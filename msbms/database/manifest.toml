@@ -1,3 +1,4 @@
 load_files = [
     "dbinit/database_initial_setup.sql",
+    "dbinit/create_database_schemata.sql",
 ]
