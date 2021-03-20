@@ -3,4 +3,5 @@ load_files = [
     "dbinit/create_database_schemata.sql",
     "msbms_syst_priv/functions/get_exception_details.sql",
     "msbms_syst_priv/trigger_functions/trig_b_iu_set_diagnostic_columns.sql",
+    "msbms_syst_data/tables/app_modules.sql",
 ]
