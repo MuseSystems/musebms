@@ -112,9 +112,9 @@ BEGIN
                                 ,p_param_data     => NULL::jsonb
                                 ,p_context_data   =>
                                     jsonb_build_object(
-                                         'tg_op', tg_op
-                                        ,'tg_when', tg_when
-                                        ,'tg_schema', tg_table_schema
+                                         'tg_op',         tg_op
+                                        ,'tg_when',       tg_when
+                                        ,'tg_schema',     tg_table_schema
                                         ,'tg_table_name', tg_table_name)),
                     ERRCODE = 'PM001',
                     SCHEMA = tg_table_schema,
