@@ -7,4 +7,5 @@ load_files = [
     "msbms_syst_data/tables/app_feature_types.sql",
     "msbms_syst_data/tables/app_features.sql",
     "msbms_syst_data/tables/app_relations.sql",
+    "msbms_syst_data/tables/configs.sql",
 ]
