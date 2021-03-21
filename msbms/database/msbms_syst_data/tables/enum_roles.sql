@@ -54,7 +54,7 @@ COMMENT ON
 $DOC$A listing of 'roles' for use by various system oriented relations.  These roles
 are designed to drive lists of values which appear in the application and exist
 for the purposes of categorizing various relations in the system.  Note that
-often times these types will have actual functional ramifications when selected.$DOC$;
+often times these roles will have actual functional ramifications when selected.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.enum_roles.id IS
@@ -65,7 +65,7 @@ COMMENT ON COLUMN
     msbms_syst_data.enum_roles.app_relation_id IS
 $DOC$Identifies the specific relation with which the enum_roles record is associated.
 This value forms part of a compound candidate key for the record along with the
-enum_type.display_name column.$DOC$;
+enum_roles.display_name column.$DOC$;
 
 COMMENT ON COLUMN
     msbms_syst_data.enum_roles.internal_name IS

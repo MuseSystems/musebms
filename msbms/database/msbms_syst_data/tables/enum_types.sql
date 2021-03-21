@@ -64,7 +64,7 @@ COMMENT ON COLUMN
     msbms_syst_data.enum_types.app_relation_id IS
 $DOC$Identifies the specific relation with which the enum_types record is associated.
 This value forms part of a compound candidate key for the record along with the
-enum_type.display_name column.$DOC$;
+enum_types.display_name column.$DOC$;
 
 COMMENT ON COLUMN
     msbms_syst_data.enum_types.internal_name IS
