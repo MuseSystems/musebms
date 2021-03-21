@@ -22,7 +22,6 @@ CREATE TABLE msbms_syst_data.enum_types
     ,internal_name           text                                    NOT NULL
         CONSTRAINT enum_types_internal_name_udx UNIQUE
     ,display_name            text                                    NOT NULL
-        CONSTRAINT enum_types_display_name_udx UNIQUE
     ,sort_order              integer                                 NOT NULL DEFAULT 999999
     ,description             text                                    NOT NULL
     ,app_feature_type_id     uuid                                    NOT NULL
@@ -36,6 +35,8 @@ CREATE TABLE msbms_syst_data.enum_types
     ,diag_role_modified      text                                    NOT NULL
     ,diag_row_version        bigint      DEFAULT 1                   NOT NULL
     ,diag_update_count       bigint      DEFAULT 0                   NOT NULL
+    ,CONSTRAINT enum_types_app_relation_id_display_name_udx
+        UNIQUE (app_relation_id, display_name)
 );
 
 ALTER TABLE msbms_syst_data.enum_types OWNER TO msbms_owner;
