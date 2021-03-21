@@ -62,33 +62,39 @@ system.$DOC$;
 
 COMMENT ON COLUMN
     msbms_syst_data.enum_types.app_relation_id IS
-$DOC$Identifies the specific relation with which the enum_type record is associated.
+$DOC$Identifies the specific relation with which the enum_types record is associated.
 This value forms part of a compound candidate key for the record along with the
 enum_type.display_name column.$DOC$;
 
-COMMENT ON COLUMN msbms_syst_data.enum_types.internal_name IS
+COMMENT ON COLUMN
+    msbms_syst_data.enum_types.internal_name IS
 $DOC$A candidate key useful for programmatic references to individual records.  Note
 that this value is expected to be unique in this table even though other columns
 which are normally candidate keys are only compound key components in this
 table.$DOC$;
 
-COMMENT ON COLUMN msbms_syst_data.enum_types.display_name IS
+COMMENT ON COLUMN
+    msbms_syst_data.enum_types.display_name IS
 $DOC$A friendly name for the record suitable for use in user interfaces.  Note that
 the display_name value in this table may be duplicated unlike many other tables
 where this field appears.  In this table, display_name is only a component of
 the app_relation_id, display_name composite candidate key.$DOC$;
 
-COMMENT ON COLUMN msbms_syst_data.enum_types.sort_order IS
+COMMENT ON COLUMN
+    msbms_syst_data.enum_types.sort_order IS
 $DOC$A simple number based sort use to sort on-screen displays of the data in the
 table.$DOC$;
 
-COMMENT ON COLUMN msbms_syst_data.enum_types.description IS
+COMMENT ON COLUMN
+    msbms_syst_data.enum_types.description IS
 $DOC$A text describing the meaning and use of the specific record.$DOC$;
 
-COMMENT ON COLUMN msbms_syst_data.enum_types.app_feature_type_id IS
+COMMENT ON COLUMN
+    msbms_syst_data.enum_types.app_feature_type_id IS
 $DOC$A reference to the feature type to which the enumeration type is associated.$DOC$;
 
-COMMENT ON COLUMN msbms_syst_data.enum_types.functional_type IS
+COMMENT ON COLUMN
+    msbms_syst_data.enum_types.functional_type IS
 $DOC$$DOC$;
 
 COMMENT ON
