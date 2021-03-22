@@ -21,7 +21,7 @@ CREATE TABLE msbms_syst_data.app_relations
         CONSTRAINT app_relations_display_name_udx UNIQUE
     ,schema_name             text                                    NOT NULL
     ,table_name              text                                    NOT NULL
-    ,app_feature_type     uuid                                       NOT NULL
+    ,app_feature_type_id     uuid                                    NOT NULL
         CONSTRAINT app_relations_app_feature_type_fk
         REFERENCES msbms_syst_data.app_feature_types ( id )
     ,diag_timestamp_created  timestamptz DEFAULT now( )              NOT NULL
