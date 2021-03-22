@@ -11,4 +11,5 @@ load_files = [
     "msbms_syst_data/tables/app_feature_app_relation_assigns.sql",
     "msbms_syst_data/tables/enum_types.sql",
     "msbms_syst_data/tables/enum_roles.sql",
+    "msbms_syst_data/tables/enum_states.sql",
 ]
