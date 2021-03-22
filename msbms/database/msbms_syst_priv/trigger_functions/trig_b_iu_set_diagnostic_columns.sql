@@ -122,7 +122,7 @@ BEGIN
 
         END CASE;
 
-        -- We've done our hstore magic, lets actually get a record to return...
+        -- We've done our jsonb magic, lets actually get a record to return...
         new := jsonb_populate_record( new, var_jsonb_final );
 
         RETURN new;
