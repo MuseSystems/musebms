@@ -15,10 +15,14 @@ CREATE TABLE msbms_syst_data.enum_app_interface_types
 (
      id                      uuid        DEFAULT uuid_generate_v1( ) NOT NULL
         CONSTRAINT enum_app_interface_types_pk PRIMARY KEY
-    ,internal_name           text                                    NOT NULL UNIQUE
-    ,display_name            text                                    NOT NULL UNIQUE
+    ,internal_name           text                                    NOT NULL
+        CONSTRAINT enum_app_interface_types_internal_name_udx UNIQUE
+    ,display_name            text                                    NOT NULL
+        CONSTRAINT enum_app_interface_types_display_name_udx UNIQUE
     ,description             text                                    NOT NULL
     ,functional_type         text                                    NOT NULL
+        CONSTRAINT functional_type_chk
+            CHECK (functional_type IN ( 'web_ui', 'json_api', 'db_api' ))
     ,diag_timestamp_created  timestamptz DEFAULT now( )              NOT NULL
     ,diag_role_created       text                                    NOT NULL
     ,diag_timestamp_modified timestamptz DEFAULT now( )              NOT NULL
@@ -26,8 +30,6 @@ CREATE TABLE msbms_syst_data.enum_app_interface_types
     ,diag_role_modified      text                                    NOT NULL
     ,diag_row_version        bigint      DEFAULT 1                   NOT NULL
     ,diag_update_count       bigint      DEFAULT 0                   NOT NULL
-    ,CONSTRAINT functional_type_chk
-        CHECK (functional_type IN ( 'web_ui', 'json_api', 'db_api' ))
 );
 
 ALTER TABLE msbms_syst_data.enum_app_interface_types OWNER TO msbms_owner;
