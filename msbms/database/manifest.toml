@@ -12,4 +12,5 @@ load_files = [
     "msbms_syst_data/tables/enum_app_interface_types.sql",
     "msbms_syst_data/tables/enum_app_interaction_types.sql",
     "msbms_syst_data/tables/interaction_logs.sql",
+    "msbms_appl_data/tables/configs.sql",
 ]
