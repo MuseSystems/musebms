@@ -20,12 +20,8 @@ CREATE TABLE msbms_appl_data.enum_person_states
     ,display_name            text                                    NOT NULL 
         CONSTRAINT enum_person_states_display_name_udx UNIQUE
     ,description             text                                    NOT NULL
-    ,functional_type         text                                    NOT NULL
-        CONSTRAINT functional_type_chk
-            CHECK (functional_type IN ( 'authoring'
-                                       ,'active'
-                                       ,'suspended'
-                                       ,'inactive' ))
+    ,options                 jsonb       DEFAULT '{}'::jsonb         NOT NULL
+    ,user_options            jsonb       DEFAULT '{}'::jsonb         NOT NULL
     ,diag_timestamp_created  timestamptz DEFAULT now( )              NOT NULL
     ,diag_role_created       text                                    NOT NULL
     ,diag_timestamp_modified timestamptz DEFAULT now( )              NOT NULL
@@ -68,10 +64,15 @@ $DOC$A text describing the meaning and use of the specific record that may be
 visible to users of the record.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_appl_data.enum_person_states.functional_type IS
-$DOC$Establishes the meaning of the record in relation to functionality implemented
-in the system.  The system will base processing decisions upon the value in this
-field.$DOC$;
+    COLUMN msbms_appl_data.enum_person_states.options IS
+$DOC$A JSON representation of various options that may be applied when a record
+exists in a given state.  This may include flags, rules to test, and other such
+arbitrary behaviors as required by the specific record's state.$DOC$;
+
+COMMENT ON
+    COLUMN msbms_appl_data.enum_person_states.user_options IS
+$DOC$Allows for user defined options related to the state similar to the way the
+options field is envisioned.$DOC$;
 
 COMMENT ON
     COLUMN msbms_appl_data.enum_person_states.diag_timestamp_created IS
@@ -112,29 +113,3 @@ $DOC$Records the number of times the record has been updated regardless as to if
 the update actually changed any data.  In this way needless or redundant record 
 updates can be found.  This row starts at 0 and therefore may be the same as the 
 diag_row_version - 1.$DOC$;
-
-COMMENT ON
-    CONSTRAINT functional_type_chk
-    ON msbms_appl_data.enum_person_states IS
-$DOC$Defines the core states which are drive functionality within the application.
-
-    * authoring: This is the 'pre-active' state representative of a record that
-                 may still be considered a work-in-progress and is not
-                 actionable; for the rest of the system the record should not be
-                 considered as existing.  States involving approval processes
-                 are also considered to be in the 'authoring' functional type.
-
-    * active:    States of this functional type are considered to be fully
-                 active and available to any valid system operation involving
-                 the record.
-
-    * suspended: The record is on some sort of hold or pause, or may be obsolete
-                 pending final deactivation.  The idea behind this functional
-                 type is that certain 'new business' should not be allowed, but
-                 continuations of certain started business processes should be
-                 allowed to follow their natural course.
-
-    * inactive:  This functional type represents the soft deletion of the
-                 record for most purposes.  It is still possible that record may
-                 appear in certain historical reporting, but it is not available
-                 to any transaction processing.$DOC$;
