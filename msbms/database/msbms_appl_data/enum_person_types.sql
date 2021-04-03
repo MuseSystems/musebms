@@ -20,9 +20,8 @@ CREATE TABLE msbms_appl_data.enum_person_types
     ,display_name            text                                    NOT NULL
         CONSTRAINT enum_person_types_display_name_udx UNIQUE
     ,description             text                                    NOT NULL
-    ,functional_type         text                                    NOT NULL
-        CONSTRAINT functional_type_chk
-            CHECK (functional_type IN ( 'individual', 'function' ))
+    ,options                 jsonb       DEFAULT '{}'::jsonb         NOT NULL
+    ,user_options            jsonb       DEFAULT '{}'::jsonb         NOT NULL
     ,diag_timestamp_created  timestamptz DEFAULT now( )              NOT NULL
     ,diag_role_created       text                                    NOT NULL
     ,diag_timestamp_modified timestamptz DEFAULT now( )              NOT NULL
@@ -65,10 +64,15 @@ $DOC$A text describing the meaning and use of the specific record that may be
 visible to users of the record.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_appl_data.enum_person_types.functional_type IS
-$DOC$Establishes the meaning of the record in relation to functionality implemented
-in the system.  The system will base processing decisions upon the value in this
-field.$DOC$;
+    COLUMN msbms_appl_data.enum_person_types.options IS
+$DOC$A JSON representation of various options that may be applied when a record is of
+a given type.  This may include flags, rules to test, and other such arbitrary
+behaviors as required by the specific record's type.$DOC$;
+
+COMMENT ON
+    COLUMN msbms_appl_data.enum_person_types.user_options IS
+$DOC$Allows for user defined options related to the type similar to the way the
+options field is envisioned.$DOC$;
 
 COMMENT ON
     COLUMN msbms_appl_data.enum_person_types.diag_timestamp_created IS
@@ -109,12 +113,3 @@ $DOC$Records the number of times the record has been updated regardless as to if
 the update actually changed any data.  In this way needless or redundant record
 updates can be found.  This row starts at 0 and therefore may be the same as the
 diag_row_version - 1.$DOC$;
-
-COMMENT ON
-    CONSTRAINT functional_type_chk
-    ON msbms_appl_data.enum_person_types IS
-$DOC$Defines the system recognized types which can alter processing.
-
-    * individual: indicates that the record is an actual person
-    * function:   indicates that the contact is more general such as 'payables
-                  clerk'$DOC$;
