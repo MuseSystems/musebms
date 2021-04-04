@@ -30,4 +30,5 @@ load_files = [
     "msbms_appl_data/tables/enum_contact_roles.sql",
     "msbms_appl_data/tables/enum_fiscal_year_states.sql",
     "msbms_appl_data/tables/enum_fiscal_year_types.sql",
+    "msbms_appl_data/tables/enum_fiscal_period_states.sql",
 ]
