@@ -1,5 +1,5 @@
 -- File:        configs.sql
--- Location:    msbms/database/msbms_appl_data/configs.sql
+-- Location:    msbms/database/msbms_appl_data/tables/configs.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Licensed to Lima Buttgereit Holdings LLC (d/b/a Muse Systems) under one or

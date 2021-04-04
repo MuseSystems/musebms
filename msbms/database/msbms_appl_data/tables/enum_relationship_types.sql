@@ -1,6 +1,6 @@
 -- File:        enum_relationship_types.sql
--- Location:    msbms\database\msbms_appl_data\enum_relationship_types.sql
--- Project:     default
+-- Location:    msbms/database/msbms_appl_data/tables/enum_relationship_types.sql
+-- Project:     Muse Systems Business Management System
 --
 -- Licensed to Lima Buttgereit Holdings LLC (d/b/a Muse Systems) under one or
 -- more agreements.  Muse Systems licenses this file to you under the terms and
@@ -10,6 +10,7 @@
 -- See the NOTICE file in the project root for copyright ownership information.
 --
 -- muse.information@musesystems.com  :: https://muse.systems
+
 
 CREATE TABLE msbms_appl_data.enum_relationship_types
 (
