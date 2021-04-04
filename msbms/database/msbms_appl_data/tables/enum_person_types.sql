@@ -1,5 +1,5 @@
 -- File:        enum_person_types.sql
--- Location:    msbms/database/msbms_appl_data/enum_person_types.sql
+-- Location:    msbms/database/msbms_appl_data/tables/enum_person_types.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Licensed to Lima Buttgereit Holdings LLC (d/b/a Muse Systems) under one or

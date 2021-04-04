@@ -1,5 +1,5 @@
 -- File:        enum_facility_states.sql
--- Location:    msbms/database/msbms_appl_data/enum_facility_states.sql
+-- Location:    msbms/database/msbms_appl_data/tables/enum_facility_states.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Licensed to Lima Buttgereit Holdings LLC (d/b/a Muse Systems) under one or
