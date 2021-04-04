@@ -42,8 +42,7 @@ CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
 
 COMMENT ON
     TABLE msbms_appl_data.enum_contact_states IS
-$DOC$Establishes categories for contacts such as office, after hours, personal, work,
-etc.$DOC$;
+$DOC$Establishes the available life-cycle states for contact information.$DOC$;
 
 COMMENT ON
     COLUMN msbms_appl_data.enum_contact_states.id IS
