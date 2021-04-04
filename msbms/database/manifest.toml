@@ -25,4 +25,5 @@ load_files = [
     "msbms_appl_data/tables/enum_relationship_facility_roles.sql",
     "msbms_appl_data/tables/enum_relationship_person_roles.sql",
     "msbms_appl_data/tables/enum_facility_address_roles.sql",
+    "msbms_appl_data/tables/enum_contact_states.sql",
 ]
