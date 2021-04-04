@@ -19,4 +19,5 @@ load_files = [
     "msbms_appl_data/tables/enum_person_types.sql",
     "msbms_appl_data/tables/enum_facility_states.sql",
     "msbms_appl_data/tables/enum_facility_types.sql",
+    "msbms_appl_data/tables/enum_address_states.sql",
 ]
