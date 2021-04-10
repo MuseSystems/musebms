@@ -56,7 +56,7 @@ $DOC$A candidate key useful for programmatic references to individual records.$D
 COMMENT ON
     COLUMN msbms_appl_data.enum_relationship_states.display_name IS
 $DOC$A friendly name and candidate key for the record, suitable for use in user
-relationships.$DOC$;
+interfaces.$DOC$;
 
 COMMENT ON
     COLUMN msbms_appl_data.enum_relationship_states.description IS
