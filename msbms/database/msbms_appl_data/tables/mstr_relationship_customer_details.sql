@@ -13,20 +13,25 @@
 
 CREATE TABLE msbms_appl_data.mstr_relationship_customer_details
 (
-     id                      uuid        DEFAULT uuid_generate_v1( ) NOT NULL
+     id                          uuid        DEFAULT uuid_generate_v1( ) NOT NULL
         CONSTRAINT mstr_relationship_customer_details_pk PRIMARY KEY
-    ,mstr_relationship_id    uuid                                    NOT NULL
-        CONSTRAINT mstr_relationship_relationship_id_udx UNIQUE
+    ,mstr_relationship_id        uuid                                    NOT NULL
         CONSTRAINT mstr_relationship_id_fk
         REFERENCES msbms_appl_data.mstr_relationships (id)
         ON DELETE CASCADE
-    ,diag_timestamp_created  timestamptz DEFAULT now( )              NOT NULL
-    ,diag_role_created       text                                    NOT NULL
-    ,diag_timestamp_modified timestamptz DEFAULT now( )              NOT NULL
-    ,diag_wallclock_modified timestamptz DEFAULT clock_timestamp( )  NOT NULL
-    ,diag_role_modified      text                                    NOT NULL
-    ,diag_row_version        bigint      DEFAULT 1                   NOT NULL
-    ,diag_update_count       bigint      DEFAULT 0                   NOT NULL
+    ,owning_mstr_relationship_id uuid                                    NOT NULL
+        CONSTRAINT owning_mstr_relationship_id_fk
+        REFERENCES msbms_appl_data.mstr_relationships (id)
+        ON DELETE CASCADE
+    ,diag_timestamp_created      timestamptz DEFAULT now( )              NOT NULL
+    ,diag_role_created           text                                    NOT NULL
+    ,diag_timestamp_modified     timestamptz DEFAULT now( )              NOT NULL
+    ,diag_wallclock_modified     timestamptz DEFAULT clock_timestamp( )  NOT NULL
+    ,diag_role_modified          text                                    NOT NULL
+    ,diag_row_version            bigint      DEFAULT 1                   NOT NULL
+    ,diag_update_count           bigint      DEFAULT 0                   NOT NULL
+    ,CONSTRAINT mstr_relationship_customer_relationships_udx
+        UNIQUE (mstr_relationship_id, owning_mstr_relationship_id)
 );
 
 ALTER TABLE msbms_appl_data.mstr_relationship_customer_details OWNER TO msbms_owner;
@@ -49,7 +54,17 @@ COMMENT ON
 $DOC$The record's primary key.  The definitive identifier of the record in the
 system.$DOC$;
 
+COMMENT ON
+    COLUMN msbms_appl_data.mstr_relationship_customer_details.mstr_relationship_id IS
+$DOC$Identifies for which relationship customer details are being defined.  The terms
+in this record define the customer behavior for the relationship defined by this
+field.$DOC$;
 
+COMMENT ON
+    COLUMN msbms_appl_data.mstr_relationship_customer_details.owning_mstr_relationship_id IS
+$DOC$Identifies the relationship that will use the customer terms when processing
+selling and receivables transactions with the relationship identified in the
+mstr_relationship_id field.$DOC$;
 
 COMMENT ON
     COLUMN msbms_appl_data.mstr_relationship_customer_details.diag_timestamp_created IS
