@@ -1,5 +1,5 @@
 -- File:        mstr_relationship_customer_details.sql
--- Location:    msbms\database\msbms_appl_data\tables\mstr_relationship_customer_details.sql
+-- Location:    msbms/database/msbms_appl_data/tables/mstr_relationship_customer_details.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Licensed to Lima Buttgereit Holdings LLC (d/b/a Muse Systems) under one or
