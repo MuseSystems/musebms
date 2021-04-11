@@ -10,6 +10,7 @@ defmodule Msbms.MixProject do
     {:ecto, ">= 0.0.0"},
     {:ecto_sql, ">= 0.0.0"},
     {:jason, ">= 0.0.0"},
+    {:toml, ">= 0.0.0"},
     {:ex_doc, ">= 0.0.0", only: :dev, runtime: false}
   ]
 
