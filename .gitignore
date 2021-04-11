@@ -6,3 +6,4 @@
 !.vscode/extensions.json
 *.code-workspace
 
+msbms/priv/starting_database.sql
