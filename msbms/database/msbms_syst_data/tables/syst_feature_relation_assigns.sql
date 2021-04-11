@@ -15,8 +15,8 @@ CREATE TABLE msbms_syst_data.syst_feature_relation_assigns
 (
      id                      uuid        DEFAULT uuid_generate_v1( ) NOT NULL
         CONSTRAINT syst_feature_relation_assigns_pk PRIMARY KEY
-    ,app_feature_id          uuid                                    NOT NULL
-        CONSTRAINT syst_feature_relation_assigns_app_feature_fk
+    ,syst_feature_id          uuid                                    NOT NULL
+        CONSTRAINT syst_feature_relation_assigns_syst_feature_fk
         REFERENCES msbms_syst_data.syst_features (id)
     ,app_relation_id         uuid                                    NOT NULL
         CONSTRAINT syst_feature_relation_assigns_app_relation_fk
@@ -52,7 +52,7 @@ $DOC$The record's primary key.  The definitive identifier of the record in the
 system.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_feature_relation_assigns.app_feature_id IS
+    COLUMN msbms_syst_data.syst_feature_relation_assigns.syst_feature_id IS
 $DOC$Identifies the feature record to which the relation record is being
 associated.$DOC$;
 

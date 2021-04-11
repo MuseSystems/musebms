@@ -20,12 +20,12 @@ CREATE TABLE msbms_syst_data.syst_features
     ,display_name                text                                    NOT NULL
         CONSTRAINT syst_features_display_name_udx UNIQUE
     ,description                 text                                    NOT NULL
-    ,app_module_id               uuid                                    NOT NULL
-        CONSTRAINT syst_features_app_module_fk
-        REFERENCES msbms_syst_data.app_modules ( id )
-    ,app_feature_type_id uuid                                    NOT NULL
-        CONSTRAINT syst_features_app_feature_type_fk
-        REFERENCES msbms_syst_data.app_feature_types ( id )
+    ,syst_module_id               uuid                                    NOT NULL
+        CONSTRAINT syst_features_syst_module_fk
+        REFERENCES msbms_syst_data.syst_features ( id )
+    ,syst_feature_type_id uuid                                    NOT NULL
+        CONSTRAINT syst_features_syst_feature_type_fk
+        REFERENCES msbms_syst_data.syst_feature_types ( id )
     ,diag_timestamp_created      timestamptz DEFAULT now( )              NOT NULL
     ,diag_role_created           text                                    NOT NULL
     ,diag_timestamp_modified     timestamptz DEFAULT now( )              NOT NULL
@@ -69,11 +69,11 @@ COMMENT ON
 $DOC$A text describing the meaning and use of the specific record.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_features.app_module_id IS
+    COLUMN msbms_syst_data.syst_features.syst_module_id IS
 $DOC$Identifies the application module to which this document belongs.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_features.app_feature_type_id IS
+    COLUMN msbms_syst_data.syst_features.syst_feature_type_id IS
 $DOC$Identifies the kind of document being represented.  For example 'Master
 Data' or 'Booking Transaction'.$DOC$;
 

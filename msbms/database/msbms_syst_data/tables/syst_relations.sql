@@ -21,9 +21,9 @@ CREATE TABLE msbms_syst_data.syst_relations
         CONSTRAINT syst_relations_display_name_udx UNIQUE
     ,schema_name             text                                    NOT NULL
     ,table_name              text                                    NOT NULL
-    ,app_feature_type_id     uuid                                    NOT NULL
-        CONSTRAINT syst_relations_app_feature_type_fk
-        REFERENCES msbms_syst_data.app_feature_types ( id )
+    ,syst_feature_type_id     uuid                                    NOT NULL
+        CONSTRAINT syst_relations_syst_feature_type_fk
+        REFERENCES msbms_syst_data.syst_feature_types ( id )
     ,diag_timestamp_created  timestamptz DEFAULT now( )              NOT NULL
     ,diag_role_created       text                                    NOT NULL
     ,diag_timestamp_modified timestamptz DEFAULT now( )              NOT NULL
@@ -75,7 +75,7 @@ COMMENT ON
 $DOC$The name of the relation that is the subject of the record.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_relations.app_feature_type IS
+    COLUMN msbms_syst_data.syst_relations.syst_feature_type_id IS
 $DOC$Categorizes the record according to its feature type.$DOC$;
 
 COMMENT ON
