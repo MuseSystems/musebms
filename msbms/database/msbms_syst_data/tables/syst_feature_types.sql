@@ -170,4 +170,4 @@ $DOC$Defines the currently recognized feature groups in the system:
     * relation:  As the name suggests these are database tables holding the application's data.
 
     * operation: These are systematic processes such as batch jobs and similar which aren't directly
-                 interacted with, but still process data.$DOC$
+                 interacted with, but still process data.$DOC$;
