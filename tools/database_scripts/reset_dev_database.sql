@@ -1,3 +1,5 @@
+\c postgres
+
 DROP DATABASE msbms_dev;
 
 DROP ROLE msbms_api_admin;
@@ -7,3 +9,6 @@ DROP ROLE msbms_app_user;
 DROP ROLE msbms_owner;
 
 CREATE DATABASE msbms_dev;
+
+\c msbms_dev
+\i msbms/priv/starting_database.sql
