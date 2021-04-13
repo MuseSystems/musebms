@@ -16,11 +16,11 @@ CREATE TABLE msbms_syst_data.syst_interaction_logs
      id                           uuid        DEFAULT uuid_generate_v1( ) NOT NULL
         CONSTRAINT syst_interaction_logs_pk PRIMARY KEY
     ,interaction_timestamp        timestamptz DEFAULT now()               NOT NULL
-    ,enum_app_interaction_type_id uuid                                    NOT NULL
-        CONSTRAINT enum_app_interaction_types_fk
+    ,interaction_type_id          uuid                                    NOT NULL
+        CONSTRAINT syst_interaction_logs_interaction_types_fk
         REFERENCES msbms_syst_data.enum_interaction_types ( id )
-    ,enum_app_interface_type_id   uuid                                    NOT NULL
-        CONSTRAINT enum_app_interface_types_fk
+    ,interface_type_id            uuid                                    NOT NULL
+        CONSTRAINT syst_interaction_logs_interface_types_fk
         REFERENCES msbms_syst_data.enum_interface_types ( id )
     ,data                         jsonb
     ,diag_timestamp_created       timestamptz DEFAULT now( )              NOT NULL
@@ -60,11 +60,11 @@ $DOC$The nominal time at which the event being recorded is considered to have
 happened.  This is the database transaction start time specifically.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_interaction_logs.enum_app_interaction_type_id IS
+    COLUMN msbms_syst_data.syst_interaction_logs.interaction_type_id IS
 $DOC$The kind of interaction being recorded.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_interaction_logs.enum_app_interface_type_id IS
+    COLUMN msbms_syst_data.syst_interaction_logs.interface_type_id IS
 $DOC$The origin entry point into the application and from which the activity was
 initiated.$DOC$;
 
