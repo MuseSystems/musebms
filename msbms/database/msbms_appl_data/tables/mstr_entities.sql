@@ -70,13 +70,13 @@ $DOC$A friendly name for externally facing uses such as in communications with t
 entity.  Note that this is not a key value and has no UNIQUE enforcement.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_appl_data.mstr_entities.enum_entity_type_id IS
+    COLUMN msbms_appl_data.mstr_entities.entity_type_id IS
 $DOC$Defines the kind of entity that is being represented by the record and by
 extension the kinds of uses in which the entity may be used.  Application
 functionality is determined in part by the configuration of the selected type.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_appl_data.mstr_entities.enum_entity_state_id IS
+    COLUMN msbms_appl_data.mstr_entities.entity_state_id IS
 $DOC$Establishes current state of the entity in the established lifecycle of
 entity records.  Certain application features and behaviors will depend on
 the configuration of the state value selected for a entity record.$DOC$;
