@@ -46,9 +46,11 @@ CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
 
 COMMENT ON
     TABLE msbms_appl_data.mstr_entities IS
-$DOC$Master list of entities with whom the business interacts.  The information
-stored in this record represents general information about the entity that is
-applicable in all contexts.$DOC$;
+$DOC$Master list of legal entities with whom the business interacts.  All legal
+entities are represented by this table, including the business using this
+application itself.  The information stored in this record represents general
+information about the entity that is broadly applicable in all contexts which
+might use the entity.$DOC$;
 
 COMMENT ON
     COLUMN msbms_appl_data.mstr_entities.id IS
