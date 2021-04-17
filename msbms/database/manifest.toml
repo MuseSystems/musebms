@@ -32,5 +32,6 @@ load_files = [
     "msbms_appl_data/tables/enum_fiscal_year_types.sql",
     "msbms_appl_data/tables/enum_fiscal_period_states.sql",
     "msbms_appl_data/tables/mstr_entities.sql",
+    "msbms_appl_data/tables/mstr_facilities.sql",
     "msbms_appl_data/tables/mstr_customer_relationships.sql",
 ]
