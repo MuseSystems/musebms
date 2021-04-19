@@ -34,5 +34,6 @@ load_files = [
     "msbms_appl_data/tables/mstr_entities.sql",
     "msbms_appl_data/tables/mstr_facilities.sql",
     "msbms_appl_data/tables/mstr_persons.sql",
+    "msbms_appl_data/tables/mstr_countries.sql",
     "msbms_appl_data/tables/mstr_customer_relationships.sql",
 ]
