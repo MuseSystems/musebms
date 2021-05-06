@@ -24,7 +24,7 @@ CREATE TABLE msbms_appl_data.mstr_persons
         CONSTRAINT mstr_persons_person_types_fk
         REFERENCES msbms_appl_data.enum_person_types (id)
     ,person_state_id         uuid
-        CONSTRAINT mstr_persons_person_state_fk
+        CONSTRAINT mstr_persons_person_states_fk
         REFERENCES msbms_appl_data.enum_person_states (id)
     ,diag_timestamp_created  timestamptz DEFAULT now( )              NOT NULL
     ,diag_role_created       text                                    NOT NULL
