@@ -24,7 +24,7 @@ CREATE TABLE msbms_appl_data.mstr_facilities
         CONSTRAINT mstr_facilities_facility_types_fk
         REFERENCES msbms_appl_data.enum_facility_types (id)
     ,facility_state_id       uuid
-        CONSTRAINT mstr_facilities_facility_state_fk
+        CONSTRAINT mstr_facilities_facility_states_fk
         REFERENCES msbms_appl_data.enum_facility_states (id)
     ,diag_timestamp_created  timestamptz DEFAULT now( )              NOT NULL
     ,diag_role_created       text                                    NOT NULL
