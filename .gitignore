@@ -6,4 +6,7 @@
 !.vscode/extensions.json
 *.code-workspace
 
+### intellij ###
+.idea/*
+
 msbms/priv/starting_database.sql
