@@ -41,7 +41,8 @@ CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
 
 COMMENT ON
     TABLE msbms_appl_data.mstr_country_address_format_assocs IS
-$DOC$Establishes relationships between address format records and country records and allows recognizing an address format as the default format for the country.  $DOC$;
+$DOC$Establishes relationships between address format records and country records and
+allows recognizing an address format as the default format for the country.$DOC$;
 
 COMMENT ON
     COLUMN msbms_appl_data.mstr_country_address_format_assocs.id IS
