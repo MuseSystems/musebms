@@ -37,6 +37,7 @@ load_files = [
     "msbms_appl_data/tables/mstr_countries.sql",
     "msbms_appl_data/tables/mstr_country_address_format_assocs.sql",
     "msbms_appl_data/tables/mstr_country_phone_format_assocs.sql",
+    "msbms_appl_data/tables/mstr_country_name_format_assocs.sql",
     "msbms_appl_data/tables/mstr_entities.sql",
     "msbms_appl_data/tables/mstr_facilities.sql",
     "msbms_appl_data/tables/mstr_persons.sql",
