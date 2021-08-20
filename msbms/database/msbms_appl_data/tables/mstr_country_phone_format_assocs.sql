@@ -19,7 +19,7 @@ CREATE TABLE msbms_appl_data.mstr_country_phone_format_assocs
         REFERENCES msbms_appl_data.mstr_countries (id)
     ,phone_format_id       uuid                                    NOT NULL
         CONSTRAINT mstr_country_phone_format_assocs_phonef_formats_fk
-        REFERENCES msbms_appl_data.mstr_phone_formats (id)
+        REFERENCES msbms_appl_data.conf_phone_formats (id)
     ,is_default_for_country  boolean     DEFAULT false               NOT NULL
     ,diag_timestamp_created  timestamptz DEFAULT now( )              NOT NULL
     ,diag_role_created       text                                    NOT NULL

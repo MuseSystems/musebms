@@ -19,7 +19,7 @@ CREATE TABLE msbms_appl_data.mstr_country_address_format_assocs
         REFERENCES msbms_appl_data.mstr_countries (id)
     ,address_format_id       uuid                                    NOT NULL
         CONSTRAINT mstr_country_address_format_assocs_addressf_formats_fk
-        REFERENCES msbms_appl_data.mstr_address_formats (id)
+        REFERENCES msbms_appl_data.conf_address_formats (id)
     ,is_default_for_country  boolean     DEFAULT false               NOT NULL
     ,diag_timestamp_created  timestamptz DEFAULT now( )              NOT NULL
     ,diag_role_created       text                                    NOT NULL
