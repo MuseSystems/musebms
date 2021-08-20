@@ -49,7 +49,13 @@ COMMENT ON
 $DOC$The record's primary key.  The definitive identifier of the record in the
 system.$DOC$;
 
+COMMENT ON
+    COLUMN msbms_appl_data.mstr_country_address_format_assocs.country_id IS
+$DOC$Identifies the country with with the address format is being associated.$DOC$;
 
+COMMENT ON
+    COLUMN msbms_appl_data.mstr_country_address_format_assocs.address_format_id IS
+$DOC$Identifies the address format which is to be associated with the country.$DOC$;
 
 COMMENT ON
     COLUMN msbms_appl_data.mstr_country_address_format_assocs.diag_timestamp_created IS
