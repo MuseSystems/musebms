@@ -33,6 +33,7 @@ load_files = [
     "msbms_appl_data/tables/enum_fiscal_period_states.sql",
     "msbms_appl_data/tables/conf_address_formats.sql",
     "msbms_appl_data/tables/conf_phone_formats.sql",
+    "msbms_appl_data/tables/conf_name_formats.sql",
     "msbms_appl_data/tables/mstr_countries.sql",
     "msbms_appl_data/tables/mstr_country_address_format_assocs.sql",
     "msbms_appl_data/tables/mstr_country_phone_format_assocs.sql",
