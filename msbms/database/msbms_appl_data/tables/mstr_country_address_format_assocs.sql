@@ -58,6 +58,11 @@ COMMENT ON
 $DOC$Identifies the address format which is to be associated with the country.$DOC$;
 
 COMMENT ON
+    COLUMN msbms_appl_data.mstr_country_address_format_assocs.is_default_for_country IS
+$DOC$If true, this format should be used as the default format for the country. There
+should only ever be one default for any one country_id.$DOC$;
+
+COMMENT ON
     COLUMN msbms_appl_data.mstr_country_address_format_assocs.diag_timestamp_created IS
 $DOC$The database server date/time when the transaction which created the record 
 started.$DOC$;
