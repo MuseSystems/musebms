@@ -33,9 +33,8 @@ jobs:
         with:
           otp-version: ${{matrix.otp}}
           elixir-version: ${{matrix.elixir}}
-    - name: Output Elixir Version
-      working-directory: ./msbms
-      run: mix test
+      - run: mix deps.get
+      - run: mix test
 
     - name: Output PostgreSQL version
       run: psql --version
