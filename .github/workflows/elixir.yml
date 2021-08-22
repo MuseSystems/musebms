@@ -1,4 +1,4 @@
-name: Elixir CI
+name: Muse Systems BMS CI
 
 on:
   push:
