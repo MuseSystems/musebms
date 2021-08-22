@@ -25,6 +25,8 @@ CREATE TABLE msbms_appl_data.mstr_contacts
     ,contact_state_id        uuid                                    NOT NULL
         CONSTRAINT mstr_contacts_contact_states_fk
         REFERENCES msbms_appl_data.enum_contact_states (id)
+    ,contact_data            jsonb       DEFAULT '{}'::jsonb         NOT NULL
+    ,contact_notes           text
     ,diag_timestamp_created  timestamptz DEFAULT now( )              NOT NULL
     ,diag_role_created       text                                    NOT NULL
     ,diag_timestamp_modified timestamptz DEFAULT now( )              NOT NULL
@@ -68,12 +70,23 @@ $DOC$A non-unique/non-key value used to display to users and external parties wh
 uniqueness is less of a concern than specific end user presentation.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_appl_data.mstr_contacts.contact_type_id IS
-$DOC$$DOC$;
+    COLUMN msbms_appl_data.mstr_contacts.contact_state_id IS
+$DOC$Establishes the current life-cycle state of the contact record, such as
+whether the record is active or not.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_appl_data.mstr_contacts.contact_state_id IS
-$DOC$$DOC$;
+    COLUMN msbms_appl_data.mstr_contacts.contact_type_id IS
+$DOC$Indicates the type of the contact record.  Contact records store inforamtion of
+varying types such as phone numbers, physical addresses, email addresses, etc.
+The value in this column establishes which kind of contact data is being stored
+and indicates the data processing rules to apply.$DOC$;
+
+COMMENT ON
+    COLUMN msbms_appl_data.mstr_contacts.contact_data IS
+$DOC$Contains the actual contact data being stored by the record as well as
+associated metadata such as specialized data fields, mapping of the specialized
+fields to standard representation for data maintenance, display, printing, and
+integration.$DOC$;
 
 COMMENT ON
     COLUMN msbms_appl_data.mstr_contacts.diag_timestamp_created IS
