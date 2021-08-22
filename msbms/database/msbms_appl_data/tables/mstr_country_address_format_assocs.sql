@@ -17,9 +17,11 @@ CREATE TABLE msbms_appl_data.mstr_country_address_format_assocs
     ,country_id              uuid                                    NOT NULL
         CONSTRAINT mstr_country_address_format_assocs_countries_fk
         REFERENCES msbms_appl_data.mstr_countries (id)
+        ON DELETE CASCADE
     ,address_format_id       uuid                                    NOT NULL
         CONSTRAINT mstr_country_address_format_assocs_address_formats_fk
         REFERENCES msbms_appl_data.conf_address_formats (id)
+        ON DELETE CASCADE
     ,is_default_for_country  boolean     DEFAULT false               NOT NULL
     ,diag_timestamp_created  timestamptz DEFAULT now( )              NOT NULL
     ,diag_role_created       text                                    NOT NULL
