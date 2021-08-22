@@ -20,6 +20,10 @@ CREATE TABLE msbms_appl_data.enum_contact_types
     ,display_name            text                                    NOT NULL 
         CONSTRAINT enum_contact_types_display_name_udx UNIQUE
     ,description             text                                    NOT NULL
+    ,functional_type         text                                    NOT NULL
+        CONSTRAINT enum_contact_types_function_type_chk
+        CHECK(functional_type IN ('phone', 'physical_address', 'email_address',
+                                   'website', 'chat', 'social_media', 'generic'))
     ,options                 jsonb       DEFAULT '{}'::jsonb         NOT NULL
     ,user_options            jsonb       DEFAULT '{}'::jsonb         NOT NULL
     ,diag_timestamp_created  timestamptz DEFAULT now( )              NOT NULL
@@ -63,6 +67,29 @@ COMMENT ON
     COLUMN msbms_appl_data.enum_contact_types.description IS
 $DOC$A text describing the meaning and use of the specific record that may be
 visible to users of the record.$DOC$;
+
+COMMENT ON
+    COLUMN msbms_appl_data.enum_contact_types.functional_type IS
+$DOC$Associates the contact type with known and supported application contact type
+functionality.  These types include:
+    * phone            - Telephone system dependent communications.  Contacts of
+                         this type will include formatting information from the
+                         msbms_appl_data.conf_phone_formats table.
+
+    * physical_address - Street and mailing addresses.  Contacts of this type
+                         will include formatting information from the
+                         msbms_appl_data.conf_address_formats table.
+
+    * email_address    - Email addresses
+
+    * website          - Website addresses
+
+    * chat             - Internet user and system
+
+    * social_media     - Social media accounts and system
+
+    * generic          - A miscellaneous type to record non-functional, but
+                         still needed contact information.$DOC$;
 
 COMMENT ON
     COLUMN msbms_appl_data.enum_contact_types.options IS
