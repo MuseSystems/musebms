@@ -20,6 +20,7 @@ CREATE TABLE msbms_appl_data.mstr_persons
     ,display_name            text
         CONSTRAINT mstr_persons_display_name_udx UNIQUE
     ,external_name           text                                    NOT NULL
+    ,formatted_name          jsonb        DEFAULT '{}'::jsonb        NOT NULL
     ,person_type_id          uuid                                    NOT NULL
         CONSTRAINT mstr_persons_person_types_fk
         REFERENCES msbms_appl_data.enum_person_types (id)
@@ -67,6 +68,13 @@ COMMENT ON
     COLUMN msbms_appl_data.mstr_persons.external_name IS
 $DOC$A friendly name for externally facing uses such as in communications with the
 person.  Note that this is not a key value and has no UNIQUE enforcement.$DOC$;
+
+COMMENT ON
+    COLUMN msbms_appl_data.mstr_persons.formatted_name IS
+$DOC$Contains a jsonb object describing the naming fields, field layout, and the
+actual values of the user's name.  Note that the format will normally have
+originated from the msbms_appl_data.conf_name_formats table, but reflects the
+name formatting configuration at the time of capture.$DOC$;
 
 COMMENT ON
     COLUMN msbms_appl_data.mstr_persons.diag_timestamp_created IS
