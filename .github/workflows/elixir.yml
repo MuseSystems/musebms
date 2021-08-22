@@ -8,36 +8,17 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu20
+    runs-on: ubuntu-latest
     name: OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}
     strategy:
       matrix:
-        otp: ['24.0']
-        elixir: ['1.12.2']
-
-    services:
-      db:
-        image: postgres
-        ports: ['5432:5432']
-        env:
-          POSTGRES_PASSWORD: postgres
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
+        otp: ['20.3', '21.3', '22.2']
+        elixir: ['1.8.2', '1.9.4']
     steps:
-    - uses: actions/checkout@v2
-    - uses: erlef/setup-beam@v1
+      - uses: actions/checkout@v2
+      - uses: erlef/setup-beam@v1
         with:
           otp-version: ${{matrix.otp}}
           elixir-version: ${{matrix.elixir}}
       - run: mix deps.get
       - run: mix test
-
-    - name: Output PostgreSQL version
-      run: psql --version
-
-    - name: Output Node.js version
-      run: node --version
