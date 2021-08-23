@@ -7,35 +7,40 @@ on:
     branches: [ develop ]
 
 jobs:
-  test:
+  test-msbms-build:
     runs-on: ubuntu-latest
+    container: ubuntu20
     name: OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}
     strategy:
       matrix:
         otp: ['24.0']
         elixir: ['1.12.2']
     services:
-    postgres:
-      image: postgres:13
-      env:
-        POSTGRES_USER: msbms_installer
-        POSTGRES_PASSWORD: msbms_pass
-        POSTGRES_DB: msbms_test
-      ports:
-        - 5432:5432
-      options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
-  env:
-    MIX_ENV: test
-    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: msbms_installer
+          POSTGRES_PASSWORD: msbms_pass
+          POSTGRES_DB: msbms_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
-      - uses: actions/checkout@v2
-      - uses: erlef/setup-beam@v1
+      - name: Checkout repository code
+        uses: actions/checkout@v2
+
+      - name: Install Elixir
+        uses: erlef/setup-beam@v1
         with:
           otp-version: ${{matrix.otp}}
           elixir-version: ${{matrix.elixir}}
-      - run: mix deps.get
-        working-directory: ./msbms
-      - run: mix test
-        working-directory: ./msbms
-      - run: mix builddb
+
+      - name: Test postgres
+        run: psql --version
+
+      - name: Test Elixir
+        run: mix --version
         working-directory: ./msbms
