@@ -37,9 +37,10 @@ jobs:
           otp-version: ${{matrix.otp}}
           elixir-version: ${{matrix.elixir}}
 
-      - name: Test postgres
-        run: psql --version
+      - name: Build Mix Dependencies
+        run: mix deps.get
+        working-directory: ./msbms
 
-      - name: Test Elixir
-        run: mix --version
+      - name: Database Load Script Build
+        run: mix builddb
         working-directory: ./msbms
