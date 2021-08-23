@@ -48,7 +48,14 @@ CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
 COMMENT ON
     TABLE msbms_appl_data.mstr_contacts IS
 $DOC$Represents a single method of contact for a person, entity, facility, or other
-contextually relevant association.$DOC$;
+contextually relevant association.
+
+Note that there is a weakness in this part of the schema design in that contact
+information doesn't make sense outside of assignment to a person, facility, or
+entity, but such assignment is indirect through role assignments.  This means it
+is conceivable that records in this table could become orphaned.  At this stage,
+however, it doesn't seem worth it to denormalize the data to record the direct
+association.$DOC$;
 
 COMMENT ON
     COLUMN msbms_appl_data.mstr_contacts.id IS
