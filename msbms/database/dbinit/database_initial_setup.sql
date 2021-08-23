@@ -31,7 +31,7 @@
 DO
 $SCRIPT$
 BEGIN
-
+    RAISE EXCEPTION 'This should kill the CI process in an error condition.';
     --
     -- Database Cluster Preparation & Application Roles
     --
