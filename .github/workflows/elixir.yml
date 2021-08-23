@@ -9,7 +9,6 @@ on:
 jobs:
   test-msbms-build:
     runs-on: ubuntu-latest
-    container: ubuntu20
     name: OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}
     strategy:
       matrix:
