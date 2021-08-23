@@ -49,4 +49,5 @@ jobs:
 
       - name: Load Database Load Script
         run: psql -h localhost -p 5432 -U msbms_installer postgres < tools/database_scripts/reset_dev_database.psql
-        env: PGPASSWORD: msbms_pass
+        env:
+          PGPASSWORD: msbms_pass
