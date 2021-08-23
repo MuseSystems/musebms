@@ -7,7 +7,7 @@ on:
     branches: [ develop ]
 
 jobs:
-  test:
+  test-msbms-build:
     runs-on: ubuntu-latest
     name: OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}
     strategy:
@@ -15,27 +15,39 @@ jobs:
         otp: ['24.0']
         elixir: ['1.12.2']
     services:
-    postgres:
-      image: postgres:13
-      env:
-        POSTGRES_USER: msbms_installer
-        POSTGRES_PASSWORD: msbms_pass
-        POSTGRES_DB: msbms_test
-      ports:
-        - 5432:5432
-      options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
-  env:
-    MIX_ENV: test
-    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: msbms_installer
+          POSTGRES_PASSWORD: msbms_pass
+          POSTGRES_PORT: 5432
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
-      - uses: actions/checkout@v2
-      - uses: erlef/setup-beam@v1
+      - name: Checkout repository code
+        uses: actions/checkout@v2
+
+      - name: Install Elixir
+        uses: erlef/setup-beam@v1
         with:
           otp-version: ${{matrix.otp}}
           elixir-version: ${{matrix.elixir}}
-      - run: mix deps.get
+
+      - name: Build Mix Dependencies
+        run: mix deps.get
         working-directory: ./msbms
-      - run: mix test
+
+      - name: Database Load Script Build
+        run: mix builddb
         working-directory: ./msbms
-      - run: mix builddb
-        working-directory: ./msbms
+
+      - name: Load Database Load Script
+        run: psql -h localhost -p 5432 -U msbms_installer postgres < tools/database_scripts/reset_dev_database.psql
+        env:
+          PGPASSWORD: msbms_pass
