@@ -1,3 +1,4 @@
+\set ON_ERROR_STOP true
 \c postgres
 
 DROP DATABASE IF EXISTS msbms_dev;
