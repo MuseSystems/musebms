@@ -15,6 +15,9 @@ CREATE TABLE msbms_appl_data.mstr_persons
 (
      id                      uuid        DEFAULT uuid_generate_v1( ) NOT NULL
         CONSTRAINT mstr_persons_pk PRIMARY KEY
+    ,owning_entity_id        uuid                                    NOT NULL
+        CONSTRAINT mstr_persons_entities_fk
+        REFERENCES msbms_appl_data.mstr_entities (id)
     ,internal_name           text                                    NOT NULL
         CONSTRAINT mstr_persons_internal_name_udx UNIQUE
     ,display_name            text
@@ -54,6 +57,12 @@ COMMENT ON
     COLUMN msbms_appl_data.mstr_persons.id IS
 $DOC$The record's primary key.  The definitive identifier of the record in the
 system.$DOC$;
+
+COMMENT ON
+    COLUMN   msbms_appl_data.mstr_persons.owning_entity_id IS
+$DOC$Indicates which managing entity owns the person record for the purposes of
+default visibility and access.  Any person record owned by the global entity is
+by default visible and usable by any managed entity.$DOC$;
 
 COMMENT ON
     COLUMN msbms_appl_data.mstr_persons.internal_name IS
