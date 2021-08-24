@@ -15,6 +15,9 @@ CREATE TABLE msbms_appl_data.mstr_entities
 (
      id                         uuid        DEFAULT uuid_generate_v1( ) NOT NULL
         CONSTRAINT mstr_entities_pk PRIMARY KEY
+    ,owning_entity_id           uuid                                    NOT NULL
+        CONSTRAINT mstr_entities_entities_fk
+        REFERENCES msbms_appl_data.mstr_entities (id)
     ,internal_name              text                                    NOT NULL
         CONSTRAINT mstr_entities_internal_name_udx UNIQUE
     ,display_name               text                                    NOT NULL
@@ -56,6 +59,23 @@ COMMENT ON
     COLUMN msbms_appl_data.mstr_entities.id IS
 $DOC$The record's primary key.  The definitive identifier of the record in the
 system.$DOC$;
+
+COMMENT ON
+    COLUMN msbms_appl_data.mstr_entities.owning_entity_id IS
+$DOC$Indicates which managing entity is the owning entity for purposes of default
+visibility and usage limitations.  This limitation primarily is evident in
+searches and lists.  Explicit assignment of rights to entities, persons,
+facilities, etc. that are not the owning entity is still possible and those
+rights will prevail over the default access rules for non-owning entities.
+
+There is a special case of owning entity where an entity is self owning.  There
+may only be a single entity that is self owning and that, by definition,
+establishes that entity as the 'global entity'.  The global entity has global
+administrative rights as well as allows access to those persons, facilities, and
+entities that it owns effectively making them global to all other managed
+entities.  The global entity may be an actual business entity which essentially
+owns the MSBMS instance or it may a purely administrative construct for managing
+the system.$DOC$;
 
 COMMENT ON
     COLUMN msbms_appl_data.mstr_entities.internal_name IS

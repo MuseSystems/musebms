@@ -15,6 +15,9 @@ CREATE TABLE msbms_appl_data.mstr_facilities
 (
      id                      uuid        DEFAULT uuid_generate_v1( ) NOT NULL
         CONSTRAINT mstr_facilities_pk PRIMARY KEY
+    ,owning_entity_id        uuid                                    NOT NULL
+        CONSTRAINT mstr_facilities_entities_fk
+        REFERENCES msbms_appl_data.mstr_facilities (id)
     ,internal_name           text                                    NOT NULL
         CONSTRAINT mstr_facilities_internal_name_udx UNIQUE
     ,display_name            text
@@ -55,6 +58,13 @@ COMMENT ON
     COLUMN msbms_appl_data.mstr_facilities.id IS
 $DOC$The record's primary key.  The definitive identifier of the record in the
 system.$DOC$;
+
+COMMENT ON
+    COLUMN msbms_appl_data.mstr_facilities.owning_entity_id IS
+$DOC$Indicates which entity is the owning managing entity for purposes of default
+access and visibility.  Facilities assigned to the global entity are by default
+visible and accessible to all other managed entities, unless restricted by other
+access mechanisms.$DOC$;
 
 COMMENT ON
     COLUMN msbms_appl_data.mstr_facilities.internal_name IS
