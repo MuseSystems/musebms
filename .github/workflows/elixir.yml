@@ -33,6 +33,12 @@ jobs:
       - name: Checkout repository code
         uses: actions/checkout@v2
 
+      - name: Build The Book
+        uses: xu-cheng/latex-action@v2
+        with:
+          root_file: documentation/TheBook/main.tex
+          latexmk_use_xelatex: true
+
       - name: Install Elixir
         uses: erlef/setup-beam@v1
         with:
