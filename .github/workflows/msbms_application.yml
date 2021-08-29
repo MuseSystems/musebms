@@ -1,4 +1,4 @@
-name: Muse Systems BMS CI
+name: MSBMS Application CI
 
 on:
   push:
@@ -7,9 +7,9 @@ on:
     branches: [ develop ]
 
 jobs:
-  test-msbms-build:
+  test-msbms-apps-build:
     runs-on: ubuntu-latest
-    name: OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}
+    name: Muse Systems BMS (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
     strategy:
       matrix:
         otp: ['24.0']
@@ -32,13 +32,6 @@ jobs:
     steps:
       - name: Checkout repository code
         uses: actions/checkout@v2
-
-      - name: Build The Book
-        uses: xu-cheng/latex-action@v2
-        with:
-          working_directory: ./documentation/TheBook
-          root_file: main.tex
-          latexmk_use_xelatex: true
 
       - name: Install Elixir
         uses: erlef/setup-beam@v1
