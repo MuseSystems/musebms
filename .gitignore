@@ -9,4 +9,8 @@
 ### intellij ###
 .idea/*
 
+### documentation/latex ###
+documentation/TheBook/*.pdf
+documentation/TheBook/_build/*
+
 msbms/priv/starting_database.sql
