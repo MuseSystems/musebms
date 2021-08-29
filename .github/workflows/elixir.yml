@@ -35,8 +35,9 @@ jobs:
 
       - name: Build The Book
         uses: xu-cheng/latex-action@v2
+        working-directory: ./documentation/TheBook
         with:
-          root_file: documentation/TheBook/main.tex
+          root_file: main.tex
           latexmk_use_xelatex: true
 
       - name: Install Elixir
