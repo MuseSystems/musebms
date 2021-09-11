@@ -47,7 +47,7 @@ CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
 
 COMMENT ON
     TABLE msbms_appl_data.mstr_contacts IS
-$DOC$Represents a single method of contact for a person, entity, facility, or other
+$DOC$Represents a single method of contact for a person, entity, place, or other
 contextually relevant association.
 
 Note that there is a weakness in this part of the schema design in that contact
