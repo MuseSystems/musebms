@@ -47,7 +47,7 @@ CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
 COMMENT ON
     TABLE msbms_appl_data.enum_contact_types IS
 $DOC$Identifies the available types of contact that may be associated with a person,
-entity, or facility.$DOC$;
+entity, or place.$DOC$;
 
 COMMENT ON
     COLUMN msbms_appl_data.enum_contact_types.id IS
