@@ -16,7 +16,7 @@ CREATE TABLE msbms_appl_data.mstr_places
      id                      uuid        DEFAULT uuid_generate_v1( ) NOT NULL
         CONSTRAINT mstr_places_pk PRIMARY KEY
     ,owning_entity_id        uuid                                    NOT NULL
-        CONSTRAINT mstr_persons_entities_fk
+        CONSTRAINT mstr_places_entities_fk
         REFERENCES msbms_appl_data.mstr_entities (id)
     ,internal_name           text                                    NOT NULL
         CONSTRAINT mstr_places_internal_name_udx UNIQUE
@@ -60,7 +60,7 @@ $DOC$The record's primary key.  The definitive identifier of the record in the
 system.$DOC$;
 
 COMMENT ON
-    COLUMN   msbms_appl_data.mstr_persons.owning_entity_id IS
+    COLUMN   msbms_appl_data.mstr_places.owning_entity_id IS
 $DOC$Indicates which managing entity owns the place record for the purposes of
 default visibility and access.  Any place record owned by the global entity is
 by default visible and usable by any managed entity.$DOC$;
