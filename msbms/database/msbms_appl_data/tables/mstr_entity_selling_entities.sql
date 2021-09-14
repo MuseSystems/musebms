@@ -64,7 +64,7 @@ COMMENT ON
     COLUMN msbms_appl_data.mstr_entity_selling_entities.owning_entity_id IS
 $DOC$Identifies the entity that will use the customer terms when processing
 selling and receivables transactions with the entity identified in the
-mstr_entity_id field.$DOC$;
+entity_id field.$DOC$;
 
 COMMENT ON
     COLUMN msbms_appl_data.mstr_entity_selling_entities.diag_timestamp_created IS
