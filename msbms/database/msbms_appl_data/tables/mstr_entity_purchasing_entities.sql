@@ -30,7 +30,7 @@ CREATE TABLE msbms_appl_data.mstr_entity_purchasing_entities
     ,diag_role_modified          text                                    NOT NULL
     ,diag_row_version            bigint      DEFAULT 1                   NOT NULL
     ,diag_update_count           bigint      DEFAULT 0                   NOT NULL
-    ,CONSTRAINT mstr_customer_relationship_entities_udx
+    ,CONSTRAINT mstr_entity_purchasing_entities_udx
         UNIQUE (entity_id, owning_entity_id)
 );
 
