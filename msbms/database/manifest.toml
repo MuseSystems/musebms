@@ -47,4 +47,5 @@ load_files = [
     "msbms_appl_data/tables/mstr_entity_staffing_entities.sql",
     "msbms_appl_data/tables/mstr_entity_banking_entities.sql",
     "msbms_appl_data/tables/mstr_entity_inventory_places.sql",
+    "msbms_appl_data/tables/mstr_entity_workplace_places.sql",
 ]
