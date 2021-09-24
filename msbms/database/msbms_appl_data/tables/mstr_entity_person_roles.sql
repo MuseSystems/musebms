@@ -12,26 +12,26 @@
 -- muse.information@musesystems.com  :: https://muse.systems
 CREATE TABLE msbms_appl_data.mstr_entity_person_roles
 (
-     id                      uuid        DEFAULT uuid_generate_v1( ) NOT NULL
+     id                         uuid        DEFAULT uuid_generate_v1( ) NOT NULL
         CONSTRAINT mstr_entity_person_roles_pk PRIMARY KEY
-    ,person_id               uuid                                    NOT NULL
+    ,person_id                  uuid                                    NOT NULL
         CONSTRAINT mstr_entity_person_roles_person_fk
         REFERENCES msbms_appl_data.mstr_persons (id)
         ON DELETE CASCADE
-    ,entity_id               uuid                                    NOT NULL
+    ,entity_id                  uuid                                    NOT NULL
         CONSTRAINT mstr_entity_person_roles_entity_fk
         REFERENCES msbms_appl_data.mstr_entities (id)
         ON DELETE CASCADE
-    ,enum_entity_person_role_id uuid                                 NOT NULL
+    ,enum_entity_person_role_id uuid                                    NOT NULL
         CONSTRAINT mstr_entity_person_roles_enum_entity_person_role_fk
         REFERENCES msbms_appl_data.enum_entity_person_roles (id)
-    ,diag_timestamp_created  timestamptz DEFAULT now( )              NOT NULL
-    ,diag_role_created       text                                    NOT NULL
-    ,diag_timestamp_modified timestamptz DEFAULT now( )              NOT NULL
-    ,diag_wallclock_modified timestamptz DEFAULT clock_timestamp( )  NOT NULL
-    ,diag_role_modified      text                                    NOT NULL
-    ,diag_row_version        bigint      DEFAULT 1                   NOT NULL
-    ,diag_update_count       bigint      DEFAULT 0                   NOT NULL
+    ,diag_timestamp_created     timestamptz DEFAULT now( )              NOT NULL
+    ,diag_role_created          text                                    NOT NULL
+    ,diag_timestamp_modified    timestamptz DEFAULT now( )              NOT NULL
+    ,diag_wallclock_modified    timestamptz DEFAULT clock_timestamp( )  NOT NULL
+    ,diag_role_modified         text                                    NOT NULL
+    ,diag_row_version           bigint      DEFAULT 1                   NOT NULL
+    ,diag_update_count          bigint      DEFAULT 0                   NOT NULL
     ,CONSTRAINT mstr_entity_person_roles_person_entity_role_udx
         UNIQUE (person_id, entity_id, enum_entity_person_role_id)
 );
