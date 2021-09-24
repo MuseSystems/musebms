@@ -20,6 +20,7 @@ CREATE TABLE msbms_appl_data.enum_entity_person_roles
     ,display_name            text                                    NOT NULL 
         CONSTRAINT enum_entity_person_roles_display_name_udx UNIQUE
     ,description             text                                    NOT NULL
+    ,is_system_role          boolean     DEFAULT false               NOT NULL
     ,options                 jsonb       DEFAULT '{}'::jsonb         NOT NULL
     ,user_options            jsonb       DEFAULT '{}'::jsonb         NOT NULL
     ,diag_timestamp_created  timestamptz DEFAULT now( )              NOT NULL
@@ -62,6 +63,14 @@ COMMENT ON
     COLUMN msbms_appl_data.enum_entity_person_roles.description IS
 $DOC$A text describing the meaning and use of the specific record that may be
 visible to users of the record.$DOC$;
+
+COMMENT ON
+    COLUMN msbms_appl_data.enum_entity_person_roles.is_system_role IS
+$DOC$Identifies a given entity/person role as being a system managed role.  There are
+a handful of special cases where the relationship between a person and an entity
+has systemic implications, such as when the entity represents an individual
+person: the person record that is represented by the entity will be assigned the
+"principal" role by the system to indicate the relationship.$DOC$;
 
 COMMENT ON
     COLUMN msbms_appl_data.enum_entity_person_roles.options IS
