@@ -66,7 +66,7 @@ visible to users of the record.$DOC$;
 
 COMMENT ON
     COLUMN msbms_appl_data.enum_entity_place_roles.options IS
-$DOC$A JSON representation of various behaviorial options that the application may 
+$DOC$A JSON representation of various behavioral options that the application may
 make when the enum is assigned to the record it is qualifying.  Options may 
 include flags, rules to test, and other such arbitrary behaviors as required by 
 the specific record to which the enum is assigned.$DOC$;
