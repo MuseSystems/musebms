@@ -32,6 +32,8 @@ CREATE TABLE msbms_syst_data.syst_person_logins
         CONSTRAINT syst_person_logins_proxy_for_syst_person_login_fk
         REFERENCES msbms_syst_data.syst_person_logins (id)
         ON DELETE CASCADE
+    ,last_login                     timestamptz DEFAULT '-infinity'                  NOT NULL
+    ,last_attempted_login           timestamptz DEFAULT '-infinity'                  NOT NULL
     ,diag_timestamp_created         timestamptz DEFAULT now( )                       NOT NULL
     ,diag_role_created              text                                             NOT NULL
     ,diag_timestamp_modified        timestamptz DEFAULT now( )                       NOT NULL
@@ -104,6 +106,23 @@ temporary authentication path with an ad hoc identity and, ultimately, an ad hoc
 authenticator.  If the syst_person_logins record in question is such an ad hoc
 login, this field will reference the login record which is being reset or for
 which the ad hoc login record is serving as a proxy.$DOC$;
+
+COMMENT ON
+    COLUMN msbms_syst_data.syst_person_logins.last_login IS
+$DOC$The last time the login was used and successfully authenticated.  This doesn't
+mean that once authenticated that the user had permission to view data or
+perform actions.  A successful login only indicates a successful authentication.$DOC$;
+
+COMMENT ON
+    COLUMN msbms_syst_data.syst_person_logins.last_attempted_login IS
+$DOC$The last time a login attempt was tried.  This value will updated be updated
+without regard to the success or failure of the authentication.  An
+authentication attempt will be considered as recordable here when both an
+identity and an authenticator have both been provided to the system for
+evaluation.  Secondary authenticator attempts are not necessary to count as an
+attempted authentication; this means, for example, a good username and password
+with no attempted answer to a required secondary authentication factor will
+still count as an authentication attempt.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.syst_person_logins.diag_timestamp_created IS
