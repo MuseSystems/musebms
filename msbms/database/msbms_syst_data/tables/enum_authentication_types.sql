@@ -20,6 +20,9 @@ CREATE TABLE msbms_syst_data.enum_authentication_types
     ,display_name            text                                    NOT NULL
         CONSTRAINT enum_authentication_types_display_name_udx UNIQUE
     ,description             text                                    NOT NULL
+    ,functional_type         text                                    NOT NULL
+        CONSTRAINT enum_authentication_types_functional_type_chk
+        CHECK ( functional_type IN ('primary', 'secondary', 'single_use') )
     ,options                 jsonb       DEFAULT '{}'::jsonb         NOT NULL
     ,user_options            jsonb       DEFAULT '{}'::jsonb         NOT NULL
     ,diag_timestamp_created  timestamptz DEFAULT now( )              NOT NULL
