@@ -18,6 +18,10 @@ CREATE TABLE msbms_appl_data.mstr_contacts
         CONSTRAINT mstr_contacts_internal_name_udx UNIQUE
     ,display_name            text                                    NOT NULL
         CONSTRAINT mstr_contacts_display_name_udx UNIQUE
+    ,owning_entity_id        uuid                                    NOT NULL
+        CONSTRAINT mstr_contacts_owning_entity_fk
+        REFERENCES msbms_appl_data.mstr_entities (id)
+        ON DELETE CASCADE
     ,external_name           text                                    NOT NULL
     ,contact_type_id         uuid                                    NOT NULL
         CONSTRAINT mstr_contacts_contact_types_fk
@@ -70,6 +74,18 @@ COMMENT ON
     COLUMN msbms_appl_data.mstr_contacts.display_name IS
 $DOC$A friendly name and candidate key for the record, suitable for use in user
 interactions$DOC$;
+
+COMMENT ON
+    COLUMN msbms_appl_data.mstr_contacts.owning_entity_id IS
+$DOC$Indicates the entity which is the owner or "controlling".   There are a couple
+of ways this can be used.  The first case is illustrated by the example of a
+managed entity and an staffing entity that is an individual.  The owning entity
+in this case will be the managed entity for contacts such as the details of the
+person's office address, phone, and email addresses that is used in carrying out
+their duties as staff.  The second case is where the entity is in a selling,
+purchasing, or banking relationship with the managed entity.  In this case the
+owning entity is the entity with which the managed entity has a relationship
+since a customer, vendor, or bank determines their own contact details.$DOC$;
 
 COMMENT ON
     COLUMN msbms_appl_data.mstr_contacts.external_name IS
