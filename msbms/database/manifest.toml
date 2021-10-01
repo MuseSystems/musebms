@@ -52,4 +52,5 @@ load_files = [
     "msbms_appl_data/tables/mstr_entity_person_roles.sql",
     "msbms_syst_data/tables/syst_person_logins.sql",
     "msbms_syst_data/tables/syst_login_authenticators.sql",
+    "msbms_appl_data/tables/mstr_person_contact_roles.sql",
 ]
