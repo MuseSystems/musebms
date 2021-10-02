@@ -21,6 +21,9 @@ CREATE TABLE msbms_appl_data.mstr_person_contact_roles
     ,enum_person_contact_role_id uuid                                    NOT NULL
         CONSTRAINT mstr_person_contact_roles_enum_person_contact_role_fk
         REFERENCES msbms_appl_data.enum_person_contact_roles (id)
+    ,place_id                uuid
+        CONSTRAINT mstr_person_contact_roles_place_fk
+        REFERENCES msbms_appl_data.mstr_places (id)
     ,contact_id              uuid                                    NOT NULL
         CONSTRAINT mstr_person_contact_roles_contact_fk
         REFERENCES msbms_appl_data.mstr_contacts (id)
@@ -59,6 +62,12 @@ $DOC$Identifies the person which has the relationship to the contact information
 COMMENT ON
     COLUMN msbms_appl_data.mstr_person_contact_roles.enum_person_contact_role_id IS
 $DOC$Indicates a specific use or purpose for the identified contact information.$DOC$;
+
+COMMENT ON
+    COLUMN msbms_appl_data.mstr_person_contact_roles.place_id IS
+$DOC$This is an optional value indicating whether the given contact information is
+associated with a place.  If so, the place will appear here.  This value will be
+null if not.$DOC$;
 
 COMMENT ON
     COLUMN msbms_appl_data.mstr_person_contact_roles.contact_id IS
