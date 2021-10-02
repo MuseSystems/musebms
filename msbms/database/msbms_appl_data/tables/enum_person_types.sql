@@ -20,6 +20,9 @@ CREATE TABLE msbms_appl_data.enum_person_types
     ,display_name            text                                    NOT NULL
         CONSTRAINT enum_person_types_display_name_udx UNIQUE
     ,description             text                                    NOT NULL
+    ,functional_type         text                                    NOT NULL
+        CONSTRAINT enum_person_types_functional_type_chk
+        CHECK (functional_type IN ('individual', 'function'))
     ,options                 jsonb       DEFAULT '{}'::jsonb         NOT NULL
     ,user_options            jsonb       DEFAULT '{}'::jsonb         NOT NULL
     ,diag_timestamp_created  timestamptz DEFAULT now( )              NOT NULL
@@ -62,6 +65,19 @@ COMMENT ON
     COLUMN msbms_appl_data.enum_person_types.description IS
 $DOC$A text describing the meaning and use of the specific record that may be
 visible to users of the record.$DOC$;
+
+COMMENT ON
+    COLUMN msbms_appl_data.enum_person_types.functional_type IS
+$DOC$Indicates what kind of person record is being defined.  This value may influence
+the behavior of the system in certain circumstances.
+    * individual:  In this case the person record represents an actual person.
+    * function:    This type indicates that the person is defining a role where
+                   the specific person performing that role is not important.
+                   For example, "Accounts Receivable" may be a generic person
+                   to contact for payment remission or for the resolution of
+                   other payment issues.  The key is the specific person
+                   contacted is not important but contacting someone acting in
+                   that capacity is.$DOC$;
 
 COMMENT ON
     COLUMN msbms_appl_data.enum_person_types.options IS
