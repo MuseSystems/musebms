@@ -1,0 +1,13 @@
+syst_modules
+conf_system_settings
+syst_login_authenticators
+syst_interaction_logs
+syst_feature_relation_assigns
+syst_relations
+syst_person_logins
+syst_features
+enum_login_states
+enum_interface_types
+enum_interaction_types
+enum_authentication_types
+syst_feature_types
