@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<database name="msbms_dev" schema="msbms_syst_data" type="PostgreSQL - 14.0 (Ubuntu 14.0-1.pgdg20.04+1)">
+   <tables>
+      <table name="conf_system_settings" numRows="0" remarks="Configurations for controlling system behaviors via options." schema="msbms_syst_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v1()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system." size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="false" remarks="A candidate key useful for programmatic references to individual records." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="display_name" nullable="false" remarks="A friendly name and candidate key for the record suitable for use in user&#10;interfaces." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="description" nullable="false" remarks="A text describing the meaning and use of the specific record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="config_flag" nullable="true" remarks="A boolean configuration point." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="config_integer" nullable="true" remarks="An integer configuration point" size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="config_decimal" nullable="true" remarks="An decimal configuration point (not floating point)." size="0" type="numeric" typeCode="2"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="7" name="config_interval" nullable="true" remarks="An interval configuration point." size="49" type="interval" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="config_date" nullable="true" remarks="A date configuation point." size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="9" name="config_time" nullable="true" remarks="A time configuration point (without time zone)." size="15" type="time" typeCode="92"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="10" name="config_timestamp" nullable="true" remarks="A full datetime configuration point including time zone." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="config_json" nullable="true" remarks="A JSON configuration point.  Note that duplicate keys at the same level are not&#10;allowed." size="2147483647" type="jsonb" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="config_text" nullable="true" remarks="A text configuration point." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="13" name="config_uuid" nullable="true" remarks="A UUID configuration point." size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="14" name="config_blob" nullable="true" remarks="A binary configuration point." size="2147483647" type="bytea" typeCode="-2"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="15" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="16" name="diag_role_created" nullable="false" remarks="The database role which created the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="17" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="18" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="19" name="diag_role_modified" nullable="false" remarks="The database role which modified the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="20" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="21" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="conf_system_settings_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="conf_system_settings_display_name_udx" unique="true">
+            <column ascending="true" name="display_name"/>
+         </index>
+         <index name="conf_system_settings_internal_name_udx" unique="true">
+            <column ascending="true" name="internal_name"/>
+         </index>
+      </table>
+      <table name="enum_authentication_types" numRows="0" remarks="Identifies the different kinds of authentication mechanisms offered by the&#10;system." schema="msbms_syst_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v1()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system." size="2147483647" type="uuid" typeCode="1111">
+            <child column="enum_authentication_type_id" foreignKey="syst_login_authenticators_enum_authentication_type_fk" implied="false" onDeleteCascade="false" schema="msbms_syst_data" table="syst_login_authenticators"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="false" remarks="A candidate key useful for programmatic references to individual records." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="display_name" nullable="false" remarks="A friendly name and candidate key for the record, suitable for use in user&#10;authentications." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="description" nullable="false" remarks="A text describing the meaning and use of the specific record that may be&#10;visible to users of the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="functional_type" nullable="false" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="'{}'::jsonb" digits="0" id="5" name="options" nullable="false" remarks="A JSON representation of various behavioral options that the application may&#10;make when the enum is assigned to the record it is qualifying.  Options may&#10;include flags, rules to test, and other such arbitrary behaviors as required by&#10;the specific record to which the enum is assigned." size="2147483647" type="jsonb" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="'{}'::jsonb" digits="0" id="6" name="user_options" nullable="false" remarks="Allows for user defined options related to the type similar to the way the&#10;options field is envisioned." size="2147483647" type="jsonb" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="7" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="diag_role_created" nullable="false" remarks="The database role which created the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="9" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="10" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="diag_role_modified" nullable="false" remarks="The database role which modified the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="12" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="13" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="enum_authentication_types_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="enum_authentication_types_display_name_udx" unique="true">
+            <column ascending="true" name="display_name"/>
+         </index>
+         <index name="enum_authentication_types_internal_name_udx" unique="true">
+            <column ascending="true" name="internal_name"/>
+         </index>
+         <checkConstraint constraint="((functional_type = ANY (ARRAY['primary'::text, 'secondary'::text, 'single_use'::text])))" name="enum_authentication_types_functional_type_chk"/>
+      </table>
+      <table name="enum_interaction_types" numRows="0" remarks="Identifies classes of actions that a user or external system may request of the application." schema="msbms_syst_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v1()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system." size="2147483647" type="uuid" typeCode="1111">
+            <child column="interaction_type_id" foreignKey="syst_interaction_logs_interaction_types_fk" implied="false" onDeleteCascade="false" schema="msbms_syst_data" table="syst_interaction_logs"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="false" remarks="A candidate key useful for programmatic references to individual records." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="display_name" nullable="false" remarks="A friendly name and candidate key for the record, suitable for use in user&#10;interactions." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="description" nullable="false" remarks="A text describing the meaning and use of the specific record that may be&#10;visible to users of the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="'{}'::jsonb" digits="0" id="4" name="options" nullable="false" remarks="A JSON representation of various options that may be applied when a record is of&#10;a given type.  This may include flags, rules to test, and other such arbitrary&#10;behaviors as required by the specific record's type." size="2147483647" type="jsonb" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="'{}'::jsonb" digits="0" id="5" name="user_options" nullable="false" remarks="Allows for user defined options related to the type similar to the way the&#10;options field is envisioned." size="2147483647" type="jsonb" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="6" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="diag_role_created" nullable="false" remarks="The database role which created the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="8" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="9" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="diag_role_modified" nullable="false" remarks="The database role which modified the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="11" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="12" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="enum_interaction_types_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="enum_interaction_types_display_name_udx" unique="true">
+            <column ascending="true" name="display_name"/>
+         </index>
+         <index name="enum_interaction_types_internal_name_udx" unique="true">
+            <column ascending="true" name="internal_name"/>
+         </index>
+      </table>
+      <table name="enum_interface_types" numRows="0" remarks="Lists the different supported entry points use to interact with the application." schema="msbms_syst_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v1()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system." size="2147483647" type="uuid" typeCode="1111">
+            <child column="interface_type_id" foreignKey="syst_interaction_logs_interface_types_fk" implied="false" onDeleteCascade="false" schema="msbms_syst_data" table="syst_interaction_logs"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="false" remarks="A candidate key useful for programmatic references to individual records." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="display_name" nullable="false" remarks="A friendly name and candidate key for the record, suitable for use in user&#10;interfaces." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="description" nullable="false" remarks="A text describing the meaning and use of the specific record that may be&#10;visible to users of the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="'{}'::jsonb" digits="0" id="4" name="options" nullable="false" remarks="A JSON representation of various options that may be applied when a record is of&#10;a given type.  This may include flags, rules to test, and other such arbitrary&#10;behaviors as required by the specific record's type." size="2147483647" type="jsonb" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="'{}'::jsonb" digits="0" id="5" name="user_options" nullable="false" remarks="Allows for user defined options related to the type similar to the way the&#10;options field is envisioned." size="2147483647" type="jsonb" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="6" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="diag_role_created" nullable="false" remarks="The database role which created the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="8" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="9" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="diag_role_modified" nullable="false" remarks="The database role which modified the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="11" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="12" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="enum_interface_types_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="enum_interface_types_display_name_udx" unique="true">
+            <column ascending="true" name="display_name"/>
+         </index>
+         <index name="enum_interface_types_internal_name_udx" unique="true">
+            <column ascending="true" name="internal_name"/>
+         </index>
+      </table>
+      <table name="enum_login_states" numRows="0" remarks="Defines the life-cycle states in which user login records may exist." schema="msbms_syst_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v1()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system." size="2147483647" type="uuid" typeCode="1111">
+            <child column="enum_login_state_id" foreignKey="syst_person_logins_enum_login_state_fk" implied="false" onDeleteCascade="false" schema="msbms_syst_data" table="syst_person_logins"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="false" remarks="A candidate key useful for programmatic references to individual records." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="display_name" nullable="false" remarks="A friendly name and candidate key for the record, suitable for use in user&#10;authentications." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="description" nullable="false" remarks="A text describing the meaning and use of the specific record that may be&#10;visible to users of the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="'{}'::jsonb" digits="0" id="4" name="options" nullable="false" remarks="A JSON representation of various behavioral options that the application may&#10;make when the enum is assigned to the record it is qualifying.  Options may&#10;include flags, rules to test, and other such arbitrary behaviors as required by&#10;the specific record to which the enum is assigned." size="2147483647" type="jsonb" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="'{}'::jsonb" digits="0" id="5" name="user_options" nullable="false" remarks="Allows for user defined options related to the type similar to the way the&#10;options field is envisioned." size="2147483647" type="jsonb" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="6" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="diag_role_created" nullable="false" remarks="The database role which created the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="8" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="9" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="diag_role_modified" nullable="false" remarks="The database role which modified the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="11" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="12" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="enum_login_states_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="enum_login_states_display_name_udx" unique="true">
+            <column ascending="true" name="display_name"/>
+         </index>
+         <index name="enum_login_states_internal_name_udx" unique="true">
+            <column ascending="true" name="internal_name"/>
+         </index>
+      </table>
+      <table name="syst_feature_relation_assigns" numRows="0" remarks="A join table which allows application relations to be associated with various&#10;application features.  This is a many-to-many relationship.  The expectation is&#10;that this association will be used in organizing certain configuration or&#10;permissioning displays into a tree-like structure." schema="msbms_syst_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v1()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system." size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="feature_id" nullable="false" remarks="Identifies the feature record to which the relation record is being&#10;associated." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="syst_feature_relation_assigns_feature_fk" implied="false" onDeleteCascade="false" schema="msbms_syst_data" table="syst_features"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="relation_id" nullable="false" remarks="Identifies the relation record which is being associates with the feature." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="syst_feature_relation_assigns_relation_fk" implied="false" onDeleteCascade="false" schema="msbms_syst_data" table="syst_relations"/>
+         </column>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="3" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="diag_role_created" nullable="false" remarks="The database role which created the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="5" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="6" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="diag_role_modified" nullable="false" remarks="The database role which modified the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="8" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="9" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="syst_feature_relation_assigns_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="syst_feature_types" numRows="0" remarks="A list of the various types of forms, processes, and data managed by the ERP&#10;system." schema="msbms_syst_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v1()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system." size="2147483647" type="uuid" typeCode="1111">
+            <child column="syst_feature_type_id" foreignKey="syst_features_syst_feature_type_fk" implied="false" onDeleteCascade="false" schema="msbms_syst_data" table="syst_features"/>
+            <child column="feature_type_id" foreignKey="syst_relations_feature_type_fk" implied="false" onDeleteCascade="false" schema="msbms_syst_data" table="syst_relations"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="false" remarks="A candidate key useful for programmatic references to individual records." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="display_name" nullable="false" remarks="A friendly name and candidate key for the record, suitable for use in user&#10;app_functionals." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="description" nullable="false" remarks="A text describing the meaning and use of the specific record that may be&#10;visible to users of the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="feature_group" nullable="false" remarks="Identifies the nature of the feature.  For example, a data records stored in the&#10;database are considered part of the 'relation' feature groups.  This field is&#10;used primarily for grouping like features together." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="functional_type" nullable="false" remarks="Establishes the meaning of the record in relation to functionality implemented&#10;in the system.  The system will base processing decisions upon the value in this&#10;field." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="6" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="diag_role_created" nullable="false" remarks="The database role which created the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="8" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="9" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="diag_role_modified" nullable="false" remarks="The database role which modified the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="11" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="12" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="syst_feature_types_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="syst_feature_types_display_name_udx" unique="true">
+            <column ascending="true" name="display_name"/>
+         </index>
+         <index name="syst_feature_types_internal_name_udx" unique="true">
+            <column ascending="true" name="internal_name"/>
+         </index>
+         <checkConstraint constraint="((feature_group = ANY (ARRAY['document'::text, 'operation'::text, 'relation'::text])))" name="feature_group_chk"/>
+         <checkConstraint constraint="((functional_type = ANY (ARRAY['master'::text, 'support'::text, 'nonbooking'::text, 'booking'::text, 'maintenance'::text])))" name="functional_type_chk"/>
+      </table>
+      <table name="syst_features" numRows="0" remarks="A list of features such as forms and operations and some simple metadata&#10;describing the feature.  Categorization of features into modules and into broad&#10;types of applicability included in the current metadata." schema="msbms_syst_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v1()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system." size="2147483647" type="uuid" typeCode="1111">
+            <child column="feature_id" foreignKey="syst_feature_relation_assigns_feature_fk" implied="false" onDeleteCascade="false" schema="msbms_syst_data" table="syst_feature_relation_assigns"/>
+            <child column="syst_module_id" foreignKey="syst_features_syst_module_fk" implied="false" onDeleteCascade="false" schema="msbms_syst_data" table="syst_features"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="false" remarks="A candidate key useful for programmatic references to individual records." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="display_name" nullable="false" remarks="A friendly name and candidate key for the record suitable for use in user&#10;interfaces." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="description" nullable="false" remarks="A text describing the meaning and use of the specific record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="syst_module_id" nullable="false" remarks="Identifies the application module to which this document belongs." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="syst_features_syst_module_fk" implied="false" onDeleteCascade="false" schema="msbms_syst_data" table="syst_features"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="syst_feature_type_id" nullable="false" remarks="Identifies the kind of document being represented.  For example 'Master&#10;Data' or 'Booking Transaction'." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="syst_features_syst_feature_type_fk" implied="false" onDeleteCascade="false" schema="msbms_syst_data" table="syst_feature_types"/>
+         </column>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="6" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="diag_role_created" nullable="false" remarks="The database role which created the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="8" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="9" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="diag_role_modified" nullable="false" remarks="The database role which modified the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="11" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="12" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="syst_features_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="syst_features_display_name_udx" unique="true">
+            <column ascending="true" name="display_name"/>
+         </index>
+         <index name="syst_features_internal_name_udx" unique="true">
+            <column ascending="true" name="internal_name"/>
+         </index>
+      </table>
+      <table name="syst_interaction_logs" numRows="0" remarks="Records interactions to drive both system functionality and to provide usage&#10;telemetry." schema="msbms_syst_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v1()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system." size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="1" name="interaction_timestamp" nullable="false" remarks="The nominal time at which the event being recorded is considered to have&#10;happened.  This is the database transaction start time specifically." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="interaction_type_id" nullable="false" remarks="The kind of interaction being recorded." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="syst_interaction_logs_interaction_types_fk" implied="false" onDeleteCascade="false" schema="msbms_syst_data" table="enum_interaction_types"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="interface_type_id" nullable="false" remarks="The origin entry point into the application and from which the activity was&#10;initiated." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="syst_interaction_logs_interface_types_fk" implied="false" onDeleteCascade="false" schema="msbms_syst_data" table="enum_interface_types"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="data" nullable="true" remarks="Optional document style data which may more completely elaborate on the activity&#10;being recorded." size="2147483647" type="jsonb" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="5" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="diag_role_created" nullable="false" remarks="The database role which created the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="7" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="8" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="diag_role_modified" nullable="false" remarks="The database role which modified the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="10" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="11" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="syst_interaction_logs_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="syst_interaction_logs_interaction_timestamp_idx" unique="false">
+            <column ascending="true" name="interaction_timestamp"/>
+         </index>
+      </table>
+      <table name="syst_login_authenticators" numRows="0" remarks="Provides the authenticators for syst_person_logins records.  This table may" schema="msbms_syst_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v1()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system." size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="syst_person_login_id" nullable="false" remarks="References the login for which this record serves as an authenticator." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="syst_login_authenticators_syst_person_login_fk" implied="false" onDeleteCascade="true" schema="msbms_syst_data" table="syst_person_logins"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="enum_authentication_type_id" nullable="false" remarks="Indicates the authentication mechanism to use to validate the authenticator and&#10;whether the authenticator is a primary or secondary authenticator.  A primary&#10;authenticator may be something like a password (&quot;what you know&quot;) and a secondary&#10;authenticator may be along the lines of a TOTP authenticator (&quot;what you have&quot;)." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="syst_login_authenticators_enum_authentication_type_fk" implied="false" onDeleteCascade="false" schema="msbms_syst_data" table="enum_authentication_types"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="authentication_data" nullable="false" remarks="This is the authenticator itself.  In reality this is a compound field that&#10;presumes both (presumably) hashed secret along with the salt.  The details of&#10;this data structure will depend on the specific authentication type represented&#10;by this record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="4" name="invalidated" nullable="false" remarks="If the authenticator is invalidated, it means on next use it must be updated." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="'-infinity'::timestamp with time zone" digits="6" id="5" name="last_login" nullable="false" remarks="The last time this specific authenticator was successfully used to access the&#10;system.  Note that only this individual factor must be sucessfully authenticated&#10;to update this field to the date/time of the success.  This differs from the&#10;syst_person_logins field which requires a fully successful login to be recorded." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="'-infinity'::timestamp with time zone" digits="6" id="6" name="last_attempted_login" nullable="false" remarks="The last time this authenticator was used in an authentication attempt without&#10;regard to if the attempt was successful or not." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="7" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record &#10;started." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="diag_role_created" nullable="false" remarks="The database role which created the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="9" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record &#10;started.  This field will be the same as diag_timestamp_created for inserted &#10;records." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="10" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the &#10;value of diag_timestamp_modified." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="diag_role_modified" nullable="false" remarks="The database role which modified the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="12" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual &#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version &#10;is not updated, nor are any updates made to the other diag_* columns other than &#10;diag_update_count." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="13" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if &#10;the update actually changed any data.  In this way needless or redundant record &#10;updates can be found.  This row starts at 0 and therefore may be the same as the &#10;diag_row_version - 1." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="syst_login_authenticators_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="syst_modules" numRows="0" remarks="Categorizes broad areas of the application's functionality." schema="msbms_syst_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v1()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system." size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="false" remarks="A candidate key useful for programatic references to individual records." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="display_name" nullable="false" remarks="A friendly name and candidate key for the record suitable for use in user&#10;interfaces." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="short_display_name" nullable="false" remarks="A friendly name that can be used when a truncated version of the display name&#10;is appropriate." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="description" nullable="false" remarks="A text describing the meaning and use of the specific record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="5" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="diag_role_created" nullable="false" remarks="The database role which created the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="7" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="8" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="diag_role_modified" nullable="false" remarks="The database role which modified the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="10" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="11" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="syst_modules_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="syst_modules_display_name_udx" unique="true">
+            <column ascending="true" name="display_name"/>
+         </index>
+         <index name="syst_modules_internal_name_udx" unique="true">
+            <column ascending="true" name="internal_name"/>
+         </index>
+         <index name="syst_modules_short_display_name_udx" unique="true">
+            <column ascending="true" name="short_display_name"/>
+         </index>
+      </table>
+      <table name="syst_person_logins" numRows="0" remarks="Provides the list of available login identities for people needing access to the&#10;system for any reason.  Identity in this case isn't the person, but the means by&#10;which a person identifies themselves to the system.  A login may be owned by the&#10;entity to which the person record belongs, this is used in selling and&#10;purchasing relationships since a customer or vendor controls their login&#10;details, and also in inactive staffing relationships where on-going employee&#10;portal access may be appropriate.  A login may be owned by the managed entity&#10;such as in the case of an active staffing relationship; this must be true since&#10;the employee login may have more stringent login requirements than is required&#10;for selling and purchasing relationships, or secondary authentication may be&#10;tied to company owned devices that cease to be available once the staffing&#10;relationship terminates." schema="msbms_syst_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v1()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system." size="2147483647" type="uuid" typeCode="1111">
+            <child column="syst_person_login_id" foreignKey="syst_login_authenticators_syst_person_login_fk" implied="false" onDeleteCascade="true" schema="msbms_syst_data" table="syst_login_authenticators"/>
+            <child column="proxy_for_syst_person_login_id" foreignKey="syst_person_logins_proxy_for_syst_person_login_fk" implied="false" onDeleteCascade="true" schema="msbms_syst_data" table="syst_person_logins"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="person_id" nullable="false" remarks="The person that this login will identify." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="syst_person_logins_person_fk" implied="false" onDeleteCascade="true" schema="msbms_appl_data" table="mstr_persons"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="owning_entity_id" nullable="false" remarks="The owning entity of this login.  See the table description for the broader&#10;ownership concept.  This will point to the entity responsible for managing the&#10;login." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="syst_person_logins_owning_entity_fk" implied="false" onDeleteCascade="true" schema="msbms_appl_data" table="mstr_entities"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="enum_login_state_id" nullable="false" remarks="Establishes which life-cycle state the login record is in." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="syst_person_logins_enum_login_state_fk" implied="false" onDeleteCascade="false" schema="msbms_syst_data" table="enum_login_states"/>
+         </column>
+         <column autoUpdated="false" defaultValue="tstzrange(now(), NULL::timestamp with time zone, '[)'::text)" digits="0" id="4" name="validity_start_end" nullable="false" remarks="Indicates the starting and ending timestamps for which a given login may be&#10;used to access the system, so long as the enum_login_state_id value also&#10;represents a state which allows login attempts.  The allowed times include the&#10;starting time and allow logins up to the ending time, but not including the&#10;ending time itself." size="2147483647" type="tstzrange" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="identity" nullable="false" remarks="Defines the identifier that is presented to the system by a user or system&#10;login.  Traditionally this would be the user name." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="proxy_for_syst_person_login_id" nullable="true" remarks="For cases such as self-serve password resets, it may be necessary to create a&#10;temporary authentication path with an ad hoc identity and, ultimately, an ad hoc&#10;authenticator.  If the syst_person_logins record in question is such an ad hoc&#10;login, this field will reference the login record which is being reset or for&#10;which the ad hoc login record is serving as a proxy." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="syst_person_logins_proxy_for_syst_person_login_fk" implied="false" onDeleteCascade="true" schema="msbms_syst_data" table="syst_person_logins"/>
+         </column>
+         <column autoUpdated="false" defaultValue="'-infinity'::timestamp with time zone" digits="6" id="7" name="last_login" nullable="false" remarks="The last time the login was used and successfully authenticated.  This doesn't&#10;mean that once authenticated that the user had permission to view data or&#10;perform actions.  A successful login only indicates a successful authentication." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="'-infinity'::timestamp with time zone" digits="6" id="8" name="last_attempted_login" nullable="false" remarks="The last time a login attempt was tried.  This value will updated be updated&#10;without regard to the success or failure of the authentication.  An&#10;authentication attempt will be considered as recordable here when both an&#10;identity and an authenticator have both been provided to the system for&#10;evaluation.  Secondary authenticator attempts are not necessary to count as an&#10;attempted authentication; this means, for example, a good username and password&#10;with no attempted answer to a required secondary authentication factor will&#10;still count as an authentication attempt." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="9" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="diag_role_created" nullable="false" remarks="The database role which created the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="11" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="12" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="13" name="diag_role_modified" nullable="false" remarks="The database role which modified the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="14" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="15" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="syst_person_logins_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="syst_person_logins_identity_udx" unique="true">
+            <column ascending="true" name="identity"/>
+         </index>
+      </table>
+      <table name="syst_relations" numRows="0" remarks="A list of the application tables and associated metadata that is not normally&#10;part of the table definition kept in the catalog.  This includes categorization&#10;by the feature type and association with forms and operations that may make use&#10;of the relation.  Finally, this serves to associate enum values to the relations&#10;to which they pertain." schema="msbms_syst_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v1()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system." size="2147483647" type="uuid" typeCode="1111">
+            <child column="relation_id" foreignKey="syst_feature_relation_assigns_relation_fk" implied="false" onDeleteCascade="false" schema="msbms_syst_data" table="syst_feature_relation_assigns"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="false" remarks="A candidate key useful for programatic references to individual records." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="display_name" nullable="false" remarks="A friendly name and candidate key for the record suitable for use in user&#10;interfaces." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="schema_name" nullable="false" remarks="The schema name where the record's table resides." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="table_name" nullable="false" remarks="The name of the relation that is the subject of the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="feature_type_id" nullable="false" remarks="Categorizes the record according to its feature type." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="syst_relations_feature_type_fk" implied="false" onDeleteCascade="false" schema="msbms_syst_data" table="syst_feature_types"/>
+         </column>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="6" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="diag_role_created" nullable="false" remarks="The database role which created the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="8" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="9" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="diag_role_modified" nullable="false" remarks="The database role which modified the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="11" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="12" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="syst_relations_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="syst_relations_display_name_udx" unique="true">
+            <column ascending="true" name="display_name"/>
+         </index>
+         <index name="syst_relations_internal_name_udx" unique="true">
+            <column ascending="true" name="internal_name"/>
+         </index>
+         <index name="syst_relations_schema_table_udx" unique="true">
+            <column ascending="true" name="schema_name"/>
+            <column ascending="true" name="table_name"/>
+         </index>
+      </table>
+   </tables>
+</database>
