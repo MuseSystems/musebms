@@ -21,7 +21,7 @@ defmodule Msbms.MixProject do
     [
       app:     @name,
       version: @version,
-      elixir:  "~> 1.11",
+      elixir:  "~> 1.12",
       deps:    @deps,
       build_embedded:  in_production,
       start_permanent: in_production
