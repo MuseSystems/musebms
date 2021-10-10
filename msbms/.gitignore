@@ -25,3 +25,6 @@ msbms-*.tar
 
 # Temporary files for e.g. tests
 /tmp
+
+# Ignore Environment Specific Files
+msbms_startup_options.toml
