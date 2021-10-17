@@ -1,16 +1,3 @@
--- File:        get_exception_details.sql
--- Location:    msbms/database/msbms_syst_priv/functions/get_exception_details.sql
--- Project:     Muse Systems Business Management System
---
--- Licensed to Lima Buttgereit Holdings LLC (d/b/a Muse Systems) under one or
--- more agreements.  Muse Systems licenses this file to you under the terms and
--- conditions of your Muse Systems Master Services Agreement or governing
--- Statement of Work.
---
--- See the NOTICE file in the project root for copyright ownership information.
---
--- muse.information@musesystems.com  :: https://muse.systems
-
 --
 -- Returns exception details based on the passed parameters represented as a pretty-printed JSON
 -- object.  The returned value is intended to standardize the details related to RAISEd exceptions
@@ -26,6 +13,20 @@ CREATE OR REPLACE FUNCTION
                                          ,p_context_data   jsonb)
 RETURNS text AS
 $BODY$
+
+-- Source File: get_exception_details.sql
+-- Location:    msbms/database/msbms_syst_priv/functions/get_exception_details.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from thrid parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com  :: https://muse.systems
+
+
     SELECT
         jsonb_pretty(
             jsonb_build_object(
@@ -37,6 +38,7 @@ $BODY$
                 ,'context',               p_context_data
                 ,'transaction_timestamp', now()
                 ,'wallclock_timestamp',   clock_timestamp()));
+
 $BODY$
 LANGUAGE sql VOLATILE;
 
