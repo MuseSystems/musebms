@@ -1,12 +1,11 @@
--- File:        enum_login_states.sql
+-- Source File: enum_login_states.sql
 -- Location:    msbms/database/msbms_syst_data/tables/enum_login_states.sql
 -- Project:     Muse Systems Business Management System
 --
--- Licensed to Lima Buttgereit Holdings LLC (d/b/a Muse Systems) under one or
--- more agreements.  Muse Systems licenses this file to you under the terms and
--- conditions of your Muse Systems Master Services Agreement or governing
--- Statement of Work.
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from thrid parties.
 --
+-- See the LICENSE file in the project root for license terms and conditions.
 -- See the NOTICE file in the project root for copyright ownership information.
 --
 -- muse.information@musesystems.com  :: https://muse.systems
