@@ -1,15 +1,18 @@
+-- Note that this script currently exists to support CI testing
+-- A more robust script should be produced to walk users though
+-- the initial setup of the mbms_global database and msbms_sys_login
+-- user.
+--
+-- Do not use this script to setup a production environment.
 \set ON_ERROR_STOP true
 \c postgres
 
-DROP DATABASE IF EXISTS msbms_dev;
+DROP DATABASE IF EXISTS msbms_global;
 
-DROP ROLE IF EXISTS msbms_api_admin;
-DROP ROLE IF EXISTS msbms_api_user;
-DROP ROLE IF EXISTS msbms_app_admin;
-DROP ROLE IF EXISTS msbms_app_user;
-DROP ROLE IF EXISTS msbms_owner;
-
-CREATE DATABASE msbms_dev;
-
-\c msbms_dev
-\i msbms/priv/starting_database.sql
+DROP ROLE IF EXISTS msbms_sys_owner;
+DROP ROLE IF EXISTS msbms_sys_admin;
+DROP ROLE IF EXISTS msbms_sys_app_admin;
+DROP ROLE IF EXISTS msbms_sys_api_admin;
+DROP ROLE IF EXISTS msbms_sys_app_user;
+DROP ROLE IF EXISTS msbms_sys_api_user;
+DROP ROLE IF EXISTS msbms_sys_login;
