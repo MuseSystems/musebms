@@ -1,29 +1,19 @@
 # Muse Systems Business Management System Startup Options
 #
-# Each database that a single application server will manage must have an
-# "instance" definition in this file configuring the database access
-# parameters.  Please note that there is security sensitive information in
-# this file, such as database credentials, so please handle with appropriate
-# care.
-#
 # For deployment, simply copy this file to: msbms_startup_options.toml and
 # replace the values with those that are appropriate for your deployment.
 #
-# Instances Section:
-# This section defines the various database instances that the application
-# server may connect to.  The entire [[instances]] stanza, including the
-# [[instances]] label, may be copied multiple times to support multiple
-# running instances of the application.
+# Please note that this file is security sensitive an it should be protected
+# accordingly.
 
-[[instances]]
-    internal_name = "msbms_default"            # ID for internal references in the app
-    display_name = "MuseBMS Default Instance"  # User displayable version of the instance name
-    [instances.repo]
-        db_host = "127.0.0.1"                  # The hostname/IP of the database server
-        db_port = 5432                         # The port on which the database server is listening
-        db_name = "msbms_default"              # The name of the database to connect to
-        db_user = "msbms_login"                # The database username to use in connecting to the database
-        db_pass = "password_default"           # The database password for the connecting database user
-        db_show_sensitive = false              # If true, senstive information, such as username/password may be shown in some cases
-        db_log_level = "debug"                 # A logging level for various database events from the application
-        db_pool_size = 10                      # The size of the database connection pool
+[global_admin]
+db_host           = "localhost"       # The hostname/IP of the database server
+db_port           = 5432              # The port on which the database server is listening
+db_pass           = "msbms_pass"      # The database password for the connecting database user
+db_show_sensitive = false             # If true, senstive information, such as username/password may be shown in some cases
+db_log_level      = "debug"           # A logging level for various database events from the application
+db_pool_size      = 3                 # The size of the database connection pool
+
+[instance_admin]
+# A salt used for certain service authentication scenarios, min length is 32 bytes
+instance_salt     = "Replace this!"
