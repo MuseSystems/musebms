@@ -1,5 +1,5 @@
 -- Source File: mstr_country_address_format_assocs.sql
--- Location:    msbms/database/msbms_appl_data/tables/mstr_country_address_format_assocs.sql
+-- Location:    msbms/database/instance/msbms_appl_data/tables/mstr_country_address_format_assocs.sql
 -- Project:     musebms
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

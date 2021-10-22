@@ -1,5 +1,5 @@
 -- Source File: mstr_countries.sql
--- Location:    msbms/database/msbms_appl_data/tables/mstr_countries.sql
+-- Location:    msbms/database/instance/msbms_appl_data/tables/mstr_countries.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

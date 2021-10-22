@@ -1,6 +1,6 @@
 
 -- Source File: enum_instance_types.sql
--- Location:    msbms/global_database/msbms_syst_data/tables/enum_instance_types.sql
+-- Location:    msbms/database/global/msbms_syst_data/tables/enum_instance_types.sql
 -- Project:     musebms
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

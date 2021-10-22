@@ -1,5 +1,5 @@
 -- Source File: syst_modules.sql
--- Location:    msbms/database/msbms_syst_data/tables/syst_modules.sql
+-- Location:    msbms/database/instance/msbms_syst_data/tables/syst_modules.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

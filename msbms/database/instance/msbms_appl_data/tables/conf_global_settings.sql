@@ -1,5 +1,5 @@
 -- Source File: conf_global_settings.sql
--- Location:    msbms/database/msbms_appl_data/tables/conf_global_settings.sql
+-- Location:    msbms/database/instance/msbms_appl_data/tables/conf_global_settings.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

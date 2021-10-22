@@ -1,5 +1,5 @@
 -- Source File: syst_person_logins.sql
--- Location:    msbms/database/msbms_syst_data/tables/syst_person_logins.sql
+-- Location:    msbms/database/instance/msbms_syst_data/tables/syst_person_logins.sql
 -- Project:     musebms
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

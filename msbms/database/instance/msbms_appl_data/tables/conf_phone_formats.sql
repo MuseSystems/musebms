@@ -1,5 +1,5 @@
 -- Source File: conf_phone_formats.sql
--- Location:    msbms/database/msbms_appl_data/tables/conf_phone_formats.sql
+-- Location:    msbms/database/instance/msbms_appl_data/tables/conf_phone_formats.sql
 -- Project:     musebms
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

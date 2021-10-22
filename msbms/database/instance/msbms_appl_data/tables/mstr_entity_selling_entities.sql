@@ -1,5 +1,5 @@
 -- Source File: mstr_entity_selling_entities.sql
--- Location:    msbms/database/msbms_appl_data/tables/mstr_entity_selling_entities.sql
+-- Location:    msbms/database/instance/msbms_appl_data/tables/mstr_entity_selling_entities.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

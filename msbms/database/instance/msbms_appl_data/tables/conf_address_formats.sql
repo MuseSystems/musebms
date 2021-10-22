@@ -1,5 +1,5 @@
 -- Source File: conf_address_formats.sql
--- Location:    msbms/database/msbms_appl_data/tables/conf_address_formats.sql
+-- Location:    msbms/database/instance/msbms_appl_data/tables/conf_address_formats.sql
 -- Project:     musebms
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

@@ -1,5 +1,5 @@
 -- Source File: mstr_entity_fulfillment_places.sql
--- Location:    msbms/database/msbms_appl_data/tables/mstr_entity_fulfillment_places.sql
+-- Location:    msbms/database/instance/msbms_appl_data/tables/mstr_entity_fulfillment_places.sql
 -- Project:     musebms
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

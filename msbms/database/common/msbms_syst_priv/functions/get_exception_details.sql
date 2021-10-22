@@ -15,7 +15,7 @@ RETURNS text AS
 $BODY$
 
 -- Source File: get_exception_details.sql
--- Location:    msbms/database/msbms_syst_priv/functions/get_exception_details.sql
+-- Location:    msbms/database/common/msbms_syst_priv/functions/get_exception_details.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

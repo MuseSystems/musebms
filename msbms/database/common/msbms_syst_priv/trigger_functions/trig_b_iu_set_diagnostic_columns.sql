@@ -3,7 +3,7 @@ RETURNS trigger AS
 $BODY$
 
 -- Source File: trig_b_iu_set_diagnostic_columns.sql
--- Location:    msbms/database/msbms_syst_priv/trigger_functions/trig_b_iu_set_diagnostic_columns.sql
+-- Location:    msbms/database/common/msbms_syst_priv/trigger_functions/trig_b_iu_set_diagnostic_columns.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
