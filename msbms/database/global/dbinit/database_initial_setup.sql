@@ -1,6 +1,6 @@
 
 -- Source File: database_initial_setup.sql
--- Location:    msbms/global_database/dbinit/database_initial_setup.sql
+-- Location:    msbms/database/global/dbinit/database_initial_setup.sql
 -- Project:     musebms
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

@@ -1,5 +1,5 @@
 -- Source File: enum_entity_types.sql
--- Location:    msbms/database/msbms_appl_data/tables/enum_entity_types.sql
+-- Location:    msbms/database/instance/msbms_appl_data/tables/enum_entity_types.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

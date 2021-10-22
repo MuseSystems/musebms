@@ -1,6 +1,6 @@
 
 -- Source File: conf_instance_management_settings.sql
--- Location:    msbms/global_database/msbms_syst_data/tables/conf_instance_management_settings.sql
+-- Location:    msbms/database/global/msbms_syst_data/tables/conf_instance_management_settings.sql
 -- Project:     musebms
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

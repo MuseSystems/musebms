@@ -1,5 +1,5 @@
 -- Source File: mstr_entity_person_roles.sql
--- Location:    msbms/database/msbms_appl_data/tables/mstr_entity_person_roles.sql
+-- Location:    msbms/database/instance/msbms_appl_data/tables/mstr_entity_person_roles.sql
 -- Project:     musebms
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

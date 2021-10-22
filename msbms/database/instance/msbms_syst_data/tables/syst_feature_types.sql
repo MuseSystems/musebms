@@ -1,5 +1,5 @@
 -- Source File: syst_feature_types.sql
--- Location:    msbms/database/msbms_syst_data/tables/syst_feature_types.sql
+-- Location:    msbms/database/instance/msbms_syst_data/tables/syst_feature_types.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

@@ -1,5 +1,5 @@
 -- Source File: create_database_schemata.sql
--- Location:    msbms/database/dbinit/create_database_schemata.sql
+-- Location:    msbms/database/instance/dbinit/create_database_schemata.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
