@@ -11,12 +11,14 @@
 # muse.information@musesystems.com  : : https: //muse.systems
 
 load_files = [
-    "global/dbinit/database_initial_setup.sql",
-    "global/dbinit/create_database_schemata.sql",
-    "common/msbms_syst_priv/functions/get_exception_details.sql",
-    "common/msbms_syst_priv/trigger_functions/trig_b_iu_set_diagnostic_columns.sql",
-    "global/msbms_syst_data/tables/conf_instance_management_settings.sql",
-    "global/msbms_syst_data/tables/enum_instance_types.sql",
-    "global/msbms_syst_data/tables/enum_instance_states.sql",
-    "global/msbms_syst_data/tables/syst_instances.sql",
+    "global/dbinit/database_initial_setup.eex.sql",
+    "global/dbinit/create_database_schemata.eex.sql",
+    "common/msbms_syst_priv/functions/get_exception_details.eex.sql",
+    "common/msbms_syst_priv/trigger_functions/trig_b_iu_set_diagnostic_columns.eex.sql",
+    "global/msbms_syst_data/tables/conf_instance_management_settings.eex.sql",
+    "global/msbms_syst_data/tables/enum_instance_types.eex.sql",
+    "global/msbms_syst_data/tables/enum_instance_states.eex.sql",
+    "global/msbms_syst_data/tables/syst_instances.eex.sql",
+    "common/msbms_syst_data/tables/database_migrations.eex.sql",
+    "common/msbms_syst_data/seed_data/database_migrations.eex.sql",
 ]
