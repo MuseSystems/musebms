@@ -15,8 +15,9 @@ CREATE TABLE msbms_syst_data.database_migrations
 (
      id                      uuid        DEFAULT uuid_generate_v1( ) NOT NULL
         CONSTRAINT database_migrations_pk PRIMARY KEY
-    ,migration_sequence      bigint                                  NOT NULL
-    ,migration_name          text                                    NOT NULL
+    ,migration_release       bigint                                  NOT NULL
+    ,migration_version       bigint                                  NOT NULL
+    ,migration_update        bigint                                  NOT NULL
     ,diag_timestamp_created  timestamptz DEFAULT now( )              NOT NULL
     ,diag_role_created       text                                    NOT NULL
     ,diag_timestamp_modified timestamptz DEFAULT now( )              NOT NULL
@@ -46,7 +47,13 @@ version of the file with the minimum version number not already checked against
 the maximum version applied to the database according to this table.  If the
 file version is greater, the migration is applied to the database, otherwise the
 file is skipped and the version checking process repeats until there are no more
-migration files to evaluate.$DOC$;
+migration files to evaluate.
+
+Finally, during the migration process, the msbms_syst_data.database_migrations
+record is created once the corresponding migration file has been successfully
+applied to the database.  Both the migration file and the
+msbms_syst_data.database_migrations record should be processed in the same
+database transaction.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.database_migrations.id IS
@@ -54,13 +61,18 @@ $DOC$The record's primary key.  The definitive identifier of the record in the
 system.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.database_migrations.migration_sequence IS
-$DOC$The version number of the applied migration.  The versioning here may not relate
-directly to the broader application versioning schemes.$DOC$;
+    COLUMN msbms_syst_data.database_migrations.migration_release IS
+$DOC$The release number to which the migration applies.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.database_migrations.migration_name IS
-$DOC$The file name of the migration absent the versioning prefix.$DOC$;
+    COLUMN msbms_syst_data.database_migrations.migration_version IS
+$DOC$The version of the release to which the migration applies.  Version numbers are
+subordinate to releases.$DOC$;
+
+COMMENT ON
+    COLUMN msbms_syst_data.database_migrations.migration_update IS
+$DOC$The patch, or update, to the release version.  Update numbers are subordinate to
+version numbers.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.database_migrations.diag_timestamp_created IS
