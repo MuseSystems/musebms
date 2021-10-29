@@ -1,6 +1,7 @@
+
 -- Source File: database_initial_setup.eex.sql
--- Location:    msbms/priv/database/dbinit/database_initial_setup.eex.sql
--- Project:     msbms
+-- Location:    msbms/database/instance/dbinit/database_initial_setup.eex.sql
+-- Project:     musebms
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
 -- This file may include content copyrighted and licensed from thrid parties.
@@ -8,7 +9,7 @@
 -- See the LICENSE file in the project root for license terms and conditions.
 -- See the NOTICE file in the project root for copyright ownership information.
 --
--- muse.information@musesystems.com  : : https: //muse.systems
+-- muse.information@musesystems.com  :: https://muse.systems
 
 /****
   This script initializes a fresh installation of the Muse Systems Business
