@@ -1,33 +1,53 @@
 defmodule Mix.Tasks.Builddb do
   use Mix.Task
 
-  @shortdoc "Builds the current database sources into their respective starter databases and migrations."
+  @shortdoc "Builds the current database sources into their respective migrations."
   @spec run(any) :: any
   def run(args) do
     args
     |> OptionParser.parse!(strict: [dbtype: :string])
-    |> build_starting_migration
+    |> build_migrations
 
     {:ok}
   end
 
-  defp build_starting_migration({[dbtype: "global"], _}) do
-    source_builder("manifest_global.toml", "global")
+  defp build_migrations({[dbtype: "global"], _}) do
+    get_build_plans("manifest_global.toml")
+    |> Enum.each(fn current_plan -> generate_migration_from_build_plan(current_plan, "global") end)
   end
 
-  defp build_starting_migration({[dbtype: "instance"], _}) do
-    source_builder("manifest_instance.toml", "instance")
+  defp build_migrations({[dbtype: "instance"], _}) do
+    get_build_plans("manifest_instance.toml")
+    |> Enum.each(fn current_plan ->
+      generate_migration_from_build_plan(current_plan, "instance")
+    end)
   end
 
-  defp build_starting_migration({[dbtype: bad_arg], _}) do
+  defp build_migrations({[dbtype: bad_arg], _}) do
     IO.puts(
       "Bad --dbtype argument '#{bad_arg}'.  Please set --dbtype to either 'global' or 'instance'."
     )
   end
 
-  defp source_builder(manifest_file, target_path) do
-    qualified_target_path = Path.join(["priv", "database", target_path, "starting_database.sql"])
+  defp get_build_plans(manifest_file) do
     qualified_manifest_path = Path.join(["database", manifest_file])
+
+    File.stream!(qualified_manifest_path)
+    |> Toml.decode_stream!()
+    |> Map.get("build_plans")
+  end
+
+  defp generate_migration_from_build_plan(build_plan, target_type) do
+    migration_filename =
+      target_type <>
+        "." <> String.pad_leading(Integer.to_string(build_plan["release"]), 3, "0") <>
+        "." <> String.pad_leading(Integer.to_string(build_plan["version"]), 4, "0") <>
+        "." <> String.pad_leading(Integer.to_string(build_plan["update"]), 6, "0") <>
+        ".eex.sql"
+
+    qualified_target_path = Path.join(["priv", "database", target_type, migration_filename])
+
+    IO.puts(qualified_target_path)
 
     File.rm(qualified_target_path)
     File.touch(qualified_target_path)
@@ -41,8 +61,8 @@ defmodule Mix.Tasks.Builddb do
     IO.binwrite(
       target,
       """
-      -- Built from manifest: #{qualified_manifest_path}
-      -- Built on: #{DateTime.utc_now()}
+      -- Migration: #{qualified_target_path}
+      -- Built on:  #{DateTime.utc_now()}
 
       DO
       $BUILDSCRIPT$
@@ -50,9 +70,7 @@ defmodule Mix.Tasks.Builddb do
       """
     )
 
-    File.stream!(qualified_manifest_path)
-    |> Toml.decode_stream!()
-    |> Map.get("load_files")
+    build_plan["load_files"]
     |> Enum.each(fn file ->
       sql = File.read!(Path.join(["database", file]))
       IO.binwrite(target, sql)
