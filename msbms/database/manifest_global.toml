@@ -24,5 +24,4 @@ load_files = [
     "global/msbms_syst_data/tables/enum_instance_states.eex.sql",
     "global/msbms_syst_data/tables/syst_instances.eex.sql",
     "common/msbms_syst_data/tables/database_migrations.eex.sql",
-    "common/msbms_syst_data/seed_data/database_migrations.eex.sql",
 ]
