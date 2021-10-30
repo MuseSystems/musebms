@@ -19,9 +19,9 @@ load_files = [
     "global/dbinit/create_database_schemata.eex.sql",
     "common/msbms_syst_priv/functions/get_exception_details.eex.sql",
     "common/msbms_syst_priv/trigger_functions/trig_b_iu_set_diagnostic_columns.eex.sql",
+    "common/msbms_syst_data/tables/database_migrations.eex.sql",
     "global/msbms_syst_data/tables/conf_instance_management_settings.eex.sql",
     "global/msbms_syst_data/tables/enum_instance_types.eex.sql",
     "global/msbms_syst_data/tables/enum_instance_states.eex.sql",
     "global/msbms_syst_data/tables/syst_instances.eex.sql",
-    "common/msbms_syst_data/tables/database_migrations.eex.sql",
 ]
