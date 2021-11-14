@@ -41,11 +41,15 @@ defmodule Mix.Tasks.Builddb do
     migration_filename =
       target_type <>
         "." <>
-        String.pad_leading(Integer.to_string(build_plan["release"]), 3, "0") <>
+        String.pad_leading(Integer.to_string(build_plan["release"], 36), 2, "0") <>
         "." <>
-        String.pad_leading(Integer.to_string(build_plan["version"]), 4, "0") <>
+        String.pad_leading(Integer.to_string(build_plan["version"], 36), 2, "0") <>
         "." <>
-        String.pad_leading(Integer.to_string(build_plan["update"]), 6, "0") <>
+        String.pad_leading(Integer.to_string(build_plan["update"], 36), 3, "0") <>
+        "." <>
+        String.pad_leading(Integer.to_string(build_plan["sponsor"], 36), 6, "0") <>
+        "." <>
+        String.pad_leading(Integer.to_string(build_plan["sponsor_modification"], 36), 3, "0") <>
         ".eex.sql"
 
     qualified_target_path = Path.join(["priv", "database", target_type, migration_filename])
