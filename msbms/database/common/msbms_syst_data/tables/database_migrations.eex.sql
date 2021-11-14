@@ -15,9 +15,22 @@ CREATE TABLE msbms_syst_data.database_migrations
 (
      id                      uuid        DEFAULT uuid_generate_v1( ) NOT NULL
         CONSTRAINT database_migrations_pk PRIMARY KEY
-    ,migration_release       bigint                                  NOT NULL
-    ,migration_version       bigint                                  NOT NULL
-    ,migration_update        bigint                                  NOT NULL
+    ,release                 smallint                                NOT NULL
+        CONSTRAINT database_migrations_release_range_chk
+        CHECK (release::integer <@ '[1, 1295]'::int4range)
+    ,version                 smallint                                NOT NULL
+        CONSTRAINT database_migrations_version_range_chk
+        CHECK (version::integer <@ '[1, 1295]'::int4range)
+    ,update                  integer                                 NOT NULL
+        CONSTRAINT database_migrations_update_range_chk
+        CHECK (update <@ '[0, 46655]'::int4range)
+    ,sponsor                 bigint                                  NOT NULL
+        CONSTRAINT database_migrations_sponsor_range_chk
+        CHECK (sponsor <@ '[0, 2176782335]'::int8range)
+    ,sponsor_modification    integer                                 NOT NULL
+        CONSTRAINT database_migrations_sponsor_modification_range_chk
+        CHECK (sponsor_modification <@ '[0, 46655]'::int4range)
+    ,migration_version       text                                    NOT NULL
     ,diag_timestamp_created  timestamptz DEFAULT now( )              NOT NULL
     ,diag_role_created       text                                    NOT NULL
     ,diag_timestamp_modified timestamptz DEFAULT now( )              NOT NULL
@@ -61,18 +74,65 @@ $DOC$The record's primary key.  The definitive identifier of the record in the
 system.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.database_migrations.migration_release IS
-$DOC$The release number to which the migration applies.$DOC$;
+    COLUMN msbms_syst_data.database_migrations.release IS
+$DOC$The release number to which the migration applies.  The release number is any
+value in the range of 1 to 1295 (01 - ZZ in base36 notation).  Release 00 is a
+special value used by the application and should not be used for any other
+purpose.$DOC$;
+
+COMMENT ON
+    COLUMN msbms_syst_data.database_migrations.version IS
+$DOC$The version of the release to which the migration applies.  Version numbers are
+subordinate to releases.  The version number is any value in the range of 1 to
+1295 (01 - ZZ in base36 notation).  Version 00 is a special value used by the
+application and should not be used for any other purpose.$DOC$;
+
+COMMENT ON
+    COLUMN msbms_syst_data.database_migrations.update IS
+$DOC$The patch, or update, to the release version.  Update numbers are subordinate to
+version numbers.  The update number may be any value in the range of 0 to 46655
+(000 - ZZZ in base36 notation).$DOC$;
+
+COMMENT ON
+    COLUMN msbms_syst_data.database_migrations.sponsor IS
+$DOC$Identifies the entity that sponsored the development of the migration. The
+expected value is in the range 0 to 2176782335 (0 - ZZZZZZ in base36 notation),
+though there are additional rules which must be observed:
+
+    -  Values in the range of 0 - 1295 (000000 - 0000ZZ) are reserved for Muse
+       Systems special purposes.
+
+    -  Value 820 (0000MS) identifies Muse Systems as the sponsor of the general
+       availability software release and so will appear on all regularly
+       released migrations.
+
+    -  Values in the range of 1296 - 2176782335 are identifiers that are
+       randomly assigned to clients and correspond to specific "instances"
+       (application databases).  The primary instance for a client will always
+       be the reference point for those clients with more than one instance.$DOC$;
+
+COMMENT ON
+    COLUMN msbms_syst_data.database_migrations.sponsor_modification IS
+$DOC$The specific migration implementing special or custom changes.  Sponsor
+Modification numbers are subordinate to Update numbers.  The sponsor migration
+number may be any value in the range of 0 to 46655 (000 - ZZZ in base36
+notation).  In most cases this value will just be 0 (000).$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.database_migrations.migration_version IS
-$DOC$The version of the release to which the migration applies.  Version numbers are
-subordinate to releases.$DOC$;
+$DOC$The full migration version number represented as a series of digits in base 36
+notation.  Each of the individual versioning fields are represented in a dot
+separated notation:  RR.VV.UUU.CCCCCC.MMM
 
-COMMENT ON
-    COLUMN msbms_syst_data.database_migrations.migration_update IS
-$DOC$The patch, or update, to the release version.  Update numbers are subordinate to
-version numbers.$DOC$;
+    RR     = Release Number
+    VV     = Version Number of the Release
+    UUU    = Update Number of the Version
+    CCCCCC = Client identifier for sponsored modifications
+    MMM    = Client specific modification sequence
+
+This sequence is the same as the file name of each migration as saved in the
+file system.  This field in the database is primarily for convenience of cross-
+referencing applied migrations to the file system.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.database_migrations.diag_timestamp_created IS
