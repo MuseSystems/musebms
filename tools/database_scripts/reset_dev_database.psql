@@ -9,10 +9,5 @@
 
 DROP DATABASE IF EXISTS msbms_global;
 
-DROP ROLE IF EXISTS msbms_sys_owner;
-DROP ROLE IF EXISTS msbms_sys_admin;
-DROP ROLE IF EXISTS msbms_sys_app_admin;
-DROP ROLE IF EXISTS msbms_sys_api_admin;
-DROP ROLE IF EXISTS msbms_sys_app_user;
-DROP ROLE IF EXISTS msbms_sys_api_user;
-DROP ROLE IF EXISTS msbms_sys_login;
+DROP ROLE IF EXISTS msbms_access;
+DROP ROLE IF EXISTS msbms_syst_dba;
