@@ -8,32 +8,19 @@
 \set ON_ERROR_STOP true
 \c postgres
 
-CREATE ROLE msbms_sys_owner;
 
-CREATE ROLE msbms_sys_admin
-    CREATEROLE CREATEDB
-    NOINHERIT IN GROUP
-        msbms_sys_owner;
+CREATE ROLE msbms_syst_dba
+    CREATEROLE CREATEDB NOINHERIT
+    LOGIN PASSWORD 'default.msbms.privileged.password';
 
-CREATE ROLE msbms_sys_app_admin;
+COMMENT ON ROLE msbms_syst_dba IS
+$DOC$Privileged account which performs database server administrative actions.  Does
+not have access to application data and may not perform actions requiring
+PostgreSQL superuser privileges.$DOC$;
 
-CREATE ROLE msbms_sys_api_admin;
+CREATE ROLE msbms_access
+    ADMIN msbms_syst_dba;
 
-CREATE ROLE msbms_sys_app_user;
-
-CREATE ROLE msbms_sys_api_user;
-
-CREATE ROLE msbms_sys_login
-    NOINHERIT IN GROUP
-         msbms_sys_admin
-        ,msbms_sys_owner
-        ,msbms_sys_app_admin
-        ,msbms_sys_api_admin
-        ,msbms_sys_app_user
-        ,msbms_sys_api_user
-    LOGIN PASSWORD 'msbms_pass';
-
-SET SESSION ROLE msbms_sys_admin;
-SET SESSION AUTHORIZATION msbms_sys_admin;
-
-CREATE DATABASE msbms_global OWNER msbms_sys_owner;
+COMMENT ON ROLE msbms_access IS
+$DOC$An unprivileged role used to controll access via pg_hba.conf rules.  All system
+login roles are members of this role.$DOC$;
