@@ -22,4 +22,5 @@ defmodule Msbms.System do
   # defdelegate get_instance_state, to:
   # defdelegate update_instance, to:
   # defdelegate stop_instance, to:
+  defdelegate get_const(param), to: Msbms.System.Constants, as: :get
 end
