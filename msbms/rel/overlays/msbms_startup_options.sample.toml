@@ -14,7 +14,7 @@
 #
 #===============================================================================
 
-[global_admin]
+[global_admin_settings]
 # The database password used by the system for the connecting the msbms_syst_dba
 # database user account to the various database servers.  This password must be
 # at least 32 bytes long and should be the same on all servers managed by the
@@ -25,9 +25,9 @@ dbadmin_password      = ""
 # This value should normally be quite low.
 dbadmin_pool_size     = 1
 
-# The server_name of the db_server which will host the global database.  If this
+# The server_name of the dbserver which will host the global database.  If this
 # server is not found or has not been bootstrapped, the system will not start.
-global_db_server_name = "GLOBAL-DB"
+global_dbserver_name = "GLOBAL-DB"
 
 #===============================================================================
 # Database Servers Section
@@ -37,7 +37,7 @@ global_db_server_name = "GLOBAL-DB"
 #
 #===============================================================================
 
-[[db_server]]
+[[dbserver]]
 # The identifier of the database server which will also appear in user
 # interfaces.
 server_name                    = "GLOBAL-DB"
@@ -52,12 +52,12 @@ start_server_instances         = false
 # If true, the server may host production instance databases.  The value here is
 # used to filter the available servers by instance type, especially during the
 # process that assigns instances to servers.
-instance_production_db_server  = false
+instance_production_dbserver  = false
 
 # If true, the server may host non-production instance databases.  The value
 # here is used to filter the available servers by instance type, especially
 # during the process that assigns instances to servers.
-instance_sandbox_db_server     = false
+instance_sandbox_dbserver     = false
 
 # The hostname/IP of the database server
 db_host                        = "127.0.0.1"
@@ -98,7 +98,7 @@ db_default_api_admin_pool_size = 2
 # and is ideally randomly generated.
 instance_salt                  = ""
 
-[[db_server]]
+[[dbserver]]
 # The identifier of the database server which will also appear in user
 # interfaces.
 server_name                    = "INSTANCE-DB"
@@ -113,12 +113,12 @@ start_server_instances         = true
 # If true, the server may host production instance databases.  The value here is
 # used to filter the available servers by instance type, especially during the
 # process that assigns instances to servers.
-instance_production_db_server  = true
+instance_production_dbserver  = true
 
 # If true, the server may host non-production instance databases.  The value
 # here is used to filter the available servers by instance type, especially
 # during the process that assigns instances to servers.
-instance_sandbox_db_server     = true
+instance_sandbox_dbserver     = true
 
 # The hostname/IP of the database server
 db_host                        = "127.0.0.1"
