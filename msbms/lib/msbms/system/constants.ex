@@ -13,8 +13,8 @@
 defmodule Msbms.System.Constants do
   constants = [
     startup_options_path: Path.join(["msbms_startup_options.toml"]),
-    system_db_name: :msbms_global,
-    system_db_login: "msbms_syst_dba",
+    global_db_name: :msbms_global,
+    global_db_login: "msbms_syst_dba",
     db_owner: "msbms_##dbindent##_owner",
     db_app_user: "msbms_##dbindent##_app_user",
     db_app_admin: "msbms_##dbindent##_app_admin",
