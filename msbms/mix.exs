@@ -12,7 +12,8 @@ defmodule Msbms.MixProject do
     {:jason, ">= 0.0.0"},
     {:toml, ">= 0.0.0"},
     {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
-    {:telemetry, ">= 0.0.0"}
+    {:telemetry, ">= 0.0.0"},
+    {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
   ]
 
   # ------------------------------------------------------------
