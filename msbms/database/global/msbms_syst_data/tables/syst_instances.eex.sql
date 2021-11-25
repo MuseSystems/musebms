@@ -25,12 +25,19 @@ CREATE TABLE msbms_syst_data.syst_instances
     ,enum_instance_state_id  uuid                                     NOT NULL
         CONSTRAINT syst_instances_enum_instance_state_fk
         REFERENCES msbms_syst_data.enum_instance_states (id)
-    ,db_host                 text                                     NOT NULL
-    ,db_port                 integer     DEFAULT 5432                 NOT NULL
-    ,db_app_user_pool        integer     DEFAULT 10                   NOT NULL
-    ,db_app_admin_pool       integer     DEFAULT 3                    NOT NULL
-    ,db_api_user_pool        integer     DEFAULT 10                   NOT NULL
-    ,db_api_admin_pool       integer     DEFAULT 3                    NOT NULL
+    ,dbserver_name           text                                     NOT NULL
+    ,db_app_user_pool_size   integer     DEFAULT 10                   NOT NULL
+        CONSTRAINT syst_instances_db_app_user_pool_size_no_neg_chk
+        CHECK (db_app_user_pool_size > 0)
+    ,db_app_admin_pool_size  integer     DEFAULT 3                    NOT NULL
+        CONSTRAINT syst_instances_db_app_admin_pool_size_no_neg_chk
+        CHECK (db_app_admin_pool_size > 0)
+    ,db_api_user_pool_size   integer     DEFAULT 10                   NOT NULL
+        CONSTRAINT syst_instances_db_api_user_pool_size_no_neg_chk
+        CHECK (db_api_user_pool_size > 0)
+    ,db_api_admin_pool_size  integer     DEFAULT 3                    NOT NULL
+        CONSTRAINT syst_instances_db_api_admin_pool_size_no_neg_chk
+        CHECK (db_api_admin_pool_size > 0)
     ,instance_code           bytea       DEFAULT gen_random_bytes(32) NOT NULL
     ,owning_instance_id      uuid
         CONSTRAINT syst_instances_owning_instance_fk
@@ -86,35 +93,31 @@ determine functionality such as if the instance is usable, visible, or if it may
 be purged from the database completely.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_instances.db_host IS
-$DOC$The hostname or IP address of the database host where the instance database
-resides.$DOC$;
+    COLUMN msbms_syst_data.syst_instances.dbserver_name IS
+$DOC$References a database server found in the msbms_startup_options.toml file.
+While this file may override certain defaults set for the server in that file,
+we need to use the references in that file to know where we should connect.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_instances.db_port IS
-$DOC$The TCP port upon which the db_host is listening for connections from clients
-trying to connect to the instance database.$DOC$;
-
-COMMENT ON
-    COLUMN msbms_syst_data.syst_instances.db_app_user_pool IS
+    COLUMN msbms_syst_data.syst_instances.db_app_user_pool_size IS
 $DOC$The number of database connections to open for normal application client users.
 Note that these are not individual users, but pooled connections that are
 checked out as needed.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_instances.db_app_admin_pool IS
+    COLUMN msbms_syst_data.syst_instances.db_app_admin_pool_size IS
 $DOC$The number of database connections to open for administrative application client
 users.  Note that these are not individual users, but pooled connections that
 are checked out as needed.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_instances.db_api_user_pool IS
+    COLUMN msbms_syst_data.syst_instances.db_api_user_pool_size IS
 $DOC$The number of database connections to open for non-privileged API access from
 API clients.  Note that these are not individual users, but pooled connections
 that are checked out as needed.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_instances.db_api_admin_pool IS
+    COLUMN msbms_syst_data.syst_instances.db_api_admin_pool_size IS
 $DOC$The number of database client connections to open for administrative API access
 from API clients.  Note that these are not individual users, but pooled
 connections that are checked out as needed.$DOC$;
