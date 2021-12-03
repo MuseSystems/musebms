@@ -22,5 +22,5 @@ CREATE ROLE msbms_access
     ADMIN msbms_syst_dba;
 
 COMMENT ON ROLE msbms_access IS
-$DOC$An unprivileged role used to controll access via pg_hba.conf rules.  All system
+$DOC$An unprivileged role used to control access via pg_hba.conf rules.  All system
 login roles are members of this role.$DOC$;
