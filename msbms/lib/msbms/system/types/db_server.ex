@@ -25,7 +25,9 @@ defmodule Msbms.System.Types.DbServer do
           db_default_api_user_pool_size: integer(),
           db_default_app_admin_pool_size: integer(),
           db_default_api_admin_pool_size: integer(),
-          instance_salt: binary()
+          instance_salt: binary(),
+          dbadmin_password: binary(),
+          dbadmin_pool_size: integer()
         }
   defstruct server_name: nil,
             start_server_instances: nil,
@@ -40,5 +42,7 @@ defmodule Msbms.System.Types.DbServer do
             db_default_api_user_pool_size: nil,
             db_default_app_admin_pool_size: nil,
             db_default_api_admin_pool_size: nil,
-            instance_salt: nil
+            instance_salt: nil,
+            dbadmin_password: nil,
+            dbadmin_pool_size: nil
 end

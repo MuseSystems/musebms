@@ -17,7 +17,6 @@ defmodule Msbms.System.Data.GlobalDatastore do
 
   alias Msbms.System.Types.DatastoreOptions
   alias Msbms.System.Types.DbServer
-  alias Msbms.System.Types.GlobalAdminSettings
   alias Msbms.System.Constants
 
   @spec get_datastore_options :: DatastoreOptions.t()
