@@ -18,11 +18,11 @@ defmodule Msbms.System.Data.PrivilegedDatastore do
   alias Msbms.System.Types.DbServer
   alias Msbms.System.Constants
 
-  @spec get_datastore_id :: atom()
-  def get_datastore_id() do
-    (Constants.get(:db_name) <> "_sysadmin")
+  @spec get_datastore_id(DbServer.t()) :: atom()
+  def get_datastore_id(%DbServer{} = dbserver) do
+    (Constants.get(:db_name)  <> "_sysadmin")
     |> String.replace("##dbtype##", "priv")
-    |> String.replace("##dbident##", "0000MS")
+    |> String.replace("##dbident##", dbserver.server_name)
     |> String.downcase()
     |> String.to_atom()
   end
@@ -47,9 +47,12 @@ defmodule Msbms.System.Data.PrivilegedDatastore do
     end
   end
 
-  @spec stop_datastore :: :ok
-  def stop_datastore do
-    put_dynamic_repo(get_datastore_id())
+  @spec stop_datastore(DbServer.t()) :: :ok
+  def stop_datastore(%DbServer{} = dbserver) do
+    dbserver
+    |> get_datastore_id()
+    |> put_dynamic_repo()
+
     stop()
   end
 end
