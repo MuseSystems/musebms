@@ -23,10 +23,10 @@ defmodule Msbms.System.Data.InstanceDatastore do
   @spec get_datastore_options(InstanceConfig.t()) :: DatastoreOptions.t()
   def get_datastore_options(%InstanceConfig{
         instance_name: instance_name,
-        db_app_user_pool: db_app_user_pool,
-        db_app_admin_pool: db_app_admin_pool,
-        db_api_user_pool: db_api_user_pool,
-        db_api_admin_pool: db_api_admin_pool
+        db_appusr_pool: db_app_user_pool,
+        db_appadm_pool: db_app_admin_pool,
+        db_apiusr_pool: db_api_user_pool,
+        db_apiadm_pool: db_api_admin_pool
       }) do
     global_database_name =
       Constants.get(:db_name)
@@ -37,10 +37,10 @@ defmodule Msbms.System.Data.InstanceDatastore do
     %DatastoreOptions{
       database_name: global_database_name,
       database_owner: String.replace(Constants.get(:db_owner), "##dbident##", instance_name),
-      app_user_pool: db_app_user_pool,
-      app_admin_pool: db_app_admin_pool,
-      api_user_pool: db_api_user_pool,
-      api_admin_pool: db_api_admin_pool,
+      appusr_pool: db_app_user_pool,
+      appadm_pool: db_app_admin_pool,
+      apiusr_pool: db_api_user_pool,
+      apiadm_pool: db_api_admin_pool,
       datastores: [
         appusr:
           String.to_atom(

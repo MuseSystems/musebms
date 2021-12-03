@@ -14,17 +14,17 @@ defmodule Msbms.System.Types.DatastoreOptions do
   @type t() :: %__MODULE__{
           database_name: binary(),
           database_owner: binary(),
-          app_user_pool: integer(),
-          app_admin_pool: integer(),
-          api_user_pool: integer(),
-          api_admin_pool: integer(),
+          appusr_pool: integer(),
+          appadm_pool: integer(),
+          apiusr_pool: integer(),
+          apiadm_pool: integer(),
           datastores: Keyword.t()
         }
   defstruct database_name: nil,
             database_owner: nil,
-            app_user_pool: nil,
-            app_admin_pool: nil,
-            api_user_pool: nil,
-            api_admin_pool: nil,
+            appusr_pool: nil,
+            appadm_pool: nil,
+            apiusr_pool: nil,
+            apiadm_pool: nil,
             datastores: nil
 end

@@ -16,10 +16,10 @@ defmodule Msbms.System.Constants do
     global_db_login: "msbms_syst_dba",
     db_name: "msbms_##dbtype##_##dbident##",
     db_owner: "msbms_##dbident##_owner",
-    db_app_user: "msbms_##dbident##_appusr",
-    db_app_admin: "msbms_##dbident##_appadm",
-    db_api_user: "msbms_##dbident##_apiusr",
-    db_api_admin: "msbms_##dbident##_apiadm",
+    db_appusr: "msbms_##dbident##_appusr",
+    db_appadm: "msbms_##dbident##_appadm",
+    db_apiusr: "msbms_##dbident##_apiusr",
+    db_apiadm: "msbms_##dbident##_apiadm",
     salt_min_bytes: 32,
     dba_pass_min_bytes: 32
   ]
