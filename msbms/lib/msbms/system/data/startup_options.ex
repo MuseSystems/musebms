@@ -14,7 +14,6 @@ defmodule Msbms.System.Data.StartupOptions do
   import Ecto.Changeset
   alias Msbms.System.Constants
   alias Msbms.System.Types.DbServer
-  alias Msbms.System.Types.GlobalAdminSettings
 
   @dbserver_types %{
     server_name: :string,
@@ -30,13 +29,9 @@ defmodule Msbms.System.Data.StartupOptions do
     db_default_api_user_pool_size: :integer,
     db_default_app_admin_pool_size: :integer,
     db_default_api_admin_pool_size: :integer,
-    instance_salt: :string
-  }
-
-  @global_admin_types %{
+    instance_salt: :string,
     dbadmin_password: :string,
-    dbadmin_pool_size: :integer,
-    global_dbserver_name: :string
+    dbadmin_pool_size: :integer
   }
 
   @spec get_options(binary()) ::
@@ -60,23 +55,6 @@ defmodule Msbms.System.Data.StartupOptions do
     end
   end
 
-  @spec get_global_admin_settings!(map()) :: %GlobalAdminSettings{}
-  def get_global_admin_settings!(startup_options) when is_map(startup_options) do
-    case get_global_admin_settings(startup_options) do
-      {:ok, global_admin_settings} -> global_admin_settings
-      {:error, reason} -> raise "Global admin settings are not retrievable: #{IO.inspect(reason)}"
-    end
-  end
-
-  @spec get_global_admin_settings(map()) :: {:ok, %GlobalAdminSettings{}} | {:error, any()}
-  def get_global_admin_settings(startup_options) when is_map(startup_options) do
-    case startup_options["global_admin_settings"] do
-      global_admin_settings when is_map(global_admin_settings) ->
-        validate_global_admin_settings(startup_options["global_admin_settings"])
-      _ -> {:error, "Global admin settings not found in startup options."}
-    end
-  end
-
   @spec get_global_dbserver!(map()) :: %DbServer{}
   def get_global_dbserver!(startup_options) when is_map(startup_options) do
     case get_global_dbserver(startup_options) do
@@ -89,7 +67,7 @@ defmodule Msbms.System.Data.StartupOptions do
   def get_global_dbserver(startup_options) when is_map(startup_options) do
     get_dbserver(
       startup_options,
-      startup_options["global_admin_settings"]["global_dbserver_name"]
+      startup_options["global_dbserver_name"]
     )
   end
 
@@ -117,6 +95,7 @@ defmodule Msbms.System.Data.StartupOptions do
   @spec validate_dbserver(map()) :: {:ok, %DbServer{}} | {:error, any()}
   def validate_dbserver(candidate_dbserver) do
     salt_min_bytes = Constants.get(:salt_min_bytes)
+    dba_pass_min_bytes = Constants.get(:dba_pass_min_bytes)
 
     changeset =
       {%Msbms.System.Types.DbServer{}, @dbserver_types}
@@ -126,6 +105,11 @@ defmodule Msbms.System.Data.StartupOptions do
         min: salt_min_bytes,
         count: :bytes,
         message: "The instance_salt setting must be at least #{salt_min_bytes} bytes long."
+      )
+      |> validate_length(:dbadmin_password,
+        min: dba_pass_min_bytes,
+        count: :bytes,
+        message: "The dbadmin_password setting must be at least #{dba_pass_min_bytes} bytes long."
       )
       |> validate_inclusion(:db_log_level, [
         "emergency",
@@ -158,42 +142,9 @@ defmodule Msbms.System.Data.StartupOptions do
            db_default_api_user_pool_size: changes.db_default_api_user_pool_size,
            db_default_app_admin_pool_size: changes.db_default_app_admin_pool_size,
            db_default_api_admin_pool_size: changes.db_default_api_admin_pool_size,
-           instance_salt: changes.instance_salt
-         }}
-    end
-  end
-
-  @spec validate_global_admin_settings(map()) ::
-          {:ok, %GlobalAdminSettings{}} | {:error, binary()}
-  def validate_global_admin_settings(global_admin_options) when is_map(global_admin_options) do
-    dba_pass_min_bytes = Constants.get(:dba_pass_min_bytes)
-
-    changeset =
-      {%GlobalAdminSettings{}, @global_admin_types}
-      |> cast(global_admin_options, Map.keys(@global_admin_types))
-      |> validate_required(Map.keys(@global_admin_types),
-        message: "is missing, but is required"
-      )
-      |> validate_length(:dbadmin_password,
-        min: dba_pass_min_bytes,
-        count: :bytes,
-        message: "The dbadmin_password setting must be at least #{dba_pass_min_bytes} bytes long."
-      )
-      |> validate_number(:dbadmin_pool_size,
-        greater_than: 0,
-        message: "The dbadmin_pool_size setting must be greater than 0."
-      )
-
-    case changeset do
-      %Ecto.Changeset{valid?: false, errors: validation_errors} ->
-        {:error, validation_errors}
-
-      %Ecto.Changeset{valid?: true, changes: changes} ->
-        {:ok,
-         %GlobalAdminSettings{
+           instance_salt: changes.instance_salt,
            dbadmin_password: changes.dbadmin_password,
-           dbadmin_pool_size: changes.dbadmin_pool_size,
-           global_dbserver_name: changes.global_dbserver_name
+           dbadmin_pool_size: changes.dbadmin_pool_size
          }}
     end
   end

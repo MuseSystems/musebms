@@ -16,7 +16,6 @@ defmodule Msbms.System.Data.PrivilegedDatastore do
     adapter: Ecto.Adapters.Postgres
 
   alias Msbms.System.Types.DbServer
-  alias Msbms.System.Types.GlobalAdminSettings
   alias Msbms.System.Constants
 
   @spec get_datastore_id :: atom()
@@ -28,18 +27,18 @@ defmodule Msbms.System.Data.PrivilegedDatastore do
     |> String.to_atom()
   end
 
-  @spec start_datastore(DbServer.t(), GlobalAdminSettings.t()) :: {:ok, pid()} | {:error, term()}
-  def start_datastore(%DbServer{} = dbserver, %GlobalAdminSettings{} = global_admin_settings) do
+  @spec start_datastore(DbServer.t()) :: {:ok, pid()} | {:error, term()}
+  def start_datastore(%DbServer{} = dbserver) do
     startup_result =
       start_link(
-        name: get_datastore_id(),
+        name: get_datastore_id(dbserver),
         database: "postgres",
         hostname: dbserver.db_host,
         port: dbserver.db_port,
         username: Constants.get(:global_db_login),
-        password: global_admin_settings.dbadmin_password,
+        password: dbserver.dbadmin_password,
         show_sensitive_data_on_connection_error: dbserver.db_show_sensitive,
-        pool_size: global_admin_settings.dbadmin_pool_size
+        pool_size: dbserver.dbadmin_pool_size
       )
 
     case startup_result do
