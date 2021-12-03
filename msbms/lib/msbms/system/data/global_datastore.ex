@@ -30,22 +30,26 @@ defmodule Msbms.System.Data.GlobalDatastore do
     %DatastoreOptions{
       database_name: global_database_name,
       database_owner: String.replace(Constants.get(:db_owner), "##dbident##", "0000MS"),
+      appusr_pool: nil,
+      appadm_pool: nil,
+      apiusr_pool: nil,
+      apiadm_pool: nil,
       datastores: [
         appusr:
           String.to_atom(
-            String.downcase(String.replace(Constants.get(:db_app_usr), "##dbident##", "0000MS"))
+            String.downcase(String.replace(Constants.get(:db_appusr), "##dbident##", "0000MS"))
           ),
         apiusr:
           String.to_atom(
-            String.downcase(String.replace(Constants.get(:db_api_usr), "##dbident##", "0000MS"))
+            String.downcase(String.replace(Constants.get(:db_apiusr), "##dbident##", "0000MS"))
           ),
         appadm:
           String.to_atom(
-            String.downcase(String.replace(Constants.get(:db_app_admin), "##dbident##", "0000MS"))
+            String.downcase(String.replace(Constants.get(:db_appadm), "##dbident##", "0000MS"))
           ),
         apiadm:
           String.to_atom(
-            String.downcase(String.replace(Constants.get(:db_api_admin), "##dbident##", "0000MS"))
+            String.downcase(String.replace(Constants.get(:db_apiadm), "##dbident##", "0000MS"))
           )
       ]
     }
