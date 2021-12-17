@@ -17,4 +17,15 @@ defmodule Msbms.System.Data.Utils do
   ## Scope of Usage
   These utilities are only expected to be used by Msbms.System.Data modules.
   """
+  alias Msbms.System.Constants
+
+  @doc """
+
+  """
+  @spec generate_password(binary, binary, binary) :: binary
+  def generate_password(instance_code, dbident, dbsalt)
+      when is_binary(instance_code) and is_binary(dbident) and is_binary(dbsalt) do
+    :crypto.hash(:blake2b, instance_code <> dbident <> Constants.get(:dbident_salt) <> dbsalt)
+    |> Base.encode64()
+  end
 end
