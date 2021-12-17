@@ -78,16 +78,16 @@ db_default_api_admin_pool_size = 2
 # A string of bytes used as part of the token generation for the system managed
 # database user accounts.  Note that this value must be at least 32 bytes long
 # and is ideally randomly generated.
-instance_salt                  = ""
+server_salt                    = ""
 
 # The database password used by the system for the connecting the msbms_syst_dba
 # database user account on this database server.  This password must be at least
 # 32 bytes long.
-dbadmin_password      = ""
+dbadmin_password               = ""
 
 # The number of pooled database connections to create for the dbadmin repo.
 # This value should normally be quite low.
-dbadmin_pool_size     = 1
+dbadmin_pool_size              = 1
 
 [[dbserver]]
 # The identifier of the database server which will also appear in user
@@ -148,13 +148,13 @@ db_default_api_admin_pool_size = 3
 # A string of bytes used as part of the token generation for the system managed
 # database user accounts.  Note that this value must be at least 32 bytes long
 # and is ideally randomly generated.
-instance_salt                  = ""
+server_salt                    = ""
 
 # The database password used by the system for the connecting the msbms_syst_dba
 # database user account on this database server.  This password must be at least
 # 32 bytes long.
-dbadmin_password      = ""
+dbadmin_password               = ""
 
 # The number of pooled database connections to create for the dbadmin repo.
 # This value should normally be quite low.
-dbadmin_pool_size     = 1
+dbadmin_pool_size              = 1

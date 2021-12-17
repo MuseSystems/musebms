@@ -29,7 +29,7 @@ defmodule Msbms.System.Data.StartupOptions do
     db_default_api_user_pool_size: :integer,
     db_default_app_admin_pool_size: :integer,
     db_default_api_admin_pool_size: :integer,
-    instance_salt: :string,
+    server_salt: :string,
     dbadmin_password: :string,
     dbadmin_pool_size: :integer
   }
@@ -101,10 +101,10 @@ defmodule Msbms.System.Data.StartupOptions do
       {%Msbms.System.Types.DbServer{}, @dbserver_types}
       |> cast(candidate_dbserver, Map.keys(@dbserver_types))
       |> validate_required(Map.keys(@dbserver_types))
-      |> validate_length(:instance_salt,
+      |> validate_length(:server_salt,
         min: salt_min_bytes,
         count: :bytes,
-        message: "The instance_salt setting must be at least #{salt_min_bytes} bytes long."
+        message: "The server_salt setting must be at least #{salt_min_bytes} bytes long."
       )
       |> validate_length(:dbadmin_password,
         min: dba_pass_min_bytes,
@@ -142,7 +142,7 @@ defmodule Msbms.System.Data.StartupOptions do
            db_default_api_user_pool_size: changes.db_default_api_user_pool_size,
            db_default_app_admin_pool_size: changes.db_default_app_admin_pool_size,
            db_default_api_admin_pool_size: changes.db_default_api_admin_pool_size,
-           instance_salt: changes.instance_salt,
+           server_salt: changes.server_salt,
            dbadmin_password: changes.dbadmin_password,
            dbadmin_pool_size: changes.dbadmin_pool_size
          }}
