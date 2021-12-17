@@ -18,6 +18,8 @@ defmodule Msbms.System.Types.DatastoreOptions do
           appadm_pool: integer(),
           apiusr_pool: integer(),
           apiadm_pool: integer(),
+          instance_code: binary(),
+          instance_name: binary(),
           datastores: Keyword.t()
         }
   defstruct database_name: nil,
@@ -26,5 +28,7 @@ defmodule Msbms.System.Types.DatastoreOptions do
             appadm_pool: nil,
             apiusr_pool: nil,
             apiadm_pool: nil,
+            instance_code: nil,
+            instance_name: nil,
             datastores: nil
 end
