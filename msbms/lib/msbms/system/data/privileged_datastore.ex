@@ -15,8 +15,8 @@ defmodule Msbms.System.Data.PrivilegedDatastore do
     otp_app: :msbms,
     adapter: Ecto.Adapters.Postgres
 
-  alias Msbms.System.Types.DbServer
   alias Msbms.System.Constants
+  alias Msbms.System.Types.DbServer
 
   @spec get_datastore_id(DbServer.t()) :: atom()
   def get_datastore_id(%DbServer{} = dbserver) do

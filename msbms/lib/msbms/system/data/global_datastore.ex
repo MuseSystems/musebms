@@ -15,6 +15,8 @@ defmodule Msbms.System.Data.GlobalDatastore do
     otp_app: :msbms,
     adapter: Ecto.Adapters.Postgres
 
+  alias Msbms.System.Constants
+  alias Msbms.System.Data.Utils
   alias Msbms.System.Types.DatastoreOptions
   alias Msbms.System.Types.DbServer
   alias Msbms.System.Constants
