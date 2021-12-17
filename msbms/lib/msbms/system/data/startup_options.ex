@@ -12,6 +12,7 @@
 
 defmodule Msbms.System.Data.StartupOptions do
   import Ecto.Changeset
+
   alias Msbms.System.Constants
   alias Msbms.System.Types.DbServer
 
@@ -55,7 +56,7 @@ defmodule Msbms.System.Data.StartupOptions do
     end
   end
 
-  @spec get_global_dbserver!(map()) :: %DbServer{}
+  @spec get_global_dbserver!(map()) :: DbServer.t()
   def get_global_dbserver!(startup_options) when is_map(startup_options) do
     case get_global_dbserver(startup_options) do
       {:ok, global_dbserver} -> global_dbserver
@@ -63,7 +64,7 @@ defmodule Msbms.System.Data.StartupOptions do
     end
   end
 
-  @spec get_global_dbserver(map()) :: {:ok, %DbServer{}} | {:error, any()}
+  @spec get_global_dbserver(map()) :: {:ok, DbServer.t()} | {:error, any()}
   def get_global_dbserver(startup_options) when is_map(startup_options) do
     get_dbserver(
       startup_options,
@@ -71,7 +72,7 @@ defmodule Msbms.System.Data.StartupOptions do
     )
   end
 
-  @spec get_dbserver(map(), binary()) :: {:ok, %DbServer{}} | {:error, any()}
+  @spec get_dbserver(map(), binary()) :: {:ok, DbServer.t()} | {:error, any()}
   def get_dbserver(startup_options, dbserver_name)
       when is_map(startup_options) and is_binary(dbserver_name) do
     dbserver_options =
@@ -92,7 +93,7 @@ defmodule Msbms.System.Data.StartupOptions do
     end
   end
 
-  @spec validate_dbserver(map()) :: {:ok, %DbServer{}} | {:error, any()}
+  @spec validate_dbserver(map()) :: {:ok, DbServer.t()} | {:error, any()}
   def validate_dbserver(candidate_dbserver) do
     salt_min_bytes = Constants.get(:salt_min_bytes)
     dba_pass_min_bytes = Constants.get(:dba_pass_min_bytes)
