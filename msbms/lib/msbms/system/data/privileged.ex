@@ -230,4 +230,171 @@ defmodule Msbms.System.Data.Privileged do
          "Failed to create database #{database_name} with owner #{database_owner}: #{exception.postgres.code}"}
     end
   end
+
+  @spec get_last_applied_migration_version(pid) :: binary()
+  def get_last_applied_migration_version(db_conn_pid) do
+    PrivilegedDatastore.put_dynamic_repo(db_conn_pid)
+
+    case db_migrations_table_exists?(db_conn_pid) do
+      false ->
+        "00.00.000.000000.000"
+
+      true ->
+        with(
+          {:ok, %{num_rows: 1, rows: [[migration_version | _] | _]}} <-
+            PrivilegedDatastore.query("""
+            SELECT
+              coalesce(
+                (SELECT max(migration_version) FROM msbms_syst_data.database_migrations),
+                 '00.00.000.000000.000') AS max_migration_version;
+            """)
+        ) do
+          migration_version
+        end
+    end
+  end
+
+  @spec db_migrations_table_exists?(pid()) :: boolean()
+  def db_migrations_table_exists?(db_conn_pid) when is_pid(db_conn_pid) do
+    PrivilegedDatastore.put_dynamic_repo(db_conn_pid)
+
+    migrations_table_result =
+      PrivilegedDatastore.query(
+        """
+        SELECT exists(
+          SELECT true
+          FROM   pg_tables
+          WHERE  schemaname = 'msbms_syst_data' AND
+                 tablename = 'database_migrations'
+        ) AS migrations_found
+        """,
+        []
+      )
+
+    case migrations_table_result do
+      {:ok, %{num_rows: 1, rows: [[final_result | _] | _]}} ->
+        final_result
+
+      {:ok, %{num_rows: row_count}} when row_count != 1 ->
+        raise "Unexpected result testing if the migrations table exists: row count != 1 (#{row_count})"
+
+      {:error, exception} ->
+        raise "Unexpected result testing if the migrations table exists: #{exception.postgres.code}"
+    end
+  end
+
+  @spec get_available_migrations(:global | :instance | binary()) :: list() | {:error, atom()}
+  def get_available_migrations(:global) do
+    get_available_migrations("global")
+  end
+
+  def get_available_migrations(:instance) do
+    get_available_migrations("instance")
+  end
+
+  def get_available_migrations(target_type) when is_binary(target_type) do
+    with(
+      migrations_path <- Path.join(["priv", "database", target_type]),
+      {:ok, migrations_list} <- File.ls(migrations_path)
+    ) do
+      Enum.sort(migrations_list)
+      |> Enum.map(fn migration ->
+        {:ok, migration_data} = Utils.deconstruct_migration_filename(migration)
+        migration_data
+      end)
+    end
+  end
+
+  @spec apply_migration(pid, Msbms.System.Types.DatastoreOptions.t(), %{
+          :migration_version => binary(),
+          :migration_path => binary(),
+          :release => integer(),
+          :version => integer(),
+          :update => integer(),
+          :sponsor => integer(),
+          :sponsor_modification => integer()
+        }) :: {:ok, binary()} | {:error, any()}
+  def apply_migration(
+        db_conn_pid,
+        %DatastoreOptions{database_owner: database_owner} = datastore_options,
+        migration
+      )
+      when is_pid(db_conn_pid) and is_map(migration) do
+    PrivilegedDatastore.put_dynamic_repo(db_conn_pid)
+
+    migration_bindings = [
+      msbms_owner: database_owner,
+      msbms_appusr: datastore_options.datastores |> Keyword.get(:appusr) |> Atom.to_string(),
+      msbms_appadm: datastore_options.datastores |> Keyword.get(:appadm) |> Atom.to_string(),
+      msbms_apiusr: datastore_options.datastores |> Keyword.get(:apiusr) |> Atom.to_string(),
+      msbms_apiadm: datastore_options.datastores |> Keyword.get(:apiadm) |> Atom.to_string(),
+      msbms_migration_version: migration.migration_version
+    ]
+
+    migration_text = EEx.eval_file(migration.migration_path, migration_bindings)
+
+    PrivilegedDatastore.transaction(fn ->
+      PrivilegedDatastore.query(migration_text)
+
+      migration_table_result =
+        PrivilegedDatastore.query(
+          """
+          INSERT INTO msbms_syst_data.database_migrations
+            (release, version, update, sponsor, sponsor_modification, migration_version)
+          VALUES
+            ($1, $2, $3, $4, $5, $6)
+          RETURNING id;
+          """,
+          [
+            migration.release,
+            migration.version,
+            migration.update,
+            migration.sponsor,
+            migration.sponsor_modification,
+            migration.migration_version
+          ]
+        )
+
+      {:ok, %{num_rows: 1, rows: [[migration_id | _] | _]}} = migration_table_result
+
+      {:ok, migration_id}
+    end)
+  end
+
+  @spec apply_outstanding_migrations(
+          pid,
+          Msbms.System.Types.DatastoreOptions.t(),
+          list()
+        ) :: {:ok} | {:error, any()}
+  def apply_outstanding_migrations(
+        db_conn_pid,
+        %DatastoreOptions{} = datastore_options,
+        migrations
+      )
+      when is_pid(db_conn_pid) and is_list(migrations) do
+    PrivilegedDatastore.put_dynamic_repo(db_conn_pid)
+
+    PrivilegedDatastore.query("SET ROLE #{datastore_options.database_owner};")
+
+    apply_result =
+      Enum.reduce(migrations, {:ok}, fn migration, acc ->
+        cond do
+          :error == elem(acc, 0) ->
+            acc
+
+          migration.migration_version > get_last_applied_migration_version(db_conn_pid) ->
+            apply_migration(db_conn_pid, datastore_options, migration)
+
+          true ->
+            {:ok}
+        end
+      end)
+
+    PrivilegedDatastore.query("RESET ROLE;")
+
+    case apply_result do
+      {:ok, _} -> {:ok}
+      _ -> apply_result
+    end
+  end
 end
