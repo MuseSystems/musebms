@@ -51,7 +51,7 @@ defmodule Msbms.System.Data.StartupOptions do
       when is_binary(options_file_path) do
     case get_options(options_file_path) do
       {:ok, options} -> options
-      {:error, reason} -> raise "Starup options retrieval failed: #{IO.inspect(reason)}"
+      {:error, reason} -> raise "Starup options retrieval failed: #{inspect(reason)}"
     end
   end
 
@@ -59,7 +59,7 @@ defmodule Msbms.System.Data.StartupOptions do
   def get_global_dbserver!(startup_options) when is_map(startup_options) do
     case get_global_dbserver(startup_options) do
       {:ok, global_dbserver} -> global_dbserver
-      {:error, reason} -> raise "Global database server is not retrievable: #{IO.inspect(reason)}"
+      {:error, reason} -> raise "Global database server is not retrievable: #{inspect(reason)}"
     end
   end
 
