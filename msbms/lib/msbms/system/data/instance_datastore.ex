@@ -37,35 +37,35 @@ defmodule Msbms.System.Data.InstanceDatastore do
 
     %DatastoreOptions{
       database_name: global_database_name,
-      database_owner: String.replace(Constants.get(:db_owner), "##dbident##", instance_name),
+      database_owner:
+        Constants.get(:db_owner)
+        |> String.replace("##dbident##", instance_name)
+        |> String.downcase(),
       appusr_pool: db_app_user_pool,
       appadm_pool: db_app_admin_pool,
       apiusr_pool: db_api_user_pool,
       apiadm_pool: db_api_admin_pool,
       datastores: [
         appusr:
-          String.to_atom(
-            String.downcase(
-              String.replace(Constants.get(:db_app_usr), "##dbident##", instance_name)
-            )
-          ),
+          Constants.get(:db_app_usr)
+          |> String.replace("##dbident##", instance_name)
+          |> String.downcase()
+          |> String.to_atom(),
         apiusr:
-          String.to_atom(
-            String.downcase(
-              String.replace(Constants.get(:db_api_usr), "##dbident##", instance_name)
-            )
-          ),
+          Constants.get(:db_api_usr)
+          |> String.replace("##dbident##", instance_name)
+          |> String.downcase()
+          |> String.to_atom(),
         appadm:
-          String.to_atom(
-            String.downcase(
-              String.replace(Constants.get(:db_app_admin), "##dbident##", instance_name)
-            )
-          ),
+          Constants.get(:db_app_admin)
+          |> String.replace("##dbident##", instance_name)
+          |> String.downcase()
+          |> String.to_atom(),
         apiadm:
-          String.to_atom(
-            String.downcase(
-              String.replace(Constants.get(:db_api_admin), "##dbident##", instance_name)
-            )
+          Constants.get(:db_api_admin)
+          |> String.replace("##dbident##", instance_name)
+          |> String.downcase()
+          |> String.to_atom()
           )
       ]
     }
