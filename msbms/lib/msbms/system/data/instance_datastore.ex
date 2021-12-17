@@ -15,10 +15,11 @@ defmodule Msbms.System.Data.InstanceDatastore do
     otp_app: :msbms,
     adapter: Ecto.Adapters.Postgres
 
+  alias Msbms.System.Constants
+  alias Msbms.System.Data.Utils
   alias Msbms.System.Types.DatastoreOptions
   alias Msbms.System.Types.DbServer
   alias Msbms.System.Types.InstanceConfig
-  alias Msbms.System.Constants
 
   @spec get_datastore_options(InstanceConfig.t()) :: DatastoreOptions.t()
   def get_datastore_options(%InstanceConfig{
