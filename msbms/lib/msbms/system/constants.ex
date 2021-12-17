@@ -26,6 +26,21 @@ defmodule Msbms.System.Constants do
     global_server_salt: "tt3YI/sTKBFjYO4gpO8cKRAbVx0="
   ]
 
+  @spec get(
+          :db_apiadm
+          | :db_apiusr
+          | :db_appadm
+          | :db_appusr
+          | :db_name
+          | :db_owner
+          | :dba_pass_min_bytes
+          | :dbident_salt
+          | :global_db_login
+          | :global_server_salt
+          | :salt_min_bytes
+          | :startup_options_path
+        ) :: binary() | integer()
+
   for {const, value} <- constants do
     def get(unquote(const)), do: unquote(value)
   end
