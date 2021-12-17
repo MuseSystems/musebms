@@ -21,7 +21,9 @@ defmodule Msbms.System.Constants do
     db_apiusr: "msbms_##dbident##_apiusr",
     db_apiadm: "msbms_##dbident##_apiadm",
     salt_min_bytes: 32,
-    dba_pass_min_bytes: 32
+    dba_pass_min_bytes: 32,
+    dbident_salt: "FW4eTLAjwWAuqEni3R55ihR5CxHjqh7ZSm41Ns94",
+    global_server_salt: "tt3YI/sTKBFjYO4gpO8cKRAbVx0="
   ]
 
   for {const, value} <- constants do
