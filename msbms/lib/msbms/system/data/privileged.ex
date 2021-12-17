@@ -10,8 +10,10 @@
 #
 # muse.information@musesystems.com :: https: //muse.systems
 defmodule Msbms.System.Data.Privileged do
-
+  alias Msbms.System.Constants
   alias Msbms.System.Data.PrivilegedDatastore
+  alias Msbms.System.Data.Utils
+  alias Msbms.System.Types.DatastoreOptions
   alias Msbms.System.Types.DbServer
 
   @spec db_roles_exist?(pid(), list()) :: boolean()
@@ -67,5 +69,108 @@ defmodule Msbms.System.Data.Privileged do
     end
   end
 
-  # @spec verify_and_create_global_db_roles() :: {:ok} | {:error, reason}
+  @spec create_datastore_roles(pid(), DbServer.t(), DatastoreOptions.t()) :: {:ok} | {:error, any}
+  def create_datastore_roles(
+        db_conn_pid,
+        %DbServer{} = dbserver,
+        %DatastoreOptions{} = datastore_options
+      )
+      when is_pid(db_conn_pid) do
+    with(
+      {:ok} <- create_datastore_owner_role(db_conn_pid, datastore_options),
+      {:ok} <- create_datastore_login_roles(db_conn_pid, dbserver, datastore_options)
+    ) do
+      {:ok}
+    else
+      error -> error
+    end
+  end
+
+  @spec create_datastore_login_roles(pid(), DbServer.t(), DatastoreOptions.t()) ::
+          {:ok} | {:error, any}
+  def create_datastore_login_roles(
+        db_conn_pid,
+        %DbServer{} = dbserver,
+        %DatastoreOptions{} = datastore_options
+      )
+      when is_pid(db_conn_pid) do
+    Enum.reduce(datastore_options.datastores, {:ok}, fn datastore, acc ->
+      with {:ok} <- acc do
+        rolename = Atom.to_string(elem(datastore, 1))
+
+        case db_role_exists?(db_conn_pid, rolename) do
+          false ->
+            create_db_role(
+              db_conn_pid,
+              rolename,
+              Utils.generate_password(
+                datastore_options.instance_code,
+                rolename,
+                dbserver.server_salt
+              )
+            )
+
+          true ->
+            {:ok}
+        end
+      end
+    end)
+  end
+
+  @spec(
+    create_datastore_owner_role(pid(), DatastoreOptions.t()) :: {:ok},
+    {:error, any}
+  )
+  def create_datastore_owner_role(
+        db_conn_pid,
+        %DatastoreOptions{} = datastore_options
+      )
+      when is_pid(db_conn_pid) do
+    case db_role_exists?(db_conn_pid, datastore_options.database_owner) do
+      false -> create_db_role(db_conn_pid, datastore_options.database_owner, :owner)
+      true -> {:ok}
+    end
+  end
+
+  @spec create_db_role(pid(), binary(), binary() | :owner) :: {:ok} | {:error, binary()}
+  def create_db_role(db_conn_pid, rolename, password)
+      when is_pid(db_conn_pid) and is_binary(rolename) do
+    PrivilegedDatastore.put_dynamic_repo(db_conn_pid)
+
+    create_role_result =
+      cond do
+        is_binary(password) ->
+          PrivilegedDatastore.query(
+            """
+            CREATE ROLE #{rolename}
+              WITH NOINHERIT LOGIN IN ROLE msbms_access PASSWORD '#{password}';
+            """,
+            []
+          )
+
+        :owner = password ->
+          with(
+            {:ok, _} <-
+              PrivilegedDatastore.query(
+                "CREATE ROLE #{rolename} WITH NOINHERIT NOLOGIN;",
+                []
+              ),
+            {:ok, _} <-
+              PrivilegedDatastore.query(
+                "GRANT #{rolename} TO #{Constants.get(:global_db_login)};",
+                []
+              )
+          ) do
+            {:ok, nil}
+          end
+      end
+
+    case create_role_result do
+      {:ok, _} ->
+        {:ok}
+
+      {:error, exception} ->
+        {:error, "Failed to create login role #{rolename}: #{exception.postgres.code}"}
+    end
+  end
 end
