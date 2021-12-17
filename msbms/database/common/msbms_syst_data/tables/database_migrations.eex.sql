@@ -31,6 +31,7 @@ CREATE TABLE msbms_syst_data.database_migrations
         CONSTRAINT database_migrations_sponsor_modification_range_chk
         CHECK (sponsor_modification <@ '[0, 46655]'::int4range)
     ,migration_version       text                                    NOT NULL
+        CONSTRAINT database_migrations_migration_version_udx UNIQUE
     ,diag_timestamp_created  timestamptz DEFAULT now( )              NOT NULL
     ,diag_role_created       text                                    NOT NULL
     ,diag_timestamp_modified timestamptz DEFAULT now( )              NOT NULL
