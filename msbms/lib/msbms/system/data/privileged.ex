@@ -14,9 +14,9 @@ defmodule Msbms.System.Data.Privileged do
   alias Msbms.System.Data.PrivilegedDatastore
   alias Msbms.System.Types.DbServer
 
-  @spec db_roles_exist?(DbServer.t(), list()) :: boolean()
-  def db_roles_exist?(%DbServer{} = dbserver, db_roles) when is_list(db_roles) do
-    PrivilegedDatastore.put_dynamic_repo(PrivilegedDatastore.get_datastore_id(dbserver))
+  @spec db_roles_exist?(pid(), list()) :: boolean()
+  def db_roles_exist?(db_conn_pid, db_roles) when is_pid(db_conn_pid) and is_list(db_roles) do
+    PrivilegedDatastore.put_dynamic_repo(db_conn_pid)
 
     role_qry_result =
       PrivilegedDatastore.query(
@@ -41,9 +41,9 @@ defmodule Msbms.System.Data.Privileged do
     end
   end
 
-  @spec db_role_exists?(DbServer.t(), binary()) :: boolean()
-  def db_role_exists?(%DbServer{} = dbserver, rolename) when is_binary(rolename) do
-    PrivilegedDatastore.put_dynamic_repo(PrivilegedDatastore.get_datastore_id(dbserver))
+  @spec db_role_exists?(pid(), binary()) :: boolean()
+  def db_role_exists?(db_conn_pid, rolename) when is_pid(db_conn_pid) and is_binary(rolename) do
+    PrivilegedDatastore.put_dynamic_repo(db_conn_pid)
 
     role_qry_result =
       PrivilegedDatastore.query(
