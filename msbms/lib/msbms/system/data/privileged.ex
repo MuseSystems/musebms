@@ -173,4 +173,61 @@ defmodule Msbms.System.Data.Privileged do
         {:error, "Failed to create login role #{rolename}: #{exception.postgres.code}"}
     end
   end
+
+  @spec db_exists?(pid(), DatastoreOptions.t()) :: boolean()
+  def db_exists?(db_conn_pid, %DatastoreOptions{database_name: database_name})
+      when is_pid(db_conn_pid) do
+    PrivilegedDatastore.put_dynamic_repo(db_conn_pid)
+
+    role_qry_result =
+      PrivilegedDatastore.query(
+        """
+        SELECT exists(
+          SELECT true FROM pg_database WHERE datname = $1
+        ) AS database_found
+        """,
+        [String.downcase(database_name)]
+      )
+
+    case role_qry_result do
+      {:ok, %{num_rows: 1, rows: [[final_result | _] | _]}} ->
+        final_result
+
+      {:ok, %{num_rows: row_count}} when row_count != 1 ->
+        raise "Unexpected result testing if a database exists: row count != 1 (#{row_count})"
+
+      {:error, exception} ->
+        raise "Unexpected result testing if a database exists: #{exception.postgres.code}"
+    end
+  end
+
+  @spec create_db(pid(), DatastoreOptions.t()) :: {:ok} | {:error, any}
+  def create_db(
+        db_conn_pid,
+        %DatastoreOptions{
+          database_name: database_name,
+          database_owner: database_owner
+        } = datastore_options
+      )
+      when is_pid(db_conn_pid) do
+    PrivilegedDatastore.put_dynamic_repo(db_conn_pid)
+
+    create_db_result =
+      case db_exists?(db_conn_pid, datastore_options) do
+        false ->
+          PrivilegedDatastore.query("CREATE DATABASE #{database_name} OWNER #{database_owner};")
+
+        true ->
+          {:ok, nil}
+      end
+
+    case create_db_result do
+      {:ok, _} ->
+        {:ok}
+
+      {:error, exception} ->
+        {:error,
+         "Failed to create database #{database_name} with owner #{database_owner}: #{exception.postgres.code}"}
+    end
+  end
 end
