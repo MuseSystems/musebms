@@ -52,7 +52,7 @@ defmodule Msbms.System.Data.Privileged do
           SELECT true FROM pg_roles WHERE rolname = $1
         ) AS role_found
         """,
-        [rolename]
+        [String.downcase(rolename)]
       )
 
     case role_qry_result do
