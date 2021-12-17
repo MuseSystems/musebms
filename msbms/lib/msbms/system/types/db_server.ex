@@ -23,8 +23,6 @@ defmodule Msbms.System.Types.DbServer do
           db_max_instances: integer(),
           db_default_app_user_pool_size: integer(),
           db_default_api_user_pool_size: integer(),
-          db_default_app_admin_pool_size: integer(),
-          db_default_api_admin_pool_size: integer(),
           server_salt: binary(),
           dbadmin_password: binary(),
           dbadmin_pool_size: integer()
@@ -40,9 +38,27 @@ defmodule Msbms.System.Types.DbServer do
             db_max_instances: nil,
             db_default_app_user_pool_size: nil,
             db_default_api_user_pool_size: nil,
-            db_default_app_admin_pool_size: nil,
-            db_default_api_admin_pool_size: nil,
             server_salt: nil,
             dbadmin_password: nil,
             dbadmin_pool_size: nil
+
+
+  def get_dbserver_types() do
+    %{
+      server_name: :string,
+      start_server_instances: :boolean,
+      instance_production_dbserver: :boolean,
+      instance_sandbox_dbserver: :boolean,
+      db_host: :string,
+      db_port: :integer,
+      db_show_sensitive: :boolean,
+      db_log_level: :string,
+      db_max_instances: :integer,
+      db_default_app_user_pool_size: :integer,
+      db_default_api_user_pool_size: :integer,
+      server_salt: :string,
+      dbadmin_password: :string,
+      dbadmin_pool_size: :integer
+    }
+  end
 end

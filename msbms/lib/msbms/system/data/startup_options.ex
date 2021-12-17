@@ -16,25 +16,6 @@ defmodule Msbms.System.Data.StartupOptions do
   alias Msbms.System.Constants
   alias Msbms.System.Types.DbServer
 
-  @dbserver_types %{
-    server_name: :string,
-    start_server_instances: :boolean,
-    instance_production_dbserver: :boolean,
-    instance_sandbox_dbserver: :boolean,
-    db_host: :string,
-    db_port: :integer,
-    db_show_sensitive: :boolean,
-    db_log_level: :string,
-    db_max_instances: :integer,
-    db_default_app_user_pool_size: :integer,
-    db_default_api_user_pool_size: :integer,
-    db_default_app_admin_pool_size: :integer,
-    db_default_api_admin_pool_size: :integer,
-    server_salt: :string,
-    dbadmin_password: :string,
-    dbadmin_pool_size: :integer
-  }
-
   @spec get_options(binary()) ::
           {:ok, map()} | {:error, {:invalid_toml, binary()} | {:file_read_error, atom()}}
   def get_options(options_file_path \\ Constants.get(:startup_options_path))
@@ -97,11 +78,12 @@ defmodule Msbms.System.Data.StartupOptions do
   def validate_dbserver(candidate_dbserver) do
     salt_min_bytes = Constants.get(:salt_min_bytes)
     dba_pass_min_bytes = Constants.get(:dba_pass_min_bytes)
+    dbserver_types = DbServer.get_dbserver_types()
 
     changeset =
-      {%Msbms.System.Types.DbServer{}, @dbserver_types}
-      |> cast(candidate_dbserver, Map.keys(@dbserver_types))
-      |> validate_required(Map.keys(@dbserver_types))
+      {%Msbms.System.Types.DbServer{}, dbserver_types}
+      |> cast(candidate_dbserver, Map.keys(dbserver_types))
+      |> validate_required(Map.keys(dbserver_types))
       |> validate_length(:server_salt,
         min: salt_min_bytes,
         count: :bytes,
@@ -141,8 +123,6 @@ defmodule Msbms.System.Data.StartupOptions do
            db_max_instances: changes.db_max_instances,
            db_default_app_user_pool_size: changes.db_default_app_user_pool_size,
            db_default_api_user_pool_size: changes.db_default_api_user_pool_size,
-           db_default_app_admin_pool_size: changes.db_default_app_admin_pool_size,
-           db_default_api_admin_pool_size: changes.db_default_api_admin_pool_size,
            server_salt: changes.server_salt,
            dbadmin_password: changes.dbadmin_password,
            dbadmin_pool_size: changes.dbadmin_pool_size
