@@ -31,28 +31,35 @@ defmodule Msbms.System.Data.GlobalDatastore do
 
     %DatastoreOptions{
       database_name: global_database_name,
-      database_owner: String.replace(Constants.get(:db_owner), "##dbident##", "0000MS"),
+      database_owner:
+        Constants.get(:db_owner)
+        |> String.replace("##dbident##", "0000MS")
+        |> String.downcase(),
       appusr_pool: nil,
       appadm_pool: nil,
       apiusr_pool: nil,
       apiadm_pool: nil,
       datastores: [
         appusr:
-          String.to_atom(
-            String.downcase(String.replace(Constants.get(:db_appusr), "##dbident##", "0000MS"))
-          ),
+          Constants.get(:db_appusr)
+          |> String.replace("##dbident##", "0000MS")
+          |> String.downcase()
+          |> String.to_atom(),
         apiusr:
-          String.to_atom(
-            String.downcase(String.replace(Constants.get(:db_apiusr), "##dbident##", "0000MS"))
-          ),
+          Constants.get(:db_apiusr)
+          |> String.replace("##dbident##", "0000MS")
+          |> String.downcase()
+          |> String.to_atom(),
         appadm:
-          String.to_atom(
-            String.downcase(String.replace(Constants.get(:db_appadm), "##dbident##", "0000MS"))
-          ),
+          Constants.get(:db_appadm)
+          |> String.replace("##dbident##", "0000MS")
+          |> String.downcase()
+          |> String.to_atom(),
         apiadm:
-          String.to_atom(
-            String.downcase(String.replace(Constants.get(:db_apiadm), "##dbident##", "0000MS"))
-          )
+          Constants.get(:db_apiadm)
+          |> String.replace("##dbident##", "0000MS")
+          |> String.downcase()
+          |> String.to_atom()
       ]
     }
   end
