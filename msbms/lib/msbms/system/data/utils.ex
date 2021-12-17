@@ -28,4 +28,29 @@ defmodule Msbms.System.Data.Utils do
     :crypto.hash(:blake2b, instance_code <> dbident <> Constants.get(:dbident_salt) <> dbsalt)
     |> Base.encode64()
   end
+
+  @spec deconstruct_migration_filename(binary()) :: {:ok, map()} | {:error, any()}
+  def deconstruct_migration_filename(filename) when is_binary(filename) do
+    case Regex.run(
+           ~r/^(?<kind>(global|instance))\.(?<version>..\...\....\.......\....)\.eex\.sql$/,
+           filename,
+           capture: ["kind", "version"]
+         ) do
+      [kind | [version | _]] ->
+        {:ok,
+         %{
+           migration_type: kind,
+           migration_version: version |> String.upcase(),
+           migration_path: Path.join(["priv", "database", kind, filename]),
+           release: String.slice(version, 0..1) |> String.to_integer(36),
+           version: String.slice(version, 3..4) |> String.to_integer(36),
+           update: String.slice(version, 6..8) |> String.to_integer(36),
+           sponsor: String.slice(version, 10..15) |> String.to_integer(36),
+           sponsor_modification: String.slice(version, 17..19) |> String.to_integer(36)
+         }}
+
+      _ ->
+        {:error, "Failed to parse migration version information from #{filename}"}
+    end
+  end
 end
