@@ -25,7 +25,7 @@ defmodule Msbms.System.Types.InstanceConfig do
           db_appadm_pool: integer(),
           db_apiusr_pool: integer(),
           db_apiadm_pool: integer(),
-          instance_salt: binary()
+          instance_code: binary()
         }
   defstruct id: nil,
             instance_name: nil,
@@ -39,5 +39,5 @@ defmodule Msbms.System.Types.InstanceConfig do
             db_appadm_pool: nil,
             db_apiusr_pool: nil,
             db_apiadm_pool: nil,
-            instance_salt: nil
+            instance_code: nil
 end
