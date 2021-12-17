@@ -11,5 +11,10 @@
 # muse.information@musesystems.com :: https: //muse.systems
 
 defmodule Msbms.System.Data.Utils do
+  @moduledoc """
+  Provides some simple utility functions which may be used in different data management tasks.
 
+  ## Scope of Usage
+  These utilities are only expected to be used by Msbms.System.Data modules.
+  """
 end
