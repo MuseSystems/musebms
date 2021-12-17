@@ -12,11 +12,13 @@ defmodule Mix.Tasks.Builddb do
   end
 
   defp build_migrations({[dbtype: "global"], _}) do
+    File.rm_rf!(Path.join(["priv", "database", "global"]))
     get_build_plans("manifest_global.toml")
     |> Enum.each(fn current_plan -> generate_migration_from_build_plan(current_plan, "global") end)
   end
 
   defp build_migrations({[dbtype: "instance"], _}) do
+    File.rm_rf!(Path.join(["priv", "database", "instance"]))
     get_build_plans("manifest_instance.toml")
     |> Enum.each(fn current_plan ->
       generate_migration_from_build_plan(current_plan, "instance")
@@ -54,14 +56,11 @@ defmodule Mix.Tasks.Builddb do
 
     qualified_target_path = Path.join(["priv", "database", target_type, migration_filename])
 
-    IO.puts(qualified_target_path)
-
-    File.rm(qualified_target_path)
-    File.touch(qualified_target_path)
+    File.mkdir_p(Path.join(["priv", "database", target_type]))
 
     target =
       File.open!(qualified_target_path, [
-        :append,
+        :exclusive,
         {:delayed_write, 1024, 20}
       ])
 
@@ -92,5 +91,6 @@ defmodule Mix.Tasks.Builddb do
     )
 
     File.close(target)
+    IO.puts("Created Migration: #{qualified_target_path}")
   end
 end
