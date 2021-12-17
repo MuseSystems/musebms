@@ -14,10 +14,10 @@ CREATE SCHEMA IF NOT EXISTS msbms_syst
     AUTHORIZATION <%= msbms_owner %>;
 
 REVOKE USAGE ON SCHEMA msbms_syst FROM PUBLIC;
-GRANT USAGE ON SCHEMA msbms_syst TO <%= msbms_app_admin %>;
-GRANT USAGE ON SCHEMA msbms_syst TO <%= msbms_api_admin %>;
-GRANT USAGE ON SCHEMA msbms_syst TO <%= msbms_app_user %>;
-GRANT USAGE ON SCHEMA msbms_syst TO <%= msbms_api_user %>;
+GRANT USAGE ON SCHEMA msbms_syst TO <%= msbms_appadm %>;
+GRANT USAGE ON SCHEMA msbms_syst TO <%= msbms_apiadm %>;
+GRANT USAGE ON SCHEMA msbms_syst TO <%= msbms_appusr %>;
+GRANT USAGE ON SCHEMA msbms_syst TO <%= msbms_apiusr %>;
 
 COMMENT ON SCHEMA msbms_syst IS
 $DOC$Public API for system operations.  The important distinction is that business
@@ -28,10 +28,10 @@ CREATE SCHEMA IF NOT EXISTS msbms_syst_priv
     AUTHORIZATION <%= msbms_owner %>;
 
 REVOKE USAGE ON SCHEMA msbms_syst_priv FROM PUBLIC;
-REVOKE USAGE ON SCHEMA msbms_syst_priv FROM <%= msbms_app_admin %>;
-REVOKE USAGE ON SCHEMA msbms_syst_priv FROM <%= msbms_api_admin %>;
-REVOKE USAGE ON SCHEMA msbms_syst_priv FROM <%= msbms_app_user %>;
-REVOKE USAGE ON SCHEMA msbms_syst_priv FROM <%= msbms_api_user %>;
+REVOKE USAGE ON SCHEMA msbms_syst_priv FROM <%= msbms_appadm %>;
+REVOKE USAGE ON SCHEMA msbms_syst_priv FROM <%= msbms_apiadm %>;
+REVOKE USAGE ON SCHEMA msbms_syst_priv FROM <%= msbms_appusr %>;
+REVOKE USAGE ON SCHEMA msbms_syst_priv FROM <%= msbms_apiusr %>;
 
 COMMENT ON SCHEMA msbms_syst_priv IS
 $DOC$Internal, private system operations.  These functions are developed not for the
@@ -43,10 +43,10 @@ CREATE SCHEMA IF NOT EXISTS msbms_syst_data
     AUTHORIZATION <%= msbms_owner %>;
 
 REVOKE USAGE ON SCHEMA msbms_syst_data FROM PUBLIC;
-REVOKE USAGE ON SCHEMA msbms_syst_data FROM <%= msbms_app_admin %>;
-REVOKE USAGE ON SCHEMA msbms_syst_data FROM <%= msbms_api_admin %>;
-REVOKE USAGE ON SCHEMA msbms_syst_data FROM <%= msbms_app_user %>;
-REVOKE USAGE ON SCHEMA msbms_syst_data FROM <%= msbms_api_user %>;
+REVOKE USAGE ON SCHEMA msbms_syst_data FROM <%= msbms_appadm %>;
+REVOKE USAGE ON SCHEMA msbms_syst_data FROM <%= msbms_apiadm %>;
+REVOKE USAGE ON SCHEMA msbms_syst_data FROM <%= msbms_appusr %>;
+REVOKE USAGE ON SCHEMA msbms_syst_data FROM <%= msbms_apiusr %>;
 
 COMMENT ON SCHEMA msbms_syst_data IS
 $DOC$Schema container for system operations related data tables and application
@@ -57,10 +57,10 @@ CREATE SCHEMA IF NOT EXISTS msbms_appl
     AUTHORIZATION <%= msbms_owner %>;
 
 REVOKE USAGE ON SCHEMA msbms_appl FROM PUBLIC;
-GRANT USAGE ON SCHEMA msbms_appl TO <%= msbms_app_admin %>;
-GRANT USAGE ON SCHEMA msbms_appl TO <%= msbms_api_admin %>;
-GRANT USAGE ON SCHEMA msbms_appl TO <%= msbms_app_user %>;
-GRANT USAGE ON SCHEMA msbms_appl TO <%= msbms_api_user %>;
+GRANT USAGE ON SCHEMA msbms_appl TO <%= msbms_appadm %>;
+GRANT USAGE ON SCHEMA msbms_appl TO <%= msbms_apiadm %>;
+GRANT USAGE ON SCHEMA msbms_appl TO <%= msbms_appusr %>;
+GRANT USAGE ON SCHEMA msbms_appl TO <%= msbms_apiusr %>;
 
 COMMENT ON SCHEMA msbms_appl IS
 $DOC$Public API for exposing business application logic and data.  Contains
@@ -71,10 +71,10 @@ CREATE SCHEMA IF NOT EXISTS msbms_appl_priv
     AUTHORIZATION <%= msbms_owner %>;
 
 REVOKE USAGE ON SCHEMA msbms_appl_priv FROM PUBLIC;
-REVOKE USAGE ON SCHEMA msbms_appl_priv FROM <%= msbms_app_admin %>;
-REVOKE USAGE ON SCHEMA msbms_appl_priv FROM <%= msbms_api_admin %>;
-REVOKE USAGE ON SCHEMA msbms_appl_priv FROM <%= msbms_app_user %>;
-REVOKE USAGE ON SCHEMA msbms_appl_priv FROM <%= msbms_api_user %>;
+REVOKE USAGE ON SCHEMA msbms_appl_priv FROM <%= msbms_appadm %>;
+REVOKE USAGE ON SCHEMA msbms_appl_priv FROM <%= msbms_apiadm %>;
+REVOKE USAGE ON SCHEMA msbms_appl_priv FROM <%= msbms_appusr %>;
+REVOKE USAGE ON SCHEMA msbms_appl_priv FROM <%= msbms_apiusr %>;
 
 COMMENT ON SCHEMA msbms_appl_priv IS
 $DOC$Internal, private business logic.  This schema contains the lower level
@@ -85,10 +85,10 @@ CREATE SCHEMA IF NOT EXISTS msbms_appl_data
     AUTHORIZATION <%= msbms_owner %>;
 
 REVOKE USAGE ON SCHEMA msbms_appl_data FROM PUBLIC;
-REVOKE USAGE ON SCHEMA msbms_appl_data FROM <%= msbms_app_admin %>;
-REVOKE USAGE ON SCHEMA msbms_appl_data FROM <%= msbms_api_admin %>;
-REVOKE USAGE ON SCHEMA msbms_appl_data FROM <%= msbms_app_user %>;
-REVOKE USAGE ON SCHEMA msbms_appl_data FROM <%= msbms_api_user %>;
+REVOKE USAGE ON SCHEMA msbms_appl_data FROM <%= msbms_appadm %>;
+REVOKE USAGE ON SCHEMA msbms_appl_data FROM <%= msbms_apiadm %>;
+REVOKE USAGE ON SCHEMA msbms_appl_data FROM <%= msbms_appusr %>;
+REVOKE USAGE ON SCHEMA msbms_appl_data FROM <%= msbms_apiusr %>;
 
 COMMENT ON SCHEMA msbms_appl_data IS
 $DOC$Schema container for the application's business related data tables and
@@ -98,10 +98,10 @@ CREATE SCHEMA IF NOT EXISTS msbms_user
     AUTHORIZATION <%= msbms_owner %>;
 
 REVOKE USAGE ON SCHEMA msbms_user FROM PUBLIC;
-GRANT USAGE ON SCHEMA msbms_user TO <%= msbms_app_admin %>;
-GRANT USAGE ON SCHEMA msbms_user TO <%= msbms_api_admin %>;
-GRANT USAGE ON SCHEMA msbms_user TO <%= msbms_app_user %>;
-GRANT USAGE ON SCHEMA msbms_user TO <%= msbms_api_user %>;
+GRANT USAGE ON SCHEMA msbms_user TO <%= msbms_appadm %>;
+GRANT USAGE ON SCHEMA msbms_user TO <%= msbms_apiadm %>;
+GRANT USAGE ON SCHEMA msbms_user TO <%= msbms_appusr %>;
+GRANT USAGE ON SCHEMA msbms_user TO <%= msbms_apiusr %>;
 
 COMMENT ON SCHEMA msbms_user IS
 $DOC$A schema container for user defined public API procedures, functions, and
@@ -111,10 +111,10 @@ CREATE SCHEMA IF NOT EXISTS msbms_user_priv
     AUTHORIZATION <%= msbms_owner %>;
 
 REVOKE USAGE ON SCHEMA msbms_user_priv FROM PUBLIC;
-REVOKE USAGE ON SCHEMA msbms_user_priv FROM <%= msbms_app_admin %>;
-REVOKE USAGE ON SCHEMA msbms_user_priv FROM <%= msbms_api_admin %>;
-REVOKE USAGE ON SCHEMA msbms_user_priv FROM <%= msbms_app_user %>;
-REVOKE USAGE ON SCHEMA msbms_user_priv FROM <%= msbms_api_user %>;
+REVOKE USAGE ON SCHEMA msbms_user_priv FROM <%= msbms_appadm %>;
+REVOKE USAGE ON SCHEMA msbms_user_priv FROM <%= msbms_apiadm %>;
+REVOKE USAGE ON SCHEMA msbms_user_priv FROM <%= msbms_appusr %>;
+REVOKE USAGE ON SCHEMA msbms_user_priv FROM <%= msbms_apiusr %>;
 
 COMMENT ON SCHEMA msbms_user_priv IS
 $DOC$A schema container for user defined logic primitives, procedures, functions, and
@@ -124,10 +124,10 @@ CREATE SCHEMA IF NOT EXISTS msbms_user_data
     AUTHORIZATION <%= msbms_owner %>;
 
 REVOKE USAGE ON SCHEMA msbms_user_data FROM PUBLIC;
-REVOKE USAGE ON SCHEMA msbms_user_data FROM <%= msbms_app_admin %>;
-REVOKE USAGE ON SCHEMA msbms_user_data FROM <%= msbms_api_admin %>;
-REVOKE USAGE ON SCHEMA msbms_user_data FROM <%= msbms_app_user %>;
-REVOKE USAGE ON SCHEMA msbms_user_data FROM <%= msbms_api_user %>;
+REVOKE USAGE ON SCHEMA msbms_user_data FROM <%= msbms_appadm %>;
+REVOKE USAGE ON SCHEMA msbms_user_data FROM <%= msbms_apiadm %>;
+REVOKE USAGE ON SCHEMA msbms_user_data FROM <%= msbms_appusr %>;
+REVOKE USAGE ON SCHEMA msbms_user_data FROM <%= msbms_apiusr %>;
 
 COMMENT ON SCHEMA msbms_user_data IS
 $DOC$Schema container for user defined data tables and user defined types.$DOC$;
