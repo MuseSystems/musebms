@@ -19,10 +19,9 @@ defmodule Msbms.System.Data.GlobalDatastore do
   alias Msbms.System.Data.Utils
   alias Msbms.System.Types.DatastoreOptions
   alias Msbms.System.Types.DbServer
-  alias Msbms.System.Constants
 
-  @spec get_datastore_options :: DatastoreOptions.t()
-  def get_datastore_options() do
+  @spec get_datastore_options(DbServer.t()) :: DatastoreOptions.t()
+  def get_datastore_options(%DbServer{server_salt: server_salt}) do
     global_database_name =
       Constants.get(:db_name)
       |> String.replace("##dbtype##", "glbl")
@@ -39,6 +38,8 @@ defmodule Msbms.System.Data.GlobalDatastore do
       appadm_pool: nil,
       apiusr_pool: nil,
       apiadm_pool: nil,
+      instance_name: "global",
+      instance_code: server_salt <> Constants.get(:global_server_salt),
       datastores: [
         appusr:
           Constants.get(:db_appusr)
@@ -74,7 +75,12 @@ defmodule Msbms.System.Data.GlobalDatastore do
                hostname: dbserver.db_host,
                port: dbserver.db_port,
                username: Atom.to_string(elem(datastore, 1)),
-               password: dbserver.instance_salt <> Atom.to_string(elem(datastore, 1)),
+               password:
+                 Utils.generate_password(
+                   options.instance_code,
+                   Atom.to_string(elem(datastore, 1)),
+                   dbserver.server_salt
+                 ),
                show_sensitive_data_on_connection_error: dbserver.db_show_sensitive,
                pool_size:
                  case elem(datastore, 0) do

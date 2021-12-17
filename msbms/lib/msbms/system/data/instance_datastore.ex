@@ -27,7 +27,8 @@ defmodule Msbms.System.Data.InstanceDatastore do
         db_appusr_pool: db_app_user_pool,
         db_appadm_pool: db_app_admin_pool,
         db_apiusr_pool: db_api_user_pool,
-        db_apiadm_pool: db_api_admin_pool
+        db_apiadm_pool: db_api_admin_pool,
+        instance_code: instance_code
       }) do
     global_database_name =
       Constants.get(:db_name)
@@ -45,6 +46,8 @@ defmodule Msbms.System.Data.InstanceDatastore do
       appadm_pool: db_app_admin_pool,
       apiusr_pool: db_api_user_pool,
       apiadm_pool: db_api_admin_pool,
+      instance_name: instance_name,
+      instance_code: instance_code,
       datastores: [
         appusr:
           Constants.get(:db_app_usr)
@@ -66,7 +69,6 @@ defmodule Msbms.System.Data.InstanceDatastore do
           |> String.replace("##dbident##", instance_name)
           |> String.downcase()
           |> String.to_atom()
-          )
       ]
     }
   end
@@ -81,7 +83,12 @@ defmodule Msbms.System.Data.InstanceDatastore do
                hostname: dbserver.db_host,
                port: dbserver.db_port,
                username: Atom.to_string(elem(datastore, 1)),
-               password: dbserver.instance_salt <> Atom.to_string(elem(datastore, 1)),
+               password:
+                 Utils.generate_password(
+                   options.instance_code,
+                   Atom.to_string(elem(datastore, 1)),
+                   dbserver.server_salt
+                 ),
                show_sensitive_data_on_connection_error: dbserver.db_show_sensitive,
                pool_size:
                  case elem(datastore, 0) do
