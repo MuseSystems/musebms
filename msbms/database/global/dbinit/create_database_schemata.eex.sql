@@ -11,9 +11,6 @@
 --
 -- muse.information@musesystems.com  :: https://muse.systems
 
-SET SESSION AUTHORIZATION <%= msbms_owner %>;
-SET SESSION ROLE <%= msbms_owner %>;
-
 CREATE SCHEMA IF NOT EXISTS msbms_syst
     AUTHORIZATION <%= msbms_owner %>;
 
