@@ -11,5 +11,6 @@
 --
 -- muse.information@musesystems.com  :: https://muse.systems
 
--- Make this PERFORM since there will always be a DO script wrapper
-PERFORM '*** No changes for this release/version/update.';
+RAISE NOTICE
+    USING MESSAGE = format( '*** No changes for migration version %1$s.',
+                            '<%= msbms_migration_version %>');
