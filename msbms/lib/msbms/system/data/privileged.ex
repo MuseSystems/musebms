@@ -325,9 +325,7 @@ defmodule Msbms.System.Data.Privileged do
     migration_bindings = [
       msbms_owner: database_owner,
       msbms_appusr: datastore_options.datastores |> Keyword.get(:appusr) |> Atom.to_string(),
-      msbms_appadm: datastore_options.datastores |> Keyword.get(:appadm) |> Atom.to_string(),
       msbms_apiusr: datastore_options.datastores |> Keyword.get(:apiusr) |> Atom.to_string(),
-      msbms_apiadm: datastore_options.datastores |> Keyword.get(:apiadm) |> Atom.to_string(),
       msbms_migration_version: migration.migration_version
     ]
 

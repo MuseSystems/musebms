@@ -15,8 +15,6 @@ CREATE SCHEMA IF NOT EXISTS msbms_syst
     AUTHORIZATION <%= msbms_owner %>;
 
 REVOKE USAGE ON SCHEMA msbms_syst FROM PUBLIC;
-GRANT USAGE ON SCHEMA msbms_syst TO <%= msbms_appadm %>;
-GRANT USAGE ON SCHEMA msbms_syst TO <%= msbms_apiadm %>;
 GRANT USAGE ON SCHEMA msbms_syst TO <%= msbms_appusr %>;
 GRANT USAGE ON SCHEMA msbms_syst TO <%= msbms_apiusr %>;
 
@@ -29,8 +27,6 @@ CREATE SCHEMA IF NOT EXISTS msbms_syst_priv
     AUTHORIZATION <%= msbms_owner %>;
 
 REVOKE USAGE ON SCHEMA msbms_syst_priv FROM PUBLIC;
-REVOKE USAGE ON SCHEMA msbms_syst_priv FROM <%= msbms_appadm %>;
-REVOKE USAGE ON SCHEMA msbms_syst_priv FROM <%= msbms_apiadm %>;
 REVOKE USAGE ON SCHEMA msbms_syst_priv FROM <%= msbms_appusr %>;
 REVOKE USAGE ON SCHEMA msbms_syst_priv FROM <%= msbms_apiusr %>;
 
@@ -44,8 +40,6 @@ CREATE SCHEMA IF NOT EXISTS msbms_syst_data
     AUTHORIZATION <%= msbms_owner %>;
 
 REVOKE USAGE ON SCHEMA msbms_syst_data FROM PUBLIC;
-REVOKE USAGE ON SCHEMA msbms_syst_data FROM <%= msbms_appadm %>;
-REVOKE USAGE ON SCHEMA msbms_syst_data FROM <%= msbms_apiadm %>;
 REVOKE USAGE ON SCHEMA msbms_syst_data FROM <%= msbms_appusr %>;
 REVOKE USAGE ON SCHEMA msbms_syst_data FROM <%= msbms_apiusr %>;
 

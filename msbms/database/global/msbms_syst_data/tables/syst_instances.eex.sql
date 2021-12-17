@@ -13,44 +13,38 @@
 
 CREATE TABLE msbms_syst_data.syst_instances
 (
-     id                      uuid        DEFAULT uuid_generate_v1( )  NOT NULL
+     id                       uuid        DEFAULT uuid_generate_v1( )  NOT NULL
         CONSTRAINT syst_instances_pk PRIMARY KEY
-    ,internal_name           text                                     NOT NULL
+    ,internal_name            text                                     NOT NULL
         CONSTRAINT syst_instances_internal_name_udx UNIQUE
-    ,display_name            text                                     NOT NULL
+    ,display_name             text                                     NOT NULL
         CONSTRAINT syst_instances_display_name_udx UNIQUE
-    ,enum_instance_type_id   uuid                                     NOT NULL
+    ,enum_instance_type_id    uuid                                     NOT NULL
         CONSTRAINT syst_instances_enum_instance_type_fk
         REFERENCES msbms_syst_data.enum_instance_types (id)
-    ,enum_instance_state_id  uuid                                     NOT NULL
+    ,enum_instance_state_id   uuid                                     NOT NULL
         CONSTRAINT syst_instances_enum_instance_state_fk
         REFERENCES msbms_syst_data.enum_instance_states (id)
-    ,dbserver_name           text                                     NOT NULL
-    ,db_app_user_pool_size   integer     DEFAULT 10                   NOT NULL
-        CONSTRAINT syst_instances_db_app_user_pool_size_no_neg_chk
-        CHECK (db_app_user_pool_size > 0)
-    ,db_app_admin_pool_size  integer     DEFAULT 3                    NOT NULL
-        CONSTRAINT syst_instances_db_app_admin_pool_size_no_neg_chk
-        CHECK (db_app_admin_pool_size > 0)
-    ,db_api_user_pool_size   integer     DEFAULT 10                   NOT NULL
-        CONSTRAINT syst_instances_db_api_user_pool_size_no_neg_chk
-        CHECK (db_api_user_pool_size > 0)
-    ,db_api_admin_pool_size  integer     DEFAULT 3                    NOT NULL
-        CONSTRAINT syst_instances_db_api_admin_pool_size_no_neg_chk
-        CHECK (db_api_admin_pool_size > 0)
-    ,instance_code           bytea       DEFAULT gen_random_bytes(32) NOT NULL
-    ,owning_instance_id      uuid
+    ,dbserver_name            text                                     NOT NULL
+    ,db_app_context_pool_size integer     DEFAULT 10                   NOT NULL
+        CONSTRAINT syst_instances_db_app_context_pool_size_no_neg_chk
+        CHECK (db_app_context_pool_size > 0)
+    ,db_api_context_pool_size integer     DEFAULT 3                    NOT NULL
+        CONSTRAINT syst_instances_db_api_context_pool_size_no_neg_chk
+        CHECK (db_api_context_pool_size > 0)
+    ,instance_code            bytea       DEFAULT gen_random_bytes(32) NOT NULL
+    ,owning_instance_id       uuid
         CONSTRAINT syst_instances_owning_instance_fk
         REFERENCES msbms_syst_data.syst_instances (id)
         CONSTRAINT syst_instances_self_ownership_chk
         CHECK (owning_instance_id IS NULL OR owning_instance_id != id)
-    ,diag_timestamp_created  timestamptz DEFAULT now( )               NOT NULL
-    ,diag_role_created       text                                     NOT NULL
-    ,diag_timestamp_modified timestamptz DEFAULT now( )               NOT NULL
-    ,diag_wallclock_modified timestamptz DEFAULT clock_timestamp( )   NOT NULL
-    ,diag_role_modified      text                                     NOT NULL
-    ,diag_row_version        bigint      DEFAULT 1                    NOT NULL
-    ,diag_update_count       bigint      DEFAULT 0                    NOT NULL
+    ,diag_timestamp_created   timestamptz DEFAULT now( )               NOT NULL
+    ,diag_role_created        text                                     NOT NULL
+    ,diag_timestamp_modified  timestamptz DEFAULT now( )               NOT NULL
+    ,diag_wallclock_modified  timestamptz DEFAULT clock_timestamp( )   NOT NULL
+    ,diag_role_modified       text                                     NOT NULL
+    ,diag_row_version         bigint      DEFAULT 1                    NOT NULL
+    ,diag_update_count        bigint      DEFAULT 0                    NOT NULL
 );
 
 ALTER TABLE msbms_syst_data.syst_instances OWNER TO <%= msbms_owner %>;
@@ -99,28 +93,16 @@ While this file may override certain defaults set for the server in that file,
 we need to use the references in that file to know where we should connect.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_instances.db_app_user_pool_size IS
-$DOC$The number of database connections to open for normal application client users.
-Note that these are not individual users, but pooled connections that are
-checked out as needed.$DOC$;
+    COLUMN msbms_syst_data.syst_instances.db_app_context_pool_size IS
+$DOC$The number of pooled database connections available to the application access
+context.  The application will checkout connections from the pool as needed and
+otherwise queue requests as necessary (within limits).$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_instances.db_app_admin_pool_size IS
-$DOC$The number of database connections to open for administrative application client
-users.  Note that these are not individual users, but pooled connections that
-are checked out as needed.$DOC$;
-
-COMMENT ON
-    COLUMN msbms_syst_data.syst_instances.db_api_user_pool_size IS
-$DOC$The number of database connections to open for non-privileged API access from
-API clients.  Note that these are not individual users, but pooled connections
-that are checked out as needed.$DOC$;
-
-COMMENT ON
-    COLUMN msbms_syst_data.syst_instances.db_api_admin_pool_size IS
-$DOC$The number of database client connections to open for administrative API access
-from API clients.  Note that these are not individual users, but pooled
-connections that are checked out as needed.$DOC$;
+    COLUMN msbms_syst_data.syst_instances.db_api_context_pool_size IS
+$DOC$The number of pooled database connections available to the API access context.
+The application will checkout connections from the pool as needed and otherwise
+queue requests as necessary (within limits).$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.syst_instances.instance_code IS

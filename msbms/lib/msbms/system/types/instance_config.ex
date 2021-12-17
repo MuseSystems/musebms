@@ -22,9 +22,7 @@ defmodule Msbms.System.Types.InstanceConfig do
             :uninitialized | :initializing | :active | :suspended | :inactive | :purge_eligible,
           instance_dbserver: binary(),
           db_appusr_pool: integer(),
-          db_appadm_pool: integer(),
           db_apiusr_pool: integer(),
-          db_apiadm_pool: integer(),
           instance_code: binary()
         }
   defstruct id: nil,
@@ -36,8 +34,6 @@ defmodule Msbms.System.Types.InstanceConfig do
             instance_state_functional_type: nil,
             instance_dbserver: nil,
             db_appusr_pool: nil,
-            db_appadm_pool: nil,
             db_apiusr_pool: nil,
-            db_apiadm_pool: nil,
             instance_code: nil
 end

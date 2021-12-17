@@ -17,9 +17,7 @@ defmodule Msbms.System.Constants do
     db_name: "msbms_##dbtype##_##dbident##",
     db_owner: "msbms_##dbident##_owner",
     db_appusr: "msbms_##dbident##_appusr",
-    db_appadm: "msbms_##dbident##_appadm",
     db_apiusr: "msbms_##dbident##_apiusr",
-    db_apiadm: "msbms_##dbident##_apiadm",
     salt_min_bytes: 32,
     dba_pass_min_bytes: 32,
     dbident_salt: "FW4eTLAjwWAuqEni3R55ihR5CxHjqh7ZSm41Ns94",
@@ -27,9 +25,7 @@ defmodule Msbms.System.Constants do
   ]
 
   @spec get(
-          :db_apiadm
-          | :db_apiusr
-          | :db_appadm
+          :db_apiusr
           | :db_appusr
           | :db_name
           | :db_owner

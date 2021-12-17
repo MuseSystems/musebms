@@ -27,3 +27,103 @@ load_files = [
     "global/msbms_syst_data/tables/enum_instance_states.eex.sql",
     "global/msbms_syst_data/tables/syst_instances.eex.sql",
 ]
+
+[[build_plans]]
+release              = 1
+version              = 1
+update               = 1
+sponsor              = 820
+sponsor_modification = 0
+load_files = [
+    "common/misc/no_changes.eex.sql"
+]
+
+[[build_plans]]
+release              = 1
+version              = 2
+update               = 0
+sponsor              = 820
+sponsor_modification = 0
+load_files = [
+    "common/misc/no_changes.eex.sql"
+]
+
+[[build_plans]]
+release              = 2
+version              = 1
+update               = 0
+sponsor              = 820
+sponsor_modification = 0
+load_files = [
+    "common/misc/no_changes.eex.sql"
+]
+
+[[build_plans]]
+release              = 2
+version              = 1
+update               = 1
+sponsor              = 820
+sponsor_modification = 0
+load_files = [
+    "common/misc/no_changes.eex.sql"
+]
+
+[[build_plans]]
+release              = 2
+version              = 1
+update               = 3
+sponsor              = 820
+sponsor_modification = 0
+load_files = [
+    "common/misc/no_changes.eex.sql"
+]
+
+[[build_plans]]
+release              = 2
+version              = 1
+update               = 535
+sponsor              = 820
+sponsor_modification = 1
+load_files = [
+    "common/misc/no_changes.eex.sql"
+]
+
+[[build_plans]]
+release              = 2
+version              = 1
+update               = 5350
+sponsor              = 820
+sponsor_modification = 0
+load_files = [
+    "common/misc/no_changes.eex.sql"
+]
+
+[[build_plans]]
+release              = 3
+version              = 1
+update               = 3
+sponsor              = 820
+sponsor_modification = 0
+load_files = [
+    "common/misc/no_changes.eex.sql"
+]
+
+[[build_plans]]
+release              = 3
+version              = 1
+update               = 535
+sponsor              = 820
+sponsor_modification = 1
+load_files = [
+    "common/misc/no_changes.eex.sql"
+]
+
+[[build_plans]]
+release              = 3
+version              = 1
+update               = 5350
+sponsor              = 820
+sponsor_modification = 0
+load_files = [
+    "common/misc/no_changes.eex.sql"
+]

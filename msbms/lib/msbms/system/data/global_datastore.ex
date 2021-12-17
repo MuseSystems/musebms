@@ -35,9 +35,7 @@ defmodule Msbms.System.Data.GlobalDatastore do
         |> String.replace("##dbident##", "0000MS")
         |> String.downcase(),
       appusr_pool: nil,
-      appadm_pool: nil,
       apiusr_pool: nil,
-      apiadm_pool: nil,
       instance_name: "global",
       instance_code: server_salt <> Constants.get(:global_server_salt),
       datastores: [
@@ -51,16 +49,6 @@ defmodule Msbms.System.Data.GlobalDatastore do
           |> String.replace("##dbident##", "0000MS")
           |> String.downcase()
           |> String.to_atom(),
-        appadm:
-          Constants.get(:db_appadm)
-          |> String.replace("##dbident##", "0000MS")
-          |> String.downcase()
-          |> String.to_atom(),
-        apiadm:
-          Constants.get(:db_apiadm)
-          |> String.replace("##dbident##", "0000MS")
-          |> String.downcase()
-          |> String.to_atom()
       ]
     }
   end
@@ -86,8 +74,6 @@ defmodule Msbms.System.Data.GlobalDatastore do
                  case elem(datastore, 0) do
                    :appusr -> dbserver.db_default_app_user_pool_size
                    :apiusr -> dbserver.db_default_api_user_pool_size
-                   :appadm -> dbserver.db_default_app_admin_pool_size
-                   :apiadm -> dbserver.db_default_api_admin_pool_size
                    _ -> 1
                  end
              ) do

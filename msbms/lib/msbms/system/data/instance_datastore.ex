@@ -25,9 +25,7 @@ defmodule Msbms.System.Data.InstanceDatastore do
   def get_datastore_options(%InstanceConfig{
         instance_name: instance_name,
         db_appusr_pool: db_app_user_pool,
-        db_appadm_pool: db_app_admin_pool,
         db_apiusr_pool: db_api_user_pool,
-        db_apiadm_pool: db_api_admin_pool,
         instance_code: instance_code
       }) do
     global_database_name =
@@ -43,9 +41,7 @@ defmodule Msbms.System.Data.InstanceDatastore do
         |> String.replace("##dbident##", instance_name)
         |> String.downcase(),
       appusr_pool: db_app_user_pool,
-      appadm_pool: db_app_admin_pool,
       apiusr_pool: db_api_user_pool,
-      apiadm_pool: db_api_admin_pool,
       instance_name: instance_name,
       instance_code: instance_code,
       datastores: [
@@ -56,16 +52,6 @@ defmodule Msbms.System.Data.InstanceDatastore do
           |> String.to_atom(),
         apiusr:
           Constants.get(:db_api_usr)
-          |> String.replace("##dbident##", instance_name)
-          |> String.downcase()
-          |> String.to_atom(),
-        appadm:
-          Constants.get(:db_app_admin)
-          |> String.replace("##dbident##", instance_name)
-          |> String.downcase()
-          |> String.to_atom(),
-        apiadm:
-          Constants.get(:db_api_admin)
           |> String.replace("##dbident##", instance_name)
           |> String.downcase()
           |> String.to_atom()
@@ -94,8 +80,6 @@ defmodule Msbms.System.Data.InstanceDatastore do
                  case elem(datastore, 0) do
                    :appusr -> dbserver.db_default_app_user_pool_size
                    :apiusr -> dbserver.db_default_api_user_pool_size
-                   :appadm -> dbserver.db_default_app_admin_pool_size
-                   :apiadm -> dbserver.db_default_api_admin_pool_size
                    _ -> 1
                  end
              ) do
