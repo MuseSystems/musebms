@@ -22,14 +22,12 @@ defmodule Msbms.System.Data.GlobalDatastore do
 
   @spec get_datastore_options(DbServer.t()) :: DatastoreOptions.t()
   def get_datastore_options(%DbServer{server_salt: server_salt}) do
-    global_database_name =
-      Constants.get(:db_name)
-      |> String.replace("##dbtype##", "glbl")
-      |> String.replace("##dbident##", "0000MS")
-      |> String.downcase()
-
     %DatastoreOptions{
-      database_name: global_database_name,
+      database_name:
+        Constants.get(:db_name)
+        |> String.replace("##dbtype##", "glbl")
+        |> String.replace("##dbident##", "0000ms")
+        |> String.downcase(),
       database_owner:
         Constants.get(:db_owner)
         |> String.replace("##dbident##", "0000MS")
