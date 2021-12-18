@@ -28,14 +28,12 @@ defmodule Msbms.System.Data.InstanceDatastore do
         db_apiusr_pool: db_api_user_pool,
         instance_code: instance_code
       }) do
-    global_database_name =
-      Constants.get(:db_name)
-      |> String.replace("##dbtype##", "inst")
-      |> String.replace("##dbident##", instance_name)
-      |> String.downcase()
-
     %DatastoreOptions{
-      database_name: global_database_name,
+      database_name:
+        Constants.get(:db_name)
+        |> String.replace("##dbtype##", "inst")
+        |> String.replace("##dbident##", instance_name)
+        |> String.downcase(),
       database_owner:
         Constants.get(:db_owner)
         |> String.replace("##dbident##", instance_name)
