@@ -18,6 +18,7 @@ defmodule Msbms.System.Data.Utils do
   These utilities are only expected to be used by Msbms.System.Data modules.
   """
   alias Msbms.System.Constants
+  alias Msbms.System.Types.DatastoreOptions
 
   @doc """
 
@@ -52,5 +53,50 @@ defmodule Msbms.System.Data.Utils do
       _ ->
         {:error, "Failed to parse migration version information from #{filename}"}
     end
+  end
+
+  @spec start_datastores(atom(), DatastoreOptions.t()) :: [{:ok, pid()} | {:error, term()}]
+  def start_datastores(datastore_module, %DatastoreOptions{} = options)
+      when is_atom(datastore_module) do
+    Enum.reduce(options.contexts, [], fn context, acc ->
+      [
+        case datastore_module.start_link(
+               name: Keyword.get(context, :context_id),
+               database: options.database_name,
+               hostname: options.dbserver.db_host,
+               port: options.dbserver.db_port,
+               username: Atom.to_string(Keyword.get(context, :context_id)),
+               password:
+                 generate_password(
+                   options.instance_code,
+                   Atom.to_string(Keyword.get(context, :context_id)),
+                   options.dbserver.server_salt
+                 ),
+               show_sensitive_data_on_connection_error: options.dbserver.db_show_sensitive,
+               pool_size: Keyword.get(context, :context_starting_pool_size, 1)
+             ) do
+          {:error, {:already_started, ds_pid}} -> {:ok, ds_pid}
+          return_value -> return_value
+        end
+        | acc
+      ]
+    end)
+  end
+
+  @spec stop_datastores(atom(), DatastoreOptions.t()) :: :ok
+  def stop_datastores(datastore_module, %DatastoreOptions{contexts: contexts})
+      when is_atom(datastore_module) do
+    Enum.each(
+      contexts,
+      fn context ->
+        context
+        |> Keyword.get(:context_id)
+        |> datastore_module.put_dynamic_repo()
+
+        datastore_module.stop()
+      end
+    )
+
+    :ok
   end
 end

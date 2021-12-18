@@ -14,17 +14,15 @@ defmodule Msbms.System.Types.DatastoreOptions do
   @type t() :: %__MODULE__{
           database_name: binary(),
           database_owner: binary(),
-          appusr_pool: integer(),
-          apiusr_pool: integer(),
           instance_code: binary(),
           instance_name: binary(),
-          datastores: Keyword.t()
+          contexts: [Keyword.t()],
+          dbserver: Msbms.System.Types.DbServer.t()
         }
   defstruct database_name: nil,
             database_owner: nil,
-            appusr_pool: nil,
-            apiusr_pool: nil,
             instance_code: nil,
             instance_name: nil,
-            datastores: nil
+            contexts: nil,
+            dbserver: nil
 end
