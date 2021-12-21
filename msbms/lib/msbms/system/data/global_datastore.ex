@@ -37,7 +37,9 @@ defmodule Msbms.System.Data.GlobalDatastore do
       dbserver: dbserver,
       contexts: [
         [
-          context_id:
+          context_id: :appusr,
+          context_desc: "MSBMS Gloabl Database Application Access Role",
+          context_role:
             Constants.get(:db_appusr)
             |> String.replace("##dbident##", "0000ms")
             |> String.downcase()
@@ -45,7 +47,9 @@ defmodule Msbms.System.Data.GlobalDatastore do
           context_starting_pool_size: nil
         ],
         [
-          context_id:
+          context_id: :apiusr,
+          context_desc: "MSBMS Gloabl Database API Access Role",
+          context_role:
             Constants.get(:db_apiusr)
             |> String.replace("##dbident##", "0000ms")
             |> String.downcase()

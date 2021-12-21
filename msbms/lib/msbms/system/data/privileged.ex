@@ -69,16 +69,12 @@ defmodule Msbms.System.Data.Privileged do
     end
   end
 
-  @spec create_datastore_roles(pid(), DbServer.t(), DatastoreOptions.t()) :: {:ok} | {:error, any}
-  def create_datastore_roles(
-        db_conn_pid,
-        %DbServer{} = dbserver,
-        %DatastoreOptions{} = datastore_options
-      )
+  @spec create_datastore_roles(pid(), DatastoreOptions.t()) :: {:ok} | {:error, any}
+  def create_datastore_roles(db_conn_pid, %DatastoreOptions{} = datastore_options)
       when is_pid(db_conn_pid) do
     with(
       {:ok} <- create_datastore_owner_role(db_conn_pid, datastore_options),
-      {:ok} <- create_datastore_login_roles(db_conn_pid, dbserver, datastore_options)
+      {:ok} <- create_datastore_login_roles(db_conn_pid, datastore_options)
     ) do
       {:ok}
     else
@@ -86,27 +82,26 @@ defmodule Msbms.System.Data.Privileged do
     end
   end
 
-  @spec create_datastore_login_roles(pid(), DbServer.t(), DatastoreOptions.t()) ::
+  @spec create_datastore_login_roles(pid(), DatastoreOptions.t()) ::
           {:ok} | {:error, any}
-  def create_datastore_login_roles(
-        db_conn_pid,
-        %DbServer{} = dbserver,
-        %DatastoreOptions{} = datastore_options
-      )
+  def create_datastore_login_roles(db_conn_pid, %DatastoreOptions{} = datastore_options)
       when is_pid(db_conn_pid) do
-    Enum.reduce(datastore_options.datastores, {:ok}, fn datastore, acc ->
+    Enum.reduce(datastore_options.contexts, {:ok}, fn context, acc ->
       with {:ok} <- acc do
-        rolename = Atom.to_string(elem(datastore, 1))
+        rolename =
+          Keyword.get(context, :context_role)
+          |> Atom.to_string()
 
         case db_role_exists?(db_conn_pid, rolename) do
           false ->
             create_db_role(
               db_conn_pid,
               rolename,
+              Keyword.get(context, :context_desc),
               Utils.generate_password(
                 datastore_options.instance_code,
                 rolename,
-                dbserver.server_salt
+                datastore_options.dbserver.server_salt
               )
             )
 
@@ -127,23 +122,32 @@ defmodule Msbms.System.Data.Privileged do
       )
       when is_pid(db_conn_pid) do
     case db_role_exists?(db_conn_pid, datastore_options.database_owner) do
-      false -> create_db_role(db_conn_pid, datastore_options.database_owner, :owner)
+      false -> create_db_role(db_conn_pid, datastore_options.database_owner, "MSBMS standard database owner role", :owner)
       true -> {:ok}
     end
   end
 
-  @spec create_db_role(pid(), binary(), binary() | :owner) :: {:ok} | {:error, binary()}
-  def create_db_role(db_conn_pid, rolename, password)
+  @spec create_db_role(pid(), binary(), binary() | nil, binary() | :owner) :: {:ok} | {:error, binary()}
+  def create_db_role(db_conn_pid, rolename, role_description, password)
       when is_pid(db_conn_pid) and is_binary(rolename) do
     PrivilegedDatastore.put_dynamic_repo(db_conn_pid)
+
+    role_comment = role_description || "Undocumented MSBMS Role"
 
     create_role_result =
       cond do
         is_binary(password) ->
           PrivilegedDatastore.query(
             """
-            CREATE ROLE #{rolename}
-              WITH NOINHERIT LOGIN IN ROLE msbms_access PASSWORD '#{password}';
+            DO
+            $ROLESCRIPT$
+              BEGIN
+                CREATE ROLE #{rolename}
+                  WITH NOINHERIT LOGIN IN ROLE msbms_access PASSWORD '#{password}';
+
+                COMMENT ON ROLE #{rolename} IS $DOC$#{role_comment}$DOC$;
+              END;
+            $ROLESCRIPT$;
             """,
             []
           )
@@ -152,7 +156,16 @@ defmodule Msbms.System.Data.Privileged do
           with(
             {:ok, _} <-
               PrivilegedDatastore.query(
-                "CREATE ROLE #{rolename} WITH NOINHERIT NOLOGIN;",
+                """
+                DO
+                $ROLESCRIPT$
+                  BEGIN
+                    CREATE ROLE #{rolename} WITH NOINHERIT NOLOGIN;
+
+                    COMMENT ON ROLE #{rolename} IS $DOC$#{role_description}$DOC$;
+                  END;
+                $ROLESCRIPT$;
+                """,
                 []
               ),
             {:ok, _} <-
@@ -162,6 +175,8 @@ defmodule Msbms.System.Data.Privileged do
               )
           ) do
             {:ok, nil}
+          else
+            error -> {:error, "Failed creating database role:\n#{inspect(error)}"}
           end
       end
 
@@ -324,8 +339,16 @@ defmodule Msbms.System.Data.Privileged do
 
     migration_bindings = [
       msbms_owner: database_owner,
-      msbms_appusr: datastore_options.datastores |> Keyword.get(:appusr) |> Atom.to_string(),
-      msbms_apiusr: datastore_options.datastores |> Keyword.get(:apiusr) |> Atom.to_string(),
+      msbms_appusr:
+        datastore_options.contexts
+        |> Enum.find(&(Keyword.get(&1, :context_id) == :appusr))
+        |> Keyword.get(:context_role)
+        |> Atom.to_string(),
+      msbms_apiusr:
+        datastore_options.contexts
+        |> Enum.find(&(Keyword.get(&1, :context_id) == :apiusr))
+        |> Keyword.get(:context_role)
+        |> Atom.to_string(),
       msbms_migration_version: migration.migration_version
     ]
 
