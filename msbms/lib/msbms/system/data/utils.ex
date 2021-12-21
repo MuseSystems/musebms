@@ -61,22 +61,29 @@ defmodule Msbms.System.Data.Utils do
     Enum.reduce(options.contexts, [], fn context, acc ->
       [
         case datastore_module.start_link(
-               name: Keyword.get(context, :context_id),
+               name: Keyword.get(context, :context_role),
                database: options.database_name,
                hostname: options.dbserver.db_host,
                port: options.dbserver.db_port,
-               username: Atom.to_string(Keyword.get(context, :context_id)),
+               username: Atom.to_string(Keyword.get(context, :context_role)),
                password:
                  generate_password(
                    options.instance_code,
-                   Atom.to_string(Keyword.get(context, :context_id)),
+                   Atom.to_string(Keyword.get(context, :context_role)),
                    options.dbserver.server_salt
                  ),
                show_sensitive_data_on_connection_error: options.dbserver.db_show_sensitive,
                pool_size: Keyword.get(context, :context_starting_pool_size, 1)
              ) do
-          {:error, {:already_started, ds_pid}} -> {:ok, ds_pid}
-          return_value -> return_value
+          {:error, {:already_started, ds_pid}} ->
+            {:ok, ds_pid}
+
+          {:error, reason} ->
+            {:error,
+             "Failure to start database #{options.database_name} for #{Atom.to_string(Keyword.get(context, :context_role))}.\n#{inspect(reason)}"}
+
+          return_value ->
+            return_value
         end
         | acc
       ]
@@ -90,7 +97,7 @@ defmodule Msbms.System.Data.Utils do
       contexts,
       fn context ->
         context
-        |> Keyword.get(:context_id)
+        |> Keyword.get(:context_role)
         |> datastore_module.put_dynamic_repo()
 
         datastore_module.stop()

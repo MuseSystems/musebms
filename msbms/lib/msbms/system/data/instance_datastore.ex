@@ -43,7 +43,9 @@ defmodule Msbms.System.Data.InstanceDatastore do
       dbserver: dbserver,
       contexts: [
         [
-          context_id:
+          context_id: :appusr,
+          context_desc: "MSBMS Instance (#{instance_name}) Database Application Access Role",
+          context_role:
             Constants.get(:db_appusr)
             |> String.replace("##dbident##", instance_name)
             |> String.downcase()
@@ -51,7 +53,9 @@ defmodule Msbms.System.Data.InstanceDatastore do
           context_starting_pool_size: db_app_user_pool
         ],
         [
-          context_id:
+          context_id: :apiusr,
+          context_desc: "MSBMS Instance (#{instance_name}) Database API Access Role",
+          context_role:
             Constants.get(:db_apiusr)
             |> String.replace("##dbident##", instance_name)
             |> String.downcase()
