@@ -9,7 +9,7 @@
 # See the NOTICE file in the project root for copyright ownership information.
 #
 # muse.information@musesystems.com :: https: //muse.systems
-defmodule Msbms.System.Actions.Privileged do
+defmodule Msbms.System.Actions.Global do
   alias Msbms.System.Data.GlobalDatastore
   alias Msbms.System.Data.Privileged
   alias Msbms.System.Data.PrivilegedDatastore
