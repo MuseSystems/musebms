@@ -16,6 +16,9 @@ defmodule Msbms.Application do
 
   @spec start(any, any) :: {:error, any} | {:ok, pid}
   def start(_type, _args) do
+
+    Msbms.System.Actions.Global.bootstrap()
+
     children = [
       Msbms.System.DataAccessSupervisor
     ]
