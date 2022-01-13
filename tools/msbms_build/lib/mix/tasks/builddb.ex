@@ -1,9 +1,9 @@
 defmodule Mix.Tasks.Builddb do
   use Mix.Task
 
-  @glbl_migrations_path "../msbms_syst_ds_glbl/priv/database"
-  @inst_migrations_path "../msbms_syst_ds_inst/priv/database"
-  @source_files_path "../database"
+  @glbl_migrations_path "../../components/system/msbms_syst_ds_glbl/priv/database"
+  @inst_migrations_path "../../components/system/msbms_syst_ds_inst/priv/database"
+  @source_files_path "../../database"
 
   @shortdoc "Builds the current database sources into their respective migrations."
   @spec run(any) :: any
