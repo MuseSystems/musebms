@@ -12,50 +12,14 @@
 
 defmodule MsbmsSystError.Impl.MsbmsError do
 
-  import MsbmsSystError.Impl.Gettext
-
   @moduledoc false
 
-  @type t :: %__MODULE__{
-    code:     atom(),
-    tech_msg: String.t(),
-    module:   atom(),
-    function: atom(),
-    cause:    any(),
-  }
-
-  defstruct code:     :S0X01,
-            tech_msg: "undefined error",
-            module:   nil,
-            function: nil,
-            cause:    nil
-
-  @spec get_errors_list :: Keyword.t()
-  def get_errors_list do
-    [
-      # System Module Error Codes (S), No topic, special cases (X)
-      S0X01: gettext("Unknown error."),
-      S0X02: gettext("Error description example."),
-
-      # System Module Error Codes (S), Datastore Topic (S)
-      S0S01: gettext("Startup options file could not be read."),
-      S0S02: gettext("Startup options file could not be parsed."),
-      S0S10: gettext("Global database name not found."),
-      S0S11: gettext("Global database not found."),
-      S0S12: gettext("Global database not initialized."),
-      S0S20: gettext("Instance database not found."),
-      S0S21: gettext("Instance database not initialized."),
-    ]
+  @spec get_root_cause(any()) :: any()
+  def get_root_cause(%MsbmsSystError{cause: next_error = %MsbmsSystError{}}) do
+     next_error
+     |> get_root_cause()
   end
 
-  @spec get_error_code_description(atom()) :: String.t()
-  def get_error_code_description(error_code) when is_atom(error_code) do
-    get_errors_list()
-    |> Keyword.get(error_code)
-  end
-
-  @spec get_root_cause(any) :: any
-  def get_root_cause(%__MODULE__{cause: next_error = %__MODULE__{}}), do: next_error |> get_root_cause()
   def get_root_cause(last_error), do: last_error
 
 end
