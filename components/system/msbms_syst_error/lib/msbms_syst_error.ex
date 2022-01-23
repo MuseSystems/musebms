@@ -51,6 +51,7 @@ defmodule MsbmsSystError do
     cause:    any(),
   }
 
+  @enforce_keys [:code, :message, :cause]
   defexception code:    :undefined_error,
                message: "undefined error",
                cause:   nil
