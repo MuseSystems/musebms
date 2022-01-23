@@ -7,9 +7,7 @@ defmodule MsbmsSystOptions.MixProject do
   @deps [
     {:credo,            "~> 1.6",  only: [:dev, :test], runtime: false},
     {:dialyxir,         "~> 1.0",  only: [:dev], runtime: false},
-    {:ecto,             ">= 0.0.0"},
     {:ex_doc,           "~> 0.27", only: :dev, runtime: false},
-    {:gettext,          "~> 0.19.0"},
     {:toml,             ">= 0.0.0"},
 
     {:msbms_syst_error, path: "../msbms_syst_error"}
