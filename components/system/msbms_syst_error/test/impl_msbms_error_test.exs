@@ -15,35 +15,16 @@ defmodule MsbmsSystError.ImplMsbmsErrorTest do
 
   alias MsbmsSystError.Impl.MsbmsError
 
-  @s0x02_descrip "Error description example."
-
-  test "Get and verify errors list" do
-    errors_list = MsbmsError.get_errors_list()
-
-    assert Keyword.keyword?(errors_list)
-    assert @s0x02_descrip = Keyword.get(errors_list, :S0X02)
-  end
-
-  test "Get description for error code" do
-    assert @s0x02_descrip = MsbmsError.get_error_code_description(:S0X02)
-  end
-
   test "Get root cause from error data" do
-    test_err = %MsbmsSystError.Impl.MsbmsError{
-                  code:     :S0X01,
-                  tech_msg: "Outer error message",
-                  module:   MsbmsSystError,
-                  function: :get_root_cause,
-                  cause:    %MsbmsSystError.Impl.MsbmsError{
-                              code:     :S0X01,
-                              tech_msg: "Intermediate error message",
-                              module:   MsbmsSystError,
-                              function: :get_root_cause,
-                              cause:    %MsbmsSystError.Impl.MsbmsError{
-                                          code:     :S0X02,
-                                          tech_msg: "Root error message",
-                                          module:   MsbmsSystError,
-                                          function: :get_root_cause,
+    test_err = %MsbmsSystError{
+                  code:    :example_exception,
+                  message: "Outer error message",
+                  cause:    %MsbmsSystError{
+                              code:    :example_exception,
+                              message: "Intermediate error message",
+                              cause:    %MsbmsSystError{
+                                          code:    :example_exception,
+                                          message: "Root error message",
                                           cause:    {:error, "Example Error"},
                                         },
                             },
@@ -51,7 +32,7 @@ defmodule MsbmsSystError.ImplMsbmsErrorTest do
 
     root_err = MsbmsError.get_root_cause(test_err)
 
-    assert %MsbmsError{code: :S0X02, tech_msg: "Root error message"} = root_err
+    assert %MsbmsSystError{message: "Root error message"} = root_err
 
     assert {:error, "test error"} = MsbmsError.get_root_cause({:error, "test error"})
 

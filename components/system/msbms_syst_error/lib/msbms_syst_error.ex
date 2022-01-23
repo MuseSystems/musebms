@@ -18,73 +18,70 @@ defmodule MsbmsSystError do
   This module defines a nested structure for reporting errors in contexts where a result type ends
   in an error state.  By capturing lower level errors and reporting them in a standard way, various
   application errors, especially non-fatal errors, can be handled appropriate and logged for later
-  analaysis.
+  analysis.
 
-  The basic form of a reportable application error is: {:error, %MsbmsSystError.Impl.MsbmsError{}}
-  where %MsbmsSystError.Impl.MsbmsError{} contains basic fields to identify the kind of error, the
-  source of the error.  Functions in this API are used to work with the returned struct.
+  The basic form of a reportable application error is: {:error, %MsbmsSystError{}} where
+  %MsbmsSystError{} contains basic fields to identify the kind of error, the source of the error.
 
-  Error code formatting should be compatible with database returned error codes; these are ISO SQL
-  Standard error codes. The basic rules are:
-      1) The code will be in format -> MMCEE
-      2) MM identifies the application module/area where the error originated and starts with any
-         number from 5 to 9 or any letter I to Z
-      3) C identifies the subject/topic/sub-module and starts with any number from
-         5 to 9 or any letter I to Z
-      4) EE identifies the specific error in the Module/Topic being raised and may be any
-         alpha-numeric code
-      5) All alphas should be upper case to match the database.
-  Note that standard PostgreSQL error codes may appear here to get the benefit of our application
-  specific error descriptions.  Formatting based on the advice at:
-  https://dba.stackexchange.com/questions/258328/custom-error-code-class-and-numbers-for-postgres-stored-functions/258336#258336
+  Functions in this API are used to work with the returned struct.
   """
+
   alias MsbmsSystError.Impl.MsbmsError
+  alias MsbmsSystError.Types
 
-  @doc """
-  For a given error code atom, returns the corresponding user displayable description.
+  @typedoc """
+  Defines a nestable exception format for reporting MuseBMS application exceptions.t().
 
-  ## Examples
-      iex> MsbmsSystError.get_error_code_description(:S0X02)
-      "Error description example."
+  Fields in the exception are:
+    * __code__
 
-  Note that the descriptions are returned translated into the appropriate locale.
+      Classifies the error into a specific kind of exception likely to be seen in application.  Useful for pattern matching, logging, and determining if any raised exception should be handled or not.
+
+    * __message__
+
+      The text description of the error condition.  This should be meaningful to humans.
+
+    * __cause__
+
+      This value may be either another %MsbmsSystError{} value representing a more fundamental cause or other metadata helpful in understanding the cause of the error. Values found here, in addition to other %MsbmsSystError{} values, could include maps of function parameters/values or lower level exceptions that originate from included dependencies or libraries like database connection libraries.
   """
-  @spec get_error_code_description(atom()) :: String.t()
-  defdelegate get_error_code_description(error_code), to: MsbmsError
+  @type t :: %__MODULE__{
+    code:     Types.msbms_error(),
+    message:  String.t(),
+    cause:    any(),
+  }
+
+  defexception code:    :undefined_error,
+               message: "undefined error",
+               cause:   nil
 
   @doc """
-  The %MsbmsSystError.Impl.MsbmsError{} struct (the Error Struct) may rerpesent arbitrarily nested
-  Error Structs in the  `cause:` attribute of the Error Struct. This function will traverse the
-  nesting and return the bottom most Error Struct.  If some other object, such as a standard error
-  tuple is passed to the function, the function will simply return the value.
+  The %MsbmsSystError{} struct (the Error Struct) may represent arbitrarily nested Error Structs in
+  the `cause:` attribute of the Error Struct.
+
+  This function will traverse the nesting and return the bottom most Error Struct.  If some other
+  object, such as a standard error tuple is passed to the function, the function will simply return
+  the value.
 
   ## Examples
-      iex> my_err = %MsbmsSystError.Impl.MsbmsError{
-      ...>            code:     :S0X02,
-      ...>            tech_msg: "Outer error message",
-      ...>            module:   MsbmsSystError,
-      ...>            function: :get_root_cause,
-      ...>            cause:    %MsbmsSystError.Impl.MsbmsError{
-      ...>                        code:     :S0X02,
-      ...>                        tech_msg: "Intermediate error message",
-      ...>                        module:   MsbmsSystError,
-      ...>                        function: :get_root_cause,
-      ...>                        cause:    %MsbmsSystError.Impl.MsbmsError{
-      ...>                                    code:     :S0X02,
-      ...>                                    tech_msg: "Root error message",
-      ...>                                    module:   MsbmsSystError,
-      ...>                                    function: :get_root_cause,
+      iex> my_err = %MsbmsSystError{
+      ...>            code:    :example_exception,
+      ...>            message: "Outer error message",
+      ...>            cause:    %MsbmsSystError{
+      ...>                        code:    :example_exception,
+      ...>                        message: "Intermediate error message",
+      ...>                        cause:    %MsbmsSystError{
+      ...>                                    code:    :example_exception,
+      ...>                                    message: "Root error message",
       ...>                                    cause:    {:error, "Example Error"},
       ...>                                  },
       ...>                      },
       ...>          }
       iex> MsbmsSystError.get_root_cause(my_err)
-      %MsbmsSystError.Impl.MsbmsError{
-        code:     :S0X02,
-        tech_msg: "Root error message",
-        module:   MsbmsSystError,
-        function: :get_root_cause,
-        cause:    {:error, "Example Error"},
+      %MsbmsSystError{
+        code:     :example_exception,
+        message:  "Root error message",
+        cause:    {:error, "Example Error"}
       }
 
       iex> MsbmsSystError.get_root_cause({:error, "Example Error"})
