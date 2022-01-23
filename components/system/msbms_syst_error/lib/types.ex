@@ -25,11 +25,12 @@ defmodule MsbmsSystError.Types do
   """
   @type msbms_error ::
     :undefined_error
-    | :example_exception
-    | :file_not_found
-    | :invalid_data
-    | :record_not_found
     | :database_error
+    | :example_exception
+    | :file_error
+    | :invalid_data
+    | :invalid_parameter
     | :permission_denied
+    | :record_not_found
 
 end
