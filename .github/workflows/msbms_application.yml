@@ -39,7 +39,13 @@ jobs:
           otp-version: ${{matrix.otp}}
           elixir-version: ${{matrix.elixir}}
 
-      # System Components - msbms_syst_error
+      ########
+      #
+      # System Components
+      #
+      ########
+
+      # msbms_syst_error
       - name: msbms_syst_error -- Build Mix Dependencies
         run: mix deps.get
         working-directory: ./components/system/msbms_syst_error
@@ -47,6 +53,38 @@ jobs:
       - name: msbms_syst_error -- Run mix test
         run: mix test
         working-directory: ./components/system/msbms_syst_error
+
+      # msbms_syst_options
+      - name: msbms_syst_options -- Build Mix Dependencies
+        run: mix deps.get
+        working-directory: ./components/system/msbms_syst_options
+
+      - name: msbms_syst_options -- Run mix test
+        run: mix test
+        working-directory: ./components/system/msbms_syst_options
+
+      # msbms_syst_datastore
+      - name: msbms_syst_datastore -- Build Mix Dependencies
+        run: mix deps.get
+        working-directory: ./components/system/msbms_syst_datastore
+
+      - name: msbms_syst_datastore -- Run mix test
+        run: mix test
+        working-directory: ./components/system/msbms_syst_datastore
+
+      ########
+      #
+      # Application
+      #
+      ########
+
+      - name: msbms -- Build Mix Dependencies
+        run: mix deps.get
+        working-directory: ./application/msbms
+
+      - name: msbms -- Run mix test
+        run: mix test
+        working-directory: ./application/msbms
 
       # - name: Database Load Script Build
       #   run: mix builddb
