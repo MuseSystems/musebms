@@ -40,8 +40,11 @@ jobs:
           elixir-version: ${{matrix.elixir}}
 
       # System Components - msbms_syst_error
-      - name: Build msbms_syst_error Mix Dependencies
+      - name: msbms_syst_error -- Build Mix Dependencies
         run: mix deps.get
+        working-directory: ./components/system/msbms_syst_error
+
+      - name: msbms_syst_error -- Run mix test
         run: mix test
         working-directory: ./components/system/msbms_syst_error
 
