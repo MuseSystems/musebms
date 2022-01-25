@@ -5,12 +5,14 @@ defmodule MsbmsSystDatastore.MixProject do
   @version "0.1.0"
 
   @deps [
-    {:postgrex, "~> 0.16"},
-    {:jason,    "~> 1.3"},
-    {:credo,    "~> 1.6",  only: [:dev, :test], runtime: false},
+    # Third Party Dependencies
+    {:credo,    "~> 1.0",  only: [:dev, :test], runtime: false},
     {:dialyxir, "~> 1.0",  only: [:dev], runtime: false},
-    {:ex_doc,   "~> 0.27", only: :dev, runtime: false},
+    {:ex_doc,   "~> 0.20", only: :dev, runtime: false},
+    {:jason,    "~> 1.0"},
+    {:postgrex, "~> 0.10"},
 
+    # Muse Systems Business Management System Components
     {:msbms_syst_error, path: "../msbms_syst_error"},
   ]
 
