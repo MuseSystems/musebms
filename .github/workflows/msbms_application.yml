@@ -55,11 +55,11 @@ jobs:
         working-directory: ./components/system/msbms_syst_error
 
       - name: msbms_syst_error -- credo
-        working-directory: ./components/system/msbms_syst_error
         uses: red-shirts/reviewdog-action-credo@v1.2
         with:
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-review
+        working-directory: ./components/system/msbms_syst_error
 
       # msbms_syst_options
       - name: msbms_syst_options -- Build Mix Dependencies
