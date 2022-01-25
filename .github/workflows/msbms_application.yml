@@ -53,7 +53,6 @@ jobs:
         working-directory: ./components/system/msbms_syst_error
 
       - name: msbms_syst_error -- credo
-        uses: red-shirts/reviewdog-action-credo@v1.2
         run: mix credo --strict
         working-directory: ./components/system/msbms_syst_error
 
