@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         otp: ['24.0']
-        elixir: ['1.12.2']
+        elixir: ['1.13.2']
     services:
       postgres:
         image: postgres
@@ -39,15 +39,17 @@ jobs:
           otp-version: ${{matrix.otp}}
           elixir-version: ${{matrix.elixir}}
 
-      - name: Build Mix Dependencies
+      # System Components - msbms_syst_error
+      - name: Build msbms_syst_error Mix Dependencies
         run: mix deps.get
-        working-directory: ./msbms
+        run: mix test
+        working-directory: ./components/system/msbms_syst_error
 
-      - name: Database Load Script Build
-        run: mix builddb
-        working-directory: ./msbms
+      # - name: Database Load Script Build
+      #   run: mix builddb
+      #   working-directory: ./components/system/msbms_syst_error
 
-      - name: Load Database Load Script
-        run: psql -h localhost -p 5432 -U msbms_installer postgres < tools/database_scripts/reset_dev_database.psql
-        env:
-          PGPASSWORD: msbms_pass
+      # - name: Load Database Load Script
+      #   run: psql -h localhost -p 5432 -U msbms_installer postgres < tools/database_scripts/reset_dev_database.psql
+      #   env:
+      #     PGPASSWORD: msbms_pass
