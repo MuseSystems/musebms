@@ -1,28 +1,20 @@
-# Source File: application.ex
-# Location:    musebms/lib/msbms/application.ex
-# Project:     musebms
-#
-# Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
-# This file may include content copyrighted and licensed from third parties.
-#
-# See the LICENSE file in the project root for license terms and conditions.
-# See the NOTICE file in the project root for copyright ownership information.
-#
-# muse.information@musesystems.com  : : https: //muse.systems
-
 defmodule Msbms.Application do
+  # See https://hexdocs.pm/elixir/Application.html
+  # for more information on OTP Applications
   @moduledoc false
+
   use Application
 
-  @spec start(any, any) :: {:error, any} | {:ok, pid}
+  @impl true
   def start(_type, _args) do
-
-    Msbms.System.Actions.Global.bootstrap()
-
     children = [
-      Msbms.System.DataAccessSupervisor
+      # Starts a worker by calling: Msbms.Worker.start_link(arg)
+      # {Msbms.Worker, arg}
     ]
 
-    Supervisor.start_link(children, strategy: :one_for_one)
+    # See https://hexdocs.pm/elixir/Supervisor.html
+    # for other strategies and supported options
+    opts = [strategy: :one_for_one, name: Msbms.Supervisor]
+    Supervisor.start_link(children, opts)
   end
 end
