@@ -7,6 +7,8 @@ on:
     branches: [ develop ]
 
 jobs:
+  test-system-components:
+
   test-msbms-apps-build:
     runs-on: ubuntu-latest
     name: Muse Systems BMS (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
@@ -50,15 +52,13 @@ jobs:
         run: mix deps.get
         working-directory: ./components/system/msbms_syst_error
 
-      - name: msbms_syst_error -- Run mix test
-        run: mix test
-        working-directory: ./components/system/msbms_syst_error
-
       - name: msbms_syst_error -- credo
         uses: red-shirts/reviewdog-action-credo@v1.2
-        with:
-          github_token: ${{ secrets.github_token }}
-          reporter: github-pr-review
+        run: mix credo --strict
+        working-directory: ./components/system/msbms_syst_error
+
+      - name: msbms_syst_error -- Run mix test
+        run: mix test
         working-directory: ./components/system/msbms_syst_error
 
       # msbms_syst_options
