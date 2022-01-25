@@ -5,11 +5,13 @@ defmodule MsbmsSystOptions.MixProject do
   @version "0.1.0"
 
   @deps [
-    {:credo,            "~> 1.6",  only: [:dev, :test], runtime: false},
-    {:dialyxir,         "~> 1.0",  only: [:dev], runtime: false},
-    {:ex_doc,           "~> 0.27", only: :dev, runtime: false},
-    {:toml,             ">= 0.0.0"},
+    # Third Party Dependencies
+    {:credo,    "~> 1.0",  only: [:dev, :test], runtime: false},
+    {:dialyxir, "~> 1.0",  only: [:dev], runtime: false},
+    {:ex_doc,   "~> 0.20", only: :dev, runtime: false},
+    {:toml,     "~> 0.6"},
 
+    # Muse Systems Business Management System Components
     {:msbms_syst_error, path: "../msbms_syst_error"}
   ]
 

@@ -16,14 +16,15 @@ defmodule MsbmsSystOptions.Impl.OptionsFileTest do
   alias MsbmsSystOptions.Impl.OptionsFile
   alias MsbmsSystOptions.Constants
 
-  @default_path Constants.get(:startup_options_path)
+  @default_path "testing_options.toml"
 
-  test "Verify correct path to get_options/1 is :ok" do
-    assert {:ok, _map} = OptionsFile.get_options(@default_path)
+  test "Verify get_options/1 finds file and returns {:ok, map()} " do
+    assert {:ok, map} = OptionsFile.get_options(@default_path)
+    assert is_map(map)
   end
 
-  test "Verify incorrect path to get_options/1 returns :error" do
-    assert {:error, _reason} = OptionsFile.get_options("bad_path.toml")
+  test "Verify incorrect path passed to get_options/1 returns correct error type" do
+    assert {:error, _reason = %MsbmsSystError{}} = OptionsFile.get_options("bad_path.toml")
   end
 
 end

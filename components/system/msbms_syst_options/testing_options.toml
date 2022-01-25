@@ -1,0 +1,16 @@
+# Muse Systems Business Management System Testing Options File
+#
+# This options file is designed to simply and easily test the msbms_syst_options
+# module functionality.  It is not intended to be a complete representation of
+# what should or should not be included in an options file nor are we testing
+# the TOML library's ability to decode all valid TOML.
+
+test_key1 = "test value"
+
+[[test_list]]
+test_key2 = "test value 2"
+test_key3 = "test value 3"
+
+[[test_list]]
+test_key2 = "test value 2"
+test_key3 = "test value 3"
