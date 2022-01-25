@@ -4,10 +4,7 @@ defmodule MsbmsSystOptions do
   API for retrieving and working with option files stored in the application server file system.
   """
 
-  alias MsbmsSystOptions.Constants
   alias MsbmsSystOptions.Impl.OptionsFile
-
-  @startup_options_path Constants.get(:startup_options_path)
 
   @doc """
   Parses and returns the contents of a TOML file at `options_file_path` via a
@@ -20,14 +17,15 @@ defmodule MsbmsSystOptions do
 
   ## Examples
 
-      iex> with {:ok, %{}} <- MsbmsSystOptions.get_options(), do: :map_returned
-      :map_returned
-
-      iex> with {:ok, %{}} <-
-      ...>   MsbmsSystOptions.get_options("./msbms_startup_options.toml") do
-      ...>   :map_returned
-      ...> end
-      :map_returned
+      iex> MsbmsSystOptions.get_options("./testing_options.toml")
+      { :ok,
+        %{
+          "test_key1" => "test value",
+          "test_list" => [
+            %{"test_key2" => "test value 2", "test_key3" => "test value 3"},
+            %{"test_key2" => "test value 2", "test_key3" => "test value 3"}
+          ]
+        } }
 
       iex> with {:error, %MsbmsSystError{}} <-
       ...>   MsbmsSystOptions.get_options("./bad_file_name.toml") do
@@ -37,7 +35,7 @@ defmodule MsbmsSystOptions do
 
   """
   @spec get_options(String.t()) :: {:ok, map()} | {:error, MsbmsSystError.t()}
-  defdelegate get_options(options_file_path \\ @startup_options_path), to: OptionsFile
+  defdelegate get_options(options_file_path), to: OptionsFile
 
   @doc """
   Parses and returns the contents of a TOML file at `options_file_path` or
@@ -47,19 +45,19 @@ defmodule MsbmsSystOptions do
 
   ## Examples
 
-      iex> with %{} <- MsbmsSystOptions.get_options!(), do: :map_returned
-      :map_returned
-
-      iex> with %{} <-
-      ...>   MsbmsSystOptions.get_options!("./msbms_startup_options.toml") do
-      ...>   :map_returned
-      ...> end
-      :map_returned
+      iex> MsbmsSystOptions.get_options!("./testing_options.toml")
+      %{
+        "test_key1" => "test value",
+        "test_list" => [
+          %{"test_key2" => "test value 2", "test_key3" => "test value 3"},
+          %{"test_key2" => "test value 2", "test_key3" => "test value 3"}
+        ]
+      }
 
       iex> MsbmsSystOptions.get_options!("./bad_file_name.toml")
       ** (MsbmsSystError) Problem reading options file './bad_file_name.toml'.
   """
   @spec get_options!(String.t()) :: map()
-  defdelegate get_options!(options_file_path \\ @startup_options_path), to: OptionsFile
+  defdelegate get_options!(options_file_path), to: OptionsFile
 
 end
