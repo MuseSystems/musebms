@@ -74,6 +74,20 @@ jobs:
       matrix:
         otp: ['24.2']
         elixir: ['1.13.2']
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: msbms_installer
+          POSTGRES_PASSWORD: msbms_pass
+          POSTGRES_PORT: 5432
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
         - name: Checkout repository code
@@ -84,20 +98,6 @@ jobs:
           with:
             otp-version: ${{matrix.otp}}
             elixir-version: ${{matrix.elixir}}
-          services:
-            postgres:
-              image: postgres
-              env:
-                POSTGRES_USER: msbms_installer
-                POSTGRES_PASSWORD: msbms_pass
-                POSTGRES_PORT: 5432
-              ports:
-                - 5432:5432
-              options: >-
-                --health-cmd pg_isready
-                --health-interval 10s
-                --health-timeout 5s
-                --health-retries 5
 
         - name: Build Mix Dependencies
           run: mix deps.get
@@ -118,6 +118,20 @@ jobs:
       matrix:
         otp: ['24.2']
         elixir: ['1.13.2']
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: msbms_installer
+          POSTGRES_PASSWORD: msbms_pass
+          POSTGRES_PORT: 5432
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
         - name: Checkout repository code
@@ -128,20 +142,6 @@ jobs:
           with:
             otp-version: ${{matrix.otp}}
             elixir-version: ${{matrix.elixir}}
-          services:
-            postgres:
-              image: postgres
-              env:
-                POSTGRES_USER: msbms_installer
-                POSTGRES_PASSWORD: msbms_pass
-                POSTGRES_PORT: 5432
-              ports:
-                - 5432:5432
-              options: >-
-                --health-cmd pg_isready
-                --health-interval 10s
-                --health-timeout 5s
-                --health-retries 5
 
         - name: Build Mix Dependencies
           run: mix deps.get
