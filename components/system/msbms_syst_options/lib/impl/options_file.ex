@@ -52,7 +52,6 @@ defmodule MsbmsSystOptions.Impl.OptionsFile do
 
   defp maybe_file_decode(error = {:error, _reason}), do: error
 
-
   @spec get_options!(String.t()) :: map()
   def get_options!(options_file_path) when is_binary(options_file_path) do
 
