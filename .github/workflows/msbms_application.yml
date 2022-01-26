@@ -7,8 +7,6 @@ on:
     branches: [ develop ]
 
 jobs:
-  test-system-components:
-
   test-msbms-apps-build:
     runs-on: ubuntu-latest
     name: Muse Systems BMS (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
