@@ -12,6 +12,8 @@
 
 defmodule MsbmsSystError.Impl.MsbmsError do
 
+  @moduledoc false
+
   @spec get_root_cause(any()) :: any()
   def get_root_cause(%MsbmsSystError{cause: next_error = %MsbmsSystError{}}) do
      next_error

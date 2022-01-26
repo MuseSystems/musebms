@@ -50,12 +50,12 @@ jobs:
         run: mix deps.get
         working-directory: ./components/system/msbms_syst_error
 
-      - name: msbms_syst_error -- credo
-        run: mix credo --strict
-        working-directory: ./components/system/msbms_syst_error
-
       - name: msbms_syst_error -- Run mix test
         run: mix test
+        working-directory: ./components/system/msbms_syst_error
+
+      - name: msbms_syst_error -- credo
+        run: mix credo --strict
         working-directory: ./components/system/msbms_syst_error
 
       # msbms_syst_options
@@ -67,6 +67,10 @@ jobs:
         run: mix test
         working-directory: ./components/system/msbms_syst_options
 
+      - name: msbms_syst_options -- credo
+        run: mix credo --strict
+        working-directory: ./components/system/msbms_syst_options
+
       # msbms_syst_datastore
       - name: msbms_syst_datastore -- Build Mix Dependencies
         run: mix deps.get
@@ -74,6 +78,10 @@ jobs:
 
       - name: msbms_syst_datastore -- Run mix test
         run: mix test
+        working-directory: ./components/system/msbms_syst_datastore
+
+      - name: msbms_syst_datastore -- credo
+        run: mix credo --strict
         working-directory: ./components/system/msbms_syst_datastore
 
       ########
