@@ -37,11 +37,8 @@ defmodule MsbmsSystOptions.Impl.OptionsFile do
 
   @spec get_options(options_file_path :: String.t()) :: {:ok, map()} | {:error, MsbmsSystError.t()}
   def get_options(options_file_path) when is_binary(options_file_path) do
-    with(
-      {:ok, file_contents} <- maybe_file_read(options_file_path),
-      {:ok, options_map}   <- maybe_file_decode(file_contents)
-      ) do
-      {:ok, options_map}
+    with {:ok, file_contents} <- maybe_file_read(options_file_path) do
+      maybe_file_decode(file_contents)
     end
   end
 

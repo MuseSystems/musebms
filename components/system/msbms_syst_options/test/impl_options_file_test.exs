@@ -13,8 +13,8 @@
 defmodule MsbmsSystOptions.Impl.OptionsFileTest do
   use ExUnit.Case
 
-  alias MsbmsSystOptions.Impl.OptionsFile
   alias MsbmsSystOptions.Constants
+  alias MsbmsSystOptions.Impl.OptionsFile
 
   @default_path "testing_options.toml"
 
