@@ -2,9 +2,9 @@ name: MSBMS Application CI
 
 on:
   push:
-    branches: [ develop ]
+    branches: [ next_version, versions ]
   pull_request:
-    branches: [ develop ]
+    branches: [ next_version, versions ]
 
 jobs:
   msbms-syst-error:
