@@ -10,7 +10,7 @@
 #
 # muse.information@musesystems.com  : : https: //muse.systems
 
-[[build_plans]]
+[[build_plan]]
 release              = 1
 version              = 1
 update               = 0
@@ -74,7 +74,7 @@ load_files = [
     "instance/msbms_appl_data/tables/mstr_person_contact_roles.eex.sql",
 ]
 
-[[build_plans]]
+[[build_plan]]
 release              = 1
 version              = 1
 update               = 1
@@ -84,7 +84,7 @@ load_files = [
     "common/misc/no_changes.eex.sql"
 ]
 
-[[build_plans]]
+[[build_plan]]
 release              = 1
 version              = 2
 update               = 0
@@ -94,7 +94,7 @@ load_files = [
     "common/misc/no_changes.eex.sql"
 ]
 
-[[build_plans]]
+[[build_plan]]
 release              = 2
 version              = 1
 update               = 0
@@ -104,7 +104,7 @@ load_files = [
     "common/misc/no_changes.eex.sql"
 ]
 
-[[build_plans]]
+[[build_plan]]
 release              = 2
 version              = 1
 update               = 1
@@ -114,7 +114,7 @@ load_files = [
     "common/misc/no_changes.eex.sql"
 ]
 
-[[build_plans]]
+[[build_plan]]
 release              = 2
 version              = 1
 update               = 3
@@ -124,7 +124,7 @@ load_files = [
     "common/misc/no_changes.eex.sql"
 ]
 
-[[build_plans]]
+[[build_plan]]
 release              = 2
 version              = 1
 update               = 535
@@ -134,7 +134,7 @@ load_files = [
     "common/misc/no_changes.eex.sql"
 ]
 
-[[build_plans]]
+[[build_plan]]
 release              = 2
 version              = 1
 update               = 5350
@@ -144,7 +144,7 @@ load_files = [
     "common/misc/no_changes.eex.sql"
 ]
 
-[[build_plans]]
+[[build_plan]]
 release              = 3
 version              = 1
 update               = 3
@@ -154,7 +154,7 @@ load_files = [
     "common/misc/no_changes.eex.sql"
 ]
 
-[[build_plans]]
+[[build_plan]]
 release              = 3
 version              = 1
 update               = 535
@@ -164,7 +164,7 @@ load_files = [
     "common/misc/no_changes.eex.sql"
 ]
 
-[[build_plans]]
+[[build_plan]]
 release              = 3
 version              = 1
 update               = 5350
