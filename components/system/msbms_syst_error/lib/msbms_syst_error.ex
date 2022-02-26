@@ -11,7 +11,6 @@
 # muse.information@musesystems.com :: https: //muse.systems
 
 defmodule MsbmsSystError do
-
   @moduledoc """
   API for working with the MuseBMS error reporting subsystem.
 
@@ -46,15 +45,15 @@ defmodule MsbmsSystError do
       This value may be either another %MsbmsSystError{} value representing a more fundamental cause or other metadata helpful in understanding the cause of the error. Values found here, in addition to other %MsbmsSystError{} values, could include maps of function parameters/values or lower level exceptions that originate from included dependencies or libraries like database connection libraries.
   """
   @type t :: %__MODULE__{
-    code:     Types.msbms_error(),
-    message:  String.t(),
-    cause:    any(),
-  }
+          code: Types.msbms_error(),
+          message: String.t(),
+          cause: any()
+        }
 
   @enforce_keys [:code, :message, :cause]
-  defexception code:    :undefined_error,
+  defexception code: :undefined_error,
                message: "undefined error",
-               cause:   nil
+               cause: nil
 
   @doc """
   The %MsbmsSystError{} struct (the Error Struct) may represent arbitrarily nested Error Structs in
