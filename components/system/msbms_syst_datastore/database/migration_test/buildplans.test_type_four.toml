@@ -1,0 +1,122 @@
+# Source File: buildplans.test_type_four.toml
+# Location:    components/system/msbms_syst_datastore/database/migration_test/buildplans.test_type_four.toml
+# Project:     musebms
+#
+# Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+# This file may include content copyrighted and licensed from third parties.
+#
+# See the LICENSE file in the project root for license terms and conditions.
+# See the NOTICE file in the project root for copyright ownership information.
+#
+# muse.information@musesystems.com  : : https: //muse.systems
+
+[[build_plan]]
+release              = 1
+version              = 1
+update               = 0
+sponsor              = 820
+sponsor_modification = 0
+load_files = [
+    "test_common/test01.a.common.eex.sql",
+    "test_type_four/test01.b.test_type_four.eex.sql",
+]
+
+[[build_plan]]
+release              = 1
+version              = 1
+update               = 1
+sponsor              = 820
+sponsor_modification = 0
+load_files = [
+    "test_type_four/test02.a.test_type_four.eex.sql",
+]
+
+[[build_plan]]
+release              = 1
+version              = 2
+update               = 0
+sponsor              = 820
+sponsor_modification = 0
+load_files = [
+    "test_type_four/test03.a.test_type_four.eex.sql",
+]
+
+[[build_plan]]
+release              = 2
+version              = 1
+update               = 0
+sponsor              = 820
+sponsor_modification = 0
+load_files = [
+    "test_type_four/test04.a.test_type_four.eex.sql",
+]
+
+[[build_plan]]
+release              = 2
+version              = 1
+update               = 1
+sponsor              = 820
+sponsor_modification = 0
+load_files = [
+    "test_type_four/test05.a.test_type_four.eex.sql",
+]
+
+[[build_plan]]
+release              = 2
+version              = 1
+update               = 3
+sponsor              = 820
+sponsor_modification = 0
+load_files = [
+    "test_type_four/test06.a.test_type_four.eex.sql",
+]
+
+[[build_plan]]
+release              = 2
+version              = 1
+update               = 535
+sponsor              = 820
+sponsor_modification = 1
+load_files = [
+    "test_type_four/test07.a.test_type_four.eex.sql",
+]
+
+[[build_plan]]
+release              = 2
+version              = 1
+update               = 5350
+sponsor              = 820
+sponsor_modification = 0
+load_files = [
+    "test_type_four/test08.a.test_type_four.eex.sql",
+]
+
+[[build_plan]]
+release              = 3
+version              = 1
+update               = 3
+sponsor              = 820
+sponsor_modification = 0
+load_files = [
+    "test_type_four/test09.a.test_type_four.eex.sql",
+]
+
+[[build_plan]]
+release              = 3
+version              = 1
+update               = 3
+sponsor              = 820
+sponsor_modification = 1
+load_files = [
+    "test_type_four/test10.a.test_type_four.eex.sql",
+]
+
+[[build_plan]]
+release              = 3
+version              = 1
+update               = 5350
+sponsor              = 820
+sponsor_modification = 0
+load_files = [
+    "test_type_four/test11.a.test_type_four.eex.sql",
+]
