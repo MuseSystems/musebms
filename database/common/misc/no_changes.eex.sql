@@ -1,6 +1,6 @@
 
 -- Source File: no_changes.eex.sql
--- Location:    msbms/database/common/misc/no_changes.eex.sql
+-- Location:    database/common/misc/no_changes.eex.sql
 -- Project:     musebms
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

@@ -1,6 +1,6 @@
 
 -- Source File: create_database_schemata.eex.sql
--- Location:    msbms/database/global/dbinit/create_database_schemata.eex.sql
+-- Location:    database/global/dbinit/create_database_schemata.eex.sql
 -- Project:     musebms
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

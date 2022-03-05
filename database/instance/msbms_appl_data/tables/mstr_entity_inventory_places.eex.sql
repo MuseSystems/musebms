@@ -1,5 +1,5 @@
 -- Source File: mstr_entity_inventory_places.eex.sql
--- Location:    msbms/database/instance/msbms_appl_data/tables/mstr_entity_inventory_places.eex.sql
+-- Location:    database/instance/msbms_appl_data/tables/mstr_entity_inventory_places.eex.sql
 -- Project:     musebms
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

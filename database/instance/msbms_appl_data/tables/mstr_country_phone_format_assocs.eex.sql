@@ -1,5 +1,5 @@
 -- Source File: mstr_country_phone_format_assocs.eex.sql
--- Location:    msbms/database/instance/msbms_appl_data/tables/mstr_country_phone_format_assocs.eex.sql
+-- Location:    database/instance/msbms_appl_data/tables/mstr_country_phone_format_assocs.eex.sql
 -- Project:     musebms
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

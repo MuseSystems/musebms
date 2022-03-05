@@ -1,5 +1,5 @@
 -- Source File: enum_person_states.eex.sql
--- Location:    msbms/database/instance/msbms_appl_data/tables/enum_person_states.eex.sql
+-- Location:    database/instance/msbms_appl_data/tables/enum_person_states.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

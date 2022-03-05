@@ -1,5 +1,5 @@
 -- Source File: mstr_person_contact_roles.eex.sql
--- Location:    msbms/database/instance/msbms_appl_data/tables/mstr_person_contact_roles.eex.sql
+-- Location:    database/instance/msbms_appl_data/tables/mstr_person_contact_roles.eex.sql
 -- Project:     musebms
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

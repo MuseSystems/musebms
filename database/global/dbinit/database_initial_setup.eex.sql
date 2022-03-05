@@ -1,6 +1,6 @@
 
 -- Source File: database_initial_setup.eex.sql
--- Location:    msbms/database/global/dbinit/database_initial_setup.eex.sql
+-- Location:    database/global/dbinit/database_initial_setup.eex.sql
 -- Project:     musebms
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

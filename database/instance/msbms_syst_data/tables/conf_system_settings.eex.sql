@@ -1,5 +1,5 @@
 -- Source File: conf_system_settings.eex.sql
--- Location:    msbms/database/instance/msbms_syst_data/tables/conf_system_settings.eex.sql
+-- Location:    database/instance/msbms_syst_data/tables/conf_system_settings.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

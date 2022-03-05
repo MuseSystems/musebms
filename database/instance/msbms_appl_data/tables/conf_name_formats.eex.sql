@@ -1,5 +1,5 @@
 -- Source File: conf_name_formats.eex.sql
--- Location:    msbms/database/instance/msbms_appl_data/tables/conf_name_formats.eex.sql
+-- Location:    database/instance/msbms_appl_data/tables/conf_name_formats.eex.sql
 -- Project:     musebms
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

@@ -1,6 +1,6 @@
 
 -- Source File: syst_instances.eex.sql
--- Location:    msbms/database/global/msbms_syst_data/tables/syst_instances.eex.sql
+-- Location:    database/global/msbms_syst_data/tables/syst_instances.eex.sql
 -- Project:     musebms
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

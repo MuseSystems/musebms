@@ -1,5 +1,5 @@
 -- Source File: syst_features.eex.sql
--- Location:    msbms/database/instance/msbms_syst_data/tables/syst_features.eex.sql
+-- Location:    database/instance/msbms_syst_data/tables/syst_features.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

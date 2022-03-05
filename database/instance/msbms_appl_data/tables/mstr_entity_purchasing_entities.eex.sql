@@ -1,5 +1,5 @@
 -- Source File: mstr_entity_purchasing_entities.eex.sql
--- Location:    msbms/database/instance/msbms_appl_data/tables/mstr_entity_purchasing_entities.eex.sql
+-- Location:    database/instance/msbms_appl_data/tables/mstr_entity_purchasing_entities.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
