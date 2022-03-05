@@ -6,12 +6,14 @@ defmodule Msbms.MixProject do
 
   @deps [
     # Third Party Dependencies
-    {:credo,    "~> 1.0",  only: [:dev, :test], runtime: false},
-    {:dialyxir, "~> 1.0",  only: [:dev], runtime: false},
-    {:ex_doc,   "~> 0.20", only: :dev, runtime: false},
+    {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
+    {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
+    {:ex_doc, "~> 0.20", only: :dev, runtime: false},
 
     # Muse Systems Business Management System Components
     {:msbms_syst_error, path: "../../components/system/msbms_syst_error"},
+    {:msbms_syst_options, path: "../../components/system/msbms_syst_options"},
+    {:msbms_syst_datastore, path: "../../components/system/msbms_syst_datastore"}
   ]
 
   # ------------------------------------------------------------
@@ -20,11 +22,11 @@ defmodule Msbms.MixProject do
     in_production = Mix.env() == :prod
 
     [
-      app:             @name,
-      version:         @version,
-      elixir:          "~> 1.13",
-      deps:            @deps,
-      build_embedded:  in_production,
+      app: @name,
+      version: @version,
+      elixir: "~> 1.13",
+      deps: @deps,
+      build_embedded: in_production,
       start_permanent: in_production
     ]
   end
