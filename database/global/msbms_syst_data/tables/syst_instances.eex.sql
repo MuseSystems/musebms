@@ -19,12 +19,18 @@ CREATE TABLE msbms_syst_data.syst_instances
         CONSTRAINT syst_instances_internal_name_udx UNIQUE
     ,display_name             text                                     NOT NULL
         CONSTRAINT syst_instances_display_name_udx UNIQUE
+    ,application_id           uuid                                     NOT NULL
+        CONSTRAINT syst_instances_applications_fk
+        REFERENCES msbms_syst_data.syst_applications (id)
     ,enum_instance_type_id    uuid                                     NOT NULL
         CONSTRAINT syst_instances_enum_instance_type_fk
         REFERENCES msbms_syst_data.enum_instance_types (id)
     ,enum_instance_state_id   uuid                                     NOT NULL
         CONSTRAINT syst_instances_enum_instance_state_fk
         REFERENCES msbms_syst_data.enum_instance_states (id)
+    ,owner_id                 uuid                                     NOT NULL
+        CONSTRAINT syst_instances_owners_fk
+        REFERENCES msbms_syst_data.syst_owners (id)
     ,dbserver_name            text                                     NOT NULL
     ,db_app_context_pool_size integer     DEFAULT 10                   NOT NULL
         CONSTRAINT syst_instances_db_app_context_pool_size_no_neg_chk
@@ -75,6 +81,10 @@ $DOC$A friendly name and candidate key for the record, suitable for use in user
 interactions$DOC$;
 
 COMMENT ON
+    COLUMN msbms_syst_data.syst_instances.application_id IS
+$DOC$Indicates an instance of which application is being described by the record.$DOC$;
+
+COMMENT ON
     COLUMN msbms_syst_data.syst_instances.enum_instance_type_id IS
 $DOC$Indicates the type of the instance.  This can designate instances as being
 production or non-production, or make other functional differences between
@@ -85,6 +95,14 @@ COMMENT ON
 $DOC$Establishes the current life-cycle state of the instance record.  This can
 determine functionality such as if the instance is usable, visible, or if it may
 be purged from the database completely.$DOC$;
+
+COMMENT ON
+    COLUMN msbms_syst_data.syst_instances.owner_id IS
+$DOC$Identifies the owner of the instance.  The owner is the entity which
+commissioned the instance and is the "user" of the instance.  Owners have
+nominal management rights over their instances, such as which access accounts
+and which credential types are allowed to be used to authenticate to the owner's
+instances.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.syst_instances.dbserver_name IS
