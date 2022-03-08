@@ -17,7 +17,7 @@ CREATE TABLE msbms_syst_data.syst_owners
         CONSTRAINT syst_owners_internal_name_udx UNIQUE
     ,display_name            text                                    NOT NULL
         CONSTRAINT syst_owners_display_name_udx UNIQUE
-    ,enum_owner_state_id     uuid
+    ,owner_state_id          uuid                                    NOT NULL
         CONSTRAINT syst_owner_owner_states_fk
         REFERENCES msbms_syst_data.enum_owner_states (id)
     ,diag_timestamp_created  timestamptz DEFAULT now( )              NOT NULL
