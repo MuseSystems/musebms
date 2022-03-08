@@ -45,7 +45,9 @@ CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
 
 COMMENT ON
     TABLE msbms_syst_data.syst_access_account_instance_assocs IS
-$DOC$Associates access accounts with the instances for which they are allowed to authenticate to.  Note that being able to authenticate to an instance is not the same as having authorized rights within the instance; authorization is handled by the instance directly.$DOC$;
+$DOC$Associates access accounts with the instances for which they are allowed to authenticate to.  Note
+that being able to authenticate to an instance is not the same as having authorized rights within
+the instance; authorization is handled by the instance directly.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.syst_access_account_instance_assocs.id IS
