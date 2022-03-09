@@ -19,9 +19,10 @@ CREATE TABLE msbms_syst_data.enum_identity_types
         CONSTRAINT enum_identity_types_display_name_udx UNIQUE
     ,functional_type         text                                    NOT NULL
         CONSTRAINT enum_identity_types_functional_type_chk
-        CHECK (functional_type IN (  'user_name'
-                                    ,'account_id'
-                                    ,'api_id'))
+        CHECK (functional_type IN (  'email'
+                                    ,'account'
+                                    ,'api'
+                                    ,'validation'))
     ,description             text                                    NOT NULL
     ,options                 jsonb       DEFAULT '{}'::jsonb         NOT NULL
     ,user_options            jsonb       DEFAULT '{}'::jsonb         NOT NULL
@@ -67,14 +68,14 @@ $DOC$Establishes what system recognized type the type represents.  Functional ty
 may determine how the system behaves in certain circumstances.  Functional types
 recognized by this application:
 
-    * user_name:  This identity type indicates the sort of user name a human
+    * email:      This identity type indicates the sort of user name a human
                   user would enter into a login form to identify themselves.
-                  Typically this will be an email address.  This identity may
-                  only be used for interactive logins and explicitly not for
-                  in scenarios where you would use token credential types for
-                  authentication.
+                  The user identifier will always be an email address.  This
+                  identity may only be used for interactive logins and
+                  explicitly not for in scenarios where you would use token
+                  credential types for authentication.
 
-    * account_id: Account IDs are system generated IDs which can be used
+    * account:    Account IDs are system generated IDs which can be used
                   similar to user name, but can be given to third parties, such
                   as the administrator of an application instance for the
                   purpose of being granted user access to the instance, without
@@ -83,11 +84,15 @@ recognized by this application:
                   verbal or written communication.  This ID type is not allowed
                   for login.
 
-    * api_id:     A system generated ID for use in identifying the user account
+    * api:        A system generated ID for use in identifying the user account
                   in automated access scenarios.  This kind of ID differs from
                   the account_id in that it is significantly larger than an
                   account ID would be and may only be used with token
-                  credential types.$DOC$;
+                  credential types.
+
+    * validation: A one time use identifier which, along with a one time use
+                  credential, validates that an access account has been setup
+                  correctly.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.enum_identity_types.description IS
