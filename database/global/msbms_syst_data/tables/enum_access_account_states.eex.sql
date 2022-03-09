@@ -20,7 +20,8 @@ CREATE TABLE msbms_syst_data.enum_access_account_states
     ,description             text                                    NOT NULL
     ,functional_type         text                                    NOT NULL
         CONSTRAINT enum_access_account_states_functional_type_chk
-        CHECK (functional_type in (  'active'
+        CHECK (functional_type in (  'pending'
+                                    ,'active'
                                     ,'suspended'
                                     ,'inactive'
                                     ,'purge_eligible'))
@@ -72,6 +73,14 @@ COMMENT ON
 $DOC$Establishes what system recognized type the state represents.  Functional types
 may determine how the system behaves in certain circumstances.  Functional types
 recognized by this application:
+
+    * pending:        Indicates that the access account is pending validation.
+                      When pending validation, new access accounts have been
+                      created, but verification that contact information such as
+                      the account holder's email address is valid, has not been
+                      completed.  When in pending status, the account cannot be
+                      used for regular authentication until verification has
+                      been completed.
 
     * active:         The access account is active and is considered active.
 
