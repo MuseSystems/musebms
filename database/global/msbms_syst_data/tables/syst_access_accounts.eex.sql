@@ -19,6 +19,7 @@ CREATE TABLE msbms_syst_data.syst_access_accounts
     ,owning_owner_id         uuid
         CONSTRAINT syst_access_accounts_owners_id_fk
         REFERENCES msbms_syst_data.syst_owners (id) ON DELETE CASCADE
+    ,allow_global_logins     boolean     DEFAULT false               NOT NULL
     ,access_account_state_id uuid                                    NOT NULL
         CONSTRAINT syst_access_accounts_access_account_states_fk
         REFERENCES msbms_syst_data.enum_access_account_states (id)
@@ -68,6 +69,24 @@ accounts which are identified and managed exclusively by a given owner.
 When this field is NULL, the assumption is that it's an independent access 
 account.  An independent access account may be used, for example, by third party 
 accountants that need to access the instances of different owners.$DOC$;
+
+COMMENT ON
+    COLUMN msbms_syst_data.syst_access_accounts.allow_global_logins IS
+$DOC$When true, allows an access account to log into the system without having
+an owner or instance specified in the login process.  This use case supports
+access accounts which are independently managed, such as might be the case for
+external bookkeepers.  When false, the access account is more tightly bound to a
+specific owner and so only a specific owner and instances should be evaluated at
+login time.
+
+The need for this distinction arises when considering logins for access account
+holders such as customers or vendors.  In these cases access to the owner's
+environment should appear to be unique, but they may use the same identifier as
+used for a different, but unrelated, owner.  In this case you have multiple
+access accounts with possibly the same identifier; to resolve the conflict, it
+is required therefore to know which owner or instance the access accounts holder
+is trying to access.  In the allow global case we can just ask the account
+holder but in the disallow global case we need to know it in advance.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.syst_access_accounts.access_account_state_id IS
