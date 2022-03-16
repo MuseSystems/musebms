@@ -19,7 +19,7 @@ CREATE TABLE msbms_syst_data.syst_identities
             ON DELETE CASCADE
     ,identity_type_id        uuid                                    NOT NULL
         CONSTRAINT syst_identities_identity_types_fk
-        REFERENCES msbms_syst_data.syst_identity_types (id)
+        REFERENCES msbms_syst_data.enum_identity_types (id)
             ON DELETE CASCADE
     ,identifier              text                                    NOT NULL
     ,validated               timestamptz
@@ -37,8 +37,6 @@ CREATE TABLE msbms_syst_data.syst_identities
     ,diag_role_modified      text                                    NOT NULL
     ,diag_row_version        bigint      DEFAULT 1                   NOT NULL
     ,diag_update_count       bigint      DEFAULT 0                   NOT NULL
-    ,CONSTRAINT syst_identities_identity_type_identifier_udx
-        UNIQUE (identity_type_id, identifier)
 );
 
 ALTER TABLE msbms_syst_data.syst_identities OWNER TO <%= msbms_owner %>;
@@ -147,3 +145,7 @@ $DOC$Records the number of times the record has been updated regardless as to if
 the update actually changed any data.  In this way needless or redundant record 
 updates can be found.  This row starts at 0 and therefore may be the same as the 
 diag_row_version - 1.$DOC$;
+
+CREATE TRIGGER a50_trig_b_iu_identities_validate_uniqueness
+    BEFORE INSERT OR UPDATE ON msbms_syst_data.syst_identities
+    FOR EACH ROW EXECUTE PROCEDURE msbms_syst_priv.trig_b_iu_identities_validate_uniqueness();
