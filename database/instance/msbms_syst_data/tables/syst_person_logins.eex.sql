@@ -24,13 +24,8 @@ CREATE TABLE msbms_syst_data.syst_person_logins
     ,enum_login_state_id            uuid                                             NOT NULL
         CONSTRAINT syst_person_logins_enum_login_state_fk
         REFERENCES msbms_syst_data.enum_login_states (id)
+    ,access_account_id              uuid                                             NOT NULL
     ,validity_start_end             tstzrange   DEFAULT tstzrange(now(), null, '[)') NOT NULL
-    ,identity                       text                                             NOT NULL
-        CONSTRAINT syst_person_logins_identity_udx UNIQUE
-    ,proxy_for_syst_person_login_id uuid
-        CONSTRAINT syst_person_logins_proxy_for_syst_person_login_fk
-        REFERENCES msbms_syst_data.syst_person_logins (id)
-        ON DELETE CASCADE
     ,last_login                     timestamptz DEFAULT '-infinity'                  NOT NULL
     ,last_attempted_login           timestamptz DEFAULT '-infinity'                  NOT NULL
     ,diag_timestamp_created         timestamptz DEFAULT now( )                       NOT NULL
@@ -86,25 +81,22 @@ COMMENT ON
 $DOC$Establishes which life-cycle state the login record is in.$DOC$;
 
 COMMENT ON
+    COLUMN msbms_syst_data.syst_person_logins.access_account_id IS
+$DOC$A reference to the global database msbms_syst_data.syst_access_accounts table.
+Authentication is handled centrally via the global database for all instance
+owners, instances, and supported applications.  The reference in this column
+indicates which of the global access account records is used for authentication
+to this instance.  Authorization, including authorization to connect to the
+instance is managed by the instance itself once the system authenticates the
+user.$DOC$;
+
+COMMENT ON
     COLUMN msbms_syst_data.syst_person_logins.validity_start_end IS
 $DOC$Indicates the starting and ending timestamps for which a given login may be
 used to access the system, so long as the enum_login_state_id value also
 represents a state which allows login attempts.  The allowed times include the
 starting time and allow logins up to the ending time, but not including the
 ending time itself.$DOC$;
-
-COMMENT ON
-    COLUMN msbms_syst_data.syst_person_logins.identity IS
-$DOC$Defines the identifier that is presented to the system by a user or system
-login.  Traditionally this would be the user name.$DOC$;
-
-COMMENT ON
-    COLUMN msbms_syst_data.syst_person_logins.proxy_for_syst_person_login_id IS
-$DOC$For cases such as self-serve password resets, it may be necessary to create a
-temporary authentication path with an ad hoc identity and, ultimately, an ad hoc
-authenticator.  If the syst_person_logins record in question is such an ad hoc
-login, this field will reference the login record which is being reset or for
-which the ad hoc login record is serving as a proxy.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.syst_person_logins.last_login IS

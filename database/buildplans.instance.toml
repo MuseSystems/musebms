@@ -30,7 +30,6 @@ load_files = [
     "instance/msbms_syst_data/tables/enum_interface_types.eex.sql",
     "instance/msbms_syst_data/tables/enum_interaction_types.eex.sql",
     "instance/msbms_syst_data/tables/enum_login_states.eex.sql",
-    "instance/msbms_syst_data/tables/enum_authentication_types.eex.sql",
     "instance/msbms_syst_data/tables/syst_interaction_logs.eex.sql",
     "instance/msbms_appl_data/tables/conf_global_settings.eex.sql",
     "instance/msbms_appl_data/tables/enum_entity_states.eex.sql",
@@ -69,6 +68,5 @@ load_files = [
     "instance/msbms_appl_data/tables/mstr_entity_fulfillment_places.eex.sql",
     "instance/msbms_appl_data/tables/mstr_entity_person_roles.eex.sql",
     "instance/msbms_syst_data/tables/syst_person_logins.eex.sql",
-    "instance/msbms_syst_data/tables/syst_login_authenticators.eex.sql",
     "instance/msbms_appl_data/tables/mstr_person_contact_roles.eex.sql",
 ]
