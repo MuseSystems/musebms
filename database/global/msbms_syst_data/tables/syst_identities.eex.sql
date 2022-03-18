@@ -44,6 +44,10 @@ ALTER TABLE msbms_syst_data.syst_identities OWNER TO <%= msbms_owner %>;
 REVOKE ALL ON TABLE msbms_syst_data.syst_identities FROM public;
 GRANT ALL ON TABLE msbms_syst_data.syst_identities TO <%= msbms_owner %>;
 
+CREATE TRIGGER a50_trig_b_iu_syst_identities_validate_uniqueness
+    BEFORE INSERT OR UPDATE ON msbms_syst_data.syst_identities
+    FOR EACH ROW EXECUTE PROCEDURE msbms_syst_priv.trig_b_iu_syst_identities_validate_uniqueness();
+
 CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
     BEFORE INSERT OR UPDATE ON msbms_syst_data.syst_identities
     FOR EACH ROW EXECUTE PROCEDURE msbms_syst_priv.trig_b_iu_set_diagnostic_columns();
@@ -145,7 +149,3 @@ $DOC$Records the number of times the record has been updated regardless as to if
 the update actually changed any data.  In this way needless or redundant record 
 updates can be found.  This row starts at 0 and therefore may be the same as the 
 diag_row_version - 1.$DOC$;
-
-CREATE TRIGGER a50_trig_b_iu_syst_identities_validate_uniqueness
-    BEFORE INSERT OR UPDATE ON msbms_syst_data.syst_identities
-    FOR EACH ROW EXECUTE PROCEDURE msbms_syst_priv.trig_b_iu_syst_identities_validate_uniqueness();
