@@ -26,6 +26,7 @@ load_files = [
     "common/msbms_syst_data/tables/syst_feature_types.eex.sql",
     "common/msbms_syst_data/tables/syst_features.eex.sql",
     "common/msbms_syst_data/tables/syst_relations.eex.sql",
+    "common/msbms_syst_priv/trigger_functions/conf_enum_values/trig_a_iu_conf_enum_values_check_functional_type.eex.sql",
     "common/msbms_syst_data/tables/conf_enums.eex.sql",
     "common/msbms_syst_data/tables/conf_enum_functional_types.eex.sql",
     "common/msbms_syst_data/tables/conf_enum_values.eex.sql",
