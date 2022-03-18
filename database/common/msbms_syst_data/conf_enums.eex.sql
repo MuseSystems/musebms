@@ -24,6 +24,8 @@ CREATE TABLE msbms_syst_data.conf_enums
         REFERENCES msbms_syst_data.syst_features (id)
     ,syst_defined            boolean     DEFAULT FALSE               NOT NULL
     ,user_maintainable       boolean     DEFAULT TRUE                NOT NULL
+    ,default_syst_options    jsonb
+    ,default_user_options    jsonb
     ,diag_timestamp_created  timestamptz DEFAULT now( )              NOT NULL
     ,diag_role_created       text                                    NOT NULL
     ,diag_timestamp_modified timestamptz DEFAULT now( )              NOT NULL
@@ -97,6 +99,17 @@ false, the enumeration is strictly system managed for any functional purpose.
 Note that the value of this column doesn't effect the ability to set a
 user_description value; the ability to set custom descriptions is always
 available for any properly authorized user.$DOC$;
+
+COMMENT ON
+    COLUMN msbms_syst_data.conf_enums.default_syst_options IS
+$DOC$Establishes the expected extended system options along with default values if
+applicable.  Note that this setting is used to both validate
+and set defaults in the conf_enum_values.syst_options column.$DOC$;
+
+COMMENT ON
+    COLUMN msbms_syst_data.conf_enums.default_user_options IS
+$DOC$Allows a user to set the definition of conf_enum_values.user_options values and
+provide defaults for those values if appropriate.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.conf_enums.diag_timestamp_created IS
