@@ -26,6 +26,7 @@ load_files = [
     "common/msbms_syst_data/tables/syst_features.eex.sql",
     "common/msbms_syst_data/tables/syst_relations.eex.sql",
     "common/msbms_syst_data/tables/conf_enums.eex.sql",
+    "common/msbms_syst_data/tables/conf_enum_functional_types.eex.sql",
     "global/msbms_syst_data/tables/enum_access_account_states.eex.sql",
     "global/msbms_syst_data/tables/enum_credential_types.eex.sql",
     "global/msbms_syst_data/tables/enum_identity_types.eex.sql",
