@@ -25,9 +25,9 @@ BEGIN
                        saa_this.id IS DISTINCT FROM saa_other.id
                 LEFT JOIN msbms_syst_data.syst_identities si_other
                     ON si_other.access_account_id = saa_other.id AND
-                       si_other.identity_type_id = NEW.identity_type_id
-            WHERE saa_this.id = NEW.access_acount_id AND
-                  si_other.identifier = NEW.identifier
+                       si_other.identity_type_id = new.identity_type_id
+            WHERE saa_this.id = new.access_acount_id AND
+                  si_other.identifier = new.identifier
             )
     THEN
 
@@ -41,8 +41,8 @@ BEGIN
                             ,p_exception_name => 'duplicate_identity'
                             ,p_errcode        => 'PM002'
                             ,p_param_data     => jsonb_build_object(
-                                 'access_account_id', NEW.access_account_id
-                                ,'identifier', NEW.identifier
+                                 'access_account_id', new.access_account_id
+                                ,'identifier', new.identifier
                             )
                             ,p_context_data   =>
                                 jsonb_build_object(
