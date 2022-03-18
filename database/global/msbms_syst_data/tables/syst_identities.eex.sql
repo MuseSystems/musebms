@@ -146,6 +146,6 @@ the update actually changed any data.  In this way needless or redundant record
 updates can be found.  This row starts at 0 and therefore may be the same as the 
 diag_row_version - 1.$DOC$;
 
-CREATE TRIGGER a50_trig_b_iu_identities_validate_uniqueness
+CREATE TRIGGER a50_trig_b_iu_syst_identities_validate_uniqueness
     BEFORE INSERT OR UPDATE ON msbms_syst_data.syst_identities
-    FOR EACH ROW EXECUTE PROCEDURE msbms_syst_priv.trig_b_iu_identities_validate_uniqueness();
+    FOR EACH ROW EXECUTE PROCEDURE msbms_syst_priv.trig_b_iu_syst_identities_validate_uniqueness();
