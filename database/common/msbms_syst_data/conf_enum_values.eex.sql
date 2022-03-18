@@ -11,35 +11,73 @@
 -- muse.information@musesystems.com  :: https://muse.systems
 CREATE TABLE msbms_syst_data.conf_enum_values
 (
-     id                      uuid        DEFAULT uuid_generate_v1( ) NOT NULL
+     id
+        uuid
+        NOT NULL DEFAULT uuid_generate_v1( )
         CONSTRAINT conf_enum_values_pk PRIMARY KEY
-    ,internal_name           text                                    NOT NULL
+    ,internal_name
+        text COLLATE msbms_syst_priv.variant_insensitive
+        NOT NULL
         CONSTRAINT conf_enum_values_internal_name_udx UNIQUE
-    ,display_name            text                                    NOT NULL
+    ,display_name
+        text COLLATE msbms_syst_priv.variant_insensitive
+        NOT NULL
         CONSTRAINT conf_enum_values_display_name_udx UNIQUE
-    ,enum_id                 uuid                                    NOT NULL
+    ,enum_id
+        uuid
+        NOT NULL
         CONSTRAINT conf_enum_values_enum_id_fk
-        REFERENCES msbms_syst_data.conf_enums (id)
-            ON DELETE CASCADE
-    ,functional_type_id      uuid
+            REFERENCES msbms_syst_data.conf_enums (id)
+                ON DELETE CASCADE
+    ,functional_type_id
+        uuid
         CONSTRAINT conf_enum_values_enum_functional_type_id_fk
-        REFERENCES msbms_syst_data.conf_enum_functional_types (id)
-    ,enum_default            boolean     DEFAULT FALSE               NOT NULL
-    ,functional_type_default boolean     DEFAULT FALSE               NOT NULL
-    ,syst_defined            boolean     DEFAULT FALSE               NOT NULL
-    ,user_maintainable       boolean     DEFAULT FALSE               NOT NULL
-    ,syst_description        text                                    NOT NULL
-    ,user_description        text
-    ,sort_order              integer                                 NOT NULL
-    ,syst_options            jsonb
-    ,user_options            jsonb
-    ,diag_timestamp_created  timestamptz DEFAULT now( )              NOT NULL
-    ,diag_role_created       text                                    NOT NULL
-    ,diag_timestamp_modified timestamptz DEFAULT now( )              NOT NULL
-    ,diag_wallclock_modified timestamptz DEFAULT clock_timestamp( )  NOT NULL
-    ,diag_role_modified      text                                    NOT NULL
-    ,diag_row_version        bigint      DEFAULT 1                   NOT NULL
-    ,diag_update_count       bigint      DEFAULT 0                   NOT NULL
+            REFERENCES msbms_syst_data.conf_enum_functional_types (id)
+    ,enum_default
+        boolean
+        NOT NULL DEFAULT FALSE
+    ,functional_type_default
+        boolean
+        NOT NULL DEFAULT FALSE
+    ,syst_defined
+        boolean
+        NOT NULL DEFAULT FALSE
+    ,user_maintainable
+        boolean
+        NOT NULL DEFAULT FALSE
+    ,syst_description
+        text
+        NOT NULL
+    ,user_description
+        text
+    ,sort_order
+        integer
+        NOT NULL
+    ,syst_options
+        jsonb
+    ,user_options
+        jsonb
+    ,diag_timestamp_created
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_role_created
+        text
+        NOT NULL
+    ,diag_timestamp_modified
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_wallclock_modified
+        timestamptz
+        NOT NULL DEFAULT clock_timestamp( )
+    ,diag_role_modified
+        text
+        NOT NULL
+    ,diag_row_version
+        bigint
+        NOT NULL DEFAULT 1
+    ,diag_update_count
+        bigint
+        NOT NULL DEFAULT 0
 );
 
 ALTER TABLE msbms_syst_data.conf_enum_values OWNER TO <%= msbms_owner %>;
