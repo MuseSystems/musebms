@@ -20,7 +20,7 @@ load_files = [
     "instance/dbinit/database_initial_setup.eex.sql",
     "instance/dbinit/create_database_schemata.eex.sql",
     "common/msbms_syst_priv/functions/get_exception_details.eex.sql",
-    "common/msbms_syst_priv/trigger_functions/trig_b_iu_set_diagnostic_columns.eex.sql",
+    "common/msbms_syst_priv/trigger_functions/multi_table/trig_b_iu_set_diagnostic_columns.eex.sql",
     "common/msbms_syst_data/tables/syst_modules.eex.sql",
     "common/msbms_syst_data/tables/syst_feature_types.eex.sql",
     "common/msbms_syst_data/tables/syst_features.eex.sql",
