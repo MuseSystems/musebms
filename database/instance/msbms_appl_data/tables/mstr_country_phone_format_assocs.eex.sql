@@ -1,6 +1,6 @@
--- Source File: mstr_country_phone_format_assocs.eex.sql
--- Location:    database/instance/msbms_appl_data/tables/mstr_country_phone_format_assocs.eex.sql
--- Project:     musebms
+-- File:        mstr_country_phone_format_assocs.eex.sql
+-- Location:    database\instance\msbms_appl_data\tables\mstr_country_phone_format_assocs.eex.sql
+-- Project:     Muse Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
 -- This file may include content copyrighted and licensed from third parties.
@@ -9,24 +9,47 @@
 -- See the NOTICE file in the project root for copyright ownership information.
 --
 -- muse.information@musesystems.com  :: https://muse.systems
+
 CREATE TABLE msbms_appl_data.mstr_country_phone_format_assocs
 (
-     id                      uuid        DEFAULT uuid_generate_v1( ) NOT NULL
+     id
+        uuid
+        NOT NULL DEFAULT uuid_generate_v1( )
         CONSTRAINT mstr_country_phone_format_assocs_pk PRIMARY KEY
-    ,country_id              uuid                                    NOT NULL
+    ,country_id
+        uuid
+        NOT NULL
         CONSTRAINT mstr_country_phone_format_assocs_countries_fk
-        REFERENCES msbms_appl_data.mstr_countries (id)
-    ,phone_format_id       uuid                                    NOT NULL
+            REFERENCES msbms_appl_data.mstr_countries (id)
+    ,phone_format_id
+        uuid
+        NOT NULL
         CONSTRAINT mstr_country_phone_format_assocs_phone_formats_fk
-        REFERENCES msbms_appl_data.conf_phone_formats (id)
-    ,is_default_for_country  boolean     DEFAULT false               NOT NULL
-    ,diag_timestamp_created  timestamptz DEFAULT now( )              NOT NULL
-    ,diag_role_created       text                                    NOT NULL
-    ,diag_timestamp_modified timestamptz DEFAULT now( )              NOT NULL
-    ,diag_wallclock_modified timestamptz DEFAULT clock_timestamp( )  NOT NULL
-    ,diag_role_modified      text                                    NOT NULL
-    ,diag_row_version        bigint      DEFAULT 1                   NOT NULL
-    ,diag_update_count       bigint      DEFAULT 0                   NOT NULL
+            REFERENCES msbms_appl_data.conf_phone_formats (id)
+    ,is_default_for_country
+        boolean
+        NOT NULL DEFAULT false
+    ,diag_timestamp_created
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_role_created
+        text
+        NOT NULL
+    ,diag_timestamp_modified
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_wallclock_modified
+        timestamptz
+        NOT NULL DEFAULT clock_timestamp( )
+    ,diag_role_modified
+        text
+        NOT NULL
+    ,diag_row_version
+        bigint
+        NOT NULL DEFAULT 1
+    ,diag_update_count
+        bigint
+        NOT NULL DEFAULT 0
 );
 
 ALTER TABLE msbms_appl_data.mstr_country_phone_format_assocs OWNER TO <%= msbms_owner %>;

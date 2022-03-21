@@ -1,6 +1,6 @@
--- Source File: syst_syst_interaction_logs.sql
--- Location:    database/instance/msbms_syst_data/tables/syst_syst_interaction_logs.sql
--- Project:     Muse Systems Business Management System
+-- File:        syst_interaction_logs.eex.sql
+-- Location:    database\instance\msbms_syst_data\tables\syst_interaction_logs.eex.sql
+-- Project:     Muse Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
 -- This file may include content copyrighted and licensed from third parties.
@@ -12,23 +12,46 @@
 
 CREATE TABLE msbms_syst_data.syst_interaction_logs
 (
-     id                           uuid        DEFAULT uuid_generate_v1( ) NOT NULL
+     id
+        uuid
+        NOT NULL DEFAULT uuid_generate_v1( )
         CONSTRAINT syst_interaction_logs_pk PRIMARY KEY
-    ,interaction_timestamp        timestamptz DEFAULT now()               NOT NULL
-    ,interaction_type_id          uuid                                    NOT NULL
+    ,interaction_timestamp
+        timestamptz
+        NOT NULL DEFAULT now()
+    ,interaction_type_id
+        uuid
+        NOT NULL
         CONSTRAINT syst_interaction_logs_interaction_types_fk
-        REFERENCES msbms_syst_data.enum_interaction_types ( id )
-    ,interface_type_id            uuid                                    NOT NULL
+            REFERENCES msbms_syst_data.enum_interaction_types ( id )
+    ,interface_type_id
+        uuid
+        NOT NULL
         CONSTRAINT syst_interaction_logs_interface_types_fk
-        REFERENCES msbms_syst_data.enum_interface_types ( id )
-    ,data                         jsonb
-    ,diag_timestamp_created       timestamptz DEFAULT now( )              NOT NULL
-    ,diag_role_created            text                                    NOT NULL
-    ,diag_timestamp_modified      timestamptz DEFAULT now( )              NOT NULL
-    ,diag_wallclock_modified      timestamptz DEFAULT clock_timestamp( )  NOT NULL
-    ,diag_role_modified           text                                    NOT NULL
-    ,diag_row_version             bigint      DEFAULT 1                   NOT NULL
-    ,diag_update_count            bigint      DEFAULT 0                   NOT NULL
+            REFERENCES msbms_syst_data.enum_interface_types ( id )
+    ,data
+        jsonb
+    ,diag_timestamp_created
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_role_created
+        text
+        NOT NULL
+    ,diag_timestamp_modified
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_wallclock_modified
+        timestamptz
+        NOT NULL DEFAULT clock_timestamp( )
+    ,diag_role_modified
+        text
+        NOT NULL
+    ,diag_row_version
+        bigint
+        NOT NULL DEFAULT 1
+    ,diag_update_count
+        bigint
+        NOT NULL DEFAULT 0
 );
 
 ALTER TABLE msbms_syst_data.syst_interaction_logs OWNER TO <%= msbms_owner %>;

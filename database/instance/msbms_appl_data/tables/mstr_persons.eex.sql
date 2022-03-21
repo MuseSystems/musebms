@@ -1,6 +1,6 @@
--- Source File: mstr_persons.eex.sql
--- Location:    database/instance/msbms_appl_data/tables/mstr_persons.eex.sql
--- Project:     Muse Systems Business Management System
+-- File:        mstr_persons.eex.sql
+-- Location:    database\instance\msbms_appl_data\tables\mstr_persons.eex.sql
+-- Project:     Muse Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
 -- This file may include content copyrighted and licensed from third parties.
@@ -12,30 +12,58 @@
 
 CREATE TABLE msbms_appl_data.mstr_persons
 (
-     id                      uuid        DEFAULT uuid_generate_v1( ) NOT NULL
+     id
+        uuid
+        NOT NULL DEFAULT uuid_generate_v1( )
         CONSTRAINT mstr_persons_pk PRIMARY KEY
-    ,owning_entity_id        uuid                                    NOT NULL
+    ,owning_entity_id
+        uuid
+        NOT NULL
         CONSTRAINT mstr_persons_entities_fk
-        REFERENCES msbms_appl_data.mstr_entities (id)
-    ,internal_name           text                                    NOT NULL
+            REFERENCES msbms_appl_data.mstr_entities (id)
+    ,internal_name
+        text
+        NOT NULL
         CONSTRAINT mstr_persons_internal_name_udx UNIQUE
-    ,display_name            text
+    ,display_name
+        text
         CONSTRAINT mstr_persons_display_name_udx UNIQUE
-    ,external_name           text                                    NOT NULL
-    ,formatted_name          jsonb        DEFAULT '{}'::jsonb        NOT NULL
-    ,person_type_id          uuid                                    NOT NULL
+    ,external_name
+        text
+        NOT NULL
+    ,formatted_name
+        jsonb
+        NOT NULL DEFAULT '{}'::jsonb
+    ,person_type_id
+        uuid
+        NOT NULL
         CONSTRAINT mstr_persons_person_types_fk
-        REFERENCES msbms_appl_data.enum_person_types (id)
-    ,person_state_id         uuid
+            REFERENCES msbms_appl_data.enum_person_types (id)
+    ,person_state_id
+        uuid
         CONSTRAINT mstr_persons_person_states_fk
-        REFERENCES msbms_appl_data.enum_person_states (id)
-    ,diag_timestamp_created  timestamptz DEFAULT now( )              NOT NULL
-    ,diag_role_created       text                                    NOT NULL
-    ,diag_timestamp_modified timestamptz DEFAULT now( )              NOT NULL
-    ,diag_wallclock_modified timestamptz DEFAULT clock_timestamp( )  NOT NULL
-    ,diag_role_modified      text                                    NOT NULL
-    ,diag_row_version        bigint      DEFAULT 1                   NOT NULL
-    ,diag_update_count       bigint      DEFAULT 0                   NOT NULL
+            REFERENCES msbms_appl_data.enum_person_states (id)
+    ,diag_timestamp_created
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_role_created
+        text
+        NOT NULL
+    ,diag_timestamp_modified
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_wallclock_modified
+        timestamptz
+        NOT NULL DEFAULT clock_timestamp( )
+    ,diag_role_modified
+        text
+        NOT NULL
+    ,diag_row_version
+        bigint
+        NOT NULL DEFAULT 1
+    ,diag_update_count
+        bigint
+        NOT NULL DEFAULT 0
 );
 
 ALTER TABLE msbms_appl_data.mstr_persons OWNER TO <%= msbms_owner %>;

@@ -12,23 +12,41 @@
 
 CREATE TABLE msbms_appl_data.mstr_entity_staffing_entities
 (
-     id                          uuid        DEFAULT uuid_generate_v1( ) NOT NULL
+     id
+        uuid
+        NOT NULL DEFAULT uuid_generate_v1( )
         CONSTRAINT mstr_entity_staffing_entities_pk PRIMARY KEY
-    ,entity_id                   uuid                                    NOT NULL
+    ,entity_id
+        uuid
+        NOT NULL
         CONSTRAINT mstr_entity_staffing_entities_entity_id_fk
-        REFERENCES msbms_appl_data.mstr_entities (id)
-        ON DELETE CASCADE
-    ,owning_entity_id            uuid                                    NOT NULL
+            REFERENCES msbms_appl_data.mstr_entities (id) ON DELETE CASCADE
+    ,owning_entity_id
+        uuid
+        NOT NULL
         CONSTRAINT mstr_entity_staffing_entities_owning_entity_id_fk
-        REFERENCES msbms_appl_data.mstr_entities (id)
-        ON DELETE CASCADE
-    ,diag_timestamp_created      timestamptz DEFAULT now( )              NOT NULL
-    ,diag_role_created           text                                    NOT NULL
-    ,diag_timestamp_modified     timestamptz DEFAULT now( )              NOT NULL
-    ,diag_wallclock_modified     timestamptz DEFAULT clock_timestamp( )  NOT NULL
-    ,diag_role_modified          text                                    NOT NULL
-    ,diag_row_version            bigint      DEFAULT 1                   NOT NULL
-    ,diag_update_count           bigint      DEFAULT 0                   NOT NULL
+            REFERENCES msbms_appl_data.mstr_entities (id) ON DELETE CASCADE
+    ,diag_timestamp_created
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_role_created
+        text
+        NOT NULL
+    ,diag_timestamp_modified
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_wallclock_modified
+        timestamptz
+        NOT NULL DEFAULT clock_timestamp( )
+    ,diag_role_modified
+        text
+        NOT NULL
+    ,diag_row_version
+        bigint
+        NOT NULL DEFAULT 1
+    ,diag_update_count
+        bigint
+        NOT NULL DEFAULT 0
     ,CONSTRAINT mstr_entity_staffing_entities_udx
         UNIQUE (entity_id, owning_entity_id)
 );

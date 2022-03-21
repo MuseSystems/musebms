@@ -1,5 +1,5 @@
 -- File:        conf_enums.eex.sql
--- Location:    database\common\msbms_syst_data\conf_enums.eex.sql
+-- Location:    database\common\msbms_syst_data\tables\conf_enums.eex.sql
 -- Project:     Muse Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -9,30 +9,62 @@
 -- See the NOTICE file in the project root for copyright ownership information.
 --
 -- muse.information@musesystems.com  :: https://muse.systems
+
 CREATE TABLE msbms_syst_data.conf_enums
 (
-     id                      uuid        DEFAULT uuid_generate_v1( ) NOT NULL 
+     id
+        uuid
+        NOT NULL DEFAULT uuid_generate_v1( )
         CONSTRAINT conf_enums_pk PRIMARY KEY
-    ,internal_name           text                                    NOT NULL
+    ,internal_name
+        text
+        NOT NULL
         CONSTRAINT conf_enums_internal_name_udx UNIQUE
-    ,display_name            text                                    NOT NULL
+    ,display_name
+        text
+        NOT NULL
         CONSTRAINT conf_enums_display_name_udx UNIQUE
-    ,syst_description        text                                    NOT NULL
-    ,user_description        text
-    ,feature_id              uuid                                    NOT NULL
+    ,syst_description
+        text
+        NOT NULL
+    ,user_description
+        text
+    ,feature_id
+        uuid
+        NOT NULL
         CONSTRAINT conf_enums_feature_id_fk
-        REFERENCES msbms_syst_data.syst_features (id)
-    ,syst_defined            boolean     DEFAULT FALSE               NOT NULL
-    ,user_maintainable       boolean     DEFAULT TRUE                NOT NULL
-    ,default_syst_options    jsonb
-    ,default_user_options    jsonb
-    ,diag_timestamp_created  timestamptz DEFAULT now( )              NOT NULL
-    ,diag_role_created       text                                    NOT NULL
-    ,diag_timestamp_modified timestamptz DEFAULT now( )              NOT NULL
-    ,diag_wallclock_modified timestamptz DEFAULT clock_timestamp( )  NOT NULL
-    ,diag_role_modified      text                                    NOT NULL
-    ,diag_row_version        bigint      DEFAULT 1                   NOT NULL
-    ,diag_update_count       bigint      DEFAULT 0                   NOT NULL
+            REFERENCES msbms_syst_data.syst_features (id)
+    ,syst_defined
+        boolean
+        NOT NULL DEFAULT FALSE
+    ,user_maintainable
+        boolean
+        NOT NULL DEFAULT TRUE
+    ,default_syst_options
+        jsonb
+    ,default_user_options
+        jsonb
+    ,diag_timestamp_created
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_role_created
+        text
+        NOT NULL
+    ,diag_timestamp_modified
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_wallclock_modified
+        timestamptz
+        NOT NULL DEFAULT clock_timestamp( )
+    ,diag_role_modified
+        text
+        NOT NULL
+    ,diag_row_version
+        bigint
+        NOT NULL DEFAULT 1
+    ,diag_update_count
+        bigint
+        NOT NULL DEFAULT 0
 );
 
 ALTER TABLE msbms_syst_data.conf_enums OWNER TO <%= msbms_owner %>;

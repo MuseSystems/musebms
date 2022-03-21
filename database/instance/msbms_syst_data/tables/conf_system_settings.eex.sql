@@ -12,31 +12,65 @@
 
 CREATE TABLE msbms_syst_data.conf_system_settings
 (
-     id                      uuid        DEFAULT uuid_generate_v1( ) NOT NULL
+     id
+        uuid
+        NOT NULL DEFAULT uuid_generate_v1( )
         CONSTRAINT conf_system_settings_pk PRIMARY KEY
-    ,internal_name           text                                    NOT NULL
+    ,internal_name
+        text
+        NOT NULL
         CONSTRAINT conf_system_settings_internal_name_udx UNIQUE
-    ,display_name            text                                    NOT NULL
+    ,display_name
+        text
+        NOT NULL
         CONSTRAINT conf_system_settings_display_name_udx UNIQUE
-    ,description             text                                    NOT NULL
-    ,config_flag             boolean
-    ,config_integer          bigint
-    ,config_decimal          numeric
-    ,config_interval         interval
-    ,config_date             date
-    ,config_time             time
-    ,config_timestamp        timestamptz
-    ,config_json             jsonb
-    ,config_text             text
-    ,config_uuid             uuid
-    ,config_blob             bytea
-    ,diag_timestamp_created  timestamptz DEFAULT now( )              NOT NULL
-    ,diag_role_created       text                                    NOT NULL
-    ,diag_timestamp_modified timestamptz DEFAULT now( )              NOT NULL
-    ,diag_wallclock_modified timestamptz DEFAULT clock_timestamp( )  NOT NULL
-    ,diag_role_modified      text                                    NOT NULL
-    ,diag_row_version        bigint      DEFAULT 1                   NOT NULL
-    ,diag_update_count       bigint      DEFAULT 0                   NOT NULL
+    ,description
+        text
+        NOT
+            NULL
+    ,config_flag
+        boolean
+    ,config_integer
+        bigint
+    ,config_decimal
+        numeric
+    ,config_interval
+        interval
+    ,config_date
+        date
+    ,config_time
+        time
+    ,config_timestamp
+        timestamptz
+    ,config_json
+        jsonb
+    ,config_text
+        text
+    ,config_uuid
+        uuid
+    ,config_blob
+        bytea
+    ,diag_timestamp_created
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_role_created
+        text
+        NOT NULL
+    ,diag_timestamp_modified
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_wallclock_modified
+        timestamptz
+        NOT NULL DEFAULT clock_timestamp( )
+    ,diag_role_modified
+        text
+        NOT NULL
+    ,diag_row_version
+        bigint
+        NOT NULL DEFAULT 1
+    ,diag_update_count
+        bigint
+        NOT NULL DEFAULT 0
 );
 
 ALTER TABLE msbms_syst_data.conf_system_settings OWNER TO <%= msbms_owner %>;

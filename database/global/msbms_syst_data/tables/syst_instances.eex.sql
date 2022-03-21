@@ -13,44 +13,81 @@
 
 CREATE TABLE msbms_syst_data.syst_instances
 (
-     id                       uuid        DEFAULT uuid_generate_v1( )  NOT NULL
+     id
+        uuid
+        NOT NULL DEFAULT uuid_generate_v1( )
         CONSTRAINT syst_instances_pk PRIMARY KEY
-    ,internal_name            text                                     NOT NULL
+    ,internal_name
+        text
+        NOT NULL
         CONSTRAINT syst_instances_internal_name_udx UNIQUE
-    ,display_name             text                                     NOT NULL
+    ,display_name
+        text
+        NOT NULL
         CONSTRAINT syst_instances_display_name_udx UNIQUE
-    ,application_id           uuid                                     NOT NULL
+    ,application_id
+        uuid
+        NOT NULL
         CONSTRAINT syst_instances_applications_fk
-        REFERENCES msbms_syst_data.syst_applications (id)
-    ,enum_instance_type_id    uuid                                     NOT NULL
+            REFERENCES msbms_syst_data.syst_applications (id)
+    ,enum_instance_type_id
+        uuid
+        NOT NULL
         CONSTRAINT syst_instances_enum_instance_type_fk
-        REFERENCES msbms_syst_data.enum_instance_types (id)
-    ,enum_instance_state_id   uuid                                     NOT NULL
+            REFERENCES msbms_syst_data.enum_instance_types (id)
+    ,enum_instance_state_id
+        uuid
+        NOT NULL
         CONSTRAINT syst_instances_enum_instance_state_fk
-        REFERENCES msbms_syst_data.enum_instance_states (id)
-    ,owner_id                 uuid                                     NOT NULL
+            REFERENCES msbms_syst_data.enum_instance_states (id)
+    ,owner_id
+        uuid
+        NOT NULL
         CONSTRAINT syst_instances_owners_fk
-        REFERENCES msbms_syst_data.syst_owners (id)
-    ,dbserver_name            text                                     NOT NULL
-    ,db_app_context_pool_size integer     DEFAULT 10                   NOT NULL
+            REFERENCES msbms_syst_data.syst_owners (id)
+    ,dbserver_name
+        text
+        NOT NULL
+    ,db_app_context_pool_size
+        integer
+        NOT NULL DEFAULT 10
         CONSTRAINT syst_instances_db_app_context_pool_size_no_neg_chk
-        CHECK (db_app_context_pool_size > 0)
-    ,db_api_context_pool_size integer     DEFAULT 3                    NOT NULL
+            CHECK (db_app_context_pool_size > 0)
+    ,db_api_context_pool_size
+        integer
+        NOT NULL DEFAULT 3
         CONSTRAINT syst_instances_db_api_context_pool_size_no_neg_chk
-        CHECK (db_api_context_pool_size > 0)
-    ,instance_code            bytea       DEFAULT gen_random_bytes(32) NOT NULL
-    ,owning_instance_id       uuid
+            CHECK (db_api_context_pool_size > 0)
+    ,instance_code
+        bytea
+        NOT NULL DEFAULT gen_random_bytes(32)
+    ,owning_instance_id
+        uuid
         CONSTRAINT syst_instances_owning_instance_fk
-        REFERENCES msbms_syst_data.syst_instances (id)
+            REFERENCES msbms_syst_data.syst_instances (id)
         CONSTRAINT syst_instances_self_ownership_chk
-        CHECK (owning_instance_id IS NULL OR owning_instance_id != id)
-    ,diag_timestamp_created   timestamptz DEFAULT now( )               NOT NULL
-    ,diag_role_created        text                                     NOT NULL
-    ,diag_timestamp_modified  timestamptz DEFAULT now( )               NOT NULL
-    ,diag_wallclock_modified  timestamptz DEFAULT clock_timestamp( )   NOT NULL
-    ,diag_role_modified       text                                     NOT NULL
-    ,diag_row_version         bigint      DEFAULT 1                    NOT NULL
-    ,diag_update_count        bigint      DEFAULT 0                    NOT NULL
+            CHECK (owning_instance_id IS NULL OR owning_instance_id != id)
+    ,diag_timestamp_created
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_role_created
+        text
+        NOT NULL
+    ,diag_timestamp_modified
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_wallclock_modified
+        timestamptz
+        NOT NULL DEFAULT clock_timestamp( )
+    ,diag_role_modified
+        text
+        NOT NULL
+    ,diag_row_version
+        bigint
+        NOT NULL DEFAULT 1
+    ,diag_update_count
+        bigint
+        NOT NULL DEFAULT 0
 );
 
 ALTER TABLE msbms_syst_data.syst_instances OWNER TO <%= msbms_owner %>;

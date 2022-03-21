@@ -1,6 +1,6 @@
--- Source File: syst_features.eex.sql
--- Location:    database/instance/msbms_syst_data/tables/syst_features.eex.sql
--- Project:     Muse Systems Business Management System
+-- File:        syst_features.eex.sql
+-- Location:    database\common\msbms_syst_data\tables\syst_features.eex.sql
+-- Project:     Muse Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
 -- This file may include content copyrighted and licensed from third parties.
@@ -12,26 +12,52 @@
 
 CREATE TABLE msbms_syst_data.syst_features
 (
-     id                          uuid        DEFAULT uuid_generate_v1( ) NOT NULL
+     id
+        uuid
+        NOT NULL DEFAULT uuid_generate_v1( )
         CONSTRAINT syst_features_pk PRIMARY KEY
-    ,internal_name               text                                    NOT NULL
+    ,internal_name
+        text
+        NOT NULL
         CONSTRAINT syst_features_internal_name_udx UNIQUE
-    ,display_name                text                                    NOT NULL
+    ,display_name
+        text
+        NOT NULL
         CONSTRAINT syst_features_display_name_udx UNIQUE
-    ,description                 text                                    NOT NULL
-    ,syst_module_id               uuid                                    NOT NULL
+    ,description
+        text
+        NOT NULL
+    ,syst_module_id
+        uuid
+        NOT NULL
         CONSTRAINT syst_features_syst_module_fk
-        REFERENCES msbms_syst_data.syst_features ( id )
-    ,syst_feature_type_id uuid                                    NOT NULL
+            REFERENCES msbms_syst_data.syst_features ( id )
+    ,syst_feature_type_id
+        uuid
+        NOT NULL
         CONSTRAINT syst_features_syst_feature_type_fk
-        REFERENCES msbms_syst_data.syst_feature_types ( id )
-    ,diag_timestamp_created      timestamptz DEFAULT now( )              NOT NULL
-    ,diag_role_created           text                                    NOT NULL
-    ,diag_timestamp_modified     timestamptz DEFAULT now( )              NOT NULL
-    ,diag_wallclock_modified     timestamptz DEFAULT clock_timestamp( )  NOT NULL
-    ,diag_role_modified          text                                    NOT NULL
-    ,diag_row_version            bigint      DEFAULT 1                   NOT NULL
-    ,diag_update_count           bigint      DEFAULT 0                   NOT NULL
+            REFERENCES msbms_syst_data.syst_feature_types ( id )
+    ,diag_timestamp_created
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_role_created
+        text
+        NOT NULL
+    ,diag_timestamp_modified
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_wallclock_modified
+        timestamptz
+        NOT NULL DEFAULT clock_timestamp( )
+    ,diag_role_modified
+        text
+        NOT NULL
+    ,diag_row_version
+        bigint
+        NOT NULL DEFAULT 1
+    ,diag_update_count
+        bigint
+        NOT NULL DEFAULT 0
 );
 
 ALTER TABLE msbms_syst_data.syst_features OWNER TO <%= msbms_owner %>;

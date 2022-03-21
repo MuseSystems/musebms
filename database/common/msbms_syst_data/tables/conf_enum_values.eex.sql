@@ -1,5 +1,5 @@
 -- File:        conf_enum_values.eex.sql
--- Location:    database\common\msbms_syst_data\conf_enum_values.eex.sql
+-- Location:    database\common\msbms_syst_data\tables\conf_enum_values.eex.sql
 -- Project:     Muse Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -9,6 +9,7 @@
 -- See the NOTICE file in the project root for copyright ownership information.
 --
 -- muse.information@musesystems.com  :: https://muse.systems
+
 CREATE TABLE msbms_syst_data.conf_enum_values
 (
      id
@@ -27,8 +28,7 @@ CREATE TABLE msbms_syst_data.conf_enum_values
         uuid
         NOT NULL
         CONSTRAINT conf_enum_values_enum_id_fk
-            REFERENCES msbms_syst_data.conf_enums (id)
-                ON DELETE CASCADE
+            REFERENCES msbms_syst_data.conf_enums (id) ON DELETE CASCADE
     ,functional_type_id
         uuid
         CONSTRAINT conf_enum_values_enum_functional_type_id_fk

@@ -1,6 +1,6 @@
--- Source File: syst_person_logins.eex.sql
--- Location:    database/instance/msbms_syst_data/tables/syst_person_logins.eex.sql
--- Project:     musebms
+-- File:        syst_person_logins.eex.sql
+-- Location:    database\instance\msbms_syst_data\tables\syst_person_logins.eex.sql
+-- Project:     Muse Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
 -- This file may include content copyrighted and licensed from third parties.
@@ -9,32 +9,61 @@
 -- See the NOTICE file in the project root for copyright ownership information.
 --
 -- muse.information@musesystems.com  :: https://muse.systems
+
 CREATE TABLE msbms_syst_data.syst_person_logins
 (
-     id                             uuid        DEFAULT uuid_generate_v1( )          NOT NULL
+     id
+        uuid
+        NOT NULL DEFAULT uuid_generate_v1( )
         CONSTRAINT syst_person_logins_pk PRIMARY KEY
-    ,person_id                      uuid                                             NOT NULL
+    ,person_id
+        uuid
+        NOT NULL
         CONSTRAINT syst_person_logins_person_fk
-        REFERENCES msbms_appl_data.mstr_persons (id)
-        ON DELETE CASCADE
-    ,owning_entity_id               uuid                                             NOT NULL
+            REFERENCES msbms_appl_data.mstr_persons (id) ON DELETE CASCADE
+    ,owning_entity_id
+        uuid
+        NOT NULL
         CONSTRAINT syst_person_logins_owning_entity_fk
-        REFERENCES msbms_appl_data.mstr_entities (id)
-        ON DELETE CASCADE
-    ,enum_login_state_id            uuid                                             NOT NULL
+            REFERENCES msbms_appl_data.mstr_entities (id) ON DELETE CASCADE
+    ,enum_login_state_id
+        uuid
+        NOT NULL
         CONSTRAINT syst_person_logins_enum_login_state_fk
-        REFERENCES msbms_syst_data.enum_login_states (id)
-    ,access_account_id              uuid                                             NOT NULL
-    ,validity_start_end             tstzrange   DEFAULT tstzrange(now(), null, '[)') NOT NULL
-    ,last_login                     timestamptz DEFAULT '-infinity'                  NOT NULL
-    ,last_attempted_login           timestamptz DEFAULT '-infinity'                  NOT NULL
-    ,diag_timestamp_created         timestamptz DEFAULT now( )                       NOT NULL
-    ,diag_role_created              text                                             NOT NULL
-    ,diag_timestamp_modified        timestamptz DEFAULT now( )                       NOT NULL
-    ,diag_wallclock_modified        timestamptz DEFAULT clock_timestamp( )           NOT NULL
-    ,diag_role_modified             text                                             NOT NULL
-    ,diag_row_version               bigint      DEFAULT 1                            NOT NULL
-    ,diag_update_count              bigint      DEFAULT 0                            NOT NULL
+            REFERENCES msbms_syst_data.enum_login_states (id)
+    ,access_account_id
+        uuid
+        NOT NULL
+    ,validity_start_end
+        tstzrange
+        NOT NULL DEFAULT tstzrange(now(), null, '[)')
+    ,last_login
+        timestamptz
+        NOT NULL DEFAULT '-infinity'
+    ,last_attempted_login
+        timestamptz
+        NOT NULL DEFAULT '-infinity'
+    ,diag_timestamp_created
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_role_created
+        text
+        NOT NULL
+    ,diag_timestamp_modified
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_wallclock_modified
+        timestamptz
+        NOT NULL DEFAULT clock_timestamp( )
+    ,diag_role_modified
+        text
+        NOT NULL
+    ,diag_row_version
+        bigint
+        NOT NULL DEFAULT 1
+    ,diag_update_count
+        bigint
+        NOT NULL DEFAULT 0
 );
 
 ALTER TABLE msbms_syst_data.syst_person_logins OWNER TO <%= msbms_owner %>;
