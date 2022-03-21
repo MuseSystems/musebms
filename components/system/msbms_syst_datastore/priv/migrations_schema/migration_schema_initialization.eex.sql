@@ -256,32 +256,60 @@ $INIT_DATASTORE$
 
         CREATE TABLE <%= migrations_schema %>.<%= migrations_table %>
         (
-            id                      uuid        DEFAULT uuid_generate_v1( ) NOT NULL
+             id
+                uuid
+                NOT NULL DEFAULT uuid_generate_v1( )
                 CONSTRAINT <%= migrations_table %>_pk PRIMARY KEY
-            ,release                 smallint                                NOT NULL
+            ,release
+                smallint
+                NOT NULL
                 CONSTRAINT <%= migrations_table %>_release_range_chk
-                CHECK (release::integer <@ '[1, 1295]'::int4range)
-            ,version                 smallint                                NOT NULL
+                    CHECK (release::integer <@ '[1, 1295]'::int4range)
+            ,version
+                smallint
+                NOT NULL
                 CONSTRAINT <%= migrations_table %>_version_range_chk
-                CHECK (version::integer <@ '[1, 1295]'::int4range)
-            ,update                  integer                                 NOT NULL
+                    CHECK (version::integer <@ '[1, 1295]'::int4range)
+            ,update
+                integer
+                NOT NULL
                 CONSTRAINT <%= migrations_table %>_update_range_chk
-                CHECK (update <@ '[0, 46655]'::int4range)
-            ,sponsor                 bigint                                  NOT NULL
+                    CHECK (update <@ '[0, 46655]'::int4range)
+            ,sponsor
+                bigint
+                NOT NULL
                 CONSTRAINT <%= migrations_table %>_sponsor_range_chk
-                CHECK (sponsor <@ '[0, 2176782335]'::int8range)
-            ,sponsor_modification    integer                                 NOT NULL
+                    CHECK (sponsor <@ '[0, 2176782335]'::int8range)
+            ,sponsor_modification
+                integer
+                NOT NULL
                 CONSTRAINT <%= migrations_table %>_sponsor_modification_range_chk
-                CHECK (sponsor_modification <@ '[0, 46655]'::int4range)
-            ,migration_version       text                                    NOT NULL
+                    CHECK (sponsor_modification <@ '[0, 46655]'::int4range)
+            ,migration_version
+                text
+                NOT NULL
                 CONSTRAINT <%= migrations_table %>_migration_version_udx UNIQUE
-            ,diag_timestamp_created  timestamptz DEFAULT now( )              NOT NULL
-            ,diag_role_created       text                                    NOT NULL
-            ,diag_timestamp_modified timestamptz DEFAULT now( )              NOT NULL
-            ,diag_wallclock_modified timestamptz DEFAULT clock_timestamp( )  NOT NULL
-            ,diag_role_modified      text                                    NOT NULL
-            ,diag_row_version        bigint      DEFAULT 1                   NOT NULL
-            ,diag_update_count       bigint      DEFAULT 0                   NOT NULL
+            ,diag_timestamp_created
+                timestamptz
+                NOT NULL DEFAULT now( )
+            ,diag_role_created
+                text
+                NOT NULL
+            ,diag_timestamp_modified
+                timestamptz
+                NOT NULL DEFAULT now( )
+            ,diag_wallclock_modified
+                timestamptz
+                NOT NULL DEFAULT clock_timestamp( )
+            ,diag_role_modified
+                text
+                NOT NULL
+            ,diag_row_version
+                bigint
+                NOT NULL DEFAULT 1
+            ,diag_update_count
+                bigint
+                NOT NULL DEFAULT 0
         );
 
         ALTER TABLE <%= migrations_schema %>.<%= migrations_table %> OWNER TO <%= msbms_owner %>;
