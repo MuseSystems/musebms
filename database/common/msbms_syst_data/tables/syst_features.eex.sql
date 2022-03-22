@@ -31,7 +31,7 @@ CREATE TABLE msbms_syst_data.syst_features
         uuid
         NOT NULL
         CONSTRAINT syst_features_syst_module_fk
-            REFERENCES msbms_syst_data.syst_features ( id )
+            REFERENCES msbms_syst_data.syst_modules ( id )
     ,syst_feature_type_id
         uuid
         NOT NULL
