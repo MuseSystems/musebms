@@ -1,5 +1,5 @@
--- File:        seed_syst_functional_types.eex.sql
--- Location:    database\common\seed_data\seed_syst_functional_types.eex.sql
+-- File:        seed_syst_feature_types.eex.sql
+-- Location:    database\common\seed_data\seed_syst_feature_types.eex.sql
 -- Project:     Muse Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
