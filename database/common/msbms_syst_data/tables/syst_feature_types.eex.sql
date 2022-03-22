@@ -187,7 +187,7 @@ $DOC$Defines the system recognized types which can alter processing.
                       sales order deliveries, purchase receipts are all examples of booking
                       transactions.
 
-      * matinenance:  This type isn't related to a specific data or record type as is the other
+      * maintenance:  This type isn't related to a specific data or record type as is the other
                       types, but instead refers to auxiliary actions which may be performed such as
                       logging into the system or running a batch or maintenance job.$DOC$;
 
