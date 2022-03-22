@@ -24,9 +24,11 @@ CREATE TABLE msbms_syst_data.syst_feature_types
         text
         NOT NULL
         CONSTRAINT syst_feature_types_display_name_udx UNIQUE
-    ,description
+    ,syst_description
         text
         NOT NULL
+    ,user_description
+        text
     ,feature_group
         text
         NOT NULL
@@ -89,9 +91,14 @@ $DOC$A friendly name and candidate key for the record, suitable for use in user
 app_functionals.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_feature_types.description IS
+    COLUMN msbms_syst_data.syst_feature_types.syst_description IS
 $DOC$A text describing the meaning and use of the specific record that may be
 visible to users of the record.$DOC$;
+
+COMMENT ON
+    COLUMN msbms_syst_data.syst_feature_types.user_description IS
+$DOC$A user customizable description of the feature type which overrides the
+syst_description value where it might otherwise be displayed.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.syst_feature_types.feature_group IS

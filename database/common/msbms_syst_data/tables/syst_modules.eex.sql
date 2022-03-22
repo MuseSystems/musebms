@@ -28,9 +28,11 @@ CREATE TABLE msbms_syst_data.syst_modules
         text
         NOT NULL
         CONSTRAINT syst_modules_short_display_name_udx UNIQUE
-    ,description
+    ,syst_description
         text
         NOT NULL
+    ,user_description
+        text
     ,diag_timestamp_created
         timestamptz
         NOT NULL DEFAULT now( )
@@ -87,9 +89,13 @@ $DOC$A friendly name that can be used when a truncated version of the display na
 is appropriate.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_modules.description IS
+    COLUMN msbms_syst_data.syst_modules.syst_description IS
 $DOC$A text describing the meaning and use of the specific record.$DOC$;
 
+COMMENT ON
+    COLUMN msbms_syst_data.syst_modules.user_description IS
+$DOC$A user customizable description of the module which overrides the
+syst_description value where it might otherwise be displayed.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.syst_modules.diag_timestamp_created IS
