@@ -28,7 +28,7 @@ VALUES
     ( 'nonbooking_data_operations'
     , 'Non-booking Transaction Processes'
     , 'Batch and background processes acting on non-booking transaction data.'
-    , 'relation'
+    , 'maintenance'
     , 'master' )
      ,
     ( 'booking_data_forms'
@@ -46,5 +46,5 @@ VALUES
     ( 'booking_data_operations'
     , 'Booking Transaction Processes'
     , 'Batch and background processes acting on booking transaction data.'
-    , 'relation'
+    , 'maintenance'
     , 'master' );

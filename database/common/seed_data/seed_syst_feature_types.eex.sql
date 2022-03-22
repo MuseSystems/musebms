@@ -28,7 +28,7 @@ VALUES
     ( 'master_data_operations'
     , 'Master Data Processes'
     , 'Batch and background processes acting on master data.'
-    , 'relation'
+    , 'maintenance'
     , 'master' )
      ,
     ( 'support_data_forms'
@@ -46,7 +46,7 @@ VALUES
     ( 'support_data_operations'
     , 'Supporting Data Processes'
     , 'Batch and background processes acting on supporting data.'
-    , 'relation'
+    , 'maintenance'
     , 'master' )
     ,
     ( 'maintenance_data_forms'
@@ -64,5 +64,5 @@ VALUES
     ( 'maintenance_data_operations'
     , 'System Data Processes'
     , 'Batch and background processes acting on systems management data.'
-    , 'relation'
+    , 'maintenance'
     , 'master' );
