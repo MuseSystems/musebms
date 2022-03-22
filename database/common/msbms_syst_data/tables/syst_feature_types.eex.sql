@@ -58,9 +58,9 @@ CREATE TABLE msbms_syst_data.syst_feature_types
         NOT NULL DEFAULT 0
     ,CONSTRAINT functional_type_chk
         CHECK (functional_type IN
-               ( 'master', 'support', 'nonbooking' , 'booking', 'tasking','maintenance' ))
+               ( 'master', 'support', 'nonbooking' , 'booking', 'tasking', 'maintenance' ))
     ,CONSTRAINT feature_group_chk
-        CHECK (feature_group IN ('document', 'operation', 'relation'))
+        CHECK (feature_group IN ('document', 'job', 'relation', 'enumeration', 'setting'))
 );
 
 ALTER TABLE msbms_syst_data.syst_feature_types OWNER TO <%= msbms_owner %>;
