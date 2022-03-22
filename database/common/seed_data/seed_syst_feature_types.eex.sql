@@ -13,56 +13,92 @@
 INSERT INTO msbms_syst_data.syst_feature_types
     ( internal_name, display_name, syst_description, feature_group, functional_type )
 VALUES
-    ( 'master_data_forms'
+    ( 'master_document'
     , 'Master Data Forms'
-    , 'Forms used for maintaining master records.'
-    , 'document'
-    , 'master' )
+    , ''
+    , 'master'
+    , 'document' )
      ,
-    ( 'master_data_tables'
-    , 'Master Data Tables'
-    , 'Database tables containing master data records.'
-    , 'relation'
-    , 'master' )
-     ,
-    ( 'master_data_operations'
-    , 'Master Data Processes'
-    , 'Batch and background processes acting on master data.'
-    , 'maintenance'
-    , 'master' )
-     ,
-    ( 'support_data_forms'
-    , 'Supporting Data Forms'
-    , 'Forms used for maintaining supporting records.'
-    , 'document'
-    , 'master' )
-     ,
-    ( 'support_data_tables'
-    , 'Supporting Data Tables'
-    , 'Database tables containing supporting data records.'
-    , 'relation'
-    , 'master' )
-     ,
-    ( 'support_data_operations'
-    , 'Supporting Data Processes'
-    , 'Batch and background processes acting on supporting data.'
-    , 'maintenance'
-    , 'master' )
+    ( 'master_job'
+    , 'Master Data Jobs'
+    , ''
+    , 'master'
+    , 'job' )
     ,
-    ( 'maintenance_data_forms'
-    , 'System Data Forms'
-    , 'Forms used for maintaining primary system management records.'
-    , 'document'
-    , 'master' )
+    ( 'master_relation'
+    , 'Master Data Tables'
+    , ''
+    , 'master'
+    , 'relation' )
+    ,
+    ( 'master_enumeration'
+    , 'Master Data Lists of Values'
+    , ''
+    , 'master'
+    , 'enumeration' )
+    ,
+    ( 'master_setting'
+    , 'Master Data Settings'
+    , ''
+    , 'master'
+    , 'setting' )
+    ,
+    ( 'support_document'
+    , 'Supporting Data Forms'
+    , ''
+    , 'support'
+    , 'document' )
      ,
-    ( 'maintenance_data_tables'
-    , 'System Data Tables'
-    , 'Database tables containing system management supporting data records.'
-    , 'relation'
-    , 'master' )
-     ,
-    ( 'maintenance_data_operations'
-    , 'System Data Processes'
-    , 'Batch and background processes acting on systems management data.'
+    ( 'support_job'
+    , 'Supporting Data Jobs'
+    , ''
+    , 'support'
+    , 'job' )
+    ,
+    ( 'support_relation'
+    , 'Supporting Data Tables'
+    , ''
+    , 'support'
+    , 'relation' )
+    ,
+    ( 'support_enumeration'
+    , 'Supporting Data Lists of Values'
+    , ''
+    , 'support'
+    , 'enumeration' )
+    ,
+    ( 'support_setting'
+    , 'Supporting Data Settings'
+    , ''
+    , 'support'
+    , 'setting' )
+    ,
+    ( 'maintenance_document'
+    , 'System Admin Forms'
+    , ''
     , 'maintenance'
-    , 'master' );
+    , 'document' )
+     ,
+    ( 'maintenance_job'
+    , 'System Admin Jobs'
+    , ''
+    , 'maintenance'
+    , 'job' )
+    ,
+    ( 'maintenance_relation'
+    , 'System Admin Tables'
+    , ''
+    , 'maintenance'
+    , 'relation' )
+    ,
+    ( 'maintenance_enumeration'
+    , 'System Admin Lists of Values'
+    , ''
+    , 'maintenance'
+    , 'enumeration' )
+    ,
+    ( 'maintenance_setting'
+    , 'System Admin Settings'
+    , ''
+    , 'maintenance'
+    , 'setting' );

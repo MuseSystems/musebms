@@ -13,38 +13,92 @@
 INSERT INTO msbms_syst_data.syst_feature_types
     ( internal_name, display_name, syst_description, feature_group, functional_type )
 VALUES
-    ( 'nonbooking_data_forms'
+    ( 'nonbooking_document'
     , 'Non-booking Transaction Forms'
-    , 'Forms used for processing non-booking transaction records.'
-    , 'document'
-    , 'master' )
+    , ''
+    , 'nonbooking'
+    , 'document' )
      ,
-    ( 'nonbooking_data_tables'
-    , 'Non-booking Data Tables'
-    , 'Database tables containing non-booking transaction data records.'
-    , 'relation'
-    , 'master' )
-     ,
-    ( 'nonbooking_data_operations'
-    , 'Non-booking Transaction Processes'
-    , 'Batch and background processes acting on non-booking transaction data.'
-    , 'maintenance'
-    , 'master' )
-     ,
-    ( 'booking_data_forms'
+    ( 'nonbooking_job'
+    , 'Non-booking Transaction Jobs'
+    , ''
+    , 'nonbooking'
+    , 'job' )
+    ,
+    ( 'nonbooking_relation'
+    , 'Non-booking Transaction Tables'
+    , ''
+    , 'nonbooking'
+    , 'relation' )
+    ,
+    ( 'nonbooking_enumeration'
+    , 'Non-booking Transaction Lists of Values'
+    , ''
+    , 'nonbooking'
+    , 'enumeration' )
+    ,
+    ( 'nonbooking_setting'
+    , 'Non-booking Transaction Settings'
+    , ''
+    , 'nonbooking'
+    , 'setting' )
+    ,
+    ( 'booking_document'
     , 'Booking Transaction Forms'
-    , 'Forms used for processing booking transaction records.'
-    , 'document'
-    , 'master' )
+    , ''
+    , 'booking'
+    , 'document' )
      ,
-    ( 'booking_data_tables'
-    , 'Booking Data Tables'
-    , 'Database tables containing booking transaction data records.'
-    , 'relation'
-    , 'master' )
+    ( 'booking_job'
+    , 'Booking Transaction Jobs'
+    , ''
+    , 'booking'
+    , 'job' )
+    ,
+    ( 'booking_relation'
+    , 'Booking Transaction Tables'
+    , ''
+    , 'booking'
+    , 'relation' )
+    ,
+    ( 'booking_enumeration'
+    , 'Booking Transaction Lists of Values'
+    , ''
+    , 'booking'
+    , 'enumeration' )
+    ,
+    ( 'booking_setting'
+    , 'Booking Transaction Settings'
+    , ''
+    , 'booking'
+    , 'setting' )
+    ,
+    ( 'tasking_document'
+    , 'Tasking Transaction Forms'
+    , ''
+    , 'tasking'
+    , 'document' )
      ,
-    ( 'booking_data_operations'
-    , 'Booking Transaction Processes'
-    , 'Batch and background processes acting on booking transaction data.'
-    , 'maintenance'
-    , 'master' );
+    ( 'tasking_job'
+    , 'Tasking Transaction Jobs'
+    , ''
+    , 'tasking'
+    , 'job' )
+    ,
+    ( 'tasking_relation'
+    , 'Tasking Transaction Tables'
+    , ''
+    , 'tasking'
+    , 'relation' )
+    ,
+    ( 'tasking_enumeration'
+    , 'Tasking Transaction Lists of Values'
+    , ''
+    , 'tasking'
+    , 'enumeration' )
+    ,
+    ( 'tasking_setting'
+    , 'Tasking Transaction Settings'
+    , ''
+    , 'tasking'
+    , 'setting' );
