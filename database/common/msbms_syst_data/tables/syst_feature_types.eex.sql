@@ -57,7 +57,8 @@ CREATE TABLE msbms_syst_data.syst_feature_types
         bigint
         NOT NULL DEFAULT 0
     ,CONSTRAINT functional_type_chk
-        CHECK (functional_type IN ( 'master', 'support', 'nonbooking', 'booking', 'maintenance' ))
+        CHECK (functional_type IN
+               ( 'master', 'support', 'nonbooking' , 'booking', 'tasking','maintenance' ))
     ,CONSTRAINT feature_group_chk
         CHECK (feature_group IN ('document', 'operation', 'relation'))
 );
@@ -186,6 +187,13 @@ $DOC$Defines the system recognized types which can alter processing.
                       appropriate to the transaction and its life-cycle.  Payment processing,
                       sales order deliveries, purchase receipts are all examples of booking
                       transactions.
+
+      * tasking:      This is a class of transaction that is related to tracking activities and
+                      work tasks.  While tasking transaction may ultimately lead to booking
+                      transactions, the tasking records themselves tend to be more worried about
+                      enumerating work items, recording communications between parties, tracking
+                      life-cycle from inception to multiple possible resolutions, and recording
+                      any associated labor.
 
       * maintenance:  This type isn't related to a specific data or record type as is the other
                       types, but instead refers to auxiliary actions which may be performed such as
