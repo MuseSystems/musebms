@@ -24,8 +24,8 @@ CREATE TABLE msbms_syst_data.syst_feature_map
         text
         NOT NULL
         CONSTRAINT syst_feature_map_display_name_udx UNIQUE
-    ,external_name           
-        text                                    
+    ,external_name
+        text
         NOT NULL
     ,feature_map_level_id
         uuid
@@ -45,6 +45,14 @@ CREATE TABLE msbms_syst_data.syst_feature_map
     ,displayable
         boolean
         NOT NULL DEFAULT TRUE
+    ,syst_description
+        text
+        NOT NULL
+    ,user_description
+        text
+    ,sort_order
+        smallint
+        NOT NULL DEFAULT 32767
     ,diag_timestamp_created
         timestamptz
         NOT NULL DEFAULT now( )
@@ -131,6 +139,21 @@ $DOC$If true, the feature map record may appear in queried results for the
 application.  If false, the feature map record will only be available if the
 user explicitly asks for hidden feature map records.  Note that this field is
 user maintainable even when the user_maintainable column is false.$DOC$;
+
+COMMENT ON
+    COLUMN msbms_syst_data.syst_feature_map.syst_description IS
+$DOC$A standard description of the mapping value suitable for display to application
+users.$DOC$;
+
+COMMENT ON
+    COLUMN msbms_syst_data.syst_feature_map.user_description IS
+$DOC$A user customizable description which, if not NULL, will be used to override the
+text in syst_description.$DOC$;
+
+COMMENT ON
+    COLUMN msbms_syst_data.syst_feature_map.sort_order IS
+$DOC$In user display contexts, indicates the sort relative to other records of the
+same level and grouping.  Sorting is done on a lowest value first.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.syst_feature_map.diag_timestamp_created IS
