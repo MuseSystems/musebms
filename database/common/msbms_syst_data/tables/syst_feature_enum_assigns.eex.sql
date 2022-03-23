@@ -1,5 +1,5 @@
--- File:        syst_feature_relation_assigns.eex.sql
--- Location:    database\common\msbms_syst_data\tables\syst_feature_relation_assigns.eex.sql
+-- File:        syst_feature_enum_assigns.eex.sql
+-- Location:    database\common\msbms_syst_data\tables\syst_feature_enum_assigns.eex.sql
 -- Project:     Muse Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,22 +10,22 @@
 --
 -- muse.information@musesystems.com  :: https://muse.systems
 
-CREATE TABLE msbms_syst_data.syst_feature_relation_assigns
+CREATE TABLE msbms_syst_data.syst_feature_enum_assigns
 (
      id
         uuid
         NOT NULL DEFAULT uuid_generate_v1( )
-        CONSTRAINT syst_feature_relation_assigns_pk PRIMARY KEY
+        CONSTRAINT syst_feature_enum_assigns_pk PRIMARY KEY
     ,feature_map_id
         uuid
         NOT NULL
-        CONSTRAINT syst_feature_relation_assigns_feature_map_fk
+        CONSTRAINT syst_feature_enum_assigns_feature_map_fk
             REFERENCES msbms_syst_data.syst_feature_map (id)
-    ,relation_id
+    ,enum_id
         uuid
         NOT NULL
-        CONSTRAINT syst_feature_relation_assigns_relation_fk
-            REFERENCES msbms_syst_data.syst_relations (id)
+        CONSTRAINT syst_feature_enum_assigns_enum_fk
+            REFERENCES msbms_syst_data.conf_enums (id)
     ,diag_timestamp_created
         timestamptz
         NOT NULL DEFAULT now( )
@@ -49,63 +49,63 @@ CREATE TABLE msbms_syst_data.syst_feature_relation_assigns
         NOT NULL DEFAULT 0
 );
 
-ALTER TABLE msbms_syst_data.syst_feature_relation_assigns OWNER TO <%= msbms_owner %>;
+ALTER TABLE msbms_syst_data.syst_feature_enum_assigns OWNER TO <%= msbms_owner %>;
 
-REVOKE ALL ON TABLE msbms_syst_data.syst_feature_relation_assigns FROM public;
-GRANT ALL ON TABLE msbms_syst_data.syst_feature_relation_assigns TO <%= msbms_owner %>;
+REVOKE ALL ON TABLE msbms_syst_data.syst_feature_enum_assigns FROM public;
+GRANT ALL ON TABLE msbms_syst_data.syst_feature_enum_assigns TO <%= msbms_owner %>;
 
 CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
-    BEFORE INSERT OR UPDATE ON msbms_syst_data.syst_feature_relation_assigns
+    BEFORE INSERT OR UPDATE ON msbms_syst_data.syst_feature_enum_assigns
     FOR EACH ROW EXECUTE PROCEDURE msbms_syst_priv.trig_b_iu_set_diagnostic_columns();
 
 COMMENT ON
-    TABLE msbms_syst_data.syst_feature_relation_assigns IS
-$DOC$A join table which allows application relations to be associated with various
+    TABLE msbms_syst_data.syst_feature_enum_assigns IS
+$DOC$A join table which allows application enumerations to be associated with various
 application features.  This is a many-to-many relationship.  The expectation is
 that this association will be used in organizing certain configuration or
 permissioning displays into a tree-like structure.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_feature_relation_assigns.id IS
+    COLUMN msbms_syst_data.syst_feature_enum_assigns.id IS
 $DOC$The record's primary key.  The definitive identifier of the record in the
 system.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_feature_relation_assigns.feature_map_id IS
+    COLUMN msbms_syst_data.syst_feature_enum_assigns.feature_map_id IS
 $DOC$Identifies the feature mapping record to which the relation record is being
 associated.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_feature_relation_assigns.relation_id IS
-$DOC$Identifies the relation record which is being associated with the feature.$DOC$;
+    COLUMN msbms_syst_data.syst_feature_enum_assigns.enum_id IS
+$DOC$Identifies the enumeration record which is being associated with the feature.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_feature_relation_assigns.diag_timestamp_created IS
+    COLUMN msbms_syst_data.syst_feature_enum_assigns.diag_timestamp_created IS
 $DOC$The database server date/time when the transaction which created the record
 started.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_feature_relation_assigns.diag_role_created IS
+    COLUMN msbms_syst_data.syst_feature_enum_assigns.diag_role_created IS
 $DOC$The database role which created the record.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_feature_relation_assigns.diag_timestamp_modified IS
+    COLUMN msbms_syst_data.syst_feature_enum_assigns.diag_timestamp_modified IS
 $DOC$The database server date/time when the transaction which modified the record
 started.  This field will be the same as diag_timestamp_created for inserted
 records.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_feature_relation_assigns.diag_wallclock_modified IS
+    COLUMN msbms_syst_data.syst_feature_enum_assigns.diag_wallclock_modified IS
 $DOC$The database server date/time at the moment the record was actually modified.
 For long running transactions this time may be significantly later than the
 value of diag_timestamp_modified.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_feature_relation_assigns.diag_role_modified IS
+    COLUMN msbms_syst_data.syst_feature_enum_assigns.diag_role_modified IS
 $DOC$The database role which modified the record.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_feature_relation_assigns.diag_row_version IS
+    COLUMN msbms_syst_data.syst_feature_enum_assigns.diag_row_version IS
 $DOC$The current version of the row.  The value here indicates how many actual
 data changes have been made to the row.  If an update of the row leaves all data
 fields the same, disregarding the updates to the diag_* columns, the row version
@@ -113,7 +113,7 @@ is not updated, nor are any updates made to the other diag_* columns other than
 diag_update_count.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_feature_relation_assigns.diag_update_count IS
+    COLUMN msbms_syst_data.syst_feature_enum_assigns.diag_update_count IS
 $DOC$Records the number of times the record has been updated regardless as to if
 the update actually changed any data.  In this way needless or redundant record
 updates can be found.  This row starts at 0 and therefore may be the same as the
