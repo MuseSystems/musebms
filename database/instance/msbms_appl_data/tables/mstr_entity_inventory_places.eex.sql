@@ -19,12 +19,12 @@ CREATE TABLE msbms_appl_data.mstr_entity_inventory_places
     ,place_id
         uuid
         NOT NULL
-        CONSTRAINT mstr_entity_inventory_places_place_id_fk
+        CONSTRAINT mstr_entity_inventory_places_place_fk
             REFERENCES msbms_appl_data.mstr_places (id) ON DELETE CASCADE
     ,owning_entity_id
         uuid
         NOT NULL
-        CONSTRAINT mstr_entity_inventory_places_owning_entity_id_fk
+        CONSTRAINT mstr_entity_inventory_places_owning_entity_fk
             REFERENCES msbms_appl_data.mstr_entities (id) ON DELETE CASCADE
     ,receives_external_inventory
         boolean

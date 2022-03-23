@@ -19,12 +19,12 @@ CREATE TABLE msbms_appl_data.mstr_entity_purchasing_entities
     ,entity_id
         uuid
         NOT NULL
-        CONSTRAINT mstr_entity_purchasing_entities_entity_id_fk
+        CONSTRAINT mstr_entity_purchasing_entities_entity_fk
             REFERENCES msbms_appl_data.mstr_entities (id) ON DELETE CASCADE
     ,owning_entity_id
         uuid
         NOT NULL
-        CONSTRAINT mstr_entity_purchasing_entities_owning_entity_id_fk
+        CONSTRAINT mstr_entity_purchasing_entities_owning_entity_fk
             REFERENCES msbms_appl_data.mstr_entities (id) ON DELETE CASCADE
     ,diag_timestamp_created
         timestamptz

@@ -16,22 +16,22 @@ CREATE TABLE msbms_syst_data.syst_feature_map
         uuid
         NOT NULL DEFAULT uuid_generate_v1( )
         CONSTRAINT syst_feature_map_pk PRIMARY KEY
-    ,internal_name           
-        text                                    
+    ,internal_name
+        text
         NOT NULL
         CONSTRAINT syst_feature_map_internal_name_udx UNIQUE
-    ,display_name            
-        text                                    
+    ,display_name
+        text
         NOT NULL
         CONSTRAINT syst_feature_map_display_name_udx UNIQUE
     ,feature_map_level_id
         uuid
         NOT NULL
-        CONSTRAINT syst_feature_map_feature_map_levels_id_fk
+        CONSTRAINT syst_feature_map_feature_map_levels_fk
             REFERENCES msbms_syst_data.syst_feature_map_levels (id)
     ,parent_feature_map_id
         uuid
-        CONSTRAINT syst_feature_map_feature_map_id_fk
+        CONSTRAINT syst_feature_map_feature_map_fk
             REFERENCES msbms_syst_data.syst_feature_map (id)
     ,diag_timestamp_created
         timestamptz

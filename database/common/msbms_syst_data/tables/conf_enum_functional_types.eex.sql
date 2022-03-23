@@ -27,7 +27,7 @@ CREATE TABLE msbms_syst_data.conf_enum_functional_types
     ,enum_id
         uuid
         NOT NULL
-        CONSTRAINT conf_enum_functional_types_enum_id_fk
+        CONSTRAINT conf_enum_functional_types_enum_fk
             REFERENCES msbms_syst_data.conf_enums (id) ON DELETE CASCADE
     ,syst_description
         text

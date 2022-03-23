@@ -27,11 +27,11 @@ CREATE TABLE msbms_syst_data.conf_enum_values
     ,enum_id
         uuid
         NOT NULL
-        CONSTRAINT conf_enum_values_enum_id_fk
+        CONSTRAINT conf_enum_values_enum_fk
             REFERENCES msbms_syst_data.conf_enums (id) ON DELETE CASCADE
     ,functional_type_id
         uuid
-        CONSTRAINT conf_enum_values_enum_functional_type_id_fk
+        CONSTRAINT conf_enum_values_enum_functional_type_fk
             REFERENCES msbms_syst_data.conf_enum_functional_types (id)
     ,enum_default
         boolean
