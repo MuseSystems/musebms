@@ -33,6 +33,15 @@ CREATE TABLE msbms_syst_data.syst_feature_map
         uuid
         CONSTRAINT syst_feature_map_feature_map_fk
             REFERENCES msbms_syst_data.syst_feature_map (id)
+    ,system_defined
+        boolean
+        NOT NULL DEFAULT FALSE
+    ,user_maintainable
+        boolean
+        NOT NULL DEFAULT TRUE
+    ,displayable
+        boolean
+        NOT NULL DEFAULT TRUE
     ,diag_timestamp_created
         timestamptz
         NOT NULL DEFAULT now( )
@@ -96,6 +105,24 @@ $DOC$Indicates of which mapping entry the current entry is a child, if it is a
 child of any entry.  If this column is NULL, the mapping entry sits at the top/
 root level of the hierarchy.  This series of parent/child relationships between
 mapping entries establishes a tree structure for organizing system features.$DOC$;
+
+COMMENT ON
+    COLUMN msbms_syst_data.syst_feature_map.system_defined IS
+$DOC$If true, indicates that the record was added by the standard system installation
+process.  If false, the feature map level was user defined.$DOC$;
+
+COMMENT ON
+    COLUMN msbms_syst_data.syst_feature_map.user_maintainable IS
+$DOC$If true, users may make modifications to the record including the possibility
+of deleting the record.  If false, the user may only make minimal modifications
+to columns designated as user columns (i.e. user_description).$DOC$;
+
+COMMENT ON
+    COLUMN msbms_syst_data.syst_feature_map.displayable IS
+$DOC$If true, the feature map record may appear in queried results for the
+application.  If false, the feature map record will only be available if the
+user explicitly asks for hidden feature map records.  Note that this field is
+user maintainable even when the user_maintainable column is false.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.syst_feature_map.diag_timestamp_created IS

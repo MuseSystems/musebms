@@ -12,9 +12,9 @@
 
 CREATE TABLE msbms_syst_data.syst_feature_map_levels
 (
-     id                      
-        uuid        
-        NOT NULL DEFAULT uuid_generate_v1( ) 
+     id
+        uuid
+        NOT NULL DEFAULT uuid_generate_v1( )
         CONSTRAINT syst_feature_map_levels_pk PRIMARY KEY
     ,internal_name
         text
@@ -35,25 +35,31 @@ CREATE TABLE msbms_syst_data.syst_feature_map_levels
         NOT NULL
     ,user_description
         text
-    ,diag_timestamp_created  
-        timestamptz 
-        NOT NULL DEFAULT now( )              
-    ,diag_role_created       
-        text                                    
-    ,diag_timestamp_modified 
-        timestamptz 
-        NOT NULL DEFAULT now( )              
-    ,diag_wallclock_modified 
-        timestamptz 
-        NOT NULL DEFAULT clock_timestamp( )  
-    ,diag_role_modified      
-        text                                    
-    ,diag_row_version        
-        bigint      
-        NOT NULL DEFAULT 1                   
-    ,diag_update_count       
-        bigint      
-        NOT NULL DEFAULT 0                   
+    ,system_defined
+        boolean
+        NOT NULL DEFAULT FALSE
+    ,user_maintainable
+        boolean
+        NOT NULL DEFAULT TRUE
+    ,diag_timestamp_created
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_role_created
+        text
+    ,diag_timestamp_modified
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_wallclock_modified
+        timestamptz
+        NOT NULL DEFAULT clock_timestamp( )
+    ,diag_role_modified
+        text
+    ,diag_row_version
+        bigint
+        NOT NULL DEFAULT 1
+    ,diag_update_count
+        bigint
+        NOT NULL DEFAULT 0
 );
 
 ALTER TABLE msbms_syst_data.syst_feature_map_levels OWNER TO <%= msbms_owner %>;
@@ -109,8 +115,19 @@ null, it will override the system defined text at times that the description
 would be visible to application users.$DOC$;
 
 COMMENT ON
+    COLUMN msbms_syst_data.syst_feature_map_levels.system_defined IS
+$DOC$If true, indicates that the record was added by the standard system installation
+process.  If false, the feature map level was user defined.$DOC$;
+
+COMMENT ON
+    COLUMN msbms_syst_data.syst_feature_map_levels.user_maintainable IS
+$DOC$If true, users may make modifications to the record including the possibility
+of deleting the record.  If false, the user may only make minimal modifications
+to columns designated as user columns (i.e. user_description).$DOC$;
+
+COMMENT ON
     COLUMN msbms_syst_data.syst_feature_map_levels.diag_timestamp_created IS
-$DOC$The database server date/time when the transaction which created the record 
+$DOC$The database server date/time when the transaction which created the record
 started.$DOC$;
 
 COMMENT ON
@@ -119,14 +136,14 @@ $DOC$The database role which created the record.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.syst_feature_map_levels.diag_timestamp_modified IS
-$DOC$The database server date/time when the transaction which modified the record 
-started.  This field will be the same as diag_timestamp_created for inserted 
+$DOC$The database server date/time when the transaction which modified the record
+started.  This field will be the same as diag_timestamp_created for inserted
 records.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.syst_feature_map_levels.diag_wallclock_modified IS
 $DOC$The database server date/time at the moment the record was actually modified.
-For long running transactions this time may be significantly later than the 
+For long running transactions this time may be significantly later than the
 value of diag_timestamp_modified.$DOC$;
 
 COMMENT ON
@@ -135,15 +152,15 @@ $DOC$The database role which modified the record.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.syst_feature_map_levels.diag_row_version IS
-$DOC$The current version of the row.  The value here indicates how many actual 
+$DOC$The current version of the row.  The value here indicates how many actual
 data changes have been made to the row.  If an update of the row leaves all data
-fields the same, disregarding the updates to the diag_* columns, the row version 
-is not updated, nor are any updates made to the other diag_* columns other than 
+fields the same, disregarding the updates to the diag_* columns, the row version
+is not updated, nor are any updates made to the other diag_* columns other than
 diag_update_count.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.syst_feature_map_levels.diag_update_count IS
-$DOC$Records the number of times the record has been updated regardless as to if 
-the update actually changed any data.  In this way needless or redundant record 
-updates can be found.  This row starts at 0 and therefore may be the same as the 
+$DOC$Records the number of times the record has been updated regardless as to if
+the update actually changed any data.  In this way needless or redundant record
+updates can be found.  This row starts at 0 and therefore may be the same as the
 diag_row_version - 1.$DOC$;
