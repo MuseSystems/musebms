@@ -58,6 +58,15 @@ CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
     BEFORE INSERT OR UPDATE ON msbms_syst_data.syst_feature_setting_assigns
     FOR EACH ROW EXECUTE PROCEDURE msbms_syst_priv.trig_b_iu_set_diagnostic_columns();
 
+CREATE CONSTRAINT TRIGGER a50_trig_a_i_feature_map_level_assignable_check
+    BEFORE INSERT ON msbms_syst_data.syst_feature_setting_assigns
+    FOR EACH ROW EXECUTE PROCEDURE msbms_syst_priv.trig_a_iu_feature_map_level_assignable_check();
+
+CREATE CONSTRAINT TRIGGER a50_trig_a_u_feature_map_level_assignable_check
+    BEFORE UPDATE ON msbms_syst_data.syst_feature_setting_assigns
+    FOR EACH ROW WHEN ( OLD.feature_map_id != NEW.feature_map_id )
+        EXECUTE PROCEDURE msbms_syst_priv.trig_a_iu_feature_map_level_assignable_check();
+
 COMMENT ON
     TABLE msbms_syst_data.syst_feature_setting_assigns IS
 $DOC$A join table which allows application settings to be associated with various
