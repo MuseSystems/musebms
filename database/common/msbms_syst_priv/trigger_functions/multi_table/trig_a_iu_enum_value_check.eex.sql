@@ -21,37 +21,35 @@ DECLARE
 
 BEGIN
 
-    IF
-        NOT EXISTS(
-            SELECT TRUE
-            FROM   msbms_syst_data.conf_enum_values cev
-                JOIN msbms_syst_data.conf_enums ce
-                    ON ce.id = cev.enum_id
-            WHERE  ce.internal_name = var_enumeration_name
-                AND cev.id = ( var_new_json ->> var_enumeration_column )::uuid
-            )
+    IF NOT exists( SELECT
+                       TRUE
+                   FROM msbms_syst_data.conf_enum_values cev
+                   JOIN msbms_syst_data.conf_enums ce ON ce.id = cev.enum_id
+                   WHERE
+                         ce.internal_name = var_enumeration_name
+                     AND cev.id = ( var_new_json ->> var_enumeration_column )::uuid )
     THEN
         RAISE EXCEPTION
-                USING
-                    MESSAGE =
-                        format('The enumeration value %1$s was not for enumeration %2$s.'
-                            ,( var_new_json ->> var_enumeration_column )::uuid
-                            ,var_enumeration_name),
-                    DETAIL = msbms_syst_priv.get_exception_details(
-                                 p_proc_schema    => 'msbms_syst_priv'
-                                ,p_proc_name      => 'trig_a_iu_enum_value_check'
-                                ,p_exception_name => 'enum_value_not_found'
-                                ,p_errcode        => 'PM003'
-                                ,p_param_data     => to_jsonb(tg_argv)
-                                ,p_context_data   =>
-                                    jsonb_build_object(
-                                         'tg_op',         tg_op
-                                        ,'tg_when',       tg_when
-                                        ,'tg_schema',     tg_table_schema
-                                        ,'tg_table_name', tg_table_name)),
-                    ERRCODE = 'PM003',
-                    SCHEMA = tg_table_schema,
-                    TABLE = tg_table_name;
+            USING
+                MESSAGE =
+                    format('The enumeration value %1$s was not for enumeration %2$s.'
+                        ,( var_new_json ->> var_enumeration_column )::uuid
+                        ,var_enumeration_name),
+                DETAIL = msbms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'msbms_syst_priv'
+                            ,p_proc_name      => 'trig_a_iu_enum_value_check'
+                            ,p_exception_name => 'enum_value_not_found'
+                            ,p_errcode        => 'PM003'
+                            ,p_param_data     => to_jsonb(tg_argv)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM003',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
     END IF;
 
     RETURN NULL;
