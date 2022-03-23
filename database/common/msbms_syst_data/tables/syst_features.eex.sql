@@ -24,9 +24,11 @@ CREATE TABLE msbms_syst_data.syst_features
         text
         NOT NULL
         CONSTRAINT syst_features_display_name_udx UNIQUE
-    ,description
+    ,syst_description
         text
         NOT NULL
+    ,user_description
+        text
     ,syst_module_id
         uuid
         NOT NULL
@@ -90,8 +92,14 @@ $DOC$A friendly name and candidate key for the record suitable for use in user
 interfaces.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_features.description IS
+    COLUMN msbms_syst_data.syst_features.syst_description IS
 $DOC$A text describing the meaning and use of the specific record.$DOC$;
+
+COMMENT ON
+    COLUMN msbms_syst_data.syst_features.user_description IS
+$DOC$User configurable description for the purposes of overriding the system defined
+description in places where it might be made visible to users.  This column is
+only used if it is set to a non-NULL value.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.syst_features.syst_module_id IS
