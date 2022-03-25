@@ -54,6 +54,7 @@ BEGIN
             (
               internal_name
              ,display_name
+             ,external_name
              ,enum_id
              ,syst_description
             )
@@ -61,6 +62,7 @@ BEGIN
             (
               var_curr_functional_type ->> 'internal_name'
              ,var_curr_functional_type ->> 'display_name'
+             ,var_curr_functional_type ->> 'external_name'
              ,var_new_enum.id
              ,var_curr_functional_type ->> 'syst_description'
             );
@@ -76,6 +78,7 @@ BEGIN
             (
                internal_name
               ,display_name
+              ,external_name
               ,enum_id
               ,functional_type_id
               ,enum_default
@@ -90,6 +93,7 @@ BEGIN
             (
                 var_curr_enum_value ->> 'internal_name'
                ,var_curr_enum_value ->> 'display_name'
+               ,var_curr_enum_value ->> 'external_name'
                ,var_new_enum.id
                ,( SELECT id
                   FROM msbms_syst_data.conf_enum_functional_types

@@ -24,6 +24,9 @@ CREATE TABLE msbms_syst_data.conf_enum_functional_types
         text
         NOT NULL
         CONSTRAINT conf_enum_functional_types_display_name_udx UNIQUE
+    ,external_name
+        text
+        NOT NULL
     ,enum_id
         uuid
         NOT NULL
@@ -85,6 +88,11 @@ COMMENT ON
     COLUMN msbms_syst_data.conf_enum_functional_types.display_name IS
 $DOC$A friendly name and candidate key for the record, suitable for use in user
 interactions$DOC$;
+
+COMMENT ON
+    COLUMN msbms_syst_data.conf_enum_functional_types.external_name IS
+$DOC$A non-unique/non-key value used to display to users and external parties where
+uniqueness is less of a concern than specific end user presentation.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.conf_enum_functional_types.enum_id IS
