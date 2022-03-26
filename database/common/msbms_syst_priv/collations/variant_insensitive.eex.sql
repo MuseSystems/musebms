@@ -10,7 +10,7 @@
 --
 -- muse.information@musesystems.com  :: https://muse.systems
 CREATE COLLATION msbms_syst_priv.variant_insensitive (
-     PROVIDER      = 'iuc'
+     PROVIDER      = 'icu'
     ,LOCALE        = 'und-u-ks-level1'
     ,DETERMINISTIC = FALSE
     );
