@@ -32,13 +32,13 @@ BEGIN
 
         RAISE EXCEPTION
             USING
-                MESSAGE = '',
+                MESSAGE = 'The enumeration requires a valid functional type to be specified.',
                 DETAIL  = msbms_syst_priv.get_exception_details(
                              p_proc_schema    => 'msbms_syst_priv'
                             ,p_proc_name      => 'trig_a_conf_enum_values_check_functional_types'
-                            ,p_exception_name => 'unreachable_code_reached'
+                            ,p_exception_name => 'invalid_functional_type'
                             ,p_errcode        => 'PM003'
-                            ,p_param_data     => NULL::jsonb
+                            ,p_param_data     => to_jsonb(new)
                             ,p_context_data   =>
                                 jsonb_build_object(
                                      'tg_op',         tg_op
