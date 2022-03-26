@@ -33,7 +33,7 @@ CREATE TABLE msbms_syst_data.conf_enums
         uuid
         NOT NULL
         CONSTRAINT conf_enums_feature_fk
-            REFERENCES msbms_syst_data.syst_features (id)
+            REFERENCES msbms_syst_data.syst_feature_map (id)
     ,syst_defined
         boolean
         NOT NULL DEFAULT FALSE
