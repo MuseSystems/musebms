@@ -59,11 +59,11 @@ CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
     FOR EACH ROW EXECUTE PROCEDURE msbms_syst_priv.trig_b_iu_set_diagnostic_columns();
 
 CREATE CONSTRAINT TRIGGER a50_trig_a_i_feature_map_level_assignable_check
-    BEFORE INSERT ON msbms_syst_data.syst_feature_setting_assigns
+    AFTER INSERT ON msbms_syst_data.syst_feature_setting_assigns
     FOR EACH ROW EXECUTE PROCEDURE msbms_syst_priv.trig_a_iu_feature_map_level_assignable_check();
 
 CREATE CONSTRAINT TRIGGER a50_trig_a_u_feature_map_level_assignable_check
-    BEFORE UPDATE ON msbms_syst_data.syst_feature_setting_assigns
+    AFTER UPDATE ON msbms_syst_data.syst_feature_setting_assigns
     FOR EACH ROW WHEN ( OLD.feature_map_id != NEW.feature_map_id )
         EXECUTE PROCEDURE msbms_syst_priv.trig_a_iu_feature_map_level_assignable_check();
 
