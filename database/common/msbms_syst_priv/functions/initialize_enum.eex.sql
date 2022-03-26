@@ -47,7 +47,7 @@ BEGIN
 
     << functional_type_loop >>
     FOR var_curr_functional_type IN
-        SELECT jsonb_array_elements(p_enum_def ->> 'functional_types')
+        SELECT jsonb_array_elements(p_enum_def -> 'functional_types')
     LOOP
 
         INSERT INTO msbms_syst_data.conf_enum_functional_types
@@ -97,7 +97,7 @@ BEGIN
                ,var_new_enum.id
                ,( SELECT id
                   FROM msbms_syst_data.conf_enum_functional_types
-                  WHERE internal_name = p_enum_def ->> 'functional_type_internal_name')
+                  WHERE internal_name = var_curr_enum_value ->> 'functional_type_internal_name')
                ,( var_curr_enum_value -> 'enum_default' )::boolean
                ,( var_curr_enum_value -> 'functional_type_default' )::boolean
                ,( var_curr_enum_value -> 'syst_defined' )::boolean
@@ -119,11 +119,10 @@ $BODY$
 LANGUAGE plpgsql VOLATILE;
 
 ALTER FUNCTION msbms_syst_priv.initialize_enum(p_enum_def jsonb)
-    OWNER TO <%= msbms_owner %>>;
+    OWNER TO <%= msbms_owner %>;
 
 REVOKE EXECUTE ON FUNCTION msbms_syst_priv.initialize_enum(p_enum_def jsonb) FROM public;
-GRANT EXECUTE ON FUNCTION msbms_syst_priv.initialize_enum(p_enum_def jsonb) TO <%= msbms_owner %>>;
-GRANT EXECUTE ON FUNCTION msbms_syst_priv.initialize_enum(p_enum_def jsonb) TO <SECONDARY ROLE>;
+GRANT EXECUTE ON FUNCTION msbms_syst_priv.initialize_enum(p_enum_def jsonb) TO <%= msbms_owner %>;
 
 
 COMMENT ON FUNCTION msbms_syst_priv.initialize_enum(p_enum_def jsonb) IS
