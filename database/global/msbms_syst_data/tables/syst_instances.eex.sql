@@ -30,16 +30,16 @@ CREATE TABLE msbms_syst_data.syst_instances
         NOT NULL
         CONSTRAINT syst_instances_applications_fk
             REFERENCES msbms_syst_data.syst_applications (id)
-    ,enum_instance_type_id
+    ,instance_type_id
         uuid
         NOT NULL
         CONSTRAINT syst_instances_enum_instance_type_fk
-            REFERENCES msbms_syst_data.enum_instance_types (id)
-    ,enum_instance_state_id
+            REFERENCES msbms_syst_data.conf_enum_values (id)
+    ,instance_state_id
         uuid
         NOT NULL
         CONSTRAINT syst_instances_enum_instance_state_fk
-            REFERENCES msbms_syst_data.enum_instance_states (id)
+            REFERENCES msbms_syst_data.conf_enum_values (id)
     ,owner_id
         uuid
         NOT NULL
@@ -99,6 +99,30 @@ CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
     BEFORE INSERT OR UPDATE ON msbms_syst_data.syst_instances
     FOR EACH ROW EXECUTE PROCEDURE msbms_syst_priv.trig_b_iu_set_diagnostic_columns();
 
+CREATE CONSTRAINT TRIGGER a50_trig_a_i_enum_value_check_instance_types
+    AFTER INSERT ON msbms_syst_data.syst_instances
+    FOR EACH ROW EXECUTE PROCEDURE
+        msbms_syst_priv.trig_a_iu_enum_value_check('instance_types', 'instance_type_id');
+
+CREATE CONSTRAINT TRIGGER a50_trig_a_u_enum_value_check_instance_types
+    AFTER UPDATE ON msbms_syst_data.syst_instances
+    FOR EACH ROW WHEN ( old.instance_type_id != new.instance_type_id)
+        EXECUTE PROCEDURE
+            msbms_syst_priv.trig_a_iu_enum_value_check(
+                'instance_types', 'instance_type_id');
+
+CREATE CONSTRAINT TRIGGER a50_trig_a_i_enum_value_check_instance_states
+    AFTER INSERT ON msbms_syst_data.syst_instances
+    FOR EACH ROW EXECUTE PROCEDURE
+        msbms_syst_priv.trig_a_iu_enum_value_check('instance_states', 'instance_state_id');
+
+CREATE CONSTRAINT TRIGGER a50_trig_a_u_enum_value_check_instance_states
+    AFTER UPDATE ON msbms_syst_data.syst_instances
+    FOR EACH ROW WHEN ( old.instance_state_id != new.instance_state_id)
+        EXECUTE PROCEDURE
+            msbms_syst_priv.trig_a_iu_enum_value_check(
+                'instance_states', 'instance_state_id');
+
 COMMENT ON
     TABLE msbms_syst_data.syst_instances IS
 $DOC$Defines known application instances and provides their configuration settings.$DOC$;
@@ -122,13 +146,13 @@ COMMENT ON
 $DOC$Indicates an instance of which application is being described by the record.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_instances.enum_instance_type_id IS
+    COLUMN msbms_syst_data.syst_instances.instance_type_id IS
 $DOC$Indicates the type of the instance.  This can designate instances as being
 production or non-production, or make other functional differences between
 instances created for different reasons based on the assigned instance type.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_instances.enum_instance_state_id IS
+    COLUMN msbms_syst_data.syst_instances.instance_state_id IS
 $DOC$Establishes the current life-cycle state of the instance record.  This can
 determine functionality such as if the instance is usable, visible, or if it may
 be purged from the database completely.$DOC$;
