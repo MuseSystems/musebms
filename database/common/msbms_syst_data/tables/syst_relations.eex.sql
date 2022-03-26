@@ -30,11 +30,6 @@ CREATE TABLE msbms_syst_data.syst_relations
     ,table_name
         text
         NOT NULL
-    ,feature_type_id
-        uuid
-        NOT NULL
-        CONSTRAINT syst_relations_feature_type_fk
-            REFERENCES msbms_syst_data.syst_feature_types ( id )
     ,diag_timestamp_created
         timestamptz
         NOT NULL DEFAULT now( )
@@ -98,10 +93,6 @@ $DOC$The schema name where the record's table resides.$DOC$;
 COMMENT ON
     COLUMN msbms_syst_data.syst_relations.table_name IS
 $DOC$The name of the relation that is the subject of the record.$DOC$;
-
-COMMENT ON
-    COLUMN msbms_syst_data.syst_relations.feature_type_id IS
-$DOC$Categorizes the record according to its feature type.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.syst_relations.diag_timestamp_created IS
