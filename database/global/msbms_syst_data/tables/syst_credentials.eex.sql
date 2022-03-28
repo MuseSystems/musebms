@@ -25,7 +25,7 @@ CREATE TABLE msbms_syst_data.syst_credentials
         uuid
         NOT NULL
         CONSTRAINT syst_credentials_credential_types_fk
-            REFERENCES msbms_syst_data.conf_enum_values (id)
+            REFERENCES msbms_syst_data.syst_enum_values (id)
     ,credential_for_identity_id
         uuid
         CONSTRAINT syst_credentials_for_identities_fk

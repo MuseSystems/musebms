@@ -25,7 +25,7 @@ CREATE TABLE msbms_syst_data.syst_feature_enum_assigns
         uuid
         NOT NULL
         CONSTRAINT syst_feature_enum_assigns_enum_fk
-            REFERENCES msbms_syst_data.conf_enums (id)
+            REFERENCES msbms_syst_data.syst_enums (id)
     ,diag_timestamp_created
         timestamptz
         NOT NULL DEFAULT now( )

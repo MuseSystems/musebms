@@ -24,7 +24,7 @@ CREATE TABLE msbms_appl_data.mstr_country_name_format_assocs
         uuid
         NOT NULL
         CONSTRAINT mstr_country_name_format_assocs_name_formats_fk
-            REFERENCES msbms_appl_data.conf_name_formats (id)
+            REFERENCES msbms_appl_data.syst_name_formats (id)
     ,is_default_for_country
         boolean
         NOT NULL DEFAULT false

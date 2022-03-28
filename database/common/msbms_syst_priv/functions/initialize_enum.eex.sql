@@ -15,13 +15,13 @@ $BODY$
 -- muse.information@musesystems.com  :: https://muse.systems
 
 DECLARE
-    var_new_enum             msbms_syst_data.conf_enums;
+    var_new_enum             msbms_syst_data.syst_enums;
     var_curr_functional_type jsonb;
     var_curr_enum_value      jsonb;
 
 BEGIN
 
-    INSERT INTO msbms_syst_data.conf_enums
+    INSERT INTO msbms_syst_data.syst_enums
         (
            internal_name
           ,display_name
@@ -50,7 +50,7 @@ BEGIN
         SELECT jsonb_array_elements(p_enum_def -> 'functional_types')
     LOOP
 
-        INSERT INTO msbms_syst_data.conf_enum_functional_types
+        INSERT INTO msbms_syst_data.syst_enum_functional_types
             (
               internal_name
              ,display_name
@@ -74,7 +74,7 @@ BEGIN
         SELECT jsonb_array_elements(p_enum_def -> 'enum_values')
     LOOP
 
-        INSERT INTO msbms_syst_data.conf_enum_values
+        INSERT INTO msbms_syst_data.syst_enum_values
             (
                internal_name
               ,display_name
@@ -96,7 +96,7 @@ BEGIN
                ,var_curr_enum_value ->> 'external_name'
                ,var_new_enum.id
                ,( SELECT id
-                  FROM msbms_syst_data.conf_enum_functional_types
+                  FROM msbms_syst_data.syst_enum_functional_types
                   WHERE internal_name = var_curr_enum_value ->> 'functional_type_internal_name')
                ,( var_curr_enum_value -> 'enum_default' )::boolean
                ,( var_curr_enum_value -> 'functional_type_default' )::boolean
@@ -105,7 +105,7 @@ BEGIN
                ,var_curr_enum_value ->> 'syst_description'
                ,coalesce(
                    (SELECT max(sort_order) + 1
-                    FROM msbms_syst_data.conf_enum_values
+                    FROM msbms_syst_data.syst_enum_values
                     WHERE enum_id = var_new_enum.id),
                    1
                     )

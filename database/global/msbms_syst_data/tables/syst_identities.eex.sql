@@ -25,7 +25,7 @@ CREATE TABLE msbms_syst_data.syst_identities
         uuid
         NOT NULL
         CONSTRAINT syst_identities_identity_types_fk
-            REFERENCES msbms_syst_data.conf_enum_values (id) ON DELETE CASCADE
+            REFERENCES msbms_syst_data.syst_enum_values (id) ON DELETE CASCADE
     ,identifier
         text
         NOT NULL

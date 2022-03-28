@@ -25,7 +25,7 @@ CREATE TABLE msbms_syst_data.syst_feature_setting_assigns
         uuid
         NOT NULL
         CONSTRAINT syst_feature_setting_assigns_setting_fk
-            REFERENCES msbms_syst_data.conf_settings (id)
+            REFERENCES msbms_syst_data.syst_settings (id)
     ,diag_timestamp_created
         timestamptz
         NOT NULL DEFAULT now( )

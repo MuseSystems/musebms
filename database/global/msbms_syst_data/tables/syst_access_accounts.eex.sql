@@ -34,7 +34,7 @@ CREATE TABLE msbms_syst_data.syst_access_accounts
         uuid
         NOT NULL
         CONSTRAINT syst_access_accounts_access_account_states_fk
-            REFERENCES msbms_syst_data.conf_enum_values (id)
+            REFERENCES msbms_syst_data.syst_enum_values (id)
     ,diag_timestamp_created
         timestamptz
         NOT NULL DEFAULT now( )

@@ -24,7 +24,7 @@ load_files = [
     "common/msbms_syst_priv/functions/get_exception_details.eex.sql",
     "common/msbms_syst_priv/trigger_functions/multi_table/trig_b_iu_set_diagnostic_columns.eex.sql",
 
-    "common/msbms_syst_data/tables/conf_settings.eex.sql",
+    "common/msbms_syst_data/tables/syst_settings.eex.sql",
     "common/msbms_syst_data/tables/syst_relations.eex.sql",
     "common/msbms_syst_data/tables/syst_feature_map_levels.eex.sql",
     "common/msbms_syst_data/tables/syst_feature_map.eex.sql",
@@ -32,10 +32,10 @@ load_files = [
     "common/msbms_syst_data/tables/syst_feature_relation_assigns.eex.sql",
     "common/msbms_syst_data/tables/syst_feature_setting_assigns.eex.sql",
 
-    "common/msbms_syst_data/tables/conf_enums.eex.sql",
-    "common/msbms_syst_data/tables/conf_enum_functional_types.eex.sql",
-    "common/msbms_syst_priv/trigger_functions/conf_enum_values/trig_a_iu_conf_enum_values_check_functional_type.eex.sql",
-    "common/msbms_syst_data/tables/conf_enum_values.eex.sql",
+    "common/msbms_syst_data/tables/syst_enums.eex.sql",
+    "common/msbms_syst_data/tables/syst_enum_functional_types.eex.sql",
+    "common/msbms_syst_priv/trigger_functions/syst_enum_values/trig_a_iu_syst_enum_values_check_functional_type.eex.sql",
+    "common/msbms_syst_data/tables/syst_enum_values.eex.sql",
     "common/msbms_syst_priv/trigger_functions/multi_table/trig_a_iu_enum_value_check.eex.sql",
     "common/msbms_syst_data/tables/syst_feature_enum_assigns.eex.sql",
     "common/msbms_syst_priv/functions/initialize_enum.eex.sql",

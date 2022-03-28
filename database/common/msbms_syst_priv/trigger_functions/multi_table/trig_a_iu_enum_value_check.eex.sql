@@ -23,8 +23,8 @@ BEGIN
 
     IF NOT exists( SELECT
                        TRUE
-                   FROM msbms_syst_data.conf_enum_values cev
-                   JOIN msbms_syst_data.conf_enums ce ON ce.id = cev.enum_id
+                   FROM msbms_syst_data.syst_enum_values cev
+                   JOIN msbms_syst_data.syst_enums ce ON ce.id = cev.enum_id
                    WHERE
                          ce.internal_name = var_enumeration_name
                      AND cev.id = ( var_new_json ->> var_enumeration_column )::uuid )
@@ -66,6 +66,6 @@ GRANT EXECUTE ON FUNCTION msbms_syst_priv.trig_a_iu_enum_value_check() TO <%= ms
 
 COMMENT ON FUNCTION msbms_syst_priv.trig_a_iu_enum_value_check() IS
 $DOC$A constraint trigger function to provide foreign key like validation of columns
-which reference conf_enum_values.  This relationship requires the additional
+which reference syst_enum_values.  This relationship requires the additional
 check that only values from the desired enumeration are used in assigning to
 records.$DOC$;

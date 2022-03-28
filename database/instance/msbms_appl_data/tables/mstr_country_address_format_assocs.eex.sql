@@ -24,7 +24,7 @@ CREATE TABLE msbms_appl_data.mstr_country_address_format_assocs
         uuid
         NOT NULL
         CONSTRAINT mstr_country_address_format_assocs_address_formats_fk
-            REFERENCES msbms_appl_data.conf_address_formats (id) ON DELETE CASCADE
+            REFERENCES msbms_appl_data.syst_address_formats (id) ON DELETE CASCADE
     ,is_default_for_country
         boolean
         NOT NULL DEFAULT false

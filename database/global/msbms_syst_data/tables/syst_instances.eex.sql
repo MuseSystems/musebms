@@ -34,12 +34,12 @@ CREATE TABLE msbms_syst_data.syst_instances
         uuid
         NOT NULL
         CONSTRAINT syst_instances_enum_instance_type_fk
-            REFERENCES msbms_syst_data.conf_enum_values (id)
+            REFERENCES msbms_syst_data.syst_enum_values (id)
     ,instance_state_id
         uuid
         NOT NULL
         CONSTRAINT syst_instances_enum_instance_state_fk
-            REFERENCES msbms_syst_data.conf_enum_values (id)
+            REFERENCES msbms_syst_data.syst_enum_values (id)
     ,owner_id
         uuid
         NOT NULL
