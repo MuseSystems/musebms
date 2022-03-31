@@ -67,13 +67,13 @@ CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
     BEFORE INSERT OR UPDATE ON msbms_syst_data.syst_access_accounts
     FOR EACH ROW EXECUTE PROCEDURE msbms_syst_priv.trig_b_iu_set_diagnostic_columns();
 
-CREATE CONSTRAINT TRIGGER a50_trig_a_i_enum_value_check
+CREATE CONSTRAINT TRIGGER a50_trig_a_i_access_account_states_enum_value_check
     AFTER INSERT ON msbms_syst_data.syst_access_accounts
     FOR EACH ROW EXECUTE PROCEDURE
         msbms_syst_priv.trig_a_iu_enum_value_check(
             'access_account_states', 'access_account_state_id');
 
-CREATE CONSTRAINT TRIGGER a50_trig_a_u_enum_value_check
+CREATE CONSTRAINT TRIGGER a50_trig_a_u_access_account_states_enum_value_check
     AFTER UPDATE ON msbms_syst_data.syst_access_accounts
     FOR EACH ROW WHEN ( old.access_account_state_id != new.access_account_state_id)
         EXECUTE PROCEDURE

@@ -61,12 +61,12 @@ CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
     BEFORE INSERT OR UPDATE ON msbms_syst_data.syst_owners
     FOR EACH ROW EXECUTE PROCEDURE msbms_syst_priv.trig_b_iu_set_diagnostic_columns();
 
-CREATE CONSTRAINT TRIGGER a50_trig_a_i_enum_value_check
+CREATE CONSTRAINT TRIGGER a50_trig_a_i_owner_states_enum_value_check
     AFTER INSERT ON msbms_syst_data.syst_owners
     FOR EACH ROW EXECUTE PROCEDURE
         msbms_syst_priv.trig_a_iu_enum_value_check('owner_states', 'owner_state_id');
 
-CREATE CONSTRAINT TRIGGER a50_trig_a_u_enum_value_check
+CREATE CONSTRAINT TRIGGER a50_trig_a_u_owner_states_enum_value_check
     AFTER UPDATE ON msbms_syst_data.syst_owners
     FOR EACH ROW WHEN ( old.owner_state_id != new.owner_state_id )EXECUTE PROCEDURE
         msbms_syst_priv.trig_a_iu_enum_value_check('owner_states', 'owner_state_id');

@@ -78,12 +78,12 @@ CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
     BEFORE INSERT OR UPDATE ON msbms_syst_data.syst_identities
     FOR EACH ROW EXECUTE PROCEDURE msbms_syst_priv.trig_b_iu_set_diagnostic_columns();
 
-CREATE CONSTRAINT TRIGGER a50_trig_a_i_enum_value_check
+CREATE CONSTRAINT TRIGGER a50_trig_a_i_identity_types_enum_value_check
     AFTER INSERT ON msbms_syst_data.syst_identities
     FOR EACH ROW EXECUTE PROCEDURE
         msbms_syst_priv.trig_a_iu_enum_value_check('identity_types', 'identity_type_id');
 
-CREATE CONSTRAINT TRIGGER a50_trig_a_u_enum_value_check
+CREATE CONSTRAINT TRIGGER a50_trig_a_u_identity_types_enum_value_check
     AFTER UPDATE ON msbms_syst_data.syst_identities
     FOR EACH ROW WHEN ( old.identity_type_id != new.identity_type_id)
         EXECUTE PROCEDURE
