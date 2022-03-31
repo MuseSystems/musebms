@@ -24,7 +24,7 @@ CREATE TABLE msbms_appl_data.mstr_country_address_format_assocs
         uuid
         NOT NULL
         CONSTRAINT mstr_country_address_format_assocs_address_formats_fk
-            REFERENCES msbms_appl_data.syst_address_formats (id) ON DELETE CASCADE
+            REFERENCES msbms_syst_data.syst_complex_format_values (id) ON DELETE CASCADE
     ,is_default_for_country
         boolean
         NOT NULL DEFAULT false
@@ -59,6 +59,19 @@ GRANT ALL ON TABLE msbms_appl_data.mstr_country_address_format_assocs TO <%= msb
 CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
     BEFORE INSERT OR UPDATE ON msbms_appl_data.mstr_country_address_format_assocs
     FOR EACH ROW EXECUTE PROCEDURE msbms_syst_priv.trig_b_iu_set_diagnostic_columns();
+
+CREATE CONSTRAINT TRIGGER a50_trig_a_i_complex_format_value_check
+    AFTER INSERT ON msbms_appl_data.mstr_country_address_format_assocs
+    FOR EACH ROW EXECUTE PROCEDURE
+        msbms_syst_priv.trig_a_iu_complex_format_value_check('address_formats', 'address_format_id');
+
+CREATE CONSTRAINT TRIGGER a50_trig_a_u_complex_format_value_check
+    AFTER UPDATE ON msbms_appl_data.mstr_country_address_format_assocs
+    FOR EACH ROW WHEN ( old.address_format_id != new.address_format_id)
+        EXECUTE PROCEDURE
+            msbms_syst_priv.trig_a_iu_complex_format_value_check(
+                'address_formats', 'address_format_id');
+
 
 COMMENT ON
     TABLE msbms_appl_data.mstr_country_address_format_assocs IS
