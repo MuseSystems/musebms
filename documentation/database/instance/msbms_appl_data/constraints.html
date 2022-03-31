@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>msbms_dev Database</title>
+        <title>instance_doc Database</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../index.html" class="navbar-brand"><b>msbms_dev</b> Database</a>
+                            <a href="../index.html" class="navbar-brand"><b>instance_doc</b> Database</a>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -127,7 +127,7 @@
                                         <td>
                                             <table border='0' cellspacing='0' cellpadding='0'>
                                                 <tr>
-                                                    <td><a href='tables/enum_contact_states.html'>enum_contact_states</a><span>.id</span></td>
+                                                    <td><a href='tables/syst_enum_values.html'>syst_enum_values</a><span>.id</span></td>
                                                 </tr>
                                             </table>
                                         </td>
@@ -145,32 +145,14 @@
                                         <td>
                                             <table border='0' cellspacing='0' cellpadding='0'>
                                                 <tr>
-                                                    <td><a href='tables/enum_contact_types.html'>enum_contact_types</a><span>.id</span></td>
+                                                    <td><a href='tables/syst_enum_values.html'>syst_enum_values</a><span>.id</span></td>
                                                 </tr>
                                             </table>
                                         </td>
                                         <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
                                     </tr>
                                     <tr>
-                                        <td>mstr_entity_fulfillment_places_place_id_fk</td>
-                                        <td>
-                                            <table border='0' cellspacing='0' cellpadding='0'>
-                                                <tr>
-                                                    <td><a href='tables/mstr_entity_fulfillment_places.html'>mstr_entity_fulfillment_places</a><span>.place_id</span></td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td>
-                                            <table border='0' cellspacing='0' cellpadding='0'>
-                                                <tr>
-                                                    <td><a href='tables/mstr_places.html'>mstr_places</a><span>.id</span></td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td><span title='Cascade on delete:&#10;Deletion of parent deletes child'>Cascade on delete</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>mstr_entity_fulfillment_places_entity_id_fk</td>
+                                        <td>mstr_entity_fulfillment_places_entity_fk</td>
                                         <td>
                                             <table border='0' cellspacing='0' cellpadding='0'>
                                                 <tr>
@@ -188,36 +170,18 @@
                                         <td><span title='Cascade on delete:&#10;Deletion of parent deletes child'>Cascade on delete</span></td>
                                     </tr>
                                     <tr>
-                                        <td>mstr_entity_banking_entities_owning_entity_id_fk</td>
+                                        <td>mstr_entity_fulfillment_places_place_fk</td>
                                         <td>
                                             <table border='0' cellspacing='0' cellpadding='0'>
                                                 <tr>
-                                                    <td><a href='tables/mstr_entity_banking_entities.html'>mstr_entity_banking_entities</a><span>.owning_entity_id</span></td>
+                                                    <td><a href='tables/mstr_entity_fulfillment_places.html'>mstr_entity_fulfillment_places</a><span>.place_id</span></td>
                                                 </tr>
                                             </table>
                                         </td>
                                         <td>
                                             <table border='0' cellspacing='0' cellpadding='0'>
                                                 <tr>
-                                                    <td><a href='tables/mstr_entities.html'>mstr_entities</a><span>.id</span></td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td><span title='Cascade on delete:&#10;Deletion of parent deletes child'>Cascade on delete</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>mstr_entity_banking_entities_entity_id_fk</td>
-                                        <td>
-                                            <table border='0' cellspacing='0' cellpadding='0'>
-                                                <tr>
-                                                    <td><a href='tables/mstr_entity_banking_entities.html'>mstr_entity_banking_entities</a><span>.entity_id</span></td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td>
-                                            <table border='0' cellspacing='0' cellpadding='0'>
-                                                <tr>
-                                                    <td><a href='tables/mstr_entities.html'>mstr_entities</a><span>.id</span></td>
+                                                    <td><a href='tables/mstr_places.html'>mstr_places</a><span>.id</span></td>
                                                 </tr>
                                             </table>
                                         </td>
@@ -253,7 +217,7 @@
                                         <td>
                                             <table border='0' cellspacing='0' cellpadding='0'>
                                                 <tr>
-                                                    <td><a href='tables/enum_person_types.html'>enum_person_types</a><span>.id</span></td>
+                                                    <td><a href='tables/syst_enum_values.html'>syst_enum_values</a><span>.id</span></td>
                                                 </tr>
                                             </table>
                                         </td>
@@ -271,14 +235,140 @@
                                         <td>
                                             <table border='0' cellspacing='0' cellpadding='0'>
                                                 <tr>
-                                                    <td><a href='tables/enum_person_states.html'>enum_person_states</a><span>.id</span></td>
+                                                    <td><a href='tables/syst_enum_values.html'>syst_enum_values</a><span>.id</span></td>
                                                 </tr>
                                             </table>
                                         </td>
                                         <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
                                     </tr>
                                     <tr>
-                                        <td>mstr_entity_purchasing_entities_owning_entity_id_fk</td>
+                                        <td>mstr_entity_banking_entities_entity_fk</td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/mstr_entity_banking_entities.html'>mstr_entity_banking_entities</a><span>.entity_id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/mstr_entities.html'>mstr_entities</a><span>.id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td><span title='Cascade on delete:&#10;Deletion of parent deletes child'>Cascade on delete</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>mstr_entity_banking_entities_owning_entity_fk</td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/mstr_entity_banking_entities.html'>mstr_entity_banking_entities</a><span>.owning_entity_id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/mstr_entities.html'>mstr_entities</a><span>.id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td><span title='Cascade on delete:&#10;Deletion of parent deletes child'>Cascade on delete</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>mstr_country_phone_format_assocs_phone_formats_fk</td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/mstr_country_phone_format_assocs.html'>mstr_country_phone_format_assocs</a><span>.phone_format_id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/syst_complex_format_values.html'>syst_complex_format_values</a><span>.id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>mstr_country_phone_format_assocs_countries_fk</td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/mstr_country_phone_format_assocs.html'>mstr_country_phone_format_assocs</a><span>.country_id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/mstr_countries.html'>mstr_countries</a><span>.id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>mstr_places_place_states_fk</td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/mstr_places.html'>mstr_places</a><span>.place_state_id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/syst_enum_values.html'>syst_enum_values</a><span>.id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>mstr_places_entities_fk</td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/mstr_places.html'>mstr_places</a><span>.owning_entity_id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/mstr_entities.html'>mstr_entities</a><span>.id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>mstr_places_place_types_fk</td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/mstr_places.html'>mstr_places</a><span>.place_type_id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/syst_enum_values.html'>syst_enum_values</a><span>.id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>mstr_entity_purchasing_entities_owning_entity_fk</td>
                                         <td>
                                             <table border='0' cellspacing='0' cellpadding='0'>
                                                 <tr>
@@ -296,7 +386,7 @@
                                         <td><span title='Cascade on delete:&#10;Deletion of parent deletes child'>Cascade on delete</span></td>
                                     </tr>
                                     <tr>
-                                        <td>mstr_entity_purchasing_entities_entity_id_fk</td>
+                                        <td>mstr_entity_purchasing_entities_entity_fk</td>
                                         <td>
                                             <table border='0' cellspacing='0' cellpadding='0'>
                                                 <tr>
@@ -318,14 +408,14 @@
                                         <td>
                                             <table border='0' cellspacing='0' cellpadding='0'>
                                                 <tr>
-                                                    <td><a href='tables/mstr_person_contact_roles.html'>mstr_person_contact_roles</a><span>.enum_person_contact_role_id</span></td>
+                                                    <td><a href='tables/mstr_person_contact_roles.html'>mstr_person_contact_roles</a><span>.person_contact_role_id</span></td>
                                                 </tr>
                                             </table>
                                         </td>
                                         <td>
                                             <table border='0' cellspacing='0' cellpadding='0'>
                                                 <tr>
-                                                    <td><a href='tables/enum_person_contact_roles.html'>enum_person_contact_roles</a><span>.id</span></td>
+                                                    <td><a href='tables/syst_enum_values.html'>syst_enum_values</a><span>.id</span></td>
                                                 </tr>
                                             </table>
                                         </td>
@@ -386,222 +476,6 @@
                                         <td><span title='Cascade on delete:&#10;Deletion of parent deletes child'>Cascade on delete</span></td>
                                     </tr>
                                     <tr>
-                                        <td>mstr_country_address_format_assocs_countries_fk</td>
-                                        <td>
-                                            <table border='0' cellspacing='0' cellpadding='0'>
-                                                <tr>
-                                                    <td><a href='tables/mstr_country_address_format_assocs.html'>mstr_country_address_format_assocs</a><span>.country_id</span></td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td>
-                                            <table border='0' cellspacing='0' cellpadding='0'>
-                                                <tr>
-                                                    <td><a href='tables/mstr_countries.html'>mstr_countries</a><span>.id</span></td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td><span title='Cascade on delete:&#10;Deletion of parent deletes child'>Cascade on delete</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>mstr_country_address_format_assocs_address_formats_fk</td>
-                                        <td>
-                                            <table border='0' cellspacing='0' cellpadding='0'>
-                                                <tr>
-                                                    <td><a href='tables/mstr_country_address_format_assocs.html'>mstr_country_address_format_assocs</a><span>.address_format_id</span></td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td>
-                                            <table border='0' cellspacing='0' cellpadding='0'>
-                                                <tr>
-                                                    <td><a href='tables/conf_address_formats.html'>conf_address_formats</a><span>.id</span></td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td><span title='Cascade on delete:&#10;Deletion of parent deletes child'>Cascade on delete</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>mstr_entity_person_roles_entity_fk</td>
-                                        <td>
-                                            <table border='0' cellspacing='0' cellpadding='0'>
-                                                <tr>
-                                                    <td><a href='tables/mstr_entity_person_roles.html'>mstr_entity_person_roles</a><span>.entity_id</span></td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td>
-                                            <table border='0' cellspacing='0' cellpadding='0'>
-                                                <tr>
-                                                    <td><a href='tables/mstr_entities.html'>mstr_entities</a><span>.id</span></td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td><span title='Cascade on delete:&#10;Deletion of parent deletes child'>Cascade on delete</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>mstr_entity_person_roles_enum_entity_person_role_fk</td>
-                                        <td>
-                                            <table border='0' cellspacing='0' cellpadding='0'>
-                                                <tr>
-                                                    <td><a href='tables/mstr_entity_person_roles.html'>mstr_entity_person_roles</a><span>.enum_entity_person_role_id</span></td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td>
-                                            <table border='0' cellspacing='0' cellpadding='0'>
-                                                <tr>
-                                                    <td><a href='tables/enum_entity_person_roles.html'>enum_entity_person_roles</a><span>.id</span></td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>mstr_entity_person_roles_person_fk</td>
-                                        <td>
-                                            <table border='0' cellspacing='0' cellpadding='0'>
-                                                <tr>
-                                                    <td><a href='tables/mstr_entity_person_roles.html'>mstr_entity_person_roles</a><span>.person_id</span></td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td>
-                                            <table border='0' cellspacing='0' cellpadding='0'>
-                                                <tr>
-                                                    <td><a href='tables/mstr_persons.html'>mstr_persons</a><span>.id</span></td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td><span title='Cascade on delete:&#10;Deletion of parent deletes child'>Cascade on delete</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>mstr_entity_inventory_places_owning_entity_id_fk</td>
-                                        <td>
-                                            <table border='0' cellspacing='0' cellpadding='0'>
-                                                <tr>
-                                                    <td><a href='tables/mstr_entity_inventory_places.html'>mstr_entity_inventory_places</a><span>.owning_entity_id</span></td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td>
-                                            <table border='0' cellspacing='0' cellpadding='0'>
-                                                <tr>
-                                                    <td><a href='tables/mstr_entities.html'>mstr_entities</a><span>.id</span></td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td><span title='Cascade on delete:&#10;Deletion of parent deletes child'>Cascade on delete</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>mstr_entity_inventory_places_place_id_fk</td>
-                                        <td>
-                                            <table border='0' cellspacing='0' cellpadding='0'>
-                                                <tr>
-                                                    <td><a href='tables/mstr_entity_inventory_places.html'>mstr_entity_inventory_places</a><span>.place_id</span></td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td>
-                                            <table border='0' cellspacing='0' cellpadding='0'>
-                                                <tr>
-                                                    <td><a href='tables/mstr_places.html'>mstr_places</a><span>.id</span></td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td><span title='Cascade on delete:&#10;Deletion of parent deletes child'>Cascade on delete</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>mstr_country_phone_format_assocs_phone_formats_fk</td>
-                                        <td>
-                                            <table border='0' cellspacing='0' cellpadding='0'>
-                                                <tr>
-                                                    <td><a href='tables/mstr_country_phone_format_assocs.html'>mstr_country_phone_format_assocs</a><span>.phone_format_id</span></td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td>
-                                            <table border='0' cellspacing='0' cellpadding='0'>
-                                                <tr>
-                                                    <td><a href='tables/conf_phone_formats.html'>conf_phone_formats</a><span>.id</span></td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>mstr_country_phone_format_assocs_countries_fk</td>
-                                        <td>
-                                            <table border='0' cellspacing='0' cellpadding='0'>
-                                                <tr>
-                                                    <td><a href='tables/mstr_country_phone_format_assocs.html'>mstr_country_phone_format_assocs</a><span>.country_id</span></td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td>
-                                            <table border='0' cellspacing='0' cellpadding='0'>
-                                                <tr>
-                                                    <td><a href='tables/mstr_countries.html'>mstr_countries</a><span>.id</span></td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>mstr_places_place_states_fk</td>
-                                        <td>
-                                            <table border='0' cellspacing='0' cellpadding='0'>
-                                                <tr>
-                                                    <td><a href='tables/mstr_places.html'>mstr_places</a><span>.place_state_id</span></td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td>
-                                            <table border='0' cellspacing='0' cellpadding='0'>
-                                                <tr>
-                                                    <td><a href='tables/enum_place_states.html'>enum_place_states</a><span>.id</span></td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>mstr_places_entities_fk</td>
-                                        <td>
-                                            <table border='0' cellspacing='0' cellpadding='0'>
-                                                <tr>
-                                                    <td><a href='tables/mstr_places.html'>mstr_places</a><span>.owning_entity_id</span></td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td>
-                                            <table border='0' cellspacing='0' cellpadding='0'>
-                                                <tr>
-                                                    <td><a href='tables/mstr_entities.html'>mstr_entities</a><span>.id</span></td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>mstr_places_place_types_fk</td>
-                                        <td>
-                                            <table border='0' cellspacing='0' cellpadding='0'>
-                                                <tr>
-                                                    <td><a href='tables/mstr_places.html'>mstr_places</a><span>.place_type_id</span></td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td>
-                                            <table border='0' cellspacing='0' cellpadding='0'>
-                                                <tr>
-                                                    <td><a href='tables/enum_place_types.html'>enum_place_types</a><span>.id</span></td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
-                                    </tr>
-                                    <tr>
                                         <td>mstr_entities_entity_types_fk</td>
                                         <td>
                                             <table border='0' cellspacing='0' cellpadding='0'>
@@ -613,7 +487,7 @@
                                         <td>
                                             <table border='0' cellspacing='0' cellpadding='0'>
                                                 <tr>
-                                                    <td><a href='tables/enum_entity_types.html'>enum_entity_types</a><span>.id</span></td>
+                                                    <td><a href='tables/syst_enum_values.html'>syst_enum_values</a><span>.id</span></td>
                                                 </tr>
                                             </table>
                                         </td>
@@ -649,14 +523,14 @@
                                         <td>
                                             <table border='0' cellspacing='0' cellpadding='0'>
                                                 <tr>
-                                                    <td><a href='tables/enum_entity_states.html'>enum_entity_states</a><span>.id</span></td>
+                                                    <td><a href='tables/syst_enum_values.html'>syst_enum_values</a><span>.id</span></td>
                                                 </tr>
                                             </table>
                                         </td>
                                         <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
                                     </tr>
                                     <tr>
-                                        <td>mstr_entity_selling_entities_owning_entity_id_fk</td>
+                                        <td>mstr_entity_selling_entities_owning_entity_fk</td>
                                         <td>
                                             <table border='0' cellspacing='0' cellpadding='0'>
                                                 <tr>
@@ -674,7 +548,7 @@
                                         <td><span title='Cascade on delete:&#10;Deletion of parent deletes child'>Cascade on delete</span></td>
                                     </tr>
                                     <tr>
-                                        <td>mstr_entity_selling_entities_entity_id_fk</td>
+                                        <td>mstr_entity_selling_entities_entity_fk</td>
                                         <td>
                                             <table border='0' cellspacing='0' cellpadding='0'>
                                                 <tr>
@@ -692,7 +566,43 @@
                                         <td><span title='Cascade on delete:&#10;Deletion of parent deletes child'>Cascade on delete</span></td>
                                     </tr>
                                     <tr>
-                                        <td>mstr_entity_workplace_places_place_id_fk</td>
+                                        <td>mstr_country_address_format_assocs_countries_fk</td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/mstr_country_address_format_assocs.html'>mstr_country_address_format_assocs</a><span>.country_id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/mstr_countries.html'>mstr_countries</a><span>.id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td><span title='Cascade on delete:&#10;Deletion of parent deletes child'>Cascade on delete</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>mstr_country_address_format_assocs_address_formats_fk</td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/mstr_country_address_format_assocs.html'>mstr_country_address_format_assocs</a><span>.address_format_id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/syst_complex_format_values.html'>syst_complex_format_values</a><span>.id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td><span title='Cascade on delete:&#10;Deletion of parent deletes child'>Cascade on delete</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>mstr_entity_workplace_places_place_fk</td>
                                         <td>
                                             <table border='0' cellspacing='0' cellpadding='0'>
                                                 <tr>
@@ -710,7 +620,7 @@
                                         <td><span title='Cascade on delete:&#10;Deletion of parent deletes child'>Cascade on delete</span></td>
                                     </tr>
                                     <tr>
-                                        <td>mstr_entity_workplace_places_owning_entity_id_fk</td>
+                                        <td>mstr_entity_workplace_places_owning_entity_fk</td>
                                         <td>
                                             <table border='0' cellspacing='0' cellpadding='0'>
                                                 <tr>
@@ -757,14 +667,68 @@
                                         <td>
                                             <table border='0' cellspacing='0' cellpadding='0'>
                                                 <tr>
-                                                    <td><a href='tables/conf_name_formats.html'>conf_name_formats</a><span>.id</span></td>
+                                                    <td><a href='tables/syst_complex_format_values.html'>syst_complex_format_values</a><span>.id</span></td>
                                                 </tr>
                                             </table>
                                         </td>
                                         <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
                                     </tr>
                                     <tr>
-                                        <td>mstr_entity_staffing_entities_entity_id_fk</td>
+                                        <td>mstr_entity_person_roles_entity_fk</td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/mstr_entity_person_roles.html'>mstr_entity_person_roles</a><span>.entity_id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/mstr_entities.html'>mstr_entities</a><span>.id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td><span title='Cascade on delete:&#10;Deletion of parent deletes child'>Cascade on delete</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>mstr_entity_person_roles_enum_entity_person_role_fk</td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/mstr_entity_person_roles.html'>mstr_entity_person_roles</a><span>.entity_person_role_id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/syst_enum_values.html'>syst_enum_values</a><span>.id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>mstr_entity_person_roles_person_fk</td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/mstr_entity_person_roles.html'>mstr_entity_person_roles</a><span>.person_id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/mstr_persons.html'>mstr_persons</a><span>.id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td><span title='Cascade on delete:&#10;Deletion of parent deletes child'>Cascade on delete</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>mstr_entity_staffing_entities_entity_fk</td>
                                         <td>
                                             <table border='0' cellspacing='0' cellpadding='0'>
                                                 <tr>
@@ -782,7 +746,7 @@
                                         <td><span title='Cascade on delete:&#10;Deletion of parent deletes child'>Cascade on delete</span></td>
                                     </tr>
                                     <tr>
-                                        <td>mstr_entity_staffing_entities_owning_entity_id_fk</td>
+                                        <td>mstr_entity_staffing_entities_owning_entity_fk</td>
                                         <td>
                                             <table border='0' cellspacing='0' cellpadding='0'>
                                                 <tr>
@@ -794,6 +758,42 @@
                                             <table border='0' cellspacing='0' cellpadding='0'>
                                                 <tr>
                                                     <td><a href='tables/mstr_entities.html'>mstr_entities</a><span>.id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td><span title='Cascade on delete:&#10;Deletion of parent deletes child'>Cascade on delete</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>mstr_entity_inventory_places_owning_entity_fk</td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/mstr_entity_inventory_places.html'>mstr_entity_inventory_places</a><span>.owning_entity_id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/mstr_entities.html'>mstr_entities</a><span>.id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td><span title='Cascade on delete:&#10;Deletion of parent deletes child'>Cascade on delete</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>mstr_entity_inventory_places_place_fk</td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/mstr_entity_inventory_places.html'>mstr_entity_inventory_places</a><span>.place_id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/mstr_places.html'>mstr_places</a><span>.id</span></td>
                                                 </tr>
                                             </table>
                                         </td>
@@ -822,16 +822,6 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td><a href='tables/enum_contact_types.html'>enum_contact_types</a></td>
-                                        <td>enum_contact_types_function_type_chk</td>
-                                        <td>((functional_type = ANY (ARRAY[&#39;phone&#39;::text, &#39;physical_address&#39;::text, &#39;email_address&#39;::text, &#39;website&#39;::text, &#39;chat&#39;::text, &#39;social_media&#39;::text, &#39;generic&#39;::text])))</td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href='tables/enum_person_types.html'>enum_person_types</a></td>
-                                        <td>enum_person_types_functional_type_chk</td>
-                                        <td>((functional_type = ANY (ARRAY[&#39;individual&#39;::text, &#39;function&#39;::text])))</td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>

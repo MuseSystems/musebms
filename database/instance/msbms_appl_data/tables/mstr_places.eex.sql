@@ -1,6 +1,6 @@
--- Source File: mstr_places.eex.sql
--- Location:    database/instance/msbms_appl_data/tables/mstr_places.eex.sql
--- Project:     Muse Systems Business Management System
+-- File:        mstr_places.eex.sql
+-- Location:    database\instance\msbms_appl_data\tables\mstr_places.eex.sql
+-- Project:     Muse Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
 -- This file may include content copyrighted and licensed from third parties.
@@ -12,29 +12,55 @@
 
 CREATE TABLE msbms_appl_data.mstr_places
 (
-     id                      uuid        DEFAULT uuid_generate_v1( ) NOT NULL
+     id
+        uuid
+        NOT NULL DEFAULT uuid_generate_v1( )
         CONSTRAINT mstr_places_pk PRIMARY KEY
-    ,owning_entity_id        uuid                                    NOT NULL
+    ,owning_entity_id
+        uuid
+        NOT NULL
         CONSTRAINT mstr_places_entities_fk
-        REFERENCES msbms_appl_data.mstr_entities (id)
-    ,internal_name           text                                    NOT NULL
+            REFERENCES msbms_appl_data.mstr_entities (id)
+    ,internal_name
+        text
+        NOT NULL
         CONSTRAINT mstr_places_internal_name_udx UNIQUE
-    ,display_name            text
+    ,display_name
+        text
         CONSTRAINT mstr_places_display_name_udx UNIQUE
-    ,external_name           text                                    NOT NULL
-    ,place_type_id        uuid                                    NOT NULL
+    ,external_name
+        text
+        NOT NULL
+    ,place_type_id
+        uuid
+        NOT NULL
         CONSTRAINT mstr_places_place_types_fk
-        REFERENCES msbms_appl_data.enum_place_types (id)
-    ,place_state_id       uuid
+            REFERENCES msbms_syst_data.syst_enum_values (id)
+    ,place_state_id
+        uuid
         CONSTRAINT mstr_places_place_states_fk
-        REFERENCES msbms_appl_data.enum_place_states (id)
-    ,diag_timestamp_created  timestamptz DEFAULT now( )              NOT NULL
-    ,diag_role_created       text                                    NOT NULL
-    ,diag_timestamp_modified timestamptz DEFAULT now( )              NOT NULL
-    ,diag_wallclock_modified timestamptz DEFAULT clock_timestamp( )  NOT NULL
-    ,diag_role_modified      text                                    NOT NULL
-    ,diag_row_version        bigint      DEFAULT 1                   NOT NULL
-    ,diag_update_count       bigint      DEFAULT 0                   NOT NULL
+            REFERENCES msbms_syst_data.syst_enum_values (id)
+    ,diag_timestamp_created
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_role_created
+        text
+        NOT NULL
+    ,diag_timestamp_modified
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_wallclock_modified
+        timestamptz
+        NOT NULL DEFAULT clock_timestamp( )
+    ,diag_role_modified
+        text
+        NOT NULL
+    ,diag_row_version
+        bigint
+        NOT NULL DEFAULT 1
+    ,diag_update_count
+        bigint
+        NOT NULL DEFAULT 0
 );
 
 ALTER TABLE msbms_appl_data.mstr_places OWNER TO <%= msbms_owner %>;
@@ -45,6 +71,30 @@ GRANT ALL ON TABLE msbms_appl_data.mstr_places TO <%= msbms_owner %>;
 CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
     BEFORE INSERT OR UPDATE ON msbms_appl_data.mstr_places
     FOR EACH ROW EXECUTE PROCEDURE msbms_syst_priv.trig_b_iu_set_diagnostic_columns();
+
+CREATE CONSTRAINT TRIGGER a50_trig_a_i_place_states_enum_value_check
+    AFTER INSERT ON msbms_appl_data.mstr_places
+    FOR EACH ROW EXECUTE PROCEDURE
+        msbms_syst_priv.trig_a_iu_enum_value_check('place_states', 'place_state_id');
+
+CREATE CONSTRAINT TRIGGER a50_trig_a_u_place_states_enum_value_check
+    AFTER UPDATE ON msbms_appl_data.mstr_places
+    FOR EACH ROW WHEN ( old.place_state_id != new.place_state_id)
+        EXECUTE PROCEDURE
+            msbms_syst_priv.trig_a_iu_enum_value_check(
+                'place_states', 'place_state_id');
+
+CREATE CONSTRAINT TRIGGER a50_trig_a_i_place_types_enum_value_check
+    AFTER INSERT ON msbms_appl_data.mstr_places
+    FOR EACH ROW EXECUTE PROCEDURE
+        msbms_syst_priv.trig_a_iu_enum_value_check('place_types', 'place_type_id');
+
+CREATE CONSTRAINT TRIGGER a50_trig_a_u_place_types_enum_value_check
+    AFTER UPDATE ON msbms_appl_data.mstr_places
+    FOR EACH ROW WHEN ( old.place_type_id != new.place_type_id)
+        EXECUTE PROCEDURE
+            msbms_syst_priv.trig_a_iu_enum_value_check(
+                'place_types', 'place_type_id');
 
 COMMENT ON
     TABLE msbms_appl_data.mstr_places IS

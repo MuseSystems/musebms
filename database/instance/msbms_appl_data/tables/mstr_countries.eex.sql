@@ -1,6 +1,6 @@
--- Source File: mstr_countries.eex.sql
--- Location:    database/instance/msbms_appl_data/tables/mstr_countries.eex.sql
--- Project:     Muse Systems Business Management System
+-- File:        mstr_countries.eex.sql
+-- Location:    database\instance\msbms_appl_data\tables\mstr_countries.eex.sql
+-- Project:     Muse Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
 -- This file may include content copyrighted and licensed from third parties.
@@ -9,60 +9,120 @@
 -- See the NOTICE file in the project root for copyright ownership information.
 --
 -- muse.information@musesystems.com  :: https://muse.systems
+
 CREATE TABLE msbms_appl_data.mstr_countries
 (
-     id                               uuid        DEFAULT uuid_generate_v1( ) NOT NULL
+     id
+        uuid
+        NOT NULL DEFAULT uuid_generate_v1( )
         CONSTRAINT mstr_countries_pk PRIMARY KEY
-    ,internal_name                    text                                    NOT NULL
+    ,internal_name
+        text
+        NOT NULL
         CONSTRAINT mstr_countries_internal_name_udx UNIQUE
-    ,display_name                     text
+    ,display_name
+        text
         CONSTRAINT mstr_countries_display_name_udx UNIQUE
-    ,external_name                    text                                    NOT NULL
-    ,official_name_ar                 text
-    ,official_name_cn                 text
-    ,official_name_en                 text
-    ,official_name_es                 text
-    ,official_name_fr                 text
-    ,official_name_ru                 text
-    ,iso3166_1_alpha_2                text
-    ,iso3166_1_alpha_3                text
-    ,iso3166_1_numeric                text
-    ,iso4217_currency_alphabetic_code text
-    ,iso4217_currency_country_name    text
-    ,iso4217_currency_minor_unit      text
-    ,iso4217_currency_name            text
-    ,iso4217_currency_numeric_code    text
-    ,cldr_display_name                text
-    ,capital                          text
-    ,continent                        text
-    ,ds                               text
-    ,dial                             text
-    ,edgar                            text
-    ,fips                             text
-    ,gaul                             text
-    ,geoname_id                       text
-    ,global_code                      text
-    ,global_name                      text
-    ,ioc                              text
-    ,itu                              text
-    ,intermediate_region_code         text
-    ,intermediate_region_name         text
-    ,languages                        text
-    ,marc                             text
-    ,region_code                      text
-    ,region_name                      text
-    ,sub_region_code                  text
-    ,sub_region_name                  text
-    ,tld                              text
-    ,wmo                              text
-    ,is_independent                   text
-    ,diag_timestamp_created           timestamptz DEFAULT now( )              NOT NULL
-    ,diag_role_created                text                                    NOT NULL
-    ,diag_timestamp_modified          timestamptz DEFAULT now( )              NOT NULL
-    ,diag_wallclock_modified          timestamptz DEFAULT clock_timestamp( )  NOT NULL
-    ,diag_role_modified               text                                    NOT NULL
-    ,diag_row_version                 bigint      DEFAULT 1                   NOT NULL
-    ,diag_update_count                bigint      DEFAULT 0                   NOT NULL
+    ,external_name
+        text
+        NOT NULL
+    ,official_name_ar
+        text
+    ,official_name_cn
+        text
+    ,official_name_en
+        text
+    ,official_name_es
+        text
+    ,official_name_fr
+        text
+    ,official_name_ru
+        text
+    ,iso3166_1_alpha_2
+        text
+    ,iso3166_1_alpha_3
+        text
+    ,iso3166_1_numeric
+        text
+    ,iso4217_currency_alphabetic_code
+        text
+    ,iso4217_currency_country_name
+        text
+    ,iso4217_currency_minor_unit
+        text
+    ,iso4217_currency_name
+        text
+    ,iso4217_currency_numeric_code
+        text
+    ,cldr_display_name
+        text
+    ,capital
+        text
+    ,continent
+        text
+    ,ds
+        text
+    ,dial
+        text
+    ,edgar
+        text
+    ,fips
+        text
+    ,gaul
+        text
+    ,geoname_id
+        text
+    ,global_code
+        text
+    ,global_name
+        text
+    ,ioc
+        text
+    ,itu
+        text
+    ,intermediate_region_code
+        text
+    ,intermediate_region_name
+        text
+    ,languages
+        text
+    ,marc
+        text
+    ,region_code
+        text
+    ,region_name
+        text
+    ,sub_region_code
+        text
+    ,sub_region_name
+        text
+    ,tld
+        text
+    ,wmo
+        text
+    ,is_independent
+        text
+    ,diag_timestamp_created
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_role_created
+        text
+        NOT NULL
+    ,diag_timestamp_modified
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_wallclock_modified
+        timestamptz
+        NOT NULL DEFAULT clock_timestamp( )
+    ,diag_role_modified
+        text
+        NOT NULL
+    ,diag_row_version
+        bigint
+        NOT NULL DEFAULT 1
+    ,diag_update_count
+        bigint
+        NOT NULL DEFAULT 0
 );
 
 ALTER TABLE msbms_appl_data.mstr_countries OWNER TO <%= msbms_owner %>;

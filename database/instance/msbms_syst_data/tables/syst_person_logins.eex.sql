@@ -1,6 +1,6 @@
--- Source File: syst_person_logins.eex.sql
--- Location:    database/instance/msbms_syst_data/tables/syst_person_logins.eex.sql
--- Project:     musebms
+-- File:        syst_person_logins.eex.sql
+-- Location:    database\instance\msbms_syst_data\tables\syst_person_logins.eex.sql
+-- Project:     Muse Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
 -- This file may include content copyrighted and licensed from third parties.
@@ -9,37 +9,61 @@
 -- See the NOTICE file in the project root for copyright ownership information.
 --
 -- muse.information@musesystems.com  :: https://muse.systems
+
 CREATE TABLE msbms_syst_data.syst_person_logins
 (
-     id                             uuid        DEFAULT uuid_generate_v1( )          NOT NULL
+     id
+        uuid
+        NOT NULL DEFAULT uuid_generate_v1( )
         CONSTRAINT syst_person_logins_pk PRIMARY KEY
-    ,person_id                      uuid                                             NOT NULL
+    ,person_id
+        uuid
+        NOT NULL
         CONSTRAINT syst_person_logins_person_fk
-        REFERENCES msbms_appl_data.mstr_persons (id)
-        ON DELETE CASCADE
-    ,owning_entity_id               uuid                                             NOT NULL
+            REFERENCES msbms_appl_data.mstr_persons (id) ON DELETE CASCADE
+    ,owning_entity_id
+        uuid
+        NOT NULL
         CONSTRAINT syst_person_logins_owning_entity_fk
-        REFERENCES msbms_appl_data.mstr_entities (id)
-        ON DELETE CASCADE
-    ,enum_login_state_id            uuid                                             NOT NULL
+            REFERENCES msbms_appl_data.mstr_entities (id) ON DELETE CASCADE
+    ,login_state_id
+        uuid
+        NOT NULL
         CONSTRAINT syst_person_logins_enum_login_state_fk
-        REFERENCES msbms_syst_data.enum_login_states (id)
-    ,validity_start_end             tstzrange   DEFAULT tstzrange(now(), null, '[)') NOT NULL
-    ,identity                       text                                             NOT NULL
-        CONSTRAINT syst_person_logins_identity_udx UNIQUE
-    ,proxy_for_syst_person_login_id uuid
-        CONSTRAINT syst_person_logins_proxy_for_syst_person_login_fk
-        REFERENCES msbms_syst_data.syst_person_logins (id)
-        ON DELETE CASCADE
-    ,last_login                     timestamptz DEFAULT '-infinity'                  NOT NULL
-    ,last_attempted_login           timestamptz DEFAULT '-infinity'                  NOT NULL
-    ,diag_timestamp_created         timestamptz DEFAULT now( )                       NOT NULL
-    ,diag_role_created              text                                             NOT NULL
-    ,diag_timestamp_modified        timestamptz DEFAULT now( )                       NOT NULL
-    ,diag_wallclock_modified        timestamptz DEFAULT clock_timestamp( )           NOT NULL
-    ,diag_role_modified             text                                             NOT NULL
-    ,diag_row_version               bigint      DEFAULT 1                            NOT NULL
-    ,diag_update_count              bigint      DEFAULT 0                            NOT NULL
+            REFERENCES msbms_syst_data.syst_enum_values (id)
+    ,access_account_id
+        uuid
+        NOT NULL
+    ,validity_start_end
+        tstzrange
+        NOT NULL DEFAULT tstzrange(now(), null, '[)')
+    ,last_login
+        timestamptz
+        NOT NULL DEFAULT '-infinity'
+    ,last_attempted_login
+        timestamptz
+        NOT NULL DEFAULT '-infinity'
+    ,diag_timestamp_created
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_role_created
+        text
+        NOT NULL
+    ,diag_timestamp_modified
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_wallclock_modified
+        timestamptz
+        NOT NULL DEFAULT clock_timestamp( )
+    ,diag_role_modified
+        text
+        NOT NULL
+    ,diag_row_version
+        bigint
+        NOT NULL DEFAULT 1
+    ,diag_update_count
+        bigint
+        NOT NULL DEFAULT 0
 );
 
 ALTER TABLE msbms_syst_data.syst_person_logins OWNER TO <%= msbms_owner %>;
@@ -50,6 +74,18 @@ GRANT ALL ON TABLE msbms_syst_data.syst_person_logins TO <%= msbms_owner %>;
 CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
     BEFORE INSERT OR UPDATE ON msbms_syst_data.syst_person_logins
     FOR EACH ROW EXECUTE PROCEDURE msbms_syst_priv.trig_b_iu_set_diagnostic_columns();
+
+CREATE CONSTRAINT TRIGGER a50_trig_a_i_login_states_enum_value_check
+    AFTER INSERT ON msbms_syst_data.syst_person_logins
+    FOR EACH ROW EXECUTE PROCEDURE
+        msbms_syst_priv.trig_a_iu_enum_value_check('login_states', 'login_state_id');
+
+CREATE CONSTRAINT TRIGGER a50_trig_a_u_login_states_enum_value_check
+    AFTER UPDATE ON msbms_syst_data.syst_person_logins
+    FOR EACH ROW WHEN ( old.login_state_id != new.login_state_id)
+        EXECUTE PROCEDURE
+            msbms_syst_priv.trig_a_iu_enum_value_check(
+                'login_states', 'login_state_id');
 
 COMMENT ON
     TABLE msbms_syst_data.syst_person_logins IS
@@ -82,8 +118,18 @@ ownership concept.  This will point to the entity responsible for managing the
 login.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_person_logins.enum_login_state_id IS
+    COLUMN msbms_syst_data.syst_person_logins.login_state_id IS
 $DOC$Establishes which life-cycle state the login record is in.$DOC$;
+
+COMMENT ON
+    COLUMN msbms_syst_data.syst_person_logins.access_account_id IS
+$DOC$A reference to the global database msbms_syst_data.syst_access_accounts table.
+Authentication is handled centrally via the global database for all instance
+owners, instances, and supported applications.  The reference in this column
+indicates which of the global access account records is used for authentication
+to this instance.  Authorization, including authorization to connect to the
+instance is managed by the instance itself once the system authenticates the
+user.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.syst_person_logins.validity_start_end IS
@@ -92,19 +138,6 @@ used to access the system, so long as the enum_login_state_id value also
 represents a state which allows login attempts.  The allowed times include the
 starting time and allow logins up to the ending time, but not including the
 ending time itself.$DOC$;
-
-COMMENT ON
-    COLUMN msbms_syst_data.syst_person_logins.identity IS
-$DOC$Defines the identifier that is presented to the system by a user or system
-login.  Traditionally this would be the user name.$DOC$;
-
-COMMENT ON
-    COLUMN msbms_syst_data.syst_person_logins.proxy_for_syst_person_login_id IS
-$DOC$For cases such as self-serve password resets, it may be necessary to create a
-temporary authentication path with an ad hoc identity and, ultimately, an ad hoc
-authenticator.  If the syst_person_logins record in question is such an ad hoc
-login, this field will reference the login record which is being reset or for
-which the ad hoc login record is serving as a proxy.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.syst_person_logins.last_login IS

@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>msbms_dev Database</title>
+        <title>instance_doc Database</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../index.html" class="navbar-brand"><b>msbms_dev</b> Database</a>
+                            <a href="../index.html" class="navbar-brand"><b>instance_doc</b> Database</a>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -77,12 +77,12 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="callout callout-info">
-                                <h4>SchemaSpy Analysis of msbms_dev</h4>
-                                <p>Generated on Fri Oct 08 14:17 PDT 2021</p>
+                                <h4>SchemaSpy Analysis of instance_doc</h4>
+                                <p>Generated on Thu Mar 31 04:50 PDT 2022</p>
                             </div>
                         </div>
                     </div>
-                    <a href="msbms_dev.msbms_appl_data.xml" title="XML Representation">XML Representation</a><br />
+                    <a href="instance_doc.msbms_appl_data.xml" title="XML Representation">XML Representation</a><br />
                     <a href="insertionOrder.txt" title="Useful for loading data into a database">Insertion Order</a>
                     <a href="deletionOrder.txt" title="Useful for purging data from a database">Deletion Order</a>
                 </section>
@@ -94,7 +94,7 @@
                                 <span class="info-box-icon bg-aqua"><i class="fa fa-table"></i></span>
                                 <div class="info-box-content">
                                     <span class="info-box-text">TABLES</span>
-                                    <span class="info-box-number">37</span>
+                                    <span class="info-box-number">17</span>
                                 </div>
                                 <!-- /.info-box-content -->
                             </div>
@@ -118,7 +118,7 @@
                                 <span class="info-box-icon bg-green"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></span>
                                 <div class="info-box-content">
                                     <span class="info-box-text">COLUMNS</span>
-                                    <span class="info-box-number">504</span>
+                                    <span class="info-box-number">238</span>
                                 </div>
                                 <!-- /.info-box-content -->
                             </div>
@@ -168,7 +168,7 @@
                             <span class="label label-primary pull-right"><i class="fa fa-cog fa-2x"></i></span>
                         </div><!-- /.box-header -->
                         <div class="box-body">
-                            <p>Database Type: PostgreSQL - 14.0 (Ubuntu 14.0-1.pgdg20.04+1)</p>
+                            <p>Database Type: PostgreSQL - 14.2 (Ubuntu 14.2-1.pgdg20.04+1)</p>
                         </div><!-- /.box-body -->
                     </div>
                     <div class="box box-primary">
@@ -231,6 +231,16 @@ inventory/place relationship determines whether or not the place may receive<br 
 units.</p></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/mstr_persons.html">mstr_persons</a></td>
+                                        <td class="detail" align="right">3</td>
+                                        <td class="detail" align="right">3</td>
+                                        <td class="detail" align="right">15</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Represents real people in the world.  Ideally, there is one record in this table<br />
+for each person the various entities interact with.</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/mstr_entity_banking_entities.html">mstr_entity_banking_entities</a></td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">2</td>
@@ -242,14 +252,26 @@ and a banking related entity.  This record, or its children, will define the<br 
 banking behavior when the transaction entity is the owning entity.</p></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
-                                        <td class="detail"><a href="tables/mstr_persons.html">mstr_persons</a></td>
-                                        <td class="detail" align="right">3</td>
-                                        <td class="detail" align="right">3</td>
-                                        <td class="detail" align="right">15</td>
+                                        <td class="detail"><a href="tables/mstr_country_phone_format_assocs.html">mstr_country_phone_format_assocs</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">11</td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Represents real people in the world.  Ideally, there is one record in this table<br />
-for each person the various entities interact with.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Establishes relationships between phone format records and country records and<br />
+allows recognizing an phone format as the default format for the country.</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/mstr_places.html">mstr_places</a></td>
+                                        <td class="detail" align="right">4</td>
+                                        <td class="detail" align="right">3</td>
+                                        <td class="detail" align="right">14</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>places are system representations of real world buildings, such as office<br />
+buildings, warehouses, factories, or sales centers.  Note that a place may be<br />
+associated with multiple addresses which can be assigned roles for different<br />
+purposes.</p></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/mstr_entity_purchasing_entities.html">mstr_entity_purchasing_entities</a></td>
@@ -285,63 +307,28 @@ organizations.</p>
 <a href="https://datahub.io/core/country-codes">https://datahub.io/core/country-codes</a></p></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
-                                        <td class="detail"><a href="tables/conf_name_formats.html">conf_name_formats</a></td>
-                                        <td class="detail" align="right">1</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">11</td>
+                                        <td class="detail"><a href="tables/mstr_entities.html">mstr_entities</a></td>
+                                        <td class="detail" align="right">17</td>
+                                        <td class="detail" align="right">3</td>
+                                        <td class="detail" align="right">14</td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Establishes different personal naming conventions that the application may<br />
-produce.  The key idea behind phone formats is to allow the application to be<br />
-able to have country/locality appropriate phone numbering formats.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Master list of legal entities with whom the business interacts.  All legal<br />
+entities are represented by this table, including the business using this<br />
+application itself.  The information stored in this record represents general<br />
+information about the entity that is broadly applicable in all contexts which<br />
+might use the entity.</p></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
-                                        <td class="detail"><a href="tables/enum_person_states.html">enum_person_states</a></td>
-                                        <td class="detail" align="right">1</td>
+                                        <td class="detail"><a href="tables/mstr_entity_selling_entities.html">mstr_entity_selling_entities</a></td>
                                         <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">13</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Lifecycle management stages for persons.</p></td>
-                                    </tr>
-                                    <tr class="tbl even" valign="top">
-                                        <td class="detail"><a href="tables/enum_fiscal_year_types.html">enum_fiscal_year_types</a></td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">13</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">10</td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Enumerates the different supported cadences of periods for fiscal years.</p></td>
-                                    </tr>
-                                    <tr class="tbl even" valign="top">
-                                        <td class="detail"><a href="tables/enum_entity_place_roles.html">enum_entity_place_roles</a></td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">13</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Defines the different roles that a given place may assume for a specific<br />
-entity.</p></td>
-                                    </tr>
-                                    <tr class="tbl even" valign="top">
-                                        <td class="detail"><a href="tables/conf_phone_formats.html">conf_phone_formats</a></td>
-                                        <td class="detail" align="right">1</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">11</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Establishes different phone number formats that the application may produce.<br />
-The key idea behind phone formats is to allow the application to be able to have<br />
-country/locality appropriate phone numbering formats.</p></td>
-                                    </tr>
-                                    <tr class="tbl even" valign="top">
-                                        <td class="detail"><a href="tables/enum_entity_types.html">enum_entity_types</a></td>
-                                        <td class="detail" align="right">1</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">13</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Identifies classes of actions that a user or external system may request of the application.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Establishes a customer relationship between an owning entity and its customer<br />
+entity.  This record, or its children, will define sales and receivables<br />
+behavior when the transaction entity is the owning entity.</p></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/mstr_country_address_format_assocs.html">mstr_country_address_format_assocs</a></td>
@@ -354,13 +341,24 @@ country/locality appropriate phone numbering formats.</p></td>
 allows recognizing an address format as the default format for the country.</p></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
-                                        <td class="detail"><a href="tables/enum_fiscal_year_states.html">enum_fiscal_year_states</a></td>
+                                        <td class="detail"><a href="tables/mstr_entity_workplace_places.html">mstr_entity_workplace_places</a></td>
                                         <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">13</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">10</td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Life-cycle management stages for fiscal year records.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Identifies a specific place as being a valid option for person addressing, such<br />
+as mailing, etc.</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/mstr_country_name_format_assocs.html">mstr_country_name_format_assocs</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">11</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Establishes relationships between name format records and country records and<br />
+allows recognizing a name format as the default format for the country.</p></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/mstr_entity_person_roles.html">mstr_entity_person_roles</a></td>
@@ -377,28 +375,15 @@ should the relationships not be containable in a single attribute describing the
 role.</p></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
-                                        <td class="detail"><a href="tables/enum_person_contact_roles.html">enum_person_contact_roles</a></td>
-                                        <td class="detail" align="right">1</td>
+                                        <td class="detail"><a href="tables/mstr_entity_staffing_entities.html">mstr_entity_staffing_entities</a></td>
                                         <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">13</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Defines the role that a contact information record may fulfill with a given<br />
-person.  This could be mailing address, mobile phone contact, primary email,<br />
-etc.</p></td>
-                                    </tr>
-                                    <tr class="tbl even" valign="top">
-                                        <td class="detail"><a href="tables/conf_address_formats.html">conf_address_formats</a></td>
-                                        <td class="detail" align="right">1</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">11</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">10</td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Establishes different addressing formats that the application may produce.  The<br />
-key idea behind address formats is to allow the application to be able to have<br />
-country/locality appropriate address formats.  While there are some techniques<br />
-for generalizing address formats, such generalizing usually just encourages<br />
-breaks with any standard.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Establishes an employee or contractor relationship between an owning entity and<br />
+its employee entity.  This record, or its children, will define the employee<br />
+behavior when the transaction entity is the owning entity.</p></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/mstr_entity_inventory_places.html">mstr_entity_inventory_places</a></td>
@@ -409,184 +394,6 @@ breaks with any standard.</p></td>
                                         <td class="detail" align="right">Table</td>
                                         <td class="comment detail" style="display: table-cell;"><p>Establishes one or more inventory relationships between a managed entity and a<br />
 place.</p></td>
-                                    </tr>
-                                    <tr class="tbl even" valign="top">
-                                        <td class="detail"><a href="tables/enum_entity_person_roles.html">enum_entity_person_roles</a></td>
-                                        <td class="detail" align="right">1</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">14</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Defines the various roles which a person may assume on behalf of a given entity.</p></td>
-                                    </tr>
-                                    <tr class="tbl even" valign="top">
-                                        <td class="detail"><a href="tables/enum_contact_states.html">enum_contact_states</a></td>
-                                        <td class="detail" align="right">1</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">13</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Establishes the available life-cycle states for contact information.</p></td>
-                                    </tr>
-                                    <tr class="tbl even" valign="top">
-                                        <td class="detail"><a href="tables/enum_address_states.html">enum_address_states</a></td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">13</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Defines the life-cycle states for addresses in the system.</p></td>
-                                    </tr>
-                                    <tr class="tbl even" valign="top">
-                                        <td class="detail"><a href="tables/mstr_country_phone_format_assocs.html">mstr_country_phone_format_assocs</a></td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">2</td>
-                                        <td class="detail" align="right">11</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Establishes relationships between phone format records and country records and<br />
-allows recognizing an phone format as the default format for the country.</p></td>
-                                    </tr>
-                                    <tr class="tbl even" valign="top">
-                                        <td class="detail"><a href="tables/mstr_places.html">mstr_places</a></td>
-                                        <td class="detail" align="right">4</td>
-                                        <td class="detail" align="right">3</td>
-                                        <td class="detail" align="right">14</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>places are system representations of real world buildings, such as office<br />
-buildings, warehouses, factories, or sales centers.  Note that a place may be<br />
-associated with multiple addresses which can be assigned roles for different<br />
-purposes.</p></td>
-                                    </tr>
-                                    <tr class="tbl even" valign="top">
-                                        <td class="detail"><a href="tables/enum_entity_states.html">enum_entity_states</a></td>
-                                        <td class="detail" align="right">1</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">13</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Lifecycle management stages for business entities.</p></td>
-                                    </tr>
-                                    <tr class="tbl even" valign="top">
-                                        <td class="detail"><a href="tables/mstr_entities.html">mstr_entities</a></td>
-                                        <td class="detail" align="right">17</td>
-                                        <td class="detail" align="right">3</td>
-                                        <td class="detail" align="right">14</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Master list of legal entities with whom the business interacts.  All legal<br />
-entities are represented by this table, including the business using this<br />
-application itself.  The information stored in this record represents general<br />
-information about the entity that is broadly applicable in all contexts which<br />
-might use the entity.</p></td>
-                                    </tr>
-                                    <tr class="tbl even" valign="top">
-                                        <td class="detail"><a href="tables/enum_contact_types.html">enum_contact_types</a></td>
-                                        <td class="detail" align="right">1</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">14</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Identifies the available types of contact that may be associated with a person,<br />
-entity, or place.</p></td>
-                                    </tr>
-                                    <tr class="tbl even" valign="top">
-                                        <td class="detail"><a href="tables/enum_place_types.html">enum_place_types</a></td>
-                                        <td class="detail" align="right">1</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">13</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Establishes the different ki</p></td>
-                                    </tr>
-                                    <tr class="tbl even" valign="top">
-                                        <td class="detail"><a href="tables/mstr_entity_selling_entities.html">mstr_entity_selling_entities</a></td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">2</td>
-                                        <td class="detail" align="right">10</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Establishes a customer relationship between an owning entity and its customer<br />
-entity.  This record, or its children, will define sales and receivables<br />
-behavior when the transaction entity is the owning entity.</p></td>
-                                    </tr>
-                                    <tr class="tbl even" valign="top">
-                                        <td class="detail"><a href="tables/conf_global_settings.html">conf_global_settings</a></td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">22</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Configurations for controlling application behaviors via options.</p></td>
-                                    </tr>
-                                    <tr class="tbl even" valign="top">
-                                        <td class="detail"><a href="tables/mstr_entity_workplace_places.html">mstr_entity_workplace_places</a></td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">2</td>
-                                        <td class="detail" align="right">10</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Identifies a specific place as being a valid option for person addressing, such<br />
-as mailing, etc.</p></td>
-                                    </tr>
-                                    <tr class="tbl even" valign="top">
-                                        <td class="detail"><a href="tables/enum_fiscal_period_states.html">enum_fiscal_period_states</a></td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">13</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Life-cycle management states which govern fiscal periods.</p></td>
-                                    </tr>
-                                    <tr class="tbl even" valign="top">
-                                        <td class="detail"><a href="tables/mstr_country_name_format_assocs.html">mstr_country_name_format_assocs</a></td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">2</td>
-                                        <td class="detail" align="right">11</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Establishes relationships between name format records and country records and<br />
-allows recognizing a name format as the default format for the country.</p></td>
-                                    </tr>
-                                    <tr class="tbl even" valign="top">
-                                        <td class="detail"><a href="tables/enum_place_address_roles.html">enum_place_address_roles</a></td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">13</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Established the roles which an address may assume related to a parent place.</p></td>
-                                    </tr>
-                                    <tr class="tbl even" valign="top">
-                                        <td class="detail"><a href="tables/enum_place_states.html">enum_place_states</a></td>
-                                        <td class="detail" align="right">1</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">13</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Defines the available states which govern the place life-cycle and<br />
-establishes what capabilities are supported in such states by default.</p></td>
-                                    </tr>
-                                    <tr class="tbl even" valign="top">
-                                        <td class="detail"><a href="tables/enum_person_types.html">enum_person_types</a></td>
-                                        <td class="detail" align="right">1</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">14</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>A list of the various types of entities may be represented by a person.</p></td>
-                                    </tr>
-                                    <tr class="tbl even" valign="top">
-                                        <td class="detail"><a href="tables/mstr_entity_staffing_entities.html">mstr_entity_staffing_entities</a></td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">2</td>
-                                        <td class="detail" align="right">10</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Establishes an employee or contractor relationship between an owning entity and<br />
-its employee entity.  This record, or its children, will define the employee<br />
-behavior when the transaction entity is the owning entity.</p></td>
                                     </tr>
                             </table>
                         </div>

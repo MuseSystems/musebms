@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>mstr_contacts - msbms_dev Database</title>
+        <title>mstr_contacts - instance_doc Database</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../../index.html" class="navbar-brand"><b>msbms_dev</b> Database</a>
+                            <a href="../../index.html" class="navbar-brand"><b>instance_doc</b> Database</a>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -240,7 +240,7 @@ uniqueness is less of a concern than specific end user presentation.</p></td>
                                     <td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
-                                                <td title="mstr_contacts.contact_type_id references enum_contact_types.id via mstr_contacts_contact_types_fk"><a href='enum_contact_types.html'>enum_contact_types</a><span class='relatedKey'>.id</span></td>
+                                                <td title="mstr_contacts.contact_type_id references msbms_syst_data.syst_enum_values.id via mstr_contacts_contact_types_fk"><a href='../../msbms_syst_data/tables/syst_enum_values.html'>syst_enum_values</a><span class='relatedKey'>.id</span></td>
                                                 <td class="constraint detail">mstr_contacts_contact_types_fk<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
@@ -264,7 +264,7 @@ and indicates the data processing rules to apply.</p></td>
                                     <td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
-                                                <td title="mstr_contacts.contact_state_id references enum_contact_states.id via mstr_contacts_contact_states_fk"><a href='enum_contact_states.html'>enum_contact_states</a><span class='relatedKey'>.id</span></td>
+                                                <td title="mstr_contacts.contact_state_id references msbms_syst_data.syst_enum_values.id via mstr_contacts_contact_states_fk"><a href='../../msbms_syst_data/tables/syst_enum_values.html'>syst_enum_values</a><span class='relatedKey'>.id</span></td>
                                                 <td class="constraint detail">mstr_contacts_contact_states_fk<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
@@ -505,35 +505,30 @@ diag_row_version - 1.</p></td>
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="mstr_contacts.html" target="_top" title="mstr_contacts" alt="" coords="329,137,745,676">
-<area shape="rect" id="node2" href="enum_contact_states.html" target="_top" title="enum_contact_states" alt="" coords="5,480,285,656">
-<area shape="rect" id="node3" href="enum_contact_types.html" target="_top" title="enum_contact_types" alt="" coords="5,287,285,463">
-<area shape="rect" id="node4" href="mstr_entities.html" target="_top" title="mstr_entities" alt="" coords="5,5,285,269">
-<area shape="rect" id="node5" href="mstr_person_contact_roles.html" target="_top" title="mstr_person_contact_roles" alt="" coords="789,23,1103,257">
+<area shape="rect" id="node1" href="mstr_contacts.html" target="_top" title="mstr_contacts" alt="" coords="761,176,1196,715">
+<area shape="rect" id="node2" href="../msbms_syst_data/tables/syst_enum_values.html" target="_top" title="msbms_syst_data.syst_enum_values" alt="" coords="5,264,393,352">
+<area shape="rect" id="node3" href="mstr_entities.html" target="_top" title="mstr_entities" alt="" coords="437,112,717,376">
+<area shape="rect" id="node4" href="mstr_person_contact_roles.html" target="_top" title="mstr_person_contact_roles" alt="" coords="1240,5,1548,240">
 </map>
                                         <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/mstr_contacts.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="twodegreesDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
-<area shape="rect" id="node1" href="mstr_contacts.html" target="_top" title="mstr_contacts" alt="" coords="591,923,1007,1461">
-<area shape="rect" id="node2" href="enum_contact_states.html" target="_top" title="enum_contact_states" alt="" coords="267,1183,547,1359">
-<area shape="rect" id="node3" href="enum_contact_types.html" target="_top" title="enum_contact_types" alt="" coords="267,989,547,1165">
-<area shape="rect" id="node4" href="mstr_entities.html" target="_top" title="mstr_entities" alt="" coords="267,391,547,655">
-<area shape="rect" id="node5" href="enum_entity_states.html" target="_top" title="enum_entity_states" alt="" coords="5,579,223,667">
-<area shape="rect" id="node6" href="enum_entity_types.html" target="_top" title="enum_entity_types" alt="" coords="7,473,221,561">
-<area shape="rect" id="node7" href="mstr_entity_banking_entities.html" target="_top" title="mstr_entity_banking_entities" alt="" coords="657,499,940,587">
-<area shape="rect" id="node8" href="mstr_entity_fulfillment_places.html" target="_top" title="mstr_entity_fulfillment_places" alt="" coords="1079,111,1370,199">
-<area shape="rect" id="node9" href="mstr_places.html" target="_top" title="mstr_places" alt="" coords="716,288,881,376">
-<area shape="rect" id="node10" href="mstr_entity_inventory_places.html" target="_top" title="mstr_entity_inventory_places" alt="" coords="1081,252,1368,340">
-<area shape="rect" id="node11" href="mstr_entity_person_roles.html" target="_top" title="mstr_entity_person_roles" alt="" coords="1095,571,1355,659">
-<area shape="rect" id="node12" href="mstr_persons.html" target="_top" title="mstr_persons" alt="" coords="710,712,887,800">
-<area shape="rect" id="node13" href="mstr_entity_purchasing_entities.html" target="_top" title="mstr_entity_purchasing_entities" alt="" coords="646,147,951,235">
-<area shape="rect" id="node14" href="mstr_entity_selling_entities.html" target="_top" title="mstr_entity_selling_entities" alt="" coords="662,393,935,481">
-<area shape="rect" id="node15" href="mstr_entity_staffing_entities.html" target="_top" title="mstr_entity_staffing_entities" alt="" coords="659,5,939,93">
-<area shape="rect" id="node16" href="mstr_entity_workplace_places.html" target="_top" title="mstr_entity_workplace_places" alt="" coords="1079,393,1371,481">
-<area shape="rect" id="node17" href="mstr_person_contact_roles.html" target="_top" title="mstr_person_contact_roles" alt="" coords="1068,781,1381,1016">
-<area shape="rect" id="node18" href="enum_person_contact_roles.html" target="_top" title="enum_person_contact_roles" alt="" coords="659,817,939,905">
-<area shape="rect" id="node19" href="../msbms_syst_data/tables/syst_person_logins.html" target="_top" title="msbms_syst_data.syst_person_logins" alt="" coords="1051,676,1399,764">
+<area shape="rect" id="node1" href="mstr_contacts.html" target="_top" title="mstr_contacts" alt="" coords="761,792,1196,1331">
+<area shape="rect" id="node2" href="../msbms_syst_data/tables/syst_enum_values.html" target="_top" title="msbms_syst_data.syst_enum_values" alt="" coords="5,691,393,779">
+<area shape="rect" id="node3" href="mstr_entities.html" target="_top" title="mstr_entities" alt="" coords="437,403,717,667">
+<area shape="rect" id="node4" href="mstr_entity_banking_entities.html" target="_top" title="mstr_entity_banking_entities" alt="" coords="815,579,1142,667">
+<area shape="rect" id="node5" href="mstr_entity_fulfillment_places.html" target="_top" title="mstr_entity_fulfillment_places" alt="" coords="1270,312,1605,400">
+<area shape="rect" id="node6" href="mstr_places.html" target="_top" title="mstr_places" alt="" coords="885,85,1073,173">
+<area shape="rect" id="node7" href="mstr_entity_inventory_places.html" target="_top" title="mstr_entity_inventory_places" alt="" coords="1272,21,1603,109">
+<area shape="rect" id="node8" href="mstr_entity_person_roles.html" target="_top" title="mstr_entity_person_roles" alt="" coords="1290,1348,1585,1436">
+<area shape="rect" id="node9" href="mstr_persons.html" target="_top" title="mstr_persons" alt="" coords="879,1348,1079,1436">
+<area shape="rect" id="node10" href="mstr_entity_purchasing_entities.html" target="_top" title="mstr_entity_purchasing_entities" alt="" coords="803,227,1154,315">
+<area shape="rect" id="node11" href="mstr_entity_selling_entities.html" target="_top" title="mstr_entity_selling_entities" alt="" coords="821,332,1136,420">
+<area shape="rect" id="node12" href="mstr_entity_staffing_entities.html" target="_top" title="mstr_entity_staffing_entities" alt="" coords="817,473,1140,561">
+<area shape="rect" id="node13" href="mstr_entity_workplace_places.html" target="_top" title="mstr_entity_workplace_places" alt="" coords="1269,136,1605,224">
+<area shape="rect" id="node14" href="mstr_person_contact_roles.html" target="_top" title="mstr_person_contact_roles" alt="" coords="1283,631,1591,865">
+<area shape="rect" id="node15" href="../msbms_syst_data/tables/syst_person_logins.html" target="_top" title="msbms_syst_data.syst_person_logins" alt="" coords="1240,1085,1635,1173">
 </map>
                                         <a name='diagram'><img id="twodegreesDegreeImg" src="../diagrams/tables/mstr_contacts.2degrees.png" usemap="#twoDegreesRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>

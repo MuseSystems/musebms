@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>msbms_dev Database</title>
+        <title>instance_doc Database</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../index.html" class="navbar-brand"><b>msbms_dev</b> Database</a>
+                            <a href="../index.html" class="navbar-brand"><b>instance_doc</b> Database</a>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -80,7 +80,7 @@
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <i class="ion ion-key"></i>
-                            <h3 class="box-title">13 Foreign Key Constraints</h3>
+                            <h3 class="box-title">25 Foreign Key Constraints</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -98,72 +98,144 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>syst_features_syst_module_fk</td>
+                                        <td>syst_numbering_sequence_values_numbering_sequences_fk</td>
                                         <td>
                                             <table border='0' cellspacing='0' cellpadding='0'>
                                                 <tr>
-                                                    <td><a href='tables/syst_features.html'>syst_features</a><span>.syst_module_id</span></td>
+                                                    <td><a href='tables/syst_numbering_sequence_values.html'>syst_numbering_sequence_values</a><span>.id</span></td>
                                                 </tr>
                                             </table>
                                         </td>
                                         <td>
                                             <table border='0' cellspacing='0' cellpadding='0'>
                                                 <tr>
-                                                    <td><a href='tables/syst_features.html'>syst_features</a><span>.id</span></td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>syst_features_syst_feature_type_fk</td>
-                                        <td>
-                                            <table border='0' cellspacing='0' cellpadding='0'>
-                                                <tr>
-                                                    <td><a href='tables/syst_features.html'>syst_features</a><span>.syst_feature_type_id</span></td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td>
-                                            <table border='0' cellspacing='0' cellpadding='0'>
-                                                <tr>
-                                                    <td><a href='tables/syst_feature_types.html'>syst_feature_types</a><span>.id</span></td>
+                                                    <td><a href='tables/syst_numbering_sequences.html'>syst_numbering_sequences</a><span>.id</span></td>
                                                 </tr>
                                             </table>
                                         </td>
                                         <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
                                     </tr>
                                     <tr>
-                                        <td>syst_relations_feature_type_fk</td>
+                                        <td>syst_numbering_segments_enums_fk</td>
                                         <td>
                                             <table border='0' cellspacing='0' cellpadding='0'>
                                                 <tr>
-                                                    <td><a href='tables/syst_relations.html'>syst_relations</a><span>.feature_type_id</span></td>
+                                                    <td><a href='tables/syst_numbering_segments.html'>syst_numbering_segments</a><span>.enum_id</span></td>
                                                 </tr>
                                             </table>
                                         </td>
                                         <td>
                                             <table border='0' cellspacing='0' cellpadding='0'>
                                                 <tr>
-                                                    <td><a href='tables/syst_feature_types.html'>syst_feature_types</a><span>.id</span></td>
+                                                    <td><a href='tables/syst_enums.html'>syst_enums</a><span>.id</span></td>
                                                 </tr>
                                             </table>
                                         </td>
                                         <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
                                     </tr>
                                     <tr>
-                                        <td>syst_feature_relation_assigns_feature_fk</td>
+                                        <td>syst_numbering_segments_numberings_fk</td>
                                         <td>
                                             <table border='0' cellspacing='0' cellpadding='0'>
                                                 <tr>
-                                                    <td><a href='tables/syst_feature_relation_assigns.html'>syst_feature_relation_assigns</a><span>.feature_id</span></td>
+                                                    <td><a href='tables/syst_numbering_segments.html'>syst_numbering_segments</a><span>.numbering_id</span></td>
                                                 </tr>
                                             </table>
                                         </td>
                                         <td>
                                             <table border='0' cellspacing='0' cellpadding='0'>
                                                 <tr>
-                                                    <td><a href='tables/syst_features.html'>syst_features</a><span>.id</span></td>
+                                                    <td><a href='tables/syst_numberings.html'>syst_numberings</a><span>.id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td><span title='Cascade on delete:&#10;Deletion of parent deletes child'>Cascade on delete</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>syst_numbering_segments_numbering_sequences_fk</td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/syst_numbering_segments.html'>syst_numbering_segments</a><span>.numbering_sequence_id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/syst_numbering_sequences.html'>syst_numbering_sequences</a><span>.id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>syst_numbering_segments_numbering_segment_types_fk</td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/syst_numbering_segments.html'>syst_numbering_segments</a><span>.numbering_segment_type_id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/syst_numbering_segment_types.html'>syst_numbering_segment_types</a><span>.id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>syst_feature_enum_assigns_enum_fk</td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/syst_feature_enum_assigns.html'>syst_feature_enum_assigns</a><span>.enum_id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/syst_enums.html'>syst_enums</a><span>.id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>syst_feature_enum_assigns_feature_map_fk</td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/syst_feature_enum_assigns.html'>syst_feature_enum_assigns</a><span>.feature_map_id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/syst_feature_map.html'>syst_feature_map</a><span>.id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>syst_numberings_feature_fk</td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/syst_numberings.html'>syst_numberings</a><span>.feature_id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/syst_feature_map.html'>syst_feature_map</a><span>.id</span></td>
                                                 </tr>
                                             </table>
                                         </td>
@@ -188,54 +260,180 @@
                                         <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
                                     </tr>
                                     <tr>
-                                        <td>syst_login_authenticators_enum_authentication_type_fk</td>
+                                        <td>syst_feature_relation_assigns_feature_map_fk</td>
                                         <td>
                                             <table border='0' cellspacing='0' cellpadding='0'>
                                                 <tr>
-                                                    <td><a href='tables/syst_login_authenticators.html'>syst_login_authenticators</a><span>.enum_authentication_type_id</span></td>
+                                                    <td><a href='tables/syst_feature_relation_assigns.html'>syst_feature_relation_assigns</a><span>.feature_map_id</span></td>
                                                 </tr>
                                             </table>
                                         </td>
                                         <td>
                                             <table border='0' cellspacing='0' cellpadding='0'>
                                                 <tr>
-                                                    <td><a href='tables/enum_authentication_types.html'>enum_authentication_types</a><span>.id</span></td>
+                                                    <td><a href='tables/syst_feature_map.html'>syst_feature_map</a><span>.id</span></td>
                                                 </tr>
                                             </table>
                                         </td>
                                         <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
                                     </tr>
                                     <tr>
-                                        <td>syst_login_authenticators_syst_person_login_fk</td>
+                                        <td>syst_feature_setting_assigns_feature_map_fk</td>
                                         <td>
                                             <table border='0' cellspacing='0' cellpadding='0'>
                                                 <tr>
-                                                    <td><a href='tables/syst_login_authenticators.html'>syst_login_authenticators</a><span>.syst_person_login_id</span></td>
+                                                    <td><a href='tables/syst_feature_setting_assigns.html'>syst_feature_setting_assigns</a><span>.feature_map_id</span></td>
                                                 </tr>
                                             </table>
                                         </td>
                                         <td>
                                             <table border='0' cellspacing='0' cellpadding='0'>
                                                 <tr>
-                                                    <td><a href='tables/syst_person_logins.html'>syst_person_logins</a><span>.id</span></td>
+                                                    <td><a href='tables/syst_feature_map.html'>syst_feature_map</a><span>.id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>syst_feature_setting_assigns_setting_fk</td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/syst_feature_setting_assigns.html'>syst_feature_setting_assigns</a><span>.setting_id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/syst_settings.html'>syst_settings</a><span>.id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>syst_enums_feature_fk</td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/syst_enums.html'>syst_enums</a><span>.feature_id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/syst_feature_map.html'>syst_feature_map</a><span>.id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>syst_enum_values_enum_functional_type_fk</td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/syst_enum_values.html'>syst_enum_values</a><span>.functional_type_id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/syst_enum_functional_types.html'>syst_enum_functional_types</a><span>.id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>syst_enum_values_enum_fk</td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/syst_enum_values.html'>syst_enum_values</a><span>.enum_id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/syst_enums.html'>syst_enums</a><span>.id</span></td>
                                                 </tr>
                                             </table>
                                         </td>
                                         <td><span title='Cascade on delete:&#10;Deletion of parent deletes child'>Cascade on delete</span></td>
                                     </tr>
                                     <tr>
-                                        <td>syst_person_logins_enum_login_state_fk</td>
+                                        <td>syst_complex_formats_feature_fk</td>
                                         <td>
                                             <table border='0' cellspacing='0' cellpadding='0'>
                                                 <tr>
-                                                    <td><a href='tables/syst_person_logins.html'>syst_person_logins</a><span>.enum_login_state_id</span></td>
+                                                    <td><a href='tables/syst_complex_formats.html'>syst_complex_formats</a><span>.feature_id</span></td>
                                                 </tr>
                                             </table>
                                         </td>
                                         <td>
                                             <table border='0' cellspacing='0' cellpadding='0'>
                                                 <tr>
-                                                    <td><a href='tables/enum_login_states.html'>enum_login_states</a><span>.id</span></td>
+                                                    <td><a href='tables/syst_feature_map.html'>syst_feature_map</a><span>.id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>syst_feature_map_feature_map_levels_fk</td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/syst_feature_map.html'>syst_feature_map</a><span>.feature_map_level_id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/syst_feature_map_levels.html'>syst_feature_map_levels</a><span>.id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>syst_feature_map_feature_map_fk</td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/syst_feature_map.html'>syst_feature_map</a><span>.parent_feature_map_id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/syst_feature_map.html'>syst_feature_map</a><span>.id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>Restrict delete</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>syst_person_logins_enum_login_state_fk</td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/syst_person_logins.html'>syst_person_logins</a><span>.login_state_id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/syst_enum_values.html'>syst_enum_values</a><span>.id</span></td>
                                                 </tr>
                                             </table>
                                         </td>
@@ -260,24 +458,6 @@
                                         <td><span title='Cascade on delete:&#10;Deletion of parent deletes child'>Cascade on delete</span></td>
                                     </tr>
                                     <tr>
-                                        <td>syst_person_logins_proxy_for_syst_person_login_fk</td>
-                                        <td>
-                                            <table border='0' cellspacing='0' cellpadding='0'>
-                                                <tr>
-                                                    <td><a href='tables/syst_person_logins.html'>syst_person_logins</a><span>.proxy_for_syst_person_login_id</span></td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td>
-                                            <table border='0' cellspacing='0' cellpadding='0'>
-                                                <tr>
-                                                    <td><a href='tables/syst_person_logins.html'>syst_person_logins</a><span>.id</span></td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td><span title='Cascade on delete:&#10;Deletion of parent deletes child'>Cascade on delete</span></td>
-                                    </tr>
-                                    <tr>
                                         <td>syst_person_logins_owning_entity_fk</td>
                                         <td>
                                             <table border='0' cellspacing='0' cellpadding='0'>
@@ -296,6 +476,42 @@
                                         <td><span title='Cascade on delete:&#10;Deletion of parent deletes child'>Cascade on delete</span></td>
                                     </tr>
                                     <tr>
+                                        <td>syst_complex_format_values_complex_format_fk</td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/syst_complex_format_values.html'>syst_complex_format_values</a><span>.complex_format_id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/syst_complex_formats.html'>syst_complex_formats</a><span>.id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td><span title='Cascade on delete:&#10;Deletion of parent deletes child'>Cascade on delete</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>syst_enum_functional_types_enum_fk</td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/syst_enum_functional_types.html'>syst_enum_functional_types</a><span>.enum_id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table border='0' cellspacing='0' cellpadding='0'>
+                                                <tr>
+                                                    <td><a href='tables/syst_enums.html'>syst_enums</a><span>.id</span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td><span title='Cascade on delete:&#10;Deletion of parent deletes child'>Cascade on delete</span></td>
+                                    </tr>
+                                    <tr>
                                         <td>syst_interaction_logs_interaction_types_fk</td>
                                         <td>
                                             <table border='0' cellspacing='0' cellpadding='0'>
@@ -307,7 +523,7 @@
                                         <td>
                                             <table border='0' cellspacing='0' cellpadding='0'>
                                                 <tr>
-                                                    <td><a href='tables/enum_interaction_types.html'>enum_interaction_types</a><span>.id</span></td>
+                                                    <td><a href='tables/syst_enum_values.html'>syst_enum_values</a><span>.id</span></td>
                                                 </tr>
                                             </table>
                                         </td>
@@ -325,7 +541,7 @@
                                         <td>
                                             <table border='0' cellspacing='0' cellpadding='0'>
                                                 <tr>
-                                                    <td><a href='tables/enum_interface_types.html'>enum_interface_types</a><span>.id</span></td>
+                                                    <td><a href='tables/syst_enum_values.html'>syst_enum_values</a><span>.id</span></td>
                                                 </tr>
                                             </table>
                                         </td>
@@ -355,19 +571,44 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><a href='tables/syst_feature_types.html'>syst_feature_types</a></td>
-                                        <td>feature_group_chk</td>
-                                        <td>((feature_group = ANY (ARRAY[&#39;document&#39;::text, &#39;operation&#39;::text, &#39;relation&#39;::text])))</td>
+                                        <td><a href='tables/syst_numbering_sequences.html'>syst_numbering_sequences</a></td>
+                                        <td>syst_numbering_segments_numeric_representation_type_chk</td>
+                                        <td>((style_type = ANY (ARRAY[&#39;base10&#39;::text, &#39;base36&#39;::text, &#39;obfuscated_base36&#39;::text, &#39;alpha_base26&#39;::text])))</td>
                                     </tr>
                                     <tr>
-                                        <td><a href='tables/syst_feature_types.html'>syst_feature_types</a></td>
-                                        <td>functional_type_chk</td>
-                                        <td>((functional_type = ANY (ARRAY[&#39;master&#39;::text, &#39;support&#39;::text, &#39;nonbooking&#39;::text, &#39;booking&#39;::text, &#39;maintenance&#39;::text])))</td>
+                                        <td><a href='tables/syst_numbering_sequences.html'>syst_numbering_sequences</a></td>
+                                        <td>syst_numbering_segments_sequence_cycle_policy_chk</td>
+                                        <td>((cycle_policy = ANY (ARRAY[&#39;cycle&#39;::text, &#39;error&#39;::text])))</td>
                                     </tr>
                                     <tr>
-                                        <td><a href='tables/enum_authentication_types.html'>enum_authentication_types</a></td>
-                                        <td>enum_authentication_types_functional_type_chk</td>
-                                        <td>((functional_type = ANY (ARRAY[&#39;primary&#39;::text, &#39;secondary&#39;::text, &#39;single_use&#39;::text])))</td>
+                                        <td><a href='tables/syst_numbering_sequences.html'>syst_numbering_sequences</a></td>
+                                        <td>syst_numbering_sequences_value_increment_validation_chk</td>
+                                        <td>((sign((value_increment)::double precision) &lt;&gt; (0)::double precision))</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href='tables/syst_numbering_segments.html'>syst_numbering_segments</a></td>
+                                        <td>syst_numbering_segments_display_length_validation_chk</td>
+                                        <td>((display_length &gt;= 0))</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href='tables/syst_numbering_segments.html'>syst_numbering_segments</a></td>
+                                        <td>syst_numbering_segments_fixed_text_validation_chk</td>
+                                        <td>(((fixed_text IS NULL) OR (length(fixed_text) &lt;= display_length)))</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href='tables/syst_numbering_segments.html'>syst_numbering_segments</a></td>
+                                        <td>syst_numbering_segments_padding_side_validation_chk</td>
+                                        <td>(((NOT use_padding) OR ((padding_side IS NOT NULL) AND (padding_side = ANY (ARRAY[&#39;start&#39;::text, &#39;end&#39;::text])))))</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href='tables/syst_numbering_segments.html'>syst_numbering_segments</a></td>
+                                        <td>syst_numbering_segments_padding_text_validation_chk</td>
+                                        <td>(((NOT use_padding) OR (padding_text IS NOT NULL)))</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href='tables/syst_feature_map_levels.html'>syst_feature_map_levels</a></td>
+                                        <td>syst_feature_map_levels_functional_type_chk</td>
+                                        <td>((functional_type = ANY (ARRAY[&#39;assignable&#39;::text, &#39;nonassignable&#39;::text])))</td>
                                     </tr>
                                 </tbody>
                             </table>

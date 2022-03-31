@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>mstr_entities - msbms_dev Database</title>
+        <title>mstr_entities - instance_doc Database</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../../index.html" class="navbar-brand"><b>msbms_dev</b> Database</a>
+                            <a href="../../index.html" class="navbar-brand"><b>instance_doc</b> Database</a>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -137,52 +137,52 @@ might use the entity.</p>
                                                 <td class="constraint detail">mstr_entities_entities_fk<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                             <tr>
-                                                <td title="mstr_entity_banking_entities.entity_id references mstr_entities.id via mstr_entity_banking_entities_entity_id_fk"><a href='mstr_entity_banking_entities.html'>mstr_entity_banking_entities</a><span class='relatedKey'>.entity_id</span></td>
-                                                <td class="constraint detail">mstr_entity_banking_entities_entity_id_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
+                                                <td title="mstr_entity_banking_entities.entity_id references mstr_entities.id via mstr_entity_banking_entities_entity_fk"><a href='mstr_entity_banking_entities.html'>mstr_entity_banking_entities</a><span class='relatedKey'>.entity_id</span></td>
+                                                <td class="constraint detail">mstr_entity_banking_entities_entity_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
                                             </tr>
                                             <tr>
-                                                <td title="mstr_entity_banking_entities.owning_entity_id references mstr_entities.id via mstr_entity_banking_entities_owning_entity_id_fk"><a href='mstr_entity_banking_entities.html'>mstr_entity_banking_entities</a><span class='relatedKey'>.owning_entity_id</span></td>
-                                                <td class="constraint detail">mstr_entity_banking_entities_owning_entity_id_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
+                                                <td title="mstr_entity_banking_entities.owning_entity_id references mstr_entities.id via mstr_entity_banking_entities_owning_entity_fk"><a href='mstr_entity_banking_entities.html'>mstr_entity_banking_entities</a><span class='relatedKey'>.owning_entity_id</span></td>
+                                                <td class="constraint detail">mstr_entity_banking_entities_owning_entity_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
                                             </tr>
                                             <tr>
-                                                <td title="mstr_entity_fulfillment_places.owning_entity_id references mstr_entities.id via mstr_entity_fulfillment_places_entity_id_fk"><a href='mstr_entity_fulfillment_places.html'>mstr_entity_fulfillment_places</a><span class='relatedKey'>.owning_entity_id</span></td>
-                                                <td class="constraint detail">mstr_entity_fulfillment_places_entity_id_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
+                                                <td title="mstr_entity_fulfillment_places.owning_entity_id references mstr_entities.id via mstr_entity_fulfillment_places_entity_fk"><a href='mstr_entity_fulfillment_places.html'>mstr_entity_fulfillment_places</a><span class='relatedKey'>.owning_entity_id</span></td>
+                                                <td class="constraint detail">mstr_entity_fulfillment_places_entity_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
                                             </tr>
                                             <tr>
-                                                <td title="mstr_entity_inventory_places.owning_entity_id references mstr_entities.id via mstr_entity_inventory_places_owning_entity_id_fk"><a href='mstr_entity_inventory_places.html'>mstr_entity_inventory_places</a><span class='relatedKey'>.owning_entity_id</span></td>
-                                                <td class="constraint detail">mstr_entity_inventory_places_owning_entity_id_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
+                                                <td title="mstr_entity_inventory_places.owning_entity_id references mstr_entities.id via mstr_entity_inventory_places_owning_entity_fk"><a href='mstr_entity_inventory_places.html'>mstr_entity_inventory_places</a><span class='relatedKey'>.owning_entity_id</span></td>
+                                                <td class="constraint detail">mstr_entity_inventory_places_owning_entity_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
                                             </tr>
                                             <tr>
                                                 <td title="mstr_entity_person_roles.entity_id references mstr_entities.id via mstr_entity_person_roles_entity_fk"><a href='mstr_entity_person_roles.html'>mstr_entity_person_roles</a><span class='relatedKey'>.entity_id</span></td>
                                                 <td class="constraint detail">mstr_entity_person_roles_entity_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
                                             </tr>
                                             <tr>
-                                                <td title="mstr_entity_purchasing_entities.entity_id references mstr_entities.id via mstr_entity_purchasing_entities_entity_id_fk"><a href='mstr_entity_purchasing_entities.html'>mstr_entity_purchasing_entities</a><span class='relatedKey'>.entity_id</span></td>
-                                                <td class="constraint detail">mstr_entity_purchasing_entities_entity_id_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
+                                                <td title="mstr_entity_purchasing_entities.entity_id references mstr_entities.id via mstr_entity_purchasing_entities_entity_fk"><a href='mstr_entity_purchasing_entities.html'>mstr_entity_purchasing_entities</a><span class='relatedKey'>.entity_id</span></td>
+                                                <td class="constraint detail">mstr_entity_purchasing_entities_entity_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
                                             </tr>
                                             <tr>
-                                                <td title="mstr_entity_purchasing_entities.owning_entity_id references mstr_entities.id via mstr_entity_purchasing_entities_owning_entity_id_fk"><a href='mstr_entity_purchasing_entities.html'>mstr_entity_purchasing_entities</a><span class='relatedKey'>.owning_entity_id</span></td>
-                                                <td class="constraint detail">mstr_entity_purchasing_entities_owning_entity_id_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
+                                                <td title="mstr_entity_purchasing_entities.owning_entity_id references mstr_entities.id via mstr_entity_purchasing_entities_owning_entity_fk"><a href='mstr_entity_purchasing_entities.html'>mstr_entity_purchasing_entities</a><span class='relatedKey'>.owning_entity_id</span></td>
+                                                <td class="constraint detail">mstr_entity_purchasing_entities_owning_entity_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
                                             </tr>
                                             <tr>
-                                                <td title="mstr_entity_selling_entities.entity_id references mstr_entities.id via mstr_entity_selling_entities_entity_id_fk"><a href='mstr_entity_selling_entities.html'>mstr_entity_selling_entities</a><span class='relatedKey'>.entity_id</span></td>
-                                                <td class="constraint detail">mstr_entity_selling_entities_entity_id_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
+                                                <td title="mstr_entity_selling_entities.entity_id references mstr_entities.id via mstr_entity_selling_entities_entity_fk"><a href='mstr_entity_selling_entities.html'>mstr_entity_selling_entities</a><span class='relatedKey'>.entity_id</span></td>
+                                                <td class="constraint detail">mstr_entity_selling_entities_entity_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
                                             </tr>
                                             <tr>
-                                                <td title="mstr_entity_selling_entities.owning_entity_id references mstr_entities.id via mstr_entity_selling_entities_owning_entity_id_fk"><a href='mstr_entity_selling_entities.html'>mstr_entity_selling_entities</a><span class='relatedKey'>.owning_entity_id</span></td>
-                                                <td class="constraint detail">mstr_entity_selling_entities_owning_entity_id_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
+                                                <td title="mstr_entity_selling_entities.owning_entity_id references mstr_entities.id via mstr_entity_selling_entities_owning_entity_fk"><a href='mstr_entity_selling_entities.html'>mstr_entity_selling_entities</a><span class='relatedKey'>.owning_entity_id</span></td>
+                                                <td class="constraint detail">mstr_entity_selling_entities_owning_entity_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
                                             </tr>
                                             <tr>
-                                                <td title="mstr_entity_staffing_entities.entity_id references mstr_entities.id via mstr_entity_staffing_entities_entity_id_fk"><a href='mstr_entity_staffing_entities.html'>mstr_entity_staffing_entities</a><span class='relatedKey'>.entity_id</span></td>
-                                                <td class="constraint detail">mstr_entity_staffing_entities_entity_id_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
+                                                <td title="mstr_entity_staffing_entities.entity_id references mstr_entities.id via mstr_entity_staffing_entities_entity_fk"><a href='mstr_entity_staffing_entities.html'>mstr_entity_staffing_entities</a><span class='relatedKey'>.entity_id</span></td>
+                                                <td class="constraint detail">mstr_entity_staffing_entities_entity_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
                                             </tr>
                                             <tr>
-                                                <td title="mstr_entity_staffing_entities.owning_entity_id references mstr_entities.id via mstr_entity_staffing_entities_owning_entity_id_fk"><a href='mstr_entity_staffing_entities.html'>mstr_entity_staffing_entities</a><span class='relatedKey'>.owning_entity_id</span></td>
-                                                <td class="constraint detail">mstr_entity_staffing_entities_owning_entity_id_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
+                                                <td title="mstr_entity_staffing_entities.owning_entity_id references mstr_entities.id via mstr_entity_staffing_entities_owning_entity_fk"><a href='mstr_entity_staffing_entities.html'>mstr_entity_staffing_entities</a><span class='relatedKey'>.owning_entity_id</span></td>
+                                                <td class="constraint detail">mstr_entity_staffing_entities_owning_entity_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
                                             </tr>
                                             <tr>
-                                                <td title="mstr_entity_workplace_places.owning_entity_id references mstr_entities.id via mstr_entity_workplace_places_owning_entity_id_fk"><a href='mstr_entity_workplace_places.html'>mstr_entity_workplace_places</a><span class='relatedKey'>.owning_entity_id</span></td>
-                                                <td class="constraint detail">mstr_entity_workplace_places_owning_entity_id_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
+                                                <td title="mstr_entity_workplace_places.owning_entity_id references mstr_entities.id via mstr_entity_workplace_places_owning_entity_fk"><a href='mstr_entity_workplace_places.html'>mstr_entity_workplace_places</a><span class='relatedKey'>.owning_entity_id</span></td>
+                                                <td class="constraint detail">mstr_entity_workplace_places_owning_entity_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
                                             </tr>
                                             <tr>
                                                 <td title="mstr_persons.owning_entity_id references mstr_entities.id via mstr_persons_entities_fk"><a href='mstr_persons.html'>mstr_persons</a><span class='relatedKey'>.owning_entity_id</span></td>
@@ -305,7 +305,7 @@ entity.  Note that this is not a key value and has no UNIQUE enforcement.</p></t
                                     <td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
-                                                <td title="mstr_entities.entity_type_id references enum_entity_types.id via mstr_entities_entity_types_fk"><a href='enum_entity_types.html'>enum_entity_types</a><span class='relatedKey'>.id</span></td>
+                                                <td title="mstr_entities.entity_type_id references msbms_syst_data.syst_enum_values.id via mstr_entities_entity_types_fk"><a href='../../msbms_syst_data/tables/syst_enum_values.html'>syst_enum_values</a><span class='relatedKey'>.id</span></td>
                                                 <td class="constraint detail">mstr_entities_entity_types_fk<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
@@ -328,7 +328,7 @@ functionality is determined in part by the configuration of the selected type.</
                                     <td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
-                                                <td title="mstr_entities.entity_state_id references enum_entity_states.id via mstr_entities_entity_states_fk"><a href='enum_entity_states.html'>enum_entity_states</a><span class='relatedKey'>.id</span></td>
+                                                <td title="mstr_entities.entity_state_id references msbms_syst_data.syst_enum_values.id via mstr_entities_entity_states_fk"><a href='../../msbms_syst_data/tables/syst_enum_values.html'>syst_enum_values</a><span class='relatedKey'>.id</span></td>
                                                 <td class="constraint detail">mstr_entities_entity_states_fk<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
@@ -533,49 +533,40 @@ diag_row_version - 1.</p></td>
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="mstr_contacts.html" target="_top" title="mstr_contacts" alt="" coords="811,5,1091,269">
-<area shape="rect" id="node2" href="mstr_entities.html" target="_top" title="mstr_entities" alt="" coords="329,880,739,1360">
-<area shape="rect" id="node3" href="enum_entity_states.html" target="_top" title="enum_entity_states" alt="" coords="5,1140,285,1316">
-<area shape="rect" id="node4" href="enum_entity_types.html" target="_top" title="enum_entity_types" alt="" coords="5,947,285,1123">
-<area shape="rect" id="node5" href="mstr_entity_banking_entities.html" target="_top" title="mstr_entity_banking_entities" alt="" coords="797,287,1106,463">
-<area shape="rect" id="node6" href="mstr_entity_fulfillment_places.html" target="_top" title="mstr_entity_fulfillment_places" alt="" coords="1179,365,1497,541">
-<area shape="rect" id="node7" href="mstr_places.html" target="_top" title="mstr_places" alt="" coords="811,516,1091,780">
-<area shape="rect" id="node8" href="mstr_entity_inventory_places.html" target="_top" title="mstr_entity_inventory_places" alt="" coords="1182,559,1494,735">
-<area shape="rect" id="node9" href="mstr_entity_person_roles.html" target="_top" title="mstr_entity_person_roles" alt="" coords="1189,1148,1487,1353">
-<area shape="rect" id="node10" href="mstr_persons.html" target="_top" title="mstr_persons" alt="" coords="811,1485,1091,1749">
-<area shape="rect" id="node11" href="mstr_entity_purchasing_entities.html" target="_top" title="mstr_entity_purchasing_entities" alt="" coords="783,905,1120,1081">
-<area shape="rect" id="node12" href="mstr_entity_selling_entities.html" target="_top" title="mstr_entity_selling_entities" alt="" coords="803,1099,1099,1275">
-<area shape="rect" id="node13" href="mstr_entity_staffing_entities.html" target="_top" title="mstr_entity_staffing_entities" alt="" coords="798,1292,1105,1468">
-<area shape="rect" id="node14" href="mstr_entity_workplace_places.html" target="_top" title="mstr_entity_workplace_places" alt="" coords="1179,752,1497,928">
-<area shape="rect" id="node15" href="../msbms_syst_data/tables/syst_person_logins.html" target="_top" title="msbms_syst_data.syst_person_logins" alt="" coords="1164,1591,1512,1737">
+<area shape="rect" id="node1" href="mstr_contacts.html" target="_top" title="mstr_contacts" alt="" coords="947,5,1227,269">
+<area shape="rect" id="node2" href="../msbms_syst_data/tables/syst_enum_values.html" target="_top" title="msbms_syst_data.syst_enum_values" alt="" coords="5,981,393,1069">
+<area shape="rect" id="node3" href="mstr_entities.html" target="_top" title="mstr_entities" alt="" coords="437,827,868,1307">
+<area shape="rect" id="node4" href="mstr_entity_banking_entities.html" target="_top" title="mstr_entity_banking_entities" alt="" coords="924,604,1251,780">
+<area shape="rect" id="node5" href="mstr_entity_fulfillment_places.html" target="_top" title="mstr_entity_fulfillment_places" alt="" coords="1337,473,1671,649">
+<area shape="rect" id="node6" href="mstr_places.html" target="_top" title="mstr_places" alt="" coords="947,287,1227,551">
+<area shape="rect" id="node7" href="mstr_entity_inventory_places.html" target="_top" title="mstr_entity_inventory_places" alt="" coords="1339,689,1669,865">
+<area shape="rect" id="node8" href="mstr_entity_person_roles.html" target="_top" title="mstr_entity_person_roles" alt="" coords="1357,1668,1651,1873">
+<area shape="rect" id="node9" href="mstr_persons.html" target="_top" title="mstr_persons" alt="" coords="947,1485,1227,1749">
+<area shape="rect" id="node10" href="mstr_entity_purchasing_entities.html" target="_top" title="mstr_entity_purchasing_entities" alt="" coords="912,905,1263,1081">
+<area shape="rect" id="node11" href="mstr_entity_selling_entities.html" target="_top" title="mstr_entity_selling_entities" alt="" coords="930,1099,1245,1275">
+<area shape="rect" id="node12" href="mstr_entity_staffing_entities.html" target="_top" title="mstr_entity_staffing_entities" alt="" coords="926,1292,1249,1468">
+<area shape="rect" id="node13" href="mstr_entity_workplace_places.html" target="_top" title="mstr_entity_workplace_places" alt="" coords="1336,269,1672,445">
+<area shape="rect" id="node14" href="../msbms_syst_data/tables/syst_person_logins.html" target="_top" title="msbms_syst_data.syst_person_logins" alt="" coords="1307,1161,1701,1308">
 </map>
                                         <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/mstr_entities.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="twodegreesDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
-<area shape="rect" id="node1" href="mstr_contacts.html" target="_top" title="mstr_contacts" alt="" coords="811,5,1091,269">
-<area shape="rect" id="node2" href="enum_contact_states.html" target="_top" title="enum_contact_states" alt="" coords="419,211,649,299">
-<area shape="rect" id="node3" href="enum_contact_types.html" target="_top" title="enum_contact_types" alt="" coords="421,105,647,193">
-<area shape="rect" id="node4" href="mstr_entities.html" target="_top" title="mstr_entities" alt="" coords="329,965,739,1445">
-<area shape="rect" id="node5" href="enum_entity_states.html" target="_top" title="enum_entity_states" alt="" coords="5,1227,285,1403">
-<area shape="rect" id="node6" href="enum_entity_types.html" target="_top" title="enum_entity_types" alt="" coords="5,1033,285,1209">
-<area shape="rect" id="node7" href="mstr_entity_banking_entities.html" target="_top" title="mstr_entity_banking_entities" alt="" coords="797,1063,1106,1239">
-<area shape="rect" id="node8" href="mstr_entity_fulfillment_places.html" target="_top" title="mstr_entity_fulfillment_places" alt="" coords="1179,413,1497,589">
-<area shape="rect" id="node9" href="mstr_places.html" target="_top" title="mstr_places" alt="" coords="811,287,1091,551">
-<area shape="rect" id="node21" href="enum_place_states.html" target="_top" title="enum_place_states" alt="" coords="427,456,641,544">
-<area shape="rect" id="node22" href="enum_place_types.html" target="_top" title="enum_place_types" alt="" coords="429,351,639,439">
-<area shape="rect" id="node10" href="mstr_entity_inventory_places.html" target="_top" title="mstr_entity_inventory_places" alt="" coords="1182,643,1494,819">
-<area shape="rect" id="node11" href="mstr_entity_person_roles.html" target="_top" title="mstr_entity_person_roles" alt="" coords="1189,1668,1487,1873">
-<area shape="rect" id="node12" href="enum_entity_person_roles.html" target="_top" title="enum_entity_person_roles" alt="" coords="818,1803,1085,1891">
-<area shape="rect" id="node13" href="mstr_persons.html" target="_top" title="mstr_persons" alt="" coords="811,1485,1091,1749">
-<area shape="rect" id="node19" href="enum_person_states.html" target="_top" title="enum_person_states" alt="" coords="421,1673,647,1761">
-<area shape="rect" id="node20" href="enum_person_types.html" target="_top" title="enum_person_types" alt="" coords="423,1568,645,1656">
-<area shape="rect" id="node14" href="mstr_entity_purchasing_entities.html" target="_top" title="mstr_entity_purchasing_entities" alt="" coords="783,1256,1120,1432">
-<area shape="rect" id="node15" href="mstr_entity_selling_entities.html" target="_top" title="mstr_entity_selling_entities" alt="" coords="803,604,1099,780">
-<area shape="rect" id="node16" href="mstr_entity_staffing_entities.html" target="_top" title="mstr_entity_staffing_entities" alt="" coords="798,797,1105,973">
-<area shape="rect" id="node17" href="mstr_entity_workplace_places.html" target="_top" title="mstr_entity_workplace_places" alt="" coords="1179,909,1497,1085">
-<area shape="rect" id="node18" href="mstr_person_contact_roles.html" target="_top" title="mstr_person_contact_roles" alt="" coords="1201,289,1475,377">
-<area shape="rect" id="node23" href="../msbms_syst_data/tables/syst_person_logins.html" target="_top" title="msbms_syst_data.syst_person_logins" alt="" coords="1164,1432,1512,1579">
+<area shape="rect" id="node1" href="mstr_contacts.html" target="_top" title="mstr_contacts" alt="" coords="947,1249,1227,1513">
+<area shape="rect" id="node2" href="../msbms_syst_data/tables/syst_enum_values.html" target="_top" title="msbms_syst_data.syst_enum_values" alt="" coords="5,1388,393,1476">
+<area shape="rect" id="node3" href="mstr_entities.html" target="_top" title="mstr_entities" alt="" coords="437,868,868,1348">
+<area shape="rect" id="node4" href="mstr_entity_banking_entities.html" target="_top" title="mstr_entity_banking_entities" alt="" coords="924,597,1251,773">
+<area shape="rect" id="node5" href="mstr_entity_fulfillment_places.html" target="_top" title="mstr_entity_fulfillment_places" alt="" coords="1337,5,1671,181">
+<area shape="rect" id="node6" href="mstr_places.html" target="_top" title="mstr_places" alt="" coords="947,87,1227,351">
+<area shape="rect" id="node7" href="mstr_entity_inventory_places.html" target="_top" title="mstr_entity_inventory_places" alt="" coords="1339,208,1669,384">
+<area shape="rect" id="node8" href="mstr_entity_person_roles.html" target="_top" title="mstr_entity_person_roles" alt="" coords="1357,1749,1651,1955">
+<area shape="rect" id="node9" href="mstr_persons.html" target="_top" title="mstr_persons" alt="" coords="947,1567,1227,1831">
+<area shape="rect" id="node10" href="mstr_entity_purchasing_entities.html" target="_top" title="mstr_entity_purchasing_entities" alt="" coords="912,827,1263,1003">
+<area shape="rect" id="node11" href="mstr_entity_selling_entities.html" target="_top" title="mstr_entity_selling_entities" alt="" coords="930,1020,1245,1196">
+<area shape="rect" id="node12" href="mstr_entity_staffing_entities.html" target="_top" title="mstr_entity_staffing_entities" alt="" coords="926,404,1249,580">
+<area shape="rect" id="node13" href="mstr_entity_workplace_places.html" target="_top" title="mstr_entity_workplace_places" alt="" coords="1336,525,1672,701">
+<area shape="rect" id="node14" href="mstr_person_contact_roles.html" target="_top" title="mstr_person_contact_roles" alt="" coords="1350,1356,1658,1444">
+<area shape="rect" id="node15" href="../msbms_syst_data/tables/syst_person_logins.html" target="_top" title="msbms_syst_data.syst_person_logins" alt="" coords="1307,1513,1701,1660">
 </map>
                                         <a name='diagram'><img id="twodegreesDegreeImg" src="../diagrams/tables/mstr_entities.2degrees.png" usemap="#twoDegreesRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>

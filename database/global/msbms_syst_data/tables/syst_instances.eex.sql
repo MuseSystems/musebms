@@ -13,38 +13,81 @@
 
 CREATE TABLE msbms_syst_data.syst_instances
 (
-     id                       uuid        DEFAULT uuid_generate_v1( )  NOT NULL
+     id
+        uuid
+        NOT NULL DEFAULT uuid_generate_v1( )
         CONSTRAINT syst_instances_pk PRIMARY KEY
-    ,internal_name            text                                     NOT NULL
+    ,internal_name
+        text
+        NOT NULL
         CONSTRAINT syst_instances_internal_name_udx UNIQUE
-    ,display_name             text                                     NOT NULL
+    ,display_name
+        text
+        NOT NULL
         CONSTRAINT syst_instances_display_name_udx UNIQUE
-    ,enum_instance_type_id    uuid                                     NOT NULL
+    ,application_id
+        uuid
+        NOT NULL
+        CONSTRAINT syst_instances_applications_fk
+            REFERENCES msbms_syst_data.syst_applications (id)
+    ,instance_type_id
+        uuid
+        NOT NULL
         CONSTRAINT syst_instances_enum_instance_type_fk
-        REFERENCES msbms_syst_data.enum_instance_types (id)
-    ,enum_instance_state_id   uuid                                     NOT NULL
+            REFERENCES msbms_syst_data.syst_enum_values (id)
+    ,instance_state_id
+        uuid
+        NOT NULL
         CONSTRAINT syst_instances_enum_instance_state_fk
-        REFERENCES msbms_syst_data.enum_instance_states (id)
-    ,dbserver_name            text                                     NOT NULL
-    ,db_app_context_pool_size integer     DEFAULT 10                   NOT NULL
+            REFERENCES msbms_syst_data.syst_enum_values (id)
+    ,owner_id
+        uuid
+        NOT NULL
+        CONSTRAINT syst_instances_owners_fk
+            REFERENCES msbms_syst_data.syst_owners (id)
+    ,dbserver_name
+        text
+        NOT NULL
+    ,db_app_context_pool_size
+        integer
+        NOT NULL DEFAULT 10
         CONSTRAINT syst_instances_db_app_context_pool_size_no_neg_chk
-        CHECK (db_app_context_pool_size > 0)
-    ,db_api_context_pool_size integer     DEFAULT 3                    NOT NULL
+            CHECK (db_app_context_pool_size > 0)
+    ,db_api_context_pool_size
+        integer
+        NOT NULL DEFAULT 3
         CONSTRAINT syst_instances_db_api_context_pool_size_no_neg_chk
-        CHECK (db_api_context_pool_size > 0)
-    ,instance_code            bytea       DEFAULT gen_random_bytes(32) NOT NULL
-    ,owning_instance_id       uuid
+            CHECK (db_api_context_pool_size > 0)
+    ,instance_code
+        bytea
+        NOT NULL DEFAULT gen_random_bytes(32)
+    ,owning_instance_id
+        uuid
         CONSTRAINT syst_instances_owning_instance_fk
-        REFERENCES msbms_syst_data.syst_instances (id)
+            REFERENCES msbms_syst_data.syst_instances (id)
         CONSTRAINT syst_instances_self_ownership_chk
-        CHECK (owning_instance_id IS NULL OR owning_instance_id != id)
-    ,diag_timestamp_created   timestamptz DEFAULT now( )               NOT NULL
-    ,diag_role_created        text                                     NOT NULL
-    ,diag_timestamp_modified  timestamptz DEFAULT now( )               NOT NULL
-    ,diag_wallclock_modified  timestamptz DEFAULT clock_timestamp( )   NOT NULL
-    ,diag_role_modified       text                                     NOT NULL
-    ,diag_row_version         bigint      DEFAULT 1                    NOT NULL
-    ,diag_update_count        bigint      DEFAULT 0                    NOT NULL
+            CHECK (owning_instance_id IS NULL OR owning_instance_id != id)
+    ,diag_timestamp_created
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_role_created
+        text
+        NOT NULL
+    ,diag_timestamp_modified
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_wallclock_modified
+        timestamptz
+        NOT NULL DEFAULT clock_timestamp( )
+    ,diag_role_modified
+        text
+        NOT NULL
+    ,diag_row_version
+        bigint
+        NOT NULL DEFAULT 1
+    ,diag_update_count
+        bigint
+        NOT NULL DEFAULT 0
 );
 
 ALTER TABLE msbms_syst_data.syst_instances OWNER TO <%= msbms_owner %>;
@@ -55,6 +98,30 @@ GRANT ALL ON TABLE msbms_syst_data.syst_instances TO <%= msbms_owner %>;
 CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
     BEFORE INSERT OR UPDATE ON msbms_syst_data.syst_instances
     FOR EACH ROW EXECUTE PROCEDURE msbms_syst_priv.trig_b_iu_set_diagnostic_columns();
+
+CREATE CONSTRAINT TRIGGER a50_trig_a_i_instance_types_enum_value_check
+    AFTER INSERT ON msbms_syst_data.syst_instances
+    FOR EACH ROW EXECUTE PROCEDURE
+        msbms_syst_priv.trig_a_iu_enum_value_check('instance_types', 'instance_type_id');
+
+CREATE CONSTRAINT TRIGGER a50_trig_a_u_instance_types_enum_value_check
+    AFTER UPDATE ON msbms_syst_data.syst_instances
+    FOR EACH ROW WHEN ( old.instance_type_id != new.instance_type_id)
+        EXECUTE PROCEDURE
+            msbms_syst_priv.trig_a_iu_enum_value_check(
+                'instance_types', 'instance_type_id');
+
+CREATE CONSTRAINT TRIGGER a50_trig_a_i_instance_states_enum_value_check
+    AFTER INSERT ON msbms_syst_data.syst_instances
+    FOR EACH ROW EXECUTE PROCEDURE
+        msbms_syst_priv.trig_a_iu_enum_value_check('instance_states', 'instance_state_id');
+
+CREATE CONSTRAINT TRIGGER a50_trig_a_u_instance_states_enum_value_check
+    AFTER UPDATE ON msbms_syst_data.syst_instances
+    FOR EACH ROW WHEN ( old.instance_state_id != new.instance_state_id)
+        EXECUTE PROCEDURE
+            msbms_syst_priv.trig_a_iu_enum_value_check(
+                'instance_states', 'instance_state_id');
 
 COMMENT ON
     TABLE msbms_syst_data.syst_instances IS
@@ -75,16 +142,28 @@ $DOC$A friendly name and candidate key for the record, suitable for use in user
 interactions$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_instances.enum_instance_type_id IS
+    COLUMN msbms_syst_data.syst_instances.application_id IS
+$DOC$Indicates an instance of which application is being described by the record.$DOC$;
+
+COMMENT ON
+    COLUMN msbms_syst_data.syst_instances.instance_type_id IS
 $DOC$Indicates the type of the instance.  This can designate instances as being
 production or non-production, or make other functional differences between
 instances created for different reasons based on the assigned instance type.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_instances.enum_instance_state_id IS
+    COLUMN msbms_syst_data.syst_instances.instance_state_id IS
 $DOC$Establishes the current life-cycle state of the instance record.  This can
 determine functionality such as if the instance is usable, visible, or if it may
 be purged from the database completely.$DOC$;
+
+COMMENT ON
+    COLUMN msbms_syst_data.syst_instances.owner_id IS
+$DOC$Identifies the owner of the instance.  The owner is the entity which
+commissioned the instance and is the "user" of the instance.  Owners have
+nominal management rights over their instances, such as which access accounts
+and which credential types are allowed to be used to authenticate to the owner's
+instances.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.syst_instances.dbserver_name IS

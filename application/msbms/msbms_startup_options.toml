@@ -10,6 +10,13 @@
 # server is not found or has not been bootstrapped, the system will not start.
 global_dbserver_name = "global_db"
 
+# Used for peppering access account credentials when appropriate.  This value
+# should be changed for each installation of the application and also kept in
+# a secure place.  If this value is ever lost, existing access accounts will in
+# many cases no longer be able to authenticate to the system.  This value should
+# contain at least 32 bytes of data.
+global_pepper_value  = "jTtEdXRExP5YXHeARQ1W66lP6wDc9GyOvhFPvwnHhtc="
+
 #===============================================================================
 # Database Servers Section
 #-------------------------------------------------------------------------------

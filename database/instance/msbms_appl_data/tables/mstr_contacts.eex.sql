@@ -1,6 +1,6 @@
--- Source File: mstr_contacts.eex.sql
--- Location:    database/instance/msbms_appl_data/tables/mstr_contacts.eex.sql
--- Project:     Muse Systems Business Management System
+-- File:        mstr_contacts.eex.sql
+-- Location:    database\instance\msbms_appl_data\tables\mstr_contacts.eex.sql
+-- Project:     Muse Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
 -- This file may include content copyrighted and licensed from third parties.
@@ -9,34 +9,65 @@
 -- See the NOTICE file in the project root for copyright ownership information.
 --
 -- muse.information@musesystems.com  :: https://muse.systems
+
 CREATE TABLE msbms_appl_data.mstr_contacts
 (
-     id                      uuid        DEFAULT uuid_generate_v1( ) NOT NULL
+     id
+        uuid
+        NOT NULL DEFAULT uuid_generate_v1( )
         CONSTRAINT mstr_contacts_pk PRIMARY KEY
-    ,internal_name           text                                    NOT NULL
+    ,internal_name
+        text
+        NOT NULL
         CONSTRAINT mstr_contacts_internal_name_udx UNIQUE
-    ,display_name            text                                    NOT NULL
+    ,display_name
+        text
+        NOT NULL
         CONSTRAINT mstr_contacts_display_name_udx UNIQUE
-    ,owning_entity_id        uuid                                    NOT NULL
+    ,owning_entity_id
+        uuid
+        NOT NULL
         CONSTRAINT mstr_contacts_owning_entity_fk
-        REFERENCES msbms_appl_data.mstr_entities (id)
-        ON DELETE CASCADE
-    ,external_name           text                                    NOT NULL
-    ,contact_type_id         uuid                                    NOT NULL
+            REFERENCES msbms_appl_data.mstr_entities (id) ON DELETE CASCADE
+    ,external_name
+        text
+        NOT NULL
+    ,contact_type_id
+        uuid
+        NOT NULL
         CONSTRAINT mstr_contacts_contact_types_fk
-        REFERENCES msbms_appl_data.enum_contact_types (id)
-    ,contact_state_id        uuid                                    NOT NULL
+            REFERENCES msbms_syst_data.syst_enum_values (id)
+    ,contact_state_id
+        uuid
+        NOT NULL
         CONSTRAINT mstr_contacts_contact_states_fk
-        REFERENCES msbms_appl_data.enum_contact_states (id)
-    ,contact_data            jsonb       DEFAULT '{}'::jsonb         NOT NULL
-    ,contact_notes           text
-    ,diag_timestamp_created  timestamptz DEFAULT now( )              NOT NULL
-    ,diag_role_created       text                                    NOT NULL
-    ,diag_timestamp_modified timestamptz DEFAULT now( )              NOT NULL
-    ,diag_wallclock_modified timestamptz DEFAULT clock_timestamp( )  NOT NULL
-    ,diag_role_modified      text                                    NOT NULL
-    ,diag_row_version        bigint      DEFAULT 1                   NOT NULL
-    ,diag_update_count       bigint      DEFAULT 0                   NOT NULL
+            REFERENCES msbms_syst_data.syst_enum_values (id)
+    ,contact_data
+        jsonb
+        NOT NULL DEFAULT '{}'::jsonb
+    ,contact_notes
+        text
+    ,diag_timestamp_created
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_role_created
+        text
+        NOT NULL
+    ,diag_timestamp_modified
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_wallclock_modified
+        timestamptz
+        NOT NULL DEFAULT clock_timestamp( )
+    ,diag_role_modified
+        text
+        NOT NULL
+    ,diag_row_version
+        bigint
+        NOT NULL DEFAULT 1
+    ,diag_update_count
+        bigint
+        NOT NULL DEFAULT 0
 );
 
 ALTER TABLE msbms_appl_data.mstr_contacts OWNER TO <%= msbms_owner %>;
@@ -47,6 +78,30 @@ GRANT ALL ON TABLE msbms_appl_data.mstr_contacts TO <%= msbms_owner %>;
 CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
     BEFORE INSERT OR UPDATE ON msbms_appl_data.mstr_contacts
     FOR EACH ROW EXECUTE PROCEDURE msbms_syst_priv.trig_b_iu_set_diagnostic_columns();
+
+CREATE CONSTRAINT TRIGGER a50_trig_a_i_contact_types_enum_value_check
+    AFTER INSERT ON msbms_appl_data.mstr_contacts
+    FOR EACH ROW EXECUTE PROCEDURE
+        msbms_syst_priv.trig_a_iu_enum_value_check('contact_types', 'contact_type_id');
+
+CREATE CONSTRAINT TRIGGER a50_trig_a_u_contact_types_enum_value_check
+    AFTER UPDATE ON msbms_appl_data.mstr_contacts
+    FOR EACH ROW WHEN ( old.contact_type_id != new.contact_type_id)
+        EXECUTE PROCEDURE
+            msbms_syst_priv.trig_a_iu_enum_value_check(
+                'contact_types', 'contact_type_id');
+
+CREATE CONSTRAINT TRIGGER a50_trig_a_i_contact_states_enum_value_check
+    AFTER INSERT ON msbms_appl_data.mstr_contacts
+    FOR EACH ROW EXECUTE PROCEDURE
+        msbms_syst_priv.trig_a_iu_enum_value_check('contact_states', 'contact_state_id');
+
+CREATE CONSTRAINT TRIGGER a50_trig_a_u_contact_states_enum_value_check
+    AFTER UPDATE ON msbms_appl_data.mstr_contacts
+    FOR EACH ROW WHEN ( old.contact_state_id != new.contact_state_id)
+        EXECUTE PROCEDURE
+            msbms_syst_priv.trig_a_iu_enum_value_check(
+                'contact_states', 'contact_state_id');
 
 COMMENT ON
     TABLE msbms_appl_data.mstr_contacts IS

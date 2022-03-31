@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>syst_feature_relation_assigns - msbms_dev Database</title>
+        <title>syst_feature_relation_assigns - instance_doc Database</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../../index.html" class="navbar-brand"><b>msbms_dev</b> Database</a>
+                            <a href="../../index.html" class="navbar-brand"><b>instance_doc</b> Database</a>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -137,7 +137,7 @@ permissioning displays into a tree-like structure.</p>
 system.</p></td>
                                 </tr>
                                 <tr>
-                                    <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="feature_id">feature_id</span></td>
+                                    <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="feature_map_id">feature_map_id</span></td>
                                     <td>uuid</td>
                                     <td>2147483647</td>
                                     <td title=''></td>
@@ -150,12 +150,12 @@ system.</p></td>
                                     <td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
-                                                <td title="syst_feature_relation_assigns.feature_id references syst_features.id via syst_feature_relation_assigns_feature_fk"><a href='syst_features.html'>syst_features</a><span class='relatedKey'>.id</span></td>
-                                                <td class="constraint detail">syst_feature_relation_assigns_feature_fk<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td title="syst_feature_relation_assigns.feature_map_id references syst_feature_map.id via syst_feature_relation_assigns_feature_map_fk"><a href='syst_feature_map.html'>syst_feature_map</a><span class='relatedKey'>.id</span></td>
+                                                <td class="constraint detail">syst_feature_relation_assigns_feature_map_fk<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
                                     </td>
-                                    <td><p>Identifies the feature record to which the relation record is being<br />
+                                    <td><p>Identifies the feature mapping record to which the relation record is being<br />
 associated.</p></td>
                                 </tr>
                                 <tr>
@@ -177,7 +177,7 @@ associated.</p></td>
                                             </tr>
                                         </table>
                                     </td>
-                                    <td><p>Identifies the relation record which is being associates with the feature.</p></td>
+                                    <td><p>Identifies the relation record which is being associated with the feature.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_timestamp_created">diag_timestamp_created</span></td>
@@ -363,18 +363,23 @@ diag_row_version - 1.</p></td>
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="syst_feature_relation_assigns.html" target="_top" title="syst_feature_relation_assigns" alt="" coords="329,85,773,448">
-<area shape="rect" id="node2" href="syst_features.html" target="_top" title="syst_features" alt="" coords="5,5,285,240">
-<area shape="rect" id="node3" href="syst_relations.html" target="_top" title="syst_relations" alt="" coords="5,257,285,521">
+<area shape="rect" id="node1" href="syst_feature_relation_assigns.html" target="_top" title="syst_feature_relation_assigns" alt="" coords="329,85,795,448">
+<area shape="rect" id="node2" href="syst_feature_map.html" target="_top" title="syst_feature_map" alt="" coords="5,5,285,240">
+<area shape="rect" id="node3" href="syst_relations.html" target="_top" title="syst_relations" alt="" coords="5,257,285,492">
 </map>
                                         <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/syst_feature_relation_assigns.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="twodegreesDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
-<area shape="rect" id="node1" href="syst_feature_relation_assigns.html" target="_top" title="syst_feature_relation_assigns" alt="" coords="587,85,1031,448">
-<area shape="rect" id="node2" href="syst_features.html" target="_top" title="syst_features" alt="" coords="263,5,543,240">
-<area shape="rect" id="node3" href="syst_relations.html" target="_top" title="syst_relations" alt="" coords="263,257,543,521">
-<area shape="rect" id="node4" href="syst_feature_types.html" target="_top" title="syst_feature_types" alt="" coords="5,267,219,355">
+<area shape="rect" id="node1" href="syst_complex_formats.html" target="_top" title="syst_complex_formats" alt="" coords="761,5,1032,93">
+<area shape="rect" id="node2" href="syst_feature_map.html" target="_top" title="syst_feature_map" alt="" coords="340,197,620,432">
+<area shape="rect" id="node5" href="syst_feature_map_levels.html" target="_top" title="syst_feature_map_levels" alt="" coords="5,288,296,376">
+<area shape="rect" id="node3" href="syst_enums.html" target="_top" title="syst_enums" alt="" coords="803,147,990,235">
+<area shape="rect" id="node4" href="syst_feature_enum_assigns.html" target="_top" title="syst_feature_enum_assigns" alt="" coords="1173,111,1487,199">
+<area shape="rect" id="node6" href="syst_feature_relation_assigns.html" target="_top" title="syst_feature_relation_assigns" alt="" coords="664,463,1129,825">
+<area shape="rect" id="node7" href="syst_relations.html" target="_top" title="syst_relations" alt="" coords="340,524,620,759">
+<area shape="rect" id="node8" href="syst_feature_setting_assigns.html" target="_top" title="syst_feature_setting_assigns" alt="" coords="733,252,1060,340">
+<area shape="rect" id="node9" href="syst_numberings.html" target="_top" title="syst_numberings" alt="" coords="783,357,1011,445">
 </map>
                                         <a name='diagram'><img id="twodegreesDegreeImg" src="../diagrams/tables/syst_feature_relation_assigns.2degrees.png" usemap="#twoDegreesRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>

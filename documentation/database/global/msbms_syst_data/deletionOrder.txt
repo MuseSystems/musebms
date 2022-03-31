@@ -1,0 +1,17 @@
+syst_credentials
+syst_access_account_instance_assocs
+syst_feature_setting_assigns
+syst_feature_relation_assigns
+syst_feature_enum_assigns
+syst_instances
+syst_identities
+syst_access_accounts
+syst_owners
+syst_enum_values
+syst_enum_functional_types
+syst_enums
+syst_feature_map
+syst_settings
+syst_relations
+syst_feature_map_levels
+syst_applications
