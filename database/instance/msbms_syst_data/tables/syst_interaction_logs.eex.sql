@@ -23,12 +23,12 @@ CREATE TABLE msbms_syst_data.syst_interaction_logs
         uuid
         NOT NULL
         CONSTRAINT syst_interaction_logs_interaction_types_fk
-            REFERENCES msbms_syst_data.enum_interaction_types ( id )
+            REFERENCES msbms_syst_data.syst_enum_values ( id )
     ,interface_type_id
         uuid
         NOT NULL
         CONSTRAINT syst_interaction_logs_interface_types_fk
-            REFERENCES msbms_syst_data.enum_interface_types ( id )
+            REFERENCES msbms_syst_data.syst_enum_values ( id )
     ,data
         jsonb
     ,diag_timestamp_created
@@ -62,6 +62,30 @@ GRANT ALL ON TABLE msbms_syst_data.syst_interaction_logs TO <%= msbms_owner %>;
 CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
     BEFORE INSERT OR UPDATE ON msbms_syst_data.syst_interaction_logs
     FOR EACH ROW EXECUTE PROCEDURE msbms_syst_priv.trig_b_iu_set_diagnostic_columns();
+
+CREATE CONSTRAINT TRIGGER a50_trig_a_i_interaction_types_enum_value_check
+    AFTER INSERT ON msbms_syst_data.syst_interaction_logs
+    FOR EACH ROW EXECUTE PROCEDURE
+        msbms_syst_priv.trig_a_iu_enum_value_check('interaction_types', 'interaction_type_id');
+
+CREATE CONSTRAINT TRIGGER a50_trig_a_u_interaction_types_enum_value_check
+    AFTER UPDATE ON msbms_syst_data.syst_interaction_logs
+    FOR EACH ROW WHEN ( old.interaction_type_id != new.interaction_type_id)
+        EXECUTE PROCEDURE
+            msbms_syst_priv.trig_a_iu_enum_value_check(
+                'interaction_types', 'interaction_type_id');
+
+CREATE CONSTRAINT TRIGGER a50_trig_a_i_interface_types_enum_value_check
+    AFTER INSERT ON msbms_syst_data.syst_interaction_logs
+    FOR EACH ROW EXECUTE PROCEDURE
+        msbms_syst_priv.trig_a_iu_enum_value_check('interface_types', 'interface_type_id');
+
+CREATE CONSTRAINT TRIGGER a50_trig_a_u_interface_types_enum_value_check
+    AFTER UPDATE ON msbms_syst_data.syst_interaction_logs
+    FOR EACH ROW WHEN ( old.interface_type_id != new.interface_type_id)
+        EXECUTE PROCEDURE
+            msbms_syst_priv.trig_a_iu_enum_value_check(
+                'interface_types', 'interface_type_id');
 
 CREATE INDEX syst_interaction_logs_interaction_timestamp_idx
     ON msbms_syst_data.syst_interaction_logs USING brin (interaction_timestamp);

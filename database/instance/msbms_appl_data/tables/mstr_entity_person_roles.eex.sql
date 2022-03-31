@@ -26,11 +26,11 @@ CREATE TABLE msbms_appl_data.mstr_entity_person_roles
         NOT NULL
         CONSTRAINT mstr_entity_person_roles_entity_fk
             REFERENCES msbms_appl_data.mstr_entities (id) ON DELETE CASCADE
-    ,enum_entity_person_role_id
+    ,entity_person_role_id
         uuid
         NOT NULL
         CONSTRAINT mstr_entity_person_roles_enum_entity_person_role_fk
-            REFERENCES msbms_appl_data.enum_entity_person_roles (id)
+            REFERENCES msbms_syst_data.syst_enum_values (id)
     ,diag_timestamp_created
         timestamptz
         NOT NULL DEFAULT now( )
@@ -53,7 +53,7 @@ CREATE TABLE msbms_appl_data.mstr_entity_person_roles
         bigint
         NOT NULL DEFAULT 0
     ,CONSTRAINT mstr_entity_person_roles_person_entity_role_udx
-        UNIQUE (person_id, entity_id, enum_entity_person_role_id)
+        UNIQUE (person_id, entity_id, entity_person_role_id)
 );
 
 ALTER TABLE msbms_appl_data.mstr_entity_person_roles OWNER TO <%= msbms_owner %>;
@@ -64,6 +64,18 @@ GRANT ALL ON TABLE msbms_appl_data.mstr_entity_person_roles TO <%= msbms_owner %
 CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
     BEFORE INSERT OR UPDATE ON msbms_appl_data.mstr_entity_person_roles
     FOR EACH ROW EXECUTE PROCEDURE msbms_syst_priv.trig_b_iu_set_diagnostic_columns();
+
+CREATE CONSTRAINT TRIGGER a50_trig_a_i_entity_person_roles_enum_value_check
+    AFTER INSERT ON msbms_appl_data.mstr_entity_person_roles
+    FOR EACH ROW EXECUTE PROCEDURE
+        msbms_syst_priv.trig_a_iu_enum_value_check('entity_person_roles', 'entity_person_role_id');
+
+CREATE CONSTRAINT TRIGGER a50_trig_a_u_entity_person_roles_enum_value_check
+    AFTER UPDATE ON msbms_appl_data.mstr_entity_person_roles
+    FOR EACH ROW WHEN ( old.entity_person_role_id != new.entity_person_role_id)
+        EXECUTE PROCEDURE
+            msbms_syst_priv.trig_a_iu_enum_value_check(
+                'entity_person_roles', 'entity_person_role_id');
 
 COMMENT ON
     TABLE msbms_appl_data.mstr_entity_person_roles IS
@@ -89,7 +101,7 @@ $DOC$The entity with which the identified person has a role.  In many regards,
 this field identifies the owner of the record.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_appl_data.mstr_entity_person_roles.enum_entity_person_role_id IS
+    COLUMN msbms_appl_data.mstr_entity_person_roles.entity_person_role_id IS
 $DOC$Identifies the role being assigned to the person for the identified entity.$DOC$;
 
 COMMENT ON

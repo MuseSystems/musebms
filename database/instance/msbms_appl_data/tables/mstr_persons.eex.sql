@@ -38,11 +38,11 @@ CREATE TABLE msbms_appl_data.mstr_persons
         uuid
         NOT NULL
         CONSTRAINT mstr_persons_person_types_fk
-            REFERENCES msbms_appl_data.enum_person_types (id)
+            REFERENCES msbms_syst_data.syst_enum_values (id)
     ,person_state_id
         uuid
         CONSTRAINT mstr_persons_person_states_fk
-            REFERENCES msbms_appl_data.enum_person_states (id)
+            REFERENCES msbms_syst_data.syst_enum_values (id)
     ,diag_timestamp_created
         timestamptz
         NOT NULL DEFAULT now( )
@@ -74,6 +74,30 @@ GRANT ALL ON TABLE msbms_appl_data.mstr_persons TO <%= msbms_owner %>;
 CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
     BEFORE INSERT OR UPDATE ON msbms_appl_data.mstr_persons
     FOR EACH ROW EXECUTE PROCEDURE msbms_syst_priv.trig_b_iu_set_diagnostic_columns();
+
+CREATE CONSTRAINT TRIGGER a50_trig_a_i_person_types_enum_value_check
+    AFTER INSERT ON msbms_appl_data.mstr_persons
+    FOR EACH ROW EXECUTE PROCEDURE
+        msbms_syst_priv.trig_a_iu_enum_value_check('person_types', 'person_type_id');
+
+CREATE CONSTRAINT TRIGGER a50_trig_a_u_person_types_enum_value_check
+    AFTER UPDATE ON msbms_appl_data.mstr_persons
+    FOR EACH ROW WHEN ( old.person_type_id != new.person_type_id)
+        EXECUTE PROCEDURE
+            msbms_syst_priv.trig_a_iu_enum_value_check(
+                'person_types', 'person_type_id');
+
+CREATE CONSTRAINT TRIGGER a50_trig_a_i_person_states_enum_value_check
+    AFTER INSERT ON msbms_appl_data.mstr_persons
+    FOR EACH ROW EXECUTE PROCEDURE
+        msbms_syst_priv.trig_a_iu_enum_value_check('person_states', 'person_state_id');
+
+CREATE CONSTRAINT TRIGGER a50_trig_a_u_person_states_enum_value_check
+    AFTER UPDATE ON msbms_appl_data.mstr_persons
+    FOR EACH ROW WHEN ( old.person_state_id != new.person_state_id)
+        EXECUTE PROCEDURE
+            msbms_syst_priv.trig_a_iu_enum_value_check(
+                'person_states', 'person_state_id');
 
 COMMENT ON
     TABLE msbms_appl_data.mstr_persons IS
@@ -109,7 +133,7 @@ COMMENT ON
     COLUMN msbms_appl_data.mstr_persons.formatted_name IS
 $DOC$Contains a jsonb object describing the naming fields, field layout, and the
 actual values of the user's name.  Note that the format will normally have
-originated from the msbms_appl_data.conf_name_formats table, but reflects the
+originated from the msbms_appl_data.syst_name_formats table, but reflects the
 name formatting configuration at the time of capture.$DOC$;
 
 COMMENT ON

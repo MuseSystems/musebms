@@ -21,11 +21,11 @@ CREATE TABLE msbms_appl_data.mstr_person_contact_roles
         NOT NULL
         CONSTRAINT mstr_person_contact_roles_person_fk
             REFERENCES msbms_appl_data.mstr_persons (id) ON DELETE CASCADE
-    ,enum_person_contact_role_id
+    ,person_contact_role_id
         uuid
         NOT NULL
         CONSTRAINT mstr_person_contact_roles_enum_person_contact_role_fk
-            REFERENCES msbms_appl_data.enum_person_contact_roles (id)
+            REFERENCES msbms_syst_data.syst_enum_values (id)
     ,place_id
         uuid
         CONSTRAINT mstr_person_contact_roles_place_fk
@@ -67,6 +67,18 @@ CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
     BEFORE INSERT OR UPDATE ON msbms_appl_data.mstr_person_contact_roles
     FOR EACH ROW EXECUTE PROCEDURE msbms_syst_priv.trig_b_iu_set_diagnostic_columns();
 
+CREATE CONSTRAINT TRIGGER a50_trig_a_i_person_contact_roles_enum_value_check
+    AFTER INSERT ON msbms_appl_data.mstr_person_contact_roles
+    FOR EACH ROW EXECUTE PROCEDURE
+        msbms_syst_priv.trig_a_iu_enum_value_check('person_contact_roles', 'person_contact_role_id');
+
+CREATE CONSTRAINT TRIGGER a50_trig_a_u_person_contact_roles_enum_value_check
+    AFTER UPDATE ON msbms_appl_data.mstr_person_contact_roles
+    FOR EACH ROW WHEN ( old.person_contact_role_id != new.person_contact_role_id)
+        EXECUTE PROCEDURE
+            msbms_syst_priv.trig_a_iu_enum_value_check(
+                'person_contact_roles', 'person_contact_role_id');
+
 COMMENT ON
     TABLE msbms_appl_data.mstr_person_contact_roles IS
 $DOC$Associates individual persons with their contact data and includes an indication $DOC$;
@@ -81,7 +93,7 @@ COMMENT ON
 $DOC$Identifies the person which has the relationship to the contact information.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_appl_data.mstr_person_contact_roles.enum_person_contact_role_id IS
+    COLUMN msbms_appl_data.mstr_person_contact_roles.person_contact_role_id IS
 $DOC$Indicates a specific use or purpose for the identified contact information.$DOC$;
 
 COMMENT ON

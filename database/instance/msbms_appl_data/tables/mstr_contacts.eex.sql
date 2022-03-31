@@ -36,12 +36,12 @@ CREATE TABLE msbms_appl_data.mstr_contacts
         uuid
         NOT NULL
         CONSTRAINT mstr_contacts_contact_types_fk
-            REFERENCES msbms_appl_data.enum_contact_types (id)
+            REFERENCES msbms_syst_data.syst_enum_values (id)
     ,contact_state_id
         uuid
         NOT NULL
         CONSTRAINT mstr_contacts_contact_states_fk
-            REFERENCES msbms_appl_data.enum_contact_states (id)
+            REFERENCES msbms_syst_data.syst_enum_values (id)
     ,contact_data
         jsonb
         NOT NULL DEFAULT '{}'::jsonb
@@ -78,6 +78,30 @@ GRANT ALL ON TABLE msbms_appl_data.mstr_contacts TO <%= msbms_owner %>;
 CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
     BEFORE INSERT OR UPDATE ON msbms_appl_data.mstr_contacts
     FOR EACH ROW EXECUTE PROCEDURE msbms_syst_priv.trig_b_iu_set_diagnostic_columns();
+
+CREATE CONSTRAINT TRIGGER a50_trig_a_i_contact_types_enum_value_check
+    AFTER INSERT ON msbms_appl_data.mstr_contacts
+    FOR EACH ROW EXECUTE PROCEDURE
+        msbms_syst_priv.trig_a_iu_enum_value_check('contact_types', 'contact_type_id');
+
+CREATE CONSTRAINT TRIGGER a50_trig_a_u_contact_types_enum_value_check
+    AFTER UPDATE ON msbms_appl_data.mstr_contacts
+    FOR EACH ROW WHEN ( old.contact_type_id != new.contact_type_id)
+        EXECUTE PROCEDURE
+            msbms_syst_priv.trig_a_iu_enum_value_check(
+                'contact_types', 'contact_type_id');
+
+CREATE CONSTRAINT TRIGGER a50_trig_a_i_contact_states_enum_value_check
+    AFTER INSERT ON msbms_appl_data.mstr_contacts
+    FOR EACH ROW EXECUTE PROCEDURE
+        msbms_syst_priv.trig_a_iu_enum_value_check('contact_states', 'contact_state_id');
+
+CREATE CONSTRAINT TRIGGER a50_trig_a_u_contact_states_enum_value_check
+    AFTER UPDATE ON msbms_appl_data.mstr_contacts
+    FOR EACH ROW WHEN ( old.contact_state_id != new.contact_state_id)
+        EXECUTE PROCEDURE
+            msbms_syst_priv.trig_a_iu_enum_value_check(
+                'contact_states', 'contact_state_id');
 
 COMMENT ON
     TABLE msbms_appl_data.mstr_contacts IS

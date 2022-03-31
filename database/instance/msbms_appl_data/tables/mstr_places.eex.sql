@@ -35,11 +35,11 @@ CREATE TABLE msbms_appl_data.mstr_places
         uuid
         NOT NULL
         CONSTRAINT mstr_places_place_types_fk
-            REFERENCES msbms_appl_data.enum_place_types (id)
+            REFERENCES msbms_syst_data.syst_enum_values (id)
     ,place_state_id
         uuid
         CONSTRAINT mstr_places_place_states_fk
-            REFERENCES msbms_appl_data.enum_place_states (id)
+            REFERENCES msbms_syst_data.syst_enum_values (id)
     ,diag_timestamp_created
         timestamptz
         NOT NULL DEFAULT now( )
@@ -71,6 +71,30 @@ GRANT ALL ON TABLE msbms_appl_data.mstr_places TO <%= msbms_owner %>;
 CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
     BEFORE INSERT OR UPDATE ON msbms_appl_data.mstr_places
     FOR EACH ROW EXECUTE PROCEDURE msbms_syst_priv.trig_b_iu_set_diagnostic_columns();
+
+CREATE CONSTRAINT TRIGGER a50_trig_a_i_place_states_enum_value_check
+    AFTER INSERT ON msbms_appl_data.mstr_places
+    FOR EACH ROW EXECUTE PROCEDURE
+        msbms_syst_priv.trig_a_iu_enum_value_check('place_states', 'place_state_id');
+
+CREATE CONSTRAINT TRIGGER a50_trig_a_u_place_states_enum_value_check
+    AFTER UPDATE ON msbms_appl_data.mstr_places
+    FOR EACH ROW WHEN ( old.place_state_id != new.place_state_id)
+        EXECUTE PROCEDURE
+            msbms_syst_priv.trig_a_iu_enum_value_check(
+                'place_states', 'place_state_id');
+
+CREATE CONSTRAINT TRIGGER a50_trig_a_i_place_types_enum_value_check
+    AFTER INSERT ON msbms_appl_data.mstr_places
+    FOR EACH ROW EXECUTE PROCEDURE
+        msbms_syst_priv.trig_a_iu_enum_value_check('place_types', 'place_type_id');
+
+CREATE CONSTRAINT TRIGGER a50_trig_a_u_place_types_enum_value_check
+    AFTER UPDATE ON msbms_appl_data.mstr_places
+    FOR EACH ROW WHEN ( old.place_type_id != new.place_type_id)
+        EXECUTE PROCEDURE
+            msbms_syst_priv.trig_a_iu_enum_value_check(
+                'place_types', 'place_type_id');
 
 COMMENT ON
     TABLE msbms_appl_data.mstr_places IS
