@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION msbms_syst_priv.trig_a_syst_enum_values_check_functional_types()
+CREATE OR REPLACE FUNCTION msbms_syst_priv.trig_a_iu_syst_enum_values_check_functional_types()
 RETURNS trigger AS
 $BODY$
 
@@ -35,7 +35,7 @@ BEGIN
                 MESSAGE = 'The enumeration requires a valid functional type to be specified.',
                 DETAIL  = msbms_syst_priv.get_exception_details(
                              p_proc_schema    => 'msbms_syst_priv'
-                            ,p_proc_name      => 'trig_a_syst_enum_values_check_functional_types'
+                            ,p_proc_name      => 'trig_a_iu_syst_enum_values_check_functional_types'
                             ,p_exception_name => 'invalid_functional_type'
                             ,p_errcode        => 'PM003'
                             ,p_param_data     => to_jsonb(new)
@@ -56,13 +56,13 @@ END;
 $BODY$
 LANGUAGE plpgsql VOLATILE;
 
-ALTER FUNCTION msbms_syst_priv.trig_a_syst_enum_values_check_functional_types()
+ALTER FUNCTION msbms_syst_priv.trig_a_iu_syst_enum_values_check_functional_types()
     OWNER TO <%= msbms_owner %>;
 
-REVOKE EXECUTE ON FUNCTION msbms_syst_priv.trig_a_syst_enum_values_check_functional_types() FROM public;
-GRANT EXECUTE ON FUNCTION msbms_syst_priv.trig_a_syst_enum_values_check_functional_types() TO <%= msbms_owner %>;
+REVOKE EXECUTE ON FUNCTION msbms_syst_priv.trig_a_iu_syst_enum_values_check_functional_types() FROM public;
+GRANT EXECUTE ON FUNCTION msbms_syst_priv.trig_a_iu_syst_enum_values_check_functional_types() TO <%= msbms_owner %>;
 
-COMMENT ON FUNCTION msbms_syst_priv.trig_a_syst_enum_values_check_functional_types() IS
+COMMENT ON FUNCTION msbms_syst_priv.trig_a_iu_syst_enum_values_check_functional_types() IS
 $DOC$Ensures that if the parent syst_enums record has syst_enum_functional_types
 records defined, a syst_enum_values record will reference one of those
 functional types.  Note that this trigger function is intended to be use by
