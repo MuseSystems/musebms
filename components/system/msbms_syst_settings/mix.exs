@@ -8,11 +8,11 @@ defmodule MsbmsSystSettings.MixProject do
     # Third Party Dependencies
     {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
     {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
-    {:ecto, "~> 3.0"},
     {:ex_doc, "~> 0.20", only: :dev, runtime: false},
 
     # Muse Systems Business Management System Components
-    {:msbms_syst_error, path: "../msbms_syst_error"}
+    {:msbms_syst_error, path: "../msbms_syst_error"},
+    {:msbms_syst_datastore, path: "../msbms_syst_datastore"}
   ]
 
   @dialyzer_opts [
