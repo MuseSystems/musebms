@@ -23,7 +23,7 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
   @default_migrations_table "migrations"
   @default_migrations_root_dir "priv/database"
 
-  @migration_schema_sql_file "priv/migrations_schema/migration_schema_initialization.eex.sql"
+  @migration_schema_sql_file "migrations_schema/migration_schema_initialization.eex.sql"
 
   @spec build_migrations(String.t(), Keyword.t()) ::
           {:ok, list(Path.t())} | {:error, MsbmsSystError.t()}
@@ -282,7 +282,11 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
       migrations_table: opts_final[:migrations_table]
     ]
 
-    migration_schema_sql = EEx.eval_file(@migration_schema_sql_file, bindings)
+    migration_schema_sql =
+      EEx.eval_file(
+        Path.join([:code.priv_dir(:msbms_syst_datastore), @migration_schema_sql_file]),
+        bindings
+      )
 
     Datastore.query_for_none!(priv_db_conn, migration_schema_sql)
 
