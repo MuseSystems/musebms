@@ -15,7 +15,6 @@ CREATE SCHEMA IF NOT EXISTS msbms_syst
 
 REVOKE USAGE ON SCHEMA msbms_syst FROM PUBLIC;
 GRANT USAGE ON SCHEMA msbms_syst TO <%= msbms_appusr %>;
-GRANT USAGE ON SCHEMA msbms_syst TO <%= msbms_apiusr %>;
 
 COMMENT ON SCHEMA msbms_syst IS
 $DOC$Public API for system operations.  The important distinction is that business
@@ -26,8 +25,7 @@ CREATE SCHEMA IF NOT EXISTS msbms_syst_priv
     AUTHORIZATION <%= msbms_owner %>;
 
 REVOKE USAGE ON SCHEMA msbms_syst_priv FROM PUBLIC;
-REVOKE USAGE ON SCHEMA msbms_syst_priv FROM <%= msbms_appusr %>;
-REVOKE USAGE ON SCHEMA msbms_syst_priv FROM <%= msbms_apiusr %>;
+GRANT  USAGE ON SCHEMA msbms_syst_priv TO   <%= msbms_appusr %>;
 
 COMMENT ON SCHEMA msbms_syst_priv IS
 $DOC$Internal, private system operations.  These functions are developed not for the
@@ -39,8 +37,7 @@ CREATE SCHEMA IF NOT EXISTS msbms_syst_data
     AUTHORIZATION <%= msbms_owner %>;
 
 REVOKE USAGE ON SCHEMA msbms_syst_data FROM PUBLIC;
-REVOKE USAGE ON SCHEMA msbms_syst_data FROM <%= msbms_appusr %>;
-REVOKE USAGE ON SCHEMA msbms_syst_data FROM <%= msbms_apiusr %>;
+GRANT  USAGE ON SCHEMA msbms_syst_data TO   <%= msbms_appusr %>;
 
 COMMENT ON SCHEMA msbms_syst_data IS
 $DOC$Schema container for system operations related data tables and application
