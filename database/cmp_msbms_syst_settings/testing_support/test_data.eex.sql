@@ -99,11 +99,15 @@ INSERT INTO msbms_syst_data.syst_settings
     , user_description
     , config_flag
     , config_integer
+    , config_integer_range
     , config_decimal
+    , config_decimal_range
     , config_interval
     , config_date
+    , config_date_range
     , config_time
     , config_timestamp
+    , config_timestamp_range
     , config_json
     , config_text
     , config_uuid
@@ -115,11 +119,15 @@ VALUES
     , 'Test Setting One User Description'
     , TRUE
     , 111
+    , int8range(1,11)
     , 111.111
+    , numrange(1.1, 11.11)
     , '1 month'::interval
     , '2022-01-01'::date
+    ,  daterange('2022-01-01'::date, '2023-01-01'::date)
     , '01:00'::time
     , '2022-01-01 01:00:00'::timestamptz
+    , tstzrange('2022-01-01 01:00:00'::timestamptz, 'infinity'::timestamptz)
     , $JSON_TEST$
       {
         "test_settings_one": {
@@ -139,11 +147,15 @@ VALUES
     , 'Test Setting Two User Description'
     , FALSE
     , 222
+    , int8range(2,22)
     , 222.222
+    , numrange(2.2, 22.22)
     , '2 days'::interval
     , '2022-01-02'::date
+    ,  daterange('2022-01-02'::date, '2023-01-02'::date)
     , '02:00'::time
     , '2022-01-02 02:00:00'::timestamptz
+    , tstzrange('2022-01-02 02:00:00'::timestamptz, 'infinity'::timestamptz)
     , $JSON_TEST$
       {
         "test_settings_two": {
@@ -163,11 +175,15 @@ VALUES
     , 'Test Setting Three User Description'
     , TRUE
     , 333
+    , int8range(3,33)
     , 333.333
+    , numrange(3.3, 33.33)
     , '3000000 microseconds'::interval
     , '2022-01-03'::date
+    ,  daterange('2022-01-03'::date, '2023-01-03'::date)
     , '03:00'::time
     , '2022-01-03 03:00:00'::timestamptz
+    , tstzrange('2022-01-03 03:00:00'::timestamptz, 'infinity'::timestamptz)
     , $JSON_TEST$
       {
         "test_settings_three": {
@@ -196,3 +212,11 @@ VALUES
      ,
     ( ( SELECT id FROM msbms_syst_data.syst_feature_map WHERE internal_name = 'test_settings' )
     , ( SELECT id FROM msbms_syst_data.syst_settings WHERE internal_name = 'test_setting_three' ) );
+
+--------------------------------------------------------------------------------
+--  Grant all privileges to test user
+--------------------------------------------------------------------------------
+
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA msbms_syst      TO <%= msbms_appusr %>;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA msbms_syst_priv TO <%= msbms_appusr %>;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA msbms_syst_data TO <%= msbms_appusr %>;

@@ -24,6 +24,9 @@ CREATE TABLE msbms_syst_data.syst_settings
         text
         NOT NULL
         CONSTRAINT syst_settings_display_name_udx UNIQUE
+    ,syst_defined
+        boolean
+        NOT NULL DEFAULT TRUE
     ,syst_description
         text
         NOT NULL
@@ -33,16 +36,24 @@ CREATE TABLE msbms_syst_data.syst_settings
         boolean
     ,config_integer
         bigint
+    ,config_integer_range
+        int8range
     ,config_decimal
         numeric
+    ,config_decimal_range
+        numrange
     ,config_interval
         interval
     ,config_date
         date
+    ,config_date_range
+        daterange
     ,config_time
         time
     ,config_timestamp
         timestamptz
+    ,config_timestamp_range
+        tstzrange
     ,config_json
         jsonb
     ,config_text
@@ -103,6 +114,11 @@ $DOC$A friendly name and candidate key for the record suitable for use in user
 interfaces.$DOC$;
 
 COMMENT ON
+    COLUMN msbms_syst_data.syst_settings.syst_defined IS
+$DOC$When true, indicates that the setting was created as part of the system and is
+expected to exist.  If false, the setting is user created and maintained.$DOC$;
+
+COMMENT ON
     COLUMN msbms_syst_data.syst_settings.syst_description IS
 $DOC$A text describing the meaning and use of the specific record.$DOC$;
 
@@ -121,8 +137,16 @@ COMMENT ON
 $DOC$An integer configuration point$DOC$;
 
 COMMENT ON
+    COLUMN msbms_syst_data.syst_settings.config_integer_range IS
+$DOC$An integer range configuration point.$DOC$;
+
+COMMENT ON
     COLUMN msbms_syst_data.syst_settings.config_decimal IS
 $DOC$An decimal configuration point (not floating point).$DOC$;
+
+COMMENT ON
+    COLUMN msbms_syst_data.syst_settings.config_decimal_range IS
+$DOC$A decimal range configuration point.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.syst_settings.config_interval IS
@@ -133,12 +157,20 @@ COMMENT ON
 $DOC$A date configuation point.$DOC$;
 
 COMMENT ON
+    COLUMN msbms_syst_data.syst_settings.config_date_range IS
+$DOC$A date range configuration point.$DOC$;
+
+COMMENT ON
     COLUMN msbms_syst_data.syst_settings.config_time IS
 $DOC$A time configuration point (without time zone).$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.syst_settings.config_timestamp IS
 $DOC$A full datetime configuration point including time zone.$DOC$;
+
+COMMENT ON
+    COLUMN msbms_syst_data.syst_settings.config_timestamp_range IS
+$DOC$A range of timestamps with time zone configuration points.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.syst_settings.config_json IS
