@@ -27,13 +27,16 @@ defmodule MsbmsSystDatastore.Impl.DbTypes.Interval do
   defstruct months: 0, days: 0, seconds: 0, microseconds: 0
 
   @spec type :: :interval
+  @impl true
   def type, do: :interval
 
   @spec cast(any()) :: {:ok, t()} | :error
+  @impl true
   def cast(%__MODULE__{} = value), do: {:ok, value}
   def cast(_), do: :error
 
   @spec load(any()) :: {:ok, t()} | :error
+  @impl true
   def load(%Postgrex.Interval{months: months, days: days, secs: secs, microsecs: microsecs}) do
     {:ok, %__MODULE__{months: months, days: days, seconds: secs, microseconds: microsecs}}
   end
@@ -41,6 +44,7 @@ defmodule MsbmsSystDatastore.Impl.DbTypes.Interval do
   def load(_), do: :error
 
   @spec dump(t()) :: {:ok, Postgrex.Interval.t()} | :error
+  @impl true
   def dump(%__MODULE__{months: months, days: days, seconds: seconds, microseconds: microseconds}) do
     {:ok, %Postgrex.Interval{months: months, days: days, secs: seconds, microsecs: microseconds}}
   end
