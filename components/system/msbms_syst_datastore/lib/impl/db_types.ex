@@ -10,6 +10,10 @@
 #
 # muse.information@musesystems.com :: https: //muse.systems
 
+Postgrex.Types.define(MsbmsSystDatastore.Impl.DbTypes.PostgrexTypes, [],
+  allow_infinite_timestamps: true
+)
+
 defmodule MsbmsSystDatastore.Impl.DbTypes.Interval do
   use Ecto.Type
 
@@ -50,4 +54,236 @@ defmodule MsbmsSystDatastore.Impl.DbTypes.Interval do
   end
 
   def dump(_), do: :error
+end
+
+defmodule MsbmsSystDatastore.Impl.DbTypes.IntegerRange do
+  use Ecto.Type
+
+  @type t :: %__MODULE__{
+          lower: integer() | :empty | :unbound,
+          upper: integer() | :empty | :unbound,
+          lower_inclusive: boolean,
+          upper_inclusive: boolean
+        }
+
+  defstruct lower: :empty, upper: :empty, lower_inclusive: true, upper_inclusive: false
+
+  @spec type :: :integerrange
+  @impl true
+  def type, do: :integerrange
+
+  @spec cast(any()) :: {:ok, t()} | :error
+  @impl true
+  def cast(%__MODULE__{} = value), do: {:ok, value}
+  def cast(_), do: :error
+
+  @spec load(any()) :: {:ok, t()} | :error
+  @impl true
+  def load(%Postgrex.Range{
+        lower: lower,
+        upper: upper,
+        lower_inclusive: low_inclusive,
+        upper_inclusive: upper_inclusive
+      }) do
+    {:ok,
+     %__MODULE__{
+       lower: lower,
+       upper: upper,
+       lower_inclusive: low_inclusive,
+       upper_inclusive: upper_inclusive
+     }}
+  end
+
+  def load(_), do: :error
+
+  @spec dump(t()) :: {:ok, Postgrex.Range.t()} | :error
+  @impl true
+  def dump(%__MODULE__{
+        lower: lower,
+        upper: upper,
+        lower_inclusive: low_inclusive,
+        upper_inclusive: upper_inclusive
+      }) do
+    {:ok,
+     %Postgrex.Range{
+       lower: lower,
+       upper: upper,
+       lower_inclusive: low_inclusive,
+       upper_inclusive: upper_inclusive
+     }}
+  end
+end
+
+defmodule MsbmsSystDatastore.Impl.DbTypes.DecimalRange do
+  use Ecto.Type
+
+  @type t :: %__MODULE__{
+          lower: Decimal.t() | :empty | :unbound,
+          upper: Decimal.t() | :empty | :unbound,
+          lower_inclusive: boolean,
+          upper_inclusive: boolean
+        }
+
+  defstruct lower: :empty, upper: :empty, lower_inclusive: true, upper_inclusive: false
+
+  @spec type :: :decimalrange
+  @impl true
+  def type, do: :decimalrange
+
+  @spec cast(any()) :: {:ok, t()} | :error
+  @impl true
+  def cast(%__MODULE__{} = value), do: {:ok, value}
+  def cast(_), do: :error
+
+  @spec load(any()) :: {:ok, t()} | :error
+  @impl true
+  def load(%Postgrex.Range{
+        lower: lower,
+        upper: upper,
+        lower_inclusive: low_inclusive,
+        upper_inclusive: upper_inclusive
+      }) do
+    {:ok,
+     %__MODULE__{
+       lower: lower,
+       upper: upper,
+       lower_inclusive: low_inclusive,
+       upper_inclusive: upper_inclusive
+     }}
+  end
+
+  def load(_), do: :error
+
+  @spec dump(t()) :: {:ok, Postgrex.Range.t()} | :error
+  @impl true
+  def dump(%__MODULE__{
+        lower: lower,
+        upper: upper,
+        lower_inclusive: low_inclusive,
+        upper_inclusive: upper_inclusive
+      }) do
+    {:ok,
+     %Postgrex.Range{
+       lower: lower,
+       upper: upper,
+       lower_inclusive: low_inclusive,
+       upper_inclusive: upper_inclusive
+     }}
+  end
+end
+
+defmodule MsbmsSystDatastore.Impl.DbTypes.DateRange do
+  use Ecto.Type
+
+  @type t :: %__MODULE__{
+          lower: Date.t() | :empty | :unbound,
+          upper: Date.t() | :empty | :unbound,
+          lower_inclusive: boolean,
+          upper_inclusive: boolean
+        }
+
+  defstruct lower: :empty, upper: :empty, lower_inclusive: true, upper_inclusive: false
+
+  @spec type :: :daterange
+  @impl true
+  def type, do: :daterange
+
+  @spec cast(any()) :: {:ok, t()} | :error
+  @impl true
+  def cast(%__MODULE__{} = value), do: {:ok, value}
+  def cast(_), do: :error
+
+  @spec load(any()) :: {:ok, t()} | :error
+  @impl true
+  def load(%Postgrex.Range{
+        lower: lower,
+        upper: upper,
+        lower_inclusive: low_inclusive,
+        upper_inclusive: upper_inclusive
+      }) do
+    {:ok,
+     %__MODULE__{
+       lower: lower,
+       upper: upper,
+       lower_inclusive: low_inclusive,
+       upper_inclusive: upper_inclusive
+     }}
+  end
+
+  def load(_), do: :error
+
+  @spec dump(t()) :: {:ok, Postgrex.Range.t()} | :error
+  @impl true
+  def dump(%__MODULE__{
+        lower: lower,
+        upper: upper,
+        lower_inclusive: low_inclusive,
+        upper_inclusive: upper_inclusive
+      }) do
+    {:ok,
+     %Postgrex.Range{
+       lower: lower,
+       upper: upper,
+       lower_inclusive: low_inclusive,
+       upper_inclusive: upper_inclusive
+     }}
+  end
+end
+
+defmodule MsbmsSystDatastore.Impl.DbTypes.TimestampRange do
+  use Ecto.Type
+
+  @type t :: %__MODULE__{
+          lower: DateTime.t() | :empty | :unbound,
+          upper: DateTime.t() | :empty | :unbound,
+          lower_inclusive: boolean,
+          upper_inclusive: boolean
+        }
+
+  defstruct lower: :empty, upper: :empty, lower_inclusive: true, upper_inclusive: false
+
+  @spec type :: :timestamprange
+  @impl true
+  def type, do: :timestamprange
+
+  @spec cast(any()) :: {:ok, t()} | :error
+  @impl true
+  def cast(%__MODULE__{} = value), do: {:ok, value}
+  def cast(_), do: :error
+
+  @spec load(any()) :: {:ok, t()} | :error
+  @impl true
+  def load(%Postgrex.Range{
+        lower: lower,
+        upper: upper,
+        lower_inclusive: low_inclusive,
+        upper_inclusive: upper_inclusive
+      }) do
+    {:ok,
+     %__MODULE__{
+       lower: lower,
+       upper: upper,
+       lower_inclusive: low_inclusive,
+       upper_inclusive: upper_inclusive
+     }}
+  end
+
+  def load(_), do: :error
+
+  @spec dump(t()) :: {:ok, Postgrex.Range.t()} | :error
+  @impl true
+  def dump(%__MODULE__{
+        lower: lower,
+        upper: upper,
+        lower_inclusive: low_inclusive,
+        upper_inclusive: upper_inclusive
+      }) do
+    {:ok,
+     %Postgrex.Range{
+       lower: lower,
+       upper: upper,
+       lower_inclusive: low_inclusive,
+       upper_inclusive: upper_inclusive
+     }}
+  end
 end
