@@ -1,6 +1,6 @@
 -- Note that this script currently exists to support CI testing
 -- A more robust script should be produced to walk users though
--- the initial setup of the mbms_global database and msbms_sys_login
+-- the initial setup of the global database and msbms_sys_login
 -- user.
 --
 -- Do not use this script to setup a production environment.
