@@ -1,5 +1,5 @@
 # Source File: schema.ex
-# Location:    /home/scb/source/products/musebms/components/system/msbms_syst_settings/lib/impl/schema.ex
+# Location:    components/system/msbms_syst_datastore/lib/impl/schema.ex
 # Project:     msbms
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,7 +10,7 @@
 #
 # muse.information@musesystems.com :: https: //muse.systems
 
-defmodule MsbmsSystSettings.Impl.Schema do
+defmodule MsbmsSystDatastore.Schema do
   defmacro __using__(_) do
     quote do
       use Ecto.Schema

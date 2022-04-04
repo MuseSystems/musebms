@@ -11,7 +11,7 @@
 # muse.information@musesystems.com :: https: //muse.systems
 
 defmodule MsbmsSystSettings.Impl.Schema.SystSettings do
-  use MsbmsSystSettings.Impl.Schema
+  use MsbmsSystDatastore.Schema
   import Ecto.Changeset
 
   alias MsbmsSystDatastore.Impl.DbTypes
