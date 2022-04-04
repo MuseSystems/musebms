@@ -420,7 +420,7 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
         )
     end
 
-    Datastore.db_transaction(migration_params.db_conn, trans_func)
+    Datastore.ecto_transaction(migration_params.db_conn, trans_func)
   end
 
   defp deconstruct_migration_filename(filename, migration_params) when is_binary(filename) do

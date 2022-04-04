@@ -332,12 +332,16 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
     end
   end
 
-  @spec db_transaction(
+  # -----------------------------------------------------------------------------
+  # Ecto.Repo Query API Wrappers
+  # -----------------------------------------------------------------------------
+
+  @spec ecto_transaction(
           pid() | Ecto.Repo.t() | Ecto.Adapter.adapter_meta(),
           fun_or_multi :: (... -> any()) | Ecto.Multi.t(),
           opts :: Keyword.t()
         ) :: {:ok, any()} | {:error, MsbmsSystError.t()}
-  def db_transaction(db_conn, job, opts \\ []) do
+  def ecto_transaction(db_conn, job, opts \\ []) do
     put_dynamic_repo(db_conn)
 
     case transaction(job, opts) do
