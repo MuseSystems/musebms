@@ -359,4 +359,149 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
         }
     end
   end
+
+  def record_count(db_conn, queryable, opts) do
+    put_dynamic_repo(db_conn)
+    aggregate(queryable, :count, opts)
+  end
+
+  def ecto_aggregate(db_conn, queryable, aggregate, field, opts \\ []) do
+    put_dynamic_repo(db_conn)
+    aggregate(queryable, aggregate, field, opts)
+  end
+
+  def ecto_all(db_conn, queryable, opts \\ []) do
+    put_dynamic_repo(db_conn)
+    all(queryable, opts)
+  end
+
+  def ecto_delete(db_conn, struct_or_changeset, opts \\ []) do
+    put_dynamic_repo(db_conn)
+    delete(struct_or_changeset, opts)
+  end
+
+  def ecto_delete!(db_conn, struct_or_changeset, opts \\ []) do
+    put_dynamic_repo(db_conn)
+    delete!(struct_or_changeset, opts)
+  end
+
+  def ecto_delete_all(db_conn, queryable, opts \\ []) do
+    put_dynamic_repo(db_conn)
+    delete_all(queryable, opts)
+  end
+
+  def ecto_exists?(db_conn, queryable, opts \\ []) do
+    put_dynamic_repo(db_conn)
+    exists?(queryable, opts)
+  end
+
+  def ecto_get(db_conn, queryable, id, opts \\ []) do
+    put_dynamic_repo(db_conn)
+    get(queryable, id, opts)
+  end
+
+  def ecto_get!(db_conn, queryable, id, opts \\ []) do
+    put_dynamic_repo(db_conn)
+    get!(queryable, id, opts)
+  end
+
+  def ecto_get_by(db_conn, queryable, clauses, opts \\ []) do
+    put_dynamic_repo(db_conn)
+    get_by(queryable, clauses, opts)
+  end
+
+  def ecto_get_by!(db_conn, queryable, clauses, opts \\ []) do
+    put_dynamic_repo(db_conn)
+    get_by!(queryable, clauses, opts)
+  end
+
+  def ecto_in_transaction?(db_conn) do
+    put_dynamic_repo(db_conn)
+    in_transaction?()
+  end
+
+  def ecto_insert(db_conn, struct_or_changeset, opts \\ []) do
+    put_dynamic_repo(db_conn)
+    insert(struct_or_changeset, opts)
+  end
+
+  def ecto_insert!(db_conn, struct_or_changeset, opts \\ []) do
+    put_dynamic_repo(db_conn)
+    insert!(struct_or_changeset, opts)
+  end
+
+  def ecto_insert_all(db_conn, schema_or_source, entries_or_query, opts \\ []) do
+    put_dynamic_repo(db_conn)
+    insert_all(schema_or_source, entries_or_query, opts)
+  end
+
+  def ecto_insert_or_update(db_conn, changeset, opts \\ []) do
+    put_dynamic_repo(db_conn)
+    insert_or_update(changeset, opts)
+  end
+
+  def ecto_insert_or_update!(db_conn, changeset, opts \\ []) do
+    put_dynamic_repo(db_conn)
+    insert_or_update!(changeset, opts)
+  end
+
+  def ecto_load(db_conn, module_or_map, data) do
+    put_dynamic_repo(db_conn)
+    load(module_or_map, data)
+  end
+
+  def ecto_one(db_conn, queryable, opts \\ []) do
+    put_dynamic_repo(db_conn)
+    one(queryable, opts)
+  end
+
+  def ecto_one!(db_conn, queryable, opts \\ []) do
+    put_dynamic_repo(db_conn)
+    one!(queryable, opts)
+  end
+
+  def ecto_preload(db_conn, structs_or_struct_or_nil, preloads, opts \\ []) do
+    put_dynamic_repo(db_conn)
+    preload(structs_or_struct_or_nil, preloads, opts)
+  end
+
+  def ecto_prepare_query(db_conn, operation, query, opts \\ []) do
+    put_dynamic_repo(db_conn)
+    prepare_query(operation, query, opts)
+  end
+
+  def ecto_reload(db_conn, struct_or_structs, opts \\ []) do
+    put_dynamic_repo(db_conn)
+    reload(struct_or_structs, opts)
+  end
+
+  def ecto_reload!(db_conn, struct_or_structs, opts \\ []) do
+    put_dynamic_repo(db_conn)
+    reload!(struct_or_structs, opts)
+  end
+
+  def ecto_rollback(db_conn, value) do
+    put_dynamic_repo(db_conn)
+    rollback(value)
+  end
+
+  def ecto_stream(db_conn, queryable, opts \\ []) do
+    put_dynamic_repo(db_conn)
+    stream(queryable, opts)
+  end
+
+  def ecto_update(db_conn, changeset, opts \\ []) do
+    put_dynamic_repo(db_conn)
+    update(changeset, opts)
+  end
+
+  def ecto_update!(db_conn, changeset, opts \\ []) do
+    put_dynamic_repo(db_conn)
+    update!(changeset, opts)
+  end
+
+  def ecto_update_all(db_conn, queryable, updates, opts \\ []) do
+    put_dynamic_repo(db_conn)
+    update_all(queryable, updates, opts)
+  end
 end

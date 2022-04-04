@@ -269,4 +269,88 @@ defmodule MsbmsSystDatastore do
           optional(atom()) => any()
         }
   defdelegate query_for_many!(db_conn, query, query_params \\ [], opts \\ []), to: Datastore
+
+  # The API below largely duplicates the Ecto.Repo Queryable API and currently
+  # wraps it.  The expectation is whether or not we continue to use Ecto, we'd
+  # want our basic data access API to look really close to it since it would be
+  # reasonably familiar to other developers.
+
+  defdelegate transaction(db_conn, job, opts \\ []), to: Datastore, as: :ecto_transaction
+  defdelegate record_count(db_conn, queryable, opts), to: Datastore, as: :record_count
+
+  defdelegate aggregate(db_conn, queryable, aggregate, field, opts \\ []),
+    to: Datastore,
+    as: :ecto_aggregate
+
+  defdelegate all(db_conn, queryable, opts \\ []), to: Datastore, as: :ecto_all
+
+  defdelegate delete(db_conn, struct_or_changeset, opts \\ []),
+    to: Datastore,
+    as: :ecto_delete
+
+  defdelegate delete!(db_conn, struct_or_changeset, opts \\ []),
+    to: Datastore,
+    as: :ecto_delete
+
+  defdelegate delete_all(db_conn, queryable, opts \\ []), to: Datastore, as: :ecto_delete_all
+  defdelegate exists?(db_conn, queryable, opts \\ []), to: Datastore, as: :ecto_exists?
+  defdelegate get(db_conn, queryable, id, opts \\ []), to: Datastore, as: :ecto_get
+  defdelegate get!(db_conn, queryable, id, opts \\ []), to: Datastore, as: :ecto_get
+
+  defdelegate get_by(db_conn, queryable, clauses, opts \\ []),
+    to: Datastore,
+    as: :ecto_get_by
+
+  defdelegate get_by!(db_conn, queryable, clauses, opts \\ []),
+    to: Datastore,
+    as: :ecto_get_by
+
+  defdelegate in_transaction?(db_conn), to: Datastore, as: :ecto_in_transaction?
+
+  defdelegate insert(db_conn, struct_or_changeset, opts \\ []),
+    to: Datastore,
+    as: :ecto_insert
+
+  defdelegate insert!(db_conn, struct_or_changeset, opts \\ []),
+    to: Datastore,
+    as: :ecto_insert
+
+  defdelegate insert_all(db_conn, schema_or_source, entries_or_query, opts \\ []),
+    to: Datastore,
+    as: :ecto_insert_all
+
+  defdelegate insert_or_update(db_conn, changeset, opts \\ []),
+    to: Datastore,
+    as: :ecto_insert_or_update
+
+  defdelegate insert_or_update!(db_conn, changeset, opts \\ []),
+    to: Datastore,
+    as: :ecto_insert_or_update
+
+  defdelegate load(db_conn, module_or_map, data), to: Datastore, as: :ecto_load
+  defdelegate one(db_conn, queryable, opts \\ []), to: Datastore, as: :ecto_one
+  defdelegate one!(db_conn, queryable, opts \\ []), to: Datastore, as: :ecto_one
+
+  defdelegate preload(db_conn, structs_or_struct_or_nil, preloads, opts \\ []),
+    to: Datastore,
+    as: :ecto_preload
+
+  defdelegate prepare_query(db_conn, operation, query, opts \\ []),
+    to: Datastore,
+    as: :ecto_prepare_query
+
+  defdelegate reload(db_conn, struct_or_structs, opts \\ []), to: Datastore, as: :ecto_reload
+
+  defdelegate reload!(db_conn, struct_or_structs, opts \\ []),
+    to: Datastore,
+    as: :ecto_reload
+
+  defdelegate rollback(db_conn, value), to: Datastore, as: :ecto_rollback
+  defdelegate stream(db_conn, queryable, opts \\ []), to: Datastore, as: :ecto_stream
+  defdelegate update(db_conn, changeset, opts \\ []), to: Datastore, as: :ecto_update
+  defdelegate update!(db_conn, changeset, opts \\ []), to: Datastore, as: :ecto_update
+
+  defdelegate update_all(db_conn, queryable, updates, opts \\ []),
+    to: Datastore,
+    as: :ecto_update_all
 end
