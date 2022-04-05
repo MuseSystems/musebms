@@ -1,5 +1,5 @@
 # Source File: db_types.ex
-# Location:    components/system/msbms_syst_datastore/lib/impl/db_types.ex
+# Location:    components/system/msbms_syst_datastore/lib/db_types.ex
 # Project:     msbms
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,11 +10,11 @@
 #
 # muse.information@musesystems.com :: https: //muse.systems
 
-Postgrex.Types.define(MsbmsSystDatastore.Impl.DbTypes.PostgrexTypes, [],
+Postgrex.Types.define(MsbmsSystDatastore.DbTypes.PostgrexTypes, [],
   allow_infinite_timestamps: true
 )
 
-defmodule MsbmsSystDatastore.Impl.DbTypes.Interval do
+defmodule MsbmsSystDatastore.DbTypes.Interval do
   use Ecto.Type
 
   @moduledoc """
@@ -56,7 +56,7 @@ defmodule MsbmsSystDatastore.Impl.DbTypes.Interval do
   def dump(_), do: :error
 end
 
-defmodule MsbmsSystDatastore.Impl.DbTypes.IntegerRange do
+defmodule MsbmsSystDatastore.DbTypes.IntegerRange do
   use Ecto.Type
 
   @type t :: %__MODULE__{
@@ -114,7 +114,7 @@ defmodule MsbmsSystDatastore.Impl.DbTypes.IntegerRange do
   end
 end
 
-defmodule MsbmsSystDatastore.Impl.DbTypes.DecimalRange do
+defmodule MsbmsSystDatastore.DbTypes.DecimalRange do
   use Ecto.Type
 
   @type t :: %__MODULE__{
@@ -172,7 +172,7 @@ defmodule MsbmsSystDatastore.Impl.DbTypes.DecimalRange do
   end
 end
 
-defmodule MsbmsSystDatastore.Impl.DbTypes.DateRange do
+defmodule MsbmsSystDatastore.DbTypes.DateRange do
   use Ecto.Type
 
   @type t :: %__MODULE__{
@@ -230,7 +230,7 @@ defmodule MsbmsSystDatastore.Impl.DbTypes.DateRange do
   end
 end
 
-defmodule MsbmsSystDatastore.Impl.DbTypes.TimestampRange do
+defmodule MsbmsSystDatastore.DbTypes.TimestampRange do
   use Ecto.Type
 
   @type t :: %__MODULE__{
