@@ -40,4 +40,9 @@ load_files = [
     "cmp_msbms_syst_settings/msbms_syst_data/tables/syst_feature_setting_assigns.eex.sql",
 
     "cmp_msbms_syst_settings/testing_support/test_data.eex.sql",
+
+    "cmp_msbms_syst_settings/msbms_syst/api_views/syst_settings/trig_i_i_syst_settings.eex.sql",
+    "cmp_msbms_syst_settings/msbms_syst/api_views/syst_settings/trig_i_u_syst_settings.eex.sql",
+    "cmp_msbms_syst_settings/msbms_syst/api_views/syst_settings/trig_i_d_syst_settings.eex.sql",
+    "cmp_msbms_syst_settings/msbms_syst/api_views/syst_settings/syst_settings.eex.sql",
 ]
