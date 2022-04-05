@@ -89,7 +89,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
       password: context.database_password,
       show_sensitive_data_on_connection_error: datastore_options.db_server.db_show_sensitive,
       pool_size: context.starting_pool_size,
-      types: MsbmsSystDatastore.Impl.DbTypes.PostgrexTypes
+      types: MsbmsSystDatastore.DbTypes.PostgrexTypes
     )
     |> maybe_context_start_result()
   catch
