@@ -1,5 +1,5 @@
 # Source File: syst_settings.ex
-# Location:    /home/scb/source/products/musebms/components/system/msbms_syst_settings/lib/impl/schema/syst_settings.ex
+# Location:    components/system/msbms_syst_settings/lib/data/syst_settings.ex
 # Project:     msbms
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,13 +10,13 @@
 #
 # muse.information@musesystems.com :: https: //muse.systems
 
-defmodule MsbmsSystSettings.Impl.Schema.SystSettings do
+defmodule MsbmsSystSettings.Data.SystSettings do
   use MsbmsSystDatastore.Schema
   import Ecto.Changeset
 
-  alias MsbmsSystDatastore.Impl.DbTypes
+  alias MsbmsSystDatastore.DbTypes
 
-  @schema_prefix "msbms_syst_data"
+  @schema_prefix "msbms_syst"
 
   schema "syst_settings" do
     field(:internal_name, :string)
