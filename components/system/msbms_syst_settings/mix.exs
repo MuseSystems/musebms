@@ -16,7 +16,7 @@ defmodule MsbmsSystSettings.MixProject do
   ]
 
   @dialyzer_opts [
-    flags: ["-Wunmatched_returns", :error_handling, :underspecs],
+    flags: ["-Wunmatched_returns", :error_handling, :race_conditions, :underspecs],
     plt_add_apps: [:mix]
   ]
 
