@@ -50,10 +50,24 @@ defmodule MsbmsSystSettings.Data.SystSettings do
 
   def changeset(syst_settings, params \\ %{}) do
     syst_settings
-    |> cast(params, [:name, :email, :age])
-    |> validate_required([:name, :email])
-    |> validate_format(:email, ~r/@/)
-    |> validate_inclusion(:age, 18..100)
-    |> unique_constraint(:email)
+    |> cast(params, [
+      :display_name,
+      :user_description,
+      :config_flag,
+      :config_integer,
+      :config_integer_range,
+      :config_decimal,
+      :config_decimal_range,
+      :config_interval,
+      :config_date,
+      :config_date_range,
+      :config_time,
+      :config_timestamp,
+      :config_timestamp_range,
+      :config_json,
+      :config_text,
+      :config_uuid,
+      :config_blob
+    ])
   end
 end
