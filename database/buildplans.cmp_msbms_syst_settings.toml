@@ -30,19 +30,11 @@ load_files = [
     "all/msbms_syst_priv/functions/get_exception_details.eex.sql",
     "all/msbms_syst_priv/trigger_functions/trig_b_iu_set_diagnostic_columns.eex.sql",
 
-    "cmp_msbms_syst_features/msbms_syst_data/tables/syst_relations.eex.sql",
-    "cmp_msbms_syst_features/msbms_syst_data/tables/syst_feature_map_levels.eex.sql",
-    "cmp_msbms_syst_features/msbms_syst_data/tables/syst_feature_map.eex.sql",
-    "cmp_msbms_syst_features/msbms_syst_priv/trigger_functions/multi_table/trig_a_iu_feature_map_level_assignable_check.eex.sql",
-    "cmp_msbms_syst_features/msbms_syst_data/tables/syst_feature_relation_assigns.eex.sql",
-
     "cmp_msbms_syst_settings/msbms_syst_data/tables/syst_settings.eex.sql",
-    "cmp_msbms_syst_settings/msbms_syst_data/tables/syst_feature_setting_assigns.eex.sql",
-
-    "cmp_msbms_syst_settings/testing_support/test_data.eex.sql",
-
     "cmp_msbms_syst_settings/msbms_syst/api_views/syst_settings/trig_i_i_syst_settings.eex.sql",
     "cmp_msbms_syst_settings/msbms_syst/api_views/syst_settings/trig_i_u_syst_settings.eex.sql",
     "cmp_msbms_syst_settings/msbms_syst/api_views/syst_settings/trig_i_d_syst_settings.eex.sql",
     "cmp_msbms_syst_settings/msbms_syst/api_views/syst_settings/syst_settings.eex.sql",
+
+    "cmp_msbms_syst_settings/testing_support/test_data.eex.sql",
 ]
