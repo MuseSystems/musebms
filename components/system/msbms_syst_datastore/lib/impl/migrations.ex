@@ -192,9 +192,9 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
     :ok
   end
 
-  @spec get_datastore_version(pid() | atom(), Keyword.t()) ::
+  @spec get_datastore_version(Keyword.t()) ::
           {:ok, String.t()} | {:error, MsbmsSystError.t()}
-  def get_datastore_version(priv_db_conn, opts \\ []) do
+  def get_datastore_version(opts \\ []) do
     opts_default = [
       migrations_schema: @default_migrations_schema,
       migrations_table: @default_migrations_table
@@ -204,7 +204,6 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
 
     migration_table_exists? =
       query_table_exists(
-        priv_db_conn,
         opts_final[:migrations_schema],
         opts_final[:migrations_table]
       )
@@ -212,7 +211,6 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
     if migration_table_exists? do
       {:ok,
        query_datastore_version(
-         priv_db_conn,
          opts_final[:migrations_schema],
          opts_final[:migrations_table]
        )}
@@ -233,30 +231,24 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
       }
   end
 
-  defp query_table_exists(priv_db_conn, migrations_schema, migrations_table) do
-    Datastore.query_for_value!(
-      priv_db_conn,
-      """
-      SELECT exists(
-        SELECT true
-        FROM   pg_tables
-        WHERE  schemaname = '#{migrations_schema}' AND
-               tablename = '#{migrations_table}'
-      ) AS migrations_found
-      """
-    )
+  defp query_table_exists(migrations_schema, migrations_table) do
+    Datastore.query_for_value!("""
+    SELECT exists(
+      SELECT true
+      FROM   pg_tables
+      WHERE  schemaname = '#{migrations_schema}' AND
+             tablename = '#{migrations_table}'
+    ) AS migrations_found
+    """)
   end
 
-  defp query_datastore_version(priv_db_conn, migrations_schema, migrations_table) do
-    Datastore.query_for_value!(
-      priv_db_conn,
-      """
-      SELECT
-        coalesce(
-          (SELECT max(migration_version) FROM #{migrations_schema}.#{migrations_table}),
-          '00.00.000.000000.000') AS max_migration_version;
-      """
-    )
+  defp query_datastore_version(migrations_schema, migrations_table) do
+    Datastore.query_for_value!("""
+    SELECT
+      coalesce(
+        (SELECT max(migration_version) FROM #{migrations_schema}.#{migrations_table}),
+        '00.00.000.000000.000') AS max_migration_version;
+    """)
     |> String.upcase()
   end
 
@@ -266,9 +258,9 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
     |> Enum.sort()
   end
 
-  @spec initialize_datastore(pid() | atom(), String.t(), Keyword.t()) ::
+  @spec initialize_datastore(String.t(), Keyword.t()) ::
           :ok | {:error, MsbmsSystError.t()}
-  def initialize_datastore(priv_db_conn, datastore_owner, opts \\ []) do
+  def initialize_datastore(datastore_owner, opts \\ []) do
     opts_default = [
       migrations_schema: @default_migrations_schema,
       migrations_table: @default_migrations_table
@@ -288,7 +280,7 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
         bindings
       )
 
-    Datastore.query_for_none!(priv_db_conn, migration_schema_sql)
+    Datastore.query_for_none!(migration_schema_sql)
 
     :ok
   rescue
@@ -305,10 +297,9 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
       }
   end
 
-  @spec apply_outstanding_migrations(pid() | atom(), String.t(), Keyword.t(), Keyword.t()) ::
+  @spec apply_outstanding_migrations(String.t(), Keyword.t(), Keyword.t()) ::
           {:error, MsbmsSystError.t()} | {:ok, list}
   def apply_outstanding_migrations(
-        priv_db_conn,
         datastore_type,
         migration_bindings,
         opts \\ []
@@ -328,7 +319,6 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
 
     {:ok, current_version} =
       get_datastore_version(
-        priv_db_conn,
         migrations_schema: opts_final[:migrations_schema],
         migrations_table: opts_final[:migrations_table]
       )
@@ -337,7 +327,6 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
       Enum.reduce(
         available_migrations,
         %{
-          db_conn: priv_db_conn,
           current_version: current_version,
           migrations_root_dir: opts_final[:migrations_root_dir],
           datastore_type: datastore_type,
@@ -374,7 +363,6 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
 
       {:ok, current_version} =
         get_datastore_version(
-          migration_params.db_conn,
           migrations_schema: migration_params.migrations_schema,
           migrations_table: migration_params.migrations_table
         )
@@ -420,7 +408,7 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
         )
     end
 
-    Datastore.ecto_transaction(migration_params.db_conn, trans_func)
+    Datastore.ecto_transaction(trans_func)
   end
 
   defp deconstruct_migration_filename(filename, migration_params) when is_binary(filename) do

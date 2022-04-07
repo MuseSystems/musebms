@@ -194,21 +194,19 @@ defmodule MsbmsSystDatastoreTest do
                @migration_test_opts
              )
 
+    MsbmsSystDatastore.set_datastore_context(:msbms_type_four_role_01)
+
     assert 3 = length(first_stage_migrations_applied)
 
-    assert :ok = MsbmsSystDatastore.query_for_none(:msbms_type_four_role_01, "SELECT true;")
+    assert :ok = MsbmsSystDatastore.query_for_none("SELECT true;")
 
     assert {:ok, 2} =
              MsbmsSystDatastore.query_for_value(
-               :msbms_type_four_role_01,
                "SELECT count(id) AS rec_count FROM msbms_test.test_type_four;"
              )
 
     assert {:ok, %{num_rows: 2}} =
-             MsbmsSystDatastore.query_for_many(
-               :msbms_type_four_role_01,
-               "SELECT * FROM msbms_test.test_type_four;"
-             )
+             MsbmsSystDatastore.query_for_many("SELECT * FROM msbms_test.test_type_four;")
 
     :ok = setup_second_stage_migration_test()
 
@@ -222,17 +220,15 @@ defmodule MsbmsSystDatastoreTest do
 
     assert 8 = length(second_stage_migrations_applied)
 
+    MsbmsSystDatastore.set_datastore_context(:msbms_type_four_role_01)
+
     assert {:ok, 10} =
              MsbmsSystDatastore.query_for_value(
-               :msbms_type_four_role_01,
                "SELECT count(id) AS rec_count FROM msbms_test.test_type_four;"
              )
 
     assert {:ok, %{num_rows: 10}} =
-             MsbmsSystDatastore.query_for_many(
-               :msbms_type_four_role_01,
-               "SELECT * FROM msbms_test.test_type_four;"
-             )
+             MsbmsSystDatastore.query_for_many("SELECT * FROM msbms_test.test_type_four;")
 
     assert :ok = MsbmsSystDatastore.stop_datastore(datastore_options)
   end
