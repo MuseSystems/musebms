@@ -14,58 +14,58 @@ $BODY$
 --
 -- muse.information@musesystems.com  :: https://muse.systems
 
-    BEGIN
+BEGIN
 
-        IF
-            old.syst_defined AND
-            ( new.internal_name    != old.internal_name OR
-              new.display_name     != old.display_name OR
-              new.syst_defined     != old.syst_defined OR
-              new.syst_description != old.syst_description )
-        THEN
-            RAISE EXCEPTION
-                USING
-                    MESSAGE = 'The requested data update included changes to fields disallowed ' ||
-                              'by the business rules of the API View.',
-                    DETAIL = msbms_syst_priv.get_exception_details(
-                                 p_proc_schema    => 'msbms_syst'
-                                ,p_proc_name      => 'trig_i_u_syst_settings'
-                                ,p_exception_name => 'invalid_api_view_call'
-                                ,p_errcode        => 'PM008'
-                                ,p_param_data     => to_jsonb(new)
-                                ,p_context_data   =>
-                                    jsonb_build_object(
-                                         'tg_op',         tg_op
-                                        ,'tg_when',       tg_when
-                                        ,'tg_schema',     tg_table_schema
-                                        ,'tg_table_name', tg_table_name)),
-                    ERRCODE = 'PM008',
-                    SCHEMA = tg_table_schema,
-                    TABLE = tg_table_name;
-        END IF;
+    IF
+        old.syst_defined AND
+        ( new.internal_name    != old.internal_name OR
+          new.display_name     != old.display_name OR
+          new.syst_defined     != old.syst_defined OR
+          new.syst_description != old.syst_description )
+    THEN
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'The requested data update included changes to fields disallowed ' ||
+                          'by the business rules of the API View.',
+                DETAIL = msbms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'msbms_syst'
+                            ,p_proc_name      => 'trig_i_u_syst_settings'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(new)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+    END IF;
 
-        UPDATE msbms_syst_data.syst_settings SET
-              user_description       = new.user_description
-            , config_flag            = new.config_flag
-            , config_integer         = new.config_integer
-            , config_integer_range   = new.config_integer_range
-            , config_decimal         = new.config_decimal
-            , config_decimal_range   = new.config_decimal_range
-            , config_interval        = new.config_interval
-            , config_date            = new.config_date
-            , config_date_range      = new.config_date_range
-            , config_time            = new.config_time
-            , config_timestamp       = new.config_timestamp
-            , config_timestamp_range = new.config_timestamp_range
-            , config_json            = new.config_json
-            , config_text            = new.config_text
-            , config_uuid            = new.config_uuid
-            , config_blob            = new.config_blob
-        WHERE id = new.id;
+    UPDATE msbms_syst_data.syst_settings SET
+          user_description       = new.user_description
+        , config_flag            = new.config_flag
+        , config_integer         = new.config_integer
+        , config_integer_range   = new.config_integer_range
+        , config_decimal         = new.config_decimal
+        , config_decimal_range   = new.config_decimal_range
+        , config_interval        = new.config_interval
+        , config_date            = new.config_date
+        , config_date_range      = new.config_date_range
+        , config_time            = new.config_time
+        , config_timestamp       = new.config_timestamp
+        , config_timestamp_range = new.config_timestamp_range
+        , config_json            = new.config_json
+        , config_text            = new.config_text
+        , config_uuid            = new.config_uuid
+        , config_blob            = new.config_blob
+    WHERE id = new.id;
 
-        RETURN new;
+    RETURN new;
 
-    END;
+END;
 $BODY$ LANGUAGE plpgsql VOLATILE SECURITY DEFINER;
 
 ALTER FUNCTION msbms_syst.trig_i_u_syst_settings() OWNER TO <%= msbms_owner %>;

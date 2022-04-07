@@ -12,34 +12,34 @@
 
 CREATE VIEW msbms_syst.syst_settings AS
     SELECT
-    id
-    ,internal_name
-    ,display_name
-    ,syst_defined
-    ,syst_description
-    ,user_description
-    ,config_flag
-    ,config_integer
-    ,config_integer_range
-    ,config_decimal
-    ,config_decimal_range
-    ,config_interval
-    ,config_date
-    ,config_date_range
-    ,config_time
-    ,config_timestamp
-    ,config_timestamp_range
-    ,config_json
-    ,config_text
-    ,config_uuid
-    ,config_blob
-    ,diag_timestamp_created
-    ,diag_role_created
-    ,diag_timestamp_modified
-    ,diag_wallclock_modified
-    ,diag_role_modified
-    ,diag_row_version
-    ,diag_update_count
+        id
+      , internal_name
+      , display_name
+      , syst_defined
+      , syst_description
+      , user_description
+      , config_flag
+      , config_integer
+      , config_integer_range
+      , config_decimal
+      , config_decimal_range
+      , config_interval
+      , config_date
+      , config_date_range
+      , config_time
+      , config_timestamp
+      , config_timestamp_range
+      , config_json
+      , config_text
+      , config_uuid
+      , config_blob
+      , diag_timestamp_created
+      , diag_role_created
+      , diag_timestamp_modified
+      , diag_wallclock_modified
+      , diag_role_modified
+      , diag_row_version
+      , diag_update_count
     FROM msbms_syst_data.syst_settings;
 
 ALTER VIEW msbms_syst.syst_settings OWNER TO <%= msbms_owner %>;
