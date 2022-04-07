@@ -149,19 +149,12 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
 
   def stop_datastore_context(context, shutdown_timeout)
       when is_pid(context) or is_atom(context) do
-    put_dynamic_repo(context)
+    set_datastore_context(context)
     stop(shutdown_timeout)
   end
 
-  @spec query_for_none(
-          pid() | Ecto.Repo.t() | Ecto.Adapter.adapter_meta(),
-          iodata(),
-          [term()],
-          Keyword.t()
-        ) :: :ok | {:error, MsbmsSystError.t()}
-  def query_for_none(db_conn, query, query_params \\ [], opts \\ []) do
-    put_dynamic_repo(db_conn)
-
+  @spec query_for_none(iodata(), [term()], Keyword.t()) :: :ok | {:error, MsbmsSystError.t()}
+  def query_for_none(query, query_params \\ [], opts \\ []) do
     case query(query, query_params, opts) do
       {:ok, _query_result} ->
         :ok
@@ -176,14 +169,9 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
     end
   end
 
-  @spec query_for_none!(
-          pid() | Ecto.Repo.t() | Ecto.Adapter.adapter_meta(),
-          iodata(),
-          [term()],
-          Keyword.t()
-        ) :: :ok
-  def query_for_none!(db_conn, query, query_params \\ [], opts \\ []) do
-    case query_for_none(db_conn, query, query_params, opts) do
+  @spec query_for_none!(iodata(), [term()], Keyword.t()) :: :ok
+  def query_for_none!(query, query_params \\ [], opts \\ []) do
+    case query_for_none(query, query_params, opts) do
       :ok ->
         :ok
 
@@ -195,15 +183,9 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
     end
   end
 
-  @spec query_for_value(
-          pid() | Ecto.Repo.t() | Ecto.Adapter.adapter_meta(),
-          iodata(),
-          [term()],
-          Keyword.t()
-        ) :: {:ok, any()} | {:error, MsbmsSystError.t()}
-  def query_for_value(db_conn, query, query_params \\ [], opts \\ []) do
-    put_dynamic_repo(db_conn)
-
+  @spec query_for_value(iodata(), [term()], Keyword.t()) ::
+          {:ok, any()} | {:error, MsbmsSystError.t()}
+  def query_for_value(query, query_params \\ [], opts \\ []) do
     case query(query, query_params, opts) do
       {:ok, %{num_rows: 1, rows: [[result_value | _] | _]}} ->
         {:ok, result_value}
@@ -218,14 +200,9 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
     end
   end
 
-  @spec query_for_value!(
-          pid() | Ecto.Repo.t() | Ecto.Adapter.adapter_meta(),
-          iodata(),
-          [term()],
-          Keyword.t()
-        ) :: any()
-  def query_for_value!(db_conn, query, query_params \\ [], opts \\ []) do
-    case query_for_value(db_conn, query, query_params, opts) do
+  @spec query_for_value!(iodata(), [term()], Keyword.t()) :: any()
+  def query_for_value!(query, query_params \\ [], opts \\ []) do
+    case query_for_value(query, query_params, opts) do
       {:ok, result_value} ->
         result_value
 
@@ -237,15 +214,9 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
     end
   end
 
-  @spec query_for_one(
-          pid() | Ecto.Repo.t() | Ecto.Adapter.adapter_meta(),
-          iodata(),
-          [term()],
-          Keyword.t()
-        ) :: {:ok, [any()]} | {:error, MsbmsSystError.t()}
-  def query_for_one(db_conn, query, query_params \\ [], opts \\ []) do
-    put_dynamic_repo(db_conn)
-
+  @spec query_for_one(iodata(), [term()], Keyword.t()) ::
+          {:ok, [any()]} | {:error, MsbmsSystError.t()}
+  def query_for_one(query, query_params \\ [], opts \\ []) do
     case query(query, query_params, opts) do
       {:ok, %{num_rows: 1, rows: [result_row | _]}} ->
         {:ok, result_row}
@@ -260,14 +231,9 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
     end
   end
 
-  @spec query_for_one!(
-          pid() | Ecto.Repo.t() | Ecto.Adapter.adapter_meta(),
-          iodata(),
-          [term()],
-          Keyword.t()
-        ) :: [any()]
-  def query_for_one!(db_conn, query, query_params \\ [], opts \\ []) do
-    case query_for_one(db_conn, query, query_params, opts) do
+  @spec query_for_one!(iodata(), [term()], Keyword.t()) :: [any()]
+  def query_for_one!(query, query_params \\ [], opts \\ []) do
+    case query_for_one(query, query_params, opts) do
       {:ok, result_value} ->
         result_value
 
@@ -279,12 +245,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
     end
   end
 
-  @spec query_for_many(
-          pid() | Ecto.Repo.t() | Ecto.Adapter.adapter_meta(),
-          iodata(),
-          [term()],
-          Keyword.t()
-        ) ::
+  @spec query_for_many(iodata(), [term()], Keyword.t()) ::
           {:ok,
            %{
              :rows => nil | [[term()] | binary()],
@@ -292,9 +253,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
              optional(atom()) => any()
            }}
           | {:error, MsbmsSystError.t()}
-  def query_for_many(db_conn, query, query_params \\ [], opts \\ []) do
-    put_dynamic_repo(db_conn)
-
+  def query_for_many(query, query_params \\ [], opts \\ []) do
     case query(query, query_params, opts) do
       query_result = {:ok, _result} ->
         query_result
@@ -309,18 +268,13 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
     end
   end
 
-  @spec query_for_many!(
-          pid() | Ecto.Repo.t() | Ecto.Adapter.adapter_meta(),
-          iodata(),
-          [term()],
-          Keyword.t()
-        ) :: %{
+  @spec query_for_many!(iodata(), [term()], Keyword.t()) :: %{
           :rows => nil | [[term()] | binary()],
           :num_rows => non_neg_integer(),
           optional(atom()) => any()
         }
-  def query_for_many!(db_conn, query, query_params \\ [], opts \\ []) do
-    case query_for_many(db_conn, query, query_params, opts) do
+  def query_for_many!(query, query_params \\ [], opts \\ []) do
+    case query_for_many(query, query_params, opts) do
       {:ok, result_value} ->
         result_value
 
@@ -336,14 +290,18 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
   # Ecto.Repo Query API Wrappers
   # -----------------------------------------------------------------------------
 
+  @spec set_datastore_context(pid() | Ecto.Repo.t() | Ecto.Adapter.adapter_meta()) ::
+          atom() | pid()
+  def set_datastore_context(context), do: put_dynamic_repo(context)
+
+  @spec current_datastore_context :: atom() | pid()
+  def current_datastore_context(), do: get_dynamic_repo()
+
   @spec ecto_transaction(
-          pid() | Ecto.Repo.t() | Ecto.Adapter.adapter_meta(),
           fun_or_multi :: (... -> any()) | Ecto.Multi.t(),
           opts :: Keyword.t()
         ) :: {:ok, any()} | {:error, MsbmsSystError.t()}
-  def ecto_transaction(db_conn, job, opts \\ []) do
-    put_dynamic_repo(db_conn)
-
+  def ecto_transaction(job, opts \\ []) do
     case transaction(job, opts) do
       transaction_result = {:ok, _result} ->
         transaction_result
@@ -360,148 +318,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
     end
   end
 
-  def record_count(db_conn, queryable, opts) do
-    put_dynamic_repo(db_conn)
+  def record_count(queryable, opts) do
     aggregate(queryable, :count, opts)
-  end
-
-  def ecto_aggregate(db_conn, queryable, aggregate, field, opts \\ []) do
-    put_dynamic_repo(db_conn)
-    aggregate(queryable, aggregate, field, opts)
-  end
-
-  def ecto_all(db_conn, queryable, opts \\ []) do
-    put_dynamic_repo(db_conn)
-    all(queryable, opts)
-  end
-
-  def ecto_delete(db_conn, struct_or_changeset, opts \\ []) do
-    put_dynamic_repo(db_conn)
-    delete(struct_or_changeset, opts)
-  end
-
-  def ecto_delete!(db_conn, struct_or_changeset, opts \\ []) do
-    put_dynamic_repo(db_conn)
-    delete!(struct_or_changeset, opts)
-  end
-
-  def ecto_delete_all(db_conn, queryable, opts \\ []) do
-    put_dynamic_repo(db_conn)
-    delete_all(queryable, opts)
-  end
-
-  def ecto_exists?(db_conn, queryable, opts \\ []) do
-    put_dynamic_repo(db_conn)
-    exists?(queryable, opts)
-  end
-
-  def ecto_get(db_conn, queryable, id, opts \\ []) do
-    put_dynamic_repo(db_conn)
-    get(queryable, id, opts)
-  end
-
-  def ecto_get!(db_conn, queryable, id, opts \\ []) do
-    put_dynamic_repo(db_conn)
-    get!(queryable, id, opts)
-  end
-
-  def ecto_get_by(db_conn, queryable, clauses, opts \\ []) do
-    put_dynamic_repo(db_conn)
-    get_by(queryable, clauses, opts)
-  end
-
-  def ecto_get_by!(db_conn, queryable, clauses, opts \\ []) do
-    put_dynamic_repo(db_conn)
-    get_by!(queryable, clauses, opts)
-  end
-
-  def ecto_in_transaction?(db_conn) do
-    put_dynamic_repo(db_conn)
-    in_transaction?()
-  end
-
-  def ecto_insert(db_conn, struct_or_changeset, opts \\ []) do
-    put_dynamic_repo(db_conn)
-    insert(struct_or_changeset, opts)
-  end
-
-  def ecto_insert!(db_conn, struct_or_changeset, opts \\ []) do
-    put_dynamic_repo(db_conn)
-    insert!(struct_or_changeset, opts)
-  end
-
-  def ecto_insert_all(db_conn, schema_or_source, entries_or_query, opts \\ []) do
-    put_dynamic_repo(db_conn)
-    insert_all(schema_or_source, entries_or_query, opts)
-  end
-
-  def ecto_insert_or_update(db_conn, changeset, opts \\ []) do
-    put_dynamic_repo(db_conn)
-    insert_or_update(changeset, opts)
-  end
-
-  def ecto_insert_or_update!(db_conn, changeset, opts \\ []) do
-    put_dynamic_repo(db_conn)
-    insert_or_update!(changeset, opts)
-  end
-
-  def ecto_load(db_conn, module_or_map, data) do
-    put_dynamic_repo(db_conn)
-    load(module_or_map, data)
-  end
-
-  def ecto_one(db_conn, queryable, opts \\ []) do
-    put_dynamic_repo(db_conn)
-    one(queryable, opts)
-  end
-
-  def ecto_one!(db_conn, queryable, opts \\ []) do
-    put_dynamic_repo(db_conn)
-    one!(queryable, opts)
-  end
-
-  def ecto_preload(db_conn, structs_or_struct_or_nil, preloads, opts \\ []) do
-    put_dynamic_repo(db_conn)
-    preload(structs_or_struct_or_nil, preloads, opts)
-  end
-
-  def ecto_prepare_query(db_conn, operation, query, opts \\ []) do
-    put_dynamic_repo(db_conn)
-    prepare_query(operation, query, opts)
-  end
-
-  def ecto_reload(db_conn, struct_or_structs, opts \\ []) do
-    put_dynamic_repo(db_conn)
-    reload(struct_or_structs, opts)
-  end
-
-  def ecto_reload!(db_conn, struct_or_structs, opts \\ []) do
-    put_dynamic_repo(db_conn)
-    reload!(struct_or_structs, opts)
-  end
-
-  def ecto_rollback(db_conn, value) do
-    put_dynamic_repo(db_conn)
-    rollback(value)
-  end
-
-  def ecto_stream(db_conn, queryable, opts \\ []) do
-    put_dynamic_repo(db_conn)
-    stream(queryable, opts)
-  end
-
-  def ecto_update(db_conn, changeset, opts \\ []) do
-    put_dynamic_repo(db_conn)
-    update(changeset, opts)
-  end
-
-  def ecto_update!(db_conn, changeset, opts \\ []) do
-    put_dynamic_repo(db_conn)
-    update!(changeset, opts)
-  end
-
-  def ecto_update_all(db_conn, queryable, updates, opts \\ []) do
-    put_dynamic_repo(db_conn)
-    update_all(queryable, updates, opts)
   end
 end

@@ -173,79 +173,46 @@ defmodule MsbmsSystDatastore do
   @doc """
   Executes a database query but returns no results.
   """
-  @spec query_for_none(
-          pid() | Ecto.Repo.t() | Ecto.Adapter.adapter_meta(),
-          iodata(),
-          [term()],
-          Keyword.t()
-        ) :: :ok | {:error, MsbmsSystError.t()}
-  defdelegate query_for_none(db_conn, query, query_params \\ [], opts \\ []), to: Datastore
+  @spec query_for_none(iodata(), [term()], Keyword.t()) :: :ok | {:error, MsbmsSystError.t()}
+  defdelegate query_for_none(query, query_params \\ [], opts \\ []), to: Datastore
 
   @doc """
   Executes a database query but returns no results.  Raises on error.
 
   """
-  @spec query_for_none!(
-          pid() | Ecto.Repo.t() | Ecto.Adapter.adapter_meta(),
-          iodata(),
-          [term()],
-          Keyword.t()
-        ) :: :ok
-  defdelegate query_for_none!(db_conn, query, query_params \\ [], opts \\ []), to: Datastore
+  @spec query_for_none!(iodata(), [term()], Keyword.t()) :: :ok
+  defdelegate query_for_none!(query, query_params \\ [], opts \\ []), to: Datastore
 
   @doc """
   Executes a database query returning a single value.
   """
-  @spec query_for_value(
-          pid() | Ecto.Repo.t() | Ecto.Adapter.adapter_meta(),
-          iodata(),
-          [term()],
-          Keyword.t()
-        ) :: {:ok, any()} | {:error, MsbmsSystError.t()}
-  defdelegate query_for_value(db_conn, query, query_params \\ [], opts \\ []), to: Datastore
+  @spec query_for_value(iodata(), [term()], Keyword.t()) ::
+          {:ok, any()} | {:error, MsbmsSystError.t()}
+  defdelegate query_for_value(query, query_params \\ [], opts \\ []), to: Datastore
 
   @doc """
   Executes a database query returning a single value.  Raises on error.
   """
-  @spec query_for_value!(
-          pid() | Ecto.Repo.t() | Ecto.Adapter.adapter_meta(),
-          iodata(),
-          [term()],
-          Keyword.t()
-        ) :: any()
-  defdelegate query_for_value!(db_conn, query, query_params \\ [], opts \\ []), to: Datastore
+  @spec query_for_value!(iodata(), [term()], Keyword.t()) :: any()
+  defdelegate query_for_value!(query, query_params \\ [], opts \\ []), to: Datastore
 
   @doc """
   Executes a database query and returns a single row.
   """
-  @spec query_for_one(
-          pid() | Ecto.Repo.t() | Ecto.Adapter.adapter_meta(),
-          iodata(),
-          [term()],
-          Keyword.t()
-        ) :: {:ok, [any()]} | {:error, MsbmsSystError.t()}
-  defdelegate query_for_one(db_conn, query, query_params \\ [], opts \\ []), to: Datastore
+  @spec query_for_one(iodata(), [term()], Keyword.t()) ::
+          {:ok, [any()]} | {:error, MsbmsSystError.t()}
+  defdelegate query_for_one(query, query_params \\ [], opts \\ []), to: Datastore
 
   @doc """
   Executes a database query and returns a single row.  Raises on error.
   """
-  @spec query_for_one!(
-          pid() | Ecto.Repo.t() | Ecto.Adapter.adapter_meta(),
-          iodata(),
-          [term()],
-          Keyword.t()
-        ) :: [any()]
-  defdelegate query_for_one!(db_conn, query, query_params \\ [], opts \\ []), to: Datastore
+  @spec query_for_one!(iodata(), [term()], Keyword.t()) :: [any()]
+  defdelegate query_for_one!(query, query_params \\ [], opts \\ []), to: Datastore
 
   @doc """
   Executes a database query and returns all rows.
   """
-  @spec query_for_many(
-          pid() | Ecto.Repo.t() | Ecto.Adapter.adapter_meta(),
-          iodata(),
-          [term()],
-          Keyword.t()
-        ) ::
+  @spec query_for_many(iodata(), [term()], Keyword.t()) ::
           {:ok,
            %{
              :rows => nil | [[term()] | binary()],
@@ -253,104 +220,91 @@ defmodule MsbmsSystDatastore do
              optional(atom()) => any()
            }}
           | {:error, MsbmsSystError.t()}
-  defdelegate query_for_many(db_conn, query, query_params \\ [], opts \\ []), to: Datastore
+  defdelegate query_for_many(query, query_params \\ [], opts \\ []), to: Datastore
 
   @doc """
   Executes a database query and returns all rows.  Raises on error.
   """
-  @spec query_for_many!(
-          pid() | Ecto.Repo.t() | Ecto.Adapter.adapter_meta(),
-          iodata(),
-          [term()],
-          Keyword.t()
-        ) :: %{
+  @spec query_for_many!(iodata(), [term()], Keyword.t()) :: %{
           :rows => nil | [[term()] | binary()],
           :num_rows => non_neg_integer(),
           optional(atom()) => any()
         }
-  defdelegate query_for_many!(db_conn, query, query_params \\ [], opts \\ []), to: Datastore
+  defdelegate query_for_many!(query, query_params \\ [], opts \\ []), to: Datastore
 
   # The API below largely duplicates the Ecto.Repo Queryable API and currently
   # wraps it.  The expectation is whether or not we continue to use Ecto, we'd
   # want our basic data access API to look really close to it since it would be
   # reasonably familiar to other developers.
 
-  defdelegate transaction(db_conn, job, opts \\ []), to: Datastore, as: :ecto_transaction
-  defdelegate record_count(db_conn, queryable, opts), to: Datastore, as: :record_count
+  @spec set_datastore_context(pid() | Ecto.Repo.t() | Ecto.Adapter.adapter_meta()) ::
+          atom() | pid()
+  defdelegate set_datastore_context(context), to: Datastore
 
-  defdelegate aggregate(db_conn, queryable, aggregate, field, opts \\ []),
-    to: Datastore,
-    as: :ecto_aggregate
+  @spec current_datastore_context :: atom() | pid()
+  defdelegate current_datastore_context(), to: Datastore
 
-  defdelegate all(db_conn, queryable, opts \\ []), to: Datastore, as: :ecto_all
+  defdelegate transaction(job, opts \\ []), to: Datastore, as: :ecto_transaction
+  defdelegate record_count(queryable, opts), to: Datastore, as: :record_count
 
-  defdelegate delete(db_conn, struct_or_changeset, opts \\ []),
-    to: Datastore,
-    as: :ecto_delete
+  defdelegate aggregate(queryable, aggregate, field, opts \\ []), to: Datastore
 
-  defdelegate delete!(db_conn, struct_or_changeset, opts \\ []),
-    to: Datastore,
-    as: :ecto_delete
+  defdelegate all(queryable, opts \\ []), to: Datastore
 
-  defdelegate delete_all(db_conn, queryable, opts \\ []), to: Datastore, as: :ecto_delete_all
-  defdelegate exists?(db_conn, queryable, opts \\ []), to: Datastore, as: :ecto_exists?
-  defdelegate get(db_conn, queryable, id, opts \\ []), to: Datastore, as: :ecto_get
-  defdelegate get!(db_conn, queryable, id, opts \\ []), to: Datastore, as: :ecto_get
+  defdelegate delete(struct_or_changeset, opts \\ []),
+    to: Datastore
 
-  defdelegate get_by(db_conn, queryable, clauses, opts \\ []),
-    to: Datastore,
-    as: :ecto_get_by
+  defdelegate delete!(struct_or_changeset, opts \\ []),
+    to: Datastore
 
-  defdelegate get_by!(db_conn, queryable, clauses, opts \\ []),
-    to: Datastore,
-    as: :ecto_get_by
+  defdelegate delete_all(queryable, opts \\ []), to: Datastore
+  defdelegate exists?(queryable, opts \\ []), to: Datastore
+  defdelegate get(queryable, id, opts \\ []), to: Datastore
+  defdelegate get!(queryable, id, opts \\ []), to: Datastore
 
-  defdelegate in_transaction?(db_conn), to: Datastore, as: :ecto_in_transaction?
+  defdelegate get_by(queryable, clauses, opts \\ []),
+    to: Datastore
 
-  defdelegate insert(db_conn, struct_or_changeset, opts \\ []),
-    to: Datastore,
-    as: :ecto_insert
+  defdelegate get_by!(queryable, clauses, opts \\ []),
+    to: Datastore
 
-  defdelegate insert!(db_conn, struct_or_changeset, opts \\ []),
-    to: Datastore,
-    as: :ecto_insert
+  defdelegate in_transaction?, to: Datastore
 
-  defdelegate insert_all(db_conn, schema_or_source, entries_or_query, opts \\ []),
-    to: Datastore,
-    as: :ecto_insert_all
+  defdelegate insert(struct_or_changeset, opts \\ []),
+    to: Datastore
 
-  defdelegate insert_or_update(db_conn, changeset, opts \\ []),
-    to: Datastore,
-    as: :ecto_insert_or_update
+  defdelegate insert!(struct_or_changeset, opts \\ []),
+    to: Datastore
 
-  defdelegate insert_or_update!(db_conn, changeset, opts \\ []),
-    to: Datastore,
-    as: :ecto_insert_or_update
+  defdelegate insert_all(schema_or_source, entries_or_query, opts \\ []),
+    to: Datastore
 
-  defdelegate load(db_conn, module_or_map, data), to: Datastore, as: :ecto_load
-  defdelegate one(db_conn, queryable, opts \\ []), to: Datastore, as: :ecto_one
-  defdelegate one!(db_conn, queryable, opts \\ []), to: Datastore, as: :ecto_one
+  defdelegate insert_or_update(changeset, opts \\ []),
+    to: Datastore
 
-  defdelegate preload(db_conn, structs_or_struct_or_nil, preloads, opts \\ []),
-    to: Datastore,
-    as: :ecto_preload
+  defdelegate insert_or_update!(changeset, opts \\ []),
+    to: Datastore
 
-  defdelegate prepare_query(db_conn, operation, query, opts \\ []),
-    to: Datastore,
-    as: :ecto_prepare_query
+  defdelegate load(module_or_map, data), to: Datastore
+  defdelegate one(queryable, opts \\ []), to: Datastore
+  defdelegate one!(queryable, opts \\ []), to: Datastore
 
-  defdelegate reload(db_conn, struct_or_structs, opts \\ []), to: Datastore, as: :ecto_reload
+  defdelegate preload(structs_or_struct_or_nil, preloads, opts \\ []),
+    to: Datastore
 
-  defdelegate reload!(db_conn, struct_or_structs, opts \\ []),
-    to: Datastore,
-    as: :ecto_reload
+  defdelegate prepare_query(operation, query, opts \\ []),
+    to: Datastore
 
-  defdelegate rollback(db_conn, value), to: Datastore, as: :ecto_rollback
-  defdelegate stream(db_conn, queryable, opts \\ []), to: Datastore, as: :ecto_stream
-  defdelegate update(db_conn, changeset, opts \\ []), to: Datastore, as: :ecto_update
-  defdelegate update!(db_conn, changeset, opts \\ []), to: Datastore, as: :ecto_update
+  defdelegate reload(struct_or_structs, opts \\ []), to: Datastore
 
-  defdelegate update_all(db_conn, queryable, updates, opts \\ []),
-    to: Datastore,
-    as: :ecto_update_all
+  defdelegate reload!(struct_or_structs, opts \\ []),
+    to: Datastore
+
+  defdelegate rollback(value), to: Datastore
+  defdelegate stream(queryable, opts \\ []), to: Datastore
+  defdelegate update(changeset, opts \\ []), to: Datastore
+  defdelegate update!(changeset, opts \\ []), to: Datastore
+
+  defdelegate update_all(queryable, updates, opts \\ []),
+    to: Datastore
 end
