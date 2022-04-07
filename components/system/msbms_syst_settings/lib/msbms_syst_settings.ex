@@ -3,16 +3,30 @@ defmodule MsbmsSystSettings do
   Documentation for `MsbmsSystSettings`.
   """
 
-  @doc """
-  Hello world.
+  def start_settings_cache() do
+  end
 
-  ## Examples
+  def refresh_cache() do
+  end
 
-      iex> MsbmsSystSettings.hello()
-      :world
+  def create_setting() do
+  end
 
-  """
-  def hello do
-    :world
+  def set_setting_value do
+  end
+
+  def set_setting_values do
+  end
+
+  def get_setting_value() do
+  end
+
+  def get_setting_values() do
+  end
+
+  def delete_setting() do
+  end
+
+  def terminate_settings_cache() do
   end
 end
