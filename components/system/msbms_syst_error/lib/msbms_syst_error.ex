@@ -65,13 +65,13 @@ defmodule MsbmsSystError do
 
   ## Examples
       iex> my_err = %MsbmsSystError{
-      ...>            code:    :example_exception,
+      ...>            code:    :example_error,
       ...>            message: "Outer error message",
       ...>            cause:    %MsbmsSystError{
-      ...>                        code:    :example_exception,
+      ...>                        code:    :example_error,
       ...>                        message: "Intermediate error message",
       ...>                        cause:    %MsbmsSystError{
-      ...>                                    code:    :example_exception,
+      ...>                                    code:    :example_error,
       ...>                                    message: "Root error message",
       ...>                                    cause:    {:error, "Example Error"},
       ...>                                  },
@@ -79,7 +79,7 @@ defmodule MsbmsSystError do
       ...>          }
       iex> MsbmsSystError.get_root_cause(my_err)
       %MsbmsSystError{
-        code:     :example_exception,
+        code:     :example_error,
         message:  "Root error message",
         cause:    {:error, "Example Error"}
       }

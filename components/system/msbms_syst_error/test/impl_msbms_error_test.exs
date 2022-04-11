@@ -17,24 +17,23 @@ defmodule MsbmsSystError.ImplMsbmsErrorTest do
 
   test "Get root cause from error data" do
     test_err = %MsbmsSystError{
-                  code:    :example_exception,
-                  message: "Outer error message",
-                  cause:    %MsbmsSystError{
-                              code:    :example_exception,
-                              message: "Intermediate error message",
-                              cause:    %MsbmsSystError{
-                                          code:    :example_exception,
-                                          message: "Root error message",
-                                          cause:    {:error, "Example Error"},
-                                        },
-                            },
-                }
+      code: :example_error,
+      message: "Outer error message",
+      cause: %MsbmsSystError{
+        code: :example_error,
+        message: "Intermediate error message",
+        cause: %MsbmsSystError{
+          code: :example_error,
+          message: "Root error message",
+          cause: {:error, "Example Error"}
+        }
+      }
+    }
 
     root_err = MsbmsError.get_root_cause(test_err)
 
     assert %MsbmsSystError{message: "Root error message"} = root_err
 
     assert {:error, "test error"} = MsbmsError.get_root_cause({:error, "test error"})
-
   end
 end

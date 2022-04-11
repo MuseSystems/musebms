@@ -11,7 +11,6 @@
 # muse.information@musesystems.com :: https: //muse.systems
 
 defmodule MsbmsSystError.Types do
-
   @moduledoc """
   Defines the public types exposed by the MsbmsSystError component.
   """
@@ -24,13 +23,13 @@ defmodule MsbmsSystError.Types do
   understand the nature of the error.
   """
   @type msbms_error ::
-    :undefined_error
-    | :database_error
-    | :example_exception
-    | :file_error
-    | :invalid_data
-    | :invalid_parameter
-    | :permission_denied
-    | :record_not_found
-
+          :undefined_error
+          | :database_error
+          | :example_error
+          | :file_error
+          | :invalid_data
+          | :invalid_parameter
+          | :permission_denied
+          | :record_not_found
+          | :process_error
 end
