@@ -22,42 +22,42 @@ BEGIN
         , syst_defined
         , syst_description
         , user_description
-        , config_flag
-        , config_integer
-        , config_integer_range
-        , config_decimal
-        , config_decimal_range
-        , config_interval
-        , config_date
-        , config_date_range
-        , config_time
-        , config_timestamp
-        , config_timestamp_range
-        , config_json
-        , config_text
-        , config_uuid
-        , config_blob )
+        , setting_flag
+        , setting_integer
+        , setting_integer_range
+        , setting_decimal
+        , setting_decimal_range
+        , setting_interval
+        , setting_date
+        , setting_date_range
+        , setting_time
+        , setting_timestamp
+        , setting_timestamp_range
+        , setting_json
+        , setting_text
+        , setting_uuid
+        , setting_blob )
     VALUES
         ( new.internal_name
         , new.display_name
         , FALSE
         , '(System Description Not Provided)'
         , new.user_description
-        , new.config_flag
-        , new.config_integer
-        , new.config_integer_range
-        , new.config_decimal
-        , new.config_decimal_range
-        , new.config_interval
-        , new.config_date
-        , new.config_date_range
-        , new.config_time
-        , new.config_timestamp
-        , new.config_timestamp_range
-        , new.config_json
-        , new.config_text
-        , new.config_uuid
-        , new.config_blob );
+        , new.setting_flag
+        , new.setting_integer
+        , new.setting_integer_range
+        , new.setting_decimal
+        , new.setting_decimal_range
+        , new.setting_interval
+        , new.setting_date
+        , new.setting_date_range
+        , new.setting_time
+        , new.setting_timestamp
+        , new.setting_timestamp_range
+        , new.setting_json
+        , new.setting_text
+        , new.setting_uuid
+        , new.setting_blob );
 
     RETURN new;
 

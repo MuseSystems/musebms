@@ -32,35 +32,35 @@ CREATE TABLE msbms_syst_data.syst_settings
         NOT NULL
     ,user_description
         text
-    ,config_flag
+    ,setting_flag
         boolean
-    ,config_integer
+    ,setting_integer
         bigint
-    ,config_integer_range
+    ,setting_integer_range
         int8range
-    ,config_decimal
+    ,setting_decimal
         numeric
-    ,config_decimal_range
+    ,setting_decimal_range
         numrange
-    ,config_interval
+    ,setting_interval
         interval
-    ,config_date
+    ,setting_date
         date
-    ,config_date_range
+    ,setting_date_range
         daterange
-    ,config_time
+    ,setting_time
         time
-    ,config_timestamp
+    ,setting_timestamp
         timestamptz
-    ,config_timestamp_range
+    ,setting_timestamp_range
         tstzrange
-    ,config_json
+    ,setting_json
         jsonb
-    ,config_text
+    ,setting_text
         text
-    ,config_uuid
+    ,setting_uuid
         uuid
-    ,config_blob
+    ,setting_blob
         bytea
     ,diag_timestamp_created
         timestamptz
@@ -129,64 +129,64 @@ this column is not NULL, this text will be displayed to users in preference to
 the description found in syst_description.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_settings.config_flag IS
+    COLUMN msbms_syst_data.syst_settings.setting_flag IS
 $DOC$A boolean configuration point.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_settings.config_integer IS
+    COLUMN msbms_syst_data.syst_settings.setting_integer IS
 $DOC$An integer configuration point$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_settings.config_integer_range IS
+    COLUMN msbms_syst_data.syst_settings.setting_integer_range IS
 $DOC$An integer range configuration point.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_settings.config_decimal IS
+    COLUMN msbms_syst_data.syst_settings.setting_decimal IS
 $DOC$An decimal configuration point (not floating point).$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_settings.config_decimal_range IS
+    COLUMN msbms_syst_data.syst_settings.setting_decimal_range IS
 $DOC$A decimal range configuration point.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_settings.config_interval IS
+    COLUMN msbms_syst_data.syst_settings.setting_interval IS
 $DOC$An interval configuration point.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_settings.config_date IS
+    COLUMN msbms_syst_data.syst_settings.setting_date IS
 $DOC$A date configuation point.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_settings.config_date_range IS
+    COLUMN msbms_syst_data.syst_settings.setting_date_range IS
 $DOC$A date range configuration point.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_settings.config_time IS
+    COLUMN msbms_syst_data.syst_settings.setting_time IS
 $DOC$A time configuration point (without time zone).$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_settings.config_timestamp IS
+    COLUMN msbms_syst_data.syst_settings.setting_timestamp IS
 $DOC$A full datetime configuration point including time zone.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_settings.config_timestamp_range IS
+    COLUMN msbms_syst_data.syst_settings.setting_timestamp_range IS
 $DOC$A range of timestamps with time zone configuration points.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_settings.config_json IS
+    COLUMN msbms_syst_data.syst_settings.setting_json IS
 $DOC$A JSON configuration point.  Note that duplicate keys at the same level are not
 allowed.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_settings.config_text IS
+    COLUMN msbms_syst_data.syst_settings.setting_text IS
 $DOC$A text configuration point.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_settings.config_uuid IS
+    COLUMN msbms_syst_data.syst_settings.setting_uuid IS
 $DOC$A UUID configuration point.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_settings.config_blob IS
+    COLUMN msbms_syst_data.syst_settings.setting_blob IS
 $DOC$A binary configuration point.$DOC$;
 
 COMMENT ON
