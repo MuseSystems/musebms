@@ -13,6 +13,25 @@
 defmodule MsbmsSystDatastore.Impl.Privileged do
   @moduledoc false
 
+  ######
+  #
+  # Privileged actions are those which require the database owner role to
+  # execute correctly.  The initial connection will open with the dba role,
+  # which is a login role, then quickly degrade its access rights by setting the
+  # role to be the database owner.  All actions are then undertaken as the owner
+  # role.
+  #
+  # Most actions taken under the privileged datastore are likely to be database
+  # migration related.  While it is conceivable there would be other uses, most
+  # non-migration actions should be made with the appropriate regular datastore
+  # contexts and should not require elevated privileges.
+  #
+  # Once all privileged actions have taken place, the privileged datastore
+  # connection should be closed.  We don't typically want long-lived/persistent
+  # privileged connections.
+  #
+  ######
+
   alias MsbmsSystDatastore.Impl.Migrations
   alias MsbmsSystDatastore.Runtime.Datastore
   alias MsbmsSystDatastore.Types
