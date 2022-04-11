@@ -20,21 +20,21 @@ INSERT INTO msbms_syst_data.syst_settings
     , display_name
     , syst_description
     , user_description
-    , config_flag
-    , config_integer
-    , config_integer_range
-    , config_decimal
-    , config_decimal_range
-    , config_interval
-    , config_date
-    , config_date_range
-    , config_time
-    , config_timestamp
-    , config_timestamp_range
-    , config_json
-    , config_text
-    , config_uuid
-    , config_blob )
+    , setting_flag
+    , setting_integer
+    , setting_integer_range
+    , setting_decimal
+    , setting_decimal_range
+    , setting_interval
+    , setting_date
+    , setting_date_range
+    , setting_time
+    , setting_timestamp
+    , setting_timestamp_range
+    , setting_json
+    , setting_text
+    , setting_uuid
+    , setting_blob )
 VALUES
     ( 'test_setting_one'
     , 'Test Setting One'

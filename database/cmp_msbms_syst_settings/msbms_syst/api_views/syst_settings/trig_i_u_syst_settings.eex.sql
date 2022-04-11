@@ -46,21 +46,21 @@ BEGIN
 
     UPDATE msbms_syst_data.syst_settings SET
           user_description       = new.user_description
-        , config_flag            = new.config_flag
-        , config_integer         = new.config_integer
-        , config_integer_range   = new.config_integer_range
-        , config_decimal         = new.config_decimal
-        , config_decimal_range   = new.config_decimal_range
-        , config_interval        = new.config_interval
-        , config_date            = new.config_date
-        , config_date_range      = new.config_date_range
-        , config_time            = new.config_time
-        , config_timestamp       = new.config_timestamp
-        , config_timestamp_range = new.config_timestamp_range
-        , config_json            = new.config_json
-        , config_text            = new.config_text
-        , config_uuid            = new.config_uuid
-        , config_blob            = new.config_blob
+        , setting_flag            = new.setting_flag
+        , setting_integer         = new.setting_integer
+        , setting_integer_range   = new.setting_integer_range
+        , setting_decimal         = new.setting_decimal
+        , setting_decimal_range   = new.setting_decimal_range
+        , setting_interval        = new.setting_interval
+        , setting_date            = new.setting_date
+        , setting_date_range      = new.setting_date_range
+        , setting_time            = new.setting_time
+        , setting_timestamp       = new.setting_timestamp
+        , setting_timestamp_range = new.setting_timestamp_range
+        , setting_json            = new.setting_json
+        , setting_text            = new.setting_text
+        , setting_uuid            = new.setting_uuid
+        , setting_blob            = new.setting_blob
     WHERE id = new.id;
 
     RETURN new;

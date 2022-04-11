@@ -24,21 +24,21 @@ defmodule MsbmsSystSettings.Data.SystSettings do
     field(:syst_defined, :boolean)
     field(:syst_description, :string)
     field(:user_description, :string)
-    field(:config_flag, :boolean)
-    field(:config_integer, :integer)
-    field(:config_integer_range, DbTypes.IntegerRange)
-    field(:config_decimal, :decimal)
-    field(:config_decimal_range, DbTypes.DecimalRange)
-    field(:config_interval, DbTypes.Interval)
-    field(:config_date, :date)
-    field(:config_date_range, DbTypes.DateRange)
-    field(:config_time, :time)
-    field(:config_timestamp, :utc_datetime)
-    field(:config_timestamp_range, DbTypes.TimestampRange)
-    field(:config_json, :map)
-    field(:config_text, :string)
-    field(:config_uuid, Ecto.UUID)
-    field(:config_blob, :binary)
+    field(:setting_flag, :boolean)
+    field(:setting_integer, :integer)
+    field(:setting_integer_range, DbTypes.IntegerRange)
+    field(:setting_decimal, :decimal)
+    field(:setting_decimal_range, DbTypes.DecimalRange)
+    field(:setting_interval, DbTypes.Interval)
+    field(:setting_date, :date)
+    field(:setting_date_range, DbTypes.DateRange)
+    field(:setting_time, :time)
+    field(:setting_timestamp, :utc_datetime)
+    field(:setting_timestamp_range, DbTypes.TimestampRange)
+    field(:setting_json, :map)
+    field(:setting_text, :string)
+    field(:setting_uuid, Ecto.UUID)
+    field(:setting_blob, :binary)
     field(:diag_timestamp_created, :utc_datetime)
     field(:diag_role_created, :string)
     field(:diag_timestamp_modified, :utc_datetime)
@@ -48,26 +48,56 @@ defmodule MsbmsSystSettings.Data.SystSettings do
     field(:diag_update_count, :integer)
   end
 
-  def changeset(syst_settings, params \\ %{}) do
+  def create_changeset(params \\ %{}) do
+    %__MODULE__{}
+    |> cast(params, [
+      :internal_name,
+      :display_name,
+      :user_description,
+      :setting_flag,
+      :setting_integer,
+      :setting_integer_range,
+      :setting_decimal,
+      :setting_decimal_range,
+      :setting_interval,
+      :setting_date,
+      :setting_date_range,
+      :setting_time,
+      :setting_timestamp,
+      :setting_timestamp_range,
+      :setting_json,
+      :setting_text,
+      :setting_uuid,
+      :setting_blob
+    ])
+    |> validate_required([:internal_name, :display_name, :user_description])
+    |> put_change(:syst_defined, false)
+    |> validate_length(:user_description, min: 6)
+    |> unique_constraint(:internal_name)
+    |> unique_constraint(:display_name)
+  end
+
+  def update_changeset(syst_settings, params \\ %{}) do
     syst_settings
     |> cast(params, [
       :display_name,
       :user_description,
-      :config_flag,
-      :config_integer,
-      :config_integer_range,
-      :config_decimal,
-      :config_decimal_range,
-      :config_interval,
-      :config_date,
-      :config_date_range,
-      :config_time,
-      :config_timestamp,
-      :config_timestamp_range,
-      :config_json,
-      :config_text,
-      :config_uuid,
-      :config_blob
+      :setting_flag,
+      :setting_integer,
+      :setting_integer_range,
+      :setting_decimal,
+      :setting_decimal_range,
+      :setting_interval,
+      :setting_date,
+      :setting_date_range,
+      :setting_time,
+      :setting_timestamp,
+      :setting_timestamp_range,
+      :setting_json,
+      :setting_text,
+      :setting_uuid,
+      :setting_blob
     ])
+    |> unique_constraint(:display_name)
   end
 end
