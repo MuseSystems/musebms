@@ -13,6 +13,14 @@
 defmodule MsbmsSystDatastore.Impl.Migrations do
   @moduledoc false
 
+  ######
+  #
+  # This module provides the logic for both building database build plan TOML
+  # files into migration eex.sql files as well as applying the migrations to
+  # specific databases.
+  #
+  ######
+
   require Logger
 
   alias MsbmsSystDatastore.Runtime.Datastore
