@@ -33,11 +33,8 @@ defmodule MsbmsSystSettings.Runtime.Server do
           :ok | {:error, MsbmsSystError.t()}
   def start_link({settings_service_name, _datastore_context_name} = params) do
     case GenServer.start_link(__MODULE__, params, name: settings_service_name) do
-      {:error, {:already_started, _pid}} ->
-        :ok
-
-      {:ok, _pid} ->
-        :ok
+      {:ok, pid} ->
+        {:ok, pid}
 
       abort_reason ->
         {
