@@ -85,6 +85,15 @@ defmodule MsbmsSystSettings.Runtime.Server do
   end
 
   @impl true
+  def handle_call(:refresh, _from, state) do
+    {
+      :reply,
+      Settings.refresh_from_database(state.service_name),
+      state
+    }
+  end
+
+  @impl true
   def handle_call({:create, creation_params}, _from, state) do
     {
       :reply,

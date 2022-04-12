@@ -62,7 +62,9 @@ defmodule MsbmsSystSettings do
   for `MsbmsSystSettings.Types.service_name()` for more.
   """
   @spec refresh_from_database(MsbmsSystSettings.Types.service_name()) :: :ok
-  defdelegate(refresh_from_database(service_name), to: Settings)
+  def refresh_from_database(service_name) do
+    GenServer.call(service_name, :refresh)
+  end
 
   @doc """
   Creates a new user defined setting.
