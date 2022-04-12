@@ -12,6 +12,9 @@
 
 defmodule MsbmsSystSettings.Impl.Settings do
   alias MsbmsSystSettings.Data.SystSettings
+
+  import Ecto.Query
+
   require Logger
 
   @moduledoc false
@@ -142,9 +145,12 @@ defmodule MsbmsSystSettings.Impl.Settings do
   def delete_setting(service_name, setting_name) when is_binary(setting_name) do
     ets_table_name = get_ets_table_from_service_name(service_name)
 
-    :ets.lookup_element(ets_table_name, setting_name, 2)
-    |> MsbmsSystDatastore.update!()
-    |> then(&:ets.delete(ets_table_name, &1.internal_name))
+    delete_qry =
+      from(s in MsbmsSystSettings.Data.SystSettings, where: s.internal_name == ^setting_name)
+
+    {1, _rows} = MsbmsSystDatastore.delete_all(delete_qry)
+
+    true = :ets.delete(ets_table_name, setting_name)
 
     :ok
   rescue
