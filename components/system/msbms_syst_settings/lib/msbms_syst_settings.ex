@@ -42,13 +42,12 @@ defmodule MsbmsSystSettings do
   `MsbmsSystDatastore` context.  This context will be used for accessing and
   modifying database data.
   """
-  @spec start_settings_service(
-          MsbmsSystSettings.Types.service_name(),
-          MsbmsSystDatastore.Types.context_id()
+  @spec start_link(
+          {MsbmsSystSettings.Types.service_name(), MsbmsSystDatastore.Types.context_id()}
         ) ::
-          :ok | {:error, MsbmsSystError.t()}
-  def start_settings_service(service_name, datastore_context_name) do
-    Server.start_link({service_name, datastore_context_name})
+          {:ok, pid()} | {:error, MsbmsSystError.t()}
+  def start_link({_service_name, _datastore_context_name} = params) do
+    Server.start_link(params)
   end
 
   @doc """
@@ -56,10 +55,10 @@ defmodule MsbmsSystSettings do
 
   Calling this function causes the existing cached settings to be purged from
   the cache and the cache to be repopulated from the database using the
-  datastore context provided to `start_settings_service/2`.
+  datastore context provided to `start_link/1`.
 
   The `service_name` argument identifies which settings service instance should
-  be used by the function.  See `start_settings_service/2` and type documentation
+  be used by the function.  See `start_link/1` and type documentation
   for `MsbmsSystSettings.Types.service_name()` for more.
   """
   @spec refresh_from_database(MsbmsSystSettings.Types.service_name()) :: :ok
@@ -73,7 +72,7 @@ defmodule MsbmsSystSettings do
   only kind of settings which may be deleted via `delete_setting/2`.
 
   The `service_name` argument identifies which settings service instance should
-  be used by the function.  See `start_settings_service/2` and type documentation
+  be used by the function.  See `start_link/1` and type documentation
   for `MsbmsSystSettings.Types.service_name()` for more.
 
   The `creation_params` argument is a map defining the new settings record.  The
@@ -107,7 +106,7 @@ defmodule MsbmsSystSettings do
   Sets the value of any one setting type for the named setting.
 
   The `service_name` argument identifies which settings service instance should
-  be used by the function.  See `start_settings_service/2` and type documentation
+  be used by the function.  See `start_link/1` and type documentation
   for `MsbmsSystSettings.Types.service_name()` for more.
 
   The `setting_name` argument indicates the name of the setting to update with
@@ -140,7 +139,7 @@ defmodule MsbmsSystSettings do
   may also be set.
 
   The `service_name` argument identifies which settings service instance should
-  be used by the function.  See `start_settings_service/2` and type documentation
+  be used by the function.  See `start_link/1` and type documentation
   for `MsbmsSystSettings.Types.service_name()` for more.
 
   The `setting_name` argument indicates the name of the setting to update with
@@ -164,7 +163,7 @@ defmodule MsbmsSystSettings do
   Retrieves the value of the given type for the requested setting.
 
   The `service_name` argument identifies which settings service instance should
-  be used by the function.  See `start_settings_service/2` and type documentation
+  be used by the function.  See `start_link/1` and type documentation
   for `MsbmsSystSettings.Types.service_name()` for more.
 
   The `setting_name` argument indicates the name of the setting for which to
@@ -184,7 +183,7 @@ defmodule MsbmsSystSettings do
   Retrieves all values associated with the requested setting.
 
   The `service_name` argument identifies which settings service instance should
-  be used by the function.  See `start_settings_service/2` and type documentation
+  be used by the function.  See `start_link/1` and type documentation
   for `MsbmsSystSettings.Types.service_name()` for more.
 
   The `setting_name` argument indicates the name of the setting for which to
@@ -206,7 +205,7 @@ defmodule MsbmsSystSettings do
   descriptions, etc.
 
   The `service_name` argument identifies which settings service instance should
-  be used by the function.  See `start_settings_service/2` and type documentation
+  be used by the function.  See `start_link/1` and type documentation
   for `MsbmsSystSettings.Types.service_name()` for more.
   """
   @spec get_all_settings_values(MsbmsSystSettings.Types.service_name()) ::
@@ -220,7 +219,7 @@ defmodule MsbmsSystSettings do
   Trying to do so will result in a error being raised.
 
   The `service_name` argument identifies which settings service instance should
-  be used by the function.  See `start_settings_service/2` and type documentation
+  be used by the function.  See `start_link/1` and type documentation
   for `MsbmsSystSettings.Types.service_name()` for more.
 
   The `setting_name` argument indicates the name of the setting should be
@@ -238,7 +237,7 @@ defmodule MsbmsSystSettings do
   Terminates a running instance of the settings service.
 
   The `service_name` argument identifies which settings service instance should
-  be used by the function.  See `start_settings_service/2` and type documentation
+  be used by the function.  See `start_link/1` and type documentation
   for `MsbmsSystSettings.Types.service_name()` for more.
   """
   @spec terminate_settings_service(MsbmsSystSettings.Types.service_name()) :: :ok
