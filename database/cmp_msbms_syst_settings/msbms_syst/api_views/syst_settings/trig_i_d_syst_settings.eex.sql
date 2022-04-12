@@ -39,7 +39,7 @@ BEGIN
 
     DELETE FROM msbms_syst_data.syst_settings WHERE id = old.id;
 
-    RETURN null;
+    RETURN old;
 
 END;
 $BODY$ LANGUAGE plpgsql VOLATILE SECURITY DEFINER;
