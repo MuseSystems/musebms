@@ -1,5 +1,5 @@
 # Source File: schema.ex
-# Location:    components/system/msbms_syst_datastore/lib/impl/schema.ex
+# Location:    components/system/msbms_syst_datastore/lib/schema.ex
 # Project:     msbms
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -11,6 +11,14 @@
 # muse.information@musesystems.com :: https: //muse.systems
 
 defmodule MsbmsSystDatastore.Schema do
+  @moduledoc """
+  Provides common attributes for use by most application Ecto Schema instances.
+
+  Chiefly, we ensure that the primary and foreign keys are all of a common type.
+
+  To use this module, simply add `use MsbmsSystDatastore.Schema` in place of
+  `use Ecto.Schema`.
+  """
   defmacro __using__(_) do
     quote do
       use Ecto.Schema
