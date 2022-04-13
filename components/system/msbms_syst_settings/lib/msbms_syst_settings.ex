@@ -60,6 +60,12 @@ defmodule MsbmsSystSettings do
   The `service_name` argument identifies which settings service instance should
   be used by the function.  See `start_link/1` and type documentation
   for `MsbmsSystSettings.Types.service_name()` for more.
+
+  ## Examples
+
+    iex> MsbmsSystSettings.refresh_from_database(:settings_instance)
+    :ok
+
   """
   @spec refresh_from_database(MsbmsSystSettings.Types.service_name()) :: :ok
   def refresh_from_database(service_name) do
@@ -94,6 +100,17 @@ defmodule MsbmsSystSettings do
 
   other allowed values, such as the setting values themselves, are also
   permitted here, but not required.
+
+  ## Examples
+
+    iex> new_setting = %{
+    ...>   internal_name: "create_example_setting",
+    ...>   display_name: "Create Example Setting",
+    ...>   user_description: "An example of setting creation.",
+    ...>   setting_integer: 9876
+    ...> }
+    iex> MsbmsSystSettings.create_setting(:settings_instance, new_setting)
+    :ok
   """
   @spec create_setting(
           MsbmsSystSettings.Types.service_name(),
@@ -120,6 +137,15 @@ defmodule MsbmsSystSettings do
   The last argument, `setting_value` is the new value to set on the setting.
   Note that the setting value must be appropriate for the `setting_type`
   argument or an error will be raised.
+
+  ## Examples
+
+    iex> MsbmsSystSettings.set_setting_value(
+    ...>   :settings_instance,
+    ...>   "set_example_setting",
+    ...>   :setting_decimal,
+    ...>   Decimal.new("1029.3847"))
+    :ok
   """
   @spec set_setting_value(
           MsbmsSystSettings.Types.service_name(),
@@ -151,6 +177,24 @@ defmodule MsbmsSystSettings do
   `MsbmsSystSettings.Types.setting_service_params()` type specification and
   includes the updates to setting type values, updates to the `display_name`
   value, and/or updates to the `user_description` value.
+
+  ## Examples
+
+    iex> update_values = %{
+    ...>   user_description: "An example of updating the user description.",
+    ...>   setting_integer: 6758,
+    ...>   setting_date_range:
+    ...>      %MsbmsSystDatastore.DbTypes.DateRange{
+    ...>        lower: ~D[2022-04-01],
+    ...>        upper: ~D[2022-04-12],
+    ...>        upper_inclusive: true
+    ...>      }
+    ...> }
+    iex> MsbmsSystSettings.set_setting_values(
+    ...>   :settings_instance,
+    ...>   "set_example_setting",
+    ...>   update_values)
+    :ok
   """
   @spec set_setting_values(
           MsbmsSystSettings.Types.service_name(),
@@ -172,6 +216,19 @@ defmodule MsbmsSystSettings do
   retrieve a value.
 
   Argument `setting_type` indicates which of the various typed values to return.
+
+  ## Examples
+
+    iex> MsbmsSystSettings.get_setting_value(
+    ...>   :settings_instance,
+    ...>   "get_example_setting",
+    ...>   :setting_decimal_range)
+    %MsbmsSystDatastore.DbTypes.DecimalRange{
+      lower: Decimal.new("1.1"),
+      upper: Decimal.new("99.99"),
+      lower_inclusive: true,
+      upper_inclusive: false
+    }
   """
   @spec get_setting_value(
           MsbmsSystSettings.Types.service_name(),
@@ -193,6 +250,12 @@ defmodule MsbmsSystSettings do
 
   The successful return of this function is an instance of the
   `MsbmsSystSettings.Data.SystSettings` struct containing the values requested.
+
+  ## Examples
+
+    iex> MsbmsSystSettings.get_setting_values(
+    ...>   :settings_instance,
+    ...>   "get_example_setting")
   """
   @spec get_setting_values(
           MsbmsSystSettings.Types.service_name(),
@@ -209,6 +272,10 @@ defmodule MsbmsSystSettings do
   The `service_name` argument identifies which settings service instance should
   be used by the function.  See `start_link/1` and type documentation
   for `MsbmsSystSettings.Types.service_name()` for more.
+
+  ## Examples
+
+    iex> MsbmsSystSettings.get_all_settings_values(:settings_instance)
   """
   @spec get_all_settings_values(MsbmsSystSettings.Types.service_name()) ::
           list(MsbmsSystSettings.Data.SystSettings)
@@ -226,6 +293,11 @@ defmodule MsbmsSystSettings do
 
   The `setting_name` argument indicates the name of the setting should be
   deleted.
+
+  ## Examples
+
+    iex> MsbmsSystSettings.delete_setting(:settings_instance, "delete_example_setting")
+    :ok
   """
   @spec delete_setting(
           MsbmsSystSettings.Types.service_name(),
@@ -241,6 +313,11 @@ defmodule MsbmsSystSettings do
   The `service_name` argument identifies which settings service instance should
   be used by the function.  See `start_link/1` and type documentation
   for `MsbmsSystSettings.Types.service_name()` for more.
+
+  ## Examples
+
+    iex> MsbmsSystSettings.terminate_settings_service(:settings_instance)
+    :ok
   """
   @spec terminate_settings_service(MsbmsSystSettings.Types.service_name()) :: :ok
   def terminate_settings_service(service_name) do
