@@ -70,9 +70,9 @@ defmodule MsbmsSystSettings.Runtime.Server do
   def init({service_name, datastore_context_name}) do
     ets_table_name = Settings.get_ets_table_from_service_name(service_name)
 
-    :ets.new(ets_table_name, [:set, :protected, :named_table])
+    _ = :ets.new(ets_table_name, [:set, :protected, :named_table])
 
-    MsbmsSystDatastore.set_datastore_context(datastore_context_name)
+    _ = MsbmsSystDatastore.set_datastore_context(datastore_context_name)
 
     Settings.refresh_from_database(service_name)
 
