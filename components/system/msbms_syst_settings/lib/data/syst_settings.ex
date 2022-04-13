@@ -16,6 +16,39 @@ defmodule MsbmsSystSettings.Data.SystSettings do
 
   alias MsbmsSystDatastore.DbTypes
 
+  @type t() ::
+          %__MODULE__{
+            __meta__: Ecto.Schema.Metadata.t(),
+            id: Ecto.UUID.t(),
+            internal_name: MsbmsSystSettings.Types.setting_name(),
+            display_name: String.t(),
+            syst_defined: boolean(),
+            syst_description: String.t(),
+            user_description: String.t(),
+            setting_flag: boolean(),
+            setting_integer: integer(),
+            setting_integer_range: DbTypes.IntegerRange.t(),
+            setting_decimal: Decimal.t(),
+            setting_decimal_range: DbTypes.DecimalRange.t(),
+            setting_interval: DbTypes.Interval.t(),
+            setting_date: Date.t(),
+            setting_date_range: DbTypes.DateRange.t(),
+            setting_time: Time.t(),
+            setting_timestamp: DateTime.t(),
+            setting_timestamp_range: DbTypes.TimestampRange.t(),
+            setting_json: map(),
+            setting_text: String.t(),
+            setting_uuid: Ecto.UUID.t(),
+            setting_blob: binary(),
+            diag_timestamp_created: DateTime.t(),
+            diag_role_created: String.t(),
+            diag_timestamp_modified: DateTime.t(),
+            diag_wallclock_modified: DateTime.t(),
+            diag_role_modified: String.t(),
+            diag_row_version: integer(),
+            diag_update_count: integer()
+          }
+
   @schema_prefix "msbms_syst"
 
   schema "syst_settings" do
@@ -48,6 +81,7 @@ defmodule MsbmsSystSettings.Data.SystSettings do
     field(:diag_update_count, :integer)
   end
 
+  @spec create_changeset(map()) :: Ecto.Changeset.t()
   def create_changeset(params \\ %{}) do
     %__MODULE__{}
     |> cast(params, [
@@ -77,6 +111,7 @@ defmodule MsbmsSystSettings.Data.SystSettings do
     |> unique_constraint(:display_name)
   end
 
+  @spec update_changeset(t(), map()) :: Ecto.Changeset.t()
   def update_changeset(syst_settings, params \\ %{}) do
     syst_settings
     |> cast(params, [
