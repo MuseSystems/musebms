@@ -112,6 +112,8 @@ defmodule MsbmsSystDatastore.DbTypes.IntegerRange do
        upper_inclusive: upper_inclusive
      }}
   end
+
+  def dump(_), do: :error
 end
 
 defmodule MsbmsSystDatastore.DbTypes.DecimalRange do
@@ -170,6 +172,8 @@ defmodule MsbmsSystDatastore.DbTypes.DecimalRange do
        upper_inclusive: upper_inclusive
      }}
   end
+
+  def dump(_), do: :error
 end
 
 defmodule MsbmsSystDatastore.DbTypes.DateRange do
@@ -228,6 +232,8 @@ defmodule MsbmsSystDatastore.DbTypes.DateRange do
        upper_inclusive: upper_inclusive
      }}
   end
+
+  def dump(_), do: :error
 end
 
 defmodule MsbmsSystDatastore.DbTypes.TimestampRange do
@@ -286,4 +292,6 @@ defmodule MsbmsSystDatastore.DbTypes.TimestampRange do
        upper_inclusive: upper_inclusive
      }}
   end
+
+  def dump(_), do: :error
 end
