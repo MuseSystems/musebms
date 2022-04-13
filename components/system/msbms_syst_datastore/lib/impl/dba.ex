@@ -49,7 +49,7 @@ defmodule MsbmsSystDatastore.Impl.Dba do
 
     {:ok, dba_pid} = start_dba_connection(datastore_options)
 
-    Datastore.set_datastore_context(dba_pid)
+    _ = Datastore.set_datastore_context(dba_pid)
 
     database_state = get_database_state(datastore_options)
     context_states = get_context_states(datastore_options.contexts)
@@ -80,7 +80,7 @@ defmodule MsbmsSystDatastore.Impl.Dba do
 
     {:ok, dba_pid} = start_dba_connection(datastore_options)
 
-    Datastore.set_datastore_context(dba_pid)
+    _ = Datastore.set_datastore_context(dba_pid)
 
     context_states = create_contexts(datastore_options.contexts)
 
@@ -111,7 +111,7 @@ defmodule MsbmsSystDatastore.Impl.Dba do
 
     {:ok, dba_pid} = start_dba_connection(datastore_options)
 
-    Datastore.set_datastore_context(dba_pid)
+    _ = Datastore.set_datastore_context(dba_pid)
 
     :ok = drop_database(datastore_options)
 
@@ -138,7 +138,7 @@ defmodule MsbmsSystDatastore.Impl.Dba do
 
     {:ok, dba_pid} = start_dba_connection(datastore_options)
 
-    Datastore.set_datastore_context(dba_pid)
+    _ = Datastore.set_datastore_context(dba_pid)
 
     state_result = get_context_states(datastore_options.contexts)
 
@@ -168,7 +168,7 @@ defmodule MsbmsSystDatastore.Impl.Dba do
     opts_final = Keyword.merge(opts, opts_default, fn _k, v1, _v2 -> v1 end)
 
     {:ok, dba_pid} = start_dba_connection(datastore_options)
-    Datastore.set_datastore_context(dba_pid)
+    _ = Datastore.set_datastore_context(dba_pid)
 
     context_states = create_contexts(new_contexts)
 
@@ -199,7 +199,7 @@ defmodule MsbmsSystDatastore.Impl.Dba do
 
     {:ok, dba_pid} = start_dba_connection(datastore_options)
 
-    Datastore.set_datastore_context(dba_pid)
+    _ = Datastore.set_datastore_context(dba_pid)
 
     :ok = drop_contexts(delete_contexts)
 
@@ -252,7 +252,7 @@ defmodule MsbmsSystDatastore.Impl.Dba do
 
     case Datastore.start_datastore_context(dba_options, dba_context) do
       {:ok, dba_pid} ->
-        Datastore.set_datastore_context(dba_pid)
+        _ = Datastore.set_datastore_context(dba_pid)
         Datastore.query_for_none!("SET application_name = '#{dba_context.description}';")
 
         {:ok, dba_pid}
