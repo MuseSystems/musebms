@@ -295,7 +295,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
   def set_datastore_context(context), do: put_dynamic_repo(context)
 
   @spec current_datastore_context :: atom() | pid()
-  def current_datastore_context(), do: get_dynamic_repo()
+  def current_datastore_context, do: get_dynamic_repo()
 
   @spec ecto_transaction(
           fun_or_multi :: (... -> any()) | Ecto.Multi.t(),
