@@ -18,7 +18,10 @@ defmodule MsbmsSystDatastore.DbTypes.Interval do
   use Ecto.Type
 
   @moduledoc """
-  Provides application types which map to specific database types.
+  An Elixir representation of the PostgreSQL `interval` data type.
+
+  Derived from the Postgrex.Interval data type.  For more information about this
+  data type, see: [The PostgreSQL Documentation: Date/Time Types](https://www.postgresql.org/docs/current/datatype-datetime.html#DATATYPE-INTERVAL-INPUT)
   """
 
   @type t :: %__MODULE__{
@@ -32,15 +35,18 @@ defmodule MsbmsSystDatastore.DbTypes.Interval do
 
   @spec type :: :interval
   @impl true
+  @doc false
   def type, do: :interval
 
   @spec cast(any()) :: {:ok, t()} | :error
   @impl true
+  @doc false
   def cast(%__MODULE__{} = value), do: {:ok, value}
   def cast(_), do: :error
 
   @spec load(any()) :: {:ok, t()} | :error
   @impl true
+  @doc false
   def load(%Postgrex.Interval{months: months, days: days, secs: secs, microsecs: microsecs}) do
     {:ok, %__MODULE__{months: months, days: days, seconds: secs, microseconds: microsecs}}
   end
@@ -49,6 +55,7 @@ defmodule MsbmsSystDatastore.DbTypes.Interval do
 
   @spec dump(t()) :: {:ok, Postgrex.Interval.t()} | :error
   @impl true
+  @doc false
   def dump(%__MODULE__{months: months, days: days, seconds: seconds, microseconds: microseconds}) do
     {:ok, %Postgrex.Interval{months: months, days: days, secs: seconds, microsecs: microseconds}}
   end
@@ -58,6 +65,13 @@ end
 
 defmodule MsbmsSystDatastore.DbTypes.IntegerRange do
   use Ecto.Type
+
+  @moduledoc """
+  An Elixir representation of the PostgreSQL `int8range` data type.
+
+  Derived from the Postgrex.Range data type.  For more information about this
+  data type, see: [The PostgreSQL Documentation: Range Types](https://www.postgresql.org/docs/current/rangetypes.html)
+  """
 
   @type t :: %__MODULE__{
           lower: integer() | :empty | :unbound,
@@ -70,15 +84,18 @@ defmodule MsbmsSystDatastore.DbTypes.IntegerRange do
 
   @spec type :: :integerrange
   @impl true
+  @doc false
   def type, do: :integerrange
 
   @spec cast(any()) :: {:ok, t()} | :error
   @impl true
+  @doc false
   def cast(%__MODULE__{} = value), do: {:ok, value}
   def cast(_), do: :error
 
   @spec load(any()) :: {:ok, t()} | :error
   @impl true
+  @doc false
   def load(%Postgrex.Range{
         lower: lower,
         upper: upper,
@@ -98,6 +115,7 @@ defmodule MsbmsSystDatastore.DbTypes.IntegerRange do
 
   @spec dump(t()) :: {:ok, Postgrex.Range.t()} | :error
   @impl true
+  @doc false
   def dump(%__MODULE__{
         lower: lower,
         upper: upper,
@@ -119,6 +137,13 @@ end
 defmodule MsbmsSystDatastore.DbTypes.DecimalRange do
   use Ecto.Type
 
+  @moduledoc """
+  An Elixir representation of the PostgreSQL `numrange` data type.
+
+  Derived from the Postgrex.Range data type.  For more information about this
+  data type, see: [The PostgreSQL Documentation: Range Types](https://www.postgresql.org/docs/current/rangetypes.html)
+  """
+
   @type t :: %__MODULE__{
           lower: Decimal.t() | :empty | :unbound,
           upper: Decimal.t() | :empty | :unbound,
@@ -130,15 +155,18 @@ defmodule MsbmsSystDatastore.DbTypes.DecimalRange do
 
   @spec type :: :decimalrange
   @impl true
+  @doc false
   def type, do: :decimalrange
 
   @spec cast(any()) :: {:ok, t()} | :error
   @impl true
+  @doc false
   def cast(%__MODULE__{} = value), do: {:ok, value}
   def cast(_), do: :error
 
   @spec load(any()) :: {:ok, t()} | :error
   @impl true
+  @doc false
   def load(%Postgrex.Range{
         lower: lower,
         upper: upper,
@@ -158,6 +186,7 @@ defmodule MsbmsSystDatastore.DbTypes.DecimalRange do
 
   @spec dump(t()) :: {:ok, Postgrex.Range.t()} | :error
   @impl true
+  @doc false
   def dump(%__MODULE__{
         lower: lower,
         upper: upper,
@@ -179,6 +208,13 @@ end
 defmodule MsbmsSystDatastore.DbTypes.DateRange do
   use Ecto.Type
 
+  @moduledoc """
+  An Elixir representation of the PostgreSQL `daterange` data type.
+
+  Derived from the Postgrex.Range data type.  For more information about this
+  data type, see: [The PostgreSQL Documentation: Range Types](https://www.postgresql.org/docs/current/rangetypes.html)
+  """
+
   @type t :: %__MODULE__{
           lower: Date.t() | :empty | :unbound,
           upper: Date.t() | :empty | :unbound,
@@ -190,15 +226,18 @@ defmodule MsbmsSystDatastore.DbTypes.DateRange do
 
   @spec type :: :daterange
   @impl true
+  @doc false
   def type, do: :daterange
 
   @spec cast(any()) :: {:ok, t()} | :error
   @impl true
+  @doc false
   def cast(%__MODULE__{} = value), do: {:ok, value}
   def cast(_), do: :error
 
   @spec load(any()) :: {:ok, t()} | :error
   @impl true
+  @doc false
   def load(%Postgrex.Range{
         lower: lower,
         upper: upper,
@@ -218,6 +257,7 @@ defmodule MsbmsSystDatastore.DbTypes.DateRange do
 
   @spec dump(t()) :: {:ok, Postgrex.Range.t()} | :error
   @impl true
+  @doc false
   def dump(%__MODULE__{
         lower: lower,
         upper: upper,
@@ -239,6 +279,13 @@ end
 defmodule MsbmsSystDatastore.DbTypes.TimestampRange do
   use Ecto.Type
 
+  @moduledoc """
+  An Elixir representation of the PostgreSQL `tstzrange` data type.
+
+  Derived from the Postgrex.Range data type.  For more information about this
+  data type, see: [The PostgreSQL Documentation: Range Types](https://www.postgresql.org/docs/current/rangetypes.html)
+  """
+
   @type t :: %__MODULE__{
           lower: DateTime.t() | :empty | :unbound,
           upper: DateTime.t() | :empty | :unbound,
@@ -250,15 +297,18 @@ defmodule MsbmsSystDatastore.DbTypes.TimestampRange do
 
   @spec type :: :timestamprange
   @impl true
+  @doc false
   def type, do: :timestamprange
 
   @spec cast(any()) :: {:ok, t()} | :error
   @impl true
+  @doc false
   def cast(%__MODULE__{} = value), do: {:ok, value}
   def cast(_), do: :error
 
   @spec load(any()) :: {:ok, t()} | :error
   @impl true
+  @doc false
   def load(%Postgrex.Range{
         lower: lower,
         upper: upper,
@@ -278,6 +328,7 @@ defmodule MsbmsSystDatastore.DbTypes.TimestampRange do
 
   @spec dump(t()) :: {:ok, Postgrex.Range.t()} | :error
   @impl true
+  @doc false
   def dump(%__MODULE__{
         lower: lower,
         upper: upper,
