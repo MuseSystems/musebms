@@ -162,7 +162,7 @@ defmodule MsbmsSystDatastore.Impl.Privileged do
 
     case Datastore.start_datastore_context(priv_options, priv_context) do
       {:ok, priv_pid} ->
-        Datastore.set_datastore_context(priv_pid)
+        _ = Datastore.set_datastore_context(priv_pid)
 
         Datastore.query_for_none!("SET ROLE #{datastore_options.database_owner};")
 

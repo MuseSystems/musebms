@@ -149,7 +149,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
 
   def stop_datastore_context(context, shutdown_timeout)
       when is_pid(context) or is_atom(context) do
-    set_datastore_context(context)
+    _ = set_datastore_context(context)
     stop(shutdown_timeout)
   end
 
