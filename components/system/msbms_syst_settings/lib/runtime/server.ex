@@ -30,7 +30,7 @@ defmodule MsbmsSystSettings.Runtime.Server do
   ##
 
   @spec start_link(MsbmsSystSettings.Types.setting_service_params()) ::
-          :ok | {:error, MsbmsSystError.t()}
+          {:ok, pid()} | {:error, MsbmsSystError.t()}
   def start_link({settings_service_name, _datastore_context_name} = params) do
     case GenServer.start_link(__MODULE__, params, name: settings_service_name) do
       {:ok, pid} ->
