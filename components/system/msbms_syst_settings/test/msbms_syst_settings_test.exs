@@ -408,7 +408,7 @@ defmodule MsbmsSystSettingsTest do
     first_change = %{
       setting_integer_range: %MsbmsSystDatastore.DbTypes.IntegerRange{
         lower: 111,
-        upper: 11111,
+        upper: 11_111,
         lower_inclusive: true,
         upper_inclusive: true
       }
@@ -417,7 +417,7 @@ defmodule MsbmsSystSettingsTest do
     second_change = %{
       setting_integer_range: %MsbmsSystDatastore.DbTypes.IntegerRange{
         lower: 222,
-        upper: 22222,
+        upper: 22_222,
         lower_inclusive: false,
         upper_inclusive: true
       }
@@ -456,7 +456,7 @@ defmodule MsbmsSystSettingsTest do
     assert %MsbmsSystDatastore.DbTypes.IntegerRange{
              lower: 223,
              lower_inclusive: true,
-             upper: 22223,
+             upper: 22_223,
              upper_inclusive: false
            } ==
              MsbmsSystSettings.get_setting_value(
@@ -476,7 +476,7 @@ defmodule MsbmsSystSettingsTest do
     assert %MsbmsSystDatastore.DbTypes.IntegerRange{
              lower: 111,
              lower_inclusive: true,
-             upper: 11112,
+             upper: 11_112,
              upper_inclusive: false
            } ==
              MsbmsSystSettings.get_setting_value(
