@@ -244,11 +244,14 @@ defmodule MsbmsSystDatastore do
   @spec current_datastore_context :: atom() | pid()
   defdelegate current_datastore_context(), to: Datastore
 
+  @spec transaction(fun | Ecto.Multi.t(), keyword) :: {:error, MsbmsSystError.t()} | {:ok, any}
   defdelegate transaction(job, opts \\ []), to: Datastore, as: :ecto_transaction
+
   defdelegate record_count(queryable, opts), to: Datastore, as: :record_count
 
   defdelegate aggregate(queryable, aggregate, field, opts \\ []), to: Datastore
 
+  @spec all(Ecto.Queryable.t(), Keyword.t()) :: list(Ecto.Schema.t())
   defdelegate all(queryable, opts \\ []), to: Datastore
 
   defdelegate delete(struct_or_changeset, opts \\ []),
