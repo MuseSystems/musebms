@@ -19,7 +19,6 @@ BEGIN
     IF
         old.syst_defined AND
         ( new.internal_name    != old.internal_name OR
-          new.display_name     != old.display_name OR
           new.syst_defined     != old.syst_defined OR
           new.syst_description != old.syst_description )
     THEN
@@ -45,7 +44,8 @@ BEGIN
     END IF;
 
     UPDATE msbms_syst_data.syst_settings SET
-          user_description       = new.user_description
+          display_name            = new.display_name
+        , user_description        = new.user_description
         , setting_flag            = new.setting_flag
         , setting_integer         = new.setting_integer
         , setting_integer_range   = new.setting_integer_range
