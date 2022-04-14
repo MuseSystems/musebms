@@ -37,6 +37,10 @@ jobs:
           run: mix credo --strict
           working-directory: ./components/system/msbms_syst_error
 
+        - name: Run Dialyzer
+          run: mix dialyzer
+          working-directory: ./components/system/msbms_syst_error
+
   msbms-syst-options:
     runs-on: ubuntu-latest
     name: MuseSystOptions (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
@@ -65,6 +69,10 @@ jobs:
 
         - name: Run Credo
           run: mix credo --strict
+          working-directory: ./components/system/msbms_syst_options
+
+        - name: Run Dialyzer
+          run: mix dialyzer
           working-directory: ./components/system/msbms_syst_options
 
   msbms-syst-datastore:
@@ -113,6 +121,10 @@ jobs:
 
         - name: Run Credo
           run: mix credo --strict
+          working-directory: ./components/system/msbms_syst_datastore
+
+        - name: Run Dialyzer
+          run: mix dialyzer
           working-directory: ./components/system/msbms_syst_datastore
 
   msbms-syst-settings:
@@ -166,6 +178,7 @@ jobs:
         - name: Run Dialyzer
           run: mix dialyzer
           working-directory: ./components/system/msbms_syst_settings
+
   msbms-application:
     runs-on: ubuntu-latest
     name: Muse BMS (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
@@ -208,5 +221,9 @@ jobs:
 
         - name: Run Credo
           run: mix credo --strict
+          working-directory: ./application/msbms
+
+        - name: Run Dialyzer
+          run: mix dialyzer
           working-directory: ./application/msbms
 
