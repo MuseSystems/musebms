@@ -34,7 +34,7 @@ jobs:
           working-directory: ./components/system/msbms_syst_error
 
         - name: Run Credo
-          run: mix credo --strict
+          run: mix credo
           working-directory: ./components/system/msbms_syst_error
 
         - name: Run Dialyzer
@@ -68,7 +68,7 @@ jobs:
           working-directory: ./components/system/msbms_syst_options
 
         - name: Run Credo
-          run: mix credo --strict
+          run: mix credo
           working-directory: ./components/system/msbms_syst_options
 
         - name: Run Dialyzer
@@ -120,7 +120,7 @@ jobs:
           working-directory: ./components/system/msbms_syst_datastore
 
         - name: Run Credo
-          run: mix credo --strict
+          run: mix credo
           working-directory: ./components/system/msbms_syst_datastore
 
         - name: Run Dialyzer
@@ -172,7 +172,7 @@ jobs:
           working-directory: ./components/system/msbms_syst_settings
 
         - name: Run Credo
-          run: mix credo --strict
+          run: mix credo
           working-directory: ./components/system/msbms_syst_settings
 
         - name: Run Dialyzer
@@ -220,7 +220,7 @@ jobs:
           working-directory: ./application/msbms
 
         - name: Run Credo
-          run: mix credo --strict
+          run: mix credo
           working-directory: ./application/msbms
 
         - name: Run Dialyzer
