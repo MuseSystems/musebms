@@ -90,9 +90,9 @@ defmodule MsbmsSystSettings.Data.SystSettings do
   end
 
   @spec create_changeset(map()) :: Ecto.Changeset.t()
-  def create_changeset(params \\ %{}) do
+  def create_changeset(create_params \\ %{}) do
     %__MODULE__{}
-    |> cast(params, [
+    |> cast(create_params, [
       :internal_name,
       :display_name,
       :user_description,
@@ -125,9 +125,9 @@ defmodule MsbmsSystSettings.Data.SystSettings do
   end
 
   @spec update_changeset(t(), map()) :: Ecto.Changeset.t()
-  def update_changeset(syst_settings, params \\ %{}) do
+  def update_changeset(syst_settings, update_params \\ %{}) do
     syst_settings
-    |> cast(params, [
+    |> cast(update_params, [
       :display_name,
       :user_description,
       :setting_flag,
