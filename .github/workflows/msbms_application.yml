@@ -12,8 +12,8 @@ jobs:
     name: MuseSystError (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
     strategy:
       matrix:
-        otp: ['24.2']
-        elixir: ['1.13.2']
+        otp: ['24.3']
+        elixir: ['1.13.4']
 
     steps:
         - name: Checkout repository code
@@ -42,8 +42,8 @@ jobs:
     name: MuseSystOptions (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
     strategy:
       matrix:
-        otp: ['24.2']
-        elixir: ['1.13.2']
+        otp: ['24.3']
+        elixir: ['1.13.4']
 
     steps:
         - name: Checkout repository code
@@ -72,8 +72,8 @@ jobs:
     name: MuseSystDatastore (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
     strategy:
       matrix:
-        otp: ['24.2']
-        elixir: ['1.13.2']
+        otp: ['24.3']
+        elixir: ['1.13.4']
     services:
       postgres:
         image: postgres
@@ -171,8 +171,8 @@ jobs:
     name: Muse BMS (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
     strategy:
       matrix:
-        otp: ['24.2']
-        elixir: ['1.13.2']
+        otp: ['24.3']
+        elixir: ['1.13.4']
     services:
       postgres:
         image: postgres
