@@ -129,7 +129,7 @@ jobs:
 
   msbms-syst-settings:
     runs-on: ubuntu-latest
-    name: MuseSystDatastore (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
+    name: MuseSystSettings (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
     strategy:
       matrix:
         otp: ['24.3']
