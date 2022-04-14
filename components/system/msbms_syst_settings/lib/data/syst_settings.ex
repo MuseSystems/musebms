@@ -16,6 +16,14 @@ defmodule MsbmsSystSettings.Data.SystSettings do
 
   alias MsbmsSystDatastore.DbTypes
 
+  @min_internal_name 6
+  @max_internal_name 64
+
+  @min_display_name 6
+  @max_display_name 64
+
+  @min_user_description_length 6
+  @max_user_description_length 1_000
   @type t() ::
           %__MODULE__{
             __meta__: Ecto.Schema.Metadata.t(),
@@ -106,7 +114,12 @@ defmodule MsbmsSystSettings.Data.SystSettings do
     ])
     |> validate_required([:internal_name, :display_name, :user_description])
     |> put_change(:syst_defined, false)
-    |> validate_length(:user_description, min: 6)
+    |> validate_length(:internal_name, min: @min_internal_name, max: @max_internal_name)
+    |> validate_length(:display_name, min: @min_display_name, max: @max_display_name)
+    |> validate_length(:user_description,
+      min: @min_user_description_length,
+      max: @max_user_description_length
+    )
     |> unique_constraint(:internal_name)
     |> unique_constraint(:display_name)
   end
@@ -133,6 +146,22 @@ defmodule MsbmsSystSettings.Data.SystSettings do
       :setting_uuid,
       :setting_blob
     ])
+    |> validate_length(:display_name, min: @min_display_name, max: @max_display_name)
+    |> maybe_validate_user_description()
     |> unique_constraint(:display_name)
   end
+
+  defp maybe_validate_user_description(changeset) do
+    (!get_field(changeset, :syst_defined) or !is_nil(get_field(changeset, :user_description, nil)))
+    |> maybe_validate_user_description(changeset)
+  end
+
+  defp maybe_validate_user_description(true, changeset),
+    do:
+      validate_length(changeset, :user_description,
+        min: @min_user_description_length,
+        max: @max_user_description_length
+      )
+
+  defp maybe_validate_user_description(false, changeset), do: changeset
 end
