@@ -24,6 +24,14 @@ defmodule MsbmsSystSettings.Data.SystSettings do
 
   @min_user_description_length 6
   @max_user_description_length 1_000
+
+  @moduledoc """
+  Defines the primary representation of settings related data.
+
+  The SystSettings struct and related functions define the primary data
+  structure for application settings data.
+  """
+
   @type t() ::
           %__MODULE__{
             __meta__: Ecto.Schema.Metadata.t(),
@@ -89,6 +97,23 @@ defmodule MsbmsSystSettings.Data.SystSettings do
     field(:diag_update_count, :integer)
   end
 
+  @doc """
+  Produces a changeset to be used to create a new user defined setting.
+
+  The `create_params` argument defines the attributes to be used in creating a new
+  user defined setting.  Of the allowed fields, the following are required for
+  creation:
+
+    * `internal_name` - A unique key which is intended for programmatic usage
+      by the application and other applications which make use of the data.
+
+    * `display_name` - A unique key for the purposes of presentation to users
+      in user interfaces, reporting, etc.
+
+    * `user_description` - A description of the setting including its use cases
+      and any limits or restrictions.  This field must contain between 6 and
+      1000 characters to be considered valid.
+  """
   @spec create_changeset(map()) :: Ecto.Changeset.t()
   def create_changeset(create_params \\ %{}) do
     %__MODULE__{}
@@ -124,6 +149,12 @@ defmodule MsbmsSystSettings.Data.SystSettings do
     |> unique_constraint(:display_name)
   end
 
+  @doc """
+  Produces a changeset for the purposes of updating an existing setting record.
+
+  Updates may be made to any setting record, system or user defined.  There are
+  no required values for changing a setting
+  """
   @spec update_changeset(t(), map()) :: Ecto.Changeset.t()
   def update_changeset(syst_settings, update_params \\ %{}) do
     syst_settings
