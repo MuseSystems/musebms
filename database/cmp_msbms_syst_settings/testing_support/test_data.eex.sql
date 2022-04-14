@@ -51,8 +51,8 @@ VALUES
     , '2022-01-01'::date
     ,  daterange('2022-01-01'::date, '2023-01-01'::date)
     , '01:00'::time
-    , '2022-01-01 01:00:00'::timestamptz
-    , tstzrange('2022-01-01 01:00:00'::timestamptz, 'infinity'::timestamptz)
+    , '2022-01-01 01:00:00Z'::timestamptz
+    , tstzrange('2022-01-01 01:00:00Z'::timestamptz, 'infinity'::timestamptz)
     , $JSON_TEST$
       {
         "test_settings_one": {
