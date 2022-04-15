@@ -29,11 +29,6 @@ CREATE TABLE msbms_syst_data.syst_enums
         NOT NULL
     ,user_description
         text
-    ,feature_id
-        uuid
-        NOT NULL
-        CONSTRAINT syst_enums_feature_fk
-            REFERENCES msbms_syst_data.syst_feature_map (id)
     ,syst_defined
         boolean
         NOT NULL DEFAULT FALSE
@@ -108,12 +103,6 @@ COMMENT ON
     COLUMN msbms_syst_data.syst_enums.user_description IS
 $DOC$A user defined description of the enumeration to support custom user
 documentation of the purpose and function of the enumeration.$DOC$;
-
-COMMENT ON
-    COLUMN msbms_syst_data.syst_enums.feature_id IS
-$DOC$A reference to the specific feature of which the enumeration is considered to be
-part.  This reference is chiefly used to determine where in the configuration
-options the enumeration should appear.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.syst_enums.syst_defined IS
