@@ -11,7 +11,7 @@
 -- muse.information@musesystems.com  :: https://muse.systems
 
 DO
-$SYS_SETTINGS_OPTION$
+$SYST_SETTINGS_OPTION$
     BEGIN
         IF
             exists( SELECT TRUE
@@ -140,4 +140,4 @@ diag_row_version - 1.$DOC$;
 
         END IF;
     END;
-$SYS_SETTINGS_OPTION$;
+$SYST_SETTINGS_OPTION$;
