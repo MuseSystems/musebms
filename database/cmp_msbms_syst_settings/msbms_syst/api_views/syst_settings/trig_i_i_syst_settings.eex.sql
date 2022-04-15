@@ -41,7 +41,7 @@ BEGIN
         ( new.internal_name
         , new.display_name
         , FALSE
-        , '(System Description Not Provided)'
+        , '(System Description Not Available)'
         , new.user_description
         , new.setting_flag
         , new.setting_integer
