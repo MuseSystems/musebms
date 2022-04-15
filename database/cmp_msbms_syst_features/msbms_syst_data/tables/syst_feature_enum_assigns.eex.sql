@@ -1,5 +1,5 @@
 -- File:        syst_feature_enum_assigns.eex.sql
--- Location:    database\cmp_msbms_syst_enums\msbms_syst_data\tables\syst_feature_enum_assigns.eex.sql
+-- Location:    database\cmp_msbms_syst_features\msbms_syst_data\tables\syst_feature_enum_assigns.eex.sql
 -- Project:     Muse Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
