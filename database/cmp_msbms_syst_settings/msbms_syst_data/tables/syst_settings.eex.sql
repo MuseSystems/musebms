@@ -26,7 +26,7 @@ CREATE TABLE msbms_syst_data.syst_settings
         CONSTRAINT syst_settings_display_name_udx UNIQUE
     ,syst_defined
         boolean
-        NOT NULL DEFAULT TRUE
+        NOT NULL DEFAULT FALSE
     ,syst_description
         text
         NOT NULL
