@@ -73,11 +73,16 @@ data is the preferred method of data maintenance in the course of normal usage.$
 COMMENT ON
     COLUMN msbms_syst.syst_settings.id IS
 $DOC$The record's primary key.  The definitive identifier of the record in the
-system.$DOC$;
+system.
+
+Note that this column may not be updated via this API View.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst.syst_settings.internal_name IS
-$DOC$A candidate key useful for programmatic references to individual records.$DOC$;
+$DOC$A candidate key useful for programmatic references to individual records.
+
+Note that this column may not be updated via this API View, though an initial
+insert operation may set it initially$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst.syst_settings.display_name IS
