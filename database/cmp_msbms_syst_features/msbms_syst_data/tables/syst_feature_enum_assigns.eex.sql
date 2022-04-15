@@ -10,6 +10,15 @@
 --
 -- muse.information@musesystems.com  :: https://muse.systems
 
+DO
+$SYST_ENUMS_OPTION$
+    BEGIN
+        IF
+            exists( SELECT TRUE
+                    FROM information_schema.tables
+                    WHERE table_schema = 'msbms_syst_data'
+                      AND table_name = 'syst_enums')
+        THEN
 CREATE TABLE msbms_syst_data.syst_feature_enum_assigns
 (
      id
@@ -127,3 +136,7 @@ $DOC$Records the number of times the record has been updated regardless as to if
 the update actually changed any data.  In this way needless or redundant record
 updates can be found.  This row starts at 0 and therefore may be the same as the
 diag_row_version - 1.$DOC$;
+
+        END IF;
+    END;
+$SYST_ENUMS_OPTION$;
