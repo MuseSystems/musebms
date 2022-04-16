@@ -37,7 +37,7 @@ BEGIN
                 TABLE = tg_table_name;
     END IF;
 
-    DELETE FROM msbms_syst_data.syst_settings WHERE id = old.id;
+    DELETE FROM msbms_syst_data.syst_settings WHERE id = old.id RETURNING * INTO old;
 
     RETURN old;
 

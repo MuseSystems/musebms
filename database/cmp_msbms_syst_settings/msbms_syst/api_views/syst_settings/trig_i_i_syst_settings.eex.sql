@@ -57,7 +57,8 @@ BEGIN
         , new.setting_json
         , new.setting_text
         , new.setting_uuid
-        , new.setting_blob );
+        , new.setting_blob )
+    RETURNING * INTO new;
 
     RETURN new;
 
