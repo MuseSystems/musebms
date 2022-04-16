@@ -88,6 +88,12 @@ ALTER TABLE msbms_syst_data.syst_enum_values OWNER TO <%= msbms_owner %>;
 REVOKE ALL ON TABLE msbms_syst_data.syst_enum_values FROM public;
 GRANT ALL ON TABLE msbms_syst_data.syst_enum_values TO <%= msbms_owner %>;
 
+CREATE TRIGGER a50_trig_b_i_syst_enum_values_maintain_sort_order
+    BEFORE INSERT
+    ON msbms_syst_data.syst_enum_values
+    FOR EACH ROW
+EXECUTE PROCEDURE msbms_syst_priv.trig_b_i_syst_enum_values_maintain_sort_order( );
+
 CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
     BEFORE INSERT OR UPDATE
     ON msbms_syst_data.syst_enum_values
@@ -106,6 +112,12 @@ CREATE CONSTRAINT TRIGGER a50_trig_a_u_syst_enum_values_check_functional_type
     FOR EACH ROW
     WHEN ( old.functional_type_id IS DISTINCT FROM new.functional_type_id )
 EXECUTE PROCEDURE msbms_syst_priv.trig_a_iu_syst_enum_values_check_functional_types( );
+
+CREATE TRIGGER a55_trig_a_iu_syst_enum_values_maintain_sort_order
+    BEFORE INSERT
+    ON msbms_syst_data.syst_enum_values
+    FOR EACH ROW
+EXECUTE PROCEDURE msbms_syst_priv.trig_a_iu_syst_enum_values_maintain_sort_order( );
 
 COMMENT ON
     TABLE msbms_syst_data.syst_enum_values IS
