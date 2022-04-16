@@ -16,12 +16,7 @@ $BODY$
 
 BEGIN
 
-    IF
-        old.syst_defined AND
-        ( new.internal_name    != old.internal_name OR
-          new.syst_defined     != old.syst_defined OR
-          new.syst_description != old.syst_description )
-    THEN
+    IF old.syst_defined AND new.internal_name != old.internal_name THEN
         RAISE EXCEPTION
             USING
                 MESSAGE = 'The requested data update included changes to fields disallowed ' ||
