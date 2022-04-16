@@ -68,7 +68,12 @@ provides a reference center to interested application functionality.
 
 This API View allows the application to read and maintain the data according to
 well defined application business rules.  Using this API view for updates to
-data is the preferred method of data maintenance in the course of normal usage.$DOC$;
+data is the preferred method of data maintenance in the course of normal usage.
+
+Only user maintainable values may be maintained via this API.  System created or
+maintained data is not maintainable via this view.  Attempts at invalid data
+maintenance via this API may result in the invalid changes being ignored or may
+raise an exception.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst.syst_settings.id IS
