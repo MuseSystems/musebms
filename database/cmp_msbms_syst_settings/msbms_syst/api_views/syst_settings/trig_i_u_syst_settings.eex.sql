@@ -61,7 +61,8 @@ BEGIN
         , setting_text            = new.setting_text
         , setting_uuid            = new.setting_uuid
         , setting_blob            = new.setting_blob
-    WHERE id = new.id;
+    WHERE id = new.id
+    RETURNING * INTO new;
 
     RETURN new;
 
