@@ -44,7 +44,8 @@ BEGIN
     END IF;
 
     UPDATE msbms_syst_data.syst_settings SET
-          display_name            = new.display_name
+          internal_name           = new.internal_name
+        , display_name            = new.display_name
         , user_description        = new.user_description
         , setting_flag            = new.setting_flag
         , setting_integer         = new.setting_integer

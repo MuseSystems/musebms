@@ -79,10 +79,7 @@ Note that this column may not be updated via this API View.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst.syst_settings.internal_name IS
-$DOC$A candidate key useful for programmatic references to individual records.
-
-Note that this column may not be updated via this API View, though an initial
-insert operation may set it initially$DOC$;
+$DOC$A candidate key useful for programmatic references to individual records.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst.syst_settings.display_name IS
