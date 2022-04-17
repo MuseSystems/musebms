@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION msbms_syst.syst_enum_functional_types()
+CREATE OR REPLACE FUNCTION msbms_syst.trig_i_d_syst_enum_functional_types()
 RETURNS trigger AS
 $BODY$
 
@@ -50,14 +50,14 @@ END;
 $BODY$
 LANGUAGE plpgsql VOLATILE;
 
-ALTER FUNCTION msbms_syst.syst_enum_functional_types()
+ALTER FUNCTION msbms_syst.trig_i_d_syst_enum_functional_types()
     OWNER TO <%= msbms_owner %>;
 
-REVOKE EXECUTE ON FUNCTION msbms_syst.syst_enum_functional_types() FROM public;
-GRANT EXECUTE ON FUNCTION msbms_syst.syst_enum_functional_types() TO <%= msbms_owner %>;
-GRANT EXECUTE ON FUNCTION msbms_syst.syst_enum_functional_types() TO <%= msbms_apiusr>;
+REVOKE EXECUTE ON FUNCTION msbms_syst.trig_i_d_syst_enum_functional_types() FROM public;
+GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_d_syst_enum_functional_types() TO <%= msbms_owner %>;
+GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_d_syst_enum_functional_types() TO <%= msbms_apiusr>;
 
 
-COMMENT ON FUNCTION msbms_syst.syst_enum_functional_types() IS
+COMMENT ON FUNCTION msbms_syst.trig_i_d_syst_enum_functional_types() IS
 $DOC$An INSTEAD OF trigger function which applies business rules when using the
 syst_enum_functional_types API View for DELETE operations.$DOC$;
