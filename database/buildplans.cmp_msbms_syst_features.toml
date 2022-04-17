@@ -23,6 +23,10 @@ update               = 0
 sponsor              = 820
 sponsor_modification = 0
 load_files = [
+    #
+    # Database Preparation and Common Facilities Load
+    #
+
     "cmp_msbms_syst_features/testing_support/database_initial_setup.eex.sql",
     "cmp_msbms_syst_features/testing_support/create_database_schemata.eex.sql",
 
@@ -30,18 +34,30 @@ load_files = [
     "all/msbms_syst_priv/functions/get_exception_details.eex.sql",
     "all/msbms_syst_priv/trigger_functions/trig_b_iu_set_diagnostic_columns.eex.sql",
 
-    "cmp_msbms_syst_settings/msbms_syst_data/tables/syst_settings.eex.sql",
+    #
+    # Optional Module Installation (for testing)
+    #
 
-    "cmp_msbms_syst_features/msbms_syst_data/tables/syst_relations.eex.sql",
-    "cmp_msbms_syst_features/msbms_syst_data/tables/syst_feature_map_levels.eex.sql",
-    "cmp_msbms_syst_features/msbms_syst_data/tables/syst_feature_map.eex.sql",
-    "cmp_msbms_syst_features/msbms_syst_priv/trigger_functions/multi_table/trig_a_iu_feature_map_level_assignable_check.eex.sql",
-    "cmp_msbms_syst_features/msbms_syst_data/tables/syst_feature_relation_assigns.eex.sql",
+    "cmp_msbms_syst_settings/msbms_syst_data/tables/syst_settings/syst_settings.eex.sql",
+
+    #
+    #  MsbmsSystFeatures Module
+    #
+
+    "cmp_msbms_syst_features/msbms_syst_data/tables/syst_relations/syst_relations.eex.sql",
+    "cmp_msbms_syst_features/msbms_syst_data/tables/syst_feature_map_levels/syst_feature_map_levels.eex.sql",
+    "cmp_msbms_syst_features/msbms_syst_data/tables/syst_feature_map/syst_feature_map.eex.sql",
+    "cmp_msbms_syst_features/msbms_syst_priv/trigger_functions/trig_a_iu_feature_map_level_assignable_check.eex.sql",
+    "cmp_msbms_syst_features/msbms_syst_data/tables/syst_feature_relation_assigns/syst_feature_relation_assigns.eex.sql",
 
     "cmp_msbms_syst_features/msbms_syst/api_views/syst_feature_setting_assigns/trig_i_i_syst_feature_setting_assigns.eex.sql",
     "cmp_msbms_syst_features/msbms_syst/api_views/syst_feature_setting_assigns/trig_i_u_syst_feature_setting_assigns.eex.sql",
     "cmp_msbms_syst_features/msbms_syst/api_views/syst_feature_setting_assigns/trig_i_d_syst_feature_setting_assigns.eex.sql",
     "cmp_msbms_syst_features/msbms_syst/api_views/syst_feature_setting_assigns/syst_feature_setting_assigns.eex.sql",
+
+    #
+    # Testing Data Setup
+    #
 
     "cmp_msbms_syst_features/testing_support/test_data.eex.sql",
 
