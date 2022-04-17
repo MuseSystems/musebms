@@ -50,7 +50,7 @@ ALTER FUNCTION msbms_syst.trig_i_d_syst_enum_values()
 
 REVOKE EXECUTE ON FUNCTION msbms_syst.trig_i_d_syst_enum_values() FROM public;
 GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_d_syst_enum_values() TO <%= msbms_owner %>;
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_d_syst_enum_values() TO <%= msbms_apiusr>;
+GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_d_syst_enum_values() TO <%= msbms_apiusr %>;
 
 
 COMMENT ON FUNCTION msbms_syst.trig_i_d_syst_enum_values() IS
