@@ -1,5 +1,5 @@
--- File:        syst_enums.sql
--- Location:    database\cmp_msbms_syst_enums\msbms_syst\api_views\syst_enums\syst_enums.sql
+-- File:        syst_enums.eex.sql
+-- Location:    database\cmp_msbms_syst_enums\msbms_syst\api_views\syst_enums\syst_enums.eex.sql
 -- Project:     Muse Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
