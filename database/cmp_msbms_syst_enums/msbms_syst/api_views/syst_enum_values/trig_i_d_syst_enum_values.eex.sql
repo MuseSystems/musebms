@@ -37,7 +37,7 @@ BEGIN
                 TABLE = tg_table_name;
     END IF;
 
-    DELETE FROM msbms_syst_data.syst_enum_valuess WHERE id = old.id RETURNING * INTO old;
+    DELETE FROM msbms_syst_data.syst_enum_values WHERE id = old.id RETURNING * INTO old;
 
     RETURN old;
 
