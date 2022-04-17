@@ -47,7 +47,7 @@ CREATE TABLE msbms_syst_data.syst_enum_values
         NOT NULL DEFAULT FALSE
     ,user_maintainable
         boolean
-        NOT NULL DEFAULT FALSE
+        NOT NULL DEFAULT TRUE
     ,syst_description
         text
         NOT NULL
