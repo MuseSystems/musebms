@@ -55,7 +55,7 @@ ALTER FUNCTION msbms_syst.trig_i_d_syst_enum_functional_types()
 
 REVOKE EXECUTE ON FUNCTION msbms_syst.trig_i_d_syst_enum_functional_types() FROM public;
 GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_d_syst_enum_functional_types() TO <%= msbms_owner %>;
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_d_syst_enum_functional_types() TO <%= msbms_apiusr>;
+GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_d_syst_enum_functional_types() TO <%= msbms_apiusr %>;
 
 
 COMMENT ON FUNCTION msbms_syst.trig_i_d_syst_enum_functional_types() IS
