@@ -19,7 +19,7 @@ defmodule MsbmsSystEnumsTest do
         login_context: false
       },
       %{
-        id: :settings_app_context,
+        id: :enums_app_context,
         description: "MsBmsSystEnums Testing App User",
         database_role: "msbms_syst_enums_app_user",
         database_password: 'msbms_syst_enums.testing.code.app.user',
@@ -57,7 +57,7 @@ defmodule MsbmsSystEnumsTest do
   @migration_test_source_root_dir "../../../database"
   @migration_test_datastore_type "cmp_msbms_syst_enums"
 
-  @datastore_context_name :settings_app_context
+  @datastore_context_name :enums_app_context
 
   #  This testing presumes that the database schema is tested separately and is
   #  correct here.
@@ -66,8 +66,8 @@ defmodule MsbmsSystEnumsTest do
     setup_test_environment()
 
     service_child_spec = %{
-      id: SettingsTest,
-      start: {MsbmsSystEnums, :start_link, [{:settings_instance, @datastore_context_name}]}
+      id: EnumsTest,
+      start: {MsbmsSystEnums, :start_link, [{:enums_instance, @datastore_context_name}]}
     }
 
     # start_supervised!(service_child_spec)
