@@ -17,17 +17,13 @@ $BODY$
 BEGIN
 
     IF
-        NOT EXISTS( SELECT TRUE
-                    FROM msbms_syst_data.syst_enums ce
-                        JOIN msbms_syst_data.syst_enum_functional_types ceft
-                            ON ceft.enum_id = ce.id
-                    WHERE   ce.id   = new.enum_id
-                        AND ceft.id = new.functional_type_id) AND
         EXISTS( SELECT TRUE
-                FROM msbms_syst_data.syst_enums ce
-                    JOIN msbms_syst_data.syst_enum_functional_types ceft
-                        ON ceft.enum_id = ce.id
-                WHERE   ce.id = new.enum_id)
+                FROM msbms_syst_data.syst_enum_functional_types seft
+                WHERE   seft.enum_id = new.enum_id) AND
+        NOT EXISTS( SELECT TRUE
+                    FROM msbms_syst_data.syst_enum_functional_types seft
+                    WHERE   seft.id = new.functional_type_id
+                        AND seft.enum_id = new.enum_id)
     THEN
 
         RAISE EXCEPTION
