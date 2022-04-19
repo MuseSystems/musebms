@@ -56,6 +56,10 @@ defmodule MsbmsSystSettings.Types do
           | :setting_uuid
           | :setting_blob
 
+  @typedoc """
+  A map definition describing what specific key/value pairs are available for
+  passing as SystSettings changeset parameters.
+  """
   @type setting_params() :: %{
           optional(:internal_name) => setting_name(),
           optional(:display_name) => String.t(),
