@@ -26,10 +26,7 @@ defmodule MsbmsSystSettings.Data.SystSettings do
   @max_user_description_length 1_000
 
   @moduledoc """
-  Defines the primary representation of settings related data.
-
-  The SystSettings struct and related functions define the primary data
-  structure for application settings data.
+  The primary data structure for applications settings data.
   """
 
   @type t() ::
