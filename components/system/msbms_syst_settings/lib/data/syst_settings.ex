@@ -175,21 +175,39 @@ defmodule MsbmsSystSettings.Data.SystSettings do
       :setting_blob
     ])
     |> validate_length(:display_name, min: @min_display_name, max: @max_display_name)
-    |> maybe_validate_user_description()
+    |> validate_user_description()
+    |> validate_internal_name()
     |> unique_constraint(:display_name)
   end
 
-  defp maybe_validate_user_description(changeset) do
+  # System defined settings are allowed to have a nil user descriptions, but all
+  # other user description values must meet min/max length requirements.
+  defp validate_user_description(changeset) do
     (!get_field(changeset, :syst_defined) or !is_nil(get_field(changeset, :user_description, nil)))
-    |> maybe_validate_user_description(changeset)
+    |> validate_user_description(changeset)
   end
 
-  defp maybe_validate_user_description(true, changeset),
+  defp validate_user_description(true, changeset),
     do:
       validate_length(changeset, :user_description,
         min: @min_user_description_length,
         max: @max_user_description_length
       )
 
-  defp maybe_validate_user_description(false, changeset), do: changeset
+  defp validate_user_description(false, changeset), do: changeset
+
+  defp validate_internal_name(changeset) do
+    validation_func = fn :internal_name, _internal_name ->
+      if get_field(changeset, :syst_defined) do
+        [:internal_name, "System defined settings may not have their internal names changed."]
+      else
+        []
+      end
+    end
+
+    changeset
+    |> validate_change(:internal_name, :validate_internal_name, &validation_func.(&1, &2))
+    |> validate_length(:internal_name, min: @min_internal_name, max: @max_internal_name)
+    |> unique_constraint(:internal_name)
+  end
 end
