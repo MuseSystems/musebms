@@ -57,7 +57,7 @@ defmodule MsbmsSystSettings.Types do
           | :setting_blob
 
   @type setting_params() :: %{
-          optional(:internal_name) => String.t(),
+          optional(:internal_name) => setting_name(),
           optional(:display_name) => String.t(),
           optional(:user_description) => String.t(),
           optional(:setting_flag) => boolean(),
@@ -71,7 +71,7 @@ defmodule MsbmsSystSettings.Types do
           optional(:setting_time) => Time.t(),
           optional(:setting_timestamp) => DateTime.t(),
           optional(:setting_timestamp_range) => MsbmsSystDatastore.DbTypes.TimestampRange.t(),
-          optional(:setting_json) => String.t(),
+          optional(:setting_json) => map(),
           optional(:setting_text) => String.t(),
           optional(:setting_uuid) => Ecto.UUID.t(),
           optional(:setting_blob) => binary()
