@@ -114,7 +114,7 @@ CREATE CONSTRAINT TRIGGER a50_trig_a_u_syst_enum_values_check_functional_type
 EXECUTE PROCEDURE msbms_syst_data.trig_a_iu_syst_enum_values_check_functional_types( );
 
 CREATE TRIGGER a55_trig_a_iu_syst_enum_values_maintain_sort_order
-    BEFORE INSERT
+    AFTER INSERT
     ON msbms_syst_data.syst_enum_values
     FOR EACH ROW
 EXECUTE PROCEDURE msbms_syst_data.trig_a_iu_syst_enum_values_maintain_sort_order( );
