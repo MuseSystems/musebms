@@ -90,7 +90,7 @@ defmodule MsbmsSystSettings.Impl.Settings do
     ets_table_name = get_ets_table_from_service_name(service_name)
 
     creation_params
-    |> SystSettings.create_changeset()
+    |> then(&SystSettings.changeset(%SystSettings{}, &1))
     |> MsbmsSystDatastore.insert!(returning: true)
     |> then(&:ets.insert(ets_table_name, {&1.internal_name, &1}))
 
@@ -119,7 +119,7 @@ defmodule MsbmsSystSettings.Impl.Settings do
     ets_table_name = get_ets_table_from_service_name(service_name)
 
     :ets.lookup_element(ets_table_name, setting_name, 2)
-    |> SystSettings.update_changeset(update_params)
+    |> SystSettings.changeset(update_params)
     |> MsbmsSystDatastore.update!(returning: true)
     |> then(&:ets.update_element(ets_table_name, setting_name, {2, &1}))
 

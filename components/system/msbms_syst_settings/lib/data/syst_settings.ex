@@ -32,34 +32,34 @@ defmodule MsbmsSystSettings.Data.SystSettings do
   @type t() ::
           %__MODULE__{
             __meta__: Ecto.Schema.Metadata.t(),
-            id: Ecto.UUID.t(),
-            internal_name: MsbmsSystSettings.Types.setting_name(),
-            display_name: String.t(),
-            syst_defined: boolean(),
-            syst_description: String.t(),
-            user_description: String.t(),
-            setting_flag: boolean(),
-            setting_integer: integer(),
-            setting_integer_range: DbTypes.IntegerRange.t(),
-            setting_decimal: Decimal.t(),
-            setting_decimal_range: DbTypes.DecimalRange.t(),
-            setting_interval: DbTypes.Interval.t(),
-            setting_date: Date.t(),
-            setting_date_range: DbTypes.DateRange.t(),
-            setting_time: Time.t(),
-            setting_timestamp: DateTime.t(),
-            setting_timestamp_range: DbTypes.TimestampRange.t(),
-            setting_json: map(),
-            setting_text: String.t(),
-            setting_uuid: Ecto.UUID.t(),
-            setting_blob: binary(),
-            diag_timestamp_created: DateTime.t(),
-            diag_role_created: String.t(),
-            diag_timestamp_modified: DateTime.t(),
-            diag_wallclock_modified: DateTime.t(),
-            diag_role_modified: String.t(),
-            diag_row_version: integer(),
-            diag_update_count: integer()
+            id: Ecto.UUID.t() | nil,
+            internal_name: MsbmsSystSettings.Types.setting_name() | nil,
+            display_name: String.t() | nil,
+            syst_defined: boolean() | nil,
+            syst_description: String.t() | nil,
+            user_description: String.t() | nil,
+            setting_flag: boolean() | nil,
+            setting_integer: integer() | nil,
+            setting_integer_range: DbTypes.IntegerRange.t() | nil,
+            setting_decimal: Decimal.t() | nil,
+            setting_decimal_range: DbTypes.DecimalRange.t() | nil,
+            setting_interval: DbTypes.Interval.t() | nil,
+            setting_date: Date.t() | nil,
+            setting_date_range: DbTypes.DateRange.t() | nil,
+            setting_time: Time.t() | nil,
+            setting_timestamp: DateTime.t() | nil,
+            setting_timestamp_range: DbTypes.TimestampRange.t() | nil,
+            setting_json: map() | nil,
+            setting_text: String.t() | nil,
+            setting_uuid: Ecto.UUID.t() | nil,
+            setting_blob: binary() | nil,
+            diag_timestamp_created: DateTime.t() | nil,
+            diag_role_created: String.t() | nil,
+            diag_timestamp_modified: DateTime.t() | nil,
+            diag_wallclock_modified: DateTime.t() | nil,
+            diag_role_modified: String.t() | nil,
+            diag_row_version: integer() | nil,
+            diag_update_count: integer() | nil
           }
 
   @schema_prefix "msbms_syst"
@@ -95,9 +95,9 @@ defmodule MsbmsSystSettings.Data.SystSettings do
   end
 
   @doc """
-  Produces a changeset to be used to create a new user defined setting.
+  Produces a changeset used to create or update a settings record.
 
-  The `create_params` argument defines the attributes to be used in creating a new
+  The `change_params` argument defines the attributes to be used in creating a new
   user defined setting.  Of the allowed fields, the following are required for
   creation:
 
@@ -111,10 +111,10 @@ defmodule MsbmsSystSettings.Data.SystSettings do
       and any limits or restrictions.  This field must contain between 6 and
       1000 characters to be considered valid.
   """
-  @spec create_changeset(map()) :: Ecto.Changeset.t()
-  def create_changeset(create_params \\ %{}) do
-    %__MODULE__{}
-    |> cast(create_params, [
+  @spec changeset(t(), map()) :: Ecto.Changeset.t()
+  def changeset(syst_settings, change_params \\ %{}) do
+    syst_settings
+    |> cast(change_params, [
       :internal_name,
       :display_name,
       :user_description,
@@ -134,49 +134,11 @@ defmodule MsbmsSystSettings.Data.SystSettings do
       :setting_uuid,
       :setting_blob
     ])
-    |> validate_required([:internal_name, :display_name, :user_description])
-    |> put_change(:syst_defined, false)
-    |> validate_length(:internal_name, min: @min_internal_name, max: @max_internal_name)
+    |> validate_required([:internal_name, :display_name])
     |> validate_length(:display_name, min: @min_display_name, max: @max_display_name)
-    |> validate_length(:user_description,
-      min: @min_user_description_length,
-      max: @max_user_description_length
-    )
-    |> unique_constraint(:internal_name)
-    |> unique_constraint(:display_name)
-  end
-
-  @doc """
-  Produces a changeset for the purposes of updating an existing setting record.
-
-  Updates may be made to any setting record, system or user defined.  There are
-  no required values for changing a setting
-  """
-  @spec update_changeset(t(), map()) :: Ecto.Changeset.t()
-  def update_changeset(syst_settings, update_params \\ %{}) do
-    syst_settings
-    |> cast(update_params, [
-      :display_name,
-      :user_description,
-      :setting_flag,
-      :setting_integer,
-      :setting_integer_range,
-      :setting_decimal,
-      :setting_decimal_range,
-      :setting_interval,
-      :setting_date,
-      :setting_date_range,
-      :setting_time,
-      :setting_timestamp,
-      :setting_timestamp_range,
-      :setting_json,
-      :setting_text,
-      :setting_uuid,
-      :setting_blob
-    ])
-    |> validate_length(:display_name, min: @min_display_name, max: @max_display_name)
-    |> validate_user_description()
     |> validate_internal_name()
+    |> validate_user_description()
+    |> maybe_put_syst_defined()
     |> unique_constraint(:display_name)
   end
 
@@ -187,18 +149,20 @@ defmodule MsbmsSystSettings.Data.SystSettings do
     |> validate_user_description(changeset)
   end
 
-  defp validate_user_description(true, changeset),
-    do:
-      validate_length(changeset, :user_description,
-        min: @min_user_description_length,
-        max: @max_user_description_length
-      )
+  defp validate_user_description(true, changeset) do
+    changeset
+    |> validate_required(:user_description)
+    |> validate_length(:user_description,
+      min: @min_user_description_length,
+      max: @max_user_description_length
+    )
+  end
 
   defp validate_user_description(false, changeset), do: changeset
 
   defp validate_internal_name(changeset) do
     validation_func = fn :internal_name, _internal_name ->
-      if get_field(changeset, :syst_defined) do
+      if get_field(changeset, :syst_defined, false) do
         [:internal_name, "System defined settings may not have their internal names changed."]
       else
         []
@@ -210,4 +174,14 @@ defmodule MsbmsSystSettings.Data.SystSettings do
     |> validate_length(:internal_name, min: @min_internal_name, max: @max_internal_name)
     |> unique_constraint(:internal_name)
   end
+
+  defp maybe_put_syst_defined(changeset) do
+    changeset
+    |> get_field(:id, nil)
+    |> is_nil()
+    |> maybe_put_syst_defined(changeset)
+  end
+
+  defp maybe_put_syst_defined(true, changeset), do: put_change(changeset, :syst_defined, false)
+  defp maybe_put_syst_defined(false, changeset), do: changeset
 end
