@@ -1,9 +1,9 @@
-CREATE OR REPLACE FUNCTION msbms_syst.trig_i_u_syst_enum_values()
+CREATE OR REPLACE FUNCTION msbms_syst.trig_i_u_syst_enum_items()
 RETURNS trigger AS
 $BODY$
 
--- File:        trig_i_u_syst_enum_values.eex.sql
--- Location:    database\cmp_msbms_syst_enums\msbms_syst\api_views\syst_enum_values\trig_i_u_syst_enum_values.eex.sql
+-- File:        trig_i_u_syst_enum_items.eex.sql
+-- Location:    database\cmp_msbms_syst_enums\msbms_syst\api_views\syst_enum_items\trig_i_u_syst_enum_items.eex.sql
 -- Project:     Muse Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -23,7 +23,7 @@ BEGIN
                           'by the business rules of the API View.',
                 DETAIL = msbms_syst_priv.get_exception_details(
                              p_proc_schema    => 'msbms_syst'
-                            ,p_proc_name      => 'trig_i_u_syst_enum_values'
+                            ,p_proc_name      => 'trig_i_u_syst_enum_items'
                             ,p_exception_name => 'invalid_api_view_call'
                             ,p_errcode        => 'PM008'
                             ,p_param_data     => to_jsonb(new)
@@ -38,7 +38,7 @@ BEGIN
                 TABLE = tg_table_name;
     END IF;
 
-    UPDATE msbms_syst_data.syst_enum_values
+    UPDATE msbms_syst_data.syst_enum_items
     SET
         internal_name           = new.internal_name
       , display_name            = new.display_name
@@ -57,14 +57,14 @@ END;
 $BODY$
 LANGUAGE plpgsql VOLATILE;
 
-ALTER FUNCTION msbms_syst.trig_i_u_syst_enum_values()
+ALTER FUNCTION msbms_syst.trig_i_u_syst_enum_items()
     OWNER TO <%= msbms_owner %>;
 
-REVOKE EXECUTE ON FUNCTION msbms_syst.trig_i_u_syst_enum_values() FROM public;
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_u_syst_enum_values() TO <%= msbms_owner %>;
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_u_syst_enum_values() TO <%= msbms_apiusr %>;
+REVOKE EXECUTE ON FUNCTION msbms_syst.trig_i_u_syst_enum_items() FROM public;
+GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_u_syst_enum_items() TO <%= msbms_owner %>;
+GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_u_syst_enum_items() TO <%= msbms_apiusr %>;
 
 
-COMMENT ON FUNCTION msbms_syst.trig_i_u_syst_enum_values() IS
+COMMENT ON FUNCTION msbms_syst.trig_i_u_syst_enum_items() IS
 $DOC$An INSTEAD OF trigger function which applies business rules when using the
-syst_enum_values API View for UPDATE operations.$DOC$;
+syst_enum_items API View for UPDATE operations.$DOC$;

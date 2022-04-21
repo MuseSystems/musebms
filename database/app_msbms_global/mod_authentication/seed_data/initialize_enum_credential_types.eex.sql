@@ -58,7 +58,7 @@ PERFORM
               "syst_description": "A token based credential where the user is requesting to recover from loss of another credential type, such as password recovery.  These credentials should be time limited and unusable for other authentication scenarios."
             }
           ],
-          "enum_values": [
+          "enum_items": [
             {
               "internal_name": "credential_types_sysdef_password",
               "display_name": "Credential Type / Password",

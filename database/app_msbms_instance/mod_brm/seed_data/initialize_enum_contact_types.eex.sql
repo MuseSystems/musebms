@@ -70,7 +70,7 @@ PERFORM
               "syst_description": "A miscellaneous type to record non-functional, but still needed contact information."
             }
           ],
-          "enum_values": [
+          "enum_items": [
             {
               "internal_name": "contact_types_sysdef_phone",
               "display_name": "Contact Type / Phone",

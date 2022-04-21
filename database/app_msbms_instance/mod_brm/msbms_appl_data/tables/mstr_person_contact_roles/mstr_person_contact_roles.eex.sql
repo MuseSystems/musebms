@@ -25,7 +25,7 @@ CREATE TABLE msbms_appl_data.mstr_person_contact_roles
         uuid
         NOT NULL
         CONSTRAINT mstr_person_contact_roles_enum_person_contact_role_fk
-            REFERENCES msbms_syst_data.syst_enum_values (id)
+            REFERENCES msbms_syst_data.syst_enum_items (id)
     ,place_id
         uuid
         CONSTRAINT mstr_person_contact_roles_place_fk
@@ -67,16 +67,16 @@ CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
     BEFORE INSERT OR UPDATE ON msbms_appl_data.mstr_person_contact_roles
     FOR EACH ROW EXECUTE PROCEDURE msbms_syst_priv.trig_b_iu_set_diagnostic_columns();
 
-CREATE CONSTRAINT TRIGGER a50_trig_a_i_person_contact_roles_enum_value_check
+CREATE CONSTRAINT TRIGGER a50_trig_a_i_person_contact_roles_enum_item_check
     AFTER INSERT ON msbms_appl_data.mstr_person_contact_roles
     FOR EACH ROW EXECUTE PROCEDURE
-        msbms_syst_priv.trig_a_iu_enum_value_check('person_contact_roles', 'person_contact_role_id');
+        msbms_syst_priv.trig_a_iu_enum_item_check('person_contact_roles', 'person_contact_role_id');
 
-CREATE CONSTRAINT TRIGGER a50_trig_a_u_person_contact_roles_enum_value_check
+CREATE CONSTRAINT TRIGGER a50_trig_a_u_person_contact_roles_enum_item_check
     AFTER UPDATE ON msbms_appl_data.mstr_person_contact_roles
     FOR EACH ROW WHEN ( old.person_contact_role_id != new.person_contact_role_id)
         EXECUTE PROCEDURE
-            msbms_syst_priv.trig_a_iu_enum_value_check(
+            msbms_syst_priv.trig_a_iu_enum_item_check(
                 'person_contact_roles', 'person_contact_role_id');
 
 COMMENT ON

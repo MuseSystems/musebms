@@ -58,7 +58,7 @@ PERFORM
               "syst_description": "The access account is not available for any use, not visible to users and subject to be completely deleted from the system at any point in time."
             }
           ],
-          "enum_values": [
+          "enum_items": [
             {
               "internal_name": "access_account_states_sysdef_pending",
               "display_name": "Access Account State / Pending",

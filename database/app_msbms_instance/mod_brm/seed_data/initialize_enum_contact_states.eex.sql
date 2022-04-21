@@ -27,7 +27,7 @@ PERFORM
           "default_syst_options": null,
           "default_user_options": null,
           "functional_types": [],
-          "enum_values": []
+          "enum_items": []
         }
             $INIT_ENUM_CONTACT_STATES$::jsonb);
 

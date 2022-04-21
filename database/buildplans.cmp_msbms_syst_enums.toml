@@ -38,13 +38,14 @@ load_files = [
     # MsbmsSystEnums Module
     #
 
-    "cmp_msbms_syst_enums/msbms_syst_data/tables/syst_enum_values/trig_b_i_syst_enum_values_maintain_sort_order.eex.sql",
-    "cmp_msbms_syst_enums/msbms_syst_data/tables/syst_enum_values/trig_a_iu_syst_enum_values_check_functional_type.eex.sql",
-    "cmp_msbms_syst_enums/msbms_syst_data/tables/syst_enum_values/trig_a_iu_syst_enum_values_maintain_sort_order.eex.sql",
+    "cmp_msbms_syst_enums/msbms_syst_data/tables/syst_enum_items/trig_b_i_syst_enum_items_maintain_sort_order.eex.sql",
+    "cmp_msbms_syst_enums/msbms_syst_data/tables/syst_enum_items/trig_a_iu_syst_enum_items_check_functional_type.eex.sql",
+    "cmp_msbms_syst_enums/msbms_syst_data/tables/syst_enum_items/trig_a_iu_syst_enum_items_maintain_sort_order.eex.sql",
     "cmp_msbms_syst_enums/msbms_syst_data/tables/syst_enums/syst_enums.eex.sql",
     "cmp_msbms_syst_enums/msbms_syst_data/tables/syst_enum_functional_types/syst_enum_functional_types.eex.sql",
-    "cmp_msbms_syst_enums/msbms_syst_data/tables/syst_enum_values/syst_enum_values.eex.sql",
+    "cmp_msbms_syst_enums/msbms_syst_data/tables/syst_enum_items/syst_enum_items.eex.sql",
     "cmp_msbms_syst_enums/msbms_syst_priv/functions/initialize_enum.eex.sql",
+    "cmp_msbms_syst_enums/msbms_syst_priv/trigger_functions/trig_a_iu_enum_item_check.eex.sql",
 
     "cmp_msbms_syst_enums/msbms_syst/api_views/syst_enums/trig_i_i_syst_enums.eex.sql",
     "cmp_msbms_syst_enums/msbms_syst/api_views/syst_enums/trig_i_u_syst_enums.eex.sql",
@@ -56,10 +57,10 @@ load_files = [
     "cmp_msbms_syst_enums/msbms_syst/api_views/syst_enum_functional_types/trig_i_d_syst_enum_functional_types.eex.sql",
     "cmp_msbms_syst_enums/msbms_syst/api_views/syst_enum_functional_types/syst_enum_functional_types.eex.sql",
 
-    "cmp_msbms_syst_enums/msbms_syst/api_views/syst_enum_values/trig_i_i_syst_enum_values.eex.sql",
-    "cmp_msbms_syst_enums/msbms_syst/api_views/syst_enum_values/trig_i_u_syst_enum_values.eex.sql",
-    "cmp_msbms_syst_enums/msbms_syst/api_views/syst_enum_values/trig_i_d_syst_enum_values.eex.sql",
-    "cmp_msbms_syst_enums/msbms_syst/api_views/syst_enum_values/syst_enum_values.eex.sql",
+    "cmp_msbms_syst_enums/msbms_syst/api_views/syst_enum_items/trig_i_i_syst_enum_items.eex.sql",
+    "cmp_msbms_syst_enums/msbms_syst/api_views/syst_enum_items/trig_i_u_syst_enum_items.eex.sql",
+    "cmp_msbms_syst_enums/msbms_syst/api_views/syst_enum_items/trig_i_d_syst_enum_items.eex.sql",
+    "cmp_msbms_syst_enums/msbms_syst/api_views/syst_enum_items/syst_enum_items.eex.sql",
 
     #
     # Testing Data Setup
