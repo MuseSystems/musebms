@@ -41,6 +41,8 @@ defmodule MsbmsSystEnums.Impl.ChangesetHelpers do
       max_internal_name_length: @default_max_internal_name_length,
       min_display_name_length: @default_min_display_name_length,
       max_display_name_length: @default_max_display_name_length,
+      min_external_name_length: @default_min_external_name_length,
+      max_external_name_length: @default_max_external_name_length,
       min_user_description_length: @default_min_user_description_length,
       max_user_description_length: @default_max_user_description_length
     ]
