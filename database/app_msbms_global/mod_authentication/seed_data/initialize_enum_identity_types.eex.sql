@@ -52,7 +52,7 @@ PERFORM
               "syst_description": "A one time use identifier which, along with a one time use credential, validates that an access account has been setup correctly."
             }
           ],
-          "enum_values": [
+          "enum_items": [
             {
               "internal_name": "identity_types_sysdef_email",
               "display_name": "Identity Type / Email",

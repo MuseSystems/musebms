@@ -40,7 +40,7 @@ PERFORM
               "syst_description": "This type indicates that the person is defining a role where the specific person performing that role is not important.  For example, \"Accounts Receivable\" may be a generic person to contact for payment remission or for the resolution of other payment issues.  The key is the specific person contacted is not important but contacting someone acting in that capacity is."
             }
           ],
-          "enum_values": [
+          "enum_items": [
             {
               "internal_name": "person_types_sysdef_individual",
               "display_name": "Person Type / Individual",

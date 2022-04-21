@@ -27,7 +27,7 @@ PERFORM
           "default_syst_options": null,
           "default_user_options": null,
           "functional_types": [],
-          "enum_values": [
+          "enum_items": [
             {
               "internal_name": "instance_types_sysdef_nonproduction",
               "display_name": "Instance Type / Non-Production",

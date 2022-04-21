@@ -85,7 +85,7 @@ VALUES
 
 --  Enum Values: Enum One
 
-INSERT INTO msbms_syst_data.syst_enum_values
+INSERT INTO msbms_syst_data.syst_enum_items
     ( internal_name
     , display_name
     , external_name
@@ -116,7 +116,7 @@ VALUES
     , 1
     , jsonb_build_object( 'cancel1', 1, 'cancel2', 'b', 'cancel3', TRUE ) );
 
-INSERT INTO msbms_syst_data.syst_enum_values
+INSERT INTO msbms_syst_data.syst_enum_items
     ( internal_name
     , display_name
     , external_name
@@ -145,7 +145,7 @@ VALUES
     , 'Enum One/Closed System Description'
     , jsonb_build_object( 'closed1', 1, 'closed2', 'b', 'closed3', TRUE ) );
 
-INSERT INTO msbms_syst_data.syst_enum_values
+INSERT INTO msbms_syst_data.syst_enum_items
     ( internal_name
     , display_name
     , external_name
@@ -178,7 +178,7 @@ VALUES
 
 --  Enum Values: Enum Two
 
-INSERT INTO msbms_syst_data.syst_enum_values
+INSERT INTO msbms_syst_data.syst_enum_items
     ( internal_name
     , display_name
     , external_name
@@ -201,7 +201,7 @@ VALUES
     , 'Enum Two/Cancelled System Description'
     , 1 );
 
-INSERT INTO msbms_syst_data.syst_enum_values
+INSERT INTO msbms_syst_data.syst_enum_items
     ( internal_name
     , display_name
     , external_name
@@ -222,7 +222,7 @@ VALUES
     , FALSE
     , 'Enum Two/Closed System Description' );
 
-INSERT INTO msbms_syst_data.syst_enum_values
+INSERT INTO msbms_syst_data.syst_enum_items
     ( internal_name
     , display_name
     , external_name
@@ -247,7 +247,7 @@ VALUES
 
 --  Enum Values: Enum Three
 
-INSERT INTO msbms_syst_data.syst_enum_values
+INSERT INTO msbms_syst_data.syst_enum_items
     ( internal_name
     , display_name
     , external_name
@@ -274,7 +274,7 @@ VALUES
     , TRUE
     , 'Enum Three/Closed System Description' );
 
-INSERT INTO msbms_syst_data.syst_enum_values
+INSERT INTO msbms_syst_data.syst_enum_items
     ( internal_name
     , display_name
     , external_name

@@ -115,13 +115,13 @@ COMMENT ON
     COLUMN msbms_syst.syst_enums.default_syst_options IS
 $DOC$Establishes the expected extended system options along with default values if
 applicable.  Note that this setting is used to both validate
-and set defaults in the syst_enum_values.syst_options column.
+and set defaults in the syst_enum_items.syst_options column.
 
 Note that this column may not be updated via this API View.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst.syst_enums.default_user_options IS
-$DOC$Allows a user to set the definition of syst_enum_values.user_options values and
+$DOC$Allows a user to set the definition of syst_enum_items.user_options values and
 provide defaults for those values if appropriate.$DOC$;
 
 COMMENT ON

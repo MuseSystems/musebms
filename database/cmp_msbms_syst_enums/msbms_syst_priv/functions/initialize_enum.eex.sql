@@ -17,7 +17,7 @@ $BODY$
 DECLARE
     var_new_enum             msbms_syst_data.syst_enums;
     var_curr_functional_type jsonb;
-    var_curr_enum_value      jsonb;
+    var_curr_enum_item      jsonb;
 
 BEGIN
 
@@ -69,12 +69,12 @@ BEGIN
 
     END LOOP functional_type_loop;
 
-    << enum_value_loop >>
-    FOR var_curr_enum_value IN
-        SELECT jsonb_array_elements(p_enum_def -> 'enum_values')
+    << enum_item_loop >>
+    FOR var_curr_enum_item IN
+        SELECT jsonb_array_elements(p_enum_def -> 'enum_items')
     LOOP
 
-        INSERT INTO msbms_syst_data.syst_enum_values
+        INSERT INTO msbms_syst_data.syst_enum_items
             (
                internal_name
               ,display_name
@@ -91,28 +91,28 @@ BEGIN
             )
         VALUES
             (
-                var_curr_enum_value ->> 'internal_name'
-               ,var_curr_enum_value ->> 'display_name'
-               ,var_curr_enum_value ->> 'external_name'
+                var_curr_enum_item ->> 'internal_name'
+               ,var_curr_enum_item ->> 'display_name'
+               ,var_curr_enum_item ->> 'external_name'
                ,var_new_enum.id
                ,( SELECT id
                   FROM msbms_syst_data.syst_enum_functional_types
-                  WHERE internal_name = var_curr_enum_value ->> 'functional_type_internal_name')
-               ,( var_curr_enum_value -> 'enum_default' )::boolean
-               ,( var_curr_enum_value -> 'functional_type_default' )::boolean
-               ,( var_curr_enum_value -> 'syst_defined' )::boolean
-               ,( var_curr_enum_value -> 'user_maintainable' )::boolean
-               ,var_curr_enum_value ->> 'syst_description'
+                  WHERE internal_name = var_curr_enum_item ->> 'functional_type_internal_name')
+               ,( var_curr_enum_item -> 'enum_default' )::boolean
+               ,( var_curr_enum_item -> 'functional_type_default' )::boolean
+               ,( var_curr_enum_item -> 'syst_defined' )::boolean
+               ,( var_curr_enum_item -> 'user_maintainable' )::boolean
+               ,var_curr_enum_item ->> 'syst_description'
                ,coalesce(
                    (SELECT max(sort_order) + 1
-                    FROM msbms_syst_data.syst_enum_values
+                    FROM msbms_syst_data.syst_enum_items
                     WHERE enum_id = var_new_enum.id),
                    1
                     )
-               ,var_curr_enum_value -> 'syst_options'
+               ,var_curr_enum_item -> 'syst_options'
             );
 
-    END LOOP enum_value_loop;
+    END LOOP enum_item_loop;
 
 END;
 $BODY$

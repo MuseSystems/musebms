@@ -33,12 +33,12 @@ CREATE TABLE msbms_syst_data.syst_instances
         uuid
         NOT NULL
         CONSTRAINT syst_instances_enum_instance_type_fk
-            REFERENCES msbms_syst_data.syst_enum_values (id)
+            REFERENCES msbms_syst_data.syst_enum_items (id)
     ,instance_state_id
         uuid
         NOT NULL
         CONSTRAINT syst_instances_enum_instance_state_fk
-            REFERENCES msbms_syst_data.syst_enum_values (id)
+            REFERENCES msbms_syst_data.syst_enum_items (id)
     ,owner_id
         uuid
         NOT NULL
@@ -98,28 +98,28 @@ CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
     BEFORE INSERT OR UPDATE ON msbms_syst_data.syst_instances
     FOR EACH ROW EXECUTE PROCEDURE msbms_syst_priv.trig_b_iu_set_diagnostic_columns();
 
-CREATE CONSTRAINT TRIGGER a50_trig_a_i_instance_types_enum_value_check
+CREATE CONSTRAINT TRIGGER a50_trig_a_i_instance_types_enum_item_check
     AFTER INSERT ON msbms_syst_data.syst_instances
     FOR EACH ROW EXECUTE PROCEDURE
-        msbms_syst_priv.trig_a_iu_enum_value_check('instance_types', 'instance_type_id');
+        msbms_syst_priv.trig_a_iu_enum_item_check('instance_types', 'instance_type_id');
 
-CREATE CONSTRAINT TRIGGER a50_trig_a_u_instance_types_enum_value_check
+CREATE CONSTRAINT TRIGGER a50_trig_a_u_instance_types_enum_item_check
     AFTER UPDATE ON msbms_syst_data.syst_instances
     FOR EACH ROW WHEN ( old.instance_type_id != new.instance_type_id)
         EXECUTE PROCEDURE
-            msbms_syst_priv.trig_a_iu_enum_value_check(
+            msbms_syst_priv.trig_a_iu_enum_item_check(
                 'instance_types', 'instance_type_id');
 
-CREATE CONSTRAINT TRIGGER a50_trig_a_i_instance_states_enum_value_check
+CREATE CONSTRAINT TRIGGER a50_trig_a_i_instance_states_enum_item_check
     AFTER INSERT ON msbms_syst_data.syst_instances
     FOR EACH ROW EXECUTE PROCEDURE
-        msbms_syst_priv.trig_a_iu_enum_value_check('instance_states', 'instance_state_id');
+        msbms_syst_priv.trig_a_iu_enum_item_check('instance_states', 'instance_state_id');
 
-CREATE CONSTRAINT TRIGGER a50_trig_a_u_instance_states_enum_value_check
+CREATE CONSTRAINT TRIGGER a50_trig_a_u_instance_states_enum_item_check
     AFTER UPDATE ON msbms_syst_data.syst_instances
     FOR EACH ROW WHEN ( old.instance_state_id != new.instance_state_id)
         EXECUTE PROCEDURE
-            msbms_syst_priv.trig_a_iu_enum_value_check(
+            msbms_syst_priv.trig_a_iu_enum_item_check(
                 'instance_states', 'instance_state_id');
 
 COMMENT ON
