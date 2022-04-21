@@ -13,17 +13,9 @@
 defmodule MsbmsSystSettings.Data.SystSettings do
   use MsbmsSystDatastore.Schema
   import Ecto.Changeset
+  import MsbmsSystSettings.Impl.ChangesetHelpers
 
   alias MsbmsSystDatastore.DbTypes
-
-  @min_internal_name 6
-  @max_internal_name 64
-
-  @min_display_name 6
-  @max_display_name 64
-
-  @min_user_description_length 6
-  @max_user_description_length 1_000
 
   @moduledoc """
   The primary data structure for applications settings data.
@@ -97,8 +89,8 @@ defmodule MsbmsSystSettings.Data.SystSettings do
   @doc """
   Produces a changeset used to create or update a settings record.
 
-  The `change_params` argument defines the attributes to be used in creating a new
-  user defined setting.  Of the allowed fields, the following are required for
+  The `change_params` argument defines the attributes to be used in maintaining
+  a settings record.  Of the allowed fields, the following are required for
   creation:
 
     * `internal_name` - A unique key which is intended for programmatic usage
@@ -110,9 +102,32 @@ defmodule MsbmsSystSettings.Data.SystSettings do
     * `user_description` - A description of the setting including its use cases
       and any limits or restrictions.  This field must contain between 6 and
       1000 characters to be considered valid.
+
+  The options define other attributes which can guide validation of
+  `change_param` values:
+
+    * `min_internal_name_length` - Sets a minimum length for `internal_name`
+      values.  The default value is 6 Unicode graphemes.
+
+    * `max_internal_name_length` - The maximum length allowed for the
+      `internal_name` value.  The default is 64 Unicode graphemes.
+
+    * `min_display_name_length` - Sets a minimum length for `display_name`
+      values.  The default value is 6 Unicode graphemes.
+
+    * `max_display_name_length` - The maximum length allowed for the
+      `display_name` value.  The default is 64 Unicode graphemes.
+
+    * `min_user_description_length` - Sets a minimum length for
+      `user_description` values.  The default value is 6 Unicode graphemes.
+
+    * `max_user_description_length` - The maximum length allowed for the
+      `user_description` value.  The default is 1000 Unicode graphemes.
   """
-  @spec changeset(t(), map()) :: Ecto.Changeset.t()
-  def changeset(syst_settings, change_params \\ %{}) do
+  @spec changeset(t(), map(), Keyword.t()) :: Ecto.Changeset.t()
+  def changeset(syst_settings, change_params \\ %{}, opts \\ []) do
+    opts = resolve_options(opts)
+
     syst_settings
     |> cast(change_params, [
       :internal_name,
@@ -134,54 +149,9 @@ defmodule MsbmsSystSettings.Data.SystSettings do
       :setting_uuid,
       :setting_blob
     ])
-    |> validate_required([:internal_name, :display_name])
-    |> validate_length(:display_name, min: @min_display_name, max: @max_display_name)
-    |> validate_internal_name()
-    |> validate_user_description()
+    |> validate_internal_name(opts)
+    |> validate_display_name(opts)
+    |> validate_user_description(opts)
     |> maybe_put_syst_defined()
-    |> unique_constraint(:display_name)
   end
-
-  # System defined settings are allowed to have a nil user descriptions, but all
-  # other user description values must meet min/max length requirements.
-  defp validate_user_description(changeset) do
-    (!get_field(changeset, :syst_defined) or !is_nil(get_field(changeset, :user_description, nil)))
-    |> validate_user_description(changeset)
-  end
-
-  defp validate_user_description(true, changeset) do
-    changeset
-    |> validate_required(:user_description)
-    |> validate_length(:user_description,
-      min: @min_user_description_length,
-      max: @max_user_description_length
-    )
-  end
-
-  defp validate_user_description(false, changeset), do: changeset
-
-  defp validate_internal_name(changeset) do
-    validation_func = fn :internal_name, _internal_name ->
-      if get_field(changeset, :syst_defined, false) do
-        [:internal_name, "System defined settings may not have their internal names changed."]
-      else
-        []
-      end
-    end
-
-    changeset
-    |> validate_change(:internal_name, :validate_internal_name, &validation_func.(&1, &2))
-    |> validate_length(:internal_name, min: @min_internal_name, max: @max_internal_name)
-    |> unique_constraint(:internal_name)
-  end
-
-  defp maybe_put_syst_defined(changeset) do
-    changeset
-    |> get_field(:id, nil)
-    |> is_nil()
-    |> maybe_put_syst_defined(changeset)
-  end
-
-  defp maybe_put_syst_defined(true, changeset), do: put_change(changeset, :syst_defined, false)
-  defp maybe_put_syst_defined(false, changeset), do: changeset
 end
