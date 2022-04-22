@@ -27,6 +27,10 @@ defmodule MsbmsSystSettings.Impl.Settings do
   #
   ######
 
+  # Note that all data changing functions must be called from the GenServer
+  # since we need to change data in the ets tables which are owned by the
+  # GenServer and are in "protected" mode.
+
   @spec refresh_from_database(MsbmsSystSettings.Types.service_name()) :: :ok
   def refresh_from_database(service_name) do
     ets_table_name = get_ets_table_from_service_name(service_name)
