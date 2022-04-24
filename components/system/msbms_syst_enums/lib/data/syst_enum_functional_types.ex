@@ -34,12 +34,12 @@ defmodule MsbmsSystEnums.Data.SystEnumFunctionalTypes do
   @type t() ::
           %__MODULE__{
             __meta__: Ecto.Schema.Metadata.t(),
-            id: Ecto.UUID.t(),
+            id: Ecto.UUID.t() | nil,
             internal_name: MsbmsSystEnums.Types.enum_functional_type_name() | nil,
             display_name: String.t() | nil,
             external_name: String.t() | nil,
             enum_id: Ecto.UUID.t() | nil,
-            enum: MsbmsSystEnums.Data.SystEnums.t() | nil,
+            enum: MsbmsSystEnums.Data.SystEnums.t() | Ecto.Association.NotLoaded.t() | nil,
             syst_description: String.t() | nil,
             user_description: String.t() | nil,
             diag_timestamp_created: DateTime.t() | nil,

@@ -27,9 +27,12 @@ defmodule MsbmsSystEnums.Data.SystEnumItems do
             display_name: String.t() | nil,
             external_name: String.t() | nil,
             enum_id: Ecto.UUID.t() | nil,
-            enum: MsbmsSystEnums.Data.SystEnums.t() | nil,
+            enum: MsbmsSystEnums.Data.SystEnums.t() | Ecto.Association.NotLoaded.t() | nil,
             functional_type_id: Ecto.UUID.t() | nil,
-            functional_type: MsbmsSystEnums.Data.SystEnumFunctionalTypes.t() | nil,
+            functional_type:
+              MsbmsSystEnums.Data.SystEnumFunctionalTypes.t()
+              | Ecto.Association.NotLoaded.t()
+              | nil,
             enum_default: boolean() | nil,
             functional_type_default: boolean() | nil,
             syst_defined: boolean() | nil,

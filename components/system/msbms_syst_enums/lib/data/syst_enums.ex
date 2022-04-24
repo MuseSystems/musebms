@@ -40,8 +40,12 @@ defmodule MsbmsSystEnums.Data.SystEnums do
             user_maintainable: boolean() | nil,
             default_syst_options: map() | nil,
             default_user_options: map() | nil,
-            functional_types: list(MsbmsSystEnums.Data.SystEnumFunctionalTypes.t()) | nil,
-            enum_items: list(MsbmsSystEnums.Data.SystEnumItems.t()) | nil,
+            functional_types:
+              list(MsbmsSystEnums.Data.SystEnumFunctionalTypes.t())
+              | Ecto.Association.NotLoaded.t()
+              | nil,
+            enum_items:
+              list(MsbmsSystEnums.Data.SystEnumItems.t()) | Ecto.Association.NotLoaded.t() | nil,
             diag_timestamp_created: DateTime.t() | nil,
             diag_role_created: String.t() | nil,
             diag_timestamp_modified: DateTime.t() | nil,
