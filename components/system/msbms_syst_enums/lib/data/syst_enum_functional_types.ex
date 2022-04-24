@@ -69,6 +69,7 @@ defmodule MsbmsSystEnums.Data.SystEnumFunctionalTypes do
     belongs_to(:enum, MsbmsSystEnums.Data.SystEnums)
   end
 
+  @doc false
   @spec changeset(t(), map(), Keyword.t()) :: Ecto.Changeset.t()
   def changeset(syst_enum_functional_types, change_params \\ %{}, opts \\ []) do
     opts = resolve_options(opts)
