@@ -50,7 +50,7 @@ BEGIN
 
 END;
 $BODY$
-LANGUAGE plpgsql VOLATILE;
+LANGUAGE plpgsql VOLATILE SECURITY DEFINER;
 
 ALTER FUNCTION msbms_syst.trig_i_i_syst_enum_items()
     OWNER TO <%= msbms_owner %>;
