@@ -12,7 +12,6 @@
 
 defmodule MsbmsSystSettings do
   alias MsbmsSystSettings.Impl.Settings
-  alias MsbmsSystSettings.Runtime.Server
 
   @moduledoc """
   A user options configuration management service.
@@ -58,9 +57,7 @@ defmodule MsbmsSystSettings do
           {MsbmsSystSettings.Types.service_name(), MsbmsSystDatastore.Types.context_id()}
         ) ::
           {:ok, pid()} | {:error, MsbmsSystError.t()}
-  def start_link({_service_name, _datastore_context_name} = params) do
-    Server.start_link(params)
-  end
+  defdelegate start_link(params), to: MsbmsSystSettings.Runtime.Server
 
   @doc """
   Refreshes the cached settings values from the database.
