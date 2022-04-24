@@ -53,7 +53,9 @@ defmodule MsbmsSystEnums.Types do
   @type enum_params() :: %{
           optional(:internal_name) => enum_name(),
           optional(:display_name) => String.t(),
-          optional(:user_description) => String.t()
+          optional(:user_description) => String.t(),
+          optional(:enum_items) => list(enum_item_params()),
+          optional(:functional_types) => list(enum_functional_type_params())
         }
 
   @typedoc """
@@ -61,6 +63,7 @@ defmodule MsbmsSystEnums.Types do
   passing as SystEnumFunctionalTypes changeset parameters.
   """
   @type enum_functional_type_params() :: %{
+          optional(:enum_id) => Ecto.UUID.t(),
           optional(:internal_name) => enum_functional_type_name(),
           optional(:display_name) => String.t(),
           optional(:user_description) => String.t()
@@ -71,8 +74,11 @@ defmodule MsbmsSystEnums.Types do
   passing as SystEnumItems changeset parameters.
   """
   @type enum_item_params() :: %{
+          optional(:enum_id) => Ecto.UUID.t(),
+          optional(:functional_type_id) => Ecto.UUID.t(),
           optional(:internal_name) => enum_item_name(),
           optional(:display_name) => String.t(),
-          optional(:user_description) => String.t()
+          optional(:user_description) => String.t(),
+          optional(:user_options) => map()
         }
 end
