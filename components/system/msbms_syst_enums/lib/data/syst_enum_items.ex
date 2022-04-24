@@ -85,12 +85,17 @@ defmodule MsbmsSystEnums.Data.SystEnumItems do
     |> cast(change_params, [
       :internal_name,
       :display_name,
+      :external_name,
+      :enum_default,
+      :functional_type_default,
       :user_description,
-      :default_user_options,
+      :sort_order,
+      :syst_options,
+      :user_options,
       :enum_id,
       :functional_type_id
     ])
-    |> validate_required([:enum_id, :functional_type_id])
+    |> validate_required([:enum_id, :enum_default, :functional_type_default])
     |> validate_internal_name(opts)
     |> validate_display_name(opts)
     |> validate_external_name(opts)
