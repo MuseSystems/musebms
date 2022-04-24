@@ -15,15 +15,6 @@ defmodule MsbmsSystEnums.Data.SystEnums do
   import Ecto.Changeset
   import MsbmsSystEnums.Impl.ChangesetHelpers
 
-  @min_internal_name 6
-  @max_internal_name 64
-
-  @min_display_name 6
-  @max_display_name 64
-
-  @min_user_description_length 6
-  @max_user_description_length 1_000
-
   @moduledoc """
   The data structure defining available system enumerations (lists of values).
   """
