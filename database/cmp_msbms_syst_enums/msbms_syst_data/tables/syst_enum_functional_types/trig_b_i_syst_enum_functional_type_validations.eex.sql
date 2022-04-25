@@ -1,9 +1,9 @@
-CREATE OR REPLACE FUNCTION msbms_syst_data.trig_b_i_syst_enum_functional_type_new_allowed_check()
+CREATE OR REPLACE FUNCTION msbms_syst_data.trig_b_i_syst_enum_functional_type_validations()
 RETURNS trigger AS
 $BODY$
 
--- File:        trig_b_i_syst_enum_functional_type_new_allowed_check.eex.sql
--- Location:    database\cmp_msbms_syst_enums\msbms_syst_data\tables\syst_enum_functional_types\trig_b_i_syst_enum_functional_type_new_allowed_check.eex.sql
+-- File:        trig_b_i_syst_enum_functional_type_validations.eex.sql
+-- Location:    database\cmp_msbms_syst_enums\msbms_syst_data\tables\syst_enum_functional_types\trig_b_i_syst_enum_functional_type_validations.eex.sql
 -- Project:     Muse Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -55,14 +55,14 @@ END;
 $BODY$
 LANGUAGE plpgsql VOLATILE;
 
-ALTER FUNCTION msbms_syst_data.trig_b_i_syst_enum_functional_type_new_allowed_check()
+ALTER FUNCTION msbms_syst_data.trig_b_i_syst_enum_functional_type_validations()
     OWNER TO <%= msbms_owner %>;
 
-REVOKE EXECUTE ON FUNCTION msbms_syst_data.trig_b_i_syst_enum_functional_type_new_allowed_check() FROM public;
-GRANT EXECUTE ON FUNCTION msbms_syst_data.trig_b_i_syst_enum_functional_type_new_allowed_check() TO <%= msbms_owner %>;
+REVOKE EXECUTE ON FUNCTION msbms_syst_data.trig_b_i_syst_enum_functional_type_validations() FROM public;
+GRANT EXECUTE ON FUNCTION msbms_syst_data.trig_b_i_syst_enum_functional_type_validations() TO <%= msbms_owner %>;
 
 
-COMMENT ON FUNCTION msbms_syst_data.trig_b_i_syst_enum_functional_type_new_allowed_check() IS
+COMMENT ON FUNCTION msbms_syst_data.trig_b_i_syst_enum_functional_type_validations() IS
 $DOC$Checks to see if this is the first functional type being added for the
 enumeration and, if so, that no syst_enum_items records already exist.  Adding a
 first functional type for an enumeration which already has defined enumeration
