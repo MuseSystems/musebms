@@ -16,6 +16,32 @@ $BODY$
 
 BEGIN
 
+    IF
+        exists( SELECT TRUE
+                FROM msbms_syst_data.syst_enums
+                WHERE id = new.enum_id AND syst_defined AND NOT user_maintainable)
+    THEN
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'You may not add new enumeration items for system defined ' ||
+                          'enumerations that are not marked user maintainable.',
+                DETAIL = msbms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'msbms_syst'
+                            ,p_proc_name      => 'trig_i_i_syst_enum_items'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(new)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+    END IF;
+
     INSERT INTO msbms_syst_data.syst_enum_items
         ( internal_name
         , display_name
