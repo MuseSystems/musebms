@@ -65,10 +65,10 @@ ALTER TABLE msbms_syst_data.syst_enum_functional_types OWNER TO <%= msbms_owner 
 REVOKE ALL ON TABLE msbms_syst_data.syst_enum_functional_types FROM public;
 GRANT ALL ON TABLE msbms_syst_data.syst_enum_functional_types TO <%= msbms_owner %>;
 
-CREATE TRIGGER a50_trig_b_i_syst_enum_functional_type_validations
+CREATE TRIGGER a10_trig_b_i_syst_enum_functional_type_validate_new_allowed
     BEFORE INSERT ON msbms_syst_data.syst_enum_functional_types
     FOR EACH ROW
-    EXECUTE PROCEDURE msbms_syst_data.trig_b_i_syst_enum_functional_type_validations( );
+    EXECUTE PROCEDURE msbms_syst_data.trig_b_i_syst_enum_functional_type_validate_new_allowed( );
 
 CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
     BEFORE INSERT OR UPDATE ON msbms_syst_data.syst_enum_functional_types
