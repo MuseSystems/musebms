@@ -32,7 +32,7 @@ load_files = [
     # MsbmsSystSettings Module
     #
 
-    "cmp_msbms_syst_settings/msbms_syst_data/tables/syst_settings/syst_settings.eex.sql",
+    "cmp_msbms_syst_settings/msbms_syst_data/syst_settings/syst_settings.eex.sql",
     "cmp_msbms_syst_settings/msbms_syst/api_views/syst_settings/trig_i_i_syst_settings.eex.sql",
     "cmp_msbms_syst_settings/msbms_syst/api_views/syst_settings/trig_i_u_syst_settings.eex.sql",
     "cmp_msbms_syst_settings/msbms_syst/api_views/syst_settings/trig_i_d_syst_settings.eex.sql",
@@ -42,15 +42,15 @@ load_files = [
     # MsbmsSystEnums Module
     #
 
-    "cmp_msbms_syst_enums/msbms_syst_data/tables/syst_enums/syst_enums.eex.sql",
+    "cmp_msbms_syst_enums/msbms_syst_data/syst_enums/syst_enums.eex.sql",
 
-    "cmp_msbms_syst_enums/msbms_syst_data/tables/syst_enum_functional_types/trig_b_i_syst_enum_functional_type_validate_new_allowed.eex.sql",
-    "cmp_msbms_syst_enums/msbms_syst_data/tables/syst_enum_functional_types/syst_enum_functional_types.eex.sql",
+    "cmp_msbms_syst_enums/msbms_syst_data/syst_enum_functional_types/trig_b_i_syst_enum_functional_type_validate_new_allowed.eex.sql",
+    "cmp_msbms_syst_enums/msbms_syst_data/syst_enum_functional_types/syst_enum_functional_types.eex.sql",
 
-    "cmp_msbms_syst_enums/msbms_syst_data/tables/syst_enum_items/trig_b_i_syst_enum_items_maintain_sort_order.eex.sql",
-    "cmp_msbms_syst_enums/msbms_syst_data/tables/syst_enum_items/trig_b_iu_syst_enum_items_validate_functional_types.eex.sql",
-    "cmp_msbms_syst_enums/msbms_syst_data/tables/syst_enum_items/trig_a_iu_syst_enum_items_maintain_sort_order.eex.sql",
-    "cmp_msbms_syst_enums/msbms_syst_data/tables/syst_enum_items/syst_enum_items.eex.sql",
+    "cmp_msbms_syst_enums/msbms_syst_data/syst_enum_items/trig_b_i_syst_enum_items_maintain_sort_order.eex.sql",
+    "cmp_msbms_syst_enums/msbms_syst_data/syst_enum_items/trig_b_iu_syst_enum_items_validate_functional_types.eex.sql",
+    "cmp_msbms_syst_enums/msbms_syst_data/syst_enum_items/trig_a_iu_syst_enum_items_maintain_sort_order.eex.sql",
+    "cmp_msbms_syst_enums/msbms_syst_data/syst_enum_items/syst_enum_items.eex.sql",
 
     "cmp_msbms_syst_enums/msbms_syst_priv/functions/initialize_enum.eex.sql",
     "cmp_msbms_syst_enums/msbms_syst_priv/trigger_functions/trig_a_iu_enum_item_check.eex.sql",
@@ -74,13 +74,13 @@ load_files = [
     #  MsbmsSystFeatures Module
     #
 
-    "cmp_msbms_syst_features/msbms_syst_data/tables/syst_relations/syst_relations.eex.sql",
-    "cmp_msbms_syst_features/msbms_syst_data/tables/syst_feature_map_levels/syst_feature_map_levels.eex.sql",
-    "cmp_msbms_syst_features/msbms_syst_data/tables/syst_feature_map/syst_feature_map.eex.sql",
+    "cmp_msbms_syst_features/msbms_syst_data/syst_relations/syst_relations.eex.sql",
+    "cmp_msbms_syst_features/msbms_syst_data/syst_feature_map_levels/syst_feature_map_levels.eex.sql",
+    "cmp_msbms_syst_features/msbms_syst_data/syst_feature_map/syst_feature_map.eex.sql",
     "cmp_msbms_syst_features/msbms_syst_priv/trigger_functions/trig_a_iu_feature_map_level_assignable_check.eex.sql",
-    "cmp_msbms_syst_features/msbms_syst_data/tables/syst_feature_relation_assigns/syst_feature_relation_assigns.eex.sql",
-    "cmp_msbms_syst_features/msbms_syst_data/tables/syst_feature_setting_assigns/syst_feature_setting_assigns.eex.sql",
-    "cmp_msbms_syst_features/msbms_syst_data/tables/syst_feature_enum_assigns/syst_feature_enum_assigns.eex.sql",
+    "cmp_msbms_syst_features/msbms_syst_data/syst_feature_relation_assigns/syst_feature_relation_assigns.eex.sql",
+    "cmp_msbms_syst_features/msbms_syst_data/syst_feature_setting_assigns/syst_feature_setting_assigns.eex.sql",
+    "cmp_msbms_syst_features/msbms_syst_data/syst_feature_enum_assigns/syst_feature_enum_assigns.eex.sql",
 
     #
     # Global Schema Loading
@@ -95,12 +95,12 @@ load_files = [
     "app_msbms_global/mod_instance_mgr/seed_data/initialize_enum_instance_types.eex.sql",
     "app_msbms_global/mod_instance_mgr/seed_data/initialize_enum_owner_states.eex.sql",
 
-    "app_msbms_global/mod_instance_mgr/msbms_syst_data/tables/syst_applications/syst_applications.eex.sql",
-    "app_msbms_global/mod_instance_mgr/msbms_syst_data/tables/syst_owners/syst_owners.eex.sql",
-    "app_msbms_global/mod_authentication/msbms_syst_data/tables/syst_access_accounts/syst_access_accounts.eex.sql",
-    "app_msbms_global/mod_authentication/msbms_syst_data/tables/syst_identities/trig_b_iu_syst_identities_check_uniqueness.eex.sql",
-    "app_msbms_global/mod_authentication/msbms_syst_data/tables/syst_identities/syst_identities.eex.sql",
-    "app_msbms_global/mod_authentication/msbms_syst_data/tables/syst_credentials/syst_credentials.eex.sql",
-    "app_msbms_global/mod_instance_mgr/msbms_syst_data/tables/syst_instances/syst_instances.eex.sql",
-    "app_msbms_global/mod_authentication/msbms_syst_data/tables/syst_access_account_instance_assocs/syst_access_account_instance_assocs.eex.sql",
+    "app_msbms_global/mod_instance_mgr/msbms_syst_data/syst_applications/syst_applications.eex.sql",
+    "app_msbms_global/mod_instance_mgr/msbms_syst_data/syst_owners/syst_owners.eex.sql",
+    "app_msbms_global/mod_authentication/msbms_syst_data/syst_access_accounts/syst_access_accounts.eex.sql",
+    "app_msbms_global/mod_authentication/msbms_syst_data/syst_identities/trig_b_iu_syst_identities_check_uniqueness.eex.sql",
+    "app_msbms_global/mod_authentication/msbms_syst_data/syst_identities/syst_identities.eex.sql",
+    "app_msbms_global/mod_authentication/msbms_syst_data/syst_credentials/syst_credentials.eex.sql",
+    "app_msbms_global/mod_instance_mgr/msbms_syst_data/syst_instances/syst_instances.eex.sql",
+    "app_msbms_global/mod_authentication/msbms_syst_data/syst_access_account_instance_assocs/syst_access_account_instance_assocs.eex.sql",
 ]

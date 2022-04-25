@@ -38,17 +38,17 @@ load_files = [
     # Optional Module Installation (for testing)
     #
 
-    "cmp_msbms_syst_settings/msbms_syst_data/tables/syst_settings/syst_settings.eex.sql",
+    "cmp_msbms_syst_settings/msbms_syst_data/syst_settings/syst_settings.eex.sql",
 
     #
     #  MsbmsSystFeatures Module
     #
 
-    "cmp_msbms_syst_features/msbms_syst_data/tables/syst_relations/syst_relations.eex.sql",
-    "cmp_msbms_syst_features/msbms_syst_data/tables/syst_feature_map_levels/syst_feature_map_levels.eex.sql",
-    "cmp_msbms_syst_features/msbms_syst_data/tables/syst_feature_map/syst_feature_map.eex.sql",
+    "cmp_msbms_syst_features/msbms_syst_data/syst_relations/syst_relations.eex.sql",
+    "cmp_msbms_syst_features/msbms_syst_data/syst_feature_map_levels/syst_feature_map_levels.eex.sql",
+    "cmp_msbms_syst_features/msbms_syst_data/syst_feature_map/syst_feature_map.eex.sql",
     "cmp_msbms_syst_features/msbms_syst_priv/trigger_functions/trig_a_iu_feature_map_level_assignable_check.eex.sql",
-    "cmp_msbms_syst_features/msbms_syst_data/tables/syst_feature_relation_assigns/syst_feature_relation_assigns.eex.sql",
+    "cmp_msbms_syst_features/msbms_syst_data/syst_feature_relation_assigns/syst_feature_relation_assigns.eex.sql",
 
     "cmp_msbms_syst_features/msbms_syst/api_views/syst_feature_setting_assigns/trig_i_i_syst_feature_setting_assigns.eex.sql",
     "cmp_msbms_syst_features/msbms_syst/api_views/syst_feature_setting_assigns/trig_i_u_syst_feature_setting_assigns.eex.sql",

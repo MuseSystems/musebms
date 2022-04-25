@@ -32,7 +32,7 @@ load_files = [
     # MsbmsSystSettings Module
     #
 
-    "cmp_msbms_syst_settings/msbms_syst_data/tables/syst_settings/syst_settings.eex.sql",
+    "cmp_msbms_syst_settings/msbms_syst_data/syst_settings/syst_settings.eex.sql",
     "cmp_msbms_syst_settings/msbms_syst/api_views/syst_settings/trig_i_i_syst_settings.eex.sql",
     "cmp_msbms_syst_settings/msbms_syst/api_views/syst_settings/trig_i_u_syst_settings.eex.sql",
     "cmp_msbms_syst_settings/msbms_syst/api_views/syst_settings/trig_i_d_syst_settings.eex.sql",
@@ -42,15 +42,15 @@ load_files = [
     # MsbmsSystEnums Module
     #
 
-    "cmp_msbms_syst_enums/msbms_syst_data/tables/syst_enums/syst_enums.eex.sql",
+    "cmp_msbms_syst_enums/msbms_syst_data/syst_enums/syst_enums.eex.sql",
 
-    "cmp_msbms_syst_enums/msbms_syst_data/tables/syst_enum_functional_types/trig_b_i_syst_enum_functional_type_validate_new_allowed.eex.sql",
-    "cmp_msbms_syst_enums/msbms_syst_data/tables/syst_enum_functional_types/syst_enum_functional_types.eex.sql",
+    "cmp_msbms_syst_enums/msbms_syst_data/syst_enum_functional_types/trig_b_i_syst_enum_functional_type_validate_new_allowed.eex.sql",
+    "cmp_msbms_syst_enums/msbms_syst_data/syst_enum_functional_types/syst_enum_functional_types.eex.sql",
 
-    "cmp_msbms_syst_enums/msbms_syst_data/tables/syst_enum_items/trig_b_i_syst_enum_items_maintain_sort_order.eex.sql",
-    "cmp_msbms_syst_enums/msbms_syst_data/tables/syst_enum_items/trig_b_iu_syst_enum_items_validate_functional_types.eex.sql",
-    "cmp_msbms_syst_enums/msbms_syst_data/tables/syst_enum_items/trig_a_iu_syst_enum_items_maintain_sort_order.eex.sql",
-    "cmp_msbms_syst_enums/msbms_syst_data/tables/syst_enum_items/syst_enum_items.eex.sql",
+    "cmp_msbms_syst_enums/msbms_syst_data/syst_enum_items/trig_b_i_syst_enum_items_maintain_sort_order.eex.sql",
+    "cmp_msbms_syst_enums/msbms_syst_data/syst_enum_items/trig_b_iu_syst_enum_items_validate_functional_types.eex.sql",
+    "cmp_msbms_syst_enums/msbms_syst_data/syst_enum_items/trig_a_iu_syst_enum_items_maintain_sort_order.eex.sql",
+    "cmp_msbms_syst_enums/msbms_syst_data/syst_enum_items/syst_enum_items.eex.sql",
 
     "cmp_msbms_syst_enums/msbms_syst_priv/functions/initialize_enum.eex.sql",
     "cmp_msbms_syst_enums/msbms_syst_priv/trigger_functions/trig_a_iu_enum_item_check.eex.sql",
@@ -74,33 +74,33 @@ load_files = [
     # MsbmsSystFormats Module
     #
 
-    "cmp_msbms_syst_formats/msbms_syst_data/tables/syst_complex_formats/syst_complex_formats.eex.sql",
-    "cmp_msbms_syst_formats/msbms_syst_data/tables/syst_complex_format_values/syst_complex_format_values.eex.sql",
+    "cmp_msbms_syst_formats/msbms_syst_data/syst_complex_formats/syst_complex_formats.eex.sql",
+    "cmp_msbms_syst_formats/msbms_syst_data/syst_complex_format_values/syst_complex_format_values.eex.sql",
     "cmp_msbms_syst_formats/msbms_syst_priv/trigger_functions/trig_a_iu_complex_format_value_check.eex.sql",
 
     #
     # MsbmsSystNumberings Module
     #
 
-    "cmp_msbms_syst_numberings/msbms_syst_data/tables/syst_numberings/syst_numberings.eex.sql",
-    "cmp_msbms_syst_numberings/msbms_syst_data/tables/syst_numbering_sequences/trig_a_i_syst_numbering_sequence_create_value.eex.sql",
-    "cmp_msbms_syst_numberings/msbms_syst_data/tables/syst_numbering_sequences/syst_numbering_sequences.eex.sql",
-    "cmp_msbms_syst_numberings/msbms_syst_data/tables/syst_numbering_sequence_values/syst_numbering_sequence_values.eex.sql",
+    "cmp_msbms_syst_numberings/msbms_syst_data/syst_numberings/syst_numberings.eex.sql",
+    "cmp_msbms_syst_numberings/msbms_syst_data/syst_numbering_sequences/trig_a_i_syst_numbering_sequence_create_value.eex.sql",
+    "cmp_msbms_syst_numberings/msbms_syst_data/syst_numbering_sequences/syst_numbering_sequences.eex.sql",
+    "cmp_msbms_syst_numberings/msbms_syst_data/syst_numbering_sequence_values/syst_numbering_sequence_values.eex.sql",
     "cmp_msbms_syst_numberings/msbms_syst_priv/functions/get_next_sequence_value.eex.sql",
     "cmp_msbms_syst_numberings/msbms_syst_priv/functions/set_next_sequence_value.eex.sql",
-    "cmp_msbms_syst_numberings/msbms_syst_data/tables/syst_numbering_segment_types/syst_numbering_segment_types.eex.sql",
-    "cmp_msbms_syst_numberings/msbms_syst_data/tables/syst_numbering_segments/syst_numbering_segments.eex.sql",
+    "cmp_msbms_syst_numberings/msbms_syst_data/syst_numbering_segment_types/syst_numbering_segment_types.eex.sql",
+    "cmp_msbms_syst_numberings/msbms_syst_data/syst_numbering_segments/syst_numbering_segments.eex.sql",
     "cmp_msbms_syst_numberings/seed_data/initialize_numbering_segment_types.eex.sql",
 
     #
     #  MsbmsSystFeatures Module
     #
 
-    "cmp_msbms_syst_features/msbms_syst_data/tables/syst_relations/syst_relations.eex.sql",
-    "cmp_msbms_syst_features/msbms_syst_data/tables/syst_feature_map_levels/syst_feature_map_levels.eex.sql",
-    "cmp_msbms_syst_features/msbms_syst_data/tables/syst_feature_map/syst_feature_map.eex.sql",
+    "cmp_msbms_syst_features/msbms_syst_data/syst_relations/syst_relations.eex.sql",
+    "cmp_msbms_syst_features/msbms_syst_data/syst_feature_map_levels/syst_feature_map_levels.eex.sql",
+    "cmp_msbms_syst_features/msbms_syst_data/syst_feature_map/syst_feature_map.eex.sql",
     "cmp_msbms_syst_features/msbms_syst_priv/trigger_functions/trig_a_iu_feature_map_level_assignable_check.eex.sql",
-    "cmp_msbms_syst_features/msbms_syst_data/tables/syst_feature_relation_assigns/syst_feature_relation_assigns.eex.sql",
+    "cmp_msbms_syst_features/msbms_syst_data/syst_feature_relation_assigns/syst_feature_relation_assigns.eex.sql",
 
     "cmp_msbms_syst_features/msbms_syst/api_views/syst_feature_setting_assigns/trig_i_i_syst_feature_setting_assigns.eex.sql",
     "cmp_msbms_syst_features/msbms_syst/api_views/syst_feature_setting_assigns/trig_i_u_syst_feature_setting_assigns.eex.sql",
@@ -135,23 +135,23 @@ load_files = [
     "app_msbms_instance/mod_accounting/seed_data/initialize_enum_fiscal_year_states.eex.sql",
     "app_msbms_instance/mod_accounting/seed_data/initialize_enum_fiscal_year_types.eex.sql",
 
-    "app_msbms_instance/mod_syst/msbms_syst_data/tables/syst_interaction_logs/syst_interaction_logs.eex.sql",
-    "app_msbms_instance/mod_brm/msbms_appl_data/tables/mstr_countries/mstr_countries.eex.sql",
-    "app_msbms_instance/mod_brm/msbms_appl_data/tables/mstr_country_address_format_assocs/mstr_country_address_format_assocs.eex.sql",
-    "app_msbms_instance/mod_brm/msbms_appl_data/tables/mstr_country_phone_format_assocs/mstr_country_phone_format_assocs.eex.sql",
-    "app_msbms_instance/mod_brm/msbms_appl_data/tables/mstr_country_name_format_assocs/mstr_country_name_format_assocs.eex.sql",
-    "app_msbms_instance/mod_brm/msbms_appl_data/tables/mstr_entities/mstr_entities.eex.sql",
-    "app_msbms_instance/mod_brm/msbms_appl_data/tables/mstr_places/mstr_places.eex.sql",
-    "app_msbms_instance/mod_brm/msbms_appl_data/tables/mstr_persons/mstr_persons.eex.sql",
-    "app_msbms_instance/mod_brm/msbms_appl_data/tables/mstr_contacts/mstr_contacts.eex.sql",
-    "app_msbms_instance/mod_brm/msbms_appl_data/tables/mstr_entity_selling_entities/mstr_entity_selling_entities.eex.sql",
-    "app_msbms_instance/mod_brm/msbms_appl_data/tables/mstr_entity_purchasing_entities/mstr_entity_purchasing_entities.eex.sql",
-    "app_msbms_instance/mod_brm/msbms_appl_data/tables/mstr_entity_staffing_entities/mstr_entity_staffing_entities.eex.sql",
-    "app_msbms_instance/mod_brm/msbms_appl_data/tables/mstr_entity_banking_entities/mstr_entity_banking_entities.eex.sql",
-    "app_msbms_instance/mod_brm/msbms_appl_data/tables/mstr_entity_inventory_places/mstr_entity_inventory_places.eex.sql",
-    "app_msbms_instance/mod_brm/msbms_appl_data/tables/mstr_entity_workplace_places/mstr_entity_workplace_places.eex.sql",
-    "app_msbms_instance/mod_brm/msbms_appl_data/tables/mstr_entity_fulfillment_places/mstr_entity_fulfillment_places.eex.sql",
-    "app_msbms_instance/mod_brm/msbms_appl_data/tables/mstr_entity_person_roles/mstr_entity_person_roles.eex.sql",
-    "app_msbms_instance/mod_syst/msbms_syst_data/tables/syst_person_logins/syst_person_logins.eex.sql",
-    "app_msbms_instance/mod_brm/msbms_appl_data/tables/mstr_person_contact_roles/mstr_person_contact_roles.eex.sql",
+    "app_msbms_instance/mod_syst/msbms_syst_data/syst_interaction_logs/syst_interaction_logs.eex.sql",
+    "app_msbms_instance/mod_brm/msbms_appl_data/mstr_countries/mstr_countries.eex.sql",
+    "app_msbms_instance/mod_brm/msbms_appl_data/mstr_country_address_format_assocs/mstr_country_address_format_assocs.eex.sql",
+    "app_msbms_instance/mod_brm/msbms_appl_data/mstr_country_phone_format_assocs/mstr_country_phone_format_assocs.eex.sql",
+    "app_msbms_instance/mod_brm/msbms_appl_data/mstr_country_name_format_assocs/mstr_country_name_format_assocs.eex.sql",
+    "app_msbms_instance/mod_brm/msbms_appl_data/mstr_entities/mstr_entities.eex.sql",
+    "app_msbms_instance/mod_brm/msbms_appl_data/mstr_places/mstr_places.eex.sql",
+    "app_msbms_instance/mod_brm/msbms_appl_data/mstr_persons/mstr_persons.eex.sql",
+    "app_msbms_instance/mod_brm/msbms_appl_data/mstr_contacts/mstr_contacts.eex.sql",
+    "app_msbms_instance/mod_brm/msbms_appl_data/mstr_entity_selling_entities/mstr_entity_selling_entities.eex.sql",
+    "app_msbms_instance/mod_brm/msbms_appl_data/mstr_entity_purchasing_entities/mstr_entity_purchasing_entities.eex.sql",
+    "app_msbms_instance/mod_brm/msbms_appl_data/mstr_entity_staffing_entities/mstr_entity_staffing_entities.eex.sql",
+    "app_msbms_instance/mod_brm/msbms_appl_data/mstr_entity_banking_entities/mstr_entity_banking_entities.eex.sql",
+    "app_msbms_instance/mod_brm/msbms_appl_data/mstr_entity_inventory_places/mstr_entity_inventory_places.eex.sql",
+    "app_msbms_instance/mod_brm/msbms_appl_data/mstr_entity_workplace_places/mstr_entity_workplace_places.eex.sql",
+    "app_msbms_instance/mod_brm/msbms_appl_data/mstr_entity_fulfillment_places/mstr_entity_fulfillment_places.eex.sql",
+    "app_msbms_instance/mod_brm/msbms_appl_data/mstr_entity_person_roles/mstr_entity_person_roles.eex.sql",
+    "app_msbms_instance/mod_syst/msbms_syst_data/syst_person_logins/syst_person_logins.eex.sql",
+    "app_msbms_instance/mod_brm/msbms_appl_data/mstr_person_contact_roles/mstr_person_contact_roles.eex.sql",
 ]
