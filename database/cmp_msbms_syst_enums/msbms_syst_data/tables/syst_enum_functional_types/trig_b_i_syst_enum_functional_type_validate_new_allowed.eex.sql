@@ -1,9 +1,9 @@
-CREATE OR REPLACE FUNCTION msbms_syst_data.trig_b_i_syst_enum_functional_type_validations()
+CREATE OR REPLACE FUNCTION msbms_syst_data.trig_b_i_syst_enum_functional_type_validate_new_allowed()
 RETURNS trigger AS
 $BODY$
 
--- File:        trig_b_i_syst_enum_functional_type_validations.eex.sql
--- Location:    database\cmp_msbms_syst_enums\msbms_syst_data\tables\syst_enum_functional_types\trig_b_i_syst_enum_functional_type_validations.eex.sql
+-- File:        trig_b_i_syst_enum_functional_type_validate_new_allowed.eex.sql
+-- Location:    database\cmp_msbms_syst_enums\msbms_syst_data\tables\syst_enum_functional_types\trig_b_i_syst_enum_functional_type_validate_new_allowed.eex.sql
 -- Project:     Muse Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -33,7 +33,7 @@ BEGIN
                           'records have already been defined.',
                 DETAIL  = msbms_syst_priv.get_exception_details(
                              p_proc_schema    => 'msbms_syst_data'
-                            ,p_proc_name      => 'trig_b_i_syst_enum_functional_type_new_allowed_check'
+                            ,p_proc_name      => 'trig_b_i_syst_enum_functional_type_validate_new_allowed'
                             ,p_exception_name => 'invalid_functional_type'
                             ,p_errcode        => 'PM003'
                             ,p_param_data     => to_jsonb(new)
@@ -55,14 +55,14 @@ END;
 $BODY$
 LANGUAGE plpgsql VOLATILE;
 
-ALTER FUNCTION msbms_syst_data.trig_b_i_syst_enum_functional_type_validations()
+ALTER FUNCTION msbms_syst_data.trig_b_i_syst_enum_functional_type_validate_new_allowed()
     OWNER TO <%= msbms_owner %>;
 
-REVOKE EXECUTE ON FUNCTION msbms_syst_data.trig_b_i_syst_enum_functional_type_validations() FROM public;
-GRANT EXECUTE ON FUNCTION msbms_syst_data.trig_b_i_syst_enum_functional_type_validations() TO <%= msbms_owner %>;
+REVOKE EXECUTE ON FUNCTION msbms_syst_data.trig_b_i_syst_enum_functional_type_validate_new_allowed() FROM public;
+GRANT EXECUTE ON FUNCTION msbms_syst_data.trig_b_i_syst_enum_functional_type_validate_new_allowed() TO <%= msbms_owner %>;
 
 
-COMMENT ON FUNCTION msbms_syst_data.trig_b_i_syst_enum_functional_type_validations() IS
+COMMENT ON FUNCTION msbms_syst_data.trig_b_i_syst_enum_functional_type_validate_new_allowed() IS
 $DOC$Checks to see if this is the first functional type being added for the
 enumeration and, if so, that no syst_enum_items records already exist.  Adding a
 first functional type for an enumeration which already has defined enumeration
