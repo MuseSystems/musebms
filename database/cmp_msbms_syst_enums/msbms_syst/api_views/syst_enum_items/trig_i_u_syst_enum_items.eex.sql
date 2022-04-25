@@ -16,7 +16,11 @@ $BODY$
 
 BEGIN
 
-    IF old.syst_defined AND new.internal_name != old.internal_name THEN
+    IF
+        old.syst_defined AND
+        (new.internal_name != old.internal_name OR
+         new.functional_type_id != old.functional_type_id)
+    THEN
         RAISE EXCEPTION
             USING
                 MESSAGE = 'The requested data update included changes to fields disallowed ' ||
@@ -43,7 +47,6 @@ BEGIN
         internal_name           = new.internal_name
       , display_name            = new.display_name
       , external_name           = new.external_name
-      , enum_id                 = new.enum_id
       , functional_type_id      = new.functional_type_id
       , enum_default            = new.enum_default
       , functional_type_default = new.functional_type_default
