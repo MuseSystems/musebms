@@ -20,7 +20,7 @@ BEGIN
     SET sort_order = sort_order + 1
     WHERE enum_id = new.enum_id AND sort_order = new.sort_order AND id != new.id;
 
-    RETURN null;
+    RETURN NULL;
 
 END;
 $BODY$

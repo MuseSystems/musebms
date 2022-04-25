@@ -88,11 +88,24 @@ ALTER TABLE msbms_syst_data.syst_enum_items OWNER TO <%= msbms_owner %>;
 REVOKE ALL ON TABLE msbms_syst_data.syst_enum_items FROM public;
 GRANT ALL ON TABLE msbms_syst_data.syst_enum_items TO <%= msbms_owner %>;
 
-CREATE TRIGGER a50_trig_b_i_syst_enum_items_maintain_sort_order
+CREATE TRIGGER b50_trig_b_i_syst_enum_items_maintain_sort_order
     BEFORE INSERT
     ON msbms_syst_data.syst_enum_items
     FOR EACH ROW
 EXECUTE PROCEDURE msbms_syst_data.trig_b_i_syst_enum_items_maintain_sort_order( );
+
+CREATE TRIGGER c50_trig_b_i_syst_enum_items_validate_functional_type
+    BEFORE INSERT
+    ON msbms_syst_data.syst_enum_items
+    FOR EACH ROW
+EXECUTE PROCEDURE msbms_syst_data.trig_b_iu_syst_enum_items_validate_functional_types( );
+
+CREATE TRIGGER c50_trig_b_u_syst_enum_items_validate_functional_type
+    BEFORE UPDATE
+    ON msbms_syst_data.syst_enum_items
+    FOR EACH ROW
+    WHEN ( old.functional_type_id IS DISTINCT FROM new.functional_type_id )
+EXECUTE PROCEDURE msbms_syst_data.trig_b_iu_syst_enum_items_validate_functional_types( );
 
 CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
     BEFORE INSERT OR UPDATE
@@ -100,20 +113,7 @@ CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
     FOR EACH ROW
 EXECUTE PROCEDURE msbms_syst_priv.trig_b_iu_set_diagnostic_columns( );
 
-CREATE CONSTRAINT TRIGGER a50_trig_a_i_syst_enum_items_check_functional_type
-    AFTER INSERT
-    ON msbms_syst_data.syst_enum_items
-    FOR EACH ROW
-EXECUTE PROCEDURE msbms_syst_data.trig_a_iu_syst_enum_items_check_functional_types( );
-
-CREATE CONSTRAINT TRIGGER a50_trig_a_u_syst_enum_items_check_functional_type
-    AFTER UPDATE
-    ON msbms_syst_data.syst_enum_items
-    FOR EACH ROW
-    WHEN ( old.functional_type_id IS DISTINCT FROM new.functional_type_id )
-EXECUTE PROCEDURE msbms_syst_data.trig_a_iu_syst_enum_items_check_functional_types( );
-
-CREATE TRIGGER a55_trig_a_iu_syst_enum_items_maintain_sort_order
+CREATE TRIGGER b55_trig_a_iu_syst_enum_items_maintain_sort_order
     AFTER INSERT
     ON msbms_syst_data.syst_enum_items
     FOR EACH ROW
