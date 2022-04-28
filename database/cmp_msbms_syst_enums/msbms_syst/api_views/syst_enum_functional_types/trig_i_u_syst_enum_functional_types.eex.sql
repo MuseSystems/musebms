@@ -15,12 +15,9 @@ $BODY$
 -- muse.information@musesystems.com  :: https://muse.systems
 
 BEGIN
-
     IF
-        ( SELECT syst_defined
-          FROM msbms_syst_data.syst_enums
-          WHERE id = old.enum_id  ) AND
-        old.internal_name != new.internal_name
+        (old.syst_defined AND old.internal_name != new.internal_name) OR
+        old.enum_id != new.enum_id
     THEN
         RAISE EXCEPTION
             USING
@@ -50,13 +47,30 @@ BEGIN
       , external_name    = new.external_name
       , user_description = new.user_description
     WHERE id = new.id
-    RETURNING * INTO new;
+    RETURNING INTO new
+          id
+        , internal_name
+        , display_name
+        , external_name
+        , old.syst_defined
+        , enum_id
+        , syst_description
+        , user_description
+        , diag_timestamp_created
+        , diag_role_created
+        , diag_timestamp_modified
+        , diag_wallclock_modified
+        , diag_role_modified
+        , diag_row_version
+        , diag_update_count ;
+
+    RAISE WARNING '======>>>>>>> New Func. Type: %', to_jsonb(new);
 
     RETURN new;
 
 END;
 $BODY$
-LANGUAGE plpgsql VOLATILE;
+LANGUAGE plpgsql VOLATILE SECURITY DEFINER;
 
 ALTER FUNCTION msbms_syst.trig_i_u_syst_enum_functional_types()
     OWNER TO <%= msbms_owner %>;

@@ -12,21 +12,24 @@
 
 CREATE VIEW msbms_syst.syst_enum_functional_types AS
     SELECT
-        id
-      , internal_name
-      , display_name
-      , external_name
-      , enum_id
-      , syst_description
-      , user_description
-      , diag_timestamp_created
-      , diag_role_created
-      , diag_timestamp_modified
-      , diag_wallclock_modified
-      , diag_role_modified
-      , diag_row_version
-      , diag_update_count
-    FROM msbms_syst_data.syst_enum_functional_types;
+        seft.id
+      , seft.internal_name
+      , seft.display_name
+      , seft.external_name
+      , se.syst_defined
+      , seft.enum_id
+      , seft.syst_description
+      , seft.user_description
+      , seft.diag_timestamp_created
+      , seft.diag_role_created
+      , seft.diag_timestamp_modified
+      , seft.diag_wallclock_modified
+      , seft.diag_role_modified
+      , seft.diag_row_version
+      , seft.diag_update_count
+    FROM msbms_syst_data.syst_enum_functional_types seft
+        JOIN msbms_syst_data.syst_enums se
+            ON se.id = seft.enum_id;
 
 ALTER VIEW msbms_syst.syst_enum_functional_types OWNER TO <%= msbms_owner %>;
 
@@ -82,6 +85,20 @@ COMMENT ON
     COLUMN msbms_syst.syst_enum_functional_types.external_name IS
 $DOC$A non-unique/non-key value used to display to users and external parties where
 uniqueness is less of a concern than specific end user presentation.$DOC$;
+
+COMMENT ON
+    COLUMN msbms_syst.syst_enum_functional_types.syst_defined IS
+$DOC$If true, this value indicates that the functional type is considered to be
+system defined and a part of the application.  This column is not part of the
+functional type underlying data and is a reflect of the functional type's parent
+enumeration since the parent determines if the functional type is considered
+system defined.  If false, the assumption is that the functional type is user
+defined and supports custom user functionality.
+
+See the documentation for msbms_syst.syst_enums.syst_defined for a more complete
+complete description.
+
+Note that this column may not be updated via this API View.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst.syst_enum_functional_types.enum_id IS

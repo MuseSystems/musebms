@@ -38,6 +38,7 @@ defmodule MsbmsSystEnums.Data.SystEnumFunctionalTypes do
             internal_name: MsbmsSystEnums.Types.enum_functional_type_name() | nil,
             display_name: String.t() | nil,
             external_name: String.t() | nil,
+            syst_defined: boolean() | nil,
             enum_id: Ecto.UUID.t() | nil,
             enum: MsbmsSystEnums.Data.SystEnums.t() | Ecto.Association.NotLoaded.t() | nil,
             syst_description: String.t() | nil,
@@ -57,6 +58,7 @@ defmodule MsbmsSystEnums.Data.SystEnumFunctionalTypes do
     field(:internal_name, :string)
     field(:display_name, :string)
     field(:external_name, :string)
+    field(:syst_defined, :boolean)
     field(:syst_description, :string)
     field(:user_description, :string)
     field(:diag_timestamp_created, :utc_datetime)

@@ -13,14 +13,14 @@ $BODY$
 -- See the NOTICE file in the project root for copyright ownership information.
 --
 -- muse.information@musesystems.com  :: https://muse.systems
-
+DECLARE
+    var_syst_defined boolean;
 BEGIN
+    SELECT syst_defined INTO var_syst_defined
+    FROM msbms_syst_data.syst_enums
+    WHERE id = new.enum_id;
 
-    IF
-        NOT exists( SELECT TRUE
-                    FROM msbms_syst_data.syst_enums
-                    WHERE id = new.enum_id AND NOT syst_defined )
-    THEN
+    IF var_syst_defined THEN
         RAISE EXCEPTION
             USING
                 MESSAGE = 'The functional type creation for the requested ' ||
@@ -56,7 +56,22 @@ BEGIN
          , new.enum_id
          , '(System Description Not Available)'
          , new.user_description)
-    RETURNING * INTO new;
+    RETURNING INTO new
+          id
+        , internal_name
+        , display_name
+        , external_name
+        , var_syst_defined
+        , enum_id
+        , syst_description
+        , user_description
+        , diag_timestamp_created
+        , diag_role_created
+        , diag_timestamp_modified
+        , diag_wallclock_modified
+        , diag_role_modified
+        , diag_row_version
+        , diag_update_count ;
 
     RETURN new;
 
