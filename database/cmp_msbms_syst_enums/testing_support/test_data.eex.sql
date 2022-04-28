@@ -49,7 +49,7 @@ VALUES
     ( 'example_enumeration'
     , 'Example Enumeration'
     , 'A enumeration to use in examples and doctests.'
-    , TRUE
+    , FALSE
     , TRUE
     , jsonb_build_object( 'enum_option_one', 1, 'enum_option_two', 2, 'enum_option_three',
                           ARRAY ['array_value1', 'array_value2', 'array_value3']::text[] ) );
