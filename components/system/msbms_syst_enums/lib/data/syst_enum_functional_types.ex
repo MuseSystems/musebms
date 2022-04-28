@@ -86,6 +86,7 @@ defmodule MsbmsSystEnums.Data.SystEnumFunctionalTypes do
     ])
     |> validate_internal_name(opts)
     |> validate_display_name(opts)
+    |> validate_enum_id()
     |> validate_external_name(opts)
     |> validate_user_description(opts)
   end
