@@ -56,9 +56,11 @@ BEGIN
     WHERE id = new.id
     RETURNING * INTO new;
 
+    RETURN new;
+
 END;
 $BODY$
-LANGUAGE plpgsql VOLATILE;
+LANGUAGE plpgsql VOLATILE SECURITY DEFINER;
 
 ALTER FUNCTION msbms_syst.trig_i_u_syst_enum_items()
     OWNER TO <%= msbms_owner %>;
