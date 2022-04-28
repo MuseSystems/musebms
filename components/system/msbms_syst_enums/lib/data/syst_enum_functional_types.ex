@@ -84,13 +84,6 @@ defmodule MsbmsSystEnums.Data.SystEnumFunctionalTypes do
       :enum_id,
       :user_description
     ])
-    |> validate_required([
-      :internal_name,
-      :display_name,
-      :external_name,
-      :enum_id,
-      :user_description
-    ])
     |> validate_internal_name(opts)
     |> validate_display_name(opts)
     |> validate_external_name(opts)
