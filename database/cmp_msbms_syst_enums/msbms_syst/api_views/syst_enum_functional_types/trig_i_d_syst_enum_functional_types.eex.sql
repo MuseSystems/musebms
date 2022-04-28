@@ -16,11 +16,7 @@ $BODY$
 
 BEGIN
 
-    IF
-        ( SELECT syst_defined
-          FROM msbms_syst_data.syst_enums
-          WHERE id = old.enum_id  )
-    THEN
+    IF old.syst_defined THEN
         RAISE EXCEPTION
             USING
                 MESSAGE = 'You cannot delete a system defined enumeration ' ||
@@ -42,13 +38,31 @@ BEGIN
                 TABLE = tg_table_name;
     END IF;
 
-    DELETE FROM msbms_syst_data.syst_enum_functional_types WHERE id = old.id RETURNING * INTO old;
+    DELETE
+    FROM msbms_syst_data.syst_enum_functional_types
+    WHERE id = old.id
+    RETURNING INTO old
+          id
+        , internal_name
+        , display_name
+        , external_name
+        , old.syst_defined
+        , enum_id
+        , syst_description
+        , user_description
+        , diag_timestamp_created
+        , diag_role_created
+        , diag_timestamp_modified
+        , diag_wallclock_modified
+        , diag_role_modified
+        , diag_row_version
+        , diag_update_count ;
 
     RETURN old;
 
 END;
 $BODY$
-LANGUAGE plpgsql VOLATILE;
+LANGUAGE plpgsql VOLATILE SECURITY DEFINER;
 
 ALTER FUNCTION msbms_syst.trig_i_d_syst_enum_functional_types()
     OWNER TO <%= msbms_owner %>;
