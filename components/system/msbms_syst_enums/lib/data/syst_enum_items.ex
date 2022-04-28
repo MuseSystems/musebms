@@ -90,7 +90,6 @@ defmodule MsbmsSystEnums.Data.SystEnumItems do
       :functional_type_default,
       :user_description,
       :sort_order,
-      :syst_options,
       :user_options,
       :enum_id,
       :functional_type_id
