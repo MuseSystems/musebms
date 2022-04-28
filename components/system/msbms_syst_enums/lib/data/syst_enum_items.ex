@@ -94,7 +94,9 @@ defmodule MsbmsSystEnums.Data.SystEnumItems do
       :enum_id,
       :functional_type_id
     ])
-    |> validate_required([:enum_id, :enum_default, :functional_type_default])
+    |> validate_required([:enum_default, :functional_type_default])
+    |> validate_enum_id()
+    |> validate_functional_type_id()
     |> validate_internal_name(opts)
     |> validate_display_name(opts)
     |> validate_external_name(opts)
