@@ -44,4 +44,3 @@ defmodule MsbmsSystEnums.MixProject do
     ]
   end
 end
-
