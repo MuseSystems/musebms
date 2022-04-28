@@ -63,8 +63,8 @@ defmodule MsbmsSystEnums.Impl.ChangesetHelpers do
     opts = resolve_options(opts)
 
     validation_func = fn :internal_name, _internal_name ->
-      if get_field(changeset, :syst_defined, false) do
-        [:internal_name, "System defined enumerations may not have their internal names changed."]
+      if get_field(changeset, :syst_defined, false) == true do
+        [internal_name: "System defined enumerations may not have their internal names changed."]
       else
         []
       end
