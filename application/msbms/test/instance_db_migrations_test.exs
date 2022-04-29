@@ -4,7 +4,7 @@ defmodule InstanceDbMigrationTest do
   alias Mix.Tasks.Builddb
 
   @datastore_options %{
-    database_name: "instance_build_build",
+    database_name: "test_instance_build",
     database_owner: "instance_build_owner",
     datastore_code: "instance.testing.code",
     datastore_name: :instance,
@@ -64,10 +64,11 @@ defmodule InstanceDbMigrationTest do
   #  correct here.
 
   setup_all do
+    setup_test_environment()
     on_exit(&cleanup_test_environment/0)
   end
 
-  test "Build & Apply instance Migrations" do
+  defp setup_test_environment do
     :ok = build_migrations()
 
     datastore_options = @datastore_options
@@ -87,9 +88,6 @@ defmodule InstanceDbMigrationTest do
       )
   end
 
-  defp setup_test_environment do
-  end
-
   defp cleanup_test_environment do
     datastore_options = @datastore_options
     :ok = MsbmsSystDatastore.drop_datastore(datastore_options)
@@ -106,5 +104,9 @@ defmodule InstanceDbMigrationTest do
       "-d",
       @migration_test_destination_dir
     ])
+  end
+
+  test "Misc Test" do
+    assert :ok = :ok
   end
 end

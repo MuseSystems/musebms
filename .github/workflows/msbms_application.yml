@@ -263,6 +263,10 @@ jobs:
             otp-version: ${{matrix.otp}}
             elixir-version: ${{matrix.elixir}}
 
+        - name: Initialize Database
+          run: psql -f database_utils/bootstrap_database.psql postgresql://msbms_syst_dba:msbms.syst.dba.testing.password@localhost:5432/postgres
+          working-directory: ./application/msbms
+
         - name: Build Mix Dependencies
           run: mix deps.get
           working-directory: ./application/msbms
