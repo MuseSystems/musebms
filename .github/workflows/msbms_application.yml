@@ -179,6 +179,58 @@ jobs:
           run: mix dialyzer
           working-directory: ./components/system/msbms_syst_settings
 
+  msbms-syst-enums:
+    runs-on: ubuntu-latest
+    name: MuseSystEnums (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
+    strategy:
+      matrix:
+        otp: ['24.3']
+        elixir: ['1.13.4']
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: msbms_syst_dba
+          POSTGRES_PASSWORD: msbms.syst.dba.testing.password
+          POSTGRES_PORT: 5432
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+        - name: Checkout repository code
+          uses: actions/checkout@v2
+
+        - name: Install Elixir
+          uses: erlef/setup-beam@v1
+          with:
+            otp-version: ${{matrix.otp}}
+            elixir-version: ${{matrix.elixir}}
+
+        - name: Initialize Database
+          run: psql -f database_utils/bootstrap_database.psql postgresql://msbms_syst_dba:msbms.syst.dba.testing.password@localhost:5432/postgres
+          working-directory: ./components/system/msbms_syst_enums
+
+        - name: Build Mix Dependencies
+          run: mix deps.get
+          working-directory: ./components/system/msbms_syst_enums
+
+        - name: Run Tests
+          run: mix test
+          working-directory: ./components/system/msbms_syst_enums
+
+        - name: Run Credo
+          run: mix credo
+          working-directory: ./components/system/msbms_syst_enums
+
+        - name: Run Dialyzer
+          run: mix dialyzer
+          working-directory: ./components/system/msbms_syst_enums
+
   msbms-application:
     runs-on: ubuntu-latest
     name: Muse BMS (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
