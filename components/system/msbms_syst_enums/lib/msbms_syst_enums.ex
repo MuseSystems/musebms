@@ -84,7 +84,7 @@ defmodule MsbmsSystEnums do
   ## Examples
 
       iex> MsbmsSystEnums.get_enum_syst_defined(:enums_instance, "example_enumeration")
-      true
+      false
   """
   @spec get_enum_syst_defined(
           MsbmsSystEnums.Types.service_name(),
