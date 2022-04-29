@@ -163,7 +163,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
         {:error,
          %MsbmsSystError{
            code: :database_error,
-           message: "Failed to retrieve current datastore version.",
+           message: "Failed to verify query success.",
            cause: error_result
          }}
     end
