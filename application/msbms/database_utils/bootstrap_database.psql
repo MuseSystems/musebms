@@ -1,0 +1,45 @@
+-- Note that this script currently exists to support CI testing
+-- A more robust script should be produced to walk users though
+-- the initial setup of the starting database objects.
+--
+-- Do not use this script to setup a production environment.
+
+\set ON_ERROR_STOP true
+\c postgres
+
+DO
+$BOOTSTRAPDB$
+    BEGIN
+
+        IF
+            NOT EXISTS(SELECT true
+                       FROM   pg_roles
+                       WHERE  rolname = 'msbms_syst_dba')
+        THEN
+
+            CREATE ROLE msbms_syst_dba
+                CREATEROLE CREATEDB NOINHERIT
+                LOGIN PASSWORD 'msbms.syst.dba.testing.password';
+
+            COMMENT ON ROLE msbms_syst_dba IS
+            $DOC$Privileged account which performs database server administrative actions.  Does not have access to application data and may not perform actions requiring PostgreSQL superuser privileges.$DOC$;
+
+        END IF;
+
+        IF
+            NOT EXISTS(SELECT true
+                       FROM   pg_roles
+                       WHERE  rolname = 'msbms_access')
+        THEN
+
+            CREATE ROLE msbms_access
+            ADMIN msbms_syst_dba;
+
+            COMMENT ON ROLE msbms_access IS
+            $DOC$An unprivileged role used to control access via pg_hba.conf rules.  All system login roles are members of this role.$DOC$;
+
+        END IF;
+
+    END;
+$BOOTSTRAPDB$;
+

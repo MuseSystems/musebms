@@ -122,6 +122,34 @@ defmodule MsbmsSystDatastoreTest do
     }
   }
 
+  defp setup_first_stage_migration_test do
+    Builddb.run([
+      "-t",
+      "test_type_four",
+      "-c",
+      "-s",
+      @migration_test_source_root_dir,
+      "-d",
+      @migration_test_migrations_root_dir
+    ])
+
+    (@migration_test_migrations_root_dir <>
+       "/test_type_four/test_type_four.{02,03}.??.???.0000MS.???.eex.sql")
+    |> Path.wildcard()
+    |> Enum.each(&File.rm!(&1))
+  end
+
+  defp setup_second_stage_migration_test do
+    Builddb.run([
+      "-t",
+      "test_type_four",
+      "-s",
+      @migration_test_source_root_dir,
+      "-d",
+      @migration_test_migrations_root_dir
+    ])
+  end
+
   doctest MsbmsSystDatastore
 
   test "Basic datastore management" do
@@ -231,33 +259,5 @@ defmodule MsbmsSystDatastoreTest do
              MsbmsSystDatastore.query_for_many("SELECT * FROM msbms_test.test_type_four;")
 
     assert :ok = MsbmsSystDatastore.stop_datastore(datastore_options)
-  end
-
-  defp setup_first_stage_migration_test do
-    Builddb.run([
-      "-t",
-      "test_type_four",
-      "-c",
-      "-s",
-      @migration_test_source_root_dir,
-      "-d",
-      @migration_test_migrations_root_dir
-    ])
-
-    (@migration_test_migrations_root_dir <>
-       "/test_type_four/test_type_four.{02,03}.??.???.0000MS.???.eex.sql")
-    |> Path.wildcard()
-    |> Enum.each(&File.rm!(&1))
-  end
-
-  defp setup_second_stage_migration_test do
-    Builddb.run([
-      "-t",
-      "test_type_four",
-      "-s",
-      @migration_test_source_root_dir,
-      "-d",
-      @migration_test_migrations_root_dir
-    ])
   end
 end

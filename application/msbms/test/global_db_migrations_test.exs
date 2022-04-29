@@ -16,7 +16,7 @@ defmodule GlobalDbMigrationsTest do
   alias Mix.Tasks.Builddb
 
   @datastore_options %{
-    database_name: "global_build_build",
+    database_name: "test_global_build",
     database_owner: "global_build_owner",
     datastore_code: "global.testing.code",
     datastore_name: :global,
@@ -35,7 +35,7 @@ defmodule GlobalDbMigrationsTest do
         description: "Global Build Testing App User",
         database_role: "global_build_app_user",
         database_password: "global.testing.code.app.user",
-        starting_pool_size: 3,
+        starting_pool_size: 20,
         start_context: true,
         login_context: true
       },
@@ -44,7 +44,7 @@ defmodule GlobalDbMigrationsTest do
         description: "Global Build Testing Api User",
         database_role: "global_build_api_user",
         database_password: "global.testing.code.app.user",
-        starting_pool_size: 3,
+        starting_pool_size: 20,
         start_context: true,
         login_context: true
       }
@@ -76,10 +76,11 @@ defmodule GlobalDbMigrationsTest do
   #  correct here.
 
   setup_all do
+    setup_test_environment()
     on_exit(&cleanup_test_environment/0)
   end
 
-  test "Build & Apply Global Migrations" do
+  defp setup_test_environment do
     :ok = build_migrations()
 
     datastore_options = @datastore_options
@@ -99,9 +100,6 @@ defmodule GlobalDbMigrationsTest do
       )
   end
 
-  defp setup_test_environment do
-  end
-
   defp cleanup_test_environment do
     datastore_options = @datastore_options
     :ok = MsbmsSystDatastore.drop_datastore(datastore_options)
@@ -118,5 +116,9 @@ defmodule GlobalDbMigrationsTest do
       "-d",
       @migration_test_destination_dir
     ])
+  end
+
+  test "Misc Test" do
+    assert :ok = :ok
   end
 end

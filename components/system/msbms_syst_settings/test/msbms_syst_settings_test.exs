@@ -78,6 +78,41 @@ defmodule MsbmsSystSettingsTest do
     on_exit(&cleanup_test_environment/0)
   end
 
+  defp setup_test_environment do
+    :ok = build_migrations()
+
+    datastore_options = @datastore_options
+
+    {:ok, :ready, _} = MsbmsSystDatastore.create_datastore(datastore_options)
+
+    {:ok, _} =
+      MsbmsSystDatastore.upgrade_datastore(
+        datastore_options,
+        @migration_test_datastore_type,
+        msbms_owner: datastore_options.database_owner,
+        msbms_appusr: "msbms_syst_settings_app_user",
+        msbms_apiusr: "msbms_syst_settings_api_user"
+      )
+
+    {:ok, _, _} = MsbmsSystDatastore.start_datastore(datastore_options)
+  end
+
+  defp cleanup_test_environment do
+    datastore_options = @datastore_options
+    :ok = MsbmsSystDatastore.drop_datastore(datastore_options)
+    File.rm_rf!("priv/database/cmp_msbms_syst_settings")
+  end
+
+  defp build_migrations do
+    Builddb.run([
+      "-t",
+      @migration_test_datastore_type,
+      "-c",
+      "-s",
+      @migration_test_source_root_dir
+    ])
+  end
+
   doctest MsbmsSystSettings, except: [terminate_settings_service: 1]
 
   test "Create/Delete User Defined Settings" do
@@ -1374,40 +1409,5 @@ defmodule MsbmsSystSettingsTest do
                "test_setting_one",
                :setting_blob
              )
-  end
-
-  defp setup_test_environment do
-    :ok = build_migrations()
-
-    datastore_options = @datastore_options
-
-    {:ok, :ready, _} = MsbmsSystDatastore.create_datastore(datastore_options)
-
-    {:ok, _} =
-      MsbmsSystDatastore.upgrade_datastore(
-        datastore_options,
-        @migration_test_datastore_type,
-        msbms_owner: datastore_options.database_owner,
-        msbms_appusr: "msbms_syst_settings_app_user",
-        msbms_apiusr: "msbms_syst_settings_api_user"
-      )
-
-    {:ok, _, _} = MsbmsSystDatastore.start_datastore(datastore_options)
-  end
-
-  defp cleanup_test_environment do
-    datastore_options = @datastore_options
-    :ok = MsbmsSystDatastore.drop_datastore(datastore_options)
-    File.rm_rf!("priv/database/cmp_msbms_syst_settings")
-  end
-
-  defp build_migrations do
-    Builddb.run([
-      "-t",
-      @migration_test_datastore_type,
-      "-c",
-      "-s",
-      @migration_test_source_root_dir
-    ])
   end
 end
