@@ -106,7 +106,7 @@ defmodule GlobalDbMigrationsTest do
     File.rm_rf!(Path.join([@migration_test_destination_dir, @migration_test_datastore_type]))
   end
 
-  defp build_migrations() do
+  defp build_migrations do
     Builddb.run([
       "-t",
       @migration_test_datastore_type,
