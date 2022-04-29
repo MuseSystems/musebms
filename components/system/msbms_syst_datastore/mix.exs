@@ -8,8 +8,8 @@ defmodule MsbmsSystDatastore.MixProject do
     # Third Party Dependencies
     {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
     {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
-    {:ecto_sql, "~> 3.0"},
-    {:ecto, "~> 3.0"},
+    {:ecto_sql, "== 3.7.2"},
+    {:ecto, "== 3.7.2"},
     {:ex_doc, "~> 0.20", only: :dev, runtime: false},
     {:jason, "~> 1.0"},
     {:postgrex, "~> 0.10"},
