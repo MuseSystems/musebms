@@ -1,5 +1,5 @@
 -- File:        syst_instances.eex.sql
--- Location:    database\app_msbms_global\mod_instance_mgr\msbms_syst_data\syst_instances\syst_instances.eex.sql
+-- Location:    database\cmp_msbms_syst_instance_mgr\msbms_syst_data\syst_instances\syst_instances.eex.sql
 -- Project:     Muse Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
