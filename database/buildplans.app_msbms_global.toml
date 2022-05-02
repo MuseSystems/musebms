@@ -74,33 +74,33 @@ load_files = [
     #  MsbmsSystFeatures Module
     #
 
-    # "cmp_msbms_syst_features/msbms_syst_data/syst_relations/syst_relations.eex.sql",
-    # "cmp_msbms_syst_features/msbms_syst_data/syst_feature_map_levels/syst_feature_map_levels.eex.sql",
-    # "cmp_msbms_syst_features/msbms_syst_data/syst_feature_map/syst_feature_map.eex.sql",
-    # "cmp_msbms_syst_features/msbms_syst_priv/trigger_functions/trig_a_iu_feature_map_level_assignable_check.eex.sql",
-    # "cmp_msbms_syst_features/msbms_syst_data/syst_feature_relation_assigns/syst_feature_relation_assigns.eex.sql",
-    # "cmp_msbms_syst_features/msbms_syst_data/syst_feature_setting_assigns/syst_feature_setting_assigns.eex.sql",
-    # "cmp_msbms_syst_features/msbms_syst_data/syst_feature_enum_assigns/syst_feature_enum_assigns.eex.sql",
+    "cmp_msbms_syst_features/msbms_syst_data/syst_relations/syst_relations.eex.sql",
+    "cmp_msbms_syst_features/msbms_syst_data/syst_feature_map_levels/syst_feature_map_levels.eex.sql",
+    "cmp_msbms_syst_features/msbms_syst_data/syst_feature_map/syst_feature_map.eex.sql",
+    "cmp_msbms_syst_features/msbms_syst_priv/trigger_functions/trig_a_iu_feature_map_level_assignable_check.eex.sql",
+    "cmp_msbms_syst_features/msbms_syst_data/syst_feature_relation_assigns/syst_feature_relation_assigns.eex.sql",
+    "cmp_msbms_syst_features/msbms_syst_data/syst_feature_setting_assigns/syst_feature_setting_assigns.eex.sql",
+    "cmp_msbms_syst_features/msbms_syst_data/syst_feature_enum_assigns/syst_feature_enum_assigns.eex.sql",
 
     #
     # Global Schema Loading
     #
 
-    # "app_msbms_global/gen_seed_data/initialize_feature_mapping.eex.sql",
+    "app_msbms_global/gen_seed_data/initialize_feature_mapping.eex.sql",
 
-    # "app_msbms_global/mod_authentication/seed_data/initialize_enum_access_account_states.eex.sql",
-    # "app_msbms_global/mod_authentication/seed_data/initialize_enum_credential_types.eex.sql",
-    # "app_msbms_global/mod_authentication/seed_data/initialize_enum_identity_types.eex.sql",
-    # "app_msbms_global/mod_instance_mgr/seed_data/initialize_enum_instance_states.eex.sql",
-    # "app_msbms_global/mod_instance_mgr/seed_data/initialize_enum_instance_types.eex.sql",
-    # "app_msbms_global/mod_instance_mgr/seed_data/initialize_enum_owner_states.eex.sql",
+    "app_msbms_global/mod_authentication/seed_data/initialize_enum_access_account_states.eex.sql",
+    "app_msbms_global/mod_authentication/seed_data/initialize_enum_credential_types.eex.sql",
+    "app_msbms_global/mod_authentication/seed_data/initialize_enum_identity_types.eex.sql",
+    "app_msbms_global/mod_instance_mgr/seed_data/initialize_enum_instance_states.eex.sql",
+    "app_msbms_global/mod_instance_mgr/seed_data/initialize_enum_instance_types.eex.sql",
+    "app_msbms_global/mod_instance_mgr/seed_data/initialize_enum_owner_states.eex.sql",
 
-    # "app_msbms_global/mod_instance_mgr/msbms_syst_data/syst_applications/syst_applications.eex.sql",
-    # "app_msbms_global/mod_instance_mgr/msbms_syst_data/syst_owners/syst_owners.eex.sql",
-    # "app_msbms_global/mod_authentication/msbms_syst_data/syst_access_accounts/syst_access_accounts.eex.sql",
-    # "app_msbms_global/mod_authentication/msbms_syst_data/syst_identities/trig_b_iu_syst_identities_check_uniqueness.eex.sql",
-    # "app_msbms_global/mod_authentication/msbms_syst_data/syst_identities/syst_identities.eex.sql",
-    # "app_msbms_global/mod_authentication/msbms_syst_data/syst_credentials/syst_credentials.eex.sql",
-    # "app_msbms_global/mod_instance_mgr/msbms_syst_data/syst_instances/syst_instances.eex.sql",
-    # "app_msbms_global/mod_authentication/msbms_syst_data/syst_access_account_instance_assocs/syst_access_account_instance_assocs.eex.sql",
+    "app_msbms_global/mod_instance_mgr/msbms_syst_data/syst_applications/syst_applications.eex.sql",
+    "app_msbms_global/mod_instance_mgr/msbms_syst_data/syst_owners/syst_owners.eex.sql",
+    "app_msbms_global/mod_authentication/msbms_syst_data/syst_access_accounts/syst_access_accounts.eex.sql",
+    "app_msbms_global/mod_authentication/msbms_syst_data/syst_identities/trig_b_iu_syst_identities_check_uniqueness.eex.sql",
+    "app_msbms_global/mod_authentication/msbms_syst_data/syst_identities/syst_identities.eex.sql",
+    "app_msbms_global/mod_authentication/msbms_syst_data/syst_credentials/syst_credentials.eex.sql",
+    "app_msbms_global/mod_instance_mgr/msbms_syst_data/syst_instances/syst_instances.eex.sql",
+    "app_msbms_global/mod_authentication/msbms_syst_data/syst_access_account_instance_assocs/syst_access_account_instance_assocs.eex.sql",
 ]
