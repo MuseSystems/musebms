@@ -21,7 +21,6 @@ PERFORM
           "internal_name": "person_contact_roles",
           "display_name": "Person - Contact Roles",
           "syst_description": "Defines the role that a contact information record may fulfill with a given person.  This could be mailing address, mobile phone contact, primary email, etc.",
-          "feature_internal_name": "instance_brm_master_people_enumerations",
           "syst_defined": true,
           "user_maintainable": true,
           "default_syst_options": null,

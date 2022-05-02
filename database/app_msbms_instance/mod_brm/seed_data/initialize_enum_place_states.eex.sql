@@ -21,7 +21,6 @@ PERFORM
           "internal_name": "pace_states",
           "display_name": "Place States",
           "syst_description": "Defines the available states which govern the place life-cycle and establishes what capabilities are supported in such states by default.",
-          "feature_internal_name": "instance_brm_master_places_enumerations",
           "syst_defined": true,
           "user_maintainable": true,
           "default_syst_options": null,

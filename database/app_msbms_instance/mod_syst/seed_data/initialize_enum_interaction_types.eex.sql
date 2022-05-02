@@ -21,7 +21,6 @@ PERFORM
           "internal_name": "interaction_types",
           "display_name": "Interaction Types",
           "syst_description": "Identifies classes of actions that a user or external system may request of the application.",
-          "feature_internal_name": "instance_sysadmin_maintenance_auditing_enumerations",
           "syst_defined": true,
           "user_maintainable": true,
           "default_syst_options": null,

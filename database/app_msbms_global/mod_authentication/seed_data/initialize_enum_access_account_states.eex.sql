@@ -21,7 +21,6 @@ PERFORM
           "internal_name": "access_account_states",
           "display_name": "Access Account States",
           "syst_description": "Enumerates the available states which describe the life-cycle of the access account records.",
-          "feature_internal_name": "global_authentication_enumerations",
           "syst_defined": true,
           "user_maintainable": true,
           "default_syst_options": null,

@@ -21,7 +21,6 @@ PERFORM
           "internal_name": "entity_person_roles",
           "display_name": "Entity - Person Roles",
           "syst_description": "Defines the various roles which a person may assume on behalf of a given entity.",
-          "feature_internal_name": "instance_brm_master_entities_enumerations",
           "syst_defined": true,
           "user_maintainable": true,
           "default_syst_options": null,

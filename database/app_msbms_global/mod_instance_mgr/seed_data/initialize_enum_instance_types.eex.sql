@@ -21,7 +21,6 @@ PERFORM
           "internal_name": "instance_types",
           "display_name": "Instance Types",
           "syst_description": "Defines the available kinds of instances and specifies their capabilities.  This typing works both for simple informational categorizaton as well as functional concerns within the application.",
-          "feature_internal_name": "global_instance_management_enumerations",
           "syst_defined": true,
           "user_maintainable": true,
           "default_syst_options": null,

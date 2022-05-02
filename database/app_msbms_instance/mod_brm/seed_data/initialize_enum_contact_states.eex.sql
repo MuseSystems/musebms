@@ -21,7 +21,6 @@ PERFORM
           "internal_name": "contact_states",
           "display_name": "Contact States",
           "syst_description": "Establishes the available life-cycle states for contact information.",
-          "feature_internal_name": "instance_brm_master_people_enumerations",
           "syst_defined": true,
           "user_maintainable": true,
           "default_syst_options": null,

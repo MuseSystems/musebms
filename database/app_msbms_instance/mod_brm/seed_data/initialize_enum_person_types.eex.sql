@@ -21,7 +21,6 @@ PERFORM
           "internal_name": "person_types",
           "display_name": "Person Types",
           "syst_description": "A list of the various types of entities may be represented by a person.",
-          "feature_internal_name": "instance_brm_master_people_enumerations",
           "syst_defined": true,
           "user_maintainable": true,
           "default_syst_options": null,

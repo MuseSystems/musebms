@@ -21,7 +21,6 @@ PERFORM
           "internal_name": "owner_states",
           "display_name": "Owner States",
           "syst_description": "Enumerates the life-cycle states that an owner record might exist in.  Chiefly, this has to do with whether or not a particular owner is considered active or not.",
-          "feature_internal_name": "global_instance_management_enumerations",
           "syst_defined": true,
           "user_maintainable": true,
           "default_syst_options": null,

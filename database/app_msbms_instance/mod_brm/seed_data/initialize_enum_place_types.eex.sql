@@ -21,7 +21,6 @@ PERFORM
           "internal_name": "pace_types",
           "display_name": "Place Types",
           "syst_description": "Establishes the different kinds of places in which the place may be categorized",
-          "feature_internal_name": "instance_brm_master_places_enumerations",
           "syst_defined": true,
           "user_maintainable": true,
           "default_syst_options": null,

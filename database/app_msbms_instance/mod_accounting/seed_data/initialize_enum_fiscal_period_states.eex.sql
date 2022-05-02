@@ -21,7 +21,6 @@ PERFORM
           "internal_name": "fiscal_period_states",
           "display_name": "Fiscal Period States",
           "syst_description": "Life-cycle management stages for fiscal period records.",
-          "feature_internal_name": "instance_accounting_supporting_fiscal_calendar_enumerations",
           "syst_defined": true,
           "user_maintainable": true,
           "default_syst_options": null,

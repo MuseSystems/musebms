@@ -26,7 +26,6 @@ BEGIN
            internal_name
           ,display_name
           ,syst_description
-          ,feature_id
           ,syst_defined
           ,user_maintainable
           ,default_syst_options
@@ -36,9 +35,6 @@ BEGIN
            p_enum_def ->> 'internal_name'
           ,p_enum_def ->> 'display_name'
           ,p_enum_def ->> 'syst_description'
-          ,(SELECT id
-            FROM msbms_syst_data.syst_feature_map
-            WHERE internal_name = p_enum_def ->> 'feature_internal_name')
           ,( p_enum_def -> 'syst_defined' )::boolean
           ,( p_enum_def -> 'user_maintainable' )::boolean
           ,p_enum_def -> 'default_syst_options'

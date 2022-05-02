@@ -21,7 +21,6 @@ PERFORM
           "internal_name": "person_states",
           "display_name": "Person States",
           "syst_description": "Lifecycle management stages for persons.",
-          "feature_internal_name": "instance_brm_master_people_enumerations",
           "syst_defined": true,
           "user_maintainable": true,
           "default_syst_options": null,

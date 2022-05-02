@@ -21,7 +21,6 @@ PERFORM
           "internal_name": "entity_types",
           "display_name": "Entity Types",
           "syst_description": "Lists the different kinds of legal business entities with which business is conducted.",
-          "feature_internal_name": "instance_brm_master_entities_enumerations",
           "syst_defined": true,
           "user_maintainable": true,
           "default_syst_options": null,

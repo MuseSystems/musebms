@@ -21,7 +21,6 @@ PERFORM
           "internal_name": "entity_place_roles",
           "display_name": "Entity - Place Roles",
           "syst_description": "Defines the different roles that a given place may assume for a specific entity.",
-          "feature_internal_name": "instance_brm_master_entities_enumerations",
           "syst_defined": true,
           "user_maintainable": true,
           "default_syst_options": null,

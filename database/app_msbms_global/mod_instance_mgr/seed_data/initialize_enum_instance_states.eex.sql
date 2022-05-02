@@ -21,7 +21,6 @@ PERFORM
           "internal_name": "instance_states",
           "display_name": "Instance States",
           "syst_description": "Establishes the available states in the life-cycle of a system instance (msbms_syst_data.syst_instances) record, including some direction of state related system functionality.",
-          "feature_internal_name": "global_instance_management_enumerations",
           "syst_defined": true,
           "user_maintainable": true,
           "default_syst_options": null,

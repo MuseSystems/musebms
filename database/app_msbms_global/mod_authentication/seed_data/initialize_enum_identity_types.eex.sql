@@ -21,7 +21,6 @@ PERFORM
           "internal_name": "identity_types",
           "display_name": "Identity Types",
           "syst_description": "Established the various kinds of credentials that are available for verifying an identity.",
-          "feature_internal_name": "global_authentication_enumerations",
           "syst_defined": true,
           "user_maintainable": true,
           "default_syst_options": null,

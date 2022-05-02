@@ -21,7 +21,6 @@ PERFORM
           "internal_name": "login_states",
           "display_name": "Login States",
           "syst_description": "Defines the life-cycle states in which user login records may exist.",
-          "feature_internal_name": "instance_sysadmin_maintenance_authorization_enumerations",
           "syst_defined": true,
           "user_maintainable": true,
           "default_syst_options": null,

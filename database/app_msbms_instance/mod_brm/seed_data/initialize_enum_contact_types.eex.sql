@@ -21,7 +21,6 @@ PERFORM
           "internal_name": "contact_types",
           "display_name": "Contact Types",
           "syst_description": "Identifies the available types of contact that may be associated with a person, entity, or place.",
-          "feature_internal_name": "instance_brm_master_people_enumerations",
           "syst_defined": true,
           "user_maintainable": true,
           "default_syst_options": null,

@@ -21,7 +21,6 @@ PERFORM
           "internal_name": "interface_types",
           "display_name": "Interface Types",
           "syst_description": "Lists the different supported entry points use to interact with the application.",
-          "feature_internal_name": "instance_sysadmin_maintenance_auditing_enumerations",
           "syst_defined": true,
           "user_maintainable": true,
           "default_syst_options": null,

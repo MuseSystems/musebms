@@ -21,7 +21,6 @@ PERFORM
           "internal_name": "fiscal_year_types",
           "display_name": "Fiscal Year Types",
           "syst_description": "Enumerates the different supported cadences of periods for fiscal years.",
-          "feature_internal_name": "instance_accounting_supporting_fiscal_calendar_enumerations",
           "syst_defined": true,
           "user_maintainable": true,
           "default_syst_options": null,

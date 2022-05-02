@@ -21,7 +21,6 @@ PERFORM
           "internal_name": "address_states",
           "display_name": "Address States",
           "syst_description": "Defines the life-cycle states for addresses in the system.",
-          "feature_internal_name": "instance_brm_master_places_enumerations",
           "syst_defined": true,
           "user_maintainable": true,
           "default_syst_options": null,

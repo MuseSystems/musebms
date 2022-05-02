@@ -21,7 +21,6 @@ PERFORM
           "internal_name": "entity_states",
           "display_name": "Entity States",
           "syst_description": "Lifecycle management stages for business entities.",
-          "feature_internal_name": "instance_brm_master_entities_enumerations",
           "syst_defined": true,
           "user_maintainable": true,
           "default_syst_options": null,

@@ -21,7 +21,6 @@ PERFORM
           "internal_name": "place_address_roles",
           "display_name": "Place - Address Roles",
           "syst_description": "Established the roles which an address may assume related to a parent place.",
-          "feature_internal_name": "instance_brm_master_places_enumerations",
           "syst_defined": true,
           "user_maintainable": true,
           "default_syst_options": null,
