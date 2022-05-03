@@ -70,6 +70,10 @@ defmodule MsbmsSystInstanceMgrTest do
     on_exit(&cleanup_test_environment/0)
   end
 
+  setup %{} do
+    [datastore_context: MsbmsSystDatastore.set_datastore_context(@datastore_context_name)]
+  end
+
   defp setup_test_environment do
     :ok = build_migrations()
 
@@ -106,4 +110,10 @@ defmodule MsbmsSystInstanceMgrTest do
   end
 
   doctest MsbmsSystInstanceMgr
+
+  test "Can List Applications" do
+    assert {:ok, apps} = MsbmsSystInstanceMgr.list_applications()
+    assert 2 = length(apps)
+    assert %MsbmsSystInstanceMgr.Data.SystApplications{internal_name: "test_app_1"} = hd(apps)
+  end
 end
