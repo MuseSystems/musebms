@@ -44,28 +44,14 @@ CREATE TABLE msbms_syst_data.syst_instances
         NOT NULL
         CONSTRAINT syst_instances_owners_fk
             REFERENCES msbms_syst_data.syst_owners (id)
-    ,dbserver_name
-        text
-        NOT NULL
-    ,db_app_context_pool_size
-        integer
-        NOT NULL DEFAULT 10
-        CONSTRAINT syst_instances_db_app_context_pool_size_no_neg_chk
-            CHECK (db_app_context_pool_size > 0)
-    ,db_api_context_pool_size
-        integer
-        NOT NULL DEFAULT 3
-        CONSTRAINT syst_instances_db_api_context_pool_size_no_neg_chk
-            CHECK (db_api_context_pool_size > 0)
-    ,instance_code
-        bytea
-        NOT NULL DEFAULT gen_random_bytes(32)
     ,owning_instance_id
         uuid
         CONSTRAINT syst_instances_owning_instance_fk
             REFERENCES msbms_syst_data.syst_instances (id)
         CONSTRAINT syst_instances_self_ownership_chk
             CHECK (owning_instance_id IS NULL OR owning_instance_id != id)
+    ,instance_options
+        jsonb
     ,diag_timestamp_created
         timestamptz
         NOT NULL DEFAULT now( )
@@ -165,30 +151,6 @@ and which credential types are allowed to be used to authenticate to the owner's
 instances.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_instances.dbserver_name IS
-$DOC$References a database server found in the msbms_startup_options.toml file.
-While this file may override certain defaults set for the server in that file,
-we need to use the references in that file to know where we should connect.$DOC$;
-
-COMMENT ON
-    COLUMN msbms_syst_data.syst_instances.db_app_context_pool_size IS
-$DOC$The number of pooled database connections available to the application access
-context.  The application will checkout connections from the pool as needed and
-otherwise queue requests as necessary (within limits).$DOC$;
-
-COMMENT ON
-    COLUMN msbms_syst_data.syst_instances.db_api_context_pool_size IS
-$DOC$The number of pooled database connections available to the API access context.
-The application will checkout connections from the pool as needed and otherwise
-queue requests as necessary (within limits).$DOC$;
-
-COMMENT ON
-    COLUMN msbms_syst_data.syst_instances.instance_code IS
-$DOC$A randomly generated sequence of bytes used in instance database connection
-authentication.  Note that this value, while random, should be no fewer than 32
-bytes long.$DOC$;
-
-COMMENT ON
     COLUMN msbms_syst_data.syst_instances.owning_instance_id IS
 $DOC$In some cases, an instance is considered subordinate to another instance.  For
 example, consider a production environment and a related sandbox environment.
@@ -197,6 +159,13 @@ with some sort of production instance where the real work is performed.  This
 kind of association becomes clearer in SaaS environments where a primary
 instance is contracted for, but other supporting instances, such as a sandbox,
 should follow certain account related actions of the primary.$DOC$;
+
+COMMENT ON
+    COLUMN msbms_syst_data.syst_instances.instance_options IS
+$DOC$A key/value store of values which define application or instance specific
+options.  Common use cases for this value include defining runtime details which
+might vary from instance to instance, such as the number of datastore
+connections to establish.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.syst_instances.diag_timestamp_created IS

@@ -42,10 +42,7 @@ defmodule MsbmsSystInstanceMgr.Data.SystInstances do
             owning_instance_id: Ecto.UUID.t() | nil,
             owning_instance:
               MsbmsSystInstanceMgr.Data.SystInstances.t() | Ecto.Association.NotLoaded.t() | nil,
-            dbserver_name: String.t() | nil,
-            db_app_context_pool_size: integer() | nil,
-            db_api_context_pool_size: integer() | nil,
-            instance_code: binary() | nil,
+            instance_options: map() | nil,
             diag_timestamp_created: DateTime.t() | nil,
             diag_role_created: String.t() | nil,
             diag_timestamp_modified: DateTime.t() | nil,
@@ -60,10 +57,7 @@ defmodule MsbmsSystInstanceMgr.Data.SystInstances do
   schema "syst_instances" do
     field(:internal_name, :string)
     field(:display_name, :string)
-    field(:dbserver_name, :string)
-    field(:db_app_context_pool_size, :integer)
-    field(:db_api_context_pool_size, :integer)
-    field(:instance_code, :binary)
+    field(:instance_options, :map)
     field(:diag_timestamp_created, :utc_datetime)
     field(:diag_role_created, :string)
     field(:diag_timestamp_modified, :utc_datetime)
@@ -96,21 +90,17 @@ defmodule MsbmsSystInstanceMgr.Data.SystInstances do
     |> cast(change_params, [
       :internal_name,
       :display_name,
-      :dbserver_name,
-      :db_app_context_pool_size,
-      :db_api_context_pool_size,
-      :instance_code_id,
       :application_id,
       :instance_type_id,
       :instance_state_id,
       :owner_id,
-      :owning_instance_id
+      :owning_instance_id,
+      :instance_options
     ])
     |> validate_required([
       :dbserver_name,
       :db_app_context_pool_size,
       :db_api_context_pool_size,
-      :instance_code_id,
       :application_id,
       :instance_type_id,
       :instance_state_id
