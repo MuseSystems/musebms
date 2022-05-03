@@ -24,6 +24,9 @@ CREATE TABLE msbms_syst_data.syst_applications
         text
         NOT NULL
         CONSTRAINT syst_applications_display_name_udx UNIQUE
+    ,syst_description
+        text
+        NOT NULL
     ,diag_timestamp_created
         timestamptz
         NOT NULL DEFAULT now( )
@@ -74,6 +77,11 @@ COMMENT ON
     COLUMN msbms_syst_data.syst_applications.display_name IS
 $DOC$A friendly name and candidate key for the record, suitable for use in user
 interactions$DOC$;
+
+COMMENT ON
+    COLUMN msbms_syst_data.syst_applications.syst_description IS
+$DOC$A system default description describing the application being represented by the
+record.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.syst_applications.diag_timestamp_created IS
