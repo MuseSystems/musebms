@@ -83,6 +83,21 @@ load_files = [
     "cmp_msbms_syst_features/msbms_syst_data/syst_feature_enum_assigns/syst_feature_enum_assigns.eex.sql",
 
     #
+    # MsbmsSystInstanceMgr Module
+    #
+
+    "cmp_msbms_syst_instance_mgr/msbms_syst_data/syst_applications/syst_applications.eex.sql",
+    "cmp_msbms_syst_instance_mgr/msbms_syst_data/syst_owners/syst_owners.eex.sql",
+    "cmp_msbms_syst_instance_mgr/msbms_syst_data/syst_instances/syst_instances.eex.sql",
+
+    "cmp_msbms_syst_instance_mgr/msbms_syst/api_views/syst_applications/syst_applications.eex.sql",
+    "cmp_msbms_syst_instance_mgr/msbms_syst/api_views/syst_owners/syst_owners.eex.sql",
+
+    "cmp_msbms_syst_instance_mgr/seed_data/initialize_enum_owner_states.eex.sql",
+    "cmp_msbms_syst_instance_mgr/seed_data/initialize_enum_instance_states.eex.sql",
+    "cmp_msbms_syst_instance_mgr/seed_data/initialize_enum_instance_types.eex.sql",
+
+    #
     # Global Schema Loading
     #
 
@@ -91,10 +106,6 @@ load_files = [
     "app_msbms_global/mod_authentication/seed_data/initialize_enum_access_account_states.eex.sql",
     "app_msbms_global/mod_authentication/seed_data/initialize_enum_credential_types.eex.sql",
     "app_msbms_global/mod_authentication/seed_data/initialize_enum_identity_types.eex.sql",
-    "app_msbms_global/mod_instance_mgr/seed_data/initialize_enum_instance_states.eex.sql",
-    "app_msbms_global/mod_instance_mgr/seed_data/initialize_enum_instance_types.eex.sql",
-    "app_msbms_global/mod_instance_mgr/seed_data/initialize_enum_owner_states.eex.sql",
-
 
     "app_msbms_global/mod_authentication/msbms_syst_data/syst_access_accounts/syst_access_accounts.eex.sql",
     "app_msbms_global/mod_authentication/msbms_syst_data/syst_identities/trig_b_iu_syst_identities_check_uniqueness.eex.sql",

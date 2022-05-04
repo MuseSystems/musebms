@@ -1,5 +1,5 @@
 -- File:        initialize_enum_owner_states.eex.sql
--- Location:    database\app_msbms_global\mod_instance_mgr\seed_data\initialize_enum_owner_states.eex.sql
+-- Location:    database\cmp_msbms_syst_instance_mgr\seed_data\initialize_enum_owner_states.eex.sql
 -- Project:     Muse Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -30,25 +30,25 @@ PERFORM
               "internal_name": "owner_states_active",
               "display_name": "Owner State / Active",
               "external_name": "Active",
-              "syst_description": "The instance is created and usable by users."
+              "syst_description": "The owner is active and available for normal use."
             },
             {
               "internal_name": "owner_states_suspended",
               "display_name": "Owner State / Suspended",
               "external_name": "Suspended",
-              "syst_description": "The instance is not available for regular use, though some limited functionality may be available.  The instance is likely visible to users for this reason."
+              "syst_description": "The owner is not available for regular use, though some limited functionality may be available.  The owner is likely visible to users for this reason."
             },
             {
               "internal_name": "owner_states_inactive",
               "display_name": "Owner State / Inactive",
               "external_name": "Inactive",
-              "syst_description": "The instance is not available for any use and would not typically be visible tp users for any purpose."
+              "syst_description": "The owner is not available for any use and would not typically be visible tp users for any purpose."
             },
             {
               "internal_name": "owner_states_purge_eligible",
               "display_name": "Owner State / Purge Eligible",
               "external_name": "Purge Eligible",
-              "syst_description": "The instance is not available for any use, not visible to users and subject to be completely deleted from the system at any point in time."
+              "syst_description": "The owner is not available for any use, not visible to users and subject to be completely deleted from the system at any point in time."
             }
           ],
           "enum_items": [
