@@ -350,7 +350,7 @@ VALUES
     , ( SELECT id
         FROM msbms_syst_data.syst_enum_functional_types
         WHERE internal_name = 'example_enum_func_type_1' )
-    , FALSE
+    , TRUE
     , TRUE
     , TRUE
     , 'Example list item two, should sort into second place.'
@@ -388,6 +388,7 @@ INSERT INTO msbms_syst_data.syst_enum_items
     , enum_id
     , functional_type_id
     , enum_default
+    , functional_type_default
     , syst_defined
     , user_maintainable
     , syst_description
@@ -402,6 +403,7 @@ VALUES
     , ( SELECT id
         FROM msbms_syst_data.syst_enum_functional_types
         WHERE internal_name = 'example_enum_func_type_1' )
+    , FALSE
     , TRUE
     , TRUE
     , FALSE

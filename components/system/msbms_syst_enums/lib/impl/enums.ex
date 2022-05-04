@@ -151,6 +151,31 @@ defmodule MsbmsSystEnums.Impl.Enums do
     |> hd()
   end
 
+  @spec get_default_enum_item(
+          MsbmsSystEnums.Types.service_name(),
+          MsbmsSystEnums.Types.enum_name(),
+          Keyword.t(functional_type_name: MsbmsSystEnums.Types.enum_functional_type_name()) | []
+        ) :: MsbmsSystEnums.Data.SystEnumItems.t()
+  def get_default_enum_item(service_name, enum_name, opts) do
+    service_name
+    |> get_ets_table_from_service_name()
+    |> :ets.select([{{enum_name, %{enum_items: :"$1"}}, [], [:"$1"]}])
+    |> hd()
+    |> Enum.find(fn enum_item ->
+      default_enum_item_found?(enum_item, opts[:functional_type_name])
+    end)
+  end
+
+  defp default_enum_item_found?(enum_item, functional_type_name)
+       when is_binary(functional_type_name) do
+    enum_item.functional_type.internal_name == functional_type_name and
+      enum_item.functional_type_default == true
+  end
+
+  defp default_enum_item_found?(enum_item, _functional_type_name) do
+    enum_item.enum_default == true
+  end
+
   @spec create_enum(MsbmsSystEnums.Types.service_name(), MsbmsSystEnums.Types.enum_params()) ::
           :ok | {:error, MsbmsSystError.t()}
   def create_enum(service_name, enum_params) do
