@@ -1388,4 +1388,16 @@ defmodule MsbmsSystEnumsTest do
              |> Enum.find(&(&1.internal_name == "enum_three_closed"))
              |> is_nil()
   end
+
+  test "Get Default Enum Item" do
+    assert %MsbmsSystEnums.Data.SystEnumItems{internal_name: "enum_three_active"} =
+             MsbmsSystEnums.get_default_enum_item(:enums_instance, "test_syst_enum_three")
+  end
+
+  test "Get Default Enum Item for Functional Type" do
+    assert %MsbmsSystEnums.Data.SystEnumItems{internal_name: "enum_three_closed"} =
+             MsbmsSystEnums.get_default_enum_item(:enums_instance, "test_syst_enum_three",
+               functional_type_name: "enum_three_inactive"
+             )
+  end
 end

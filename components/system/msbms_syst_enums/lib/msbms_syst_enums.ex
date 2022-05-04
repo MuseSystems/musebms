@@ -161,6 +161,53 @@ defmodule MsbmsSystEnums do
   defdelegate get_enum_functional_types(service_name, enum_name), to: Enums
 
   @doc """
+  Finds the default enumeration item for the requested enumeration or for the
+  enumeration functional type.
+
+  When no qualifying options are specified, this function will return the
+  enumeration item record which is marked as being default for the enumeration.
+  If the `functional_type_name` option is used, then the function returns the
+  record which is marked as default for the functional type.
+
+  The `service_name` argument identifies which enumerations service instance
+  should be used by the function.  See `start_link/1` and type documentation
+  for `t:MsbmsSystEnums.Types.service_name/0` for more.
+
+  The `enum_name` argument indicates the name of the enumeration for which to
+  retrieve the default enumeration item.
+
+  `opts` is a keyword list which takes one of the following optional values:
+
+    * `functional_type_name` - If the enumeration uses functional types, this
+      option allows you to find the default for the functional type rather than
+      the entire enumeration.
+
+  ## Examples
+      iex> %MsbmsSystEnums.Data.SystEnumItems{
+      ...>   internal_name: "example_enum_item_two"
+      ...> } =
+      ...>   MsbmsSystEnums.get_default_enum_item(
+      ...>     :enums_instance,
+      ...>     "example_enumeration"
+      ...>   )
+
+      iex> %MsbmsSystEnums.Data.SystEnumItems{
+      ...>   internal_name: "example_enum_item_one"
+      ...> } =
+      ...>   MsbmsSystEnums.get_default_enum_item(
+      ...>     :enums_instance,
+      ...>     "example_enumeration",
+      ...>     [functional_type_name: "example_enum_func_type_1"]
+      ...>   )
+  """
+  @spec get_default_enum_item(
+          MsbmsSystEnums.Types.service_name(),
+          MsbmsSystEnums.Types.enum_name(),
+          Keyword.t(functional_type_name: MsbmsSystEnums.Types.enum_functional_type_name()) | []
+        ) :: MsbmsSystEnums.Data.SystEnumItems.t()
+  defdelegate get_default_enum_item(service_name, enum_name, opts \\ []), to: Enums
+
+  @doc """
   Create a new user defined enumeration, optionally including functional type
   and enumeration item definitions.
 
