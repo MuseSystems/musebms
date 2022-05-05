@@ -77,4 +77,36 @@ defmodule MsbmsSystInstanceMgr.Types do
           | :owner_states_suspended
           | :owner_states_inactive
           | :owner_states_purge_eligible
+
+  @typedoc """
+  Establishes the available instance state functional types understood by the
+  module.
+
+    * `:instance_states_uninitialized` - The instance definition record has been
+      created, but the corresponding instance has not been created on the
+      database server and is awaiting processing.
+
+    * `:instance_states_initializing` - The process of creating the instance has
+      been started.
+
+    * `:instance_states_active` - The instance is created and usable by users.
+
+    * `:instance_states_suspended` - The instance is not available for regular
+      use, though some limited functionality may be available.  The instance is
+      likely visible to users for this reason.
+
+    * `:instance_states_inactive` - The instance is not available for any use
+      and would not typically be visible tp users for any purpose.
+
+    * `:instance_states_purge_eligible` - The instance is not available for any
+      use, not visible to users and subject to be completely deleted from the
+      system at any point in time.
+  """
+  @type instance_state_functional_types ::
+          :instance_states_uninitialized
+          | :instance_states_initializing
+          | :instance_states_active
+          | :instance_states_suspended
+          | :instance_states_inactive
+          | :instance_states_purge_eligible
 end
