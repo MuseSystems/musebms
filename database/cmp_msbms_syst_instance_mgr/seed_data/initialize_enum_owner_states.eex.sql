@@ -57,7 +57,7 @@ PERFORM
               "display_name": "Owner State / Active",
               "external_name": "Active",
               "functional_type_internal_name": "owner_states_active",
-              "enum_default": false,
+              "enum_default": true,
               "functional_type_default": true,
               "syst_defined": true,
               "user_maintainable": true,
