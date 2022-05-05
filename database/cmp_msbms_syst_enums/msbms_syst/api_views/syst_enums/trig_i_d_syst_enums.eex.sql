@@ -43,7 +43,10 @@ BEGIN
 
 END;
 $BODY$
-LANGUAGE plpgsql VOLATILE SECURITY DEFINER;
+    LANGUAGE plpgsql
+    VOLATILE
+    SECURITY DEFINER
+    SET search_path TO msbms_syst, pg_temp;
 
 ALTER FUNCTION msbms_syst.trig_i_d_syst_enums()
     OWNER TO <%= msbms_owner %>;
