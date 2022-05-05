@@ -69,5 +69,6 @@ defmodule MsbmsSystInstanceMgr.Data.SystOwners do
     |> validate_required([:owner_state_id])
     |> validate_internal_name(opts)
     |> validate_display_name(opts)
+    |> optimistic_lock(:diag_row_version)
   end
 end

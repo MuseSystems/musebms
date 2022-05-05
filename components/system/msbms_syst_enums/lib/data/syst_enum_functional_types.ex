@@ -89,5 +89,6 @@ defmodule MsbmsSystEnums.Data.SystEnumFunctionalTypes do
     |> validate_enum_id()
     |> validate_external_name(opts)
     |> validate_user_description(opts)
+    |> optimistic_lock(:diag_row_version)
   end
 end

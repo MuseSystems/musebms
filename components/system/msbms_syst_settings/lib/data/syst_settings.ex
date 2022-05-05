@@ -153,5 +153,6 @@ defmodule MsbmsSystSettings.Data.SystSettings do
     |> validate_display_name(opts)
     |> validate_user_description(opts)
     |> maybe_put_syst_defined()
+    |> optimistic_lock(:diag_row_version)
   end
 end
