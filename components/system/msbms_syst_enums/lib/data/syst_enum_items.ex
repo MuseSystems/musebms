@@ -103,5 +103,6 @@ defmodule MsbmsSystEnums.Data.SystEnumItems do
     |> validate_user_description(opts)
     |> maybe_put_syst_defined()
     |> maybe_put_user_maintainable()
+    |> optimistic_lock(:diag_row_version)
   end
 end
