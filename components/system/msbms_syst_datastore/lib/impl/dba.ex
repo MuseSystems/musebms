@@ -430,6 +430,8 @@ defmodule MsbmsSystDatastore.Impl.Dba do
     Datastore.query(
       "CREATE DATABASE #{datastore_options.database_name} OWNER #{datastore_options.database_owner};"
     )
+
+    Datastore.query("REVOKE ALL ON DATABASE #{datastore_options.database_name} FROM public;")
   end
 
   defp drop_database(datastore_options) do
