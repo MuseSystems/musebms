@@ -55,4 +55,26 @@ defmodule MsbmsSystInstanceMgr.Types do
           optional(:owner_id) => Ecto.UUID.t(),
           optional(:owning_instance_id) => Ecto.UUID.t()
         }
+
+  @typedoc """
+  Defines the available owner state functional types which the module recognizes.
+
+    * `:owner_states_active` - The owner is active and available for normal use.
+
+    * `:owner_states_suspended` - The owner is not available for regular use,
+      though some limited functionality may be available.  The owner is likely
+      visible to users for this reason.
+
+    * `:owner_states_inactive` - The owner is not available for any use and
+      would not typically be visible tp users for any purpose.
+
+    * `:owner_states_purge_eligible` - The owner is not available for any use,
+      not visible to users and subject to be completely deleted from the system
+      at any point in time.
+  """
+  @type owner_state_functional_types ::
+          :owner_states_active
+          | :owner_states_suspended
+          | :owner_states_inactive
+          | :owner_states_purge_eligible
 end
