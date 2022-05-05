@@ -16,6 +16,37 @@ $BODY$
 
 BEGIN
 
+    IF
+        exists( SELECT
+                    TRUE
+                FROM msbms_syst_data.syst_enum_functional_types seft
+                WHERE
+                      seft.enum_id = old.owner_state_id
+                  AND seft.internal_name != 'owner_states_purge_eligible' )
+    THEN
+
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'You cannot delete an owner that is not in a purge ' ||
+                          'eligible owner state using this API view.',
+                DETAIL = msbms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'msbms_syst'
+                            ,p_proc_name      => 'trig_i_d_syst_owners'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(old)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+
+    END IF;
+
     DELETE FROM msbms_syst_data.syst_owners WHERE id = old.id RETURNING * INTO old;
 
     RETURN old;
