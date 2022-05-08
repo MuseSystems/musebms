@@ -1,8 +1,6 @@
 defmodule MsbmsSystInstanceMgrTest do
   use ExUnit.Case, async: true
 
-  import Ecto.Query
-
   alias Mix.Tasks.Builddb
 
   @datastore_context_name :instmgr_app_context
@@ -212,7 +210,7 @@ defmodule MsbmsSystInstanceMgrTest do
             }} = MsbmsSystInstanceMgr.set_owner_values(test_owner.id, change)
   end
 
-  test "Can Change Existing Owner Owner State", context do
+  test "Can Change Existing Owner Owner State" do
     default_owner_state = MsbmsSystEnums.get_default_enum_item(:instance_mgr, "owner_states")
 
     new_state =
