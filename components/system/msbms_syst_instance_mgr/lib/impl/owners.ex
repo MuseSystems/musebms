@@ -28,32 +28,34 @@ defmodule MsbmsSystInstanceMgr.Impl.Owners do
 
   @spec list_owners(
           Keyword.t(
-            state_functional_types: list(Types.owner_state_functional_types()) | [],
+            owner_state_functional_types: list(Types.owner_state_functional_types()) | [],
             sort: boolean()
           )
         ) ::
           {:ok, list(Data.SystOwners.t())} | {:error, MsbmsSystError.t()}
   def list_owners(opts_given) do
-    opts_default = [state_functional_types: [], sort: false]
+    opts_default = [owner_state_functional_types: [], sort: false]
 
     opts = Keyword.merge(opts_given, opts_default, fn _k, v1, _v2 -> v1 end)
 
     from(o in Data.SystOwners,
       join: s in assoc(o, :owner_state),
+      as: :owner_state,
       join: f in assoc(s, :functional_type),
+      as: :owner_state_functional_type,
       select: %{
-        id: o.id,
-        internal_name: o.internal_name,
-        display_name: o.display_name,
-        state_id: s.id,
-        state_display_name: s.display_name,
-        state_external_name: s.external_name,
-        state_functional_type_id: f.id,
-        state_functional_type: f.internal_name
+        owner_id: o.id,
+        owner_internal_name: o.internal_name,
+        owner_display_name: o.display_name,
+        owner_state_id: s.id,
+        owner_state_display_name: s.display_name,
+        owner_state_external_name: s.external_name,
+        owner_state_functional_type_id: f.id,
+        owner_state_functional_type_name: f.internal_name
       }
     )
     |> maybe_add_owner_display_name_sort(opts[:sort])
-    |> maybe_add_owner_state_filter(opts[:state_functional_types])
+    |> maybe_add_owner_state_filter(opts[:owner_state_functional_types])
     |> MsbmsSystDatastore.all()
     |> then(&{:ok, &1})
   rescue
