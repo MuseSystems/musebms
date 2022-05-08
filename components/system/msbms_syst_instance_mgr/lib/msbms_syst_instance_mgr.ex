@@ -217,4 +217,17 @@ defmodule MsbmsSystInstanceMgr do
   @spec purge_all_eligible_owners() ::
           {:ok, {non_neg_integer(), nil | [term()]}} | {:error, MsbmsSystError.t()}
   defdelegate purge_all_eligible_owners(), to: Impl.Owners
+
+  @spec list_instances(
+          Keyword.t(
+            instance_types: list(Types.instance_type_name()) | [],
+            instance_state_functional_types: list(Types.instance_state_functional_types()) | [],
+            owner_id: Ecto.UUID.t() | nil,
+            owner_state_functional_types: list(Types.owner_state_functional_types()) | [],
+            applications: list(Types.application_name()) | [],
+            sort: list(:application | :owner | :instance)
+          )
+        ) ::
+          {:ok, list(Data.SystInstances.t())} | {:error, MsbmsSystError.t()}
+  defdelegate list_instances(opts_given \\ []), to: Impl.Instances
 end

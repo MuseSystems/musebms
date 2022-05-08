@@ -40,6 +40,11 @@ defmodule MsbmsSystInstanceMgr.Types do
   @type instance_name() :: String.t()
 
   @typedoc """
+  Type for identifying instance type names.
+  """
+  @type instance_type_name() :: String.t()
+
+  @typedoc """
   A map definition which allows for the maintenance of system instance records.
   """
   @type instance_params() :: %{
