@@ -189,9 +189,9 @@ defmodule MsbmsSystInstanceMgr.Impl.Owners do
       cause: delete_result
   end
 
-  @spec purge_all_eligible_owners() ::
+  @spec purge_all_eligible_owners ::
           {:ok, {non_neg_integer(), nil | [term()]}} | {:error, MsbmsSystError.t()}
-  def purge_all_eligible_owners() do
+  def purge_all_eligible_owners do
     from(o in Data.SystOwners,
       join: s in assoc(o, :owner_state),
       join: f in assoc(s, :functional_type),
