@@ -144,12 +144,14 @@ defmodule MsbmsSystInstanceMgrTest do
   test "Can List Sorted Owners" do
     assert {:ok, owners} = MsbmsSystInstanceMgr.list_owners(sort: true)
     assert 4 <= length(owners)
-    assert %{internal_name: "owner_1"} = hd(owners)
+    assert %{owner_internal_name: "owner_1"} = hd(owners)
   end
 
   test "Can List Owners by Status" do
     assert {:ok, owners} =
-             MsbmsSystInstanceMgr.list_owners(state_functional_types: [:owner_states_active])
+             MsbmsSystInstanceMgr.list_owners(
+               owner_state_functional_types: [:owner_states_active]
+             )
 
     assert 2 <= length(owners)
   end
@@ -158,11 +160,11 @@ defmodule MsbmsSystInstanceMgrTest do
     assert {:ok, owners} =
              MsbmsSystInstanceMgr.list_owners(
                sort: true,
-               state_functional_types: [:owner_states_inactive]
+               owner_state_functional_types: [:owner_states_inactive]
              )
 
     assert 2 <= length(owners)
-    assert %{internal_name: "owner_2"} = hd(owners)
+    assert %{owner_internal_name: "owner_2"} = hd(owners)
   end
 
   test "Can Create New Owner" do
