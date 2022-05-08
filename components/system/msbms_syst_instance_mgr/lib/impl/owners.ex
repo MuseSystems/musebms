@@ -75,7 +75,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Owners do
   defp maybe_add_owner_state_filter(query, [_ | _] = functional_types) do
     functional_types
     |> Enum.map(&Atom.to_string/1)
-    |> then(&from([o, s, f] in query, where: f.internal_name in ^&1))
+    |> then(&from([owner_state_functional_type: f] in query, where: f.internal_name in ^&1))
   end
 
   defp maybe_add_owner_state_filter(query, _functional_types), do: query
