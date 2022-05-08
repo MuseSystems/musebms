@@ -60,7 +60,7 @@ defmodule MsbmsSystInstanceMgr do
     to: Impl.Owners
 
   @doc """
-  Creates a new `MsbmsSystInstanceMgr.Data.SystOwner` record in the system.
+  Creates a new `MsbmsSystInstanceMgr.Data.SystOwners` record in the system.
 
   ## Parameters
 
@@ -158,7 +158,7 @@ defmodule MsbmsSystInstanceMgr do
   defdelegate set_owner_values(owner_id, owner_params), to: Impl.Owners
 
   @doc """
-  Deletes a single `MsbmsSystInstanceMgr.Data.SystOwner` record from the system.
+  Deletes a single `MsbmsSystInstanceMgr.Data.SystOwners` record from the system.
 
   > #### Note {: .neutral}
   >
@@ -207,7 +207,7 @@ defmodule MsbmsSystInstanceMgr do
   defdelegate purge_owner(owner_id), to: Impl.Owners
 
   @doc """
-  Deletes all `MsbmsSystInstanceMgr.Data.SystOwner` records that are in a purge
+  Deletes all `MsbmsSystInstanceMgr.Data.SystOwners` records that are in a purge
   eligible owner state.
 
   Unlike the `MsbmsInstanceMgr.purge_owner/1`, this function will not return an
