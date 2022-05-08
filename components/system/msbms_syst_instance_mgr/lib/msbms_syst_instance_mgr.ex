@@ -30,10 +30,10 @@ defmodule MsbmsSystInstanceMgr do
 
   ## Options
 
-    * `state_functional_types` - a list of one or more owner state functional
-      types with which to filter the list of returned SystOwners records.  If
-      this parameter is not provided, then all owners defined in the system will
-      be returned.
+    * `owner_state_functional_types` - a list of one or more owner state
+      functional types with which to filter the list of returned SystOwners
+      records.  If this parameter is not provided, then all owners defined in
+      the system will be returned.
 
     * `sort` - A boolean value that, if true, will cause the list of SystOwner
       records to be sorted by the record's Display Name field.  Sorting is done
@@ -45,12 +45,12 @@ defmodule MsbmsSystInstanceMgr do
 
       iex> {:ok, [_ | _]} =
       ...>   MsbmsSystInstanceMgr.list_owners(
-      ...>     state_functional_types: [:owner_states_active]
+      ...>     owner_state_functional_types: [:owner_states_active]
       ...>   )
   """
   @spec list_owners(
           Keyword.t(
-            state_functional_types: list(Types.owner_state_functional_types()) | [],
+            owner_state_functional_types: list(Types.owner_state_functional_types()) | [],
             sort: boolean()
           )
           | []
