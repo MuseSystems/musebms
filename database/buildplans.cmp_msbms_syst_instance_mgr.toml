@@ -81,6 +81,8 @@ load_files = [
     "cmp_msbms_syst_instance_mgr/msbms_syst/api_views/syst_owners/trig_i_d_syst_owners.eex.sql",
     "cmp_msbms_syst_instance_mgr/msbms_syst/api_views/syst_owners/syst_owners.eex.sql",
 
+    "cmp_msbms_syst_instance_mgr/msbms_syst/api_views/syst_instances/syst_instances.eex.sql",
+
     "cmp_msbms_syst_instance_mgr/seed_data/initialize_enum_owner_states.eex.sql",
     "cmp_msbms_syst_instance_mgr/seed_data/initialize_enum_instance_states.eex.sql",
     "cmp_msbms_syst_instance_mgr/seed_data/initialize_enum_instance_types.eex.sql",
