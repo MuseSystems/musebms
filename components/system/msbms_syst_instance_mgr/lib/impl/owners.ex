@@ -110,6 +110,30 @@ defmodule MsbmsSystInstanceMgr.Impl.Owners do
       }
   end
 
+  @spec get_owner_by_name(Types.owner_name()) ::
+          {:ok, Data.SystOwners.t()} | {:error, MsbmsSystError.t()}
+  def get_owner_by_name(owner_name) do
+    from(o in Data.SystOwners,
+      join: os in assoc(o, :owner_state),
+      where: o.internal_name == ^owner_name,
+      preload: [owner_state: os]
+    )
+    |> MsbmsSystDatastore.one!()
+    |> then(&{:ok, &1})
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure updating existing owner.",
+          cause: error
+        }
+      }
+  end
+
   @spec set_owner_values(Ecto.UUID.t(), Types.owner_params()) ::
           {:ok, Data.SystOwners.t()} | {:error, MsbmsSystError.t()}
   def set_owner_values(owner_id, owner_params) do
