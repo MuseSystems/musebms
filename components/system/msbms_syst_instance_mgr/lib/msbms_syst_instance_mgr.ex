@@ -91,7 +91,28 @@ defmodule MsbmsSystInstanceMgr do
     to: Impl.Owners
 
   @doc """
-  Updates an existing `MsbmsSystInstanceMgr.Data.SystOwner` record.
+  Retrieves a full `MsbmsSystInstanceMgr.Data.SystOwners` record by its
+  internal_name.
+
+  ## Parameters
+    * `owner_name` - The internal name of the owner to retrieve.
+
+  ## Examples
+
+      iex> {
+      ...>   :ok,
+      ...>   %MsbmsSystInstanceMgr.Data.SystOwners{
+      ...>     internal_name: "owner_1"
+      ...>     }
+      ...> } =
+      ...>   MsbmsSystInstanceMgr.get_owner_by_name("owner_1")
+  """
+  @spec get_owner_by_name(Types.owner_name()) ::
+          {:ok, Data.SystOwners.t()} | {:error, MsbmsSystError.t()}
+  defdelegate get_owner_by_name(owner_name), to: Impl.Owners
+
+  @doc """
+  Updates an existing `MsbmsSystInstanceMgr.Data.SystOwners` record.
 
   ## Parameters
 

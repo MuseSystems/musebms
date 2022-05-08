@@ -318,4 +318,11 @@ defmodule MsbmsSystInstanceMgrTest do
     # cause race conditions... keep an eye on if that concern is real.
     assert {:ok, {0, _rows}} = MsbmsSystInstanceMgr.purge_all_eligible_owners()
   end
+
+  test "Can Get Owner by Internal Name" do
+    assert {:ok, %MsbmsSystInstanceMgr.Data.SystOwners{internal_name: "owner_1"}} =
+             MsbmsSystInstanceMgr.get_owner_by_name("owner_1")
+
+    MsbmsSystInstanceMgr.get_owner_by_name("owner_1")
+  end
 end
