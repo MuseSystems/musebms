@@ -19,7 +19,7 @@ defmodule MsbmsSystInstanceMgr do
 
   ## Examples
 
-      iex> {:ok, apps} = MsbmsSystInstanceMgr.list_applications()
+      iex> {:ok, _apps} = MsbmsSystInstanceMgr.list_applications()
   """
   @spec list_applications() :: {:ok, list()} | {:error, MsbmsSystError.t()}
   defdelegate list_applications, to: Impl.Applications
