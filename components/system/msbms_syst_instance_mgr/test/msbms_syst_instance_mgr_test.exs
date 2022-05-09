@@ -118,12 +118,7 @@ defmodule MsbmsSystInstanceMgrTest do
     }
 
     start_supervised!(service_child_spec)
-
-    [
-      owner_states: MsbmsSystEnums.get_enum_items(:instance_mgr, "owner_states"),
-      instance_states: MsbmsSystEnums.get_enum_items(:instance_mgr, "instance_states"),
-      instance_types: MsbmsSystEnums.get_enum_items(:instance_mgr, "instance_types")
-    ]
+    :ok
   end
 
   doctest MsbmsSystInstanceMgr
