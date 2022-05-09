@@ -94,7 +94,8 @@ defmodule MsbmsSystEnums.Data.SystEnumItems do
       :enum_id,
       :functional_type_id
     ])
-    |> validate_required([:enum_default, :functional_type_default])
+    |> maybe_default_enum_default()
+    |> maybe_default_functional_type_default()
     |> validate_enum_id()
     |> validate_functional_type_id()
     |> validate_internal_name(opts)
@@ -105,4 +106,15 @@ defmodule MsbmsSystEnums.Data.SystEnumItems do
     |> maybe_put_user_maintainable()
     |> optimistic_lock(:diag_row_version)
   end
+
+  defp maybe_default_enum_default(changeset),
+    do: put_change(changeset, :enum_default, get_field(changeset, :enum_default) || false)
+
+  defp maybe_default_functional_type_default(changeset),
+    do:
+      put_change(
+        changeset,
+        :functional_type_default,
+        get_field(changeset, :functional_type_default) || false
+      )
 end
