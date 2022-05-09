@@ -230,4 +230,32 @@ defmodule MsbmsSystInstanceMgr do
         ) ::
           {:ok, list(Data.SystInstances.t())} | {:error, MsbmsSystError.t()}
   defdelegate list_instances(opts_given \\ []), to: Impl.Instances
+
+  @spec get_instance_by_name(Types.instance_name()) ::
+          {:ok, Data.SystInstances.t()} | {:error, MsbmsSystError.t()}
+  defdelegate get_instance_by_name(instance_internal_name), to: Impl.Instances
+
+  @spec list_instance_types(MsbmsSystEnums.Types.service_name()) ::
+          {:ok, list(MsbmsSystEnums.Data.SystEnumItems.t())} | {:error, MsbmsSystError.t()}
+  defdelegate list_instance_types(enums_service_name), to: Impl.Instances
+
+  @spec create_instance_type(
+          MsbmsSystEnums.Types.service_name(),
+          Types.instance_type()
+        ) :: {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MsbmsSystError.t()}
+  defdelegate create_instance_type(service_name, instance_type_params), to: Impl.Instances
+
+  @spec get_instance_type_by_name(
+          MsbmsSystEnums.Types.service_name(),
+          MsbmsSystEnums.Types.enum_item_name()
+        ) :: {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MsbmsSystError.t()}
+  defdelegate get_instance_type_by_name(service_name, instance_type_name), to: Impl.Instances
+
+  @spec set_instance_type_values(
+          MsbmsSystEnums.Types.service_name(),
+          MsbmsSystEnums.Types.enum_item_name(),
+          Types.instance_type()
+        ) :: {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MsbmsSystError.t()}
+  defdelegate set_instance_type_values(service_name, instance_type_name, instance_type_params),
+    to: Impl.Instances
 end
