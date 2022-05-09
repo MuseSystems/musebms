@@ -15,6 +15,7 @@ defmodule MsbmsSystSettings.Runtime.Server do
   require Logger
 
   alias MsbmsSystSettings.Impl.Settings
+  alias MsbmsSystSettings.Runtime.ProcessUtils
 
   @moduledoc false
 
@@ -68,13 +69,14 @@ defmodule MsbmsSystSettings.Runtime.Server do
   @spec init(MsbmsSystSettings.Types.setting_service_params()) ::
           {:ok, map()} | {:stop, MsbmsSystError.t()}
   def init({service_name, datastore_context_name}) do
+    ProcessUtils.put_settings_service(service_name)
     ets_table_name = Settings.get_ets_table_from_service_name(service_name)
 
     _ = :ets.new(ets_table_name, [:set, :protected, :named_table])
 
     _ = MsbmsSystDatastore.set_datastore_context(datastore_context_name)
 
-    Settings.refresh_from_database(service_name)
+    Settings.refresh_from_database()
 
     {:ok,
      %{
@@ -88,7 +90,7 @@ defmodule MsbmsSystSettings.Runtime.Server do
   def handle_call(:refresh, _from, state) do
     {
       :reply,
-      Settings.refresh_from_database(state.service_name),
+      Settings.refresh_from_database(),
       state
     }
   end
@@ -97,7 +99,7 @@ defmodule MsbmsSystSettings.Runtime.Server do
   def handle_call({:create, creation_params}, _from, state) do
     {
       :reply,
-      Settings.create_setting(state.service_name, creation_params),
+      Settings.create_setting(creation_params),
       state
     }
   end
@@ -106,7 +108,7 @@ defmodule MsbmsSystSettings.Runtime.Server do
   def handle_call({:update, setting_name, update_params}, _from, state) do
     {
       :reply,
-      Settings.update_setting(state.service_name, setting_name, update_params),
+      Settings.update_setting(setting_name, update_params),
       state
     }
   end
@@ -115,13 +117,14 @@ defmodule MsbmsSystSettings.Runtime.Server do
   def handle_call({:delete, setting_name}, _from, state) do
     {
       :reply,
-      Settings.delete_setting(state.service_name, setting_name),
+      Settings.delete_setting(setting_name),
       state
     }
   end
 
   @impl true
   def terminate(:normal, state) do
+    _last_settings_service = ProcessUtils.clear_settings_service()
     :ets.delete(state.ets_table_name)
     :ok
   end

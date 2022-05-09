@@ -12,6 +12,7 @@
 
 defmodule MsbmsSystSettings.Impl.Settings do
   alias MsbmsSystSettings.Data.SystSettings
+  alias MsbmsSystSettings.Runtime.ProcessUtils
 
   import Ecto.Query
 
@@ -31,9 +32,9 @@ defmodule MsbmsSystSettings.Impl.Settings do
   # since we need to change data in the ets tables which are owned by the
   # GenServer and are in "protected" mode.
 
-  @spec refresh_from_database(MsbmsSystSettings.Types.service_name()) :: :ok
-  def refresh_from_database(service_name) do
-    ets_table_name = get_ets_table_from_service_name(service_name)
+  @spec refresh_from_database() :: :ok
+  def refresh_from_database() do
+    ets_table_name = get_ets_table_from_service_name(ProcessUtils.get_settings_service())
 
     :ets.delete_all_objects(ets_table_name)
 
@@ -41,20 +42,19 @@ defmodule MsbmsSystSettings.Impl.Settings do
     |> Enum.each(&:ets.insert(ets_table_name, {&1.internal_name, &1}))
   end
 
-  @spec get_setting_values(
-          MsbmsSystSettings.Types.service_name(),
-          MsbmsSystSettings.Types.setting_name()
-        ) :: MsbmsSystSettings.Data.SystSettings.t()
-  def get_setting_values(service_name, setting_name) do
-    :ets.lookup_element(service_name, setting_name, 2)
+  @spec get_setting_values(MsbmsSystSettings.Types.setting_name()) ::
+          MsbmsSystSettings.Data.SystSettings.t()
+  def get_setting_values(setting_name) do
+    ProcessUtils.get_settings_service()
+    |> get_ets_table_from_service_name()
+    |> :ets.lookup_element(setting_name, 2)
   end
 
   @spec get_setting_value(
-          MsbmsSystSettings.Types.service_name(),
           MsbmsSystSettings.Types.setting_name(),
           MsbmsSystSettings.Types.setting_types()
         ) :: any()
-  def get_setting_value(service_name, setting_name, setting_type)
+  def get_setting_value(setting_name, setting_type)
       when setting_type in [
              :setting_flag,
              :setting_integer,
@@ -72,26 +72,23 @@ defmodule MsbmsSystSettings.Impl.Settings do
              :setting_uuid,
              :setting_blob
            ] do
-    get_setting_values(service_name, setting_name)
+    get_setting_values(setting_name)
     |> Map.get(setting_type)
   end
 
-  @spec get_all_settings_values(MsbmsSystSettings.Types.service_name()) ::
+  @spec get_all_settings_values() ::
           list(MsbmsSystSettings.Data.SystSettings)
-  def get_all_settings_values(service_name) do
+  def get_all_settings_values() do
     # Select query :ets.fun2ms(fn {_, setting_values} -> setting_values end)
-    service_name
+    ProcessUtils.get_settings_service()
     |> get_ets_table_from_service_name()
     |> :ets.select([{{:_, :"$1"}, [], [:"$1"]}])
   end
 
-  @spec create_setting(
-          MsbmsSystSettings.Types.service_name(),
-          MsbmsSystSettings.Types.setting_params()
-        ) ::
+  @spec create_setting(MsbmsSystSettings.Types.setting_params()) ::
           :ok | {:error, MsbmsSystError.t()}
-  def create_setting(service_name, creation_params) when is_map(creation_params) do
-    ets_table_name = get_ets_table_from_service_name(service_name)
+  def create_setting(creation_params) when is_map(creation_params) do
+    ets_table_name = get_ets_table_from_service_name(ProcessUtils.get_settings_service())
 
     creation_params
     |> then(&SystSettings.changeset(%SystSettings{}, &1))
@@ -114,13 +111,12 @@ defmodule MsbmsSystSettings.Impl.Settings do
   end
 
   @spec update_setting(
-          MsbmsSystSettings.Types.service_name(),
           MsbmsSystSettings.Types.setting_name(),
           MsbmsSystSettings.Types.setting_params()
         ) :: :ok | {:error, MsbmsSystError.t()}
-  def update_setting(service_name, setting_name, update_params)
+  def update_setting(setting_name, update_params)
       when is_binary(setting_name) and is_map(update_params) do
-    ets_table_name = get_ets_table_from_service_name(service_name)
+    ets_table_name = get_ets_table_from_service_name(ProcessUtils.get_settings_service())
 
     :ets.lookup_element(ets_table_name, setting_name, 2)
     |> SystSettings.changeset(update_params)
@@ -142,12 +138,10 @@ defmodule MsbmsSystSettings.Impl.Settings do
       }
   end
 
-  @spec delete_setting(
-          MsbmsSystSettings.Types.service_name(),
-          MsbmsSystSettings.Types.setting_name()
-        ) :: :ok | {:error, MsbmsSystError.t()}
-  def delete_setting(service_name, setting_name) when is_binary(setting_name) do
-    ets_table_name = get_ets_table_from_service_name(service_name)
+  @spec delete_setting(MsbmsSystSettings.Types.setting_name()) ::
+          :ok | {:error, MsbmsSystError.t()}
+  def delete_setting(setting_name) when is_binary(setting_name) do
+    ets_table_name = get_ets_table_from_service_name(ProcessUtils.get_settings_service())
 
     delete_qry =
       from(s in MsbmsSystSettings.Data.SystSettings, where: s.internal_name == ^setting_name)
