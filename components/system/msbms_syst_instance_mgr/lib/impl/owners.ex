@@ -128,7 +128,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Owners do
         :error,
         %MsbmsSystError{
           code: :undefined_error,
-          message: "Failure updating existing owner.",
+          message: "Failure retrieving owner record.",
           cause: error
         }
       }
