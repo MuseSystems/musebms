@@ -36,7 +36,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Instances do
             sort: list(:application | :owner | :instance)
           )
         ) ::
-          {:ok, list(Data.SystInstances.t())} | {:error, MsbmsSystError.t()}
+          {:ok, list(Types.instances_list_item())} | {:error, MsbmsSystError.t()}
   def list_instances(opts_given) do
     opts_default = [
       instance_types: [],
@@ -69,7 +69,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Instances do
         instance_internal_name: i.internal_name,
         instance_display_name: i.display_name,
         instance_owning_instance_id: i.owning_instance_id,
-        instance_instance_options: i.instance_options,
+        instance_options: i.instance_options,
         instance_type_id: it.id,
         instance_type_display_name: it.display_name,
         instance_type_external_name: it.external_name,
@@ -158,5 +158,168 @@ defmodule MsbmsSystInstanceMgr.Impl.Instances do
 
   defp add_instance_sort(query, :instance) do
     from([i] in query, order_by: i.display_name)
+  end
+
+  @spec get_instance_by_name(Types.instance_name()) ::
+          {:ok, Data.SystInstances.t()} | {:error, MsbmsSystError.t()}
+  def get_instance_by_name(instance_internal_name) do
+    child_instance_qry =
+      from(i in Data.SystInstances,
+        join: ia in assoc(i, :application),
+        join: it in assoc(i, :instance_type),
+        join: is in assoc(i, :instance_state),
+        join: isft in assoc(is, :functional_type),
+        preload: [
+          application: ia,
+          instance_type: it,
+          instance_state: {is, functional_type: isft}
+        ]
+      )
+
+    from(i in Data.SystInstances,
+      join: ia in assoc(i, :application),
+      join: it in assoc(i, :instance_type),
+      join: is in assoc(i, :instance_state),
+      join: isft in assoc(is, :functional_type),
+      join: io in assoc(i, :owner),
+      left_join: oi in assoc(i, :owning_instance),
+      where: i.internal_name == ^instance_internal_name,
+      preload: [
+        application: ia,
+        instance_type: it,
+        instance_state: {is, functional_type: isft},
+        owner: io,
+        owning_instance: oi,
+        owned_instances: ^child_instance_qry
+      ]
+    )
+    |> MsbmsSystDatastore.one!()
+    |> then(&{:ok, &1})
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure retrieving instance record.",
+          cause: error
+        }
+      }
+  end
+
+  @spec list_instance_types(MsbmsSystEnums.Types.service_name()) ::
+          {:ok, list(MsbmsSystEnums.Data.SystEnumItems.t())} | {:error, MsbmsSystError.t()}
+  def list_instance_types(enums_service_name) do
+    {:ok, MsbmsSystEnums.get_sorted_enum_items(enums_service_name, "instance_types")}
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure retrieving instance types list.",
+          cause: error
+        }
+      }
+  end
+
+  @spec create_instance_type(
+          MsbmsSystEnums.Types.service_name(),
+          Types.instance_type()
+        ) :: {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MsbmsSystError.t()}
+  def create_instance_type(service_name, instance_type_params) do
+    :ok = MsbmsSystEnums.create_enum_item(service_name, "instance_types", instance_type_params)
+
+    get_instance_type_by_name(service_name, instance_type_params.internal_name)
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure creating new instance type.",
+          cause: error
+        }
+      }
+  end
+
+  @spec get_instance_type_by_name(
+          MsbmsSystEnums.Types.service_name(),
+          MsbmsSystEnums.Types.enum_item_name()
+        ) :: {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MsbmsSystError.t()}
+  def get_instance_type_by_name(service_name, instance_type_name) do
+    MsbmsSystEnums.get_enum_items(service_name, "instance_types")
+    |> Enum.find(&(&1.internal_name == instance_type_name))
+    |> then(&{:ok, &1})
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure retrieving instance type by name.",
+          cause: error
+        }
+      }
+  end
+
+  @spec set_instance_type_values(
+          MsbmsSystEnums.Types.service_name(),
+          MsbmsSystEnums.Types.enum_item_name(),
+          Types.instance_type()
+        ) :: {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MsbmsSystError.t()}
+  def set_instance_type_values(service_name, instance_type_name, instance_type_params) do
+    :ok =
+      MsbmsSystEnums.set_enum_item_values(
+        service_name,
+        "instance_types",
+        instance_type_name,
+        instance_type_params
+      )
+
+    get_instance_type_by_name(service_name, instance_type_name)
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure setting instance type values.",
+          cause: error
+        }
+      }
+  end
+
+  @spec(
+    delete_instance_type(
+      MsbmsSystEnums.Types.service_name(),
+      MsbmsSystEnums.Types.enum_item_name()
+    ) :: :ok,
+    {:error, MsbmsSystError.t()}
+  )
+  def delete_instance_type(service_name, instance_type_name) do
+    MsbmsSystEnums.delete_enum_item(service_name, "instance_types", instance_type_name)
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure deleting instance type.",
+          cause: error
+        }
+      }
   end
 end
