@@ -218,6 +218,14 @@ defmodule MsbmsSystInstanceMgr do
           {:ok, {non_neg_integer(), nil | [term()]}} | {:error, MsbmsSystError.t()}
   defdelegate purge_all_eligible_owners(), to: Impl.Owners
 
+  @doc """
+  Retrieves a list of `MsbmsSystInstanceMgr.Data.SystInstances` records set up
+  in the system.
+
+  The returned list is not the full data of the records, but a map of the most
+  essential data defined by
+  `t:MsbmsSystInstanceMgr.Types.instances_list_item/0`.
+  """
   @spec list_instances(
           Keyword.t(
             instance_types: list(Types.instance_type_name()) | [],
