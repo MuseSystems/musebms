@@ -236,7 +236,7 @@ defmodule MsbmsSystInstanceMgr do
             sort: list(:application | :owner | :instance)
           )
         ) ::
-          {:ok, list(Data.SystInstances.t())} | {:error, MsbmsSystError.t()}
+          {:ok, list(Types.instances_list_item())} | {:error, MsbmsSystError.t()}
   defdelegate list_instances(opts_given \\ []), to: Impl.Instances
 
   @spec get_instance_by_name(Types.instance_name()) ::
