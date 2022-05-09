@@ -114,4 +114,69 @@ defmodule MsbmsSystInstanceMgr.Types do
           | :instance_states_suspended
           | :instance_states_inactive
           | :instance_states_purge_eligible
+
+  @typedoc """
+  Defines the data which is returned by the `MsbmsSystInstanceMgr.list_instances/1`
+  function.
+  """
+  @type instances_list_item :: %{
+          instance_id: Ecto.UUID.t(),
+          instance_internal_name: instance_name(),
+          instance_display_name: String.t(),
+          instance_owning_instance_id: Ecto.UUID.t(),
+          instance_options: map(),
+          instance_type_id: Ecto.UUID.t(),
+          instance_type_display_name: String.t(),
+          instance_type_external_name: String.t(),
+          instance_state_id: Ecto.UUID.t(),
+          instance_state_display_name: String.t(),
+          instance_state_external_name: String.t(),
+          instance_state_functional_type_id: Ecto.UUID.t(),
+          instance_state_functional_type_name: MsbmsSystEnums.Types.enum_functional_type_name(),
+          owner_id: Ecto.UUID.t(),
+          owner_display_name: String.t(),
+          owner_state_display_name: String.t(),
+          owner_state_functional_type_name: MsbmsSystEnums.Types.enum_functional_type_name(),
+          owner_state_functional_type_display_name: String.t(),
+          application_id: Ecto.UUID.t(),
+          application_display_name: String.t(),
+          application_syst_description: String.t()
+        }
+
+  @typedoc """
+  Expected data structure for Instance Type user_options data.
+
+  Instance Type user options serve two purposes.  First the are used to define
+  which datastore contexts are expected to exist for any instance of a given
+  type and they set default connection pool sizes for those contexts.
+
+  Ultimately, these values end up at the `MsbmsSystInstanceMgr.Data.SystInstances`
+  record in the `instance_options` field.  However, the values defined here for
+  the Instance Type are only a subset of the fields expected in
+  `instance_options`.
+  """
+  @type instance_type_default_options :: %{
+          required(:datastore_contexts) =>
+            list(%{
+              id: MsbmsSystDatastore.Types.context_id(),
+              db_pool_size: integer()
+            })
+        }
+
+  @typedoc """
+  The required data for creating new Instance Types.
+
+  Note that when creating new instance types, the `internal_name`,
+  `display_name`, `external_name`, `user_description`, and `user_options` fields
+  are required.  On updates of an existing instance type, those fields are
+  optional.
+  """
+  @type instance_type :: %{
+          optional(:internal_name) => MsbmsSystEnums.Types.enum_item_name(),
+          optional(:display_name) => String.t(),
+          optional(:external_name) => String.t(),
+          optional(:user_description) => String.t(),
+          optional(:user_options) => instance_type_default_options(),
+          optional(:enum_default) => boolean()
+        }
 end
