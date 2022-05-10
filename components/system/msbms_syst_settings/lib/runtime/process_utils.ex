@@ -11,6 +11,14 @@
 # muse.information@musesystems.com :: https: //muse.systems
 
 defmodule MsbmsSystSettings.Runtime.ProcessUtils do
+  @moduledoc false
+
+  ######
+  #
+  # Small utility functions to deal with the Process dependent state.
+  #
+  ######
+
   # Greatly inspired by what Ecto.Repo is doing to make dynamic repos work.
   # Our use case is similar in that our service naming is typically static for
   # the life of the process where it is set and may be called on frequently for
