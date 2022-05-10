@@ -17,14 +17,11 @@ defmodule MsbmsSystSettings.Runtime.ProcessUtils do
   # the life of the process.  This feels like the appropriate use of the Process
   # Dictionary and it doesn't feel like abusive of use of process global state.
 
-  @spec put_settings_service(MsbmsSystSettings.Types.service_name()) ::
+  @spec put_settings_service(MsbmsSystSettings.Types.service_name() | nil) ::
           MsbmsSystSettings.Types.service_name() | nil
   def put_settings_service(service_name),
     do: Process.put({__MODULE__, :service_name}, service_name)
 
   @spec get_settings_service() :: MsbmsSystSettings.Types.service_name() | nil
   def get_settings_service, do: Process.get({__MODULE__, :service_name})
-
-  @spec clear_settings_service() :: MsbmsSystSettings.Types.service_name() | nil
-  def clear_settings_service(), do: Process.put({__MODULE__, :service_name}, nil)
 end
