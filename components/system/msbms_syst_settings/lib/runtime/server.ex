@@ -124,7 +124,6 @@ defmodule MsbmsSystSettings.Runtime.Server do
 
   @impl true
   def terminate(:normal, state) do
-    _last_settings_service = ProcessUtils.clear_settings_service()
     :ets.delete(state.ets_table_name)
     :ok
   end

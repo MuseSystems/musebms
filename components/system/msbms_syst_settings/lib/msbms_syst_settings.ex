@@ -86,7 +86,7 @@ defmodule MsbmsSystSettings do
 
       iex> MsbmsSystSettings.put_settings_service(:settings_instance)
   """
-  @spec put_settings_service(MsbmsSystSettings.Types.service_name()) ::
+  @spec put_settings_service(MsbmsSystSettings.Types.service_name() | nil) ::
           MsbmsSystSettings.Types.service_name() | nil
   defdelegate put_settings_service(service_name), to: ProcessUtils
 
@@ -100,17 +100,6 @@ defmodule MsbmsSystSettings do
   """
   @spec get_settings_service() :: MsbmsSystSettings.Types.service_name() | nil
   defdelegate get_settings_service(), to: ProcessUtils
-
-  @doc """
-  Clears the currently set Settings Service name from the Process Dictionary.
-
-  Note that this function does not terminate the service, it simply causes the
-  current process to forget that a Settings Service exists.  To terminate the
-  Settings Service (which also clears the reference from the Process
-  Dictionary), use `MsbmsSystSettings.terminate_settings_service/0` instead.
-  """
-  @spec clear_settings_service() :: MsbmsSystSettings.Types.service_name() | nil
-  defdelegate clear_settings_service(), to: ProcessUtils
 
   @doc """
   Refreshes the cached settings values from the database.
