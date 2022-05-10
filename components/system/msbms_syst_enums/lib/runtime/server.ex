@@ -14,6 +14,7 @@ defmodule MsbmsSystEnums.Runtime.Server do
   require Logger
 
   alias MsbmsSystEnums.Impl.Enums
+  alias MsbmsSystEnums.Runtime.ProcessUtils
 
   @moduledoc false
 
@@ -67,13 +68,15 @@ defmodule MsbmsSystEnums.Runtime.Server do
   @spec init(MsbmsSystEnums.Types.enum_service_params()) ::
           {:ok, map()} | {:stop, MsbmsSystError.t()}
   def init({service_name, datastore_context_name}) do
+    _ = ProcessUtils.put_enums_service(service_name)
+
     ets_table_name = Enums.get_ets_table_from_service_name(service_name)
 
     _ = :ets.new(ets_table_name, [:set, :protected, :named_table])
 
     _ = MsbmsSystDatastore.set_datastore_context(datastore_context_name)
 
-    Enums.refresh_from_database(service_name)
+    Enums.refresh_from_database()
 
     {:ok,
      %{
@@ -87,7 +90,7 @@ defmodule MsbmsSystEnums.Runtime.Server do
   def handle_call({:create_enum, creation_params}, _from, state) do
     {
       :reply,
-      Enums.create_enum(state.service_name, creation_params),
+      Enums.create_enum(creation_params),
       state
     }
   end
@@ -96,7 +99,7 @@ defmodule MsbmsSystEnums.Runtime.Server do
   def handle_call({:create_enum_functional_type, enum_name, creation_params}, _from, state) do
     {
       :reply,
-      Enums.create_enum_functional_type(state.service_name, enum_name, creation_params),
+      Enums.create_enum_functional_type(enum_name, creation_params),
       state
     }
   end
@@ -105,7 +108,7 @@ defmodule MsbmsSystEnums.Runtime.Server do
   def handle_call({:create_enum_item, enum_name, creation_params}, _from, state) do
     {
       :reply,
-      Enums.create_enum_item(state.service_name, enum_name, creation_params),
+      Enums.create_enum_item(enum_name, creation_params),
       state
     }
   end
@@ -114,7 +117,7 @@ defmodule MsbmsSystEnums.Runtime.Server do
   def handle_call({:set_enum_values, enum_name, set_value_params}, _from, state) do
     {
       :reply,
-      Enums.set_enum_values(state.service_name, enum_name, set_value_params),
+      Enums.set_enum_values(enum_name, set_value_params),
       state
     }
   end
@@ -128,7 +131,6 @@ defmodule MsbmsSystEnums.Runtime.Server do
     {
       :reply,
       Enums.set_enum_functional_type_values(
-        state.service_name,
         enum_name,
         functional_type_name,
         set_value_params
@@ -146,7 +148,6 @@ defmodule MsbmsSystEnums.Runtime.Server do
     {
       :reply,
       Enums.set_enum_item_values(
-        state.service_name,
         enum_name,
         enum_item_name,
         set_value_params
@@ -163,7 +164,7 @@ defmodule MsbmsSystEnums.Runtime.Server do
       ) do
     {
       :reply,
-      Enums.delete_enum(state.service_name, enum_name),
+      Enums.delete_enum(enum_name),
       state
     }
   end
@@ -176,7 +177,7 @@ defmodule MsbmsSystEnums.Runtime.Server do
       ) do
     {
       :reply,
-      Enums.delete_enum_functional_type(state.service_name, enum_name, functional_type_name),
+      Enums.delete_enum_functional_type(enum_name, functional_type_name),
       state
     }
   end
@@ -189,7 +190,7 @@ defmodule MsbmsSystEnums.Runtime.Server do
       ) do
     {
       :reply,
-      Enums.delete_enum_item(state.service_name, enum_name, enum_item_name),
+      Enums.delete_enum_item(enum_name, enum_item_name),
       state
     }
   end

@@ -1,5 +1,6 @@
 defmodule MsbmsSystEnums do
   alias MsbmsSystEnums.Impl.Enums
+  alias MsbmsSystEnums.Runtime.ProcessUtils
 
   @moduledoc """
   Documentation for `MsbmsSystEnums`.
@@ -28,29 +29,64 @@ defmodule MsbmsSystEnums do
   defdelegate start_link(params), to: MsbmsSystEnums.Runtime.Server
 
   @doc """
+  Establishes the current Enumerations Service instance for the process.
+
+  A running system is likely to have more than one instance of the Enums
+  Service running.  For example, in multi-tenant applications each tenant may
+  have its own instance of the Enumerations Service, caching data unique to the
+  tenant.
+
+  Calling `MsbmsSystEnums.put_enums_service/1` will set the reference to
+  the desired Enumerations Service instance for any subsequent MsbmsSystEnums
+  calls.  The service name is set in the Process Dictionary of the process from
+  which the calls are being made.  As such, you must call put_enums_service at
+  least once for any process from which you wish to access the Enumerations
+  Service.
+
+  Because we're just thinly wrapping `Process.put/2` here, the return value will
+  be the previous value set here, or nil if no previous value was set.
+
+  ## Parameters
+    * `service_name` - The name of the service which is to be set as servicing
+      the process.
+
+  ## Examples
+
+      iex> MsbmsSystEnums.put_enums_service(:enums_instance)
+  """
+  @spec put_enums_service(MsbmsSystEnums.Types.service_name() | nil) ::
+          MsbmsSystEnums.Types.service_name() | nil
+  defdelegate put_enums_service(service_name), to: ProcessUtils
+
+  @doc """
+  Retrieves the currently set Enumerations Service name or `nil` if none has
+  been set.
+
+  ## Examples
+      iex> MsbmsSystEnums.get_enums_service()
+      :enums_instance
+  """
+  @spec get_enums_service() :: MsbmsSystEnums.Types.service_name() | nil
+  defdelegate get_enums_service(), to: ProcessUtils
+
+  @doc """
   Retrieves all values associated with the requested enumeration.
 
-  The `service_name` argument identifies which enumerations service instance
-  should be used by the function.  See `start_link/1` and type documentation
-  for `t:MsbmsSystEnums.Types.service_name/0` for more.
-
-  The `enum_name` argument indicates the name of the enumeration for which to
-  retrieve values.
+  ## Parameters
+    * `enum_name` - indicates the name of the enumeration for which to retrieve values.
 
   The successful return of this function is an instance of the
-  `MsbmsSystSettings.Data.SystEnums` struct containing the values requested,
+  `MsbmsSystEnums.Data.SystEnums` struct containing the values requested,
   including the `enum_items` association populated as well as each item's
   `functional_type` association populated.
 
   ## Examples
 
-      iex> MsbmsSystEnums.get_enum_values(
-      ...>   :enums_instance,
-      ...>   "example_enumeration")
+      iex> MsbmsSystEnums.get_enum_values("example_enumeration")
   """
-  @spec get_enum_values(MsbmsSystEnums.Types.service_name(), MsbmsSystEnums.Types.enum_name()) ::
+  @spec get_enum_values(MsbmsSystEnums.Types.enum_name()) ::
           MsbmsSystEnums.Data.SystEnums.t()
-  defdelegate get_enum_values(service_name, enum_name), to: Enums
+  defdelegate get_enum_values(enum_name), to: Enums
 
   @doc """
   Retrieves all values for all enumerations.
@@ -59,106 +95,81 @@ defmodule MsbmsSystEnums do
   descriptions, etc.  Also included is association data for the `enum_items`
   field and the `functional_type` association of each item.
 
-  The `service_name` argument identifies which enumerations service instance
-  should be used by the function.  See `start_link/1` and type documentation
-  for `t:MsbmsSystEnums.Types.service_name/0` for more.
-
   ## Examples
 
-    iex> MsbmsSystEnums.get_all_enum_values(:enums_instance)
+    iex> MsbmsSystEnums.get_all_enum_values()
   """
-  @spec get_all_enum_values(MsbmsSystEnums.Types.service_name()) ::
+  @spec get_all_enum_values() ::
           list(MsbmsSystEnums.Data.SystEnums.t())
-  defdelegate get_all_enum_values(service_name), to: Enums
+  defdelegate get_all_enum_values(), to: Enums
 
   @doc """
   Returns true if the requested enumeration is system defined, false otherwise.
 
-  The `service_name` argument identifies which enumerations service instance
-  should be used by the function.  See `start_link/1` and type documentation
-  for `t:MsbmsSystEnums.Types.service_name/0` for more.
+  ## Parameters
 
-  The `enum_name` argument indicates the name of the enumeration to test as
-  being system defined.
+    * `enum_name` - the name of the enumeration to test as being system defined.
 
   ## Examples
 
-      iex> MsbmsSystEnums.get_enum_syst_defined(:enums_instance, "example_enumeration")
+      iex> MsbmsSystEnums.get_enum_syst_defined("example_enumeration")
       false
   """
-  @spec get_enum_syst_defined(
-          MsbmsSystEnums.Types.service_name(),
-          MsbmsSystEnums.Types.enum_name()
-        ) :: boolean()
-  defdelegate get_enum_syst_defined(service_name, enum_name), to: Enums
+  @spec get_enum_syst_defined(MsbmsSystEnums.Types.enum_name()) :: boolean()
+  defdelegate get_enum_syst_defined(enum_name), to: Enums
 
   @doc """
-  Returns true if the requested enumeration is user maintainable, false otherwise.
+  Returns true if the requested enumeration is user maintainable, false
+  otherwise.
 
-  The `service_name` argument identifies which enumerations service instance
-  should be used by the function.  See `start_link/1` and type documentation
-  for `t:MsbmsSystEnums.Types.service_name/0` for more.
-
-  The `enum_name` argument indicates the name of the enumeration to test as
-  being user maintainable.
+  ## Parameters
+    * `enum_name` - the name of the enumeration to test as being user
+      maintainable.
 
   ## Examples
 
-      iex> MsbmsSystEnums.get_enum_user_maintainable(:enums_instance, "example_enumeration")
+      iex> MsbmsSystEnums.get_enum_user_maintainable( "example_enumeration")
       true
   """
-  @spec get_enum_user_maintainable(
-          MsbmsSystEnums.Types.service_name(),
-          MsbmsSystEnums.Types.enum_name()
-        ) :: boolean()
-  defdelegate get_enum_user_maintainable(service_name, enum_name), to: Enums
+  @spec get_enum_user_maintainable(MsbmsSystEnums.Types.enum_name()) :: boolean()
+  defdelegate get_enum_user_maintainable(enum_name), to: Enums
 
   @doc """
   Returns the list of Enumeration Items associated with the requested
   enumeration.
 
-  The `service_name` argument identifies which enumerations service instance
-  should be used by the function.  See `start_link/1` and type documentation
-  for `t:MsbmsSystEnums.Types.service_name/0` for more.
+  ## Parameters
 
-  The `enum_name` argument indicates the name of the enumeration for which to
-  retrieve the list of enumeration items.
+    * `enum_name`- the name of the enumeration for which to retrieve the list of
+      enumeration items.
   """
-  @spec get_enum_items(MsbmsSystEnums.Types.service_name(), MsbmsSystEnums.Types.enum_name()) ::
+  @spec get_enum_items(MsbmsSystEnums.Types.enum_name()) ::
           list(MsbmsSystEnums.Data.SystEnumItems.t())
-  defdelegate get_enum_items(service_name, enum_name), to: Enums
+  defdelegate get_enum_items(enum_name), to: Enums
 
   @doc """
   Returns the list of Enumeration Items associated with the requested
   enumeration sorted by their sort_order value.
 
   In all other regards this function works the same
-  `MsbmsSystEnums.get_enum_items/2`.
+  `MsbmsSystEnums.get_enum_items/1`.
   """
-  @spec get_sorted_enum_items(
-          MsbmsSystEnums.Types.service_name(),
-          MsbmsSystEnums.Types.enum_name()
-        ) ::
+  @spec get_sorted_enum_items(MsbmsSystEnums.Types.enum_name()) ::
           list(MsbmsSystEnums.Data.SystEnumItems.t())
-  defdelegate get_sorted_enum_items(service_name, enum_name), to: Enums
+  defdelegate get_sorted_enum_items(enum_name), to: Enums
 
   @doc """
   Returns the list of Enumeration Functional Types associated with the requested
   enumeration.
 
-  The `service_name` argument identifies which enumerations service instance
-  should be used by the function.  See `start_link/1` and type documentation
-  for `t:MsbmsSystEnums.Types.service_name/0` for more.
+  ## Parameters
 
-  The `enum_name` argument indicates the name of the enumeration for which to
-  retrieve the list of enumeration functional types.
+    * `enum_name` - the name of the enumeration for which to retrieve the list
+      of enumeration functional types.
   """
-  @spec get_enum_functional_types(
-          MsbmsSystEnums.Types.service_name(),
-          MsbmsSystEnums.Types.enum_name()
-        ) ::
+  @spec get_enum_functional_types(MsbmsSystEnums.Types.enum_name()) ::
           list(MsbmsSystEnums.Data.SystEnumFunctionalTypes.t())
-  defdelegate get_enum_functional_types(service_name, enum_name), to: Enums
+  defdelegate get_enum_functional_types(enum_name), to: Enums
 
   @doc """
   Finds the default enumeration item for the requested enumeration or for the
@@ -169,61 +180,52 @@ defmodule MsbmsSystEnums do
   If the `functional_type_name` option is used, then the function returns the
   record which is marked as default for the functional type.
 
-  The `service_name` argument identifies which enumerations service instance
-  should be used by the function.  See `start_link/1` and type documentation
-  for `t:MsbmsSystEnums.Types.service_name/0` for more.
+  ## Parameters
 
-  The `enum_name` argument indicates the name of the enumeration for which to
-  retrieve the default enumeration item.
+    * `enum_name`- the name of the enumeration for which to retrieve the default
+      enumeration item.
 
-  `opts` is a keyword list which takes one of the following optional values:
+    * `opts` - a keyword list which takes one of the following optional values:
 
-    * `functional_type_name` - If the enumeration uses functional types, this
-      option allows you to find the default for the functional type rather than
-      the entire enumeration.
+      * `functional_type_name` - If the enumeration uses functional types, this
+        option allows you to find the default for the functional type rather
+        than the entire enumeration.
 
   ## Examples
       iex> %MsbmsSystEnums.Data.SystEnumItems{
       ...>   internal_name: "example_enum_item_two"
       ...> } =
-      ...>   MsbmsSystEnums.get_default_enum_item(
-      ...>     :enums_instance,
-      ...>     "example_enumeration"
-      ...>   )
+      ...>   MsbmsSystEnums.get_default_enum_item("example_enumeration")
 
       iex> %MsbmsSystEnums.Data.SystEnumItems{
       ...>   internal_name: "example_enum_item_one"
       ...> } =
       ...>   MsbmsSystEnums.get_default_enum_item(
-      ...>     :enums_instance,
       ...>     "example_enumeration",
       ...>     [functional_type_name: "example_enum_func_type_1"]
       ...>   )
   """
   @spec get_default_enum_item(
-          MsbmsSystEnums.Types.service_name(),
           MsbmsSystEnums.Types.enum_name(),
           Keyword.t(functional_type_name: MsbmsSystEnums.Types.enum_functional_type_name()) | []
         ) :: MsbmsSystEnums.Data.SystEnumItems.t()
-  defdelegate get_default_enum_item(service_name, enum_name, opts \\ []), to: Enums
+  defdelegate get_default_enum_item(enum_name, opts \\ []), to: Enums
 
   @doc """
   Create a new user defined enumeration, optionally including functional type
   and enumeration item definitions.
 
-  The `service_name` argument identifies which enumerations service instance
-  should be used by the function.  See `start_link/1` and type documentation
-  for `t:MsbmsSystEnums.Types.service_name/0` for more.
+  ## Parameters
 
-  The `enum_params` argument is a map containing the enumeration field values
-  used in creating the user defined enumerations.  If the enumeration's
-  functional types and enumeration items are known at enumeration creation time,
-  it is recommended to nest values for those records under the
-  `functional_types` and `enum_items` attributes as appropriate.  See the
-  documentation for `t:MsbmsSystEnums.Types.enum_params/0`,
-  `t:MsbmsSystEnums.Types.enum_functional_type_params/0`, and
-  `t:MsbmsSystEnums.Types.enum_item_params/0` for more information about the
-  available and required attributes.
+    * `enum_params` - a map containing the enumeration field values used in
+      creating the user defined enumerations.  If the enumeration's functional
+      types and enumeration items are known at enumeration creation time,
+      it is recommended to nest values for those records under the
+      `functional_types` and `enum_items` attributes as appropriate.  See the
+      documentation for `t:MsbmsSystEnums.Types.enum_params/0`,
+      `t:MsbmsSystEnums.Types.enum_functional_type_params/0`, and
+      `t:MsbmsSystEnums.Types.enum_item_params/0` for more information about the
+      available and required attributes.
 
   ## Examples
 
@@ -252,13 +254,13 @@ defmodule MsbmsSystEnums do
       ...>        }
       ...>      ]
       ...>    }
-      iex> MsbmsSystEnums.create_enum(:enums_instance, example_enumeration)
+      iex> MsbmsSystEnums.create_enum(example_enumeration)
       :ok
   """
-  @spec create_enum(MsbmsSystEnums.Types.service_name(), MsbmsSystEnums.Types.enum_params()) ::
+  @spec create_enum(MsbmsSystEnums.Types.enum_params()) ::
           :ok | {:error, MsbmsSystError.t()}
-  def create_enum(service_name, enum_params) do
-    GenServer.call(service_name, {:create_enum, enum_params})
+  def create_enum(enum_params) do
+    GenServer.call(ProcessUtils.get_enums_service(), {:create_enum, enum_params})
   end
 
   @doc """
@@ -266,26 +268,22 @@ defmodule MsbmsSystEnums do
 
   User defined functional types may only be added to user defined enumerations.
 
-  The `service_name` argument identifies which enumerations service instance
-  should be used by the function.  See `start_link/1` and type documentation
-  for `t:MsbmsSystEnums.Types.service_name/0` for more.
+  ## Parameters
+    * `enum_name` - the Enumeration to which the new functional type will be a
+      child.
 
-  The `enum_name` argument indicates to which enumeration the new functional
-  type will be a child.
-
-  `functional_type_params` is a map of type
-  `t:MsbmsSystEnums.Types.enum_functional_type_params/0` which establishes the
-  data values for the new functional type.
+    * `functional_type_params` - a map of type
+      `t:MsbmsSystEnums.Types.enum_functional_type_params/0` which establishes
+      the data values for the new functional type.
 
   """
   @spec create_enum_functional_type(
-          MsbmsSystEnums.Types.service_name(),
           MsbmsSystEnums.Types.enum_name(),
           MsbmsSystEnums.Types.enum_functional_type_params()
         ) :: :ok | {:error, MsbmsSystError.t()}
-  def create_enum_functional_type(service_name, enum_name, functional_type_params) do
+  def create_enum_functional_type(enum_name, functional_type_params) do
     GenServer.call(
-      service_name,
+      ProcessUtils.get_enums_service(),
       {:create_enum_functional_type, enum_name, functional_type_params}
     )
   end
@@ -297,25 +295,22 @@ defmodule MsbmsSystEnums do
   enumerations or system defined enumerations which are also marked user
   maintainable.
 
-  The `service_name` argument identifies which enumerations service instance
-  should be used by the function.  See `start_link/1` and type documentation
-  for `t:MsbmsSystEnums.Types.service_name/0` for more.
+  ## Parameters
 
-  The `enum_name` argument indicates to which enumeration the new enumeration
-  item will be a child.
+    * `enum_name` -the  enumeration to which the new enumeration item will be a
+      child.
 
-  `enum_item_params` is a map of type
-  `t:MsbmsSystEnums.Types.enum_item_params/0` which establishes the data values
-  for the new enumeration item.
+    * `enum_item_params` - a map of type
+      `t:MsbmsSystEnums.Types.enum_item_params/0` which establishes the data
+      values for the new enumeration item.
   """
   @spec create_enum_item(
-          MsbmsSystEnums.Types.service_name(),
           MsbmsSystEnums.Types.enum_name(),
           MsbmsSystEnums.Types.enum_item_params()
         ) :: :ok | {:error, MsbmsSystError.t()}
-  def create_enum_item(service_name, enum_name, enum_item_params) do
+  def create_enum_item(enum_name, enum_item_params) do
     GenServer.call(
-      service_name,
+      ProcessUtils.get_enums_service(),
       {:create_enum_item, enum_name, enum_item_params}
     )
   end
@@ -339,25 +334,22 @@ defmodule MsbmsSystEnums do
   can be modified.  Changes to functional type or enumeration item records must
   be addressed individually.
 
-  The `service_name` argument identifies which enumerations service instance
-  should be used by the function.  See `start_link/1` and type documentation
-  for `t:MsbmsSystEnums.Types.service_name/0` for more.
+  ## Parameters
 
-  The `enum_name` argument specifies the enumeration which is being modified.
+    * `enum_name` - the enumeration which is being modified.
 
-  `enum_params` is a map of type `t:MsbmsSystEnums.Types.enum_params/0` which
-  establishes the data values which are to be changed.
+    * `enum_params` - a map of type `t:MsbmsSystEnums.Types.enum_params/0` which
+      establishes the data values which are to be changed.
 
   """
   @spec set_enum_values(
-          MsbmsSystEnums.Types.service_name(),
           MsbmsSystEnums.Types.enum_name(),
           MsbmsSystEnums.Types.enum_params()
         ) ::
           :ok | {:error, MsbmsSystError.t()}
-  def set_enum_values(service_name, enum_name, enum_params) do
+  def set_enum_values(enum_name, enum_params) do
     GenServer.call(
-      service_name,
+      ProcessUtils.get_enums_service(),
       {:set_enum_values, enum_name, enum_params}
     )
   end
@@ -379,36 +371,32 @@ defmodule MsbmsSystEnums do
   Other fields of the MsbmsSystEnums.Data.SystEnumFunctionalTypes data type may
   not be modified via this module.
 
-  The `service_name` argument identifies which enumerations service instance
-  should be used by the function.  See `start_link/1` and type documentation
-  for `t:MsbmsSystEnums.Types.service_name/0` for more.
+  ## Parameters
 
-  The `enum_name` argument specifies the enumeration which is parent to the
-  functional type being modified.
+    * `enum_name`- the enumeration which is parent to the functional type being
+      modified.
 
-  Attribute `functional_type_name` identifies the specific functional type which
-  will be updated.
+    * `functional_type_name` - the specific functional type which will be
+      updated.
 
-  `functional_type_params` is a map of type
-  `t:MsbmsSystEnums.Types.enum_functional_type_params/0` which establishes the
-  data values which are to be changed.
+    * `functional_type_params` - a map of type
+      `t:MsbmsSystEnums.Types.enum_functional_type_params/0` which establishes
+      the data values which are to be changed.
 
   """
   @spec set_enum_functional_type_values(
-          MsbmsSystEnums.Types.service_name(),
           MsbmsSystEnums.Types.enum_name(),
           MsbmsSystEnums.Types.enum_functional_type_name(),
           MsbmsSystEnums.Types.enum_functional_type_params()
         ) ::
           :ok | {:error, MsbmsSystError.t()}
   def set_enum_functional_type_values(
-        service_name,
         enum_name,
         functional_type_name,
         functional_type_params
       ) do
     GenServer.call(
-      service_name,
+      ProcessUtils.get_enums_service(),
       {:set_enum_functional_type_values, enum_name, functional_type_name, functional_type_params}
     )
   end
@@ -438,35 +426,29 @@ defmodule MsbmsSystEnums do
   Other fields of the MsbmsSystEnums.Data.SystEnumItems data type may not be
   modified via this module.
 
-  The `service_name` argument identifies which enumerations service instance
-  should be used by the function.  See `start_link/1` and type documentation
-  for `t:MsbmsSystEnums.Types.service_name/0` for more.
+  ## Parameters
 
-  The `enum_name` argument specifies the enumeration which is parent to the
-  enumeration item.
+    * `enum_name` - the enumeration which is parent to the enumeration item.
 
-  Attribute `enum_item_name` identifies the specific enumeration item which
-  will be updated.
+    * `enum_item_name` - the specific enumeration item which will be updated.
 
-  `enum_item_params` is a map of type
-  `t:MsbmsSystEnums.Types.enum_item_params/0` which establishes the data values
-  which are to be changed.
+    * `enum_item_params` - a map of type
+      `t:MsbmsSystEnums.Types.enum_item_params/0` which establishes the data values
+      which are to be changed.
   """
   @spec set_enum_item_values(
-          MsbmsSystEnums.Types.service_name(),
           MsbmsSystEnums.Types.enum_name(),
           MsbmsSystEnums.Types.enum_item_name(),
           MsbmsSystEnums.Types.enum_item_params()
         ) ::
           :ok | {:error, MsbmsSystError.t()}
   def set_enum_item_values(
-        service_name,
         enum_name,
         enum_item_name,
         enum_item_params
       ) do
     GenServer.call(
-      service_name,
+      ProcessUtils.get_enums_service(),
       {:set_enum_item_values, enum_name, enum_item_name, enum_item_params}
     )
   end
@@ -478,17 +460,13 @@ defmodule MsbmsSystEnums do
   You cannot delete a system defined enumeration nor can you delete an
   enumeration that has been referenced in other application data records.
 
-  The `service_name` argument identifies which enumerations service instance
-  should be used by the function.  See `start_link/1` and type documentation
-  for `t:MsbmsSystEnums.Types.service_name/0` for more.
+  ## Parameters
 
-  The `enum_name` argument specifies the enumeration which is to be deleted by
-  the function.
+    * `enum_name` - the enumeration which is to be deleted by the function.
   """
-  @spec delete_enum(MsbmsSystEnums.Types.service_name(), MsbmsSystEnums.Types.enum_name()) ::
-          :ok | {:error, MsbmsSystError.t()}
-  def delete_enum(service_name, enum_name) do
-    GenServer.call(service_name, {:delete_enum, enum_name})
+  @spec delete_enum(MsbmsSystEnums.Types.enum_name()) :: :ok | {:error, MsbmsSystError.t()}
+  def delete_enum(enum_name) do
+    GenServer.call(ProcessUtils.get_enums_service(), {:delete_enum, enum_name})
   end
 
   @doc """
@@ -497,24 +475,24 @@ defmodule MsbmsSystEnums do
   You cannot delete a system defined functional type nor can you delete a
   functional type which is still referenced by enumeration item records.
 
-  The `service_name` argument identifies which enumerations service instance
-  should be used by the function.  See `start_link/1` and type documentation
-  for `t:MsbmsSystEnums.Types.service_name/0` for more.
+  ## Parameters
 
-  The `enum_name` argument specifies the enumeration which is is the parent of
-  the functional type to be deleted.
+    * `enum_name` - the enumeration which is is the parent of the functional
+      type to be deleted.
 
-  Argument `enum_functional_type_name` identifies the target functional type of
-  the delete operation.
+    * `enum_functional_type_name`- the target functional type of the delete
+      operation.
   """
   @spec delete_enum_functional_type(
-          MsbmsSystEnums.Types.service_name(),
           MsbmsSystEnums.Types.enum_name(),
           MsbmsSystEnums.Types.enum_functional_type_name()
         ) ::
           :ok | {:error, MsbmsSystError.t()}
-  def delete_enum_functional_type(service_name, enum_name, functional_type_name) do
-    GenServer.call(service_name, {:delete_enum_functional_type, enum_name, functional_type_name})
+  def delete_enum_functional_type(enum_name, functional_type_name) do
+    GenServer.call(
+      ProcessUtils.get_enums_service(),
+      {:delete_enum_functional_type, enum_name, functional_type_name}
+    )
   end
 
   @doc """
@@ -523,23 +501,22 @@ defmodule MsbmsSystEnums do
   You cannot delete a system defined enumeration item nor can you delete an
   an enumeration item record which has been referenced in application data.
 
-  The `service_name` argument identifies which enumerations service instance
-  should be used by the function.  See `start_link/1` and type documentation
-  for `t:MsbmsSystEnums.Types.service_name/0` for more.
+  ## Parameters
 
-  The `enum_name` argument specifies the enumeration which is is the parent of
-  the enumeration item to be deleted.
+    * `enum_name` - the enumeration which is is the parent of the enumeration
+      item to be deleted.
 
-  Argument `enum_item_name` identifies the target functional type of
-  the delete operation.
+    * `enum_item_name` - the target functional type of the delete operation.
   """
   @spec delete_enum_item(
-          MsbmsSystEnums.Types.service_name(),
           MsbmsSystEnums.Types.enum_name(),
           MsbmsSystEnums.Types.enum_item_name()
         ) ::
           :ok | {:error, MsbmsSystError.t()}
-  def delete_enum_item(service_name, enum_name, enum_item_name) do
-    GenServer.call(service_name, {:delete_enum_item, enum_name, enum_item_name})
+  def delete_enum_item(enum_name, enum_item_name) do
+    GenServer.call(
+      ProcessUtils.get_enums_service(),
+      {:delete_enum_item, enum_name, enum_item_name}
+    )
   end
 end
