@@ -64,7 +64,7 @@ defmodule MsbmsSystSettings do
   Establishes the current Settings Service instance for the process.
 
   A running system is likely to have more than one instance of the Settings
-  Service running.  For example, in mutli-tenant applications each tenant may
+  Service running.  For example, in multi-tenant applications each tenant may
   have its own instance of the Setting Service, caching data unique to the
   tenant.
 
