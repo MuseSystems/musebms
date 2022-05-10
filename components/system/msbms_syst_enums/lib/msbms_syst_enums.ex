@@ -250,7 +250,7 @@ defmodule MsbmsSystEnums do
       ...>          user_description: "Demonstration of enumeration item creation.",
       ...>          enum_default: true,
       ...>          functional_type_default: false,
-      ...>          functional_type_internal_name: "example_create_enum_functional_type"
+      ...>          functional_type_name: "example_create_enum_functional_type"
       ...>        }
       ...>      ]
       ...>    }

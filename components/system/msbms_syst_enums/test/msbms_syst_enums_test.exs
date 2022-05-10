@@ -196,7 +196,7 @@ defmodule MsbmsSystEnumsTest do
           user_description: "A testing enumeration item",
           enum_default: false,
           functional_type_default: false,
-          functional_type_internal_name: "create_enum_func_type_one"
+          functional_type_name: "create_enum_func_type_one"
         },
         %{
           internal_name: "create_enum_test_item_one",
@@ -205,7 +205,7 @@ defmodule MsbmsSystEnumsTest do
           user_description: "A testing enumeration item",
           enum_default: true,
           functional_type_default: true,
-          functional_type_internal_name: "create_enum_func_type_one",
+          functional_type_name: "create_enum_func_type_one",
           sort_order: 1
         },
         %{
@@ -215,7 +215,7 @@ defmodule MsbmsSystEnumsTest do
           user_description: "A testing enumeration item",
           enum_default: false,
           functional_type_default: true,
-          functional_type_internal_name: "create_enum_func_type_two",
+          functional_type_name: "create_enum_func_type_two",
           sort_order: 2
         }
       ]
@@ -449,7 +449,7 @@ defmodule MsbmsSystEnumsTest do
         "Failure enum since we identify a functional type when the enumeration has no defined functional types.",
       enum_default: true,
       functional_type_default: false,
-      functional_type_internal_name: "create_enum_item_enum_with_types_type"
+      functional_type_name: "create_enum_item_enum_with_types_type"
     }
 
     assert {:error, _} =
@@ -465,7 +465,7 @@ defmodule MsbmsSystEnumsTest do
       user_description: "A testing enumeration item",
       enum_default: true,
       functional_type_default: true,
-      functional_type_internal_name: "create_enum_item_enum_with_types_type"
+      functional_type_name: "create_enum_item_enum_with_types_type"
     }
 
     assert :ok =
@@ -513,7 +513,7 @@ defmodule MsbmsSystEnumsTest do
       user_description: "system_type_enum_item",
       enum_default: true,
       functional_type_default: true,
-      functional_type_internal_name: "enum_three_active"
+      functional_type_name: "enum_three_active"
     }
 
     assert :ok =
@@ -530,7 +530,7 @@ defmodule MsbmsSystEnumsTest do
       user_description: "Failure due to asking for a functional type belonging to another enum.",
       enum_default: true,
       functional_type_default: true,
-      functional_type_internal_name: "create_enum_item_enum_with_types_type"
+      functional_type_name: "create_enum_item_enum_with_types_type"
     }
 
     assert {:error, _} =
@@ -549,7 +549,7 @@ defmodule MsbmsSystEnumsTest do
         "Failure due to trying to add an enum item to a system defined enum which is not user_maintainable.",
       enum_default: true,
       functional_type_default: true,
-      functional_type_internal_name: "enum_one_active"
+      functional_type_name: "enum_one_active"
     }
 
     assert {:error, _} =
@@ -937,7 +937,7 @@ defmodule MsbmsSystEnumsTest do
           display_name: "User Defined Enum Item Changes Old",
           external_name: "User Defined Enum Item Changes Old",
           user_description: "User Defined Enum Item Changes Old",
-          functional_type_internal_name: "user_def_enum_item_changes_func_type",
+          functional_type_name: "user_def_enum_item_changes_func_type",
           functional_type_default: true,
           enum_default: true
         }
@@ -1091,7 +1091,7 @@ defmodule MsbmsSystEnumsTest do
           display_name: "Delete User Defined Enum Enum Item",
           external_name: "Delete User Defined Enum Enum Item",
           user_description: "Delete User Defined Enum Enum Item",
-          functional_type_internal_name: "delete_user_defined_enum__enum_func_type",
+          functional_type_name: "delete_user_defined_enum__enum_func_type",
           functional_type_default: true,
           enum_default: true
         }
@@ -1144,7 +1144,7 @@ defmodule MsbmsSystEnumsTest do
           display_name: "Delete User Defined Functional Type Enum Item",
           external_name: "Delete User Defined Functional Type Enum Item",
           user_description: "Delete User Defined Functional Type Enum Item",
-          functional_type_internal_name: "delete_user_def_functional_type_failure",
+          functional_type_name: "delete_user_def_functional_type_failure",
           functional_type_default: true,
           enum_default: true
         }
@@ -1218,7 +1218,7 @@ defmodule MsbmsSystEnumsTest do
           display_name: "Delete User Defined Enum Item One",
           external_name: "Delete User Defined Enum Item One",
           user_description: "Delete User Defined Enum Item One",
-          functional_type_internal_name: "delete_user_def_functional_type_one",
+          functional_type_name: "delete_user_def_functional_type_one",
           functional_type_default: true,
           enum_default: true
         },
@@ -1227,7 +1227,7 @@ defmodule MsbmsSystEnumsTest do
           display_name: "Delete User Defined Enum Item Two",
           external_name: "Delete User Defined Enum Item Two",
           user_description: "Delete User Defined Enum Item Two",
-          functional_type_internal_name: "delete_user_def_functional_type_two",
+          functional_type_name: "delete_user_def_functional_type_two",
           functional_type_default: true,
           enum_default: false
         }
@@ -1257,7 +1257,7 @@ defmodule MsbmsSystEnumsTest do
       display_name: "Delete User Defined Enum Item One/Syst Enum",
       external_name: "Delete User Defined Enum Item One / System Enum",
       user_description: "Delete User Defined Enum Item One for System Defined Enumeration",
-      functional_type_internal_name: "enum_three_active",
+      functional_type_name: "enum_three_active",
       functional_type_default: false,
       enum_default: true
     }
