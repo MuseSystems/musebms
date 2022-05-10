@@ -14,6 +14,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
   import Ecto.Query
 
   alias MsbmsSystEnums.Data
+  alias MsbmsSystEnums.Runtime.ProcessUtils
 
   require Logger
 
@@ -31,9 +32,9 @@ defmodule MsbmsSystEnums.Impl.Enums do
   # since we need to change data in the ets tables which are owned by the
   # GenServer and are in "protected" mode.
 
-  @spec refresh_from_database(MsbmsSystEnums.Types.service_name()) :: :ok
-  def refresh_from_database(service_name) do
-    ets_table_name = get_ets_table_from_service_name(service_name)
+  @spec refresh_from_database() :: :ok
+  def refresh_from_database do
+    ets_table_name = get_ets_table_from_service_name(ProcessUtils.get_enums_service())
 
     :ets.delete_all_objects(ets_table_name)
 
@@ -53,12 +54,10 @@ defmodule MsbmsSystEnums.Impl.Enums do
   # consider allowing an outright crash in this case since our state would be
   # invalid and perhaps not regularly recoverable.
 
-  @spec refresh_enum_from_database(
-          MsbmsSystEnums.Types.service_name(),
-          MsbmsSystEnums.Types.enum_name()
-        ) :: :ok | {:error, MsbmsSystError.t()}
-  def refresh_enum_from_database(service_name, enum_name) do
-    ets_table_name = get_ets_table_from_service_name(service_name)
+  @spec refresh_enum_from_database(MsbmsSystEnums.Types.enum_name()) ::
+          :ok | {:error, MsbmsSystError.t()}
+  def refresh_enum_from_database(enum_name) do
+    ets_table_name = get_ets_table_from_service_name(ProcessUtils.get_enums_service())
 
     from(e in Data.SystEnums,
       preload: [enum_items: [:functional_type], functional_types: []],
@@ -82,82 +81,67 @@ defmodule MsbmsSystEnums.Impl.Enums do
       }
   end
 
-  @spec get_enum_values(MsbmsSystEnums.Types.service_name(), MsbmsSystEnums.Types.enum_name()) ::
-          Data.SystEnums.t()
-  def get_enum_values(service_name, enum_name) do
-    service_name
+  @spec get_enum_values(MsbmsSystEnums.Types.enum_name()) :: Data.SystEnums.t()
+  def get_enum_values(enum_name) do
+    ProcessUtils.get_enums_service()
     |> get_ets_table_from_service_name()
     |> :ets.lookup_element(enum_name, 2)
   end
 
-  @spec get_all_enum_values(MsbmsSystEnums.Types.service_name()) ::
-          list(Data.SystEnums.t())
-  def get_all_enum_values(service_name) do
+  @spec get_all_enum_values() :: list(Data.SystEnums.t())
+  def get_all_enum_values do
     # Select query :ets.fun2ms(fn {_, enum_values} -> enum_values end)
-    service_name
+    ProcessUtils.get_enums_service()
     |> get_ets_table_from_service_name()
     |> :ets.select([{{:_, :"$1"}, [], [:"$1"]}])
   end
 
-  @spec get_enum_syst_defined(
-          MsbmsSystEnums.Types.service_name(),
-          MsbmsSystEnums.Types.enum_name()
-        ) :: boolean()
-  def get_enum_syst_defined(service_name, enum_name) do
-    service_name
+  @spec get_enum_syst_defined(MsbmsSystEnums.Types.enum_name()) :: boolean()
+  def get_enum_syst_defined(enum_name) do
+    ProcessUtils.get_enums_service()
     |> get_ets_table_from_service_name()
     |> :ets.select([{{enum_name, %{syst_defined: :"$1"}}, [], [:"$1"]}])
     |> hd()
   end
 
-  @spec get_enum_user_maintainable(
-          MsbmsSystEnums.Types.service_name(),
-          MsbmsSystEnums.Types.enum_name()
-        ) :: boolean()
-  def get_enum_user_maintainable(service_name, enum_name) do
-    service_name
+  @spec get_enum_user_maintainable(MsbmsSystEnums.Types.enum_name()) :: boolean()
+  def get_enum_user_maintainable(enum_name) do
+    ProcessUtils.get_enums_service()
     |> get_ets_table_from_service_name()
     |> :ets.select([{{enum_name, %{user_maintainable: :"$1"}}, [], [:"$1"]}])
     |> hd()
   end
 
-  @spec get_enum_items(MsbmsSystEnums.Types.service_name(), MsbmsSystEnums.Types.enum_name()) ::
+  @spec get_enum_items(MsbmsSystEnums.Types.enum_name()) ::
           list(Data.SystEnumItems.t())
-  def get_enum_items(service_name, enum_name) do
-    service_name
+  def get_enum_items(enum_name) do
+    ProcessUtils.get_enums_service()
     |> get_ets_table_from_service_name()
     |> :ets.select([{{enum_name, %{enum_items: :"$1"}}, [], [:"$1"]}])
     |> hd()
   end
 
-  @spec get_sorted_enum_items(
-          MsbmsSystEnums.Types.service_name(),
-          MsbmsSystEnums.Types.enum_name()
-        ) ::
+  @spec get_sorted_enum_items(MsbmsSystEnums.Types.enum_name()) ::
           list(Data.SystEnumItems.t())
-  def get_sorted_enum_items(service_name, enum_name) do
-    Enum.sort(get_enum_items(service_name, enum_name), &(&1.sort_order < &2.sort_order))
+  def get_sorted_enum_items(enum_name) do
+    Enum.sort(get_enum_items(enum_name), &(&1.sort_order < &2.sort_order))
   end
 
-  @spec get_enum_functional_types(
-          MsbmsSystEnums.Types.service_name(),
-          MsbmsSystEnums.Types.enum_name()
-        ) ::
+  @spec get_enum_functional_types(MsbmsSystEnums.Types.enum_name()) ::
           list(Data.SystEnumFunctionalTypes.t())
-  def get_enum_functional_types(service_name, enum_name) do
-    service_name
+  def get_enum_functional_types(enum_name) do
+    ProcessUtils.get_enums_service()
     |> get_ets_table_from_service_name()
     |> :ets.select([{{enum_name, %{functional_types: :"$1"}}, [], [:"$1"]}])
     |> hd()
   end
 
   @spec get_default_enum_item(
-          MsbmsSystEnums.Types.service_name(),
           MsbmsSystEnums.Types.enum_name(),
           Keyword.t(functional_type_name: MsbmsSystEnums.Types.enum_functional_type_name()) | []
         ) :: MsbmsSystEnums.Data.SystEnumItems.t()
-  def get_default_enum_item(service_name, enum_name, opts) do
-    service_name
+  def get_default_enum_item(enum_name, opts) do
+    ProcessUtils.get_enums_service()
     |> get_ets_table_from_service_name()
     |> :ets.select([{{enum_name, %{enum_items: :"$1"}}, [], [:"$1"]}])
     |> hd()
@@ -176,9 +160,8 @@ defmodule MsbmsSystEnums.Impl.Enums do
     enum_item.enum_default == true
   end
 
-  @spec create_enum(MsbmsSystEnums.Types.service_name(), MsbmsSystEnums.Types.enum_params()) ::
-          :ok | {:error, MsbmsSystError.t()}
-  def create_enum(service_name, enum_params) do
+  @spec create_enum(MsbmsSystEnums.Types.enum_params()) :: :ok | {:error, MsbmsSystError.t()}
+  def create_enum(enum_params) do
     {:ok, _} =
       Ecto.Multi.new()
       |> Ecto.Multi.insert(:enum, Data.SystEnums.changeset(%Data.SystEnums{}, enum_params),
@@ -194,7 +177,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
       end)
       |> MsbmsSystDatastore.transaction()
 
-    refresh_enum_from_database(service_name, enum_params.internal_name)
+    refresh_enum_from_database(enum_params.internal_name)
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -249,12 +232,11 @@ defmodule MsbmsSystEnums.Impl.Enums do
   defp create_enum_items_for_enum(multi, _changes, _enum_params), do: multi
 
   @spec create_enum_functional_type(
-          MsbmsSystEnums.Types.service_name(),
           MsbmsSystEnums.Types.enum_name(),
           MsbmsSystEnums.Types.enum_functional_type_params()
         ) :: :ok | {:error, MsbmsSystError.t()}
-  def create_enum_functional_type(service_name, enum_name, functional_type_params) do
-    %Data.SystEnums{id: enum_id} = get_enum_values(service_name, enum_name)
+  def create_enum_functional_type(enum_name, functional_type_params) do
+    %Data.SystEnums{id: enum_id} = get_enum_values(enum_name)
 
     resolved_functional_type = Map.put(functional_type_params, :enum_id, enum_id)
 
@@ -262,7 +244,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
     |> MsbmsSystEnums.Data.SystEnumFunctionalTypes.changeset(resolved_functional_type)
     |> MsbmsSystDatastore.insert!()
 
-    refresh_enum_from_database(service_name, enum_name)
+    refresh_enum_from_database(enum_name)
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -278,13 +260,11 @@ defmodule MsbmsSystEnums.Impl.Enums do
   end
 
   @spec create_enum_item(
-          MsbmsSystEnums.Types.service_name(),
           MsbmsSystEnums.Types.enum_name(),
           MsbmsSystEnums.Types.enum_item_params()
         ) :: :ok | {:error, MsbmsSystError.t()}
-  def create_enum_item(service_name, enum_name, enum_item_params) do
-    %Data.SystEnums{id: enum_id, functional_types: functional_types} =
-      get_enum_values(service_name, enum_name)
+  def create_enum_item(enum_name, enum_item_params) do
+    %Data.SystEnums{id: enum_id, functional_types: functional_types} = get_enum_values(enum_name)
 
     functional_type_id =
       maybe_get_functional_type_id(
@@ -299,7 +279,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
     |> MsbmsSystEnums.Data.SystEnumItems.changeset(resolved_enum_item_params)
     |> MsbmsSystDatastore.insert!()
 
-    refresh_enum_from_database(service_name, enum_name)
+    refresh_enum_from_database(enum_name)
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -360,14 +340,10 @@ defmodule MsbmsSystEnums.Impl.Enums do
       cause: %{functional_type_id: functional_type_id}
   end
 
-  @spec set_enum_values(
-          MsbmsSystEnums.Types.service_name(),
-          MsbmsSystEnums.Types.enum_name(),
-          MsbmsSystEnums.Types.enum_params()
-        ) ::
+  @spec set_enum_values(MsbmsSystEnums.Types.enum_name(), MsbmsSystEnums.Types.enum_params()) ::
           :ok | {:error, MsbmsSystError.t()}
-  def set_enum_values(service_name, enum_name, enum_params) do
-    ets_table_name = get_ets_table_from_service_name(service_name)
+  def set_enum_values(enum_name, enum_params) do
+    ets_table_name = get_ets_table_from_service_name(ProcessUtils.get_enums_service())
 
     resolved_internal_name = Map.get(enum_params, :internal_name, enum_name)
 
@@ -377,7 +353,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
 
     if enum_name != resolved_internal_name, do: :ets.delete(ets_table_name, enum_name)
 
-    refresh_enum_from_database(service_name, resolved_internal_name)
+    refresh_enum_from_database(resolved_internal_name)
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -393,19 +369,17 @@ defmodule MsbmsSystEnums.Impl.Enums do
   end
 
   @spec set_enum_functional_type_values(
-          MsbmsSystEnums.Types.service_name(),
           MsbmsSystEnums.Types.enum_name(),
           MsbmsSystEnums.Types.enum_functional_type_name(),
           MsbmsSystEnums.Types.enum_functional_type_params()
         ) ::
           :ok | {:error, MsbmsSystError.t()}
   def set_enum_functional_type_values(
-        service_name,
         enum_name,
         functional_type_name,
         functional_type_params
       ) do
-    ets_table_name = get_ets_table_from_service_name(service_name)
+    ets_table_name = get_ets_table_from_service_name(ProcessUtils.get_enums_service())
 
     %{functional_types: functional_types} = :ets.lookup_element(ets_table_name, enum_name, 2)
 
@@ -413,7 +387,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
     |> MsbmsSystEnums.Data.SystEnumFunctionalTypes.changeset(functional_type_params)
     |> MsbmsSystDatastore.update!()
 
-    refresh_enum_from_database(service_name, enum_name)
+    refresh_enum_from_database(enum_name)
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -429,13 +403,12 @@ defmodule MsbmsSystEnums.Impl.Enums do
   end
 
   @spec set_enum_item_values(
-          MsbmsSystEnums.Types.service_name(),
           MsbmsSystEnums.Types.enum_name(),
           MsbmsSystEnums.Types.enum_item_name(),
           MsbmsSystEnums.Types.enum_item_params()
         ) :: :ok | {:error, MsbmsSystError.t()}
-  def set_enum_item_values(service_name, enum_name, enum_item_name, enum_item_params) do
-    ets_table_name = get_ets_table_from_service_name(service_name)
+  def set_enum_item_values(enum_name, enum_item_name, enum_item_params) do
+    ets_table_name = get_ets_table_from_service_name(ProcessUtils.get_enums_service())
 
     %{enum_items: enum_items} = :ets.lookup_element(ets_table_name, enum_name, 2)
 
@@ -443,7 +416,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
     |> MsbmsSystEnums.Data.SystEnumItems.changeset(enum_item_params)
     |> MsbmsSystDatastore.update!()
 
-    refresh_enum_from_database(service_name, enum_name)
+    refresh_enum_from_database(enum_name)
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -458,10 +431,9 @@ defmodule MsbmsSystEnums.Impl.Enums do
       }
   end
 
-  @spec delete_enum(MsbmsSystEnums.Types.service_name(), MsbmsSystEnums.Types.enum_name()) ::
-          :ok | {:error, MsbmsSystError.t()}
-  def delete_enum(service_name, enum_name) do
-    ets_table_name = get_ets_table_from_service_name(service_name)
+  @spec delete_enum(MsbmsSystEnums.Types.enum_name()) :: :ok | {:error, MsbmsSystError.t()}
+  def delete_enum(enum_name) do
+    ets_table_name = get_ets_table_from_service_name(ProcessUtils.get_enums_service())
 
     delete_qry = from(e in MsbmsSystEnums.Data.SystEnums, where: e.internal_name == ^enum_name)
 
@@ -485,11 +457,10 @@ defmodule MsbmsSystEnums.Impl.Enums do
   end
 
   @spec delete_enum_functional_type(
-          MsbmsSystEnums.Types.service_name(),
           MsbmsSystEnums.Types.enum_name(),
           MsbmsSystEnums.Types.enum_functional_type_name()
         ) :: :ok | {:error, MsbmsSystError.t()}
-  def delete_enum_functional_type(service_name, enum_name, functional_type_name) do
+  def delete_enum_functional_type(enum_name, functional_type_name) do
     delete_qry =
       from(f in MsbmsSystEnums.Data.SystEnumFunctionalTypes,
         where: f.internal_name == ^functional_type_name
@@ -497,7 +468,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
 
     {1, _rows} = MsbmsSystDatastore.delete_all(delete_qry)
 
-    refresh_enum_from_database(service_name, enum_name)
+    refresh_enum_from_database(enum_name)
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -512,18 +483,15 @@ defmodule MsbmsSystEnums.Impl.Enums do
       }
   end
 
-  @spec delete_enum_item(
-          MsbmsSystEnums.Types.service_name(),
-          MsbmsSystEnums.Types.enum_name(),
-          MsbmsSystEnums.Types.enum_item_name()
-        ) :: :ok | {:error, MsbmsSystError.t()}
-  def delete_enum_item(service_name, enum_name, enum_item_name) do
+  @spec delete_enum_item(MsbmsSystEnums.Types.enum_name(), MsbmsSystEnums.Types.enum_item_name()) ::
+          :ok | {:error, MsbmsSystError.t()}
+  def delete_enum_item(enum_name, enum_item_name) do
     delete_qry =
       from(f in MsbmsSystEnums.Data.SystEnumItems, where: f.internal_name == ^enum_item_name)
 
     {1, _rows} = MsbmsSystDatastore.delete_all(delete_qry)
 
-    refresh_enum_from_database(service_name, enum_name)
+    refresh_enum_from_database(enum_name)
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
