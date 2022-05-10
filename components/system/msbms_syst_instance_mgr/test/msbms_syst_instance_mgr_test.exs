@@ -76,6 +76,11 @@ defmodule MsbmsSystInstanceMgrTest do
     [datastore_context: MsbmsSystDatastore.set_datastore_context(@datastore_context_name)]
   end
 
+  setup do
+    MsbmsSystEnums.put_enums_service(:instance_mgr)
+    :ok
+  end
+
   defp setup_testing_database do
     :ok = build_migrations()
 
@@ -161,7 +166,7 @@ defmodule MsbmsSystInstanceMgrTest do
   end
 
   test "Can Create New Owner" do
-    default_owner_state = MsbmsSystEnums.get_default_enum_item(:instance_mgr, "owner_states")
+    default_owner_state = MsbmsSystEnums.get_default_enum_item("owner_states")
 
     assert {:ok, %MsbmsSystInstanceMgr.Data.SystOwners{internal_name: "owner_create_1"}} =
              MsbmsSystInstanceMgr.create_owner(
@@ -174,7 +179,7 @@ defmodule MsbmsSystInstanceMgrTest do
   test "Can Change Existing Owner Internal Name" do
     change = %{internal_name: "changed_owner_create_2"}
 
-    default_owner_state = MsbmsSystEnums.get_default_enum_item(:instance_mgr, "owner_states")
+    default_owner_state = MsbmsSystEnums.get_default_enum_item("owner_states")
 
     {:ok, test_owner} =
       MsbmsSystInstanceMgr.create_owner(
@@ -190,7 +195,7 @@ defmodule MsbmsSystInstanceMgrTest do
   test "Can Change Existing Owner Display Name" do
     change = %{display_name: "Owner Change Display Name Test Is Changed"}
 
-    default_owner_state = MsbmsSystEnums.get_default_enum_item(:instance_mgr, "owner_states")
+    default_owner_state = MsbmsSystEnums.get_default_enum_item("owner_states")
 
     {:ok, test_owner} =
       MsbmsSystInstanceMgr.create_owner(
@@ -206,10 +211,10 @@ defmodule MsbmsSystInstanceMgrTest do
   end
 
   test "Can Change Existing Owner Owner State" do
-    default_owner_state = MsbmsSystEnums.get_default_enum_item(:instance_mgr, "owner_states")
+    default_owner_state = MsbmsSystEnums.get_default_enum_item("owner_states")
 
     new_state =
-      MsbmsSystEnums.get_default_enum_item(:instance_mgr, "owner_states",
+      MsbmsSystEnums.get_default_enum_item("owner_states",
         functional_type_name: "owner_states_inactive"
       )
 
@@ -231,10 +236,10 @@ defmodule MsbmsSystInstanceMgrTest do
   end
 
   test "Can Change Existing Owner Multiple Values" do
-    default_owner_state = MsbmsSystEnums.get_default_enum_item(:instance_mgr, "owner_states")
+    default_owner_state = MsbmsSystEnums.get_default_enum_item("owner_states")
 
     new_state =
-      MsbmsSystEnums.get_default_enum_item(:instance_mgr, "owner_states",
+      MsbmsSystEnums.get_default_enum_item("owner_states",
         functional_type_name: "owner_states_inactive"
       )
 
@@ -260,7 +265,7 @@ defmodule MsbmsSystInstanceMgrTest do
 
   test "Can Purge a Single Purge Eligible Owner" do
     default_owner_state =
-      MsbmsSystEnums.get_default_enum_item(:instance_mgr, "owner_states",
+      MsbmsSystEnums.get_default_enum_item("owner_states",
         functional_type_name: "owner_states_purge_eligible"
       )
 
@@ -275,7 +280,7 @@ defmodule MsbmsSystInstanceMgrTest do
   end
 
   test "Cannot Purge a Single Ineligible Owner" do
-    default_owner_state = MsbmsSystEnums.get_default_enum_item(:instance_mgr, "owner_states")
+    default_owner_state = MsbmsSystEnums.get_default_enum_item("owner_states")
 
     {:ok, test_owner} =
       MsbmsSystInstanceMgr.create_owner(
@@ -289,7 +294,7 @@ defmodule MsbmsSystInstanceMgrTest do
 
   test "Can Purge a All Purge Eligible Owners" do
     default_owner_state =
-      MsbmsSystEnums.get_default_enum_item(:instance_mgr, "owner_states",
+      MsbmsSystEnums.get_default_enum_item("owner_states",
         functional_type_name: "owner_states_purge_eligible"
       )
 
@@ -416,7 +421,7 @@ defmodule MsbmsSystInstanceMgrTest do
   end
 
   test "Can List Instance Types" do
-    assert {:ok, instance_types_list} = MsbmsSystInstanceMgr.list_instance_types(:instance_mgr)
+    assert {:ok, instance_types_list} = MsbmsSystInstanceMgr.list_instance_types()
   end
 
   test "Can create Instance Type" do
@@ -441,15 +446,12 @@ defmodule MsbmsSystInstanceMgrTest do
     }
 
     assert {:ok, %MsbmsSystEnums.Data.SystEnumItems{internal_name: "can_create_instance_type"}} =
-             MsbmsSystInstanceMgr.create_instance_type(:instance_mgr, new_instance_type)
+             MsbmsSystInstanceMgr.create_instance_type(new_instance_type)
   end
 
   test "Can Get Instance by Instance Internal Name" do
     assert {:ok, %MsbmsSystEnums.Data.SystEnumItems{internal_name: "instance_types_big_instance"}} =
-             MsbmsSystInstanceMgr.get_instance_type_by_name(
-               :instance_mgr,
-               "instance_types_big_instance"
-             )
+             MsbmsSystInstanceMgr.get_instance_type_by_name("instance_types_big_instance")
   end
 
   test "Can Set Instance Type Values" do
@@ -465,7 +467,6 @@ defmodule MsbmsSystInstanceMgrTest do
               display_name: "Instance Types / Std. Instance (Changed)"
             }} =
              MsbmsSystInstanceMgr.set_instance_type_values(
-               :instance_mgr,
                "instance_types_std_instance",
                instance_type_changes
              )

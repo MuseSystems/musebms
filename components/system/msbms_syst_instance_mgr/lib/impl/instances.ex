@@ -209,10 +209,10 @@ defmodule MsbmsSystInstanceMgr.Impl.Instances do
       }
   end
 
-  @spec list_instance_types(MsbmsSystEnums.Types.service_name()) ::
+  @spec list_instance_types() ::
           {:ok, list(MsbmsSystEnums.Data.SystEnumItems.t())} | {:error, MsbmsSystError.t()}
-  def list_instance_types(enums_service_name) do
-    {:ok, MsbmsSystEnums.get_sorted_enum_items(enums_service_name, "instance_types")}
+  def list_instance_types do
+    {:ok, MsbmsSystEnums.get_sorted_enum_items("instance_types")}
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -227,14 +227,12 @@ defmodule MsbmsSystInstanceMgr.Impl.Instances do
       }
   end
 
-  @spec create_instance_type(
-          MsbmsSystEnums.Types.service_name(),
-          Types.instance_type()
-        ) :: {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MsbmsSystError.t()}
-  def create_instance_type(service_name, instance_type_params) do
-    :ok = MsbmsSystEnums.create_enum_item(service_name, "instance_types", instance_type_params)
+  @spec create_instance_type(Types.instance_type()) ::
+          {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MsbmsSystError.t()}
+  def create_instance_type(instance_type_params) do
+    :ok = MsbmsSystEnums.create_enum_item("instance_types", instance_type_params)
 
-    get_instance_type_by_name(service_name, instance_type_params.internal_name)
+    get_instance_type_by_name(instance_type_params.internal_name)
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -249,12 +247,10 @@ defmodule MsbmsSystInstanceMgr.Impl.Instances do
       }
   end
 
-  @spec get_instance_type_by_name(
-          MsbmsSystEnums.Types.service_name(),
-          MsbmsSystEnums.Types.enum_item_name()
-        ) :: {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MsbmsSystError.t()}
-  def get_instance_type_by_name(service_name, instance_type_name) do
-    MsbmsSystEnums.get_enum_items(service_name, "instance_types")
+  @spec get_instance_type_by_name(MsbmsSystEnums.Types.enum_item_name()) ::
+          {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MsbmsSystError.t()}
+  def get_instance_type_by_name(instance_type_name) do
+    MsbmsSystEnums.get_enum_items("instance_types")
     |> Enum.find(&(&1.internal_name == instance_type_name))
     |> then(&{:ok, &1})
   rescue
@@ -271,21 +267,17 @@ defmodule MsbmsSystInstanceMgr.Impl.Instances do
       }
   end
 
-  @spec set_instance_type_values(
-          MsbmsSystEnums.Types.service_name(),
-          MsbmsSystEnums.Types.enum_item_name(),
-          Types.instance_type()
-        ) :: {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MsbmsSystError.t()}
-  def set_instance_type_values(service_name, instance_type_name, instance_type_params) do
+  @spec set_instance_type_values(MsbmsSystEnums.Types.enum_item_name(), Types.instance_type()) ::
+          {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MsbmsSystError.t()}
+  def set_instance_type_values(instance_type_name, instance_type_params) do
     :ok =
       MsbmsSystEnums.set_enum_item_values(
-        service_name,
         "instance_types",
         instance_type_name,
         instance_type_params
       )
 
-    get_instance_type_by_name(service_name, instance_type_name)
+    get_instance_type_by_name(instance_type_name)
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -300,15 +292,11 @@ defmodule MsbmsSystInstanceMgr.Impl.Instances do
       }
   end
 
-  @spec(
-    delete_instance_type(
-      MsbmsSystEnums.Types.service_name(),
-      MsbmsSystEnums.Types.enum_item_name()
-    ) :: :ok,
-    {:error, MsbmsSystError.t()}
-  )
-  def delete_instance_type(service_name, instance_type_name) do
-    MsbmsSystEnums.delete_enum_item(service_name, "instance_types", instance_type_name)
+  @spec delete_instance_type(MsbmsSystEnums.Types.enum_item_name()) ::
+          :ok | {:error, MsbmsSystError.t()}
+
+  def delete_instance_type(instance_type_name) do
+    MsbmsSystEnums.delete_enum_item("instance_types", instance_type_name)
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
