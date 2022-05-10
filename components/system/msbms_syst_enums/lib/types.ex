@@ -76,7 +76,7 @@ defmodule MsbmsSystEnums.Types do
   @type enum_item_params() :: %{
           optional(:enum_id) => Ecto.UUID.t(),
           optional(:functional_type_id) => Ecto.UUID.t(),
-          optional(:functional_type_internal_name) => enum_functional_type_name(),
+          optional(:functional_type_name) => enum_functional_type_name(),
           optional(:internal_name) => enum_item_name(),
           optional(:display_name) => String.t(),
           optional(:user_description) => String.t(),

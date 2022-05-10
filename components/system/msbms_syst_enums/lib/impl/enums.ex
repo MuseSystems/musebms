@@ -211,9 +211,9 @@ defmodule MsbmsSystEnums.Impl.Enums do
   defp create_enum_items_for_enum(multi, changes, %{enum_items: enum_items}) do
     Enum.reduce(enum_items, multi, fn enum_item, multi ->
       resolved_enum_item =
-        if Map.has_key?(enum_item, :functional_type_internal_name) do
+        if Map.has_key?(enum_item, :functional_type_name) do
           %{id: functional_type_id} =
-            Map.get(changes, {:functional_type, enum_item.functional_type_internal_name})
+            Map.get(changes, {:functional_type, enum_item.functional_type_name})
 
           Map.merge(enum_item, %{functional_type_id: functional_type_id, enum_id: changes.enum.id})
         else
@@ -269,7 +269,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
     functional_type_id =
       maybe_get_functional_type_id(
         functional_types,
-        Map.get(enum_item_params, :functional_type_internal_name)
+        Map.get(enum_item_params, :functional_type_name)
       )
 
     resolved_enum_item_params =
@@ -294,41 +294,41 @@ defmodule MsbmsSystEnums.Impl.Enums do
       }
   end
 
-  defp maybe_get_functional_type_id(functional_types, functional_type_internal_name)
+  defp maybe_get_functional_type_id(functional_types, functional_type_name)
        when is_list(functional_types) and length(functional_types) > 0 and
-              is_binary(functional_type_internal_name) do
+              is_binary(functional_type_name) do
     Enum.find(functional_types, fn func_type ->
-      func_type.internal_name == functional_type_internal_name
+      func_type.internal_name == functional_type_name
     end)
     |> Map.get(:id)
     |> validated_functional_type_id!()
   end
 
-  defp maybe_get_functional_type_id(functional_types, functional_type_internal_name)
+  defp maybe_get_functional_type_id(functional_types, functional_type_name)
        when (is_nil(functional_types) or functional_types == []) and
-              is_binary(functional_type_internal_name) do
+              is_binary(functional_type_name) do
     raise MsbmsSystError,
       code: :undefined_error,
       message: "New enum item requests a functional type but the enumeration has none.",
       cause: %{
         functional_types: functional_types,
-        functional_type_internal_name: functional_type_internal_name
+        functional_type_name: functional_type_name
       }
   end
 
-  defp maybe_get_functional_type_id(functional_types, functional_type_internal_name)
+  defp maybe_get_functional_type_id(functional_types, functional_type_name)
        when is_list(functional_types) and length(functional_types) > 0 and
-              is_nil(functional_type_internal_name) do
+              is_nil(functional_type_name) do
     raise MsbmsSystError,
       code: :undefined_error,
       message: "New enum item for this enumeration must identify a functional type.",
       cause: %{
         functional_types: functional_types,
-        functional_type_internal_name: functional_type_internal_name
+        functional_type_name: functional_type_name
       }
   end
 
-  defp maybe_get_functional_type_id(_functional_types, _functional_type_internal_name), do: nil
+  defp maybe_get_functional_type_id(_functional_types, _functional_type_name), do: nil
 
   defp validated_functional_type_id!(functional_type_id) when is_binary(functional_type_id),
     do: functional_type_id

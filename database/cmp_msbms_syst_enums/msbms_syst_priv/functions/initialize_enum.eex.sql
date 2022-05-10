@@ -93,7 +93,7 @@ BEGIN
                ,var_new_enum.id
                ,( SELECT id
                   FROM msbms_syst_data.syst_enum_functional_types
-                  WHERE internal_name = var_curr_enum_item ->> 'functional_type_internal_name')
+                  WHERE internal_name = var_curr_enum_item ->> 'functional_type_name')
                ,( var_curr_enum_item -> 'enum_default' )::boolean
                ,( var_curr_enum_item -> 'functional_type_default' )::boolean
                ,( var_curr_enum_item -> 'syst_defined' )::boolean
