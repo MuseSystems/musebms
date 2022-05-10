@@ -69,7 +69,7 @@ defmodule MsbmsSystSettings.Runtime.Server do
   @spec init(MsbmsSystSettings.Types.setting_service_params()) ::
           {:ok, map()} | {:stop, MsbmsSystError.t()}
   def init({service_name, datastore_context_name}) do
-    ProcessUtils.put_settings_service(service_name)
+    _ = ProcessUtils.put_settings_service(service_name)
     ets_table_name = Settings.get_ets_table_from_service_name(service_name)
 
     _ = :ets.new(ets_table_name, [:set, :protected, :named_table])

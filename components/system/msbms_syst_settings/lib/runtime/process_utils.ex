@@ -23,7 +23,7 @@ defmodule MsbmsSystSettings.Runtime.ProcessUtils do
     do: Process.put({__MODULE__, :service_name}, service_name)
 
   @spec get_settings_service() :: MsbmsSystSettings.Types.service_name() | nil
-  def get_settings_service(), do: Process.get({__MODULE__, :service_name})
+  def get_settings_service, do: Process.get({__MODULE__, :service_name})
 
   @spec clear_settings_service() :: MsbmsSystSettings.Types.service_name() | nil
   def clear_settings_service(), do: Process.put({__MODULE__, :service_name}, nil)

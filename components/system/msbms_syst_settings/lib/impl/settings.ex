@@ -33,7 +33,7 @@ defmodule MsbmsSystSettings.Impl.Settings do
   # GenServer and are in "protected" mode.
 
   @spec refresh_from_database() :: :ok
-  def refresh_from_database() do
+  def refresh_from_database do
     ets_table_name = get_ets_table_from_service_name(ProcessUtils.get_settings_service())
 
     :ets.delete_all_objects(ets_table_name)
@@ -78,7 +78,7 @@ defmodule MsbmsSystSettings.Impl.Settings do
 
   @spec get_all_settings_values() ::
           list(MsbmsSystSettings.Data.SystSettings)
-  def get_all_settings_values() do
+  def get_all_settings_values do
     # Select query :ets.fun2ms(fn {_, setting_values} -> setting_values end)
     ProcessUtils.get_settings_service()
     |> get_ets_table_from_service_name()

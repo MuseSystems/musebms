@@ -126,7 +126,7 @@ defmodule MsbmsSystSettings do
 
   """
   @spec refresh_from_database() :: :ok
-  def refresh_from_database() do
+  def refresh_from_database do
     GenServer.call(ProcessUtils.get_settings_service(), :refresh)
   end
 
@@ -336,7 +336,7 @@ defmodule MsbmsSystSettings do
     :ok
   """
   @spec terminate_settings_service() :: :ok
-  def terminate_settings_service() do
+  def terminate_settings_service do
     GenServer.stop(ProcessUtils.get_settings_service(), :normal)
   end
 end
