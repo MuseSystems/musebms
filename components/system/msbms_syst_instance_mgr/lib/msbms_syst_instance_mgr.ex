@@ -243,20 +243,20 @@ defmodule MsbmsSystInstanceMgr do
 
   @spec list_instance_types() ::
           {:ok, list(MsbmsSystEnums.Data.SystEnumItems.t())} | {:error, MsbmsSystError.t()}
-  defdelegate list_instance_types, to: Impl.Instances
+  defdelegate list_instance_types, to: Impl.InstanceTypes
 
   @spec create_instance_type(Types.instance_type()) ::
           {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MsbmsSystError.t()}
-  defdelegate create_instance_type(instance_type_params), to: Impl.Instances
+  defdelegate create_instance_type(instance_type_params), to: Impl.InstanceTypes
 
   @spec get_instance_type_by_name(MsbmsSystEnums.Types.enum_item_name()) ::
           {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MsbmsSystError.t()}
-  defdelegate get_instance_type_by_name(instance_type_name), to: Impl.Instances
+  defdelegate get_instance_type_by_name(instance_type_name), to: Impl.InstanceTypes
 
   @spec set_instance_type_values(
           MsbmsSystEnums.Types.enum_item_name(),
           Types.instance_type()
         ) :: {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MsbmsSystError.t()}
   defdelegate set_instance_type_values(instance_type_name, instance_type_params),
-    to: Impl.Instances
+    to: Impl.InstanceTypes
 end
