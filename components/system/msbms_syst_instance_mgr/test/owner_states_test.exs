@@ -16,7 +16,7 @@ defmodule OwnerStatesTest do
   test "Can List Owner States" do
     assert {:ok, owner_states} = MsbmsSystInstanceMgr.list_owner_states()
 
-    assert 6 >= length(owner_states)
+    assert 4 <= length(owner_states)
   end
 
   test "Can Create Owner State" do
