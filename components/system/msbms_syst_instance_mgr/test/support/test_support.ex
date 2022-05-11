@@ -104,7 +104,7 @@ defmodule TestSupport do
     datastore_options = @datastore_options
     :ok = MsbmsSystDatastore.stop_datastore(datastore_options)
     :ok = MsbmsSystDatastore.drop_datastore(datastore_options)
-    File.rm_rf!("priv/database/cmp_msbms_syst_instance_mgr")
+    File.rm_rf!(Path.join(["priv/database", @migration_test_datastore_type]))
   end
 
   def get_testing_datastore_context_id, do: @datastore_context_name
