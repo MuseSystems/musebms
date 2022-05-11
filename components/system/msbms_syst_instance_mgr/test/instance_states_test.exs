@@ -16,7 +16,7 @@ defmodule InstanceStatesTest do
   test "Can List Instance States" do
     assert {:ok, instance_states} = MsbmsSystInstanceMgr.list_instance_states()
 
-    assert 6 >= length(instance_states)
+    assert 6 <= length(instance_states)
   end
 
   test "Can Create Instance State" do
