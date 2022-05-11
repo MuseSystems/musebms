@@ -1,5 +1,5 @@
-# Source File: msbms_syst_instance_mgr_applications_test.exs
-# Location:    components/system/msbms_syst_instance_mgr/test/msbms_syst_instance_mgr_applications_test.exs
+# Source File: applications_test.exs
+# Location:    components/system/msbms_syst_instance_mgr/test/applications_test.exs
 # Project:     msbms
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,8 +10,8 @@
 #
 # muse.information@musesystems.com :: https: //muse.systems
 
-defmodule MsbmsSystInstanceMgrApplicationsTest do
-  use MsbmsSystInstanceMgrTestCase, async: true
+defmodule ApplicationsTest do
+  use InstanceMgrTestCase, async: true
 
   test "Can List Applications" do
     assert {:ok, apps} = MsbmsSystInstanceMgr.list_applications()

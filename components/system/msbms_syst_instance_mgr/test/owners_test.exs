@@ -1,5 +1,5 @@
-# Source File: msbms_syst_instance_mgr_owners_test.exs
-# Location:    components/system/msbms_syst_instance_mgr/test/msbms_syst_instance_mgr_owners_test.exs
+# Source File: owners_test.exs
+# Location:    components/system/msbms_syst_instance_mgr/test/owners_test.exs
 # Project:     msbms
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,8 +10,8 @@
 #
 # muse.information@musesystems.com :: https: //muse.systems
 
-defmodule MsbmsSystInstanceMgrOwnersTest do
-  use MsbmsSystInstanceMgrTestCase, async: true
+defmodule OwnersTest do
+  use InstanceMgrTestCase, async: true
 
   test "Can List All Owners" do
     assert {:ok, owners} = MsbmsSystInstanceMgr.list_owners()

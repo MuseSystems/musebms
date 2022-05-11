@@ -1,5 +1,5 @@
-# Source File: msbms_syst_instance_mgr_instances_test.exs
-# Location:    components/system/msbms_syst_instance_mgr/test/msbms_syst_instance_mgr_instances_test.exs
+# Source File: instances_test.exs
+# Location:    components/system/msbms_syst_instance_mgr/test/instances_test.exs
 # Project:     msbms
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,8 +10,8 @@
 #
 # muse.information@musesystems.com :: https: //muse.systems
 
-defmodule MsbsSystInstanceMgrInstancesTest do
-  use MsbmsSystInstanceMgrTestCase, async: true
+defmodule InstancesTest do
+  use InstanceMgrTestCase, async: true
 
   test "Can Get Unfiltered/Unsorted Instances List" do
     assert {:ok, instances_list} = MsbmsSystInstanceMgr.list_instances()

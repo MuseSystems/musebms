@@ -12,31 +12,29 @@
 
 #  This testing presumes that the database schema is tested separately and is
 #  for module testing purposes.
-MsbmsSystInstanceMgrTestHelper.setup_testing_database()
+TestSupport.setup_testing_database()
 
-MsbmsSystDatastore.set_datastore_context(
-  MsbmsSystInstanceMgrTestHelper.get_testing_datastore_context_id()
-)
+MsbmsSystDatastore.set_datastore_context(TestSupport.get_testing_datastore_context_id())
 
 enum_service_spec = %{
   id: MsbmsSystInstanceMgrTestingEnumService,
   start: {
     MsbmsSystEnums,
     :start_link,
-    [{:instance_mgr, MsbmsSystInstanceMgrTestHelper.get_testing_datastore_context_id()}]
+    [{:instance_mgr, TestSupport.get_testing_datastore_context_id()}]
   }
 }
 
 children = [
-  {DynamicSupervisor, strategy: :one_for_one, name: MsbmsSystInstanceMgr.TestingSuper}
+  {DynamicSupervisor, strategy: :one_for_one, name: MsbmsSystInstanceMgr.TestingSupervisor}
 ]
 
 Supervisor.start_link(children, strategy: :one_for_one)
 Logger.configure(level: :info)
 ExUnit.start()
 
-DynamicSupervisor.start_child(MsbmsSystInstanceMgr.TestingSuper, enum_service_spec)
+DynamicSupervisor.start_child(MsbmsSystInstanceMgr.TestingSupervisor, enum_service_spec)
 
 ExUnit.after_suite(fn _suite_result ->
-  MsbmsSystInstanceMgrTestHelper.cleanup_testing_database()
+  TestSupport.cleanup_testing_database()
 end)
