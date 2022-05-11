@@ -259,4 +259,25 @@ defmodule MsbmsSystInstanceMgr do
         ) :: {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MsbmsSystError.t()}
   defdelegate set_instance_type_values(instance_type_name, instance_type_params),
     to: Impl.InstanceTypes
+
+  @spec list_instance_states() ::
+          {:ok, list(MsbmsSystEnums.Data.SystEnumItems.t())} | {:error, MsbmsSystError.t()}
+  defdelegate list_instance_states, to: Impl.InstanceStates
+
+  @spec create_instance_state(Types.instance_state()) ::
+          {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MsbmsSystError.t()}
+  defdelegate create_instance_state(instance_state_params), to: Impl.InstanceStates
+
+  @spec get_instance_state_by_name(MsbmsSystEnums.Types.enum_item_name()) ::
+          {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MsbmsSystError.t()}
+  defdelegate get_instance_state_by_name(instance_state_name), to: Impl.InstanceStates
+
+  @spec set_instance_state_values(MsbmsSystEnums.Types.enum_item_name(), Types.instance_state()) ::
+          {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MsbmsSystError.t()}
+  defdelegate set_instance_state_values(instance_state_name, instance_state_params),
+    to: Impl.InstanceStates
+
+  @spec delete_instance_state(MsbmsSystEnums.Types.enum_item_name()) ::
+          :ok | {:error, MsbmsSystError.t()}
+  defdelegate delete_instance_state(instance_state_name), to: Impl.InstanceStates
 end

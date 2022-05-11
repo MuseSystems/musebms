@@ -179,4 +179,21 @@ defmodule MsbmsSystInstanceMgr.Types do
           optional(:user_options) => instance_type_default_options(),
           optional(:enum_default) => boolean()
         }
+
+  @typedoc """
+  The required data for maintaining Instance States.
+
+  Note that when creating new instance states, the `internal_name`,
+  `display_name`, `external_name`, `user_description`, and
+  `functional_type_name` fields are required.  On updates of an existing
+  instance state, those fields are optional.
+  """
+  @type instance_state :: %{
+          optional(:internal_name) => MsbmsSystEnums.Types.enum_item_name(),
+          optional(:display_name) => String.t(),
+          optional(:external_name) => String.t(),
+          optional(:user_description) => String.t(),
+          optional(:enum_default) => boolean(),
+          optional(:functional_type_name) => MsbmsSystEnums.Types.enum_functional_type_name()
+        }
 end
