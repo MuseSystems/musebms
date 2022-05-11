@@ -164,7 +164,7 @@ defmodule MsbmsSystInstanceMgr.Types do
         }
 
   @typedoc """
-  The required data for creating new Instance Types.
+  The required data for maintaining Instance Types.
 
   Note that when creating new instance types, the `internal_name`,
   `display_name`, `external_name`, `user_description`, and `user_options` fields
