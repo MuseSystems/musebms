@@ -11,6 +11,18 @@
 # muse.information@musesystems.com :: https: //muse.systems
 
 defmodule TestSupport do
+  @moduledoc false
+
+  #######################
+  #
+  # Testing Support
+  #
+  # This module provides functions used to create, migrate, and clean up the
+  # testing database for the individual tests in the suite that require the
+  # database.
+  #
+  ########################
+
   alias Mix.Tasks.Builddb
 
   @datastore_context_name :instmgr_app_context
@@ -106,14 +118,4 @@ defmodule TestSupport do
       @migration_test_source_root_dir
     ])
   end
-
-  # def setup_enums_service do
-  #   service_child_spec = %{
-  #     id: MsbmsSystInstanceMgrTestingEnumService,
-  #     start: {MsbmsSystEnums, :start_link, [{:instance_mgr, @datastore_context_name}]}
-  #   }
-
-  #   start_supervised!(service_child_spec)
-  #   :ok
-  # end
 end
