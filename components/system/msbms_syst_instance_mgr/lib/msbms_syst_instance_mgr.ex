@@ -280,4 +280,25 @@ defmodule MsbmsSystInstanceMgr do
   @spec delete_instance_state(MsbmsSystEnums.Types.enum_item_name()) ::
           :ok | {:error, MsbmsSystError.t()}
   defdelegate delete_instance_state(instance_state_name), to: Impl.InstanceStates
+
+  @spec list_owner_states() ::
+          {:ok, list(MsbmsSystEnums.Data.SystEnumItems.t())} | {:error, MsbmsSystError.t()}
+  defdelegate list_owner_states, to: Impl.OwnerStates
+
+  @spec create_owner_state(Types.owner_state()) ::
+          {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MsbmsSystError.t()}
+  defdelegate create_owner_state(owner_state_params), to: Impl.OwnerStates
+
+  @spec get_owner_state_by_name(MsbmsSystEnums.Types.enum_item_name()) ::
+          {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MsbmsSystError.t()}
+  defdelegate get_owner_state_by_name(owner_state_name), to: Impl.OwnerStates
+
+  @spec set_owner_state_values(MsbmsSystEnums.Types.enum_item_name(), Types.owner_state()) ::
+          {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MsbmsSystError.t()}
+  defdelegate set_owner_state_values(owner_state_name, owner_state_params),
+    to: Impl.OwnerStates
+
+  @spec delete_owner_state(MsbmsSystEnums.Types.enum_item_name()) ::
+          :ok | {:error, MsbmsSystError.t()}
+  defdelegate delete_owner_state(owner_state_name), to: Impl.OwnerStates
 end
