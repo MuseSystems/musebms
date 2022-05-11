@@ -1,5 +1,5 @@
-# Source File: msbms_syst_instance_mgr_doctests_test.exs
-# Location:    components/system/msbms_syst_instance_mgr/test/msbms_syst_instance_mgr_doctests_test.exs
+# Source File: doctests_test.exs
+# Location:    components/system/msbms_syst_instance_mgr/test/doctests_test.exs
 # Project:     msbms
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,8 +10,8 @@
 #
 # muse.information@musesystems.com :: https: //muse.systems
 
-defmodule MsbmsSystInstanceMgrDoctestsTest do
-  use MsbmsSystInstanceMgrTestCase, async: true
+defmodule DoctestsTest do
+  use InstanceMgrTestCase, async: true
 
   doctest MsbmsSystInstanceMgr
 end

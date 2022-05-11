@@ -1,5 +1,5 @@
-# Source File: msbms_syst_instance_mgr_test_case.ex
-# Location:    components/system/msbms_syst_instance_mgr/test/support/msbms_syst_instance_mgr_test_case.ex
+# Source File: instance_mgr_test_case.ex
+# Location:    components/system/msbms_syst_instance_mgr/test/support/instance_mgr_test_case.ex
 # Project:     msbms
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,15 +10,13 @@
 #
 # muse.information@musesystems.com :: https: //muse.systems
 
-defmodule MsbmsSystInstanceMgrTestCase do
+defmodule InstanceMgrTestCase do
   use ExUnit.CaseTemplate
 
   setup do
     [
       datastore_context:
-        MsbmsSystDatastore.set_datastore_context(
-          MsbmsSystInstanceMgrTestHelper.get_testing_datastore_context_id()
-        )
+        MsbmsSystDatastore.set_datastore_context(TestSupport.get_testing_datastore_context_id())
     ]
   end
 

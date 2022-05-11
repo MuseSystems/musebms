@@ -1,5 +1,5 @@
-# Source File: msbms_syst_instance_mgr_test_helper.ex
-# Location:    components/system/msbms_syst_instance_mgr/test/support/msbms_syst_instance_mgr_test_helper.ex
+# Source File: test_support.ex
+# Location:    components/system/msbms_syst_instance_mgr/test/support/test_support.ex
 # Project:     msbms
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,7 +10,7 @@
 #
 # muse.information@musesystems.com :: https: //muse.systems
 
-defmodule MsbmsSystInstanceMgrTestHelper do
+defmodule TestSupport do
   alias Mix.Tasks.Builddb
 
   @datastore_context_name :instmgr_app_context
