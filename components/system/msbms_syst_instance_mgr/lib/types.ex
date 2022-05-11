@@ -84,6 +84,23 @@ defmodule MsbmsSystInstanceMgr.Types do
           | :owner_states_purge_eligible
 
   @typedoc """
+  The required data for maintaining Owner States.
+
+  Note that when creating new owner states, the `internal_name`, `display_name`,
+  `external_name`, `user_description`, and `functional_type_name` fields are
+  required.  On updates of an existing instance state, those fields are
+  optional.
+  """
+  @type owner_state :: %{
+          optional(:internal_name) => MsbmsSystEnums.Types.enum_item_name(),
+          optional(:display_name) => String.t(),
+          optional(:external_name) => String.t(),
+          optional(:user_description) => String.t(),
+          optional(:enum_default) => boolean(),
+          optional(:functional_type_name) => MsbmsSystEnums.Types.enum_functional_type_name()
+        }
+
+  @typedoc """
   Establishes the available instance state functional types understood by the
   module.
 
