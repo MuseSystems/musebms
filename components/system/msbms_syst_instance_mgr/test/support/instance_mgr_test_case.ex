@@ -11,6 +11,8 @@
 # muse.information@musesystems.com :: https: //muse.systems
 
 defmodule InstanceMgrTestCase do
+  @moduledoc false
+
   use ExUnit.CaseTemplate
 
   setup do
