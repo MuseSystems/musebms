@@ -114,8 +114,16 @@ BEGIN
         , '(System Description Not Provided)'
         , 'A Big Instance Description'
         , '{
-          "app_db_context_pool_size": 20,
-          "api_db_context_pool_size": 20
+          "datastore_contexts": [
+            {
+              "id": "test_datastore_context_1",
+              "db_pool_size": 20
+            },
+            {
+              "id": "test_datastore_context_1",
+              "db_pool_size": 20
+            }
+          ]
         }'::jsonb )
     RETURNING * INTO var_big_instance;
 
@@ -136,7 +144,18 @@ BEGIN
         , FALSE
         , '(System Description Not Provided)'
         , 'A Standard Instance Description'
-        , NULL )
+        , '{
+          "datastore_contexts": [
+            {
+              "id": "test_datastore_context_1",
+              "db_pool_size": 10
+            },
+            {
+              "id": "test_datastore_context_1",
+              "db_pool_size": 10
+            }
+          ]
+        }'::jsonb )
     RETURNING * INTO var_std_instance;
 
     INSERT INTO msbms_syst_data.syst_enum_items
@@ -157,8 +176,16 @@ BEGIN
         , '(System Description Not Provided)'
         , 'A Small Instance Description'
         , '{
-          "app_db_context_pool_size": 3,
-          "api_db_context_pool_size": 3
+          "datastore_contexts": [
+            {
+              "id": "test_datastore_context_1",
+              "db_pool_size": 3
+            },
+            {
+              "id": "test_datastore_context_1",
+              "db_pool_size": 3
+            }
+          ]
         }'::jsonb )
     RETURNING * INTO var_sml_instance;
 
@@ -180,14 +207,24 @@ BEGIN
         , 'Test Instance One'
         , var_test_app_1.id
         , var_big_instance.id
-        , ( SELECT id
+        , ( SELECT
+                id
             FROM msbms_syst_data.syst_enum_items
             WHERE internal_name = 'instance_states_sysdef_active' )
         , var_owner_3.id
         , NULL
-        , json_build_object( 'dbserver_name', 'test_server', 'app_db_context_pool_size', 20,
-                             'api_db_context_pool_size', 20, 'instance_code',
-                             gen_random_bytes( 32 ) ) )
+        , '{
+          "datastore_contexts": [
+            {
+              "id": "test_datastore_context_1",
+              "db_pool_size": 20
+            },
+            {
+              "id": "test_datastore_context_1",
+              "db_pool_size": 20
+            }
+          ]
+        }'::jsonb )
     RETURNING * INTO var_test_instance_1;
 
     INSERT INTO msbms_syst_data.syst_instances
@@ -209,9 +246,18 @@ BEGIN
             WHERE internal_name = 'instance_states_sysdef_active' )
         , var_owner_3.id
         , var_test_instance_1.id
-        , json_build_object( 'dbserver_name', 'test_server', 'app_db_context_pool_size', 10,
-                             'api_db_context_pool_size', 10, 'instance_code',
-                             gen_random_bytes( 32 ) ) )
+        , '{
+          "datastore_contexts": [
+            {
+              "id": "test_datastore_context_1",
+              "db_pool_size": 10
+            },
+            {
+              "id": "test_datastore_context_1",
+              "db_pool_size": 10
+            }
+          ]
+        }'::jsonb )
     RETURNING * INTO var_test_instance_2;
 
     INSERT INTO msbms_syst_data.syst_instances
@@ -228,16 +274,25 @@ BEGIN
         , 'Test Instance Three (Sub 1)'
         , var_test_app_1.id
         , var_sml_instance.id
-        , ( SELECT id
+        , ( SELECT
+                id
             FROM msbms_syst_data.syst_enum_items
             WHERE internal_name = 'instance_states_sysdef_inactive' )
         , var_owner_3.id
         , var_test_instance_1.id
-        , json_build_object( 'dbserver_name', 'test_server', 'app_db_context_pool_size', 3,
-                             'api_db_context_pool_size', 3, 'instance_code',
-                             gen_random_bytes( 32 ) ) )
+        , '{
+          "datastore_contexts": [
+            {
+              "id": "test_datastore_context_1",
+              "db_pool_size": 3
+            },
+            {
+              "id": "test_datastore_context_1",
+              "db_pool_size": 3
+            }
+          ]
+        }'::jsonb )
     RETURNING * INTO var_test_instance_3;
-
 
     INSERT INTO msbms_syst_data.syst_instances
         ( internal_name
@@ -253,14 +308,24 @@ BEGIN
         , 'Test Instance Four'
         , var_test_app_2.id
         , var_big_instance.id
-        , ( SELECT id
+        , ( SELECT
+                id
             FROM msbms_syst_data.syst_enum_items
             WHERE internal_name = 'instance_states_sysdef_active' )
         , var_owner_4.id
         , NULL
-        , json_build_object( 'dbserver_name', 'test_server', 'app_db_context_pool_size', 20,
-                             'api_db_context_pool_size', 20, 'instance_code',
-                             gen_random_bytes( 32 ) ) )
+        , '{
+          "datastore_contexts": [
+            {
+              "id": "test_datastore_context_1",
+              "db_pool_size": 20
+            },
+            {
+              "id": "test_datastore_context_1",
+              "db_pool_size": 20
+            }
+          ]
+        }'::jsonb )
     RETURNING * INTO var_test_instance_4;
 
     INSERT INTO msbms_syst_data.syst_instances
@@ -277,14 +342,24 @@ BEGIN
         , 'Test Instance Five'
         , var_test_app_1.id
         , var_big_instance.id
-        , ( SELECT id
+        , ( SELECT
+                id
             FROM msbms_syst_data.syst_enum_items
             WHERE internal_name = 'instance_states_sysdef_inactive' )
         , var_owner_4.id
         , NULL
-        , json_build_object( 'dbserver_name', 'test_server', 'app_db_context_pool_size', 20,
-                             'api_db_context_pool_size', 20, 'instance_code',
-                             gen_random_bytes( 32 ) ) )
+        , '{
+          "datastore_contexts": [
+            {
+              "id": "test_datastore_context_1",
+              "db_pool_size": 20
+            },
+            {
+              "id": "test_datastore_context_1",
+              "db_pool_size": 20
+            }
+          ]
+        }'::jsonb )
     RETURNING * INTO var_test_instance_5;
 
 END;
