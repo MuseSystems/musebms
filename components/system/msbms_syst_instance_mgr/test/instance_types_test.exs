@@ -14,7 +14,7 @@ defmodule InstanceTypesTest do
   use InstanceMgrTestCase, async: true
 
   test "Can List Instance Types" do
-    assert {:ok, instance_types_list} = MsbmsSystInstanceMgr.list_instance_types()
+    assert {:ok, _instance_types_list} = MsbmsSystInstanceMgr.list_instance_types()
   end
 
   test "Can create Instance Type" do
@@ -63,5 +63,31 @@ defmodule InstanceTypesTest do
                "instance_types_std_instance",
                instance_type_changes
              )
+  end
+
+  test "Can Delete Instance Type" do
+    new_instance_type = %{
+      internal_name: "can_delete_instance_type",
+      display_name: "Can Delete Instance Type",
+      enum_default: true,
+      user_description: "Can Delete Instance Type Description",
+      external_name: "Can Delete Instance Type",
+      user_options: %{
+        datastore_contexts: [
+          %{
+            id: :test_datastore_context_1,
+            db_pool_size: 3
+          },
+          %{
+            id: :test_datastore_context_1,
+            db_pool_size: 3
+          }
+        ]
+      }
+    }
+
+    {:ok, _instance_type} = MsbmsSystInstanceMgr.create_instance_type(new_instance_type)
+
+    assert :ok = MsbmsSystInstanceMgr.delete_instance_type("can_delete_instance_type")
   end
 end
