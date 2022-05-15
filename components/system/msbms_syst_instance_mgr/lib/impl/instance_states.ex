@@ -41,7 +41,7 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceStates do
       }
   end
 
-  @spec create_instance_state(Types.instance_state()) ::
+  @spec create_instance_state(Types.instance_state_params()) ::
           {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MsbmsSystError.t()}
   def create_instance_state(instance_state_params) do
     :ok = MsbmsSystEnums.create_enum_item("instance_states", instance_state_params)
@@ -81,7 +81,10 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceStates do
       }
   end
 
-  @spec set_instance_state_values(MsbmsSystEnums.Types.enum_item_name(), Types.instance_state()) ::
+  @spec set_instance_state_values(
+          MsbmsSystEnums.Types.enum_item_name(),
+          Types.instance_state_params()
+        ) ::
           {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MsbmsSystError.t()}
   def set_instance_state_values(instance_state_name, instance_state_params) do
     :ok =

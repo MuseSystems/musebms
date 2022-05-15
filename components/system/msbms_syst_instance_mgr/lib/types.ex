@@ -91,7 +91,7 @@ defmodule MsbmsSystInstanceMgr.Types do
   required.  On updates of an existing instance state, those fields are
   optional.
   """
-  @type owner_state :: %{
+  @type owner_state_params :: %{
           optional(:internal_name) => MsbmsSystEnums.Types.enum_item_name(),
           optional(:display_name) => String.t(),
           optional(:external_name) => String.t(),
@@ -188,7 +188,7 @@ defmodule MsbmsSystInstanceMgr.Types do
   are required.  On updates of an existing instance type, those fields are
   optional.
   """
-  @type instance_type :: %{
+  @type instance_type_params :: %{
           optional(:internal_name) => MsbmsSystEnums.Types.enum_item_name(),
           optional(:display_name) => String.t(),
           optional(:external_name) => String.t(),
@@ -205,7 +205,7 @@ defmodule MsbmsSystInstanceMgr.Types do
   `functional_type_name` fields are required.  On updates of an existing
   instance state, those fields are optional.
   """
-  @type instance_state :: %{
+  @type instance_state_params :: %{
           optional(:internal_name) => MsbmsSystEnums.Types.enum_item_name(),
           optional(:display_name) => String.t(),
           optional(:external_name) => String.t(),
