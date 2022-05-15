@@ -68,7 +68,7 @@ defmodule OwnersTest do
       )
 
     assert {:ok, %MsbmsSystInstanceMgr.Data.SystOwners{internal_name: "changed_owner_create_2"}} =
-             MsbmsSystInstanceMgr.set_owner_values(test_owner.id, change)
+             MsbmsSystInstanceMgr.set_owner_values("owner_create_2", change)
   end
 
   test "Can Change Existing Owner Display Name" do
@@ -86,7 +86,7 @@ defmodule OwnersTest do
     assert {:ok,
             %MsbmsSystInstanceMgr.Data.SystOwners{
               display_name: "Owner Change Display Name Test Is Changed"
-            }} = MsbmsSystInstanceMgr.set_owner_values(test_owner.id, change)
+            }} = MsbmsSystInstanceMgr.set_owner_values("owner_create_3", change)
   end
 
   test "Can Change Existing Owner Owner State" do
@@ -109,7 +109,7 @@ defmodule OwnersTest do
     assert {:ok,
             %MsbmsSystInstanceMgr.Data.SystOwners{
               owner_state_id: updated_id
-            }} = MsbmsSystInstanceMgr.set_owner_values(test_owner.id, change)
+            }} = MsbmsSystInstanceMgr.set_owner_values("owner_create_4", change)
 
     assert new_state.id == updated_id
   end
@@ -135,7 +135,7 @@ defmodule OwnersTest do
         default_owner_state.id
       )
 
-    assert {:ok, updated_owner} = MsbmsSystInstanceMgr.set_owner_values(test_owner.id, change)
+    assert {:ok, updated_owner} = MsbmsSystInstanceMgr.set_owner_values("owner_create_5", change)
 
     assert new_state.id == updated_owner.owner_state_id
     assert "owner_create_5_changed" == updated_owner.internal_name
@@ -155,7 +155,7 @@ defmodule OwnersTest do
         default_owner_state.id
       )
 
-    assert {:ok, {1, _rows}} = MsbmsSystInstanceMgr.purge_owner(test_owner.id)
+    assert {:ok, {1, _rows}} = MsbmsSystInstanceMgr.purge_owner("owner_purge_1")
   end
 
   test "Cannot Purge a Single Ineligible Owner" do
@@ -168,7 +168,7 @@ defmodule OwnersTest do
         default_owner_state.id
       )
 
-    assert {:error, _reason} = MsbmsSystInstanceMgr.purge_owner(test_owner.id)
+    assert {:error, _reason} = MsbmsSystInstanceMgr.purge_owner("owner_purge_2")
   end
 
   test "Can Purge a All Purge Eligible Owners" do

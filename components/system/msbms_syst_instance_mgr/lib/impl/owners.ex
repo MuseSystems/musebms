@@ -134,10 +134,11 @@ defmodule MsbmsSystInstanceMgr.Impl.Owners do
       }
   end
 
-  @spec set_owner_values(Ecto.UUID.t(), Types.owner_params()) ::
+  @spec set_owner_values(Types.owner_name(), Types.owner_params()) ::
           {:ok, Data.SystOwners.t()} | {:error, MsbmsSystError.t()}
-  def set_owner_values(owner_id, owner_params) do
-    MsbmsSystDatastore.get!(Data.SystOwners, owner_id)
+  def set_owner_values(owner_name, owner_params) do
+    from(o in Data.SystOwners, where: [internal_name: ^owner_name])
+    |> MsbmsSystDatastore.one!()
     |> Data.SystOwners.changeset(owner_params)
     |> MsbmsSystDatastore.update!(returning: true)
     |> then(&{:ok, &1})
@@ -155,13 +156,13 @@ defmodule MsbmsSystInstanceMgr.Impl.Owners do
       }
   end
 
-  @spec purge_owner(Ecto.UUID.t()) ::
+  @spec purge_owner(Types.owner_name()) ::
           {:ok, {non_neg_integer(), nil | [term()]}} | {:error, MsbmsSystError.t()}
-  def purge_owner(owner_id) do
+  def purge_owner(owner_name) do
     from(o in Data.SystOwners,
       join: s in assoc(o, :owner_state),
       join: f in assoc(s, :functional_type),
-      where: o.id == ^owner_id and f.internal_name == "owner_states_purge_eligible"
+      where: o.internal_name == ^owner_name and f.internal_name == "owner_states_purge_eligible"
     )
     |> MsbmsSystDatastore.delete_all(returning: true)
     |> maybe_owner_purged()
