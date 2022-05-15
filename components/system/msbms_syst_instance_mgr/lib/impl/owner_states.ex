@@ -41,7 +41,7 @@ defmodule MsbmsSystInstanceMgr.Impl.OwnerStates do
       }
   end
 
-  @spec create_owner_state(Types.owner_state()) ::
+  @spec create_owner_state(Types.owner_state_params()) ::
           {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MsbmsSystError.t()}
   def create_owner_state(owner_state_params) do
     :ok = MsbmsSystEnums.create_enum_item("owner_states", owner_state_params)
@@ -81,7 +81,7 @@ defmodule MsbmsSystInstanceMgr.Impl.OwnerStates do
       }
   end
 
-  @spec set_owner_state_values(MsbmsSystEnums.Types.enum_item_name(), Types.owner_state()) ::
+  @spec set_owner_state_values(MsbmsSystEnums.Types.enum_item_name(), Types.owner_state_params()) ::
           {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MsbmsSystError.t()}
   def set_owner_state_values(owner_state_name, owner_state_params) do
     :ok =

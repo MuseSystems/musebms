@@ -41,7 +41,7 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceTypes do
       }
   end
 
-  @spec create_instance_type(Types.instance_type()) ::
+  @spec create_instance_type(Types.instance_type_params()) ::
           {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MsbmsSystError.t()}
   def create_instance_type(instance_type_params) do
     :ok = MsbmsSystEnums.create_enum_item("instance_types", instance_type_params)
@@ -81,7 +81,10 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceTypes do
       }
   end
 
-  @spec set_instance_type_values(MsbmsSystEnums.Types.enum_item_name(), Types.instance_type()) ::
+  @spec set_instance_type_values(
+          MsbmsSystEnums.Types.enum_item_name(),
+          Types.instance_type_params()
+        ) ::
           {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MsbmsSystError.t()}
   def set_instance_type_values(instance_type_name, instance_type_params) do
     :ok =
@@ -91,7 +94,7 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceTypes do
         instance_type_params
       )
 
-    get_instance_type_by_name(instance_type_name)
+    get_instance_type_by_name(instance_type_params[:internal_name] || instance_type_name)
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -108,7 +111,6 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceTypes do
 
   @spec delete_instance_type(MsbmsSystEnums.Types.enum_item_name()) ::
           :ok | {:error, MsbmsSystError.t()}
-
   def delete_instance_type(instance_type_name) do
     MsbmsSystEnums.delete_enum_item("instance_types", instance_type_name)
   rescue
