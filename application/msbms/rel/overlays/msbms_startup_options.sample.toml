@@ -38,15 +38,28 @@ server_name                    = "global_db"
 # the setting here.
 start_server_instances         = false
 
-# If true, the server may host production instance databases.  The value here is
-# used to filter the available servers by instance type, especially during the
-# process that assigns instances to servers.
-instance_production_dbserver  = false
-
-# If true, the server may host non-production instance databases.  The value
-# here is used to filter the available servers by instance type, especially
-# during the process that assigns instances to servers.
-instance_sandbox_dbserver     = false
+# Indicates which system instance classes the database server may be used to
+# host.  None, one, or many of the following values are allowed:
+#
+#     * primary - this class is used to host production workloads.  At least one
+#       database server must be configured to support primary class instances.
+#       In many scenarios, this will be the only class needed.
+#
+#     * linked - instances which are child instances to a parent primary
+#       instance.  Typically these are used for non-production instances which
+#       are copies or otherwise reflect the parent instance.
+#
+#     * demo - indicates that the database server will host instances dedicated
+#       to demonstration purposes.  In typical scenarios, this instance class
+#       will not be used.
+#
+#     * reserved - designates that other, special use instances may be hosted by
+#       the database server.  Under normal circumstances this value will not be
+#       used.
+#
+# If no classes are configured for a database server, the server may not host
+# any application instances though it may host the global database.
+supported_instance_classes     = []
 
 # The hostname/IP of the database server
 db_host                        = "127.0.0.1"
@@ -65,22 +78,6 @@ db_log_level                   = "error"
 
 # The number of instance databases that may be hosted on the server.
 db_max_instances               = 0
-
-# The default global/instance app_user pool size that the application will start
-# each of the database connections with.
-db_default_app_user_pool_size  = 3
-
-# The default global/instance api_user pool size that the application will start
-# each of the database connections with.
-db_default_api_user_pool_size  = 2
-
-# The default global/instance app_admin pool size that the application will
-# start each of the database connections with.
-db_default_app_admin_pool_size = 2
-
-# The default global/instance api_admin pool size that the application will
-# start each of the database connections with.
-db_default_api_admin_pool_size = 2
 
 # A string of bytes used as part of the token generation for the system managed
 # database user accounts.  Note that this value must be at least 32 bytes long
@@ -108,15 +105,28 @@ server_name                    = "instance_db"
 # the setting here.
 start_server_instances         = true
 
-# If true, the server may host production instance databases.  The value here is
-# used to filter the available servers by instance type, especially during the
-# process that assigns instances to servers.
-instance_production_dbserver  = true
-
-# If true, the server may host non-production instance databases.  The value
-# here is used to filter the available servers by instance type, especially
-# during the process that assigns instances to servers.
-instance_sandbox_dbserver     = true
+# Indicates which system instance classes the database server may be used to
+# host.  None, one, or many of the following values are allowed:
+#
+#     * primary - this class is used to host production workloads.  At least one
+#       database server must be configured to support primary class instances.
+#       In many scenarios, this will be the only class needed.
+#
+#     * linked - instances which are child instances to a parent primary
+#       instance.  Typically these are used for non-production instances which
+#       are copies or otherwise reflect the parent instance.
+#
+#     * demo - indicates that the database server will host instances dedicated
+#       to demonstration purposes.  In typical scenarios, this instance class
+#       will not be used.
+#
+#     * reserved - designates that other, special use instances may be hosted by
+#       the database server.  Under normal circumstances this value will not be
+#       used.
+#
+# If no classes are configured for a database server, the server may not host
+# any application instances though it may host the global database.
+supported_instance_classes     = ["primary"]
 
 # The hostname/IP of the database server
 db_host                        = "127.0.0.1"
@@ -135,22 +145,6 @@ db_log_level                   = "error"
 
 # The number of instance databases that may be hosted on the server.
 db_max_instances               = 0
-
-# The default global/instance app_user pool size that the application will start
-# each of the database connections with.
-db_default_app_user_pool_size  = 5
-
-# The default global/instance api_user pool size that the application will start
-# each of the database connections with.
-db_default_api_user_pool_size  = 3
-
-# The default global/instance app_admin pool size that the application will
-# start each of the database connections with.
-db_default_app_admin_pool_size = 3
-
-# The default global/instance api_admin pool size that the application will
-# start each of the database connections with.
-db_default_api_admin_pool_size = 3
 
 # A string of bytes used as part of the token generation for the system managed
 # database user accounts.  Note that this value must be at least 32 bytes long
