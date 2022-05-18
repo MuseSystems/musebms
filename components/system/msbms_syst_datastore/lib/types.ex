@@ -26,14 +26,10 @@ defmodule MsbmsSystDatastore.Types do
   * `:server_name` - Provides a unique identifier for a database server
     instance.
 
-  * `:start_server_databases` - If true, indicates that databases on the server
+  * `:start_server_instances` - If true, indicates that databases on the server
     can be started and made available as application datastores.
 
-  * `:instance_production_dbserver` - If true, this value indicates that the
-    database server may be used to host production data. (default `false`)
-
-  * `:instance_sandbox_dbserver` - If true, the database server instance may
-    host non-production, sandbox data. (default `false`)
+  * `:
 
   * `:db_host` - The hostname or IP address of the database server on the
     network.
@@ -51,10 +47,6 @@ defmodule MsbmsSystDatastore.Types do
   * `:db_max_databases` - The total number of databases allowed to be
     established for the db_server instance.
 
-  * `:context_defaults` - A list of contexts and their starting defaults for
-    certain database parameters.  Currently the only datastore_context fields
-    used by the db_server type are `id` and `starting_pool_size`.
-
   * `:server_salt` - For certain cryptographic operations, such as password
     derivation, allows for the assignment of specific salting value for that is
     specific to a given database server.  This value must be at least 32 bytes
@@ -71,15 +63,13 @@ defmodule MsbmsSystDatastore.Types do
 
   @type db_server :: %{
           required(:server_name) => String.t(),
-          optional(:start_server_databases) => boolean(),
-          optional(:instance_production_dbserver) => boolean(),
-          optional(:instance_sandbox_dbserver) => boolean(),
+          required(:start_server_instances) => boolean(),
+          required(:supported_instance_classes) => list(String.t()),
           required(:db_host) => String.t(),
           required(:db_port) => integer(),
           required(:db_show_sensitive) => boolean(),
           required(:db_log_level) => Logger.level(),
           required(:db_max_databases) => integer(),
-          required(:context_defaults) => [datastore_context()],
           required(:server_salt) => String.t(),
           required(:dbadmin_password) => String.t(),
           required(:dbadmin_pool_size) => integer()

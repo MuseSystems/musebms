@@ -1,10 +1,11 @@
 defmodule MsbmsSystOptions do
-
   @moduledoc """
   API for retrieving and working with option files stored in the application server file system.
   """
 
   alias MsbmsSystOptions.Impl.OptionsFile
+  alias MsbmsSystOptions.Impl.OptionsParser
+  alias MsbmsSystOptions.Types
 
   @doc """
   Parses and returns the contents of a TOML file at `options_file_path` via a
@@ -15,24 +16,56 @@ defmodule MsbmsSystOptions do
   value of `:error` and second value of the relevant `MsbmsSystError` exception
   is returned.
 
+  ## Parameters
+
+    * `options_file_path` - describes where to find the options file in the file
+    system.
+
   ## Examples
 
+  Typical call and return:
+
       iex> MsbmsSystOptions.get_options("./testing_options.toml")
-      { :ok,
+      {
+        :ok,
         %{
-          "test_key1" => "test value",
-          "test_list" => [
-            %{"test_key2" => "test value 2", "test_key3" => "test value 3"},
-            %{"test_key2" => "test value 2", "test_key3" => "test value 3"}
-          ]
-        } }
+          dbserver: [
+            %{
+              db_host: "127.0.0.1",
+              db_log_level: "debug",
+              db_max_instances: 0,
+              db_port: 5432,
+              db_show_sensitive: true,
+              dbadmin_password: "default.msbms.privileged.password",
+              dbadmin_pool_size: 1,
+              server_name: "global_db",
+              server_salt: "sklMRkLXzMQgzqpMpJZPk31Js88su39U/mooAXALhj0=",
+              start_server_instances: false,
+              supported_instance_classes: []
+            },
+            %{
+              db_host: "127.0.0.1",
+              db_log_level: "debug",
+              db_max_instances: 30,
+              db_port: 5432,
+              db_show_sensitive: true,
+              dbadmin_password: "default.msbms.privileged.password",
+              dbadmin_pool_size: 1,
+              server_name: "instance_db",
+              server_salt: "w1OfRx630x7svid8Tk3L9rLL1eEGSm0fq8XcLdveuSs=",
+              start_server_instances: true,
+              supported_instance_classes: ["primary", "linked", "demo", "reserved"]
+            }
+          ],
+          global_dbserver_name: "global_db",
+          global_pepper_value: "jTtEdXRExP5YXHeARQ1W66lP6wDc9GyOvhFPvwnHhtc="
+        }
+      }
 
-      iex> with {:error, %MsbmsSystError{}} <-
-      ...>   MsbmsSystOptions.get_options("./bad_file_name.toml") do
-      ...>   :error_returned
-      ...> end
-      :error_returned
+  Called with bad parameters:
 
+      iex> {:error, %MsbmsSystError{}} =
+      ...>   MsbmsSystOptions.get_options("./bad_file_name.toml")
   """
   @spec get_options(String.t()) :: {:ok, map()} | {:error, MsbmsSystError.t()}
   defdelegate get_options(options_file_path), to: OptionsFile
@@ -45,14 +78,43 @@ defmodule MsbmsSystOptions do
 
   ## Examples
 
+  Typical call and return:
+
       iex> MsbmsSystOptions.get_options!("./testing_options.toml")
       %{
-        "test_key1" => "test value",
-        "test_list" => [
-          %{"test_key2" => "test value 2", "test_key3" => "test value 3"},
-          %{"test_key2" => "test value 2", "test_key3" => "test value 3"}
-        ]
+        dbserver: [
+          %{
+            db_host: "127.0.0.1",
+            db_log_level: "debug",
+            db_max_instances: 0,
+            db_port: 5432,
+            db_show_sensitive: true,
+            dbadmin_password: "default.msbms.privileged.password",
+            dbadmin_pool_size: 1,
+            server_name: "global_db",
+            server_salt: "sklMRkLXzMQgzqpMpJZPk31Js88su39U/mooAXALhj0=",
+            start_server_instances: false,
+            supported_instance_classes: []
+          },
+          %{
+            db_host: "127.0.0.1",
+            db_log_level: "debug",
+            db_max_instances: 30,
+            db_port: 5432,
+            db_show_sensitive: true,
+            dbadmin_password: "default.msbms.privileged.password",
+            dbadmin_pool_size: 1,
+            server_name: "instance_db",
+            server_salt: "w1OfRx630x7svid8Tk3L9rLL1eEGSm0fq8XcLdveuSs=",
+            start_server_instances: true,
+            supported_instance_classes: ["primary", "linked", "demo", "reserved"]
+          }
+        ],
+        global_dbserver_name: "global_db",
+        global_pepper_value: "jTtEdXRExP5YXHeARQ1W66lP6wDc9GyOvhFPvwnHhtc="
       }
+
+  Called with bad parameters:
 
       iex> MsbmsSystOptions.get_options!("./bad_file_name.toml")
       ** (MsbmsSystError) Problem reading options file './bad_file_name.toml'.
@@ -60,4 +122,172 @@ defmodule MsbmsSystOptions do
   @spec get_options!(String.t()) :: map()
   defdelegate get_options!(options_file_path), to: OptionsFile
 
+  @doc """
+  Returns the name of the database server which hosts the global database.
+
+  ## Parameters
+
+    * `options` - the options file data as read by `get_options/1`.
+
+  ## Examples
+
+      iex> config_options = MsbmsSystOptions.get_options!("./testing_options.toml")
+      iex> MsbmsSystOptions.get_global_dbserver_name(config_options)
+      "global_db"
+  """
+  @spec get_global_dbserver_name(map()) :: String.t()
+  defdelegate get_global_dbserver_name(options), to: OptionsParser
+
+  @doc """
+  Returns the `t:MsbmsSystDatastore.Types.dbserver/0` data for the database
+  server designated as hosting the global database.
+
+  ## Parameters
+
+    * `options` - the options file data as read by `get_options/1`.
+
+  ## Examples
+      iex> config_options = MsbmsSystOptions.get_options!("./testing_options.toml")
+      iex> %{server_name: "global_db"} = MsbmsSystOptions.get_global_dbserver(config_options)
+
+  """
+  @spec get_global_dbserver(map()) :: MsbmsSystDatastore.Types.db_server()
+  defdelegate get_global_dbserver(options), to: OptionsParser
+
+  @doc """
+  Returns the configured global server "pepper" value for use in some automatic
+  account creation scenarios.
+
+  > #### Note {: .warning}
+  >
+  > While this is the way the system is built today, the suspicion is that the
+  > approach we're currently taking with automatic account creation is better
+  > than no effort for security, but probably not by much.  In other words, this
+  > is not an example for how to build a robust security system, but should do
+  > until there's actual public deployment of the application.
+
+  ## Parameters
+
+    * `options` - the options file data as read by `get_options/1`.
+
+  ## Examples
+      iex> config_options = MsbmsSystOptions.get_options!("./testing_options.toml")
+      iex> MsbmsSystOptions.get_global_pepper_value(config_options)
+      "jTtEdXRExP5YXHeARQ1W66lP6wDc9GyOvhFPvwnHhtc="
+  """
+  @spec get_global_pepper_value(map()) :: binary()
+  defdelegate get_global_pepper_value(options), to: OptionsParser
+
+  @doc """
+  Extracts the list of configured dbservers in the options file, optionally
+  filtered by the server's supported instance classes.
+
+  ## Parameters
+
+    * `options` - the options file data as read by `get_options/1`.
+
+    * `filters` - a list one or more instance class values with with to filter
+    the database servers list.  The valid instance classes are: "primary",
+    "linked", "demo", and "reserved".  An empty list of filter values returns
+    all database servers, including those that have no supported instance
+    classes (this is common for global database host servers).  The `filters`
+    values defaults to the empty list if not explicitly provided.
+
+  ## Examples
+
+  Calling without filters:
+
+      iex> config_options = MsbmsSystOptions.get_options!("./testing_options.toml")
+      iex> [_ | _] = MsbmsSystOptions.list_dbservers(config_options)
+      [
+        %{
+          db_host: "127.0.0.1",
+          db_log_level: "debug",
+          db_max_instances: 0,
+          db_port: 5432,
+          db_show_sensitive: true,
+          dbadmin_password: "default.msbms.privileged.password",
+          dbadmin_pool_size: 1,
+          server_name: "global_db",
+          server_salt: "sklMRkLXzMQgzqpMpJZPk31Js88su39U/mooAXALhj0=",
+          start_server_instances: false,
+          supported_instance_classes: []
+        },
+        %{
+          db_host: "127.0.0.1",
+          db_log_level: "debug",
+          db_max_instances: 30,
+          db_port: 5432,
+          db_show_sensitive: true,
+          dbadmin_password: "default.msbms.privileged.password",
+          dbadmin_pool_size: 1,
+          server_name: "instance_db",
+          server_salt: "w1OfRx630x7svid8Tk3L9rLL1eEGSm0fq8XcLdveuSs=",
+          start_server_instances: true,
+          supported_instance_classes: ["primary", "linked", "demo", "reserved"]
+        }
+      ]
+
+  Calling with filters:
+
+      iex> config_options = MsbmsSystOptions.get_options!("./testing_options.toml")
+      iex> [_ | _] = MsbmsSystOptions.list_dbservers(config_options, ["primary"])
+      [
+        %{
+          db_host: "127.0.0.1",
+          db_log_level: "debug",
+          db_max_instances: 30,
+          db_port: 5432,
+          db_show_sensitive: true,
+          dbadmin_password: "default.msbms.privileged.password",
+          dbadmin_pool_size: 1,
+          server_name: "instance_db",
+          server_salt: "w1OfRx630x7svid8Tk3L9rLL1eEGSm0fq8XcLdveuSs=",
+          start_server_instances: true,
+          supported_instance_classes: ["primary", "linked", "demo", "reserved"]
+        }
+      ]
+
+  """
+  @spec list_dbservers(map(), list(Types.instance_class())) ::
+          list(MsbmsSystDatastore.Types.db_server())
+  defdelegate list_dbservers(options, filters \\ []), to: OptionsParser
+
+  @doc """
+  Returns the database server definition which corresponds to the provided name.
+
+  ## Parameters
+
+    * `options` - the options file data as read by `get_options/1`.
+
+    * `dbserver_name` - the name of the database server to look up.
+
+  ## Examples
+
+  Typical call for database server:
+
+      iex> config_options = MsbmsSystOptions.get_options!("./testing_options.toml")
+      iex> MsbmsSystOptions.get_dbserver_by_name(config_options, "instance_db")
+      %{
+        db_host: "127.0.0.1",
+        db_log_level: "debug",
+        db_max_instances: 30,
+        db_port: 5432,
+        db_show_sensitive: true,
+        dbadmin_password: "default.msbms.privileged.password",
+        dbadmin_pool_size: 1,
+        server_name: "instance_db",
+        server_salt: "w1OfRx630x7svid8Tk3L9rLL1eEGSm0fq8XcLdveuSs=",
+        start_server_instances: true,
+        supported_instance_classes: ["primary", "linked", "demo", "reserved"]
+      }
+
+  Result in case of bad server name:
+
+      iex> config_options = MsbmsSystOptions.get_options!("./testing_options.toml")
+      iex> MsbmsSystOptions.get_dbserver_by_name(config_options, "non_existent_db")
+      nil
+  """
+  @spec get_dbserver_by_name(map(), String.t()) :: MsbmsSystDatastore.Types.db_server()
+  defdelegate get_dbserver_by_name(options, dbserver_name), to: OptionsParser
 end

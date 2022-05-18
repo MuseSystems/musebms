@@ -1,5 +1,4 @@
 defmodule MsbmsSystOptionsTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
   doctest MsbmsSystOptions
-
 end
