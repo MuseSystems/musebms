@@ -136,6 +136,26 @@ defmodule MsbmsSystEnums.Impl.Enums do
     |> hd()
   end
 
+  @spec get_enum_item_by_name(
+          MsbmsSystEnums.Types.enum_name(),
+          MsbmsSystEnums.Types.enum_item_name()
+        ) ::
+          MsbmsSystEnums.Data.SystEnumItems.t()
+  def get_enum_item_by_name(enum_name, enum_item_name) do
+    get_enum_items(enum_name)
+    |> Enum.find(&(&1.internal_name == enum_item_name))
+  end
+
+  @spec get_enum_item_by_id(
+          MsbmsSystEnums.Types.enum_name(),
+          MsbmsSystEnums.Types.enum_item_name()
+        ) ::
+          MsbmsSystEnums.Data.SystEnumItems.t()
+  def get_enum_item_by_id(enum_name, enum_item_id) do
+    get_enum_items(enum_name)
+    |> Enum.find(&(&1.id == enum_item_id))
+  end
+
   @spec get_default_enum_item(
           MsbmsSystEnums.Types.enum_name(),
           Keyword.t(functional_type_name: MsbmsSystEnums.Types.enum_functional_type_name()) | []
