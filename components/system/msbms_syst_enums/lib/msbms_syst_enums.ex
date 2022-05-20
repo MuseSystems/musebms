@@ -172,6 +172,56 @@ defmodule MsbmsSystEnums do
   defdelegate get_enum_functional_types(enum_name), to: Enums
 
   @doc """
+  Returns an Enumeration Item record from the named Enumeration as identified by
+  its name.
+
+  ## Parameters
+
+    * `enum_name` - the name of the Enumeration that is parent to the target
+    Enumeration Item record.
+
+    * `enum_item_name` - the name of the Enumeration Item record to return.
+
+  ## Examples
+
+      iex> %MsbmsSystEnums.Data.SystEnumItems{
+      ...>   internal_name: "example_enum_item_one"
+      ...> } =
+      ...>   MsbmsSystEnums.get_enum_item_by_name(
+      ...>     "example_enumeration",
+      ...>     "example_enum_item_one"
+      ...>   )
+  """
+  @spec get_enum_item_by_name(
+          MsbmsSystEnums.Types.enum_name(),
+          MsbmsSystEnums.Types.enum_item_name()
+        ) ::
+          MsbmsSystEnums.Data.SystEnumItems.t()
+  defdelegate get_enum_item_by_name(enum_name, enum_item_name), to: Enums
+
+  @doc """
+  Returns an Enumeration Item record from the named Enumeration as identified by
+  its id value.
+
+  Other than using a different identifier to locate the enumeration item record,
+  this function behaves the same as `get_enum_by_name/2`.
+
+  ## Parameters
+
+    * `enum_name` - the name of the Enumeration that is parent to the target
+    Enumeration Item record.
+
+    * `enum_item_id` - the id value of the Enumeration Item record to return.
+
+  """
+  @spec get_enum_item_by_id(
+          MsbmsSystEnums.Types.enum_name(),
+          Ecto.UUID.t()
+        ) ::
+          MsbmsSystEnums.Data.SystEnumItems.t()
+  defdelegate get_enum_item_by_id(enum_name, enum_item_id), to: Enums
+
+  @doc """
   Finds the default enumeration item for the requested enumeration or for the
   enumeration functional type.
 

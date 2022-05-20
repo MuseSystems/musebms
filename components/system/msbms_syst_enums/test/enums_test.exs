@@ -405,4 +405,16 @@ defmodule MsbmsSystEnumsTest do
 
     assert 1 = length(after_enum_items)
   end
+
+  test "Can Lookup Enum Item by Name" do
+    assert %MsbmsSystEnums.Data.SystEnumItems{internal_name: "enum_two_closed"} =
+             MsbmsSystEnums.get_enum_item_by_name("test_syst_enum_two", "enum_two_closed")
+  end
+
+  test "Can Lookup Enum Item by Id" do
+    [test_enum_item | _] = MsbmsSystEnums.get_enum_items("test_syst_enum_one")
+
+    assert test_enum_item =
+             MsbmsSystEnums.get_enum_item_by_id("test_syst_enum_one", test_enum_item.id)
+  end
 end
