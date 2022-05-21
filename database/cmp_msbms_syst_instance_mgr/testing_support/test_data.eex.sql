@@ -21,7 +21,7 @@ DECLARE
     var_owner_1 msbms_syst_data.syst_owners;
     var_owner_2 msbms_syst_data.syst_owners;
 
-    var_instance_type_enum msbms_syst_data.syst_enums;
+    var_instance_type_enum record;
     var_big_instance msbms_syst_data.syst_enum_items;
     var_std_instance msbms_syst_data.syst_enum_items;
     var_sml_instance msbms_syst_data.syst_enum_items;
@@ -91,10 +91,12 @@ BEGIN
     -- Create some instance types.
     --
 
-    SELECT *
-    INTO var_instance_type_enum
-    FROM msbms_syst_data.syst_enums
-    WHERE internal_name = 'instance_types';
+    SELECT INTO var_instance_type_enum
+        se.id   AS enum_id
+      , seft.id AS functional_type_id
+    FROM msbms_syst_data.syst_enums se
+        JOIN msbms_syst_data.syst_enum_functional_types seft ON seft.enum_id = se.id
+    WHERE se.internal_name = 'instance_types' AND seft.internal_name = 'instance_types_primary';
 
     INSERT INTO msbms_syst_data.syst_enum_items
         ( internal_name
@@ -102,6 +104,8 @@ BEGIN
         , external_name
         , enum_id
         , enum_default
+        , functional_type_id
+        , functional_type_default
         , syst_description
         , user_description
         , user_options )
@@ -109,7 +113,9 @@ BEGIN
         ( 'instance_types_big_instance'
         , 'Instance Types / Big Instance'
         , 'Big Instance'
-        , var_instance_type_enum.id
+        , var_instance_type_enum.enum_id
+        , FALSE
+        , var_instance_type_enum.functional_type_id
         , FALSE
         , '(System Description Not Provided)'
         , 'A Big Instance Description'
@@ -133,6 +139,8 @@ BEGIN
         , external_name
         , enum_id
         , enum_default
+        , functional_type_id
+        , functional_type_default
         , syst_description
         , user_description
         , user_options )
@@ -140,8 +148,10 @@ BEGIN
         ( 'instance_types_std_instance'
         , 'Instance Types / Std. Instance'
         , 'Standard Instance'
-        , var_instance_type_enum.id
-        , FALSE
+        , var_instance_type_enum.enum_id
+        , TRUE
+        , var_instance_type_enum.functional_type_id
+        , TRUE
         , '(System Description Not Provided)'
         , 'A Standard Instance Description'
         , '{
@@ -164,6 +174,8 @@ BEGIN
         , external_name
         , enum_id
         , enum_default
+        , functional_type_id
+        , functional_type_default
         , syst_description
         , user_description
         , user_options )
@@ -171,7 +183,9 @@ BEGIN
         ( 'instance_types_sml_instance'
         , 'Instance Types / Small Instance'
         , 'Small Instance'
-        , var_instance_type_enum.id
+        , var_instance_type_enum.enum_id
+        , FALSE
+        , var_instance_type_enum.functional_type_id
         , FALSE
         , '(System Description Not Provided)'
         , 'A Small Instance Description'
