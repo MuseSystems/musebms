@@ -496,6 +496,12 @@ defmodule MsbmsSystInstanceMgr do
       in contexts where visually apparent uniqueness is less important than
       brevity.  This field is required.
 
+      * `functional_type_name` - establishes the class of the instance type and
+      is used in matching instance types to the database servers which can
+      support them. For more see
+      `t:MsbmsSystInstanceMgr.Types.instance_type_functional_types/0`.  This
+      field is required.
+
       * `user_description` - a brief description of the Instance Type informing
       application users of the purpose and use of the Instance Type.  This field
       is required.
@@ -517,6 +523,7 @@ defmodule MsbmsSystInstanceMgr do
       ...>   internal_name: "instance_types_new_example",
       ...>   display_name: "Instance Types / New Example",
       ...>   external_name: "New Example",
+      ...>   functional_type_name: "instance_types_primary",
       ...>   enum_default: false,
       ...>   user_description: "An example of creating an instance type.",
       ...>   user_options: %{
@@ -579,6 +586,11 @@ defmodule MsbmsSystInstanceMgr do
       * `external_name` - a name which is used in user interface displays, but
       in contexts where visually apparent uniqueness is less important than
       brevity.
+
+      * `functional_type_name` - establishes the class of the instance type and
+      is used in matching instance types to the database servers which can
+      support them. For more see
+      `t:MsbmsSystInstanceMgr.Types.instance_type_functional_types/0`.
 
       * `user_description` - a brief description of the Instance Type informing
       application users of the purpose and use of the Instance Type.
