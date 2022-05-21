@@ -24,6 +24,7 @@ defmodule InstanceTypesTest do
       enum_default: true,
       user_description: "Can Create Instance Type Description",
       external_name: "Can Create Instance Type",
+      functional_type_name: "instance_types_primary",
       user_options: %{
         datastore_contexts: [
           %{
@@ -66,12 +67,13 @@ defmodule InstanceTypesTest do
   end
 
   test "Can Delete Instance Type" do
-    new_instance_type = %{
+    instance_type = %{
       internal_name: "can_delete_instance_type",
       display_name: "Can Delete Instance Type",
       enum_default: true,
       user_description: "Can Delete Instance Type Description",
       external_name: "Can Delete Instance Type",
+      functional_type_name: "instance_types_primary",
       user_options: %{
         datastore_contexts: [
           %{
@@ -86,7 +88,7 @@ defmodule InstanceTypesTest do
       }
     }
 
-    {:ok, _instance_type} = MsbmsSystInstanceMgr.create_instance_type(new_instance_type)
+    {:ok, _instance_type} = MsbmsSystInstanceMgr.create_instance_type(instance_type)
 
     assert :ok = MsbmsSystInstanceMgr.delete_instance_type("can_delete_instance_type")
   end
