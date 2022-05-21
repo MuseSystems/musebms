@@ -55,6 +55,7 @@ defmodule DoctestsTest do
       internal_name: "instance_type_delete_example",
       display_name: "Instance Type / Delete Example",
       external_name: "Delete Example",
+      functional_type_name: "instance_types_primary",
       user_description: "Example of Instance Type Deletion.",
       user_options: %{}
     }
