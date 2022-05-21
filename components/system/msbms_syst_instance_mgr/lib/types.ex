@@ -145,6 +145,8 @@ defmodule MsbmsSystInstanceMgr.Types do
           instance_type_id: Ecto.UUID.t(),
           instance_type_display_name: String.t(),
           instance_type_external_name: String.t(),
+          instance_type_functional_type_id: Ecto.UUID.t(),
+          instance_type_functional_type_name: MsbmsSystEnums.Types.enum_functional_type_name(),
           instance_state_id: Ecto.UUID.t(),
           instance_state_display_name: String.t(),
           instance_state_external_name: String.t(),
@@ -184,9 +186,9 @@ defmodule MsbmsSystInstanceMgr.Types do
   The required data for maintaining Instance Types.
 
   Note that when creating new instance types, the `internal_name`,
-  `display_name`, `external_name`, `user_description`, and `user_options` fields
-  are required.  On updates of an existing instance type, those fields are
-  optional.
+  `display_name`, `external_name`, `user_description`, `functional_type_name`,
+  and `user_options` fields are required.  On updates of an existing instance
+  type, those fields are optional.
   """
   @type instance_type_params :: %{
           optional(:internal_name) => MsbmsSystEnums.Types.enum_item_name(),
@@ -194,7 +196,8 @@ defmodule MsbmsSystInstanceMgr.Types do
           optional(:external_name) => String.t(),
           optional(:user_description) => String.t(),
           optional(:user_options) => instance_type_default_options(),
-          optional(:enum_default) => boolean()
+          optional(:enum_default) => boolean(),
+          optional(:functional_type_name) => MsbmsSystEnums.Types.enum_functional_type_name()
         }
 
   @typedoc """
