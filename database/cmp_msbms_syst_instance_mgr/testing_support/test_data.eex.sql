@@ -120,13 +120,14 @@ BEGIN
         , '(System Description Not Provided)'
         , 'A Big Instance Description'
         , '{
+          "dbserver_name": "instance_db",
           "datastore_contexts": [
             {
-              "id": "test_datastore_context_1",
+              "application_context": "test_datastore_context_1",
               "db_pool_size": 20
             },
             {
-              "id": "test_datastore_context_1",
+              "application_context": "test_datastore_context_2",
               "db_pool_size": 20
             }
           ]
@@ -155,13 +156,14 @@ BEGIN
         , '(System Description Not Provided)'
         , 'A Standard Instance Description'
         , '{
+          "dbserver_name": "instance_db",
           "datastore_contexts": [
             {
-              "id": "test_datastore_context_1",
+              "application_context": "test_datastore_context_1",
               "db_pool_size": 10
             },
             {
-              "id": "test_datastore_context_1",
+              "application_context": "test_datastore_context_2",
               "db_pool_size": 10
             }
           ]
@@ -190,13 +192,14 @@ BEGIN
         , '(System Description Not Provided)'
         , 'A Small Instance Description'
         , '{
+          "dbserver_name": null,
           "datastore_contexts": [
             {
-              "id": "test_datastore_context_1",
+              "application_context": "test_datastore_context_1",
               "db_pool_size": 3
             },
             {
-              "id": "test_datastore_context_1",
+              "application_context": "test_datastore_context_2",
               "db_pool_size": 3
             }
           ]
@@ -228,14 +231,20 @@ BEGIN
         , var_owner_3.id
         , NULL
         , '{
+          "dbserver_name": "instance_db",
+          "instance_code": "Testing data do not use in production!!!",
           "datastore_contexts": [
             {
-              "id": "test_datastore_context_1",
-              "db_pool_size": 20
+              "id": "msbms_test_instance_1_test_datastore_context_1",
+              "application_context": "test_datastore_context_1",
+              "db_pool_size": 20,
+              "context_code": "Testing data do not use in production!!!"
             },
             {
-              "id": "test_datastore_context_1",
-              "db_pool_size": 20
+              "id": "msbms_test_instance_1_test_datastore_context_2",
+              "application_context": "test_datastore_context_2",
+              "db_pool_size": 20,
+              "context_code": "Testing data do not use in production!!!"
             }
           ]
         }'::jsonb )
@@ -261,14 +270,20 @@ BEGIN
         , var_owner_3.id
         , var_test_instance_1.id
         , '{
+          "dbserver_name": "instance_db",
+          "instance_code": "Testing data do not use in production!!!",
           "datastore_contexts": [
             {
-              "id": "test_datastore_context_1",
-              "db_pool_size": 10
+              "id": "msbms_test_instance_2_test_datastore_context_1",
+              "application_context": "test_datastore_context_1",
+              "db_pool_size": 10,
+              "context_code": "Testing data do not use in production!!!"
             },
             {
-              "id": "test_datastore_context_1",
-              "db_pool_size": 10
+              "id": "msbms_test_instance_2_test_datastore_context_2",
+              "application_context": "test_datastore_context_2",
+              "db_pool_size": 10,
+              "context_code": "Testing data do not use in production!!!"
             }
           ]
         }'::jsonb )
@@ -295,14 +310,20 @@ BEGIN
         , var_owner_3.id
         , var_test_instance_1.id
         , '{
+          "dbserver_name": "instance_db",
+          "instance_code": "Testing data do not use in production!!!",
           "datastore_contexts": [
             {
-              "id": "test_datastore_context_1",
-              "db_pool_size": 3
+              "id": "msbms_test_instance_3_test_datastore_context_1",
+              "application_context": "test_datastore_context_1",
+              "db_pool_size": 3,
+              "context_code": "Testing data do not use in production!!!"
             },
             {
-              "id": "test_datastore_context_1",
-              "db_pool_size": 3
+              "id": "msbms_test_instance_3_test_datastore_context_2",
+              "application_context": "test_datastore_context_2",
+              "db_pool_size": 3,
+              "context_code": "Testing data do not use in production!!!"
             }
           ]
         }'::jsonb )
@@ -329,14 +350,20 @@ BEGIN
         , var_owner_4.id
         , NULL
         , '{
+          "dbserver_name": "instance_db",
+          "instance_code": "Testing data do not use in production!!!",
           "datastore_contexts": [
             {
-              "id": "test_datastore_context_1",
-              "db_pool_size": 20
+              "id": "msbms_test_instance_4_test_datastore_context_1",
+              "application_context": "test_datastore_context_1",
+              "db_pool_size": 20,
+              "context_code": "Testing data do not use in production!!!"
             },
             {
-              "id": "test_datastore_context_1",
-              "db_pool_size": 20
+              "id": "msbms_test_instance_4_test_datastore_context_2",
+              "application_context": "test_datastore_context_2",
+              "db_pool_size": 20,
+              "context_code": "Testing data do not use in production!!!"
             }
           ]
         }'::jsonb )
@@ -363,14 +390,20 @@ BEGIN
         , var_owner_4.id
         , NULL
         , '{
+          "dbserver_name": "instance_db",
+          "instance_code": "Testing data do not use in production!!!",
           "datastore_contexts": [
             {
-              "id": "test_datastore_context_1",
-              "db_pool_size": 20
+              "id": "msbms_test_instance_5_test_datastore_context_1",
+              "application_context": "test_datastore_context_1",
+              "db_pool_size": 20,
+              "context_code": "Testing data do not use in production!!!"
             },
             {
-              "id": "test_datastore_context_1",
-              "db_pool_size": 20
+              "id": "msbms_test_instance_5_test_datastore_context_2",
+              "application_context": "test_datastore_context_2",
+              "db_pool_size": 20,
+              "context_code": "Testing data do not use in production!!!"
             }
           ]
         }'::jsonb )
