@@ -106,4 +106,29 @@ defmodule InstancesTest do
     assert {:ok, %MsbmsSystInstanceMgr.Data.SystInstances{internal_name: "test_instance_1"}} =
              MsbmsSystInstanceMgr.get_instance_by_name("test_instance_1")
   end
+
+  test "Can Create Simple Instance" do
+    new_instance_params = %{
+      internal_name: "create_simple_instance",
+      display_name: "Create Simple Instance",
+      application_name: "test_app_1",
+      owner_name: "owner_1"
+    }
+
+    assert {:ok, _new_instance} = MsbmsSystInstanceMgr.create_instance(new_instance_params)
+  end
+
+  test "Can Create Complex Instance" do
+    new_instance_params = %{
+      internal_name: "create_complex_instance",
+      display_name: "Create Complex Instance",
+      application_name: "test_app_2",
+      owner_name: "owner_2",
+      instance_type_name: "instance_types_sml_instance",
+      instance_state_name: "instance_states_sysdef_inactive",
+      owning_instance_name: "test_instance_5"
+    }
+
+    assert {:ok, _new_instance} = MsbmsSystInstanceMgr.create_instance(new_instance_params)
+  end
 end
