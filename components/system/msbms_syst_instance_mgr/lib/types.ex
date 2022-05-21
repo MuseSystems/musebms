@@ -45,20 +45,46 @@ defmodule MsbmsSystInstanceMgr.Types do
   @type instance_type_name() :: String.t()
 
   @typedoc """
+  Defines the structure of Instance Datastore Contexts as used by Instance
+  Options definition.
+  """
+  @type datastore_context :: %{
+          required(:id) => MsbmsSystDatastore.Types.context_id(),
+          required(:application_context) => atom(),
+          required(:db_pool_size) => non_neg_integer(),
+          optional(:context_code) => binary()
+        }
+
+  @typedoc """
+  Establishes the expected structure of Instance Options.
+
+  This type is used by Instant Types to define default instance options for
+  Instance creation and in Instances directly to define their runtime data
+  related behavior.
+  """
+  @type instance_options() :: %{
+          required(:dbserver_name) => String.t(),
+          required(:datastore_context_defaults) => list(datastore_context()),
+          optional(:instance_code) => binary()
+        }
+
+  @typedoc """
   A map definition which allows for the maintenance of system instance records.
   """
   @type instance_params() :: %{
           optional(:internal_name) => instance_name(),
           optional(:display_name) => String.t(),
-          optional(:dbserver_name) => String.t(),
-          optional(:db_app_context_pool_size) => integer(),
-          optional(:db_api_context_pool_size) => integer(),
-          optional(:instance_code_id) => Ecto.UUID.t(),
           optional(:application_id) => Ecto.UUID.t(),
+          optional(:application_name) => application_name(),
           optional(:instance_type_id) => Ecto.UUID.t(),
+          optional(:instance_type_name) => instance_type_name(),
           optional(:instance_state_id) => Ecto.UUID.t(),
+          optional(:instance_state_name) => instance_state_name(),
           optional(:owner_id) => Ecto.UUID.t(),
-          optional(:owning_instance_id) => Ecto.UUID.t()
+          optional(:owner_name) => owner_name(),
+          optional(:owning_instance_id) => Ecto.UUID.t(),
+          optional(:owning_instance_name) => instance_name(),
+          optional(:instance_options) => instance_options()
         }
 
   @typedoc """
