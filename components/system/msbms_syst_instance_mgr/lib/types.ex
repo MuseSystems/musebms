@@ -127,6 +127,11 @@ defmodule MsbmsSystInstanceMgr.Types do
         }
 
   @typedoc """
+  Type for identifying Instance States by name.
+  """
+  @type instance_state_name() :: String.t()
+
+  @typedoc """
   Establishes the available instance state functional types understood by the
   module.
 
