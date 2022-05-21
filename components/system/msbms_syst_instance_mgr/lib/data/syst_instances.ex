@@ -98,12 +98,10 @@ defmodule MsbmsSystInstanceMgr.Data.SystInstances do
       :instance_options
     ])
     |> validate_required([
-      :dbserver_name,
-      :db_app_context_pool_size,
-      :db_api_context_pool_size,
       :application_id,
       :instance_type_id,
-      :instance_state_id
+      :instance_state_id,
+      :instance_options
     ])
     |> validate_internal_name(opts)
     |> validate_display_name(opts)
