@@ -458,6 +458,92 @@ defmodule MsbmsSystInstanceMgr do
   defdelegate get_instance_by_name(instance_name), to: Impl.Instances
 
   @doc """
+  Creates a new Instance record based on the provided parameters.
+
+  ## Parameters
+
+    * `instance_params` - the parameters with which to create the new instance.
+    The available attributes which are expected are:
+
+      * `internal_name` - the unique identifier for the instance which is used
+      in programmatic contexts.  This field is required.
+
+      * `display_name` - a user facing unique identifier for the instance as
+      used in user interfaces.  This field is required.
+
+      * `application_id` - the unique database identifier of the application for
+      which this instance provides services.  This field is required if the
+      `application_name` field is not provided.
+
+      * `application_name` - the unique identifier of the application for which
+      this instance provides services.  This field is required if the
+      `application_id` field is not provided.
+
+      * `instance_type_id` - the unique database identifier of the Instance
+      Type of the instance.  Instance types determine which database servers are
+      available to service the Instance and other similar runtime
+      categorization.  This field is optional and the default Instance Type
+      will be used if no Instance Type is identified.  Alternatively, the
+      `instance_type_name` parameter may be used to to select the Instance Type.
+
+      * `instance_type_name` - the unique identifier of the Instance Type of the
+      Instance.  This field is optional and the default Instance Type will be
+      used if no Instance Type is identified.  Alternatively, the
+      `instance_type_id` parameter may be used to to select the Instance Type.
+
+      * `instance_state_id` - the unique database identifier of the Instance
+      State of the Instance.  The Instance State defines the current life-
+      cycle state of the Instance which can influence system behavior in regard
+      to the Instance, such as if the Instance should be started or not or even
+      if it is eligible for purging.  This field is optional and the default
+      Instance State will be used if no Instance State is identified.
+      Alternatively, the `instance_state_name` parameter may be used to to
+      select the Instance State.
+
+      * `instance_state_name` - the unique identifier of the Instance State of
+      the Instance.  This field is optional and the default Instance State will
+      be used if no Instance State is identified.  Alternatively, the
+      `instance_state_id` parameter may be used to to select the Instance State.
+
+      * `owner_id` - the unique database identifier of the Owner of the
+      Instance.  The Owner is a reference to the entity which is served by the
+      application.  This field is required unless the `owner_name` field is
+      provided instead.
+
+      * `owner_name` - the unique identifier of the Owner of the Instance.  This
+      field is required unless the `owner_id` field has been provided instead.
+
+      * `owning_instance_id` - the unique database identifier of the Owning
+      Instance.  An Owning Instance is an regular Instance which acts as a
+      parent to its Owned Instances. For example, a parent production Instance
+      may be parent to a duplicate Instance used for training.  This field is
+      optional.  An Owning Instance may alternatively be identified by the
+      `owning_instance_name` field.
+
+      * `owning_instance_name` - the unique identifier of the Owning Instance.
+      This field is optional.  An Owning Instance may alternatively be
+      identified by the `owning_instance_id` field.
+
+      * `instance_options` - a map of options which determine how the Instance
+      connects to its host database server.  See
+      `t:MsbmsSystInstanceMgr.Types.instance_options/0` for more.
+
+  ## Examples
+
+      iex> new_instance_params = %{
+      ...>   internal_name: "create_example_instance",
+      ...>   display_name: "Create Example Instance",
+      ...>   application_name: "test_app_1",
+      ...>   owner_name: "owner_1"
+      ...> }
+      iex> {:ok, _new_instance} = MsbmsSystInstanceMgr.create_instance(new_instance_params)
+
+  """
+  @spec create_instance(Types.instance_params()) ::
+          {:ok, Data.SystInstances.t()} | {:error, MsbmsSystError.t()}
+  defdelegate create_instance(instance_params), to: Impl.Instances
+
+  @doc """
   Returns a list of the configured Instance Types to which an Instance may be
   assigned.
 
