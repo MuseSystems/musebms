@@ -250,9 +250,56 @@ defmodule MsbmsSystInstanceMgr.Impl.Instances do
       }
   end
 
-  defp resolve_application(%{application_id: application_id} = instance_params)
-       when is_binary(application_id),
-       do: instance_params
+  @spec set_instance_values(Types.instance_name(), Types.instance_params()) ::
+          {:ok, Data.SystInstances.t()} | {:error, MsbmsSystError.t()}
+  def set_instance_values(instance_name, instance_params) do
+    # TODO: Consider raising on unsupported parameters rather than ignoring
+    #       them.
+    resolved_instance_params =
+      instance_params
+      |> resolve_application()
+      |> resolve_instance_type_no_default()
+      |> resolve_instance_state_no_default()
+      |> resolve_instance_options()
+      |> Map.delete(:owner_id)
+      |> Map.delete(:owner_name)
+      |> Map.delete(:owning_instance_id)
+      |> Map.delete(:owning_instance_name)
+
+    from(i in Data.SystInstances, where: [internal_name: ^instance_name])
+    |> MsbmsSystDatastore.one!()
+    |> Data.SystInstances.changeset(resolved_instance_params)
+    |> MsbmsSystDatastore.update!(returning: true)
+    |> then(&{:ok, &1})
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure setting instance record values.",
+          cause: error
+        }
+      }
+  end
+
+  defp resolve_instance_type_no_default(
+         %{instance_type_name: instance_type_name} = instance_params
+       )
+       when is_binary(instance_type_name),
+       do: resolve_instance_type(instance_params)
+
+  defp resolve_instance_type_no_default(instance_params), do: instance_params
+
+  defp resolve_instance_state_no_default(
+         %{instance_state_name: instance_state_name} = instance_params
+       )
+       when is_binary(instance_state_name),
+       do: resolve_instance_state(instance_params)
+
+  defp resolve_instance_state_no_default(instance_params), do: instance_params
 
   defp resolve_application(%{application_name: application_name} = instance_params)
        when is_binary(application_name) do
@@ -265,6 +312,8 @@ defmodule MsbmsSystInstanceMgr.Impl.Instances do
 
     Map.put(instance_params, :application_id, application.id)
   end
+
+  defp resolve_application(instance_params), do: instance_params
 
   defp resolve_instance_type(%{instance_type_id: instance_type_id} = instance_params)
        when is_binary(instance_type_id),
@@ -296,10 +345,6 @@ defmodule MsbmsSystInstanceMgr.Impl.Instances do
     Map.put(instance_params, :instance_state_id, instance_state.id)
   end
 
-  defp resolve_owner(%{owner_id: owner_id} = instance_params)
-       when is_binary(owner_id),
-       do: instance_params
-
   defp resolve_owner(%{owner_name: owner_name} = instance_params)
        when is_binary(owner_name) do
     owner =
@@ -312,9 +357,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Instances do
     Map.put(instance_params, :owner_id, owner.id)
   end
 
-  defp resolve_owning_instance(%{owning_instance_id: owning_instance_id} = instance_params)
-       when is_binary(owning_instance_id),
-       do: instance_params
+  defp resolve_owner(instance_params), do: instance_params
 
   defp resolve_owning_instance(%{owning_instance_name: owning_instance_name} = instance_params)
        when is_binary(owning_instance_name) do
@@ -344,20 +387,25 @@ defmodule MsbmsSystInstanceMgr.Impl.Instances do
       )
       |> Map.put_new("dbserver_name", default_instance_options["dbserver_name"])
       |> Map.put_new("datastore_contexts", default_instance_options["datastore_contexts"])
-      |> resolve_datastore_context_options(instance_params)
+      |> resolve_datastore_context_options(
+        instance_params,
+        default_instance_options["datastore_contexts"]
+      )
 
     Map.put(instance_params, :instance_options, resolved_instance_options)
   end
 
-  defp resolve_datastore_context_options(instance_options, instance_params) do
-    default_contexts = instance_options["datastore_contexts"]
-    provided_instance_options = Map.get(instance_params, :instance_options, %{})
+  defp resolve_datastore_context_options(
+         provided_instance_options,
+         instance_params,
+         default_contexts
+       ) do
     provided_contexts = Map.get(provided_instance_options, "datastore_contexts", [])
 
     provided_contexts
     |> maybe_apply_context_defaults(instance_params.internal_name, default_contexts)
     |> maybe_apply_extended_contexts(provided_contexts)
-    |> then(&Map.put(instance_options, "datastore_contexts", &1))
+    |> then(&Map.put(provided_instance_options, "datastore_contexts", &1))
   end
 
   defp maybe_apply_context_defaults(provided_contexts, instance_name, default_contexts) do
@@ -366,7 +414,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Instances do
         Enum.find(
           provided_contexts,
           %{},
-          &(&1.application_context == context["application_context"])
+          &(&1["application_context"] == context["application_context"])
         )
         |> Map.put_new(
           "id",
@@ -391,7 +439,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Instances do
            Enum.find(
              defaulted_contexts,
              nil,
-             &(&1.application_context == context.application_context)
+             &(&1["application_context"] == context["application_context"])
            )
          ) do
         [context | resolved_contexts]
