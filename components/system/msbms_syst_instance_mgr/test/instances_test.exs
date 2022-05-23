@@ -126,9 +126,35 @@ defmodule InstancesTest do
       owner_name: "owner_2",
       instance_type_name: "instance_types_sml_instance",
       instance_state_name: "instance_states_sysdef_inactive",
-      owning_instance_name: "test_instance_5"
+      owning_instance_name: "test_instance_5",
+      instance_options: %{
+        "dbserver_name" => "instance_db",
+        "datastore_contexts" => [
+          %{
+            "application_context" => "test_datastore_context_1",
+            "db_pool_size" => 10
+          },
+          %{
+            "application_context" => "extra_context",
+            "db_pool_size" => 10
+          }
+        ]
+      }
     }
 
-    assert {:ok, _new_instance} = MsbmsSystInstanceMgr.create_instance(new_instance_params)
+    assert {:ok, new_instance} = MsbmsSystInstanceMgr.create_instance(new_instance_params)
+    assert %{instance_options: %{"datastore_contexts" => contexts}} = new_instance
+
+    assert %{"db_pool_size" => 10} =
+             Enum.find(contexts, &(&1["application_context"] == "test_datastore_context_1"))
+
+    assert %{"db_pool_size" => 3} =
+             Enum.find(contexts, &(&1["application_context"] == "test_datastore_context_2"))
+  end
+
+  test "Can Modify Instance Values" do
+    updated_values = %{
+      display_name: "Updated Display Name"
+    }
   end
 end
