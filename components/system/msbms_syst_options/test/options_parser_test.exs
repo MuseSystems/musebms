@@ -30,16 +30,21 @@ defmodule OptionsParserTest do
              MsbmsSystOptions.get_global_pepper_value(options)
   end
 
+  test "Can List Available Server Pools", %{options: options} do
+    assert ["primary", "linked", "demo", "reserved"] =
+             MsbmsSystOptions.get_available_server_pools(options)
+  end
+
   test "Can Retrieve DbServers List Unfiltered", %{options: options} do
     assert [_ | _] = dbserver_list = MsbmsSystOptions.list_dbservers(options)
     assert 2 = length(dbserver_list)
   end
 
   test "Can Retrieve DbServers List Filtered", %{options: options} do
-    assert [%{supported_instance_classes: server_classes} | []] =
+    assert [%{server_pools: server_pools} | []] =
              MsbmsSystOptions.list_dbservers(options, ["primary"])
 
-    assert "primary" in server_classes
+    assert "primary" in server_pools
   end
 
   test "Can Retrieve DbServer by Name", %{options: options} do

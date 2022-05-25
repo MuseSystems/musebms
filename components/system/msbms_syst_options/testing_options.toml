@@ -8,14 +8,19 @@
 
 # The server_name of the dbserver which will host the global database.  If this
 # server is not found or has not been bootstrapped, the system will not start.
-global_dbserver_name = "global_db"
+global_dbserver_name   = "global_db"
 
 # Used for peppering access account credentials when appropriate.  This value
 # should be changed for each installation of the application and also kept in
 # a secure place.  If this value is ever lost, existing access accounts will in
 # many cases no longer be able to authenticate to the system.  This value should
 # contain at least 32 bytes of data.
-global_pepper_value  = "jTtEdXRExP5YXHeARQ1W66lP6wDc9GyOvhFPvwnHhtc="
+global_pepper_value    = "jTtEdXRExP5YXHeARQ1W66lP6wDc9GyOvhFPvwnHhtc="
+
+# Defines the server pools which are available for different deployment
+# purposes.  In the application, Instance Types define which of these server
+# pools are valid for hosting instances of that type.
+available_server_pools = ["primary", "linked", "demo", "reserved"]
 
 #===============================================================================
 # Database Servers Section
@@ -37,28 +42,10 @@ server_name                    = "global_db"
 # the setting here.
 start_server_instances         = false
 
-# Indicates which system instance classes the database server may be used to
-# host.  None, one, or many of the following values are allowed:
-#
-#     * primary - this class is used to host production workloads.  At least one
-#       database server must be configured to support primary class instances.
-#       In many scenarios, this will be the only class needed.
-#
-#     * linked - instances which are child instances to a parent primary
-#       instance.  Typically these are used for non-production instances which
-#       are copies or otherwise reflect the parent instance.
-#
-#     * demo - indicates that the database server will host instances dedicated
-#       to demonstration purposes.  In typical scenarios, this instance class
-#       will not be used.
-#
-#     * reserved - designates that other, special use instances may be hosted by
-#       the database server.  Under normal circumstances this value will not be
-#       used.
-#
-# If no classes are configured for a database server, the server may not host
-# any application instances though it may host the global database.
-supported_instance_classes     = []
+# Indicates which server pools this server participates in.  The valid values
+# are none or more of the values defined in the top level
+# `available_server_pools` configuration.
+server_pools                   = []
 
 # The hostname/IP of the database server
 db_host                        = "127.0.0.1"
@@ -101,28 +88,10 @@ server_name                    = "instance_db"
 # the setting here.
 start_server_instances         = true
 
-# Indicates which system instance classes the database server may be used to
-# host.  None, one, or many of the following values are allowed:
-#
-#     * primary - this class is used to host production workloads.  At least one
-#       database server must be configured to support primary class instances.
-#       In many scenarios, this will be the only class needed.
-#
-#     * linked - instances which are child instances to a parent primary
-#       instance.  Typically these are used for non-production instances which
-#       are copies or otherwise reflect the parent instance.
-#
-#     * demo - indicates that the database server will host instances dedicated
-#       to demonstration purposes.  In typical scenarios, this instance class
-#       will not be used.
-#
-#     * reserved - designates that other, special use instances may be hosted by
-#       the database server.  Under normal circumstances this value will not be
-#       used.
-#
-# If no classes are configured for a database server, the server may not host
-# any application instances though it may host the global database.
-supported_instance_classes     = ["primary", "linked", "demo", "reserved"]
+# Indicates which server pools this server participates in.  The valid values
+# are none or more of the values defined in the top level
+# `available_server_pools` configuration.
+server_pools                   = ["primary", "linked", "demo", "reserved"]
 
 # The hostname/IP of the database server
 db_host                        = "127.0.0.1"

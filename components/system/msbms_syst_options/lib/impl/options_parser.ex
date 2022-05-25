@@ -26,24 +26,27 @@ defmodule MsbmsSystOptions.Impl.OptionsParser do
   @spec get_global_pepper_value(map()) :: binary()
   def get_global_pepper_value(options) when is_map(options), do: options.global_pepper_value
 
-  @spec list_dbservers(map(), list(Types.instance_class())) ::
+  @spec get_available_server_pools(map()) :: list(Types.server_pool())
+  def get_available_server_pools(options), do: options[:available_server_pools]
+
+  @spec list_dbservers(map(), list(Types.server_pool())) ::
           list(MsbmsSystDatastore.Types.db_server())
   def list_dbservers(options, filters) when is_map(options) do
     options.dbserver
-    |> maybe_filter_dbservers_by_instance_class(filters)
+    |> maybe_filter_dbservers_by_server_pool(filters)
   end
 
-  defp maybe_filter_dbservers_by_instance_class(dbservers_list, [_ | _] = instance_classes) do
+  defp maybe_filter_dbservers_by_server_pool(dbservers_list, [_ | _] = server_pools) do
     Enum.filter(dbservers_list, fn curr_dbserver ->
-      for filter_class <- instance_classes,
-          server_class <- curr_dbserver[:supported_instance_classes],
+      for filter_pool <- server_pools,
+          server_pool <- curr_dbserver[:server_pools],
           reduce: false do
-        acc -> acc or filter_class == server_class
+        acc -> acc or filter_pool == server_pool
       end
     end)
   end
 
-  defp maybe_filter_dbservers_by_instance_class(dbservers_list, []), do: dbservers_list
+  defp maybe_filter_dbservers_by_server_pool(dbservers_list, []), do: dbservers_list
 
   @spec get_dbserver_by_name(map(), String.t()) :: MsbmsSystDatastore.Types.db_server()
   def get_dbserver_by_name(options, dbserver_name) do
