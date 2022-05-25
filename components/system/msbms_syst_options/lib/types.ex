@@ -17,24 +17,11 @@ defmodule MsbmsSystOptions.Types do
   """
 
   @typedoc """
-  Instance classes are used to identify certain sorts of workloads or
-  operational parameters of application instances.
+  Server pools allow for the categorization for dbservers which relate to their
+  targeted workload or other operational constraints.
 
-  The valid types of Instance Class are:
-
-    * `primary`- general purpose instance class which includes instances
-    designated as 'production'.  In most cases, this is the only instance
-    class that is required.
-
-    * `linked`- designates a class of instances which are the children of a
-    parent instance.  Typically these are non-production instances which are
-    copies of their parent instance.
-
-    * `demo`- instances which support application demonstration purposes.  Most
-    installations will not require this type to be used.
-
-    * `reserved`- other special use instances which don't fall under the other
-    categories.  Typically there is no need to use this class.
+  The available server pools are defined at the top level of the options file
+  under the `available_server_pools` configuration point.
   """
-  @type instance_class :: String.t()
+  @type server_pool :: String.t()
 end

@@ -18,6 +18,11 @@ global_dbserver_name = "global_db"
 # contain at least 32 bytes of data.
 global_pepper_value  = ""
 
+# Defines the server pools which are available for different deployment
+# purposes.  In the application, Instance Types define which of these server
+# pools are valid for hosting instances of that type.
+available_server_pools = ["primary", "sandbox"]
+
 #===============================================================================
 # Database Servers Section
 #-------------------------------------------------------------------------------
@@ -38,28 +43,10 @@ server_name                    = "global_db"
 # the setting here.
 start_server_instances         = false
 
-# Indicates which system instance classes the database server may be used to
-# host.  None, one, or many of the following values are allowed:
-#
-#     * primary - this class is used to host production workloads.  At least one
-#       database server must be configured to support primary class instances.
-#       In many scenarios, this will be the only class needed.
-#
-#     * linked - instances which are child instances to a parent primary
-#       instance.  Typically these are used for non-production instances which
-#       are copies or otherwise reflect the parent instance.
-#
-#     * demo - indicates that the database server will host instances dedicated
-#       to demonstration purposes.  In typical scenarios, this instance class
-#       will not be used.
-#
-#     * reserved - designates that other, special use instances may be hosted by
-#       the database server.  Under normal circumstances this value will not be
-#       used.
-#
-# If no classes are configured for a database server, the server may not host
-# any application instances though it may host the global database.
-supported_instance_classes     = []
+# Indicates which server pools this server participates in.  The valid values
+# are none or more of the values defined in the top level
+# `available_server_pools` configuration.
+server_pools                   = []
 
 # The hostname/IP of the database server
 db_host                        = "127.0.0.1"
@@ -96,7 +83,7 @@ dbadmin_pool_size              = 1
 [[dbserver]]
 # The identifier of the database server which will also appear in user
 # interfaces.
-server_name                    = "instance_db"
+server_name                    = "production"
 
 # If this database server hosts instance databases and the value here is true,
 # the system will make database connections for any instance databases existing
@@ -105,28 +92,59 @@ server_name                    = "instance_db"
 # the setting here.
 start_server_instances         = true
 
-# Indicates which system instance classes the database server may be used to
-# host.  None, one, or many of the following values are allowed:
-#
-#     * primary - this class is used to host production workloads.  At least one
-#       database server must be configured to support primary class instances.
-#       In many scenarios, this will be the only class needed.
-#
-#     * linked - instances which are child instances to a parent primary
-#       instance.  Typically these are used for non-production instances which
-#       are copies or otherwise reflect the parent instance.
-#
-#     * demo - indicates that the database server will host instances dedicated
-#       to demonstration purposes.  In typical scenarios, this instance class
-#       will not be used.
-#
-#     * reserved - designates that other, special use instances may be hosted by
-#       the database server.  Under normal circumstances this value will not be
-#       used.
-#
-# If no classes are configured for a database server, the server may not host
-# any application instances though it may host the global database.
-supported_instance_classes     = ["primary"]
+# Indicates which server pools this server participates in.  The valid values
+# are none or more of the values defined in the top level
+# `available_server_pools` configuration.
+server_pools                   = ["primary"]
+
+# The hostname/IP of the database server
+db_host                        = "127.0.0.1"
+
+# The port on which the database server is listening
+db_port                        = 5432
+
+# If true, senstive information, such as username/password may be shown in
+# some application logs or error displays
+db_show_sensitive              = false
+
+# This value is used to set the database connection minimum log level.
+# Valid values are:
+#     emergency, alert, critical, error, warning, notice, info, debug
+db_log_level                   = "error"
+
+# The number of instance databases that may be hosted on the server.
+db_max_instances               = 0
+
+# A string of bytes used as part of the token generation for the system managed
+# database user accounts.  Note that this value must be at least 32 bytes long
+# and is ideally randomly generated.
+server_salt                    = ""
+
+# The database password used by the system for the connecting the msbms_syst_dba
+# database user account on this database server.  This password must be at least
+# 32 bytes long.
+dbadmin_password               = ""
+
+# The number of pooled database connections to create for the dbadmin repo.
+# This value should normally be quite low.
+dbadmin_pool_size              = 1
+
+[[dbserver]]
+# The identifier of the database server which will also appear in user
+# interfaces.
+server_name                    = "sandbox"
+
+# If this database server hosts instance databases and the value here is true,
+# the system will make database connections for any instance databases existing
+# on the server.  If false, those instances will not be available via the
+# application server.  Note the global database is always started regardless of
+# the setting here.
+start_server_instances         = true
+
+# Indicates which server pools this server participates in.  The valid values
+# are none or more of the values defined in the top level
+# `available_server_pools` configuration.
+server_pools                   = ["sandbox"]
 
 # The hostname/IP of the database server
 db_host                        = "127.0.0.1"

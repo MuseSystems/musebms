@@ -41,7 +41,7 @@ defmodule MsbmsSystOptions do
               server_name: "global_db",
               server_salt: "sklMRkLXzMQgzqpMpJZPk31Js88su39U/mooAXALhj0=",
               start_server_instances: false,
-              supported_instance_classes: []
+              server_pools: []
             },
             %{
               db_host: "127.0.0.1",
@@ -54,9 +54,10 @@ defmodule MsbmsSystOptions do
               server_name: "instance_db",
               server_salt: "w1OfRx630x7svid8Tk3L9rLL1eEGSm0fq8XcLdveuSs=",
               start_server_instances: true,
-              supported_instance_classes: ["primary", "linked", "demo", "reserved"]
+              server_pools: ["primary", "linked", "demo", "reserved"]
             }
           ],
+          available_server_pools: ["primary", "linked", "demo", "reserved"],
           global_dbserver_name: "global_db",
           global_pepper_value: "jTtEdXRExP5YXHeARQ1W66lP6wDc9GyOvhFPvwnHhtc="
         }
@@ -94,7 +95,7 @@ defmodule MsbmsSystOptions do
             server_name: "global_db",
             server_salt: "sklMRkLXzMQgzqpMpJZPk31Js88su39U/mooAXALhj0=",
             start_server_instances: false,
-            supported_instance_classes: []
+            server_pools: []
           },
           %{
             db_host: "127.0.0.1",
@@ -107,9 +108,10 @@ defmodule MsbmsSystOptions do
             server_name: "instance_db",
             server_salt: "w1OfRx630x7svid8Tk3L9rLL1eEGSm0fq8XcLdveuSs=",
             start_server_instances: true,
-            supported_instance_classes: ["primary", "linked", "demo", "reserved"]
+            server_pools: ["primary", "linked", "demo", "reserved"]
           }
         ],
+        available_server_pools: ["primary", "linked", "demo", "reserved"],
         global_dbserver_name: "global_db",
         global_pepper_value: "jTtEdXRExP5YXHeARQ1W66lP6wDc9GyOvhFPvwnHhtc="
       }
@@ -179,6 +181,21 @@ defmodule MsbmsSystOptions do
   defdelegate get_global_pepper_value(options), to: OptionsParser
 
   @doc """
+  Returns the list of available server pools configured in the options file.
+
+  ## Parameters
+
+    * `options` - the options file data as read by `get_options/1`.
+
+  ## Examples
+      iex> config_options = MsbmsSystOptions.get_options!("./testing_options.toml")
+      iex> MsbmsSystOptions.get_available_server_pools(config_options)
+      ["primary", "linked", "demo", "reserved"]
+  """
+  @spec get_available_server_pools(map()) :: list(Types.server_pool())
+  defdelegate get_available_server_pools(options), to: OptionsParser
+
+  @doc """
   Extracts the list of configured dbservers in the options file, optionally
   filtered by the server's supported instance classes.
 
@@ -211,7 +228,7 @@ defmodule MsbmsSystOptions do
           server_name: "global_db",
           server_salt: "sklMRkLXzMQgzqpMpJZPk31Js88su39U/mooAXALhj0=",
           start_server_instances: false,
-          supported_instance_classes: []
+          server_pools: []
         },
         %{
           db_host: "127.0.0.1",
@@ -224,7 +241,7 @@ defmodule MsbmsSystOptions do
           server_name: "instance_db",
           server_salt: "w1OfRx630x7svid8Tk3L9rLL1eEGSm0fq8XcLdveuSs=",
           start_server_instances: true,
-          supported_instance_classes: ["primary", "linked", "demo", "reserved"]
+          server_pools: ["primary", "linked", "demo", "reserved"]
         }
       ]
 
@@ -244,7 +261,7 @@ defmodule MsbmsSystOptions do
           server_name: "instance_db",
           server_salt: "w1OfRx630x7svid8Tk3L9rLL1eEGSm0fq8XcLdveuSs=",
           start_server_instances: true,
-          supported_instance_classes: ["primary", "linked", "demo", "reserved"]
+          server_pools: ["primary", "linked", "demo", "reserved"]
         }
       ]
 
@@ -279,7 +296,7 @@ defmodule MsbmsSystOptions do
         server_name: "instance_db",
         server_salt: "w1OfRx630x7svid8Tk3L9rLL1eEGSm0fq8XcLdveuSs=",
         start_server_instances: true,
-        supported_instance_classes: ["primary", "linked", "demo", "reserved"]
+        server_pools: ["primary", "linked", "demo", "reserved"]
       }
 
   Result in case of bad server name:
