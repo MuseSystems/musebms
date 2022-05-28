@@ -85,8 +85,6 @@ ALTER FUNCTION msbms_syst.trig_i_i_syst_enum_items()
     OWNER TO <%= msbms_owner %>;
 
 REVOKE EXECUTE ON FUNCTION msbms_syst.trig_i_i_syst_enum_items() FROM public;
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_i_syst_enum_items() TO <%= msbms_owner %>;
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_i_syst_enum_items() TO <%= msbms_apiusr %>;
 
 COMMENT ON FUNCTION msbms_syst.trig_i_i_syst_enum_items() IS
 $DOC$An INSTEAD OF trigger function which applies business rules when using the

@@ -50,15 +50,6 @@ defmodule TestSupport do
         starting_pool_size: 3,
         start_context: true,
         login_context: true
-      },
-      %{
-        id: :msbms_syst_settings_api_user,
-        description: "MsBmsSystSettings Testing Api User",
-        database_role: "msbms_syst_settings_api_user",
-        database_password: 'msbms_syst_settings.testing.code.app.user',
-        starting_pool_size: 3,
-        start_context: true,
-        login_context: true
       }
     ],
     db_server: %{
@@ -93,8 +84,7 @@ defmodule TestSupport do
         datastore_options,
         @migration_test_datastore_type,
         msbms_owner: datastore_options.database_owner,
-        msbms_appusr: "msbms_syst_settings_app_user",
-        msbms_apiusr: "msbms_syst_settings_api_user"
+        msbms_appusr: "msbms_syst_settings_app_user"
       )
 
     {:ok, _, _} = MsbmsSystDatastore.start_datastore(datastore_options)

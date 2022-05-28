@@ -52,8 +52,6 @@ ALTER FUNCTION msbms_syst.trig_i_d_syst_enum_items()
     OWNER TO <%= msbms_owner %>;
 
 REVOKE EXECUTE ON FUNCTION msbms_syst.trig_i_d_syst_enum_items() FROM public;
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_d_syst_enum_items() TO <%= msbms_owner %>;
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_d_syst_enum_items() TO <%= msbms_apiusr %>;
 
 
 COMMENT ON FUNCTION msbms_syst.trig_i_d_syst_enum_items() IS
