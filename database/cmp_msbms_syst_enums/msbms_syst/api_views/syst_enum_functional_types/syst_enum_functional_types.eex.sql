@@ -35,9 +35,6 @@ ALTER VIEW msbms_syst.syst_enum_functional_types OWNER TO <%= msbms_owner %>;
 
 REVOKE ALL ON TABLE msbms_syst.syst_enum_functional_types FROM PUBLIC;
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE msbms_syst.syst_enum_functional_types TO <%= msbms_appusr %>;
-GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE msbms_syst.syst_enum_functional_types TO <%= msbms_apiusr %>;
-
 CREATE TRIGGER a50_trig_i_i_syst_enum_functional_types
     INSTEAD OF INSERT ON msbms_syst.syst_enum_functional_types
     FOR EACH ROW EXECUTE PROCEDURE msbms_syst.trig_i_i_syst_enum_functional_types();

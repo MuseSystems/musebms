@@ -14,6 +14,5 @@ DROP ROLE IF EXISTS msbms_syst_dba;
 
 DROP ROLE IF EXISTS msbms_syst_instance_mgr_owner;
 DROP ROLE IF EXISTS msbms_syst_instance_mgr_app_user;
-DROP ROLE IF EXISTS msbms_syst_instance_mgr_api_user;
 
 \ir bootstrap_database.psql

@@ -68,8 +68,6 @@ $BODY$ LANGUAGE plpgsql VOLATILE SECURITY DEFINER;
 ALTER FUNCTION msbms_syst.trig_i_i_syst_settings() OWNER TO <%= msbms_owner %>;
 
 REVOKE EXECUTE ON FUNCTION msbms_syst.trig_i_i_syst_settings() FROM PUBLIC;
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_i_syst_settings() TO <%= msbms_appusr %>;
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_i_syst_settings() TO <%= msbms_apiusr %>;
 
 COMMENT ON
     FUNCTION msbms_syst.trig_i_i_syst_settings() IS

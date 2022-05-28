@@ -79,9 +79,6 @@ ALTER FUNCTION msbms_syst.trig_i_u_syst_enum_functional_types()
     OWNER TO <%= msbms_owner %>;
 
 REVOKE EXECUTE ON FUNCTION msbms_syst.trig_i_u_syst_enum_functional_types() FROM public;
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_u_syst_enum_functional_types() TO <%= msbms_appusr %>;
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_u_syst_enum_functional_types() TO <%= msbms_apiusr %>;
-
 
 COMMENT ON FUNCTION msbms_syst.trig_i_u_syst_enum_functional_types() IS
 $DOC$An INSTEAD OF trigger function which applies business rules when using the

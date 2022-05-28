@@ -38,6 +38,8 @@ load_files = [
     "cmp_msbms_syst_settings/msbms_syst/api_views/syst_settings/trig_i_d_syst_settings.eex.sql",
     "cmp_msbms_syst_settings/msbms_syst/api_views/syst_settings/syst_settings.eex.sql",
 
+    "app_msbms_instance/components/msbms_syst_settings/privileges.eex.sql",
+
     #
     # MsbmsSystEnums Module
     #
@@ -69,6 +71,8 @@ load_files = [
     "cmp_msbms_syst_enums/msbms_syst/api_views/syst_enum_items/trig_i_u_syst_enum_items.eex.sql",
     "cmp_msbms_syst_enums/msbms_syst/api_views/syst_enum_items/trig_i_d_syst_enum_items.eex.sql",
     "cmp_msbms_syst_enums/msbms_syst/api_views/syst_enum_items/syst_enum_items.eex.sql",
+
+    "app_msbms_instance/components/msbms_syst_enums/privileges.eex.sql",
 
     #
     # MsbmsSystFormats Module

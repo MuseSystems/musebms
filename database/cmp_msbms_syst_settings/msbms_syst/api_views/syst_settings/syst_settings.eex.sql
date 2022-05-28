@@ -46,9 +46,6 @@ ALTER VIEW msbms_syst.syst_settings OWNER TO <%= msbms_owner %>;
 
 REVOKE ALL ON TABLE msbms_syst.syst_settings FROM PUBLIC;
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE msbms_syst.syst_settings TO <%= msbms_appusr %>;
-GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE msbms_syst.syst_settings TO <%= msbms_apiusr %>;
-
 CREATE TRIGGER a50_trig_i_i_syst_settings
     INSTEAD OF INSERT ON msbms_syst.syst_settings
     FOR EACH ROW EXECUTE PROCEDURE msbms_syst.trig_i_i_syst_settings();
