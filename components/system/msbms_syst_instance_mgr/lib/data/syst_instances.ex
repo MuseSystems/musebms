@@ -88,17 +88,13 @@ defmodule MsbmsSystInstanceMgr.Data.SystInstances do
     )
   end
 
-  @spec changeset(
-          MsbmsSystInstanceMgr.Data.SystInstances.t(),
-          MsbmsSystInstanceMgr.Types.instance_params(),
-          Keyword.t()
-        ) ::
+  @spec insert_changeset(MsbmsSystInstanceMgr.Types.instance_params(), Keyword.t()) ::
           Ecto.Changeset.t()
-  def changeset(instance, change_params \\ %{}, opts \\ []) do
+  def insert_changeset(insert_params, opts \\ []) do
     opts = resolve_options(opts)
 
-    instance
-    |> cast(change_params, [
+    %MsbmsSystInstanceMgr.Data.SystInstances{}
+    |> cast(insert_params, [
       :internal_name,
       :display_name,
       :application_id,
@@ -106,15 +102,46 @@ defmodule MsbmsSystInstanceMgr.Data.SystInstances do
       :instance_state_id,
       :owner_id,
       :owning_instance_id,
-      :instance_options
-    ])
-    |> validate_required([
-      :application_id,
-      :instance_type_id,
-      :instance_state_id,
+      :dbserver_name,
+      :instance_code,
       :instance_options
     ])
     |> validate_internal_name(opts)
     |> validate_display_name(opts)
+    |> validate_instance_code(opts)
+    |> validate_required([
+      :application_id,
+      :instance_type_id,
+      :instance_state_id
+    ])
+  end
+
+  @spec update_changeset(
+          MsbmsSystInstanceMgr.Data.SystInstances.t(),
+          MsbmsSystInstanceMgr.Types.instance_params(),
+          Keyword.t()
+        ) ::
+          Ecto.Changeset.t()
+  def update_changeset(instance, update_params \\ %{}, opts \\ []) do
+    opts = resolve_options(opts)
+
+    instance
+    |> cast(update_params, [
+      :internal_name,
+      :display_name,
+      :instance_type_id,
+      :instance_state_id,
+      :dbserver_name,
+      :instance_code,
+      :instance_options
+    ])
+    |> validate_internal_name(opts)
+    |> validate_display_name(opts)
+    |> validate_instance_code(opts)
+    |> validate_required([
+      :application_id,
+      :instance_type_id,
+      :instance_state_id
+    ])
   end
 end
