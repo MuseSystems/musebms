@@ -13,7 +13,8 @@
 defmodule MsbmsSystInstanceMgr.Data.SystOwners do
   use MsbmsSystDatastore.Schema
   import Ecto.Changeset
-  import MsbmsSystInstanceMgr.Impl.ChangesetHelpers
+  import MsbmsSystInstanceMgr.Data.Validators.General
+  import MsbmsSystInstanceMgr.Data.Helpers.OptionDefaults
 
   @moduledoc """
   Data description for known instance owners.
