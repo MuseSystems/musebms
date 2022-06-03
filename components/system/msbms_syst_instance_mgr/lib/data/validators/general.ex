@@ -1,5 +1,5 @@
-# Source File: changeset_helpers.ex
-# Location:    components/system/msbms_syst_instance_mgr/lib/impl/changeset_helpers.ex
+# Source File: general.ex
+# Location:    components/system/msbms_syst_instance_mgr/lib/data/validators/general.ex
 # Project:     msbms
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,35 +10,10 @@
 #
 # muse.information@musesystems.com :: https: //muse.systems
 
-defmodule MsbmsSystInstanceMgr.Impl.ChangesetHelpers do
+defmodule MsbmsSystInstanceMgr.Data.Validators.General do
   import Ecto.Changeset
 
   @moduledoc false
-
-  @default_min_internal_name_length 6
-  @default_max_internal_name_length 64
-
-  @default_min_display_name_length 6
-  @default_max_display_name_length 64
-
-  # Resolve user provided options to a complete set of options by filling gaps
-  # with pre-defined defaults.
-  #
-  # Allows the changeset function to resolve defaults that are used to
-  # parameterize other validations.   We do that resolution in the changeset
-  # function directly so we're only doing the user/default resolution once for
-  # a changeset.
-  @spec resolve_options(Keyword.t()) :: Keyword.t()
-  def resolve_options(opts_given) do
-    opts_default = [
-      min_internal_name_length: @default_min_internal_name_length,
-      max_internal_name_length: @default_max_internal_name_length,
-      min_display_name_length: @default_min_display_name_length,
-      max_display_name_length: @default_max_display_name_length
-    ]
-
-    Keyword.merge(opts_given, opts_default, fn _k, v1, _v2 -> v1 end)
-  end
 
   # Validate the internal_name key for the changeset.
   #
@@ -50,8 +25,6 @@ defmodule MsbmsSystInstanceMgr.Impl.ChangesetHelpers do
   #                            values.
   @spec validate_internal_name(Ecto.Changeset.t(), Keyword.t()) :: Ecto.Changeset.t()
   def validate_internal_name(changeset, opts) do
-    opts = resolve_options(opts)
-
     changeset
     |> validate_required(:internal_name)
     |> validate_length(:internal_name,
