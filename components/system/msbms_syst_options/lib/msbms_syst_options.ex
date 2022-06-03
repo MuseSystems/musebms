@@ -266,7 +266,7 @@ defmodule MsbmsSystOptions do
       ]
 
   """
-  @spec list_dbservers(map(), list(Types.instance_class())) ::
+  @spec list_dbservers(map(), list(Types.server_pool())) ::
           list(MsbmsSystDatastore.Types.db_server())
   defdelegate list_dbservers(options, filters \\ []), to: OptionsParser
 
