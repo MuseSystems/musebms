@@ -255,5 +255,7 @@ defmodule MsbmsSystDatastoreTest do
              MsbmsSystDatastore.query_for_many("SELECT * FROM msbms_test.test_type_four;")
 
     assert :ok = MsbmsSystDatastore.stop_datastore(datastore_options)
+
+    assert :ok = MsbmsSystDatastore.drop_datastore(datastore_options)
   end
 end
