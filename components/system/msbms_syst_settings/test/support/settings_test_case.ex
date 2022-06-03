@@ -12,6 +12,7 @@
 
 defmodule SettingsTestCase do
   use ExUnit.CaseTemplate
+  @moduledoc false
 
   setup do
     [

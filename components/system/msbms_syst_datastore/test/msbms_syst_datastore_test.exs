@@ -38,16 +38,14 @@ defmodule MsbmsSystDatastoreTest do
       }
     ],
     db_server: %{
-      server_name: :test_server,
-      start_server_databases: true,
-      instance_production_dbserver: false,
-      instance_sandbox_dbserver: true,
+      server_name: "test_server",
+      start_server_instances: true,
+      server_pools: [],
       db_host: "127.0.0.1",
-      db_port: "5432",
+      db_port: 5432,
       db_show_sensitive: true,
       db_log_level: :debug,
-      db_max_databases: 1,
-      context_defaults: [],
+      db_max_instances: 1,
       server_salt: "test",
       dbadmin_password: "msbms.syst.dba.testing.password",
       dbadmin_pool_size: 1
@@ -106,16 +104,14 @@ defmodule MsbmsSystDatastoreTest do
       }
     ],
     db_server: %{
-      server_name: :test_server,
-      start_server_databases: true,
-      instance_production_dbserver: false,
-      instance_sandbox_dbserver: true,
+      server_name: "test_server",
+      start_server_instances: true,
+      server_pools: [],
       db_host: "127.0.0.1",
-      db_port: "5432",
+      db_port: 5432,
       db_show_sensitive: true,
       db_log_level: :debug,
-      db_max_databases: 1,
-      context_defaults: [],
+      db_max_instances: 1,
       server_salt: "test",
       dbadmin_password: "msbms.syst.dba.testing.password",
       dbadmin_pool_size: 1

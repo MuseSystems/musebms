@@ -44,7 +44,7 @@ defmodule MsbmsSystDatastore.Types do
   * `:db_log_level` - Sets the `Logger` module log level for the database
     connection to the server.  (default `:debug`)
 
-  * `:db_max_databases` - The total number of databases allowed to be
+  * `:db_max_instances` - The total number of databases allowed to be
     established for the db_server instance.
 
   * `:server_salt` - For certain cryptographic operations, such as password
@@ -64,12 +64,12 @@ defmodule MsbmsSystDatastore.Types do
   @type db_server :: %{
           required(:server_name) => String.t(),
           required(:start_server_instances) => boolean(),
-          required(:supported_instance_classes) => list(String.t()),
+          required(:server_pools) => list(String.t()) | [],
           required(:db_host) => String.t(),
           required(:db_port) => integer(),
           required(:db_show_sensitive) => boolean(),
           required(:db_log_level) => Logger.level(),
-          required(:db_max_databases) => integer(),
+          required(:db_max_instances) => integer(),
           required(:server_salt) => String.t(),
           required(:dbadmin_password) => String.t(),
           required(:dbadmin_pool_size) => integer()
@@ -131,7 +131,7 @@ defmodule MsbmsSystDatastore.Types do
           optional(:id) => context_id(),
           required(:description) => String.t(),
           required(:database_role) => context_role(),
-          optional(:database_password) => String.t(),
+          optional(:database_password) => String.t() | nil,
           required(:starting_pool_size) => integer(),
           required(:start_context) => boolean(),
           optional(:login_context) => boolean()
@@ -168,7 +168,7 @@ defmodule MsbmsSystDatastore.Types do
           optional(:database_owner) => String.t(),
           optional(:datastore_code) => String.t(),
           optional(:datastore_name) => atom(),
-          required(:contexts) => [datastore_context()],
+          required(:contexts) => [datastore_context()] | [],
           required(:db_server) => db_server()
         }
 
