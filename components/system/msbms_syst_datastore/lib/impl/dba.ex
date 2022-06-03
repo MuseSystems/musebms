@@ -84,7 +84,7 @@ defmodule MsbmsSystDatastore.Impl.Dba do
 
     context_states = create_contexts(datastore_options.contexts)
 
-    {:ok, _} = create_database(datastore_options)
+    :ok = create_database(datastore_options)
 
     stop_dba_connection(opts_final[:db_shutdown_timeout])
 
@@ -428,11 +428,15 @@ defmodule MsbmsSystDatastore.Impl.Dba do
   end
 
   defp create_database(datastore_options) do
-    Datastore.query(
-      "CREATE DATABASE #{datastore_options.database_name} OWNER #{datastore_options.database_owner};"
-    )
+    :ok =
+      Datastore.query_for_none!(
+        "CREATE DATABASE #{datastore_options.database_name} OWNER #{datastore_options.database_owner};"
+      )
 
-    Datastore.query("REVOKE ALL ON DATABASE #{datastore_options.database_name} FROM public;")
+    :ok =
+      Datastore.query_for_none!(
+        "REVOKE ALL ON DATABASE #{datastore_options.database_name} FROM public;"
+      )
   end
 
   defp drop_database(datastore_options) do
