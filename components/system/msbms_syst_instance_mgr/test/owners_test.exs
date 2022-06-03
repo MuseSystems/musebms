@@ -21,7 +21,7 @@ defmodule OwnersTest do
   test "Can List Sorted Owners" do
     assert {:ok, owners} = MsbmsSystInstanceMgr.list_owners(sort: true)
     assert 4 <= length(owners)
-    assert %{owner_internal_name: "owner_1"} = hd(owners)
+    assert %{owner_internal_name: "owner1"} = hd(owners)
   end
 
   test "Can List Owners by Status" do
@@ -41,15 +41,15 @@ defmodule OwnersTest do
              )
 
     assert 2 <= length(owners)
-    assert %{owner_internal_name: "owner_2"} = hd(owners)
+    assert %{owner_internal_name: "owner2"} = hd(owners)
   end
 
   test "Can Create New Owner" do
     default_owner_state = MsbmsSystEnums.get_default_enum_item("owner_states")
 
-    assert {:ok, %MsbmsSystInstanceMgr.Data.SystOwners{internal_name: "owner_create_1"}} =
+    assert {:ok, %MsbmsSystInstanceMgr.Data.SystOwners{internal_name: "ownercreate_1"}} =
              MsbmsSystInstanceMgr.create_owner(
-               "owner_create_1",
+               "ownercreate_1",
                "Owner Create Test",
                default_owner_state.id
              )
@@ -60,15 +60,15 @@ defmodule OwnersTest do
 
     default_owner_state = MsbmsSystEnums.get_default_enum_item("owner_states")
 
-    {:ok, test_owner} =
+    {:ok, _test_owner} =
       MsbmsSystInstanceMgr.create_owner(
-        "owner_create_2",
+        "ownercreate_2",
         "Owner Change Internal Name Test",
         default_owner_state.id
       )
 
     assert {:ok, %MsbmsSystInstanceMgr.Data.SystOwners{internal_name: "changed_owner_create_2"}} =
-             MsbmsSystInstanceMgr.set_owner_values("owner_create_2", change)
+             MsbmsSystInstanceMgr.set_owner_values("ownercreate_2", change)
   end
 
   test "Can Change Existing Owner Display Name" do
@@ -76,9 +76,9 @@ defmodule OwnersTest do
 
     default_owner_state = MsbmsSystEnums.get_default_enum_item("owner_states")
 
-    {:ok, test_owner} =
+    {:ok, _test_owner} =
       MsbmsSystInstanceMgr.create_owner(
-        "owner_create_3",
+        "ownercreate_3",
         "Owner Change Display Name Test",
         default_owner_state.id
       )
@@ -86,7 +86,7 @@ defmodule OwnersTest do
     assert {:ok,
             %MsbmsSystInstanceMgr.Data.SystOwners{
               display_name: "Owner Change Display Name Test Is Changed"
-            }} = MsbmsSystInstanceMgr.set_owner_values("owner_create_3", change)
+            }} = MsbmsSystInstanceMgr.set_owner_values("ownercreate_3", change)
   end
 
   test "Can Change Existing Owner Owner State" do
@@ -99,9 +99,9 @@ defmodule OwnersTest do
 
     change = %{owner_state_id: new_state.id}
 
-    {:ok, test_owner} =
+    {:ok, _test_owner} =
       MsbmsSystInstanceMgr.create_owner(
-        "owner_create_4",
+        "ownercreate_4",
         "Owner Change Owner State Test",
         default_owner_state.id
       )
@@ -109,7 +109,7 @@ defmodule OwnersTest do
     assert {:ok,
             %MsbmsSystInstanceMgr.Data.SystOwners{
               owner_state_id: updated_id
-            }} = MsbmsSystInstanceMgr.set_owner_values("owner_create_4", change)
+            }} = MsbmsSystInstanceMgr.set_owner_values("ownercreate_4", change)
 
     assert new_state.id == updated_id
   end
@@ -124,21 +124,21 @@ defmodule OwnersTest do
 
     change = %{
       owner_state_id: new_state.id,
-      internal_name: "owner_create_5_changed",
+      internal_name: "ownercreate_5_changed",
       display_name: "Owner Change Owner Multi Test Changed"
     }
 
-    {:ok, test_owner} =
+    {:ok, _test_owner} =
       MsbmsSystInstanceMgr.create_owner(
-        "owner_create_5",
+        "ownercreate_5",
         "Owner Change Owner Multi Test",
         default_owner_state.id
       )
 
-    assert {:ok, updated_owner} = MsbmsSystInstanceMgr.set_owner_values("owner_create_5", change)
+    assert {:ok, updated_owner} = MsbmsSystInstanceMgr.set_owner_values("ownercreate_5", change)
 
     assert new_state.id == updated_owner.owner_state_id
-    assert "owner_create_5_changed" == updated_owner.internal_name
+    assert "ownercreate_5_changed" == updated_owner.internal_name
     assert "Owner Change Owner Multi Test Changed" == updated_owner.display_name
   end
 
@@ -148,27 +148,27 @@ defmodule OwnersTest do
         functional_type_name: "owner_states_purge_eligible"
       )
 
-    {:ok, test_owner} =
+    {:ok, _test_owner} =
       MsbmsSystInstanceMgr.create_owner(
-        "owner_purge_1",
+        "ownerpurge_1",
         "Owner Purge Single Owner Test",
         default_owner_state.id
       )
 
-    assert {:ok, {1, _rows}} = MsbmsSystInstanceMgr.purge_owner("owner_purge_1")
+    assert {:ok, {1, _rows}} = MsbmsSystInstanceMgr.purge_owner("ownerpurge_1")
   end
 
   test "Cannot Purge a Single Ineligible Owner" do
     default_owner_state = MsbmsSystEnums.get_default_enum_item("owner_states")
 
-    {:ok, test_owner} =
+    {:ok, _test_owner} =
       MsbmsSystInstanceMgr.create_owner(
-        "owner_purge_2",
+        "ownerpurge_2",
         "Owner No Purge Single Owner Test",
         default_owner_state.id
       )
 
-    assert {:error, _reason} = MsbmsSystInstanceMgr.purge_owner("owner_purge_2")
+    assert {:error, _reason} = MsbmsSystInstanceMgr.purge_owner("ownerpurge_2")
   end
 
   test "Can Purge a All Purge Eligible Owners" do
@@ -179,14 +179,14 @@ defmodule OwnersTest do
 
     {:ok, _} =
       MsbmsSystInstanceMgr.create_owner(
-        "owner_purge_3",
+        "ownerpurge_3",
         "Owner Purge All Eligible Owners 1",
         default_owner_state.id
       )
 
     {:ok, _} =
       MsbmsSystInstanceMgr.create_owner(
-        "owner_purge_4",
+        "ownerpurge_4",
         "Owner Purge All Eligible Owners 2",
         default_owner_state.id
       )
@@ -199,9 +199,9 @@ defmodule OwnersTest do
   end
 
   test "Can Get Owner by Internal Name" do
-    assert {:ok, %MsbmsSystInstanceMgr.Data.SystOwners{internal_name: "owner_1"}} =
-             MsbmsSystInstanceMgr.get_owner_by_name("owner_1")
+    assert {:ok, %MsbmsSystInstanceMgr.Data.SystOwners{internal_name: "owner1"}} =
+             MsbmsSystInstanceMgr.get_owner_by_name("owner1")
 
-    MsbmsSystInstanceMgr.get_owner_by_name("owner_1")
+    MsbmsSystInstanceMgr.get_owner_by_name("owner1")
   end
 end
