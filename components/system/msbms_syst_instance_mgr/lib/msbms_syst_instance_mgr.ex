@@ -102,7 +102,7 @@ defmodule MsbmsSystInstanceMgr do
   ## Examples
 
       iex> {:ok, _owner} =
-      ...>   MsbmsSystInstanceMgr.get_owner_by_name("owner_1")
+      ...>   MsbmsSystInstanceMgr.get_owner_by_name("owner1")
   """
   @spec get_owner_by_name(Types.owner_name()) ::
           {:ok, Data.SystOwners.t()} | {:error, MsbmsSystError.t()}
@@ -450,8 +450,8 @@ defmodule MsbmsSystInstanceMgr do
 
   ## Examples
 
-      iex> {:ok, _instance_type} =
-      ...>   MsbmsSystInstanceMgr.get_instance_by_name("test_instance_2")
+      iex> {:ok, _instance} =
+      ...>   MsbmsSystInstanceMgr.get_instance_by_name("app1_owner1_instance_types_big")
   """
   @spec get_instance_by_name(Types.instance_name()) ::
           {:ok, Data.SystInstances.t()} | {:error, MsbmsSystError.t()}
@@ -609,21 +609,9 @@ defmodule MsbmsSystInstanceMgr do
       ...>   internal_name: "instance_types_new_example",
       ...>   display_name: "Instance Types / New Example",
       ...>   external_name: "New Example",
-      ...>   functional_type_name: "instance_types_primary",
       ...>   enum_default: false,
       ...>   user_description: "An example of creating an instance type.",
-      ...>   user_options: %{
-      ...>     datastore_contexts: [
-      ...>       %{
-      ...>         id: :test_datastore_context_1,
-      ...>         db_pool_size: 3
-      ...>       },
-      ...>       %{
-      ...>         id: :test_datastore_context_1,
-      ...>         db_pool_size: 3
-      ...>       }
-      ...>     ]
-      ...>   }
+      ...>   user_options: %{"allowed_server_pools" => ["primary", "sandbox"] }
       ...> }
       iex> {:ok, _new_instance_type} =
       ...>   MsbmsSystInstanceMgr.create_instance_type(instance_type_params)
@@ -643,7 +631,7 @@ defmodule MsbmsSystInstanceMgr do
   ## Examples
 
       iex> {:ok, _instance_type} =
-      ...>   MsbmsSystInstanceMgr.get_instance_type_by_name("instance_types_big_instance")
+      ...>   MsbmsSystInstanceMgr.get_instance_type_by_name("instance_types_big")
   """
   @spec get_instance_type_by_name(MsbmsSystEnums.Types.enum_item_name()) ::
           {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MsbmsSystError.t()}
@@ -702,7 +690,7 @@ defmodule MsbmsSystInstanceMgr do
       ...>     }
       ...> } =
       ...>   MsbmsSystInstanceMgr.set_instance_type_values(
-      ...>     "instance_types_sml_instance",
+      ...>     "instance_types_sml",
       ...>     instance_type_updates
       ...>   )
   """

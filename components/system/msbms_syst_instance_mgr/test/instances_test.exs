@@ -15,16 +15,15 @@ defmodule InstancesTest do
 
   test "Can Get Unfiltered/Unsorted Instances List" do
     assert {:ok, instances_list} = MsbmsSystInstanceMgr.list_instances()
-
     assert is_list(instances_list)
   end
 
   test "Can Filter Instances List by Instance Types" do
     assert {:ok, instances_list} =
-             MsbmsSystInstanceMgr.list_instances(instance_types: ["instance_types_big_instance"])
+             MsbmsSystInstanceMgr.list_instances(instance_types: ["instance_types_big"])
 
     assert Enum.reduce(instances_list, true, fn instance, acc ->
-             instance.instance_type_display_name == "Instance Types / Big Instance" and acc
+             instance.instance_type_display_name == "Instance Types / Big" and acc
            end)
   end
 
@@ -40,7 +39,7 @@ defmodule InstancesTest do
   end
 
   test "Can Filter Instances List by Owner" do
-    {:ok, test_owner} = MsbmsSystInstanceMgr.get_owner_by_name("owner_3")
+    {:ok, test_owner} = MsbmsSystInstanceMgr.get_owner_by_name("owner3")
 
     assert {:ok, instances_list} = MsbmsSystInstanceMgr.list_instances(owner_id: test_owner.id)
 
@@ -61,11 +60,10 @@ defmodule InstancesTest do
   end
 
   test "Can Filter Instances List by Applications" do
-    assert {:ok, instances_list} =
-             MsbmsSystInstanceMgr.list_instances(applications: ["test_app_1"])
+    assert {:ok, instances_list} = MsbmsSystInstanceMgr.list_instances(applications: ["app1"])
 
     assert Enum.reduce(instances_list, true, fn instance, acc ->
-             instance.application_display_name == "Test App 1" and acc
+             instance.application_display_name == "App 1" and acc
            end)
   end
 
@@ -103,8 +101,10 @@ defmodule InstancesTest do
   end
 
   test "Can Retrieve Single Instance" do
-    assert {:ok, %MsbmsSystInstanceMgr.Data.SystInstances{internal_name: "test_instance_1"}} =
-             MsbmsSystInstanceMgr.get_instance_by_name("test_instance_1")
+    assert {:ok,
+            %MsbmsSystInstanceMgr.Data.SystInstances{
+              internal_name: "app2_owner4_instance_types_big"
+            }} = MsbmsSystInstanceMgr.get_instance_by_name("app2_owner4_instance_types_big")
   end
 
   test "Can Create Simple Instance" do

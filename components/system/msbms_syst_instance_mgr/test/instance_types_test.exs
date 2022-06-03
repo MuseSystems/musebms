@@ -32,8 +32,8 @@ defmodule InstanceTypesTest do
   end
 
   test "Can Get Instance by Instance Internal Name" do
-    assert {:ok, %MsbmsSystEnums.Data.SystEnumItems{internal_name: "instance_types_big_instance"}} =
-             MsbmsSystInstanceMgr.get_instance_type_by_name("instance_types_big_instance")
+    assert {:ok, %MsbmsSystEnums.Data.SystEnumItems{internal_name: "instance_types_big"}} =
+             MsbmsSystInstanceMgr.get_instance_type_by_name("instance_types_big")
   end
 
   test "Can Set Instance Type Values" do
@@ -44,12 +44,12 @@ defmodule InstanceTypesTest do
 
     assert {:ok,
             %MsbmsSystEnums.Data.SystEnumItems{
-              internal_name: "instance_types_std_instance",
+              internal_name: "instance_types_std",
               external_name: "Standard Instance (Changed)",
               display_name: "Instance Types / Std. Instance (Changed)"
             }} =
              MsbmsSystInstanceMgr.set_instance_type_values(
-               "instance_types_std_instance",
+               "instance_types_std",
                instance_type_changes
              )
   end

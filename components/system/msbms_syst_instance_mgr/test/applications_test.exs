@@ -16,6 +16,6 @@ defmodule ApplicationsTest do
   test "Can List Applications" do
     assert {:ok, apps} = MsbmsSystInstanceMgr.list_applications()
     assert 2 = length(apps)
-    assert %MsbmsSystInstanceMgr.Data.SystApplications{internal_name: "test_app_1"} = hd(apps)
+    assert %MsbmsSystInstanceMgr.Data.SystApplications{internal_name: "app1"} = hd(apps)
   end
 end

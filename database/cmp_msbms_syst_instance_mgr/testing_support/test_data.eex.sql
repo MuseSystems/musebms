@@ -12,26 +12,6 @@
 
 DO
 $INSTANCE_MGR_TESTING_INIT$
-DECLARE
-    var_test_app_1 msbms_syst_data.syst_applications;
-    var_test_app_2 msbms_syst_data.syst_applications;
-
-    var_owner_4 msbms_syst_data.syst_owners;
-    var_owner_3 msbms_syst_data.syst_owners;
-    var_owner_1 msbms_syst_data.syst_owners;
-    var_owner_2 msbms_syst_data.syst_owners;
-
-    var_instance_type_enum record;
-    var_big_instance msbms_syst_data.syst_enum_items;
-    var_std_instance msbms_syst_data.syst_enum_items;
-    var_sml_instance msbms_syst_data.syst_enum_items;
-
-    var_test_instance_1 msbms_syst_data.syst_instances;
-    var_test_instance_2 msbms_syst_data.syst_instances;
-    var_test_instance_3 msbms_syst_data.syst_instances;
-    var_test_instance_4 msbms_syst_data.syst_instances;
-    var_test_instance_5 msbms_syst_data.syst_instances;
-
 BEGIN
 
     --
@@ -41,14 +21,88 @@ BEGIN
     INSERT INTO msbms_syst_data.syst_applications
         ( internal_name, display_name, syst_description )
     VALUES
-        ( 'test_app_2', 'Test App 2', 'Test App Two Description' )
-    RETURNING * INTO var_test_app_2;
+        ( 'app2', 'App 2', 'App Two Description' )
+         ,
+        ( 'app1', 'App 1', 'App One Description' );
 
-    INSERT INTO msbms_syst_data.syst_applications
-        ( internal_name, display_name, syst_description )
+    --
+    -- Application Contexts
+    --
+
+    INSERT INTO msbms_syst_data.syst_application_contexts
+        ( internal_name
+        , display_name
+        , application_id
+        , description
+        , start_context
+        , login_context
+        , database_owner_context )
     VALUES
-        ( 'test_app_1', 'Test App 1', 'Test App One Description' )
-    RETURNING * INTO var_test_app_1;
+        ( 'app1_owner'
+        , 'App 1 Owner'
+        , ( SELECT id
+            FROM msbms_syst_data.syst_applications
+            WHERE internal_name = 'app1' )
+        , 'App 1 Owner'
+        , FALSE
+        , FALSE
+        , TRUE )
+
+         ,
+        ( 'app1_appusr'
+        , 'App 1 AppUsr'
+        , ( SELECT id
+            FROM msbms_syst_data.syst_applications
+            WHERE internal_name = 'app1' )
+        , 'App 1 AppUsr'
+        , TRUE
+        , TRUE
+        , FALSE )
+
+         ,
+        ( 'app1_apiusr'
+        , 'App 1 ApiUsr'
+        , ( SELECT id
+            FROM msbms_syst_data.syst_applications
+            WHERE internal_name = 'app1' )
+        , 'App 1 API user Context'
+        , TRUE
+        , TRUE
+        , FALSE )
+
+         ,
+        ( 'app2_owner'
+        , 'App 2 Owner'
+        , ( SELECT id
+            FROM msbms_syst_data.syst_applications
+            WHERE internal_name = 'app2' )
+        , 'App 2 Owner'
+        , FALSE
+        , FALSE
+        , TRUE )
+
+         ,
+        ( 'app2_appusr'
+        , 'App 2 AppUsr'
+        , ( SELECT id
+            FROM msbms_syst_data.syst_applications
+            WHERE internal_name = 'app2' )
+        , 'App 2 App'
+        , TRUE
+        , TRUE
+        , FALSE )
+
+         ,
+        ( 'app2_apiusr'
+        , 'App 2 ApiUsr'
+        , ( SELECT id
+            FROM msbms_syst_data.syst_applications
+            WHERE internal_name = 'app2' )
+        , 'App 2 API'
+        , TRUE
+        , TRUE
+        , FALSE );
+
 
     --
     --  Owners
@@ -57,46 +111,29 @@ BEGIN
     INSERT INTO msbms_syst_data.syst_owners
         ( internal_name, display_name, owner_state_id )
     VALUES
-        ( 'owner_4', 'Owner 4 Inactive', ( SELECT id
-                                           FROM msbms_syst_data.syst_enum_items
-                                           WHERE internal_name = 'owner_states_sysdef_inactive' ) )
-    RETURNING * INTO var_owner_4;
+        ( 'owner4', 'Owner 4 Inactive', ( SELECT id
+                                          FROM msbms_syst_data.syst_enum_items
+                                          WHERE internal_name = 'owner_states_sysdef_inactive' ) )
 
-    INSERT INTO msbms_syst_data.syst_owners
-        ( internal_name, display_name, owner_state_id )
-    VALUES
-        ( 'owner_3', 'Owner 3 Active', ( SELECT id
-                                         FROM msbms_syst_data.syst_enum_items
-                                         WHERE internal_name = 'owner_states_sysdef_active' ) )
-    RETURNING * INTO var_owner_3;
+         ,
+        ( 'owner3', 'Owner 3 Active', ( SELECT id
+                                        FROM msbms_syst_data.syst_enum_items
+                                        WHERE internal_name = 'owner_states_sysdef_active' ) )
 
-    INSERT INTO msbms_syst_data.syst_owners
-        ( internal_name, display_name, owner_state_id )
-    VALUES
-        ( 'owner_1', 'Owner 1 Active', ( SELECT id
-                                         FROM msbms_syst_data.syst_enum_items
-                                         WHERE internal_name = 'owner_states_sysdef_active' ) )
-    RETURNING * INTO var_owner_1;
+         ,
+        ( 'owner1', 'Owner 1 Active', ( SELECT id
+                                        FROM msbms_syst_data.syst_enum_items
+                                        WHERE internal_name = 'owner_states_sysdef_active' ) )
 
-    INSERT INTO msbms_syst_data.syst_owners
-        ( internal_name, display_name, owner_state_id )
-    VALUES
-        ( 'owner_2', 'Owner 2 Inactive', ( SELECT id
-                                           FROM msbms_syst_data.syst_enum_items
-                                           WHERE internal_name = 'owner_states_sysdef_inactive' ) )
-    RETURNING * INTO var_owner_2;
+         ,
+        ( 'owner2', 'Owner 2 Inactive', ( SELECT id
+                                          FROM msbms_syst_data.syst_enum_items
+                                          WHERE internal_name = 'owner_states_sysdef_inactive' ) );
 
 
     --
-    -- Create some instance types.
+    -- Create Instance Types.
     --
-
-    SELECT INTO var_instance_type_enum
-        se.id   AS enum_id
-      , seft.id AS functional_type_id
-    FROM msbms_syst_data.syst_enums se
-        JOIN msbms_syst_data.syst_enum_functional_types seft ON seft.enum_id = se.id
-    WHERE se.internal_name = 'instance_types' AND seft.internal_name = 'instance_types_primary';
 
     INSERT INTO msbms_syst_data.syst_enum_items
         ( internal_name
@@ -104,110 +141,58 @@ BEGIN
         , external_name
         , enum_id
         , enum_default
-        , functional_type_id
-        , functional_type_default
         , syst_description
         , user_description
         , user_options )
     VALUES
-        ( 'instance_types_big_instance'
-        , 'Instance Types / Big Instance'
+        ( 'instance_types_big'
+        , 'Instance Types / Big'
         , 'Big Instance'
-        , var_instance_type_enum.enum_id
-        , FALSE
-        , var_instance_type_enum.functional_type_id
+        , (SELECT id FROM msbms_syst_data.syst_enums WHERE internal_name = 'instance_types')
         , FALSE
         , '(System Description Not Provided)'
         , 'A Big Instance Description'
-        , '{
-          "dbserver_name": "instance_db",
-          "datastore_contexts": [
-            {
-              "application_context": "test_datastore_context_1",
-              "db_pool_size": 20
-            },
-            {
-              "application_context": "test_datastore_context_2",
-              "db_pool_size": 20
-            }
-          ]
-        }'::jsonb )
-    RETURNING * INTO var_big_instance;
-
-    INSERT INTO msbms_syst_data.syst_enum_items
-        ( internal_name
-        , display_name
-        , external_name
-        , enum_id
-        , enum_default
-        , functional_type_id
-        , functional_type_default
-        , syst_description
-        , user_description
-        , user_options )
-    VALUES
-        ( 'instance_types_std_instance'
-        , 'Instance Types / Std. Instance'
+        , '{"allowed_server_pools": ["primary"]}'::jsonb )
+         ,
+        ( 'instance_types_std'
+        , 'Instance Types / Standard'
         , 'Standard Instance'
-        , var_instance_type_enum.enum_id
-        , TRUE
-        , var_instance_type_enum.functional_type_id
+        , (SELECT id FROM msbms_syst_data.syst_enums WHERE internal_name = 'instance_types')
         , TRUE
         , '(System Description Not Provided)'
         , 'A Standard Instance Description'
-        , '{
-          "dbserver_name": "instance_db",
-          "datastore_contexts": [
-            {
-              "application_context": "test_datastore_context_1",
-              "db_pool_size": 10
-            },
-            {
-              "application_context": "test_datastore_context_2",
-              "db_pool_size": 10
-            }
-          ]
-        }'::jsonb )
-    RETURNING * INTO var_std_instance;
-
-    INSERT INTO msbms_syst_data.syst_enum_items
-        ( internal_name
-        , display_name
-        , external_name
-        , enum_id
-        , enum_default
-        , functional_type_id
-        , functional_type_default
-        , syst_description
-        , user_description
-        , user_options )
-    VALUES
-        ( 'instance_types_sml_instance'
-        , 'Instance Types / Small Instance'
+        , '{"allowed_server_pools": ["primary"]}'::jsonb )
+         ,
+        ( 'instance_types_sml'
+        , 'Instance Types / Small'
         , 'Small Instance'
-        , var_instance_type_enum.enum_id
-        , FALSE
-        , var_instance_type_enum.functional_type_id
+        , (SELECT id FROM msbms_syst_data.syst_enums WHERE internal_name = 'instance_types')
         , FALSE
         , '(System Description Not Provided)'
         , 'A Small Instance Description'
-        , '{
-          "dbserver_name": null,
-          "datastore_contexts": [
-            {
-              "application_context": "test_datastore_context_1",
-              "db_pool_size": 3
-            },
-            {
-              "application_context": "test_datastore_context_2",
-              "db_pool_size": 3
-            }
-          ]
-        }'::jsonb )
-    RETURNING * INTO var_sml_instance;
+        , '{"allowed_server_pools": ["primary"]}'::jsonb );
 
     --
-    -- Create some instances.
+    -- Create Instance Type Contexts
+    --
+
+    INSERT INTO msbms_syst_data.syst_instance_type_contexts
+        ( instance_type_id, application_context_id, default_db_pool_size )
+    SELECT
+        sei.id
+      , sac.id
+      , CASE
+            WHEN sei.internal_name = 'instance_types_big' AND sac.login_context THEN 20
+            WHEN sei.internal_name = 'instance_types_std' AND sac.login_context THEN 10
+            WHEN sei.internal_name = 'instance_types_sml' AND sac.login_context THEN 3
+            ELSE 0
+        END
+    FROM msbms_syst_data.syst_application_contexts sac,
+         msbms_syst_data.syst_enums se  JOIN msbms_syst_data.syst_enum_items sei
+             ON se.internal_name = 'instance_types' AND sei.enum_id = se.id;
+
+    --
+    -- Create Instances
     --
 
     INSERT INTO msbms_syst_data.syst_instances
@@ -217,197 +202,84 @@ BEGIN
         , instance_type_id
         , instance_state_id
         , owner_id
-        , owning_instance_id
-        , instance_options )
-    VALUES
-        ( 'test_instance_1'
-        , 'Test Instance One'
-        , var_test_app_1.id
-        , var_big_instance.id
-        , ( SELECT
-                id
-            FROM msbms_syst_data.syst_enum_items
-            WHERE internal_name = 'instance_states_sysdef_active' )
-        , var_owner_3.id
-        , NULL
-        , '{
-          "dbserver_name": "instance_db",
-          "instance_code": "Testing data do not use in production!!!",
-          "datastore_contexts": [
-            {
-              "id": "msbms_test_instance_1_test_datastore_context_1",
-              "application_context": "test_datastore_context_1",
-              "db_pool_size": 20,
-              "context_code": "Testing data do not use in production!!!"
-            },
-            {
-              "id": "msbms_test_instance_1_test_datastore_context_2",
-              "application_context": "test_datastore_context_2",
-              "db_pool_size": 20,
-              "context_code": "Testing data do not use in production!!!"
-            }
-          ]
-        }'::jsonb )
-    RETURNING * INTO var_test_instance_1;
+        , instance_code)
+    SELECT
+        sa.internal_name || '_' || so.internal_name || '_' || seiit.internal_name
+      , sa.display_name || ' / ' || so.display_name || ' / ' || seiit.display_name
+      , sa.id
+      , seiit.id
+      , seiis.id
+      , so.id
+      , gen_random_bytes(16)
+    FROM msbms_syst_data.syst_owners so, msbms_syst_data.syst_applications sa
+       , msbms_syst_data.syst_enums seit
+             JOIN msbms_syst_data.syst_enum_items seiit
+                  ON seit.internal_name = 'instance_types' AND seiit.enum_id = seit.id
+       , msbms_syst_data.syst_enums seis
+             JOIN msbms_syst_data.syst_enum_items seiis
+                  ON seis.internal_name = 'instance_states' AND seiis.enum_id = seis.id
+    WHERE
+        CASE sa.internal_name
+            WHEN 'app2' THEN
+                seiis.internal_name = 'instance_states_sysdef_uninitialized'
+            WHEN 'app1' THEN
+                seiis.internal_name = 'instance_states_sysdef_active'
+        END;
 
-    INSERT INTO msbms_syst_data.syst_instances
-        ( internal_name
-        , display_name
-        , application_id
-        , instance_type_id
-        , instance_state_id
-        , owner_id
-        , owning_instance_id
-        , instance_options )
-    VALUES
-        ( 'test_instance_2'
-        , 'Test Instance Two (Sub 1)'
-        , var_test_app_1.id
-        , var_std_instance.id
-        , ( SELECT id
-            FROM msbms_syst_data.syst_enum_items
-            WHERE internal_name = 'instance_states_sysdef_active' )
-        , var_owner_3.id
-        , var_test_instance_1.id
-        , '{
-          "dbserver_name": "instance_db",
-          "instance_code": "Testing data do not use in production!!!",
-          "datastore_contexts": [
-            {
-              "id": "msbms_test_instance_2_test_datastore_context_1",
-              "application_context": "test_datastore_context_1",
-              "db_pool_size": 10,
-              "context_code": "Testing data do not use in production!!!"
-            },
-            {
-              "id": "msbms_test_instance_2_test_datastore_context_2",
-              "application_context": "test_datastore_context_2",
-              "db_pool_size": 10,
-              "context_code": "Testing data do not use in production!!!"
-            }
-          ]
-        }'::jsonb )
-    RETURNING * INTO var_test_instance_2;
+    UPDATE msbms_syst_data.syst_instances upttarget
+    SET owning_instance_id = owner.new_owning_instance_id
+    FROM (SELECT
+              si.id AS new_owning_instance_id
+            , si.owner_id AS owner_id
+            , si.application_id AS application_id
+          FROM msbms_syst_data.syst_instances si
+            JOIN msbms_syst_data.syst_enum_items sei
+                ON sei.id = si.instance_type_id
+          WHERE sei.internal_name = 'instance_types_big') owner,
+        (SELECT
+              si.id AS to_be_owned_instance_id
+         FROM msbms_syst_data.syst_instances si
+            JOIN msbms_syst_data.syst_enum_items sei
+                ON sei.id = si.instance_type_id
+         WHERE sei.internal_name = 'instance_types_sml') target
+    WHERE upttarget.id             = target.to_be_owned_instance_id AND
+          upttarget.owner_id       = owner.owner_id AND
+          upttarget.application_id = owner.application_id;
 
-    INSERT INTO msbms_syst_data.syst_instances
-        ( internal_name
-        , display_name
-        , application_id
-        , instance_type_id
-        , instance_state_id
-        , owner_id
-        , owning_instance_id
-        , instance_options )
-    VALUES
-        ( 'test_instance_3'
-        , 'Test Instance Three (Sub 1)'
-        , var_test_app_1.id
-        , var_sml_instance.id
-        , ( SELECT
-                id
-            FROM msbms_syst_data.syst_enum_items
-            WHERE internal_name = 'instance_states_sysdef_inactive' )
-        , var_owner_3.id
-        , var_test_instance_1.id
-        , '{
-          "dbserver_name": "instance_db",
-          "instance_code": "Testing data do not use in production!!!",
-          "datastore_contexts": [
-            {
-              "id": "msbms_test_instance_3_test_datastore_context_1",
-              "application_context": "test_datastore_context_1",
-              "db_pool_size": 3,
-              "context_code": "Testing data do not use in production!!!"
-            },
-            {
-              "id": "msbms_test_instance_3_test_datastore_context_2",
-              "application_context": "test_datastore_context_2",
-              "db_pool_size": 3,
-              "context_code": "Testing data do not use in production!!!"
-            }
-          ]
-        }'::jsonb )
-    RETURNING * INTO var_test_instance_3;
+    --
+    -- Create Instance Contexts
+    --
 
-    INSERT INTO msbms_syst_data.syst_instances
-        ( internal_name
-        , display_name
-        , application_id
-        , instance_type_id
-        , instance_state_id
-        , owner_id
-        , owning_instance_id
-        , instance_options )
-    VALUES
-        ( 'test_instance_4'
-        , 'Test Instance Four'
-        , var_test_app_2.id
-        , var_big_instance.id
-        , ( SELECT
-                id
-            FROM msbms_syst_data.syst_enum_items
-            WHERE internal_name = 'instance_states_sysdef_active' )
-        , var_owner_4.id
-        , NULL
-        , '{
-          "dbserver_name": "instance_db",
-          "instance_code": "Testing data do not use in production!!!",
-          "datastore_contexts": [
-            {
-              "id": "msbms_test_instance_4_test_datastore_context_1",
-              "application_context": "test_datastore_context_1",
-              "db_pool_size": 20,
-              "context_code": "Testing data do not use in production!!!"
-            },
-            {
-              "id": "msbms_test_instance_4_test_datastore_context_2",
-              "application_context": "test_datastore_context_2",
-              "db_pool_size": 20,
-              "context_code": "Testing data do not use in production!!!"
-            }
-          ]
-        }'::jsonb )
-    RETURNING * INTO var_test_instance_4;
-
-    INSERT INTO msbms_syst_data.syst_instances
-        ( internal_name
-        , display_name
-        , application_id
-        , instance_type_id
-        , instance_state_id
-        , owner_id
-        , owning_instance_id
-        , instance_options )
-    VALUES
-        ( 'test_instance_5'
-        , 'Test Instance Five'
-        , var_test_app_1.id
-        , var_big_instance.id
-        , ( SELECT
-                id
-            FROM msbms_syst_data.syst_enum_items
-            WHERE internal_name = 'instance_states_sysdef_inactive' )
-        , var_owner_4.id
-        , NULL
-        , '{
-          "dbserver_name": "instance_db",
-          "instance_code": "Testing data do not use in production!!!",
-          "datastore_contexts": [
-            {
-              "id": "msbms_test_instance_5_test_datastore_context_1",
-              "application_context": "test_datastore_context_1",
-              "db_pool_size": 20,
-              "context_code": "Testing data do not use in production!!!"
-            },
-            {
-              "id": "msbms_test_instance_5_test_datastore_context_2",
-              "application_context": "test_datastore_context_2",
-              "db_pool_size": 20,
-              "context_code": "Testing data do not use in production!!!"
-            }
-          ]
-        }'::jsonb )
-    RETURNING * INTO var_test_instance_5;
+    INSERT INTO msbms_syst_data.syst_instance_contexts
+    ( internal_name
+    , display_name
+    , instance_id
+    , application_context_id
+    , start_context
+    , db_pool_size
+    , context_code)
+    SELECT
+        sac.internal_name || '_' || so.internal_name || '_' || si.internal_name
+      , sac.display_name || ' / ' || so.display_name || ' / ' || si.display_name
+      , si.id
+      , sac.id
+      , sac.start_context
+      , CASE
+          WHEN si.internal_name = 'instance_types_std' THEN
+            round(sitc.default_db_pool_size::numeric / 2.0)::integer
+          ELSE
+            sitc.default_db_pool_size
+        END
+      , gen_random_bytes(16)
+    FROM msbms_syst_data.syst_instances si
+        JOIN msbms_syst_data.syst_owners so
+            ON so.id = si.owner_id
+        JOIN msbms_syst_data.syst_instance_type_contexts sitc
+            ON sitc.instance_type_id = si.instance_type_id
+        JOIN msbms_syst_data.syst_enum_items sei
+            ON sei.id = si.instance_type_id
+        JOIN msbms_syst_data.syst_application_contexts sac
+            ON sac.id = sitc.application_context_id AND sac.application_id = si.application_id;
 
 END;
 $INSTANCE_MGR_TESTING_INIT$;
