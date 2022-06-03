@@ -62,9 +62,6 @@ ALTER FUNCTION msbms_syst.trig_i_d_syst_owners()
     OWNER TO <%= msbms_owner %>;
 
 REVOKE EXECUTE ON FUNCTION msbms_syst.trig_i_d_syst_owners() FROM public;
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_d_syst_owners() TO <%= msbms_owner %>;
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_d_syst_owners() TO <%= msbms_apiusr %>;
-
 
 COMMENT ON FUNCTION msbms_syst.trig_i_d_syst_owners() IS
 $DOC$An INSTEAD OF trigger function which applies business rules when using the

@@ -29,19 +29,13 @@ ALTER VIEW msbms_syst.syst_applications OWNER TO <%= msbms_owner %>;
 
 REVOKE ALL ON TABLE msbms_syst.syst_applications FROM PUBLIC;
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE msbms_syst.syst_applications TO <%= msbms_appusr %>;
-GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE msbms_syst.syst_applications TO <%= msbms_apiusr %>;
-
 COMMENT ON
     VIEW msbms_syst.syst_applications IS
 $DOC$Describes the known applications which is managed by the global database and
 authentication infrastructure.
 
-This API View allows the application to read and maintain the data according to
-well defined application business rules.  Using this API view for updates to
-data is the preferred method of data maintenance in the course of normal usage.
+This API View allows the application to read the data according to well defined
+application business rules.
 
-Only user maintainable values may be maintained via this API.  System created or
-maintained data is not maintainable via this view.  Attempts at invalid data
-maintenance via this API may result in the invalid changes being ignored or may
-raise an exception.$DOC$;
+Attempts at invalid data maintenance via this API may result in the invalid
+changes being ignored or may raise an exception.$DOC$;
