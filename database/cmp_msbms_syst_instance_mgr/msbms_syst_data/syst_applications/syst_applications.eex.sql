@@ -58,6 +58,7 @@ GRANT ALL ON TABLE msbms_syst_data.syst_applications TO <%= msbms_owner %>;
 CREATE TRIGGER b50_trig_b_d_syst_applications_delete_contexts
     BEFORE DELETE ON msbms_syst_data.syst_applications
     FOR EACH ROW EXECUTE PROCEDURE msbms_syst_data.trig_b_d_syst_applications_delete_contexts();
+
 CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
     BEFORE INSERT OR UPDATE ON msbms_syst_data.syst_applications
     FOR EACH ROW EXECUTE PROCEDURE msbms_syst_priv.trig_b_iu_set_diagnostic_columns();
