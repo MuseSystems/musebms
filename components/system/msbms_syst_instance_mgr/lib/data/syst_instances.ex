@@ -45,6 +45,8 @@ defmodule MsbmsSystInstanceMgr.Data.SystInstances do
             owning_instance_id: Ecto.UUID.t() | nil,
             owning_instance:
               MsbmsSystInstanceMgr.Data.SystInstances.t() | Ecto.Association.NotLoaded.t() | nil,
+            dbserver_name: String.t() | nil,
+            instance_code: binary() | nil,
             instance_options: map() | nil,
             diag_timestamp_created: DateTime.t() | nil,
             diag_role_created: String.t() | nil,
@@ -60,6 +62,8 @@ defmodule MsbmsSystInstanceMgr.Data.SystInstances do
   schema "syst_instances" do
     field(:internal_name, :string)
     field(:display_name, :string)
+    field(:dbserver_name, :string)
+    field(:instance_code, :binary)
     field(:instance_options, :map)
     field(:diag_timestamp_created, :utc_datetime)
     field(:diag_role_created, :string)
@@ -77,6 +81,10 @@ defmodule MsbmsSystInstanceMgr.Data.SystInstances do
 
     has_many(:owned_instances, MsbmsSystInstanceMgr.Data.SystInstances,
       foreign_key: :owning_instance_id
+    )
+
+    has_many(:instance_contexts, MsbmsSystInstanceMgr.Data.SystInstanceContexts,
+      foreign_key: :instance_id
     )
   end
 

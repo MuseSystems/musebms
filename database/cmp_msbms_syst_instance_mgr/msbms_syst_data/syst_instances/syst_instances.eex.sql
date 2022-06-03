@@ -50,6 +50,11 @@ CREATE TABLE msbms_syst_data.syst_instances
             REFERENCES msbms_syst_data.syst_instances (id)
         CONSTRAINT syst_instances_self_ownership_chk
             CHECK (owning_instance_id IS NULL OR owning_instance_id != id)
+    ,dbserver_name
+        text
+    ,instance_code
+        bytea
+        NOT NULL
     ,instance_options
         jsonb
     ,diag_timestamp_created
@@ -161,11 +166,21 @@ instance is contracted for, but other supporting instances, such as a sandbox,
 should follow certain account related actions of the primary.$DOC$;
 
 COMMENT ON
+    COLUMN msbms_syst_data.syst_instances.dbserver_name IS
+$DOC$Identifies on which database server the instance is hosted. If empty, no
+server has been assigned and the instance is unstartable.$DOC$;
+
+COMMENT ON
+    COLUMN msbms_syst_data.syst_instances.instance_code IS
+$DOC$This is a random sequence of bytes intended for use in certain algorithmic
+credential generation.  Note that losing this value may prevent the Instance
+from being started due to bad credentials; there may be other consequences as
+well.$DOC$;
+
+COMMENT ON
     COLUMN msbms_syst_data.syst_instances.instance_options IS
 $DOC$A key/value store of values which define application or instance specific
-options.  Common use cases for this value include defining runtime details which
-might vary from instance to instance, such as the number of datastore
-connections to establish.$DOC$;
+options.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.syst_instances.diag_timestamp_created IS

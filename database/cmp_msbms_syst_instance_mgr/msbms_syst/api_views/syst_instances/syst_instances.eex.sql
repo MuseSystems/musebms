@@ -20,6 +20,8 @@ SELECT
   , instance_state_id
   , owner_id
   , owning_instance_id
+  , dbserver_name
+  , instance_code
   , instance_options
   , diag_timestamp_created
   , diag_role_created

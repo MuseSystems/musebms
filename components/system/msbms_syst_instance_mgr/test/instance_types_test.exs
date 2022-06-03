@@ -24,19 +24,7 @@ defmodule InstanceTypesTest do
       enum_default: true,
       user_description: "Can Create Instance Type Description",
       external_name: "Can Create Instance Type",
-      functional_type_name: "instance_types_primary",
-      user_options: %{
-        datastore_contexts: [
-          %{
-            id: :test_datastore_context_1,
-            db_pool_size: 3
-          },
-          %{
-            id: :test_datastore_context_1,
-            db_pool_size: 3
-          }
-        ]
-      }
+      user_options: %{"allowed_server_pools" => ["primary"]}
     }
 
     assert {:ok, %MsbmsSystEnums.Data.SystEnumItems{internal_name: "can_create_instance_type"}} =
@@ -73,19 +61,7 @@ defmodule InstanceTypesTest do
       enum_default: true,
       user_description: "Can Delete Instance Type Description",
       external_name: "Can Delete Instance Type",
-      functional_type_name: "instance_types_primary",
-      user_options: %{
-        datastore_contexts: [
-          %{
-            id: :test_datastore_context_1,
-            db_pool_size: 3
-          },
-          %{
-            id: :test_datastore_context_1,
-            db_pool_size: 3
-          }
-        ]
-      }
+      user_options: %{"allowed_server_pools" => ["primary"]}
     }
 
     {:ok, _instance_type} = MsbmsSystInstanceMgr.create_instance_type(instance_type)
