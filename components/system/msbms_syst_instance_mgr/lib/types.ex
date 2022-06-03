@@ -21,6 +21,11 @@ defmodule MsbmsSystInstanceMgr.Types do
   @type application_name() :: String.t()
 
   @typedoc """
+  The data type describing unique naming for known application contexts in programmatic contexts.
+  """
+  @type application_context_name() :: String.t()
+
+  @typedoc """
   Type for programmatic the unique identification of system owner records.
   """
   @type owner_name() :: String.t()
@@ -86,6 +91,11 @@ defmodule MsbmsSystInstanceMgr.Types do
           optional(:owning_instance_name) => instance_name(),
           optional(:instance_options) => instance_options()
         }
+
+  @typedoc """
+  Defines the data type representing Instance Context names.
+  """
+  @type instance_context_name() :: String.t()
 
   @typedoc """
   Defines the available owner state functional types which the module recognizes.
@@ -176,8 +186,6 @@ defmodule MsbmsSystInstanceMgr.Types do
           instance_type_id: Ecto.UUID.t(),
           instance_type_display_name: String.t(),
           instance_type_external_name: String.t(),
-          instance_type_functional_type_id: Ecto.UUID.t(),
-          instance_type_functional_type_name: MsbmsSystEnums.Types.enum_functional_type_name(),
           instance_state_id: Ecto.UUID.t(),
           instance_state_display_name: String.t(),
           instance_state_external_name: String.t(),
@@ -196,30 +204,18 @@ defmodule MsbmsSystInstanceMgr.Types do
   @typedoc """
   Expected data structure for Instance Type user_options data.
 
-  Instance Type user options serve two purposes.  First the are used to define
-  which datastore contexts are expected to exist for any instance of a given
-  type and they set default connection pool sizes for those contexts.
-
-  Ultimately, these values end up at the `MsbmsSystInstanceMgr.Data.SystInstances`
-  record in the `instance_options` field.  However, the values defined here for
-  the Instance Type are only a subset of the fields expected in
-  `instance_options`.
+  Instance Type user options currently define which server pools are allowed to
+  host Instances of the Instance Type.
   """
-  @type instance_type_default_options :: %{
-          required(:datastore_contexts) =>
-            list(%{
-              id: MsbmsSystDatastore.Types.context_id(),
-              db_pool_size: integer()
-            })
-        }
+  @type instance_type_default_options :: %{required(:allowed_server_pools) => list(String.t())}
 
   @typedoc """
   The required data for maintaining Instance Types.
 
   Note that when creating new instance types, the `internal_name`,
-  `display_name`, `external_name`, `user_description`, `functional_type_name`,
-  and `user_options` fields are required.  On updates of an existing instance
-  type, those fields are optional.
+  `display_name`, `external_name`, `user_description`, and `user_options` fields
+  are required.  On updates of an existing instance type, those fields are
+  optional.
   """
   @type instance_type_params :: %{
           optional(:internal_name) => MsbmsSystEnums.Types.enum_item_name(),
@@ -227,8 +223,7 @@ defmodule MsbmsSystInstanceMgr.Types do
           optional(:external_name) => String.t(),
           optional(:user_description) => String.t(),
           optional(:user_options) => instance_type_default_options(),
-          optional(:enum_default) => boolean(),
-          optional(:functional_type_name) => MsbmsSystEnums.Types.enum_functional_type_name()
+          optional(:enum_default) => boolean()
         }
 
   @typedoc """
@@ -246,5 +241,32 @@ defmodule MsbmsSystInstanceMgr.Types do
           optional(:user_description) => String.t(),
           optional(:enum_default) => boolean(),
           optional(:functional_type_name) => MsbmsSystEnums.Types.enum_functional_type_name()
+        }
+
+  @typedoc """
+  The required data for maintaining Instance Type Contexts.
+  """
+  @type instance_type_context_params :: %{
+          optional(:instance_type_id) => Ecto.UUID.t(),
+          optional(:instance_type_name) => instance_type_name(),
+          optional(:application_context_id) => Ecto.UUID.t(),
+          optional(:application_context_name) => application_context_name(),
+          optional(:default_db_pool_size) => non_neg_integer(),
+          optional(:allowed_server_pools) => list(String.t())
+        }
+
+  @typedoc """
+  The required data and types for maintaining Instance Contexts.
+  """
+  @type instance_context_params :: %{
+          optional(:internal_name) => instance_context_name(),
+          optional(:display_name) => String.t(),
+          optional(:instance_id) => Ecto.UUID.t(),
+          optional(:instance_name) => instance_name(),
+          optional(:application_context_id) => Ecto.UUID.t(),
+          optional(:application_context_name) => application_context_name(),
+          optional(:start_context) => boolean(),
+          optional(:db_pool_size) => non_neg_integer(),
+          optional(:context_code) => binary()
         }
 end
