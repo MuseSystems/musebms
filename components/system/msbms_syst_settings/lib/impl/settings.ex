@@ -11,8 +11,9 @@
 # muse.information@musesystems.com :: https: //muse.systems
 
 defmodule MsbmsSystSettings.Impl.Settings do
-  alias MsbmsSystSettings.Data.SystSettings
+  alias MsbmsSystSettings.Data
   alias MsbmsSystSettings.Runtime.ProcessUtils
+  alias MsbmsSystSettings.Types
 
   import Ecto.Query
 
@@ -38,22 +39,18 @@ defmodule MsbmsSystSettings.Impl.Settings do
 
     :ets.delete_all_objects(ets_table_name)
 
-    MsbmsSystDatastore.all(SystSettings)
+    MsbmsSystDatastore.all(Data.SystSettings)
     |> Enum.each(&:ets.insert(ets_table_name, {&1.internal_name, &1}))
   end
 
-  @spec get_setting_values(MsbmsSystSettings.Types.setting_name()) ::
-          MsbmsSystSettings.Data.SystSettings.t()
+  @spec get_setting_values(Types.setting_name()) :: Data.SystSettings.t()
   def get_setting_values(setting_name) do
     ProcessUtils.get_settings_service()
     |> get_ets_table_from_service_name()
     |> :ets.lookup_element(setting_name, 2)
   end
 
-  @spec get_setting_value(
-          MsbmsSystSettings.Types.setting_name(),
-          MsbmsSystSettings.Types.setting_types()
-        ) :: any()
+  @spec get_setting_value(Types.setting_name(), Types.setting_types()) :: any()
   def get_setting_value(setting_name, setting_type)
       when setting_type in [
              :setting_flag,
@@ -76,8 +73,7 @@ defmodule MsbmsSystSettings.Impl.Settings do
     |> Map.get(setting_type)
   end
 
-  @spec get_all_settings_values() ::
-          list(MsbmsSystSettings.Data.SystSettings)
+  @spec get_all_settings_values() :: list(Data.SystSettings)
   def get_all_settings_values do
     # Select query :ets.fun2ms(fn {_, setting_values} -> setting_values end)
     ProcessUtils.get_settings_service()
@@ -85,13 +81,12 @@ defmodule MsbmsSystSettings.Impl.Settings do
     |> :ets.select([{{:_, :"$1"}, [], [:"$1"]}])
   end
 
-  @spec create_setting(MsbmsSystSettings.Types.setting_params()) ::
-          :ok | {:error, MsbmsSystError.t()}
+  @spec create_setting(Types.setting_params()) :: :ok | {:error, MsbmsSystError.t()}
   def create_setting(creation_params) when is_map(creation_params) do
     ets_table_name = get_ets_table_from_service_name(ProcessUtils.get_settings_service())
 
     creation_params
-    |> then(&SystSettings.changeset(%SystSettings{}, &1))
+    |> then(&Data.SystSettings.changeset(%Data.SystSettings{}, &1))
     |> MsbmsSystDatastore.insert!(returning: true)
     |> then(&:ets.insert(ets_table_name, {&1.internal_name, &1}))
 
@@ -110,16 +105,14 @@ defmodule MsbmsSystSettings.Impl.Settings do
       }
   end
 
-  @spec update_setting(
-          MsbmsSystSettings.Types.setting_name(),
-          MsbmsSystSettings.Types.setting_params()
-        ) :: :ok | {:error, MsbmsSystError.t()}
+  @spec update_setting(Types.setting_name(), Types.setting_params()) ::
+          :ok | {:error, MsbmsSystError.t()}
   def update_setting(setting_name, update_params)
       when is_binary(setting_name) and is_map(update_params) do
     ets_table_name = get_ets_table_from_service_name(ProcessUtils.get_settings_service())
 
     :ets.lookup_element(ets_table_name, setting_name, 2)
-    |> SystSettings.changeset(update_params)
+    |> Data.SystSettings.changeset(update_params)
     |> MsbmsSystDatastore.update!(returning: true)
     |> then(&:ets.update_element(ets_table_name, setting_name, {2, &1}))
 
@@ -138,13 +131,11 @@ defmodule MsbmsSystSettings.Impl.Settings do
       }
   end
 
-  @spec delete_setting(MsbmsSystSettings.Types.setting_name()) ::
-          :ok | {:error, MsbmsSystError.t()}
+  @spec delete_setting(Types.setting_name()) :: :ok | {:error, MsbmsSystError.t()}
   def delete_setting(setting_name) when is_binary(setting_name) do
     ets_table_name = get_ets_table_from_service_name(ProcessUtils.get_settings_service())
 
-    delete_qry =
-      from(s in MsbmsSystSettings.Data.SystSettings, where: s.internal_name == ^setting_name)
+    delete_qry = from(s in Data.SystSettings, where: s.internal_name == ^setting_name)
 
     {1, _rows} = MsbmsSystDatastore.delete_all(delete_qry)
 
@@ -165,7 +156,7 @@ defmodule MsbmsSystSettings.Impl.Settings do
       }
   end
 
-  @spec get_ets_table_from_service_name(MsbmsSystSettings.Types.service_name()) :: atom()
+  @spec get_ets_table_from_service_name(Types.service_name()) :: atom()
   def get_ets_table_from_service_name(service_name) when is_atom(service_name), do: service_name
 
   def get_ets_table_from_service_name({:via, _module, service_name})
