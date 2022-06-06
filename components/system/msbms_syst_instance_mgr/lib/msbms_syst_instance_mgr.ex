@@ -884,4 +884,33 @@ defmodule MsbmsSystInstanceMgr do
   @spec delete_instance_state(MsbmsSystEnums.Types.enum_item_name()) ::
           :ok | {:error, MsbmsSystError.t()}
   defdelegate delete_instance_state(instance_state_name), to: Impl.InstanceStates
+
+  defdelegate get_application_context_id_by_name(application_context_name),
+    to: Impl.ApplicationContexts
+
+  @spec get_application_contexts(
+          Keyword.t(
+            application_name: String.t() | nil,
+            application_id: Ecto.UUID.t() | nil,
+            start_context: boolean() | nil,
+            login_context: boolean() | nil
+          )
+        ) ::
+          {:ok, [Data.SystApplicationContexts.t()]} | {:error, MsbmsSystError.t()}
+  defdelegate get_application_contexts(opts \\ []), to: Impl.ApplicationContexts
+
+  @spec get_application_context_by_name(Types.application_context_name()) ::
+          {:ok, Data.SystApplicationContexts.t()} | {:error, MsbmsSystError.t()}
+  defdelegate get_application_context_by_name(application_context_name),
+    to: Impl.ApplicationContexts
+
+  @spec get_application_context_by_id(Types.application_context_id()) ::
+          {:ok, Data.SystApplicationContexts.t()} | {:error, MsbmsSystError.t()}
+  defdelegate get_application_context_by_id(application_context_id), to: Impl.ApplicationContexts
+
+  @spec set_application_context_start_context(Types.application_context_id(), boolean()) ::
+          {:ok, Data.SystApplicationContexts.t()}
+          | {:error, MsbmsSystError.t()}
+  defdelegate set_application_context_start_context(application_context_id, start_context),
+    to: Impl.ApplicationContexts
 end
