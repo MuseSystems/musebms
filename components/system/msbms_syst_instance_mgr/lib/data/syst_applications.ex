@@ -49,6 +49,10 @@ defmodule MsbmsSystInstanceMgr.Data.SystApplications do
     field(:diag_update_count, :integer)
 
     has_many(:instances, MsbmsSystInstanceMgr.Data.SystInstances, foreign_key: :application_id)
+
+    has_many(:application_contexts, MsbmsSystInstanceMgr.Data.SystApplicationContexts,
+      foreign_key: :application_id
+    )
   end
 
   # Note that there are no changeset functions here because the only way to add
