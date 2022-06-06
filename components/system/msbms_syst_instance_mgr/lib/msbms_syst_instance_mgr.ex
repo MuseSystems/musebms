@@ -484,12 +484,12 @@ defmodule MsbmsSystInstanceMgr do
       available to service the Instance and other similar runtime
       categorization.  This field is optional and the default Instance Type
       will be used if no Instance Type is identified.  Alternatively, the
-      `instance_type_name` parameter may be used to to select the Instance Type.
+      `instance_type_name` parameter may be used to select the Instance Type.
 
       * `instance_type_name` - the unique identifier of the Instance Type of the
       Instance.  This field is optional and the default Instance Type will be
       used if no Instance Type is identified.  Alternatively, the
-      `instance_type_id` parameter may be used to to select the Instance Type.
+      `instance_type_id` parameter may be used to select the Instance Type.
 
       * `instance_state_id` - the unique database identifier of the Instance
       State of the Instance.  The Instance State defines the current life-
@@ -503,7 +503,7 @@ defmodule MsbmsSystInstanceMgr do
       * `instance_state_name` - the unique identifier of the Instance State of
       the Instance.  This field is optional and the default Instance State will
       be used if no Instance State is identified.  Alternatively, the
-      `instance_state_id` parameter may be used to to select the Instance State.
+      `instance_state_id` parameter may be used to select the Instance State.
 
       * `owner_id` - the unique database identifier of the Owner of the
       Instance.  The Owner is a reference to the entity which is served by the
