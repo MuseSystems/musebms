@@ -29,7 +29,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Applications do
   def list_applications do
     app_list =
       from(a in Data.SystApplications,
-        select: [:internal_name, :display_name, :syst_description],
+        select: [:id, :internal_name, :display_name, :syst_description],
         order_by: [:display_name]
       )
       |> MsbmsSystDatastore.all()
