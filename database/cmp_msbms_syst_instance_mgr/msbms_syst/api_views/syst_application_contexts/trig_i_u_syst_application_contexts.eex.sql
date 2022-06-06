@@ -45,7 +45,7 @@ BEGIN
                 TABLE = tg_table_name;
     END IF;
 
-    UPDATE msbms_syst_data.sys_application_contexts
+    UPDATE msbms_syst_data.syst_application_contexts
     SET start_context = new.start_context
     WHERE id = new.id
     RETURNING * INTO new;
