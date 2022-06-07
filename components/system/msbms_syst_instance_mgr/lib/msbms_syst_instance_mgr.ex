@@ -913,4 +913,23 @@ defmodule MsbmsSystInstanceMgr do
           | {:error, MsbmsSystError.t()}
   defdelegate set_application_context_start_context(application_context_id, start_context),
     to: Impl.ApplicationContexts
+
+  @spec get_instance_type_contexts(
+          Keyword.t(
+            instance_type_name: Types.instance_type_name() | nil,
+            instance_type_id: Ecto.UUID.t() | nil
+          )
+        ) ::
+          {:ok, [Data.SystInstanceTypeContexts.t()]} | {:error, MsbmsSystError.t()}
+  defdelegate get_instance_type_contexts(opts \\ []), to: Impl.InstanceTypeContexts
+
+  @spec set_instance_type_context_values(Types.instance_type_context_id(), non_neg_integer()) ::
+          {:ok, Data.SystInstanceTypeContexts.t()} | {:error, MsbmsSystError.t()}
+  defdelegate set_instance_type_context_values(instance_type_context_id, default_db_pool_size),
+    to: Impl.InstanceTypeContexts
+
+  @spec get_instance_type_context_by_id(Types.instance_type_context_id()) ::
+          {:ok, Data.SystApplicationContexts.t()} | {:error, MsbmsSystError.t()}
+  defdelegate get_instance_type_context_by_id(instance_type_context_id),
+    to: Impl.InstanceTypeContexts
 end
