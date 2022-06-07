@@ -135,6 +135,11 @@ defmodule MsbmsSystInstanceMgr.Types do
         }
 
   @typedoc """
+  Defines the data type of the Instance Type Context ID.
+  """
+  @type instance_type_context_id() :: Ecto.UUID.t()
+
+  @typedoc """
   The required data for maintaining Instance Type Contexts.
   """
   @type instance_type_context_params :: %{
