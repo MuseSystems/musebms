@@ -74,5 +74,6 @@ defmodule MsbmsSystInstanceMgr.Data.SystApplicationContexts do
     application_context
     |> cast(%{start_context: start_context}, [:start_context])
     |> validate_required([:start_context])
+    |> optimistic_lock(:diag_row_version)
   end
 end
