@@ -102,9 +102,12 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceTypeContexts do
     )
   end
 
-  @spec set_instance_type_context_values(Types.instance_type_context_id(), non_neg_integer()) ::
+  @spec set_instance_type_context_db_pool_size(
+          Types.instance_type_context_id(),
+          non_neg_integer()
+        ) ::
           {:ok, Data.SystInstanceTypeContexts.t()} | {:error, MsbmsSystError.t()}
-  def set_instance_type_context_values(instance_type_context_id, default_db_pool_size) do
+  def set_instance_type_context_db_pool_size(instance_type_context_id, default_db_pool_size) do
     MsbmsSystDatastore.get!(Data.SystInstanceTypeContexts, instance_type_context_id)
     |> Data.SystInstanceTypeContexts.update_changeset(%{
       default_db_pool_size: default_db_pool_size
