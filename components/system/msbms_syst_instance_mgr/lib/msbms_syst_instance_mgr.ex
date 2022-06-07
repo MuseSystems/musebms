@@ -888,9 +888,56 @@ defmodule MsbmsSystInstanceMgr do
           :ok | {:error, MsbmsSystError.t()}
   defdelegate delete_instance_state(instance_state_name), to: Impl.InstanceStates
 
+  @doc """
+  Returns the Application Context ID for a given Application Context Name.
+
+  ## Parameters
+
+    * `application_context_name` - The internal name value of the desired
+    Application Context.
+
+  ## Examples
+
+      iex> _application_context_id =
+      ...>    MsbmsSystInstanceMgr.get_application_context_id_by_name("app1_appusr")
+  """
   defdelegate get_application_context_id_by_name(application_context_name),
     to: Impl.ApplicationContexts
 
+  @doc """
+  Returns an optionally filtered list of Application Context records.
+
+  If no filtering condition is applied, all known Application Context records
+  are returned.
+
+  ## Parameters
+
+    * `opts` - a Keyword List defining optional filters to restrict the result.
+    Possible filters are:
+
+      * `application_name` - the internal name of an Application for which to
+      return Application Context records.
+
+      * `application_id` - the ID of an Application for which to return
+      Application Context records.
+
+      * `start_context` - a boolean value which if true returns only Application
+      Context records which are marked as start_context = true; if false, only
+      those records marked false are returned.  A nil value is treated as not
+      filtering by this attribute.
+
+      * `login_context` - a boolean value which if true returns only Application
+      Context records which are designated as login contexts; if this value is
+      false, then only those Application Contexts which are not login contexts
+      are returned.  A nil value will simply not filter by login_context at all.
+
+  ## Examples
+
+      iex> {:ok, [_ | _]} =
+      ...>   MsbmsSystInstanceMgr.get_application_contexts(
+      ...>     application_name: "app1", login_context: false
+      ...>   )
+  """
   @spec get_application_contexts(
           Keyword.t(
             application_name: Types.application_name() | nil,
@@ -902,21 +949,90 @@ defmodule MsbmsSystInstanceMgr do
           {:ok, [Data.SystApplicationContexts.t()]} | {:error, MsbmsSystError.t()}
   defdelegate get_application_contexts(opts \\ []), to: Impl.ApplicationContexts
 
+  @doc """
+  Returns an Application Context record as identified by its internal name.
+
+  ## Parameters
+
+    * `application_context_name` - the internal name of the Application Context
+    record to return.
+
+  ## Examples
+
+      iex> {:ok, %MsbmsSystInstanceMgr.Data.SystApplicationContexts{}} =
+      ...>   MsbmsSystInstanceMgr.get_application_context_by_name("app1_appusr")
+  """
   @spec get_application_context_by_name(Types.application_context_name()) ::
           {:ok, Data.SystApplicationContexts.t()} | {:error, MsbmsSystError.t()}
   defdelegate get_application_context_by_name(application_context_name),
     to: Impl.ApplicationContexts
 
+  @doc """
+  Returns an Application Context record as identified by its record ID.
+
+  ## Parameters
+
+    * `application_context_id` - the internal name of the Application Context
+    record to return.
+
+  ## Examples
+
+      iex> application_context_id =
+      ...>    MsbmsSystInstanceMgr.get_application_context_id_by_name("app1_appusr")
+      iex> {:ok, %MsbmsSystInstanceMgr.Data.SystApplicationContexts{}} =
+      ...>   MsbmsSystInstanceMgr.get_application_context_by_id(application_context_id)
+  """
   @spec get_application_context_by_id(Types.application_context_id()) ::
           {:ok, Data.SystApplicationContexts.t()} | {:error, MsbmsSystError.t()}
   defdelegate get_application_context_by_id(application_context_id), to: Impl.ApplicationContexts
 
+  @doc """
+  Updates the start_context value of the requested Application Context.
+
+  The only maintainable attribute of an Application Context is the start_context
+  value.  When this value is true, the application will start any associated
+  Instance Contexts so long as they are not disabled.  Only login contexts are
+  allowed to be marked as start_context = true.
+
+  ## Parameters
+
+    * `application_context_id` - the record ID of the Application Context which
+    to update.
+
+    * `start_context` - the value to set on the Application Context.  True means
+    that any associated Instance Context records will be started at system start
+    so long as they haven't been individually disabled.  False will bypass the
+    starting of associated Instance Contexts regardless of their individual
+    status.
+  """
   @spec set_application_context_start_context(Types.application_context_id(), boolean()) ::
           {:ok, Data.SystApplicationContexts.t()}
           | {:error, MsbmsSystError.t()}
   defdelegate set_application_context_start_context(application_context_id, start_context),
     to: Impl.ApplicationContexts
 
+  @doc """
+  Retrieves Instance Type Context records.
+
+  The records returned are optionally filtered by identifying a specific
+  Instance Type of interest.  The default behavior of the function is to return
+  all defined Instance Type Context records.
+
+  ## Parameters
+
+    * `instance_type_name` - the internal name of an Instance Type for which to
+    return Instance Type Contexts.
+
+    * `instance_type_id` - the record ID of an Instance Type for which to return
+    Instance Type Contexts.
+
+  ## Examples
+
+    iex> {:ok, [_ | _]} =
+    ...>   MsbmsSystInstanceMgr.get_instance_type_contexts(
+    ...>     instance_type_name: "instance_types_std"
+    ...>   )
+  """
   @spec get_instance_type_contexts(
           Keyword.t(
             instance_type_name: Types.instance_type_name() | nil,
@@ -957,6 +1073,15 @@ defmodule MsbmsSystInstanceMgr do
               ),
               to: Impl.InstanceTypeContexts
 
+  @doc """
+  Retrieve an Instance Type Context record by its record ID.
+
+  ## Parameters
+
+    * `instance_type_context_id` - the record ID of the Instance Type Context
+    record which to retrieve.
+
+  """
   @spec get_instance_type_context_by_id(Types.instance_type_context_id()) ::
           {:ok, Data.SystApplicationContexts.t()} | {:error, MsbmsSystError.t()}
   defdelegate get_instance_type_context_by_id(instance_type_context_id),
