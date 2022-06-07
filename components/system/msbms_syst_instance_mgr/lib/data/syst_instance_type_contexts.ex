@@ -104,5 +104,6 @@ defmodule MsbmsSystInstanceMgr.Data.SystInstanceTypeContexts do
       :application_context_id,
       :allowed_server_pools
     ])
+    |> optimistic_lock(:diag_row_version)
   end
 end
