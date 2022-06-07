@@ -861,7 +861,10 @@ defmodule MsbmsSystInstanceMgr do
       ...>     changes
       ...>   )
   """
-  @spec set_instance_state_values(MsbmsSystEnums.Types.enum_item_name(), Types.instance_state()) ::
+  @spec set_instance_state_values(
+          MsbmsSystEnums.Types.enum_item_name(),
+          Types.instance_state_params()
+        ) ::
           {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MsbmsSystError.t()}
   defdelegate set_instance_state_values(instance_state_name, instance_state_params),
     to: Impl.InstanceStates
