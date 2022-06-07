@@ -39,7 +39,7 @@ defmodule MsbmsSystInstanceMgr.Impl.ApplicationContexts do
 
     opts = Keyword.merge(opts_given, opts_default, fn _k, v1, _v2 -> v1 end)
 
-    get_application_context_base_query()
+    application_context_base_query()
     |> order_by([application: a, application_context: ac], [a.display_name, ac.display_name])
     |> maybe_add_application_name_filter(opts[:application_name])
     |> maybe_add_application_id_filter(opts[:application_id])
@@ -90,7 +90,7 @@ defmodule MsbmsSystInstanceMgr.Impl.ApplicationContexts do
           {:ok, Data.SystApplicationContexts.t()} | {:error, MsbmsSystError.t()}
   def get_application_context_by_name(application_context_name)
       when is_binary(application_context_name) do
-    get_application_context_base_query()
+    application_context_base_query()
     |> where([application_context: ac], ac.internal_name == ^application_context_name)
     |> MsbmsSystDatastore.one!()
     |> then(&{:ok, &1})
@@ -112,7 +112,7 @@ defmodule MsbmsSystInstanceMgr.Impl.ApplicationContexts do
           {:ok, Data.SystApplicationContexts.t()} | {:error, MsbmsSystError.t()}
   def get_application_context_by_id(application_context_id)
       when is_binary(application_context_id) do
-    get_application_context_base_query()
+    application_context_base_query()
     |> where([application_context: ac], ac.id == ^application_context_id)
     |> MsbmsSystDatastore.one!()
     |> then(&{:ok, &1})
@@ -132,7 +132,7 @@ defmodule MsbmsSystInstanceMgr.Impl.ApplicationContexts do
 
   # Enough of these functions are just variations on a theme that we might as
   # well have a statement of that theme.
-  defp get_application_context_base_query() do
+  defp application_context_base_query() do
     from(ac in Data.SystApplicationContexts,
       as: :application_context,
       join: a in assoc(ac, :application),
