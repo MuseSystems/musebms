@@ -901,6 +901,8 @@ defmodule MsbmsSystInstanceMgr do
       iex> _application_context_id =
       ...>    MsbmsSystInstanceMgr.get_application_context_id_by_name("app1_appusr")
   """
+  @spec get_application_context_id_by_name(Types.application_context_name()) ::
+          Types.application_context_id()
   defdelegate get_application_context_id_by_name(application_context_name),
     to: Impl.ApplicationContexts
 
