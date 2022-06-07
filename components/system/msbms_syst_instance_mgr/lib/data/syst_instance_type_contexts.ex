@@ -14,7 +14,6 @@ defmodule MsbmsSystInstanceMgr.Data.SystInstanceTypeContexts do
   use MsbmsSystDatastore.Schema
 
   import Ecto.Changeset
-  import MsbmsSystInstanceMgr.Data.Validators.SystInstanceTypeContexts
 
   @moduledoc """
   Defines the data structure of the Instance Type Context.
@@ -38,7 +37,6 @@ defmodule MsbmsSystInstanceMgr.Data.SystInstanceTypeContexts do
               | Ecto.Association.NotLoaded.t()
               | nil,
             default_db_pool_size: non_neg_integer() | nil,
-            allowed_server_pools: list(String.t()) | nil,
             diag_timestamp_created: DateTime.t() | nil,
             diag_role_created: String.t() | nil,
             diag_timestamp_modified: DateTime.t() | nil,
@@ -52,7 +50,6 @@ defmodule MsbmsSystInstanceMgr.Data.SystInstanceTypeContexts do
 
   schema "syst_instance_type_contexts" do
     field(:default_db_pool_size, :integer)
-    field(:allowed_server_pools, {:array, :string})
     field(:diag_timestamp_created, :utc_datetime)
     field(:diag_role_created, :string)
     field(:diag_timestamp_modified, :utc_datetime)
@@ -68,41 +65,36 @@ defmodule MsbmsSystInstanceMgr.Data.SystInstanceTypeContexts do
     )
   end
 
-  @spec insert_changeset(MsbmsSystInstanceMgr.Types.instance_type_context_params(), Keyword.t()) ::
+  @spec insert_changeset(MsbmsSystInstanceMgr.Types.instance_type_context_params()) ::
           Ecto.Changeset.t()
-  def insert_changeset(insert_params, opts \\ []) do
+  def insert_changeset(insert_params) do
     %MsbmsSystInstanceMgr.Data.SystInstanceTypeContexts{}
     |> cast(insert_params, [
       :instance_type_id,
       :application_context_id,
-      :default_db_pool_size,
-      :allowed_server_pools
+      :default_db_pool_size
     ])
-    |> validate_context_code(opts)
     |> validate_required([
       :instance_type_id,
       :application_context_id,
-      :allowed_server_pools
+      :default_db_pool_size
     ])
   end
 
   @spec update_changeset(
           MsbmsSystInstanceMgr.Data.SystInstanceTypeContexts.t(),
-          MsbmsSystInstanceMgr.Types.instance_type_context_params(),
-          Keyword.t()
+          MsbmsSystInstanceMgr.Types.instance_type_context_params()
         ) ::
           Ecto.Changeset.t()
-  def update_changeset(instance_type_context, update_params, opts \\ []) do
+  def update_changeset(instance_type_context, update_params) do
     instance_type_context
     |> cast(update_params, [
-      :default_db_pool_size,
-      :allowed_server_pools
+      :default_db_pool_size
     ])
-    |> validate_context_code(opts)
     |> validate_required([
       :instance_type_id,
       :application_context_id,
-      :allowed_server_pools
+      :default_db_pool_size
     ])
     |> optimistic_lock(:diag_row_version)
   end
