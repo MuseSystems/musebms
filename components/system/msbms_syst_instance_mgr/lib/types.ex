@@ -142,8 +142,7 @@ defmodule MsbmsSystInstanceMgr.Types do
           optional(:instance_type_name) => instance_type_name(),
           optional(:application_context_id) => Ecto.UUID.t(),
           optional(:application_context_name) => application_context_name(),
-          optional(:default_db_pool_size) => non_neg_integer(),
-          optional(:allowed_server_pools) => list(String.t())
+          optional(:default_db_pool_size) => non_neg_integer()
         }
 
   @typedoc """
