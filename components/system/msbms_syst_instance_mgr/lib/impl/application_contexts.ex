@@ -22,7 +22,7 @@ defmodule MsbmsSystInstanceMgr.Impl.ApplicationContexts do
 
   @spec get_application_contexts(
           Keyword.t(
-            application_name: String.t() | nil,
+            application_name: Types.application_name() | nil,
             application_id: Ecto.UUID.t() | nil,
             start_context: boolean() | nil,
             login_context: boolean() | nil
