@@ -923,10 +923,36 @@ defmodule MsbmsSystInstanceMgr do
           {:ok, [Data.SystInstanceTypeContexts.t()]} | {:error, MsbmsSystError.t()}
   defdelegate get_instance_type_contexts(opts \\ []), to: Impl.InstanceTypeContexts
 
-  @spec set_instance_type_context_values(Types.instance_type_context_id(), non_neg_integer()) ::
+  @doc """
+  Sets the default database pool size for Instance Type Contexts.
+
+  Instance Type Contexts define a default database connection pool size which is
+  then applied to Instance Context records and defines how many database
+  connections to open at start time.  Instance Contexts may override this value
+  for their own needs, but in the typical case the default defined here for the
+  Instance Type Context will be the value used at runtime.
+
+  As of this writing, default database pool size is the only maintainable value
+  of the Instance Type Context record.
+
+  ## Parameters
+
+    * `instance_type_context_id` - the record ID of the Instance Type Context
+    record to update.
+
+    * `default_db_pool_size` - the default database connection pool size to set
+    for associated Instance Context records.
+  """
+  @spec set_instance_type_context_db_pool_size(
+          Types.instance_type_context_id(),
+          non_neg_integer()
+        ) ::
           {:ok, Data.SystInstanceTypeContexts.t()} | {:error, MsbmsSystError.t()}
-  defdelegate set_instance_type_context_values(instance_type_context_id, default_db_pool_size),
-    to: Impl.InstanceTypeContexts
+  defdelegate set_instance_type_context_db_pool_size(
+                instance_type_context_id,
+                default_db_pool_size
+              ),
+              to: Impl.InstanceTypeContexts
 
   @spec get_instance_type_context_by_id(Types.instance_type_context_id()) ::
           {:ok, Data.SystApplicationContexts.t()} | {:error, MsbmsSystError.t()}
