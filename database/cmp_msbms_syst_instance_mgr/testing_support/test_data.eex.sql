@@ -173,23 +173,44 @@ BEGIN
         , '{"allowed_server_pools": ["primary"]}'::jsonb );
 
     --
-    -- Create Instance Type Contexts
+    -- Insert Instance Type Applications
     --
 
-    INSERT INTO msbms_syst_data.syst_instance_type_contexts
-        ( instance_type_id, application_context_id, default_db_pool_size )
+    INSERT INTO msbms_syst_data.syst_instance_type_applications
+        ( instance_type_id, application_id )
     SELECT
         sei.id
-      , sac.id
-      , CASE
-            WHEN sei.internal_name = 'instance_types_big' AND sac.login_context THEN 20
-            WHEN sei.internal_name = 'instance_types_std' AND sac.login_context THEN 10
-            WHEN sei.internal_name = 'instance_types_sml' AND sac.login_context THEN 3
-            ELSE 0
-        END
-    FROM msbms_syst_data.syst_application_contexts sac,
-         msbms_syst_data.syst_enums se  JOIN msbms_syst_data.syst_enum_items sei
-             ON se.internal_name = 'instance_types' AND sei.enum_id = se.id;
+      , sa.id
+    FROM msbms_syst_data.syst_applications sa
+    CROSS JOIN ( msbms_syst_data.syst_enums se JOIN msbms_syst_data.syst_enum_items sei
+                 ON se.id = sei.enum_id )
+    WHERE se.internal_name = 'instance_types';
+
+    --
+    -- Update Instance Type Contexts
+    --
+
+    UPDATE msbms_syst_data.syst_instance_type_contexts sitc
+    SET
+        default_db_pool_size = CASE
+                                   WHEN it.instance_type_name = 'instance_types_big' AND
+                                        it.login_context THEN 20
+                                   WHEN it.instance_type_name = 'instance_types_std' AND
+                                        it.login_context THEN 10
+                                   WHEN it.instance_type_name = 'instance_types_sml' AND
+                                        it.login_context THEN 3
+                                   ELSE 0
+                               END
+    FROM ( SELECT
+               sac.id            AS application_context_id
+             , sac.login_context AS login_context
+             , sei.id            AS instance_type_id
+             , sei.internal_name AS instance_type_name
+           FROM msbms_syst_data.syst_application_contexts sac,
+                msbms_syst_data.syst_enums se
+                    JOIN msbms_syst_data.syst_enum_items sei ON sei.enum_id = se.id
+           WHERE se.internal_name = 'instance_types' ) it
+    WHERE it.application_context_id = sitc.application_context_id AND it.instance_type_id = sitc.instance_type_id;
 
     --
     -- Create Instances
