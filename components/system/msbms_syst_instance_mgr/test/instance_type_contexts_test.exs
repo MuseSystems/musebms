@@ -69,7 +69,7 @@ defmodule InstanceTypeContextTest do
       MsbmsSystInstanceMgr.get_instance_type_contexts(login_context: true)
 
     assert {:ok, updated_instance_type_context} =
-             MsbmsSystInstanceMgr.set_instance_type_context_values(
+             MsbmsSystInstanceMgr.set_instance_type_context_db_pool_size(
                instance_type_context.id,
                instance_type_context.default_db_pool_size + 7
              )
@@ -78,7 +78,7 @@ defmodule InstanceTypeContextTest do
              instance_type_context.default_db_pool_size + 7
 
     assert {:ok, updated_instance_type_context} =
-             MsbmsSystInstanceMgr.set_instance_type_context_values(
+             MsbmsSystInstanceMgr.set_instance_type_context_db_pool_size(
                instance_type_context.id,
                instance_type_context.default_db_pool_size
              )
