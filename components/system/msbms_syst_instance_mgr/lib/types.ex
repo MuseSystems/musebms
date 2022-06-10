@@ -56,11 +56,6 @@ defmodule MsbmsSystInstanceMgr.Types do
   Application's Contexts, setting value specific for the Instance.
   """
   @type instance_context_params :: %{
-          optional(:internal_name) => instance_context_name(),
-          optional(:instance_id) => Ecto.UUID.t(),
-          optional(:instance_name) => instance_name(),
-          optional(:application_context_id) => Ecto.UUID.t(),
-          optional(:application_context_name) => application_context_name(),
           optional(:start_context) => boolean(),
           optional(:db_pool_size) => non_neg_integer(),
           optional(:context_code) => binary()
