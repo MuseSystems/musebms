@@ -268,42 +268,5 @@ BEGIN
           upttarget.owner_id       = owner.owner_id AND
           upttarget.application_id = owner.application_id;
 
-    --
-    -- Create Instance Contexts
-    --
-
-    INSERT INTO msbms_syst_data.syst_instance_contexts
-    ( internal_name
-    , display_name
-    , instance_id
-    , application_context_id
-    , start_context
-    , db_pool_size
-    , context_code)
-    SELECT
-        sac.internal_name || '_' || so.internal_name || '_' || si.internal_name
-      , sac.display_name || ' / ' || si.display_name
-      , si.id
-      , sac.id
-      , sac.start_context
-      , CASE
-          WHEN si.internal_name = 'instance_types_std' THEN
-            round(sitc.default_db_pool_size::numeric / 2.0)::integer
-          ELSE
-            sitc.default_db_pool_size
-        END
-      , gen_random_bytes(16)
-    FROM msbms_syst_data.syst_instances si
-        JOIN msbms_syst_data.syst_owners so
-            ON so.id = si.owner_id
-        JOIN msbms_syst_data.syst_application_contexts sac
-            ON sac.application_id = si.application_id
-        JOIN msbms_syst_data.syst_instance_type_applications sita
-            ON sita.application_id = si.application_id AND sita.instance_type_id = si.instance_type_id
-        JOIN msbms_syst_data.syst_enum_items sei
-            ON sei.id = sita.instance_type_id
-        JOIN msbms_syst_data.syst_instance_type_contexts sitc
-            ON sitc.instance_type_application_id = sita.id AND sitc.application_context_id = sac.id;
-
 END;
 $INSTANCE_MGR_TESTING_INIT$;
