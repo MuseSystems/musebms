@@ -57,7 +57,6 @@ defmodule MsbmsSystInstanceMgr.Types do
   """
   @type instance_context_params :: %{
           optional(:internal_name) => instance_context_name(),
-          optional(:display_name) => String.t(),
           optional(:instance_id) => Ecto.UUID.t(),
           optional(:instance_name) => instance_name(),
           optional(:application_context_id) => Ecto.UUID.t(),

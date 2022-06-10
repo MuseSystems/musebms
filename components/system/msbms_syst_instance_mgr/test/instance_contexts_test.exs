@@ -138,14 +138,12 @@ defmodule InstanceContextsTest do
              MsbmsSystInstanceMgr.set_instance_context_values(
                instance_context.id,
                %{
-                 display_name: "Set Values Instance Context Update",
                  start_context: !instance_context.start_context,
                  db_pool_size: instance_context.db_pool_size + 9,
                  context_code: "testing update code"
                }
              )
 
-    assert "Set Values Instance Context Update" = new_instance_context.display_name
     assert new_instance_context.start_context == !instance_context.start_context
     assert new_instance_context.db_pool_size == instance_context.db_pool_size + 9
     assert "testing update code" == new_instance_context.context_code
@@ -154,14 +152,12 @@ defmodule InstanceContextsTest do
              MsbmsSystInstanceMgr.set_instance_context_values(
                instance_context.id,
                %{
-                 display_name: instance_context.display_name,
                  start_context: instance_context.start_context,
                  db_pool_size: instance_context.db_pool_size,
                  context_code: instance_context.context_code
                }
              )
 
-    assert new_instance_context.display_name == instance_context.display_name
     assert new_instance_context.start_context == instance_context.start_context
     assert new_instance_context.db_pool_size == instance_context.db_pool_size
     assert new_instance_context.context_code == instance_context.context_code

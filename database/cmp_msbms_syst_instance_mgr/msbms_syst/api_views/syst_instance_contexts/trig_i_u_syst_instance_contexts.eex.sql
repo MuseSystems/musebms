@@ -45,8 +45,7 @@ BEGIN
 
     UPDATE msbms_syst_data.syst_instance_contexts
     SET
-        display_name  = new.display_name
-      , start_context = new.start_context
+        start_context = new.start_context
       , db_pool_size  = new.db_pool_size
       , context_code  = new.context_code
     WHERE id = new.id
