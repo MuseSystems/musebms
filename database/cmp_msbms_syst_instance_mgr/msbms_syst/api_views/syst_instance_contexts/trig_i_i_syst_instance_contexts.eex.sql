@@ -16,25 +16,26 @@ $BODY$
 
 BEGIN
 
-    INSERT INTO msbms_syst_data.syst_instance_contexts
-        ( internal_name
-        , display_name
-        , instance_id
-        , application_context_id
-        , start_context
-        , db_pool_size
-        , context_code )
-    VALUES
-        ( new.internal_name
-        , new.display_name
-        , new.instance_id
-        , new.application_context_id
-        , new.start_context
-        , new.db_pool_size
-        , new.context_code )
-    RETURNING * INTO new;
-
-    RETURN new;
+    RAISE EXCEPTION
+        USING
+            MESSAGE = 'Records in this table are created automatically when ' ||
+                      'its parent records are created.  Direct creation via ' ||
+                      'this API view is not supported.',
+            DETAIL = msbms_syst_priv.get_exception_details(
+                         p_proc_schema    => 'msbms_syst'
+                        ,p_proc_name      => 'trig_i_i_syst_instance_contexts'
+                        ,p_exception_name => 'invalid_api_view_call'
+                        ,p_errcode        => 'PM008'
+                        ,p_param_data     => to_jsonb(new)
+                        ,p_context_data   =>
+                            jsonb_build_object(
+                                 'tg_op',         tg_op
+                                ,'tg_when',       tg_when
+                                ,'tg_schema',     tg_table_schema
+                                ,'tg_table_name', tg_table_name)),
+            ERRCODE = 'PM008',
+            SCHEMA = tg_table_schema,
+            TABLE = tg_table_name;
 
 END;
 $BODY$
