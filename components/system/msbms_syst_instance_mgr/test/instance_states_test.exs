@@ -79,7 +79,7 @@ defmodule InstanceStatesTest do
       functional_type_name: "instance_states_inactive"
     }
 
-    {:ok, created_state} = MsbmsSystInstanceMgr.create_instance_state(new_state)
+    {:ok, _created_state} = MsbmsSystInstanceMgr.create_instance_state(new_state)
 
     assert :ok = MsbmsSystInstanceMgr.delete_instance_state("instance_state_delete_test")
   end
