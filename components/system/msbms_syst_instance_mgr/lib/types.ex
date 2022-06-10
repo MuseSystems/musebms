@@ -30,9 +30,19 @@ defmodule MsbmsSystInstanceMgr.Types do
   @type application_context_name() :: String.t()
 
   @typedoc """
+  The data type of the Application ID value.
+  """
+  @type application_id() :: Ecto.UUID.t()
+
+  @typedoc """
   The data type describing unique naming for known system applications in programmatic contexts.
   """
   @type application_name() :: String.t()
+
+  @typedoc """
+  The data type describing the record ID value of the Instance Context record.
+  """
+  @type instance_context_id() :: Ecto.UUID.t()
 
   @typedoc """
   Defines the data type representing Instance Context names.
@@ -56,6 +66,11 @@ defmodule MsbmsSystInstanceMgr.Types do
           optional(:db_pool_size) => non_neg_integer(),
           optional(:context_code) => binary()
         }
+
+  @typedoc """
+  Defines the type of the Instance record ID value.
+  """
+  @type instance_id() :: Ecto.UUID.t()
 
   @typedoc """
   Type for identifying individual known system instances.
@@ -176,6 +191,11 @@ defmodule MsbmsSystInstanceMgr.Types do
   host Instances of the Instance Type.
   """
   @type instance_type_default_options :: %{required(:allowed_server_pools) => list(String.t())}
+
+  @typedoc """
+  Type of the Instance Type ID value.
+  """
+  @type instance_type_id() :: Ecto.UUID.t()
 
   @typedoc """
   Type for identifying instance type names.
