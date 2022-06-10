@@ -29,7 +29,7 @@ BEGIN
       , sac.id
       , sac.login_context
       , sitc.default_db_pool_size
-      , gen_random_bytes( 16 )
+      , public.gen_random_bytes( 16 )
     FROM
         msbms_syst_data.syst_owners so,
         msbms_syst_data.syst_application_contexts sac
