@@ -16,7 +16,7 @@ $BODY$
 
 BEGIN
 
-    INSERT INTO msbms_syst_data.instance_contexts
+    INSERT INTO msbms_syst_data.syst_instance_contexts
         ( internal_name
         , instance_id
         , application_context_id
@@ -27,7 +27,7 @@ BEGIN
         sac.internal_name || '_' || so.internal_name || '_' || new.internal_name
       , new.id
       , sac.id
-      , sa.login_context
+      , sac.login_context
       , sitc.default_db_pool_size
       , gen_random_bytes( 16 )
     FROM
@@ -37,9 +37,11 @@ BEGIN
                 ON sitc.application_context_id = sac.id
             JOIN msbms_syst_data.syst_applications sa
                 ON sa.id = sac.application_id
+            JOIN msbms_syst_data.syst_instance_type_applications sita
+                ON sita.id = sitc.instance_type_application_id
     WHERE
           so.id = new.owner_id
-      AND sitc.instance_type_id = new.instance_type_id
+      AND sita.instance_type_id = new.instance_type_id
       AND sa.id = new.application_id;
 
     RETURN new;
