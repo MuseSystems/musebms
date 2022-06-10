@@ -14,9 +14,7 @@ defmodule InstanceTypeContextTest do
   use InstanceMgrTestCase, async: true
 
   test "Can Get Instance Type Contexts" do
-    assert {:ok, [_ | _]} =
-             MsbmsSystInstanceMgr.get_instance_type_contexts()
-             |> IO.inspect()
+    assert {:ok, [_ | _]} = MsbmsSystInstanceMgr.get_instance_type_contexts()
   end
 
   test "Can Get Instance Type Contexts Filtered by Instance Type Name" do
