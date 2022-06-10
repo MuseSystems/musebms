@@ -68,9 +68,19 @@ GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_u_syst_owners() TO <%= msbms_appusr 
 
 GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_d_syst_owners() TO <%= msbms_appusr %>;
 
+-- syst_instance_type_applications
+
+GRANT SELECT, INSERT, DELETE ON TABLE msbms_syst.syst_instance_type_applications TO <%= msbms_appusr %>;
+
+GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_i_syst_instance_type_applications() TO <%= msbms_appusr %>;
+
+GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_u_syst_instance_type_applications() TO <%= msbms_appusr %>;
+
+GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_d_syst_instance_type_applications() TO <%= msbms_appusr %>;
+
 -- syst_instance_type_contexts
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE msbms_syst.syst_instance_type_contexts TO <%= msbms_appusr %>;
+GRANT SELECT, UPDATE ON TABLE msbms_syst.syst_instance_type_contexts TO <%= msbms_appusr %>;
 
 GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_i_syst_instance_type_contexts() TO <%= msbms_appusr %>;
 

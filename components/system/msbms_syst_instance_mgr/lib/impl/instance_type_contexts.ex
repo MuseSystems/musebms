@@ -20,6 +20,18 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceTypeContexts do
 
   @moduledoc false
 
+  ######
+  #
+  # Logic for managing and accessing SystInstanceTypeContexts data.
+  #
+  # Note that SystInstanceTypeContexts records are created and destroyed
+  # automatically in the database when SystInstanceTypeApplications records are
+  # created or destroyed.  This happens via database trigger on
+  # msbms_syst_data.syst_instance_type_applications and foreign key constraints
+  # on msbms_syst_data.syst_instance_type_contexts.
+  #
+  ######
+
   @spec get_instance_type_contexts(
           Keyword.t(
             instance_type_name: Types.instance_type_name() | nil,

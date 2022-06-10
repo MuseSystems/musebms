@@ -16,13 +16,26 @@ $BODY$
 
 BEGIN
 
-    INSERT INTO msbms_syst_data.syst_instance_type_contexts
-        ( instance_type_id, application_context_id, default_db_pool_size )
-    VALUES
-        ( new.instance_type_id, new.application_context_id, new.default_db_pool_size )
-    RETURNING * INTO new;
-
-    RETURN new;
+    RAISE EXCEPTION
+        USING
+            MESSAGE = 'Records are created automatically at ' ||
+                      'msbms_syst_data.syst_instance_type_applications INSERT ' ||
+                      'time and may not be inserted via this API view.',
+            DETAIL = msbms_syst_priv.get_exception_details(
+                         p_proc_schema    => 'msbms_syst'
+                        ,p_proc_name      => 'trig_i_i_syst_instance_type_contexts'
+                        ,p_exception_name => 'invalid_api_view_call'
+                        ,p_errcode        => 'PM008'
+                        ,p_param_data     => to_jsonb(new)
+                        ,p_context_data   =>
+                            jsonb_build_object(
+                                 'tg_op',         tg_op
+                                ,'tg_when',       tg_when
+                                ,'tg_schema',     tg_table_schema
+                                ,'tg_table_name', tg_table_name)),
+            ERRCODE = 'PM008',
+            SCHEMA = tg_table_schema,
+            TABLE = tg_table_name;
 
 END;
 $BODY$

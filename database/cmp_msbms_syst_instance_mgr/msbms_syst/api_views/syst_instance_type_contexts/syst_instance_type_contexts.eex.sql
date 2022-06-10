@@ -13,7 +13,7 @@
 CREATE VIEW msbms_syst.syst_instance_type_contexts AS
 SELECT
     id
-  , instance_type_id
+  , instance_type_application_id
   , application_context_id
   , default_db_pool_size
   , diag_timestamp_created
@@ -44,7 +44,10 @@ CREATE TRIGGER a50_trig_i_d_syst_instance_type_contexts
 COMMENT ON
     VIEW msbms_syst.syst_instance_type_contexts IS
 $DOC$Establishes Instance Type defaults for each of an Application's defined
-datastore contexts.
+datastore contexts.  In practice, these records are used in the creation of
+Instance Context records, but do not establish a direct relationship; records in
+this table simply inform us what Instance Contexts should exist and give us
+default values to use in their creation.
 
 This API View allows the application to read and maintain the data according to
 well defined application business rules.  Using this API view for updates to
@@ -63,8 +66,9 @@ system.
 This column is read only and not maintainable via this API view.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst.syst_instance_type_contexts.instance_type_id IS
-$DOC$The Instance Type to which the context definition belongs.
+    COLUMN msbms_syst.syst_instance_type_contexts.instance_type_application_id IS
+$DOC$The Instance Type/Application association to which the context definition
+belongs.
 
 This API view will allow INSERT operations for this column, but not UPDATE.$DOC$;
 
