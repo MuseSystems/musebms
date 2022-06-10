@@ -76,7 +76,7 @@ defmodule OwnerStatesTest do
       functional_type_name: "owner_states_inactive"
     }
 
-    {:ok, created_state} = MsbmsSystInstanceMgr.create_owner_state(new_state)
+    {:ok, _created_state} = MsbmsSystInstanceMgr.create_owner_state(new_state)
 
     assert :ok = MsbmsSystInstanceMgr.delete_owner_state("owner_state_delete_test")
   end
