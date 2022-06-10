@@ -18,7 +18,6 @@ BEGIN
 
     INSERT INTO msbms_syst_data.instance_contexts
         ( internal_name
-        , display_name
         , instance_id
         , application_context_id
         , start_context
@@ -26,7 +25,6 @@ BEGIN
         , context_code )
     SELECT
         sac.internal_name || '_' || so.internal_name || '_' || new.internal_name
-      , sac.display_name || ' / ' || so.display_name || ' / ' || new.display_name
       , new.id
       , sac.id
       , sa.login_context

@@ -20,10 +20,6 @@ CREATE TABLE msbms_syst_data.syst_instance_contexts
         text COLLATE msbms_syst_priv.variant_insensitive
         NOT NULL
         CONSTRAINT syst_instance_contexts_internal_name_udx UNIQUE
-    ,display_name
-        text
-        NOT NULL
-        CONSTRAINT syst_instance_contexts_display_name_udx UNIQUE
     ,instance_id
         uuid
         NOT NULL
@@ -90,11 +86,6 @@ system.$DOC$;
 COMMENT ON
     COLUMN msbms_syst_data.syst_instance_contexts.internal_name IS
 $DOC$A candidate key useful for programmatic references to individual records.$DOC$;
-
-COMMENT ON
-    COLUMN msbms_syst_data.syst_instance_contexts.display_name IS
-$DOC$A friendly name and candidate key for the record, suitable for use in user
-interactions$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.syst_instance_contexts.instance_id IS

@@ -35,7 +35,6 @@ defmodule MsbmsSystInstanceMgr.Data.SystInstanceContexts do
             __meta__: Ecto.Schema.Metadata.t(),
             id: Ecto.UUID.t() | nil,
             internal_name: MsbmsSystInstanceMgr.Types.instance_context_name() | nil,
-            display_name: String.t() | nil,
             instance_id: Ecto.UUID.t() | nil,
             instance:
               MsbmsSystInstanceMgr.Data.SystInstances.t()
@@ -62,7 +61,6 @@ defmodule MsbmsSystInstanceMgr.Data.SystInstanceContexts do
 
   schema "syst_instance_contexts" do
     field(:internal_name, :string)
-    field(:display_name, :string)
     field(:start_context, :boolean)
     field(:db_pool_size, :integer)
     field(:context_code, :binary)
@@ -91,12 +89,10 @@ defmodule MsbmsSystInstanceMgr.Data.SystInstanceContexts do
 
     instance_context
     |> cast(update_params, [
-      :display_name,
       :start_context,
       :db_pool_size,
       :context_code
     ])
-    |> validate_display_name(opts)
     |> validate_context_code(opts)
     |> validate_required([
       :instance_id,

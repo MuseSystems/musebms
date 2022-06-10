@@ -14,7 +14,6 @@ CREATE VIEW msbms_syst.syst_instance_contexts AS
 SELECT
     id
   , internal_name
-  , display_name
   , instance_id
   , application_context_id
   , start_context
@@ -72,11 +71,6 @@ $DOC$A candidate key useful for programmatic references to individual records.
 
 This column's value must be set on INSERT, but may not be updated later using
 this API view.$DOC$;
-
-COMMENT ON
-    COLUMN msbms_syst.syst_instance_contexts.display_name IS
-$DOC$A friendly name and candidate key for the record, suitable for use in user
-interactions$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst.syst_instance_contexts.instance_id IS
