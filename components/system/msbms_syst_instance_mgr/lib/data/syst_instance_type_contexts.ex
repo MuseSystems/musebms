@@ -26,9 +26,17 @@ defmodule MsbmsSystInstanceMgr.Data.SystInstanceTypeContexts do
           %__MODULE__{
             __meta__: Ecto.Schema.Metadata.t(),
             id: Ecto.UUID.t() | nil,
-            instance_type_id: Ecto.UUID.t() | nil,
+            instance_type_application_id: Ecto.UUID.t() | nil,
+            instance_type_application:
+              MsbmsSystInstanceMgr.Data.SystInstanceTypeApplications.t()
+              | Ecto.Association.NotLoaded.t()
+              | nil,
             instance_type:
               MsbmsSystEnums.Data.SystEnumItems.t()
+              | Ecto.Association.NotLoaded.t()
+              | nil,
+            application:
+              MsbmsSystInstanceMgr.Data.SystApplications.t()
               | Ecto.Association.NotLoaded.t()
               | nil,
             application_context_id: Ecto.UUID.t() | nil,
@@ -58,11 +66,17 @@ defmodule MsbmsSystInstanceMgr.Data.SystInstanceTypeContexts do
     field(:diag_row_version, :integer)
     field(:diag_update_count, :integer)
 
-    belongs_to(:instance_type, MsbmsSystEnums.Data.SystEnumItems, foreign_key: :instance_type_id)
+    belongs_to(:instance_type_application, MsbmsSystInstanceMgr.Data.SystInstanceTypeApplications,
+      foreign_key: :instance_type_application_id
+    )
 
     belongs_to(:application_context, MsbmsSystInstanceMgr.Data.SystApplicationContexts,
       foreign_key: :application_context_id
     )
+
+    has_one(:instance_type, through: [:instance_type_application, :instance_type])
+
+    has_one(:application, through: [:instance_type_application, :application])
   end
 
   @spec insert_changeset(MsbmsSystInstanceMgr.Types.instance_type_context_params()) ::
@@ -70,12 +84,12 @@ defmodule MsbmsSystInstanceMgr.Data.SystInstanceTypeContexts do
   def insert_changeset(insert_params) do
     %MsbmsSystInstanceMgr.Data.SystInstanceTypeContexts{}
     |> cast(insert_params, [
-      :instance_type_id,
+      :instance_type_application_id,
       :application_context_id,
       :default_db_pool_size
     ])
     |> validate_required([
-      :instance_type_id,
+      :instance_type_application_id,
       :application_context_id,
       :default_db_pool_size
     ])
@@ -92,7 +106,7 @@ defmodule MsbmsSystInstanceMgr.Data.SystInstanceTypeContexts do
       :default_db_pool_size
     ])
     |> validate_required([
-      :instance_type_id,
+      :instance_type_application_id,
       :application_context_id,
       :default_db_pool_size
     ])

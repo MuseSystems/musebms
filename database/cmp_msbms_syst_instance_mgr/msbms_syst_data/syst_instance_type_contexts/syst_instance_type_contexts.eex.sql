@@ -16,11 +16,11 @@ CREATE TABLE msbms_syst_data.syst_instance_type_contexts
         uuid
         NOT NULL DEFAULT uuid_generate_v1( )
         CONSTRAINT syst_instance_type_contexts_pk PRIMARY KEY
-    ,instance_type_id
+    ,instance_type_application_id
         uuid
         NOT NULL
-        CONSTRAINT syst_instance_type_contexts_enum_items_fk
-            REFERENCES msbms_syst_data.syst_enum_items (id)
+        CONSTRAINT syst_instance_type_contexts_inst_type_app_fk
+            REFERENCES msbms_syst_data.syst_instance_type_applications (id)
             ON DELETE CASCADE
     ,application_context_id
         uuid
@@ -52,6 +52,8 @@ CREATE TABLE msbms_syst_data.syst_instance_type_contexts
     ,diag_update_count
         bigint
         NOT NULL DEFAULT 0
+    ,CONSTRAINT syst_instance_type_contexts_instance_types_applications_udx
+        UNIQUE (instance_type_application_id, application_context_id)
 );
 
 ALTER TABLE msbms_syst_data.syst_instance_type_contexts OWNER TO <%= msbms_owner %>;
@@ -63,21 +65,13 @@ CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
     BEFORE INSERT OR UPDATE ON msbms_syst_data.syst_instance_type_contexts
     FOR EACH ROW EXECUTE PROCEDURE msbms_syst_priv.trig_b_iu_set_diagnostic_columns();
 
-CREATE CONSTRAINT TRIGGER a50_trig_a_i_instance_types_enum_item_check
-    AFTER INSERT ON msbms_syst_data.syst_instance_type_contexts
-    FOR EACH ROW EXECUTE PROCEDURE
-        msbms_syst_priv.trig_a_iu_enum_item_check('instance_types', 'instance_type_id');
-
-CREATE CONSTRAINT TRIGGER a50_trig_a_u_instance_types_enum_item_check
-    AFTER UPDATE ON msbms_syst_data.syst_instance_type_contexts
-    FOR EACH ROW WHEN ( old.instance_type_id != new.instance_type_id)
-        EXECUTE PROCEDURE
-            msbms_syst_priv.trig_a_iu_enum_item_check('instance_types', 'instance_type_id');
-
 COMMENT ON
     TABLE msbms_syst_data.syst_instance_type_contexts IS
 $DOC$Establishes Instance Type defaults for each of an Application's defined
-datastore contexts.$DOC$;
+datastore contexts.  In practice, these records are used in the creation of
+Instance Context records, but do not establish a direct relationship; records in
+this table simply inform us what Instance Contexts should exist and give us
+default values to use in their creation.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.syst_instance_type_contexts.id IS
@@ -85,8 +79,9 @@ $DOC$The record's primary key.  The definitive identifier of the record in the
 system.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_instance_type_contexts.instance_type_id IS
-$DOC$The Instance Type to which the context definition belongs.$DOC$;
+    COLUMN msbms_syst_data.syst_instance_type_contexts.instance_type_application_id IS
+$DOC$The Instance Type/Application association to which the context definition
+belongs.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.syst_instance_type_contexts.application_context_id IS

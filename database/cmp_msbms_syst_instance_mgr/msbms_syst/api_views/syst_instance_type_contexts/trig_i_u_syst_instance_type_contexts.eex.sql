@@ -17,8 +17,8 @@ $BODY$
 BEGIN
 
     IF
-        new.instance_type_id       != old.instance_type_id OR
-        new.application_context_id != old.application_context_id
+        new.instance_type_application_id != old.instance_type_application_id OR
+        new.application_context_id       != old.application_context_id
     THEN
         RAISE EXCEPTION
             USING

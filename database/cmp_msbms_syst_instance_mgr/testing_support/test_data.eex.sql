@@ -204,13 +204,14 @@ BEGIN
     FROM ( SELECT
                sac.id            AS application_context_id
              , sac.login_context AS login_context
-             , sei.id            AS instance_type_id
+             , sita.id           AS instance_type_application_id
              , sei.internal_name AS instance_type_name
            FROM msbms_syst_data.syst_application_contexts sac,
                 msbms_syst_data.syst_enums se
                     JOIN msbms_syst_data.syst_enum_items sei ON sei.enum_id = se.id
+                    JOIN msbms_syst_data.syst_instance_type_applications sita ON sita.instance_type_id = sei.id
            WHERE se.internal_name = 'instance_types' ) it
-    WHERE it.application_context_id = sitc.application_context_id AND it.instance_type_id = sitc.instance_type_id;
+    WHERE it.application_context_id = sitc.application_context_id AND it.instance_type_application_id = sitc.instance_type_application_id;
 
     --
     -- Create Instances

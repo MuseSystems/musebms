@@ -135,6 +135,25 @@ defmodule MsbmsSystInstanceMgr.Types do
         }
 
   @typedoc """
+  The data type of the Instance Type Application record ID.
+  """
+  @type instance_type_application_id() :: Ecto.UUID.t()
+
+  @typedoc """
+  Defines the creation parameters for Instance Type Application records.
+
+    * `instance_type_id` - the record ID of the parent Instance Type record.
+    This field is required.
+
+    * `application_id` - the record ID of the Application record being
+    associated with the parent Instance Type.
+  """
+  @type instance_type_application_params() :: %{
+          instance_type_id: instance_type_id(),
+          application_id: application_id()
+        }
+
+  @typedoc """
   Defines the data type of the Instance Type Context ID.
   """
   @type instance_type_context_id() :: Ecto.UUID.t()
