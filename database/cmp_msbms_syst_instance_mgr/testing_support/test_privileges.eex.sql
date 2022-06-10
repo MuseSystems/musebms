@@ -100,7 +100,7 @@ GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_d_syst_instances() TO <%= msbms_appu
 
 -- syst_instance_contexts
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE msbms_syst.syst_instance_contexts TO <%= msbms_appusr %>;
+GRANT SELECT, UPDATE ON TABLE msbms_syst.syst_instance_contexts TO <%= msbms_appusr %>;
 
 GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_i_syst_instance_contexts() TO <%= msbms_appusr %>;
 

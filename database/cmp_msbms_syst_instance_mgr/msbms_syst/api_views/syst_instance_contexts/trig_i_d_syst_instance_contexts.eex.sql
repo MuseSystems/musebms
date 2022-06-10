@@ -16,9 +16,26 @@ $BODY$
 
 BEGIN
 
-    DELETE FROM msbms_syst_data.syst_instance_contexts WHERE id = new.id RETURNING * INTO old;
-
-    RETURN old;
+    RAISE EXCEPTION
+        USING
+            MESSAGE = 'Records in this table are deleted automatically when ' ||
+                      'its parent records are deleted.  Direct deletion via ' ||
+                      'this API view is not supported.',
+            DETAIL = msbms_syst_priv.get_exception_details(
+                         p_proc_schema    => 'msbms_syst'
+                        ,p_proc_name      => 'trig_i_d_syst_instance_contexts'
+                        ,p_exception_name => 'invalid_api_view_call'
+                        ,p_errcode        => 'PM008'
+                        ,p_param_data     => to_jsonb(new)
+                        ,p_context_data   =>
+                            jsonb_build_object(
+                                 'tg_op',         tg_op
+                                ,'tg_when',       tg_when
+                                ,'tg_schema',     tg_table_schema
+                                ,'tg_table_name', tg_table_name)),
+            ERRCODE = 'PM008',
+            SCHEMA = tg_table_schema,
+            TABLE = tg_table_name;
 
 END;
 $BODY$
