@@ -1088,6 +1088,75 @@ defmodule MsbmsSystInstanceMgr do
           {:ok, Data.SystApplicationContexts.t()} | {:error, MsbmsSystError.t()}
   defdelegate get_instance_type_context_by_id(instance_type_context_id),
     to: Impl.InstanceTypeContexts
+
+  @doc """
+  Returns the known Instance Type / Application association records.
+
+  ## Parameters
+
+    * `opts` - this function accepts the following optional filtering criteria:
+
+      * `instance_type_name` - the internal name identifying a specific Instance
+      Type to filter.
+
+      * `instance_type_id` - the record ID of an Instance Type for which to
+      filter.
+
+      * `application_name` - the internal name of an Application record to which
+      to restrict the function result set.
+
+      * `application_id` - the record ID of the Application to use to filter the
+      result set.
+
+  ## Examples
+
+  Unfiltered results are obtained by passing no parameters:
+
+      iex> {:ok, _result} = MsbmsSystInstanceMgr.get_instance_type_applications()
+
+  Optionally filters can be applied as a Keyword list:
+
+      iex> {:ok, _result} =
+      ...>   MsbmsSystInstanceMgr.get_instance_type_applications(
+      ...>     instance_type_name: "instance_type_big", application_name: "app1"
+      ...>   )
+  """
+  @spec get_instance_type_applications(Keyword.t()) ::
+          {:ok, [Data.SystInstanceTypeApplications.t()]} | {:error, MsbmsSystError.t()}
+  defdelegate get_instance_type_applications(opts \\ []), to: Impl.InstanceTypeApplications
+
+  @doc """
+  Creates a new association between and Instance Type and Application.
+
+  ## Parameters
+
+    * `instance_type_id` - the record ID of the Instance Type record which is
+    being associated with an Application.
+
+    * `application_id` - the record ID of the Application record being
+    associated to an Instance Type.
+  """
+  @spec create_instance_type_application(Types.instance_type_id(), Types.application_id()) ::
+          {:ok, Data.SystInstanceTypeApplications.t()} | {:error, MsbmsSystError.t()}
+  defdelegate create_instance_type_application(instance_type_id, application_id),
+    to: Impl.InstanceTypeApplications
+
+  @doc """
+  Deletes the association between and Instance Type and Application.
+
+  ## Parameters
+
+    * `instance_type_application_id` - the record ID of the Instance Type
+    Application record to delete.
+
+  Note that deleting an Instance Type Application record will also delete any
+  related Instance Type Context records as well.
+  """
+  @spec delete_instance_type_application(Types.instance_type_application_id()) ::
+          {:ok, {non_neg_integer(), nil | [term()]}} | {:error, MsbmsSystError.t()}
+  defdelegate delete_instance_type_application(instance_type_application_id),
+    to: Impl.InstanceTypeApplications
+
   @doc """
   A list of Instance Context records configured in the system.
 

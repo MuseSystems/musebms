@@ -17,9 +17,9 @@ $BODY$
 BEGIN
 
     INSERT INTO msbms_syst_data.syst_instance_type_contexts
-        ( instance_type_id, application_context_id, default_db_pool_size )
+        ( instance_type_application_id, application_context_id, default_db_pool_size )
     SELECT
-        new.instance_type_id
+        new.id
       , id
       , 0
     FROM msbms_syst_data.syst_application_contexts
