@@ -113,6 +113,11 @@ CREATE CONSTRAINT TRIGGER a50_trig_a_u_instance_states_enum_item_check
             msbms_syst_priv.trig_a_iu_enum_item_check(
                 'instance_states', 'instance_state_id');
 
+CREATE TRIGGER b50_trig_a_i_syst_instances_create_instance_contexts
+    AFTER INSERT ON msbms_syst_data.syst_instances
+    FOR EACH ROW
+        EXECUTE PROCEDURE msbms_syst_data.trig_a_i_syst_instances_create_instance_contexts();
+
 COMMENT ON
     TABLE msbms_syst_data.syst_instances IS
 $DOC$Defines known application instances and provides their configuration settings.$DOC$;
