@@ -81,31 +81,6 @@ defmodule MsbmsSystInstanceMgr.Data.SystInstanceContexts do
     )
   end
 
-  @spec insert_changeset(Types.instance_context_params(), Keyword.t()) :: Ecto.Changeset.t()
-  def insert_changeset(insert_params, opts \\ []) do
-    opts = resolve_options(opts)
-
-    %MsbmsSystInstanceMgr.Data.SystInstanceContexts{}
-    |> cast(insert_params, [
-      :internal_name,
-      :display_name,
-      :instance_id,
-      :application_context_id,
-      :start_context,
-      :db_pool_size,
-      :context_code
-    ])
-    |> validate_internal_name(opts)
-    |> validate_display_name(opts)
-    |> validate_context_code(opts)
-    |> validate_required([
-      :instance_id,
-      :application_context_id,
-      :start_context
-    ])
-    |> validate_number(:db_pool_size, greater_than_or_equal_to: 0)
-  end
-
   @spec update_changeset(
           MsbmsSystInstanceMgr.Data.SystInstanceContexts.t(),
           Types.instance_context_params(),

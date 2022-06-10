@@ -1088,4 +1088,78 @@ defmodule MsbmsSystInstanceMgr do
           {:ok, Data.SystApplicationContexts.t()} | {:error, MsbmsSystError.t()}
   defdelegate get_instance_type_context_by_id(instance_type_context_id),
     to: Impl.InstanceTypeContexts
+  @doc """
+  A list of Instance Context records configured in the system.
+
+  The behavior of this function is to return all configured Instance Context
+  records unless one or more of the optional filtering options is provided.
+
+  ## Parameters
+
+    * `opts` - a Keyword list of filter parameters which determine which
+    Instance Context records to return.  Available filters are:
+
+      * `instance_id` - The record ID of an Instance record for which to
+      retrieve Instance Context records.
+
+      * `instance_name` - the internal name identity of an Instance record for
+      which to retrieve Instance Context records.
+
+      * `owner_id` - an Owner record ID for which to retrieve Instance Context
+      records.
+
+      * `owner_name` - an Owner record internal name value with which to filter
+      the returned Instance Context records.
+
+      * `application_id` - the Application record ID for which to retrieve
+      Instance Context records.
+
+      * `application_name` - the internal name of an Application for which to
+      return Instance Context records.
+
+      * `start_context` - filters the returned Instance Context record according
+      to whether or not they are flagged as start enabled.
+
+      * `database_owner_context` - if true, returns those Instance Context
+      records representing database owner contexts; if false, all other Instance
+      Context records are returned.
+
+      * `login_context` - if true, returns those Instance Context records which
+      are configured as being database login roles.
+
+  ## Examples
+
+  Retrieving an unfiltered list of Instance Context records:
+
+      iex> {:ok, _instance_contexts} = MsbmsSystInstanceMgr.get_instance_contexts()
+
+  Filtering the returned Instance Context list:
+
+      iex> {:ok, _filtered_instance_contexts} =
+      ...>   MsbmsSystInstanceMgr.get_instance_contexts(
+      ...>     application_name: "app1",
+      ...>     start_context: true
+      ...>   )
+
+  """
+  @spec get_instance_contexts(
+          Keyword.t(
+            instance_id: Types.instance_id() | nil,
+            instance_name: Types.instance_name() | nil,
+            owner_id: Types.owner_id() | nil,
+            owner_name: Types.owner_name() | nil,
+            application_id: Types.application_id() | nil,
+            application_name: Types.application_name() | nil,
+            start_context: boolean() | nil,
+            database_owner_context: boolean() | nil,
+            login_context: boolean() | nil
+          )
+        ) ::
+          {:ok, [Data.SystInstanceContexts.t()]} | {:error, MsbmsSystError.t()}
+  defdelegate get_instance_contexts(opts \\ []), to: Impl.InstanceContexts
+
+  @spec set_instance_context_values(Types.instance_context_id(), Types.instance_context_params()) ::
+          {:ok, Data.SystInstanceContexts.t()} | {:error, MsbmsSystError.t()}
+  defdelegate set_instance_context_values(instance_context_id, instance_context_params),
+    to: Impl.InstanceContexts
 end

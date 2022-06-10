@@ -227,7 +227,7 @@ BEGIN
         , instance_code)
     SELECT
         sa.internal_name || '_' || so.internal_name || '_' || seiit.internal_name
-      , sa.display_name || ' / ' || so.display_name || ' / ' || seiit.display_name
+      , sa.display_name || ' / ' || so.display_name || ' / ' || seiit.external_name
       , sa.id
       , seiit.id
       , seiis.id
@@ -282,7 +282,7 @@ BEGIN
     , context_code)
     SELECT
         sac.internal_name || '_' || so.internal_name || '_' || si.internal_name
-      , sac.display_name || ' / ' || so.display_name || ' / ' || si.display_name
+      , sac.display_name || ' / ' || si.display_name
       , si.id
       , sac.id
       , sac.start_context
@@ -296,12 +296,14 @@ BEGIN
     FROM msbms_syst_data.syst_instances si
         JOIN msbms_syst_data.syst_owners so
             ON so.id = si.owner_id
-        JOIN msbms_syst_data.syst_instance_type_contexts sitc
-            ON sitc.instance_type_id = si.instance_type_id
-        JOIN msbms_syst_data.syst_enum_items sei
-            ON sei.id = si.instance_type_id
         JOIN msbms_syst_data.syst_application_contexts sac
-            ON sac.id = sitc.application_context_id AND sac.application_id = si.application_id;
+            ON sac.application_id = si.application_id
+        JOIN msbms_syst_data.syst_instance_type_applications sita
+            ON sita.application_id = si.application_id AND sita.instance_type_id = si.instance_type_id
+        JOIN msbms_syst_data.syst_enum_items sei
+            ON sei.id = sita.instance_type_id
+        JOIN msbms_syst_data.syst_instance_type_contexts sitc
+            ON sitc.instance_type_application_id = sita.id AND sitc.application_context_id = sac.id;
 
 END;
 $INSTANCE_MGR_TESTING_INIT$;
