@@ -17,9 +17,9 @@ $BODY$
 BEGIN
 
     IF
-        new.internal_name          = old.internal_name OR
-        new.instance_id            = old.instance_id OR
-        new.application_context_id = old.application_context_id
+        new.internal_name          != old.internal_name OR
+        new.instance_id            != old.instance_id OR
+        new.application_context_id != old.application_context_id
     THEN
         RAISE EXCEPTION
             USING
@@ -30,7 +30,8 @@ BEGIN
                             ,p_proc_name      => 'trig_i_u_syst_instance_contexts'
                             ,p_exception_name => 'invalid_api_view_call'
                             ,p_errcode        => 'PM008'
-                            ,p_param_data     => to_jsonb(new)
+                            ,p_param_data     =>
+                                jsonb_build_object('new', to_jsonb(new), 'old', to_jsonb(old))
                             ,p_context_data   =>
                                 jsonb_build_object(
                                      'tg_op',         tg_op

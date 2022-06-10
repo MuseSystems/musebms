@@ -77,6 +77,7 @@ load_files = [
     "cmp_msbms_syst_instance_mgr/msbms_syst_data/syst_instance_type_applications/trig_a_i_syst_instance_type_apps_create_inst_type_contexts.eex.sql",
     "cmp_msbms_syst_instance_mgr/msbms_syst_data/syst_instance_type_applications/syst_instance_type_applications.eex.sql",
     "cmp_msbms_syst_instance_mgr/msbms_syst_data/syst_owners/syst_owners.eex.sql",
+    "cmp_msbms_syst_instance_mgr/msbms_syst_data/syst_instances/trig_a_i_syst_instances_create_instance_contexts.eex.sql",
     "cmp_msbms_syst_instance_mgr/msbms_syst_data/syst_instances/syst_instances.eex.sql",
     "cmp_msbms_syst_instance_mgr/msbms_syst_data/syst_instance_type_contexts/syst_instance_type_contexts.eex.sql",
     "cmp_msbms_syst_instance_mgr/msbms_syst_data/syst_instance_contexts/syst_instance_contexts.eex.sql",
