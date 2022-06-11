@@ -18,10 +18,6 @@ defmodule MsbmsSystInstanceMgr.Impl.Instances do
 
   require Logger
 
-  @context_code_length 32
-  @instance_code_length 32
-  @context_name_prefix "msbms"
-
   @moduledoc false
 
   ######
@@ -56,8 +52,6 @@ defmodule MsbmsSystInstanceMgr.Impl.Instances do
     from(i in Data.SystInstances,
       join: it in assoc(i, :instance_type),
       as: :instance_type,
-      join: itft in assoc(it, :functional_type),
-      as: :instance_type_functional_type,
       join: is in assoc(i, :instance_state),
       as: :instance_state,
       join: isft in assoc(is, :functional_type),
@@ -79,8 +73,6 @@ defmodule MsbmsSystInstanceMgr.Impl.Instances do
         instance_type_id: it.id,
         instance_type_display_name: it.display_name,
         instance_type_external_name: it.external_name,
-        instance_type_functional_type_id: itft.id,
-        instance_type_functional_type_name: itft.internal_name,
         instance_state_id: is.id,
         instance_state_display_name: is.display_name,
         instance_state_external_name: is.external_name,
@@ -217,23 +209,11 @@ defmodule MsbmsSystInstanceMgr.Impl.Instances do
       }
   end
 
-  # TODO: I'm not over-fond of the depth of private function nesting that's
-  # supporting the create_instance/1 function.  Right now get it working, but
-  # revisit once we're off critical path.
   @spec create_instance(Types.instance_params()) ::
           {:ok, Data.SystInstances.t()} | {:error, MsbmsSystError.t()}
   def create_instance(instance_params) do
-    resolved_instance_params =
-      instance_params
-      |> resolve_application()
-      |> resolve_instance_type()
-      |> resolve_instance_state()
-      |> resolve_owner()
-      |> resolve_owning_instance()
-      |> resolve_instance_options()
-
-    %Data.SystInstances{}
-    |> Data.SystInstances.changeset(resolved_instance_params)
+    resolve_instance_name_params(instance_params, :insert)
+    |> Data.SystInstances.insert_changeset()
     |> MsbmsSystDatastore.insert!(returning: true)
     |> then(&{:ok, &1})
   rescue
@@ -250,25 +230,32 @@ defmodule MsbmsSystInstanceMgr.Impl.Instances do
       }
   end
 
-  @spec set_instance_values(Types.instance_name(), Types.instance_params()) ::
+  @spec set_instance_values(
+          Types.instance_name() | Data.SystInstances.t(),
+          Types.instance_params()
+        ) ::
           {:ok, Data.SystInstances.t()} | {:error, MsbmsSystError.t()}
-  def set_instance_values(instance_name, instance_params) do
-    # TODO: Consider raising on unsupported parameters rather than ignoring
-    #       them.
-    resolved_instance_params =
-      instance_params
-      |> resolve_application()
-      |> resolve_instance_type_no_default()
-      |> resolve_instance_state_no_default()
-      |> resolve_instance_options()
-      |> Map.delete(:owner_id)
-      |> Map.delete(:owner_name)
-      |> Map.delete(:owning_instance_id)
-      |> Map.delete(:owning_instance_name)
-
+  def set_instance_values(instance_name, instance_params) when is_binary(instance_name) do
     from(i in Data.SystInstances, where: [internal_name: ^instance_name])
     |> MsbmsSystDatastore.one!()
-    |> Data.SystInstances.changeset(resolved_instance_params)
+    |> set_instance_values(instance_params)
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure setting instance record values by instance name.",
+          cause: error
+        }
+      }
+  end
+
+  def set_instance_values(instance, instance_params) when is_struct(instance) do
+    instance
+    |> Data.SystInstances.update_changeset(resolve_instance_name_params(instance_params, :update))
     |> MsbmsSystDatastore.update!(returning: true)
     |> then(&{:ok, &1})
   rescue
@@ -279,27 +266,20 @@ defmodule MsbmsSystInstanceMgr.Impl.Instances do
         :error,
         %MsbmsSystError{
           code: :undefined_error,
-          message: "Failure setting instance record values.",
+          message: "Failure setting instance record values by instance.",
           cause: error
         }
       }
   end
 
-  defp resolve_instance_type_no_default(
-         %{instance_type_name: instance_type_name} = instance_params
-       )
-       when is_binary(instance_type_name),
-       do: resolve_instance_type(instance_params)
-
-  defp resolve_instance_type_no_default(instance_params), do: instance_params
-
-  defp resolve_instance_state_no_default(
-         %{instance_state_name: instance_state_name} = instance_params
-       )
-       when is_binary(instance_state_name),
-       do: resolve_instance_state(instance_params)
-
-  defp resolve_instance_state_no_default(instance_params), do: instance_params
+  defp resolve_instance_name_params(change_params, operation) do
+    change_params
+    |> resolve_application()
+    |> resolve_instance_type(operation)
+    |> resolve_instance_state(operation)
+    |> resolve_owner()
+    |> resolve_owning_instance()
+  end
 
   defp resolve_application(%{application_name: application_name} = instance_params)
        when is_binary(application_name) do
@@ -315,35 +295,48 @@ defmodule MsbmsSystInstanceMgr.Impl.Instances do
 
   defp resolve_application(instance_params), do: instance_params
 
-  defp resolve_instance_type(%{instance_type_id: instance_type_id} = instance_params)
+  defp resolve_instance_type(%{instance_type_id: instance_type_id} = instance_params, _operation)
        when is_binary(instance_type_id),
        do: instance_params
 
-  defp resolve_instance_type(%{instance_type_name: instance_type_name} = instance_params)
+  defp resolve_instance_type(
+         %{instance_type_name: instance_type_name} = instance_params,
+         _operation
+       )
        when is_binary(instance_type_name) do
     instance_type = MsbmsSystEnums.get_enum_item_by_name("instance_types", instance_type_name)
     Map.put(instance_params, :instance_type_id, instance_type.id)
   end
 
-  defp resolve_instance_type(instance_params) do
+  defp resolve_instance_type(instance_params, :insert) do
     instance_type = MsbmsSystEnums.get_default_enum_item("instance_types")
     Map.put(instance_params, :instance_type_id, instance_type.id)
   end
 
-  defp resolve_instance_state(%{instance_state_id: instance_state_id} = instance_params)
+  defp resolve_instance_type(instance_params, :update), do: instance_params
+
+  defp resolve_instance_state(
+         %{instance_state_id: instance_state_id} = instance_params,
+         _operation
+       )
        when is_binary(instance_state_id),
        do: instance_params
 
-  defp resolve_instance_state(%{instance_state_name: instance_state_name} = instance_params)
+  defp resolve_instance_state(
+         %{instance_state_name: instance_state_name} = instance_params,
+         _operation
+       )
        when is_binary(instance_state_name) do
     instance_state = MsbmsSystEnums.get_enum_item_by_name("instance_states", instance_state_name)
     Map.put(instance_params, :instance_state_id, instance_state.id)
   end
 
-  defp resolve_instance_state(instance_params) do
+  defp resolve_instance_state(instance_params, :insert) do
     instance_state = MsbmsSystEnums.get_default_enum_item("instance_states")
     Map.put(instance_params, :instance_state_id, instance_state.id)
   end
+
+  defp resolve_instance_state(instance_params, :update), do: instance_params
 
   defp resolve_owner(%{owner_name: owner_name} = instance_params)
        when is_binary(owner_name) do
@@ -373,90 +366,64 @@ defmodule MsbmsSystInstanceMgr.Impl.Instances do
 
   defp resolve_owning_instance(instance_params), do: instance_params
 
-  defp resolve_instance_options(instance_params) do
-    instance_type =
-      MsbmsSystEnums.get_enum_item_by_id("instance_types", instance_params.instance_type_id)
+  @spec purge_instance(Types.instance_name()) ::
+          {:ok, {non_neg_integer(), nil | [term()]}} | {:error, MsbmsSystError.t()}
+  def purge_instance(instance_name) when is_binary(instance_name) do
+    from(
+      i in Data.SystInstances,
+      join: s in assoc(i, :instance_state),
+      join: f in assoc(s, :functional_type),
+      where:
+        i.internal_name == ^instance_name and
+          f.internal_name == "instance_states_purge_eligible"
+    )
+    |> MsbmsSystDatastore.delete_all(returning: true)
+    |> maybe_instance_purged()
+    |> then(&{:ok, &1})
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-    default_instance_options = instance_type.user_options || instance_type.syst_options
-
-    resolved_instance_options =
-      Map.get(instance_params, :instance_options, %{})
-      |> Map.put_new(
-        "instance_code",
-        Base.encode64(:crypto.strong_rand_bytes(@instance_code_length))
-      )
-      |> Map.put_new("dbserver_name", default_instance_options["dbserver_name"])
-      |> Map.put_new("datastore_contexts", default_instance_options["datastore_contexts"])
-      |> resolve_datastore_context_options(
-        instance_params,
-        default_instance_options["datastore_contexts"]
-      )
-
-    Map.put(instance_params, :instance_options, resolved_instance_options)
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure purging an existing Instance.",
+          cause: error
+        }
+      }
   end
 
-  defp resolve_datastore_context_options(
-         provided_instance_options,
-         instance_params,
-         default_contexts
-       ) do
-    provided_contexts = Map.get(provided_instance_options, "datastore_contexts", [])
+  defp maybe_instance_purged({1, _rows} = delete_result), do: delete_result
 
-    provided_contexts
-    |> maybe_apply_context_defaults(instance_params.internal_name, default_contexts)
-    |> maybe_apply_extended_contexts(provided_contexts)
-    |> then(&Map.put(provided_instance_options, "datastore_contexts", &1))
+  defp maybe_instance_purged(delete_result) do
+    raise MsbmsSystError,
+      code: :database_error,
+      message: "Failure to delete single Instance.",
+      cause: delete_result
   end
 
-  defp maybe_apply_context_defaults(provided_contexts, instance_name, default_contexts) do
-    default_func = fn context, resolved_contexts ->
-      curr_instance_context =
-        Enum.find(
-          provided_contexts,
-          %{},
-          &(&1["application_context"] == context["application_context"])
-        )
-        |> Map.put_new(
-          "id",
-          generate_instance_context_id(instance_name, context["application_context"])
-        )
-        |> Map.put_new("application_context", context["application_context"])
-        |> Map.put_new("db_pool_size", context["db_pool_size"])
-        |> Map.put_new(
-          "context_code",
-          Base.encode64(:crypto.strong_rand_bytes(@context_code_length))
-        )
+  @spec purge_all_eligible_instances ::
+          {:ok, {non_neg_integer(), nil | [term()]}} | {:error, MsbmsSystError.t()}
+  def purge_all_eligible_instances do
+    from(i in Data.SystInstances,
+      join: s in assoc(i, :instance_state),
+      join: f in assoc(s, :functional_type),
+      where: f.internal_name == "instance_states_purge_eligible"
+    )
+    |> MsbmsSystDatastore.delete_all(returning: true)
+    |> then(&{:ok, &1})
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      [curr_instance_context | resolved_contexts]
-    end
-
-    Enum.reduce(default_contexts, [], default_func)
-  end
-
-  defp maybe_apply_extended_contexts(defaulted_contexts, provided_contexts) do
-    eval_func = fn context, resolved_contexts ->
-      if is_nil(
-           Enum.find(
-             defaulted_contexts,
-             nil,
-             &(&1["application_context"] == context["application_context"])
-           )
-         ) do
-        [context | resolved_contexts]
-      else
-        resolved_contexts
-      end
-    end
-
-    Enum.reduce(provided_contexts, defaulted_contexts, eval_func)
-  end
-
-  defp generate_instance_context_id(instance_name, application_context, opts_given \\ []) do
-    opts_default = [context_name_prefix: @context_name_prefix]
-
-    opts = Keyword.merge(opts_given, opts_default, fn _k, v1, _v2 -> v1 end)
-
-    [opts[:context_name_prefix], instance_name, to_string(application_context)]
-    |> Enum.join("_")
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure purging eligible Instances.",
+          cause: error
+        }
+      }
   end
 end
