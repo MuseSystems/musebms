@@ -93,6 +93,7 @@ defmodule MsbmsSystInstanceMgr.Data.SystInstanceContexts do
       :db_pool_size,
       :context_code
     ])
+    |> validate_internal_name(opts)
     |> validate_context_code(opts)
     |> validate_required([
       :instance_id,
@@ -100,5 +101,6 @@ defmodule MsbmsSystInstanceMgr.Data.SystInstanceContexts do
       :start_context
     ])
     |> validate_number(:db_pool_size, greater_than_or_equal_to: 0)
+    |> optimistic_lock(:diag_row_version)
   end
 end
