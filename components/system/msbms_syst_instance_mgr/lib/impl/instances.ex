@@ -450,4 +450,10 @@ defmodule MsbmsSystInstanceMgr.Impl.Instances do
         }
       }
   end
+
+  @spec get_instance_id_by_name(Types.instance_name()) :: Types.instance_id()
+  def get_instance_id_by_name(instance_name) do
+    from(i in Data.SystInstances, where: i.internal_name == ^instance_name, select: i.id)
+    |> MsbmsSystDatastore.one!()
+  end
 end
