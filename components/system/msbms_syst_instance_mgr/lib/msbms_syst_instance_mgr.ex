@@ -458,6 +458,29 @@ defmodule MsbmsSystInstanceMgr do
   defdelegate get_instance_by_name(instance_name), to: Impl.Instances
 
   @doc """
+  Returns a specific `MsbmsSystInstanceMgr.Data.SystInstances` record for the
+  given Instances record ID.
+
+  The data returned includes data for the Instance's application, type, state,
+  owner, the data of the "owner instance" if the requested instance is a child
+  of a parent instance, and the children instance records if the requested
+  instance is a parent to other instances.
+  ## Parameters
+
+    * `instance_id` - the record ID of the Instance to retrieve.
+
+  ## Examples
+
+      iex> {:ok, [instance | _]} = MsbmsSystInstanceMgr.list_instances()
+      iex>
+      iex> {:ok, %MsbmsSystInstanceMgr.Data.SystInstances{}} =
+      ...>   MsbmsSystInstanceMgr.get_instance_by_id(instance.instance_id)
+  """
+  @spec get_instance_by_id(Types.instance_id()) ::
+          {:ok, Data.SystInstances.t()} | {:error, MsbmsSystError.t()}
+  defdelegate get_instance_by_id(instance_id), to: Impl.Instances
+
+  @doc """
   Creates a new Instance record based on the provided parameters.
 
   ## Parameters
@@ -525,23 +548,52 @@ defmodule MsbmsSystInstanceMgr do
       identified by the `owning_instance_id` field.
 
       * `instance_options` - a map of options which determine how the Instance
-      connects to its host database server.  See
+      connects to its host database server.  This field is required and the
+      provided `datastore_contexts` will be validated against those defined in
+      the selected Instance Type.  See
       `t:MsbmsSystInstanceMgr.Types.instance_options/0` for more.
-
-  ## Examples
-
-      iex> new_instance_params = %{
-      ...>   internal_name: "create_example_instance",
-      ...>   display_name: "Create Example Instance",
-      ...>   application_name: "test_app_1",
-      ...>   owner_name: "owner_1"
-      ...> }
-      iex> {:ok, _new_instance} = MsbmsSystInstanceMgr.create_instance(new_instance_params)
-
   """
   @spec create_instance(Types.instance_params()) ::
           {:ok, Data.SystInstances.t()} | {:error, MsbmsSystError.t()}
   defdelegate create_instance(instance_params), to: Impl.Instances
+
+  @doc """
+  Sets the values of an existing Instance record.
+
+  ## Parameters
+
+  * `instance_params` - the available attributes for updating in an Instance
+  are:
+
+      * `internal_name` - the unique identifier for the instance which is used
+      in programmatic contexts.
+
+      * `display_name` - a user facing unique identifier for the instance as
+      used in user interfaces.
+
+      * `instance_type_id` - the unique database identifier of the Instance
+      Type of the instance.  Alternatively, the `instance_type_name` parameter
+      may be used to select the Instance Type.
+
+      * `instance_type_name` - the unique identifier of the Instance Type of the
+      Instance.  Alternatively, the `instance_type_id` parameter may be used to
+      select the Instance Type.
+
+      * `instance_state_id` - the unique database identifier of the Instance
+      State of the Instance.Alternatively, the `instance_state_name` parameter
+      may be used to select the Instance State.
+
+      * `instance_state_name` - the unique identifier of the Instance State of
+      the Instance.  Alternatively, the `instance_state_id` parameter may be
+      used to select the Instance State.
+
+      * `instance_options` - a map of options which determine how the Instance
+      connects to its host database server.  See
+      `t:MsbmsSystInstanceMgr.Types.instance_options/0` for more.
+  """
+  @spec set_instance_values(Types.instance_name(), Types.instance_params()) ::
+          {:ok, Data.SystInstances.t()} | {:error, MsbmsSystError.t()}
+  defdelegate set_instance_values(instance_name, instance_params), to: Impl.Instances
 
   @doc """
   Returns a list of the configured Instance Types to which an Instance may be
@@ -1227,8 +1279,58 @@ defmodule MsbmsSystInstanceMgr do
           {:ok, [Data.SystInstanceContexts.t()]} | {:error, MsbmsSystError.t()}
   defdelegate get_instance_contexts(opts \\ []), to: Impl.InstanceContexts
 
+  @doc """
+  Updates the maintainable attributes of the Instance Context record.
+
+  ## Parameters
+
+    * `instance_context_id` - the record ID of the Instance Context record to
+    update.
+
+    * `instance_context_params` - the attribute value pairs with which to update
+    the Instance Context record.  Updatable options are:
+
+      * `start_context` - if set to true, the Instance Context will be started
+      during any applicable Instance start-up operation.  If false, the Instance
+      Context will not be started during otherwise applicable start-up
+      operations.
+
+      * `db_pool_size` - the number of database connections to establish for the
+      context.
+
+      * `context_code` - a random series of bytes for use in generating Instance
+      credentials.  Note that this value is security sensitive.
+
+  """
   @spec set_instance_context_values(Types.instance_context_id(), Types.instance_context_params()) ::
           {:ok, Data.SystInstanceContexts.t()} | {:error, MsbmsSystError.t()}
   defdelegate set_instance_context_values(instance_context_id, instance_context_params),
     to: Impl.InstanceContexts
+
+  @doc """
+  Deletes a specific Instance so long as the Instance is in a Purge Eligible
+  state.
+
+  ## Parameters
+
+    * `instance_name` - the internal name value which identifies the Instance
+    to purge.
+  """
+
+  @spec purge_instance(Types.instance_name()) ::
+          {:ok, {non_neg_integer(), nil | [term()]}} | {:error, MsbmsSystError.t()}
+  defdelegate purge_instance(instance_name), to: Impl.Instances
+
+  @doc """
+  Deletes all Instances which are in a Purge Eligible state.
+
+  Note that function currently purges all Instances regardless of Application.
+  Only the instance state of the Instance is considered.
+  """
+  @spec purge_all_eligible_instances ::
+          {:ok, {non_neg_integer(), nil | [term()]}} | {:error, MsbmsSystError.t()}
+  defdelegate purge_all_eligible_instances, to: Impl.Instances
+
+  @spec get_instance_id_by_name(Types.instance_name()) :: Types.instance_id()
+  defdelegate get_instance_id_by_name(instance_name), to: Impl.Instances
 end
