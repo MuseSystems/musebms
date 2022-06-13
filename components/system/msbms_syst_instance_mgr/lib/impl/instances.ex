@@ -162,7 +162,45 @@ defmodule MsbmsSystInstanceMgr.Impl.Instances do
 
   @spec get_instance_by_name(Types.instance_name()) ::
           {:ok, Data.SystInstances.t()} | {:error, MsbmsSystError.t()}
-  def get_instance_by_name(instance_internal_name) do
+  def get_instance_by_name(instance_name) do
+    from([instances: i] in instance_base_query(), where: i.internal_name == ^instance_name)
+    |> MsbmsSystDatastore.one!()
+    |> then(&{:ok, &1})
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure retrieving instance record by name.",
+          cause: error
+        }
+      }
+  end
+
+  @spec get_instance_by_id(Types.instance_id()) ::
+          {:ok, Data.SystInstances.t()} | {:error, MsbmsSystError.t()}
+  def get_instance_by_id(instance_id) do
+    from([instances: i] in instance_base_query(), where: i.id == ^instance_id)
+    |> MsbmsSystDatastore.one!()
+    |> then(&{:ok, &1})
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure retrieving instance record by ID.",
+          cause: error
+        }
+      }
+  end
+
+  defp instance_base_query() do
     child_instance_qry =
       from(i in Data.SystInstances,
         join: ia in assoc(i, :application),
@@ -177,13 +215,13 @@ defmodule MsbmsSystInstanceMgr.Impl.Instances do
       )
 
     from(i in Data.SystInstances,
+      as: :instances,
       join: ia in assoc(i, :application),
       join: it in assoc(i, :instance_type),
       join: is in assoc(i, :instance_state),
       join: isft in assoc(is, :functional_type),
       join: io in assoc(i, :owner),
       left_join: oi in assoc(i, :owning_instance),
-      where: i.internal_name == ^instance_internal_name,
       preload: [
         application: ia,
         instance_type: it,
@@ -193,20 +231,6 @@ defmodule MsbmsSystInstanceMgr.Impl.Instances do
         owned_instances: ^child_instance_qry
       ]
     )
-    |> MsbmsSystDatastore.one!()
-    |> then(&{:ok, &1})
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MsbmsSystError{
-          code: :undefined_error,
-          message: "Failure retrieving instance record.",
-          cause: error
-        }
-      }
   end
 
   @spec create_instance(Types.instance_params()) ::
