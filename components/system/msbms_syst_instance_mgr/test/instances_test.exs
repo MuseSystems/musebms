@@ -102,11 +102,25 @@ defmodule InstancesTest do
            end)
   end
 
-  test "Can Retrieve Single Instance" do
+  test "Can Retrieve Single Instance by Name" do
     assert {:ok,
             %MsbmsSystInstanceMgr.Data.SystInstances{
               internal_name: "app2_owner4_instance_types_big"
             }} = MsbmsSystInstanceMgr.get_instance_by_name("app2_owner4_instance_types_big")
+  end
+
+  test "Can Retrieve Single Instance by Id" do
+    {:ok, [instance | _]} = MsbmsSystInstanceMgr.list_instances()
+
+    assert {:ok, got_instance} = MsbmsSystInstanceMgr.get_instance_by_id(instance.instance_id)
+    assert instance.instance_internal_name == got_instance.internal_name
+  end
+
+  test "Can Get Instance ID by Name" do
+    {:ok, [instance | _]} = MsbmsSystInstanceMgr.list_instances()
+
+    assert instance.instance_id ==
+             MsbmsSystInstanceMgr.get_instance_id_by_name(instance.instance_internal_name)
   end
 
   test "Can Create Instance" do
@@ -169,30 +183,33 @@ defmodule InstancesTest do
     assert {:error, _reason} = MsbmsSystInstanceMgr.purge_instance("no_delete_test")
   end
 
-  test "Can Purge a All Purge Eligible Owners" do
-    default_owner_state =
-      MsbmsSystEnums.get_default_enum_item("owner_states",
-        functional_type_name: "owner_states_purge_eligible"
-      )
+  test "Can Purge a All Purge Eligible Instances" do
+    {:ok, _} =
+      MsbmsSystInstanceMgr.create_instance(%{
+        internal_name: "purge_all_1",
+        display_name: "Purge Instances Test 1",
+        application_name: "app2",
+        owner_name: "owner2",
+        instance_type_name: "instance_types_sml",
+        instance_state_name: "instance_states_sysdef_purge_eligible",
+        instance_code: :crypto.strong_rand_bytes(16)
+      })
 
     {:ok, _} =
-      MsbmsSystInstanceMgr.create_owner(
-        "ownerpurge_3",
-        "Owner Purge All Eligible Owners 1",
-        default_owner_state.id
-      )
+      MsbmsSystInstanceMgr.create_instance(%{
+        internal_name: "purge_all_2",
+        display_name: "Purge Instances Test 2",
+        application_name: "app1",
+        owner_name: "owner1",
+        instance_type_name: "instance_types_std",
+        instance_state_name: "instance_states_sysdef_purge_eligible",
+        instance_code: :crypto.strong_rand_bytes(16)
+      })
 
-    {:ok, _} =
-      MsbmsSystInstanceMgr.create_owner(
-        "ownerpurge_4",
-        "Owner Purge All Eligible Owners 2",
-        default_owner_state.id
-      )
-
-    assert {:ok, {2, _rows}} = MsbmsSystInstanceMgr.purge_all_eligible_owners()
+    assert {:ok, {2, _rows}} = MsbmsSystInstanceMgr.purge_all_eligible_instances()
 
     # A second call should result in no deletions, but no error.  This test could
     # cause race conditions... keep an eye on if that concern is real.
-    assert {:ok, {0, _rows}} = MsbmsSystInstanceMgr.purge_all_eligible_owners()
+    assert {:ok, {0, _rows}} = MsbmsSystInstanceMgr.purge_all_eligible_instances()
   end
 end
