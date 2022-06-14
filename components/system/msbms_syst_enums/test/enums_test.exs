@@ -12,7 +12,7 @@ defmodule MsbmsSystEnumsTest do
   end
 
   test "Get All Enum Values" do
-    assert all_enums = MsbmsSystEnums.get_all_enum_values()
+    assert all_enums = MsbmsSystEnums.list_all_enums()
     assert is_list(all_enums)
     assert length(all_enums) >= 4
 
@@ -97,7 +97,7 @@ defmodule MsbmsSystEnumsTest do
     assert %{internal_name: "create_enum_test"} =
              MsbmsSystEnums.get_enum_values("create_enum_test")
 
-    saved_enum_items = MsbmsSystEnums.get_sorted_enum_items("create_enum_test")
+    saved_enum_items = MsbmsSystEnums.list_sorted_enum_items("create_enum_test")
 
     assert 3 = length(saved_enum_items)
 
@@ -132,7 +132,7 @@ defmodule MsbmsSystEnumsTest do
 
     assert 2 == length(functional_types)
 
-    saved_enum_items = MsbmsSystEnums.get_sorted_enum_items("create_enum_no_items_test")
+    saved_enum_items = MsbmsSystEnums.list_sorted_enum_items("create_enum_no_items_test")
 
     assert 0 = length(saved_enum_items)
   end
@@ -177,7 +177,7 @@ defmodule MsbmsSystEnumsTest do
     assert %{internal_name: "create_enum_test_no_func_type"} =
              MsbmsSystEnums.get_enum_values("create_enum_test_no_func_type")
 
-    saved_enum_items = MsbmsSystEnums.get_sorted_enum_items("create_enum_test_no_func_type")
+    saved_enum_items = MsbmsSystEnums.list_sorted_enum_items("create_enum_test_no_func_type")
 
     assert 3 = length(saved_enum_items)
 
@@ -198,7 +198,7 @@ defmodule MsbmsSystEnumsTest do
              MsbmsSystEnums.get_enum_values("create_enum_test_no_func_type_no_items")
 
     saved_enum_items =
-      MsbmsSystEnums.get_sorted_enum_items("create_enum_test_no_func_type_no_items")
+      MsbmsSystEnums.list_sorted_enum_items("create_enum_test_no_func_type_no_items")
 
     assert 0 = length(saved_enum_items)
   end
@@ -391,7 +391,7 @@ defmodule MsbmsSystEnumsTest do
 
     :ok = MsbmsSystEnums.create_enum(new_enum)
 
-    before_enum_items = MsbmsSystEnums.get_enum_items("delete_user_def_enum_item_enum")
+    before_enum_items = MsbmsSystEnums.list_enum_items("delete_user_def_enum_item_enum")
 
     assert 2 = length(before_enum_items)
 
@@ -401,7 +401,7 @@ defmodule MsbmsSystEnumsTest do
                "delete_user_def_enum_item_two"
              )
 
-    after_enum_items = MsbmsSystEnums.get_enum_items("delete_user_def_enum_item_enum")
+    after_enum_items = MsbmsSystEnums.list_enum_items("delete_user_def_enum_item_enum")
 
     assert 1 = length(after_enum_items)
   end
@@ -412,7 +412,7 @@ defmodule MsbmsSystEnumsTest do
   end
 
   test "Can Lookup Enum Item by Id" do
-    [test_enum_item | _] = MsbmsSystEnums.get_enum_items("test_syst_enum_one")
+    [test_enum_item | _] = MsbmsSystEnums.list_enum_items("test_syst_enum_one")
 
     assert test_enum_item =
              MsbmsSystEnums.get_enum_item_by_id("test_syst_enum_one", test_enum_item.id)

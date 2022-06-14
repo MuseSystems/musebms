@@ -26,7 +26,7 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceStates do
   @spec list_instance_states() ::
           {:ok, list(MsbmsSystEnums.Data.SystEnumItems.t())} | {:error, MsbmsSystError.t()}
   def list_instance_states do
-    {:ok, MsbmsSystEnums.get_sorted_enum_items("instance_states")}
+    {:ok, MsbmsSystEnums.list_sorted_enum_items("instance_states")}
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -64,7 +64,7 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceStates do
   @spec get_instance_state_by_name(MsbmsSystEnums.Types.enum_item_name()) ::
           {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MsbmsSystError.t()}
   def get_instance_state_by_name(instance_state_name) do
-    MsbmsSystEnums.get_enum_items("instance_states")
+    MsbmsSystEnums.list_enum_items("instance_states")
     |> Enum.find(&(&1.internal_name == instance_state_name))
     |> then(&{:ok, &1})
   rescue

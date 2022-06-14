@@ -26,8 +26,8 @@ defmodule MsbmsSystOptions.Impl.OptionsParser do
   @spec get_global_pepper_value(map()) :: binary()
   def get_global_pepper_value(options) when is_map(options), do: options.global_pepper_value
 
-  @spec get_available_server_pools(map()) :: list(Types.server_pool())
-  def get_available_server_pools(options), do: options[:available_server_pools]
+  @spec list_available_server_pools(map()) :: list(Types.server_pool())
+  def list_available_server_pools(options), do: options[:available_server_pools]
 
   @spec list_dbservers(map(), list(Types.server_pool())) ::
           list(MsbmsSystDatastore.Types.db_server())

@@ -33,9 +33,9 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceTypeApplications do
   #
   ######
 
-  @spec get_instance_type_applications(Keyword.t()) ::
+  @spec list_instance_type_applications(Keyword.t()) ::
           {:ok, [Data.SystInstanceTypeApplications.t()]} | {:error, MsbmsSystError.t()}
-  def get_instance_type_applications(opts_given) do
+  def list_instance_type_applications(opts_given) do
     opts_default = [
       application_id: nil,
       application_name: nil,

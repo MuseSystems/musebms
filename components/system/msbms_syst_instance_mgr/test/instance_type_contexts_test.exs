@@ -14,12 +14,12 @@ defmodule InstanceTypeContextTest do
   use InstanceMgrTestCase, async: true
 
   test "Can Get Instance Type Contexts" do
-    assert {:ok, [_ | _]} = MsbmsSystInstanceMgr.get_instance_type_contexts()
+    assert {:ok, [_ | _]} = MsbmsSystInstanceMgr.list_instance_type_contexts()
   end
 
   test "Can Get Instance Type Contexts Filtered by Instance Type Name" do
     assert {:ok, instance_type_contexts} =
-             MsbmsSystInstanceMgr.get_instance_type_contexts(
+             MsbmsSystInstanceMgr.list_instance_type_contexts(
                instance_type_name: "instance_types_big"
              )
 
@@ -32,7 +32,7 @@ defmodule InstanceTypeContextTest do
     {:ok, instance_type} = MsbmsSystInstanceMgr.get_instance_type_by_name("instance_types_sml")
 
     assert {:ok, instance_type_contexts} =
-             MsbmsSystInstanceMgr.get_instance_type_contexts(instance_type_id: instance_type.id)
+             MsbmsSystInstanceMgr.list_instance_type_contexts(instance_type_id: instance_type.id)
 
     Enum.each(instance_type_contexts, fn context ->
       assert context.instance_type.internal_name == "instance_types_sml"
@@ -46,7 +46,7 @@ defmodule InstanceTypeContextTest do
     # successfully; except in the case where they contradict which should return
     # nothing... this is good test that both params are being added.
     assert {:ok, instance_type_contexts} =
-             MsbmsSystInstanceMgr.get_instance_type_contexts(
+             MsbmsSystInstanceMgr.list_instance_type_contexts(
                instance_type_id: instance_type.id,
                instance_type_name: "instance_types_std"
              )
@@ -56,7 +56,7 @@ defmodule InstanceTypeContextTest do
     end)
 
     assert {:ok, []} =
-             MsbmsSystInstanceMgr.get_instance_type_contexts(
+             MsbmsSystInstanceMgr.list_instance_type_contexts(
                instance_type_id: instance_type.id,
                instance_type_name: "instance_types_big"
              )
@@ -64,7 +64,7 @@ defmodule InstanceTypeContextTest do
 
   test "Can Update Instance Type Context Default DB Pool Size" do
     {:ok, [instance_type_context | _]} =
-      MsbmsSystInstanceMgr.get_instance_type_contexts(login_context: true)
+      MsbmsSystInstanceMgr.list_instance_type_contexts(login_context: true)
 
     assert {:ok, updated_instance_type_context} =
              MsbmsSystInstanceMgr.set_instance_type_context_db_pool_size(
@@ -87,7 +87,7 @@ defmodule InstanceTypeContextTest do
 
   test "Can Get Instance Type Context by ID" do
     {:ok, [instance_type_context | _]} =
-      MsbmsSystInstanceMgr.get_instance_type_contexts(
+      MsbmsSystInstanceMgr.list_instance_type_contexts(
         login_context: false,
         application_name: "app1"
       )

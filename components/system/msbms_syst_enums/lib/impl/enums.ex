@@ -88,8 +88,8 @@ defmodule MsbmsSystEnums.Impl.Enums do
     |> :ets.lookup_element(enum_name, 2)
   end
 
-  @spec get_all_enum_values() :: list(Data.SystEnums.t())
-  def get_all_enum_values do
+  @spec list_all_enums() :: list(Data.SystEnums.t())
+  def list_all_enums do
     # Select query :ets.fun2ms(fn {_, enum_values} -> enum_values end)
     ProcessUtils.get_enums_service()
     |> get_ets_table_from_service_name()
@@ -112,24 +112,24 @@ defmodule MsbmsSystEnums.Impl.Enums do
     |> hd()
   end
 
-  @spec get_enum_items(MsbmsSystEnums.Types.enum_name()) ::
+  @spec list_enum_items(MsbmsSystEnums.Types.enum_name()) ::
           list(Data.SystEnumItems.t())
-  def get_enum_items(enum_name) do
+  def list_enum_items(enum_name) do
     ProcessUtils.get_enums_service()
     |> get_ets_table_from_service_name()
     |> :ets.select([{{enum_name, %{enum_items: :"$1"}}, [], [:"$1"]}])
     |> hd()
   end
 
-  @spec get_sorted_enum_items(MsbmsSystEnums.Types.enum_name()) ::
+  @spec list_sorted_enum_items(MsbmsSystEnums.Types.enum_name()) ::
           list(Data.SystEnumItems.t())
-  def get_sorted_enum_items(enum_name) do
-    Enum.sort(get_enum_items(enum_name), &(&1.sort_order < &2.sort_order))
+  def list_sorted_enum_items(enum_name) do
+    Enum.sort(list_enum_items(enum_name), &(&1.sort_order < &2.sort_order))
   end
 
-  @spec get_enum_functional_types(MsbmsSystEnums.Types.enum_name()) ::
+  @spec list_enum_functional_types(MsbmsSystEnums.Types.enum_name()) ::
           list(Data.SystEnumFunctionalTypes.t())
-  def get_enum_functional_types(enum_name) do
+  def list_enum_functional_types(enum_name) do
     ProcessUtils.get_enums_service()
     |> get_ets_table_from_service_name()
     |> :ets.select([{{enum_name, %{functional_types: :"$1"}}, [], [:"$1"]}])
@@ -142,7 +142,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
         ) ::
           MsbmsSystEnums.Data.SystEnumItems.t()
   def get_enum_item_by_name(enum_name, enum_item_name) do
-    get_enum_items(enum_name)
+    list_enum_items(enum_name)
     |> Enum.find(&(&1.internal_name == enum_item_name))
   end
 
@@ -152,7 +152,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
         ) ::
           MsbmsSystEnums.Data.SystEnumItems.t()
   def get_enum_item_by_id(enum_name, enum_item_id) do
-    get_enum_items(enum_name)
+    list_enum_items(enum_name)
     |> Enum.find(&(&1.id == enum_item_id))
   end
 

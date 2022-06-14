@@ -14,7 +14,7 @@ defmodule InstanceTypeApplicationsTest do
   use InstanceMgrTestCase, async: true
 
   test "Can List Instance Type Applications" do
-    assert {:ok, [_ | _]} = MsbmsSystInstanceMgr.get_instance_type_applications()
+    assert {:ok, [_ | _]} = MsbmsSystInstanceMgr.list_instance_type_applications()
   end
 
   test "Can Create Instance Type Application" do

@@ -14,7 +14,7 @@ defmodule FunctionalTypesTest do
   use EnumsTestCase, async: true
 
   test "Get Enum Functional Types" do
-    assert functional_types = MsbmsSystEnums.get_enum_functional_types("test_syst_enum_one")
+    assert functional_types = MsbmsSystEnums.list_enum_functional_types("test_syst_enum_one")
 
     assert 2 = length(functional_types)
   end
@@ -271,7 +271,7 @@ defmodule FunctionalTypesTest do
     :ok = MsbmsSystEnums.create_enum(new_enum)
 
     before_functional_types =
-      MsbmsSystEnums.get_enum_functional_types("delete_user_defined_functional_type_enum")
+      MsbmsSystEnums.list_enum_functional_types("delete_user_defined_functional_type_enum")
 
     assert 2 = length(before_functional_types)
 
@@ -288,13 +288,13 @@ defmodule FunctionalTypesTest do
              )
 
     after_functional_types =
-      MsbmsSystEnums.get_enum_functional_types("delete_user_defined_functional_type_enum")
+      MsbmsSystEnums.list_enum_functional_types("delete_user_defined_functional_type_enum")
 
     assert 1 = length(after_functional_types)
   end
 
   test "Delete System Defined Functional Types" do
-    before_functional_types = MsbmsSystEnums.get_enum_functional_types("test_syst_enum_three")
+    before_functional_types = MsbmsSystEnums.list_enum_functional_types("test_syst_enum_three")
 
     assert 2 = length(before_functional_types)
 
@@ -304,7 +304,7 @@ defmodule FunctionalTypesTest do
                "enum_three_active"
              )
 
-    after_functional_types = MsbmsSystEnums.get_enum_functional_types("test_syst_enum_three")
+    after_functional_types = MsbmsSystEnums.list_enum_functional_types("test_syst_enum_three")
 
     assert 2 = length(after_functional_types)
   end
