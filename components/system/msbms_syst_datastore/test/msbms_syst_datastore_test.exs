@@ -5,7 +5,6 @@ defmodule MsbmsSystDatastoreTest do
 
   @datastore_options_type_one %{
     database_name: "msbms_test_type_one",
-    database_owner: "msbms_test_type_one_owner",
     datastore_code: "datastore_code_test_type_one",
     datastore_name: :msbms_type_one_datastore,
     contexts: [
@@ -16,7 +15,8 @@ defmodule MsbmsSystDatastoreTest do
         database_password: nil,
         starting_pool_size: 0,
         start_context: false,
-        login_context: false
+        login_context: false,
+        database_owner_context: true
       },
       %{
         id: :msbms_type_one_role_01,
@@ -34,7 +34,8 @@ defmodule MsbmsSystDatastoreTest do
         database_password: 'type_one_role_02',
         starting_pool_size: 3,
         start_context: true,
-        login_context: true
+        login_context: true,
+        database_owner_context: false
       }
     ],
     db_server: %{
@@ -69,7 +70,8 @@ defmodule MsbmsSystDatastoreTest do
       database_password: 'type_one_role_04',
       starting_pool_size: 3,
       start_context: true,
-      login_context: true
+      login_context: true,
+      database_owner_context: false
     }
   ]
 
@@ -80,7 +82,6 @@ defmodule MsbmsSystDatastoreTest do
 
   @migration_test_datastore_options %{
     database_name: "msbms_test_type_four",
-    database_owner: "msbms_test_type_four_owner",
     datastore_code: "datastore_code_test_type_four",
     datastore_name: :msbms_type_four_datastore,
     contexts: [
@@ -91,7 +92,8 @@ defmodule MsbmsSystDatastoreTest do
         database_password: nil,
         starting_pool_size: 0,
         start_context: false,
-        login_context: false
+        login_context: false,
+        database_owner_context: true
       },
       %{
         id: :msbms_type_four_role_01,
@@ -100,7 +102,8 @@ defmodule MsbmsSystDatastoreTest do
         database_password: 'type_four_role_01',
         starting_pool_size: 3,
         start_context: true,
-        login_context: true
+        login_context: true,
+        database_owner_context: false
       }
     ],
     db_server: %{
@@ -206,6 +209,8 @@ defmodule MsbmsSystDatastoreTest do
 
     datastore_options = @migration_test_datastore_options
 
+    database_owner = Enum.find(datastore_options.contexts, &(&1[:database_owner_context] == true))
+
     {:ok, :ready, _} = MsbmsSystDatastore.create_datastore(datastore_options)
 
     assert {:ok, :all_started, _contexts} = MsbmsSystDatastore.start_datastore(datastore_options)
@@ -214,7 +219,7 @@ defmodule MsbmsSystDatastoreTest do
              MsbmsSystDatastore.upgrade_datastore(
                datastore_options,
                @migration_test_datastore_type,
-               [msbms_owner: datastore_options.database_owner],
+               [msbms_owner: database_owner.database_role],
                @migration_test_opts
              )
 
@@ -238,7 +243,7 @@ defmodule MsbmsSystDatastoreTest do
              MsbmsSystDatastore.upgrade_datastore(
                datastore_options,
                @migration_test_datastore_type,
-               [msbms_owner: datastore_options.database_owner],
+               [msbms_owner: database_owner.database_role],
                @migration_test_opts
              )
 

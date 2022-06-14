@@ -74,9 +74,11 @@ defmodule MsbmsSystDatastore.Impl.Privileged do
     opts_default = [db_shutdown_timeout: @default_db_shutdown_timeout]
     opts_final = Keyword.merge(opts, opts_default, fn _k, v1, _v2 -> v1 end)
 
+    database_owner = Enum.find(datastore_options.contexts, &(&1[:database_owner_context] == true))
+
     :ok = start_priv_connection(datastore_options)
 
-    :ok = Migrations.initialize_datastore(datastore_options.database_owner, opts_final)
+    :ok = Migrations.initialize_datastore(database_owner.database_role, opts_final)
 
     stop_priv_connection(opts_final[:db_shutdown_timeout])
   rescue
@@ -161,11 +163,13 @@ defmodule MsbmsSystDatastore.Impl.Privileged do
     priv_options = get_priv_connection_options(datastore_options)
     priv_context = hd(priv_options.contexts)
 
+    database_owner = Enum.find(datastore_options.contexts, &(&1[:database_owner_context] == true))
+
     case Datastore.start_datastore_context(priv_options, priv_context) do
       {:ok, priv_pid} ->
         _ = Datastore.set_datastore_context(priv_pid)
 
-        Datastore.query_for_none!("SET ROLE #{datastore_options.database_owner};")
+        Datastore.query_for_none!("SET ROLE #{database_owner.database_role};")
 
         Datastore.query_for_none!("SET application_name = '#{priv_context.description}';")
 

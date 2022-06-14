@@ -95,23 +95,23 @@ defmodule MsbmsSystDatastore.Types do
   roles which are limited by their database security configuration.
 
 
-    * `:id` - The application's identifier for a specific security context.
+    * `:id` - the application's identifier for a specific security context.
       This isn't specific to a particular database, but to the application
       overall.
 
-    * `:description` - A user friendly description of the context.
+    * `:description` - a user friendly description of the context.
 
-    * `:database_role` - Maps the application context to a specific database
+    * `:database_role` - maps the application context to a specific database
       role.  When establishing a connection to a database, this is the database
       role name that will be used.
 
-    * `:database_password` - The password used to connect the `:database_role`
+    * `:database_password` - the password used to connect the `:database_role`
       to the database server.
 
-    * `:starting_pool_size` - The number of database connections to initially
+    * `:starting_pool_size` - the number of database connections to initially
       open for this context.
 
-    * `:start_context` - When working with application database connections
+    * `:start_context` - when working with application database connections
       which are started and pooled at application start time, this value
       indicates whether or not the specific context should be started as normal.
       For normal startup to take place, both this value and the `:login_context`
@@ -119,13 +119,18 @@ defmodule MsbmsSystDatastore.Types do
       database connections which are established on demand as needed, such as
       DBA related connections.
 
-    * `:login_context` - If `true`, the context is a normal context associated
+    * `:login_context` - if `true`, the context is a normal context associated
       with a database login role and will be used in establishing connections to
       the database.  If `false`, the context is an administrative context which
       is only used in security definitions within the database.  Database owner
       roles, roles which own all of the application database tables/functions
       would typically not be login roles, even though the are highly privileged
       when their context is active in a database session. (default: true)
+
+    * `:database_owner_context` - if `true` the context represents the database
+      owner role.  If `false` or not provided the database role is not used for
+      this purpose.  Note that there should only be one context defined as the
+      database owner for any datastore.
   """
   @type datastore_context :: %{
           optional(:id) => context_id(),
@@ -134,7 +139,8 @@ defmodule MsbmsSystDatastore.Types do
           optional(:database_password) => String.t() | nil,
           required(:starting_pool_size) => integer(),
           required(:start_context) => boolean(),
-          optional(:login_context) => boolean()
+          optional(:login_context) => boolean(),
+          optional(:database_owner_context) => boolean()
         }
 
   @typedoc """
@@ -144,10 +150,6 @@ defmodule MsbmsSystDatastore.Types do
     * `:database_name` - The name of the database in the database server to
       which the connection will be made.  Often times this value will be the
       same as the String.t() form of the `:datastore_name` value.
-
-    * `:database_owner` - The database role which owns the database and its
-      objects.  This is typically not a login account, but is used during
-      database creation or updating functions.
 
     * `:datastore_code` - Defines a datastore specific salting value for use in
       certain security and cryptographic related functions.
@@ -165,7 +167,6 @@ defmodule MsbmsSystDatastore.Types do
   """
   @type datastore_options :: %{
           required(:database_name) => String.t(),
-          optional(:database_owner) => String.t(),
           optional(:datastore_code) => String.t(),
           optional(:datastore_name) => atom(),
           required(:contexts) => [datastore_context()] | [],
