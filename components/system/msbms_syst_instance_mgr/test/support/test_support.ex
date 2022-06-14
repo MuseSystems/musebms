@@ -29,7 +29,6 @@ defmodule TestSupport do
 
   @datastore_options %{
     database_name: "msbms_syst_instance_mgr",
-    database_owner: "msbms_syst_instance_mgr_owner",
     datastore_code: "msbms_syst_instance_mgr.testing.code",
     datastore_name: :msbms_syst_instance_mgr,
     contexts: [
@@ -40,7 +39,8 @@ defmodule TestSupport do
         database_password: nil,
         starting_pool_size: 0,
         start_context: false,
-        login_context: false
+        login_context: false,
+        database_owner_context: true
       },
       %{
         id: @datastore_context_name,
@@ -75,13 +75,15 @@ defmodule TestSupport do
 
     datastore_options = @datastore_options
 
+    database_owner = Enum.find(datastore_options.contexts, &(&1[:database_owner_context] == true))
+
     {:ok, :ready, _} = MsbmsSystDatastore.create_datastore(datastore_options)
 
     {:ok, _} =
       MsbmsSystDatastore.upgrade_datastore(
         datastore_options,
         @migration_test_datastore_type,
-        msbms_owner: datastore_options.database_owner,
+        msbms_owner: database_owner.database_role,
         msbms_appusr: "msbms_syst_instance_mgr_app_user"
       )
 

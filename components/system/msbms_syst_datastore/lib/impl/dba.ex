@@ -428,9 +428,11 @@ defmodule MsbmsSystDatastore.Impl.Dba do
   end
 
   defp create_database(datastore_options) do
+    database_owner = Enum.find(datastore_options.contexts, &(&1[:database_owner_context] == true))
+
     :ok =
       Datastore.query_for_none!(
-        "CREATE DATABASE #{datastore_options.database_name} OWNER #{datastore_options.database_owner};"
+        "CREATE DATABASE #{datastore_options.database_name} OWNER #{database_owner.database_role};"
       )
 
     :ok =
@@ -440,7 +442,9 @@ defmodule MsbmsSystDatastore.Impl.Dba do
   end
 
   defp drop_database(datastore_options) do
-    with {:ok, _} <- Datastore.query("SET ROLE #{datastore_options.database_owner};"),
+    database_owner = Enum.find(datastore_options.contexts, &(&1[:database_owner_context] == true))
+
+    with {:ok, _} <- Datastore.query("SET ROLE #{database_owner.database_role};"),
          {:ok, _} <-
            Datastore.query("DROP DATABASE IF EXISTS #{datastore_options.database_name};"),
          {:ok, _} <- Datastore.query("RESET ROLE;") do
