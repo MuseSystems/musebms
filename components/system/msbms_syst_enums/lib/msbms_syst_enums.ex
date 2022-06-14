@@ -97,11 +97,11 @@ defmodule MsbmsSystEnums do
 
   ## Examples
 
-    iex> MsbmsSystEnums.get_all_enum_values()
+    iex> MsbmsSystEnums.list_all_enums()
   """
-  @spec get_all_enum_values() ::
+  @spec list_all_enums() ::
           list(MsbmsSystEnums.Data.SystEnums.t())
-  defdelegate get_all_enum_values(), to: Enums
+  defdelegate list_all_enums(), to: Enums
 
   @doc """
   Returns true if the requested enumeration is system defined, false otherwise.
@@ -143,20 +143,20 @@ defmodule MsbmsSystEnums do
     * `enum_name`- the name of the enumeration for which to retrieve the list of
       enumeration items.
   """
-  @spec get_enum_items(MsbmsSystEnums.Types.enum_name()) ::
+  @spec list_enum_items(MsbmsSystEnums.Types.enum_name()) ::
           list(MsbmsSystEnums.Data.SystEnumItems.t())
-  defdelegate get_enum_items(enum_name), to: Enums
+  defdelegate list_enum_items(enum_name), to: Enums
 
   @doc """
   Returns the list of Enumeration Items associated with the requested
   enumeration sorted by their sort_order value.
 
   In all other regards this function works the same
-  `MsbmsSystEnums.get_enum_items/1`.
+  `MsbmsSystEnums.list_enum_items/1`.
   """
-  @spec get_sorted_enum_items(MsbmsSystEnums.Types.enum_name()) ::
+  @spec list_sorted_enum_items(MsbmsSystEnums.Types.enum_name()) ::
           list(MsbmsSystEnums.Data.SystEnumItems.t())
-  defdelegate get_sorted_enum_items(enum_name), to: Enums
+  defdelegate list_sorted_enum_items(enum_name), to: Enums
 
   @doc """
   Returns the list of Enumeration Functional Types associated with the requested
@@ -167,9 +167,9 @@ defmodule MsbmsSystEnums do
     * `enum_name` - the name of the enumeration for which to retrieve the list
       of enumeration functional types.
   """
-  @spec get_enum_functional_types(MsbmsSystEnums.Types.enum_name()) ::
+  @spec list_enum_functional_types(MsbmsSystEnums.Types.enum_name()) ::
           list(MsbmsSystEnums.Data.SystEnumFunctionalTypes.t())
-  defdelegate get_enum_functional_types(enum_name), to: Enums
+  defdelegate list_enum_functional_types(enum_name), to: Enums
 
   @doc """
   Returns an Enumeration Item record from the named Enumeration as identified by

@@ -289,11 +289,11 @@ defmodule MsbmsSystSettings do
 
   ## Examples
 
-    iex> MsbmsSystSettings.get_all_settings_values()
+    iex> MsbmsSystSettings.list_all_settings()
   """
-  @spec get_all_settings_values() ::
+  @spec list_all_settings() ::
           list(MsbmsSystSettings.Data.SystSettings)
-  defdelegate get_all_settings_values(), to: Settings
+  defdelegate list_all_settings(), to: Settings
 
   @doc """
   Deletes the named user defined setting from the system.

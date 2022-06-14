@@ -32,14 +32,14 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceTypeContexts do
   #
   ######
 
-  @spec get_instance_type_contexts(
+  @spec list_instance_type_contexts(
           Keyword.t(
             instance_type_name: Types.instance_type_name() | nil,
             instance_type_id: Ecto.UUID.t() | nil
           )
         ) ::
           {:ok, [Data.SystInstanceTypeContexts.t()]} | {:error, MsbmsSystError.t()}
-  def get_instance_type_contexts(opts_given) do
+  def list_instance_type_contexts(opts_given) do
     opts_default = [
       instance_type_name: nil,
       instance_type_id: nil

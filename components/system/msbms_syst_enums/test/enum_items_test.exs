@@ -14,7 +14,7 @@ defmodule EnumItemsTest do
   use EnumsTestCase, async: true
 
   test "Get Enum Items" do
-    assert enum_items = MsbmsSystEnums.get_enum_items("test_syst_enum_one")
+    assert enum_items = MsbmsSystEnums.list_enum_items("test_syst_enum_one")
     assert 3 = length(enum_items)
   end
 
@@ -196,11 +196,11 @@ defmodule EnumItemsTest do
     change_enum_id = %{enum_id: other_enum.id}
 
     orig_functional_type =
-      MsbmsSystEnums.get_enum_functional_types("test_syst_enum_one")
+      MsbmsSystEnums.list_enum_functional_types("test_syst_enum_one")
       |> Enum.find(&(&1.internal_name == "enum_one_active"))
 
     other_functional_type =
-      MsbmsSystEnums.get_enum_functional_types("test_syst_enum_one")
+      MsbmsSystEnums.list_enum_functional_types("test_syst_enum_one")
       |> Enum.find(&(&1.internal_name == "enum_one_inactive"))
 
     change_functional_type = %{functional_type_id: other_functional_type.id}
@@ -338,11 +338,11 @@ defmodule EnumItemsTest do
     change_enum_id = %{enum_id: other_enum.id}
 
     orig_functional_type =
-      MsbmsSystEnums.get_enum_functional_types("user_def_enum_item_changes_enum")
+      MsbmsSystEnums.list_enum_functional_types("user_def_enum_item_changes_enum")
       |> Enum.find(&(&1.internal_name == "user_def_enum_item_changes_func_type"))
 
     other_functional_type =
-      MsbmsSystEnums.get_enum_functional_types("test_syst_enum_one")
+      MsbmsSystEnums.list_enum_functional_types("test_syst_enum_one")
       |> Enum.find(&(&1.internal_name == "enum_one_inactive"))
 
     change_functional_type = %{functional_type_id: other_functional_type.id}
@@ -458,7 +458,7 @@ defmodule EnumItemsTest do
     :ok = MsbmsSystEnums.create_enum_item("test_syst_enum_three", new_enum_item)
 
     false =
-      MsbmsSystEnums.get_enum_items("test_syst_enum_three")
+      MsbmsSystEnums.list_enum_items("test_syst_enum_three")
       |> Enum.find(&(&1.internal_name == "delete_user_def_enum_item_syst_enum"))
       |> is_nil()
 
@@ -469,14 +469,14 @@ defmodule EnumItemsTest do
              )
 
     assert true =
-             MsbmsSystEnums.get_enum_items("test_syst_enum_three")
+             MsbmsSystEnums.list_enum_items("test_syst_enum_three")
              |> Enum.find(&(&1.internal_name == "delete_user_def_enum_item_syst_enum"))
              |> is_nil()
   end
 
   test "Delete System Defined Enum Item" do
     false =
-      MsbmsSystEnums.get_enum_items("test_syst_enum_three")
+      MsbmsSystEnums.list_enum_items("test_syst_enum_three")
       |> Enum.find(&(&1.internal_name == "enum_three_closed"))
       |> is_nil()
 
@@ -487,7 +487,7 @@ defmodule EnumItemsTest do
              )
 
     assert false ==
-             MsbmsSystEnums.get_enum_items("test_syst_enum_three")
+             MsbmsSystEnums.list_enum_items("test_syst_enum_three")
              |> Enum.find(&(&1.internal_name == "enum_three_closed"))
              |> is_nil()
   end

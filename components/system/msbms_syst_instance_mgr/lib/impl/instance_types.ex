@@ -26,7 +26,7 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceTypes do
   @spec list_instance_types() ::
           {:ok, list(MsbmsSystEnums.Data.SystEnumItems.t())} | {:error, MsbmsSystError.t()}
   def list_instance_types do
-    {:ok, MsbmsSystEnums.get_sorted_enum_items("instance_types")}
+    {:ok, MsbmsSystEnums.list_sorted_enum_items("instance_types")}
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -64,7 +64,7 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceTypes do
   @spec get_instance_type_by_name(MsbmsSystEnums.Types.enum_item_name()) ::
           {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MsbmsSystError.t()}
   def get_instance_type_by_name(instance_type_name) do
-    MsbmsSystEnums.get_enum_items("instance_types")
+    MsbmsSystEnums.list_enum_items("instance_types")
     |> Enum.find(&(&1.internal_name == instance_type_name))
     |> then(&{:ok, &1})
   rescue

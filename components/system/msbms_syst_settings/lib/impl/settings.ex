@@ -73,8 +73,8 @@ defmodule MsbmsSystSettings.Impl.Settings do
     |> Map.get(setting_type)
   end
 
-  @spec get_all_settings_values() :: list(Data.SystSettings)
-  def get_all_settings_values do
+  @spec list_all_settings() :: list(Data.SystSettings)
+  def list_all_settings do
     # Select query :ets.fun2ms(fn {_, setting_values} -> setting_values end)
     ProcessUtils.get_settings_service()
     |> get_ets_table_from_service_name()

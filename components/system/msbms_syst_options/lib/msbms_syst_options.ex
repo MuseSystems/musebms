@@ -189,11 +189,11 @@ defmodule MsbmsSystOptions do
 
   ## Examples
       iex> config_options = MsbmsSystOptions.get_options!("./testing_options.toml")
-      iex> MsbmsSystOptions.get_available_server_pools(config_options)
+      iex> MsbmsSystOptions.list_available_server_pools(config_options)
       ["primary", "linked", "demo", "reserved"]
   """
-  @spec get_available_server_pools(map()) :: list(Types.server_pool())
-  defdelegate get_available_server_pools(options), to: OptionsParser
+  @spec list_available_server_pools(map()) :: list(Types.server_pool())
+  defdelegate list_available_server_pools(options), to: OptionsParser
 
   @doc """
   Extracts the list of configured dbservers in the options file, optionally

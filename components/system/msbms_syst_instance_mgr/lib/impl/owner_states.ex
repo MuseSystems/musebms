@@ -26,7 +26,7 @@ defmodule MsbmsSystInstanceMgr.Impl.OwnerStates do
   @spec list_owner_states() ::
           {:ok, list(MsbmsSystEnums.Data.SystEnumItems.t())} | {:error, MsbmsSystError.t()}
   def list_owner_states do
-    {:ok, MsbmsSystEnums.get_sorted_enum_items("owner_states")}
+    {:ok, MsbmsSystEnums.list_sorted_enum_items("owner_states")}
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -64,7 +64,7 @@ defmodule MsbmsSystInstanceMgr.Impl.OwnerStates do
   @spec get_owner_state_by_name(MsbmsSystEnums.Types.enum_item_name()) ::
           {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MsbmsSystError.t()}
   def get_owner_state_by_name(owner_state_name) do
-    MsbmsSystEnums.get_enum_items("owner_states")
+    MsbmsSystEnums.list_enum_items("owner_states")
     |> Enum.find(&(&1.internal_name == owner_state_name))
     |> then(&{:ok, &1})
   rescue

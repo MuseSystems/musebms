@@ -20,7 +20,7 @@ defmodule MsbmsSystInstanceMgr.Impl.ApplicationContexts do
 
   @moduledoc false
 
-  @spec get_application_contexts(
+  @spec list_application_contexts(
           Keyword.t(
             application_name: Types.application_name() | nil,
             application_id: Ecto.UUID.t() | nil,
@@ -29,7 +29,7 @@ defmodule MsbmsSystInstanceMgr.Impl.ApplicationContexts do
           )
         ) ::
           {:ok, [Data.SystApplicationContexts.t()]} | {:error, MsbmsSystError.t()}
-  def get_application_contexts(opts_given) do
+  def list_application_contexts(opts_given) do
     opts_default = [
       application_name: nil,
       application_id: nil,

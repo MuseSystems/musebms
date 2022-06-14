@@ -24,12 +24,12 @@ defmodule ApplicationContextsTest do
   end
 
   test "Can Get Application Context List" do
-    assert {:ok, [_ | _]} = MsbmsSystInstanceMgr.get_application_contexts()
+    assert {:ok, [_ | _]} = MsbmsSystInstanceMgr.list_application_contexts()
   end
 
   test "Can Get Application Contexts by Application Name" do
     assert {:ok, application_contexts} =
-             MsbmsSystInstanceMgr.get_application_contexts(application_name: "app1")
+             MsbmsSystInstanceMgr.list_application_contexts(application_name: "app1")
 
     Enum.each(application_contexts, fn context ->
       assert context.application.internal_name == "app1"
@@ -38,14 +38,14 @@ defmodule ApplicationContextsTest do
 
   test "Can Get Application Contexts by Start Context" do
     assert {:ok, application_contexts} =
-             MsbmsSystInstanceMgr.get_application_contexts(start_context: true)
+             MsbmsSystInstanceMgr.list_application_contexts(start_context: true)
 
     Enum.each(application_contexts, fn context ->
       assert true == context.start_context
     end)
 
     assert {:ok, application_contexts} =
-             MsbmsSystInstanceMgr.get_application_contexts(start_context: false)
+             MsbmsSystInstanceMgr.list_application_contexts(start_context: false)
 
     Enum.each(application_contexts, fn context ->
       assert false == context.start_context
@@ -54,14 +54,14 @@ defmodule ApplicationContextsTest do
 
   test "Can Get Application Contexts by Login Context" do
     assert {:ok, application_contexts} =
-             MsbmsSystInstanceMgr.get_application_contexts(login_context: true)
+             MsbmsSystInstanceMgr.list_application_contexts(login_context: true)
 
     Enum.each(application_contexts, fn context ->
       assert true == context.login_context
     end)
 
     assert {:ok, application_contexts} =
-             MsbmsSystInstanceMgr.get_application_contexts(login_context: false)
+             MsbmsSystInstanceMgr.list_application_contexts(login_context: false)
 
     Enum.each(application_contexts, fn context ->
       assert false == context.login_context
@@ -72,7 +72,7 @@ defmodule ApplicationContextsTest do
     {:ok, [application | _]} = MsbmsSystInstanceMgr.list_applications()
 
     assert {:ok, application_contexts} =
-             MsbmsSystInstanceMgr.get_application_contexts(application_id: application.id)
+             MsbmsSystInstanceMgr.list_application_contexts(application_id: application.id)
 
     Enum.each(application_contexts, fn context ->
       assert context.application.id == application.id
@@ -87,7 +87,7 @@ defmodule ApplicationContextsTest do
     # always exist; and 2) should always be start_context = false and
     # login_context = false.
     assert {:ok, application_contexts} =
-             MsbmsSystInstanceMgr.get_application_contexts(
+             MsbmsSystInstanceMgr.list_application_contexts(
                application_id: application.id,
                application_name: application.internal_name,
                start_context: false,

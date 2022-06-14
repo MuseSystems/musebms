@@ -32,7 +32,7 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceContexts do
   #
   ######
 
-  @spec get_instance_contexts(
+  @spec list_instance_contexts(
           Keyword.t(
             instance_id: Types.instance_id() | nil,
             instance_name: Types.instance_name() | nil,
@@ -46,7 +46,7 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceContexts do
           )
         ) ::
           {:ok, [Data.SystInstanceContexts.t()]} | {:error, MsbmsSystError.t()}
-  def get_instance_contexts(opts_given) do
+  def list_instance_contexts(opts_given) do
     opts_default = [
       instance_id: nil,
       instance_name: nil,

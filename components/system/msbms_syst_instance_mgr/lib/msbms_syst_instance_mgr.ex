@@ -988,11 +988,11 @@ defmodule MsbmsSystInstanceMgr do
   ## Examples
 
       iex> {:ok, [_ | _]} =
-      ...>   MsbmsSystInstanceMgr.get_application_contexts(
+      ...>   MsbmsSystInstanceMgr.list_application_contexts(
       ...>     application_name: "app1", login_context: false
       ...>   )
   """
-  @spec get_application_contexts(
+  @spec list_application_contexts(
           Keyword.t(
             application_name: Types.application_name() | nil,
             application_id: Ecto.UUID.t() | nil,
@@ -1001,7 +1001,7 @@ defmodule MsbmsSystInstanceMgr do
           )
         ) ::
           {:ok, [Data.SystApplicationContexts.t()]} | {:error, MsbmsSystError.t()}
-  defdelegate get_application_contexts(opts \\ []), to: Impl.ApplicationContexts
+  defdelegate list_application_contexts(opts \\ []), to: Impl.ApplicationContexts
 
   @doc """
   Returns an Application Context record as identified by its internal name.
@@ -1083,18 +1083,18 @@ defmodule MsbmsSystInstanceMgr do
   ## Examples
 
     iex> {:ok, [_ | _]} =
-    ...>   MsbmsSystInstanceMgr.get_instance_type_contexts(
+    ...>   MsbmsSystInstanceMgr.list_instance_type_contexts(
     ...>     instance_type_name: "instance_types_std"
     ...>   )
   """
-  @spec get_instance_type_contexts(
+  @spec list_instance_type_contexts(
           Keyword.t(
             instance_type_name: Types.instance_type_name() | nil,
             instance_type_id: Ecto.UUID.t() | nil
           )
         ) ::
           {:ok, [Data.SystInstanceTypeContexts.t()]} | {:error, MsbmsSystError.t()}
-  defdelegate get_instance_type_contexts(opts \\ []), to: Impl.InstanceTypeContexts
+  defdelegate list_instance_type_contexts(opts \\ []), to: Impl.InstanceTypeContexts
 
   @doc """
   Sets the default database pool size for Instance Type Contexts.
@@ -1164,18 +1164,18 @@ defmodule MsbmsSystInstanceMgr do
 
   Unfiltered results are obtained by passing no parameters:
 
-      iex> {:ok, _result} = MsbmsSystInstanceMgr.get_instance_type_applications()
+      iex> {:ok, _result} = MsbmsSystInstanceMgr.list_instance_type_applications()
 
   Optionally filters can be applied as a Keyword list:
 
       iex> {:ok, _result} =
-      ...>   MsbmsSystInstanceMgr.get_instance_type_applications(
+      ...>   MsbmsSystInstanceMgr.list_instance_type_applications(
       ...>     instance_type_name: "instance_type_big", application_name: "app1"
       ...>   )
   """
-  @spec get_instance_type_applications(Keyword.t()) ::
+  @spec list_instance_type_applications(Keyword.t()) ::
           {:ok, [Data.SystInstanceTypeApplications.t()]} | {:error, MsbmsSystError.t()}
-  defdelegate get_instance_type_applications(opts \\ []), to: Impl.InstanceTypeApplications
+  defdelegate list_instance_type_applications(opts \\ []), to: Impl.InstanceTypeApplications
 
   @doc """
   Creates a new association between and Instance Type and Application.
@@ -1252,18 +1252,18 @@ defmodule MsbmsSystInstanceMgr do
 
   Retrieving an unfiltered list of Instance Context records:
 
-      iex> {:ok, _instance_contexts} = MsbmsSystInstanceMgr.get_instance_contexts()
+      iex> {:ok, _instance_contexts} = MsbmsSystInstanceMgr.list_instance_contexts()
 
   Filtering the returned Instance Context list:
 
       iex> {:ok, _filtered_instance_contexts} =
-      ...>   MsbmsSystInstanceMgr.get_instance_contexts(
+      ...>   MsbmsSystInstanceMgr.list_instance_contexts(
       ...>     application_name: "app1",
       ...>     start_context: true
       ...>   )
 
   """
-  @spec get_instance_contexts(
+  @spec list_instance_contexts(
           Keyword.t(
             instance_id: Types.instance_id() | nil,
             instance_name: Types.instance_name() | nil,
@@ -1277,7 +1277,7 @@ defmodule MsbmsSystInstanceMgr do
           )
         ) ::
           {:ok, [Data.SystInstanceContexts.t()]} | {:error, MsbmsSystError.t()}
-  defdelegate get_instance_contexts(opts \\ []), to: Impl.InstanceContexts
+  defdelegate list_instance_contexts(opts \\ []), to: Impl.InstanceContexts
 
   @doc """
   Updates the maintainable attributes of the Instance Context record.
