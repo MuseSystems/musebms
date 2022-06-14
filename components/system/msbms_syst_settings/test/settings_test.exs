@@ -1195,4 +1195,8 @@ defmodule SettingsTest do
                :setting_blob
              )
   end
+
+  test "Can List All Settings." do
+    assert [_ | _] = MsbmsSystSettings.list_all_settings()
+  end
 end
