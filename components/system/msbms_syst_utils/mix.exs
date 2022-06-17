@@ -1,27 +1,18 @@
-defmodule MsbmsSystDatastore.MixProject do
+defmodule MsbmsSystUtils.MixProject do
   use Mix.Project
 
-  @name :msbms_syst_datastore
+  @name :msbms_syst_utils
   @version "0.1.0"
 
   @deps [
     # Third Party Dependencies
     {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
     {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
-    {:ecto_sql, "~> 3.0"},
-    {:ecto, "~> 3.0"},
-    {:ex_doc, "~> 0.20", only: :dev, runtime: false},
-    {:jason, "~> 1.0"},
-    {:postgrex, "~> 0.10"},
-    {:toml, "~> 0.6"},
-
-    # Muse Systems Business Management System Components
-    {:msbms_syst_error, path: "../msbms_syst_error"},
-    {:msbms_syst_utils, path: "../msbms_syst_utils"}
+    {:ex_doc, "~> 0.20", only: :dev, runtime: false}
   ]
 
   @dialyzer_opts [
-    flags: ["-Wunmatched_returns", :error_handling, :underspecs],
+    flags: ["-Wunmatched_returns", :error_handling, :race_conditions, :underspecs],
     plt_add_apps: [:mix]
   ]
 
@@ -37,15 +28,18 @@ defmodule MsbmsSystDatastore.MixProject do
       deps: @deps,
       build_embedded: in_production,
       start_permanent: in_production,
-      dialyzer: @dialyzer_opts
+      dialyzer: @dialyzer_opts,
+      elixirc_paths: elixirc_paths(Mix.env())
     ]
   end
 
   def application do
     [
-      extra_applications: [
-        :logger
-      ]
+      extra_applications: []
     ]
   end
+
+  defp elixirc_paths(:test), do: elixirc_paths() ++ ["test/support"]
+  defp elixirc_paths(_), do: elixirc_paths()
+  defp elixirc_paths(), do: ["lib"]
 end

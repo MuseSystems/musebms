@@ -11,6 +11,7 @@ defmodule MsbmsSystInstanceMgr.MixProject do
     {:ex_doc, "~> 0.20", only: :dev, runtime: false},
 
     # Muse Systems Business Management System Components
+    {:msbms_syst_utils, path: "../msbms_syst_utils"},
     {:msbms_syst_error, path: "../msbms_syst_error"},
     {:msbms_syst_datastore, path: "../msbms_syst_datastore"},
     {:msbms_syst_enums, path: "../msbms_syst_enums"}
