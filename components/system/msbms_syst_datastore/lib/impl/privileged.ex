@@ -11,6 +11,14 @@
 # muse.information@musesystems.com :: https: //muse.systems
 
 defmodule MsbmsSystDatastore.Impl.Privileged do
+  alias MsbmsSystDatastore.Impl.Migrations
+  alias MsbmsSystDatastore.Runtime.Datastore
+  alias MsbmsSystDatastore.Types
+
+  import MsbmsSystUtils
+
+  require Logger
+
   @moduledoc false
 
   ######
@@ -32,12 +40,6 @@ defmodule MsbmsSystDatastore.Impl.Privileged do
   #
   ######
 
-  alias MsbmsSystDatastore.Impl.Migrations
-  alias MsbmsSystDatastore.Runtime.Datastore
-  alias MsbmsSystDatastore.Types
-
-  require Logger
-
   @default_db_shutdown_timeout 60_000
   @priv_connection_role "msbms_syst_dba"
   @priv_application_name "MSBMS Datastore Privileged Access"
@@ -45,13 +47,13 @@ defmodule MsbmsSystDatastore.Impl.Privileged do
   @spec get_datastore_version(Types.datastore_options(), Keyword.t()) ::
           {:ok, String.t()} | {:error, MsbmsSystError.t()}
   def get_datastore_version(datastore_options, opts) do
-    opts_default = [db_shutdown_timeout: @default_db_shutdown_timeout]
-    opts_final = Keyword.merge(opts, opts_default, fn _k, v1, _v2 -> v1 end)
+    opts = resolve_options(opts, db_shutdown_timeout: @default_db_shutdown_timeout)
+
     :ok = start_priv_connection(datastore_options)
 
-    datastore_version = Migrations.get_datastore_version(opts_final)
+    datastore_version = Migrations.get_datastore_version(opts)
 
-    stop_priv_connection(opts_final[:db_shutdown_timeout])
+    stop_priv_connection(opts[:db_shutdown_timeout])
 
     datastore_version
   rescue
@@ -71,16 +73,15 @@ defmodule MsbmsSystDatastore.Impl.Privileged do
   @spec initialize_datastore(Types.datastore_options(), Keyword.t()) ::
           :ok | {:error, MsbmsSystError.t()}
   def initialize_datastore(datastore_options, opts \\ []) do
-    opts_default = [db_shutdown_timeout: @default_db_shutdown_timeout]
-    opts_final = Keyword.merge(opts, opts_default, fn _k, v1, _v2 -> v1 end)
+    opts = resolve_options(opts, db_shutdown_timeout: @default_db_shutdown_timeout)
 
     database_owner = Enum.find(datastore_options.contexts, &(&1[:database_owner_context] == true))
 
     :ok = start_priv_connection(datastore_options)
 
-    :ok = Migrations.initialize_datastore(database_owner.database_role, opts_final)
+    :ok = Migrations.initialize_datastore(database_owner.database_role, opts)
 
-    stop_priv_connection(opts_final[:db_shutdown_timeout])
+    stop_priv_connection(opts[:db_shutdown_timeout])
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -98,8 +99,7 @@ defmodule MsbmsSystDatastore.Impl.Privileged do
   @spec upgrade_datastore(Types.datastore_options(), String.t(), Keyword.t(), Keyword.t()) ::
           {:ok, [String.t()]} | {:error, MsbmsSystError.t()}
   def upgrade_datastore(datastore_options, datastore_type, migration_bindings, opts \\ []) do
-    opts_default = [db_shutdown_timeout: @default_db_shutdown_timeout]
-    opts_final = Keyword.merge(opts, opts_default, fn _k, v1, _v2 -> v1 end)
+    opts = resolve_options(opts, db_shutdown_timeout: @default_db_shutdown_timeout)
 
     :ok = start_priv_connection(datastore_options)
 
@@ -107,10 +107,10 @@ defmodule MsbmsSystDatastore.Impl.Privileged do
       Migrations.apply_outstanding_migrations(
         datastore_type,
         migration_bindings,
-        opts_final
+        opts
       )
 
-    stop_priv_connection(opts_final[:db_shutdown_timeout])
+    stop_priv_connection(opts[:db_shutdown_timeout])
 
     apply_migrations_result
   rescue

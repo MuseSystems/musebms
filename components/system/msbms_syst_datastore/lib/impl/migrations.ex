@@ -11,6 +11,12 @@
 # muse.information@musesystems.com :: https: //muse.systems
 
 defmodule MsbmsSystDatastore.Impl.Migrations do
+  import MsbmsSystUtils
+
+  alias MsbmsSystDatastore.Runtime.Datastore
+
+  require Logger
+
   @moduledoc false
 
   ######
@@ -20,10 +26,6 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
   # specific databases.
   #
   ######
-
-  require Logger
-
-  alias MsbmsSystDatastore.Runtime.Datastore
 
   @default_source_root_dir "database"
 
@@ -36,17 +38,16 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
   @spec build_migrations(String.t(), Keyword.t()) ::
           {:ok, list(Path.t())} | {:error, MsbmsSystError.t()}
   def build_migrations(datastore_type, opts \\ []) do
-    opts_default = [
-      source_root_dir: @default_source_root_dir,
-      migrations_root_dir: @default_migrations_root_dir,
-      clean_migrations: false
-    ]
+    opts =
+      resolve_options(opts,
+        source_root_dir: @default_source_root_dir,
+        migrations_root_dir: @default_migrations_root_dir,
+        clean_migrations: false
+      )
 
-    opts_final = Keyword.merge(opts, opts_default, fn _k, v1, _v2 -> v1 end)
+    migrations_path = Path.join([opts[:migrations_root_dir], datastore_type])
 
-    migrations_path = Path.join([opts_final[:migrations_root_dir], datastore_type])
-
-    :ok = maybe_clean_migrations(migrations_path, opts_final[:clean_migrations])
+    :ok = maybe_clean_migrations(migrations_path, opts[:clean_migrations])
 
     existing_migrations = get_existing_migrations_list(migrations_path)
 
@@ -54,7 +55,7 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
       plan
       |> maybe_create_migration(
         datastore_type,
-        opts_final[:source_root_dir],
+        opts[:source_root_dir],
         migrations_path,
         existing_migrations
       )
@@ -65,7 +66,7 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
     end
 
     newly_built_migrations =
-      get_build_plans(opts_final[:source_root_dir], datastore_type)
+      get_build_plans(opts[:source_root_dir], datastore_type)
       |> Enum.reduce([], &reducer_func.(&1, &2))
 
     {:ok, newly_built_migrations}
@@ -173,11 +174,10 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
 
   @spec(clean_existing_migrations(String.t(), Keyword.t()) :: :ok, {:error, MsbmsSystError.t()})
   def clean_existing_migrations(datastore_type, opts \\ []) do
-    opts_default = [migrations_root_dir: @default_migrations_root_dir]
-    opts_final = Keyword.merge(opts, opts_default, fn _k, v1, _v2 -> v1 end)
+    opts = resolve_options(opts, migrations_root_dir: @default_migrations_root_dir)
 
     :ok =
-      [opts_final[:migrations_root_dir], datastore_type]
+      [opts[:migrations_root_dir], datastore_type]
       |> Path.join()
       |> clean_migrations()
   rescue
@@ -203,24 +203,23 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
   @spec get_datastore_version(Keyword.t()) ::
           {:ok, String.t()} | {:error, MsbmsSystError.t()}
   def get_datastore_version(opts \\ []) do
-    opts_default = [
-      migrations_schema: @default_migrations_schema,
-      migrations_table: @default_migrations_table
-    ]
-
-    opts_final = Keyword.merge(opts, opts_default, fn _k, v1, _v2 -> v1 end)
+    opts =
+      resolve_options(opts,
+        migrations_schema: @default_migrations_schema,
+        migrations_table: @default_migrations_table
+      )
 
     migration_table_exists? =
       query_table_exists(
-        opts_final[:migrations_schema],
-        opts_final[:migrations_table]
+        opts[:migrations_schema],
+        opts[:migrations_table]
       )
 
     if migration_table_exists? do
       {:ok,
        query_datastore_version(
-         opts_final[:migrations_schema],
-         opts_final[:migrations_table]
+         opts[:migrations_schema],
+         opts[:migrations_table]
        )}
     else
       {:ok, "00.00.000.000000.000"}
@@ -269,17 +268,16 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
   @spec initialize_datastore(String.t(), Keyword.t()) ::
           :ok | {:error, MsbmsSystError.t()}
   def initialize_datastore(datastore_owner, opts \\ []) do
-    opts_default = [
-      migrations_schema: @default_migrations_schema,
-      migrations_table: @default_migrations_table
-    ]
-
-    opts_final = Keyword.merge(opts, opts_default, fn _k, v1, _v2 -> v1 end)
+    opts =
+      resolve_options(opts,
+        migrations_schema: @default_migrations_schema,
+        migrations_table: @default_migrations_table
+      )
 
     bindings = [
       msbms_owner: datastore_owner,
-      migrations_schema: opts_final[:migrations_schema],
-      migrations_table: opts_final[:migrations_table]
+      migrations_schema: opts[:migrations_schema],
+      migrations_table: opts[:migrations_table]
     ]
 
     migration_schema_sql =
@@ -307,28 +305,23 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
 
   @spec apply_outstanding_migrations(String.t(), Keyword.t(), Keyword.t()) ::
           {:error, MsbmsSystError.t()} | {:ok, list}
-  def apply_outstanding_migrations(
-        datastore_type,
-        migration_bindings,
-        opts \\ []
-      ) do
-    opts_default = [
-      migrations_root_dir: @default_migrations_root_dir,
-      migrations_schema: @default_migrations_schema,
-      migrations_table: @default_migrations_table
-    ]
-
-    opts_final = Keyword.merge(opts, opts_default, fn _k, v1, _v2 -> v1 end)
+  def apply_outstanding_migrations(datastore_type, migration_bindings, opts \\ []) do
+    opts =
+      resolve_options(opts,
+        migrations_root_dir: @default_migrations_root_dir,
+        migrations_schema: @default_migrations_schema,
+        migrations_table: @default_migrations_table
+      )
 
     available_migrations =
-      [opts_final[:migrations_root_dir], datastore_type]
+      [opts[:migrations_root_dir], datastore_type]
       |> Path.join()
       |> get_available_migrations()
 
     {:ok, current_version} =
       get_datastore_version(
-        migrations_schema: opts_final[:migrations_schema],
-        migrations_table: opts_final[:migrations_table]
+        migrations_schema: opts[:migrations_schema],
+        migrations_table: opts[:migrations_table]
       )
 
     migrations_result =
@@ -336,10 +329,10 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
         available_migrations,
         %{
           current_version: current_version,
-          migrations_root_dir: opts_final[:migrations_root_dir],
+          migrations_root_dir: opts[:migrations_root_dir],
           datastore_type: datastore_type,
-          migrations_schema: opts_final[:migrations_schema],
-          migrations_table: opts_final[:migrations_table],
+          migrations_schema: opts[:migrations_schema],
+          migrations_table: opts[:migrations_table],
           migration_bindings: migration_bindings,
           applied_migrations: []
         },

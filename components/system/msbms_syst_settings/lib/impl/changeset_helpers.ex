@@ -33,16 +33,14 @@ defmodule MsbmsSystSettings.Impl.ChangesetHelpers do
   # a changeset.
   @spec resolve_options(Keyword.t()) :: Keyword.t()
   def resolve_options(opts_given) do
-    opts_default = [
+    MsbmsSystUtils.resolve_options(opts_given,
       min_internal_name_length: @default_min_internal_name_length,
       max_internal_name_length: @default_max_internal_name_length,
       min_display_name_length: @default_min_display_name_length,
       max_display_name_length: @default_max_display_name_length,
       min_user_description_length: @default_min_user_description_length,
       max_user_description_length: @default_max_user_description_length
-    ]
-
-    Keyword.merge(opts_given, opts_default, fn _k, v1, _v2 -> v1 end)
+    )
   end
 
   # Validate the internal_name key for the changeset.
