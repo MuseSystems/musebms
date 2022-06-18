@@ -16,43 +16,43 @@ defmodule InstancesTest do
   alias MsbmsSystInstanceMgr.Data
 
   test "Can Get Unfiltered/Unsorted Instances List" do
-    assert {:ok, instances_list} = MsbmsSystInstanceMgr.list_instances()
+    assert {:ok, instances_list} = MsbmsSystInstanceMgr.list_summarized_instances()
     assert is_list(instances_list)
   end
 
   test "Can Filter Instances List by Instance Types" do
     assert {:ok, instances_list} =
-             MsbmsSystInstanceMgr.list_instances(instance_types: ["instance_types_big"])
+             MsbmsSystInstanceMgr.list_summarized_instances(
+               instance_types: ["instance_types_big"]
+             )
 
-    assert Enum.reduce(instances_list, true, fn instance, acc ->
-             instance.instance_type_display_name == "Instance Types / Big" and acc
-           end)
+    Enum.each(instances_list, &assert(&1.instance_type_display_name == "Instance Types / Big"))
   end
 
   test "Can Filter Instances List by Instance State Functional Types" do
     assert {:ok, instances_list} =
-             MsbmsSystInstanceMgr.list_instances(
+             MsbmsSystInstanceMgr.list_summarized_instances(
                instance_state_functional_types: [:instance_states_active]
              )
 
-    assert Enum.reduce(instances_list, true, fn instance, acc ->
-             instance.instance_state_functional_type_name == "instance_states_active" and acc
-           end)
+    Enum.each(
+      instances_list,
+      &assert(&1.instance_state_functional_type_name == "instance_states_active")
+    )
   end
 
   test "Can Filter Instances List by Owner" do
-    {:ok, test_owner} = MsbmsSystInstanceMgr.get_owner_by_name("owner3")
+    {:ok, [owner | _]} = MsbmsSystInstanceMgr.list_owners()
 
-    assert {:ok, instances_list} = MsbmsSystInstanceMgr.list_instances(owner_id: test_owner.id)
+    assert {:ok, instances_list} =
+             MsbmsSystInstanceMgr.list_summarized_instances(owner_id: owner.id)
 
-    assert Enum.reduce(instances_list, true, fn instance, acc ->
-             instance.owner_id == test_owner.id and acc
-           end)
+    Enum.each(instances_list, &assert(&1.owner_id == owner.id))
   end
 
   test "Can Filter Instances List by Owner State Functional Types" do
     assert {:ok, instances_list} =
-             MsbmsSystInstanceMgr.list_instances(
+             MsbmsSystInstanceMgr.list_summarized_instances(
                owner_state_functional_types: [:owner_states_active]
              )
 
@@ -62,7 +62,8 @@ defmodule InstancesTest do
   end
 
   test "Can Filter Instances List by Applications" do
-    assert {:ok, instances_list} = MsbmsSystInstanceMgr.list_instances(applications: ["app1"])
+    assert {:ok, instances_list} =
+             MsbmsSystInstanceMgr.list_summarized_instances(applications: ["app1"])
 
     assert Enum.reduce(instances_list, true, fn instance, acc ->
              instance.application_display_name == "App 1" and acc
@@ -70,7 +71,8 @@ defmodule InstancesTest do
   end
 
   test "Can Apply Application Sort to Instances List" do
-    assert {:ok, instances_list} = MsbmsSystInstanceMgr.list_instances(sort: [:application])
+    assert {:ok, instances_list} =
+             MsbmsSystInstanceMgr.list_summarized_instances(sort: [:application])
 
     assert Enum.reduce(instances_list, {true, nil}, fn instance, acc ->
              {
@@ -81,7 +83,7 @@ defmodule InstancesTest do
   end
 
   test "Can Apply Owner Sort to Instances List" do
-    assert {:ok, instances_list} = MsbmsSystInstanceMgr.list_instances(sort: [:owner])
+    assert {:ok, instances_list} = MsbmsSystInstanceMgr.list_summarized_instances(sort: [:owner])
 
     assert Enum.reduce(instances_list, {true, nil}, fn instance, acc ->
              {
@@ -92,7 +94,8 @@ defmodule InstancesTest do
   end
 
   test "Can Apply Instance Sort to Instances List" do
-    assert {:ok, instances_list} = MsbmsSystInstanceMgr.list_instances(sort: [:instance])
+    assert {:ok, instances_list} =
+             MsbmsSystInstanceMgr.list_summarized_instances(sort: [:instance])
 
     assert Enum.reduce(instances_list, {true, nil}, fn instance, acc ->
              {
@@ -110,14 +113,14 @@ defmodule InstancesTest do
   end
 
   test "Can Retrieve Single Instance by Id" do
-    {:ok, [instance | _]} = MsbmsSystInstanceMgr.list_instances()
+    {:ok, [instance | _]} = MsbmsSystInstanceMgr.list_summarized_instances()
 
     assert {:ok, got_instance} = MsbmsSystInstanceMgr.get_instance_by_id(instance.instance_id)
     assert instance.instance_internal_name == got_instance.internal_name
   end
 
   test "Can Get Instance ID by Name" do
-    {:ok, [instance | _]} = MsbmsSystInstanceMgr.list_instances()
+    {:ok, [instance | _]} = MsbmsSystInstanceMgr.list_summarized_instances()
 
     assert instance.instance_id ==
              MsbmsSystInstanceMgr.get_instance_id_by_name(instance.instance_internal_name)

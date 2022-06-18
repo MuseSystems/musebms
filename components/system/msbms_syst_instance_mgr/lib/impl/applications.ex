@@ -12,6 +12,7 @@
 
 defmodule MsbmsSystInstanceMgr.Impl.Applications do
   import Ecto.Query
+  import MsbmsSystUtils
 
   alias MsbmsSystInstanceMgr.Data
 
@@ -25,13 +26,14 @@ defmodule MsbmsSystInstanceMgr.Impl.Applications do
   #
   ######
 
-  @spec list_applications() :: {:ok, list()} | {:error, MsbmsSystError.t()}
-  def list_applications do
+  @spec list_applications(Keyword.t(sorts: list(:application)) | [] | nil) ::
+          {:ok, list(Data.SystApplications.t())} | {:error, MsbmsSystError.t()}
+  def list_applications(opts_given) do
+    opts = resolve_options(opts_given, sorts: [])
+
     app_list =
-      from(a in Data.SystApplications,
-        select: [:id, :internal_name, :display_name, :syst_description],
-        order_by: [:display_name]
-      )
+      from(a in Data.SystApplications, as: :applications)
+      |> maybe_add_sorts(opts[:sorts])
       |> MsbmsSystDatastore.all()
 
     {:ok, app_list}
@@ -47,5 +49,20 @@ defmodule MsbmsSystInstanceMgr.Impl.Applications do
           cause: error
         }
       }
+  end
+
+  defp maybe_add_sorts(query, [_ | _] = sorts) do
+    Enum.reduce(sorts, query, &add_sort(&1, &2))
+  end
+
+  defp maybe_add_sorts(query, _sorts), do: query
+
+  defp add_sort(:application, query), do: order_by(query, [applications: a], a.display_name)
+
+  defp add_sort(sort, _query) do
+    raise MsbmsSystError,
+      code: :invalid_parameter,
+      message: "Invalid sort requested.",
+      cause: sort
   end
 end

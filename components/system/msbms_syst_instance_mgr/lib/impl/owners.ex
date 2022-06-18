@@ -12,6 +12,7 @@
 
 defmodule MsbmsSystInstanceMgr.Impl.Owners do
   import Ecto.Query
+  import MsbmsSystUtils
 
   alias MsbmsSystInstanceMgr.Data
   alias MsbmsSystInstanceMgr.Types
@@ -28,34 +29,31 @@ defmodule MsbmsSystInstanceMgr.Impl.Owners do
 
   @spec list_owners(
           Keyword.t(
-            owner_state_functional_types: list(Types.owner_state_functional_types()) | [],
-            sort: boolean()
+            filters:
+              Keyword.t(
+                owner_state_functional_types: list(Types.owner_state_functional_types()) | []
+              )
+              | nil,
+            extra_data: list(:owner_state | :owner_state_functional_type) | [] | nil,
+            sorts: list(:owner_display_name) | [] | nil
           )
         ) ::
           {:ok, list(Data.SystOwners.t())} | {:error, MsbmsSystError.t()}
-  def list_owners(opts_given) do
-    opts_default = [owner_state_functional_types: [], sort: false]
+  def list_owners(opts) do
+    opts = resolve_options(opts, filters: nil, extra_data: nil, sorts: nil)
 
-    opts = Keyword.merge(opts_given, opts_default, fn _k, v1, _v2 -> v1 end)
-
+    # TODO: The joins may be necessary or extraneous depending on the filters or
+    # extra data.  Not critical path, but see if they can be made optional.
     from(o in Data.SystOwners,
+      as: :owner,
       join: s in assoc(o, :owner_state),
       as: :owner_state,
       join: f in assoc(s, :functional_type),
-      as: :owner_state_functional_type,
-      select: %{
-        owner_id: o.id,
-        owner_internal_name: o.internal_name,
-        owner_display_name: o.display_name,
-        owner_state_id: s.id,
-        owner_state_display_name: s.display_name,
-        owner_state_external_name: s.external_name,
-        owner_state_functional_type_id: f.id,
-        owner_state_functional_type_name: f.internal_name
-      }
+      as: :owner_state_functional_type
     )
-    |> maybe_add_owner_display_name_sort(opts[:sort])
-    |> maybe_add_owner_state_filter(opts[:owner_state_functional_types])
+    |> maybe_add_filters(opts[:filters])
+    |> maybe_add_sorts(opts[:sorts])
+    |> maybe_add_extra_data(opts[:extra_data])
     |> MsbmsSystDatastore.all()
     |> then(&{:ok, &1})
   rescue
@@ -72,18 +70,62 @@ defmodule MsbmsSystInstanceMgr.Impl.Owners do
       }
   end
 
-  defp maybe_add_owner_state_filter(query, [_ | _] = functional_types) do
+  defp maybe_add_filters(query, [_ | _] = filters) do
+    Enum.reduce(filters, query, &add_filter(&1, &2))
+  end
+
+  defp maybe_add_filters(query, _filters), do: query
+
+  defp add_filter({:owner_state_functional_types, functional_types}, query) do
     functional_types
     |> Enum.map(&Atom.to_string/1)
     |> then(&from([owner_state_functional_type: f] in query, where: f.internal_name in ^&1))
   end
 
-  defp maybe_add_owner_state_filter(query, _functional_types), do: query
+  defp add_filter(filter, _query) do
+    raise MsbmsSystError,
+      code: :invalid_parameter,
+      message: "Invalid filter requested.",
+      cause: filter
+  end
 
-  defp maybe_add_owner_display_name_sort(query, true),
-    do: from(o in query, order_by: o.display_name)
+  defp maybe_add_sorts(query, [_ | _] = sorts) do
+    Enum.reduce(sorts, query, &add_sort(&1, &2))
+  end
 
-  defp maybe_add_owner_display_name_sort(query, false), do: query
+  defp maybe_add_sorts(query, _sorts), do: query
+
+  defp add_sort(:owner_display_name, query),
+    do: from([owners: o] in query, order_by: o.display_name)
+
+  defp add_sort(sort, _query) do
+    raise MsbmsSystError,
+      code: :invalid_parameter,
+      message: "Invalid sort requested.",
+      cause: sort
+  end
+
+  defp maybe_add_extra_data(query, [_ | _] = extra_data) do
+    Enum.reduce(extra_data, query, &add_preload(&1, &2))
+  end
+
+  defp maybe_add_extra_data(query, _extra_data), do: query
+
+  defp add_preload(:owner_state, query),
+    do: from([owner_state: s] in query, preload: [owner_state: s])
+
+  defp add_preload(:owner_state_functional_type, query) do
+    from([owner_state: s, owner_state_functional_type: sft] in query,
+      preload: [owner_state: {s, functional_type: sft}]
+    )
+  end
+
+  defp add_preload(extra_data, _query) do
+    raise MsbmsSystError,
+      code: :invalid_parameter,
+      message: "Invalid extra data requested.",
+      cause: extra_data
+  end
 
   @spec create_owner(Types.owner_name(), String.t(), Ecto.UUID.t()) ::
           {:ok, Data.SystOwners.t()} | {:error, MsbmsSystError.t()}
