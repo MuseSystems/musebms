@@ -13,15 +13,39 @@
 defmodule InstanceContextsTest do
   use InstanceMgrTestCase, async: true
 
+  alias MsbmsSystInstanceMgr.Data
+
   test "Can Get Instance Contexts" do
     assert {:ok, [_ | _]} = MsbmsSystInstanceMgr.list_instance_contexts()
   end
 
+  test "Can Get Instance Contexts with Only Extra Instance Data" do
+    assert {:ok, [instance | _]} =
+             MsbmsSystInstanceMgr.list_instance_contexts(extra_data: [:instance])
+
+    assert %Data.SystInstanceContexts{
+             instance: %Data.SystInstances{},
+             application_context: %Ecto.Association.NotLoaded{}
+           } = instance
+  end
+
+  test "Can Get Instance Contexts with Only Extra Application Context Data" do
+    assert {:ok, [instance | _]} =
+             MsbmsSystInstanceMgr.list_instance_contexts(extra_data: [:application_context])
+
+    assert %Data.SystInstanceContexts{
+             instance: %Ecto.Association.NotLoaded{},
+             application_context: %Data.SystApplicationContexts{}
+           } = instance
+  end
+
   test "Can Get Instance Contexts Filtered by instance_id" do
-    {:ok, [instance | _]} = MsbmsSystInstanceMgr.list_instances()
+    {:ok, [instance | _]} = MsbmsSystInstanceMgr.list_summarized_instances()
 
     assert {:ok, contexts} =
-             MsbmsSystInstanceMgr.list_instance_contexts(instance_id: instance.instance_id)
+             MsbmsSystInstanceMgr.list_instance_contexts(
+               filters: [instance_id: instance.instance_id]
+             )
 
     Enum.each(contexts, fn context ->
       assert context.instance_id == instance.instance_id
@@ -29,11 +53,12 @@ defmodule InstanceContextsTest do
   end
 
   test "Can Get Instance Contexts Filtered by instance_name" do
-    {:ok, [instance | _]} = MsbmsSystInstanceMgr.list_instances()
+    {:ok, [instance | _]} = MsbmsSystInstanceMgr.list_summarized_instances()
 
     assert {:ok, contexts} =
              MsbmsSystInstanceMgr.list_instance_contexts(
-               instance_name: instance.instance_internal_name
+               filters: [instance_name: instance.instance_internal_name],
+               extra_data: [:instance]
              )
 
     Enum.each(contexts, fn context ->
@@ -44,10 +69,14 @@ defmodule InstanceContextsTest do
   test "Can Get Instance Contexts Filtered by owner_id" do
     {:ok, [owner | _]} = MsbmsSystInstanceMgr.list_owners()
 
-    assert {:ok, contexts} = MsbmsSystInstanceMgr.list_instance_contexts(owner_id: owner.owner_id)
+    assert {:ok, contexts} =
+             MsbmsSystInstanceMgr.list_instance_contexts(
+               filters: [owner_id: owner.id],
+               extra_data: [:instance]
+             )
 
     Enum.each(contexts, fn context ->
-      assert context.instance.owner_id == owner.owner_id
+      assert context.instance.owner_id == owner.id
     end)
   end
 
@@ -55,10 +84,13 @@ defmodule InstanceContextsTest do
     {:ok, [owner | _]} = MsbmsSystInstanceMgr.list_owners()
 
     assert {:ok, contexts} =
-             MsbmsSystInstanceMgr.list_instance_contexts(owner_name: owner.owner_internal_name)
+             MsbmsSystInstanceMgr.list_instance_contexts(
+               filters: [owner_name: owner.internal_name],
+               extra_data: [:instance]
+             )
 
     Enum.each(contexts, fn context ->
-      assert context.instance.owner_id == owner.owner_id
+      assert context.instance.owner_id == owner.id
     end)
   end
 
@@ -66,7 +98,10 @@ defmodule InstanceContextsTest do
     {:ok, [application | _]} = MsbmsSystInstanceMgr.list_applications()
 
     assert {:ok, contexts} =
-             MsbmsSystInstanceMgr.list_instance_contexts(application_id: application.id)
+             MsbmsSystInstanceMgr.list_instance_contexts(
+               filters: [application_id: application.id],
+               extra_data: [:instance]
+             )
 
     Enum.each(contexts, fn context ->
       assert context.instance.application_id == application.id
@@ -78,7 +113,8 @@ defmodule InstanceContextsTest do
 
     assert {:ok, contexts} =
              MsbmsSystInstanceMgr.list_instance_contexts(
-               application_name: application.internal_name
+               filters: [application_name: application.internal_name],
+               extra_data: [:instance]
              )
 
     Enum.each(contexts, fn context ->
@@ -87,13 +123,21 @@ defmodule InstanceContextsTest do
   end
 
   test "Can Get Instance Contexts Filtered by start_context" do
-    assert {:ok, contexts} = MsbmsSystInstanceMgr.list_instance_contexts(start_context: true)
+    assert {:ok, contexts} =
+             MsbmsSystInstanceMgr.list_instance_contexts(
+               filters: [start_context: true],
+               extra_data: [:application_context]
+             )
 
     Enum.each(contexts, fn context ->
       assert context.application_context.start_context == true
     end)
 
-    assert {:ok, contexts} = MsbmsSystInstanceMgr.list_instance_contexts(start_context: false)
+    assert {:ok, contexts} =
+             MsbmsSystInstanceMgr.list_instance_contexts(
+               filters: [start_context: false],
+               extra_data: [:application_context]
+             )
 
     Enum.each(contexts, fn context ->
       assert context.application_context.start_context == false
@@ -102,14 +146,20 @@ defmodule InstanceContextsTest do
 
   test "Can Get Instance Contexts Filtered by database_owner_context" do
     assert {:ok, contexts} =
-             MsbmsSystInstanceMgr.list_instance_contexts(database_owner_context: true)
+             MsbmsSystInstanceMgr.list_instance_contexts(
+               filters: [database_owner_context: true],
+               extra_data: [:application_context]
+             )
 
     Enum.each(contexts, fn context ->
       assert context.application_context.database_owner_context == true
     end)
 
     assert {:ok, contexts} =
-             MsbmsSystInstanceMgr.list_instance_contexts(database_owner_context: false)
+             MsbmsSystInstanceMgr.list_instance_contexts(
+               filters: [database_owner_context: false],
+               extra_data: [:application_context]
+             )
 
     Enum.each(contexts, fn context ->
       assert context.application_context.database_owner_context == false
@@ -117,13 +167,21 @@ defmodule InstanceContextsTest do
   end
 
   test "Can Get Instance Contexts Filtered by login_context" do
-    assert {:ok, contexts} = MsbmsSystInstanceMgr.list_instance_contexts(login_context: true)
+    assert {:ok, contexts} =
+             MsbmsSystInstanceMgr.list_instance_contexts(
+               filters: [login_context: true],
+               extra_data: [:application_context]
+             )
 
     Enum.each(contexts, fn context ->
       assert context.application_context.login_context == true
     end)
 
-    assert {:ok, contexts} = MsbmsSystInstanceMgr.list_instance_contexts(login_context: false)
+    assert {:ok, contexts} =
+             MsbmsSystInstanceMgr.list_instance_contexts(
+               filters: [login_context: false],
+               extra_data: [:application_context]
+             )
 
     Enum.each(contexts, fn context ->
       assert context.application_context.login_context == false
@@ -132,7 +190,10 @@ defmodule InstanceContextsTest do
 
   test "Can Update Instance Context Values" do
     {:ok, [instance_context | _]} =
-      MsbmsSystInstanceMgr.list_instance_contexts(login_context: true)
+      MsbmsSystInstanceMgr.list_instance_contexts(
+        filters: [login_context: true],
+        extra_data: [:application_context]
+      )
 
     assert {:ok, new_instance_context} =
              MsbmsSystInstanceMgr.set_instance_context_values(

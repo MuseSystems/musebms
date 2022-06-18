@@ -13,8 +13,118 @@
 defmodule InstanceTypeApplicationsTest do
   use InstanceMgrTestCase, async: true
 
+  alias MsbmsSystInstanceMgr.Data
+
   test "Can List Instance Type Applications" do
     assert {:ok, [_ | _]} = MsbmsSystInstanceMgr.list_instance_type_applications()
+  end
+
+  test "Can List Instance Type Applications Filtered by application_id" do
+    {:ok, [application | _]} = MsbmsSystInstanceMgr.list_applications()
+
+    assert {:ok, test_list} =
+             MsbmsSystInstanceMgr.list_instance_type_applications(
+               filters: [application_id: application.id]
+             )
+
+    Enum.each(test_list, fn element ->
+      assert element.application_id == application.id
+    end)
+  end
+
+  test "Can List Instance Type Applications Filtered by application_name" do
+    {:ok, [application | _]} = MsbmsSystInstanceMgr.list_applications()
+
+    assert {:ok, test_list} =
+             MsbmsSystInstanceMgr.list_instance_type_applications(
+               filters: [application_name: application.internal_name],
+               sorts: [:application]
+             )
+
+    Enum.each(test_list, fn element ->
+      assert element.application_id == application.id
+    end)
+  end
+
+  test "Can List Instance Type Applications Filtered by instance_type_id" do
+    {:ok, [instance_type | _]} = MsbmsSystInstanceMgr.list_instance_types()
+
+    assert {:ok, test_list} =
+             MsbmsSystInstanceMgr.list_instance_type_applications(
+               filters: [instance_type_id: instance_type.id]
+             )
+
+    Enum.each(test_list, fn element ->
+      assert element.instance_type_id == instance_type.id
+    end)
+  end
+
+  test "Can List Instance Type Applications Filtered by instance_type_name" do
+    {:ok, [instance_type | _]} = MsbmsSystInstanceMgr.list_instance_types()
+
+    assert {:ok, test_list} =
+             MsbmsSystInstanceMgr.list_instance_type_applications(
+               filters: [instance_type_name: instance_type.internal_name]
+             )
+
+    Enum.each(test_list, fn element ->
+      assert element.instance_type_id == instance_type.id
+    end)
+  end
+
+  test "Can Get Instance Type Application List with Application Extra Data Only" do
+    assert {:ok,
+            [
+              %Data.SystInstanceTypeApplications{
+                application: %Data.SystApplications{},
+                instance_type: %Ecto.Association.NotLoaded{},
+                instance_type_contexts: %Ecto.Association.NotLoaded{}
+              }
+              | _
+            ]} = MsbmsSystInstanceMgr.list_instance_type_applications(extra_data: [:application])
+  end
+
+  test "Can Get Instance Type Application List with Instance Type Extra Data Only" do
+    assert {:ok,
+            [
+              %Data.SystInstanceTypeApplications{
+                application: %Ecto.Association.NotLoaded{},
+                instance_type: %MsbmsSystEnums.Data.SystEnumItems{},
+                instance_type_contexts: %Ecto.Association.NotLoaded{}
+              }
+              | _
+            ]} =
+             MsbmsSystInstanceMgr.list_instance_type_applications(extra_data: [:instance_type])
+  end
+
+  test "Can Get Instance Type Application List with Instance Type Context Extra Data Only" do
+    assert {:ok,
+            [
+              %Data.SystInstanceTypeApplications{
+                application: %Ecto.Association.NotLoaded{},
+                instance_type: %Ecto.Association.NotLoaded{},
+                instance_type_contexts: [%Data.SystInstanceTypeContexts{} | _]
+              }
+              | _
+            ]} =
+             MsbmsSystInstanceMgr.list_instance_type_applications(
+               extra_data: [:instance_type_contexts]
+             )
+  end
+
+  test "Can Get Instance Type Application List with All Extra Data" do
+    assert {:ok,
+            [
+              %Data.SystInstanceTypeApplications{
+                application: %Data.SystApplications{},
+                instance_type: %MsbmsSystEnums.Data.SystEnumItems{},
+                instance_type_contexts: [%Data.SystInstanceTypeContexts{} | _]
+              }
+              | _
+            ]} =
+             MsbmsSystInstanceMgr.list_instance_type_applications(
+               extra_data: [:instance_type_contexts, :application, :instance_type]
+             )
   end
 
   test "Can Create Instance Type Application" do

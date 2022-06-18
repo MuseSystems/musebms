@@ -21,8 +21,9 @@ defmodule MsbmsSystInstanceMgr do
 
       iex> {:ok, _apps} = MsbmsSystInstanceMgr.list_applications()
   """
-  @spec list_applications() :: {:ok, list()} | {:error, MsbmsSystError.t()}
-  defdelegate list_applications, to: Impl.Applications
+  @spec list_applications(Keyword.t(sorts: list(:application)) | [] | nil) ::
+          {:ok, list()} | {:error, MsbmsSystError.t()}
+  defdelegate list_applications(opts \\ []), to: Impl.Applications
 
   @doc """
   Returns a simple list of owners with optional filtering by owner status and
@@ -413,17 +414,17 @@ defmodule MsbmsSystInstanceMgr do
 
   Without parameters the entire list is returned.
 
-      iex> {:ok, [_ | _]} = MsbmsSystInstanceMgr.list_instances()
+      iex> {:ok, [_ | _]} = MsbmsSystInstanceMgr.list_summarized_instances()
 
   However, filters and sorts can be added as via the `opts` parameter.
 
       iex> {:ok, [_ | _]} =
-      ...>   MsbmsSystInstanceMgr.list_instances(
+      ...>   MsbmsSystInstanceMgr.list_summarized_instances(
       ...>     instance_state_functional_type: [:instance_states_active],
       ...>     sort: [:owner, :application, :instance]
       ...>   )
   """
-  @spec list_instances(
+  @spec list_summarized_instances(
           Keyword.t(
             instance_types: list(Types.instance_type_name()) | [],
             instance_state_functional_types: list(Types.instance_state_functional_types()) | [],
@@ -434,7 +435,7 @@ defmodule MsbmsSystInstanceMgr do
           )
         ) ::
           {:ok, list(Types.instances_list_item())} | {:error, MsbmsSystError.t()}
-  defdelegate list_instances(opts \\ []), to: Impl.Instances
+  defdelegate list_summarized_instances(opts \\ []), to: Impl.Instances
 
   @doc """
   Returns a specific `MsbmsSystInstanceMgr.Data.SystInstances` record for the
@@ -471,7 +472,7 @@ defmodule MsbmsSystInstanceMgr do
 
   ## Examples
 
-      iex> {:ok, [instance | _]} = MsbmsSystInstanceMgr.list_instances()
+      iex> {:ok, [instance | _]} = MsbmsSystInstanceMgr.list_summarized_instances()
       iex>
       iex> {:ok, %MsbmsSystInstanceMgr.Data.SystInstances{}} =
       ...>   MsbmsSystInstanceMgr.get_instance_by_id(instance.instance_id)
@@ -1089,8 +1090,18 @@ defmodule MsbmsSystInstanceMgr do
   """
   @spec list_instance_type_contexts(
           Keyword.t(
-            instance_type_name: Types.instance_type_name() | nil,
-            instance_type_id: Ecto.UUID.t() | nil
+            filters:
+              Keyword.t(
+                instance_type_name: Types.instance_type_name(),
+                instance_type_id: Ecto.UUID.t(),
+                login_context: boolean(),
+                database_owner_context: boolean(),
+                application_name: Types.application_name()
+              )
+              | []
+              | nil,
+            extra_data: list(:instance_type | :application_context),
+            sorts: list(:instance_type | :application_context)
           )
         ) ::
           {:ok, [Data.SystInstanceTypeContexts.t()]} | {:error, MsbmsSystError.t()}
@@ -1136,9 +1147,12 @@ defmodule MsbmsSystInstanceMgr do
     record which to retrieve.
 
   """
-  @spec get_instance_type_context_by_id(Types.instance_type_context_id()) ::
+  @spec get_instance_type_context_by_id(
+          Types.instance_type_context_id(),
+          Keyword.t(extra_data: list(:instance_type | :application_context))
+        ) ::
           {:ok, Data.SystApplicationContexts.t()} | {:error, MsbmsSystError.t()}
-  defdelegate get_instance_type_context_by_id(instance_type_context_id),
+  defdelegate get_instance_type_context_by_id(instance_type_context_id, opts \\ []),
     to: Impl.InstanceTypeContexts
 
   @doc """
@@ -1173,7 +1187,19 @@ defmodule MsbmsSystInstanceMgr do
       ...>     instance_type_name: "instance_type_big", application_name: "app1"
       ...>   )
   """
-  @spec list_instance_type_applications(Keyword.t()) ::
+  @spec list_instance_type_applications(
+          Keyword.t(
+            filters:
+              Keyword.t(
+                application_id: Types.application_id() | nil,
+                application_name: Types.application_name() | nil,
+                instance_type_id: Types.instance_type_id() | nil,
+                instance_type_name: Types.instance_type_name() | nil
+              ),
+            sorts: list(:application | :instance_type),
+            extra_data: list(:application | :instance_type)
+          )
+        ) ::
           {:ok, [Data.SystInstanceTypeApplications.t()]} | {:error, MsbmsSystError.t()}
   defdelegate list_instance_type_applications(opts \\ []), to: Impl.InstanceTypeApplications
 
@@ -1258,23 +1284,32 @@ defmodule MsbmsSystInstanceMgr do
 
       iex> {:ok, _filtered_instance_contexts} =
       ...>   MsbmsSystInstanceMgr.list_instance_contexts(
-      ...>     application_name: "app1",
-      ...>     start_context: true
+      ...>     filters: [
+      ...>       application_name: "app1",
+      ...>       start_context: true
+      ...>     ]
       ...>   )
 
   """
   @spec list_instance_contexts(
           Keyword.t(
-            instance_id: Types.instance_id() | nil,
-            instance_name: Types.instance_name() | nil,
-            owner_id: Types.owner_id() | nil,
-            owner_name: Types.owner_name() | nil,
-            application_id: Types.application_id() | nil,
-            application_name: Types.application_name() | nil,
-            start_context: boolean() | nil,
-            database_owner_context: boolean() | nil,
-            login_context: boolean() | nil
+            filters:
+              Keyword.t(
+                instance_id: Types.instance_id() | nil,
+                instance_name: Types.instance_name() | nil,
+                owner_id: Types.owner_id() | nil,
+                owner_name: Types.owner_name() | nil,
+                application_id: Types.application_id() | nil,
+                application_name: Types.application_name() | nil,
+                start_context: boolean() | nil,
+                database_owner_context: boolean() | nil,
+                login_context: boolean() | nil
+              )
+              | []
+              | nil,
+            extra_data: list(:instance | :application_context) | [] | nil
           )
+          | []
         ) ::
           {:ok, [Data.SystInstanceContexts.t()]} | {:error, MsbmsSystError.t()}
   defdelegate list_instance_contexts(opts \\ []), to: Impl.InstanceContexts

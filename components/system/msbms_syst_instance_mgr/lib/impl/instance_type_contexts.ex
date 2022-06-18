@@ -12,6 +12,7 @@
 
 defmodule MsbmsSystInstanceMgr.Impl.InstanceTypeContexts do
   import Ecto.Query
+  import MsbmsSystUtils
 
   require Logger
 
@@ -34,23 +35,29 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceTypeContexts do
 
   @spec list_instance_type_contexts(
           Keyword.t(
-            instance_type_name: Types.instance_type_name() | nil,
-            instance_type_id: Ecto.UUID.t() | nil
+            filters:
+              Keyword.t(
+                instance_type_name: Types.instance_type_name(),
+                instance_type_id: Ecto.UUID.t(),
+                login_context: boolean(),
+                database_owner_context: boolean(),
+                application_name: Types.application_name()
+              )
+              | []
+              | nil,
+            extra_data: list(:instance_type | :application_context),
+            sorts: list(:instance_type | :application_context)
           )
         ) ::
           {:ok, [Data.SystInstanceTypeContexts.t()]} | {:error, MsbmsSystError.t()}
   def list_instance_type_contexts(opts_given) do
-    opts_default = [
-      instance_type_name: nil,
-      instance_type_id: nil
-    ]
-
-    opts = Keyword.merge(opts_given, opts_default, fn _k, v1, _v2 -> v1 end)
+    opts = resolve_options(opts_given, filters: nil, extra_data: nil, sorts: nil)
 
     instance_type_context_base_query()
-    |> order_by([instance_type: it, application_context: ac], [it.sort_order, ac.display_name])
-    |> maybe_add_instance_type_name_filter(opts[:instance_type_name])
-    |> maybe_add_instance_type_id_filter(opts[:instance_type_id])
+    |> maybe_add_joins(opts)
+    |> maybe_add_filters(opts[:filters])
+    |> maybe_add_extra_data(opts[:extra_data])
+    |> maybe_add_sorts(opts[:sorts])
     |> MsbmsSystDatastore.all()
     |> then(&{:ok, &1})
   rescue
@@ -67,26 +74,19 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceTypeContexts do
       }
   end
 
-  defp maybe_add_instance_type_name_filter(query, nil), do: query
-
-  defp maybe_add_instance_type_name_filter(query, instance_type_name)
-       when is_binary(instance_type_name) do
-    from([instance_type: it] in query, where: it.internal_name == ^instance_type_name)
-  end
-
-  defp maybe_add_instance_type_id_filter(query, nil), do: query
-
-  defp maybe_add_instance_type_id_filter(query, instance_type_id)
-       when is_binary(instance_type_id) do
-    from([instance_type: it] in query, where: it.id == ^instance_type_id)
-  end
-
-  @spec get_instance_type_context_by_id(Types.instance_type_context_id()) ::
+  @spec get_instance_type_context_by_id(
+          Types.instance_type_context_id(),
+          Keyword.t(extra_data: list(:instance_type | :application_context))
+        ) ::
           {:ok, Data.SystApplicationContexts.t()} | {:error, MsbmsSystError.t()}
-  def get_instance_type_context_by_id(instance_type_context_id)
+  def get_instance_type_context_by_id(instance_type_context_id, opts)
       when is_binary(instance_type_context_id) do
+    opts = resolve_options(opts, extra_data: [])
+
     instance_type_context_base_query()
-    |> where([instance_type_contexts: itc], itc.id == ^instance_type_context_id)
+    |> maybe_add_joins(opts)
+    |> maybe_add_extra_data(opts[:extra_data])
+    |> where([instance_type_context: itc], itc.id == ^instance_type_context_id)
     |> MsbmsSystDatastore.one!()
     |> then(&{:ok, &1})
   rescue
@@ -104,14 +104,148 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceTypeContexts do
   end
 
   defp instance_type_context_base_query() do
-    from(itc in Data.SystInstanceTypeContexts,
-      as: :instance_type_contexts,
-      join: it in assoc(itc, :instance_type),
-      as: :instance_type,
+    from(itc in Data.SystInstanceTypeContexts, as: :instance_type_context)
+  end
+
+  #
+  # Join Section
+  #
+
+  defp maybe_add_joins(query, [_ | _] = options) do
+    ((options[:extra_data] || []) ++
+       Enum.reduce(Keyword.keys(options[:filters] || []), [], &add_filter_join_item/2) ++
+       (options[:sorts] || []))
+    |> Enum.uniq()
+    |> Enum.reduce(query, &add_join(&1, &2))
+  end
+
+  defp add_filter_join_item(:instance_type_name, join_list), do: [:instance_type | join_list]
+  defp add_filter_join_item(:instance_type_id, join_list), do: [:instance_type | join_list]
+  defp add_filter_join_item(:login_context, join_list), do: [:application_context | join_list]
+
+  defp add_filter_join_item(:database_owner_context, join_list),
+    do: [:application_context | join_list]
+
+  defp add_filter_join_item(:application_name, join_list),
+    do: [:application_context, :application | join_list]
+
+  defp add_filter_join_item(_, join_list), do: join_list
+
+  defp add_join(:application_context, query) do
+    from([instance_type_context: itc] in query,
       join: ac in assoc(itc, :application_context),
       as: :application_context,
-      preload: [instance_type: it, application_context: ac]
+      join: a in assoc(ac, :application),
+      as: :application
     )
+  end
+
+  defp add_join(:instance_type, query) do
+    from([instance_type_context: itc] in query,
+      join: ita in assoc(itc, :instance_type_application),
+      as: :instance_type_application,
+      join: it in assoc(ita, :instance_type),
+      as: :instance_type
+    )
+  end
+
+  defp add_join(:application, query) do
+    from([application_context: ac] in query, join: a in assoc(ac, :application))
+  end
+
+  #
+  # Filter Section
+  #
+
+  defp maybe_add_filters(query, [_ | _] = filters) do
+    Enum.reduce(filters, query, &add_filter(&1, &2))
+  end
+
+  defp maybe_add_filters(query, _filters), do: query
+
+  defp add_filter({:instance_type_name, instance_type_name}, query)
+       when is_binary(instance_type_name) do
+    from([instance_type: it] in query, where: it.internal_name == ^instance_type_name)
+  end
+
+  defp add_filter({:instance_type_id, instance_type_id}, query)
+       when is_binary(instance_type_id) do
+    from([instance_type_application: ita] in query,
+      where: ita.instance_type_id == ^instance_type_id
+    )
+  end
+
+  defp add_filter({:login_context, login_context}, query) do
+    from([application_context: ac] in query, where: ac.login_context == ^login_context)
+  end
+
+  defp add_filter({:database_owner_context, database_owner_context}, query) do
+    from([application_context: ac] in query,
+      where: ac.database_owner_context == ^database_owner_context
+    )
+  end
+
+  defp add_filter({:application_name, application_name}, query) do
+    from([application: a] in query, where: a.internal_name == ^application_name)
+  end
+
+  defp add_filter(filter, _query) do
+    raise MsbmsSystError,
+      code: :invalid_parameter,
+      message: "Invalid filter requested.",
+      cause: filter
+  end
+
+  #
+  # Sort Section
+  #
+
+  defp maybe_add_sorts(query, [_ | _] = sorts) do
+    Enum.reduce(sorts, query, &add_sort(&1, &2))
+  end
+
+  defp maybe_add_sorts(query, _sorts), do: query
+
+  defp add_sort(:application_context, query) do
+    from([application_context: ac] in query, order_by: ac.display_name)
+  end
+
+  defp add_sort(:instance_type, query) do
+    from([instance_type: it] in query, order_by: it.sort_order)
+  end
+
+  defp add_sort(sort, _query) do
+    raise MsbmsSystError,
+      code: :invalid_parameter,
+      message: "Invalid sort requested.",
+      cause: sort
+  end
+
+  #
+  # Extra Data Section
+  #
+
+  defp maybe_add_extra_data(query, [_ | _] = extra_data) do
+    Enum.reduce(extra_data, query, &add_preload(&1, &2))
+  end
+
+  defp maybe_add_extra_data(query, _extra_data), do: query
+
+  defp add_preload(:application_context, query) do
+    from([application_context: ac] in query, preload: [application_context: ac])
+  end
+
+  defp add_preload(:instance_type, query) do
+    from([instance_type_application: ita, instance_type: it] in query,
+      preload: [instance_type_application: {ita, instance_type: it}]
+    )
+  end
+
+  defp add_preload(extra_data, _query) do
+    raise MsbmsSystError,
+      code: :invalid_parameter,
+      message: "Invalid extra data requested.",
+      cause: extra_data
   end
 
   @spec set_instance_type_context_db_pool_size(

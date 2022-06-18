@@ -12,6 +12,7 @@
 
 defmodule MsbmsSystInstanceMgr.Impl.InstanceContexts do
   import Ecto.Query
+  import MsbmsSystUtils
 
   require Logger
 
@@ -34,43 +35,37 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceContexts do
 
   @spec list_instance_contexts(
           Keyword.t(
-            instance_id: Types.instance_id() | nil,
-            instance_name: Types.instance_name() | nil,
-            owner_id: Types.owner_id() | nil,
-            owner_name: Types.owner_name() | nil,
-            application_id: Types.application_id() | nil,
-            application_name: Types.application_name() | nil,
-            start_context: boolean() | nil,
-            database_owner_context: boolean() | nil,
-            login_context: boolean() | nil
+            filters:
+              Keyword.t(
+                instance_id: Types.instance_id() | nil,
+                instance_name: Types.instance_name() | nil,
+                owner_id: Types.owner_id() | nil,
+                owner_name: Types.owner_name() | nil,
+                application_id: Types.application_id() | nil,
+                application_name: Types.application_name() | nil,
+                start_context: boolean() | nil,
+                database_owner_context: boolean() | nil,
+                login_context: boolean() | nil
+              )
+              | []
+              | nil,
+            extra_data: list(:instance | :application_context) | [] | nil
           )
+          | []
         ) ::
           {:ok, [Data.SystInstanceContexts.t()]} | {:error, MsbmsSystError.t()}
   def list_instance_contexts(opts_given) do
-    opts_default = [
-      instance_id: nil,
-      instance_name: nil,
-      owner_id: nil,
-      owner_name: nil,
-      application_id: nil,
-      application_name: nil,
-      start_context: nil,
-      database_owner_context: nil,
-      login_context: nil
-    ]
+    opts = resolve_options(opts_given, filters: [], extra_data: [])
 
-    opts = Keyword.merge(opts_given, opts_default, fn _k, v1, _v2 -> v1 end)
-
-    instance_context_base_query()
-    |> maybe_add_instance_id_filter(opts[:instance_id])
-    |> maybe_add_instance_name_filter(opts[:instance_name])
-    |> maybe_add_owner_id_filter(opts[:owner_id])
-    |> maybe_add_owner_name_filter(opts[:owner_name])
-    |> maybe_add_application_id_filter(opts[:application_id])
-    |> maybe_add_application_name_filter(opts[:application_name])
-    |> maybe_add_start_context_filter(opts[:start_context])
-    |> maybe_add_database_owner_context_filter(opts[:database_owner_context])
-    |> maybe_add_login_context_filter(opts[:login_context])
+    from(ic in Data.SystInstanceContexts,
+      as: :instance_context,
+      join: i in assoc(ic, :instance),
+      as: :instance,
+      join: ac in assoc(ic, :application_context),
+      as: :application_context
+    )
+    |> maybe_add_filters(opts[:filters])
+    |> maybe_add_extra_data(opts[:extra_data])
     |> MsbmsSystDatastore.all()
     |> then(&{:ok, &1})
   rescue
@@ -87,83 +82,88 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceContexts do
       }
   end
 
-  defp maybe_add_instance_id_filter(query, nil), do: query
-
-  defp maybe_add_instance_id_filter(query, instance_id) when is_binary(instance_id) do
-    from([instance_contexts: ic] in query, where: ic.instance_id == ^instance_id)
+  defp maybe_add_filters(query, [_ | _] = filters) do
+    Enum.reduce(filters, query, &add_filter(&1, &2))
   end
 
-  defp maybe_add_instance_name_filter(query, nil), do: query
+  defp maybe_add_filters(query, _filters), do: query
 
-  defp maybe_add_instance_name_filter(query, instance_name) when is_binary(instance_name) do
-    from([instances: i] in query, where: i.internal_name == ^instance_name)
+  defp add_filter({:instance_id, instance_id}, query) when is_binary(instance_id) do
+    from([instance_context: ic] in query, where: ic.instance_id == ^instance_id)
   end
 
-  defp maybe_add_owner_id_filter(query, nil), do: query
-
-  defp maybe_add_owner_id_filter(query, owner_id) when is_binary(owner_id) do
-    from([instances: i] in query, where: i.owner_id == ^owner_id)
+  defp add_filter({:instance_name, instance_name}, query) when is_binary(instance_name) do
+    from([instance: i] in query, where: i.internal_name == ^instance_name)
   end
 
-  defp maybe_add_owner_name_filter(query, nil), do: query
+  defp add_filter({:owner_id, owner_id}, query) when is_binary(owner_id) do
+    from([instance: i] in query, where: i.owner_id == ^owner_id)
+  end
 
-  defp maybe_add_owner_name_filter(query, owner_name) when is_binary(owner_name) do
-    from([instances: i] in query,
+  defp add_filter({:owner_name, owner_name}, query) when is_binary(owner_name) do
+    from([instance: i] in query,
       join: o in assoc(i, :owner),
       as: :owners,
       where: o.internal_name == ^owner_name
     )
   end
 
-  defp maybe_add_application_id_filter(query, nil), do: query
-
-  defp maybe_add_application_id_filter(query, application_id) when is_binary(application_id) do
-    from([instances: i] in query, where: i.application_id == ^application_id)
+  defp add_filter({:application_id, application_id}, query) when is_binary(application_id) do
+    from([instance: i] in query, where: i.application_id == ^application_id)
   end
 
-  defp maybe_add_application_name_filter(query, nil), do: query
-
-  defp maybe_add_application_name_filter(query, application_name)
+  defp add_filter({:application_name, application_name}, query)
        when is_binary(application_name) do
-    from([instances: i] in query,
+    from([instance: i] in query,
       join: a in assoc(i, :application),
       as: :applications,
       where: a.internal_name == ^application_name
     )
   end
 
-  defp maybe_add_start_context_filter(query, nil), do: query
-
-  defp maybe_add_start_context_filter(query, start_context) when is_boolean(start_context) do
-    from([application_contexts: ac] in query, where: ac.start_context == ^start_context)
+  defp add_filter({:start_context, start_context}, query) when is_boolean(start_context) do
+    from([application_context: ac] in query, where: ac.start_context == ^start_context)
   end
 
-  defp maybe_add_database_owner_context_filter(query, nil), do: query
-
-  defp maybe_add_database_owner_context_filter(query, database_owner_context)
+  defp add_filter({:database_owner_context, database_owner_context}, query)
        when is_boolean(database_owner_context) do
-    from([application_contexts: ac] in query,
+    from([application_context: ac] in query,
       where: ac.database_owner_context == ^database_owner_context
     )
   end
 
-  defp maybe_add_login_context_filter(query, nil), do: query
-
-  defp maybe_add_login_context_filter(query, login_context) when is_boolean(login_context) do
-    from([application_contexts: ac] in query,
+  defp add_filter({:login_context, login_context}, query) when is_boolean(login_context) do
+    from([application_context: ac] in query,
       where: ac.login_context == ^login_context
     )
   end
 
-  defp instance_context_base_query do
-    from(ic in Data.SystInstanceContexts,
-      as: :instance_contexts,
-      join: i in assoc(ic, :instance),
-      as: :instances,
-      join: ac in assoc(ic, :application_context),
-      as: :application_contexts,
-      preload: [instance: i, application_context: ac]
-    )
+  defp add_filter(filter, _query) do
+    raise MsbmsSystError,
+      code: :invalid_parameter,
+      message: "Invalid filter requested.",
+      cause: filter
+  end
+
+  defp maybe_add_extra_data(query, [_ | _] = extra_data) do
+    Enum.reduce(extra_data, query, &add_preload(&1, &2))
+  end
+
+  defp maybe_add_extra_data(query, _extra_data), do: query
+
+  defp add_preload(:instance, query) do
+    from([instance: i] in query, preload: [instance: i])
+  end
+
+  defp add_preload(:application_context, query) do
+    from([application_context: ac] in query, preload: [application_context: ac])
+  end
+
+  defp add_preload(extra_data, _query) do
+    raise MsbmsSystError,
+      code: :invalid_parameter,
+      message: "Invalid extra data requested.",
+      cause: extra_data
   end
 
   @spec set_instance_context_values(Types.instance_context_id(), Types.instance_context_params()) ::

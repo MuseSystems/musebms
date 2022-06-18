@@ -12,6 +12,7 @@
 
 defmodule MsbmsSystInstanceMgr.Impl.InstanceTypeApplications do
   import Ecto.Query
+  import MsbmsSystUtils
 
   require Logger
 
@@ -33,30 +34,28 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceTypeApplications do
   #
   ######
 
-  @spec list_instance_type_applications(Keyword.t()) ::
+  @spec list_instance_type_applications(
+          Keyword.t(
+            filters:
+              Keyword.t(
+                application_id: Types.application_id() | nil,
+                application_name: Types.application_name() | nil,
+                instance_type_id: Types.instance_type_id() | nil,
+                instance_type_name: Types.instance_type_name() | nil
+              ),
+            sorts: list(:application | :instance_type),
+            extra_data: list(:application | :instance_type | :instance_type_contexts)
+          )
+        ) ::
           {:ok, [Data.SystInstanceTypeApplications.t()]} | {:error, MsbmsSystError.t()}
   def list_instance_type_applications(opts_given) do
-    opts_default = [
-      application_id: nil,
-      application_name: nil,
-      instance_type_id: nil,
-      instance_type_name: nil
-    ]
+    opts = resolve_options(opts_given, filters: nil, sorts: nil, extra_data: nil)
 
-    opts = Keyword.merge(opts_given, opts_default, fn _k, v1, _v2 -> v1 end)
-
-    from(ita in Data.SystInstanceTypeApplications,
-      as: :instance_type_applications,
-      join: a in assoc(ita, :application),
-      as: :applications,
-      join: it in assoc(ita, :instance_type),
-      as: :instance_types,
-      order_by: [it.sort_order, a.display_name]
-    )
-    |> maybe_add_application_name_filter(opts[:application_name])
-    |> maybe_add_application_id_filter(opts[:application_id])
-    |> maybe_add_instance_type_name_filter(opts[:instance_type_name])
-    |> maybe_add_instance_type_id_filter(opts[:instance_type_id])
+    from(ita in Data.SystInstanceTypeApplications, as: :instance_type_application)
+    |> maybe_add_joins(opts)
+    |> maybe_add_filters(opts[:filters])
+    |> maybe_add_extra_data(opts[:extra_data])
+    |> maybe_add_sorts(opts[:sorts])
     |> MsbmsSystDatastore.all()
     |> then(&{:ok, &1})
   rescue
@@ -73,32 +72,118 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceTypeApplications do
       }
   end
 
-  defp maybe_add_application_name_filter(query, nil), do: query
+  # TODO: A fair amount of calls to Enum functions across the same lists,
+  # probably can be more efficient but good enough for now.
 
-  defp maybe_add_application_name_filter(query, application_name)
+  defp maybe_add_joins(query, [_ | _] = options) do
+    ((options[:extra_data] || []) ++
+       Enum.reduce(Keyword.keys(options[:filters] || []), [], &add_filter_join_item/2) ++
+       (options[:sorts] || []))
+    |> Enum.uniq()
+    |> Enum.reduce(query, &add_join(&1, &2))
+  end
+
+  defp add_filter_join_item(:application_name, join_list), do: [:application | join_list]
+  defp add_filter_join_item(:instance_type_name, join_list), do: [:instance_type | join_list]
+  defp add_filter_join_item(_, join_list), do: join_list
+
+  defp add_join(:application, query) do
+    from([instance_type_application: ita] in query,
+      join: a in assoc(ita, :application),
+      as: :application
+    )
+  end
+
+  defp add_join(:instance_type, query) do
+    from([instance_type_application: ita] in query,
+      join: it in assoc(ita, :instance_type),
+      as: :instance_type
+    )
+  end
+
+  # TODO: Revisit whether or not a JOIN here would be worthwhile given actual usage knowledge.
+  # Meanwhile any preload will be a separate query.
+  defp add_join(:instance_type_contexts, query), do: query
+
+  defp maybe_add_filters(query, [_ | _] = filters) do
+    Enum.reduce(filters, query, &add_filter(&1, &2))
+  end
+
+  defp maybe_add_filters(query, _filters), do: query
+
+  defp add_filter({:application_name, application_name}, query)
        when is_binary(application_name) do
-    from([applications: a] in query, where: a.internal_name == ^application_name)
+    from([application: a] in query, where: a.internal_name == ^application_name)
   end
 
-  defp maybe_add_application_id_filter(query, nil), do: query
-
-  defp maybe_add_application_id_filter(query, application_id)
+  defp add_filter({:application_id, application_id}, query)
        when is_binary(application_id) do
-    from([applications: a] in query, where: a.id == ^application_id)
+    from([instance_type_application: ita] in query, where: ita.application_id == ^application_id)
   end
 
-  defp maybe_add_instance_type_name_filter(query, nil), do: query
-
-  defp maybe_add_instance_type_name_filter(query, instance_type_name)
+  defp add_filter({:instance_type_name, instance_type_name}, query)
        when is_binary(instance_type_name) do
-    from([instance_types: it] in query, where: it.internal_name == ^instance_type_name)
+    from([instance_type: it] in query, where: it.internal_name == ^instance_type_name)
   end
 
-  defp maybe_add_instance_type_id_filter(query, nil), do: query
-
-  defp maybe_add_instance_type_id_filter(query, instance_type_id)
+  defp add_filter({:instance_type_id, instance_type_id}, query)
        when is_binary(instance_type_id) do
-    from([instance_types: it] in query, where: it.id == ^instance_type_id)
+    from([instance_type_application: ita] in query,
+      where: ita.instance_type_id == ^instance_type_id
+    )
+  end
+
+  defp add_filter(filter, _query) do
+    raise MsbmsSystError,
+      code: :invalid_parameter,
+      message: "Invalid filter requested.",
+      cause: filter
+  end
+
+  defp maybe_add_sorts(query, [_ | _] = sorts) do
+    Enum.reduce(sorts, query, &add_sort(&1, &2))
+  end
+
+  defp maybe_add_sorts(query, _sorts), do: query
+
+  defp add_sort(:application, query) do
+    from([application: a] in query, order_by: a.display_name)
+  end
+
+  defp add_sort(:instance_type, query) do
+    from([instance_type: it] in query, order_by: it.sort_order)
+  end
+
+  defp add_sort(sort, _query) do
+    raise MsbmsSystError,
+      code: :invalid_parameter,
+      message: "Invalid sort requested.",
+      cause: sort
+  end
+
+  defp maybe_add_extra_data(query, [_ | _] = extra_data) do
+    Enum.reduce(extra_data, query, &add_preload(&1, &2))
+  end
+
+  defp maybe_add_extra_data(query, _extra_data), do: query
+
+  defp add_preload(:application, query) do
+    from([application: a] in query, preload: [application: a])
+  end
+
+  defp add_preload(:instance_type, query) do
+    from([instance_type: it] in query, preload: [instance_type: it])
+  end
+
+  defp add_preload(:instance_type_contexts, query) do
+    from([instance_type_application: ita] in query, preload: :instance_type_contexts)
+  end
+
+  defp add_preload(extra_data, _query) do
+    raise MsbmsSystError,
+      code: :invalid_parameter,
+      message: "Invalid extra data requested.",
+      cause: extra_data
   end
 
   @spec create_instance_type_application(Types.instance_type_id(), Types.application_id()) ::

@@ -13,21 +13,23 @@
 defmodule OwnersTest do
   use InstanceMgrTestCase, async: true
 
+  alias MsbmsSystInstanceMgr.Data
+
   test "Can List All Owners" do
     assert {:ok, owners} = MsbmsSystInstanceMgr.list_owners()
     assert 4 <= length(owners)
   end
 
   test "Can List Sorted Owners" do
-    assert {:ok, owners} = MsbmsSystInstanceMgr.list_owners(sort: true)
+    assert {:ok, owners} = MsbmsSystInstanceMgr.list_owners(sorts: [:owner_display_name])
     assert 4 <= length(owners)
-    assert %{owner_internal_name: "owner1"} = hd(owners)
+    assert %{internal_name: "owner1"} = hd(owners)
   end
 
   test "Can List Owners by Status" do
     assert {:ok, owners} =
              MsbmsSystInstanceMgr.list_owners(
-               owner_state_functional_types: [:owner_states_active]
+               filters: [owner_state_functional_types: [:owner_states_active]]
              )
 
     assert 2 <= length(owners)
@@ -36,12 +38,33 @@ defmodule OwnersTest do
   test "Can List Sorted Owners by Status" do
     assert {:ok, owners} =
              MsbmsSystInstanceMgr.list_owners(
-               sort: true,
-               owner_state_functional_types: [:owner_states_inactive]
+               sorts: [:owner_display_name],
+               filters: [owner_state_functional_types: [:owner_states_inactive]]
              )
 
     assert 2 <= length(owners)
-    assert %{owner_internal_name: "owner2"} = hd(owners)
+    assert %{internal_name: "owner2"} = hd(owners)
+  end
+
+  test "Can List Owners with Extra Data" do
+    assert {:ok, [owner | _]} =
+             MsbmsSystInstanceMgr.list_owners(extra_data: [:owner_state_functional_type])
+
+    assert %Data.SystOwners{
+             owner_state: %MsbmsSystEnums.Data.SystEnumItems{
+               functional_type: %MsbmsSystEnums.Data.SystEnumFunctionalTypes{
+                 internal_name: functional_type_name
+               }
+             }
+           } = owner
+
+    assert is_binary(functional_type_name)
+  end
+
+  test "Can List Owners without Extra Data" do
+    assert {:ok, [owner | _]} = MsbmsSystInstanceMgr.list_owners()
+
+    assert %Data.SystOwners{owner_state: %Ecto.Association.NotLoaded{}} = owner
   end
 
   test "Can Create New Owner" do

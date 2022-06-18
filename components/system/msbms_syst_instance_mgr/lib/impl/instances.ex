@@ -12,6 +12,7 @@
 
 defmodule MsbmsSystInstanceMgr.Impl.Instances do
   import Ecto.Query
+  import MsbmsSystUtils
 
   alias MsbmsSystInstanceMgr.Data
   alias MsbmsSystInstanceMgr.Types
@@ -26,28 +27,23 @@ defmodule MsbmsSystInstanceMgr.Impl.Instances do
   #
   ######
 
-  @spec list_instances(
+  @spec list_summarized_instances(
           Keyword.t(
-            instance_types: list(Types.instance_type_name()) | [],
-            instance_state_functional_types: list(Types.instance_state_functional_types()) | [],
-            owner_id: Ecto.UUID.t() | nil,
-            owner_state_functional_types: list(Types.owner_state_functional_types()) | [],
-            applications: list(Types.application_name()) | [],
-            sort: list(:application | :owner | :instance)
+            filters:
+              Keyword.t(
+                instance_types: list(Types.instance_type_name()) | [],
+                instance_state_functional_types:
+                  list(Types.instance_state_functional_types()) | [],
+                owner_id: Ecto.UUID.t() | nil,
+                owner_state_functional_types: list(Types.owner_state_functional_types()) | [],
+                applications: list(Types.application_name()) | []
+              ),
+            sorts: list(:application | :owner | :instance)
           )
         ) ::
           {:ok, list(Types.instances_list_item())} | {:error, MsbmsSystError.t()}
-  def list_instances(opts_given) do
-    opts_default = [
-      instance_types: [],
-      instance_state_functional_types: [],
-      owner_id: nil,
-      owner_state_functional_types: [],
-      applications: [],
-      sort: []
-    ]
-
-    opts = Keyword.merge(opts_given, opts_default, fn _k, v1, _v2 -> v1 end)
+  def list_summarized_instances(opts_given) do
+    opts = resolve_options(opts_given, filters: nil, sorts: nil)
 
     from(i in Data.SystInstances,
       join: it in assoc(i, :instance_type),
@@ -88,12 +84,8 @@ defmodule MsbmsSystInstanceMgr.Impl.Instances do
         application_syst_description: a.syst_description
       }
     )
-    |> maybe_add_instance_type_filter(opts[:instance_types])
-    |> maybe_add_instance_state_filter(opts[:instance_state_functional_types])
-    |> maybe_add_owner_state_filter(opts[:owner_state_functional_types])
-    |> maybe_add_owner_filter(opts[:owner_id])
-    |> maybe_add_application_filter(opts[:applications])
-    |> maybe_add_instance_display_name_sorts(opts[:sort])
+    |> maybe_add_summary_filters(opts[:filters])
+    |> maybe_add_summary_sorts(opts[:sorts])
     |> MsbmsSystDatastore.all()
     |> then(&{:ok, &1})
   rescue
@@ -110,54 +102,66 @@ defmodule MsbmsSystInstanceMgr.Impl.Instances do
       }
   end
 
-  defp maybe_add_instance_type_filter(query, [_ | _] = instance_types) do
+  defp maybe_add_summary_filters(query, [_ | _] = filters) do
+    Enum.reduce(filters, query, &add_summary_filter(&1, &2))
+  end
+
+  defp maybe_add_summary_filters(query, _filters), do: query
+
+  defp add_summary_filter({:instance_types, instance_types}, query) do
     from([instance_type: f] in query, where: f.internal_name in ^instance_types)
   end
 
-  defp maybe_add_instance_type_filter(query, _instance_types), do: query
-
-  defp maybe_add_instance_state_filter(query, [_ | _] = functional_types) do
+  defp add_summary_filter({:instance_state_functional_types, functional_types}, query) do
     functional_types
     |> Enum.map(&Atom.to_string/1)
     |> then(&from([instance_type: f] in query, where: f.internal_name in ^&1))
   end
 
-  defp maybe_add_instance_state_filter(query, _functional_types), do: query
-
-  defp maybe_add_owner_filter(query, owner_id) when is_binary(owner_id) do
+  defp add_summary_filter({:owner_id, owner_id}, query) when is_binary(owner_id) do
     from([owner: o] in query, where: o.id == ^owner_id)
   end
 
-  defp maybe_add_owner_filter(query, _owner_id), do: query
-
-  defp maybe_add_owner_state_filter(query, [_ | _] = functional_types) do
+  defp add_summary_filter({:owner_state_functional_types, functional_types}, query) do
     functional_types
     |> Enum.map(&Atom.to_string/1)
     |> then(&from([owner_state_functional_type: f] in query, where: f.internal_name in ^&1))
   end
 
-  defp maybe_add_owner_state_filter(query, _functional_types), do: query
-
-  defp maybe_add_application_filter(query, [_ | _] = applications) do
+  defp add_summary_filter({:applications, applications}, query) do
     from([application: a] in query, where: a.internal_name in ^applications)
   end
 
-  defp maybe_add_application_filter(query, _applications), do: query
-
-  defp maybe_add_instance_display_name_sorts(query, sorts) do
-    Enum.reduce(sorts, query, fn sort, qry -> add_instance_sort(qry, sort) end)
+  defp add_summary_filter(filter, _query) do
+    raise MsbmsSystError,
+      code: :invalid_parameter,
+      message: "Invalid filter requested.",
+      cause: filter
   end
 
-  defp add_instance_sort(query, :application) do
+  defp maybe_add_summary_sorts(query, [_ | _] = sorts) do
+    Enum.reduce(sorts, query, &add_summary_sort(&1, &2))
+  end
+
+  defp maybe_add_summary_sorts(query, _sorts), do: query
+
+  defp add_summary_sort(:application, query) do
     from([application: a] in query, order_by: a.display_name)
   end
 
-  defp add_instance_sort(query, :owner) do
+  defp add_summary_sort(:owner, query) do
     from([owner: o] in query, order_by: o.display_name)
   end
 
-  defp add_instance_sort(query, :instance) do
+  defp add_summary_sort(:instance, query) do
     from([i] in query, order_by: i.display_name)
+  end
+
+  defp add_summary_sort(sort, _query) do
+    raise MsbmsSystError,
+      code: :invalid_parameter,
+      message: "Invalid sort requested.",
+      cause: sort
   end
 
   @spec get_instance_by_name(Types.instance_name()) ::
@@ -455,5 +459,10 @@ defmodule MsbmsSystInstanceMgr.Impl.Instances do
   def get_instance_id_by_name(instance_name) do
     from(i in Data.SystInstances, where: i.internal_name == ^instance_name, select: i.id)
     |> MsbmsSystDatastore.one!()
+  end
+
+  @spec get_instance_datastore_options(Types.instance_id(), map()) ::
+          MsbmsSystDatastore.Types.datastore_options()
+  def get_instance_datastore_options(instance_id, options) do
   end
 end

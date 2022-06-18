@@ -214,7 +214,7 @@ defmodule MsbmsSystInstanceMgr.Types do
         }
 
   @typedoc """
-  Defines the data which is returned by the `MsbmsSystInstanceMgr.list_instances/1`
+  Defines the data which is returned by the `MsbmsSystInstanceMgr.list_summarized_instances/1`
   function.
   """
   @type instances_list_item :: %{
