@@ -24,7 +24,7 @@ BEGIN
         , db_pool_size
         , context_code )
     SELECT
-        sac.internal_name || '_' || so.internal_name || '_' || new.internal_name
+        new.internal_name || '_' || sac.internal_name
       , new.id
       , sac.id
       , sac.login_context
