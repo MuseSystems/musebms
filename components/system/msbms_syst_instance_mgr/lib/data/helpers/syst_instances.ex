@@ -13,6 +13,8 @@
 defmodule MsbmsSystInstanceMgr.Data.Helpers.SystInstances do
   import Ecto.Query
 
+  alias MsbmsSystInstanceMgr.Data
+
   @moduledoc false
 
   def resolve_name_params(instance_params, operation) do
