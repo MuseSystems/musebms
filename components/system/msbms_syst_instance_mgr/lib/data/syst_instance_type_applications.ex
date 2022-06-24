@@ -13,8 +13,7 @@
 defmodule MsbmsSystInstanceMgr.Data.SystInstanceTypeApplications do
   use MsbmsSystDatastore.Schema
 
-  import Ecto.Changeset
-
+  alias MsbmsSystInstanceMgr.Data
   alias MsbmsSystInstanceMgr.Types
 
   @moduledoc """
@@ -34,14 +33,9 @@ defmodule MsbmsSystInstanceMgr.Data.SystInstanceTypeApplications do
               | Ecto.Association.NotLoaded.t()
               | nil,
             application_id: Ecto.UUID.t() | nil,
-            application:
-              MsbmsSystInstanceMgr.Data.SystApplications.t()
-              | Ecto.Association.NotLoaded.t()
-              | nil,
+            application: Data.SystApplications.t() | Ecto.Association.NotLoaded.t() | nil,
             instance_type_contexts:
-              MsbmsSystInstanceMgr.Data.SystInstanceTypeContexts.t()
-              | Ecto.Association.NotLoaded.t()
-              | nil,
+              Data.SystInstanceTypeContexts.t() | Ecto.Association.NotLoaded.t() | nil,
             diag_timestamp_created: DateTime.t() | nil,
             diag_role_created: String.t() | nil,
             diag_timestamp_modified: DateTime.t() | nil,
@@ -64,19 +58,13 @@ defmodule MsbmsSystInstanceMgr.Data.SystInstanceTypeApplications do
 
     belongs_to(:instance_type, MsbmsSystEnums.Data.SystEnumItems, foreign_key: :instance_type_id)
 
-    belongs_to(:application, MsbmsSystInstanceMgr.Data.SystApplications,
-      foreign_key: :application_id
-    )
+    belongs_to(:application, Data.SystApplications, foreign_key: :application_id)
 
-    has_many(:instance_type_contexts, MsbmsSystInstanceMgr.Data.SystInstanceTypeContexts,
+    has_many(:instance_type_contexts, Data.SystInstanceTypeContexts,
       foreign_key: :instance_type_application_id
     )
   end
 
   @spec insert_changeset(Types.instance_type_application_params()) :: Ecto.Changeset.t()
-  def insert_changeset(instance_type_application_params) do
-    %MsbmsSystInstanceMgr.Data.SystInstanceTypeApplications{}
-    |> cast(instance_type_application_params, [:instance_type_id, :application_id])
-    |> validate_required([:instance_type_id, :application_id])
-  end
+  defdelegate insert_changeset(insert_params), to: Data.Validators.SystInstanceTypeApplications
 end

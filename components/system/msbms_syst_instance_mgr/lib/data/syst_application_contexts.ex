@@ -12,7 +12,9 @@
 
 defmodule MsbmsSystInstanceMgr.Data.SystApplicationContexts do
   use MsbmsSystDatastore.Schema
-  import Ecto.Changeset
+
+  alias MsbmsSystInstanceMgr.Data
+  alias MsbmsSystInstanceMgr.Types
 
   @moduledoc """
   Defines the data structure of the Application Context.
@@ -28,13 +30,10 @@ defmodule MsbmsSystInstanceMgr.Data.SystApplicationContexts do
           %__MODULE__{
             __meta__: Ecto.Schema.Metadata.t(),
             id: Ecto.UUID.t() | nil,
-            internal_name: MsbmsSystInstanceMgr.Types.application_context_name() | nil,
+            internal_name: Types.application_context_name() | nil,
             display_name: String.t() | nil,
             application_id: Ecto.UUID.t() | nil,
-            application:
-              MsbmsSystInstanceMgr.Data.SystApplications.t()
-              | Ecto.Association.NotLoaded.t()
-              | nil,
+            application: Data.SystApplications.t() | Ecto.Association.NotLoaded.t() | nil,
             description: String.t() | nil,
             start_context: boolean() | nil,
             login_context: boolean() | nil,
@@ -65,15 +64,10 @@ defmodule MsbmsSystInstanceMgr.Data.SystApplicationContexts do
     field(:diag_row_version, :integer)
     field(:diag_update_count, :integer)
 
-    belongs_to(:application, MsbmsSystInstanceMgr.Data.SystApplications)
+    belongs_to(:application, Data.SystApplications)
   end
 
-  @spec update_changeset(MsbmsSystInstanceMgr.Data.SystApplicationContexts.t(), boolean()) ::
-          Ecto.Changeset.t()
-  def update_changeset(application_context, start_context) when is_boolean(start_context) do
-    application_context
-    |> cast(%{start_context: start_context}, [:start_context])
-    |> validate_required([:start_context])
-    |> optimistic_lock(:diag_row_version)
-  end
+  @spec update_changeset(Data.SystApplicationContexts.t(), boolean()) :: Ecto.Changeset.t()
+  defdelegate update_changeset(application_context, start_context),
+    to: Data.Validators.SystApplicationContexts
 end

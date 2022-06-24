@@ -13,6 +13,9 @@
 defmodule MsbmsSystInstanceMgr.Data.SystApplications do
   use MsbmsSystDatastore.Schema
 
+  alias MsbmsSystInstanceMgr.Data
+  alias MsbmsSystInstanceMgr.Types
+
   @moduledoc """
   Data structure describing the known applications for which instances may be
   hosted.
@@ -22,7 +25,7 @@ defmodule MsbmsSystInstanceMgr.Data.SystApplications do
           %__MODULE__{
             __meta__: Ecto.Schema.Metadata.t(),
             id: Ecto.UUID.t() | nil,
-            internal_name: MsbmsSystInstanceMgr.Types.application_name() | nil,
+            internal_name: Types.application_name() | nil,
             display_name: String.t() | nil,
             syst_description: String.t() | nil,
             diag_timestamp_created: DateTime.t() | nil,
@@ -48,11 +51,9 @@ defmodule MsbmsSystInstanceMgr.Data.SystApplications do
     field(:diag_row_version, :integer)
     field(:diag_update_count, :integer)
 
-    has_many(:instances, MsbmsSystInstanceMgr.Data.SystInstances, foreign_key: :application_id)
+    has_many(:instances, Data.SystInstances, foreign_key: :application_id)
 
-    has_many(:application_contexts, MsbmsSystInstanceMgr.Data.SystApplicationContexts,
-      foreign_key: :application_id
-    )
+    has_many(:application_contexts, Data.SystApplicationContexts, foreign_key: :application_id)
   end
 
   # Note that there are no changeset functions here because the only way to add

@@ -13,11 +13,7 @@
 defmodule MsbmsSystInstanceMgr.Data.SystInstanceContexts do
   use MsbmsSystDatastore.Schema
 
-  import Ecto.Changeset
-  import MsbmsSystInstanceMgr.Data.Helpers.OptionDefaults
-  import MsbmsSystInstanceMgr.Data.Validators.General
-  import MsbmsSystInstanceMgr.Data.Validators.SystInstanceContexts
-
+  alias MsbmsSystInstanceMgr.Data
   alias MsbmsSystInstanceMgr.Types
 
   @moduledoc """
@@ -34,17 +30,12 @@ defmodule MsbmsSystInstanceMgr.Data.SystInstanceContexts do
           %__MODULE__{
             __meta__: Ecto.Schema.Metadata.t(),
             id: Ecto.UUID.t() | nil,
-            internal_name: MsbmsSystInstanceMgr.Types.instance_context_name() | nil,
+            internal_name: Types.instance_context_name() | nil,
             instance_id: Ecto.UUID.t() | nil,
-            instance:
-              MsbmsSystInstanceMgr.Data.SystInstances.t()
-              | Ecto.Association.NotLoaded.t()
-              | nil,
+            instance: Data.SystInstances.t() | Ecto.Association.NotLoaded.t() | nil,
             application_context_id: Ecto.UUID.t() | nil,
             application_context:
-              MsbmsSystInstanceMgr.Data.SystApplicationContexts.t()
-              | Ecto.Association.NotLoaded.t()
-              | nil,
+              Data.SystApplicationContexts.t() | Ecto.Association.NotLoaded.t() | nil,
             start_context: boolean() | nil,
             db_pool_size: non_neg_integer() | nil,
             context_code: binary() | nil,
@@ -72,35 +63,18 @@ defmodule MsbmsSystInstanceMgr.Data.SystInstanceContexts do
     field(:diag_row_version, :integer)
     field(:diag_update_count, :integer)
 
-    belongs_to(:instance, MsbmsSystInstanceMgr.Data.SystInstances, foreign_key: :instance_id)
+    belongs_to(:instance, Data.SystInstances, foreign_key: :instance_id)
 
-    belongs_to(:application_context, MsbmsSystInstanceMgr.Data.SystApplicationContexts,
+    belongs_to(:application_context, Data.SystApplicationContexts,
       foreign_key: :application_context_id
     )
   end
 
   @spec update_changeset(
-          MsbmsSystInstanceMgr.Data.SystInstanceContexts.t(),
+          Data.SystInstanceContexts.t(),
           Types.instance_context_params(),
           Keyword.t()
         ) :: Ecto.Changeset.t()
-  def update_changeset(instance_context, update_params, opts \\ []) do
-    opts = resolve_options(opts)
-
-    instance_context
-    |> cast(update_params, [
-      :start_context,
-      :db_pool_size,
-      :context_code
-    ])
-    |> validate_internal_name(opts)
-    |> validate_context_code(opts)
-    |> validate_required([
-      :instance_id,
-      :application_context_id,
-      :start_context
-    ])
-    |> validate_number(:db_pool_size, greater_than_or_equal_to: 0)
-    |> optimistic_lock(:diag_row_version)
-  end
+  defdelegate update_changeset(instance_context, update_params \\ %{}, opts \\ []),
+    to: Data.Validators.SystInstanceContexts
 end

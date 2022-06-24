@@ -20,9 +20,9 @@ defmodule MsbmsSystInstanceMgr.Data.Helpers.OptionDefaults do
   # parameterize other validations.   We do that resolution in the changeset
   # function directly so we're only doing the user/default resolution once for
   # a changeset.
-  @spec resolve_options(Keyword.t()) :: Keyword.t()
-  def resolve_options(opts_given) do
-    MsbmsSystUtils.resolve_options(opts_given,
+  @spec defaults() :: Keyword.t()
+  def defaults(),
+    do: [
       min_internal_name_length: 6,
       max_internal_name_length: 64,
       min_display_name_length: 6,
@@ -31,6 +31,5 @@ defmodule MsbmsSystInstanceMgr.Data.Helpers.OptionDefaults do
       max_context_code_length: 64,
       min_instance_code_length: 8,
       max_instance_code_length: 64
-    )
-  end
+    ]
 end

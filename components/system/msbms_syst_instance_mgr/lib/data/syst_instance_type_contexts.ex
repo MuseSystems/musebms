@@ -13,7 +13,8 @@
 defmodule MsbmsSystInstanceMgr.Data.SystInstanceTypeContexts do
   use MsbmsSystDatastore.Schema
 
-  import Ecto.Changeset
+  alias MsbmsSystInstanceMgr.Data
+  alias MsbmsSystInstanceMgr.Types
 
   @moduledoc """
   Defines the data structure of the Instance Type Context.
@@ -28,22 +29,15 @@ defmodule MsbmsSystInstanceMgr.Data.SystInstanceTypeContexts do
             id: Ecto.UUID.t() | nil,
             instance_type_application_id: Ecto.UUID.t() | nil,
             instance_type_application:
-              MsbmsSystInstanceMgr.Data.SystInstanceTypeApplications.t()
-              | Ecto.Association.NotLoaded.t()
-              | nil,
+              Data.SystInstanceTypeApplications.t() | Ecto.Association.NotLoaded.t() | nil,
             instance_type:
               MsbmsSystEnums.Data.SystEnumItems.t()
               | Ecto.Association.NotLoaded.t()
               | nil,
-            application:
-              MsbmsSystInstanceMgr.Data.SystApplications.t()
-              | Ecto.Association.NotLoaded.t()
-              | nil,
+            application: Data.SystApplications.t() | Ecto.Association.NotLoaded.t() | nil,
             application_context_id: Ecto.UUID.t() | nil,
             application_context:
-              MsbmsSystInstanceMgr.Data.SystApplicationContexts.t()
-              | Ecto.Association.NotLoaded.t()
-              | nil,
+              Data.SystApplicationContexts.t() | Ecto.Association.NotLoaded.t() | nil,
             default_db_pool_size: non_neg_integer() | nil,
             diag_timestamp_created: DateTime.t() | nil,
             diag_role_created: String.t() | nil,
@@ -66,11 +60,11 @@ defmodule MsbmsSystInstanceMgr.Data.SystInstanceTypeContexts do
     field(:diag_row_version, :integer)
     field(:diag_update_count, :integer)
 
-    belongs_to(:instance_type_application, MsbmsSystInstanceMgr.Data.SystInstanceTypeApplications,
+    belongs_to(:instance_type_application, Data.SystInstanceTypeApplications,
       foreign_key: :instance_type_application_id
     )
 
-    belongs_to(:application_context, MsbmsSystInstanceMgr.Data.SystApplicationContexts,
+    belongs_to(:application_context, Data.SystApplicationContexts,
       foreign_key: :application_context_id
     )
 
@@ -79,37 +73,11 @@ defmodule MsbmsSystInstanceMgr.Data.SystInstanceTypeContexts do
     has_one(:application, through: [:instance_type_application, :application])
   end
 
-  @spec insert_changeset(MsbmsSystInstanceMgr.Types.instance_type_context_params()) ::
-          Ecto.Changeset.t()
-  def insert_changeset(insert_params) do
-    %MsbmsSystInstanceMgr.Data.SystInstanceTypeContexts{}
-    |> cast(insert_params, [
-      :instance_type_application_id,
-      :application_context_id,
-      :default_db_pool_size
-    ])
-    |> validate_required([
-      :instance_type_application_id,
-      :application_context_id,
-      :default_db_pool_size
-    ])
-  end
+  @spec insert_changeset(Types.instance_type_context_params()) :: Ecto.Changeset.t()
+  defdelegate insert_changeset(insert_params), to: Data.Validators.SystInstanceTypeContexts
 
-  @spec update_changeset(
-          MsbmsSystInstanceMgr.Data.SystInstanceTypeContexts.t(),
-          MsbmsSystInstanceMgr.Types.instance_type_context_params()
-        ) ::
+  @spec update_changeset(Data.SystInstanceTypeContexts.t(), Types.instance_type_context_params()) ::
           Ecto.Changeset.t()
-  def update_changeset(instance_type_context, update_params) do
-    instance_type_context
-    |> cast(update_params, [
-      :default_db_pool_size
-    ])
-    |> validate_required([
-      :instance_type_application_id,
-      :application_context_id,
-      :default_db_pool_size
-    ])
-    |> optimistic_lock(:diag_row_version)
-  end
+  defdelegate update_changeset(instance_type_context, update_params \\ %{}),
+    to: Data.Validators.SystInstanceTypeContexts
 end
