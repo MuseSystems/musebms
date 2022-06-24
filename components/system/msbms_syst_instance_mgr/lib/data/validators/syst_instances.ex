@@ -12,11 +12,72 @@
 
 defmodule MsbmsSystInstanceMgr.Data.Validators.SystInstances do
   import Ecto.Changeset
+  import MsbmsSystUtils
+  import MsbmsSystInstanceMgr.Data.Validators.General
+
+  alias MsbmsSystInstanceMgr.Data
+  alias MsbmsSystInstanceMgr.Data.Helpers
+  alias MsbmsSystInstanceMgr.Types
 
   @moduledoc false
 
-  @spec validate_instance_code(Ecto.Changeset.t(), Keyword.t()) :: Ecto.Changeset.t()
-  def validate_instance_code(changeset, opts) do
+  @spec insert_changeset(Types.instance_params(), Keyword.t()) :: Ecto.Changeset.t()
+  def insert_changeset(insert_params, opts) do
+    opts = resolve_options(opts, Helpers.OptionDefaults.defaults())
+
+    resolved_insert_params = Helpers.SystInstances.resolve_name_params(insert_params, :insert)
+
+    %Data.SystInstances{}
+    |> cast(resolved_insert_params, [
+      :internal_name,
+      :display_name,
+      :application_id,
+      :instance_type_id,
+      :instance_state_id,
+      :owner_id,
+      :owning_instance_id,
+      :dbserver_name,
+      :instance_code,
+      :instance_options
+    ])
+    |> validate_internal_name(opts)
+    |> validate_display_name(opts)
+    |> validate_instance_code(opts)
+    |> validate_required([
+      :application_id,
+      :instance_type_id,
+      :instance_state_id
+    ])
+  end
+
+  @spec update_changeset(Data.SystInstances.t(), Types.instance_params(), Keyword.t()) ::
+          Ecto.Changeset.t()
+  def update_changeset(instance, update_params, opts) do
+    opts = resolve_options(opts, Helpers.OptionDefaults.defaults())
+
+    resolved_update_params = Helpers.SystInstances.resolve_name_params(update_params, :update)
+
+    instance
+    |> cast(resolved_update_params, [
+      :internal_name,
+      :display_name,
+      :instance_type_id,
+      :instance_state_id,
+      :dbserver_name,
+      :instance_code,
+      :instance_options
+    ])
+    |> validate_internal_name(opts)
+    |> validate_display_name(opts)
+    |> validate_instance_code(opts)
+    |> validate_required([
+      :application_id,
+      :instance_type_id,
+      :instance_state_id
+    ])
+  end
+
+  defp validate_instance_code(changeset, opts) do
     changeset
     |> validate_required(:instance_code)
     |> validate_length(:instance_code,

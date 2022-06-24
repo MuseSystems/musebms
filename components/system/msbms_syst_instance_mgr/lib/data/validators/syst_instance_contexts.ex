@@ -12,11 +12,41 @@
 
 defmodule MsbmsSystInstanceMgr.Data.Validators.SystInstanceContexts do
   import Ecto.Changeset
+  import MsbmsSystUtils
+  import MsbmsSystInstanceMgr.Data.Validators.General
+
+  alias MsbmsSystInstanceMgr.Data
+  alias MsbmsSystInstanceMgr.Data.Helpers
+  alias MsbmsSystInstanceMgr.Types
 
   @moduledoc false
 
-  @spec validate_context_code(Ecto.Changeset.t(), Keyword.t()) :: Ecto.Changeset.t()
-  def validate_context_code(changeset, opts) do
+  @spec update_changeset(
+          Data.SystInstanceContexts.t(),
+          Types.instance_context_params(),
+          Keyword.t()
+        ) :: Ecto.Changeset.t()
+  def update_changeset(instance_context, update_params, opts) do
+    opts = resolve_options(opts, Helpers.OptionDefaults.defaults())
+
+    instance_context
+    |> cast(update_params, [
+      :start_context,
+      :db_pool_size,
+      :context_code
+    ])
+    |> validate_internal_name(opts)
+    |> validate_context_code(opts)
+    |> validate_required([
+      :instance_id,
+      :application_context_id,
+      :start_context
+    ])
+    |> validate_number(:db_pool_size, greater_than_or_equal_to: 0)
+    |> optimistic_lock(:diag_row_version)
+  end
+
+  defp validate_context_code(changeset, opts) do
     changeset
     |> validate_required(:context_code)
     |> validate_length(:context_code,
