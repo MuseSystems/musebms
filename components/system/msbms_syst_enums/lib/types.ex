@@ -42,6 +42,11 @@ defmodule MsbmsSystEnums.Types do
   @type enum_functional_type_name() :: String.t()
 
   @typedoc """
+  Record ID type for the Enum Item record.
+  """
+  @type enum_item_id() :: binary()
+
+  @typedoc """
   Identification of each unique Enum Value that can be associated with an Enum.
   """
   @type enum_item_name() :: String.t()
