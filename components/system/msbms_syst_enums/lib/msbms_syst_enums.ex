@@ -221,6 +221,10 @@ defmodule MsbmsSystEnums do
           MsbmsSystEnums.Data.SystEnumItems.t()
   defdelegate get_enum_item_by_id(enum_name, enum_item_id), to: Enums
 
+  @spec get_functional_type_by_enum_item_id(Types.enum_name(), Types.enum_item_id()) ::
+          Types.enum_functional_type_name()
+  defdelegate get_functional_type_by_enum_item_id(enum_name, enum_item_id), to: Enums
+
   @doc """
   Finds the default enumeration item for the requested enumeration or for the
   enumeration functional type.
