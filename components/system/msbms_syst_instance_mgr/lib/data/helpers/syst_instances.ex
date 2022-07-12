@@ -78,7 +78,10 @@ defmodule MsbmsSystInstanceMgr.Data.Helpers.SystInstances do
 
   def resolve_instance_state_id(instance_params, :insert) do
     default_instance_state =
-      MsbmsSystEnums.get_default_enum_item("instance_states", "instance_states_uninitialized")
+      MsbmsSystEnums.get_default_enum_item(
+        "instance_states",
+        functional_type_name: "instance_states_uninitialized"
+      )
 
     Map.put(instance_params, :instance_state_id, default_instance_state.id)
   end
