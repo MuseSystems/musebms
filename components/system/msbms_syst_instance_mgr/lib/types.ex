@@ -77,8 +77,10 @@ defmodule MsbmsSystInstanceMgr.Types do
   @type instance_params() :: %{
           optional(:internal_name) => instance_name(),
           optional(:display_name) => String.t(),
+          optional(:dbserver_name) => String.t(),
           optional(:application_id) => Ecto.UUID.t(),
           optional(:application_name) => application_name(),
+          optional(:instance_code) => binary(),
           optional(:instance_type_id) => Ecto.UUID.t(),
           optional(:instance_type_name) => instance_type_name(),
           optional(:instance_state_id) => Ecto.UUID.t(),
