@@ -21,6 +21,12 @@ defmodule MsbmsSystInstanceMgr.Data.Validators.SystInstances do
 
   @moduledoc false
 
+  # The expected behavior of instance name resolution is to favor the name over
+  # the ID if both are provided and they conflict.  On insert, this is likely
+  # wrong, but on update, where this situation is more likely to appear, it is
+  # more correct to assume the name represents a new value and the ID an old
+  # value.
+
   @spec insert_changeset(Types.instance_params(), Keyword.t()) :: Ecto.Changeset.t()
   def insert_changeset(insert_params, opts) do
     opts = resolve_options(opts, Helpers.OptionDefaults.defaults())
@@ -75,6 +81,7 @@ defmodule MsbmsSystInstanceMgr.Data.Validators.SystInstances do
       :instance_type_id,
       :instance_state_id
     ])
+    |> optimistic_lock(:diag_row_version)
   end
 
   defp validate_instance_code(changeset, opts) do
