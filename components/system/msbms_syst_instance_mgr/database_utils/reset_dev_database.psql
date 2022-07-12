@@ -15,4 +15,28 @@ DROP ROLE IF EXISTS msbms_syst_dba;
 DROP ROLE IF EXISTS msbms_syst_instance_mgr_owner;
 DROP ROLE IF EXISTS msbms_syst_instance_mgr_app_user;
 
+DROP DATABASE IF EXISTS app1_owner1;
+
+DROP ROLE IF EXISTS app1_owner1_app1_owner;
+DROP ROLE IF EXISTS app1_owner1_app1_appusr;
+DROP ROLE IF EXISTS app1_owner1_app1_apiusr;
+
+DROP DATABASE IF EXISTS app1_owner2;
+
+DROP ROLE IF EXISTS app1_owner2_app1_owner;
+DROP ROLE IF EXISTS app1_owner2_app1_appusr;
+DROP ROLE IF EXISTS app1_owner2_app1_apiusr;
+
+DROP DATABASE IF EXISTS app2_owner1;
+
+DROP ROLE IF EXISTS app2_owner1_app2_owner;
+DROP ROLE IF EXISTS app2_owner1_app2_appusr;
+DROP ROLE IF EXISTS app2_owner1_app2_apiusr;
+
+DROP DATABASE IF EXISTS app2_owner2;
+
+DROP ROLE IF EXISTS app2_owner2_app2_owner;
+DROP ROLE IF EXISTS app2_owner2_app2_appusr;
+DROP ROLE IF EXISTS app2_owner2_app2_apiusr;
+
 \ir bootstrap_database.psql

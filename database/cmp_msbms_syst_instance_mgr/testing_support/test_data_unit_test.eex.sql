@@ -1,5 +1,5 @@
--- File:        test_data.eex.sql
--- Location:    database\cmp_msbms_syst_instance_mgr\testing_support\test_data.eex.sql
+-- File:        test_data_unit_test.eex.sql
+-- Location:    database\cmp_msbms_syst_instance_mgr\testing_support\test_data_unit_test.eex.sql
 -- Project:     Muse Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -184,7 +184,7 @@ BEGIN
     FROM msbms_syst_data.syst_applications sa
     CROSS JOIN ( msbms_syst_data.syst_enums se JOIN msbms_syst_data.syst_enum_items sei
                  ON se.id = sei.enum_id )
-    WHERE se.internal_name = 'instance_types';
+    WHERE se.internal_name = 'instance_types' AND sei.internal_name != 'instance_types_std';
 
     --
     -- Update Instance Type Contexts
@@ -195,8 +195,6 @@ BEGIN
         default_db_pool_size = CASE
                                    WHEN it.instance_type_name = 'instance_types_big' AND
                                         it.login_context THEN 20
-                                   WHEN it.instance_type_name = 'instance_types_std' AND
-                                        it.login_context THEN 10
                                    WHEN it.instance_type_name = 'instance_types_sml' AND
                                         it.login_context THEN 3
                                    ELSE 0

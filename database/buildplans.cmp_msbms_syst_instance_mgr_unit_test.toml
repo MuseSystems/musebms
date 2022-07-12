@@ -121,5 +121,5 @@ load_files = [
     #
 
     "cmp_msbms_syst_instance_mgr/testing_support/test_privileges.eex.sql",
-    "cmp_msbms_syst_instance_mgr/testing_support/test_data.eex.sql",
+    "cmp_msbms_syst_instance_mgr/testing_support/test_data_unit_test.eex.sql",
 ]

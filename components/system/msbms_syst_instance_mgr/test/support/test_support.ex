@@ -68,12 +68,14 @@ defmodule TestSupport do
   }
 
   @migration_test_source_root_dir "../../../database"
-  @migration_test_datastore_type "cmp_msbms_syst_instance_mgr"
+  @migration_unit_test_ds_type "cmp_msbms_syst_instance_mgr_unit_test"
+  @migration_integration_test_ds_type "cmp_msbms_syst_instance_mgr_integration_test"
 
-  def setup_testing_database do
-    :ok = build_migrations()
+  def setup_testing_database(test_kind) do
+    :ok = build_migrations(test_kind)
 
     datastore_options = @datastore_options
+    datastore_type = get_datastore_type(test_kind)
 
     database_owner = Enum.find(datastore_options.contexts, &(&1[:database_owner_context] == true))
 
@@ -82,7 +84,7 @@ defmodule TestSupport do
     {:ok, _} =
       MsbmsSystDatastore.upgrade_datastore(
         datastore_options,
-        @migration_test_datastore_type,
+        datastore_type,
         msbms_owner: database_owner.database_role,
         msbms_appusr: "msbms_syst_instance_mgr_app_user"
       )
@@ -90,19 +92,24 @@ defmodule TestSupport do
     {:ok, _, _} = MsbmsSystDatastore.start_datastore(datastore_options)
   end
 
-  def cleanup_testing_database do
+  def cleanup_testing_database(test_kind) do
+    datastore_type = get_datastore_type(test_kind)
     datastore_options = @datastore_options
+
     :ok = MsbmsSystDatastore.stop_datastore(datastore_options)
     :ok = MsbmsSystDatastore.drop_datastore(datastore_options)
-    File.rm_rf!(Path.join(["priv/database", @migration_test_datastore_type]))
+    File.rm_rf!(Path.join(["priv/database", datastore_type]))
   end
 
   def get_testing_datastore_context_id, do: @datastore_context_name
 
-  defp build_migrations do
+  defp get_datastore_type(:unit_testing), do: @migration_unit_test_ds_type
+  defp get_datastore_type(:integration_testing), do: @migration_integration_test_ds_type
+
+  defp build_migrations(test_kind) do
     Builddb.run([
       "-t",
-      @migration_test_datastore_type,
+      get_datastore_type(test_kind),
       "-c",
       "-s",
       @migration_test_source_root_dir
