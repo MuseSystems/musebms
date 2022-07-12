@@ -242,6 +242,11 @@ defmodule MsbmsSystInstanceMgr.Types do
         }
 
   @typedoc """
+  Type for Owner record ID values.
+  """
+  @type owner_id() :: binary()
+
+  @typedoc """
   Type for programmatic the unique identification of system owner records.
   """
   @type owner_name() :: String.t()
