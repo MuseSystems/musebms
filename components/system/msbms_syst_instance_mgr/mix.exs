@@ -44,7 +44,8 @@ defmodule MsbmsSystInstanceMgr.MixProject do
     [
       extra_applications: [
         :logger
-      ]
+      ],
+      mod: {MsbmsSystInstanceMgr.Runtime.Application, []}
     ]
   end
 
