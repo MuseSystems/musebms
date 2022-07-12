@@ -17,17 +17,53 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
     otp_app: :msbms_syst_datastore,
     adapter: Ecto.Adapters.Postgres
 
+  import MsbmsSystUtils
+
   alias MsbmsSystDatastore.Types
 
   require Logger
 
-  @spec start_datastore(MsbmsSystDatastore.Types.datastore_options()) ::
-          {:ok, :all_started | :some_started, list(Types.context_state_values())}
+  def get_datastore_child_spec(opts) when is_list(opts) do
+    %{
+      id: __MODULE__,
+      start: {MsbmsSystDatastore.Datastore, :start_link, [opts]},
+      type: :supervisor,
+      restart: :transient
+    }
+  end
+
+  def start_link_datastore(opts) when is_list(opts) do
+    {:ok, datastore_options} = validate_datastore_options(opts[:datastore_options])
+
+    opts =
+      resolve_options(opts,
+        strategy: :one_for_one,
+        name: datastore_options.datastore_name,
+        restart: :transient,
+        timeout: 60_000
+      )
+
+    {:ok, datastore_supervisor_pid} = DynamicSupervisor.start_link(opts)
+
+    start_datastore(datastore_options, opts[:name])
+    |> start_datastore_post_processing(datastore_supervisor_pid)
+  rescue
+    error ->
+      {:error,
+       %MsbmsSystError{
+         code: :undefined_error,
+         message: "The datastore failed to start.",
+         cause: error
+       }}
+  end
+
+  @spec start_datastore(MsbmsSystDatastore.Types.datastore_options(), Keyword.t()) ::
+          {:ok, {:all_started | :some_started, list(Types.context_state_values())}}
           | {:error, MsbmsSystError.t()}
-  def start_datastore(datastore_options) when is_map(datastore_options) do
+  def start_datastore(datastore_options, supervisor_name \\ nil) when is_map(datastore_options) do
     datastore_options.contexts
-    |> Enum.filter(& &1.start_context)
-    |> Enum.map_reduce(nil, &ds_start_map_reduce(datastore_options, &1, &2))
+    |> Enum.filter(&(&1.login_context and &1.start_context))
+    |> Enum.map_reduce(nil, &ds_start_map_reduce(supervisor_name, datastore_options, &1, &2))
     |> case do
       {_context_states, :error} ->
         {
@@ -54,8 +90,17 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
       }
   end
 
-  defp ds_start_map_reduce(datastore_options, context, acc) do
+  defp ds_start_map_reduce(nil, datastore_options, context, acc) do
     start_datastore_context(datastore_options, context)
+    |> ds_start_map_reduce_value(acc, context.id)
+  end
+
+  defp ds_start_map_reduce(supervisor_name, datastore_options, context, acc) do
+    opts = [datastore_options: datastore_options, datastore_context: context]
+
+    context_child_spec = get_context_child_spec(context.id, opts)
+
+    DynamicSupervisor.start_child(supervisor_name, context_child_spec)
     |> ds_start_map_reduce_value(acc, context.id)
   end
 
@@ -68,6 +113,10 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
     {%{context: context_id, state: :started}, :some_started}
   end
 
+  defp ds_start_map_reduce_value({:error, {:already_started, pid}}, acc, context_id) do
+    ds_start_map_reduce_value({:ok, pid}, acc, context_id)
+  end
+
   defp ds_start_map_reduce_value({:error, _}, acc, context_id) when acc in [nil, :error] do
     {%{context: context_id, state: :not_started}, :error}
   end
@@ -77,10 +126,53 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
     {%{context: context_id, state: :not_started}, :some_started}
   end
 
+  defp start_datastore_post_processing({:ok, result, context_states}, datastore_supervisor_pid),
+    do: {:ok, datastore_supervisor_pid, {result, context_states}}
+
+  defp start_datastore_post_processing({:error, _reason} = error, datastore_supervisor_pid) do
+    DynamicSupervisor.stop(datastore_supervisor_pid, error, 60_000)
+    error
+  end
+
+  def get_context_child_spec(context_name, opts) when is_atom(context_name) and is_list(opts) do
+    %{
+      id: context_name,
+      start: {MsbmsSystDatastore.DatastoreContext, :start_link, [opts]},
+      type: :worker,
+      restart: :transient
+    }
+  end
+
+  def start_link_context(opts) when is_list(opts) do
+    {:ok, datastore_options} = validate_datastore_options(opts[:datastore_options])
+
+    {:ok, context} = validate_datastore_context(opts[:datastore_context])
+
+    start_datastore_context(datastore_options, context)
+  rescue
+    error -> Logger.error(Exception.format(:error, error, __STACKTRACE__))
+  end
+
+  defp validate_datastore_context(context_name) when is_atom(context_name),
+    do: {:ok, context_name}
+
+  defp validate_datastore_context(%{id: context_name} = datastore_context)
+       when is_binary(context_name) or is_atom(context_name),
+       do: {:ok, datastore_context}
+
+  defp validate_datastore_context(datastore_context) do
+    {:error,
+     %MsbmsSystError{
+       code: :invalid_parameter,
+       message: "The datastore_context parameter must be provided and valid.",
+       cause: %{parameters: datastore_context}
+     }}
+  end
+
   @spec start_datastore_context(Types.datastore_options(), atom() | Types.datastore_context()) ::
           {:ok, pid()} | {:error, MsbmsSystError.t()}
   def start_datastore_context(datastore_options, context) when is_map(context) do
-    start_link(
+    [
       name: context.id,
       database: datastore_options.database_name,
       hostname: datastore_options.db_server.db_host,
@@ -90,7 +182,8 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
       show_sensitive_data_on_connection_error: datastore_options.db_server.db_show_sensitive,
       pool_size: context.starting_pool_size,
       types: MsbmsSystDatastore.DbTypes.PostgrexTypes
-    )
+    ]
+    |> start_link()
     |> maybe_context_start_result()
   catch
     error ->
@@ -122,11 +215,30 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
       cause: reason
   end
 
-  @spec stop_datastore(Types.datastore_options(), non_neg_integer()) ::
+  defp validate_datastore_options(%{datastore_name: datastore_name} = datastore_options)
+       when is_atom(datastore_name),
+       do: {:ok, datastore_options}
+
+  defp validate_datastore_options(datastore_options) do
+    {:error,
+     %MsbmsSystError{
+       code: :invalid_parameter,
+       message: "The datastore_options parameter must be provided and valid.",
+       cause: %{parameters: datastore_options}
+     }}
+  end
+
+  @spec stop_datastore(
+          Types.datastore_options() | list(Types.datastore_context()),
+          non_neg_integer()
+        ) ::
           :ok | {:error, MsbmsSystError.t()}
-  def stop_datastore(datastore_options, shutdown_timeout) do
-    datastore_options.contexts
-    |> Enum.filter(&(&1.id != nil))
+  def stop_datastore(%{contexts: contexts}, shutdown_timeout),
+    do: stop_datastore(contexts, shutdown_timeout)
+
+  def stop_datastore(contexts, shutdown_timeout) when is_list(contexts) do
+    contexts
+    |> Enum.filter(&(Ecto.Repo.all_running() |> Enum.member?(&1.id)))
     |> Enum.each(&stop_datastore_context(&1, shutdown_timeout))
   catch
     error ->
@@ -149,8 +261,15 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
 
   def stop_datastore_context(context, shutdown_timeout)
       when is_pid(context) or is_atom(context) do
+    starting_datastore_context = current_datastore_context()
+
     _ = set_datastore_context(context)
-    stop(shutdown_timeout)
+
+    result = stop(shutdown_timeout)
+
+    set_datastore_context(starting_datastore_context)
+
+    result
   end
 
   @spec query_for_none(iodata(), [term()], Keyword.t()) :: :ok | {:error, MsbmsSystError.t()}

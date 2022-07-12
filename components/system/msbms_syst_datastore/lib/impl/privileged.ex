@@ -49,11 +49,15 @@ defmodule MsbmsSystDatastore.Impl.Privileged do
   def get_datastore_version(datastore_options, opts) do
     opts = resolve_options(opts, db_shutdown_timeout: @default_db_shutdown_timeout)
 
+    starting_datastore_context = Datastore.get_dynamic_repo()
+
     :ok = start_priv_connection(datastore_options)
 
     datastore_version = Migrations.get_datastore_version(opts)
 
     stop_priv_connection(opts[:db_shutdown_timeout])
+
+    Datastore.set_datastore_context(starting_datastore_context)
 
     datastore_version
   rescue
@@ -101,6 +105,8 @@ defmodule MsbmsSystDatastore.Impl.Privileged do
   def upgrade_datastore(datastore_options, datastore_type, migration_bindings, opts \\ []) do
     opts = resolve_options(opts, db_shutdown_timeout: @default_db_shutdown_timeout)
 
+    starting_datastore_context = Datastore.current_datastore_context()
+
     :ok = start_priv_connection(datastore_options)
 
     apply_migrations_result =
@@ -111,6 +117,8 @@ defmodule MsbmsSystDatastore.Impl.Privileged do
       )
 
     stop_priv_connection(opts[:db_shutdown_timeout])
+
+    Datastore.set_datastore_context(starting_datastore_context)
 
     apply_migrations_result
   rescue

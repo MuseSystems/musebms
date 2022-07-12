@@ -26,22 +26,7 @@ defmodule MsbmsSystDatastore do
   @spec create_datastore(Types.datastore_options(), Keyword.t()) ::
           {:ok, Types.database_state_values(), list(Types.context_state())}
           | {:error, MsbmsSystError.t()}
-  def create_datastore(datastore_options, opts \\ []) do
-    with {:ok, database_state, context_states} <- Dba.create_datastore(datastore_options, opts),
-         :ok <- Privileged.initialize_datastore(datastore_options, opts) do
-      {:ok, database_state, context_states}
-    else
-      error ->
-        {
-          :error,
-          %MsbmsSystError{
-            code: :database_error,
-            message: "Failure creating datastore.",
-            cause: error
-          }
-        }
-    end
-  end
+  defdelegate create_datastore(datastore_options, opts \\ []), to: Dba
 
   @doc """
   Drops a datastore along with its contexts.
@@ -157,9 +142,12 @@ defmodule MsbmsSystDatastore do
   @doc """
   Disconnects the database connections for all of the login datastore option contexts.
   """
-  @spec stop_datastore(Types.datastore_options(), non_neg_integer()) ::
+  @spec stop_datastore(
+          Types.datastore_options() | list(Types.datastore_context()),
+          non_neg_integer()
+        ) ::
           :ok | {:error, MsbmsSystError.t()}
-  defdelegate stop_datastore(datastore_options, db_shutdown_timeout \\ 60_000),
+  defdelegate stop_datastore(datastore_options_or_contexts, db_shutdown_timeout \\ 60_000),
     to: Datastore
 
   @doc """

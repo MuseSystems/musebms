@@ -13,6 +13,7 @@
 defmodule MsbmsSystDatastore.Impl.Dba do
   import MsbmsSystUtils
 
+  alias MsbmsSystDatastore.Impl.Privileged
   alias MsbmsSystDatastore.Runtime.Datastore
   alias MsbmsSystDatastore.Types
 
@@ -48,6 +49,8 @@ defmodule MsbmsSystDatastore.Impl.Dba do
   def get_datastore_state(datastore_options, opts \\ []) do
     opts = resolve_options(opts, db_shutdown_timeout: @default_db_shutdown_timeout)
 
+    starting_datastore_context = Datastore.get_dynamic_repo()
+
     {:ok, dba_pid} = start_dba_connection(datastore_options)
 
     _ = Datastore.set_datastore_context(dba_pid)
@@ -56,6 +59,8 @@ defmodule MsbmsSystDatastore.Impl.Dba do
     context_states = get_context_states(datastore_options.contexts)
 
     stop_dba_connection(opts[:db_shutdown_timeout])
+
+    Datastore.put_dynamic_repo(starting_datastore_context)
 
     {:ok, database_state, context_states}
   rescue
@@ -78,6 +83,8 @@ defmodule MsbmsSystDatastore.Impl.Dba do
   def create_datastore(datastore_options, opts \\ []) do
     opts = resolve_options(opts, db_shutdown_timeout: @default_db_shutdown_timeout)
 
+    starting_datastore_context = Datastore.current_datastore_context()
+
     {:ok, dba_pid} = start_dba_connection(datastore_options)
 
     _ = Datastore.set_datastore_context(dba_pid)
@@ -87,6 +94,10 @@ defmodule MsbmsSystDatastore.Impl.Dba do
     :ok = create_database(datastore_options)
 
     stop_dba_connection(opts[:db_shutdown_timeout])
+
+    :ok = Privileged.initialize_datastore(datastore_options, opts)
+
+    Datastore.set_datastore_context(starting_datastore_context)
 
     {:ok, :ready, context_states}
   rescue
@@ -108,6 +119,8 @@ defmodule MsbmsSystDatastore.Impl.Dba do
   def drop_datastore(datastore_options, opts \\ []) do
     opts = resolve_options(opts, db_shutdown_timeout: @default_db_shutdown_timeout)
 
+    starting_datastore_context = Datastore.get_dynamic_repo()
+
     {:ok, dba_pid} = start_dba_connection(datastore_options)
 
     _ = Datastore.set_datastore_context(dba_pid)
@@ -117,6 +130,10 @@ defmodule MsbmsSystDatastore.Impl.Dba do
     :ok = drop_contexts(datastore_options.contexts)
 
     stop_dba_connection(opts[:db_shutdown_timeout])
+
+    Datastore.put_dynamic_repo(starting_datastore_context)
+
+    :ok
   catch
     error ->
       {
@@ -134,6 +151,8 @@ defmodule MsbmsSystDatastore.Impl.Dba do
   def get_datastore_context_states(datastore_options, opts \\ []) do
     opts = resolve_options(opts, db_shutdown_timeout: @default_db_shutdown_timeout)
 
+    starting_datastore_context = Datastore.get_dynamic_repo()
+
     {:ok, dba_pid} = start_dba_connection(datastore_options)
 
     _ = Datastore.set_datastore_context(dba_pid)
@@ -141,6 +160,8 @@ defmodule MsbmsSystDatastore.Impl.Dba do
     state_result = get_context_states(datastore_options.contexts)
 
     stop_dba_connection(opts[:db_shutdown_timeout])
+
+    Datastore.set_datastore_context(starting_datastore_context)
 
     {:ok, state_result}
   catch
@@ -473,7 +494,7 @@ defmodule MsbmsSystDatastore.Impl.Dba do
   end
 
   defp drop_database_role(%{database_role: role_name}) do
-    Datastore.query("DROP ROLE #{role_name};")
+    Datastore.query("DROP ROLE IF EXISTS #{role_name};")
   end
 
   defp parse_drop_database_role_result({:ok, _database_result}), do: :ok
