@@ -13,6 +13,13 @@
 defmodule MsbmsSystOptions.Impl.OptionsFile do
   @moduledoc false
 
+  ######
+  #
+  # The OptionsFile module provides functions for retrieving a TOML file
+  # containing the desired options settings.
+  #
+  ######
+
   @spec get_options(options_file_path :: String.t()) ::
           {:ok, map()} | {:error, MsbmsSystError.t()}
   def get_options(options_file_path) when is_binary(options_file_path) do
