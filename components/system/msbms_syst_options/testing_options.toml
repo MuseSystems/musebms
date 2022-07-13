@@ -58,6 +58,7 @@ db_port                        = 5432
 db_show_sensitive              = true
 
 db_log_level                   = "debug"
+db_log_level                   = "warn"
 
 # The number of instance databases that may be hosted on the server.
 db_max_instances               = 0
@@ -107,6 +108,7 @@ db_show_sensitive              = true
 db_max_instances               = 30
 
 db_log_level = "debug"
+db_log_level                   = "warn"
 
 # A string of bytes used as part of the token generation for the system managed
 # database user accounts.  Note that this value must be at least 32 bytes long
