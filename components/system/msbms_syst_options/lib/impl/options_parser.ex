@@ -15,6 +15,13 @@ defmodule MsbmsSystOptions.Impl.OptionsParser do
 
   alias MsbmsSystOptions.Types
 
+  ######
+  #
+  # The OptionsParser module provides convenience functions for parsing out
+  # certain common values from the provided options map.
+  #
+  ######
+
   @spec get_global_dbserver_name(map()) :: String.t()
   def get_global_dbserver_name(options) when is_map(options), do: options.global_dbserver_name
 
