@@ -28,7 +28,7 @@ defmodule MsbmsSystSettings.Types do
   @typedoc """
   The expected form of the parameters used to start the Settings service.
   """
-  @type setting_service_params() :: {service_name(), MsbmsSystDatastore.Types.context_id()}
+  @type setting_service_params() :: {service_name(), MsbmsSystDatastore.Types.context_name()}
 
   @typedoc """
   Identification of each unique Setting managed by the Settings Service instance.

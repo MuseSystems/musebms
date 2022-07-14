@@ -240,7 +240,7 @@ defmodule MsbmsSystDatastore.Impl.Dba do
       database_name: @dba_database_name,
       contexts: [
         %{
-          id: nil,
+          context_name: nil,
           description: @dba_application_name,
           database_role: @dba_role_name,
           database_password: db_server.dbadmin_password,
@@ -355,7 +355,7 @@ defmodule MsbmsSystDatastore.Impl.Dba do
         datastore_contexts
         |> Enum.find(&(&1.database_role == role_state.database_role))
 
-      %{context: context.id, state: role_state.state}
+      %{context: context.context_name, state: role_state.state}
     end
 
     role_states
@@ -389,7 +389,7 @@ defmodule MsbmsSystDatastore.Impl.Dba do
       |> create_database_role()
       |> parse_create_database_role_result()
 
-      %{context: context.id, state: :ready}
+      %{context: context.context_name, state: :ready}
     end
 
     {:ok, result} = Datastore.transaction(fn -> contexts |> Enum.map(&map_func.(&1)) end)

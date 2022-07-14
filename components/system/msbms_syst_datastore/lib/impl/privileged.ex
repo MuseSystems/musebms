@@ -143,7 +143,7 @@ defmodule MsbmsSystDatastore.Impl.Privileged do
       database_name: database_name,
       contexts: [
         %{
-          id: nil,
+          context_name: nil,
           description: @priv_application_name,
           database_role: @priv_connection_role,
           database_password: db_server.dbadmin_password,

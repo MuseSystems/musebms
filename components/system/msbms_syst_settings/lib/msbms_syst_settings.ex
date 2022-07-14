@@ -55,7 +55,7 @@ defmodule MsbmsSystSettings do
   modifying database data.
   """
   @spec start_link(
-          {MsbmsSystSettings.Types.service_name(), MsbmsSystDatastore.Types.context_id()}
+          {MsbmsSystSettings.Types.service_name(), MsbmsSystDatastore.Types.context_name()}
         ) ::
           {:ok, pid()} | {:error, MsbmsSystError.t()}
   defdelegate start_link(params), to: MsbmsSystSettings.Runtime.Server

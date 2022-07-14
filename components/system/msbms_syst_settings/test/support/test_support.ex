@@ -33,7 +33,7 @@ defmodule TestSupport do
     datastore_name: :msbms_syst_settings,
     contexts: [
       %{
-        id: nil,
+        context_name: nil,
         description: "MsBmsSystSettings Testing Owner",
         database_role: "msbms_syst_settings_owner",
         database_password: nil,
@@ -43,7 +43,7 @@ defmodule TestSupport do
         database_owner_context: true
       },
       %{
-        id: @datastore_context_name,
+        context_name: @datastore_context_name,
         description: "MsBmsSystSettings Testing App User",
         database_role: "msbms_syst_settings_app_user",
         database_password: "msbms_syst_settings.testing.code.app.user",

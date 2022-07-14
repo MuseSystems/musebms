@@ -9,7 +9,7 @@ defmodule MsbmsSystDatastoreTest do
     datastore_name: :msbms_type_one_datastore,
     contexts: [
       %{
-        id: nil,
+        context_name: nil,
         description: "Type One Owner",
         database_role: "msbms_test_type_one_owner",
         database_password: nil,
@@ -19,7 +19,7 @@ defmodule MsbmsSystDatastoreTest do
         database_owner_context: true
       },
       %{
-        id: :msbms_type_one_role_01,
+        context_name: :msbms_type_one_role_01,
         description: "Type One Role 01 ",
         database_role: "msbms_type_one_role_01",
         database_password: 'type_one_role_01',
@@ -28,7 +28,7 @@ defmodule MsbmsSystDatastoreTest do
         login_context: true
       },
       %{
-        id: :msbms_type_one_role_02,
+        context_name: :msbms_type_one_role_02,
         description: "Type One Role 02 ",
         database_role: "msbms_type_one_role_02",
         database_password: 'type_one_role_02',
@@ -55,7 +55,7 @@ defmodule MsbmsSystDatastoreTest do
 
   @context_type_one_group_two [
     %{
-      id: :msbms_type_one_role_03,
+      context_name: :msbms_type_one_role_03,
       description: "Type One Role 03 ",
       database_role: "msbms_type_one_role_03",
       database_password: 'type_one_role_03',
@@ -64,7 +64,7 @@ defmodule MsbmsSystDatastoreTest do
       login_context: true
     },
     %{
-      id: :msbms_type_one_role_04,
+      context_name: :msbms_type_one_role_04,
       description: "Type One Role 04 ",
       database_role: "msbms_type_one_role_04",
       database_password: 'type_one_role_04',
@@ -86,7 +86,7 @@ defmodule MsbmsSystDatastoreTest do
     datastore_name: :msbms_type_four_datastore,
     contexts: [
       %{
-        id: nil,
+        context_name: nil,
         description: "Type Four Owner",
         database_role: "msbms_test_type_four_owner",
         database_password: nil,
@@ -96,7 +96,7 @@ defmodule MsbmsSystDatastoreTest do
         database_owner_context: true
       },
       %{
-        id: :msbms_type_four_role_01,
+        context_name: :msbms_type_four_role_01,
         description: "Type Four Role 01 ",
         database_role: "msbms_type_four_role_01",
         database_password: 'type_four_role_01',
@@ -213,7 +213,14 @@ defmodule MsbmsSystDatastoreTest do
 
     {:ok, :ready, _} = MsbmsSystDatastore.create_datastore(datastore_options)
 
-    assert {:ok, :all_started, _contexts} = MsbmsSystDatastore.start_datastore(datastore_options)
+    {:ok, _test_supervisor_pid} =
+      DynamicSupervisor.start_link(strategy: :one_for_one, name: :migration_test_supervisor)
+
+    datastore_child_spec =
+      MsbmsSystDatastore.Datastore.child_spec(datastore_options, name: :test_datastore)
+
+    assert {:ok, _datastore_pid, {:all_started, _context_states}} =
+             DynamicSupervisor.start_child(:migration_test_supervisor, datastore_child_spec)
 
     assert {:ok, first_stage_migrations_applied} =
              MsbmsSystDatastore.upgrade_datastore(

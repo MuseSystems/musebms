@@ -23,10 +23,13 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
 
   require Logger
 
-  def get_datastore_child_spec(opts) when is_list(opts) do
+  def get_datastore_child_spec(datastore_options, opts)
+      when is_map(datastore_options) and is_list(opts) do
     %{
       id: __MODULE__,
-      start: {MsbmsSystDatastore.Datastore, :start_link, [opts]},
+      start:
+        {MsbmsSystDatastore.Datastore, :start_link,
+         [[{:datastore_options, datastore_options} | opts]]},
       type: :supervisor,
       restart: :transient
     }
@@ -92,16 +95,16 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
 
   defp ds_start_map_reduce(nil, datastore_options, context, acc) do
     start_datastore_context(datastore_options, context)
-    |> ds_start_map_reduce_value(acc, context.id)
+    |> ds_start_map_reduce_value(acc, context.context_name)
   end
 
   defp ds_start_map_reduce(supervisor_name, datastore_options, context, acc) do
-    opts = [datastore_options: datastore_options, datastore_context: context]
+    opts = [datastore_context: context]
 
-    context_child_spec = get_context_child_spec(context.id, opts)
+    context_child_spec = get_context_child_spec(datastore_options, context.context_name, opts)
 
     DynamicSupervisor.start_child(supervisor_name, context_child_spec)
-    |> ds_start_map_reduce_value(acc, context.id)
+    |> ds_start_map_reduce_value(acc, context.context_name)
   end
 
   defp ds_start_map_reduce_value({:ok, _pid}, acc, context_id) when acc in [nil, :all_started] do
@@ -134,10 +137,13 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
     error
   end
 
-  def get_context_child_spec(context_name, opts) when is_atom(context_name) and is_list(opts) do
+  def get_context_child_spec(datastore_options, context_name, opts)
+      when is_atom(context_name) and is_list(opts) do
     %{
       id: context_name,
-      start: {MsbmsSystDatastore.DatastoreContext, :start_link, [opts]},
+      start:
+        {MsbmsSystDatastore.DatastoreContext, :start_link,
+         [[{:datastore_options, datastore_options} | opts]]},
       type: :worker,
       restart: :transient
     }
@@ -156,7 +162,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
   defp validate_datastore_context(context_name) when is_atom(context_name),
     do: {:ok, context_name}
 
-  defp validate_datastore_context(%{id: context_name} = datastore_context)
+  defp validate_datastore_context(%{context_name: context_name} = datastore_context)
        when is_binary(context_name) or is_atom(context_name),
        do: {:ok, datastore_context}
 
@@ -173,7 +179,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
           {:ok, pid()} | {:error, MsbmsSystError.t()}
   def start_datastore_context(datastore_options, context) when is_map(context) do
     [
-      name: context.id,
+      name: context.context_name,
       database: datastore_options.database_name,
       hostname: datastore_options.db_server.db_host,
       port: datastore_options.db_server.db_port,
@@ -238,7 +244,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
 
   def stop_datastore(contexts, shutdown_timeout) when is_list(contexts) do
     contexts
-    |> Enum.filter(&(Ecto.Repo.all_running() |> Enum.member?(&1.id)))
+    |> Enum.filter(&(Ecto.Repo.all_running() |> Enum.member?(&1.context_name)))
     |> Enum.each(&stop_datastore_context(&1, shutdown_timeout))
   catch
     error ->
@@ -255,7 +261,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
   @spec stop_datastore_context(pid() | atom() | Types.datastore_context(), non_neg_integer()) ::
           :ok
   def stop_datastore_context(context, shutdown_timeout) when is_map(context) do
-    context.id
+    context.context_name
     |> stop_datastore_context(shutdown_timeout)
   end
 

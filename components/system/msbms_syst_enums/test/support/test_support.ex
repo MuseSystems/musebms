@@ -31,7 +31,7 @@ defmodule TestSupport do
     datastore_name: :msbms_syst_enums,
     contexts: [
       %{
-        id: nil,
+        context_name: nil,
         description: "MsBmsSystEnums Testing Owner",
         database_role: "msbms_syst_enums_owner",
         database_password: nil,
@@ -41,7 +41,7 @@ defmodule TestSupport do
         database_owner_context: true
       },
       %{
-        id: :enums_app_context,
+        context_name: :enums_app_context,
         description: "MsBmsSystEnums Testing App User",
         database_role: "msbms_syst_enums_app_user",
         database_password: "msbms_syst_enums.testing.code.app.user",
