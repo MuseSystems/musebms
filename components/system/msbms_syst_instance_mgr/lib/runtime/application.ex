@@ -26,7 +26,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
   @moduledoc false
 
   ##############################################################################
-  # Application Module
+  # Application
   # ----------------------------------------------------------------------------
   #
   # The Application Module handles runtime aspects of the MsbmsInstanceMgr

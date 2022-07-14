@@ -24,6 +24,8 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
   # that something isn't right here.
   @password_magic <<56, 14, 219, 174, 116, 26, 213, 144, 140, 191, 255, 187, 27, 58, 226, 253>>
 
+  @moduledoc false
+
   def create_instance(instance_params) do
     instance_params
     |> Data.SystInstances.insert_changeset()
