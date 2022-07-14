@@ -57,7 +57,7 @@ defmodule MsbmsSystDatastore.Impl.Privileged do
 
     stop_priv_connection(opts[:db_shutdown_timeout])
 
-    Datastore.set_datastore_context(starting_datastore_context)
+    _ = Datastore.set_datastore_context(starting_datastore_context)
 
     datastore_version
   rescue
@@ -118,7 +118,7 @@ defmodule MsbmsSystDatastore.Impl.Privileged do
 
     stop_priv_connection(opts[:db_shutdown_timeout])
 
-    Datastore.set_datastore_context(starting_datastore_context)
+    _ = Datastore.set_datastore_context(starting_datastore_context)
 
     apply_migrations_result
   rescue

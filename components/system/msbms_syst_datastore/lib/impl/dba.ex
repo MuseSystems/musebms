@@ -97,7 +97,7 @@ defmodule MsbmsSystDatastore.Impl.Dba do
 
     :ok = Privileged.initialize_datastore(datastore_options, opts)
 
-    Datastore.set_datastore_context(starting_datastore_context)
+    _ = Datastore.set_datastore_context(starting_datastore_context)
 
     {:ok, :ready, context_states}
   rescue
@@ -161,7 +161,7 @@ defmodule MsbmsSystDatastore.Impl.Dba do
 
     stop_dba_connection(opts[:db_shutdown_timeout])
 
-    Datastore.set_datastore_context(starting_datastore_context)
+    _ = Datastore.set_datastore_context(starting_datastore_context)
 
     {:ok, state_result}
   catch
