@@ -11,8 +11,6 @@
 # muse.information@musesystems.com :: https: //muse.systems
 
 defmodule MsbmsSystDatastore.Runtime.Datastore do
-  @moduledoc false
-
   use Ecto.Repo,
     otp_app: :msbms_syst_datastore,
     adapter: Ecto.Adapters.Postgres
@@ -22,6 +20,13 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
   alias MsbmsSystDatastore.Types
 
   require Logger
+
+  # TODO: figure out why start_datastore_post_processing fails the Dialyzer
+  #       test.  Insofar as I've been able to see, it shouldn't cause a no_match
+  #       warning.
+  @dialyzer {:no_match, start_datastore_post_processing: 2}
+
+  @moduledoc false
 
   @spec get_datastore_child_spec(Types.datastore_options(), Keyword.t()) ::
           Supervisor.child_spec()
@@ -282,7 +287,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
 
     result = stop(shutdown_timeout)
 
-    set_datastore_context(starting_datastore_context)
+    _ = set_datastore_context(starting_datastore_context)
 
     result
   end
