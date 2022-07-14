@@ -74,7 +74,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
         ) ::
           {:ok, {:all_started | :some_started, list(Types.context_state_values())}}
           | {:error, MsbmsSystError.t()}
-  def start_datastore(datastore_options, supervisor_name \\ nil) when is_map(datastore_options) do
+  def start_datastore(datastore_options, supervisor_name) when is_map(datastore_options) do
     datastore_options.contexts
     |> Enum.filter(&(&1.login_context and &1.start_context))
     |> Enum.map_reduce(nil, &ds_start_map_reduce(supervisor_name, datastore_options, &1, &2))
