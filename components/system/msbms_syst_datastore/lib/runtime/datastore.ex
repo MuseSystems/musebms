@@ -21,6 +21,8 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
 
   require Logger
 
+  @query_log_level :debug
+
   # TODO: figure out why start_datastore_post_processing fails the Dialyzer
   #       test.  Insofar as I've been able to see, it shouldn't cause a no_match
   #       warning.
@@ -201,7 +203,8 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
       password: context.database_password,
       show_sensitive_data_on_connection_error: datastore_options.db_server.db_show_sensitive,
       pool_size: context.starting_pool_size,
-      types: MsbmsSystDatastore.DbTypes.PostgrexTypes
+      types: MsbmsSystDatastore.DbTypes.PostgrexTypes,
+      log: @query_log_level
     ]
     |> start_link()
     |> maybe_context_start_result()

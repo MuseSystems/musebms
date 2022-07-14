@@ -11,5 +11,4 @@
 # muse.information@musesystems.com :: https: //muse.systems
 
 Mix.shell(Mix.Shell.Process)
-Logger.configure(level: :info)
 ExUnit.start()

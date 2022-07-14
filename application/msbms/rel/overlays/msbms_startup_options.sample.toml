@@ -58,11 +58,6 @@ db_port                        = 5432
 # some application logs or error displays
 db_show_sensitive              = false
 
-# This value is used to set the database connection minimum log level.
-# Valid values are:
-#     emergency, alert, critical, error, warning, notice, info, debug
-db_log_level                   = "error"
-
 # The number of instance databases that may be hosted on the server.
 db_max_instances               = 0
 
@@ -107,11 +102,6 @@ db_port                        = 5432
 # some application logs or error displays
 db_show_sensitive              = false
 
-# This value is used to set the database connection minimum log level.
-# Valid values are:
-#     emergency, alert, critical, error, warning, notice, info, debug
-db_log_level                   = "error"
-
 # The number of instance databases that may be hosted on the server.
 db_max_instances               = 0
 
@@ -155,11 +145,6 @@ db_port                        = 5432
 # If true, senstive information, such as username/password may be shown in
 # some application logs or error displays
 db_show_sensitive              = false
-
-# This value is used to set the database connection minimum log level.
-# Valid values are:
-#     emergency, alert, critical, error, warning, notice, info, debug
-db_log_level                   = "error"
 
 # The number of instance databases that may be hosted on the server.
 db_max_instances               = 0

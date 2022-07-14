@@ -57,7 +57,6 @@ defmodule GlobalDbMigrationsTest do
       db_host: "127.0.0.1",
       db_port: 5432,
       db_show_sensitive: true,
-      db_log_level: :debug,
       db_max_instances: 1,
       context_defaults: [],
       server_salt: "global.testing.code.test.salt",

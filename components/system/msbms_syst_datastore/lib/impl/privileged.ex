@@ -158,7 +158,6 @@ defmodule MsbmsSystDatastore.Impl.Privileged do
         db_host: db_server.db_host,
         db_port: db_server.db_port,
         db_show_sensitive: db_server.db_show_sensitive,
-        db_log_level: db_server.db_log_level,
         db_max_instances: db_server.db_max_instances,
         server_salt: db_server.server_salt,
         dbadmin_password: db_server.dbadmin_password,

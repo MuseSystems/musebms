@@ -1,5 +1,5 @@
 # Source File: dev.exs
-# Location:    components/system/msbms_syst_datastore/config/dev.exs
+# Location:    components/system/msbms_syst_enums/config/dev.exs
 # Project:     msbms
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

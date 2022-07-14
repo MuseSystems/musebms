@@ -58,7 +58,6 @@ defmodule TestSupport do
       db_host: "127.0.0.1",
       db_port: 5432,
       db_show_sensitive: true,
-      db_log_level: :debug,
       db_max_instances: 1,
       server_pools: [],
       server_salt: "msbms_syst_instance_mgr.testing.code.test.salt",
