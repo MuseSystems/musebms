@@ -83,7 +83,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
          startup_options
        ) do
     %{
-      id: String.to_atom(instance_context.internal_name),
+      context_name: String.to_atom(instance_context.internal_name),
       description:
         instance_data.display_name <>
           " / " <> instance_context.application_context.display_name,

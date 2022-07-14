@@ -183,7 +183,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
 
     datastore_child_spec =
       MsbmsSystDatastore.Datastore.child_spec(
-        datastore_options: datastore_options,
+        datastore_options,
         name: datastore_supervisor_name
       )
 

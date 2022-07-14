@@ -24,7 +24,7 @@ defmodule MsbmsSystEnums do
   `MsbmsSystDatastore` context.  This context will be used for accessing and
   modifying database data.
   """
-  @spec start_link({MsbmsSystEnums.Types.service_name(), MsbmsSystDatastore.Types.context_id()}) ::
+  @spec start_link({MsbmsSystEnums.Types.service_name(), MsbmsSystDatastore.Types.context_name()}) ::
           {:ok, pid()} | {:error, MsbmsSystError.t()}
   defdelegate start_link(params), to: MsbmsSystEnums.Runtime.Server
 

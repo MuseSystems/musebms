@@ -28,7 +28,7 @@ defmodule MsbmsSystEnums.Types do
   @typedoc """
   The expected form of the parameters used to start the Enums service.
   """
-  @type enum_service_params() :: {service_name(), MsbmsSystDatastore.Types.context_id()}
+  @type enum_service_params() :: {service_name(), MsbmsSystDatastore.Types.context_name()}
 
   @typedoc """
   Identification of each unique Enum managed by the Enums Service instance.

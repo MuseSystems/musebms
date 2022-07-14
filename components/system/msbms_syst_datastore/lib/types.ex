@@ -79,11 +79,11 @@ defmodule MsbmsSystDatastore.Types do
   An application wide designation for application defined datastore access
   accounts.
   """
-  @type context_id :: atom() | nil
+  @type context_name :: atom() | nil
 
   @typedoc """
   The database role name for the specific access context defined by the
-  `context_id()`.
+  `context_name()`.
   """
   @type context_role :: String.t()
 
@@ -95,7 +95,7 @@ defmodule MsbmsSystDatastore.Types do
   roles which are limited by their database security configuration.
 
 
-    * `:id` - the application's identifier for a specific security context.
+    * `:context_name` - the application's identifier for a specific security context.
       This isn't specific to a particular database, but to the application
       overall.
 
@@ -133,7 +133,7 @@ defmodule MsbmsSystDatastore.Types do
       database owner for any datastore.
   """
   @type datastore_context :: %{
-          optional(:id) => context_id(),
+          optional(:context_name) => context_name(),
           required(:description) => String.t(),
           required(:database_role) => context_role(),
           optional(:database_password) => String.t() | nil,
@@ -206,7 +206,7 @@ defmodule MsbmsSystDatastore.Types do
   @typedoc """
 
   """
-  @type context_state :: %{context: context_id(), state: context_state_values()}
+  @type context_state :: %{context: context_name(), state: context_state_values()}
 
   @typedoc """
   Defines the available states in which a datastore might exist in relation to

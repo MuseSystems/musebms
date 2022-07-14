@@ -22,7 +22,7 @@ defmodule GlobalDbMigrationsTest do
     datastore_name: :global,
     contexts: [
       %{
-        id: nil,
+        context_name: nil,
         description: "Global Build Testing Owner",
         database_role: "global_build_owner",
         database_password: nil,
@@ -31,7 +31,7 @@ defmodule GlobalDbMigrationsTest do
         login_context: false
       },
       %{
-        id: :global_build_app_context,
+        context_name: :global_build_app_context,
         description: "Global Build Testing App User",
         database_role: "global_build_app_user",
         database_password: "global.testing.code.app.user",
@@ -40,7 +40,7 @@ defmodule GlobalDbMigrationsTest do
         login_context: true
       },
       %{
-        id: :global_build_api_user,
+        context_name: :global_build_api_user,
         description: "Global Build Testing Api User",
         database_role: "global_build_api_user",
         database_password: "global.testing.code.app.user",

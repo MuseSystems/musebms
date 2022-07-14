@@ -10,7 +10,7 @@ defmodule InstanceDbMigrationTest do
     datastore_name: :instance,
     contexts: [
       %{
-        id: nil,
+        context_name: nil,
         description: "Instance Build Testing Owner",
         database_role: "instance_build_owner",
         database_password: nil,
@@ -19,7 +19,7 @@ defmodule InstanceDbMigrationTest do
         login_context: false
       },
       %{
-        id: :instance_build_app_context,
+        context_name: :instance_build_app_context,
         description: "Instance Build Testing App User",
         database_role: "instance_build_app_user",
         database_password: "instance.testing.code.app.user",
@@ -28,7 +28,7 @@ defmodule InstanceDbMigrationTest do
         login_context: true
       },
       %{
-        id: :instance_build_api_user,
+        context_name: :instance_build_api_user,
         description: "Instance Build Testing Api User",
         database_role: "instance_build_api_user",
         database_password: "instance.testing.code.app.user",
