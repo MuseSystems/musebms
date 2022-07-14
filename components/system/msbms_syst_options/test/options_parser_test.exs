@@ -32,7 +32,7 @@ defmodule OptionsParserTest do
 
   test "Can List Available Server Pools", %{options: options} do
     assert ["primary", "linked", "demo", "reserved"] =
-             MsbmsSystOptions.get_available_server_pools(options)
+             MsbmsSystOptions.list_available_server_pools(options)
   end
 
   test "Can Retrieve DbServers List Unfiltered", %{options: options} do
