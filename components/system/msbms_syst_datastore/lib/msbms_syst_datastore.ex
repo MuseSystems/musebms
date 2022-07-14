@@ -130,7 +130,7 @@ defmodule MsbmsSystDatastore do
   @spec start_datastore(Types.datastore_options(), Supervisor.supervisor() | nil) ::
           {:ok, :all_started | :some_started, list(Types.context_state_values())}
           | {:error, MsbmsSystError.t()}
-  defdelegate start_datastore(datastore_options), to: Datastore
+  defdelegate start_datastore(datastore_options, supervisor_name \\ nil), to: Datastore
 
   @doc """
   Starts a database connection for the specific datastore context provided.
