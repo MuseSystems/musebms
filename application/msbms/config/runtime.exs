@@ -1,5 +1,5 @@
-# Source File: dev.exs
-# Location:    components/system/msbms_syst_datastore/config/dev.exs
+# Source File: runtime.exs
+# Location:    application/msbms/config/runtime.exs
 # Project:     msbms
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -12,4 +12,4 @@
 
 import Config
 
-config :logger, level: :debug
+config :logger, level: :warn

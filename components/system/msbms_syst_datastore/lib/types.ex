@@ -41,8 +41,6 @@ defmodule MsbmsSystDatastore.Types do
     unredacted "sensitive" database connectivity information.  Note that even
     when false, the application still log sensitive application data.
 
-  * `:db_log_level` - Sets the `Logger` module log level for the database
-    connection to the server.  (default `:debug`)
 
   * `:db_max_instances` - The total number of databases allowed to be
     established for the db_server instance.
@@ -68,7 +66,6 @@ defmodule MsbmsSystDatastore.Types do
           required(:db_host) => String.t(),
           required(:db_port) => integer(),
           required(:db_show_sensitive) => boolean(),
-          required(:db_log_level) => Logger.level(),
           required(:db_max_instances) => integer(),
           required(:server_salt) => String.t(),
           required(:dbadmin_password) => String.t(),

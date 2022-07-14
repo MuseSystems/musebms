@@ -1,5 +1,5 @@
-# Source File: dev.exs
-# Location:    components/system/msbms_syst_datastore/config/dev.exs
+# Source File: prod.exs
+# Location:    application/msbms/config/prod.exs
 # Project:     msbms
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -12,4 +12,7 @@
 
 import Config
 
-config :logger, level: :debug
+config :logger,
+  compile_time_purge_matching: [
+    [level_lower_than: :info]
+  ]

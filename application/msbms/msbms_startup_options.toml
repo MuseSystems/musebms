@@ -70,8 +70,6 @@ db_port                        = 5432
 # some application logs or error displays
 db_show_sensitive              = true
 
-db_log_level                   = "debug"
-
 # The number of instance databases that may be hosted on the server.
 db_max_instances               = 0
 
@@ -136,8 +134,6 @@ db_show_sensitive              = true
 
 # The number of instance databases that may be hosted on the server.
 db_max_instances               = 30
-
-db_log_level = "debug"
 
 # The default global/instance app_user pool size that the application will start
 # each of the database connections with.

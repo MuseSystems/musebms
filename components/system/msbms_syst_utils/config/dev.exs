@@ -1,5 +1,5 @@
-# Source File: prod.exs
-# Location:    components/system/msbms_syst_datastore/config/prod.exs
+# Source File: dev.exs
+# Location:    components/system/msbms_syst_utils/config/dev.exs
 # Project:     msbms
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -11,3 +11,5 @@
 # muse.information@musesystems.com :: https: //muse.systems
 
 import Config
+
+config :logger, level: :debug

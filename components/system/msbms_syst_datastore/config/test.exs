@@ -11,3 +11,5 @@
 # muse.information@musesystems.com :: https: //muse.systems
 
 import Config
+
+config :logger, level: :info
