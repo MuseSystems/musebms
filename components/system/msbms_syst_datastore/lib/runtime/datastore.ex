@@ -23,6 +23,8 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
 
   require Logger
 
+  @spec get_datastore_child_spec(Types.datastore_options(), Keyword.t()) ::
+          Supervisor.child_spec()
   def get_datastore_child_spec(datastore_options, opts)
       when is_map(datastore_options) and is_list(opts) do
     %{
@@ -35,6 +37,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
     }
   end
 
+  @spec start_link_datastore(Keyword.t()) :: Supervisor.on_start_child()
   def start_link_datastore(opts) when is_list(opts) do
     {:ok, datastore_options} = validate_datastore_options(opts[:datastore_options])
 
@@ -60,7 +63,10 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
        }}
   end
 
-  @spec start_datastore(MsbmsSystDatastore.Types.datastore_options(), Keyword.t()) ::
+  @spec start_datastore(
+          MsbmsSystDatastore.Types.datastore_options(),
+          Supervisor.supervisor() | nil
+        ) ::
           {:ok, {:all_started | :some_started, list(Types.context_state_values())}}
           | {:error, MsbmsSystError.t()}
   def start_datastore(datastore_options, supervisor_name \\ nil) when is_map(datastore_options) do
@@ -137,6 +143,8 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
     error
   end
 
+  @spec get_context_child_spec(Types.datastore_options(), Types.context_name(), Keyword.t()) ::
+          Supervisor.child_spec()
   def get_context_child_spec(datastore_options, context_name, opts)
       when is_atom(context_name) and is_list(opts) do
     %{
@@ -149,6 +157,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
     }
   end
 
+  @spec start_link_context(Keyword.t()) :: Supervisor.on_start_child()
   def start_link_context(opts) when is_list(opts) do
     {:ok, datastore_options} = validate_datastore_options(opts[:datastore_options])
 

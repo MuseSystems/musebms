@@ -127,7 +127,7 @@ defmodule MsbmsSystDatastore do
   @doc """
   Starts database connections for all of login contexts in the datastore options.
   """
-  @spec start_datastore(Types.datastore_options()) ::
+  @spec start_datastore(Types.datastore_options(), Supervisor.supervisor() | nil) ::
           {:ok, :all_started | :some_started, list(Types.context_state_values())}
           | {:error, MsbmsSystError.t()}
   defdelegate start_datastore(datastore_options), to: Datastore
