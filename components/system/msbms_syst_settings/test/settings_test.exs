@@ -13,10 +13,6 @@
 defmodule SettingsTest do
   use SettingsTestCase, async: true
 
-  alias MsbmsSystSettings.Data
-
-  import Ecto.Query
-
   test "Create/Delete User Defined Settings" do
     success_setting = %{
       internal_name: "test_success_setting",
