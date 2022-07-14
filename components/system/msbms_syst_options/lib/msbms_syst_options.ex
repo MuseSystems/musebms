@@ -32,7 +32,7 @@ defmodule MsbmsSystOptions do
           dbserver: [
             %{
               db_host: "127.0.0.1",
-              db_log_level: "debug",
+              db_log_level: "warn",
               db_max_instances: 0,
               db_port: 5432,
               db_show_sensitive: true,
@@ -45,7 +45,7 @@ defmodule MsbmsSystOptions do
             },
             %{
               db_host: "127.0.0.1",
-              db_log_level: "debug",
+              db_log_level: "warn",
               db_max_instances: 30,
               db_port: 5432,
               db_show_sensitive: true,
@@ -86,7 +86,7 @@ defmodule MsbmsSystOptions do
         dbserver: [
           %{
             db_host: "127.0.0.1",
-            db_log_level: "debug",
+            db_log_level: "warn",
             db_max_instances: 0,
             db_port: 5432,
             db_show_sensitive: true,
@@ -99,7 +99,7 @@ defmodule MsbmsSystOptions do
           },
           %{
             db_host: "127.0.0.1",
-            db_log_level: "debug",
+            db_log_level: "warn",
             db_max_instances: 30,
             db_port: 5432,
             db_show_sensitive: true,
@@ -219,7 +219,7 @@ defmodule MsbmsSystOptions do
       [
         %{
           db_host: "127.0.0.1",
-          db_log_level: "debug",
+          db_log_level: "warn",
           db_max_instances: 0,
           db_port: 5432,
           db_show_sensitive: true,
@@ -232,7 +232,7 @@ defmodule MsbmsSystOptions do
         },
         %{
           db_host: "127.0.0.1",
-          db_log_level: "debug",
+          db_log_level: "warn",
           db_max_instances: 30,
           db_port: 5432,
           db_show_sensitive: true,
@@ -252,7 +252,7 @@ defmodule MsbmsSystOptions do
       [
         %{
           db_host: "127.0.0.1",
-          db_log_level: "debug",
+          db_log_level: "warn",
           db_max_instances: 30,
           db_port: 5432,
           db_show_sensitive: true,
@@ -287,7 +287,7 @@ defmodule MsbmsSystOptions do
       iex> MsbmsSystOptions.get_dbserver_by_name(config_options, "instance_db")
       %{
         db_host: "127.0.0.1",
-        db_log_level: "debug",
+        db_log_level: "warn",
         db_max_instances: 30,
         db_port: 5432,
         db_show_sensitive: true,
