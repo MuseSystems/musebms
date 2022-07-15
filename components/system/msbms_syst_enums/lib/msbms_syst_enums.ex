@@ -1,6 +1,8 @@
 defmodule MsbmsSystEnums do
-  alias MsbmsSystEnums.Impl.Enums
-  alias MsbmsSystEnums.Runtime.ProcessUtils
+  alias MsbmsSystEnums.Data
+  alias MsbmsSystEnums.Impl
+  alias MsbmsSystEnums.Runtime
+  alias MsbmsSystEnums.Types
 
   @moduledoc """
   Documentation for `MsbmsSystEnums`.
@@ -24,9 +26,9 @@ defmodule MsbmsSystEnums do
   `MsbmsSystDatastore` context.  This context will be used for accessing and
   modifying database data.
   """
-  @spec start_link({MsbmsSystEnums.Types.service_name(), MsbmsSystDatastore.Types.context_name()}) ::
+  @spec start_link({Types.service_name(), MsbmsSystDatastore.Types.context_name()}) ::
           {:ok, pid()} | {:error, MsbmsSystError.t()}
-  defdelegate start_link(params), to: MsbmsSystEnums.Runtime.Server
+  defdelegate start_link(params), to: Runtime.Server
 
   @doc """
   Establishes the current Enumerations Service instance for the process.
@@ -54,9 +56,8 @@ defmodule MsbmsSystEnums do
 
       iex> MsbmsSystEnums.put_enums_service(:enums_instance)
   """
-  @spec put_enums_service(MsbmsSystEnums.Types.service_name() | nil) ::
-          MsbmsSystEnums.Types.service_name() | nil
-  defdelegate put_enums_service(service_name), to: ProcessUtils
+  @spec put_enums_service(Types.service_name() | nil) :: Types.service_name() | nil
+  defdelegate put_enums_service(service_name), to: Runtime.ProcessUtils
 
   @doc """
   Retrieves the currently set Enumerations Service name or `nil` if none has
@@ -66,8 +67,8 @@ defmodule MsbmsSystEnums do
       iex> MsbmsSystEnums.get_enums_service()
       :enums_instance
   """
-  @spec get_enums_service() :: MsbmsSystEnums.Types.service_name() | nil
-  defdelegate get_enums_service(), to: ProcessUtils
+  @spec get_enums_service() :: Types.service_name() | nil
+  defdelegate get_enums_service(), to: Runtime.ProcessUtils
 
   @doc """
   Retrieves all values associated with the requested enumeration.
@@ -84,9 +85,8 @@ defmodule MsbmsSystEnums do
 
       iex> MsbmsSystEnums.get_enum_values("example_enumeration")
   """
-  @spec get_enum_values(MsbmsSystEnums.Types.enum_name()) ::
-          MsbmsSystEnums.Data.SystEnums.t()
-  defdelegate get_enum_values(enum_name), to: Enums
+  @spec get_enum_values(Types.enum_name()) :: Data.SystEnums.t()
+  defdelegate get_enum_values(enum_name), to: Impl.Enums
 
   @doc """
   Retrieves all values for all enumerations.
@@ -99,9 +99,8 @@ defmodule MsbmsSystEnums do
 
     iex> MsbmsSystEnums.list_all_enums()
   """
-  @spec list_all_enums() ::
-          list(MsbmsSystEnums.Data.SystEnums.t())
-  defdelegate list_all_enums(), to: Enums
+  @spec list_all_enums() :: list(Data.SystEnums.t())
+  defdelegate list_all_enums(), to: Impl.Enums
 
   @doc """
   Returns true if the requested enumeration is system defined, false otherwise.
@@ -115,8 +114,8 @@ defmodule MsbmsSystEnums do
       iex> MsbmsSystEnums.get_enum_syst_defined("example_enumeration")
       false
   """
-  @spec get_enum_syst_defined(MsbmsSystEnums.Types.enum_name()) :: boolean()
-  defdelegate get_enum_syst_defined(enum_name), to: Enums
+  @spec get_enum_syst_defined(Types.enum_name()) :: boolean()
+  defdelegate get_enum_syst_defined(enum_name), to: Impl.Enums
 
   @doc """
   Returns true if the requested enumeration is user maintainable, false
@@ -131,8 +130,8 @@ defmodule MsbmsSystEnums do
       iex> MsbmsSystEnums.get_enum_user_maintainable( "example_enumeration")
       true
   """
-  @spec get_enum_user_maintainable(MsbmsSystEnums.Types.enum_name()) :: boolean()
-  defdelegate get_enum_user_maintainable(enum_name), to: Enums
+  @spec get_enum_user_maintainable(Types.enum_name()) :: boolean()
+  defdelegate get_enum_user_maintainable(enum_name), to: Impl.Enums
 
   @doc """
   Returns the list of Enumeration Items associated with the requested
@@ -143,9 +142,8 @@ defmodule MsbmsSystEnums do
     * `enum_name`- the name of the enumeration for which to retrieve the list of
       enumeration items.
   """
-  @spec list_enum_items(MsbmsSystEnums.Types.enum_name()) ::
-          list(MsbmsSystEnums.Data.SystEnumItems.t())
-  defdelegate list_enum_items(enum_name), to: Enums
+  @spec list_enum_items(Types.enum_name()) :: list(Data.SystEnumItems.t())
+  defdelegate list_enum_items(enum_name), to: Impl.Enums
 
   @doc """
   Returns the list of Enumeration Items associated with the requested
@@ -154,9 +152,8 @@ defmodule MsbmsSystEnums do
   In all other regards this function works the same
   `MsbmsSystEnums.list_enum_items/1`.
   """
-  @spec list_sorted_enum_items(MsbmsSystEnums.Types.enum_name()) ::
-          list(MsbmsSystEnums.Data.SystEnumItems.t())
-  defdelegate list_sorted_enum_items(enum_name), to: Enums
+  @spec list_sorted_enum_items(Types.enum_name()) :: list(Data.SystEnumItems.t())
+  defdelegate list_sorted_enum_items(enum_name), to: Impl.Enums
 
   @doc """
   Returns the list of Enumeration Functional Types associated with the requested
@@ -167,9 +164,8 @@ defmodule MsbmsSystEnums do
     * `enum_name` - the name of the enumeration for which to retrieve the list
       of enumeration functional types.
   """
-  @spec list_enum_functional_types(MsbmsSystEnums.Types.enum_name()) ::
-          list(MsbmsSystEnums.Data.SystEnumFunctionalTypes.t())
-  defdelegate list_enum_functional_types(enum_name), to: Enums
+  @spec list_enum_functional_types(Types.enum_name()) :: list(Data.SystEnumFunctionalTypes.t())
+  defdelegate list_enum_functional_types(enum_name), to: Impl.Enums
 
   @doc """
   Returns an Enumeration Item record from the named Enumeration as identified by
@@ -192,12 +188,8 @@ defmodule MsbmsSystEnums do
       ...>     "example_enum_item_one"
       ...>   )
   """
-  @spec get_enum_item_by_name(
-          MsbmsSystEnums.Types.enum_name(),
-          MsbmsSystEnums.Types.enum_item_name()
-        ) ::
-          MsbmsSystEnums.Data.SystEnumItems.t()
-  defdelegate get_enum_item_by_name(enum_name, enum_item_name), to: Enums
+  @spec get_enum_item_by_name(Types.enum_name(), Types.enum_item_name()) :: Data.SystEnumItems.t()
+  defdelegate get_enum_item_by_name(enum_name, enum_item_name), to: Impl.Enums
 
   @doc """
   Returns an Enumeration Item record from the named Enumeration as identified by
@@ -214,16 +206,12 @@ defmodule MsbmsSystEnums do
     * `enum_item_id` - the id value of the Enumeration Item record to return.
 
   """
-  @spec get_enum_item_by_id(
-          MsbmsSystEnums.Types.enum_name(),
-          Ecto.UUID.t()
-        ) ::
-          MsbmsSystEnums.Data.SystEnumItems.t()
-  defdelegate get_enum_item_by_id(enum_name, enum_item_id), to: Enums
+  @spec get_enum_item_by_id(Types.enum_name(), Ecto.UUID.t()) :: Data.SystEnumItems.t()
+  defdelegate get_enum_item_by_id(enum_name, enum_item_id), to: Impl.Enums
 
   @spec get_functional_type_by_enum_item_id(Types.enum_name(), Types.enum_item_id()) ::
           Types.enum_functional_type_name()
-  defdelegate get_functional_type_by_enum_item_id(enum_name, enum_item_id), to: Enums
+  defdelegate get_functional_type_by_enum_item_id(enum_name, enum_item_id), to: Impl.Enums
 
   @doc """
   Finds the default enumeration item for the requested enumeration or for the
@@ -260,10 +248,10 @@ defmodule MsbmsSystEnums do
       ...>   )
   """
   @spec get_default_enum_item(
-          MsbmsSystEnums.Types.enum_name(),
-          Keyword.t(functional_type_name: MsbmsSystEnums.Types.enum_functional_type_name()) | []
-        ) :: MsbmsSystEnums.Data.SystEnumItems.t()
-  defdelegate get_default_enum_item(enum_name, opts \\ []), to: Enums
+          Types.enum_name(),
+          Keyword.t(functional_type_name: Types.enum_functional_type_name()) | []
+        ) :: Data.SystEnumItems.t()
+  defdelegate get_default_enum_item(enum_name, opts \\ []), to: Impl.Enums
 
   @doc """
   Create a new user defined enumeration, optionally including functional type
@@ -311,10 +299,9 @@ defmodule MsbmsSystEnums do
       iex> MsbmsSystEnums.create_enum(example_enumeration)
       :ok
   """
-  @spec create_enum(MsbmsSystEnums.Types.enum_params()) ::
-          :ok | {:error, MsbmsSystError.t()}
+  @spec create_enum(Types.enum_params()) :: :ok | {:error, MsbmsSystError.t()}
   def create_enum(enum_params) do
-    GenServer.call(ProcessUtils.get_enums_service(), {:create_enum, enum_params})
+    GenServer.call(Runtime.ProcessUtils.get_enums_service(), {:create_enum, enum_params})
   end
 
   @doc """
@@ -327,17 +314,15 @@ defmodule MsbmsSystEnums do
       child.
 
     * `functional_type_params` - a map of type
-      `t:MsbmsSystEnums.Types.enum_functional_type_params/0` which establishes
+      `t:Types.enum_functional_type_params/0` which establishes
       the data values for the new functional type.
 
   """
-  @spec create_enum_functional_type(
-          MsbmsSystEnums.Types.enum_name(),
-          MsbmsSystEnums.Types.enum_functional_type_params()
-        ) :: :ok | {:error, MsbmsSystError.t()}
+  @spec create_enum_functional_type(Types.enum_name(), Types.enum_functional_type_params()) ::
+          :ok | {:error, MsbmsSystError.t()}
   def create_enum_functional_type(enum_name, functional_type_params) do
     GenServer.call(
-      ProcessUtils.get_enums_service(),
+      Runtime.ProcessUtils.get_enums_service(),
       {:create_enum_functional_type, enum_name, functional_type_params}
     )
   end
@@ -358,13 +343,11 @@ defmodule MsbmsSystEnums do
       `t:MsbmsSystEnums.Types.enum_item_params/0` which establishes the data
       values for the new enumeration item.
   """
-  @spec create_enum_item(
-          MsbmsSystEnums.Types.enum_name(),
-          MsbmsSystEnums.Types.enum_item_params()
-        ) :: :ok | {:error, MsbmsSystError.t()}
+  @spec create_enum_item(Types.enum_name(), Types.enum_item_params()) ::
+          :ok | {:error, MsbmsSystError.t()}
   def create_enum_item(enum_name, enum_item_params) do
     GenServer.call(
-      ProcessUtils.get_enums_service(),
+      Runtime.ProcessUtils.get_enums_service(),
       {:create_enum_item, enum_name, enum_item_params}
     )
   end
@@ -383,7 +366,7 @@ defmodule MsbmsSystEnums do
 
     * `default_user_options`
 
-  Other fields of the MsbmsSystEnums.Data.SystEnums data type may not be
+  Other fields of the `MsbmsSystEnums.Data.SystEnums` data type may not be
   modified via this module.  Also note that only the enumeration value itself
   can be modified.  Changes to functional type or enumeration item records must
   be addressed individually.
@@ -396,14 +379,11 @@ defmodule MsbmsSystEnums do
       establishes the data values which are to be changed.
 
   """
-  @spec set_enum_values(
-          MsbmsSystEnums.Types.enum_name(),
-          MsbmsSystEnums.Types.enum_params()
-        ) ::
+  @spec set_enum_values(Types.enum_name(), Types.enum_params()) ::
           :ok | {:error, MsbmsSystError.t()}
   def set_enum_values(enum_name, enum_params) do
     GenServer.call(
-      ProcessUtils.get_enums_service(),
+      Runtime.ProcessUtils.get_enums_service(),
       {:set_enum_values, enum_name, enum_params}
     )
   end
@@ -439,18 +419,17 @@ defmodule MsbmsSystEnums do
 
   """
   @spec set_enum_functional_type_values(
-          MsbmsSystEnums.Types.enum_name(),
-          MsbmsSystEnums.Types.enum_functional_type_name(),
-          MsbmsSystEnums.Types.enum_functional_type_params()
-        ) ::
-          :ok | {:error, MsbmsSystError.t()}
+          Types.enum_name(),
+          Types.enum_functional_type_name(),
+          Types.enum_functional_type_params()
+        ) :: :ok | {:error, MsbmsSystError.t()}
   def set_enum_functional_type_values(
         enum_name,
         functional_type_name,
         functional_type_params
       ) do
     GenServer.call(
-      ProcessUtils.get_enums_service(),
+      Runtime.ProcessUtils.get_enums_service(),
       {:set_enum_functional_type_values, enum_name, functional_type_name, functional_type_params}
     )
   end
@@ -490,11 +469,7 @@ defmodule MsbmsSystEnums do
       `t:MsbmsSystEnums.Types.enum_item_params/0` which establishes the data values
       which are to be changed.
   """
-  @spec set_enum_item_values(
-          MsbmsSystEnums.Types.enum_name(),
-          MsbmsSystEnums.Types.enum_item_name(),
-          MsbmsSystEnums.Types.enum_item_params()
-        ) ::
+  @spec set_enum_item_values(Types.enum_name(), Types.enum_item_name(), Types.enum_item_params()) ::
           :ok | {:error, MsbmsSystError.t()}
   def set_enum_item_values(
         enum_name,
@@ -502,7 +477,7 @@ defmodule MsbmsSystEnums do
         enum_item_params
       ) do
     GenServer.call(
-      ProcessUtils.get_enums_service(),
+      Runtime.ProcessUtils.get_enums_service(),
       {:set_enum_item_values, enum_name, enum_item_name, enum_item_params}
     )
   end
@@ -518,9 +493,9 @@ defmodule MsbmsSystEnums do
 
     * `enum_name` - the enumeration which is to be deleted by the function.
   """
-  @spec delete_enum(MsbmsSystEnums.Types.enum_name()) :: :ok | {:error, MsbmsSystError.t()}
+  @spec delete_enum(Types.enum_name()) :: :ok | {:error, MsbmsSystError.t()}
   def delete_enum(enum_name) do
-    GenServer.call(ProcessUtils.get_enums_service(), {:delete_enum, enum_name})
+    GenServer.call(Runtime.ProcessUtils.get_enums_service(), {:delete_enum, enum_name})
   end
 
   @doc """
@@ -537,14 +512,11 @@ defmodule MsbmsSystEnums do
     * `enum_functional_type_name`- the target functional type of the delete
       operation.
   """
-  @spec delete_enum_functional_type(
-          MsbmsSystEnums.Types.enum_name(),
-          MsbmsSystEnums.Types.enum_functional_type_name()
-        ) ::
+  @spec delete_enum_functional_type(Types.enum_name(), Types.enum_functional_type_name()) ::
           :ok | {:error, MsbmsSystError.t()}
   def delete_enum_functional_type(enum_name, functional_type_name) do
     GenServer.call(
-      ProcessUtils.get_enums_service(),
+      Runtime.ProcessUtils.get_enums_service(),
       {:delete_enum_functional_type, enum_name, functional_type_name}
     )
   end
@@ -562,14 +534,11 @@ defmodule MsbmsSystEnums do
 
     * `enum_item_name` - the target functional type of the delete operation.
   """
-  @spec delete_enum_item(
-          MsbmsSystEnums.Types.enum_name(),
-          MsbmsSystEnums.Types.enum_item_name()
-        ) ::
+  @spec delete_enum_item(Types.enum_name(), Types.enum_item_name()) ::
           :ok | {:error, MsbmsSystError.t()}
   def delete_enum_item(enum_name, enum_item_name) do
     GenServer.call(
-      ProcessUtils.get_enums_service(),
+      Runtime.ProcessUtils.get_enums_service(),
       {:delete_enum_item, enum_name, enum_item_name}
     )
   end
