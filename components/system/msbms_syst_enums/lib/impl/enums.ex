@@ -14,8 +14,8 @@ defmodule MsbmsSystEnums.Impl.Enums do
   import Ecto.Query
 
   alias MsbmsSystEnums.Data
-  alias MsbmsSystEnums.Types
   alias MsbmsSystEnums.Runtime.ProcessUtils
+  alias MsbmsSystEnums.Types
 
   require Logger
 
