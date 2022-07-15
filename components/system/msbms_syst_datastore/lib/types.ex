@@ -76,7 +76,7 @@ defmodule MsbmsSystDatastore.Types do
   An application wide designation for application defined datastore access
   accounts.
   """
-  @type context_name :: atom() | nil
+  @type context_name() :: atom() | nil
 
   @typedoc """
   The database role name for the specific access context defined by the
