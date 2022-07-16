@@ -172,7 +172,15 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
 
     start_datastore_context(datastore_options, context)
   rescue
-    error -> Logger.error(Exception.format(:error, error, __STACKTRACE__))
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {:error,
+       %MsbmsSystError{
+         code: :undefined_error,
+         message: "Failure starting Datastore Context.",
+         cause: error
+       }}
   end
 
   defp validate_datastore_context(context_name) when is_atom(context_name),
