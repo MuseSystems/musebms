@@ -15,6 +15,8 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceTypeContext do
 
   require Logger
 
+  @moduledoc false
+
   def update_instance_type_context(instance_type_context_id, instance_type_context_params)
       when is_binary(instance_type_context_id) do
     MsbmsSystDatastore.get!(Data.SystInstanceTypeContexts, instance_type_context_id)

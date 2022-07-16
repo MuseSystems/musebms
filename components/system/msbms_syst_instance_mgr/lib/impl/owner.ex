@@ -17,6 +17,8 @@ defmodule MsbmsSystInstanceMgr.Impl.Owner do
 
   require Logger
 
+  @moduledoc false
+
   def create_owner(owner_params) do
     owner_params
     |> Data.SystOwners.insert_changeset()
