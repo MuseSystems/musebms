@@ -143,7 +143,9 @@ defmodule MsbmsSystDatastore do
   Disconnects the database connections for all of the login datastore option contexts.
   """
   @spec stop_datastore(
-          Types.datastore_options() | list(Types.datastore_context()),
+          Types.datastore_options()
+          | list(Types.datastore_context())
+          | list(%{context_name: Types.context_name()}),
           non_neg_integer()
         ) ::
           :ok | {:error, MsbmsSystError.t()}
