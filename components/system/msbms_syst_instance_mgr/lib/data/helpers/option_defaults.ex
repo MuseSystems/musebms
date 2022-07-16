@@ -21,7 +21,7 @@ defmodule MsbmsSystInstanceMgr.Data.Helpers.OptionDefaults do
   # function directly so we're only doing the user/default resolution once for
   # a changeset.
   @spec defaults() :: Keyword.t()
-  def defaults(),
+  def defaults,
     do: [
       min_internal_name_length: 6,
       max_internal_name_length: 64,
