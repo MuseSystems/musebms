@@ -124,6 +124,11 @@ defmodule MsbmsSystInstanceMgr.Types do
           | :instance_states_purge_eligible
 
   @typedoc """
+  The type of the Instance State ID value.
+  """
+  @type instance_state_id() :: Ecto.UUID.t()
+
+  @typedoc """
   Type for identifying Instance States by name.
   """
   @type instance_state_name() :: String.t()
