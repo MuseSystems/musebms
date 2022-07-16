@@ -145,10 +145,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
     |> Enum.find(&(&1.id == enum_item_id))
   end
 
-  @spec get_default_enum_item(
-          Types.enum_name(),
-          Keyword.t(functional_type_name: Types.enum_functional_type_name()) | []
-        ) :: Data.SystEnumItems.t()
+  @spec get_default_enum_item(Types.enum_name(), Keyword.t() | []) :: Data.SystEnumItems.t()
   def get_default_enum_item(enum_name, opts) do
     ProcessUtils.get_enums_service()
     |> get_ets_table_from_service_name()

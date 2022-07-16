@@ -247,10 +247,7 @@ defmodule MsbmsSystEnums do
       ...>     [functional_type_name: "example_enum_func_type_1"]
       ...>   )
   """
-  @spec get_default_enum_item(
-          Types.enum_name(),
-          Keyword.t(functional_type_name: Types.enum_functional_type_name()) | []
-        ) :: Data.SystEnumItems.t()
+  @spec get_default_enum_item(Types.enum_name(), Keyword.t() | []) :: Data.SystEnumItems.t()
   defdelegate get_default_enum_item(enum_name, opts \\ []), to: Impl.Enums
 
   @doc """
