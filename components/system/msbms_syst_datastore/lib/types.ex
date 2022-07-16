@@ -131,11 +131,11 @@ defmodule MsbmsSystDatastore.Types do
   """
   @type datastore_context :: %{
           optional(:context_name) => context_name(),
-          required(:description) => String.t(),
-          required(:database_role) => context_role(),
+          optional(:description) => String.t(),
+          optional(:database_role) => context_role(),
           optional(:database_password) => String.t() | nil,
-          required(:starting_pool_size) => integer(),
-          required(:start_context) => boolean(),
+          optional(:starting_pool_size) => integer(),
+          optional(:start_context) => boolean(),
           optional(:login_context) => boolean(),
           optional(:database_owner_context) => boolean()
         }
