@@ -37,9 +37,9 @@ jobs:
           run: mix credo
           working-directory: ./components/system/msbms_syst_error
 
-        - name: Run Dialyzer
-          run: mix dialyzer
-          working-directory: ./components/system/msbms_syst_error
+        # - name: Run Dialyzer
+        #   run: mix dialyzer
+        #   working-directory: ./components/system/msbms_syst_error
 
   msbms-syst-options:
     runs-on: ubuntu-latest
@@ -71,9 +71,9 @@ jobs:
           run: mix credo
           working-directory: ./components/system/msbms_syst_options
 
-        - name: Run Dialyzer
-          run: mix dialyzer
-          working-directory: ./components/system/msbms_syst_options
+        # - name: Run Dialyzer
+        #   run: mix dialyzer
+        #   working-directory: ./components/system/msbms_syst_options
 
   msbms-syst-datastore:
     runs-on: ubuntu-latest
@@ -123,9 +123,9 @@ jobs:
           run: mix credo
           working-directory: ./components/system/msbms_syst_datastore
 
-        - name: Run Dialyzer
-          run: mix dialyzer
-          working-directory: ./components/system/msbms_syst_datastore
+        # - name: Run Dialyzer
+        #   run: mix dialyzer
+        #   working-directory: ./components/system/msbms_syst_datastore
 
   msbms-syst-settings:
     runs-on: ubuntu-latest
@@ -175,9 +175,9 @@ jobs:
           run: mix credo
           working-directory: ./components/system/msbms_syst_settings
 
-        - name: Run Dialyzer
-          run: mix dialyzer
-          working-directory: ./components/system/msbms_syst_settings
+        # - name: Run Dialyzer
+        #   run: mix dialyzer
+        #   working-directory: ./components/system/msbms_syst_settings
 
   msbms-syst-enums:
     runs-on: ubuntu-latest
@@ -227,9 +227,9 @@ jobs:
           run: mix credo
           working-directory: ./components/system/msbms_syst_enums
 
-        - name: Run Dialyzer
-          run: mix dialyzer
-          working-directory: ./components/system/msbms_syst_enums
+        # - name: Run Dialyzer
+        #   run: mix dialyzer
+        #   working-directory: ./components/system/msbms_syst_enums
 
   msbms-syst-instance-mgr:
     runs-on: ubuntu-latest
@@ -279,9 +279,9 @@ jobs:
           run: mix credo
           working-directory: ./components/system/msbms_syst_instance_mgr
 
-        - name: Run Dialyzer
-          run: mix dialyzer
-          working-directory: ./components/system/msbms_syst_instance_mgr
+        # - name: Run Dialyzer
+        #   run: mix dialyzer
+        #   working-directory: ./components/system/msbms_syst_instance_mgr
 
   msbms-application:
     runs-on: ubuntu-latest
@@ -331,7 +331,7 @@ jobs:
           run: mix credo
           working-directory: ./application/msbms
 
-        - name: Run Dialyzer
-          run: mix dialyzer
-          working-directory: ./application/msbms
+        # - name: Run Dialyzer
+        #   run: mix dialyzer
+        #   working-directory: ./application/msbms
 
