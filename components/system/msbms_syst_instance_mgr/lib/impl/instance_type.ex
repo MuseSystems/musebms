@@ -11,12 +11,14 @@
 # muse.information@musesystems.com :: https: //muse.systems
 
 defmodule MsbmsSystInstanceMgr.Impl.InstanceType do
+  alias MsbmsSystInstanceMgr.Types
+
   require Logger
 
   @moduledoc false
 
-  # Creates an new Instance Type record in the MsbmsSystEnums module.
-
+  @spec create_instance_type(Types.instance_type_params()) ::
+          {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MsbmsSystError.t()}
   def create_instance_type(instance_type_params) do
     create_enum_item_result =
       MsbmsSystEnums.create_enum_item("instance_types", instance_type_params)
@@ -36,6 +38,8 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceType do
       }
   end
 
+  @spec update_instance_type(Types.instance_type_name(), Types.instance_type_params()) ::
+          {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MsbmsSystError.t()}
   def update_instance_type(instance_type_name, instance_type_params) do
     update_enum_item_result =
       MsbmsSystEnums.set_enum_item_values(
@@ -68,6 +72,7 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceType do
 
   defp get_change_return_value(_instance_type_name, result), do: result
 
+  @spec delete_instance_type(Types.instance_type_name()) :: :ok | {:error, MsbmsSystError.t()}
   def delete_instance_type(instance_type_name) do
     MsbmsSystEnums.delete_enum_item("instance_types", instance_type_name)
   rescue

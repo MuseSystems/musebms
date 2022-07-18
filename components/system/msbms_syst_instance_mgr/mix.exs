@@ -36,7 +36,31 @@ defmodule MsbmsSystInstanceMgr.MixProject do
       build_embedded: in_production,
       start_permanent: in_production,
       dialyzer: @dialyzer_opts,
-      elixirc_paths: elixirc_paths(Mix.env())
+      elixirc_paths: elixirc_paths(Mix.env()),
+      docs: [
+        name: "MsbmsSystInstanceMgr",
+        nest_modules_by_prefix: [MsbmsSystInstanceMgr.Data],
+        main: "MsbmsSystInstanceMgr",
+        groups_for_functions: [
+          "API - Runtime": &(&1[:section] == :service_management),
+          "API - Instances": &(&1[:section] == :instance_data),
+          "API - Instance Types": &(&1[:section] == :instance_type_data),
+          "API - Owners": &(&1[:section] == :owner_data)
+        ],
+        groups_for_modules: [
+          API: [MsbmsSystInstanceMgr],
+          Data: [
+            MsbmsSystInstanceMgr.Data.SystApplicationContexts,
+            MsbmsSystInstanceMgr.Data.SystApplications,
+            MsbmsSystInstanceMgr.Data.SystInstanceContexts,
+            MsbmsSystInstanceMgr.Data.SystInstanceTypeApplications,
+            MsbmsSystInstanceMgr.Data.SystInstanceTypeContexts,
+            MsbmsSystInstanceMgr.Data.SystInstances,
+            MsbmsSystInstanceMgr.Data.SystOwners
+          ],
+          "Supporting Types": [MsbmsSystInstanceMgr.Types]
+        ]
+      ]
     ]
   end
 

@@ -221,34 +221,6 @@ defmodule MsbmsSystInstanceMgr.Types do
         }
 
   @typedoc """
-  Defines the data which is returned by the `MsbmsSystInstanceMgr.list_summarized_instances/1`
-  function.
-  """
-  @type instances_list_item :: %{
-          instance_id: Ecto.UUID.t(),
-          instance_internal_name: instance_name(),
-          instance_display_name: String.t(),
-          instance_owning_instance_id: Ecto.UUID.t(),
-          instance_options: map(),
-          instance_type_id: Ecto.UUID.t(),
-          instance_type_display_name: String.t(),
-          instance_type_external_name: String.t(),
-          instance_state_id: Ecto.UUID.t(),
-          instance_state_display_name: String.t(),
-          instance_state_external_name: String.t(),
-          instance_state_functional_type_id: Ecto.UUID.t(),
-          instance_state_functional_type_name: MsbmsSystEnums.Types.enum_functional_type_name(),
-          owner_id: Ecto.UUID.t(),
-          owner_display_name: String.t(),
-          owner_state_display_name: String.t(),
-          owner_state_functional_type_name: MsbmsSystEnums.Types.enum_functional_type_name(),
-          owner_state_functional_type_display_name: String.t(),
-          application_id: Ecto.UUID.t(),
-          application_display_name: String.t(),
-          application_syst_description: String.t()
-        }
-
-  @typedoc """
   Type for Owner record ID values.
   """
   @type owner_id() :: binary()
