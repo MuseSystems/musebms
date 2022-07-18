@@ -128,6 +128,8 @@ defmodule MsbmsSystDatastore.Impl.Dba do
 
     _ = Datastore.set_datastore_context(dba_pid)
 
+    :ok = revoke_db_connect_privs(datastore_options.contexts, datastore_options.database_name)
+
     :ok = drop_database(datastore_options)
 
     :ok = drop_contexts(datastore_options.contexts)
@@ -222,6 +224,8 @@ defmodule MsbmsSystDatastore.Impl.Dba do
     {:ok, dba_pid} = start_dba_connection(datastore_options)
 
     _ = Datastore.set_datastore_context(dba_pid)
+
+    :ok = revoke_db_connect_privs(delete_contexts, datastore_options.database_name)
 
     :ok = drop_contexts(delete_contexts)
 
@@ -541,6 +545,36 @@ defmodule MsbmsSystDatastore.Impl.Dba do
     raise MsbmsSystError,
       code: :database_error,
       message: "Failed to drop database role for context.",
+      cause: reason
+  end
+
+  defp revoke_db_connect_privs(contexts, database_name) do
+    each_func = fn context ->
+      context
+      |> maybe_revoke_context_connect_priv(database_name)
+      |> parse_revoke_connect_priv_result()
+    end
+
+    {:ok, _} = Datastore.transaction(fn -> contexts |> Enum.each(&each_func.(&1)) end)
+
+    :ok
+  end
+
+  defp maybe_revoke_context_connect_priv(
+         %{login_context: true, database_role: role_name},
+         database_name
+       ) do
+    Datastore.query_for_none("REVOKE CONNECT ON DATABASE #{database_name} FROM #{role_name};")
+  end
+
+  defp maybe_revoke_context_connect_priv(%{login_context: false}, _database_name), do: :ok
+
+  defp parse_revoke_connect_priv_result(:ok), do: :ok
+
+  defp parse_revoke_connect_priv_result({:error, reason}) do
+    raise MsbmsSystError,
+      code: :database_error,
+      message: "Failed to revoke CONNECT privilege to database role.",
       cause: reason
   end
 end
