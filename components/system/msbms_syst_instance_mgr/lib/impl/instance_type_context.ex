@@ -12,11 +12,16 @@
 
 defmodule MsbmsSystInstanceMgr.Impl.InstanceTypeContext do
   alias MsbmsSystInstanceMgr.Data
+  alias MsbmsSystInstanceMgr.Types
 
   require Logger
 
   @moduledoc false
 
+  @spec update_instance_type_context(
+          Types.instance_type_context_id() | Data.SystInstanceTypeContexts.t(),
+          Types.instance_type_context_params()
+        ) :: {:ok, Data.SystInstanceTypeContexts.t()} | {:error, MsbmsSystError.t()}
   def update_instance_type_context(instance_type_context_id, instance_type_context_params)
       when is_binary(instance_type_context_id) do
     MsbmsSystDatastore.get!(Data.SystInstanceTypeContexts, instance_type_context_id)

@@ -16,6 +16,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
 
   alias MsbmsSystInstanceMgr.Data
   alias MsbmsSystInstanceMgr.Impl
+  alias MsbmsSystInstanceMgr.Types
 
   require Logger
 
@@ -25,18 +26,10 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
 
   @moduledoc false
 
-  ##############################################################################
-  # Application
-  # ----------------------------------------------------------------------------
-  #
-  # The Application Module handles runtime aspects of the MsbmsInstanceMgr
-  # component such as always started components and secondary supervision tree
-  # startup.
-  #
-  ##############################################################################
-
   # start/2 is called automatically on OTP application start-up.
 
+  @spec start(Application.start_type(), term()) ::
+          {:ok, pid()} | {:ok, pid(), Application.state()} | {:error, term()}
   def start(_type, _args) do
     inst_mgr_spec = [
       {DynamicSupervisor, strategy: :one_for_one, name: @inst_mgr_name},
@@ -47,14 +40,28 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
     Supervisor.start_link(inst_mgr_spec, strategy: :one_for_one)
   end
 
-  # Starts an application supervisor which will monitor all instance
-  # supervisors.  The goal is to isolate each application from other
-  # applications on the server.
-
+  @spec start_application(
+          Types.application_id() | Data.SystApplications.t(),
+          startup_options :: map(),
+          opts :: Keyword.t()
+        ) ::
+          :ok | {:error, MsbmsSystError.t()}
   def start_application(application_id, startup_options, opts) when is_binary(application_id) do
     from(a in Data.SystApplications, where: a.id == ^application_id, select: [:id, :internal_name])
     |> MsbmsSystDatastore.one!()
     |> start_application(startup_options, opts)
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure starting Application by ID.",
+          cause: error
+        }
+      }
   end
 
   def start_application(
@@ -83,16 +90,40 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
         @task_mgr_name,
         &1,
         fn instance ->
-          MsbmsSystDatastore.set_datastore_context(current_datastore_context)
-          MsbmsSystEnums.put_enums_service(current_enums_service)
+          _ = MsbmsSystDatastore.set_datastore_context(current_datastore_context)
+          _ = MsbmsSystEnums.put_enums_service(current_enums_service)
           start_instance(instance, startup_options, opts)
         end,
         opts
       )
     )
     |> Enum.to_list()
+    |> Enum.reduce(:ok, fn result, acc ->
+      case result do
+        :ok ->
+          acc
+
+        {:error, _} = error ->
+          {:error,
+           %MsbmsSystError{
+             code: :undefined_error,
+             message: "Failure starting Instance.",
+             cause: error
+           }}
+      end
+    end)
   rescue
-    error -> Logger.error(Exception.format(:error, error, __STACKTRACE__))
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure starting Application.",
+          cause: error
+        }
+      }
   end
 
   defp start_application_supervisor(application_supervisor_name) do
@@ -102,7 +133,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
     {:ok, _} = DynamicSupervisor.start_child(@inst_mgr_name, application_spec)
   end
 
-  defp default_max_concurrency() do
+  defp default_max_concurrency do
     if System.schedulers_online() < 4 do
       1
     else
@@ -110,20 +141,33 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
     end
   end
 
-  # Starts all application supervisors.
+  # Starts all Applications.
 
+  @spec start_all_applications(startup_options :: map(), opts :: Keyword.t()) ::
+          :ok | {:error, MsbmsSystError.t()}
   def start_all_applications(startup_options, opts) do
     from(a in Data.SystApplications, select: [:id, :internal_name])
     |> MsbmsSystDatastore.all()
     |> Enum.each(&start_application(&1, startup_options, opts))
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure starting Applications.",
+          cause: error
+        }
+      }
   end
 
-  # Starts an instance and places it under the appropriate application's
-  # supervisor.  An instance is essentially a tenant environment running a
-  # specific application (our sense of the word).  Each tenant's runtime
-  # characteristics are independent of other tenants on the system. Note that we
-  # assume that the Application supervisor is already started.
-
+  @spec start_instance(
+          Types.instance_id() | Data.SystInstances.t(),
+          startup_options :: map(),
+          opts :: Keyword.t()
+        ) :: :ok | {:error, MsbmsSystError.t()}
   def start_instance(instance_id, startup_options, opts) when is_binary(instance_id) do
     from(
       i in Data.SystInstances,
@@ -133,6 +177,18 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
     )
     |> MsbmsSystDatastore.one!()
     |> start_instance(startup_options, opts)
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure starting Instance by ID.",
+          cause: error
+        }
+      }
   end
 
   # TODO: This is too "happy path" centric.  There are failure modes that can be
@@ -193,7 +249,17 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
 
     :ok
   rescue
-    error -> Logger.error(Exception.format(:error, error, __STACKTRACE__))
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure starting Instance.",
+          cause: error
+        }
+      }
   end
 
   def start_instance(%Data.SystInstances{id: instance_id}, startup_options, opts),
@@ -224,12 +290,30 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
     ) in ["instance_states_initialized", "instance_states_active"]
   end
 
+  @spec stop_instance(Types.instance_id() | Data.SystInstances.t(), opts :: Keyword.t()) ::
+          :ok | {:error, MsbmsSystError.t()}
   def stop_instance(instance_id, opts) when is_binary(instance_id) do
     from(i in Data.SystInstances, where: i.id == ^instance_id, preload: [:instance_contexts])
     |> MsbmsSystDatastore.one!()
     |> stop_instance(opts)
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure stopping Instance by ID.",
+          cause: error
+        }
+      }
   end
 
+  # TODO: While we stop the datastore explicitly, I think this probably doesn't
+  #       do anything.  Stopping the Instance Supervisor I believe will stop the
+  #       Datastore Contexts anyway since they're supervised processed.  Check
+  #       out how necessary this is and if we should do something about it.
   def stop_instance(
         %Data.SystInstances{
           internal_name: instance_name,
@@ -241,8 +325,22 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
 
     :ok =
       instance_contexts
-      |> Enum.map(&%{id: String.to_atom(&1.internal_name)})
+      |> Enum.map(&%{context_name: String.to_atom(&1.internal_name)})
       |> MsbmsSystDatastore.stop_datastore(opts)
+
+    :ok
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure stopping Instance.",
+          cause: error
+        }
+      }
   end
 
   def stop_instance(%Data.SystInstances{id: instance_id}, opts),
@@ -251,16 +349,34 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
   defp stop_instance_supervisor(instance_name, opts) do
     opts = resolve_options(opts, supervisor_shutdown_timeout: 60_000)
 
-    if [{instance_supervisor, _} | _] =
-         Registry.lookup(@registry, {:instance_supervisor, instance_name}) do
-      DynamicSupervisor.stop(instance_supervisor, :normal, opts[:supervisor_shutdown_timeout])
-    end
+    Registry.lookup(@registry, {:instance_supervisor, instance_name})
+    |> maybe_stop_instance_supervisor(opts)
   end
 
+  defp maybe_stop_instance_supervisor([{instance_supervisor, _} | _], opts) do
+    DynamicSupervisor.stop(instance_supervisor, :normal, opts[:supervisor_shutdown_timeout])
+  end
+
+  defp maybe_stop_instance_supervisor(_, _opts), do: nil
+
+  @spec stop_application(Types.application_id() | Data.SystApplications.t(), opts :: Keyword.t()) ::
+          :ok | {:error, MsbmsSystError.t()}
   def stop_application(application_id, opts) when is_binary(application_id) do
     from(a in Data.SystApplications, where: a.id == ^application_id, select: [:id, :internal_name])
     |> MsbmsSystDatastore.one!()
     |> stop_application(opts)
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure stopping Application by ID.",
+          cause: error
+        }
+      }
   end
 
   def stop_application(
@@ -275,7 +391,19 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
     |> MsbmsSystDatastore.all()
     |> Enum.each(&stop_instance(&1, opts))
 
-    :ok = stop_application_supervisor(application_name, opts)
+    stop_application_supervisor(application_name, opts)
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure stopping Application.",
+          cause: error
+        }
+      }
   end
 
   defp stop_application_supervisor(application_name, opts) do
@@ -288,9 +416,26 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
     )
   end
 
+  # TODO: This function needs to be better able to report failures.  It's
+  #       conceivable that any individual Application stop could fail while
+  #       others may succeed.  This shouldn't be a common case, but it should be
+  #       better handled nonetheless.
+  @spec stop_all_applications(opts :: Keyword.t()) :: :ok | {:error, MsbmsSystError.t()}
   def stop_all_applications(opts) do
     from(a in Data.SystApplications, select: [:id, :internal_name])
     |> MsbmsSystDatastore.all()
     |> Enum.each(&stop_application(&1, opts))
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure stopping all started Applications.",
+          cause: error
+        }
+      }
   end
 end

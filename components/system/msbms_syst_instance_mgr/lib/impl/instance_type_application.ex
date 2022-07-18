@@ -12,11 +12,14 @@
 
 defmodule MsbmsSystInstanceMgr.Impl.InstanceTypeApplication do
   alias MsbmsSystInstanceMgr.Data
+  alias MsbmsSystInstanceMgr.Types
 
   require Logger
 
   @moduledoc false
 
+  @spec create_instance_type_application(Types.instance_type_id(), Types.application_id()) ::
+          {:ok, Data.SystInstanceTypeApplications.t()} | {:error, MsbmsSystError.t()}
   def create_instance_type_application(instance_type_id, application_id)
       when is_binary(instance_type_id) and is_binary(application_id) do
     %{instance_type_id: instance_type_id, application_id: application_id}
@@ -37,6 +40,10 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceTypeApplication do
       }
   end
 
+  @spec delete_instance_type_application(
+          Types.instance_type_application_id()
+          | Data.SystInstanceTypeApplications.t()
+        ) :: :ok | {:error, MsbmsSystError.t()}
   def delete_instance_type_application(instance_type_application_id)
       when is_binary(instance_type_application_id) do
     MsbmsSystDatastore.get!(Data.SystInstanceTypeApplications, instance_type_application_id)

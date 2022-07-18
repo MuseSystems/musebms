@@ -14,11 +14,14 @@ defmodule MsbmsSystInstanceMgr.Impl.Owner do
   import Ecto.Query
 
   alias MsbmsSystInstanceMgr.Data
+  alias MsbmsSystInstanceMgr.Types
 
   require Logger
 
   @moduledoc false
 
+  @spec create_owner(Types.owner_params()) ::
+          {:ok, Data.SystOwners.t()} | {:error, MsbmsSystError.t()}
   def create_owner(owner_params) do
     owner_params
     |> Data.SystOwners.insert_changeset()
@@ -38,6 +41,8 @@ defmodule MsbmsSystInstanceMgr.Impl.Owner do
       }
   end
 
+  @spec update_owner(Types.owner_id() | Data.SystOwners.t(), Types.owner_params()) ::
+          {:ok, Data.SystOwners.t()} | {:error, MsbmsSystError.t()}
   def update_owner(owner_id, owner_params) when is_binary(owner_id) do
     MsbmsSystDatastore.get!(Data.SystOwners, owner_id)
     |> update_owner(owner_params)
@@ -69,6 +74,31 @@ defmodule MsbmsSystInstanceMgr.Impl.Owner do
         %MsbmsSystError{
           code: :undefined_error,
           message: "Failure updating Owner.",
+          cause: error
+        }
+      }
+  end
+
+  @spec purge_owner(Types.owner_id() | Data.SystOwners.t()) :: :ok | {:error, MsbmsSystError.t()}
+  def purge_owner(owner_id) when is_binary(owner_id) do
+    from(
+      o in Data.SystOwners,
+      join: os in assoc(o, :owner_state),
+      join: osft in assoc(os, :functional_type),
+      where: o.id == ^owner_id,
+      preload: [owner_state: {os, functional_type: osft}]
+    )
+    |> MsbmsSystDatastore.one!()
+    |> purge_owner()
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure deleting Owner by ID.",
           cause: error
         }
       }
@@ -119,30 +149,6 @@ defmodule MsbmsSystInstanceMgr.Impl.Owner do
         %MsbmsSystError{
           code: :undefined_error,
           message: "Failure deleting Owner by struct.",
-          cause: error
-        }
-      }
-  end
-
-  def purge_owner(owner_id) when is_binary(owner_id) do
-    from(
-      o in Data.SystOwners,
-      join: os in assoc(o, :owner_state),
-      join: osft in assoc(os, :functional_type),
-      where: o.id == ^owner_id,
-      preload: [owner_state: {os, functional_type: osft}]
-    )
-    |> MsbmsSystDatastore.one!()
-    |> purge_owner()
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MsbmsSystError{
-          code: :undefined_error,
-          message: "Failure deleting Owner by ID.",
           cause: error
         }
       }

@@ -15,6 +15,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
   import MsbmsSystUtils
 
   alias MsbmsSystInstanceMgr.Data
+  alias MsbmsSystInstanceMgr.Types
 
   require Logger
 
@@ -26,13 +27,33 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
 
   @moduledoc false
 
+  @spec create_instance(Types.instance_params()) ::
+          {:ok, Data.SystInstances.t()} | {:error, MsbmsSystError.t()}
   def create_instance(instance_params) do
     instance_params
     |> Data.SystInstances.insert_changeset()
     |> MsbmsSystDatastore.insert!(returning: true)
     |> then(&{:ok, &1})
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {:error,
+       %MsbmsSystError{
+         code: :undefined_error,
+         message: "Failure creating new Instance.",
+         cause: error
+       }}
   end
 
+  # Retrieves the Datastore Options based on the Instance database record and
+  # the provided Startup Options.
+
+  @spec get_instance_datastore_options(
+          Types.instance_id() | Data.SystInstances.t(),
+          startup_options :: map()
+        ) ::
+          MsbmsSystDatastore.Types.datastore_options()
   def get_instance_datastore_options(instance_id, startup_options) when is_binary(instance_id) do
     from(i in Data.SystInstances,
       as: :instances,
@@ -112,6 +133,8 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
     |> Base.encode64(padding: false)
   end
 
+  @spec initialize_instance(Types.instance_id(), startup_options :: map(), opts :: Keyword.t()) ::
+          {:ok, Data.SystInstances.t()} | {:error, MsbmsSystError.t()}
   def initialize_instance(instance_id, startup_options, opts) do
     opts = resolve_options(opts, get_default_instance_state_ids())
 
@@ -159,13 +182,12 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
       cause: %{instance_state_functional_type_name: state_functional_type, instance: instance}
   end
 
-  defp verify_initialization_eligibility(_instance_state, instance) do
-    raise MsbmsSystError,
-      code: :unknown_error,
-      message: "Unknown error found during Instance initialization eligibility check.",
-      cause: %{instance: instance}
-  end
+  # TODO: This is one of a number of places where we might want to consider a
+  #       more formal state machine definition since there are allowed and
+  #       disallowed state transitions.  Battle for a different day.
 
+  @spec set_instance_state(Data.SystInstances.t(), Types.instance_state_id()) ::
+          {:ok, Data.SystInstances.t()} | {:error, MsbmsSystError.t()}
   def set_instance_state(instance, instance_state_id) do
     instance
     |> Data.SystInstances.update_changeset(%{instance_state_id: instance_state_id})
@@ -202,7 +224,8 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
      }}
   end
 
-  def get_default_instance_state_ids() do
+  @spec get_default_instance_state_ids() :: Keyword.t()
+  def get_default_instance_state_ids do
     initializing_state_id =
       MsbmsSystEnums.get_default_enum_item("instance_states",
         functional_type_name: "instance_states_initializing"
@@ -238,6 +261,16 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
     ]
   end
 
+  # Returns the standard bindings expected by Instance migrations which are
+  # applied during Instance Datastore updates.
+  #
+  # Migration bindings are the Instance specific values that are to be
+  # substituted into the SQL migration files.  The most typical example of such
+  # a standard binding is the names of the Datastore Context database roles
+  # which, in the migrations, must be given permission to access the database
+  # objects in the Datastore.
+
+  @spec get_standard_migration_bindings(Types.instance_id()) :: Keyword.t()
   def get_standard_migration_bindings(instance_id) do
     from(
       i in Data.SystInstances,
@@ -250,6 +283,8 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
     |> Enum.map(&{String.to_atom(elem(&1, 0)), elem(&1, 1)})
   end
 
+  @spec purge_instance(Types.instance_id() | Data.SystInstances.t(), startup_options :: map()) ::
+          :ok | {:error, MsbmsSystError.t()}
   def purge_instance(instance_id, startup_options) when is_binary(instance_id) do
     from(
       i in Data.SystInstances,
