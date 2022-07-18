@@ -540,8 +540,6 @@ defmodule MsbmsSystDatastore.Impl.Dba do
   defp parse_drop_database_role_result({:ok, _database_result}), do: :ok
 
   defp parse_drop_database_role_result({:error, reason}) do
-    IO.inspect(reason)
-
     raise MsbmsSystError,
       code: :database_error,
       message: "Failed to drop database role for context.",
