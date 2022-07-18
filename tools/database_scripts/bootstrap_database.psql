@@ -19,7 +19,7 @@ $BOOTSTRAPDB$
 
             CREATE ROLE msbms_syst_dba
                 CREATEROLE CREATEDB NOINHERIT
-                LOGIN PASSWORD 'default.msbms.privileged.password';
+                LOGIN PASSWORD 'msbms.syst.dba.testing.password';
 
             COMMENT ON ROLE msbms_syst_dba IS
             $DOC$Privileged account which performs database server administrative actions.  Does not have access to application data and may not perform actions requiring PostgreSQL superuser privileges.$DOC$;
