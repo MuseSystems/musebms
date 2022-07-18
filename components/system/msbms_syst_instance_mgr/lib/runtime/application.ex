@@ -321,12 +321,12 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
         },
         opts
       ) do
-    :ok = stop_instance_supervisor(instance_name, opts)
-
     :ok =
       instance_contexts
       |> Enum.map(&%{context_name: String.to_atom(&1.internal_name)})
       |> MsbmsSystDatastore.stop_datastore(opts)
+
+    :ok = stop_instance_supervisor(instance_name, opts)
 
     :ok
   rescue
