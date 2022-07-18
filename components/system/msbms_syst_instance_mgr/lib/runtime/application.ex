@@ -100,7 +100,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
     |> Enum.to_list()
     |> Enum.reduce(:ok, fn result, acc ->
       case result do
-        :ok ->
+        {:ok, :ok} ->
           acc
 
         {:error, _} = error ->
