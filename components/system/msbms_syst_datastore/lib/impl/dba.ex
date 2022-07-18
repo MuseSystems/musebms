@@ -234,7 +234,7 @@ defmodule MsbmsSystDatastore.Impl.Dba do
         :error,
         %MsbmsSystError{
           code: :database_error,
-          message: "Failure dropping datastore.",
+          message: "Failure dropping Datastore Context.",
           cause: error
         }
       }
@@ -284,7 +284,7 @@ defmodule MsbmsSystDatastore.Impl.Dba do
           :error,
           %MsbmsSystError{
             code: :database_error,
-            message: "Failure starting dba dataastore.",
+            message: "Failure starting DBA Dataastore.",
             cause: error
           }
         }
