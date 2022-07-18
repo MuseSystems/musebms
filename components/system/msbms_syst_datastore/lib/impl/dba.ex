@@ -89,9 +89,12 @@ defmodule MsbmsSystDatastore.Impl.Dba do
 
     _ = Datastore.set_datastore_context(dba_pid)
 
-    context_states = create_contexts(datastore_options.contexts)
+    _interim_states = create_contexts(datastore_options.contexts)
 
     :ok = create_database(datastore_options)
+
+    context_states =
+      apply_db_connect_privs(datastore_options.contexts, datastore_options.database_name)
 
     stop_dba_connection(opts[:db_shutdown_timeout])
 
@@ -188,7 +191,9 @@ defmodule MsbmsSystDatastore.Impl.Dba do
     {:ok, dba_pid} = start_dba_connection(datastore_options)
     _ = Datastore.set_datastore_context(dba_pid)
 
-    context_states = create_contexts(new_contexts)
+    _interim_states = create_contexts(new_contexts)
+
+    context_states = apply_db_connect_privs(new_contexts, datastore_options.database_name)
 
     stop_dba_connection(opts[:db_shutdown_timeout])
 
@@ -388,7 +393,7 @@ defmodule MsbmsSystDatastore.Impl.Dba do
       |> create_database_role()
       |> parse_create_database_role_result()
 
-      %{context: context.context_name, state: :ready}
+      %{context: context.context_name, state: :not_ready}
     end
 
     {:ok, result} = Datastore.transaction(fn -> contexts |> Enum.map(&map_func.(&1)) end)
@@ -455,6 +460,38 @@ defmodule MsbmsSystDatastore.Impl.Dba do
       Datastore.query_for_none!(
         "REVOKE ALL ON DATABASE #{datastore_options.database_name} FROM public;"
       )
+  end
+
+  defp apply_db_connect_privs(contexts, database_name) do
+    map_func = fn context ->
+      context
+      |> maybe_apply_context_connect_priv(database_name)
+      |> parse_apply_connect_priv_result()
+
+      %{context: context.context_name, state: :ready}
+    end
+
+    {:ok, result} = Datastore.transaction(fn -> contexts |> Enum.map(&map_func.(&1)) end)
+
+    result
+  end
+
+  defp maybe_apply_context_connect_priv(
+         %{login_context: true, database_role: role_name},
+         database_name
+       ) do
+    Datastore.query_for_none("GRANT CONNECT ON DATABASE #{database_name} TO #{role_name};")
+  end
+
+  defp maybe_apply_context_connect_priv(%{login_context: false}, _database_name), do: :ok
+
+  defp parse_apply_connect_priv_result(:ok), do: :ok
+
+  defp parse_apply_connect_priv_result({:error, reason}) do
+    raise MsbmsSystError,
+      code: :database_error,
+      message: "Failed to apply CONNECT privilege to database role.",
+      cause: reason
   end
 
   defp drop_database(datastore_options) do
