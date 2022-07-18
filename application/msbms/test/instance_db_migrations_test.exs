@@ -16,7 +16,8 @@ defmodule InstanceDbMigrationTest do
         database_password: nil,
         starting_pool_size: 0,
         start_context: false,
-        login_context: false
+        login_context: false,
+        database_owner_context: true
       },
       %{
         context_name: :instance_build_app_context,
