@@ -187,6 +187,10 @@ defmodule MsbmsSystDatastore.Types do
     * `:not_found` - The database role backing the context was not found on the
       datastore database server.
 
+    * `:not_ready` - The database role backing the context exists, but is not
+      completely set up yet.  This is an interim stage that usually has to cross
+      transaction boundaries.
+
     * `:not_started` - When starting contexts the system doesn't check for the
        existence of each context which in turn means that a start failure could
        be indicative of either non-existence or some other problem.  In these
@@ -198,7 +202,7 @@ defmodule MsbmsSystDatastore.Types do
     * `:started` - The context was found and database connections for the
       context have already been started.
   """
-  @type context_state_values :: :not_found | :ready | :not_started | :started
+  @type context_state_values :: :not_found | :not_ready | :ready | :not_started | :started
 
   @typedoc """
 
