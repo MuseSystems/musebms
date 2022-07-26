@@ -1,5 +1,5 @@
-# Source File: buildplans.app_msbms_global.toml
-# Location:    musebms/database/buildplans.app_msbms_global.toml
+# Source File: buildplans.msbms_syst_authentication.toml
+# Location:    musebms/database/buildplans.msbms_syst_authentication.toml
 # Project:     musebms
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -14,31 +14,19 @@
 release              = 1
 version              = 1
 update               = 0
-sponsor              = 820
+sponsor              = 821
 sponsor_modification = 0
 load_files = [
     #
     # Database Preparation and Common Facilities Load
     #
 
-    "app_msbms_global/gen_dbinit/database_initial_setup.eex.sql",
-    "app_msbms_global/gen_dbinit/create_database_schemata.eex.sql",
+    "cmp_msbms_syst_authentication/testing_support/database_initial_setup.eex.sql",
+    "cmp_msbms_syst_authentication/testing_support/create_database_schemata.eex.sql",
 
     "all/msbms_syst_priv/collations/variant_insensitive.eex.sql",
     "all/msbms_syst_priv/functions/get_exception_details.eex.sql",
     "all/msbms_syst_priv/trigger_functions/trig_b_iu_set_diagnostic_columns.eex.sql",
-
-    #
-    # MsbmsSystSettings Module
-    #
-
-    "cmp_msbms_syst_settings/msbms_syst_data/syst_settings/syst_settings.eex.sql",
-    "cmp_msbms_syst_settings/msbms_syst/api_views/syst_settings/trig_i_i_syst_settings.eex.sql",
-    "cmp_msbms_syst_settings/msbms_syst/api_views/syst_settings/trig_i_u_syst_settings.eex.sql",
-    "cmp_msbms_syst_settings/msbms_syst/api_views/syst_settings/trig_i_d_syst_settings.eex.sql",
-    "cmp_msbms_syst_settings/msbms_syst/api_views/syst_settings/syst_settings.eex.sql",
-
-    "app_msbms_global/components/msbms_syst_settings/privileges.eex.sql",
 
     #
     # MsbmsSystEnums Module
@@ -71,20 +59,6 @@ load_files = [
     "cmp_msbms_syst_enums/msbms_syst/api_views/syst_enum_items/trig_i_u_syst_enum_items.eex.sql",
     "cmp_msbms_syst_enums/msbms_syst/api_views/syst_enum_items/trig_i_d_syst_enum_items.eex.sql",
     "cmp_msbms_syst_enums/msbms_syst/api_views/syst_enum_items/syst_enum_items.eex.sql",
-
-    "app_msbms_global/components/msbms_syst_enums/privileges.eex.sql",
-
-    #
-    #  MsbmsSystFeatures Module
-    #
-
-    "cmp_msbms_syst_features/msbms_syst_data/syst_relations/syst_relations.eex.sql",
-    "cmp_msbms_syst_features/msbms_syst_data/syst_feature_map_levels/syst_feature_map_levels.eex.sql",
-    "cmp_msbms_syst_features/msbms_syst_data/syst_feature_map/syst_feature_map.eex.sql",
-    "cmp_msbms_syst_features/msbms_syst_priv/trigger_functions/trig_a_iu_feature_map_level_assignable_check.eex.sql",
-    "cmp_msbms_syst_features/msbms_syst_data/syst_feature_relation_assigns/syst_feature_relation_assigns.eex.sql",
-    "cmp_msbms_syst_features/msbms_syst_data/syst_feature_setting_assigns/syst_feature_setting_assigns.eex.sql",
-    "cmp_msbms_syst_features/msbms_syst_data/syst_feature_enum_assigns/syst_feature_enum_assigns.eex.sql",
 
     #
     # MsbmsSystInstanceMgr Module
@@ -136,8 +110,6 @@ load_files = [
     "cmp_msbms_syst_instance_mgr/seed_data/initialize_enum_instance_states.eex.sql",
     "cmp_msbms_syst_instance_mgr/seed_data/initialize_enum_instance_types.eex.sql",
 
-    "app_msbms_global/components/msbms_syst_instance_mgr/privileges.eex.sql",
-
     #
     # MsbmsSystAuthentication Module
     #
@@ -153,9 +125,10 @@ load_files = [
 
     "cmp_msbms_syst_authentication/msbms_syst_data/syst_access_account_instance_assocs/syst_access_account_instance_assocs.eex.sql",
 
+
     #
-    # Global Schema Loading
+    # Testing Data Setup
     #
 
-    "app_msbms_global/gen_seed_data/initialize_feature_mapping.eex.sql",
+    "cmp_msbms_syst_authentication/testing_support/test_privileges.eex.sql",
 ]
