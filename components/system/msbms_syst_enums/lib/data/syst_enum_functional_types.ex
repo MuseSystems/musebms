@@ -68,6 +68,7 @@ defmodule MsbmsSystEnums.Data.SystEnumFunctionalTypes do
     field(:diag_role_modified, :string)
     field(:diag_row_version, :integer)
     field(:diag_update_count, :integer)
+
     belongs_to(:enum, MsbmsSystEnums.Data.SystEnums)
   end
 
