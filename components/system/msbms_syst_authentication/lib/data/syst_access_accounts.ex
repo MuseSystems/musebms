@@ -1,0 +1,71 @@
+# Source File: syst_access_accounts.ex
+# Location:    components/system/msbms_syst_authentication/lib/data/syst_access_accounts.ex
+# Project:     msbms
+#
+# Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+# This file may include content copyrighted and licensed from third parties.
+#
+# See the LICENSE file in the project root for license terms and conditions.
+# See the NOTICE file in the project root for copyright ownership information.
+#
+# muse.information@musesystems.com :: https: //muse.systems
+
+defmodule MsbmsSystAuthentication.Data.SystAccessAccounts do
+  use MsbmsSystDatastore.Schema
+
+  alias MsbmsSystAuthentication.Data
+  alias MsbmsSystAuthentication.Types
+
+  @moduledoc """
+  Contains the known login accounts which are used solely for the purpose of
+  authentication of users.
+
+  Authorization is handled on a per-instance basis within the application.
+  """
+
+  @type t() ::
+          %__MODULE__{
+            __meta__: Ecto.Schema.Metadata.t(),
+            id: Ecto.UUID.t() | nil,
+            internal_name: Types.access_account_name() | nil,
+            external_name: String.t() | nil,
+            owning_owner_id: MsbmsSystInstanceMgr.Types.owner_id() | nil,
+            owning_owner:
+              MsbmsSystInstanceMgr.Data.SystOwners.t() | Ecto.Association.NotLoaded.t() | nil,
+            allow_global_logins: boolean() | nil,
+            access_account_state_id: Types.access_account_state_id() | nil,
+            access_account_state:
+              MsbmsSystEnums.Data.SystEnumItems.t() | Ecto.Association.NotLoaded.t() | nil,
+            diag_timestamp_created: DateTime.t() | nil,
+            diag_role_created: String.t() | nil,
+            diag_timestamp_modified: DateTime.t() | nil,
+            diag_wallclock_modified: DateTime.t() | nil,
+            diag_role_modified: String.t() | nil,
+            diag_row_version: integer() | nil,
+            diag_update_count: integer() | nil
+          }
+
+  @schema_prefix "msbms_syst"
+
+  schema "syst_access_accounts" do
+    field(:internal_name, :string)
+    field(:external_name, :string)
+    field(:allow_global_logins, :boolean)
+    field(:diag_timestamp_created, :utc_datetime)
+    field(:diag_role_created, :string)
+    field(:diag_timestamp_modified, :utc_datetime)
+    field(:diag_wallclock_modified, :utc_datetime)
+    field(:diag_role_modified, :string)
+    field(:diag_row_version, :integer)
+    field(:diag_update_count, :integer)
+
+    belongs_to(:access_account_state, MsbmsSystEnums.Data.SystEnumItems)
+    belongs_to(:owning_owner, MsbmsSystInstanceMgr.Data.SystOwners)
+
+    has_many(:identities, Data.SystIdentities, foreign_key: :access_account_id)
+
+    has_many(:access_account_instance_assocs, Data.SysAccessAccountInstanceAssocs,
+      foreign_key: :access_account_id
+    )
+  end
+end
