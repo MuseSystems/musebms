@@ -1,5 +1,5 @@
 -- File:        database_initial_setup.eex.sql
--- Location:    database\cmp_msbms_syst_enums\testing_support\database_initial_setup.eex.sql
+-- Location:    database\cmp_msbms_syst_instance_mgr\testing_support\database_initial_setup.eex.sql
 -- Project:     Muse Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
