@@ -27,8 +27,8 @@ load_files = [
     # Database Preparation and Common Facilities Load
     #
 
-    "cmp_msbms_syst_enums/testing_support/database_initial_setup.eex.sql",
-    "cmp_msbms_syst_enums/testing_support/create_database_schemata.eex.sql",
+    "cmp_msbms_syst_instance_mgr/testing_support/database_initial_setup.eex.sql",
+    "cmp_msbms_syst_instance_mgr/testing_support/create_database_schemata.eex.sql",
 
     "all/msbms_syst_priv/collations/variant_insensitive.eex.sql",
     "all/msbms_syst_priv/functions/get_exception_details.eex.sql",
