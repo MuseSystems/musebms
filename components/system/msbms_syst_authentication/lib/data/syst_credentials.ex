@@ -44,4 +44,22 @@ defmodule MsbmsSystAuthentication.Data.SystCredentials do
             diag_row_version: integer() | nil,
             diag_update_count: integer() | nil
           }
+
+  @schema_prefix "msbms_syst"
+
+  schema "syst_credentials" do
+    field(:credential_data, :string)
+    field(:last_updated, :utc_datetime)
+    field(:diag_timestamp_created, :utc_datetime)
+    field(:diag_role_created, :string)
+    field(:diag_timestamp_modified, :utc_datetime)
+    field(:diag_wallclock_modified, :utc_datetime)
+    field(:diag_role_modified, :string)
+    field(:diag_row_version, :integer)
+    field(:diag_update_count, :integer)
+
+    belongs_to(:access_account, Data.SystAccessAccounts)
+    belongs_to(:credential_type, MsbmsSystEnums.Data.SystEnumItems)
+    belongs_to(:credential_for_identity, Data.SystIdentities)
+  end
 end
