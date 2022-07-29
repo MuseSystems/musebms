@@ -1,6 +1,6 @@
 -- File:        syst_numbering_sequence_values.eex.sql
--- Location:    database\cmp_msbms_syst_numberings\msbms_syst_data\syst_numbering_sequence_values\syst_numbering_sequence_values.eex.sql
--- Project:     Muse Business Management System
+-- Location:    musebms/database/cmp_msbms_syst_numberings/msbms_syst_data/syst_numbering_sequence_values/syst_numbering_sequence_values.eex.sql
+-- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
 -- This file may include content copyrighted and licensed from third parties.

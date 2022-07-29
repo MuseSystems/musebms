@@ -1,6 +1,6 @@
 # Source File: syst_instance_type_applications.ex
-# Location:    components/system/msbms_syst_instance_mgr/lib/data/validators/syst_instance_type_applications.ex
-# Project:     msbms
+# Location:    musebms/components/system/msbms_syst_instance_mgr/lib/data/validators/syst_instance_type_applications.ex
+# Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
 # This file may include content copyrighted and licensed from third parties.

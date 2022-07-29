@@ -1,22 +1,10 @@
--- File:        trig_i_i_syst_instance_type_applications.eex.sql
--- Location:    database\cmp_msbms_syst_instance_mgr\msbms_syst\api_views\syst_instance_type_applications\trig_i_i_syst_instance_type_applications.eex.sql
--- Project:     Muse Business Management System
---
--- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
--- This file may include content copyrighted and licensed from third parties.
---
--- See the LICENSE file in the project root for license terms and conditions.
--- See the NOTICE file in the project root for copyright ownership information.
---
--- muse.information@musesystems.com  :: https://muse.systems
-
 CREATE OR REPLACE FUNCTION msbms_syst.trig_i_i_syst_instance_type_applications()
 RETURNS trigger AS
 $BODY$
 
 -- File:        trig_i_i_syst_instance_type_applications.eex.sql
--- Location:    database\cmp_msbms_syst_instance_mgr\msbms_syst\api_views\syst_instance_type_applications\trig_i_i_syst_instance_type_applications.eex.sql
--- Project:     Muse Business Management System
+-- Location:    musebms/database/cmp_msbms_syst_instance_mgr/msbms_syst/api_views/syst_instance_type_applications/trig_i_i_syst_instance_type_applications.eex.sql
+-- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
 -- This file may include content copyrighted and licensed from third parties.

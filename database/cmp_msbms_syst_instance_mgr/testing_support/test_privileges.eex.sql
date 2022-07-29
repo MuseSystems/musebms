@@ -1,6 +1,6 @@
 -- File:        test_privileges.eex.sql
--- Location:    database\cmp_msbms_syst_instance_mgr\testing_support\test_privileges.eex.sql
--- Project:     Muse Business Management System
+-- Location:    musebms/database/cmp_msbms_syst_instance_mgr/testing_support/test_privileges.eex.sql
+-- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
 -- This file may include content copyrighted and licensed from third parties.

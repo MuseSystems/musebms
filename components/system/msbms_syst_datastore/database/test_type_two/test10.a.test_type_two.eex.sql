@@ -1,6 +1,6 @@
 -- File:        test10.a.test_type_two.eex.sql
--- Location:    components\system\msbms_syst_datastore\database\test_type_two\test10.a.test_type_two.eex.sql
--- Project:     Muse Business Management System
+-- Location:    musebms/components\system\msbms_syst_datastore\database\test_type_two\test10.a.test_type_two.eex.sql
+-- Project:     Muse Systems Business Management System
 --
 -- Licensed to Lima Buttgereit Holdings LLC (d/b/a Muse Systems) under one or
 -- more agreements.  Muse Systems licenses this file to you under the terms and

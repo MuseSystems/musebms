@@ -1,6 +1,6 @@
 -- File:        migration_schema_initialization.eex.sql
 -- Location:    msbms/priv/migrations_schema/migration_schema_initialization.eex.sql
--- Project:     msbms
+-- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
 -- This file may include content copyrighted and licensed from third parties.
@@ -42,7 +42,7 @@ $INIT_DATASTORE$
 
         -- File:        migration_schema_initialization.eex.sql
         -- Location:    msbms/priv/migrations_schema/migration_schema_initialization.eex.sql
-        -- Project:     msbms
+        -- Project:     Muse Systems Business Management System
         --
         -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
         -- This file may include content copyrighted and licensed from third parties.
@@ -112,7 +112,7 @@ $INIT_DATASTORE$
 
         -- File:        migration_schema_initialization.eex.sql
         -- Location:    msbms/priv/migrations_schema/migration_schema_initialization.eex.sql
-        -- Project:     msbms
+        -- Project:     Muse Systems Business Management System
         --
         -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
         -- This file may include content copyrighted and licensed from third parties.

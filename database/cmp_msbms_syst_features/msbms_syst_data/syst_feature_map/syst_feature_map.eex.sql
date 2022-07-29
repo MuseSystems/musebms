@@ -1,6 +1,6 @@
 -- File:        syst_feature_map.eex.sql
--- Location:    database\cmp_msbms_syst_features\msbms_syst_data\syst_feature_map\syst_feature_map.eex.sql
--- Project:     Muse Business Management System
+-- Location:    musebms/database/cmp_msbms_syst_features/msbms_syst_data/syst_feature_map/syst_feature_map.eex.sql
+-- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
 -- This file may include content copyrighted and licensed from third parties.

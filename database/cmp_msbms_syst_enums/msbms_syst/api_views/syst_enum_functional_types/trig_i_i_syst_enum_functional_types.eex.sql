@@ -3,8 +3,8 @@ RETURNS trigger AS
 $BODY$
 
 -- File:        trig_i_i_syst_enum_functional_types.eex.sql
--- Location:    database\cmp_msbms_syst_enums\msbms_syst\api_views\syst_enum_functional_types\trig_i_i_syst_enum_functional_types.eex.sql
--- Project:     Muse Business Management System
+-- Location:    musebms/database/cmp_msbms_syst_enums/msbms_syst/api_views/syst_enum_functional_types/trig_i_i_syst_enum_functional_types.eex.sql
+-- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
 -- This file may include content copyrighted and licensed from third parties.
@@ -13,6 +13,7 @@ $BODY$
 -- See the NOTICE file in the project root for copyright ownership information.
 --
 -- muse.information@musesystems.com  :: https://muse.systems
+
 DECLARE
     var_syst_defined boolean;
 BEGIN

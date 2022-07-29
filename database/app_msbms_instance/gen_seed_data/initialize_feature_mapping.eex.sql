@@ -1,6 +1,6 @@
 -- File:        initialize_feature_mapping.eex.sql
--- Location:    database\app_msbms_instance\gen_seed_data\initialize_feature_mapping.eex.sql
--- Project:     Muse Business Management System
+-- Location:    musebms/database/app_msbms_instance/gen_seed_data/initialize_feature_mapping.eex.sql
+-- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
 -- This file may include content copyrighted and licensed from third parties.

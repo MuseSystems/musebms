@@ -3,8 +3,8 @@ RETURNS trigger AS
 $BODY$
 
 -- File:        trig_b_iud_syst_application_contexts_validate_owner_context.eex.sql
--- Location:    database\cmp_msbms_syst_instance_mgr\msbms_syst_data\syst_application_contexts\trig_b_iud_syst_application_contexts_validate_owner_context.eex.sql
--- Project:     Muse Business Management System
+-- Location:    musebms/database/cmp_msbms_syst_instance_mgr/msbms_syst_data/syst_application_contexts/trig_b_iud_syst_application_contexts_validate_owner_context.eex.sql
+-- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
 -- This file may include content copyrighted and licensed from third parties.

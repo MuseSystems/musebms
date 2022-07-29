@@ -1,6 +1,6 @@
 -- File:        mstr_entity_workplace_places.eex.sql
--- Location:    database\app_msbms_instance\mod_brm\msbms_appl_data\mstr_entity_workplace_places\mstr_entity_workplace_places.eex.sql
--- Project:     Muse Business Management System
+-- Location:    musebms/database/app_msbms_instance/mod_brm/msbms_appl_data/mstr_entity_workplace_places/mstr_entity_workplace_places.eex.sql
+-- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
 -- This file may include content copyrighted and licensed from third parties.

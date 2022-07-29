@@ -1,6 +1,6 @@
 # Source File: instance_type_application.ex
-# Location:    components/system/msbms_syst_instance_mgr/lib/impl/instance_type_application.ex
-# Project:     msbms
+# Location:    musebms/components/system/msbms_syst_instance_mgr/lib/impl/instance_type_application.ex
+# Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
 # This file may include content copyrighted and licensed from third parties.

@@ -3,8 +3,8 @@ RETURNS trigger AS
 $BODY$
 
 -- File:        trig_b_d_syst_applications_delete_contexts.eex.sql
--- Location:    database\cmp_msbms_syst_instance_mgr\msbms_syst_data\syst_applications\trig_b_d_syst_applications_delete_contexts.eex.sql
--- Project:     Muse Business Management System
+-- Location:    musebms/database/cmp_msbms_syst_instance_mgr/msbms_syst_data/syst_applications/trig_b_d_syst_applications_delete_contexts.eex.sql
+-- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
 -- This file may include content copyrighted and licensed from third parties.

@@ -1,6 +1,6 @@
 # Source File: datastore_context.ex
-# Location:    components/system/msbms_syst_datastore/lib/datastore_context.ex
-# Project:     msbms
+# Location:    musebms/components/system/msbms_syst_datastore/lib/datastore_context.ex
+# Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
 # This file may include content copyrighted and licensed from third parties.

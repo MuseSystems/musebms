@@ -1,6 +1,6 @@
 -- File:        test09.a.test_type_three.eex.sql
--- Location:    components/system/msbms_syst_datastore/database/alt_database/test_type_three/test09.a.test_type_three.eex.sql
--- Project:     Muse Business Management System
+-- Location:    musebms/components/system/msbms_syst_datastore/database/alt_database/test_type_three/test09.a.test_type_three.eex.sql
+-- Project:     Muse Systems Business Management System
 --
 -- Licensed to Lima Buttgereit Holdings LLC (d/b/a Muse Systems) under one or
 -- more agreements.  Muse Systems licenses this file to you under the terms and
