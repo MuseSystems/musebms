@@ -1,0 +1,24 @@
+{
+    "folders":
+    [
+        {
+            "path": "."
+        }
+    ],
+    "settings":
+    {
+        "rulers":
+        [
+            80,
+            98,
+            120
+        ],
+        "tab_size": 2,
+        "translate_tabs_to_spaces": true,
+        "mix_format_command": "mix format",
+        "make_path_relative": true,
+        "mix_format_on_save": true,
+        "reload_after_mix_format": true,
+        "use_root_dir": true
+    }
+}
