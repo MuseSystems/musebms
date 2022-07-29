@@ -288,6 +288,7 @@ defmodule MsbmsSystInstanceMgr do
   #
   # Owners
   #
+
   @doc section: :owner_data
   @doc """
   Creates a new Owner record.
@@ -345,6 +346,36 @@ defmodule MsbmsSystInstanceMgr do
   @spec update_owner(Types.owner_id() | Data.SystOwners.t(), Types.owner_params()) ::
           {:ok, Data.SystOwners.t()} | {:error, MsbmsSystError.t()}
   defdelegate update_owner(owner, update_params), to: Impl.Owner
+
+  @doc section: :owner_data
+  @doc """
+  Retrieves an Owner record by its internal name.
+
+  This retrieval operation will also populate the associated records of Owner 
+  State and the Owner State Functional Type. 
+
+  ## Examples
+
+    iex> %MsbmsSystInstanceMgr.Data.SystOwners{internal_name: "owner1"} =
+    ...>   MsbmsSystInstanceMgr.get_owner_by_name("owner1")
+  """
+
+  @spec get_owner_by_name(Types.owner_name()) :: Data.SystOwners.t()
+  defdelegate get_owner_by_name(owner_name), to: Impl.Owner
+
+  @doc section: :owner_data
+  @doc """
+  Retrieves the Owner record ID by Owner internal name.
+
+  ## Examples
+
+    iex> owner_id = MsbmsSystInstanceMgr.get_owner_id_by_name("owner1")
+    iex> is_binary(owner_id)
+    true
+  """
+
+  @spec get_owner_id_by_name(Types.owner_name()) :: Types.owner_id()
+  defdelegate get_owner_id_by_name(owner_name), to: Impl.Owner
 
   @doc section: :owner_data
   @doc """
