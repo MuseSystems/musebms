@@ -79,6 +79,24 @@ defmodule MsbmsSystInstanceMgr.Impl.Owner do
       }
   end
 
+  @spec get_owner_by_name(Types.owner_name()) :: Data.SystOwners.t()
+  def get_owner_by_name(owner_name) when is_binary(owner_name) do
+    from(
+      o in Data.SystOwners,
+      join: os in assoc(o, :owner_state),
+      join: osft in assoc(os, :functional_type),
+      where: o.internal_name == ^owner_name,
+      preload: [owner_state: {os, functional_type: osft}]
+    )
+    |> MsbmsSystDatastore.one!()
+  end
+
+  @spec get_owner_id_by_name(Types.owner_name()) :: Data.SystOwners.t()
+  def get_owner_id_by_name(owner_name) when is_binary(owner_name) do
+    from(o in Data.SystOwners, select: o.id, where: o.internal_name == ^owner_name)
+    |> MsbmsSystDatastore.one!()
+  end
+
   @spec purge_owner(Types.owner_id() | Data.SystOwners.t()) :: :ok | {:error, MsbmsSystError.t()}
   def purge_owner(owner_id) when is_binary(owner_id) do
     from(
