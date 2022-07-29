@@ -1,6 +1,6 @@
 -- File:        no_changes.eex.sql
--- Location:    database\all\misc\no_changes.eex.sql
--- Project:     Muse Business Management System
+-- Location:    musebms/database/all/misc/no_changes.eex.sql
+-- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
 -- This file may include content copyrighted and licensed from third parties.

@@ -1,6 +1,6 @@
 # Source File: syst_access_accounts.ex
-# Location:    components/system/msbms_syst_authentication/lib/data/syst_access_accounts.ex
-# Project:     msbms
+# Location:    musebms/components/system/msbms_syst_authentication/lib/data/syst_access_accounts.ex
+# Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
 # This file may include content copyrighted and licensed from third parties.

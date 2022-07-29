@@ -1,6 +1,6 @@
--- File:        01.01.000.0000MT.000.eex.sql
--- Location:    database\cmp_msbms_syst_instance_mgr\testing_support\app2\01.01.000.0000MT.000.eex.sql
--- Project:     Muse Business Management System
+-- File:        app2.01.01.000.0000MT.000.eex.sql
+-- Location:    musebms/database/cmp_msbms_syst_instance_mgr/testing_support/app2/app2.01.01.000.0000MT.000.eex.sql
+-- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
 -- This file may include content copyrighted and licensed from third parties.

@@ -15,8 +15,8 @@ RETURNS text AS
 $BODY$
 
 -- File:        get_exception_details.eex.sql
--- Location:    database\all\msbms_syst_priv\functions\get_exception_details.eex.sql
--- Project:     Muse Business Management System
+-- Location:    musebms/database/all/msbms_syst_priv/functions/get_exception_details.eex.sql
+-- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
 -- This file may include content copyrighted and licensed from third parties.

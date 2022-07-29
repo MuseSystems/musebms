@@ -1,6 +1,6 @@
 # Source File: global_db_migrations_test.exs
-# Location:    application/msbms/test/global_db_migrations_test.exs
-# Project:     msbms
+# Location:    musebms/application/msbms/test/global_db_migrations_test.exs
+# Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
 # This file may include content copyrighted and licensed from third parties.

@@ -3,8 +3,8 @@ RETURNS trigger AS
 $BODY$
 
 -- File:        trig_i_u_syst_settings.eex.sql
--- Location:    database\cmp_msbms_syst_settings\msbms_syst\api_views\syst_settings\trig_i_u_syst_settings.eex.sql
--- Project:     Muse Business Management System
+-- Location:    musebms/database/cmp_msbms_syst_settings/msbms_syst/api_views/syst_settings/trig_i_u_syst_settings.eex.sql
+-- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
 -- This file may include content copyrighted and licensed from third parties.

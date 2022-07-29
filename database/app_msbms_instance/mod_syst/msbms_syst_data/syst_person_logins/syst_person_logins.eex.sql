@@ -1,6 +1,6 @@
 -- File:        syst_person_logins.eex.sql
--- Location:    database\app_msbms_instance\mod_syst\msbms_syst_data\syst_person_logins\syst_person_logins.eex.sql
--- Project:     Muse Business Management System
+-- Location:    musebms/database/app_msbms_instance/mod_syst/msbms_syst_data/syst_person_logins/syst_person_logins.eex.sql
+-- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
 -- This file may include content copyrighted and licensed from third parties.

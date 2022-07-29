@@ -1,6 +1,6 @@
 -- File:        initialize_enum_fiscal_year_types.eex.sql
--- Location:    database\app_msbms_instance\mod_accounting\seed_data\initialize_enum_fiscal_year_types.eex.sql
--- Project:     Muse Business Management System
+-- Location:    musebms/database/app_msbms_instance/mod_accounting/seed_data/initialize_enum_fiscal_year_types.eex.sql
+-- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
 -- This file may include content copyrighted and licensed from third parties.

@@ -1,6 +1,6 @@
 # Source File: syst_identities.ex
-# Location:    components/system/msbms_syst_authentication/lib/data/syst_identities.ex
-# Project:     msbms
+# Location:    musebms/components/system/msbms_syst_authentication/lib/data/syst_identities.ex
+# Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
 # This file may include content copyrighted and licensed from third parties.

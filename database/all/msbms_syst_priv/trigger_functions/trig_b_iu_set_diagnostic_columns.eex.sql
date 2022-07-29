@@ -3,8 +3,8 @@ RETURNS trigger AS
 $BODY$
 
 -- File:        trig_b_iu_set_diagnostic_columns.eex.sql
--- Location:    database\all\msbms_syst_priv\trigger_functions\trig_b_iu_set_diagnostic_columns.eex.sql
--- Project:     Muse Business Management System
+-- Location:    musebms/database/all/msbms_syst_priv/trigger_functions/trig_b_iu_set_diagnostic_columns.eex.sql
+-- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
 -- This file may include content copyrighted and licensed from third parties.
