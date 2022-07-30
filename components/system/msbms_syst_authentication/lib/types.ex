@@ -23,6 +23,16 @@ defmodule MsbmsSystAuthentication.Types do
 
   @type access_account_name() :: String.t()
 
+  @type access_account_params() :: %{
+          optional(:internal_name) => access_account_name(),
+          optional(:external_name) => String.t(),
+          optional(:owning_owner_id) => MsbmsSystInstanceMgr.Types.owner_id(),
+          optional(:owning_owner_name) => MsbmsSystInstanceMgr.Types.owner_name(),
+          optional(:allow_global_logins) => boolean(),
+          optional(:access_account_state_id) => access_account_state_id(),
+          optional(:access_account_state_name) => access_account_name()
+        }
+
   @type access_account_state_id() :: MsbmsSystEnums.Types.enum_item_id()
 
   @type access_account_state_name() :: MsbmsSystEnums.Types.enum_item_name()

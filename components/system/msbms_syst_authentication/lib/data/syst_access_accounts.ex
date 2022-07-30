@@ -68,4 +68,12 @@ defmodule MsbmsSystAuthentication.Data.SystAccessAccounts do
       foreign_key: :access_account_id
     )
   end
+
+  @spec insert_changeset(Types.access_account_params(), Keyword.t()) :: Ecto.Changeset.t()
+  defdelegate insert_changeset(insert_params, opts \\ []), to: Data.Validators.SystAccessAccounts
+
+  @spec update_changeset(Data.SystAccessAccounts.t(), Types.access_account_params(), Keyword.t()) ::
+          Ecto.Changeset.t()
+  defdelegate update_changeset(access_account, update_params, opts),
+    to: Data.Validators.SystAccessAccounts
 end
