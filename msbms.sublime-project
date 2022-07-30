@@ -29,6 +29,9 @@
 			"path": "components/system/msbms_syst_instance_mgr",
 		},
 		{
+			"path": "components/system/msbms_syst_authentication",
+		},
+		{
 			"path": "application/msbms",
 		},
 		{
