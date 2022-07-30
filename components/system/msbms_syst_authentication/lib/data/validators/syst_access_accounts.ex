@@ -66,5 +66,6 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystAccessAccounts do
       :access_account_state_id,
       :allow_global_logins
     ])
+    |> optimistic_lock(:diag_row_version)
   end
 end
