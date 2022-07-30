@@ -130,21 +130,30 @@ defmodule OwnerTest do
   end
 
   test "Can Retrieve Owner by Name" do
-    assert {:ok, test_owner} = MsbmsSystInstanceMgr.get_owner_by_name("owner1")
+    owner_record =
+      from(o in Data.SystOwners, limit: 1)
+      |> MsbmsSystDatastore.one!()
 
-    assert is_binary(test_owner.id)
+    assert {:ok, test_owner} = MsbmsSystInstanceMgr.get_owner_by_name(owner_record.internal_name)
 
     assert %Data.SystOwners{
              owner_state: %MsbmsSystEnums.Data.SystEnumItems{
                functional_type: %MsbmsSystEnums.Data.SystEnumFunctionalTypes{}
              }
            } = test_owner
+
+    assert test_owner.id == owner_record.id
   end
 
   test "Can Retrieve Owner ID by Name" do
-    assert {:ok, test_owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner1")
+    owner_record =
+      from(o in Data.SystOwners, limit: 1)
+      |> MsbmsSystDatastore.one!()
 
-    assert is_binary(test_owner_id)
+    assert {:ok, test_owner_id} =
+             MsbmsSystInstanceMgr.get_owner_id_by_name(owner_record.internal_name)
+
+    assert test_owner_id == owner_record.id
   end
 
   test "Can Purge Owner by Preloaded Struct" do
