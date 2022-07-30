@@ -21,11 +21,9 @@ defmodule MsbmsSystAuthentication.Data.Helpers.SysAccessAccounts do
 
   def resolve_owner_id(%{owning_owner_name: owner_name} = access_account_params)
       when is_binary(owner_name) do
-    Map.put(
-      access_account_params,
-      :owning_owner_id,
-      MsbmsSystInstanceMgr.get_owner_id_by_name(owner_name)
-    )
+    {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name(owner_name)
+
+    Map.put(access_account_params, :owning_owner_id, owner_id)
   end
 
   def resolve_owner_id(access_account_params), do: access_account_params

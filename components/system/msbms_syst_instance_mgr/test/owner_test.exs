@@ -130,7 +130,7 @@ defmodule OwnerTest do
   end
 
   test "Can Retrieve Owner by Name" do
-    test_owner = MsbmsSystInstanceMgr.get_owner_by_name("owner1")
+    assert {:ok, test_owner} = MsbmsSystInstanceMgr.get_owner_by_name("owner1")
 
     assert is_binary(test_owner.id)
 
@@ -142,7 +142,7 @@ defmodule OwnerTest do
   end
 
   test "Can Retrieve Owner ID by Name" do
-    test_owner_id = MsbmsSystInstanceMgr.get_owner_id_by_name("owner1")
+    assert {:ok, test_owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner1")
 
     assert is_binary(test_owner_id)
   end
