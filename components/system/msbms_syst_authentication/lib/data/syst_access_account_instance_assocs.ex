@@ -69,4 +69,14 @@ defmodule MsbmsSystAuthentication.Data.SystAccessAccountInstanceAssocs do
     belongs_to(:credential_type, MsbmsSystEnums.Data.SystEnumItems)
     belongs_to(:instance, MsbmsSystInstanceMgr.Data.SystInstances)
   end
+
+  @spec insert_changeset(Types.access_account_instance_assoc_params()) :: Ecto.Changeset.t()
+  defdelegate insert_changeset(insert_params), to: Data.Validators.SystAccessAccountInstanceAssocs
+
+  @spec update_changeset(
+          Data.SystAccessAccountInstanceAssocs,
+          Types.access_account_instance_assoc_params()
+        ) :: Ecto.Changeset.t()
+  defdelegate update_changeset(access_account_instance_assoc, update_params),
+    to: Data.Validators.SystAccessAccountInstanceAssocs
 end
