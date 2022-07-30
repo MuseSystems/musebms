@@ -283,6 +283,59 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
     |> Enum.map(&{String.to_atom(elem(&1, 0)), elem(&1, 1)})
   end
 
+  # Returns a populated SystInstances struct for the requested Instance internal
+  # name.
+  #
+  # Populated in this case means that statusing information is populated.
+
+  @spec get_instance_by_name(Types.instance_name()) ::
+          {:ok, Data.SystInstances.t()} | {:error, MsbmsSystError.t()}
+  def get_instance_by_name(instance_name) when is_binary(instance_name) do
+    from(
+      i in Data.SystInstances,
+      join: is in assoc(i, :instance_state),
+      join: isft in assoc(is, :functional_type),
+      where: i.internal_name == ^instance_name,
+      preload: [instance_state: {is, functional_type: isft}]
+    )
+    |> MsbmsSystDatastore.one!()
+    |> then(&{:ok, &1})
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure retrieving Instance by internal name.",
+          cause: error
+        }
+      }
+  end
+
+  # Returns the ID of a SystInstances record as looked up by its internal name.
+
+  @spec get_instance_id_by_name(Types.instance_name()) ::
+          {:ok, Types.instance_id()} | {:error, MsbmsSystError.t()}
+  def get_instance_id_by_name(instance_name) do
+    from(i in Data.SystInstances, select: i.id, where: i.internal_name == ^instance_name)
+    |> MsbmsSystDatastore.one!()
+    |> then(&{:ok, &1})
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure retrieving Instance ID by internal name.",
+          cause: error
+        }
+      }
+  end
+
   @spec purge_instance(Types.instance_id() | Data.SystInstances.t(), startup_options :: map()) ::
           :ok | {:error, MsbmsSystError.t()}
   def purge_instance(instance_id, startup_options) when is_binary(instance_id) do

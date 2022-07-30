@@ -399,6 +399,7 @@ defmodule MsbmsSystInstanceMgr do
   #
   # Instances
   #
+
   @doc section: :instance_data
   @doc """
   Creates a new Instance record.
@@ -584,6 +585,44 @@ defmodule MsbmsSystInstanceMgr do
 
   @spec get_default_instance_state_ids() :: Keyword.t()
   defdelegate get_default_instance_state_ids, to: Impl.Instance
+
+  @doc section: :instance_data
+  @doc """
+  Returns the SystInstances record identified by its internal name.
+
+  ## Parameters
+
+    * `instance_name` - the internal name of the Instance record to return.
+
+  ## Example
+
+      iex> {:ok, %MsbmsSystInstanceMgr.Data.SystInstances{}} =
+      ...>   MsbmsSystInstanceMgr.get_instance_by_name("app1_owner1_instance_types_sml")
+  """
+
+  @spec get_instance_by_name(Types.instance_name()) ::
+          {:ok, Data.SystInstances.t()} | {:error, MsbmsSystError.t()}
+  defdelegate get_instance_by_name(instance_name), to: Impl.Instance
+
+  @doc section: :instance_data
+  @doc """
+  Returns the ID of the Instance record as identified by its internal name.
+
+  ## Parameters
+
+    * `instance_name` - the internal name of the Instance record to reference.
+
+  ## Example
+
+      iex> {:ok, instance_id} =
+      ...>   MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner1_instance_types_sml")
+      iex> is_binary(instance_id)
+      true
+  """
+
+  @spec get_instance_id_by_name(Types.instance_name()) ::
+          {:ok, Types.instance_id()} | {:error, MsbmsSystError.t()}
+  defdelegate get_instance_id_by_name(instance_name), to: Impl.Instance
 
   @doc section: :instance_data
   @doc """
