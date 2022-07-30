@@ -10,7 +10,7 @@
 #
 # muse.information@musesystems.com :: https: //muse.systems
 
-defmodule MsbmsSystAuthentication.Data.SysAccessAccountInstanceAssocs do
+defmodule MsbmsSystAuthentication.Data.SystAccessAccountInstanceAssocs do
   use MsbmsSystDatastore.Schema
 
   alias MsbmsSystAuthentication.Data
