@@ -314,7 +314,7 @@ $AUTHENTICATION_TESTING_INIT$
              ,
             ( 'accnt2', 'Access Account 2', ( SELECT id
                                               FROM msbms_syst_data.syst_owners
-                                              WHERE internal_name = 'owner1' ), TRUE, ( SELECT id
+                                              WHERE internal_name = 'owner1' ), FALSE, ( SELECT id
                                                                                         FROM msbms_syst_data.syst_enum_items
                                                                                         WHERE internal_name = 'access_account_states_sysdef_active' ) );
 
