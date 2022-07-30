@@ -89,12 +89,38 @@ defmodule MsbmsSystInstanceMgr.Impl.Owner do
       preload: [owner_state: {os, functional_type: osft}]
     )
     |> MsbmsSystDatastore.one!()
+    |> then(&{:ok, &1})
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure retrieving Owner data.",
+          cause: error
+        }
+      }
   end
 
   @spec get_owner_id_by_name(Types.owner_name()) :: Data.SystOwners.t()
   def get_owner_id_by_name(owner_name) when is_binary(owner_name) do
     from(o in Data.SystOwners, select: o.id, where: o.internal_name == ^owner_name)
     |> MsbmsSystDatastore.one!()
+    |> then(&{:ok, &1})
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure retrieving Owner ID.",
+          cause: error
+        }
+      }
   end
 
   @spec purge_owner(Types.owner_id() | Data.SystOwners.t()) :: :ok | {:error, MsbmsSystError.t()}

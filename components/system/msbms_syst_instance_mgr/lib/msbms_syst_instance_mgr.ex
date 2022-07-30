@@ -356,11 +356,12 @@ defmodule MsbmsSystInstanceMgr do
 
   ## Examples
 
-    iex> %MsbmsSystInstanceMgr.Data.SystOwners{internal_name: "owner1"} =
+    iex> {:ok, %MsbmsSystInstanceMgr.Data.SystOwners{internal_name: "owner1"}} =
     ...>   MsbmsSystInstanceMgr.get_owner_by_name("owner1")
   """
 
-  @spec get_owner_by_name(Types.owner_name()) :: Data.SystOwners.t()
+  @spec get_owner_by_name(Types.owner_name()) ::
+          {:ok, Data.SystOwners.t()} | {:error, MsbmsSystError.t()}
   defdelegate get_owner_by_name(owner_name), to: Impl.Owner
 
   @doc section: :owner_data
@@ -369,12 +370,13 @@ defmodule MsbmsSystInstanceMgr do
 
   ## Examples
 
-    iex> owner_id = MsbmsSystInstanceMgr.get_owner_id_by_name("owner1")
+    iex> {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner1")
     iex> is_binary(owner_id)
     true
   """
 
-  @spec get_owner_id_by_name(Types.owner_name()) :: Types.owner_id()
+  @spec get_owner_id_by_name(Types.owner_name()) ::
+          {:ok, Types.owner_id()} | {:error, MsbmsSystError.t()}
   defdelegate get_owner_id_by_name(owner_name), to: Impl.Owner
 
   @doc section: :owner_data
