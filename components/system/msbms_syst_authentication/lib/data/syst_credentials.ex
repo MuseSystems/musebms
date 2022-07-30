@@ -31,9 +31,10 @@ defmodule MsbmsSystAuthentication.Data.SystCredentials do
             access_account_id: Types.access_account_id() | nil,
             access_account: Data.SystAccessAccounts.t() | Ecto.Association.NotLoaded.t() | nil,
             credential_type_id: Types.credential_type_id() | nil,
-            credential_type: Data.SystCredential.t() | Ecto.Association.NotLoaded.t() | nil,
+            credential_type: Data.SystCredentials.t() | Ecto.Association.NotLoaded.t() | nil,
             credential_for_identity_id: Types.identity_id() | nil,
-            credential_for_identity: Data.SystIdentity.t() | Ecto.Association.NotLoaded.t() | nil,
+            credential_for_identity:
+              Data.SystIdentities.t() | Ecto.Association.NotLoaded.t() | nil,
             credential_data: String.t() | nil,
             last_updated: DateTime.t() | nil,
             diag_timestamp_created: DateTime.t() | nil,
