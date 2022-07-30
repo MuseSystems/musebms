@@ -107,3 +107,11 @@ GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_i_syst_instance_contexts() TO <%= ms
 GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_u_syst_instance_contexts() TO <%= msbms_appusr %>;
 
 GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_d_syst_instance_contexts() TO <%= msbms_appusr %>;
+
+--
+-- MsbmsSystAuthentication
+--
+
+-- syst_access_accounts
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE msbms_syst.syst_access_accounts TO <%= msbms_appusr %>;

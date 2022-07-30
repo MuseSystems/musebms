@@ -125,6 +125,10 @@ load_files = [
 
     "cmp_msbms_syst_authentication/msbms_syst_data/syst_access_account_instance_assocs/syst_access_account_instance_assocs.eex.sql",
 
+    "cmp_msbms_syst_authentication/msbms_syst/api_views/syst_access_accounts/trig_i_i_syst_access_accounts.eex.sql",
+    "cmp_msbms_syst_authentication/msbms_syst/api_views/syst_access_accounts/trig_i_u_syst_access_accounts.eex.sql",
+    "cmp_msbms_syst_authentication/msbms_syst/api_views/syst_access_accounts/trig_i_d_syst_access_accounts.eex.sql",
+    "cmp_msbms_syst_authentication/msbms_syst/api_views/syst_access_accounts/syst_access_accounts.eex.sql",
 
     #
     # Testing Data Setup
