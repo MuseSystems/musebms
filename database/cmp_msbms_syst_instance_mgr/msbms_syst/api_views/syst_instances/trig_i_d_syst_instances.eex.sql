@@ -35,4 +35,4 @@ GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_d_syst_instances() TO <%= msbms_owne
 
 COMMENT ON FUNCTION msbms_syst.trig_i_d_syst_instances() IS
 $DOC$An INSTEAD OF trigger function which applies business rules when using the
-syst_enum_items API View for DELETE operations.$DOC$;
+syst_instances API View for DELETE operations.$DOC$;
