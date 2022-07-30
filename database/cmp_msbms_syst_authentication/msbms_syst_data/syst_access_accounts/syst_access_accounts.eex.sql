@@ -30,6 +30,8 @@ CREATE TABLE msbms_syst_data.syst_access_accounts
     ,allow_global_logins
         boolean
         NOT NULL DEFAULT false
+        CONSTRAINT syst_access_accounts_global_login_chk
+            CHECK (NOT allow_global_logins OR owning_owner_id IS NULL)
     ,access_account_state_id
         uuid
         NOT NULL
@@ -83,8 +85,8 @@ CREATE CONSTRAINT TRIGGER a50_trig_a_u_access_account_states_enum_item_check
 COMMENT ON
     TABLE msbms_syst_data.syst_access_accounts IS
 $DOC$Contains the known login accounts which are used solely for the purpose of
-authentication of users.  Authorization is handled on a per-instance basis within the
-application.$DOC$;
+authentication of users.  Authorization is handled on a per-instance basis
+within the application.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.syst_access_accounts.id IS
@@ -125,7 +127,10 @@ used for a different, but unrelated, owner.  In this case you have multiple
 access accounts with possibly the same identifier; to resolve the conflict, it
 is required therefore to know which owner or instance the access accounts holder
 is trying to access.  In the allow global case we can just ask the account
-holder but in the disallow global case we need to know it in advance.$DOC$;
+holder but in the disallow global case we need to know it in advance.
+
+Note that when an owning_owner_id value is NOT NULL, then the
+allow_global_logins value must be false.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.syst_access_accounts.access_account_state_id IS
