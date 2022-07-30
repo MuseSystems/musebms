@@ -64,7 +64,7 @@ defmodule MsbmsSystAuthentication.Data.SystAccessAccounts do
 
     has_many(:identities, Data.SystIdentities, foreign_key: :access_account_id)
 
-    has_many(:access_account_instance_assocs, Data.SysAccessAccountInstanceAssocs,
+    has_many(:access_account_instance_assocs, Data.SystAccessAccountInstanceAssocs,
       foreign_key: :access_account_id
     )
   end
