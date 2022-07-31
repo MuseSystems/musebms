@@ -104,8 +104,11 @@ is required therefore to know which owner or instance the access accounts holder
 is trying to access.  In the allow global case we can just ask the account
 holder but in the disallow global case we need to know it in advance.
 
-Note that when an owning_owner_id value is NOT NULL, then the
-allow_global_logins value must be false.$DOC$;
+Another way to think about global logins is in relation to user interface.  A
+global login interface may present the user with a choice of instance owners and
+then their instances whereas the non-global login user must go directly to the
+login interface for a specific owner (be that URL or other client-side specific
+identification.)$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst.syst_access_accounts.access_account_state_id IS
