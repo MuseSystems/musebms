@@ -30,6 +30,8 @@ BEGIN
         , new.access_account_state_id)
     RETURNING * INTO new;
 
+    RETURN new;
+
 END;
 $BODY$
     LANGUAGE plpgsql
