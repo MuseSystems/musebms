@@ -35,6 +35,12 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
 
   @migration_schema_sql_file "migrations_schema/migration_schema_initialization.eex.sql"
 
+  ##########################
+  #
+  #  Migration File Building
+  #
+  ##########################
+
   @spec build_migrations(String.t(), Keyword.t()) ::
           {:ok, list(Path.t())} | {:error, MsbmsSystError.t()}
   def build_migrations(datastore_type, opts \\ []) do
@@ -199,6 +205,12 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
     File.mkdir_p!(dest_path)
     :ok
   end
+
+  ################################
+  #
+  #  Database Migration Management
+  #
+  ################################
 
   @spec get_datastore_version(Keyword.t()) ::
           {:ok, String.t()} | {:error, MsbmsSystError.t()}
