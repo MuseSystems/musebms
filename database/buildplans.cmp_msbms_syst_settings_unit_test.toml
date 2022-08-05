@@ -34,7 +34,6 @@ update               = 0
 sponsor              = 821
 sponsor_modification = 0
 load_files = [
-
     "cmp_msbms_syst_settings/testing_support/test_privileges.eex.sql",
     "cmp_msbms_syst_settings/testing_support/test_data.eex.sql",
 ]
