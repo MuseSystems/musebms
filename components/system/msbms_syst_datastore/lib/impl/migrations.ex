@@ -154,7 +154,15 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
            :ok <-
              build_plan["load_files"]
              |> Enum.each(fn file ->
-               sql = File.read!(Path.join([source_root, file]))
+               sql =
+                 process_load_file_item(file, source_root, %{
+                   release: build_plan["release"],
+                   version: build_plan["version"],
+                   update: build_plan["update"],
+                   sponsor: build_plan["sponsor"],
+                   sponsor_modification: build_plan["sponsor_modification"]
+                 })
+
                IO.binwrite(target, sql)
              end),
            :ok <-
@@ -176,6 +184,32 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
     after
       :ok = File.close(target)
     end
+  end
+
+  defp process_load_file_item(file, source_root, _version) when is_binary(file) do
+    File.read!(Path.join([source_root, file]))
+  end
+
+  defp process_load_file_item(%{"type" => "sql", "file" => file}, source_root, _version)
+       when is_binary(file) do
+    process_load_file_item(file, source_root, nil)
+  end
+
+  defp process_load_file_item(%{"type" => "plan", "file" => plan_file}, source_root, version)
+       when is_binary(plan_file) and is_map(version) do
+    Path.join([source_root, plan_file])
+    |> File.stream!()
+    |> Toml.decode_stream!()
+    |> Map.get("build_plan")
+    |> Enum.find(%{"load_files" => []}, fn plan ->
+      version.release == plan["release"] and
+        version.version == plan["version"] and
+        version.update == plan["update"] and
+        version.sponsor == plan["sponsor"] and
+        version.sponsor_modification == plan["sponsor_modification"]
+    end)
+    |> then(& &1["load_files"])
+    |> Enum.reduce("", &(&2 <> process_load_file_item(&1, source_root, version)))
   end
 
   @spec(clean_existing_migrations(String.t(), Keyword.t()) :: :ok, {:error, MsbmsSystError.t()})

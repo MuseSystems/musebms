@@ -8,7 +8,7 @@
 # See the LICENSE file in the project root for license terms and conditions.
 # See the NOTICE file in the project root for copyright ownership information.
 #
-# muse.information@musesystems.com :: https: //muse.systems
+# muse.information@musesystems.com :: https://muse.systems
 
 defmodule Mix.Tasks.Builddb do
   use Mix.Task
@@ -70,7 +70,8 @@ defmodule Mix.Tasks.Builddb do
   sponsor_modification = 0
   load_files = [
       "tables/table_one.sql",
-      "tables/table_two.sql",
+      {type = "sql", file = "tables/table_two.sql"},
+      {type = "plan", file = "subplans/subplans.component.toml"}
   ]
   ```
   The fields above are defined as:
@@ -100,9 +101,26 @@ defmodule Mix.Tasks.Builddb do
       field should just be left at zero.
 
 
-    * `load_files` - A list of file paths to the individual source files listed
-      in the order of which they should be applied to the database.
+    * `load_files` - A list of SQL files and sub-plans to include in the build.
+      Collectively, these are "Load File Items".
 
+  Each Load File Item may take one of three forms:
+
+    1. `"path/to/file.sql"` - A simple string is interpreted as the path to an
+       SQL file to load into a migration.
+
+    2. `{type = "sql", file = "path/to/file.sql"} - This is the same as the 
+       simple file path of form 1.  Using this form could allow for a slightly
+       cleaner representation if sat in a group of sub-plan Load File Items.
+
+    3. `{type = "plan", file = "path/to/subplan.toml"} - In this form the path
+       indicates that the file is a nested build plan, or sub-plan, whose 
+       directives should be followed at this location.  A sub-plan is itself a
+       normal build plan.  By convention, a sub-plan file name should take the
+       form: `subplans.<descriptive_name>.toml`; unlike the build plan naming 
+       convention, following the sub-plan naming convention is not required.  
+       While build plans may be nested arbitrarily deep, a best practice is to 
+       only use a single level of nesting.
 
   Each table in the array is a specific build plan which will build a single
   migration.  The body of the migration itself is simply the files in the
