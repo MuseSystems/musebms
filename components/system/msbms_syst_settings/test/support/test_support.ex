@@ -67,7 +67,7 @@ defmodule TestSupport do
   }
 
   @migration_test_source_root_dir "../../../database"
-  @migration_test_datastore_type "cmp_msbms_syst_settings"
+  @migration_test_datastore_type "cmp_msbms_syst_settings_unit_test"
 
   def setup_testing_database do
     :ok = build_migrations()
