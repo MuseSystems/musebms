@@ -10,6 +10,8 @@
 --
 -- muse.information@musesystems.com  :: https://muse.systems
 
+GRANT USAGE ON SCHEMA msbms_syst TO <%= msbms_appusr %>;
+
 --
 --  MsbmsSystEnums
 --
