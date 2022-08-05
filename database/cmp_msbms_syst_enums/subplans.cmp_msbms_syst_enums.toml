@@ -1,5 +1,5 @@
-# Source File: buildplans.msbms_syst_enums.toml
-# Location:    musebms/database/buildplans.msbms_syst_enums.toml
+# Source File: subplans.msbms_syst_enums.toml
+# Location:    musebms/database/cmp_msbms_syst_enums/subplans.msbms_syst_enums.toml
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,34 +10,13 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-##
-##  NOTE:  This build plan exists only to facilitate automated testing,
-##         continuous integration, and other similar development & testing
-##         activities.  It is not used to build released software.
-##
-
 [[build_plan]]
 release              = 1
 version              = 1
 update               = 0
-sponsor              = 821
+sponsor              = 820
 sponsor_modification = 0
 load_files = [
-    #
-    # Database Preparation and Common Facilities Load
-    #
-
-    "cmp_msbms_syst_enums/testing_support/database_initial_setup.eex.sql",
-    "cmp_msbms_syst_enums/testing_support/create_database_schemata.eex.sql",
-
-    "all/msbms_syst_priv/collations/variant_insensitive.eex.sql",
-    "all/msbms_syst_priv/functions/get_exception_details.eex.sql",
-    "all/msbms_syst_priv/trigger_functions/trig_b_iu_set_diagnostic_columns.eex.sql",
-
-    #
-    # MsbmsSystEnums Module
-    #
-
     "cmp_msbms_syst_enums/msbms_syst_data/syst_enums/syst_enums.eex.sql",
 
     "cmp_msbms_syst_enums/msbms_syst_data/syst_enum_functional_types/trig_b_i_syst_enum_functional_type_validate_new_allowed.eex.sql",
@@ -65,11 +44,4 @@ load_files = [
     "cmp_msbms_syst_enums/msbms_syst/api_views/syst_enum_items/trig_i_u_syst_enum_items.eex.sql",
     "cmp_msbms_syst_enums/msbms_syst/api_views/syst_enum_items/trig_i_d_syst_enum_items.eex.sql",
     "cmp_msbms_syst_enums/msbms_syst/api_views/syst_enum_items/syst_enum_items.eex.sql",
-
-    #
-    # Testing Data Setup
-    #
-
-    "cmp_msbms_syst_enums/testing_support/test_privileges.eex.sql",
-    "cmp_msbms_syst_enums/testing_support/test_data.eex.sql",
 ]
