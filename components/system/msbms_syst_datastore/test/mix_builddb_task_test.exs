@@ -180,4 +180,41 @@ defmodule MixBuilddbTaskTest do
       assert true = String.match?(file_content, ~r/#{file_name}/)
     end)
   end
+
+  @tag ds_type: :five
+  test "Perform a build when nested build plans are in use" do
+    # TODO: Make this test more robust.  Really there are some content and
+    #       ordering checks that should be made, but are more difficult and
+    #       sensitive to implement.  Those failure scenarios are unlikely to 
+    #       crop up in reality and so we'll just go with the "did it finish"
+    #       level of testing below, but the internal checks should be added
+    #       at some point.
+
+    assert :ok = Builddb.run(["-t", "test_type_five", "-c"])
+
+    file_list =
+      [@standard_migrations_root_dir, "test_type_five"]
+      |> Path.join()
+      |> File.ls!()
+      |> Enum.sort()
+
+    assert 3 = length(file_list)
+
+    assert ["test_type_five.01.01.000.0000MS.000.eex.sql" | _] = file_list
+
+    assert "test_type_five.01.03.000.0000MS.000.eex.sql" = List.last(file_list)
+
+    Enum.each(file_list, fn file_name ->
+      file_content =
+        [@standard_migrations_root_dir, "test_type_five", file_name]
+        |> Path.join()
+        |> File.read!()
+
+      assert true =
+               String.match?(
+                 file_content,
+                 ~r/#{file_name}/
+               )
+    end)
+  end
 end
