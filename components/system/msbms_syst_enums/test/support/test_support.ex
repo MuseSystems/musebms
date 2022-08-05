@@ -65,7 +65,7 @@ defmodule TestSupport do
   }
 
   @migration_test_source_root_dir "../../../database"
-  @migration_test_datastore_type "cmp_msbms_syst_enums"
+  @migration_test_datastore_type "cmp_msbms_syst_enums_unit_test"
 
   @datastore_context_name :enums_app_context
 
