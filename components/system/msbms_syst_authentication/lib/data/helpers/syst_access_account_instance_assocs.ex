@@ -8,7 +8,7 @@
 # See the LICENSE file in the project root for license terms and conditions.
 # See the NOTICE file in the project root for copyright ownership information.
 #
-# muse.information@musesystems.com :: https: //muse.systems
+# muse.information@musesystems.com :: https://muse.systems
 
 defmodule MsbmsSystAuthentication.Data.Helpers.SystAccessAccountInstanceAssocs do
   @moduledoc false
