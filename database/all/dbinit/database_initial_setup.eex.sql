@@ -33,5 +33,6 @@ BEGIN
     CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
     CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
+    REVOKE ALL ON SCHEMA public FROM public;
 END;
 $SCRIPT$;
