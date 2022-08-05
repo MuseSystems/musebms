@@ -10,6 +10,8 @@
 --
 -- muse.information@musesystems.com  :: https://muse.systems
 
+GRANT USAGE ON SCHEMA msbms_syst TO <%= msbms_appusr %>;
+
 -- syst_enums
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE msbms_syst.syst_enums TO <%= msbms_appusr %>;
