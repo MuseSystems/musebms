@@ -1,5 +1,5 @@
 -- File:        database_initial_setup.eex.sql
--- Location:    musebms/database/cmp_msbms_syst_settings/testing_support/database_initial_setup.eex.sql
+-- Location:    musebms/database/all/dbinit/database_initial_setup.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -17,7 +17,7 @@
   This script will create the required database roles and extensions in the
   target database cluster/database.
 
-  Please be use that the following extensions are available to be installed
+  Please be sure that the following extensions are available to be installed
   prior to running this script:
 
     - uuid-ossp
