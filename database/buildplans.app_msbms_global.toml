@@ -18,144 +18,42 @@ sponsor              = 820
 sponsor_modification = 0
 load_files = [
     #
-    # Database Preparation and Common Facilities Load
+    # Database Initialization
     #
 
-    "app_msbms_global/gen_dbinit/database_initial_setup.eex.sql",
-    "app_msbms_global/gen_dbinit/create_database_schemata.eex.sql",
-
-    "all/msbms_syst_priv/collations/variant_insensitive.eex.sql",
-    "all/msbms_syst_priv/functions/get_exception_details.eex.sql",
-    "all/msbms_syst_priv/trigger_functions/trig_b_iu_set_diagnostic_columns.eex.sql",
+    {type = "plan", file = "all/subplans.common_init.toml"},
 
     #
-    # MsbmsSystSettings Module
+    # MsbmsSystSettings
     #
 
-    "cmp_msbms_syst_settings/msbms_syst_data/syst_settings/syst_settings.eex.sql",
-    "cmp_msbms_syst_settings/msbms_syst/api_views/syst_settings/trig_i_i_syst_settings.eex.sql",
-    "cmp_msbms_syst_settings/msbms_syst/api_views/syst_settings/trig_i_u_syst_settings.eex.sql",
-    "cmp_msbms_syst_settings/msbms_syst/api_views/syst_settings/trig_i_d_syst_settings.eex.sql",
-    "cmp_msbms_syst_settings/msbms_syst/api_views/syst_settings/syst_settings.eex.sql",
-
+    {type = "plan", file = "cmp_msbms_syst_settings/subplans.cmp_msbms_syst_settings.toml"},
     "app_msbms_global/components/msbms_syst_settings/privileges.eex.sql",
 
     #
-    # MsbmsSystEnums Module
+    # MsbmsSystEnums
     #
 
-    "cmp_msbms_syst_enums/msbms_syst_data/syst_enums/syst_enums.eex.sql",
-
-    "cmp_msbms_syst_enums/msbms_syst_data/syst_enum_functional_types/trig_b_i_syst_enum_functional_type_validate_new_allowed.eex.sql",
-    "cmp_msbms_syst_enums/msbms_syst_data/syst_enum_functional_types/syst_enum_functional_types.eex.sql",
-
-    "cmp_msbms_syst_enums/msbms_syst_data/syst_enum_items/trig_b_i_syst_enum_items_maintain_sort_order.eex.sql",
-    "cmp_msbms_syst_enums/msbms_syst_data/syst_enum_items/trig_b_iu_syst_enum_items_validate_functional_types.eex.sql",
-    "cmp_msbms_syst_enums/msbms_syst_data/syst_enum_items/trig_a_iu_syst_enum_items_maintain_sort_order.eex.sql",
-    "cmp_msbms_syst_enums/msbms_syst_data/syst_enum_items/syst_enum_items.eex.sql",
-
-    "cmp_msbms_syst_enums/msbms_syst_priv/functions/initialize_enum.eex.sql",
-    "cmp_msbms_syst_enums/msbms_syst_priv/trigger_functions/trig_a_iu_enum_item_check.eex.sql",
-
-    "cmp_msbms_syst_enums/msbms_syst/api_views/syst_enums/trig_i_i_syst_enums.eex.sql",
-    "cmp_msbms_syst_enums/msbms_syst/api_views/syst_enums/trig_i_u_syst_enums.eex.sql",
-    "cmp_msbms_syst_enums/msbms_syst/api_views/syst_enums/trig_i_d_syst_enums.eex.sql",
-    "cmp_msbms_syst_enums/msbms_syst/api_views/syst_enums/syst_enums.eex.sql",
-
-    "cmp_msbms_syst_enums/msbms_syst/api_views/syst_enum_functional_types/trig_i_i_syst_enum_functional_types.eex.sql",
-    "cmp_msbms_syst_enums/msbms_syst/api_views/syst_enum_functional_types/trig_i_u_syst_enum_functional_types.eex.sql",
-    "cmp_msbms_syst_enums/msbms_syst/api_views/syst_enum_functional_types/trig_i_d_syst_enum_functional_types.eex.sql",
-    "cmp_msbms_syst_enums/msbms_syst/api_views/syst_enum_functional_types/syst_enum_functional_types.eex.sql",
-
-    "cmp_msbms_syst_enums/msbms_syst/api_views/syst_enum_items/trig_i_i_syst_enum_items.eex.sql",
-    "cmp_msbms_syst_enums/msbms_syst/api_views/syst_enum_items/trig_i_u_syst_enum_items.eex.sql",
-    "cmp_msbms_syst_enums/msbms_syst/api_views/syst_enum_items/trig_i_d_syst_enum_items.eex.sql",
-    "cmp_msbms_syst_enums/msbms_syst/api_views/syst_enum_items/syst_enum_items.eex.sql",
-
+    {type = "plan", file = "cmp_msbms_syst_enums/subplans.cmp_msbms_syst_enums.toml"},
     "app_msbms_global/components/msbms_syst_enums/privileges.eex.sql",
 
     #
-    #  MsbmsSystFeatures Module
+    #  MsbmsSystFeatures
     #
 
-    "cmp_msbms_syst_features/msbms_syst_data/syst_relations/syst_relations.eex.sql",
-    "cmp_msbms_syst_features/msbms_syst_data/syst_feature_map_levels/syst_feature_map_levels.eex.sql",
-    "cmp_msbms_syst_features/msbms_syst_data/syst_feature_map/syst_feature_map.eex.sql",
-    "cmp_msbms_syst_features/msbms_syst_priv/trigger_functions/trig_a_iu_feature_map_level_assignable_check.eex.sql",
-    "cmp_msbms_syst_features/msbms_syst_data/syst_feature_relation_assigns/syst_feature_relation_assigns.eex.sql",
-    "cmp_msbms_syst_features/msbms_syst_data/syst_feature_setting_assigns/syst_feature_setting_assigns.eex.sql",
-    "cmp_msbms_syst_features/msbms_syst_data/syst_feature_enum_assigns/syst_feature_enum_assigns.eex.sql",
+    {type = "plan", file = "cmp_msbms_syst_features/subplans.cmp_msbms_syst_features.toml"},
+    "app_msbms_global/gen_seed_data/initialize_feature_mapping.eex.sql",
 
     #
-    # MsbmsSystInstanceMgr Module
+    # MsbmsSystInstanceMgr
     #
 
-    "cmp_msbms_syst_instance_mgr/msbms_syst_data/syst_applications/trig_b_d_syst_applications_delete_contexts.eex.sql",
-    "cmp_msbms_syst_instance_mgr/msbms_syst_data/syst_applications/syst_applications.eex.sql",
-    "cmp_msbms_syst_instance_mgr/msbms_syst_data/syst_application_contexts/trig_b_iud_syst_application_contexts_validate_owner_context.eex.sql",
-    "cmp_msbms_syst_instance_mgr/msbms_syst_data/syst_application_contexts/syst_application_contexts.eex.sql",
-    "cmp_msbms_syst_instance_mgr/msbms_syst_data/syst_instance_type_applications/trig_a_i_syst_instance_type_apps_create_inst_type_contexts.eex.sql",
-    "cmp_msbms_syst_instance_mgr/msbms_syst_data/syst_instance_type_applications/syst_instance_type_applications.eex.sql",
-    "cmp_msbms_syst_instance_mgr/msbms_syst_data/syst_owners/syst_owners.eex.sql",
-    "cmp_msbms_syst_instance_mgr/msbms_syst_data/syst_instances/trig_a_i_syst_instances_create_instance_contexts.eex.sql",
-    "cmp_msbms_syst_instance_mgr/msbms_syst_data/syst_instances/syst_instances.eex.sql",
-    "cmp_msbms_syst_instance_mgr/msbms_syst_data/syst_instance_type_contexts/syst_instance_type_contexts.eex.sql",
-    "cmp_msbms_syst_instance_mgr/msbms_syst_data/syst_instance_contexts/syst_instance_contexts.eex.sql",
-
-    "cmp_msbms_syst_instance_mgr/msbms_syst/api_views/syst_applications/syst_applications.eex.sql",
-
-    "cmp_msbms_syst_instance_mgr/msbms_syst/api_views/syst_application_contexts/trig_i_u_syst_application_contexts.eex.sql",
-    "cmp_msbms_syst_instance_mgr/msbms_syst/api_views/syst_application_contexts/syst_application_contexts.eex.sql",
-
-    "cmp_msbms_syst_instance_mgr/msbms_syst/api_views/syst_owners/trig_i_i_syst_owners.eex.sql",
-    "cmp_msbms_syst_instance_mgr/msbms_syst/api_views/syst_owners/trig_i_u_syst_owners.eex.sql",
-    "cmp_msbms_syst_instance_mgr/msbms_syst/api_views/syst_owners/trig_i_d_syst_owners.eex.sql",
-    "cmp_msbms_syst_instance_mgr/msbms_syst/api_views/syst_owners/syst_owners.eex.sql",
-
-    "cmp_msbms_syst_instance_mgr/msbms_syst/api_views/syst_instance_type_applications/trig_i_i_syst_instance_type_applications.eex.sql",
-    "cmp_msbms_syst_instance_mgr/msbms_syst/api_views/syst_instance_type_applications/trig_i_u_syst_instance_type_applications.eex.sql",
-    "cmp_msbms_syst_instance_mgr/msbms_syst/api_views/syst_instance_type_applications/trig_i_d_syst_instance_type_applications.eex.sql",
-    "cmp_msbms_syst_instance_mgr/msbms_syst/api_views/syst_instance_type_applications/syst_instance_type_applications.eex.sql",
-
-    "cmp_msbms_syst_instance_mgr/msbms_syst/api_views/syst_instance_type_contexts/trig_i_i_syst_instance_type_contexts.eex.sql",
-    "cmp_msbms_syst_instance_mgr/msbms_syst/api_views/syst_instance_type_contexts/trig_i_u_syst_instance_type_contexts.eex.sql",
-    "cmp_msbms_syst_instance_mgr/msbms_syst/api_views/syst_instance_type_contexts/trig_i_d_syst_instance_type_contexts.eex.sql",
-    "cmp_msbms_syst_instance_mgr/msbms_syst/api_views/syst_instance_type_contexts/syst_instance_type_contexts.eex.sql",
-
-    "cmp_msbms_syst_instance_mgr/msbms_syst/api_views/syst_instances/trig_i_i_syst_instances.eex.sql",
-    "cmp_msbms_syst_instance_mgr/msbms_syst/api_views/syst_instances/trig_i_u_syst_instances.eex.sql",
-    "cmp_msbms_syst_instance_mgr/msbms_syst/api_views/syst_instances/trig_i_d_syst_instances.eex.sql",
-    "cmp_msbms_syst_instance_mgr/msbms_syst/api_views/syst_instances/syst_instances.eex.sql",
-
-    "cmp_msbms_syst_instance_mgr/msbms_syst/api_views/syst_instance_contexts/trig_i_i_syst_instance_contexts.eex.sql",
-    "cmp_msbms_syst_instance_mgr/msbms_syst/api_views/syst_instance_contexts/trig_i_u_syst_instance_contexts.eex.sql",
-    "cmp_msbms_syst_instance_mgr/msbms_syst/api_views/syst_instance_contexts/trig_i_d_syst_instance_contexts.eex.sql",
-    "cmp_msbms_syst_instance_mgr/msbms_syst/api_views/syst_instance_contexts/syst_instance_contexts.eex.sql",
-
-    "cmp_msbms_syst_instance_mgr/seed_data/initialize_enum_owner_states.eex.sql",
-    "cmp_msbms_syst_instance_mgr/seed_data/initialize_enum_instance_states.eex.sql",
-    "cmp_msbms_syst_instance_mgr/seed_data/initialize_enum_instance_types.eex.sql",
-
+    {type = "plan", file = "cmp_msbms_syst_instance_mgr/subplans.cmp_msbms_syst_instance_mgr.toml"},
     "app_msbms_global/components/msbms_syst_instance_mgr/privileges.eex.sql",
 
     #
-    # MsbmsSystAuthentication Module
+    # MsbmsSystAuthentication
     #
 
-    "cmp_msbms_syst_authentication/seed_data/initialize_enum_access_account_states.eex.sql",
-    "cmp_msbms_syst_authentication/seed_data/initialize_enum_credential_types.eex.sql",
-    "cmp_msbms_syst_authentication/seed_data/initialize_enum_identity_types.eex.sql",
-
-    "cmp_msbms_syst_authentication/msbms_syst_data/syst_access_accounts/syst_access_accounts.eex.sql",
-    "cmp_msbms_syst_authentication/msbms_syst_data/syst_identities/trig_b_iu_syst_identities_check_uniqueness.eex.sql",
-    "cmp_msbms_syst_authentication/msbms_syst_data/syst_identities/syst_identities.eex.sql",
-    "cmp_msbms_syst_authentication/msbms_syst_data/syst_credentials/syst_credentials.eex.sql",
-
-    "cmp_msbms_syst_authentication/msbms_syst_data/syst_access_account_instance_assocs/syst_access_account_instance_assocs.eex.sql",
-
-    #
-    # Global Schema Loading
-    #
-
-    "app_msbms_global/gen_seed_data/initialize_feature_mapping.eex.sql",
+    {type = "plan", file = "cmp_msbms_syst_authentication/subplans.cmp_msbms_syst_authentication.toml"},
 ]
