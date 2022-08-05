@@ -109,11 +109,11 @@ defmodule Mix.Tasks.Builddb do
     1. `"path/to/file.sql"` - A simple string is interpreted as the path to an
        SQL file to load into a migration.
 
-    2. `{type = "sql", file = "path/to/file.sql"} - This is the same as the 
+    2. `{type = "sql", file = "path/to/file.sql"}` - This is the same as the 
        simple file path of form 1.  Using this form could allow for a slightly
        cleaner representation if sat in a group of sub-plan Load File Items.
 
-    3. `{type = "plan", file = "path/to/subplan.toml"} - In this form the path
+    3. `{type = "plan", file = "path/to/subplan.toml"}` - In this form the path
        indicates that the file is a nested build plan, or sub-plan, whose 
        directives should be followed at this location.  A sub-plan is itself a
        normal build plan.  By convention, a sub-plan file name should take the
