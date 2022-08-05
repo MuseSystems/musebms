@@ -1,5 +1,5 @@
--- File:        create_database_schemata.eex.sql
--- Location:    musebms/database/cmp_msbms_syst_settings/testing_support/create_database_schemata.eex.sql
+-- File:        msbms_syst_schemata.eex.sql
+-- Location:    musebms/database/all/dbinit/msbms_syst_schemata.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
