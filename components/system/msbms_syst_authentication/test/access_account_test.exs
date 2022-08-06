@@ -17,7 +17,7 @@ defmodule AccessAccountTest do
 
   test "Can get Access Account ID by Name" do
     assert {:ok, access_account_id} =
-             MsbmsSystAuthentication.get_access_account_id_by_name("accnt1")
+             MsbmsSystAuthentication.get_access_account_id_by_name("unowned_all_access")
 
     assert is_binary(access_account_id)
   end

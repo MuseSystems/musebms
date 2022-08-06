@@ -23,7 +23,7 @@ defmodule MsbmsSystAuthentication do
   ## Examples
 
     iex> {:ok, access_account_id}  = 
-    ...>   MsbmsSystAuthentication.get_access_account_id_by_name("accnt1")
+    ...>   MsbmsSystAuthentication.get_access_account_id_by_name("example_accnt")
     iex> is_binary(access_account_id)
     true   
   """
