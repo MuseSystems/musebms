@@ -17,3 +17,6 @@ msbms/priv/starting_database.sql
 
 ### Legacy, temporary exclusions, and cruft
 application/msbms_old/*
+
+### sublime text ###
+**/*.sublime-workspace
