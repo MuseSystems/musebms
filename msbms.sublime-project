@@ -34,6 +34,9 @@
 		{
 			"path": "application/msbms",
 		},
+		{
+			"path": "components/system/msbms_syst_rate_limiter"
+		},
 	],
 
     "settings":
