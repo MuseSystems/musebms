@@ -2,16 +2,22 @@
 	"folders":
 	[
 		{
-			"path": "components/system/msbms_syst_datastore",
-		},
-		{
-			"path": "components/system/msbms_syst_enums",
+			"path": "database",
 		},
 		{
 			"path": "components/system/msbms_syst_error",
 		},
 		{
-			"path": "components/system/msbms_syst_instance_mgr",
+			"path": "components/system/msbms_syst_utils",
+		},
+		{
+			"path": "components/system/msbms_syst_mnesia",
+		},
+		{
+			"path": "components/system/msbms_syst_rate_limiter",
+		},
+		{
+			"path": "components/system/msbms_syst_datastore",
 		},
 		{
 			"path": "components/system/msbms_syst_options",
@@ -20,25 +26,19 @@
 			"path": "components/system/msbms_syst_settings",
 		},
 		{
-			"path": "components/system/msbms_syst_utils",
+			"path": "components/system/msbms_syst_enums",
 		},
 		{
-			"path": "database",
+			"path": "components/system/msbms_syst_instance_mgr",
+		},
+		{
+			"path": "application/msbms",
 		},
 		{
 			"path": "documentation",
 		},
 		{
 			"path": "tools",
-		},
-		{
-			"path": "application/msbms",
-		},
-		{
-			"path": "components/system/msbms_syst_rate_limiter",
-		},
-		{
-			"path": "components/system/msbms_syst_mnesia"
 		},
 	],
 
