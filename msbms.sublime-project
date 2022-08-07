@@ -1,0 +1,54 @@
+{
+	"folders":
+	[
+		{
+			"path": "components/system/msbms_syst_datastore",
+		},
+		{
+			"path": "components/system/msbms_syst_enums",
+		},
+		{
+			"path": "components/system/msbms_syst_error",
+		},
+		{
+			"path": "components/system/msbms_syst_instance_mgr",
+		},
+		{
+			"path": "components/system/msbms_syst_options",
+		},
+		{
+			"path": "components/system/msbms_syst_settings",
+		},
+		{
+			"path": "components/system/msbms_syst_utils",
+		},
+		{
+			"path": "database",
+		},
+		{
+			"path": "documentation",
+		},
+		{
+			"path": "tools",
+		},
+		{
+			"path": "application/msbms",
+		},
+	],
+
+    "settings":
+    {
+        "rulers":
+        [
+            80,
+            98,
+            120
+		],
+        "tab_size": 2,
+        "translate_tabs_to_spaces": true,
+        "mix_format_command": "mix format",
+        "make_path_relative": true,
+        "lsp_format_on_save": true,
+        "use_root_dir": true,
+    },
+}
