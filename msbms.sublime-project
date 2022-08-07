@@ -35,7 +35,10 @@
 			"path": "application/msbms",
 		},
 		{
-			"path": "components/system/msbms_syst_rate_limiter"
+			"path": "components/system/msbms_syst_rate_limiter",
+		},
+		{
+			"path": "components/system/msbms_syst_mnesia"
 		},
 	],
 
