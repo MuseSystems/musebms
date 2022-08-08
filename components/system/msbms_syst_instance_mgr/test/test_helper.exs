@@ -26,15 +26,6 @@ TestSupport.setup_testing_database(test_kind)
 
 MsbmsSystDatastore.set_datastore_context(TestSupport.get_testing_datastore_context_id())
 
-enum_service_spec = %{
-  id: MsbmsSystInstanceMgrTestingEnumService,
-  start: {
-    MsbmsSystEnums,
-    :start_link,
-    [{:instance_mgr, TestSupport.get_testing_datastore_context_id()}]
-  }
-}
-
 children = [
   {DynamicSupervisor, strategy: :one_for_one, name: MsbmsSystInstanceMgr.TestingSupervisor}
 ]
@@ -43,6 +34,15 @@ Supervisor.start_link(children, strategy: :one_for_one)
 Logger.configure(level: :info)
 
 ExUnit.start()
+
+enum_service_spec = %{
+  id: MsbmsSystInstanceMgrTestingEnumService,
+  start: {
+    MsbmsSystEnums,
+    :start_link,
+    [{:instance_mgr, TestSupport.get_testing_datastore_context_id()}]
+  }
+}
 
 DynamicSupervisor.start_child(MsbmsSystInstanceMgr.TestingSupervisor, enum_service_spec)
 
