@@ -11,9 +11,6 @@
 			"path": "components/system/msbms_syst_utils",
 		},
 		{
-			"path": "components/system/msbms_syst_mnesia",
-		},
-		{
 			"path": "components/system/msbms_syst_rate_limiter",
 		},
 		{
