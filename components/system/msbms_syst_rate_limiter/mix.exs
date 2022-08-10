@@ -9,8 +9,8 @@ defmodule MsbmsSystRateLimiter.MixProject do
     {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
     {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
     {:ex_doc, "~> 0.20", only: :dev, runtime: false},
-    {:hammer_backend_mnesia, "~> 0.5"},
-    {:hammer, "~> 6.0"},
+    {:hammer_backend_mnesia, "~> 0.5", runtime: false},
+    {:hammer, "~> 6.0", runtime: false},
 
     # Muse Systems Business Management System Components
     {:msbms_syst_error, path: "../msbms_syst_error"},
@@ -41,8 +41,10 @@ defmodule MsbmsSystRateLimiter.MixProject do
   def application do
     [
       extra_applications: [
-        :logger
-      ]
+        :logger,
+        :mnesia
+      ],
+      mod: {MsbmsSystRateLimiter.Runtime.Application, []}
     ]
   end
 end
