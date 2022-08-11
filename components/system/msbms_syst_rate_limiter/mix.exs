@@ -34,7 +34,8 @@ defmodule MsbmsSystRateLimiter.MixProject do
       deps: @deps,
       build_embedded: in_production,
       start_permanent: in_production,
-      dialyzer: @dialyzer_opts
+      dialyzer: @dialyzer_opts,
+      elixirc_paths: elixirc_paths(Mix.env())
     ]
   end
 
@@ -47,4 +48,8 @@ defmodule MsbmsSystRateLimiter.MixProject do
       mod: {MsbmsSystRateLimiter.Runtime.Application, []}
     ]
   end
+
+  defp elixirc_paths(:test), do: elixirc_paths() ++ ["test/support"]
+  defp elixirc_paths(_), do: elixirc_paths()
+  defp elixirc_paths(), do: ["lib"]
 end
