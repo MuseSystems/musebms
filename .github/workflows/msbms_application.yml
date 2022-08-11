@@ -75,6 +75,40 @@ jobs:
         #   run: mix dialyzer
         #   working-directory: ./components/system/msbms_syst_options
 
+  msbms-syst-rate-limiter:
+    runs-on: ubuntu-latest
+    name: MuseSystRateLimiter (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
+    strategy:
+      matrix:
+        otp: ['24.3']
+        elixir: ['1.13.4']
+
+    steps:
+        - name: Checkout repository code
+          uses: actions/checkout@v2
+
+        - name: Install Elixir
+          uses: erlef/setup-beam@v1
+          with:
+            otp-version: ${{matrix.otp}}
+            elixir-version: ${{matrix.elixir}}
+
+        - name: Build Mix Dependencies
+          run: mix deps.get
+          working-directory: ./components/system/msbms_syst_rate_limiter
+
+        - name: Run Unit Tests
+          run: mix test
+          working-directory: ./components/system/msbms_syst_rate_limiter
+
+        - name: Run Integration Tests
+          run: mix test --only integration
+          working-directory: ./components/system/msbms_syst_rate_limiter
+
+        - name: Run Credo
+          run: mix credo
+          working-directory: ./components/system/msbms_syst_rate_limiter
+
   msbms-syst-datastore:
     runs-on: ubuntu-latest
     name: MuseSystDatastore (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
