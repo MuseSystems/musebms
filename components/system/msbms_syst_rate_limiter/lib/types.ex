@@ -11,39 +11,35 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MsbmsSystRateLimiter.Types do
+  #
+  # Note that the ordering of typespecs here is alphabetical.
+  #
+
   @moduledoc """
   Defines public types for use with the MsbmsSystRateLimiter module.
   """
 
-  @type counter_type() :: atom()
-
+  @typedoc """
+  A unique identifier for the specific counter within the requested counter 
+  type.
+  """
   @type counter_id() :: String.t()
 
+  @typedoc """
+  The name of the counter which is derived from the counter type and counter
+  id values.
+  """
   @type counter_name() :: String.t()
 
-  #
-  # Mnesia defined types (https://www.erlang.org/doc/man/mnesia.html#data-types)
-  #
+  @typedoc """
+  The kind of activity being rate limited.
 
-  @type table() :: atom()
+  For example, a counter type might be `:login_attempt`.
+  """
+  @type counter_type() :: atom()
 
-  @type index_attr() :: atom() | non_neg_integer() | {atom()}
-
-  @type create_option() ::
-          {:access_mode, :read_write | :read_only}
-          | {:attributes, [atom()]}
-          | {:disc_copies, [node()]}
-          | {:disc_only_copies, [node()]}
-          | {:index, [index_attr()]}
-          | {:load_order, non_neg_integer()}
-          | {:majority, boolean()}
-          | {:ram_copies, [node()]}
-          | {:record_name, atom()}
-          | {:snmp, snmp_struct :: term()}
-          | {:storage_properties, [{backend :: module(), [backend_prop :: term()]}]}
-          | {:type, :set | :ordered_set | :bag}
-          | {:local_content, boolean()}
-          | {:user_properties, :proplists.proplist()}
-
-  @type t_result(res) :: {:atomic, res} | {:aborted, reason :: term()}
+  @typedoc """
+  The type of value expected for the table which holds the counters.
+  """
+  @type counter_table_name() :: atom()
 end
