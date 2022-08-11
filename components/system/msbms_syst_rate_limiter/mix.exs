@@ -35,7 +35,15 @@ defmodule MsbmsSystRateLimiter.MixProject do
       build_embedded: in_production,
       start_permanent: in_production,
       dialyzer: @dialyzer_opts,
-      elixirc_paths: elixirc_paths(Mix.env())
+      elixirc_paths: elixirc_paths(Mix.env()),
+      docs: [
+        name: "MsbmsSystRateLimiter",
+        main: "MsbmsSystRateLimiter",
+        groups_for_modules: [
+          API: [MsbmsSystRateLimiter],
+          "Supporting Types": [MsbmsSystRateLimiter.Types]
+        ]
+      ]
     ]
   end
 
