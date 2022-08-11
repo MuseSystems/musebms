@@ -29,7 +29,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
   # start/2 is called automatically on OTP application start-up.
   #
   # TODO: There's a good argument to be made that MsbmsSystInstanceMgr shouldn't
-  #       be a startable application at all.  Rather it should be started via 
+  #       be a startable application at all.  Rather it should be started via
   #       a start_link call by the consuming application.  This would mean that
   #       it could be started under an application defined supervision tree.
   #       The to-do here is to reconsider that possibility.
