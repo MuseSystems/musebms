@@ -11,6 +11,8 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MsbmsSystRateLimiter.Runtime.Application do
+  require Logger
+
   @default_backend Hammer.Backend.Mnesia
   @default_expiry_ms 60_000 * 60 * 2
   @default_cleanup_interval_ms 60_000 * 10
@@ -51,8 +53,49 @@ defmodule MsbmsSystRateLimiter.Runtime.Application do
 
     Application.put_env(:hammer, :backend, hammer_config)
 
-    Hammer.Backend.Mnesia.create_mnesia_table(@default_table_name, [])
-
     Hammer.Supervisor.start_link(hammer_config, name: MsbmsSystRateLimiter.Supervisor)
   end
+
+  @spec start_phase(atom(), Application.start_type(), term()) :: :ok | {:error, reason :: term()}
+  def start_phase(:post_mnesia_setup, _type, args \\ []) do
+    mnesia_table_args = args[:mnesia_table_args] || []
+
+    case init_rate_limiter(mnesia_table_args: mnesia_table_args) do
+      {:ok, _details} -> :ok
+      result -> result
+    end
+  end
+
+  @spec init_rate_limiter(Keyword.t()) ::
+          {:ok, detail :: atom()} | {:error, MsbmsSystError.t()}
+  def init_rate_limiter(opts) do
+    {_backend, config_opts} = Application.get_env(:hammer, :backend)
+
+    mnesia_table_args = opts[:mnesia_table_args] || []
+
+    Hammer.Backend.Mnesia.create_mnesia_table(config_opts[:table_name], mnesia_table_args)
+    |> process_create_mnesia_table_result()
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {:error,
+       %MsbmsSystError{
+         code: :undefined_error,
+         message: "Failure initializing rate limiter.",
+         cause: error
+       }}
+  end
+
+  defp process_create_mnesia_table_result({:abort, {:already_exists, _}}),
+    do: {:ok, :resource_exists}
+
+  defp process_create_mnesia_table_result({:abort, _} = reason) do
+    raise MsbmsSystError,
+      code: :undefined_error,
+      message: "Internal error initializing rate limiter.",
+      cause: reason
+  end
+
+  defp process_create_mnesia_table_result(result), do: {:ok, result}
 end
