@@ -73,6 +73,7 @@ defmodule MsbmsSystRateLimiter.Runtime.Application do
 
     mnesia_table_args = opts[:mnesia_table_args] || []
 
+    # credo:disable-for-next-line Credo.Check.Design.AliasUsage
     Hammer.Backend.Mnesia.create_mnesia_table(config_opts[:table_name], mnesia_table_args)
     |> process_create_mnesia_table_result()
   rescue
