@@ -11,8 +11,8 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MsbmsSystRateLimiter do
-  alias MsbmsSystRateLimiter.Runtime
   alias MsbmsSystRateLimiter.Impl
+  alias MsbmsSystRateLimiter.Runtime
   alias MsbmsSystRateLimiter.Types
 
   @moduledoc """
