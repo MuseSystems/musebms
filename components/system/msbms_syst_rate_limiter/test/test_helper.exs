@@ -10,4 +10,19 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
+test_kind =
+  if ExUnit.configuration() |> Keyword.get(:include) |> Enum.member?(:integration) do
+    ExUnit.configure(seed: 0)
+    :integration_testing
+  else
+    ExUnit.configure(exclude: [:integration])
+    :unit_testing
+  end
+
+TestSupport.setup_testing_database(test_kind)
+
 ExUnit.start()
+
+ExUnit.after_suite(fn _suite_result ->
+  TestSupport.cleanup_testing_database(test_kind)
+end)
