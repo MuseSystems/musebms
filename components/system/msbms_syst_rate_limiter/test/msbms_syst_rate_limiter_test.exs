@@ -1,5 +1,5 @@
 defmodule MsbmsSystRateLimiterTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
 
   test "Can get counter name" do
     assert "counter_type_1" = MsbmsSystRateLimiter.get_counter_name(:counter_type, "1")
