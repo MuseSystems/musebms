@@ -37,6 +37,9 @@
 		{
 			"path": "tools",
 		},
+		{
+			"path": ".github"
+		},
 	],
 
     "settings":
