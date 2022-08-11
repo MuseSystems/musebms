@@ -17,10 +17,7 @@ defmodule IntegrationTest do
 
   alias MsbmsSystInstanceMgr.Data
 
-  require IEx
-
   @moduletag :integration
-  @moduletag timeout: :infinity
 
   @startup_options %{
     global_dbserver_name: "testing_db_server",
@@ -175,8 +172,6 @@ defmodule IntegrationTest do
     assert new_instance1.internal_name == new_instance1_params.internal_name
     assert new_instance1.display_name == new_instance1_params.display_name
     assert new_instance1.instance_code == new_instance1_params.instance_code
-
-    # IEx.pry()
 
     new_instance2_params = %{
       internal_name: "app1_owner2",
