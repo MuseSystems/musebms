@@ -11,6 +11,7 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MsbmsSystRateLimiter do
+  alias MsbmsSystRateLimiter.Runtime
   alias MsbmsSystRateLimiter.Impl
   alias MsbmsSystRateLimiter.Types
 
@@ -58,4 +59,8 @@ defmodule MsbmsSystRateLimiter do
   @spec delete_counters(Types.counter_type(), Types.counter_id()) ::
           {:ok, integer()} | {:error, MsbmsSystError.t()}
   defdelegate delete_counters(counter_type, counter_id), to: Impl.RateLimiter
+
+  @spec init_rate_limiter(Keyword.t()) ::
+          {:ok, detail :: atom()} | {:error, MsbmsSystError.t()}
+  defdelegate init_rate_limiter(opts \\ []), to: Runtime.Application
 end
