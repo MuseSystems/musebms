@@ -87,10 +87,10 @@ defmodule MsbmsSystRateLimiter.Runtime.Application do
        }}
   end
 
-  defp process_create_mnesia_table_result({:abort, {:already_exists, _}}),
+  defp process_create_mnesia_table_result({:aborted, {:already_exists, _}}),
     do: {:ok, :resource_exists}
 
-  defp process_create_mnesia_table_result({:abort, _} = reason) do
+  defp process_create_mnesia_table_result({:aborted, _} = reason) do
     raise MsbmsSystError,
       code: :undefined_error,
       message: "Internal error initializing rate limiter.",
