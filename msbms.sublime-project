@@ -41,10 +41,13 @@
 			"path": "tools",
 		},
 		{
-			"path": "components/third_party/toml-elixir"
+			"path": "components/third_party/toml-elixir",
 		},
 		{
-			"path": ".github"
+			"path": ".github",
+		},
+		{
+			"path": "."
 		},
 	],
 
