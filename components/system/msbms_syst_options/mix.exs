@@ -9,7 +9,9 @@ defmodule MsbmsSystOptions.MixProject do
     {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
     {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
     {:ex_doc, "~> 0.20", only: :dev, runtime: false},
-    {:toml, path: "../../third_party/toml-elixir"},
+    {:toml,
+     git: "https://github.com/MuseSystems/toml-elixir.git",
+     branch: "feature/typeless-arrays-with-tests"},
 
     # Muse Systems Business Management System Components
     {:msbms_syst_error, path: "../msbms_syst_error"},
