@@ -1,7 +1,0 @@
-[toml]
-provider_test = "success!"
-provider_active = true
-provider_disabled = false
-
-[toml.nested]
-foo = "bar"
