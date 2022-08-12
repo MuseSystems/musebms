@@ -15,6 +15,7 @@ defmodule MsbmsSystAuthentication.MixProject do
     # Muse Systems Business Management System Components
     {:msbms_syst_utils, path: "../msbms_syst_utils"},
     {:msbms_syst_error, path: "../msbms_syst_error"},
+    {:msbms_syst_rate_limiter, path: "../msbms_syst_rate_limiter"},
     {:msbms_syst_datastore, path: "../msbms_syst_datastore"},
     {:msbms_syst_enums, path: "../msbms_syst_enums"},
     {:msbms_syst_options, path: "../msbms_syst_options"},
