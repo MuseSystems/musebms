@@ -27,21 +27,7 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystAccessAccounts do
 
     resolved_insert_params = Helpers.SysAccessAccounts.resolve_name_params(insert_params, :insert)
 
-    %Data.SystAccessAccounts{}
-    |> cast(resolved_insert_params, [
-      :internal_name,
-      :external_name,
-      :owning_owner_id,
-      :allow_global_logins,
-      :access_account_state_id
-    ])
-    |> validate_internal_name(opts)
-    |> validate_required([
-      :internal_name,
-      :external_name,
-      :access_account_state_id,
-      :allow_global_logins
-    ])
+    core_changeset(%Data.SystAccessAccounts{}, resolved_insert_params, opts)
   end
 
   @spec update_changeset(Data.SystAccessAccounts.t(), Types.access_account_params(), Keyword.t()) ::
@@ -52,7 +38,13 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystAccessAccounts do
     resolved_update_params = Helpers.SysAccessAccounts.resolve_name_params(update_params, :update)
 
     access_account
-    |> cast(resolved_update_params, [
+    |> core_changeset(resolved_update_params, opts)
+    |> optimistic_lock(:diag_row_version)
+  end
+
+  defp core_changeset(access_account, change_params, opts) do
+    access_account
+    |> cast(change_params, [
       :internal_name,
       :external_name,
       :owning_owner_id,
@@ -66,6 +58,5 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystAccessAccounts do
       :access_account_state_id,
       :allow_global_logins
     ])
-    |> optimistic_lock(:diag_row_version)
   end
 end
