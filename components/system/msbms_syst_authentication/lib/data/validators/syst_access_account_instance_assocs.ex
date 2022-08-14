@@ -24,21 +24,7 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystAccessAccountInstanceAssoc
     resolved_insert_params =
       Helpers.SystAccessAccountInstanceAssocs.resolve_name_params(insert_params, :insert)
 
-    %Data.SystAccessAccountInstanceAssocs{}
-    |> cast(resolved_insert_params, [
-      :access_account_id,
-      :credential_type_id,
-      :instance_id,
-      :access_granted,
-      :invitation_issued,
-      :invitation_expires,
-      :invitation_declined
-    ])
-    |> validate_required([
-      :access_account_id,
-      :credential_type_id,
-      :instance_id
-    ])
+    core_changeset(%Data.SystAccessAccountInstanceAssocs{}, resolved_insert_params)
   end
 
   @spec update_changeset(
@@ -50,7 +36,13 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystAccessAccountInstanceAssoc
       Helpers.SystAccessAccountInstanceAssocs.resolve_name_params(update_params, :update)
 
     access_account_instance_assoc
-    |> cast(resolved_update_params, [
+    |> core_changeset(resolved_update_params)
+    |> optimistic_lock(:diag_row_version)
+  end
+
+  defp core_changeset(access_account_instance_assoc, change_params) do
+    access_account_instance_assoc
+    |> cast(change_params, [
       :access_account_id,
       :credential_type_id,
       :instance_id,
@@ -64,6 +56,5 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystAccessAccountInstanceAssoc
       :credential_type_id,
       :instance_id
     ])
-    |> optimistic_lock(:diag_row_version)
   end
 end
