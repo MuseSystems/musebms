@@ -10,7 +10,7 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule MsbmsSystAuthentication.Data.Helpers.SysAccessAccounts do
+defmodule MsbmsSystAuthentication.Data.Helpers.SystAccessAccounts do
   @moduledoc false
 
   def resolve_name_params(access_account_params, operation) do

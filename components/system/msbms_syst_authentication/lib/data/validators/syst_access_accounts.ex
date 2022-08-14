@@ -25,7 +25,8 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystAccessAccounts do
   def insert_changeset(insert_params, opts) do
     opts = resolve_options(opts, Helpers.OptionDefaults.defaults())
 
-    resolved_insert_params = Helpers.SysAccessAccounts.resolve_name_params(insert_params, :insert)
+    resolved_insert_params =
+      Helpers.SystAccessAccounts.resolve_name_params(insert_params, :insert)
 
     core_changeset(%Data.SystAccessAccounts{}, resolved_insert_params, opts)
   end
@@ -35,7 +36,8 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystAccessAccounts do
   def update_changeset(access_account, update_params, opts) do
     opts = resolve_options(opts, Helpers.OptionDefaults.defaults())
 
-    resolved_update_params = Helpers.SysAccessAccounts.resolve_name_params(update_params, :update)
+    resolved_update_params =
+      Helpers.SystAccessAccounts.resolve_name_params(update_params, :update)
 
     access_account
     |> core_changeset(resolved_update_params, opts)
