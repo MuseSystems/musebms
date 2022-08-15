@@ -14,8 +14,6 @@ $BODY$
 --
 -- muse.information@musesystems.com :: https://muse.systems
 
-DECLARE
-
 BEGIN
 
     UPDATE msbms_syst_data.syst_global_network_rules
@@ -35,4 +33,5 @@ REVOKE EXECUTE ON FUNCTION msbms_syst_data.trig_a_iu_syst_global_network_rule_or
 GRANT EXECUTE ON FUNCTION msbms_syst_data.trig_a_iu_syst_global_network_rule_ordering() TO <%= msbms_owner %>;
 
 COMMENT ON FUNCTION msbms_syst_data.trig_a_iu_syst_global_network_rule_ordering() IS
-$DOC$Ensures that the ordering of network rules is maintained and that ordering values are not duplicated.$DOC$;
+$DOC$Ensures that the ordering of network rules is maintained and that ordering
+values are not duplicated.$DOC$;
