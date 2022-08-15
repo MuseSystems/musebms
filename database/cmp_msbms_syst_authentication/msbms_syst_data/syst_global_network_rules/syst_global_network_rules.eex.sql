@@ -86,7 +86,8 @@ COMMENT ON
     TABLE msbms_syst_data.syst_global_network_rules IS
 $DOC$Defines firewall-like rules that are global in scope indicating which IP
 addresses are allowed to attempt authentication and which are not.  This also
-includes the concept of global defaults applied to new Owner IP address rules.$DOC$;
+includes the concept of global defaults applied to new Owner IP address rules.
+These rules are applied in their defined ordering prior to all other rule sets.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.syst_global_network_rules.id IS
