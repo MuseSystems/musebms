@@ -50,7 +50,8 @@ COMMENT ON
 $DOC$Defines firewall-like rules that are global in scope indicating which IP
 addresses are allowed to attempt authentication and which are not.  This also
 includes the concept of global defaults applied to new Owner IP address rules.
-These rules are applied in their defined ordering prior to all other rule sets.
+These rules are applied in their defined ordering after the global_network_rules
+and before the instance_network_rules.
 
 This API View allows the application to read and maintain the data according to
 well defined application business rules.  Using this API view for updates to

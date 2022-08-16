@@ -98,6 +98,11 @@ $DOC$The record's primary key.  The definitive identifier of the record in the
 system.$DOC$;
 
 COMMENT ON
+    COLUMN  msbms_syst_data.syst_owner_network_rules.owner_id IS
+$DOC$The database identifier of the Owner record for whom the Network Rule is
+being defined.$DOC$;
+
+COMMENT ON
     COLUMN msbms_syst_data.syst_owner_network_rules.ordering IS
 $DOC$Defines the order in which IP rules are applied.  Lower values are applied
 prior to higher values.
