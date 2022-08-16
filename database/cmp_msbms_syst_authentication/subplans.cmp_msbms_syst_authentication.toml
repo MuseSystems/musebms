@@ -74,4 +74,14 @@ load_files = [
     "cmp_msbms_syst_authentication/msbms_syst/api_views/syst_instance_network_rules/trig_i_u_syst_instance_network_rules.eex.sql",
     "cmp_msbms_syst_authentication/msbms_syst/api_views/syst_instance_network_rules/trig_i_d_syst_instance_network_rules.eex.sql",
     "cmp_msbms_syst_authentication/msbms_syst/api_views/syst_instance_network_rules/syst_instance_network_rules.eex.sql",
+
+    "cmp_msbms_syst_authentication/msbms_syst/api_views/syst_global_password_rules/trig_i_i_syst_global_password_rules.eex.sql",
+    "cmp_msbms_syst_authentication/msbms_syst/api_views/syst_global_password_rules/trig_i_u_syst_global_password_rules.eex.sql",
+    "cmp_msbms_syst_authentication/msbms_syst/api_views/syst_global_password_rules/trig_i_d_syst_global_password_rules.eex.sql",
+    "cmp_msbms_syst_authentication/msbms_syst/api_views/syst_global_password_rules/syst_global_password_rules.eex.sql",
+
+    "cmp_msbms_syst_authentication/msbms_syst/api_views/syst_owner_password_rules/trig_i_i_syst_owner_password_rules.eex.sql",
+    "cmp_msbms_syst_authentication/msbms_syst/api_views/syst_owner_password_rules/trig_i_u_syst_owner_password_rules.eex.sql",
+    "cmp_msbms_syst_authentication/msbms_syst/api_views/syst_owner_password_rules/trig_i_d_syst_owner_password_rules.eex.sql",
+    "cmp_msbms_syst_authentication/msbms_syst/api_views/syst_owner_password_rules/syst_owner_password_rules.eex.sql",
 ]
