@@ -85,7 +85,7 @@ load_files = [
     "cmp_msbms_syst_authentication/msbms_syst/api_views/syst_owner_password_rules/trig_i_u_syst_owner_password_rules.eex.sql",
     "cmp_msbms_syst_authentication/msbms_syst/api_views/syst_owner_password_rules/trig_i_d_syst_owner_password_rules.eex.sql",
     "cmp_msbms_syst_authentication/msbms_syst/api_views/syst_owner_password_rules/syst_owner_password_rules.eex.sql",
-    
+
     "cmp_msbms_syst_authentication/msbms_syst/api_views/syst_password_history/trig_i_i_syst_password_history.eex.sql",
     "cmp_msbms_syst_authentication/msbms_syst/api_views/syst_password_history/trig_i_u_syst_password_history.eex.sql",
     "cmp_msbms_syst_authentication/msbms_syst/api_views/syst_password_history/trig_i_d_syst_password_history.eex.sql",
