@@ -48,7 +48,7 @@ defmodule MsbmsSystAuthentication.Data.SystOwnerNetworkRules do
 
   @schema_prefix "msbms_syst"
 
-  schema "syst_global_network_rules" do
+  schema "syst_owner_network_rules" do
     field(:ordering, :integer)
     field(:functional_type, :string)
     field(:ip_host_or_network, DbTypes.Inet)
