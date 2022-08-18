@@ -32,7 +32,7 @@ defmodule MsbmsSystAuthentication.Data.SystIdentities do
             identity_type_id: Types.identity_type_id() | nil,
             identity_type:
               MsbmsSystEnums.Data.SystEnumItems.t() | Ecto.Association.NotLoaded.t() | nil,
-            identifier: String.t() | nil,
+            account_identifier: String.t() | nil,
             validated: DateTime.t() | nil,
             validates_identity_id: Types.identity_id() | nil,
             validates_identity: t() | Ecto.Association.NotLoaded.t() | nil,
@@ -51,7 +51,7 @@ defmodule MsbmsSystAuthentication.Data.SystIdentities do
   @schema_prefix "msbms_syst"
 
   schema "syst_identities" do
-    field(:identifier, :string)
+    field(:account_identifier, :string)
     field(:validated, :utc_datetime)
     field(:validation_requested, :utc_datetime)
     field(:validation_expires, :utc_datetime)

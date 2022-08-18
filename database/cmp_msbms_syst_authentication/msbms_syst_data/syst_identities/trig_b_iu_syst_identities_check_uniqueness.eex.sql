@@ -27,7 +27,7 @@ BEGIN
                     ON si_other.access_account_id = saa_other.id AND
                        si_other.identity_type_id = new.identity_type_id
             WHERE saa_this.id = new.access_acount_id AND
-                  si_other.identifier = new.identifier
+                  si_other.account_identifier = new.account_identifier
             )
     THEN
 
@@ -42,7 +42,7 @@ BEGIN
                             ,p_errcode        => 'PM002'
                             ,p_param_data     => jsonb_build_object(
                                  'access_account_id', new.access_account_id
-                                ,'identifier', new.identifier
+                                ,'account_identifier', new.account_identifier
                             )
                             ,p_context_data   =>
                                 jsonb_build_object(
@@ -70,5 +70,6 @@ GRANT EXECUTE ON FUNCTION msbms_syst_data.trig_b_iu_syst_identities_validate_uni
 
 
 COMMENT ON FUNCTION msbms_syst_data.trig_b_iu_syst_identities_validate_uniqueness() IS
-$DOC$Provides a check that each msbms_syst_data.syst_identities.identifier value is unique for each
-owner's access accounts or unique amongst unowned access accounts.$DOC$;
+$DOC$Provides a check that each msbms_syst_data.syst_identities.account_identifier
+value is unique for each owner's access accounts or unique amongst unowned
+access accounts.$DOC$;

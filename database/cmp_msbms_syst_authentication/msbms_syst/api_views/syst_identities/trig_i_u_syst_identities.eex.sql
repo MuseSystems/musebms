@@ -19,7 +19,7 @@ BEGIN
     IF
         new.access_account_id     != old.access_account_id OR
         new.identity_type_id      != old.identity_type_id OR
-        new.identifier            != old.identifier OR
+        new.account_identifier    != old.account_identifier OR
         new.validates_identity_id != old.validates_identity_id
     THEN
         RAISE EXCEPTION

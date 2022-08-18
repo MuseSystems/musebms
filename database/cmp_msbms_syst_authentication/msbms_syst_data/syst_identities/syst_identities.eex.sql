@@ -26,7 +26,7 @@ CREATE TABLE msbms_syst_data.syst_identities
         NOT NULL
         CONSTRAINT syst_identities_identity_types_fk
             REFERENCES msbms_syst_data.syst_enum_items (id) ON DELETE CASCADE
-    ,identifier
+    ,account_identifier
         text
         NOT NULL
     ,validated
@@ -112,7 +112,7 @@ influences the kind of credentials that can be used to complete the
 authentication process.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_identities.identifier IS
+    COLUMN msbms_syst_data.syst_identities.account_identifier IS
 $DOC$The actual identifier which identifies a user or system to the system.$DOC$;
 
 COMMENT ON
