@@ -15,7 +15,7 @@ SELECT
     id
   , access_account_id
   , identity_type_id
-  , identifier
+  , account_identifier
   , validated
   , validates_identity_id
   , validation_requested
@@ -85,7 +85,7 @@ This value may only be set on INSERT via this API view.  UPDATEs to this value
 are not allowed after record creation.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst.syst_identities.identifier IS
+    COLUMN msbms_syst.syst_identities.account_identifier IS
 $DOC$The actual identifier which identifies a user or system to the system.
 
 This value may only be set on INSERT via this API view.  UPDATEs to this value

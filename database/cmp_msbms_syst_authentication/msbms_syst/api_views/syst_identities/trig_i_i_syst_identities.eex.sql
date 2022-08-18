@@ -19,7 +19,7 @@ BEGIN
     INSERT INTO msbms_syst_data.syst_identities
         ( access_account_id
         , identity_type_id
-        , identifier
+        , account_identifier
         , validated
         , validates_identity_id
         , validation_requested
@@ -28,7 +28,7 @@ BEGIN
     VALUES
         ( new.access_account_id
         , new.identity_type_id
-        , new.identifier
+        , new.account_identifier
         , new.validated
         , new.validates_identity_id
         , new.validation_requested
