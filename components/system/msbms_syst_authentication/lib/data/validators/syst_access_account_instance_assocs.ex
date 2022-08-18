@@ -28,7 +28,7 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystAccessAccountInstanceAssoc
   end
 
   @spec update_changeset(
-          Data.SystAccessAccountInstanceAssocs,
+          Data.SystAccessAccountInstanceAssocs.t(),
           Types.access_account_instance_assoc_params()
         ) :: Ecto.Changeset.t()
   def update_changeset(access_account_instance_assoc, update_params) do
