@@ -67,6 +67,8 @@ defmodule MsbmsSystAuthentication.Data.SystAccessAccounts do
     has_many(:access_account_instance_assocs, Data.SystAccessAccountInstanceAssocs,
       foreign_key: :access_account_id
     )
+
+    has_many(:password_history, Data.SystPasswordHistory, foreign_key: :access_account_id)
   end
 
   @spec insert_changeset(Types.access_account_params(), Keyword.t()) :: Ecto.Changeset.t()
