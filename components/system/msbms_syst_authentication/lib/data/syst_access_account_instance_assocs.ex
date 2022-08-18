@@ -74,7 +74,7 @@ defmodule MsbmsSystAuthentication.Data.SystAccessAccountInstanceAssocs do
   defdelegate insert_changeset(insert_params), to: Data.Validators.SystAccessAccountInstanceAssocs
 
   @spec update_changeset(
-          Data.SystAccessAccountInstanceAssocs,
+          Data.SystAccessAccountInstanceAssocs.t(),
           Types.access_account_instance_assoc_params()
         ) :: Ecto.Changeset.t()
   defdelegate update_changeset(access_account_instance_assoc, update_params),
