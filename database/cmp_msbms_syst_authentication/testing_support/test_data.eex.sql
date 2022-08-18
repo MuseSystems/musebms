@@ -308,11 +308,11 @@ $AUTHENTICATION_TESTING_INIT$
             , allow_global_logins
             , access_account_state_id )
         VALUES
-            ( 'accnt1', 'Access Account 1', NULL, TRUE, ( SELECT id
+            ( 'unowned_all_access', 'Unowned / All Access', NULL, TRUE, ( SELECT id
                                                           FROM msbms_syst_data.syst_enum_items
                                                           WHERE internal_name = 'access_account_states_sysdef_active' ) )
              ,
-            ( 'accnt2', 'Access Account 2', ( SELECT id
+            ( 'example_accnt', 'Example Account', ( SELECT id
                                               FROM msbms_syst_data.syst_owners
                                               WHERE internal_name = 'owner1' ), FALSE, ( SELECT id
                                                                                         FROM msbms_syst_data.syst_enum_items
