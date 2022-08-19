@@ -54,7 +54,24 @@ defmodule MsbmsSystAuthentication.Types do
 
   @type credential_type_name() :: MsbmsSystEnums.Types.enum_item_name()
 
+  @type account_identifier() :: String.t()
+
   @type identity_id() :: Ecto.UUID.t()
 
   @type identity_type_id() :: MsbmsSystEnums.Types.enum_item_id()
+
+  @type identity_type_name() :: MsbmsSystEnums.Types.enum_item_name()
+
+  @type identity_params() :: %{
+          optional(:access_account_id) => access_account_id(),
+          optional(:access_account_name) => access_account_name(),
+          optional(:identity_type_id) => identity_type_name(),
+          optional(:identity_type_name) => identity_type_name(),
+          optional(:account_identifier) => account_identifier(),
+          optional(:validated) => DateTime.t(),
+          optional(:validates_identity_id) => identity_id(),
+          optional(:validation_requested) => DateTime.t(),
+          optional(:validation_expires) => DateTime.t(),
+          optional(:primary_contact) => boolean()
+        }
 end

@@ -68,4 +68,10 @@ defmodule MsbmsSystAuthentication.Data.SystIdentities do
     belongs_to(:identity_type, MsbmsSystEnums.Data.SystEnumItems)
     belongs_to(:validates_identity, Data.SystIdentities)
   end
+
+  @spec insert_changeset(Types.identity_params()) :: Ecto.Changeset.t()
+  defdelegate insert_changeset(insert_params), to: Data.Validators.SystIdentities
+
+  @spec update_changeset(Data.SystIdentities.t(), Types.identity_params()) :: Ecto.Changeset.t()
+  defdelegate update_changeset(identity, update_params), to: Data.Validators.SystIdentities
 end
