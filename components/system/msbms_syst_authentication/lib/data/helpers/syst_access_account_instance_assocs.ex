@@ -13,21 +13,13 @@
 defmodule MsbmsSystAuthentication.Data.Helpers.SystAccessAccountInstanceAssocs do
   @moduledoc false
 
-  alias MsbmsSystAuthentication.Impl
+  alias MsbmsSystAuthentication.Data.Helpers
 
   def resolve_name_params(change_params, operation) do
     change_params
-    |> resolve_access_account_id()
+    |> Helpers.General.resolve_access_account_id()
     |> resolve_credential_type_id(operation)
     |> resolve_instance_id()
-  end
-
-  def resolve_access_account_id(%{access_account_name: access_account_name} = change_params)
-      when is_binary(access_account_name) do
-    {:ok, access_account_id} =
-      Impl.AccessAccount.get_access_account_id_by_name(access_account_name)
-
-    Map.put(change_params, :access_account_od, access_account_id)
   end
 
   def resolve_credential_type_id(
