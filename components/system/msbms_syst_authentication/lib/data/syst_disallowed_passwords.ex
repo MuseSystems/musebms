@@ -13,6 +13,8 @@
 defmodule MsbmsSystAuthentication.Data.SystDisallowedPasswords do
   use Ecto.Schema
 
+  alias MsbmsSystAuthentication.Data.Validators
+
   @moduledoc """
   Represents a SHA-1 hashed password which is expected to be listed in
   the dictionaries used by attackers to compromised online accounts.  Disallowed
