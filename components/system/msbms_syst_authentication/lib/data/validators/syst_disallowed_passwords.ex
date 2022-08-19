@@ -15,6 +15,8 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystDisallowedPasswords do
 
   alias MsbmsSystAuthentication.Data
 
+  @moduledoc false
+
   @spec insert_changeset(binary()) :: Ecto.Changeset.t()
   def insert_changeset(password_hash) do
     %Data.SystDisallowedPasswords{}
