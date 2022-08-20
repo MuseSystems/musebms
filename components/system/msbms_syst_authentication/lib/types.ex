@@ -50,6 +50,15 @@ defmodule MsbmsSystAuthentication.Types do
 
   @type access_account_state_name() :: MsbmsSystEnums.Types.enum_item_name()
 
+  @type credential_params() :: %{
+          optional(:access_account_id) => access_account_id(),
+          optional(:access_account_name) => access_account_name(),
+          optional(:credential_type_id) => credential_type_id(),
+          optional(:credential_type_name) => credential_type_name(),
+          optional(:credential_for_identity_id) => identity_id(),
+          optional(:credential_data) => binary()
+        }
+
   @type credential_type_id() :: MsbmsSystEnums.Types.enum_item_id()
 
   @type credential_type_name() :: MsbmsSystEnums.Types.enum_item_name()
