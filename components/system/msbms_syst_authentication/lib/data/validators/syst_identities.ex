@@ -23,21 +23,8 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystIdentities do
   def insert_changeset(insert_params) do
     resolved_insert_params = Helpers.SystIdentities.resolve_name_params(insert_params, :insert)
 
-    core_changeset(%Data.SystIdentities{}, resolved_insert_params)
-  end
-
-  @spec update_changeset(Data.SystIdentities.t(), Types.identity_params()) :: Ecto.Changeset.t()
-  def update_changeset(identity, update_params) do
-    resolved_update_params = Helpers.SystIdentities.resolve_name_params(update_params, :update)
-
-    identity
-    |> core_changeset(resolved_update_params)
-    |> optimistic_lock(:diag_row_version)
-  end
-
-  defp core_changeset(identity, change_params) do
-    identity
-    |> cast(change_params, [
+    %Data.SystIdentities{}
+    |> cast(resolved_insert_params, [
       :access_account_id,
       :identity_type_id,
       :account_identifier,
@@ -53,5 +40,23 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystIdentities do
       :account_identifier,
       :primary_contact
     ])
+  end
+
+  @spec update_changeset(Data.SystIdentities.t(), Types.identity_params()) :: Ecto.Changeset.t()
+  def update_changeset(identity, update_params) do
+    identity
+    |> cast(update_params, [
+      :validated,
+      :validation_requested,
+      :validation_expires,
+      :primary_contact
+    ])
+    |> validate_required([
+      :access_account_id,
+      :identity_type_id,
+      :account_identifier,
+      :primary_contact
+    ])
+    |> optimistic_lock(:diag_row_version)
   end
 end
