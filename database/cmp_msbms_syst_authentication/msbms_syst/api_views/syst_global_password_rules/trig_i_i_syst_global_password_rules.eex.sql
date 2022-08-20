@@ -16,31 +16,25 @@ $BODY$
 
 BEGIN
 
-    INSERT INTO msbms_syst_data.syst_global_password_rules
-        ( password_length
-        , max_age
-        , require_upper_case
-        , require_lower_case
-        , require_numbers
-        , require_symbols
-        , disallow_recently_used
-        , disallow_known_compromised
-        , require_mfa
-        , allowed_mfa_types )
-    VALUES
-        ( new.password_length
-        , new.max_age
-        , new.require_upper_case
-        , new.require_lower_case
-        , new.require_numbers
-        , new.require_symbols
-        , new.disallow_recently_used
-        , new.disallow_known_compromised
-        , new.require_mfa
-        , new.allowed_mfa_types )
-    RETURNING * INTO new;
-
-    RETURN new;
+    RAISE EXCEPTION
+        USING
+            MESSAGE = 'This API view does not allow for record inserts for ' ||
+                      'this table.',
+            DETAIL = msbms_syst_priv.get_exception_details(
+                         p_proc_schema    => 'msbms_syst'
+                        ,p_proc_name      => 'trig_i_i_syst_global_password_rules'
+                        ,p_exception_name => 'invalid_api_view_call'
+                        ,p_errcode        => 'PM008'
+                        ,p_param_data     => jsonb_build_object('new', new, 'old', old)
+                        ,p_context_data   =>
+                            jsonb_build_object(
+                                 'tg_op',         tg_op
+                                ,'tg_when',       tg_when
+                                ,'tg_schema',     tg_table_schema
+                                ,'tg_table_name', tg_table_name)),
+            ERRCODE = 'PM008',
+            SCHEMA = tg_table_schema,
+            TABLE = tg_table_name;
 
 END;
 $BODY$
