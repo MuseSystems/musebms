@@ -31,24 +31,14 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystCredentials do
       :credential_for_identity_id
     ])
     |> put_change(:last_updated, DateTime.utc_now())
-    |> validate_required([
-      :access_account_id,
-      :credential_type_id,
-      :credential_data,
-      :last_updated
-    ])
+    |> validate_common()
   end
 
   def update_changeset(credential, update_params) do
     credential
     |> cast(update_params, [:credential_data])
     |> maybe_set_last_updated()
-    |> validate_required([
-      :access_account_id,
-      :credential_type_id,
-      :credential_data,
-      :last_updated
-    ])
+    |> validate_common()
     |> optimistic_lock(:diag_row_version)
   end
 
@@ -57,4 +47,13 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystCredentials do
   end
 
   defp maybe_set_last_updated(changeset), do: changeset
+
+  defp validate_common(changeset) do
+    validate_required(changeset, [
+      :access_account_id,
+      :credential_type_id,
+      :credential_data,
+      :last_updated
+    ])
+  end
 end

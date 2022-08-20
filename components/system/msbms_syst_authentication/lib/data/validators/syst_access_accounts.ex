@@ -13,10 +13,10 @@
 defmodule MsbmsSystAuthentication.Data.Validators.SystAccessAccounts do
   import Ecto.Changeset
   import MsbmsSystUtils
-  import MsbmsSystAuthentication.Data.Validators.General
 
   alias MsbmsSystAuthentication.Data
   alias MsbmsSystAuthentication.Data.Helpers
+  alias MsbmsSystAuthentication.Data.Validators
   alias MsbmsSystAuthentication.Types
 
   @moduledoc false
@@ -28,7 +28,15 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystAccessAccounts do
     resolved_insert_params =
       Helpers.SystAccessAccounts.resolve_name_params(insert_params, :insert)
 
-    core_changeset(%Data.SystAccessAccounts{}, resolved_insert_params, opts)
+    %Data.SystAccessAccounts{}
+    |> cast(resolved_insert_params, [
+      :internal_name,
+      :external_name,
+      :owning_owner_id,
+      :allow_global_logins,
+      :access_account_state_id
+    ])
+    |> validate_common(opts)
   end
 
   @spec update_changeset(Data.SystAccessAccounts.t(), Types.access_account_params(), Keyword.t()) ::
@@ -40,20 +48,19 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystAccessAccounts do
       Helpers.SystAccessAccounts.resolve_name_params(update_params, :update)
 
     access_account
-    |> core_changeset(resolved_update_params, opts)
-    |> optimistic_lock(:diag_row_version)
-  end
-
-  defp core_changeset(access_account, change_params, opts) do
-    access_account
-    |> cast(change_params, [
+    |> cast(resolved_update_params, [
       :internal_name,
       :external_name,
-      :owning_owner_id,
       :allow_global_logins,
       :access_account_state_id
     ])
-    |> validate_internal_name(opts)
+    |> validate_common(opts)
+    |> optimistic_lock(:diag_row_version)
+  end
+
+  defp validate_common(changeset, opts) do
+    changeset
+    |> Validators.General.validate_internal_name(opts)
     |> validate_required([
       :internal_name,
       :external_name,

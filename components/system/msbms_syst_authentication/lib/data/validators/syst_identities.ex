@@ -34,12 +34,7 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystIdentities do
       :validation_expires,
       :primary_contact
     ])
-    |> validate_required([
-      :access_account_id,
-      :identity_type_id,
-      :account_identifier,
-      :primary_contact
-    ])
+    |> validate_common()
   end
 
   @spec update_changeset(Data.SystIdentities.t(), Types.identity_params()) :: Ecto.Changeset.t()
@@ -51,12 +46,16 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystIdentities do
       :validation_expires,
       :primary_contact
     ])
-    |> validate_required([
+    |> validate_common()
+    |> optimistic_lock(:diag_row_version)
+  end
+
+  defp validate_common(changeset) do
+    validate_required(changeset, [
       :access_account_id,
       :identity_type_id,
       :account_identifier,
       :primary_contact
     ])
-    |> optimistic_lock(:diag_row_version)
   end
 end
