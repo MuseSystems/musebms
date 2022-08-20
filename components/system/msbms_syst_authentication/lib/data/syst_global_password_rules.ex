@@ -28,7 +28,7 @@ defmodule MsbmsSystAuthentication.Data.SystGlobalPasswordRules do
             __meta__: Ecto.Schema.Metadata.t(),
             id: Ecto.UUID.t() | nil,
             password_length: DbTypes.IntegerRange.t() | nil,
-            max_age: integer() | nil,
+            max_age: DbTypes.Interval.t() | nil,
             require_upper_case: integer() | nil,
             require_lower_case: integer() | nil,
             require_numbers: integer() | nil,
@@ -50,7 +50,7 @@ defmodule MsbmsSystAuthentication.Data.SystGlobalPasswordRules do
 
   schema "syst_global_network_rules" do
     field(:password_length, DbTypes.IntegerRange)
-    field(:max_age, :integer)
+    field(:max_age, DbTypes.Interval)
     field(:require_upper_case, :integer)
     field(:require_lower_case, :integer)
     field(:require_numbers, :integer)
