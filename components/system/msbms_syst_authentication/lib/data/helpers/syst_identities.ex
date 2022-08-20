@@ -11,9 +11,9 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MsbmsSystAuthentication.Data.Helpers.SystIdentities do
-  @moduledoc false
-
   alias MsbmsSystAuthentication.Data.Helpers
+
+  @moduledoc false
 
   def resolve_name_params(change_params, operation) do
     change_params
@@ -39,6 +39,7 @@ defmodule MsbmsSystAuthentication.Data.Helpers.SystIdentities do
     change_params
   end
 
+  # TODO: Should we really be defaulting this value?  Is such defaulting valid?
   def resolve_identity_type_id(change_params, :insert) do
     identity_type = MsbmsSystEnums.get_default_enum_item("identity_types")
 
