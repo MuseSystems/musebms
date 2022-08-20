@@ -43,6 +43,8 @@ load_files = [
     "cmp_msbms_syst_authentication/msbms_syst_data/syst_disallowed_passwords/syst_disallowed_passwords.eex.sql",
     "cmp_msbms_syst_authentication/msbms_syst_data/syst_password_history/syst_password_history.eex.sql",
 
+    "cmp_msbms_syst_authentication/seed_data/initialize_syst_global_password_rules.eex.sql",
+
     "cmp_msbms_syst_authentication/msbms_syst/api_views/syst_access_accounts/trig_i_i_syst_access_accounts.eex.sql",
     "cmp_msbms_syst_authentication/msbms_syst/api_views/syst_access_accounts/trig_i_u_syst_access_accounts.eex.sql",
     "cmp_msbms_syst_authentication/msbms_syst/api_views/syst_access_accounts/trig_i_d_syst_access_accounts.eex.sql",
