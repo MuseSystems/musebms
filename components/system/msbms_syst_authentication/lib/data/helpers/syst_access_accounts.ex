@@ -11,22 +11,15 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MsbmsSystAuthentication.Data.Helpers.SystAccessAccounts do
+  alias MsbmsSystAuthentication.Data.Helpers
+
   @moduledoc false
 
   def resolve_name_params(access_account_params, operation) do
     access_account_params
-    |> resolve_owner_id()
+    |> Helpers.General.resolve_owner_id()
     |> resolve_access_account_state_id(operation)
   end
-
-  def resolve_owner_id(%{owning_owner_name: owner_name} = access_account_params)
-      when is_binary(owner_name) do
-    {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name(owner_name)
-
-    Map.put(access_account_params, :owning_owner_id, owner_id)
-  end
-
-  def resolve_owner_id(access_account_params), do: access_account_params
 
   def resolve_access_account_state_id(
         %{access_account_state_name: access_account_state_name} = access_account_params,

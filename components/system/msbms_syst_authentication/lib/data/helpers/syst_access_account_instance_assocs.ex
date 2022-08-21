@@ -18,39 +18,7 @@ defmodule MsbmsSystAuthentication.Data.Helpers.SystAccessAccountInstanceAssocs d
   def resolve_name_params(change_params, operation) do
     change_params
     |> Helpers.General.resolve_access_account_id()
-    |> resolve_credential_type_id(operation)
-    |> resolve_instance_id()
-  end
-
-  def resolve_credential_type_id(
-        %{credential_type_name: credential_type_name} = change_params,
-        _operation
-      )
-      when is_binary(credential_type_name) do
-    credential_type =
-      MsbmsSystEnums.get_enum_item_by_name("credential_types", credential_type_name)
-
-    Map.put(change_params, :credential_type_id, credential_type.id)
-  end
-
-  def resolve_credential_type_id(
-        %{credential_type_id: credential_type_id} = change_params,
-        _operation
-      )
-      when is_binary(credential_type_id) do
-    change_params
-  end
-
-  def resolve_credential_type_id(change_params, :insert) do
-    credential_type = MsbmsSystEnums.get_default_enum_item("credential_types")
-
-    Map.put(change_params, :credential_type_id, credential_type.id)
-  end
-
-  def resolve_instance_id(%{instance_name: instance_name} = change_params)
-      when is_binary(instance_name) do
-    {:ok, instance_id} = MsbmsSystInstanceMgr.get_instance_id_by_name(instance_name)
-
-    Map.put(change_params, :instance_id, instance_id)
+    |> Helpers.General.resolve_credential_type_id(operation)
+    |> Helpers.General.resolve_instance_id()
   end
 end
