@@ -52,6 +52,8 @@ defmodule MsbmsSystAuthentication.Types do
 
   @type access_account_state_name() :: MsbmsSystEnums.Types.enum_item_name()
 
+  @type account_identifier() :: String.t()
+
   @type credential_params() :: %{
           optional(:access_account_id) => access_account_id(),
           optional(:access_account_name) => access_account_name(),
@@ -65,7 +67,14 @@ defmodule MsbmsSystAuthentication.Types do
 
   @type credential_type_name() :: MsbmsSystEnums.Types.enum_item_name()
 
-  @type account_identifier() :: String.t()
+  @type global_network_rule_params() :: %{
+          optional(:template_rule) => boolean(),
+          optional(:ordering) => pos_integer(),
+          optional(:functional_type) => String.t(),
+          optional(:ip_host_or_network) => DbTypes.Inet.t(),
+          optional(:ip_host_range_lower) => DbTypes.Inet.t(),
+          optional(:ip_host_range_upper) => DbTypes.Inet.t()
+        }
 
   @type identity_id() :: Ecto.UUID.t()
 
@@ -84,6 +93,26 @@ defmodule MsbmsSystAuthentication.Types do
           optional(:validation_requested) => DateTime.t(),
           optional(:validation_expires) => DateTime.t(),
           optional(:primary_contact) => boolean()
+        }
+
+  @type instance_network_rule_params() :: %{
+          optional(:instance_id) => MsbmsSystInstanceMgr.Types.instance_id(),
+          optional(:instance_name) => MsbmsSystInstanceMgr.Types.instance_name(),
+          optional(:ordering) => pos_integer(),
+          optional(:functional_type) => String.t(),
+          optional(:ip_host_or_network) => DbTypes.Inet.t(),
+          optional(:ip_host_range_lower) => DbTypes.Inet.t(),
+          optional(:ip_host_range_upper) => DbTypes.Inet.t()
+        }
+
+  @type owner_network_rule_params() :: %{
+          optional(:owner_id) => MsbmsSystInstanceMgr.Types.owner_id(),
+          optional(:owner_name) => MsbmsSystInstanceMgr.Types.owner_name(),
+          optional(:ordering) => pos_integer(),
+          optional(:functional_type) => String.t(),
+          optional(:ip_host_or_network) => DbTypes.Inet.t(),
+          optional(:ip_host_range_lower) => DbTypes.Inet.t(),
+          optional(:ip_host_range_upper) => DbTypes.Inet.t()
         }
 
   @type password_rule_params() :: %{
