@@ -11,6 +11,8 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MsbmsSystAuthentication.Types do
+  alias MsbmsSystDatastore.DbTypes
+
   #
   # Note that the ordering of typespecs here is alphabetical.
   #
@@ -82,5 +84,20 @@ defmodule MsbmsSystAuthentication.Types do
           optional(:validation_requested) => DateTime.t(),
           optional(:validation_expires) => DateTime.t(),
           optional(:primary_contact) => boolean()
+        }
+
+  @type password_rule_params() :: %{
+          optional(:owner_id) => MsbmsSystInstanceMgr.Types.owner_id() | nil,
+          optional(:owner_name) => MsbmsSystInstanceMgr.Types.owner_name() | nil,
+          optional(:password_length) => DbTypes.IntegerTypes.t(),
+          optional(:max_age) => DbTypes.Interval.t(),
+          optional(:require_upper_case) => non_neg_integer(),
+          optional(:require_lower_case) => non_neg_integer(),
+          optional(:require_numbers) => non_neg_integer(),
+          optional(:require_symbols) => non_neg_integer(),
+          optional(:disallow_recently_used) => non_neg_integer(),
+          optional(:disallow_known_compromised) => boolean(),
+          optional(:require_mfa) => boolean(),
+          optional(:allowed_mfa_types) => list(String.t())
         }
 end
