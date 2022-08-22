@@ -22,4 +22,11 @@ load_files = [
     "all/msbms_syst_priv/collations/variant_insensitive.eex.sql",
     "all/msbms_syst_priv/functions/get_exception_details.eex.sql",
     "all/msbms_syst_priv/trigger_functions/trig_b_iu_set_diagnostic_columns.eex.sql",
+
+    "all/msbms_syst_priv/functions/nonstandard_encode.eex.sql",
+    "all/msbms_syst_priv/functions/nonstandard_decode.eex.sql",
+    "all/msbms_syst_priv/functions/encode_base32.eex.sql",
+    "all/msbms_syst_priv/functions/encode_base36.eex.sql",
+    "all/msbms_syst_priv/functions/decode_base32.eex.sql",
+    "all/msbms_syst_priv/functions/decode_base36.eex.sql",
 ]
