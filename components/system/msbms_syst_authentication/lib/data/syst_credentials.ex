@@ -37,6 +37,7 @@ defmodule MsbmsSystAuthentication.Data.SystCredentials do
               Data.SystIdentities.t() | Ecto.Association.NotLoaded.t() | nil,
             credential_data: String.t() | nil,
             last_updated: DateTime.t() | nil,
+            external_name: String.t() | nil,
             diag_timestamp_created: DateTime.t() | nil,
             diag_role_created: String.t() | nil,
             diag_timestamp_modified: DateTime.t() | nil,
@@ -51,6 +52,7 @@ defmodule MsbmsSystAuthentication.Data.SystCredentials do
   schema "syst_credentials" do
     field(:credential_data, :string)
     field(:last_updated, :utc_datetime)
+    field(:external_name)
     field(:diag_timestamp_created, :utc_datetime)
     field(:diag_role_created, :string)
     field(:diag_timestamp_modified, :utc_datetime)
