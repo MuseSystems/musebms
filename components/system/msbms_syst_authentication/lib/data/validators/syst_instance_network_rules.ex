@@ -35,7 +35,7 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystInstanceNetworkRules do
     ])
     |> validate_common()
     |> validate_functional_type()
-    |> validate_cidr_or_range()
+    |> validate_network_addresses()
   end
 
   @spec update_changeset(Data.SystInstanceNetworkRules.t(), Types.instance_network_rule_params()) ::
@@ -51,7 +51,7 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystInstanceNetworkRules do
     ])
     |> validate_common()
     |> validate_functional_type()
-    |> validate_cidr_or_range()
+    |> validate_network_addresses()
     |> optimistic_lock(:diag_row_version)
   end
 
@@ -84,48 +84,68 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystInstanceNetworkRules do
     end
   end
 
-  defp validate_cidr_or_range(changeset) do
+  defp validate_network_addresses(changeset) do
     cidr_addr = get_field(changeset, :ip_host_or_network)
     ip_lower = get_field(changeset, :ip_host_range_lower)
     ip_upper = get_field(changeset, :ip_host_range_upper)
 
-    cond do
-      !is_nil(cidr_addr) and (!is_nil(ip_lower) or !is_nil(ip_lower)) ->
-        add_error(
-          changeset,
-          :ip_host_or_network,
-          """
-          You may specify a CIDR host/network or a simple range of IP addresses,
-          but not both in the same rule.
-          """
-        )
+    cidr_range_violation? = !is_nil(cidr_addr) and (!is_nil(ip_lower) or !is_nil(ip_upper))
+    range_missing_lower? = is_nil(ip_lower) != is_nil(ip_upper) and is_nil(ip_lower)
+    range_missing_upper? = is_nil(ip_lower) != is_nil(ip_upper) and is_nil(ip_upper)
 
-      is_nil(ip_lower) != is_nil(ip_upper) and is_nil(ip_lower) ->
-        add_error(
-          changeset,
-          :ip_host_range_lower,
-          "When specifying a range of IP addresses you must also provide a lower bound."
-        )
+    range_reversed_values? =
+      !is_nil(ip_lower) and !is_nil(ip_upper) and ip_lower.address >= ip_upper.address
 
-      is_nil(ip_lower) != is_nil(ip_upper) and is_nil(ip_upper) ->
-        add_error(
-          changeset,
-          :ip_host_range_upper,
-          "When specifying a range of IP addresses you must also provide an upper bound."
-        )
-
-      !is_nil(ip_lower) and !is_nil(ip_upper) and ip_lower.address >= ip_upper.address ->
-        add_error(
-          changeset,
-          :ip_host_range_upper,
-          """
-          When specifying a range of IP addresses the upper bound must be
-          greater than the lower bound.
-          """
-        )
-
-      true ->
-        changeset
-    end
+    changeset
+    |> maybe_add_cidr_range_error(cidr_range_violation?)
+    |> maybe_add_missing_lower_error(range_missing_lower?)
+    |> maybe_add_missing_upper_error(range_missing_upper?)
+    |> maybe_add_range_reversed_error(range_reversed_values?)
   end
+
+  defp maybe_add_cidr_range_error(changeset, true) do
+    add_error(
+      changeset,
+      :ip_host_or_network,
+      """
+      You may specify a CIDR host/network or a simple range of IP addresses,
+      but not both in the same rule.
+      """
+    )
+  end
+
+  defp maybe_add_cidr_range_error(changeset, _false), do: changeset
+
+  defp maybe_add_missing_lower_error(changeset, true) do
+    add_error(
+      changeset,
+      :ip_host_range_lower,
+      "When specifying a range of IP addresses you must also provide a lower bound."
+    )
+  end
+
+  defp maybe_add_missing_lower_error(changeset, _false), do: changeset
+
+  defp maybe_add_missing_upper_error(changeset, true) do
+    add_error(
+      changeset,
+      :ip_host_range_upper,
+      "When specifying a range of IP addresses you must also provide an upper bound."
+    )
+  end
+
+  defp maybe_add_missing_upper_error(changeset, _false), do: changeset
+
+  defp maybe_add_range_reversed_error(changeset, true) do
+    add_error(
+      changeset,
+      :ip_host_range_upper,
+      """
+      When specifying a range of IP addresses the upper bound must be
+      greater than the lower bound.
+      """
+    )
+  end
+
+  defp maybe_add_range_reversed_error(changeset, _false), do: changeset
 end
