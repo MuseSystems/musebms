@@ -33,10 +33,22 @@ PERFORM
               "syst_description": "A simple user provided password."
             },
             {
-              "internal_name": "credential_types_secondary_totp",
-              "display_name": "Credential Type / Secondary, TOTP",
-              "external_name": "Secondary, TOTP",
+              "internal_name": "credential_types_mfa_totp",
+              "display_name": "Credential Type / Multi-factor, TOTP",
+              "external_name": "MFA - TOTP",
               "syst_description": "Second factor authenticator for TOTP credentials."
+            },
+            {
+              "internal_name": "credential_types_mfa_totp_recovery_code",
+              "display_name": "Credential Type / Multi-factor, TOTP Recovery Code",
+              "external_name": "MFA - TOTP Recovery Code",
+              "syst_description": "Recovery codes for TOTP authenticator device loss support."
+            },
+            {
+              "internal_name": "credential_types_mfa_known_host",
+              "display_name": "Credential Type / Multi-factor, Known Host",
+              "external_name": "MFA - Know Hosts",
+              "syst_description": "When a user has been fully authenticated on a device, the user may elect to remember the device for a period of time and will not be prompted for secondary authentication when using that device.  This credential type assumes stored information on the device is sufficient to meet the multi-factor requirement."
             },
             {
               "internal_name": "credential_types_token_api",
@@ -71,15 +83,39 @@ PERFORM
               "syst_options": {}
             },
             {
-              "internal_name": "credential_types_sysdef_secondary_totp",
-              "display_name": "Credential Type / Secondary, TOTP",
-              "external_name": "Secondary, TOTP",
-              "functional_type_name": "credential_types_secondary_totp",
+              "internal_name": "credential_types_sysdef_mfa_totp",
+              "display_name": "Credential Type / Multi-factor, TOTP",
+              "external_name": "MFA - TOTP",
+              "functional_type_name": "credential_types_mfa_totp",
               "enum_default": false,
               "functional_type_default": true,
               "syst_defined": true,
               "user_maintainable": true,
               "syst_description": "Second factor authenticator for TOTP credentials.",
+              "syst_options": {}
+            },
+            {
+              "internal_name": "credential_types_sysdef_mfa_totp_recovery_code",
+              "display_name": "Credential Type / Multi-factor, TOTP Recovery Code",
+              "external_name": "MFA - TOTP Recovery Code",
+              "functional_type_name": "credential_types_mfa_totp_recovery_code",
+              "enum_default": false,
+              "functional_type_default": true,
+              "syst_defined": true,
+              "user_maintainable": true,
+              "syst_description": "Recovery codes for TOTP authenticator device loss support.",
+              "syst_options": {}
+            },
+            {
+              "internal_name": "credential_types_sysdef_mfa_known_host",
+              "display_name": "Credential Type / Multi-factor, Known Host",
+              "external_name": "MFA - Know Hosts",
+              "functional_type_name": "credential_types_mfa_known_host",
+              "enum_default": false,
+              "functional_type_default": true,
+              "syst_defined": true,
+              "user_maintainable": true,
+              "syst_description": "When a user has been fully authenticated on a device, the user may elect to remember the device for a period of time and will not be prompted for secondary authentication when using that device.  This credential type assumes stored information on the device is sufficient to meet the multi-factor requirement.",
               "syst_options": {}
             },
             {

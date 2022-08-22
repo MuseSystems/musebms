@@ -60,7 +60,8 @@ defmodule MsbmsSystAuthentication.Types do
           optional(:credential_type_id) => credential_type_id(),
           optional(:credential_type_name) => credential_type_name(),
           optional(:credential_for_identity_id) => identity_id(),
-          optional(:credential_data) => binary()
+          optional(:credential_data) => binary(),
+          optional(:external_name) => String.t()
         }
 
   @type credential_type_id() :: MsbmsSystEnums.Types.enum_item_id()
