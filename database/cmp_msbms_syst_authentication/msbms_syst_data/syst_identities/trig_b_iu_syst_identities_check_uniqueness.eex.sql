@@ -26,7 +26,7 @@ BEGIN
                 LEFT JOIN msbms_syst_data.syst_identities si_other
                     ON si_other.access_account_id = saa_other.id AND
                        si_other.identity_type_id = new.identity_type_id
-            WHERE saa_this.id = new.access_acount_id AND
+            WHERE saa_this.id = new.access_account_id AND
                   si_other.account_identifier = new.account_identifier
             )
     THEN
