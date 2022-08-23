@@ -14,292 +14,49 @@ DO
 $AUTHENTICATION_TESTING_INIT$
     BEGIN
 
-        ---------------------------------------------------------------------------
-        --  Prerequisite Data Setup
-        ---------------------------------------------------------------------------
+        ------------------------------------------------------------------------
+        -- Generalized / Independent Lists
+        ------------------------------------------------------------------------
 
-        -- This test data starts with a copy of a build of the MsbmsSystInstanceMgr
-        -- test data since we need depend on instance data such as owners and
-        -- instances.  Rather than try to finesse what we need from there right now,
-        -- it's just a wholesale copy and probably includes more than we need.  Also
-        -- the source of the test data may evolve beyond what we've copied and
-        -- that's OK.  We're not trying to mirror the Instances component, we're
-        -- just getting sufficient data to test MsbmsSystAuthentication.
-
-        --
-        --  Applications
-        --
-
-        INSERT INTO msbms_syst_data.syst_applications
-            ( internal_name, display_name, syst_description )
+        INSERT INTO msbms_syst_data.syst_disallowed_passwords
+            ( password_hash )
         VALUES
-            ( 'app2', 'App 2', 'App Two Description' )
+            ( digest( 'password', 'sha1' ) )
              ,
-            ( 'app1', 'App 1', 'App One Description' );
+            ( digest( '12345678', 'sha1' ) )
+             ,
+            ( digest( '123456789', 'sha1' ) )
+             ,
+            ( digest( 'baseball', 'sha1' ) )
+             ,
+            ( digest( 'football', 'sha1' ) )
+             ,
+            ( digest( 'qwertyuiop', 'sha1' ) )
+             ,
+            ( digest( '1234567890', 'sha1' ) )
+             ,
+            ( digest( 'superman', 'sha1' ) )
+             ,
+            ( digest( '1qaz2wsx', 'sha1' ) )
+             ,
+            ( digest( 'trustno1', 'sha1' ) );
 
-        --
-        -- Application Contexts
-        --
-
-        INSERT INTO msbms_syst_data.syst_application_contexts
-            ( internal_name
-            , display_name
-            , application_id
-            , description
-            , start_context
-            , login_context
-            , database_owner_context )
+        INSERT INTO msbms_syst_data.syst_banned_hosts
+            ( host_address )
         VALUES
-            ( 'app1_owner'
-            , 'App 1 Owner'
-            , ( SELECT id
-                FROM msbms_syst_data.syst_applications
-                WHERE internal_name = 'app1' )
-            , 'App 1 Owner'
-            , FALSE
-            , FALSE
-            , TRUE )
-
+            ( '10.123.123.1'::inet )
              ,
-            ( 'app1_appusr'
-            , 'App 1 AppUsr'
-            , ( SELECT id
-                FROM msbms_syst_data.syst_applications
-                WHERE internal_name = 'app1' )
-            , 'App 1 AppUsr'
-            , TRUE
-            , TRUE
-            , FALSE )
-
+            ( '10.123.123.2'::inet )
              ,
-            ( 'app1_apiusr'
-            , 'App 1 ApiUsr'
-            , ( SELECT id
-                FROM msbms_syst_data.syst_applications
-                WHERE internal_name = 'app1' )
-            , 'App 1 API user Context'
-            , TRUE
-            , TRUE
-            , FALSE )
-
+            ( '10.123.123.3'::inet )
              ,
-            ( 'app2_owner'
-            , 'App 2 Owner'
-            , ( SELECT id
-                FROM msbms_syst_data.syst_applications
-                WHERE internal_name = 'app2' )
-            , 'App 2 Owner'
-            , FALSE
-            , FALSE
-            , TRUE )
-
+            ( '10.123.123.4'::inet )
              ,
-            ( 'app2_appusr'
-            , 'App 2 AppUsr'
-            , ( SELECT id
-                FROM msbms_syst_data.syst_applications
-                WHERE internal_name = 'app2' )
-            , 'App 2 App'
-            , TRUE
-            , TRUE
-            , FALSE )
+            ( '10.123.123.5'::inet );
 
-             ,
-            ( 'app2_apiusr'
-            , 'App 2 ApiUsr'
-            , ( SELECT id
-                FROM msbms_syst_data.syst_applications
-                WHERE internal_name = 'app2' )
-            , 'App 2 API'
-            , TRUE
-            , TRUE
-            , FALSE );
-
-        --
-        --  Owners
-        --
-
-        INSERT INTO msbms_syst_data.syst_owners
-            ( internal_name, display_name, owner_state_id )
-        VALUES
-            ( 'owner4', 'Owner 4 Inactive', ( SELECT id
-                                              FROM msbms_syst_data.syst_enum_items
-                                              WHERE internal_name = 'owner_states_sysdef_inactive' ) )
-
-             ,
-            ( 'owner3', 'Owner 3 Active', ( SELECT id
-                                            FROM msbms_syst_data.syst_enum_items
-                                            WHERE internal_name = 'owner_states_sysdef_active' ) )
-
-             ,
-            ( 'owner1', 'Owner 1 Active', ( SELECT id
-                                            FROM msbms_syst_data.syst_enum_items
-                                            WHERE internal_name = 'owner_states_sysdef_active' ) )
-
-             ,
-            ( 'owner2', 'Owner 2 Inactive', ( SELECT id
-                                              FROM msbms_syst_data.syst_enum_items
-                                              WHERE internal_name = 'owner_states_sysdef_inactive' ) );
-
-        --
-        -- Create Instance Types.
-        --
-
-        INSERT INTO msbms_syst_data.syst_enum_items
-            ( internal_name
-            , display_name
-            , external_name
-            , enum_id
-            , enum_default
-            , syst_description
-            , user_description
-            , user_options )
-        VALUES
-            ( 'instance_types_big'
-            , 'Instance Types / Big'
-            , 'Big Instance'
-            , ( SELECT id
-                FROM msbms_syst_data.syst_enums
-                WHERE internal_name = 'instance_types' )
-            , FALSE
-            , '(System Description Not Provided)'
-            , 'A Big Instance Description'
-            , '{
-              "allowed_server_pools": [
-                "primary"
-              ]
-            }'::jsonb )
-             ,
-            ( 'instance_types_std'
-            , 'Instance Types / Standard'
-            , 'Standard Instance'
-            , ( SELECT id
-                FROM msbms_syst_data.syst_enums
-                WHERE internal_name = 'instance_types' )
-            , TRUE
-            , '(System Description Not Provided)'
-            , 'A Standard Instance Description'
-            , '{
-              "allowed_server_pools": [
-                "primary"
-              ]
-            }'::jsonb )
-             ,
-            ( 'instance_types_sml'
-            , 'Instance Types / Small'
-            , 'Small Instance'
-            , ( SELECT id
-                FROM msbms_syst_data.syst_enums
-                WHERE internal_name = 'instance_types' )
-            , FALSE
-            , '(System Description Not Provided)'
-            , 'A Small Instance Description'
-            , '{
-              "allowed_server_pools": [
-                "primary"
-              ]
-            }'::jsonb );
-
-        --
-        -- Insert Instance Type Applications
-        --
-
-        INSERT INTO msbms_syst_data.syst_instance_type_applications
-            ( instance_type_id, application_id )
-        SELECT
-            sei.id
-          , sa.id
-        FROM msbms_syst_data.syst_applications sa
-        CROSS JOIN ( msbms_syst_data.syst_enums se JOIN msbms_syst_data.syst_enum_items sei
-                     ON se.id = sei.enum_id )
-        WHERE se.internal_name = 'instance_types' AND sei.internal_name != 'instance_types_std';
-
-        --
-        -- Update Instance Type Contexts
-        --
-
-        UPDATE msbms_syst_data.syst_instance_type_contexts sitc
-        SET
-            default_db_pool_size = CASE
-                                       WHEN it.instance_type_name = 'instance_types_big' AND
-                                            it.login_context THEN 20
-                                       WHEN it.instance_type_name = 'instance_types_sml' AND
-                                            it.login_context THEN 3
-                                       ELSE 0
-                                   END
-        FROM ( SELECT
-                   sac.id            AS application_context_id
-                 , sac.login_context AS login_context
-                 , sita.id           AS instance_type_application_id
-                 , sei.internal_name AS instance_type_name
-               FROM msbms_syst_data.syst_application_contexts sac, msbms_syst_data.syst_enums se
-                                                                       JOIN msbms_syst_data.syst_enum_items sei ON sei.enum_id = se.id
-                                                                       JOIN msbms_syst_data.syst_instance_type_applications sita
-                                                                            ON sita.instance_type_id = sei.id
-               WHERE se.internal_name = 'instance_types' ) it
-        WHERE
-              it.application_context_id = sitc.application_context_id
-          AND it.instance_type_application_id = sitc.instance_type_application_id;
-
-        --
-        -- Create Instances
-        --
-
-        INSERT INTO msbms_syst_data.syst_instances
-            ( internal_name
-            , display_name
-            , application_id
-            , instance_type_id
-            , instance_state_id
-            , owner_id
-            , instance_code )
-        SELECT
-                            sa.internal_name || '_' || so.internal_name || '_' ||
-                            seiit.internal_name
-          ,                 sa.display_name || ' / ' || so.display_name || ' / ' ||
-                            seiit.external_name
-          ,                 sa.id
-          ,                 seiit.id
-          ,                 seiis.id
-          ,                 so.id
-          ,                 gen_random_bytes( 16 )
-        FROM msbms_syst_data.syst_owners so, msbms_syst_data.syst_applications sa
-           , msbms_syst_data.syst_enums seit
-                 JOIN msbms_syst_data.syst_enum_items seiit
-                      ON seit.internal_name = 'instance_types' AND seiit.enum_id = seit.id
-           , msbms_syst_data.syst_enums seis
-                 JOIN msbms_syst_data.syst_enum_items seiis
-                      ON seis.internal_name = 'instance_states' AND seiis.enum_id = seis.id
-        WHERE
-            CASE sa.internal_name
-                WHEN 'app2' THEN
-                    seiis.internal_name = 'instance_states_sysdef_uninitialized'
-                WHEN 'app1' THEN
-                    seiis.internal_name = 'instance_states_sysdef_active'
-            END;
-
-        UPDATE msbms_syst_data.syst_instances upttarget
-        SET owning_instance_id = owner.new_owning_instance_id
-        FROM ( SELECT
-                   si.id             AS new_owning_instance_id
-                 , si.owner_id       AS owner_id
-                 , si.application_id AS application_id
-               FROM msbms_syst_data.syst_instances si
-               JOIN msbms_syst_data.syst_enum_items sei ON sei.id = si.instance_type_id
-               WHERE sei.internal_name = 'instance_types_big' ) owner
-           , ( SELECT
-                   si.id AS to_be_owned_instance_id
-               FROM msbms_syst_data.syst_instances si
-               JOIN msbms_syst_data.syst_enum_items sei ON sei.id = si.instance_type_id
-               WHERE sei.internal_name = 'instance_types_sml' ) target
-        WHERE
-              upttarget.id = target.to_be_owned_instance_id
-          AND upttarget.owner_id = owner.owner_id
-          AND upttarget.application_id = owner.application_id;
-
-        ----------------------------------------------------------------------------
-        -- Authentication Component Test Data
-        ----------------------------------------------------------------------------
+        ------------------------------------------------------------------------
+        -- All Access / Example User Test Data
+        ------------------------------------------------------------------------
 
         INSERT INTO msbms_syst_data.syst_access_accounts
             ( internal_name
@@ -308,15 +65,128 @@ $AUTHENTICATION_TESTING_INIT$
             , allow_global_logins
             , access_account_state_id )
         VALUES
-            ( 'unowned_all_access', 'Unowned / All Access', NULL, TRUE, ( SELECT id
-                                                          FROM msbms_syst_data.syst_enum_items
-                                                          WHERE internal_name = 'access_account_states_sysdef_active' ) )
+            ( 'unowned_all_access',
+              'Unowned / All Access',
+              NULL,
+              TRUE,
+              ( SELECT
+                    id
+                FROM msbms_syst_data.syst_enum_items
+                WHERE internal_name = 'access_account_states_sysdef_active' ) )
              ,
-            ( 'example_accnt', 'Example Account', ( SELECT id
-                                              FROM msbms_syst_data.syst_owners
-                                              WHERE internal_name = 'owner1' ), FALSE, ( SELECT id
-                                                                                        FROM msbms_syst_data.syst_enum_items
-                                                                                        WHERE internal_name = 'access_account_states_sysdef_active' ) );
+            ( 'owned_all_access'
+            , 'Owned / All Access'
+            , ( SELECT id
+                FROM msbms_syst_data.syst_owners
+                WHERE internal_name = 'owner1' )
+            , FALSE
+            , ( SELECT
+                    id
+                FROM msbms_syst_data.syst_enum_items
+                WHERE internal_name = 'access_account_states_sysdef_active' ) )
+             ,
+            ( 'example_accnt'
+            , 'Example Account'
+            , ( SELECT id
+                FROM msbms_syst_data.syst_owners
+                WHERE internal_name = 'owner1' )
+            , FALSE
+            , ( SELECT
+                    id
+                FROM msbms_syst_data.syst_enum_items
+                WHERE internal_name = 'access_account_states_sysdef_active' ) );
+
+        -- Owned accounts and unowned accounts have slightly different
+        -- restrictions on which instances they can be associated with.
+
+        INSERT INTO msbms_syst_data.syst_access_account_instance_assocs
+            ( access_account_id
+            , credential_type_id
+            , instance_id
+            , access_granted
+            , invitation_issued
+            , invitation_expires
+            , invitation_declined )
+        SELECT
+            aa.id
+          , ctei.id
+          , i.id
+          , now( ) - INTERVAL '20 days'
+          , now( ) - INTERVAL '40 days'
+          , now( ) - INTERVAL '10 days'
+          , NULL::timestamptz
+        FROM msbms_syst_data.syst_enums cte
+                 JOIN msbms_syst_data.syst_enum_items ctei ON ctei.enum_id = cte.id
+           , msbms_syst_data.syst_access_accounts aa
+           , msbms_syst_data.syst_instances i
+        WHERE cte.internal_name = 'credential_types' AND aa.internal_name = 'unowned_all_access';
+
+        INSERT INTO msbms_syst_data.syst_access_account_instance_assocs
+            ( access_account_id
+            , credential_type_id
+            , instance_id
+            , access_granted
+            , invitation_issued
+            , invitation_expires
+            , invitation_declined )
+        SELECT
+            aa.id
+          , ctei.id
+          , i.id
+          , now( ) - INTERVAL '20 days'
+          , now( ) - INTERVAL '40 days'
+          , now( ) - INTERVAL '10 days'
+          , NULL::timestamptz
+        FROM msbms_syst_data.syst_enums cte
+                 JOIN msbms_syst_data.syst_enum_items ctei ON ctei.enum_id = cte.id
+           , msbms_syst_data.syst_access_accounts aa
+                 JOIN msbms_syst_data.syst_owners o ON o.id = aa.owning_owner_id
+                 JOIN msbms_syst_data.syst_instances i ON i.owner_id = o.id
+        WHERE
+              cte.internal_name = 'credential_types'
+          AND aa.internal_name IN ( 'unowned_all_access', 'example_accnt' );
+
+        INSERT INTO msbms_syst_data.syst_identities
+            ( access_account_id
+            , identity_type_id
+            , account_identifier
+            , validated
+            , validation_requested
+            , validation_expires
+            , primary_contact )
+        SELECT
+            aa.id
+          , ( SELECT id
+              FROM msbms_syst_data.syst_enum_items
+              WHERE internal_name = 'identity_types_sysdef_email' )
+          , aa.internal_name || '@musesystems.com' -- TODO: Change this to something more testable!
+          , now( ) - interval '15 days'
+          , now( ) - interval '20 days'
+          , now( ) - interval '10 days'
+          , TRUE
+        FROM msbms_syst_data.syst_access_accounts aa;
+
+        INSERT INTO msbms_syst_data.syst_identities
+            ( access_account_id
+            , identity_type_id
+            , account_identifier
+            , validated
+            , validation_requested
+            , validation_expires
+            , primary_contact )
+        SELECT
+            aa.id
+          , ( SELECT id
+              FROM msbms_syst_data.syst_enum_items
+              WHERE internal_name = 'identity_types_sysdef_account' )
+          , msbms_syst_priv.get_random_string(9)
+          , now( ) - INTERVAL '15 days'
+          , now( ) - INTERVAL '20 days'
+          , now( ) - INTERVAL '10 days'
+          , TRUE
+        FROM msbms_syst_data.syst_access_accounts aa;
+
+
 
     END;
 $AUTHENTICATION_TESTING_INIT$;
