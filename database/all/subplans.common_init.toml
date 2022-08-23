@@ -29,4 +29,6 @@ load_files = [
     "all/msbms_syst_priv/functions/encode_base36.eex.sql",
     "all/msbms_syst_priv/functions/decode_base32.eex.sql",
     "all/msbms_syst_priv/functions/decode_base36.eex.sql",
+
+    "all/msbms_syst_priv/functions/get_random_string.eex.sql",
 ]
