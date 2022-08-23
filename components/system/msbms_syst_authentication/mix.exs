@@ -51,8 +51,8 @@ defmodule MsbmsSystAuthentication.MixProject do
         ],
         groups_for_modules: [
           API: [MsbmsSystAuthentication],
-          Data: [],
-          "Supporting Types": []
+          Data: [MsbmsSystAuthentication.Data],
+          "Supporting Types": [MsbmsSystAuthentication.Types]
         ]
       ]
     ]
