@@ -381,27 +381,14 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
         :error,
         %MsbmsSystError{
           code: :undefined_error,
-          message: "Failure deleting Instance.",
+          message: "Failure purging Instance.",
           cause: error
         }
       }
   end
 
-  def purge_instance(%Data.SystInstances{id: instance_id}, startup_options) do
-    purge_instance(instance_id, startup_options)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MsbmsSystError{
-          code: :undefined_error,
-          message: "Failure deleting Instance by struct.",
-          cause: error
-        }
-      }
-  end
+  def purge_instance(%Data.SystInstances{id: instance_id}, startup_options),
+    do: purge_instance(instance_id, startup_options)
 
   defp maybe_perform_instance_purge("instance_states_purge_eligible", instance, startup_options) do
     datastore_options = get_instance_datastore_options(instance, startup_options)
@@ -414,7 +401,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
     do:
       raise(MsbmsSystError,
         code: :invalid_parameter,
-        message: "Invalid Instance State Functional Type for Purge.",
+        message: "Invalid Instance State Functional Type for purge.",
         cause: %{parameters: [functional_type: functional_type]}
       )
 end

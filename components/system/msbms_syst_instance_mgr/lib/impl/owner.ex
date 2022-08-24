@@ -142,7 +142,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Owner do
         :error,
         %MsbmsSystError{
           code: :undefined_error,
-          message: "Failure deleting Owner by ID.",
+          message: "Failure purging Owner by ID.",
           cause: error
         }
       }
@@ -165,7 +165,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Owner do
       _ ->
         raise MsbmsSystError,
           code: :invalid_parameter,
-          message: "Invalid Owner State Functional Type for Purge.",
+          message: "Invalid Owner State Functional Type for purge.",
           cause: %{parameters: [functional_type: functional_type]}
     end
   rescue
@@ -182,19 +182,5 @@ defmodule MsbmsSystInstanceMgr.Impl.Owner do
       }
   end
 
-  def purge_owner(%Data.SystOwners{id: owner_id}) do
-    purge_owner(owner_id)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MsbmsSystError{
-          code: :undefined_error,
-          message: "Failure deleting Owner by struct.",
-          cause: error
-        }
-      }
-  end
+  def purge_owner(%Data.SystOwners{id: owner_id}), do: purge_owner(owner_id)
 end
