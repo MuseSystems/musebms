@@ -252,7 +252,7 @@ defmodule IntegrationTest do
     assert :ok =
              MsbmsSystInstanceMgr.start_all_applications(@startup_options,
                migrations_root_dir:
-                 "../../../database/cmp_msbms_syst_instance_mgr/testing_support"
+                 "../../../database/components/system/msbms_syst_instance_mgr/testing_support"
              )
   end
 

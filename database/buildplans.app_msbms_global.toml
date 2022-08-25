@@ -27,33 +27,33 @@ load_files = [
     # MsbmsSystSettings
     #
 
-    {type = "plan", file = "cmp_msbms_syst_settings/subplans.cmp_msbms_syst_settings.toml"},
-    "app_msbms_global/components/msbms_syst_settings/privileges.eex.sql",
+    {type = "plan", file = "components/system/msbms_syst_settings/subplans.msbms_syst_settings.toml"},
+    "application/msbms_global/components/msbms_syst_settings/privileges.eex.sql",
 
     #
     # MsbmsSystEnums
     #
 
-    {type = "plan", file = "cmp_msbms_syst_enums/subplans.cmp_msbms_syst_enums.toml"},
-    "app_msbms_global/components/msbms_syst_enums/privileges.eex.sql",
+    {type = "plan", file = "components/system/msbms_syst_enums/subplans.msbms_syst_enums.toml"},
+    "application/msbms_global/components/msbms_syst_enums/privileges.eex.sql",
 
     #
     #  MsbmsSystFeatures
     #
 
-    {type = "plan", file = "cmp_msbms_syst_features/subplans.cmp_msbms_syst_features.toml"},
-    "app_msbms_global/gen_seed_data/initialize_feature_mapping.eex.sql",
+    {type = "plan", file = "components/system/msbms_syst_features/subplans.msbms_syst_features.toml"},
+    "application/msbms_global/gen_seed_data/initialize_feature_mapping.eex.sql",
 
     #
     # MsbmsSystInstanceMgr
     #
 
-    {type = "plan", file = "cmp_msbms_syst_instance_mgr/subplans.cmp_msbms_syst_instance_mgr.toml"},
-    "app_msbms_global/components/msbms_syst_instance_mgr/privileges.eex.sql",
+    {type = "plan", file = "components/system/msbms_syst_instance_mgr/subplans.msbms_syst_instance_mgr.toml"},
+    "application/msbms_global/components/msbms_syst_instance_mgr/privileges.eex.sql",
 
     #
     # MsbmsSystAuthentication
     #
 
-    {type = "plan", file = "cmp_msbms_syst_authentication/subplans.cmp_msbms_syst_authentication.toml"},
+    {type = "plan", file = "components/system/msbms_syst_authentication/subplans.msbms_syst_authentication.toml"},
 ]
