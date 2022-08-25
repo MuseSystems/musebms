@@ -48,4 +48,7 @@ defmodule MsbmsSystAuthentication.Data.Helpers.SystAccessAccounts do
 
     Map.put(access_account_params, :access_account_state_id, access_account_state.id)
   end
+
+  def resolve_access_account_state_id(access_account_params, _operation),
+    do: access_account_params
 end
