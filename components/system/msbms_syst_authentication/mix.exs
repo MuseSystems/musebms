@@ -47,11 +47,24 @@ defmodule MsbmsSystAuthentication.MixProject do
         nest_modules_by_prefix: [MsbmsSystAuthentication.Data],
         main: "MsbmsSystAuthentication",
         groups_for_functions: [
+          "API - Access Accounts": &(&1[:section] == :access_account_data),
           "API - Runtime": &(&1[:section] == :service_management)
         ],
         groups_for_modules: [
           API: [MsbmsSystAuthentication],
-          Data: [MsbmsSystAuthentication.Data],
+          Data: [
+            MsbmsSystAuthentication.Data.SystAccessAccountInstanceAssocs,
+            MsbmsSystAuthentication.Data.SystAccessAccounts,
+            MsbmsSystAuthentication.Data.SystCredentials,
+            MsbmsSystAuthentication.Data.SystDisallowedPasswords,
+            MsbmsSystAuthentication.Data.SystGlobalNetworkRules,
+            MsbmsSystAuthentication.Data.SystGlobalPasswordRules,
+            MsbmsSystAuthentication.Data.SystIdentities,
+            MsbmsSystAuthentication.Data.SystInstanceNetworkRules,
+            MsbmsSystAuthentication.Data.SystOwnerNetworkRules,
+            MsbmsSystAuthentication.Data.SystOwnerPasswordRules,
+            MsbmsSystAuthentication.Data.SystPasswordHistory
+          ],
           "Supporting Types": [MsbmsSystAuthentication.Types]
         ]
       ]
