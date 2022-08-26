@@ -122,7 +122,7 @@ allows for application database connections secured to an appropriate range
 of actions and limited to an appropriate number of concurrent database
 connections.  Or to put it another way, Datastore Contexts can be thought of
 as &quot;Database Access Contexts&quot;.</p><p>Datastore and Datastore Context management is provided by the
-<a href="https://hexdocs.pm/msbms_syst_datastore/0.1.0/MsbmsSystDatastore.html"><code class="inline">MsbmsSystDatastore</code></a> component.</p><h4>Owners</h4><p>Owners represent the known tenants of the system.  An Owner will own Instances
+<a href="../../../../documentation/technical/app_server/msbms_syst_datastore/MsbmsSystDatastore.html"><code class="inline">MsbmsSystDatastore</code></a> component.</p><h4>Owners</h4><p>Owners represent the known tenants of the system.  An Owner will own Instances
 of Applications.  Owners have states which determine if they are active, not
 active, or even if they may be purged from the system.</p><h4>Applications</h4><p>Each Instance is an operational instance of a specific Application.  An
 Application is simply what an end user would understand to be application:
@@ -138,7 +138,7 @@ classes that are available for creating new Instances.  These defaults include
 such starting values as the number of database connections to use for each
 Application Context and which server pools may host the Instance.</p><p>After Instance creation, the Instance Type serves no further role for the
 Instance.</p><p>Note that Instance Type records are a special case of the
-<a href="https://hexdocs.pm/msbms_syst_enums/0.1.0/MsbmsSystEnums.Data.SystEnumItems.html"><code class="inline">MsbmsSystEnums.Data.SystEnumItems</code></a> record.  The Enum Name for Instance Type
+<a href="../../../../documentation/technical/app_server/msbms_syst_enums/MsbmsSystEnums.Data.SystEnumItems.html"><code class="inline">MsbmsSystEnums.Data.SystEnumItems</code></a> record.  The Enum Name for Instance Type
 is, unsurprisingly, <code class="inline">instance_types</code>.</p><h4>Instance Type Applications</h4><p>Establishes that a given Instance Type will support a particular Application.</p><h4>Instance Type Contexts</h4><p>Defines defaults used in creating Instance Context records at Instance
 creation time.</p><p>When an association is made between an Instance Type and an Application via
 a Instance Type Application association, a new Instance Type Context record is
@@ -165,9 +165,9 @@ overridden via this API as desired.</p><h2 id="module-special-notes" class="sect
   </a>
   Special Notes
 </h2>
-<p>This component requires that an instance of the <a href="https://hexdocs.pm/msbms_syst_enums/0.1.0/MsbmsSystEnums.html"><code class="inline">MsbmsSystEnums</code></a> service has
+<p>This component requires that an instance of the <a href="../../../../documentation/technical/app_server/msbms_syst_enums/MsbmsSystEnums.html"><code class="inline">MsbmsSystEnums</code></a> service has
 been configured and started.  Many of the API calls in this component will
-fail if the <a href="https://hexdocs.pm/msbms_syst_enums/0.1.0/MsbmsSystEnums.html"><code class="inline">MsbmsSystEnums</code></a> services are not available.</p>
+fail if the <a href="../../../../documentation/technical/app_server/msbms_syst_enums/MsbmsSystEnums.html"><code class="inline">MsbmsSystEnums</code></a> services are not available.</p>
   </section>
 
 
@@ -349,7 +349,7 @@ provided Startup Options.</p></div>
 
         </div>
 
-          <div class="summary-synopsis"><p>Creates a new Instance Type record via the <a href="https://hexdocs.pm/msbms_syst_enums/0.1.0/MsbmsSystEnums.html"><code class="inline">MsbmsSystEnums</code></a> service.</p></div>
+          <div class="summary-synopsis"><p>Creates a new Instance Type record via the <a href="../../../../documentation/technical/app_server/msbms_syst_enums/MsbmsSystEnums.html"><code class="inline">MsbmsSystEnums</code></a> service.</p></div>
 
       </div>
 
@@ -369,7 +369,7 @@ provided Startup Options.</p></div>
 
         </div>
 
-          <div class="summary-synopsis"><p>Deletes an Instance Type from the <a href="https://hexdocs.pm/msbms_syst_enums/0.1.0/MsbmsSystEnums.html"><code class="inline">MsbmsSystEnums</code></a> service.</p></div>
+          <div class="summary-synopsis"><p>Deletes an Instance Type from the <a href="../../../../documentation/technical/app_server/msbms_syst_enums/MsbmsSystEnums.html"><code class="inline">MsbmsSystEnums</code></a> service.</p></div>
 
       </div>
 
@@ -389,7 +389,7 @@ provided Startup Options.</p></div>
 
         </div>
 
-          <div class="summary-synopsis"><p>Updates an existing Instance Type record via the <a href="https://hexdocs.pm/msbms_syst_enums/0.1.0/MsbmsSystEnums.html"><code class="inline">MsbmsSystEnums</code></a> service.</p></div>
+          <div class="summary-synopsis"><p>Updates an existing Instance Type record via the <a href="../../../../documentation/technical/app_server/msbms_syst_enums/MsbmsSystEnums.html"><code class="inline">MsbmsSystEnums</code></a> service.</p></div>
 
       </div>
 
@@ -494,7 +494,7 @@ API - Runtime
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> start_all_applications(startup_options :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(), opts :: <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) ::
-  :ok | {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+  :ok | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
 
       </div>
 
@@ -526,7 +526,7 @@ for more information about this function and the available parameters.</p>
   | <a href="MsbmsSystInstanceMgr.Data.SystApplications.html#t:t/0">MsbmsSystInstanceMgr.Data.SystApplications.t</a>(),
   startup_options :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(),
   opts :: <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
-) :: :ok | {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+) :: :ok | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
 
       </div>
 
@@ -546,7 +546,7 @@ prepared for Application startup to be long running.</p><h2 id="start_applicatio
 <ul><li><p><code class="inline">application</code> - either the record ID or the
 <a href="MsbmsSystInstanceMgr.Data.SystApplications.html"><code class="inline">MsbmsSystInstanceMgr.Data.SystApplications</code></a> struct representing the
 Application to start.</p></li><li><p><code class="inline">startup_options</code> - a map of values containing the Startup Options
-obtained from the <a href="https://hexdocs.pm/msbms_syst_options/0.1.0/MsbmsSystOptions.html"><code class="inline">MsbmsSystOptions</code></a> component.</p></li><li><p><code class="inline">opts</code> - a Keyword List of optional values used during the initialization
+obtained from the <a href="../../../../documentation/technical/app_server/msbms_syst_options/MsbmsSystOptions.html"><code class="inline">MsbmsSystOptions</code></a> component.</p></li><li><p><code class="inline">opts</code> - a Keyword List of optional values used during the initialization
 process.  The available options include:</p><ul><li><p><code class="inline">max_concurrency</code> - the maximum number of Instances to start
 concurrently.  This defaults to the greater of 1 or one quarter of the
 value returned by <a href="https://hexdocs.pm/elixir/System.html#schedulers_online/0"><code class="inline">System.schedulers_online/0</code></a> floored.</p></li><li><p>other available options are passed to <a href="#start_instance/3"><code class="inline">start_instance/3</code></a>.  See the
@@ -576,7 +576,7 @@ documentation for <a href="#start_instance/3"><code class="inline">start_instanc
   | <a href="MsbmsSystInstanceMgr.Data.SystInstances.html#t:t/0">MsbmsSystInstanceMgr.Data.SystInstances.t</a>(),
   startup_options :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(),
   opts :: <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
-) :: :ok | {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+) :: :ok | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
 
       </div>
 
@@ -594,7 +594,7 @@ ready to start child processes.</p><h2 id="start_instance/3-parameters" class="s
 </h2>
 <ul><li><p><code class="inline">instance</code> - either the record ID or the
 <a href="MsbmsSystInstanceMgr.Data.SystInstances.html"><code class="inline">MsbmsSystInstanceMgr.Data.SystInstances</code></a> struct of the Instance to start.</p></li><li><p><code class="inline">startup_options</code> - a map of values containing the Startup Options
-obtained from the <a href="https://hexdocs.pm/msbms_syst_options/0.1.0/MsbmsSystOptions.html"><code class="inline">MsbmsSystOptions</code></a> component.</p></li><li><p><code class="inline">opts</code> - a Keyword List of optional values used during the initialization
+obtained from the <a href="../../../../documentation/technical/app_server/msbms_syst_options/MsbmsSystOptions.html"><code class="inline">MsbmsSystOptions</code></a> component.</p></li><li><p><code class="inline">opts</code> - a Keyword List of optional values used during the initialization
 process.  The available options include:</p><ul><li><p><code class="inline">migrating_state_id</code> - the record ID of the Instance State to use while
 the starting Instance is being updated to the most current database
 definition of the application.  If not provided the currently configured
@@ -631,7 +631,7 @@ automatically generated from Instance record data.</p></li></ul></li></ul>
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> stop_all_applications(opts :: <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: :ok | {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+          <pre translate="no"><span class="attribute">@spec</span> stop_all_applications(opts :: <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: :ok | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
 
       </div>
 
@@ -663,7 +663,7 @@ of Application shutdown, please see the documentation for
   <a href="MsbmsSystInstanceMgr.Types.html#t:application_id/0">MsbmsSystInstanceMgr.Types.application_id</a>()
   | <a href="MsbmsSystInstanceMgr.Data.SystApplications.html#t:t/0">MsbmsSystInstanceMgr.Data.SystApplications.t</a>(),
   opts :: <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
-) :: :ok | {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+) :: :ok | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
 
       </div>
 
@@ -706,7 +706,7 @@ default, this value is set to 60,000ms.</p></li><li><p>Other options available a
   <a href="MsbmsSystInstanceMgr.Types.html#t:instance_id/0">MsbmsSystInstanceMgr.Types.instance_id</a>()
   | <a href="MsbmsSystInstanceMgr.Data.SystInstances.html#t:t/0">MsbmsSystInstanceMgr.Data.SystInstances.t</a>(),
   opts :: <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
-) :: :ok | {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+) :: :ok | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
 
       </div>
 
@@ -723,7 +723,7 @@ supervised by the Instance supervisor to shut down cleanly.  By default,
 this value is set to 60,000ms.</p></li><li><p><code class="inline">db_shutdown_timeout</code> - a timeout value used to limit the time allowed
 for a clean shutdown of the database connections used for operating
 Datastore.  See the documentation for
-<a href="https://hexdocs.pm/msbms_syst_datastore/0.1.0/MsbmsSystDatastore.html#stop_datastore/2"><code class="inline">MsbmsSystDatastore.stop_datastore/2</code></a> for more information.</p></li></ul></li></ul>
+<a href="../../../../documentation/technical/app_server/msbms_syst_datastore/MsbmsSystDatastore.html#stop_datastore/2"><code class="inline">MsbmsSystDatastore.stop_datastore/2</code></a> for more information.</p></li></ul></li></ul>
   </section>
 </section>
 
@@ -757,7 +757,7 @@ API - Instances
 
           <pre translate="no"><span class="attribute">@spec</span> create_instance(<a href="MsbmsSystInstanceMgr.Types.html#t:instance_params/0">MsbmsSystInstanceMgr.Types.instance_params</a>()) ::
   {:ok, <a href="MsbmsSystInstanceMgr.Data.SystInstances.html#t:t/0">MsbmsSystInstanceMgr.Data.SystInstances.t</a>()}
-  | {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+  | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
 
       </div>
 
@@ -853,7 +853,7 @@ State value is not provided by the caller.</p>
 
           <pre translate="no"><span class="attribute">@spec</span> get_instance_by_name(<a href="MsbmsSystInstanceMgr.Types.html#t:instance_name/0">MsbmsSystInstanceMgr.Types.instance_name</a>()) ::
   {:ok, <a href="MsbmsSystInstanceMgr.Data.SystInstances.html#t:t/0">MsbmsSystInstanceMgr.Data.SystInstances.t</a>()}
-  | {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+  | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
 
       </div>
 
@@ -869,8 +869,8 @@ State value is not provided by the caller.</p>
   </a>
   Example
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="3963126343-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3963126343-2">%</span><span class="nc" data-group-id="3963126343-2">MsbmsSystInstanceMgr.Data.SystInstances</span><span class="p" data-group-id="3963126343-2">{</span><span class="p" data-group-id="3963126343-2">}</span><span class="p" data-group-id="3963126343-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystInstanceMgr</span><span class="o">.</span><span class="n">get_instance_by_name</span><span class="p" data-group-id="3963126343-3">(</span><span class="s">&quot;app1_owner1_instance_types_sml&quot;</span><span class="p" data-group-id="3963126343-3">)</span></code></pre>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="1881616736-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="1881616736-2">%</span><span class="nc" data-group-id="1881616736-2">MsbmsSystInstanceMgr.Data.SystInstances</span><span class="p" data-group-id="1881616736-2">{</span><span class="p" data-group-id="1881616736-2">}</span><span class="p" data-group-id="1881616736-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystInstanceMgr</span><span class="o">.</span><span class="n">get_instance_by_name</span><span class="p" data-group-id="1881616736-3">(</span><span class="s">&quot;app1_owner1_instance_types_sml&quot;</span><span class="p" data-group-id="1881616736-3">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_instance_datastore_options/2">
@@ -893,7 +893,7 @@ State value is not provided by the caller.</p>
   <a href="MsbmsSystInstanceMgr.Types.html#t:instance_id/0">MsbmsSystInstanceMgr.Types.instance_id</a>()
   | <a href="MsbmsSystInstanceMgr.Data.SystInstances.html#t:t/0">MsbmsSystInstanceMgr.Data.SystInstances.t</a>(),
   startup_options :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()
-) :: <a href="https://hexdocs.pm/msbms_syst_datastore/0.1.0/MsbmsSystDatastore.Types.html#t:datastore_options/0">MsbmsSystDatastore.Types.datastore_options</a>()</pre>
+) :: <a href="../../../../documentation/technical/app_server/msbms_syst_datastore/MsbmsSystDatastore.Types.html#t:datastore_options/0">MsbmsSystDatastore.Types.datastore_options</a>()</pre>
 
       </div>
 
@@ -907,7 +907,7 @@ provided Startup Options.</p><h2 id="get_instance_datastore_options/2-parameters
 <ul><li><p><code class="inline">instance</code> - the instance parameter is either the record ID value of the
 Instance record desired or the <a href="MsbmsSystInstanceMgr.Data.SystInstances.html"><code class="inline">MsbmsSystInstanceMgr.Data.SystInstances</code></a>
 struct for the target Instance.</p></li><li><p><code class="inline">startup_options</code> - a map of values containing the Startup Options
-obtained from the <a href="https://hexdocs.pm/msbms_syst_options/0.1.0/MsbmsSystOptions.html"><code class="inline">MsbmsSystOptions</code></a> component.</p></li></ul>
+obtained from the <a href="../../../../documentation/technical/app_server/msbms_syst_options/MsbmsSystOptions.html"><code class="inline">MsbmsSystOptions</code></a> component.</p></li></ul>
   </section>
 </section>
 <section class="detail" id="get_instance_id_by_name/1">
@@ -927,7 +927,7 @@ obtained from the <a href="https://hexdocs.pm/msbms_syst_options/0.1.0/MsbmsSyst
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> get_instance_id_by_name(<a href="MsbmsSystInstanceMgr.Types.html#t:instance_name/0">MsbmsSystInstanceMgr.Types.instance_name</a>()) ::
-  {:ok, <a href="MsbmsSystInstanceMgr.Types.html#t:instance_id/0">MsbmsSystInstanceMgr.Types.instance_id</a>()} | {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+  {:ok, <a href="MsbmsSystInstanceMgr.Types.html#t:instance_id/0">MsbmsSystInstanceMgr.Types.instance_id</a>()} | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
 
       </div>
 
@@ -943,9 +943,9 @@ obtained from the <a href="https://hexdocs.pm/msbms_syst_options/0.1.0/MsbmsSyst
   </a>
   Example
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="1429091437-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">instance_id</span><span class="p" data-group-id="1429091437-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystInstanceMgr</span><span class="o">.</span><span class="n">get_instance_id_by_name</span><span class="p" data-group-id="1429091437-2">(</span><span class="s">&quot;app1_owner1_instance_types_sml&quot;</span><span class="p" data-group-id="1429091437-2">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="n">is_binary</span><span class="p" data-group-id="1429091437-3">(</span><span class="n">instance_id</span><span class="p" data-group-id="1429091437-3">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="7116230175-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">instance_id</span><span class="p" data-group-id="7116230175-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystInstanceMgr</span><span class="o">.</span><span class="n">get_instance_id_by_name</span><span class="p" data-group-id="7116230175-2">(</span><span class="s">&quot;app1_owner1_instance_types_sml&quot;</span><span class="p" data-group-id="7116230175-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_binary</span><span class="p" data-group-id="7116230175-3">(</span><span class="n">instance_id</span><span class="p" data-group-id="7116230175-3">)</span><span class="w">
 </span><span class="no">true</span></code></pre>
   </section>
 </section>
@@ -973,7 +973,7 @@ obtained from the <a href="https://hexdocs.pm/msbms_syst_options/0.1.0/MsbmsSyst
   opts :: <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
 ) ::
   {:ok, <a href="MsbmsSystInstanceMgr.Data.SystInstances.html#t:t/0">MsbmsSystInstanceMgr.Data.SystInstances.t</a>()}
-  | {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+  | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
 
       </div>
 
@@ -991,7 +991,7 @@ current version of the Instance's database.</p><h2 id="initialize_instance/3-par
   Parameters
 </h2>
 <ul><li><p><code class="inline">instance_id</code> - the record ID of the Instance to initialize.</p></li><li><p><code class="inline">startup_options</code> - a map of values containing the Startup Options
-obtained from the <a href="https://hexdocs.pm/msbms_syst_options/0.1.0/MsbmsSystOptions.html"><code class="inline">MsbmsSystOptions</code></a> component.</p></li><li><p><code class="inline">opts</code> - a Keyword List of optional values used during the initialization
+obtained from the <a href="../../../../documentation/technical/app_server/msbms_syst_options/MsbmsSystOptions.html"><code class="inline">MsbmsSystOptions</code></a> component.</p></li><li><p><code class="inline">opts</code> - a Keyword List of optional values used during the initialization
 process.  The available options include:</p><ul><li><p><code class="inline">initializing_state_id</code> - the record ID value of the Instance State to
 use to indicate that the record is being initialized.  If this value is
 not provided the configured default Instance State for the functional type
@@ -1004,7 +1004,7 @@ value is not provided the default configured Instance State for the
 functional type <code class="inline">instance_states_failure</code> will be used.</p></li><li><p><code class="inline">db_shutdown_timeout</code> - a timeout value used to limit the time allowed
 for a clean shutdown of the DBA and Privileged database connections used
 for initialization of the Datastore.  See the documentation for
-<a href="https://hexdocs.pm/msbms_syst_datastore/0.1.0/MsbmsSystDatastore.html#create_datastore/2"><code class="inline">MsbmsSystDatastore.create_datastore/2</code></a> for more information.</p></li></ul></li></ul>
+<a href="../../../../documentation/technical/app_server/msbms_syst_datastore/MsbmsSystDatastore.html#create_datastore/2"><code class="inline">MsbmsSystDatastore.create_datastore/2</code></a> for more information.</p></li></ul></li></ul>
   </section>
 </section>
 <section class="detail" id="purge_instance/2">
@@ -1027,7 +1027,7 @@ for initialization of the Datastore.  See the documentation for
   <a href="MsbmsSystInstanceMgr.Types.html#t:instance_id/0">MsbmsSystInstanceMgr.Types.instance_id</a>()
   | <a href="MsbmsSystInstanceMgr.Data.SystInstances.html#t:t/0">MsbmsSystInstanceMgr.Data.SystInstances.t</a>(),
   startup_options :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()
-) :: :ok | {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+) :: :ok | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
 
       </div>
 
@@ -1043,7 +1043,7 @@ as purging an Instance leads to the irreversible loss of the Instance's data
 </h2>
 <ul><li><p><code class="inline">instance</code> - either the record ID or the
 <a href="MsbmsSystInstanceMgr.Data.SystInstances.html"><code class="inline">MsbmsSystInstanceMgr.Data.SystInstances</code></a> struct of the Instance to purge.</p></li><li><p><code class="inline">startup_options</code> - a map of values containing the Startup Options
-obtained from the <a href="https://hexdocs.pm/msbms_syst_options/0.1.0/MsbmsSystOptions.html"><code class="inline">MsbmsSystOptions</code></a> component.</p></li></ul>
+obtained from the <a href="../../../../documentation/technical/app_server/msbms_syst_options/MsbmsSystOptions.html"><code class="inline">MsbmsSystOptions</code></a> component.</p></li></ul>
   </section>
 </section>
 <section class="detail" id="set_instance_state/2">
@@ -1067,7 +1067,7 @@ obtained from the <a href="https://hexdocs.pm/msbms_syst_options/0.1.0/MsbmsSyst
   <a href="MsbmsSystInstanceMgr.Types.html#t:instance_state_id/0">MsbmsSystInstanceMgr.Types.instance_state_id</a>()
 ) ::
   {:ok, <a href="MsbmsSystInstanceMgr.Data.SystInstances.html#t:t/0">MsbmsSystInstanceMgr.Data.SystInstances.t</a>()}
-  | {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+  | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
 
       </div>
 
@@ -1112,11 +1112,11 @@ API - Instance Types
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> create_instance_type(<a href="MsbmsSystInstanceMgr.Types.html#t:instance_type_params/0">MsbmsSystInstanceMgr.Types.instance_type_params</a>()) ::
-  {:ok, <a href="https://hexdocs.pm/msbms_syst_enums/0.1.0/MsbmsSystEnums.Data.SystEnumItems.html#t:t/0">MsbmsSystEnums.Data.SystEnumItems.t</a>()} | {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+  {:ok, <a href="../../../../documentation/technical/app_server/msbms_syst_enums/MsbmsSystEnums.Data.SystEnumItems.html#t:t/0">MsbmsSystEnums.Data.SystEnumItems.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
 
       </div>
 
-<p>Creates a new Instance Type record via the <a href="https://hexdocs.pm/msbms_syst_enums/0.1.0/MsbmsSystEnums.html"><code class="inline">MsbmsSystEnums</code></a> service.</p><h2 id="create_instance_type/1-parameters" class="section-heading">
+<p>Creates a new Instance Type record via the <a href="../../../../documentation/technical/app_server/msbms_syst_enums/MsbmsSystEnums.html"><code class="inline">MsbmsSystEnums</code></a> service.</p><h2 id="create_instance_type/1-parameters" class="section-heading">
   <a href="#create_instance_type/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
   <p class="sr-only">parameters</p>
   </a>
@@ -1149,7 +1149,7 @@ for Instance Type creation.</li></ul>
   <a href="MsbmsSystInstanceMgr.Types.html#t:application_id/0">MsbmsSystInstanceMgr.Types.application_id</a>()
 ) ::
   {:ok, <a href="MsbmsSystInstanceMgr.Data.SystInstanceTypeApplications.html#t:t/0">MsbmsSystInstanceMgr.Data.SystInstanceTypeApplications.t</a>()}
-  | {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+  | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
 
       </div>
 
@@ -1182,11 +1182,11 @@ supported.</p></li></ul>
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> delete_instance_type(<a href="MsbmsSystInstanceMgr.Types.html#t:instance_type_name/0">MsbmsSystInstanceMgr.Types.instance_type_name</a>()) ::
-  :ok | {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+  :ok | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
 
       </div>
 
-<p>Deletes an Instance Type from the <a href="https://hexdocs.pm/msbms_syst_enums/0.1.0/MsbmsSystEnums.html"><code class="inline">MsbmsSystEnums</code></a> service.</p><p>Note that an attempt to delete an in-use Instance Type will result in a
+<p>Deletes an Instance Type from the <a href="../../../../documentation/technical/app_server/msbms_syst_enums/MsbmsSystEnums.html"><code class="inline">MsbmsSystEnums</code></a> service.</p><p>Note that an attempt to delete an in-use Instance Type will result in a
 constraint error.</p><h2 id="delete_instance_type/1-parameters" class="section-heading">
   <a href="#delete_instance_type/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
   <p class="sr-only">parameters</p>
@@ -1216,7 +1216,7 @@ from the system.</li></ul>
           <pre translate="no"><span class="attribute">@spec</span> delete_instance_type_application(
   <a href="MsbmsSystInstanceMgr.Types.html#t:instance_type_application_id/0">MsbmsSystInstanceMgr.Types.instance_type_application_id</a>()
   | <a href="MsbmsSystInstanceMgr.Data.SystInstanceTypeApplications.html#t:t/0">MsbmsSystInstanceMgr.Data.SystInstanceTypeApplications.t</a>()
-) :: :ok | {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+) :: :ok | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
 
       </div>
 
@@ -1255,11 +1255,11 @@ least the <code class="inline">id</code> field defined.</li></ul>
           <pre translate="no"><span class="attribute">@spec</span> update_instance_type(
   <a href="MsbmsSystInstanceMgr.Types.html#t:instance_type_name/0">MsbmsSystInstanceMgr.Types.instance_type_name</a>(),
   <a href="MsbmsSystInstanceMgr.Types.html#t:instance_type_params/0">MsbmsSystInstanceMgr.Types.instance_type_params</a>() | %{}
-) :: {:ok, <a href="https://hexdocs.pm/msbms_syst_enums/0.1.0/MsbmsSystEnums.Data.SystEnumItems.html#t:t/0">MsbmsSystEnums.Data.SystEnumItems.t</a>()} | {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+) :: {:ok, <a href="../../../../documentation/technical/app_server/msbms_syst_enums/MsbmsSystEnums.Data.SystEnumItems.html#t:t/0">MsbmsSystEnums.Data.SystEnumItems.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
 
       </div>
 
-<p>Updates an existing Instance Type record via the <a href="https://hexdocs.pm/msbms_syst_enums/0.1.0/MsbmsSystEnums.html"><code class="inline">MsbmsSystEnums</code></a> service.</p><h2 id="update_instance_type/2-parameters" class="section-heading">
+<p>Updates an existing Instance Type record via the <a href="../../../../documentation/technical/app_server/msbms_syst_enums/MsbmsSystEnums.html"><code class="inline">MsbmsSystEnums</code></a> service.</p><h2 id="update_instance_type/2-parameters" class="section-heading">
   <a href="#update_instance_type/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
   <p class="sr-only">parameters</p>
   </a>
@@ -1295,7 +1295,7 @@ contexts.</p></li></ul>
   <a href="MsbmsSystInstanceMgr.Types.html#t:instance_type_context_params/0">MsbmsSystInstanceMgr.Types.instance_type_context_params</a>() | %{}
 ) ::
   {:ok, <a href="MsbmsSystInstanceMgr.Data.SystInstanceTypeContexts.html#t:t/0">MsbmsSystInstanceMgr.Data.SystInstanceTypeContexts.t</a>()}
-  | {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+  | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
 
       </div>
 
@@ -1353,7 +1353,7 @@ API - Owners
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> create_owner(<a href="MsbmsSystInstanceMgr.Types.html#t:owner_params/0">MsbmsSystInstanceMgr.Types.owner_params</a>()) ::
-  {:ok, <a href="MsbmsSystInstanceMgr.Data.SystOwners.html#t:t/0">MsbmsSystInstanceMgr.Data.SystOwners.t</a>()} | {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+  {:ok, <a href="MsbmsSystInstanceMgr.Data.SystOwners.html#t:t/0">MsbmsSystInstanceMgr.Data.SystOwners.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
 
       </div>
 
@@ -1391,7 +1391,7 @@ enumeration.</p></li></ul></li></ul>
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> get_owner_by_name(<a href="MsbmsSystInstanceMgr.Types.html#t:owner_name/0">MsbmsSystInstanceMgr.Types.owner_name</a>()) ::
-  {:ok, <a href="MsbmsSystInstanceMgr.Data.SystOwners.html#t:t/0">MsbmsSystInstanceMgr.Data.SystOwners.t</a>()} | {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+  {:ok, <a href="MsbmsSystInstanceMgr.Data.SystOwners.html#t:t/0">MsbmsSystInstanceMgr.Data.SystOwners.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
 
       </div>
 
@@ -1423,7 +1423,7 @@ State and the Owner State Functional Type. </p><h2 id="get_owner_by_name/1-examp
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> get_owner_id_by_name(<a href="MsbmsSystInstanceMgr.Types.html#t:owner_name/0">MsbmsSystInstanceMgr.Types.owner_name</a>()) ::
-  {:ok, <a href="MsbmsSystInstanceMgr.Types.html#t:owner_id/0">MsbmsSystInstanceMgr.Types.owner_id</a>()} | {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+  {:ok, <a href="MsbmsSystInstanceMgr.Types.html#t:owner_id/0">MsbmsSystInstanceMgr.Types.owner_id</a>()} | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
 
       </div>
 
@@ -1458,7 +1458,7 @@ State and the Owner State Functional Type. </p><h2 id="get_owner_by_name/1-examp
   <a href="MsbmsSystInstanceMgr.Types.html#t:owner_id/0">MsbmsSystInstanceMgr.Types.owner_id</a>()
   | <a href="MsbmsSystInstanceMgr.Data.SystOwners.html#t:t/0">MsbmsSystInstanceMgr.Data.SystOwners.t</a>()
 ) ::
-  :ok | {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+  :ok | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
 
       </div>
 
@@ -1495,7 +1495,7 @@ purge.</li></ul>
   | <a href="MsbmsSystInstanceMgr.Data.SystOwners.html#t:t/0">MsbmsSystInstanceMgr.Data.SystOwners.t</a>(),
   <a href="MsbmsSystInstanceMgr.Types.html#t:owner_params/0">MsbmsSystInstanceMgr.Types.owner_params</a>()
 ) ::
-  {:ok, <a href="MsbmsSystInstanceMgr.Data.SystOwners.html#t:t/0">MsbmsSystInstanceMgr.Data.SystOwners.t</a>()} | {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+  {:ok, <a href="MsbmsSystInstanceMgr.Data.SystOwners.html#t:t/0">MsbmsSystInstanceMgr.Data.SystOwners.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
 
       </div>
 

@@ -40,6 +40,10 @@ defmodule MsbmsSystRateLimiter.MixProject do
         name: "MsbmsSystRateLimiter",
         main: "MsbmsSystRateLimiter",
         output: "../../../documentation/technical/app_server/msbms_syst_rate_limiter",
+        deps: [
+          msbms_syst_error: "../../../../documentation/technical/app_server/msbms_syst_error",
+          msbms_syst_utils: "../../../../documentation/technical/app_server/msbms_syst_utils"
+        ],
         groups_for_functions: [
           "API - Rate Limiter": &(&1[:section] == :rate_limiter_data),
           "API - Runtime": &(&1[:section] == :service_management)

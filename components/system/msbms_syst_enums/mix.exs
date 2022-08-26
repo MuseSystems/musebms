@@ -35,6 +35,12 @@ defmodule MsbmsSystEnums.MixProject do
       start_permanent: in_production,
       dialyzer: @dialyzer_opts,
       elixirc_paths: elixirc_paths(Mix.env()),
+      deps: [
+        msbms_syst_datastore:
+          "../../../../documentation/technical/app_server/msbms_syst_datastore",
+        msbms_syst_error: "../../../../documentation/technical/app_server/msbms_syst_error",
+        msbms_syst_utils: "../../../../documentation/technical/app_server/msbms_syst_utils"
+      ],
       docs: [
         name: "MsbmsSystEnums",
         main: "MsbmsSystEnums",
