@@ -29,7 +29,8 @@ defmodule MsbmsSystDatastore.Types do
   * `:start_server_instances` - If true, indicates that databases on the server
     can be started and made available as application datastores.
 
-  * `:
+  * `:server_pools` - The server pools in which the database server
+    participates.
 
   * `:db_host` - The hostname or IP address of the database server on the
     network.
