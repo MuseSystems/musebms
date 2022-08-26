@@ -39,7 +39,34 @@ defmodule MsbmsSystDatastore.MixProject do
       deps: @deps,
       build_embedded: in_production,
       start_permanent: in_production,
-      dialyzer: @dialyzer_opts
+      dialyzer: @dialyzer_opts,
+      docs: [
+        name: "MsbmsSystDatastore",
+        main: "MsbmsSystDatastore",
+        output: "../../../documentation/technical/app_server/msbms_syst_datastore",
+        nest_modules_by_prefix: [MsbmsSystDatastore.DbTypes],
+        groups_for_functions: [
+          "API - Query": &(&1[:section] == :query),
+          "API - Runtime": &(&1[:section] == :service_management),
+          "API - Datastore Migrations": &(&1[:section] == :datastore_migrations),
+          "API - Datastore Management": &(&1[:section] == :datastore_management)
+        ],
+        groups_for_modules: [
+          API: [MsbmsSystDatastore],
+          "Supporting Types": [MsbmsSystDatastore.Types],
+          "Database Types": [
+            MsbmsSystDatastore.DbTypes.DateRange,
+            MsbmsSystDatastore.DbTypes.DecimalRange,
+            MsbmsSystDatastore.DbTypes.Inet,
+            MsbmsSystDatastore.DbTypes.IntegerRange,
+            MsbmsSystDatastore.DbTypes.Interval,
+            MsbmsSystDatastore.DbTypes.TimestampRange
+          ],
+          "Datastore Service": [MsbmsSystDatastore.Datastore],
+          "Datastore Context Service": [MsbmsSystDatastore.DatastoreContext],
+          Schema: [MsbmsSystDatastore.Schema]
+        ]
+      ]
     ]
   end
 

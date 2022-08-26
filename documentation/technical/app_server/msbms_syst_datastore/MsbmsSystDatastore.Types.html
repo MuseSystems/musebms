@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.28.4">
+    <meta name="project" content="msbms_syst_datastore v0.1.0">
+
+    <title>MsbmsSystDatastore.Types — msbms_syst_datastore v0.1.0</title>
+    <link rel="stylesheet" href="dist/elixir-b6f1ed5df9b1d42a7309.css" />
+
+    <script src="dist/sidebar_items-5bc5626431.js"></script>
+
+      <script src="docs_config.js"></script>
+
+    <script async src="dist/app-bd1cb213813bf4825aa2.js"></script>
+
+
+  </head>
+  <body data-type="modules">
+    <script>
+
+      try {
+        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
+
+        if (settings.theme === 'dark' ||
+           ((settings.theme === 'system' || settings.theme == null) &&
+             window.matchMedia('(prefers-color-scheme: dark)').matches)
+           ) {
+          document.body.classList.add('dark')
+        }
+      } catch (error) { }
+    </script>
+
+<div class="main">
+
+
+<section class="sidebar">
+  <button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
+    <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+  </button>
+
+  <form class="sidebar-search" action="search.html">
+    <button type="submit" class="search-button" aria-label="Submit Search">
+      <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
+    </button>
+    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
+      <i class="ri-close-line ri-lg" aria-hidden="true" title="Cancel search"></i>
+    </button>
+    <label class="search-label">
+      <p class="sr-only">Search</p>
+      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
+    </label>
+  </form>
+
+  <div class="autocomplete">
+    <div class="autocomplete-results">
+    </div>
+  </div>
+
+  <div class="sidebar-header">
+
+    <div class="sidebar-projectDetails">
+      <a href="MsbmsSystDatastore.html" class="sidebar-projectName" translate="no">
+msbms_syst_datastore
+      </a>
+      <strong class="sidebar-projectVersion" translate="no">
+        v0.1.0
+      </strong>
+    </div>
+    <ul class="sidebar-listNav">
+      <li><a id="extras-list-link" href="#full-list">Pages</a></li>
+
+        <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+
+
+        <li><a id="tasks-list-link" href="#full-list"><span translate="no">Mix</span> Tasks</a></li>
+
+    </ul>
+  </div>
+
+  <div class="gradient"></div>
+  <ul id="full-list" class="sidebar-fullList"></ul>
+</section>
+
+<section class="content">
+  <output role="status" id="toast"></output>
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+<h1>
+<button class="settings display-settings">
+  <i class="ri-settings-3-line"></i>
+  <span class="sr-only">Settings</span>
+</button>
+
+
+  <span translate="no">MsbmsSystDatastore.Types</span> 
+  <small class="app-vsn" translate="no">(msbms_syst_datastore v0.1.0)</small>
+
+</h1>
+
+
+  <section id="moduledoc">
+<p>Defines public types for use with the MsbmsSystDatastore module.</p>
+  </section>
+
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+      Summary
+    </h1>
+
+  <div class="summary-types summary">
+    <h2>
+      <a href="#types">Types</a>
+    </h2>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:context_name/0" translate="no">context_name()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>An application wide designation for application defined datastore access
+accounts.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:context_role/0" translate="no">context_role()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>The database role name for the specific access context defined by the
+<code class="inline">context_name()</code>.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:context_state/0" translate="no">context_state()</a>
+
+        </div>
+
+          <div class="summary-synopsis"></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:context_state_values/0" translate="no">context_state_values()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Defines the available states in which a context may exist.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:database_state_values/0" translate="no">database_state_values()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Values indicating the state of the database which backs a given datastore.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:datastore_context/0" translate="no">datastore_context()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Defines an application level security context which maps to a specific
+database role.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:datastore_options/0" translate="no">datastore_options()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Defines the options required for establishing the database connections which
+make up a datastore.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:db_server/0" translate="no">db_server()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Represents a specific database server.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:migration_state_values/0" translate="no">migration_state_values()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Defines the available states in which a datastore might exist in relation to
+its schema migrations.</p></div>
+
+      </div>
+
+  </div>
+
+  </section>
+
+
+  <section id="types" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#types">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+Types
+    </h1>
+    <div class="types-list">
+<section class="detail" id="t:context_name/0">
+
+  <div class="detail-header">
+    <a href="#t:context_name/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">context_name()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> context_name() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>() | nil</pre>
+
+      </div>
+
+<p>An application wide designation for application defined datastore access
+accounts.</p>
+  </section>
+</section>
+<section class="detail" id="t:context_role/0">
+
+  <div class="detail-header">
+    <a href="#t:context_role/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">context_role()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> context_role() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+
+      </div>
+
+<p>The database role name for the specific access context defined by the
+<code class="inline">context_name()</code>.</p>
+  </section>
+</section>
+<section class="detail" id="t:context_state/0">
+
+  <div class="detail-header">
+    <a href="#t:context_state/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">context_state()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> context_state() :: %{context: <a href="#t:context_name/0">context_name</a>(), state: <a href="#t:context_state_values/0">context_state_values</a>()}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:context_state_values/0">
+
+  <div class="detail-header">
+    <a href="#t:context_state_values/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">context_state_values()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> context_state_values() ::
+  :not_found | :not_ready | :ready | :not_started | :started</pre>
+
+      </div>
+
+<p>Defines the available states in which a context may exist.</p><ul><li><p><code class="inline">:not_found</code> - The database role backing the context was not found on the
+datastore database server.</p></li><li><p><code class="inline">:not_ready</code> - The database role backing the context exists, but is not
+completely set up yet.  This is an interim stage that usually has to cross
+transaction boundaries.</p></li><li><p><code class="inline">:not_started</code> - When starting contexts the system doesn't check for the
+ existence of each context which in turn means that a start failure could
+ be indicative of either non-existence or some other problem.  In these
+ start-up scenarios the state would be <code class="inline">:not_started</code>.</p></li><li><p><code class="inline">:ready</code> - The context was found and may be connected to the database, but
+the database connections for the context have not been started yet.</p></li><li><p><code class="inline">:started</code> - The context was found and database connections for the
+context have already been started.</p></li></ul>
+  </section>
+</section>
+<section class="detail" id="t:database_state_values/0">
+
+  <div class="detail-header">
+    <a href="#t:database_state_values/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">database_state_values()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> database_state_values() :: :not_found | :ready</pre>
+
+      </div>
+
+<p>Values indicating the state of the database which backs a given datastore.</p><ul><li><p><code class="inline">:not_found</code> - The database for the datastore does not exist on the
+database server.</p></li><li><p><code class="inline">:ready</code> - The database is ready for further processing by the migrations
+subsystem.</p></li></ul>
+  </section>
+</section>
+<section class="detail" id="t:datastore_context/0">
+
+  <div class="detail-header">
+    <a href="#t:datastore_context/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">datastore_context()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> datastore_context() :: %{
+  optional(:context_name) =&gt; <a href="#t:context_name/0">context_name</a>(),
+  optional(:description) =&gt; <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  optional(:database_role) =&gt; <a href="#t:context_role/0">context_role</a>(),
+  optional(:database_password) =&gt; <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil,
+  optional(:starting_pool_size) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
+  optional(:start_context) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  optional(:login_context) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  optional(:database_owner_context) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()
+}</pre>
+
+      </div>
+
+<p>Defines an application level security context which maps to a specific
+database role.</p><p>Datastore contexts allow the application to access the database using database
+roles which are limited by their database security configuration.</p><ul><li><p><code class="inline">:context_name</code> - the application's identifier for a specific security context.
+This isn't specific to a particular database, but to the application
+overall.</p></li><li><p><code class="inline">:description</code> - a user friendly description of the context.</p></li><li><p><code class="inline">:database_role</code> - maps the application context to a specific database
+role.  When establishing a connection to a database, this is the database
+role name that will be used.</p></li><li><p><code class="inline">:database_password</code> - the password used to connect the <code class="inline">:database_role</code>
+to the database server.</p></li><li><p><code class="inline">:starting_pool_size</code> - the number of database connections to initially
+open for this context.</p></li><li><p><code class="inline">:start_context</code> - when working with application database connections
+which are started and pooled at application start time, this value
+indicates whether or not the specific context should be started as normal.
+For normal startup to take place, both this value and the <code class="inline">:login_context</code>
+value must be true.  This setting is disregarded in operations involving
+database connections which are established on demand as needed, such as
+DBA related connections.</p></li><li><p><code class="inline">:login_context</code> - if <code class="inline">true</code>, the context is a normal context associated
+with a database login role and will be used in establishing connections to
+the database.  If <code class="inline">false</code>, the context is an administrative context which
+is only used in security definitions within the database.  Database owner
+roles, roles which own all of the application database tables/functions
+would typically not be login roles, even though the are highly privileged
+when their context is active in a database session. (default: true)</p></li><li><p><code class="inline">:database_owner_context</code> - if <code class="inline">true</code> the context represents the database
+owner role.  If <code class="inline">false</code> or not provided the database role is not used for
+this purpose.  Note that there should only be one context defined as the
+database owner for any datastore.</p></li></ul>
+  </section>
+</section>
+<section class="detail" id="t:datastore_options/0">
+
+  <div class="detail-header">
+    <a href="#t:datastore_options/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">datastore_options()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> datastore_options() :: %{
+  :database_name =&gt; <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  optional(:datastore_code) =&gt; <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  optional(:datastore_name) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>(),
+  contexts: [<a href="#t:datastore_context/0">datastore_context</a>()] | [],
+  db_server: <a href="#t:db_server/0">db_server</a>()
+}</pre>
+
+      </div>
+
+<p>Defines the options required for establishing the database connections which
+make up a datastore.</p><ul><li><p><code class="inline">:database_name</code> - The name of the database in the database server to
+which the connection will be made.  Often times this value will be the
+same as the String.t() form of the <code class="inline">:datastore_name</code> value.</p></li><li><p><code class="inline">:datastore_code</code> - Defines a datastore specific salting value for use in
+certain security and cryptographic related functions.</p></li><li><p><code class="inline">:datastore_name</code> - A name for use by the application to identify a given
+datastore.  This value will often time be the same as the <code class="inline">:database_name</code>
+value, except as an atom() rather than a String.t().</p></li><li><p><code class="inline">:contexts</code> - A list of available datastore context values defining which
+contexts are available for this datastore.  See <code class="inline">datastore_context()</code> for
+more information concerning the values of each entry in the list.</p></li><li><p><code class="inline">:db_server</code> - The database server information for the server where the
+datastore database resides.  See <code class="inline">db_server()</code> for additional details.</p></li></ul>
+  </section>
+</section>
+<section class="detail" id="t:db_server/0">
+
+  <div class="detail-header">
+    <a href="#t:db_server/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">db_server()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> db_server() :: %{
+  server_name: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  start_server_instances: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  server_pools: [<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()] | [],
+  db_host: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  db_port: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
+  db_show_sensitive: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  db_max_instances: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
+  server_salt: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  dbadmin_password: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  dbadmin_pool_size: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()
+}</pre>
+
+      </div>
+
+<p>Represents a specific database server.</p><p>The data in the map includes fields which uniquely identifies the server,
+provides information for where on the network the server can be found, and
+connection related parameters.  Also, the full administrative credentials are
+included.</p><ul><li><p><code class="inline">:server_name</code> - Provides a unique identifier for a database server
+instance.</p></li><li><p><code class="inline">:start_server_instances</code> - If true, indicates that databases on the server
+can be started and made available as application datastores.</p></li><li><p><code class="inline">: *</code>:db_host<code class="inline">- The hostname or IP address of the database server on the network. *</code>:db_port<code class="inline">- The TCP port on which the database server is listening for connections. *</code>:db_show_sensitive<code class="inline">- If true, various logging events may show unredacted &quot;sensitive&quot; database connectivity information. Note that even when false, the application still log sensitive application data. *</code>:db_max_instances<code class="inline">- The total number of databases allowed to be established for the db_server instance. *</code>:server_salt<code class="inline">- For certain cryptographic operations, such as password derivation, allows for the assignment of specific salting value for that is specific to a given database server. This value must be at least 32 bytes long and should be a random string. *</code>:dbadmin_password<code class="inline">- The msbms_syst_dba role password for privileged operations such as creating a new database/datastore or new database roles on the database server instance. *</code>:dbadmin_pool_size` - The pool size to use for creating connections for
+  privileged operations using the msbms_syst_dba role.</p></li></ul>
+  </section>
+</section>
+<section class="detail" id="t:migration_state_values/0">
+
+  <div class="detail-header">
+    <a href="#t:migration_state_values/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">migration_state_values()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> migration_state_values() :: :not_initialized | :not_updated | :ready</pre>
+
+      </div>
+
+<p>Defines the available states in which a datastore might exist in relation to
+its schema migrations.</p><ul><li><p><code class="inline">:not_initialized</code> - The datastore does not have the table which manages
+the migrations installed.  This is also the value reported when the
+<code class="inline">database_state_values()</code> value for the datastore is <code class="inline">:not_found</code>.</p></li><li><p><code class="inline">:not_updated</code> - The datastore database exists and has been initialized,
+but does not have the most recent migrations available applied per the
+migrations management table.</p></li><li><p><code class="inline">:ready</code> - The migrations are fully up-to-date and the datastore is ready
+to serve the application as needed.</p></li></ul>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+      <footer class="footer">
+
+        <p>
+          Built using
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.28.4) for the
+
+            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+        </p>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+
+
+  </body>
+</html>

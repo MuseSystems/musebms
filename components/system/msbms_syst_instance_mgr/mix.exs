@@ -41,6 +41,7 @@ defmodule MsbmsSystInstanceMgr.MixProject do
         name: "MsbmsSystInstanceMgr",
         nest_modules_by_prefix: [MsbmsSystInstanceMgr.Data],
         main: "MsbmsSystInstanceMgr",
+        output: "../../../documentation/technical/app_server/msbms_syst_instance_mgr",
         groups_for_functions: [
           "API - Runtime": &(&1[:section] == :service_management),
           "API - Instances": &(&1[:section] == :instance_data),

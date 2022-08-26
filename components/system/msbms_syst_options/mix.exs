@@ -29,7 +29,20 @@ defmodule MsbmsSystOptions.MixProject do
       elixir: "~> 1.13",
       deps: @deps,
       build_embedded: in_production,
-      start_permanent: in_production
+      start_permanent: in_production,
+      docs: [
+        name: "MsbmsSystOptions",
+        main: "MsbmsSystOptions",
+        output: "../../../documentation/technical/app_server/msbms_syst_options",
+        groups_for_functions: [
+          "API - File Handling": &(&1[:section] == :file_handling),
+          "API - Parsing": &(&1[:section] == :options_parsing)
+        ],
+        groups_for_modules: [
+          API: [MsbmsSystOptions],
+          "Supporting Types": [MsbmsSystOptions.Types]
+        ]
+      ]
     ]
   end
 

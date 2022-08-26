@@ -21,6 +21,10 @@ defmodule MsbmsSystDatastore.DatastoreContext do
   `MsbmsSystDatastore.Datastore` module functions.  However, there are times
   when direct Datastore Context manipulation is appropriate, such as stopping
   and then restarting a specific Context for maintenance reasons.
+  """
+
+  @doc """
+  Returns the Child Specification used to start the DatastoreContext service.
 
   ## Parameters
 

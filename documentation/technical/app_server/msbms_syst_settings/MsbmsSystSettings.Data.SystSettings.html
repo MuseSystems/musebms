@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.28.4">
+    <meta name="project" content="msbms_syst_settings v0.1.0">
+
+    <title>MsbmsSystSettings.Data.SystSettings — msbms_syst_settings v0.1.0</title>
+    <link rel="stylesheet" href="dist/elixir-b6f1ed5df9b1d42a7309.css" />
+
+    <script src="dist/sidebar_items-9a0be9d78d.js"></script>
+
+      <script src="docs_config.js"></script>
+
+    <script async src="dist/app-bd1cb213813bf4825aa2.js"></script>
+
+
+  </head>
+  <body data-type="modules">
+    <script>
+
+      try {
+        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
+
+        if (settings.theme === 'dark' ||
+           ((settings.theme === 'system' || settings.theme == null) &&
+             window.matchMedia('(prefers-color-scheme: dark)').matches)
+           ) {
+          document.body.classList.add('dark')
+        }
+      } catch (error) { }
+    </script>
+
+<div class="main">
+
+
+<section class="sidebar">
+  <button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
+    <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+  </button>
+
+  <form class="sidebar-search" action="search.html">
+    <button type="submit" class="search-button" aria-label="Submit Search">
+      <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
+    </button>
+    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
+      <i class="ri-close-line ri-lg" aria-hidden="true" title="Cancel search"></i>
+    </button>
+    <label class="search-label">
+      <p class="sr-only">Search</p>
+      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
+    </label>
+  </form>
+
+  <div class="autocomplete">
+    <div class="autocomplete-results">
+    </div>
+  </div>
+
+  <div class="sidebar-header">
+
+    <div class="sidebar-projectDetails">
+      <a href="MsbmsSystSettings.html" class="sidebar-projectName" translate="no">
+msbms_syst_settings
+      </a>
+      <strong class="sidebar-projectVersion" translate="no">
+        v0.1.0
+      </strong>
+    </div>
+    <ul class="sidebar-listNav">
+      <li><a id="extras-list-link" href="#full-list">Pages</a></li>
+
+        <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+
+
+    </ul>
+  </div>
+
+  <div class="gradient"></div>
+  <ul id="full-list" class="sidebar-fullList"></ul>
+</section>
+
+<section class="content">
+  <output role="status" id="toast"></output>
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+<h1>
+<button class="settings display-settings">
+  <i class="ri-settings-3-line"></i>
+  <span class="sr-only">Settings</span>
+</button>
+
+
+  <span translate="no">MsbmsSystSettings.Data.SystSettings</span> 
+  <small class="app-vsn" translate="no">(msbms_syst_settings v0.1.0)</small>
+
+</h1>
+
+
+  <section id="moduledoc">
+<p>The primary data structure for applications settings data.</p>
+  </section>
+
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+      Summary
+    </h1>
+
+  <div class="summary-types summary">
+    <h2>
+      <a href="#types">Types</a>
+    </h2>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:t/0" translate="no">t()</a>
+
+        </div>
+
+      </div>
+
+  </div>
+
+  <div class="summary-functions summary">
+    <h2>
+      <a href="#functions">Functions</a>
+    </h2>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#changeset/3" translate="no">changeset(syst_settings, change_params \\ %{}, opts \\ [])</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Produces a changeset used to create or update a settings record.</p></div>
+
+      </div>
+
+  </div>
+
+  </section>
+
+
+  <section id="types" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#types">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+Types
+    </h1>
+    <div class="types-list">
+<section class="detail" id="t:t/0">
+
+  <div class="detail-header">
+    <a href="#t:t/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">t()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> t() :: %MsbmsSystSettings.Data.SystSettings{
+  __meta__: <a href="https://hexdocs.pm/ecto/3.8.4/Ecto.Schema.Metadata.html#t:t/0">Ecto.Schema.Metadata.t</a>(),
+  diag_role_created: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil,
+  diag_role_modified: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil,
+  diag_row_version: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>() | nil,
+  diag_timestamp_created: <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0">DateTime.t</a>() | nil,
+  diag_timestamp_modified: <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0">DateTime.t</a>() | nil,
+  diag_update_count: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>() | nil,
+  diag_wallclock_modified: <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0">DateTime.t</a>() | nil,
+  display_name: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil,
+  id: <a href="https://hexdocs.pm/ecto/3.8.4/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>() | nil,
+  internal_name: <a href="MsbmsSystSettings.Types.html#t:setting_name/0">MsbmsSystSettings.Types.setting_name</a>() | nil,
+  setting_blob: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">binary</a>() | nil,
+  setting_date: <a href="https://hexdocs.pm/elixir/Date.html#t:t/0">Date.t</a>() | nil,
+  setting_date_range: <a href="https://hexdocs.pm/msbms_syst_datastore/0.1.0/MsbmsSystDatastore.DbTypes.DateRange.html#t:t/0">MsbmsSystDatastore.DbTypes.DateRange.t</a>() | nil,
+  setting_decimal: <a href="https://hexdocs.pm/decimal/2.0.0/Decimal.html#t:t/0">Decimal.t</a>() | nil,
+  setting_decimal_range: <a href="https://hexdocs.pm/msbms_syst_datastore/0.1.0/MsbmsSystDatastore.DbTypes.DecimalRange.html#t:t/0">MsbmsSystDatastore.DbTypes.DecimalRange.t</a>() | nil,
+  setting_flag: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>() | nil,
+  setting_integer: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>() | nil,
+  setting_integer_range: <a href="https://hexdocs.pm/msbms_syst_datastore/0.1.0/MsbmsSystDatastore.DbTypes.IntegerRange.html#t:t/0">MsbmsSystDatastore.DbTypes.IntegerRange.t</a>() | nil,
+  setting_interval: <a href="https://hexdocs.pm/msbms_syst_datastore/0.1.0/MsbmsSystDatastore.DbTypes.Interval.html#t:t/0">MsbmsSystDatastore.DbTypes.Interval.t</a>() | nil,
+  setting_json: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>() | nil,
+  setting_text: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil,
+  setting_time: <a href="https://hexdocs.pm/elixir/Time.html#t:t/0">Time.t</a>() | nil,
+  setting_timestamp: <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0">DateTime.t</a>() | nil,
+  setting_timestamp_range: <a href="https://hexdocs.pm/msbms_syst_datastore/0.1.0/MsbmsSystDatastore.DbTypes.TimestampRange.html#t:t/0">MsbmsSystDatastore.DbTypes.TimestampRange.t</a>() | nil,
+  setting_uuid: <a href="https://hexdocs.pm/ecto/3.8.4/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>() | nil,
+  syst_defined: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>() | nil,
+  syst_description: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil,
+  user_description: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil
+}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+
+    </div>
+  </section>
+
+  <section id="functions" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#functions">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+Functions
+    </h1>
+    <div class="functions-list">
+<section class="detail" id="changeset/3">
+
+    <span id="changeset/1"></span>
+
+    <span id="changeset/2"></span>
+
+  <div class="detail-header">
+    <a href="#changeset/3" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">changeset(syst_settings, change_params \\ %{}, opts \\ [])</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> changeset(<a href="#t:t/0">t</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: <a href="https://hexdocs.pm/ecto/3.8.4/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>()</pre>
+
+      </div>
+
+<p>Produces a changeset used to create or update a settings record.</p><p>The <code class="inline">change_params</code> argument defines the attributes to be used in maintaining
+a settings record.  Of the allowed fields, the following are required for
+creation:</p><ul><li><p><code class="inline">internal_name</code> - A unique key which is intended for programmatic usage
+by the application and other applications which make use of the data.</p></li><li><p><code class="inline">display_name</code> - A unique key for the purposes of presentation to users
+in user interfaces, reporting, etc.</p></li><li><p><code class="inline">user_description</code> - A description of the setting including its use cases
+and any limits or restrictions.  This field must contain between 6 and
+1000 characters to be considered valid.</p></li></ul><p>The options define other attributes which can guide validation of
+<code class="inline">change_param</code> values:</p><ul><li><p><code class="inline">min_internal_name_length</code> - Sets a minimum length for <code class="inline">internal_name</code>
+values.  The default value is 6 Unicode graphemes.</p></li><li><p><code class="inline">max_internal_name_length</code> - The maximum length allowed for the
+<code class="inline">internal_name</code> value.  The default is 64 Unicode graphemes.</p></li><li><p><code class="inline">min_display_name_length</code> - Sets a minimum length for <code class="inline">display_name</code>
+values.  The default value is 6 Unicode graphemes.</p></li><li><p><code class="inline">max_display_name_length</code> - The maximum length allowed for the
+<code class="inline">display_name</code> value.  The default is 64 Unicode graphemes.</p></li><li><p><code class="inline">min_user_description_length</code> - Sets a minimum length for
+<code class="inline">user_description</code> values.  The default value is 6 Unicode graphemes.</p></li><li><p><code class="inline">max_user_description_length</code> - The maximum length allowed for the
+<code class="inline">user_description</code> value.  The default is 1000 Unicode graphemes.</p></li></ul>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+      <footer class="footer">
+
+        <p>
+          Built using
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.28.4) for the
+
+            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+        </p>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+
+
+  </body>
+</html>

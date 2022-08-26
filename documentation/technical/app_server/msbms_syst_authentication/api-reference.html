@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.28.4">
+    <meta name="project" content="msbms_syst_authentication v0.1.0">
+
+    <title>API Reference — msbms_syst_authentication v0.1.0</title>
+    <link rel="stylesheet" href="dist/elixir-b6f1ed5df9b1d42a7309.css" />
+
+    <script src="dist/sidebar_items-16527922c1.js"></script>
+
+      <script src="docs_config.js"></script>
+
+    <script async src="dist/app-bd1cb213813bf4825aa2.js"></script>
+
+
+  </head>
+  <body data-type="extras">
+    <script>
+
+      try {
+        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
+
+        if (settings.theme === 'dark' ||
+           ((settings.theme === 'system' || settings.theme == null) &&
+             window.matchMedia('(prefers-color-scheme: dark)').matches)
+           ) {
+          document.body.classList.add('dark')
+        }
+      } catch (error) { }
+    </script>
+
+<div class="main">
+
+
+<section class="sidebar">
+  <button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
+    <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+  </button>
+
+  <form class="sidebar-search" action="search.html">
+    <button type="submit" class="search-button" aria-label="Submit Search">
+      <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
+    </button>
+    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
+      <i class="ri-close-line ri-lg" aria-hidden="true" title="Cancel search"></i>
+    </button>
+    <label class="search-label">
+      <p class="sr-only">Search</p>
+      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
+    </label>
+  </form>
+
+  <div class="autocomplete">
+    <div class="autocomplete-results">
+    </div>
+  </div>
+
+  <div class="sidebar-header">
+
+    <div class="sidebar-projectDetails">
+      <a href="MsbmsSystAuthentication.html" class="sidebar-projectName" translate="no">
+msbms_syst_authentication
+      </a>
+      <strong class="sidebar-projectVersion" translate="no">
+        v0.1.0
+      </strong>
+    </div>
+    <ul class="sidebar-listNav">
+      <li><a id="extras-list-link" href="#full-list">Pages</a></li>
+
+        <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+
+
+    </ul>
+  </div>
+
+  <div class="gradient"></div>
+  <ul id="full-list" class="sidebar-fullList"></ul>
+</section>
+
+<section class="content">
+  <output role="status" id="toast"></output>
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+<h1>
+<button class="settings display-settings">
+  <i class="ri-settings-3-line"></i>
+  <span class="sr-only">Settings</span>
+</button>
+
+
+  <span>API Reference <small class="app-vsn">msbms_syst_authentication v0.1.0</small></span>
+</h1>
+
+
+  <section class="details-list">
+    <h2 id="modules" class="section-heading">
+  <a href="#modules" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">modules</p>
+  </a>
+  Modules
+</h2>
+
+    <div class="summary">
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="MsbmsSystAuthentication.html" translate="no">MsbmsSystAuthentication</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>API for the management of system user authentication.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="MsbmsSystAuthentication.Data.SystAccessAccountInstanceAssocs.html" translate="no">MsbmsSystAuthentication.Data.SystAccessAccountInstanceAssocs</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Associates access accounts with the instances for which they are allowed to
+authenticate to.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="MsbmsSystAuthentication.Data.SystAccessAccounts.html" translate="no">MsbmsSystAuthentication.Data.SystAccessAccounts</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Contains the known login accounts which are used solely for the purpose of
+authentication of users.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="MsbmsSystAuthentication.Data.SystCredentials.html" translate="no">MsbmsSystAuthentication.Data.SystCredentials</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Hosts the credentials by which a user or external system will prove its
+identity.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="MsbmsSystAuthentication.Data.SystDisallowedPasswords.html" translate="no">MsbmsSystAuthentication.Data.SystDisallowedPasswords</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Represents a SHA-1 hashed password which is expected to be listed in
+the dictionaries used by attackers to compromised online accounts.  Disallowed
+passwords, as the name suggests, are used to prevent users selecting these
+known compromised passwords when the password rule to disallow known passwords
+is in effect.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="MsbmsSystAuthentication.Data.SystGlobalNetworkRules.html" translate="no">MsbmsSystAuthentication.Data.SystGlobalNetworkRules</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Expresses globally applicable rules concerning which hosts, as identified by
+IP address, may or may not attempt to authenticate with the system.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="MsbmsSystAuthentication.Data.SystGlobalPasswordRules.html" translate="no">MsbmsSystAuthentication.Data.SystGlobalPasswordRules</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Establishes rules defining the minimum allowed password complexity
+on a global, whole system basis.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="MsbmsSystAuthentication.Data.SystIdentities.html" translate="no">MsbmsSystAuthentication.Data.SystIdentities</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>The identities with which access accounts are identified to the system.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="MsbmsSystAuthentication.Data.SystInstanceNetworkRules.html" translate="no">MsbmsSystAuthentication.Data.SystInstanceNetworkRules</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Expresses Instance specific rules concerning which hosts, as identified by
+IP address, may or may not attempt to authenticate with the system.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="MsbmsSystAuthentication.Data.SystOwnerNetworkRules.html" translate="no">MsbmsSystAuthentication.Data.SystOwnerNetworkRules</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Expresses Owner specific rules concerning which hosts, as identified by
+IP address, may or may not attempt to authenticate with the system.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="MsbmsSystAuthentication.Data.SystOwnerPasswordRules.html" translate="no">MsbmsSystAuthentication.Data.SystOwnerPasswordRules</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Establishes Owner specific rules defining the minimum allowed password
+complexity.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="MsbmsSystAuthentication.Data.SystPasswordHistory.html" translate="no">MsbmsSystAuthentication.Data.SystPasswordHistory</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>A history of previous user passwords credentials kept for the purpose of
+enforcing the reused password exclusion rule.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="MsbmsSystAuthentication.Types.html" translate="no">MsbmsSystAuthentication.Types</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Types used by the Authentication module.</p></div>
+
+</div>
+
+    </div>
+  </section>
+
+
+<div class="bottom-actions">
+  <div class="bottom-actions-item">
+
+  </div>
+  <div class="bottom-actions-item">
+
+  </div>
+</div>
+
+      <footer class="footer">
+
+        <p>
+          Built using
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.28.4) for the
+
+            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+        </p>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+
+
+  </body>
+</html>

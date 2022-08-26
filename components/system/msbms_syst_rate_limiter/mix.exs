@@ -39,6 +39,11 @@ defmodule MsbmsSystRateLimiter.MixProject do
       docs: [
         name: "MsbmsSystRateLimiter",
         main: "MsbmsSystRateLimiter",
+        output: "../../../documentation/technical/app_server/msbms_syst_rate_limiter",
+        groups_for_functions: [
+          "API - Rate Limiter": &(&1[:section] == :rate_limiter_data),
+          "API - Runtime": &(&1[:section] == :service_management)
+        ],
         groups_for_modules: [
           API: [MsbmsSystRateLimiter],
           "Supporting Types": [MsbmsSystRateLimiter.Types]
