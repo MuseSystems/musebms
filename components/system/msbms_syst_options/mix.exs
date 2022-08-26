@@ -34,6 +34,11 @@ defmodule MsbmsSystOptions.MixProject do
         name: "MsbmsSystOptions",
         main: "MsbmsSystOptions",
         output: "../../../documentation/technical/app_server/msbms_syst_options",
+        deps: [
+          msbms_syst_datastore:
+            "../../../../documentation/technical/app_server/msbms_syst_datastore",
+          msbms_syst_error: "../../../../documentation/technical/app_server/msbms_syst_error"
+        ],
         groups_for_functions: [
           "API - File Handling": &(&1[:section] == :file_handling),
           "API - Parsing": &(&1[:section] == :options_parsing)

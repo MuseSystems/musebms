@@ -39,6 +39,12 @@ defmodule MsbmsSystSettings.MixProject do
         name: "MsbmsSystSettings",
         main: "MsbmsSystSettings",
         output: "../../../documentation/technical/app_server/msbms_syst_settings",
+        deps: [
+          msbms_syst_datastore:
+            "../../../../documentation/technical/app_server/msbms_syst_datastore",
+          msbms_syst_error: "../../../../documentation/technical/app_server/msbms_syst_error",
+          msbms_syst_utils: "../../../../documentation/technical/app_server/msbms_syst_utils"
+        ],
         nest_modules_by_prefix: [MsbmsSystSettings.DbTypes],
         groups_for_functions: [
           "API - Settings": &(&1[:section] == :settings_data),

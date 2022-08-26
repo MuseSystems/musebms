@@ -44,6 +44,10 @@ defmodule MsbmsSystDatastore.MixProject do
         name: "MsbmsSystDatastore",
         main: "MsbmsSystDatastore",
         output: "../../../documentation/technical/app_server/msbms_syst_datastore",
+        deps: [
+          msbms_syst_error: "../../../../documentation/technical/app_server/msbms_syst_error",
+          msbms_syst_utils: "../../../../documentation/technical/app_server/msbms_syst_utils"
+        ],
         nest_modules_by_prefix: [MsbmsSystDatastore.DbTypes],
         groups_for_functions: [
           "API - Query": &(&1[:section] == :query),

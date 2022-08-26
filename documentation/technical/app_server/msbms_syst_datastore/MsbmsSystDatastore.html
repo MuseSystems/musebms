@@ -1136,7 +1136,7 @@ API - Query
      :num_rows =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>(),
      optional(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()
    }}
-  | {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+  | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
 
       </div>
 
@@ -1191,7 +1191,7 @@ API - Query
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> query_for_none(<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">iodata</a>(), [<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()], <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) ::
-  :ok | {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+  :ok | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
 
       </div>
 
@@ -1246,7 +1246,7 @@ API - Query
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> query_for_one(<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">iodata</a>(), [<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()], <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) ::
-  {:ok, [<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()]} | {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+  {:ok, [<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()]} | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
 
       </div>
 
@@ -1301,7 +1301,7 @@ API - Query
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> query_for_value(<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">iodata</a>(), [<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()], <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) ::
-  {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()} | {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+  {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()} | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
 
       </div>
 
@@ -1420,7 +1420,7 @@ API - Query
           <pre translate="no"><span class="attribute">@spec</span> transaction(
   (... -&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) | <a href="https://hexdocs.pm/ecto/3.8.4/Ecto.Multi.html#t:t/0">Ecto.Multi.t</a>(),
   <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">keyword</a>()
-) :: {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()} | {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+) :: {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()} | {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
 
       </div>
 
@@ -1568,7 +1568,7 @@ API - Runtime
 ) ::
   {:ok, :all_started | :some_started,
    [<a href="MsbmsSystDatastore.Types.html#t:context_state_values/0">MsbmsSystDatastore.Types.context_state_values</a>()]}
-  | {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+  | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
 
       </div>
 
@@ -1594,7 +1594,7 @@ API - Runtime
           <pre translate="no"><span class="attribute">@spec</span> start_datastore_context(
   <a href="MsbmsSystDatastore.Types.html#t:datastore_options/0">MsbmsSystDatastore.Types.datastore_options</a>(),
   <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>() | <a href="MsbmsSystDatastore.Types.html#t:datastore_context/0">MsbmsSystDatastore.Types.datastore_context</a>()
-) :: {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()} | {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+) :: {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()} | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
 
       </div>
 
@@ -1624,7 +1624,7 @@ API - Runtime
   | [<a href="MsbmsSystDatastore.Types.html#t:datastore_context/0">MsbmsSystDatastore.Types.datastore_context</a>()]
   | [%{context_name: <a href="MsbmsSystDatastore.Types.html#t:context_name/0">MsbmsSystDatastore.Types.context_name</a>()}],
   <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>()
-) :: :ok | {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+) :: :ok | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
 
       </div>
 
@@ -1691,7 +1691,7 @@ API - Datastore Migrations
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> get_datastore_version(<a href="MsbmsSystDatastore.Types.html#t:datastore_options/0">MsbmsSystDatastore.Types.datastore_options</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) ::
-  {:ok, <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()} | {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+  {:ok, <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
 
       </div>
 
@@ -1721,7 +1721,7 @@ API - Datastore Migrations
   <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
   <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>(),
   <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
-) :: {:ok, [<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()]} | {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+) :: {:ok, [<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()]} | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
 
       </div>
 
@@ -1765,7 +1765,7 @@ API - Datastore Management
           <pre translate="no"><span class="attribute">@spec</span> create_datastore(<a href="MsbmsSystDatastore.Types.html#t:datastore_options/0">MsbmsSystDatastore.Types.datastore_options</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) ::
   {:ok, <a href="MsbmsSystDatastore.Types.html#t:database_state_values/0">MsbmsSystDatastore.Types.database_state_values</a>(),
    [<a href="MsbmsSystDatastore.Types.html#t:context_state/0">MsbmsSystDatastore.Types.context_state</a>()]}
-  | {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+  | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
 
       </div>
 
@@ -1797,7 +1797,7 @@ Datastore and database roles representing each of the Datastore contexts.</p>
   <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
 ) ::
   {:ok, [<a href="MsbmsSystDatastore.Types.html#t:context_state/0">MsbmsSystDatastore.Types.context_state</a>(), ...]}
-  | {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+  | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
 
       </div>
 
@@ -1826,7 +1826,7 @@ contexts to existing Datastores.</p>
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> drop_datastore(<a href="MsbmsSystDatastore.Types.html#t:datastore_options/0">MsbmsSystDatastore.Types.datastore_options</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) ::
-  :ok | {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+  :ok | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
 
       </div>
 
@@ -1859,7 +1859,7 @@ will result in data loss.</strong></p>
   <a href="MsbmsSystDatastore.Types.html#t:datastore_options/0">MsbmsSystDatastore.Types.datastore_options</a>(),
   [<a href="MsbmsSystDatastore.Types.html#t:datastore_context/0">MsbmsSystDatastore.Types.datastore_context</a>(), ...],
   <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
-) :: :ok | {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+) :: :ok | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
 
       </div>
 
@@ -1893,7 +1893,7 @@ error condition.</p>
   <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
 ) ::
   {:ok, [<a href="MsbmsSystDatastore.Types.html#t:context_state/0">MsbmsSystDatastore.Types.context_state</a>(), ...]}
-  | {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+  | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
 
       </div>
 
@@ -1925,7 +1925,7 @@ results of this function.</p>
           <pre translate="no"><span class="attribute">@spec</span> get_datastore_state(<a href="MsbmsSystDatastore.Types.html#t:datastore_options/0">MsbmsSystDatastore.Types.datastore_options</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) ::
   {:ok, <a href="MsbmsSystDatastore.Types.html#t:database_state_values/0">MsbmsSystDatastore.Types.database_state_values</a>(),
    [<a href="MsbmsSystDatastore.Types.html#t:context_state/0">MsbmsSystDatastore.Types.context_state</a>()]}
-  | {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+  | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
 
       </div>
 
