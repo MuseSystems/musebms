@@ -8,34 +8,37 @@ defmodule MsbmsSystDatastore do
   alias MsbmsSystDatastore.Runtime.Datastore
   alias MsbmsSystDatastore.Types
 
+  @doc section: :datastore_management
   @doc """
-  Returns the state of the database and database roles which back the datastore
-  and contexts, respectively, of the provided datastore options definition.
+  Returns the state of the database and database roles which back the Datastore
+  and contexts, respectively, of the provided Datastore options definition.
   """
   @spec get_datastore_state(Types.datastore_options(), Keyword.t()) ::
           {:ok, Types.database_state_values(), list(Types.context_state())}
           | {:error, MsbmsSystError.t()}
   defdelegate get_datastore_state(datastore_options, opts \\ []), to: Dba
 
+  @doc section: :datastore_management
   @doc """
-  Creates a new datastore along with its contexts.
+  Creates a new Datastore along with its contexts.
 
-  The creation of a new datastore includes creating new database to back the
-  datastore and database roles representing each of the datastore contexts.
+  The creation of a new Datastore includes creating new database to back the
+  Datastore and database roles representing each of the Datastore contexts.
   """
   @spec create_datastore(Types.datastore_options(), Keyword.t()) ::
           {:ok, Types.database_state_values(), list(Types.context_state())}
           | {:error, MsbmsSystError.t()}
   defdelegate create_datastore(datastore_options, opts \\ []), to: Dba
 
+  @doc section: :datastore_management
   @doc """
-  Drops a datastore along with its contexts.
+  Drops a Datastore along with its contexts.
 
-  Dropping a datastore will drop the database backing the datastore from the
+  Dropping a Datastore will drop the database backing the Datastore from the
   database server as well as all of the database roles associated defined by the
   provided database options.
 
-  Prior to dropping the datastore, all active connections to the datastore
+  Prior to dropping the Datastore, all active connections to the Datastore
   should be terminated or the function call could fail.
 
   __Note that this is am irreversible, destructive action.  Any successful call
@@ -45,6 +48,7 @@ defmodule MsbmsSystDatastore do
           :ok | {:error, MsbmsSystError.t()}
   defdelegate drop_datastore(datastore_options, opts \\ []), to: Dba
 
+  @doc section: :datastore_management
   @doc """
   Returns the state of the requested contexts.
 
@@ -60,13 +64,14 @@ defmodule MsbmsSystDatastore do
           {:ok, nonempty_list(Types.context_state())} | {:error, MsbmsSystError.t()}
   defdelegate get_datastore_context_states(datastore_contexts, opts \\ []), to: Dba
 
+  @doc section: :datastore_management
   @doc """
-  Creates database roles to back all requested datastore contexts.
+  Creates database roles to back all requested Datastore contexts.
 
-  Usually datastore contexts are created in the `create_datastore/1` call, but
+  Usually Datastore contexts are created in the `create_datastore/1` call, but
   over the course of time it is expected that applications may define new
   contexts as needs change.  This function allows applications to add new
-  contexts to existing datastores.
+  contexts to existing Datastores.
   """
   @spec create_datastore_contexts(
           Types.datastore_options(),
@@ -77,12 +82,13 @@ defmodule MsbmsSystDatastore do
   defdelegate create_datastore_contexts(datastore_options, datastore_contexts, opts \\ []),
     to: Dba
 
+  @doc section: :datastore_management
   @doc """
-  Drops the requested datastore contexts.
+  Drops the requested Datastore contexts.
 
   This function will drop the database roles from the database server that
-  correspond to the requested datastore contexts.  You should be sure that the
-  requested datastore contexts do not have active database connections when
+  correspond to the requested Datastore contexts.  You should be sure that the
+  requested Datastore contexts do not have active database connections when
   calling this function as active connections are likely to result in an
   error condition.
   """
@@ -94,6 +100,7 @@ defmodule MsbmsSystDatastore do
           :ok | {:error, MsbmsSystError.t()}
   defdelegate drop_datastore_contexts(datastore_options, datastore_contexts, opts \\ []), to: Dba
 
+  @doc section: :datastore_migrations
   @doc """
   Returns the most recently installed database migration version number.
   """
@@ -101,12 +108,13 @@ defmodule MsbmsSystDatastore do
           {:ok, String.t()} | {:error, MsbmsSystError.t()}
   defdelegate get_datastore_version(datastore_options, opts \\ []), to: Privileged
 
+  @doc section: :datastore_migrations
   @doc """
-  Updates a datastore to the most current version of the given type of datastore.
+  Updates a Datastore to the most current version of the given type of Datastore.
 
-  If a datastore is already up-to-date, this function is basically a "no-op"
+  If a Datastore is already up-to-date, this function is basically a "no-op"
   that returns the current version.  Otherwise, database migrations for the
-  datastore type are applied until the datastore is fully upgraded to the most
+  Datastore type are applied until the Datastore is fully upgraded to the most
   recent schema version.
   """
   @spec upgrade_datastore(
@@ -124,23 +132,26 @@ defmodule MsbmsSystDatastore do
               ),
               to: Privileged
 
+  @doc section: :service_management
   @doc """
-  Starts database connections for all of login contexts in the datastore options.
+  Starts database connections for all of login contexts in the Datastore options.
   """
   @spec start_datastore(Types.datastore_options(), Supervisor.supervisor() | nil) ::
           {:ok, :all_started | :some_started, list(Types.context_state_values())}
           | {:error, MsbmsSystError.t()}
   defdelegate start_datastore(datastore_options, supervisor_name \\ nil), to: Datastore
 
+  @doc section: :service_management
   @doc """
-  Starts a database connection for the specific datastore context provided.
+  Starts a database connection for the specific Datastore context provided.
   """
   @spec start_datastore_context(Types.datastore_options(), atom() | Types.datastore_context()) ::
           {:ok, pid()} | {:error, MsbmsSystError.t()}
   defdelegate start_datastore_context(datastore_options, context), to: Datastore
 
+  @doc section: :service_management
   @doc """
-  Disconnects the database connections for all of the login datastore option contexts.
+  Disconnects the database connections for all of the login Datastore option contexts.
   """
   @spec stop_datastore(
           Types.datastore_options()
@@ -152,20 +163,23 @@ defmodule MsbmsSystDatastore do
   defdelegate stop_datastore(datastore_options_or_contexts, db_shutdown_timeout \\ 60_000),
     to: Datastore
 
+  @doc section: :service_management
   @doc """
-  Disconnects the database connection for the specific datastore context provided.
+  Disconnects the database connection for the specific Datastore context provided.
   """
   @spec stop_datastore_context(pid() | atom() | Types.datastore_context(), non_neg_integer()) ::
           :ok
   defdelegate stop_datastore_context(context, db_shutdown_timeout \\ 60_000),
     to: Datastore
 
+  @doc section: :query
   @doc """
   Executes a database query but returns no results.
   """
   @spec query_for_none(iodata(), [term()], Keyword.t()) :: :ok | {:error, MsbmsSystError.t()}
   defdelegate query_for_none(query, query_params \\ [], opts \\ []), to: Datastore
 
+  @doc section: :query
   @doc """
   Executes a database query but returns no results.  Raises on error.
 
@@ -173,6 +187,7 @@ defmodule MsbmsSystDatastore do
   @spec query_for_none!(iodata(), [term()], Keyword.t()) :: :ok
   defdelegate query_for_none!(query, query_params \\ [], opts \\ []), to: Datastore
 
+  @doc section: :query
   @doc """
   Executes a database query returning a single value.
   """
@@ -180,12 +195,14 @@ defmodule MsbmsSystDatastore do
           {:ok, any()} | {:error, MsbmsSystError.t()}
   defdelegate query_for_value(query, query_params \\ [], opts \\ []), to: Datastore
 
+  @doc section: :query
   @doc """
   Executes a database query returning a single value.  Raises on error.
   """
   @spec query_for_value!(iodata(), [term()], Keyword.t()) :: any()
   defdelegate query_for_value!(query, query_params \\ [], opts \\ []), to: Datastore
 
+  @doc section: :query
   @doc """
   Executes a database query and returns a single row.
   """
@@ -193,12 +210,14 @@ defmodule MsbmsSystDatastore do
           {:ok, [any()]} | {:error, MsbmsSystError.t()}
   defdelegate query_for_one(query, query_params \\ [], opts \\ []), to: Datastore
 
+  @doc section: :query
   @doc """
   Executes a database query and returns a single row.  Raises on error.
   """
   @spec query_for_one!(iodata(), [term()], Keyword.t()) :: [any()]
   defdelegate query_for_one!(query, query_params \\ [], opts \\ []), to: Datastore
 
+  @doc section: :query
   @doc """
   Executes a database query and returns all rows.
   """
@@ -212,6 +231,7 @@ defmodule MsbmsSystDatastore do
           | {:error, MsbmsSystError.t()}
   defdelegate query_for_many(query, query_params \\ [], opts \\ []), to: Datastore
 
+  @doc section: :query
   @doc """
   Executes a database query and returns all rows.  Raises on error.
   """
@@ -227,77 +247,117 @@ defmodule MsbmsSystDatastore do
   # want our basic data access API to look really close to it since it would be
   # reasonably familiar to other developers.
 
+  @doc section: :service_management
   @spec set_datastore_context(pid() | Ecto.Repo.t() | Ecto.Adapter.adapter_meta()) ::
           atom() | pid()
   defdelegate set_datastore_context(context), to: Datastore
 
+  @doc section: :service_management
   @spec current_datastore_context :: atom() | pid()
   defdelegate current_datastore_context(), to: Datastore
 
+  @doc section: :query
   @spec transaction(fun | Ecto.Multi.t(), keyword) :: {:error, MsbmsSystError.t()} | {:ok, any}
   defdelegate transaction(job, opts \\ []), to: Datastore, as: :ecto_transaction
 
+  @doc section: :query
   defdelegate record_count(queryable, opts), to: Datastore, as: :record_count
 
+  @doc section: :query
   defdelegate aggregate(queryable, aggregate, field, opts \\ []), to: Datastore
 
+  @doc section: :query
   @spec all(Ecto.Queryable.t(), Keyword.t()) :: list(Ecto.Schema.t())
   defdelegate all(queryable, opts \\ []), to: Datastore
 
+  @doc section: :query
   defdelegate delete(struct_or_changeset, opts \\ []),
     to: Datastore
 
+  @doc section: :query
   defdelegate delete!(struct_or_changeset, opts \\ []),
     to: Datastore
 
+  @doc section: :query
   defdelegate delete_all(queryable, opts \\ []), to: Datastore
+
+  @doc section: :query
   defdelegate exists?(queryable, opts \\ []), to: Datastore
+
+  @doc section: :query
   defdelegate get(queryable, id, opts \\ []), to: Datastore
+
+  @doc section: :query
   defdelegate get!(queryable, id, opts \\ []), to: Datastore
 
+  @doc section: :query
   defdelegate get_by(queryable, clauses, opts \\ []),
     to: Datastore
 
+  @doc section: :query
   defdelegate get_by!(queryable, clauses, opts \\ []),
     to: Datastore
 
+  @doc section: :query
   defdelegate in_transaction?, to: Datastore
 
+  @doc section: :query
   defdelegate insert(struct_or_changeset, opts \\ []),
     to: Datastore
 
+  @doc section: :query
   defdelegate insert!(struct_or_changeset, opts \\ []),
     to: Datastore
 
+  @doc section: :query
   defdelegate insert_all(schema_or_source, entries_or_query, opts \\ []),
     to: Datastore
 
+  @doc section: :query
   defdelegate insert_or_update(changeset, opts \\ []),
     to: Datastore
 
+  @doc section: :query
   defdelegate insert_or_update!(changeset, opts \\ []),
     to: Datastore
 
+  @doc section: :query
   defdelegate load(module_or_map, data), to: Datastore
+
+  @doc section: :query
   defdelegate one(queryable, opts \\ []), to: Datastore
+
+  @doc section: :query
   defdelegate one!(queryable, opts \\ []), to: Datastore
 
+  @doc section: :query
   defdelegate preload(structs_or_struct_or_nil, preloads, opts \\ []),
     to: Datastore
 
+  @doc section: :query
   defdelegate prepare_query(operation, query, opts \\ []),
     to: Datastore
 
+  @doc section: :query
   defdelegate reload(struct_or_structs, opts \\ []), to: Datastore
 
+  @doc section: :query
   defdelegate reload!(struct_or_structs, opts \\ []),
     to: Datastore
 
+  @doc section: :query
   defdelegate rollback(value), to: Datastore
+
+  @doc section: :query
   defdelegate stream(queryable, opts \\ []), to: Datastore
+
+  @doc section: :query
   defdelegate update(changeset, opts \\ []), to: Datastore
+
+  @doc section: :query
   defdelegate update!(changeset, opts \\ []), to: Datastore
 
+  @doc section: :query
   defdelegate update_all(queryable, updates, opts \\ []),
     to: Datastore
 end

@@ -46,6 +46,7 @@ defmodule MsbmsSystAuthentication.MixProject do
         name: "MsbmsSystAuthentication",
         nest_modules_by_prefix: [MsbmsSystAuthentication.Data],
         main: "MsbmsSystAuthentication",
+        output: "../../../documentation/technical/app_server/msbms_syst_authentication",
         groups_for_functions: [
           "API - Access Accounts": &(&1[:section] == :access_account_data),
           "API - Runtime": &(&1[:section] == :service_management)

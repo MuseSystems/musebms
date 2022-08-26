@@ -17,6 +17,7 @@ defmodule MsbmsSystUtils do
   Common utility functions generally useful across components.
   """
 
+  @doc section: :options_management
   @doc """
   Resolves function options provided as a Keyword List to either the value
   provided or a default from a Keyword List of default values.
@@ -39,8 +40,9 @@ defmodule MsbmsSystUtils do
 
   ## Examples
 
-      iex> [test_value_one: 1]
-      ...> |> MsbmsSystUtils.resolve_options([test_value_one: 0, test_value_two: 2])
+      iex> given_options = [test_value_one: 1]
+      iex> default_options = [test_value_one: 0, test_value_two: 2]
+      iex> MsbmsSystUtils.resolve_options(given_options, default_options)
       [test_value_one: 1, test_value_two: 2]
   """
   @spec resolve_options(Keyword.t(), Keyword.t()) :: Keyword.t()

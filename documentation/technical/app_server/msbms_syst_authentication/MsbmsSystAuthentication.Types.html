@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.28.4">
+    <meta name="project" content="msbms_syst_authentication v0.1.0">
+
+    <title>MsbmsSystAuthentication.Types — msbms_syst_authentication v0.1.0</title>
+    <link rel="stylesheet" href="dist/elixir-b6f1ed5df9b1d42a7309.css" />
+
+    <script src="dist/sidebar_items-16527922c1.js"></script>
+
+      <script src="docs_config.js"></script>
+
+    <script async src="dist/app-bd1cb213813bf4825aa2.js"></script>
+
+
+  </head>
+  <body data-type="modules">
+    <script>
+
+      try {
+        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
+
+        if (settings.theme === 'dark' ||
+           ((settings.theme === 'system' || settings.theme == null) &&
+             window.matchMedia('(prefers-color-scheme: dark)').matches)
+           ) {
+          document.body.classList.add('dark')
+        }
+      } catch (error) { }
+    </script>
+
+<div class="main">
+
+
+<section class="sidebar">
+  <button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
+    <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+  </button>
+
+  <form class="sidebar-search" action="search.html">
+    <button type="submit" class="search-button" aria-label="Submit Search">
+      <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
+    </button>
+    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
+      <i class="ri-close-line ri-lg" aria-hidden="true" title="Cancel search"></i>
+    </button>
+    <label class="search-label">
+      <p class="sr-only">Search</p>
+      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
+    </label>
+  </form>
+
+  <div class="autocomplete">
+    <div class="autocomplete-results">
+    </div>
+  </div>
+
+  <div class="sidebar-header">
+
+    <div class="sidebar-projectDetails">
+      <a href="MsbmsSystAuthentication.html" class="sidebar-projectName" translate="no">
+msbms_syst_authentication
+      </a>
+      <strong class="sidebar-projectVersion" translate="no">
+        v0.1.0
+      </strong>
+    </div>
+    <ul class="sidebar-listNav">
+      <li><a id="extras-list-link" href="#full-list">Pages</a></li>
+
+        <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+
+
+    </ul>
+  </div>
+
+  <div class="gradient"></div>
+  <ul id="full-list" class="sidebar-fullList"></ul>
+</section>
+
+<section class="content">
+  <output role="status" id="toast"></output>
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+<h1>
+<button class="settings display-settings">
+  <i class="ri-settings-3-line"></i>
+  <span class="sr-only">Settings</span>
+</button>
+
+
+  <span translate="no">MsbmsSystAuthentication.Types</span> 
+  <small class="app-vsn" translate="no">(msbms_syst_authentication v0.1.0)</small>
+
+</h1>
+
+
+  <section id="moduledoc">
+<p>Types used by the Authentication module.</p>
+  </section>
+
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+      Summary
+    </h1>
+
+  <div class="summary-types summary">
+    <h2>
+      <a href="#types">Types</a>
+    </h2>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:access_account_id/0" translate="no">access_account_id()</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:access_account_instance_assoc_params/0" translate="no">access_account_instance_assoc_params()</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:access_account_name/0" translate="no">access_account_name()</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:access_account_params/0" translate="no">access_account_params()</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:access_account_state_id/0" translate="no">access_account_state_id()</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:access_account_state_name/0" translate="no">access_account_state_name()</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:account_identifier/0" translate="no">account_identifier()</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:credential_params/0" translate="no">credential_params()</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:credential_type_id/0" translate="no">credential_type_id()</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:credential_type_name/0" translate="no">credential_type_name()</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:global_network_rule_params/0" translate="no">global_network_rule_params()</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:identity_id/0" translate="no">identity_id()</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:identity_params/0" translate="no">identity_params()</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:identity_type_id/0" translate="no">identity_type_id()</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:identity_type_name/0" translate="no">identity_type_name()</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:instance_network_rule_params/0" translate="no">instance_network_rule_params()</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:owner_network_rule_params/0" translate="no">owner_network_rule_params()</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:password_rule_params/0" translate="no">password_rule_params()</a>
+
+        </div>
+
+      </div>
+
+  </div>
+
+  </section>
+
+
+  <section id="types" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#types">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+Types
+    </h1>
+    <div class="types-list">
+<section class="detail" id="t:access_account_id/0">
+
+  <div class="detail-header">
+    <a href="#t:access_account_id/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">access_account_id()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> access_account_id() :: <a href="https://hexdocs.pm/ecto/3.8.4/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:access_account_instance_assoc_params/0">
+
+  <div class="detail-header">
+    <a href="#t:access_account_instance_assoc_params/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">access_account_instance_assoc_params()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> access_account_instance_assoc_params() :: %{
+  optional(:access_account_id) =&gt; <a href="#t:access_account_id/0">access_account_id</a>(),
+  optional(:access_account_name) =&gt; <a href="#t:access_account_name/0">access_account_name</a>(),
+  optional(:credential_type_id) =&gt; <a href="#t:credential_type_id/0">credential_type_id</a>(),
+  optional(:credential_type_name) =&gt; <a href="#t:credential_type_name/0">credential_type_name</a>(),
+  optional(:instance_id) =&gt; <a href="https://hexdocs.pm/msbms_syst_instance_mgr/0.1.0/MsbmsSystInstanceMgr.Types.html#t:instance_id/0">MsbmsSystInstanceMgr.Types.instance_id</a>(),
+  optional(:instance_name) =&gt; <a href="https://hexdocs.pm/msbms_syst_instance_mgr/0.1.0/MsbmsSystInstanceMgr.Types.html#t:instance_name/0">MsbmsSystInstanceMgr.Types.instance_name</a>(),
+  optional(:access_granted) =&gt; <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0">DateTime.t</a>(),
+  optional(:invitation_issued) =&gt; <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0">DateTime.t</a>(),
+  optional(:invitation_expires) =&gt; <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0">DateTime.t</a>(),
+  optional(:invitation_declined) =&gt; <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0">DateTime.t</a>()
+}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:access_account_name/0">
+
+  <div class="detail-header">
+    <a href="#t:access_account_name/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">access_account_name()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> access_account_name() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:access_account_params/0">
+
+  <div class="detail-header">
+    <a href="#t:access_account_params/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">access_account_params()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> access_account_params() :: %{
+  optional(:internal_name) =&gt; <a href="#t:access_account_name/0">access_account_name</a>(),
+  optional(:external_name) =&gt; <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  optional(:owning_owner_id) =&gt; <a href="https://hexdocs.pm/msbms_syst_instance_mgr/0.1.0/MsbmsSystInstanceMgr.Types.html#t:owner_id/0">MsbmsSystInstanceMgr.Types.owner_id</a>(),
+  optional(:owning_owner_name) =&gt; <a href="https://hexdocs.pm/msbms_syst_instance_mgr/0.1.0/MsbmsSystInstanceMgr.Types.html#t:owner_name/0">MsbmsSystInstanceMgr.Types.owner_name</a>(),
+  optional(:allow_global_logins) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  optional(:access_account_state_id) =&gt; <a href="#t:access_account_state_id/0">access_account_state_id</a>(),
+  optional(:access_account_state_name) =&gt; <a href="#t:access_account_name/0">access_account_name</a>()
+}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:access_account_state_id/0">
+
+  <div class="detail-header">
+    <a href="#t:access_account_state_id/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">access_account_state_id()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> access_account_state_id() :: <a href="https://hexdocs.pm/msbms_syst_enums/0.1.0/MsbmsSystEnums.Types.html#t:enum_item_id/0">MsbmsSystEnums.Types.enum_item_id</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:access_account_state_name/0">
+
+  <div class="detail-header">
+    <a href="#t:access_account_state_name/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">access_account_state_name()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> access_account_state_name() :: <a href="https://hexdocs.pm/msbms_syst_enums/0.1.0/MsbmsSystEnums.Types.html#t:enum_item_name/0">MsbmsSystEnums.Types.enum_item_name</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:account_identifier/0">
+
+  <div class="detail-header">
+    <a href="#t:account_identifier/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">account_identifier()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> account_identifier() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:credential_params/0">
+
+  <div class="detail-header">
+    <a href="#t:credential_params/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">credential_params()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> credential_params() :: %{
+  optional(:access_account_id) =&gt; <a href="#t:access_account_id/0">access_account_id</a>(),
+  optional(:access_account_name) =&gt; <a href="#t:access_account_name/0">access_account_name</a>(),
+  optional(:credential_type_id) =&gt; <a href="#t:credential_type_id/0">credential_type_id</a>(),
+  optional(:credential_type_name) =&gt; <a href="#t:credential_type_name/0">credential_type_name</a>(),
+  optional(:credential_for_identity_id) =&gt; <a href="#t:identity_id/0">identity_id</a>(),
+  optional(:credential_data) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">binary</a>(),
+  optional(:external_name) =&gt; <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()
+}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:credential_type_id/0">
+
+  <div class="detail-header">
+    <a href="#t:credential_type_id/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">credential_type_id()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> credential_type_id() :: <a href="https://hexdocs.pm/msbms_syst_enums/0.1.0/MsbmsSystEnums.Types.html#t:enum_item_id/0">MsbmsSystEnums.Types.enum_item_id</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:credential_type_name/0">
+
+  <div class="detail-header">
+    <a href="#t:credential_type_name/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">credential_type_name()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> credential_type_name() :: <a href="https://hexdocs.pm/msbms_syst_enums/0.1.0/MsbmsSystEnums.Types.html#t:enum_item_name/0">MsbmsSystEnums.Types.enum_item_name</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:global_network_rule_params/0">
+
+  <div class="detail-header">
+    <a href="#t:global_network_rule_params/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">global_network_rule_params()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> global_network_rule_params() :: %{
+  optional(:template_rule) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  optional(:ordering) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pos_integer</a>(),
+  optional(:functional_type) =&gt; <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  optional(:ip_host_or_network) =&gt; <a href="https://hexdocs.pm/msbms_syst_datastore/0.1.0/MsbmsSystDatastore.DbTypes.Inet.html#t:t/0">MsbmsSystDatastore.DbTypes.Inet.t</a>(),
+  optional(:ip_host_range_lower) =&gt; <a href="https://hexdocs.pm/msbms_syst_datastore/0.1.0/MsbmsSystDatastore.DbTypes.Inet.html#t:t/0">MsbmsSystDatastore.DbTypes.Inet.t</a>(),
+  optional(:ip_host_range_upper) =&gt; <a href="https://hexdocs.pm/msbms_syst_datastore/0.1.0/MsbmsSystDatastore.DbTypes.Inet.html#t:t/0">MsbmsSystDatastore.DbTypes.Inet.t</a>()
+}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:identity_id/0">
+
+  <div class="detail-header">
+    <a href="#t:identity_id/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">identity_id()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> identity_id() :: <a href="https://hexdocs.pm/ecto/3.8.4/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:identity_params/0">
+
+  <div class="detail-header">
+    <a href="#t:identity_params/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">identity_params()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> identity_params() :: %{
+  optional(:access_account_id) =&gt; <a href="#t:access_account_id/0">access_account_id</a>(),
+  optional(:access_account_name) =&gt; <a href="#t:access_account_name/0">access_account_name</a>(),
+  optional(:identity_type_id) =&gt; <a href="#t:identity_type_name/0">identity_type_name</a>(),
+  optional(:identity_type_name) =&gt; <a href="#t:identity_type_name/0">identity_type_name</a>(),
+  optional(:account_identifier) =&gt; <a href="#t:account_identifier/0">account_identifier</a>(),
+  optional(:validated) =&gt; <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0">DateTime.t</a>(),
+  optional(:validates_identity_id) =&gt; <a href="#t:identity_id/0">identity_id</a>(),
+  optional(:validation_requested) =&gt; <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0">DateTime.t</a>(),
+  optional(:validation_expires) =&gt; <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0">DateTime.t</a>(),
+  optional(:primary_contact) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()
+}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:identity_type_id/0">
+
+  <div class="detail-header">
+    <a href="#t:identity_type_id/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">identity_type_id()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> identity_type_id() :: <a href="https://hexdocs.pm/msbms_syst_enums/0.1.0/MsbmsSystEnums.Types.html#t:enum_item_id/0">MsbmsSystEnums.Types.enum_item_id</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:identity_type_name/0">
+
+  <div class="detail-header">
+    <a href="#t:identity_type_name/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">identity_type_name()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> identity_type_name() :: <a href="https://hexdocs.pm/msbms_syst_enums/0.1.0/MsbmsSystEnums.Types.html#t:enum_item_name/0">MsbmsSystEnums.Types.enum_item_name</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:instance_network_rule_params/0">
+
+  <div class="detail-header">
+    <a href="#t:instance_network_rule_params/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">instance_network_rule_params()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> instance_network_rule_params() :: %{
+  optional(:instance_id) =&gt; <a href="https://hexdocs.pm/msbms_syst_instance_mgr/0.1.0/MsbmsSystInstanceMgr.Types.html#t:instance_id/0">MsbmsSystInstanceMgr.Types.instance_id</a>(),
+  optional(:instance_name) =&gt; <a href="https://hexdocs.pm/msbms_syst_instance_mgr/0.1.0/MsbmsSystInstanceMgr.Types.html#t:instance_name/0">MsbmsSystInstanceMgr.Types.instance_name</a>(),
+  optional(:ordering) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pos_integer</a>(),
+  optional(:functional_type) =&gt; <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  optional(:ip_host_or_network) =&gt; <a href="https://hexdocs.pm/msbms_syst_datastore/0.1.0/MsbmsSystDatastore.DbTypes.Inet.html#t:t/0">MsbmsSystDatastore.DbTypes.Inet.t</a>(),
+  optional(:ip_host_range_lower) =&gt; <a href="https://hexdocs.pm/msbms_syst_datastore/0.1.0/MsbmsSystDatastore.DbTypes.Inet.html#t:t/0">MsbmsSystDatastore.DbTypes.Inet.t</a>(),
+  optional(:ip_host_range_upper) =&gt; <a href="https://hexdocs.pm/msbms_syst_datastore/0.1.0/MsbmsSystDatastore.DbTypes.Inet.html#t:t/0">MsbmsSystDatastore.DbTypes.Inet.t</a>()
+}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:owner_network_rule_params/0">
+
+  <div class="detail-header">
+    <a href="#t:owner_network_rule_params/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">owner_network_rule_params()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> owner_network_rule_params() :: %{
+  optional(:owner_id) =&gt; <a href="https://hexdocs.pm/msbms_syst_instance_mgr/0.1.0/MsbmsSystInstanceMgr.Types.html#t:owner_id/0">MsbmsSystInstanceMgr.Types.owner_id</a>(),
+  optional(:owner_name) =&gt; <a href="https://hexdocs.pm/msbms_syst_instance_mgr/0.1.0/MsbmsSystInstanceMgr.Types.html#t:owner_name/0">MsbmsSystInstanceMgr.Types.owner_name</a>(),
+  optional(:ordering) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pos_integer</a>(),
+  optional(:functional_type) =&gt; <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  optional(:ip_host_or_network) =&gt; <a href="https://hexdocs.pm/msbms_syst_datastore/0.1.0/MsbmsSystDatastore.DbTypes.Inet.html#t:t/0">MsbmsSystDatastore.DbTypes.Inet.t</a>(),
+  optional(:ip_host_range_lower) =&gt; <a href="https://hexdocs.pm/msbms_syst_datastore/0.1.0/MsbmsSystDatastore.DbTypes.Inet.html#t:t/0">MsbmsSystDatastore.DbTypes.Inet.t</a>(),
+  optional(:ip_host_range_upper) =&gt; <a href="https://hexdocs.pm/msbms_syst_datastore/0.1.0/MsbmsSystDatastore.DbTypes.Inet.html#t:t/0">MsbmsSystDatastore.DbTypes.Inet.t</a>()
+}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:password_rule_params/0">
+
+  <div class="detail-header">
+    <a href="#t:password_rule_params/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">password_rule_params()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> password_rule_params() :: %{
+  optional(:owner_id) =&gt; <a href="https://hexdocs.pm/msbms_syst_instance_mgr/0.1.0/MsbmsSystInstanceMgr.Types.html#t:owner_id/0">MsbmsSystInstanceMgr.Types.owner_id</a>() | nil,
+  optional(:owner_name) =&gt; <a href="https://hexdocs.pm/msbms_syst_instance_mgr/0.1.0/MsbmsSystInstanceMgr.Types.html#t:owner_name/0">MsbmsSystInstanceMgr.Types.owner_name</a>() | nil,
+  optional(:password_length) =&gt; MsbmsSystDatastore.DbTypes.IntegerTypes.t(),
+  optional(:max_age) =&gt; <a href="https://hexdocs.pm/msbms_syst_datastore/0.1.0/MsbmsSystDatastore.DbTypes.Interval.html#t:t/0">MsbmsSystDatastore.DbTypes.Interval.t</a>(),
+  optional(:require_upper_case) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>(),
+  optional(:require_lower_case) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>(),
+  optional(:require_numbers) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>(),
+  optional(:require_symbols) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>(),
+  optional(:disallow_recently_used) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>(),
+  optional(:disallow_known_compromised) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  optional(:require_mfa) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  optional(:allowed_mfa_types) =&gt; [<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()]
+}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+
+    </div>
+  </section>
+
+      <footer class="footer">
+
+        <p>
+          Built using
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.28.4) for the
+
+            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+        </p>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+
+
+  </body>
+</html>

@@ -34,7 +34,28 @@ defmodule MsbmsSystEnums.MixProject do
       build_embedded: in_production,
       start_permanent: in_production,
       dialyzer: @dialyzer_opts,
-      elixirc_paths: elixirc_paths(Mix.env())
+      elixirc_paths: elixirc_paths(Mix.env()),
+      docs: [
+        name: "MsbmsSystEnums",
+        main: "MsbmsSystEnums",
+        output: "../../../documentation/technical/app_server/msbms_syst_enums",
+        nest_modules_by_prefix: [MsbmsSystEnums.DbTypes],
+        groups_for_functions: [
+          "API - Enumerations": &(&1[:section] == :enum_data),
+          "API - Enumeration Functional Types": &(&1[:section] == :enum_functional_type_data),
+          "API - Enumeration items": &(&1[:section] == :enum_item_data),
+          "API - Runtime": &(&1[:section] == :service_management)
+        ],
+        groups_for_modules: [
+          API: [MsbmsSystEnums],
+          Data: [
+            MsbmsSystEnums.Data.SystEnums,
+            MsbmsSystEnums.Data.SystEnumFunctionalTypes,
+            MsbmsSystEnums.Data.SystEnumItems
+          ],
+          "Supporting Types": [MsbmsSystEnums.Types]
+        ]
+      ]
     ]
   end
 

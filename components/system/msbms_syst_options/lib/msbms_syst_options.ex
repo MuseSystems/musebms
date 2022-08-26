@@ -7,6 +7,7 @@ defmodule MsbmsSystOptions do
   alias MsbmsSystOptions.Impl.OptionsParser
   alias MsbmsSystOptions.Types
 
+  @doc section: :file_handling
   @doc """
   Parses and returns the contents of a TOML file at `options_file_path` via a
   result tuple.
@@ -69,6 +70,7 @@ defmodule MsbmsSystOptions do
   @spec get_options(String.t()) :: {:ok, map()} | {:error, MsbmsSystError.t()}
   defdelegate get_options(options_file_path), to: OptionsFile
 
+  @doc section: :file_handling
   @doc """
   Parses and returns the contents of a TOML file at `options_file_path` or
   raises.
@@ -120,6 +122,7 @@ defmodule MsbmsSystOptions do
   @spec get_options!(String.t()) :: map()
   defdelegate get_options!(options_file_path), to: OptionsFile
 
+  @doc section: :options_parsing
   @doc """
   Returns the name of the database server which hosts the global database.
 
@@ -136,8 +139,9 @@ defmodule MsbmsSystOptions do
   @spec get_global_dbserver_name(map()) :: String.t()
   defdelegate get_global_dbserver_name(options), to: OptionsParser
 
+  @doc section: :options_parsing
   @doc """
-  Returns the `t:MsbmsSystDatastore.Types.dbserver/0` data for the database
+  Returns the `t:MsbmsSystDatastore.Types.db_server/0` data for the database
   server designated as hosting the global database.
 
   ## Parameters
@@ -152,6 +156,7 @@ defmodule MsbmsSystOptions do
   @spec get_global_dbserver(map()) :: MsbmsSystDatastore.Types.db_server()
   defdelegate get_global_dbserver(options), to: OptionsParser
 
+  @doc section: :options_parsing
   @doc """
   Returns the configured global server "pepper" value for use in some automatic
   account creation scenarios.
@@ -176,6 +181,7 @@ defmodule MsbmsSystOptions do
   @spec get_global_pepper_value(map()) :: binary()
   defdelegate get_global_pepper_value(options), to: OptionsParser
 
+  @doc section: :options_parsing
   @doc """
   Returns the list of available server pools configured in the options file.
 
@@ -191,6 +197,7 @@ defmodule MsbmsSystOptions do
   @spec list_available_server_pools(map()) :: list(Types.server_pool())
   defdelegate list_available_server_pools(options), to: OptionsParser
 
+  @doc section: :options_parsing
   @doc """
   Extracts the list of configured dbservers in the options file, optionally
   filtered by the server's supported instance classes.
@@ -263,6 +270,7 @@ defmodule MsbmsSystOptions do
           list(MsbmsSystDatastore.Types.db_server())
   defdelegate list_dbservers(options, filters \\ []), to: OptionsParser
 
+  @doc section: :options_parsing
   @doc """
   Returns the database server definition which corresponds to the provided name.
 

@@ -29,7 +29,18 @@ defmodule MsbmsSystUtils.MixProject do
       build_embedded: in_production,
       start_permanent: in_production,
       dialyzer: @dialyzer_opts,
-      elixirc_paths: elixirc_paths(Mix.env())
+      elixirc_paths: elixirc_paths(Mix.env()),
+      docs: [
+        name: "MsbmsSystUtils",
+        main: "MsbmsSystUtils",
+        output: "../../../documentation/technical/app_server/msbms_syst_utils",
+        groups_for_functions: [
+          "API - Function Opts": &(&1[:section] == :options_management)
+        ],
+        groups_for_modules: [
+          API: [MsbmsSystUtils]
+        ]
+      ]
     ]
   end
 

@@ -55,6 +55,7 @@ defmodule MsbmsSystError do
                message: "undefined error",
                cause: nil
 
+  @doc section: :error_parsing
   @doc """
   The %MsbmsSystError{} struct (the Error Struct) may represent arbitrarily nested Error Structs in
   the `cause:` attribute of the Error Struct.

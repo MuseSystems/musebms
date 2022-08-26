@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.28.4">
+    <meta name="project" content="msbms_syst_authentication v0.1.0">
+
+    <title>MsbmsSystAuthentication — msbms_syst_authentication v0.1.0</title>
+    <link rel="stylesheet" href="dist/elixir-b6f1ed5df9b1d42a7309.css" />
+
+    <script src="dist/sidebar_items-16527922c1.js"></script>
+
+      <script src="docs_config.js"></script>
+
+    <script async src="dist/app-bd1cb213813bf4825aa2.js"></script>
+
+
+  </head>
+  <body data-type="modules">
+    <script>
+
+      try {
+        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
+
+        if (settings.theme === 'dark' ||
+           ((settings.theme === 'system' || settings.theme == null) &&
+             window.matchMedia('(prefers-color-scheme: dark)').matches)
+           ) {
+          document.body.classList.add('dark')
+        }
+      } catch (error) { }
+    </script>
+
+<div class="main">
+
+
+<section class="sidebar">
+  <button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
+    <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+  </button>
+
+  <form class="sidebar-search" action="search.html">
+    <button type="submit" class="search-button" aria-label="Submit Search">
+      <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
+    </button>
+    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
+      <i class="ri-close-line ri-lg" aria-hidden="true" title="Cancel search"></i>
+    </button>
+    <label class="search-label">
+      <p class="sr-only">Search</p>
+      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
+    </label>
+  </form>
+
+  <div class="autocomplete">
+    <div class="autocomplete-results">
+    </div>
+  </div>
+
+  <div class="sidebar-header">
+
+    <div class="sidebar-projectDetails">
+      <a href="MsbmsSystAuthentication.html" class="sidebar-projectName" translate="no">
+msbms_syst_authentication
+      </a>
+      <strong class="sidebar-projectVersion" translate="no">
+        v0.1.0
+      </strong>
+    </div>
+    <ul class="sidebar-listNav">
+      <li><a id="extras-list-link" href="#full-list">Pages</a></li>
+
+        <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+
+
+    </ul>
+  </div>
+
+  <div class="gradient"></div>
+  <ul id="full-list" class="sidebar-fullList"></ul>
+</section>
+
+<section class="content">
+  <output role="status" id="toast"></output>
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+<h1>
+<button class="settings display-settings">
+  <i class="ri-settings-3-line"></i>
+  <span class="sr-only">Settings</span>
+</button>
+
+
+  <span translate="no">MsbmsSystAuthentication</span> 
+  <small class="app-vsn" translate="no">(msbms_syst_authentication v0.1.0)</small>
+
+</h1>
+
+
+  <section id="moduledoc">
+<p>API for the management of system user authentication.</p><p>Authentication is a global concern allowing users to be either bound to
+specific Application Instances and Owners or to be independent and valid for
+a number of Applications and Instances.</p>
+  </section>
+
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+      Summary
+    </h1>
+
+  <div class="summary-api-access-accounts summary">
+    <h2>
+      <a href="#api-access-accounts">API - Access Accounts</a>
+    </h2>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#create_access_account/1" translate="no">create_access_account(access_account_params)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Create a new Access Account.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#get_access_account_by_name/1" translate="no">get_access_account_by_name(access_account_name)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Retrieves a fully populated Access Account record as found by internal name.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#get_access_account_id_by_name/1" translate="no">get_access_account_id_by_name(access_account_name)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Looks up an Access Account record ID by its internal name.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#purge_access_account/1" translate="no">purge_access_account(access_account)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Purges the requested Access Account if the Access Account State is of
+a purge eligible functional type.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#update_access_account/2" translate="no">update_access_account(access_account, access_account_params)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Updates the maintainable fields of a given Access Account record.</p></div>
+
+      </div>
+
+  </div>
+
+  </section>
+
+
+  <section id="api-access-accounts" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#api-access-accounts">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+API - Access Accounts
+    </h1>
+    <div class="api-access-accounts-list">
+<section class="detail" id="create_access_account/1">
+
+  <div class="detail-header">
+    <a href="#create_access_account/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">create_access_account(access_account_params)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> create_access_account(<a href="MsbmsSystAuthentication.Types.html#t:access_account_params/0">MsbmsSystAuthentication.Types.access_account_params</a>()) ::
+  {:ok, <a href="MsbmsSystAuthentication.Data.SystAccessAccounts.html#t:t/0">MsbmsSystAuthentication.Data.SystAccessAccounts.t</a>()}
+  | {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Create a new Access Account.</p><h2 id="create_access_account/1-parameters" class="section-heading">
+  <a href="#create_access_account/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">access_account_params</code> - a map of required and optional parameters which
+define the new Access Account record.  Required attributes in this map are:
+<code class="inline">internal_name</code>, <code class="inline">external_name</code>, <code class="inline">access_account_state_id</code>, and
+<code class="inline">allow_global_logins</code>.</li></ul><h2 id="create_access_account/1-example" class="section-heading">
+  <a href="#create_access_account/1-example" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">example</p>
+  </a>
+  Example
+</h2>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MsbmsSystEnums</span><span class="o">.</span><span class="n">get_default_enum_item</span><span class="p" data-group-id="8372044214-1">(</span><span class="s">&quot;access_account_states&quot;</span><span class="p" data-group-id="8372044214-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="8372044214-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8372044214-3">%</span><span class="nc" data-group-id="8372044214-3">MsbmsSystAuthentication.Data.SystAccessAccounts</span><span class="p" data-group-id="8372044214-3">{</span><span class="p" data-group-id="8372044214-3">}</span><span class="p" data-group-id="8372044214-2">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">create_access_account</span><span class="p" data-group-id="8372044214-4">(</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="p" data-group-id="8372044214-5">%{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">      </span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example_create_accnt&quot;</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">      </span><span class="ss">external_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Create Access Account Example&quot;</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">      </span><span class="ss">access_account_state_id</span><span class="p">:</span><span class="w"> </span><span class="n">state</span><span class="o">.</span><span class="n">id</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">      </span><span class="ss">allow_global_logins</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="p" data-group-id="8372044214-5">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">   </span><span class="p" data-group-id="8372044214-4">)</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="get_access_account_by_name/1">
+
+  <div class="detail-header">
+    <a href="#get_access_account_by_name/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_access_account_by_name(access_account_name)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_access_account_by_name(<a href="MsbmsSystAuthentication.Types.html#t:access_account_name/0">MsbmsSystAuthentication.Types.access_account_name</a>()) ::
+  <a href="MsbmsSystAuthentication.Data.SystAccessAccounts.html#t:t/0">MsbmsSystAuthentication.Data.SystAccessAccounts.t</a>()
+  | {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Retrieves a fully populated Access Account record as found by internal name.</p><p>'Fully populated' in this context means that the related Account Account State
+and related functional type data is also retrieved along with the actual
+Access Account data.</p><h2 id="get_access_account_by_name/1-parameters" class="section-heading">
+  <a href="#get_access_account_by_name/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">access_account_name</code> - the internal name of the Access Account record to
+retrieve.</li></ul><h2 id="get_access_account_by_name/1-example" class="section-heading">
+  <a href="#get_access_account_by_name/1-example" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">example</p>
+  </a>
+  Example
+</h2>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="1317362320-1">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:ok</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="1317362320-2">%</span><span class="nc" data-group-id="1317362320-2">MsbmsSystAuthentication.Data.SystAccessAccounts</span><span class="p" data-group-id="1317362320-2">{</span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example_accnt&quot;</span><span class="p" data-group-id="1317362320-2">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="1317362320-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">get_access_account_by_name</span><span class="p" data-group-id="1317362320-3">(</span><span class="s">&quot;example_accnt&quot;</span><span class="p" data-group-id="1317362320-3">)</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="get_access_account_id_by_name/1">
+
+  <div class="detail-header">
+    <a href="#get_access_account_id_by_name/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_access_account_id_by_name(access_account_name)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_access_account_id_by_name(
+  <a href="MsbmsSystAuthentication.Types.html#t:access_account_name/0">MsbmsSystAuthentication.Types.access_account_name</a>()
+) ::
+  {:ok, <a href="MsbmsSystAuthentication.Types.html#t:access_account_id/0">MsbmsSystAuthentication.Types.access_account_id</a>()}
+  | {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Looks up an Access Account record ID by its internal name.</p><h2 id="get_access_account_id_by_name/1-parameters" class="section-heading">
+  <a href="#get_access_account_id_by_name/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">access_account_name</code> - the internal name of the record for which to
+retrieve the record ID.</li></ul><h2 id="get_access_account_id_by_name/1-examples" class="section-heading">
+  <a href="#get_access_account_id_by_name/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
+  Examples
+</h2>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="3544527939-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">access_account_id</span><span class="p" data-group-id="3544527939-1">}</span><span class="w">  </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">get_access_account_id_by_name</span><span class="p" data-group-id="3544527939-2">(</span><span class="s">&quot;example_accnt&quot;</span><span class="p" data-group-id="3544527939-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_binary</span><span class="p" data-group-id="3544527939-3">(</span><span class="n">access_account_id</span><span class="p" data-group-id="3544527939-3">)</span><span class="w">
+</span><span class="no">true</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="purge_access_account/1">
+
+  <div class="detail-header">
+    <a href="#purge_access_account/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">purge_access_account(access_account)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> purge_access_account(
+  <a href="MsbmsSystAuthentication.Types.html#t:access_account_id/0">MsbmsSystAuthentication.Types.access_account_id</a>()
+  | <a href="MsbmsSystAuthentication.Data.SystAccessAccounts.html#t:t/0">MsbmsSystAuthentication.Data.SystAccessAccounts.t</a>()
+) :: :ok | {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Purges the requested Access Account if the Access Account State is of
+a purge eligible functional type.</p><h2 id="purge_access_account/1-parameters" class="section-heading">
+  <a href="#purge_access_account/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">access_account</code> - is either the record ID of the Access Account to purge
+or the populated <code class="inline">MsbmsSystAccessAccount.Data.SystAccessAccounts</code> struct
+representing the record to purge.</li></ul><h2 id="purge_access_account/1-example" class="section-heading">
+  <a href="#purge_access_account/1-example" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">example</p>
+  </a>
+  Example
+</h2>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="9015213027-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">target_access_account</span><span class="p" data-group-id="9015213027-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">get_access_account_by_name</span><span class="p" data-group-id="9015213027-2">(</span><span class="s">&quot;example_purge_accnt&quot;</span><span class="p" data-group-id="9015213027-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">purge_access_account</span><span class="p" data-group-id="9015213027-3">(</span><span class="n">target_access_account</span><span class="p" data-group-id="9015213027-3">)</span><span class="w">
+</span><span class="ss">:ok</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="update_access_account/2">
+
+  <div class="detail-header">
+    <a href="#update_access_account/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">update_access_account(access_account, access_account_params)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> update_access_account(
+  <a href="MsbmsSystAuthentication.Types.html#t:access_account_id/0">MsbmsSystAuthentication.Types.access_account_id</a>()
+  | <a href="MsbmsSystAuthentication.Data.SystAccessAccounts.html#t:t/0">MsbmsSystAuthentication.Data.SystAccessAccounts.t</a>(),
+  <a href="MsbmsSystAuthentication.Types.html#t:access_account_params/0">MsbmsSystAuthentication.Types.access_account_params</a>()
+) ::
+  {:ok, <a href="MsbmsSystAuthentication.Data.SystAccessAccounts.html#t:t/0">MsbmsSystAuthentication.Data.SystAccessAccounts.t</a>()}
+  | {:error, <a href="https://hexdocs.pm/msbms_syst_error/0.1.0/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Updates the maintainable fields of a given Access Account record.</p><h2 id="update_access_account/2-parameters" class="section-heading">
+  <a href="#update_access_account/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">access_account</code> - either the record ID value of the Access Account to
+update or is the complete <code class="inline">MsbmsSystAccessAccount.Data.SystAccessAccounts</code>
+struct representing the before-update state of the Access Account record.</p></li><li><p><code class="inline">access_account_params</code> - a map containing those attributes to be changed
+along with their new values.</p></li></ul><h2 id="update_access_account/2-example" class="section-heading">
+  <a href="#update_access_account/2-example" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">example</p>
+  </a>
+  Example
+</h2>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="7095004725-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">target_access_account</span><span class="p" data-group-id="7095004725-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">get_access_account_by_name</span><span class="p" data-group-id="7095004725-2">(</span><span class="s">&quot;example_accnt&quot;</span><span class="p" data-group-id="7095004725-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="7095004725-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">updated_access_account</span><span class="p" data-group-id="7095004725-3">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">update_access_account</span><span class="p" data-group-id="7095004725-4">(</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="n">target_access_account</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="p" data-group-id="7095004725-5">%{</span><span class="ss">external_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Updated Example Account Name&quot;</span><span class="p" data-group-id="7095004725-5">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="7095004725-4">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="7095004725-6">%</span><span class="nc" data-group-id="7095004725-6">MsbmsSystAuthentication.Data.SystAccessAccounts</span><span class="p" data-group-id="7095004725-6">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">external_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Updated Example Account Name&quot;</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="7095004725-6">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">updated_access_account</span></code></pre>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+      <footer class="footer">
+
+        <p>
+          Built using
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.28.4) for the
+
+            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+        </p>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+
+
+  </body>
+</html>

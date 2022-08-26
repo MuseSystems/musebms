@@ -36,6 +36,7 @@ defmodule MsbmsSystSettings do
   transaction.
   """
 
+  @doc section: :service_management
   @doc """
   Starts an instance of the Settings Service.
 
@@ -60,6 +61,7 @@ defmodule MsbmsSystSettings do
           {:ok, pid()} | {:error, MsbmsSystError.t()}
   defdelegate start_link(params), to: MsbmsSystSettings.Runtime.Server
 
+  @doc section: :service_management
   @doc """
   Establishes the current Settings Service instance for the process.
 
@@ -90,17 +92,20 @@ defmodule MsbmsSystSettings do
           MsbmsSystSettings.Types.service_name() | nil
   defdelegate put_settings_service(service_name), to: ProcessUtils
 
+  @doc section: :service_management
   @doc """
   Retrieves the currently set Settings Service name or `nil` if none has been
   set.
 
   ## Examples
+
       iex> MsbmsSystSettings.get_settings_service()
       :settings_instance
   """
   @spec get_settings_service() :: MsbmsSystSettings.Types.service_name() | nil
   defdelegate get_settings_service(), to: ProcessUtils
 
+  @doc section: :service_management
   @doc """
   Refreshes the cached settings values from the database.
 
@@ -110,8 +115,8 @@ defmodule MsbmsSystSettings do
 
   ## Examples
 
-    iex> MsbmsSystSettings.refresh_from_database()
-    :ok
+      iex> MsbmsSystSettings.refresh_from_database()
+      :ok
 
   """
   @spec refresh_from_database() :: :ok
@@ -119,6 +124,7 @@ defmodule MsbmsSystSettings do
     GenServer.call(ProcessUtils.get_settings_service(), :refresh)
   end
 
+  @doc section: :settings_data
   @doc """
   Creates a new user defined setting.
 
@@ -147,14 +153,14 @@ defmodule MsbmsSystSettings do
 
   ## Examples
 
-    iex> new_setting = %{
-    ...>   internal_name: "create_example_setting",
-    ...>   display_name: "Create Example Setting",
-    ...>   user_description: "An example of setting creation.",
-    ...>   setting_integer: 9876
-    ...> }
-    iex> MsbmsSystSettings.create_setting(new_setting)
-    :ok
+      iex> new_setting = %{
+      ...>   internal_name: "create_example_setting",
+      ...>   display_name: "Create Example Setting",
+      ...>   user_description: "An example of setting creation.",
+      ...>   setting_integer: 9876
+      ...> }
+      iex> MsbmsSystSettings.create_setting(new_setting)
+      :ok
   """
   @spec create_setting(MsbmsSystSettings.Types.setting_params()) ::
           :ok | {:error, MsbmsSystError.t()}
@@ -162,6 +168,7 @@ defmodule MsbmsSystSettings do
     GenServer.call(ProcessUtils.get_settings_service(), {:create, creation_params})
   end
 
+  @doc section: :settings_data
   @doc """
   Sets the value of any one setting type for the named setting.
 
@@ -178,11 +185,11 @@ defmodule MsbmsSystSettings do
 
   ## Examples
 
-    iex> MsbmsSystSettings.set_setting_value(
-    ...>   "set_example_setting",
-    ...>   :setting_decimal,
-    ...>   Decimal.new("1029.3847"))
-    :ok
+      iex> MsbmsSystSettings.set_setting_value(
+      ...>   "set_example_setting",
+      ...>   :setting_decimal,
+      ...>   Decimal.new("1029.3847"))
+      :ok
   """
   @spec set_setting_value(
           MsbmsSystSettings.Types.setting_name(),
@@ -194,6 +201,7 @@ defmodule MsbmsSystSettings do
     GenServer.call(ProcessUtils.get_settings_service(), {:update, setting_name, update_params})
   end
 
+  @doc section: :settings_data
   @doc """
   Sets one or more of the available setting types for the named setting.
 
@@ -213,20 +221,20 @@ defmodule MsbmsSystSettings do
 
   ## Examples
 
-    iex> update_values = %{
-    ...>   user_description: "An example of updating the user description.",
-    ...>   setting_integer: 6758,
-    ...>   setting_date_range:
-    ...>      %MsbmsSystDatastore.DbTypes.DateRange{
-    ...>        lower: ~D[2022-04-01],
-    ...>        upper: ~D[2022-04-12],
-    ...>        upper_inclusive: true
-    ...>      }
-    ...> }
-    iex> MsbmsSystSettings.set_setting_values(
-    ...>   "set_example_setting",
-    ...>   update_values)
-    :ok
+      iex> update_values = %{
+      ...>   user_description: "An example of updating the user description.",
+      ...>   setting_integer: 6758,
+      ...>   setting_date_range:
+      ...>      %MsbmsSystDatastore.DbTypes.DateRange{
+      ...>        lower: ~D[2022-04-01],
+      ...>        upper: ~D[2022-04-12],
+      ...>        upper_inclusive: true
+      ...>      }
+      ...> }
+      iex> MsbmsSystSettings.set_setting_values(
+      ...>   "set_example_setting",
+      ...>   update_values)
+      :ok
   """
   @spec set_setting_values(
           MsbmsSystSettings.Types.setting_name(),
@@ -236,6 +244,7 @@ defmodule MsbmsSystSettings do
     GenServer.call(ProcessUtils.get_settings_service(), {:update, setting_name, update_params})
   end
 
+  @doc section: :settings_data
   @doc """
   Retrieves the value of the given type for the requested setting.
 
@@ -246,15 +255,15 @@ defmodule MsbmsSystSettings do
 
   ## Examples
 
-    iex> MsbmsSystSettings.get_setting_value(
-    ...>   "get_example_setting",
-    ...>   :setting_decimal_range)
-    %MsbmsSystDatastore.DbTypes.DecimalRange{
-      lower: Decimal.new("1.1"),
-      upper: Decimal.new("99.99"),
-      lower_inclusive: true,
-      upper_inclusive: false
-    }
+      iex> MsbmsSystSettings.get_setting_value(
+      ...>   "get_example_setting",
+      ...>   :setting_decimal_range)
+      %MsbmsSystDatastore.DbTypes.DecimalRange{
+        lower: Decimal.new("1.1"),
+        upper: Decimal.new("99.99"),
+        lower_inclusive: true,
+        upper_inclusive: false
+      }
   """
   @spec get_setting_value(
           MsbmsSystSettings.Types.setting_name(),
@@ -263,6 +272,7 @@ defmodule MsbmsSystSettings do
   defdelegate get_setting_value(setting_name, setting_type),
     to: Settings
 
+  @doc section: :settings_data
   @doc """
   Retrieves all values associated with the requested setting.
 
@@ -275,12 +285,13 @@ defmodule MsbmsSystSettings do
 
   ## Examples
 
-    iex> MsbmsSystSettings.get_setting_values("get_example_setting")
+      iex> MsbmsSystSettings.get_setting_values("get_example_setting")
   """
   @spec get_setting_values(MsbmsSystSettings.Types.setting_name()) ::
           MsbmsSystSettings.Data.SystSettings.t()
   defdelegate get_setting_values(setting_name), to: Settings
 
+  @doc section: :settings_data
   @doc """
   Retrieves all values for all settings.
 
@@ -289,12 +300,13 @@ defmodule MsbmsSystSettings do
 
   ## Examples
 
-    iex> MsbmsSystSettings.list_all_settings()
+      iex> MsbmsSystSettings.list_all_settings()
   """
   @spec list_all_settings() ::
           list(MsbmsSystSettings.Data.SystSettings)
   defdelegate list_all_settings(), to: Settings
 
+  @doc section: :settings_data
   @doc """
   Deletes the named user defined setting from the system.
 
@@ -307,8 +319,8 @@ defmodule MsbmsSystSettings do
 
   ## Examples
 
-    iex> MsbmsSystSettings.delete_setting("delete_example_setting")
-    :ok
+      iex> MsbmsSystSettings.delete_setting("delete_example_setting")
+      :ok
   """
   @spec delete_setting(MsbmsSystSettings.Types.setting_name()) ::
           :ok | {:error, MsbmsSystError.t()}
@@ -316,13 +328,14 @@ defmodule MsbmsSystSettings do
     GenServer.call(ProcessUtils.get_settings_service(), {:delete, setting_name})
   end
 
+  @doc section: :service_management
   @doc """
   Terminates a running instance of the settings service.
 
   ## Examples
 
-    > MsbmsSystSettings.terminate_settings_service()
-    :ok
+      > MsbmsSystSettings.terminate_settings_service()
+      :ok
   """
   @spec terminate_settings_service() :: :ok
   def terminate_settings_service do

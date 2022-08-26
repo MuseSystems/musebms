@@ -8,6 +8,7 @@ defmodule MsbmsSystEnums do
   Documentation for `MsbmsSystEnums`.
   """
 
+  @doc section: :service_management
   @doc """
   Starts an instance of the Enumerations Service.
 
@@ -30,6 +31,7 @@ defmodule MsbmsSystEnums do
           {:ok, pid()} | {:error, MsbmsSystError.t()}
   defdelegate start_link(params), to: Runtime.Server
 
+  @doc section: :service_management
   @doc """
   Establishes the current Enumerations Service instance for the process.
 
@@ -59,6 +61,7 @@ defmodule MsbmsSystEnums do
   @spec put_enums_service(Types.service_name() | nil) :: Types.service_name() | nil
   defdelegate put_enums_service(service_name), to: Runtime.ProcessUtils
 
+  @doc section: :service_management
   @doc """
   Retrieves the currently set Enumerations Service name or `nil` if none has
   been set.
@@ -70,6 +73,7 @@ defmodule MsbmsSystEnums do
   @spec get_enums_service() :: Types.service_name() | nil
   defdelegate get_enums_service(), to: Runtime.ProcessUtils
 
+  @doc section: :enum_data
   @doc """
   Retrieves all values associated with the requested enumeration.
 
@@ -88,6 +92,7 @@ defmodule MsbmsSystEnums do
   @spec get_enum_values(Types.enum_name()) :: Data.SystEnums.t()
   defdelegate get_enum_values(enum_name), to: Impl.Enums
 
+  @doc section: :enum_data
   @doc """
   Retrieves all values for all enumerations.
 
@@ -102,6 +107,7 @@ defmodule MsbmsSystEnums do
   @spec list_all_enums() :: list(Data.SystEnums.t())
   defdelegate list_all_enums(), to: Impl.Enums
 
+  @doc section: :enum_data
   @doc """
   Returns true if the requested enumeration is system defined, false otherwise.
 
@@ -117,6 +123,7 @@ defmodule MsbmsSystEnums do
   @spec get_enum_syst_defined(Types.enum_name()) :: boolean()
   defdelegate get_enum_syst_defined(enum_name), to: Impl.Enums
 
+  @doc section: :enum_data
   @doc """
   Returns true if the requested enumeration is user maintainable, false
   otherwise.
@@ -133,6 +140,7 @@ defmodule MsbmsSystEnums do
   @spec get_enum_user_maintainable(Types.enum_name()) :: boolean()
   defdelegate get_enum_user_maintainable(enum_name), to: Impl.Enums
 
+  @doc section: :enum_item_data
   @doc """
   Returns the list of Enumeration Items associated with the requested
   enumeration.
@@ -145,6 +153,7 @@ defmodule MsbmsSystEnums do
   @spec list_enum_items(Types.enum_name()) :: list(Data.SystEnumItems.t())
   defdelegate list_enum_items(enum_name), to: Impl.Enums
 
+  @doc section: :enum_item_data
   @doc """
   Returns the list of Enumeration Items associated with the requested
   enumeration sorted by their sort_order value.
@@ -155,6 +164,7 @@ defmodule MsbmsSystEnums do
   @spec list_sorted_enum_items(Types.enum_name()) :: list(Data.SystEnumItems.t())
   defdelegate list_sorted_enum_items(enum_name), to: Impl.Enums
 
+  @doc section: :enum_functional_type_data
   @doc """
   Returns the list of Enumeration Functional Types associated with the requested
   enumeration.
@@ -167,6 +177,7 @@ defmodule MsbmsSystEnums do
   @spec list_enum_functional_types(Types.enum_name()) :: list(Data.SystEnumFunctionalTypes.t())
   defdelegate list_enum_functional_types(enum_name), to: Impl.Enums
 
+  @doc section: :enum_item_data
   @doc """
   Returns an Enumeration Item record from the named Enumeration as identified by
   its name.
@@ -191,6 +202,7 @@ defmodule MsbmsSystEnums do
   @spec get_enum_item_by_name(Types.enum_name(), Types.enum_item_name()) :: Data.SystEnumItems.t()
   defdelegate get_enum_item_by_name(enum_name, enum_item_name), to: Impl.Enums
 
+  @doc section: :enum_item_data
   @doc """
   Returns an Enumeration Item record from the named Enumeration as identified by
   its id value.
@@ -209,10 +221,12 @@ defmodule MsbmsSystEnums do
   @spec get_enum_item_by_id(Types.enum_name(), Ecto.UUID.t()) :: Data.SystEnumItems.t()
   defdelegate get_enum_item_by_id(enum_name, enum_item_id), to: Impl.Enums
 
+  @doc section: :enum_functional_type_data
   @spec get_functional_type_by_enum_item_id(Types.enum_name(), Types.enum_item_id()) ::
           Types.enum_functional_type_name()
   defdelegate get_functional_type_by_enum_item_id(enum_name, enum_item_id), to: Impl.Enums
 
+  @doc section: :enum_item_data
   @doc """
   Finds the default enumeration item for the requested enumeration or for the
   enumeration functional type.
@@ -250,6 +264,7 @@ defmodule MsbmsSystEnums do
   @spec get_default_enum_item(Types.enum_name(), Keyword.t() | []) :: Data.SystEnumItems.t()
   defdelegate get_default_enum_item(enum_name, opts \\ []), to: Impl.Enums
 
+  @doc section: :enum_data
   @doc """
   Create a new user defined enumeration, optionally including functional type
   and enumeration item definitions.
@@ -301,6 +316,7 @@ defmodule MsbmsSystEnums do
     GenServer.call(Runtime.ProcessUtils.get_enums_service(), {:create_enum, enum_params})
   end
 
+  @doc section: :enum_functional_type_data
   @doc """
   Creates a new user defined functional type.
 
@@ -324,6 +340,7 @@ defmodule MsbmsSystEnums do
     )
   end
 
+  @doc section: :enum_item_data
   @doc """
   Creates a new user defined enumeration item.
 
@@ -349,6 +366,7 @@ defmodule MsbmsSystEnums do
     )
   end
 
+  @doc section: :enum_data
   @doc """
   Changes the values of an existing enumeration.
 
@@ -385,6 +403,7 @@ defmodule MsbmsSystEnums do
     )
   end
 
+  @doc section: :enum_functional_type_data
   @doc """
   Change the values of an existing enumeration functional type record.
 
@@ -431,6 +450,7 @@ defmodule MsbmsSystEnums do
     )
   end
 
+  @doc section: :enum_item_data
   @doc """
   Change the values of an existing enumeration item record.
 
@@ -479,6 +499,7 @@ defmodule MsbmsSystEnums do
     )
   end
 
+  @doc section: :enum_data
   @doc """
   Deletes a user defined enumeration and its child functional type and
   enumeration item records.
@@ -495,6 +516,7 @@ defmodule MsbmsSystEnums do
     GenServer.call(Runtime.ProcessUtils.get_enums_service(), {:delete_enum, enum_name})
   end
 
+  @doc section: :enum_functional_type_data
   @doc """
   Deletes a user defined enumeration functional type record.
 
@@ -518,6 +540,7 @@ defmodule MsbmsSystEnums do
     )
   end
 
+  @doc section: :enum_item_data
   @doc """
   Deletes a user defined enumeration item record.
 
