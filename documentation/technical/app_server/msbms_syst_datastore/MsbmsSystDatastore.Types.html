@@ -487,8 +487,19 @@ provides information for where on the network the server can be found, and
 connection related parameters.  Also, the full administrative credentials are
 included.</p><ul><li><p><code class="inline">:server_name</code> - Provides a unique identifier for a database server
 instance.</p></li><li><p><code class="inline">:start_server_instances</code> - If true, indicates that databases on the server
-can be started and made available as application datastores.</p></li><li><p><code class="inline">: *</code>:db_host<code class="inline">- The hostname or IP address of the database server on the network. *</code>:db_port<code class="inline">- The TCP port on which the database server is listening for connections. *</code>:db_show_sensitive<code class="inline">- If true, various logging events may show unredacted &quot;sensitive&quot; database connectivity information. Note that even when false, the application still log sensitive application data. *</code>:db_max_instances<code class="inline">- The total number of databases allowed to be established for the db_server instance. *</code>:server_salt<code class="inline">- For certain cryptographic operations, such as password derivation, allows for the assignment of specific salting value for that is specific to a given database server. This value must be at least 32 bytes long and should be a random string. *</code>:dbadmin_password<code class="inline">- The msbms_syst_dba role password for privileged operations such as creating a new database/datastore or new database roles on the database server instance. *</code>:dbadmin_pool_size` - The pool size to use for creating connections for
-  privileged operations using the msbms_syst_dba role.</p></li></ul>
+can be started and made available as application datastores.</p></li><li><p><code class="inline">:server_pools</code> - The server pools in which the database server
+participates.</p></li><li><p><code class="inline">:db_host</code> - The hostname or IP address of the database server on the
+network.</p></li><li><p><code class="inline">:db_port</code> - The TCP port on which the database server is listening for
+connections.</p></li><li><p><code class="inline">:db_show_sensitive</code> - If true, various logging events may show
+unredacted &quot;sensitive&quot; database connectivity information.  Note that even
+when false, the application still log sensitive application data.</p></li><li><p><code class="inline">:db_max_instances</code> - The total number of databases allowed to be
+established for the db_server instance.</p></li><li><p><code class="inline">:server_salt</code> - For certain cryptographic operations, such as password
+derivation, allows for the assignment of specific salting value for that is
+specific to a given database server.  This value must be at least 32 bytes
+long and should be a random string.</p></li><li><p><code class="inline">:dbadmin_password</code> - The msbms_syst_dba role password for privileged
+operations such as creating a new database/datastore or new database roles
+on the database server instance.</p></li><li><p><code class="inline">:dbadmin_pool_size</code> - The pool size to use for creating connections for
+privileged operations using the msbms_syst_dba role.</p></li></ul>
   </section>
 </section>
 <section class="detail" id="t:migration_state_values/0">
