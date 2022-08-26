@@ -34,22 +34,22 @@ mix docs
 cd ../../../
 
 #
-# MsbmsSystOptions
-#
-
-rm -Rf documentation/technical/app_server/msbms_syst_options
-mkdir -p documentation/technical/app_server/msbms_syst_options
-cd components/system/msbms_syst_options
-mix docs
-cd ../../../
-
-#
 # MsbmsSystDatastore
 #
 
 rm -Rf documentation/technical/app_server/msbms_syst_datastore
 mkdir -p documentation/technical/app_server/msbms_syst_datastore
 cd components/system/msbms_syst_datastore
+mix docs
+cd ../../../
+
+#
+# MsbmsSystOptions
+#
+
+rm -Rf documentation/technical/app_server/msbms_syst_options
+mkdir -p documentation/technical/app_server/msbms_syst_options
+cd components/system/msbms_syst_options
 mix docs
 cd ../../../
 
