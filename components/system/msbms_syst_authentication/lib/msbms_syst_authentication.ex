@@ -143,4 +143,18 @@ defmodule MsbmsSystAuthentication do
   @spec purge_access_account(Types.access_account_id() | Data.SystAccessAccounts.t()) ::
           :ok | {:error, MsbmsSystError.t()}
   defdelegate purge_access_account(access_account), to: Impl.AccessAccount
+
+  @spec invite_access_account_to_instance(
+          Types.access_account_id(),
+          MsbmsSystInstanceMgr.Types.instance_id(),
+          Types.credential_type_id(),
+          Keyword.t()
+        ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MsbmsSystError.t()}
+  defdelegate invite_access_account_to_instance(
+                access_account_id,
+                instance_id,
+                credential_type_id,
+                opts \\ []
+              ),
+              to: Impl.AccessAccountInstanceAssoc
 end

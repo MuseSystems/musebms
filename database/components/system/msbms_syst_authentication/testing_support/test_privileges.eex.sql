@@ -13,107 +13,43 @@
 GRANT USAGE ON SCHEMA msbms_syst TO <%= msbms_appusr %>;
 
 --
---  MsbmsSystEnums
---
-
--- syst_enums
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE msbms_syst.syst_enums TO <%= msbms_appusr %>;
-
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_i_syst_enums() TO <%= msbms_appusr %>;
-
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_u_syst_enums() TO <%= msbms_appusr %>;
-
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_d_syst_enums() TO <%= msbms_appusr %>;
-
--- syst_enum_functional_types
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE msbms_syst.syst_enum_functional_types TO <%= msbms_appusr %>;
-
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_i_syst_enum_functional_types() TO <%= msbms_appusr %>;
-
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_u_syst_enum_functional_types() TO <%= msbms_appusr %>;
-
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_d_syst_enum_functional_types() TO <%= msbms_appusr %>;
-
--- syst_enum_items
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE msbms_syst.syst_enum_items TO <%= msbms_appusr %>;
-
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_i_syst_enum_items() TO <%= msbms_appusr %>;
-
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_u_syst_enum_items() TO <%= msbms_appusr %>;
-
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_d_syst_enum_items() TO <%= msbms_appusr %>;
-
---
--- MsbmsSystInstanceMgr
---
-
--- syst_applications
-
-GRANT SELECT ON TABLE msbms_syst.syst_applications TO <%= msbms_appusr %>;
-
--- syst_application_contexts
-
-GRANT SELECT, UPDATE ON TABLE msbms_syst.syst_application_contexts TO <%= msbms_appusr %>;
-
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_u_syst_application_contexts() TO <%= msbms_appusr %>;
-
--- syst_owners
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE msbms_syst.syst_owners TO <%= msbms_appusr %>;
-
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_i_syst_owners() TO <%= msbms_appusr %>;
-
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_u_syst_owners() TO <%= msbms_appusr %>;
-
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_d_syst_owners() TO <%= msbms_appusr %>;
-
--- syst_instance_type_applications
-
-GRANT SELECT, INSERT, DELETE ON TABLE msbms_syst.syst_instance_type_applications TO <%= msbms_appusr %>;
-
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_i_syst_instance_type_applications() TO <%= msbms_appusr %>;
-
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_u_syst_instance_type_applications() TO <%= msbms_appusr %>;
-
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_d_syst_instance_type_applications() TO <%= msbms_appusr %>;
-
--- syst_instance_type_contexts
-
-GRANT SELECT, UPDATE ON TABLE msbms_syst.syst_instance_type_contexts TO <%= msbms_appusr %>;
-
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_i_syst_instance_type_contexts() TO <%= msbms_appusr %>;
-
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_u_syst_instance_type_contexts() TO <%= msbms_appusr %>;
-
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_d_syst_instance_type_contexts() TO <%= msbms_appusr %>;
-
--- syst_instances
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE msbms_syst.syst_instances TO <%= msbms_appusr %>;
-
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_i_syst_instances() TO <%= msbms_appusr %>;
-
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_u_syst_instances() TO <%= msbms_appusr %>;
-
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_d_syst_instances() TO <%= msbms_appusr %>;
-
--- syst_instance_contexts
-
-GRANT SELECT, UPDATE ON TABLE msbms_syst.syst_instance_contexts TO <%= msbms_appusr %>;
-
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_i_syst_instance_contexts() TO <%= msbms_appusr %>;
-
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_u_syst_instance_contexts() TO <%= msbms_appusr %>;
-
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_d_syst_instance_contexts() TO <%= msbms_appusr %>;
-
---
 -- MsbmsSystAuthentication
 --
 
 -- syst_access_accounts
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE msbms_syst.syst_access_accounts TO <%= msbms_appusr %>;
+GRANT SELECT, INSERT, UPDATE, DELETE
+    ON TABLE msbms_syst.syst_access_accounts TO <%= msbms_appusr %>;
+
+GRANT SELECT, INSERT, UPDATE, DELETE
+    ON TABLE msbms_syst.syst_access_account_instance_assocs TO <%= msbms_appusr %>;
+
+GRANT SELECT, INSERT, UPDATE, DELETE
+    ON TABLE msbms_syst.syst_identities TO <%= msbms_appusr %>;
+
+GRANT SELECT, INSERT, UPDATE, DELETE
+    ON TABLE msbms_syst.syst_credentials TO <%= msbms_appusr %>;
+
+GRANT SELECT, INSERT, DELETE
+    ON TABLE msbms_syst.syst_password_history TO <%= msbms_appusr %>;
+
+GRANT SELECT, INSERT, DELETE
+    ON TABLE msbms_syst.syst_banned_hosts TO <%= msbms_appusr %>;
+
+GRANT SELECT, INSERT, UPDATE, DELETE
+    ON TABLE msbms_syst.syst_global_network_rules TO <%= msbms_appusr %>;
+
+GRANT SELECT, INSERT, UPDATE, DELETE
+    ON TABLE msbms_syst.syst_owner_network_rules TO <%= msbms_appusr %>;
+
+GRANT SELECT, INSERT, UPDATE, DELETE
+    ON TABLE msbms_syst.syst_instance_network_rules TO <%= msbms_appusr %>;
+
+GRANT SELECT, UPDATE
+    ON TABLE msbms_syst.syst_global_password_rules TO <%= msbms_appusr %>;
+
+GRANT SELECT, INSERT, UPDATE, DELETE
+    ON TABLE msbms_syst.syst_owner_password_rules TO <%= msbms_appusr %>;
+
+GRANT SELECT, INSERT, UPDATE, DELETE
+    ON TABLE msbms_syst.syst_disallowed_passwords TO <%= msbms_appusr %>;

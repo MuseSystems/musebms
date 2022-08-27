@@ -370,7 +370,6 @@ $AUTHENTICATION_TESTING_INIT$
                     id
                 FROM msbms_syst_data.syst_enum_items
                 WHERE internal_name = 'access_account_states_sysdef_active' ) )
-
              ,
             ( 'bad_update_test_accnt'
             , 'Bad Access Account Update Test Account'
@@ -382,8 +381,6 @@ $AUTHENTICATION_TESTING_INIT$
                     id
                 FROM msbms_syst_data.syst_enum_items
                 WHERE internal_name = 'access_account_states_sysdef_active' ) )
-
-
              ,
             ( 'purge_test_accnt'
             , 'Purge Access Account Test Account'
@@ -395,6 +392,17 @@ $AUTHENTICATION_TESTING_INIT$
                     id
                 FROM msbms_syst_data.syst_enum_items
                 WHERE internal_name = 'access_account_states_sysdef_purge_eligible' ) )
+             ,
+            ( 'invite_to_instance_test_accnt'
+            , 'Invite Access Account/Instance Test Account'
+            , ( SELECT id
+                FROM msbms_syst_data.syst_owners
+                WHERE internal_name = 'owner1' )
+            , FALSE
+            , ( SELECT
+                    id
+                FROM msbms_syst_data.syst_enum_items
+                WHERE internal_name = 'access_account_states_sysdef_active' ) )
              ,
             ( 'example_purge_accnt'
             , 'Example Purge Account'
@@ -466,7 +474,7 @@ $AUTHENTICATION_TESTING_INIT$
                  JOIN msbms_syst_data.syst_instances i ON i.owner_id = o.id
         WHERE
               cte.internal_name = 'credential_types'
-          AND aa.internal_name IN ( 'unowned_all_access', 'example_accnt' );
+          AND aa.internal_name IN ( 'owned_all_access', 'example_accnt' );
 
         ------------------------------------------------------------------------
         -- Identity Creation

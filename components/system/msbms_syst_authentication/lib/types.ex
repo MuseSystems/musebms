@@ -30,10 +30,10 @@ defmodule MsbmsSystAuthentication.Types do
           optional(:credential_type_name) => credential_type_name(),
           optional(:instance_id) => MsbmsSystInstanceMgr.Types.instance_id(),
           optional(:instance_name) => MsbmsSystInstanceMgr.Types.instance_name(),
-          optional(:access_granted) => DateTime.t(),
+          optional(:access_granted) => DateTime.t() | nil,
           optional(:invitation_issued) => DateTime.t(),
-          optional(:invitation_expires) => DateTime.t(),
-          optional(:invitation_declined) => DateTime.t()
+          optional(:invitation_expires) => DateTime.t() | nil,
+          optional(:invitation_declined) => DateTime.t() | nil
         }
 
   @type access_account_name() :: String.t()
