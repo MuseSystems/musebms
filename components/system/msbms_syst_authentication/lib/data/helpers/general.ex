@@ -23,6 +23,8 @@ defmodule MsbmsSystAuthentication.Data.Helpers.General do
     Map.put(change_params, :access_account_od, access_account_id)
   end
 
+  def resolve_access_account_id(change_params), do: change_params
+
   def resolve_owner_id(%{owning_owner_name: owner_name} = access_account_params)
       when is_binary(owner_name) do
     {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name(owner_name)
@@ -66,4 +68,6 @@ defmodule MsbmsSystAuthentication.Data.Helpers.General do
 
     Map.put(change_params, :credential_type_id, credential_type.id)
   end
+
+  def resolve_credential_type_id(change_params), do: change_params
 end
