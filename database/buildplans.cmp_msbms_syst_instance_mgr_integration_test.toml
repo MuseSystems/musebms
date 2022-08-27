@@ -35,6 +35,7 @@ update               = 0
 sponsor              = 821
 sponsor_modification = 0
 load_files = [
+    "components/system/msbms_syst_enums/testing_support/test_privileges.eex.sql",
     "components/system/msbms_syst_instance_mgr/testing_support/test_privileges.eex.sql",
     "components/system/msbms_syst_instance_mgr/testing_support/test_data_integration_test.eex.sql",
 ]
