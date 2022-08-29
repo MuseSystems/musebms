@@ -119,7 +119,7 @@ defmodule AccessAccountTest do
     {:ok, %Data.SystAccessAccounts{id: target_account_id}} =
       MsbmsSystAuthentication.get_access_account_by_name("owned_all_access")
 
-    assert {:error, error} =
+    assert {:error, _error} =
              MsbmsSystAuthentication.purge_access_account(%Data.SystAccessAccounts{
                id: target_account_id
              })
