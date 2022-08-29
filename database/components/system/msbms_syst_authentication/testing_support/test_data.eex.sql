@@ -404,6 +404,33 @@ $AUTHENTICATION_TESTING_INIT$
                 FROM msbms_syst_data.syst_enum_items
                 WHERE internal_name = 'access_account_states_sysdef_active' ) )
              ,
+            ( 'decline_account_to_instance_test_accnt'
+            , 'Decline Access Account/Instance Invite Test Account'
+            , NULL
+            , TRUE
+            , ( SELECT
+                    id
+                FROM msbms_syst_data.syst_enum_items
+                WHERE internal_name = 'access_account_states_sysdef_active' ) )
+             ,
+            ( 'accept_account_to_instance_test_accnt'
+            , 'Accept Access Account/Instance Invite Test Account'
+            , NULL
+            , TRUE
+            , ( SELECT
+                    id
+                FROM msbms_syst_data.syst_enum_items
+                WHERE internal_name = 'access_account_states_sysdef_active' ) )
+             ,
+            ( 'revoke_account_to_instance_test_accnt'
+            , 'Revoke Access Account/Instance Invite Test Account'
+            , NULL
+            , TRUE
+            , ( SELECT
+                    id
+                FROM msbms_syst_data.syst_enum_items
+                WHERE internal_name = 'access_account_states_sysdef_active' ) )
+             ,
             ( 'example_purge_accnt'
             , 'Example Purge Account'
             , ( SELECT id
@@ -475,6 +502,59 @@ $AUTHENTICATION_TESTING_INIT$
         WHERE
               cte.internal_name = 'credential_types'
           AND aa.internal_name IN ( 'owned_all_access', 'example_accnt' );
+
+        -- Specialized inserts to facilitate testing
+        INSERT INTO msbms_syst_data.syst_access_account_instance_assocs
+            ( access_account_id
+            , credential_type_id
+            , instance_id
+            , invitation_issued
+            , invitation_expires )
+        VALUES
+            ( ( SELECT
+                    id
+                FROM msbms_syst_data.syst_access_accounts
+                WHERE internal_name = 'decline_account_to_instance_test_accnt' )
+            , ( SELECT
+                    id
+                FROM msbms_syst_data.syst_enum_items
+                WHERE internal_name = 'credential_types_sysdef_password' )
+            , ( SELECT
+                    id
+                FROM msbms_syst_data.syst_instances i
+                WHERE internal_name = 'app1_owner1_instance_types_std' )
+            , now( ) - INTERVAL '10 days'
+            , now( ) + INTERVAL '20 days' )
+             ,
+            ( ( SELECT
+                    id
+                FROM msbms_syst_data.syst_access_accounts
+                WHERE internal_name = 'accept_account_to_instance_test_accnt' )
+            , ( SELECT
+                    id
+                FROM msbms_syst_data.syst_enum_items
+                WHERE internal_name = 'credential_types_sysdef_password' )
+            , ( SELECT
+                    id
+                FROM msbms_syst_data.syst_instances i
+                WHERE internal_name = 'app1_owner1_instance_types_std' )
+            , now( ) - INTERVAL '10 days'
+            , now( ) + INTERVAL '20 days' )
+             ,
+            ( ( SELECT
+                    id
+                FROM msbms_syst_data.syst_access_accounts
+                WHERE internal_name = 'revoke_account_to_instance_test_accnt' )
+            , ( SELECT
+                    id
+                FROM msbms_syst_data.syst_enum_items
+                WHERE internal_name = 'credential_types_sysdef_password' )
+            , ( SELECT
+                    id
+                FROM msbms_syst_data.syst_instances i
+                WHERE internal_name = 'app1_owner1_instance_types_std' )
+            , now( ) - INTERVAL '10 days'
+            , now( ) + INTERVAL '20 days' );
 
         ------------------------------------------------------------------------
         -- Identity Creation
