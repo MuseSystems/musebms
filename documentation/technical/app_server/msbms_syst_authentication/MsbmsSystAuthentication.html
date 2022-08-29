@@ -10,7 +10,7 @@
     <title>MsbmsSystAuthentication — msbms_syst_authentication v0.1.0</title>
     <link rel="stylesheet" href="dist/elixir-b6f1ed5df9b1d42a7309.css" />
 
-    <script src="dist/sidebar_items-16527922c1.js"></script>
+    <script src="dist/sidebar_items-d09d42c976.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -174,6 +174,90 @@ a purge eligible functional type.</p></div>
 
   </div>
 
+  <div class="summary-api-access-account-instance-assocs summary">
+    <h2>
+      <a href="#api-access-account-instance-assocs">API - Access Account Instance Assocs</a>
+    </h2>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#accept_instance_invite/1" translate="no">accept_instance_invite(access_account_instance_assoc)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Accepts the invitation made to an Access Account to access an Instance.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#accept_instance_invite/3" translate="no">accept_instance_invite(access_account_id, instance_id, credential_type_id)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Accepts the invitation made to an Access Account to access an Instance,
+referencing the record by its composite key values.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#decline_instance_invite/1" translate="no">decline_instance_invite(access_account_instance_assoc)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Declines an unaccepted/unexpired invitation made to an Access Account to
+access an Instance.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#decline_instance_invite/3" translate="no">decline_instance_invite(access_account_id, instance_id, credential_type_id)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Declines an unaccepted/unexpired invitation made to an Access Account to
+access an Instance, referencing the record by its composite key values.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#invite_to_instance/4" translate="no">invite_to_instance(access_account_id, instance_id, credential_type_id, opts \\ [])</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Invites or re-invites an Access Account to establish access rights to a
+specific Instance.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#revoke_instance_access/1" translate="no">revoke_instance_access(access_account_instance_assoc)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Revokes the access or invitation to access an Instance from the given Access
+Account.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#revoke_instance_access/3" translate="no">revoke_instance_access(access_account_id, instance_id, credential_type_id)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Revokes the access or invitation to access an Instance from the given Access
+Account/Credential Type combination, referencing the record by its composite
+key values.</p></div>
+
+      </div>
+
+  </div>
+
   </section>
 
 
@@ -223,16 +307,16 @@ define the new Access Account record.  Required attributes in this map are:
   </a>
   Example
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MsbmsSystEnums</span><span class="o">.</span><span class="n">get_default_enum_item</span><span class="p" data-group-id="1859182937-1">(</span><span class="s">&quot;access_account_states&quot;</span><span class="p" data-group-id="1859182937-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="1859182937-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="1859182937-3">%</span><span class="nc" data-group-id="1859182937-3">MsbmsSystAuthentication.Data.SystAccessAccounts</span><span class="p" data-group-id="1859182937-3">{</span><span class="p" data-group-id="1859182937-3">}</span><span class="p" data-group-id="1859182937-2">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">create_access_account</span><span class="p" data-group-id="1859182937-4">(</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="p" data-group-id="1859182937-5">%{</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MsbmsSystEnums</span><span class="o">.</span><span class="n">get_default_enum_item</span><span class="p" data-group-id="9482660555-1">(</span><span class="s">&quot;access_account_states&quot;</span><span class="p" data-group-id="9482660555-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="9482660555-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="9482660555-3">%</span><span class="nc" data-group-id="9482660555-3">MsbmsSystAuthentication.Data.SystAccessAccounts</span><span class="p" data-group-id="9482660555-3">{</span><span class="p" data-group-id="9482660555-3">}</span><span class="p" data-group-id="9482660555-2">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">create_access_account</span><span class="p" data-group-id="9482660555-4">(</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="p" data-group-id="9482660555-5">%{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">      </span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example_create_accnt&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">      </span><span class="ss">external_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Create Access Account Example&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">      </span><span class="ss">access_account_state_id</span><span class="p">:</span><span class="w"> </span><span class="n">state</span><span class="o">.</span><span class="n">id</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">      </span><span class="ss">allow_global_logins</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="p" data-group-id="1859182937-5">}</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">   </span><span class="p" data-group-id="1859182937-4">)</span></code></pre>
+</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="p" data-group-id="9482660555-5">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">   </span><span class="p" data-group-id="9482660555-4">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_access_account_by_name/1">
@@ -272,11 +356,11 @@ retrieve.</li></ul><h2 id="get_access_account_by_name/1-example" class="section-
   </a>
   Example
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="7430178441-1">{</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="6772358622-1">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:ok</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="7430178441-2">%</span><span class="nc" data-group-id="7430178441-2">MsbmsSystAuthentication.Data.SystAccessAccounts</span><span class="p" data-group-id="7430178441-2">{</span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example_accnt&quot;</span><span class="p" data-group-id="7430178441-2">}</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="7430178441-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">get_access_account_by_name</span><span class="p" data-group-id="7430178441-3">(</span><span class="s">&quot;example_accnt&quot;</span><span class="p" data-group-id="7430178441-3">)</span></code></pre>
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="6772358622-2">%</span><span class="nc" data-group-id="6772358622-2">MsbmsSystAuthentication.Data.SystAccessAccounts</span><span class="p" data-group-id="6772358622-2">{</span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example_accnt&quot;</span><span class="p" data-group-id="6772358622-2">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="6772358622-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">get_access_account_by_name</span><span class="p" data-group-id="6772358622-3">(</span><span class="s">&quot;example_accnt&quot;</span><span class="p" data-group-id="6772358622-3">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_access_account_id_by_name/1">
@@ -316,9 +400,9 @@ retrieve the record ID.</li></ul><h2 id="get_access_account_id_by_name/1-example
   </a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="0359613621-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">access_account_id</span><span class="p" data-group-id="0359613621-1">}</span><span class="w">  </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">get_access_account_id_by_name</span><span class="p" data-group-id="0359613621-2">(</span><span class="s">&quot;example_accnt&quot;</span><span class="p" data-group-id="0359613621-2">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="n">is_binary</span><span class="p" data-group-id="0359613621-3">(</span><span class="n">access_account_id</span><span class="p" data-group-id="0359613621-3">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="7829531232-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">access_account_id</span><span class="p" data-group-id="7829531232-1">}</span><span class="w">  </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">get_access_account_id_by_name</span><span class="p" data-group-id="7829531232-2">(</span><span class="s">&quot;example_accnt&quot;</span><span class="p" data-group-id="7829531232-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_binary</span><span class="p" data-group-id="7829531232-3">(</span><span class="n">access_account_id</span><span class="p" data-group-id="7829531232-3">)</span><span class="w">
 </span><span class="no">true</span></code></pre>
   </section>
 </section>
@@ -360,9 +444,9 @@ representing the record to purge.</li></ul><h2 id="purge_access_account/1-exampl
   </a>
   Example
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="3848490099-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">target_access_account</span><span class="p" data-group-id="3848490099-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">get_access_account_by_name</span><span class="p" data-group-id="3848490099-2">(</span><span class="s">&quot;example_purge_accnt&quot;</span><span class="p" data-group-id="3848490099-2">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">purge_access_account</span><span class="p" data-group-id="3848490099-3">(</span><span class="n">target_access_account</span><span class="p" data-group-id="3848490099-3">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="9644318204-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">target_access_account</span><span class="p" data-group-id="9644318204-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">get_access_account_by_name</span><span class="p" data-group-id="9644318204-2">(</span><span class="s">&quot;example_purge_accnt&quot;</span><span class="p" data-group-id="9644318204-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">purge_access_account</span><span class="p" data-group-id="9644318204-3">(</span><span class="n">target_access_account</span><span class="p" data-group-id="9644318204-3">)</span><span class="w">
 </span><span class="ss">:ok</span></code></pre>
   </section>
 </section>
@@ -407,16 +491,335 @@ along with their new values.</p></li></ul><h2 id="update_access_account/2-exampl
   </a>
   Example
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="1941457395-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">target_access_account</span><span class="p" data-group-id="1941457395-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">get_access_account_by_name</span><span class="p" data-group-id="1941457395-2">(</span><span class="s">&quot;example_accnt&quot;</span><span class="p" data-group-id="1941457395-2">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="1941457395-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">updated_access_account</span><span class="p" data-group-id="1941457395-3">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">update_access_account</span><span class="p" data-group-id="1941457395-4">(</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="3874970538-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">target_access_account</span><span class="p" data-group-id="3874970538-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">get_access_account_by_name</span><span class="p" data-group-id="3874970538-2">(</span><span class="s">&quot;example_accnt&quot;</span><span class="p" data-group-id="3874970538-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="3874970538-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">updated_access_account</span><span class="p" data-group-id="3874970538-3">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">update_access_account</span><span class="p" data-group-id="3874970538-4">(</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="n">target_access_account</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="p" data-group-id="1941457395-5">%{</span><span class="ss">external_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Updated Example Account Name&quot;</span><span class="p" data-group-id="1941457395-5">}</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="1941457395-4">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="1941457395-6">%</span><span class="nc" data-group-id="1941457395-6">MsbmsSystAuthentication.Data.SystAccessAccounts</span><span class="p" data-group-id="1941457395-6">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="p" data-group-id="3874970538-5">%{</span><span class="ss">external_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Updated Example Account Name&quot;</span><span class="p" data-group-id="3874970538-5">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="3874970538-4">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="3874970538-6">%</span><span class="nc" data-group-id="3874970538-6">MsbmsSystAuthentication.Data.SystAccessAccounts</span><span class="p" data-group-id="3874970538-6">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">external_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Updated Example Account Name&quot;</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="1941457395-6">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">updated_access_account</span></code></pre>
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="3874970538-6">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">updated_access_account</span></code></pre>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+  <section id="api-access-account-instance-assocs" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#api-access-account-instance-assocs">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+API - Access Account Instance Assocs
+    </h1>
+    <div class="api-access-account-instance-assocs-list">
+<section class="detail" id="accept_instance_invite/1">
+
+  <div class="detail-header">
+    <a href="#accept_instance_invite/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">accept_instance_invite(access_account_instance_assoc)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> accept_instance_invite(
+  <a href="MsbmsSystAuthentication.Types.html#t:access_account_instance_assoc_id/0">MsbmsSystAuthentication.Types.access_account_instance_assoc_id</a>()
+  | <a href="MsbmsSystAuthentication.Data.SystAccessAccountInstanceAssocs.html#t:t/0">MsbmsSystAuthentication.Data.SystAccessAccountInstanceAssocs.t</a>()
+) ::
+  {:ok, <a href="MsbmsSystAuthentication.Data.SystAccessAccountInstanceAssocs.html#t:t/0">MsbmsSystAuthentication.Data.SystAccessAccountInstanceAssocs.t</a>()}
+  | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Accepts the invitation made to an Access Account to access an Instance.</p><p>This process is only needed in the case where a
+<code class="inline">syst_access_account_instance_assocs</code> invitation may be accepted or declined
+by the Access Account holder.  To be accepted in this process the invitation
+record must have been previously created (see <a href="#invite_to_instance/3"><code class="inline">invite_to_instance/3</code></a>), must
+not be expired, previously declined, or previously accepted; trying to accept
+a record in such a state will result in an error tuple being returned.</p><p>Naturally, the Access Account holder may choose to never accept or decline the
+invitation and may simply allow the invitation to expire.</p><h2 id="accept_instance_invite/1-parameters" class="section-heading">
+  <a href="#accept_instance_invite/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">access_account_instance_assoc</code> - this value may be either the populated
+<a href="MsbmsSystAuthentication.Data.SystAccessAccountInstanceAssocs.html"><code class="inline">MsbmsSystAuthentication.Data.SystAccessAccountInstanceAssocs</code></a> struct to
+accept or the record ID of the record to accept.</li></ul>
+  </section>
+</section>
+<section class="detail" id="accept_instance_invite/3">
+
+  <div class="detail-header">
+    <a href="#accept_instance_invite/3" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">accept_instance_invite(access_account_id, instance_id, credential_type_id)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> accept_instance_invite(
+  <a href="MsbmsSystAuthentication.Types.html#t:access_account_id/0">MsbmsSystAuthentication.Types.access_account_id</a>(),
+  <a href="../../../../documentation/technical/app_server/msbms_syst_instance_mgr/MsbmsSystInstanceMgr.Types.html#t:instance_id/0">MsbmsSystInstanceMgr.Types.instance_id</a>(),
+  <a href="MsbmsSystAuthentication.Types.html#t:credential_type_id/0">MsbmsSystAuthentication.Types.credential_type_id</a>()
+) ::
+  {:ok, <a href="MsbmsSystAuthentication.Data.SystAccessAccountInstanceAssocs.html#t:t/0">MsbmsSystAuthentication.Data.SystAccessAccountInstanceAssocs.t</a>()}
+  | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Accepts the invitation made to an Access Account to access an Instance,
+referencing the record by its composite key values.</p><p>This function performs the same process as <a href="#accept_instance_invite/1"><code class="inline">accept_instance_invite/1</code></a>, but
+will look up the record to accept using the Access Account, Instance, and
+Credential Type record ID values.</p><h2 id="accept_instance_invite/3-parameters" class="section-heading">
+  <a href="#accept_instance_invite/3-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">access_account_id</code> - the record ID of the Access Account accepting the
+invitation to the Instance.</p></li><li><p><code class="inline">instance_id</code> - the Instance record ID to which the Access Account has
+been invited.</p></li><li><p><code class="inline">credential_type_id</code> - the Credential Type which is being allowed to
+authenticate the Access Account to the Instance.</p></li></ul>
+  </section>
+</section>
+<section class="detail" id="decline_instance_invite/1">
+
+  <div class="detail-header">
+    <a href="#decline_instance_invite/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">decline_instance_invite(access_account_instance_assoc)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> decline_instance_invite(
+  <a href="MsbmsSystAuthentication.Types.html#t:access_account_instance_assoc_id/0">MsbmsSystAuthentication.Types.access_account_instance_assoc_id</a>()
+  | <a href="MsbmsSystAuthentication.Data.SystAccessAccountInstanceAssocs.html#t:t/0">MsbmsSystAuthentication.Data.SystAccessAccountInstanceAssocs.t</a>()
+) :: :ok | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Declines an unaccepted/unexpired invitation made to an Access Account to
+access an Instance.</p><p>This process is only needed in the case where a
+<code class="inline">syst_access_account_instance_assocs</code> invitation may be accepted or declined
+by the Access Account holder.  To be declined in this process the invitation
+record must have been previously created (see <a href="#invite_to_instance/3"><code class="inline">invite_to_instance/3</code></a>), must
+not be expired, previously declined, or previously accepted; trying to decline
+a record in such a state will result in an error tuple being returned.</p><p>Naturally, the Access Account holder may choose to never accept or decline the
+invitation and may simply allow the invitation to expire.</p><h2 id="decline_instance_invite/1-parameters" class="section-heading">
+  <a href="#decline_instance_invite/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">access_account_instance_assoc</code> - this value may be either the populated
+<a href="MsbmsSystAuthentication.Data.SystAccessAccountInstanceAssocs.html"><code class="inline">MsbmsSystAuthentication.Data.SystAccessAccountInstanceAssocs</code></a> struct to
+decline or the record ID of the record to decline.</li></ul>
+  </section>
+</section>
+<section class="detail" id="decline_instance_invite/3">
+
+  <div class="detail-header">
+    <a href="#decline_instance_invite/3" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">decline_instance_invite(access_account_id, instance_id, credential_type_id)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> decline_instance_invite(
+  <a href="MsbmsSystAuthentication.Types.html#t:access_account_id/0">MsbmsSystAuthentication.Types.access_account_id</a>(),
+  <a href="../../../../documentation/technical/app_server/msbms_syst_instance_mgr/MsbmsSystInstanceMgr.Types.html#t:instance_id/0">MsbmsSystInstanceMgr.Types.instance_id</a>(),
+  <a href="MsbmsSystAuthentication.Types.html#t:credential_type_id/0">MsbmsSystAuthentication.Types.credential_type_id</a>()
+) ::
+  {:ok, <a href="MsbmsSystAuthentication.Data.SystAccessAccountInstanceAssocs.html#t:t/0">MsbmsSystAuthentication.Data.SystAccessAccountInstanceAssocs.t</a>()}
+  | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Declines an unaccepted/unexpired invitation made to an Access Account to
+access an Instance, referencing the record by its composite key values.</p><p>This function performs the same process as <a href="#decline_instance_invite/1"><code class="inline">decline_instance_invite/1</code></a>, but
+will look up the record to decline using the Access Account, Instance, and
+Credential Type record ID values.</p><h2 id="decline_instance_invite/3-parameters" class="section-heading">
+  <a href="#decline_instance_invite/3-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">access_account_id</code> - the record ID of the Access Account declining the
+invitation to the Instance.</p></li><li><p><code class="inline">instance_id</code> - the Instance record ID to which the Access Account has
+been invited.</p></li><li><p><code class="inline">credential_type_id</code> - the Credential Type for which the invite to access
+was created.</p></li></ul>
+  </section>
+</section>
+<section class="detail" id="invite_to_instance/4">
+
+    <span id="invite_to_instance/3"></span>
+
+  <div class="detail-header">
+    <a href="#invite_to_instance/4" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">invite_to_instance(access_account_id, instance_id, credential_type_id, opts \\ [])</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> invite_to_instance(
+  <a href="MsbmsSystAuthentication.Types.html#t:access_account_id/0">MsbmsSystAuthentication.Types.access_account_id</a>(),
+  <a href="../../../../documentation/technical/app_server/msbms_syst_instance_mgr/MsbmsSystInstanceMgr.Types.html#t:instance_id/0">MsbmsSystInstanceMgr.Types.instance_id</a>(),
+  <a href="MsbmsSystAuthentication.Types.html#t:credential_type_id/0">MsbmsSystAuthentication.Types.credential_type_id</a>(),
+  <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
+) ::
+  {:ok, <a href="MsbmsSystAuthentication.Data.SystAccessAccountInstanceAssocs.html#t:t/0">MsbmsSystAuthentication.Data.SystAccessAccountInstanceAssocs.t</a>()}
+  | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Invites or re-invites an Access Account to establish access rights to a
+specific Instance.</p><p>The invitation process creates a <code class="inline">syst_access_account_instance_assocs</code> record
+for the requested Access Account, Instance, and Credential Type and sets the
+<code class="inline">invitation_issued</code> field to the current date/time.  Re-invitation will
+update an existing <code class="inline">syst_access_account_instance_assocs</code> record resetting
+invite data such as the invitation expiration date or resetting the declined
+state if the record was previously declined by the Access Account holder.
+Once a <code class="inline">syst_access_account_instance_assocs</code> record is accepted, it may not
+be re-invited again using this process until the record is revoked (deleted).</p><p><code class="inline">syst_access_account_instance_assocs</code> are unique to the Access Account,
+Instance, and Credential Type combination and only one such record may exist
+for that combination at any one time.</p><h2 id="invite_to_instance/4-parameters" class="section-heading">
+  <a href="#invite_to_instance/4-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">access_account_id</code> - the record ID of the Access Account to invite to the
+Instance.</p></li><li><p><code class="inline">instance_id</code> - the Instance record ID to which the Access Account is
+being invited.</p></li><li><p><code class="inline">credential_type_id</code> - the Credential Type which is being allowed to
+authenticate the Access Account to the Instance.</p></li><li><p><code class="inline">opts</code> - a keyword list of optional parameters used to set record values
+and behaviors.  Available options are:</p><ul><li><p><code class="inline">create_accepted</code> - will create a <code class="inline">syst_access_account_instance_assocs</code>
+record which is already accepted when set <code class="inline">true</code>.  The default value is
+<code class="inline">false</code>.</p></li><li><p><code class="inline">expiration_days</code> - for records that are not created as accepted and act
+as true invitations, this option sets the number of days in which an
+Access Account holder may accept the invitation.  After this time the
+invitation is considered expired and must be re-invited before it can be
+used to grant access again.  The default value for this option is 30 days.</p></li></ul></li></ul>
+  </section>
+</section>
+<section class="detail" id="revoke_instance_access/1">
+
+  <div class="detail-header">
+    <a href="#revoke_instance_access/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">revoke_instance_access(access_account_instance_assoc)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> revoke_instance_access(
+  <a href="MsbmsSystAuthentication.Types.html#t:access_account_instance_assoc_id/0">MsbmsSystAuthentication.Types.access_account_instance_assoc_id</a>()
+  | <a href="MsbmsSystAuthentication.Data.SystAccessAccountInstanceAssocs.html#t:t/0">MsbmsSystAuthentication.Data.SystAccessAccountInstanceAssocs.t</a>()
+) :: :ok | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Revokes the access or invitation to access an Instance from the given Access
+Account.</p><p>Simply put, Access Accounts are both invited and granted access to Instances
+via Access Account Instance Association records (see:
+<a href="MsbmsSystAuthentication.Data.SystAccessAccountInstanceAssocs.html"><code class="inline">MsbmsSystAuthentication.Data.SystAccessAccountInstanceAssocs</code></a>) and this
+function deletes those records.  This has the effect of revoking the
+invitation to access an Instance from the Access Account/Credential Type
+combination.</p><p>Records in any state of invited, accepted, or declined may be revoked/deleted
+using this function.</p><h2 id="revoke_instance_access/1-parameters" class="section-heading">
+  <a href="#revoke_instance_access/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">access_account_instance_assoc</code> - this value may be either the populated
+<a href="MsbmsSystAuthentication.Data.SystAccessAccountInstanceAssocs.html"><code class="inline">MsbmsSystAuthentication.Data.SystAccessAccountInstanceAssocs</code></a> struct to
+revoke or the record ID of the record to revoke.</li></ul>
+  </section>
+</section>
+<section class="detail" id="revoke_instance_access/3">
+
+  <div class="detail-header">
+    <a href="#revoke_instance_access/3" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">revoke_instance_access(access_account_id, instance_id, credential_type_id)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> revoke_instance_access(
+  <a href="MsbmsSystAuthentication.Types.html#t:access_account_id/0">MsbmsSystAuthentication.Types.access_account_id</a>(),
+  <a href="../../../../documentation/technical/app_server/msbms_syst_instance_mgr/MsbmsSystInstanceMgr.Types.html#t:instance_id/0">MsbmsSystInstanceMgr.Types.instance_id</a>(),
+  <a href="MsbmsSystAuthentication.Types.html#t:credential_type_id/0">MsbmsSystAuthentication.Types.credential_type_id</a>()
+) ::
+  {:ok, <a href="MsbmsSystAuthentication.Data.SystAccessAccountInstanceAssocs.html#t:t/0">MsbmsSystAuthentication.Data.SystAccessAccountInstanceAssocs.t</a>()}
+  | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Revokes the access or invitation to access an Instance from the given Access
+Account/Credential Type combination, referencing the record by its composite
+key values.</p><p>This function performs the same action as <a href="#revoke_instance_access/1"><code class="inline">revoke_instance_access/1</code></a> but
+identified the record being revoked (deleted) using its composite/candidate
+key values.</p><h2 id="revoke_instance_access/3-parameters" class="section-heading">
+  <a href="#revoke_instance_access/3-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">access_account_id</code> - the record ID of the Access Account from which the
+invitation to access is being revoked.</p></li><li><p><code class="inline">instance_id</code> - the Instance record ID from which the Access Account had
+previously been invited to access.</p></li><li><p><code class="inline">credential_type_id</code> - the record ID of the Credential Type which for
+which access being revoked.</p></li></ul>
   </section>
 </section>
 
