@@ -42,7 +42,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccountInstanceAssoc do
     date_accepted = if opts[:create_accepted], do: date_now, else: nil
 
     date_expire =
-      if !opts[:create_accepted],
+      unless opts[:create_accepted],
         do: DateTime.add(date_now, opts[:expiration_days] * 24 * 60 * 60, :second),
         else: nil
 
