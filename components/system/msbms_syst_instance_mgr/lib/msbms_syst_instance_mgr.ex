@@ -142,7 +142,6 @@ defmodule MsbmsSystInstanceMgr do
     `external_name`, `user_description`, and `user_options` fields are required
     for Instance Type creation.
   """
-
   @spec create_instance_type(Types.instance_type_params()) ::
           {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MsbmsSystError.t()}
   defdelegate create_instance_type(instance_type_params), to: Impl.InstanceType
@@ -160,7 +159,6 @@ defmodule MsbmsSystInstanceMgr do
     Instance Type.  All attributes in the parameter map are optional in updating
     contexts.
   """
-
   @spec update_instance_type(Types.instance_type_name(), Types.instance_type_params() | %{}) ::
           {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MsbmsSystError.t()}
   defdelegate update_instance_type(instance_type_name, instance_type_params \\ %{}),
@@ -178,7 +176,6 @@ defmodule MsbmsSystInstanceMgr do
     * `instance_type_name` - the internal name of an Instance Type to delete
     from the system.
   """
-
   @spec delete_instance_type(Types.instance_type_name()) ::
           :ok | {:error, MsbmsSystError.t()}
   defdelegate delete_instance_type(instance_type_name), to: Impl.InstanceType
@@ -202,7 +199,6 @@ defmodule MsbmsSystInstanceMgr do
     * `application_id` - the ID value which identifies the Application to be
     supported.
   """
-
   @spec create_instance_type_application(
           Types.instance_type_id(),
           Types.application_id()
@@ -225,7 +221,6 @@ defmodule MsbmsSystInstanceMgr do
     `MsbmsSystInstanceMgr.Data.SystInstanceTypeApplications` struct with at
     least the `id` field defined.
   """
-
   @spec delete_instance_type_application(
           Types.instance_type_application_id()
           | Data.SystInstanceTypeApplications.t()
@@ -273,7 +268,6 @@ defmodule MsbmsSystInstanceMgr do
       pool to use for Instances Contexts created for Instances of this Instance
       Type.  This field defaults to 0 on Instance Type Context creation.
   """
-
   @spec update_instance_type_context(
           Types.instance_type_context_id()
           | Data.SystInstanceTypeContexts.t(),
@@ -312,7 +306,6 @@ defmodule MsbmsSystInstanceMgr do
       enumeration.
 
   """
-
   @spec create_owner(Types.owner_params()) ::
           {:ok, Data.SystOwners.t()} | {:error, MsbmsSystError.t()}
   defdelegate create_owner(owner_params), to: Impl.Owner
@@ -342,7 +335,6 @@ defmodule MsbmsSystInstanceMgr do
       Owner record.  Note that if this attribute is provided, but is set nil,
       an error will result.
   """
-
   @spec update_owner(Types.owner_id() | Data.SystOwners.t(), Types.owner_params()) ::
           {:ok, Data.SystOwners.t()} | {:error, MsbmsSystError.t()}
   defdelegate update_owner(owner, update_params), to: Impl.Owner
@@ -351,15 +343,14 @@ defmodule MsbmsSystInstanceMgr do
   @doc """
   Retrieves an Owner record by its internal name.
 
-  This retrieval operation will also populate the associated records of Owner 
-  State and the Owner State Functional Type. 
+  This retrieval operation will also populate the associated records of Owner
+  State and the Owner State Functional Type.
 
   ## Examples
 
     iex> {:ok, %MsbmsSystInstanceMgr.Data.SystOwners{internal_name: "owner1"}} =
     ...>   MsbmsSystInstanceMgr.get_owner_by_name("owner1")
   """
-
   @spec get_owner_by_name(Types.owner_name()) ::
           {:ok, Data.SystOwners.t()} | {:error, MsbmsSystError.t()}
   defdelegate get_owner_by_name(owner_name), to: Impl.Owner
@@ -374,7 +365,6 @@ defmodule MsbmsSystInstanceMgr do
     iex> is_binary(owner_id)
     true
   """
-
   @spec get_owner_id_by_name(Types.owner_name()) ::
           {:ok, Types.owner_id()} | {:error, MsbmsSystError.t()}
   defdelegate get_owner_id_by_name(owner_name), to: Impl.Owner
@@ -392,7 +382,6 @@ defmodule MsbmsSystInstanceMgr do
     `MsbmsSystInstanceMgr.Data.SystOwners` struct representing the Owner to
     purge.
   """
-
   @spec purge_owner(Types.owner_id() | Data.SystOwners.t()) :: :ok | {:error, MsbmsSystError.t()}
   defdelegate purge_owner(owner), to: Impl.Owner
 
@@ -478,7 +467,6 @@ defmodule MsbmsSystInstanceMgr do
       of the new Instance.
 
   """
-
   @spec create_instance(Types.instance_params()) ::
           {:ok, Data.SystInstances.t()} | {:error, MsbmsSystError.t()}
   defdelegate create_instance(instance_params), to: Impl.Instance
@@ -497,7 +485,6 @@ defmodule MsbmsSystInstanceMgr do
     * `startup_options` - a map of values containing the Startup Options
     obtained from the `MsbmsSystOptions` component.
   """
-
   @spec get_instance_datastore_options(
           Types.instance_id() | Data.SystInstances.t(),
           startup_options :: map()
@@ -551,7 +538,6 @@ defmodule MsbmsSystInstanceMgr do
       for initialization of the Datastore.  See the documentation for
       `MsbmsSystDatastore.create_datastore/2` for more information.
   """
-
   @spec initialize_instance(Types.instance_id(), startup_options :: map(), opts :: Keyword.t()) ::
           {:ok, Data.SystInstances.t()} | {:error, MsbmsSystError.t()}
   defdelegate initialize_instance(instance_id, startup_options, opts \\ []), to: Impl.Instance
@@ -568,7 +554,6 @@ defmodule MsbmsSystInstanceMgr do
     * `instance_state_id` - The record ID of the new Instance State value into
     which to place the Instance record.
   """
-
   @spec set_instance_state(Data.SystInstances.t(), Types.instance_state_id()) ::
           {:ok, Data.SystInstances.t()} | {:error, MsbmsSystError.t()}
   defdelegate set_instance_state(instance, instance_state_id), to: Impl.Instance
@@ -582,7 +567,6 @@ defmodule MsbmsSystInstanceMgr do
   Instance will default to the appropriate Instance State if a specific Instance
   State value is not provided by the caller.
   """
-
   @spec get_default_instance_state_ids() :: Keyword.t()
   defdelegate get_default_instance_state_ids, to: Impl.Instance
 
@@ -599,7 +583,6 @@ defmodule MsbmsSystInstanceMgr do
       iex> {:ok, %MsbmsSystInstanceMgr.Data.SystInstances{}} =
       ...>   MsbmsSystInstanceMgr.get_instance_by_name("app1_owner1_instance_types_sml")
   """
-
   @spec get_instance_by_name(Types.instance_name()) ::
           {:ok, Data.SystInstances.t()} | {:error, MsbmsSystError.t()}
   defdelegate get_instance_by_name(instance_name), to: Impl.Instance
@@ -619,7 +602,6 @@ defmodule MsbmsSystInstanceMgr do
       iex> is_binary(instance_id)
       true
   """
-
   @spec get_instance_id_by_name(Types.instance_name()) ::
           {:ok, Types.instance_id()} | {:error, MsbmsSystError.t()}
   defdelegate get_instance_id_by_name(instance_name), to: Impl.Instance
@@ -647,7 +629,6 @@ defmodule MsbmsSystInstanceMgr do
     * `startup_options` - a map of values containing the Startup Options
     obtained from the `MsbmsSystOptions` component.
   """
-
   @spec purge_instance(Types.instance_id() | Data.SystInstances.t(), startup_options :: map()) ::
           :ok | {:error, MsbmsSystError.t()}
   defdelegate purge_instance(instance, startup_options), to: Impl.Instance
@@ -664,7 +645,6 @@ defmodule MsbmsSystInstanceMgr do
   configured in the system.  See the documentation for `start_application/3`
   for more information about this function and the available parameters.
   """
-
   @spec start_all_applications(startup_options :: map(), opts :: Keyword.t()) ::
           :ok | {:error, MsbmsSystError.t()}
   defdelegate start_all_applications(startup_options, opts \\ []), to: Runtime.Application
@@ -703,7 +683,6 @@ defmodule MsbmsSystInstanceMgr do
       * other available options are passed to `start_instance/3`.  See the
       documentation for `start_instance/3` for the options it is able to accept.
   """
-
   @spec start_application(
           Types.application_id() | Data.SystApplications.t(),
           startup_options :: map(),
@@ -721,7 +700,6 @@ defmodule MsbmsSystInstanceMgr do
   of Application shutdown, please see the documentation for
   `stop_application/2`.
   """
-
   @spec stop_all_applications(opts :: Keyword.t()) :: :ok | {:error, MsbmsSystError.t()}
   defdelegate stop_all_applications(opts \\ []), to: Runtime.Application
 
@@ -747,7 +725,6 @@ defmodule MsbmsSystInstanceMgr do
       `stop_instance/2` function for Instance shutdown.  See the
       `stop_instance/2` for full information of the available options.
   """
-
   @spec stop_application(Types.application_id() | Data.SystApplications.t(), opts :: Keyword.t()) ::
           :ok | {:error, MsbmsSystError.t()}
   defdelegate stop_application(application, opts \\ []), to: Runtime.Application
@@ -802,7 +779,6 @@ defmodule MsbmsSystInstanceMgr do
       provide this option as the most common migration bindings are
       automatically generated from Instance record data.
   """
-
   @spec start_instance(
           Types.instance_id() | Data.SystInstances.t(),
           startup_options :: map(),
@@ -833,7 +809,6 @@ defmodule MsbmsSystInstanceMgr do
       Datastore.  See the documentation for
       `MsbmsSystDatastore.stop_datastore/2` for more information.
   """
-
   @spec stop_instance(Types.instance_id() | Data.SystInstances.t(), opts :: Keyword.t()) ::
           :ok | {:error, MsbmsSystError.t()}
   defdelegate stop_instance(instance, opts \\ []), to: Runtime.Application
