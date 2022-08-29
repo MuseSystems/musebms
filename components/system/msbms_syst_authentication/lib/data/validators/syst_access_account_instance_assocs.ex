@@ -34,6 +34,9 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystAccessAccountInstanceAssoc
       :invitation_expires,
       :invitation_declined
     ])
+    |> unique_constraint([:access_account_id, :instance_id, :credential_type_id],
+      name: "syst_access_account_instance_assoc_a_c_i_udx"
+    )
     |> validate_common()
   end
 
