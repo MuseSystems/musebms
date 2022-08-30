@@ -15,19 +15,24 @@ $BODY$
 -- muse.information@musesystems.com  :: https://muse.systems
 
 BEGIN
-
+    -- TODO: This trigger may be replaced by a unique index once PostgreSQL 15
+    --       becomes our standard.  That version will allow the option to treat
+    --       null values as a single value rather than each null distinct from
+    --       all others, which matches our resolution scope definition here.
     IF
-        exists(
-            SELECT true
-            FROM msbms_syst_data.syst_access_accounts saa_this
-                LEFT JOIN msbms_syst_data.syst_access_accounts saa_other
-                    ON saa_this.owning_owner_id IS NOT DISTINCT FROM saa_other.owning_owner_id AND
-                       saa_this.id IS DISTINCT FROM saa_other.id
-                LEFT JOIN msbms_syst_data.syst_identities si_other
-                    ON si_other.access_account_id = saa_other.id AND
-                       si_other.identity_type_id = new.identity_type_id
-            WHERE saa_this.id = new.access_account_id AND
-                  si_other.account_identifier = new.account_identifier
+        exists( SELECT
+                    TRUE
+                FROM msbms_syst_data.syst_access_accounts saa_this
+                    LEFT JOIN msbms_syst_data.syst_access_accounts saa_other
+                          ON saa_this.owning_owner_id IS NOT DISTINCT FROM saa_other.owning_owner_id AND
+                             saa_this.id IS DISTINCT FROM saa_other.id
+                    LEFT JOIN msbms_syst_data.syst_identities si_any
+                          ON ( si_any.access_account_id = saa_other.id OR
+                               si_any.access_account_id = saa_this.id ) AND
+                             si_any.identity_type_id = new.identity_type_id
+                WHERE
+                      saa_this.id = new.access_account_id
+                  AND si_any.account_identifier = new.account_identifier
             )
     THEN
 
