@@ -566,8 +566,7 @@ $AUTHENTICATION_TESTING_INIT$
             , account_identifier
             , validated
             , validation_requested
-            , validation_expires
-            , primary_contact )
+            , validation_expires)
         SELECT
             aa.id
           , ( SELECT id
@@ -577,7 +576,6 @@ $AUTHENTICATION_TESTING_INIT$
           , now( ) - interval '15 days'
           , now( ) - interval '20 days'
           , now( ) - interval '10 days'
-          , TRUE
         FROM msbms_syst_data.syst_access_accounts aa;
 
         INSERT INTO msbms_syst_data.syst_identities
@@ -586,8 +584,7 @@ $AUTHENTICATION_TESTING_INIT$
             , account_identifier
             , validated
             , validation_requested
-            , validation_expires
-            , primary_contact )
+            , validation_expires )
         SELECT
             aa.id
           , ( SELECT id
@@ -597,7 +594,6 @@ $AUTHENTICATION_TESTING_INIT$
           , now( ) - INTERVAL '15 days'
           , now( ) - INTERVAL '20 days'
           , now( ) - INTERVAL '10 days'
-          , TRUE
         FROM msbms_syst_data.syst_access_accounts aa;
 
         INSERT INTO msbms_syst_data.syst_identities
@@ -606,8 +602,7 @@ $AUTHENTICATION_TESTING_INIT$
             , account_identifier
             , validated
             , validation_requested
-            , validation_expires
-            , primary_contact )
+            , validation_expires )
         SELECT
             aa.id
           , ( SELECT id
@@ -617,7 +612,6 @@ $AUTHENTICATION_TESTING_INIT$
           , now( ) - INTERVAL '15 days'
           , now( ) - INTERVAL '20 days'
           , now( ) - INTERVAL '10 days'
-          , TRUE
         FROM msbms_syst_data.syst_access_accounts aa;
 
         ------------------------------------------------------------------------
