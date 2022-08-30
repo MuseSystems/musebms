@@ -35,13 +35,16 @@ CREATE TABLE msbms_syst_data.syst_identities
         uuid
         CONSTRAINT syst_identities_validates_identities_fk
             REFERENCES msbms_syst_data.syst_identities (id) ON DELETE CASCADE
+        CONSTRAINT syst_identities_validates_identities_udx UNIQUE
     ,validation_requested
         timestamptz
     ,validation_expires
         timestamptz
-    ,primary_contact
-        boolean
-        NOT NULL DEFAULT false
+    ,CONSTRAINT syst_identities_primary_validator_chk
+        CHECK ( ( validated IS NULL AND
+                  validation_requested IS NULL AND
+                  validation_expires IS NULL AND
+                  validates_identity_id IS NOT NULL ) OR validates_identity_id IS NULL )
     ,diag_timestamp_created
         timestamptz
         NOT NULL DEFAULT now( )
@@ -141,12 +144,6 @@ COMMENT ON
     COLUMN msbms_syst_data.syst_identities.validation_expires IS
 $DOC$The timetstamp at which a required validation request will expire.  When an
 identity validation is not required, this column will be null.$DOC$;
-
-COMMENT ON
-    COLUMN msbms_syst_data.syst_identities.primary_contact IS
-$DOC$Indicates that the identity is also used for communicating with the access
-account holder.  This value may only be true if the identity_type_id value is
-of functional type 'email'.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.syst_identities.diag_timestamp_created IS

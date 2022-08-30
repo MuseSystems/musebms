@@ -48,7 +48,6 @@ BEGIN
         validated            = new.validated
       , validation_requested = new.validation_requested
       , validation_expires   = new.validation_expires
-      , primary_contact      = new.primary_contact
     WHERE id = new.id
     RETURNING * INTO new;
 

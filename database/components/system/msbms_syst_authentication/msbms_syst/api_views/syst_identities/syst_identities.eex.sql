@@ -20,7 +20,6 @@ SELECT
   , validates_identity_id
   , validation_requested
   , validation_expires
-  , primary_contact
   , diag_timestamp_created
   , diag_role_created
   , diag_timestamp_modified
@@ -120,12 +119,6 @@ COMMENT ON
     COLUMN msbms_syst.syst_identities.validation_expires IS
 $DOC$The timetstamp at which a required validation request will expire.  When an
 identity validation is not required, this column will be null.$DOC$;
-
-COMMENT ON
-    COLUMN msbms_syst.syst_identities.primary_contact IS
-$DOC$Indicates that the identity is also used for communicating with the access
-account holder.  This value may only be true if the identity_type_id value is
-of functional type 'email'.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst.syst_identities.diag_timestamp_created IS

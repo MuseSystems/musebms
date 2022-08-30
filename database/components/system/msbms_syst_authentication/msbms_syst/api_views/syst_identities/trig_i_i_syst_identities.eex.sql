@@ -23,8 +23,7 @@ BEGIN
         , validated
         , validates_identity_id
         , validation_requested
-        , validation_expires
-        , primary_contact )
+        , validation_expires )
     VALUES
         ( new.access_account_id
         , new.identity_type_id
@@ -32,8 +31,7 @@ BEGIN
         , new.validated
         , new.validates_identity_id
         , new.validation_requested
-        , new.validation_expires
-        , new.primary_contact )
+        , new.validation_expires )
     RETURNING * INTO new;
 
     RETURN new;
