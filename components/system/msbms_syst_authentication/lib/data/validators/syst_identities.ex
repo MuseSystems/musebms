@@ -31,8 +31,7 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystIdentities do
       :validated,
       :validates_identity_id,
       :validation_requested,
-      :validation_expires,
-      :primary_contact
+      :validation_expires
     ])
     |> validate_common()
   end
@@ -43,8 +42,7 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystIdentities do
     |> cast(update_params, [
       :validated,
       :validation_requested,
-      :validation_expires,
-      :primary_contact
+      :validation_expires
     ])
     |> validate_common()
     |> optimistic_lock(:diag_row_version)
@@ -54,8 +52,7 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystIdentities do
     validate_required(changeset, [
       :access_account_id,
       :identity_type_id,
-      :account_identifier,
-      :primary_contact
+      :account_identifier
     ])
   end
 end

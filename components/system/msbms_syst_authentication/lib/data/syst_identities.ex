@@ -38,7 +38,6 @@ defmodule MsbmsSystAuthentication.Data.SystIdentities do
             validates_identity: t() | Ecto.Association.NotLoaded.t() | nil,
             validation_requested: DateTime.t() | nil,
             validation_expires: DateTime.t() | nil,
-            primary_contact: boolean() | nil,
             diag_timestamp_created: DateTime.t() | nil,
             diag_role_created: String.t() | nil,
             diag_timestamp_modified: DateTime.t() | nil,
@@ -55,7 +54,6 @@ defmodule MsbmsSystAuthentication.Data.SystIdentities do
     field(:validated, :utc_datetime)
     field(:validation_requested, :utc_datetime)
     field(:validation_expires, :utc_datetime)
-    field(:primary_contact, :boolean)
     field(:diag_timestamp_created, :utc_datetime)
     field(:diag_role_created, :string)
     field(:diag_timestamp_modified, :utc_datetime)
