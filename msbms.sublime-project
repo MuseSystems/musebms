@@ -1,53 +1,52 @@
 {
-	"folders":
-	[
-		{
-			"path": "database",
-		},
-		{
-			"path": "components/system/msbms_syst_error",
-		},
-		{
-			"path": "components/system/msbms_syst_utils",
-		},
-		{
-			"path": "components/system/msbms_syst_rate_limiter",
-		},
-		{
-			"path": "components/system/msbms_syst_datastore",
-		},
-		{
-			"path": "components/system/msbms_syst_options",
-		},
-		{
-			"path": "components/system/msbms_syst_settings",
-		},
-		{
-			"path": "components/system/msbms_syst_enums",
-		},
-		{
-			"path": "components/system/msbms_syst_instance_mgr",
-		},
-		{
-			"path": "components/system/msbms_syst_authentication",
-		},
-		{
-			"path": "application/msbms",
-		},
-		{
-			"path": "documentation",
-		},
-		{
-			"path": "tools",
-		},
-		{
-			"path": ".github",
-		},
-		{
-			"path": ".",
-		},
-	],
-
+    "folders":
+    [
+        {
+            "path": "database"
+        },
+        {
+            "path": "components/system/msbms_syst_error"
+        },
+        {
+            "path": "components/system/msbms_syst_utils"
+        },
+        {
+            "path": "components/system/msbms_syst_rate_limiter"
+        },
+        {
+            "path": "components/system/msbms_syst_datastore"
+        },
+        {
+            "path": "components/system/msbms_syst_options"
+        },
+        {
+            "path": "components/system/msbms_syst_settings"
+        },
+        {
+            "path": "components/system/msbms_syst_enums"
+        },
+        {
+            "path": "components/system/msbms_syst_instance_mgr"
+        },
+        {
+            "path": "components/system/msbms_syst_authentication"
+        },
+        {
+            "path": "application/msbms"
+        },
+        {
+            "path": "documentation"
+        },
+        {
+            "path": "tools"
+        },
+        {
+            "path": ".github"
+        },
+        {
+            "path": "."
+        }
+    ],
     "settings":
     {
         "rulers":
@@ -55,12 +54,105 @@
             80,
             98,
             120
-		],
+        ],
         "tab_size": 2,
         "translate_tabs_to_spaces": true,
         "mix_format_command": "mix format",
         "make_path_relative": true,
         "lsp_format_on_save": true,
-        "use_root_dir": true,
+        "use_root_dir": true
     },
+    "build_systems":
+    [
+        {
+            "name": "Test MsbmsSystError",
+            "shell_cmd": "cd \"$project_path/components/system/msbms_syst_error\" && mix test",
+            "working_dir": "${project_path}/components/system/msbms_syst_error",
+            "selector": "source.elixir",
+            "keyfiles":
+            [
+                "mix.exs"
+            ]
+        },
+        {
+            "name": "Test MsbmsSystUtils",
+            "shell_cmd": "cd \"$project_path/components/system/msbms_syst_utils\" && mix test",
+            "working_dir": "${project_path}/components/system/msbms_syst_utils",
+            "selector": "source.elixir",
+            "keyfiles":
+            [
+                "mix.exs"
+            ]
+        },
+        {
+            "name": "Test MsbmsSystDatastore",
+            "shell_cmd": "cd \"$project_path/components/system/msbms_syst_datastore\" && mix test",
+            "working_dir": "${project_path}/components/system/msbms_syst_datastore",
+            "selector": "source.elixir",
+            "keyfiles":
+            [
+                "mix.exs"
+            ]
+        },
+        {
+            "name": "Test MsbmsSystOptions",
+            "shell_cmd": "cd \"$project_path/components/system/msbms_syst_options\" && mix test",
+            "working_dir": "${project_path}/components/system/msbms_syst_options",
+            "selector": "source.elixir",
+            "keyfiles":
+            [
+                "mix.exs"
+            ]
+        },
+        {
+            "name": "Test MsbmsSystSettings",
+            "shell_cmd": "cd \"$project_path/components/system/msbms_syst_settings\" && mix test",
+            "working_dir": "${project_path}/components/system/msbms_syst_settings",
+            "selector": "source.elixir",
+            "keyfiles":
+            [
+                "mix.exs"
+            ]
+        },
+        {
+            "name": "Test MsbmsSystEnums",
+            "shell_cmd": "cd \"$project_path/components/system/msbms_syst_enums\" && mix test",
+            "working_dir": "${project_path}/components/system/msbms_syst_enums",
+            "selector": "source.elixir",
+            "keyfiles":
+            [
+                "mix.exs"
+            ]
+        },
+        {
+            "name": "Test MsbmsSystRateLimiter",
+            "shell_cmd": "cd \"$project_path/components/system/msbms_syst_rate_limiter\" && mix test",
+            "working_dir": "${project_path}/components/system/msbms_syst_rate_limiter",
+            "selector": "source.elixir",
+            "keyfiles":
+            [
+                "mix.exs"
+            ]
+        },
+        {
+            "name": "Test MsbmsSystInstanceMgr",
+            "shell_cmd": "cd \"$project_path/components/system/msbms_syst_instance_mgr\" && mix test",
+            "working_dir": "${project_path}/components/system/msbms_syst_instance_mgr",
+            "selector": "source.elixir",
+            "keyfiles":
+            [
+                "mix.exs"
+            ]
+        },
+        {
+            "name": "Test MsbmsSystAuthentication",
+            "shell_cmd": "cd \"$project_path/components/system/msbms_syst_authentication\" && mix test",
+            "working_dir": "${project_path}/components/system/msbms_syst_authentication",
+            "selector": "source.elixir",
+            "keyfiles":
+            [
+                "mix.exs"
+            ]
+        }
+    ]
 }
