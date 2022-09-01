@@ -13,8 +13,6 @@
 defmodule MsbmsSystUtils do
   alias MsbmsSystUtils.Impl
 
-  @default_random_string_tokens '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-
   @moduledoc """
   Common utility functions generally useful across components.
   """
