@@ -20,7 +20,7 @@ defmodule MsbmsSystAuthentication.Data.Helpers.General do
     {:ok, access_account_id} =
       Impl.AccessAccount.get_access_account_id_by_name(access_account_name)
 
-    Map.put(change_params, :access_account_od, access_account_id)
+    Map.put(change_params, :access_account_id, access_account_id)
   end
 
   def resolve_access_account_id(change_params), do: change_params
