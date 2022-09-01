@@ -94,8 +94,7 @@ defmodule MsbmsSystAuthentication.Types do
           optional(:validated) => DateTime.t(),
           optional(:validates_identity_id) => identity_id(),
           optional(:validation_requested) => DateTime.t(),
-          optional(:validation_expires) => DateTime.t(),
-          optional(:primary_contact) => boolean()
+          optional(:validation_expires) => DateTime.t()
         }
 
   @type instance_network_rule_params() :: %{
