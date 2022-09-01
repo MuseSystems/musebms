@@ -13,6 +13,8 @@
 defmodule MsbmsSystUtils do
   alias MsbmsSystUtils.Impl
 
+  @default_random_string_tokens '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
   @moduledoc """
   Common utility functions generally useful across components.
   """
@@ -47,4 +49,35 @@ defmodule MsbmsSystUtils do
   """
   @spec resolve_options(Keyword.t(), Keyword.t()) :: Keyword.t()
   defdelegate resolve_options(opts_given, opts_default), to: Impl.Utils
+
+  @doc section: :string_utilities
+  @doc """
+  Generates a random string drawn from a specified list of characters.
+
+  ## Parameters
+
+    * `string_length` - the number of characters in the returned string.
+
+    * `tokens` - this optional parameter may either be a `charlist()` including
+    the desired characters from which to randomly select characters for the
+    string or the parameter may be an atom which designates a predefined
+    character list.  The available predefined character lists are:
+
+      * `:alphanum` - will return values from the set
+      `0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ`.  This is the default value.
+
+      * `:mixed_alphanum` - will return values from the set
+      `0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz`
+
+      * `b32e` - will return values from the set
+      `0123456789ABCDEFGHIJKLMNOPQRSTUV`.  This equates to the character set
+      used by Elixir's Integer.to_string(x, 32).
+
+      * `b32c` - will return values from the set
+      `0123456789ABCDEFGHJKMNPQRSTVWXYZ`.  This is the Base32 character set
+      compatible with Douglas Crockford's Base 32 (https://www.crockford.com/base32.html).
+  """
+  @spec get_random_string(pos_integer(), charlist() | atom()) :: String.t()
+  defdelegate get_random_string(string_length, tokens \\ :alphanum),
+    to: Impl.Utils
 end

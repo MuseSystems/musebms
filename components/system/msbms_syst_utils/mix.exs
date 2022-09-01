@@ -35,7 +35,8 @@ defmodule MsbmsSystUtils.MixProject do
         main: "MsbmsSystUtils",
         output: "../../../documentation/technical/app_server/msbms_syst_utils",
         groups_for_functions: [
-          "API - Function Opts": &(&1[:section] == :options_management)
+          "API - Function Opts": &(&1[:section] == :options_management),
+          "API - String Utilities": &(&1[:section] == :string_utilities)
         ],
         groups_for_modules: [
           API: [MsbmsSystUtils]
