@@ -73,9 +73,9 @@ ALTER TABLE msbms_syst_data.syst_identities OWNER TO <%= msbms_owner %>;
 REVOKE ALL ON TABLE msbms_syst_data.syst_identities FROM public;
 GRANT ALL ON TABLE msbms_syst_data.syst_identities TO <%= msbms_owner %>;
 
-CREATE TRIGGER a50_trig_b_iu_syst_identities_validate_uniqueness
-    BEFORE INSERT OR UPDATE ON msbms_syst_data.syst_identities
-    FOR EACH ROW EXECUTE PROCEDURE msbms_syst_data.trig_b_iu_syst_identities_validate_uniqueness();
+CREATE TRIGGER a50_trig_b_i_syst_identities_validate_uniqueness
+    BEFORE INSERT ON msbms_syst_data.syst_identities
+    FOR EACH ROW EXECUTE PROCEDURE msbms_syst_data.trig_b_i_syst_identities_validate_uniqueness();
 
 CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
     BEFORE INSERT OR UPDATE ON msbms_syst_data.syst_identities
@@ -184,3 +184,10 @@ $DOC$Records the number of times the record has been updated regardless as to if
 the update actually changed any data.  In this way needless or redundant record
 updates can be found.  This row starts at 0 and therefore may be the same as the
 diag_row_version - 1.$DOC$;
+
+CREATE INDEX syst_identities_account_type_identifier_idx
+    ON msbms_syst_data.syst_identities USING btree
+        ( identity_type_id, access_account_id, account_identifier );
+
+CREATE INDEX syst_identities_access_account_idx
+    ON msbms_syst_data.syst_identities USING btree ( access_account_id );
