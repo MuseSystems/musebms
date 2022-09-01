@@ -1,9 +1,9 @@
-CREATE OR REPLACE FUNCTION msbms_syst_data.trig_b_iu_syst_identities_validate_uniqueness()
+CREATE OR REPLACE FUNCTION msbms_syst_data.trig_b_i_syst_identities_validate_uniqueness()
 RETURNS trigger AS
 $BODY$
 
--- File:        trig_b_iu_syst_identities_check_uniqueness.eex.sql
--- Location:    musebms/database/components/system/msbms_syst_authentication/msbms_syst_data/syst_identities/trig_b_iu_syst_identities_check_uniqueness.eex.sql
+-- File:        trig_b_i_syst_identities_check_uniqueness.eex.sql
+-- Location:    musebms/database/components/system/msbms_syst_authentication/msbms_syst_data/syst_identities/trig_b_i_syst_identities_check_uniqueness.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -42,7 +42,7 @@ BEGIN
                           'in the same scope of identity resolution.',
                 DETAIL = msbms_syst_priv.get_exception_details(
                              p_proc_schema    => 'msbms_syst_data'
-                            ,p_proc_name      => 'trig_b_iu_syst_identities_validate_uniqueness'
+                            ,p_proc_name      => 'trig_b_i_syst_identities_validate_uniqueness'
                             ,p_exception_name => 'duplicate_identity'
                             ,p_errcode        => 'PM002'
                             ,p_param_data     => jsonb_build_object(
@@ -67,14 +67,14 @@ END;
 $BODY$
 LANGUAGE plpgsql VOLATILE;
 
-ALTER FUNCTION msbms_syst_data.trig_b_iu_syst_identities_validate_uniqueness()
+ALTER FUNCTION msbms_syst_data.trig_b_i_syst_identities_validate_uniqueness()
     OWNER TO <%= msbms_owner %>;
 
-REVOKE EXECUTE ON FUNCTION msbms_syst_data.trig_b_iu_syst_identities_validate_uniqueness() FROM public;
-GRANT EXECUTE ON FUNCTION msbms_syst_data.trig_b_iu_syst_identities_validate_uniqueness() TO <%= msbms_owner %>;
+REVOKE EXECUTE ON FUNCTION msbms_syst_data.trig_b_i_syst_identities_validate_uniqueness() FROM public;
+GRANT EXECUTE ON FUNCTION msbms_syst_data.trig_b_i_syst_identities_validate_uniqueness() TO <%= msbms_owner %>;
 
 
-COMMENT ON FUNCTION msbms_syst_data.trig_b_iu_syst_identities_validate_uniqueness() IS
+COMMENT ON FUNCTION msbms_syst_data.trig_b_i_syst_identities_validate_uniqueness() IS
 $DOC$Provides a check that each msbms_syst_data.syst_identities.account_identifier
 value is unique for each owner's access accounts or unique amongst unowned
 access accounts.$DOC$;
