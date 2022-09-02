@@ -46,7 +46,6 @@ BEGIN
     SET
         credential_data = new.credential_data
       , last_updated    = new.last_updated
-      , external_name   = new.external_name
     WHERE id = new.id
     RETURNING * INTO new;
 

@@ -18,7 +18,6 @@ SELECT
   , credential_for_identity_id
   , credential_data
   , last_updated
-  , external_name
   , diag_timestamp_created
   , diag_role_created
   , diag_timestamp_modified
@@ -111,13 +110,6 @@ of last password change, for example).   This field is explicitly not for dating
 trivial or administrative changes which don't actually materially change the
 credential data; please consult the appropriate diagnostic fields for those use
 cases.$DOC$;
-
-COMMENT ON
-    COLUMN msbms_syst.syst_credentials.external_name IS
-$DOC$An optional external identifier for use in user displays and similar scenarios.
-This value is not unique and not suitable for anything more than informal record
-identification by the user.  Some credential types may record a default value
-automatically in this column.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst.syst_credentials.diag_timestamp_created IS

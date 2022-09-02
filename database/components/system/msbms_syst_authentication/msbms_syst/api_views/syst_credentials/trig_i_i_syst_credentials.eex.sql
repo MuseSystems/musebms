@@ -21,15 +21,13 @@ BEGIN
         , credential_type_id
         , credential_for_identity_id
         , credential_data
-        , last_updated
-        , external_name )
+        , last_updated )
     VALUES
         ( new.access_account_id
         , new.credential_type_id
         , new.credential_for_identity_id
         , new.credential_data
-        , new.last_updated
-        , new.external_name )
+        , new.last_updated )
     RETURNING * INTO new;
 
     RETURN new;
