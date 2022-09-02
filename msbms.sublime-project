@@ -66,7 +66,7 @@
     [
         {
             "name": "Test MsbmsSystError",
-            "shell_cmd": "cd \"$project_path/components/system/msbms_syst_error\" && mix test",
+            "shell_cmd": "mix test && mix credo --strict",
             "working_dir": "${project_path}/components/system/msbms_syst_error",
             "selector": "source.elixir",
             "keyfiles":
@@ -76,7 +76,7 @@
         },
         {
             "name": "Test MsbmsSystUtils",
-            "shell_cmd": "cd \"$project_path/components/system/msbms_syst_utils\" && mix test",
+            "shell_cmd": "mix test && mix credo --strict",
             "working_dir": "${project_path}/components/system/msbms_syst_utils",
             "selector": "source.elixir",
             "keyfiles":
@@ -86,7 +86,7 @@
         },
         {
             "name": "Test MsbmsSystDatastore",
-            "shell_cmd": "cd \"$project_path/components/system/msbms_syst_datastore\" && mix test",
+            "shell_cmd": "mix test && mix credo --strict",
             "working_dir": "${project_path}/components/system/msbms_syst_datastore",
             "selector": "source.elixir",
             "keyfiles":
@@ -96,7 +96,7 @@
         },
         {
             "name": "Test MsbmsSystOptions",
-            "shell_cmd": "cd \"$project_path/components/system/msbms_syst_options\" && mix test",
+            "shell_cmd": "mix test && mix credo --strict",
             "working_dir": "${project_path}/components/system/msbms_syst_options",
             "selector": "source.elixir",
             "keyfiles":
@@ -106,7 +106,7 @@
         },
         {
             "name": "Test MsbmsSystSettings",
-            "shell_cmd": "cd \"$project_path/components/system/msbms_syst_settings\" && mix test",
+            "shell_cmd": "mix test && mix credo --strict",
             "working_dir": "${project_path}/components/system/msbms_syst_settings",
             "selector": "source.elixir",
             "keyfiles":
@@ -116,7 +116,7 @@
         },
         {
             "name": "Test MsbmsSystEnums",
-            "shell_cmd": "cd \"$project_path/components/system/msbms_syst_enums\" && mix test",
+            "shell_cmd": "mix test && mix credo --strict",
             "working_dir": "${project_path}/components/system/msbms_syst_enums",
             "selector": "source.elixir",
             "keyfiles":
@@ -126,7 +126,7 @@
         },
         {
             "name": "Test MsbmsSystRateLimiter",
-            "shell_cmd": "cd \"$project_path/components/system/msbms_syst_rate_limiter\" && mix test",
+            "shell_cmd": "mix test && mix credo --strict",
             "working_dir": "${project_path}/components/system/msbms_syst_rate_limiter",
             "selector": "source.elixir",
             "keyfiles":
@@ -136,7 +136,7 @@
         },
         {
             "name": "Test MsbmsSystInstanceMgr",
-            "shell_cmd": "cd \"$project_path/components/system/msbms_syst_instance_mgr\" && mix test",
+            "shell_cmd": "mix test && mix credo --strict",
             "working_dir": "${project_path}/components/system/msbms_syst_instance_mgr",
             "selector": "source.elixir",
             "keyfiles":
@@ -146,7 +146,7 @@
         },
         {
             "name": "Test MsbmsSystAuthentication",
-            "shell_cmd": "cd \"$project_path/components/system/msbms_syst_authentication\" && mix test",
+            "shell_cmd": "mix test && mix credo --strict",
             "working_dir": "${project_path}/components/system/msbms_syst_authentication",
             "selector": "source.elixir",
             "keyfiles":
