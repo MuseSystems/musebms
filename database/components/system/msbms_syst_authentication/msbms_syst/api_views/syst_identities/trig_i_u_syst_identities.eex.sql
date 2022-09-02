@@ -48,6 +48,7 @@ BEGIN
         validated            = new.validated
       , validation_requested = new.validation_requested
       , validation_expires   = new.validation_expires
+      , external_name        = new.external_name
     WHERE id = new.id
     RETURNING * INTO new;
 

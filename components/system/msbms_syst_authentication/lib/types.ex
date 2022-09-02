@@ -62,8 +62,7 @@ defmodule MsbmsSystAuthentication.Types do
           optional(:credential_type_id) => credential_type_id(),
           optional(:credential_type_name) => credential_type_name(),
           optional(:credential_for_identity_id) => identity_id(),
-          optional(:credential_data) => binary(),
-          optional(:external_name) => String.t()
+          optional(:credential_data) => binary()
         }
 
   @type credential_type_id() :: MsbmsSystEnums.Types.enum_item_id()
@@ -94,7 +93,8 @@ defmodule MsbmsSystAuthentication.Types do
           optional(:validated) => DateTime.t(),
           optional(:validates_identity_id) => identity_id(),
           optional(:validation_requested) => DateTime.t(),
-          optional(:validation_expires) => DateTime.t()
+          optional(:validation_expires) => DateTime.t(),
+          optional(:external_name) => String.t()
         }
 
   @type instance_network_rule_params() :: %{

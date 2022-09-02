@@ -20,6 +20,7 @@ SELECT
   , validates_identity_id
   , validation_requested
   , validation_expires
+  , external_name
   , diag_timestamp_created
   , diag_role_created
   , diag_timestamp_modified
@@ -119,6 +120,13 @@ COMMENT ON
     COLUMN msbms_syst.syst_identities.validation_expires IS
 $DOC$The timetstamp at which a required validation request will expire.  When an
 identity validation is not required, this column will be null.$DOC$;
+
+COMMENT ON
+    COLUMN msbms_syst.syst_identities.external_name IS
+$DOC$An optional external identifier for use in user displays and similar scenarios.
+This value is not unique and not suitable for anything more than informal record
+identification by the user.  Some identity types may record a default value
+automatically in this column.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst.syst_identities.diag_timestamp_created IS
