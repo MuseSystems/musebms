@@ -14,35 +14,36 @@ defmodule MsbmsSystError do
   @moduledoc """
   API for working with the MuseBMS error reporting subsystem.
 
-  This module defines a nested structure for reporting errors in contexts where a result type ends
-  in an error state.  By capturing lower level errors and reporting them in a standard way, various
-  application errors, especially non-fatal errors, can be handled appropriate and logged for later
-  analysis.
+  This module defines a nested structure for reporting errors in contexts where a result should be
+  represented by an error result.  By capturing lower level errors and reporting them in a
+  standard way, various application errors, especially non-fatal errors, can be handled as
+  appropriate and logged for later analysis.
 
-  The basic form of a reportable application error is: {:error, %MsbmsSystError{}} where
-  %MsbmsSystError{} contains basic fields to identify the kind of error, the source of the error.
+  The basic form of a reportable application error is: `{:error, %MsbmsSystError{}}` where
+  `%MsbmsSystError{}` contains basic fields to identify the kind of error, the source of the
+  error, and other error related data.
 
-  Functions in this API are used to work with the returned struct.
+  Functions in this API are used to work with the returned exception.
   """
 
   alias MsbmsSystError.Impl.MsbmsError
   alias MsbmsSystError.Types
 
   @typedoc """
-  Defines a nestable exception format for reporting MuseBMS application exceptions.t().
+  Defines a nestable exception format for reporting MuseBMS application exceptions.
 
   Fields in the exception are:
-    * __code__
+    * `code` - classifies the error into a specific kind of exception likely to be seen in
+    application.  Useful for pattern matching, logging, and determining if any raised exception
+    should be handled or not.
 
-      Classifies the error into a specific kind of exception likely to be seen in application.  Useful for pattern matching, logging, and determining if any raised exception should be handled or not.
+    * `message` - the text description of the error condition.  This should be meaningful to
+    humans.
 
-    * __message__
-
-      The text description of the error condition.  This should be meaningful to humans.
-
-    * __cause__
-
-      This value may be either another %MsbmsSystError{} value representing a more fundamental cause or other metadata helpful in understanding the cause of the error. Values found here, in addition to other %MsbmsSystError{} values, could include maps of function parameters/values or lower level exceptions that originate from included dependencies or libraries like database connection libraries.
+    * `cause` - includes information that may be helpful in understanding the cause of the error
+    condition.  This could include nested `t:MsbmsSystError/0` objects, exception data created
+    outside of this exception framework, or pertinent data such as parameters and data that is
+    directly related to the exception.
   """
   @type t :: %__MODULE__{
           code: Types.msbms_error(),
@@ -57,12 +58,15 @@ defmodule MsbmsSystError do
 
   @doc section: :error_parsing
   @doc """
-  The %MsbmsSystError{} struct (the Error Struct) may represent arbitrarily nested Error Structs in
-  the `cause:` attribute of the Error Struct.
+  Returns the root cause of an `MsbmsSystError` exception object.
+
+  The `MsbmsSystError` exception handling framework allows for nested exceptions to be reported
+  stack trace style from lower levels of the application where an exception was caused into higher
+  levels of the application which enter a failure state due to the lower level root cause.
 
   This function will traverse the nesting and return the bottom most Error Struct.  If some other
-  object, such as a standard error tuple is passed to the function, the function will simply return
-  the value.
+  object, such as a standard error tuple is passed to the function, the function will simply
+  return the value.
 
   ## Examples
       iex> my_err = %MsbmsSystError{
