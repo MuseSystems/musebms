@@ -22,7 +22,7 @@ PERFORM
           "display_name": "Identity Types",
           "syst_description": "Established the various kinds of credentials that are available for verifying an identity.",
           "syst_defined": true,
-          "user_maintainable": true,
+          "user_maintainable": false,
           "default_syst_options": null,
           "default_user_options": null,
           "functional_types": [
@@ -60,7 +60,7 @@ PERFORM
               "enum_default": true,
               "functional_type_default": true,
               "syst_defined": true,
-              "user_maintainable": true,
+              "user_maintainable": false,
               "syst_description": "This identity type indicates the sort of user name a human user would enter into a login form to identify themselves. The user identifier will always be an email address.  This identity may only be used for interactive logins and explicitly not for in scenarios where you would use token credential types for authentication.",
               "syst_options": {}
             },
@@ -72,7 +72,7 @@ PERFORM
               "enum_default": false,
               "functional_type_default": true,
               "syst_defined": true,
-              "user_maintainable": true,
+              "user_maintainable": false,
               "syst_description": "Account IDs are system generated IDs which can be used similar to user name, but can be given to third parties, such as the administrator of an application instance for the purpose of being granted user access to the instance, without also disclosing personal ID information such as an email address.  These IDs are typical simple and easy to provide via verbal or written communication.  This ID type is not allowed for login.",
               "syst_options": {}
             },
@@ -84,7 +84,7 @@ PERFORM
               "enum_default": false,
               "functional_type_default": true,
               "syst_defined": true,
-              "user_maintainable": true,
+              "user_maintainable": false,
               "syst_description": "A system generated ID for use in identifying the user account in automated access scenarios.  This kind of ID differs from the account_id in that it is significantly larger than an account ID would be and may only be used with token credential types.",
               "syst_options": {}
             },
@@ -96,7 +96,7 @@ PERFORM
               "enum_default": false,
               "functional_type_default": true,
               "syst_defined": true,
-              "user_maintainable": true,
+              "user_maintainable": false,
               "syst_description": "A one time use identifier which, along with a one time use credential, validates that an access account has been setup correctly.",
               "syst_options": {}
             }
