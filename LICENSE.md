@@ -1,6 +1,4 @@
-# PolyForm Strict License 1.0.0
-
-<https://polyformproject.org/licenses/strict/1.0.0>
+# Muse Systems Business Management System Software License Agreement v1.0
 
 ## Acceptance
 
@@ -22,26 +20,13 @@ The licensor grants you a patent license for the software that
 covers patent claims the licensor can license, or becomes able
 to license, that you would infringe by using the software.
 
-## Noncommercial Purposes
-
-Any noncommercial purpose is a permitted purpose.
-
 ## Personal Uses
 
 Personal use for research, experiment, and testing for
 the benefit of public knowledge, personal study, private
-entertainment, hobby projects, amateur pursuits, or religious
-observance, without any anticipated commercial application,
-is use for a permitted purpose.
-
-## Noncommercial Organizations
-
-Use by any charitable organization, educational institution,
-public research organization, public safety or health
-organization, environmental protection organization,
-or government institution is use for a permitted purpose
-regardless of the source of funding or obligations resulting
-from the funding.
+entertainment, hobby projects, or amateur pursuits, without any
+anticipated commercial application, is use for a permitted
+purpose.
 
 ## Fair Use
 
