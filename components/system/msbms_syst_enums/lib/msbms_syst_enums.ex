@@ -222,6 +222,26 @@ defmodule MsbmsSystEnums do
   defdelegate get_enum_item_by_id(enum_name, enum_item_id), to: Impl.Enums
 
   @doc section: :enum_functional_type_data
+  @doc """
+  Returns the internal name of the functional type to which the given Enum Item
+  record belongs.
+
+  ## Parameters
+
+    * `enum_name` - the name of the enumeration to which the Enum Item ID
+    belongs.
+
+    * `enum_item_id` - the record ID of the Enum Item record of interest.
+
+  ## Example
+      iex> example_enum_item = MsbmsSystEnums.get_enum_item_by_name(
+      ...>   "example_enumeration",
+      ...>   "example_enum_item_one")
+      iex> MsbmsSystEnums.get_functional_type_by_enum_item_id(
+      ...>   "example_enumeration",
+      ...>   example_enum_item.id)
+      "example_enum_func_type_1"
+  """
   @spec get_functional_type_by_enum_item_id(Types.enum_name(), Types.enum_item_id()) ::
           Types.enum_functional_type_name()
   defdelegate get_functional_type_by_enum_item_id(enum_name, enum_item_id), to: Impl.Enums
