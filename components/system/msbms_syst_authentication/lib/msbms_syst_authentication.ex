@@ -157,9 +157,9 @@ defmodule MsbmsSystAuthentication do
   Once a `syst_access_account_instance_assocs` record is accepted, it may not
   be re-invited again using this process until the record is revoked (deleted).
 
-  `syst_access_account_instance_assocs` are unique to the Access Account,
-  Instance, and Credential Type combination and only one such record may exist
-  for that combination at any one time.
+  `syst_access_account_instance_assocs` are unique to the Access Account and
+  Instance combination and only one such record may exist for that combination
+  at any one time.
 
   ## Parameters
 
@@ -168,9 +168,6 @@ defmodule MsbmsSystAuthentication do
 
     * `instance_id` - the Instance record ID to which the Access Account is
     being invited.
-
-    * `credential_type_id` - the Credential Type which is being allowed to
-    authenticate the Access Account to the Instance.
 
     * `opts` - a keyword list of optional parameters used to set record values
     and behaviors.  Available options are:
@@ -188,10 +185,9 @@ defmodule MsbmsSystAuthentication do
   @spec invite_to_instance(
           Types.access_account_id(),
           MsbmsSystInstanceMgr.Types.instance_id(),
-          Types.credential_type_id(),
           Keyword.t()
         ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MsbmsSystError.t()}
-  defdelegate invite_to_instance(access_account_id, instance_id, credential_type_id, opts \\ []),
+  defdelegate invite_to_instance(access_account_id, instance_id, opts \\ []),
     to: Impl.AccessAccountInstanceAssoc
 
   @doc section: :access_account_instance_assoc_data
@@ -237,16 +233,12 @@ defmodule MsbmsSystAuthentication do
 
     * `instance_id` - the Instance record ID to which the Access Account has
     been invited.
-
-    * `credential_type_id` - the Credential Type which is being allowed to
-    authenticate the Access Account to the Instance.
   """
   @spec accept_instance_invite(
           Types.access_account_id(),
-          MsbmsSystInstanceMgr.Types.instance_id(),
-          Types.credential_type_id()
+          MsbmsSystInstanceMgr.Types.instance_id()
         ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MsbmsSystError.t()}
-  defdelegate accept_instance_invite(access_account_id, instance_id, credential_type_id),
+  defdelegate accept_instance_invite(access_account_id, instance_id),
     to: Impl.AccessAccountInstanceAssoc
 
   @doc section: :access_account_instance_assoc_data
@@ -293,16 +285,12 @@ defmodule MsbmsSystAuthentication do
 
     * `instance_id` - the Instance record ID to which the Access Account has
     been invited.
-
-    * `credential_type_id` - the Credential Type for which the invite to access
-    was created.
   """
   @spec decline_instance_invite(
           Types.access_account_id(),
-          MsbmsSystInstanceMgr.Types.instance_id(),
-          Types.credential_type_id()
+          MsbmsSystInstanceMgr.Types.instance_id()
         ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MsbmsSystError.t()}
-  defdelegate decline_instance_invite(access_account_id, instance_id, credential_type_id),
+  defdelegate decline_instance_invite(access_account_id, instance_id),
     to: Impl.AccessAccountInstanceAssoc
 
   @doc section: :access_account_instance_assoc_data
@@ -350,15 +338,11 @@ defmodule MsbmsSystAuthentication do
 
     * `instance_id` - the Instance record ID from which the Access Account had
     previously been invited to access.
-
-    * `credential_type_id` - the record ID of the Credential Type which for
-    which access being revoked.
   """
   @spec revoke_instance_access(
           Types.access_account_id(),
-          MsbmsSystInstanceMgr.Types.instance_id(),
-          Types.credential_type_id()
+          MsbmsSystInstanceMgr.Types.instance_id()
         ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MsbmsSystError.t()}
-  defdelegate revoke_instance_access(access_account_id, instance_id, credential_type_id),
+  defdelegate revoke_instance_access(access_account_id, instance_id),
     to: Impl.AccessAccountInstanceAssoc
 end

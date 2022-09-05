@@ -27,14 +27,13 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystAccessAccountInstanceAssoc
     %Data.SystAccessAccountInstanceAssocs{}
     |> cast(resolved_insert_params, [
       :access_account_id,
-      :credential_type_id,
       :instance_id,
       :access_granted,
       :invitation_issued,
       :invitation_expires,
       :invitation_declined
     ])
-    |> unique_constraint([:access_account_id, :instance_id, :credential_type_id],
+    |> unique_constraint([:access_account_id, :instance_id],
       name: "syst_access_account_instance_assoc_a_c_i_udx"
     )
     |> validate_common()
@@ -59,7 +58,6 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystAccessAccountInstanceAssoc
   defp validate_common(changeset) do
     validate_required(changeset, [
       :access_account_id,
-      :credential_type_id,
       :instance_id
     ])
   end

@@ -31,9 +31,6 @@ defmodule MsbmsSystAuthentication.Data.SystAccessAccountInstanceAssocs do
             id: Ecto.UUID.t() | nil,
             access_account_id: Types.access_account_id() | nil,
             access_account: Data.SystAccessAccounts.t() | Ecto.Association.NotLoaded.t() | nil,
-            credential_type_id: Types.credential_type_id() | nil,
-            credential_type:
-              MsbmsSystEnums.Data.SystEnumItems.t() | Ecto.Association.NotLoaded.t() | nil,
             instance_id: MsbmsSystInstanceMgr.Types.instance_id() | nil,
             instance:
               MsbmsSystInstanceMgr.Data.SystInstances.t() | Ecto.Association.NotLoaded.t() | nil,
@@ -66,7 +63,6 @@ defmodule MsbmsSystAuthentication.Data.SystAccessAccountInstanceAssocs do
     field(:diag_update_count, :integer)
 
     belongs_to(:access_account, Data.SystAccessAccounts)
-    belongs_to(:credential_type, MsbmsSystEnums.Data.SystEnumItems)
     belongs_to(:instance, MsbmsSystInstanceMgr.Data.SystInstances)
   end
 

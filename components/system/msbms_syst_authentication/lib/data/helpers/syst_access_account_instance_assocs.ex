@@ -18,7 +18,6 @@ defmodule MsbmsSystAuthentication.Data.Helpers.SystAccessAccountInstanceAssocs d
   def resolve_name_params(change_params, operation) do
     change_params
     |> Helpers.General.resolve_access_account_id()
-    |> Helpers.General.resolve_credential_type_id(operation)
     |> Helpers.General.resolve_instance_id()
   end
 end
