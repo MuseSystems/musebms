@@ -84,7 +84,7 @@ defmodule DevSupport do
     MsbmsSystEnums.put_enums_service(:msbms_dev_enum_service)
   end
 
-  def stop_dev_environment(db_kind \\ :unit_testing), do: cleanup_database(db_kind)
+  def stop_dev_environment(), do: cleanup_database()
 
   def get_datastore_context_id, do: @datastore_context_name
 
@@ -109,13 +109,12 @@ defmodule DevSupport do
     {:ok, _, _} = MsbmsSystDatastore.start_datastore(datastore_options)
   end
 
-  defp cleanup_database(db_kind) do
-    datastore_type = get_datastore_type(db_kind)
+  defp cleanup_database() do
     datastore_options = @datastore_options
 
     :ok = MsbmsSystDatastore.stop_datastore(datastore_options)
     :ok = MsbmsSystDatastore.drop_datastore(datastore_options)
-    File.rm_rf!(Path.join(["priv/database", datastore_type]))
+    File.rm_rf!(Path.join(["priv/database"]))
   end
 
   defp get_datastore_type(:unit_testing), do: @migration_unit_test_ds_type
