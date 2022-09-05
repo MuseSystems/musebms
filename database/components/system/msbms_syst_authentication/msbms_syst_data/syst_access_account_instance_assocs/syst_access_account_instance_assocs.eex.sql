@@ -21,18 +21,13 @@ CREATE TABLE msbms_syst_data.syst_access_account_instance_assocs
         NOT NULL
         CONSTRAINT syst_access_account_instance_assocs_access_accounts_fk
             REFERENCES msbms_syst_data.syst_access_accounts (id) ON DELETE CASCADE
-    ,credential_type_id
-        uuid
-        NOT NULL
-        CONSTRAINT syst_access_account_instance_assocs_credential_types_fk
-            REFERENCES msbms_syst_data.syst_enum_items (id) ON DELETE CASCADE
     ,instance_id
         uuid
         NOT NULL
         CONSTRAINT syst_access_account_instance_assocs_instances_fk
             REFERENCES msbms_syst_data.syst_instances (id) ON DELETE CASCADE
     ,CONSTRAINT syst_access_account_instance_assoc_a_c_i_udx
-        UNIQUE ( access_account_id, instance_id, credential_type_id )
+        UNIQUE ( access_account_id, instance_id )
     ,access_granted
         timestamptz
     ,invitation_issued
@@ -73,16 +68,6 @@ CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
     BEFORE INSERT OR UPDATE ON msbms_syst_data.syst_access_account_instance_assocs
     FOR EACH ROW EXECUTE PROCEDURE msbms_syst_priv.trig_b_iu_set_diagnostic_columns();
 
-CREATE CONSTRAINT TRIGGER a50_trig_a_i_credential_types_enum_item_check
-    AFTER INSERT ON msbms_syst_data.syst_access_account_instance_assocs
-    FOR EACH ROW EXECUTE PROCEDURE
-        msbms_syst_priv.trig_a_iu_enum_item_check('credential_types', 'credential_type_id');
-
-CREATE CONSTRAINT TRIGGER a50_trig_a_u_credential_types_enum_item_check
-    AFTER UPDATE ON msbms_syst_data.syst_access_account_instance_assocs
-    FOR EACH ROW WHEN ( old.credential_type_id != new.credential_type_id)EXECUTE PROCEDURE
-        msbms_syst_priv.trig_a_iu_enum_item_check('credential_types', 'credential_type_id');
-
 COMMENT ON
     TABLE msbms_syst_data.syst_access_account_instance_assocs IS
 $DOC$Associates access accounts with the instances for which they are allowed to
@@ -99,12 +84,6 @@ COMMENT ON
     COLUMN msbms_syst_data.syst_access_account_instance_assocs.access_account_id IS
 $DOC$The access account which is being granted authentication rights to the given
 instance.$DOC$;
-
-COMMENT ON
-    COLUMN msbms_syst_data.syst_access_account_instance_assocs.credential_type_id IS
-$DOC$Allows a specific kind of credential to be used to authenticate the access
-account to the instance.  Typically this is to control the ability to connect as
-a user or using API tokens.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.syst_access_account_instance_assocs.instance_id IS

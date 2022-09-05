@@ -18,7 +18,6 @@ BEGIN
 
     IF
         new.access_account_id  != old.access_account_id OR
-        new.credential_type_id != old.credential_type_id OR
         new.instance_id        != old.instance_id
     THEN
         RAISE EXCEPTION

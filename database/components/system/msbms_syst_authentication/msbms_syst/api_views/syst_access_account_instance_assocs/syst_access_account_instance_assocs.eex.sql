@@ -14,7 +14,6 @@ CREATE VIEW msbms_syst.syst_access_account_instance_assocs AS
 SELECT
     id
   , access_account_id
-  , credential_type_id
   , instance_id
   , access_granted
   , invitation_issued
@@ -72,15 +71,6 @@ COMMENT ON
     COLUMN msbms_syst.syst_access_account_instance_assocs.access_account_id IS
 $DOC$The access account which is being granted authentication rights to the given
 instance.
-
-This value may only be set on INSERT via this API view.  UPDATEs to this value
-are not allowed after record creation.$DOC$;
-
-COMMENT ON
-    COLUMN msbms_syst.syst_access_account_instance_assocs.credential_type_id IS
-$DOC$Allows a specific kind of credential to be used to authenticate the access
-account to the instance.  Typically this is to control the ability to connect as
-a user or using API tokens.
 
 This value may only be set on INSERT via this API view.  UPDATEs to this value
 are not allowed after record creation.$DOC$;

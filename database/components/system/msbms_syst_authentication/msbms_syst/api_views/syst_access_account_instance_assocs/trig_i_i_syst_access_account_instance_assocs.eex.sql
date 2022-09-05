@@ -18,7 +18,6 @@ BEGIN
 
     INSERT INTO msbms_syst_data.syst_access_account_instance_assocs
         ( access_account_id
-        , credential_type_id
         , instance_id
         , access_granted
         , invitation_issued
@@ -26,7 +25,6 @@ BEGIN
         , invitation_declined )
     VALUES
         ( new.access_account_id
-        , new.credential_type_id
         , new.instance_id
         , new.access_granted
         , new.invitation_issued

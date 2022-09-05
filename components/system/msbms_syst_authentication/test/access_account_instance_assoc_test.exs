@@ -33,19 +33,10 @@ defmodule AccessAccountInstanceAssocTest do
       )
       |> MsbmsSystDatastore.one!()
 
-    credential_type =
-      MsbmsSystEnums.get_enum_item_by_name(
-        "credential_types",
-        "credential_types_sysdef_token_api"
-      )
-
     test_now = DateTime.now!("Etc/UTC")
 
     assert {:ok, new_record} =
-             MsbmsSystAuthentication.invite_to_instance(
-               access_account.id,
-               instance_id,
-               credential_type.id,
+             MsbmsSystAuthentication.invite_to_instance(access_account.id, instance_id,
                create_accepted: true
              )
 
@@ -55,10 +46,7 @@ defmodule AccessAccountInstanceAssocTest do
     assert is_nil(new_record.invitation_declined)
 
     assert {:error, _error} =
-             MsbmsSystAuthentication.invite_to_instance(
-               access_account.id,
-               instance_id,
-               credential_type.id,
+             MsbmsSystAuthentication.invite_to_instance(access_account.id, instance_id,
                create_accepted: true
              )
   end
@@ -75,19 +63,12 @@ defmodule AccessAccountInstanceAssocTest do
       )
       |> MsbmsSystDatastore.one!()
 
-    credential_type =
-      MsbmsSystEnums.get_enum_item_by_name(
-        "credential_types",
-        "credential_types_sysdef_password"
-      )
-
     test_now = DateTime.now!("Etc/UTC")
 
     assert {:ok, new_record} =
              MsbmsSystAuthentication.accept_instance_invite(
                access_account.id,
-               instance_id,
-               credential_type.id
+               instance_id
              )
 
     assert DateTime.diff(new_record.access_granted, test_now) >= 0
@@ -109,20 +90,10 @@ defmodule AccessAccountInstanceAssocTest do
       )
       |> MsbmsSystDatastore.one!()
 
-    credential_type =
-      MsbmsSystEnums.get_enum_item_by_name(
-        "credential_types",
-        "credential_types_sysdef_password"
-      )
-
     test_now = DateTime.now!("Etc/UTC")
 
     assert {:ok, new_record} =
-             MsbmsSystAuthentication.decline_instance_invite(
-               access_account.id,
-               instance_id,
-               credential_type.id
-             )
+             MsbmsSystAuthentication.decline_instance_invite(access_account.id, instance_id)
 
     assert DateTime.diff(new_record.invitation_declined, test_now) >= 0
     assert DateTime.diff(new_record.invitation_issued, test_now) <= 0
@@ -143,26 +114,11 @@ defmodule AccessAccountInstanceAssocTest do
       )
       |> MsbmsSystDatastore.one!()
 
-    credential_type =
-      MsbmsSystEnums.get_enum_item_by_name(
-        "credential_types",
-        "credential_types_sysdef_password"
-      )
-
     test_now = DateTime.now!("Etc/UTC")
 
-    assert :ok =
-             MsbmsSystAuthentication.revoke_instance_access(
-               access_account.id,
-               instance_id,
-               credential_type.id
-             )
+    assert :ok = MsbmsSystAuthentication.revoke_instance_access(access_account.id, instance_id)
 
     assert {:error, _error} =
-             MsbmsSystAuthentication.revoke_instance_access(
-               access_account.id,
-               instance_id,
-               credential_type.id
-             )
+             MsbmsSystAuthentication.revoke_instance_access(access_account.id, instance_id)
   end
 end

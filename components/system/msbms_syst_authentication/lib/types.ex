@@ -28,8 +28,6 @@ defmodule MsbmsSystAuthentication.Types do
   @type access_account_instance_assoc_params() :: %{
           optional(:access_account_id) => access_account_id(),
           optional(:access_account_name) => access_account_name(),
-          optional(:credential_type_id) => credential_type_id(),
-          optional(:credential_type_name) => credential_type_name(),
           optional(:instance_id) => MsbmsSystInstanceMgr.Types.instance_id(),
           optional(:instance_name) => MsbmsSystInstanceMgr.Types.instance_name(),
           optional(:access_granted) => DateTime.t(),

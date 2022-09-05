@@ -24,17 +24,10 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccountInstanceAssoc do
   @spec invite_to_instance(
           Types.access_account_id(),
           MsbmsSystInstanceMgr.Types.instance_id(),
-          Types.credential_type_id(),
           Keyword.t()
         ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MsbmsSystError.t()}
-  def invite_to_instance(
-        access_account_id,
-        instance_id,
-        credential_type_id,
-        opts
-      )
-      when is_binary(access_account_id) and is_binary(instance_id) and
-             is_binary(credential_type_id) do
+  def invite_to_instance(access_account_id, instance_id, opts)
+      when is_binary(access_account_id) and is_binary(instance_id) do
     opts = resolve_options(opts, create_accepted: false, expiration_days: 30)
 
     date_now = DateTime.now!("Etc/UTC")
@@ -49,14 +42,12 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccountInstanceAssoc do
     invite_params = %{
       access_account_id: access_account_id,
       instance_id: instance_id,
-      credential_type_id: credential_type_id,
       invitation_issued: date_invitation,
       access_granted: date_accepted,
       invitation_expires: date_expire
     }
 
-    target_record =
-      get_access_account_instance_assoc(access_account_id, instance_id, credential_type_id)
+    target_record = get_access_account_instance_assoc(access_account_id, instance_id)
 
     invite_or_reinvite(target_record, invite_params)
   rescue
@@ -86,13 +77,11 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccountInstanceAssoc do
 
   @spec accept_instance_invite(
           Types.access_account_id(),
-          MsbmsSystInstanceMgr.Types.instance_id(),
-          Types.credential_type_id()
+          MsbmsSystInstanceMgr.Types.instance_id()
         ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MsbmsSystError.t()}
-  def accept_instance_invite(access_account_id, instance_id, credential_type_id)
-      when is_binary(access_account_id) and is_binary(instance_id) and
-             is_binary(credential_type_id) do
-    get_access_account_instance_assoc(access_account_id, instance_id, credential_type_id)
+  def accept_instance_invite(access_account_id, instance_id)
+      when is_binary(access_account_id) and is_binary(instance_id) do
+    get_access_account_instance_assoc(access_account_id, instance_id)
     |> accept_instance_invite()
   rescue
     error ->
@@ -156,13 +145,11 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccountInstanceAssoc do
 
   @spec decline_instance_invite(
           Types.access_account_id(),
-          MsbmsSystInstanceMgr.Types.instance_id(),
-          Types.credential_type_id()
+          MsbmsSystInstanceMgr.Types.instance_id()
         ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MsbmsSystError.t()}
-  def decline_instance_invite(access_account_id, instance_id, credential_type_id)
-      when is_binary(access_account_id) and is_binary(instance_id) and
-             is_binary(credential_type_id) do
-    get_access_account_instance_assoc(access_account_id, instance_id, credential_type_id)
+  def decline_instance_invite(access_account_id, instance_id)
+      when is_binary(access_account_id) and is_binary(instance_id) do
+    get_access_account_instance_assoc(access_account_id, instance_id)
     |> decline_instance_invite()
   rescue
     error ->
@@ -226,13 +213,11 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccountInstanceAssoc do
 
   @spec revoke_instance_access(
           Types.access_account_id(),
-          MsbmsSystInstanceMgr.Types.instance_id(),
-          Types.credential_type_id()
+          MsbmsSystInstanceMgr.Types.instance_id()
         ) :: :ok | {:error, MsbmsSystError.t()}
-  def revoke_instance_access(access_account_id, instance_id, credential_type_id)
-      when is_binary(access_account_id) and is_binary(instance_id) and
-             is_binary(credential_type_id) do
-    get_access_account_instance_assoc(access_account_id, instance_id, credential_type_id)
+  def revoke_instance_access(access_account_id, instance_id)
+      when is_binary(access_account_id) and is_binary(instance_id) do
+    get_access_account_instance_assoc(access_account_id, instance_id)
     |> revoke_instance_access()
   rescue
     error ->
@@ -290,11 +275,9 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccountInstanceAssoc do
       }
   end
 
-  defp get_access_account_instance_assoc(access_account_id, instance_id, credential_type_id) do
+  defp get_access_account_instance_assoc(access_account_id, instance_id) do
     from(aaia in Data.SystAccessAccountInstanceAssocs,
-      where:
-        aaia.access_account_id == ^access_account_id and aaia.instance_id == ^instance_id and
-          aaia.credential_type_id == ^credential_type_id
+      where: aaia.access_account_id == ^access_account_id and aaia.instance_id == ^instance_id
     )
     |> MsbmsSystDatastore.one()
   end

@@ -458,7 +458,6 @@ $AUTHENTICATION_TESTING_INIT$
 
         INSERT INTO msbms_syst_data.syst_access_account_instance_assocs
             ( access_account_id
-            , credential_type_id
             , instance_id
             , access_granted
             , invitation_issued
@@ -466,21 +465,17 @@ $AUTHENTICATION_TESTING_INIT$
             , invitation_declined )
         SELECT
             aa.id
-          , ctei.id
           , i.id
           , now( ) - INTERVAL '20 days'
           , now( ) - INTERVAL '40 days'
           , now( ) - INTERVAL '10 days'
           , NULL::timestamptz
-        FROM msbms_syst_data.syst_enums cte
-                 JOIN msbms_syst_data.syst_enum_items ctei ON ctei.enum_id = cte.id
-           , msbms_syst_data.syst_access_accounts aa
+        FROM msbms_syst_data.syst_access_accounts aa
            , msbms_syst_data.syst_instances i
-        WHERE cte.internal_name = 'credential_types' AND aa.internal_name = 'unowned_all_access';
+        WHERE aa.internal_name = 'unowned_all_access';
 
         INSERT INTO msbms_syst_data.syst_access_account_instance_assocs
             ( access_account_id
-            , credential_type_id
             , instance_id
             , access_granted
             , invitation_issued
@@ -488,25 +483,19 @@ $AUTHENTICATION_TESTING_INIT$
             , invitation_declined )
         SELECT
             aa.id
-          , ctei.id
           , i.id
           , now( ) - INTERVAL '20 days'
           , now( ) - INTERVAL '40 days'
           , now( ) - INTERVAL '10 days'
           , NULL::timestamptz
-        FROM msbms_syst_data.syst_enums cte
-                 JOIN msbms_syst_data.syst_enum_items ctei ON ctei.enum_id = cte.id
-           , msbms_syst_data.syst_access_accounts aa
-                 JOIN msbms_syst_data.syst_owners o ON o.id = aa.owning_owner_id
-                 JOIN msbms_syst_data.syst_instances i ON i.owner_id = o.id
-        WHERE
-              cte.internal_name = 'credential_types'
-          AND aa.internal_name IN ( 'owned_all_access', 'example_accnt' );
+        FROM msbms_syst_data.syst_access_accounts aa
+            JOIN msbms_syst_data.syst_owners o ON o.id = aa.owning_owner_id
+            JOIN msbms_syst_data.syst_instances i ON i.owner_id = o.id
+        WHERE aa.internal_name IN ( 'owned_all_access', 'example_accnt' );
 
         -- Specialized inserts to facilitate testing
         INSERT INTO msbms_syst_data.syst_access_account_instance_assocs
             ( access_account_id
-            , credential_type_id
             , instance_id
             , invitation_issued
             , invitation_expires )
@@ -515,10 +504,6 @@ $AUTHENTICATION_TESTING_INIT$
                     id
                 FROM msbms_syst_data.syst_access_accounts
                 WHERE internal_name = 'decline_account_to_instance_test_accnt' )
-            , ( SELECT
-                    id
-                FROM msbms_syst_data.syst_enum_items
-                WHERE internal_name = 'credential_types_sysdef_password' )
             , ( SELECT
                     id
                 FROM msbms_syst_data.syst_instances i
@@ -532,10 +517,6 @@ $AUTHENTICATION_TESTING_INIT$
                 WHERE internal_name = 'accept_account_to_instance_test_accnt' )
             , ( SELECT
                     id
-                FROM msbms_syst_data.syst_enum_items
-                WHERE internal_name = 'credential_types_sysdef_password' )
-            , ( SELECT
-                    id
                 FROM msbms_syst_data.syst_instances i
                 WHERE internal_name = 'app1_owner1_instance_types_std' )
             , now( ) - INTERVAL '10 days'
@@ -545,10 +526,6 @@ $AUTHENTICATION_TESTING_INIT$
                     id
                 FROM msbms_syst_data.syst_access_accounts
                 WHERE internal_name = 'revoke_account_to_instance_test_accnt' )
-            , ( SELECT
-                    id
-                FROM msbms_syst_data.syst_enum_items
-                WHERE internal_name = 'credential_types_sysdef_password' )
             , ( SELECT
                     id
                 FROM msbms_syst_data.syst_instances i
