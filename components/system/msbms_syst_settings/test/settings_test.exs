@@ -549,8 +549,8 @@ defmodule SettingsTest do
       setting_interval: %MsbmsSystDatastore.DbTypes.Interval{
         months: 1,
         days: 1,
-        seconds: 1,
-        microseconds: 1
+        secs: 1,
+        microsecs: 1
       }
     }
 
@@ -558,8 +558,8 @@ defmodule SettingsTest do
       setting_interval: %MsbmsSystDatastore.DbTypes.Interval{
         months: 2,
         days: 2,
-        seconds: 2,
-        microseconds: 2
+        secs: 2,
+        microsecs: 2
       }
     }
 
@@ -569,16 +569,16 @@ defmodule SettingsTest do
              setting_interval: %MsbmsSystDatastore.DbTypes.Interval{
                months: 1,
                days: 0,
-               seconds: 0,
-               microseconds: 0
+               secs: 0,
+               microsecs: 0
              }
            } = MsbmsSystSettings.get_setting_values("test_setting_one")
 
     assert %MsbmsSystDatastore.DbTypes.Interval{
              months: 1,
              days: 0,
-             seconds: 0,
-             microseconds: 0
+             secs: 0,
+             microsecs: 0
            } =
              MsbmsSystSettings.get_setting_value(
                "test_setting_one",
