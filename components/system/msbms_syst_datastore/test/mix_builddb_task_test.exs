@@ -185,7 +185,7 @@ defmodule MixBuilddbTaskTest do
   test "Perform a build when nested build plans are in use" do
     # TODO: Make this test more robust.  Really there are some content and
     #       ordering checks that should be made, but are more difficult and
-    #       sensitive to implement.  Those failure scenarios are unlikely to 
+    #       sensitive to implement.  Those failure scenarios are unlikely to
     #       crop up in reality and so we'll just go with the "did it finish"
     #       level of testing below, but the internal checks should be added
     #       at some point.
