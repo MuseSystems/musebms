@@ -25,7 +25,7 @@ defmodule MsbmsSystSettings do
   the application may unique.
 
   On startup, the Settings Service creates an in memory cache and populates the
-  cache from the database.  Enquiries for settings are then served from the
+  cache from the database.  Inquiries for settings are then served from the
   cache rather than the database as needed.  Operations which change the
   Settings data are written to the database and then updated in the cache.
 
