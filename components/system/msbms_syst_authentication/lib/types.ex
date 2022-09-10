@@ -118,7 +118,7 @@ defmodule MsbmsSystAuthentication.Types do
   @type password_rule_params() :: %{
           optional(:owner_id) => MsbmsSystInstanceMgr.Types.owner_id() | nil,
           optional(:owner_name) => MsbmsSystInstanceMgr.Types.owner_name() | nil,
-          optional(:password_length) => DbTypes.IntegerTypes.t(),
+          optional(:password_length) => DbTypes.IntegerRange.t(),
           optional(:max_age) => DbTypes.Interval.t(),
           optional(:require_upper_case) => non_neg_integer(),
           optional(:require_lower_case) => non_neg_integer(),
