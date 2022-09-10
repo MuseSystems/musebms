@@ -1,5 +1,5 @@
-# Source File: db_types.ex
-# Location:    musebms/components/system/msbms_syst_datastore/lib/db_types.ex
+# Source File: postgrex_types_define.ex
+# Location:    musebms/components/system/msbms_syst_datastore/lib/db_types/support/postgrex_types_define.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,12 +10,6 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defprotocol MsbmsSystDatastore.DbTypes do
-  alias MsbmsSystDatastore.Types
-
-  @spec compare(t, t) :: Types.db_type_comparison_operators()
-  def(compare(left, right))
-
-  @spec test_compare(t, t, Types.db_type_comparison_operators()) :: boolean()
-  def(test_compare(left, right, operator))
-end
+Postgrex.Types.define(MsbmsSystDatastore.DbTypes.PostgrexTypes, [],
+  allow_infinite_timestamps: true
+)
