@@ -28,6 +28,8 @@ defmodule MsbmsSystDatastore.DbTypes.Impl.Decimal do
   alias MsbmsSystDatastore.DbTypes
   alias MsbmsSystDatastore.DbTypes.Impl.DecimalRange
 
+  @moduledoc false
+
   def compare(left, %Decimal{} = right), do: Decimal.compare(left, right)
 
   def compare(left, %DbTypes.DecimalRange{} = right) do

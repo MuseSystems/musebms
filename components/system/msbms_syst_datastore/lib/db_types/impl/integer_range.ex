@@ -21,6 +21,8 @@ end
 defmodule MsbmsSystDatastore.DbTypes.Impl.IntegerRange do
   alias MsbmsSystDatastore.DbTypes
 
+  @moduledoc false
+
   def compare(left, right, range \\ :range_both), do: compare_start(left, right, range)
 
   # TODO: Not priority but think about an alternative implementation that

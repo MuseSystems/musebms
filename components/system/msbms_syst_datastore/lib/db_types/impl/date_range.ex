@@ -21,6 +21,8 @@ end
 defmodule MsbmsSystDatastore.DbTypes.Impl.DateRange do
   alias MsbmsSystDatastore.DbTypes
 
+  @moduledoc false
+
   # TODO: These may be candidates to set up as constants.  Right now I'm hoping
   #       that most comparisons needing a date that is earlier/later than all
   #       other dates will only matter in these range comparison scenarios, but

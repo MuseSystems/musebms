@@ -19,6 +19,8 @@ defimpl MsbmsSystDatastore.DbTypes.Range, for: MsbmsSystDatastore.DbTypes.Interv
 end
 
 defmodule MsbmsSystDatastore.DbTypes.Impl.Interval do
+  @moduledoc false
+
   def compare(left, right) do
     postgrex_left =
       left
