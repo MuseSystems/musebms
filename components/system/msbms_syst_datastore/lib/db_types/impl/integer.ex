@@ -16,7 +16,7 @@
 # but the normal operators handle these cases and should only be used in very
 # narrow/limited circumstances.
 
-defimpl MsbmsSystDatastore.DbTypes, for: Integer do
+defimpl MsbmsSystDatastore.DbTypes.Range, for: Integer do
   alias MsbmsSystDatastore.DbTypes.Impl
 
   def compare(left, right), do: Impl.Integer.compare(left, right)

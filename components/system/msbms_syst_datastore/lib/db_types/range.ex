@@ -10,7 +10,7 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defprotocol MsbmsSystDatastore.DbTypes do
+defprotocol MsbmsSystDatastore.DbTypes.Range do
   alias MsbmsSystDatastore.Types
 
   @spec compare(t, t) :: Types.db_type_comparison_operators()

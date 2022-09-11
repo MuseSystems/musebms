@@ -10,7 +10,7 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defimpl MsbmsSystDatastore.DbTypes, for: MsbmsSystDatastore.DbTypes.DateTimeRange do
+defimpl MsbmsSystDatastore.DbTypes.Range, for: MsbmsSystDatastore.DbTypes.DateTimeRange do
   alias MsbmsSystDatastore.DbTypes.Impl.DateTimeRange
 
   def compare(left, right), do: DateTimeRange.compare(left, right)

@@ -16,13 +16,13 @@ defmodule DbTypesDateTimeRangeDateTimeTest do
   alias MsbmsSystDatastore.DbTypes
 
   test "Can compute DateTime/DateTime result operators" do
-    assert DbTypes.compare(~U[2022-01-01 00:00:00Z], ~U[2022-01-01 00:00:00Z]) == :eq
-    assert DbTypes.compare(~U[2022-01-01 00:00:00Z], ~U[2022-01-02 00:00:00Z]) == :lt
-    assert DbTypes.compare(~U[2022-01-02 00:00:00Z], ~U[2022-01-01 00:00:00Z]) == :gt
+    assert DbTypes.Range.compare(~U[2022-01-01 00:00:00Z], ~U[2022-01-01 00:00:00Z]) == :eq
+    assert DbTypes.Range.compare(~U[2022-01-01 00:00:00Z], ~U[2022-01-02 00:00:00Z]) == :lt
+    assert DbTypes.Range.compare(~U[2022-01-02 00:00:00Z], ~U[2022-01-01 00:00:00Z]) == :gt
 
-    assert DbTypes.test_compare(~U[2022-01-01 00:00:00Z], ~U[2022-01-01 00:00:00Z], :eq)
-    assert DbTypes.test_compare(~U[2022-01-01 00:00:00Z], ~U[2022-01-02 00:00:00Z], :lt)
-    assert DbTypes.test_compare(~U[2022-01-02 00:00:00Z], ~U[2022-01-01 00:00:00Z], :gt)
+    assert DbTypes.Range.test_compare(~U[2022-01-01 00:00:00Z], ~U[2022-01-01 00:00:00Z], :eq)
+    assert DbTypes.Range.test_compare(~U[2022-01-01 00:00:00Z], ~U[2022-01-02 00:00:00Z], :lt)
+    assert DbTypes.Range.test_compare(~U[2022-01-02 00:00:00Z], ~U[2022-01-01 00:00:00Z], :gt)
   end
 
   test "Can compute DateTimeRange/DateTime inclusivity correctly" do
@@ -33,10 +33,10 @@ defmodule DbTypesDateTimeRangeDateTimeTest do
       upper_inclusive: true
     }
 
-    assert DbTypes.compare(li_ui, ~U[2022-07-31 00:00:00Z]) == :lcr
-    assert DbTypes.compare(li_ui, ~U[2022-08-01 00:00:00Z]) == :lcr
-    assert DbTypes.compare(~U[2022-07-31 00:00:00Z], li_ui) == :rcl
-    assert DbTypes.compare(~U[2022-08-01 00:00:00Z], li_ui) == :rcl
+    assert DbTypes.Range.compare(li_ui, ~U[2022-07-31 00:00:00Z]) == :lcr
+    assert DbTypes.Range.compare(li_ui, ~U[2022-08-01 00:00:00Z]) == :lcr
+    assert DbTypes.Range.compare(~U[2022-07-31 00:00:00Z], li_ui) == :rcl
+    assert DbTypes.Range.compare(~U[2022-08-01 00:00:00Z], li_ui) == :rcl
 
     li_ue = %DbTypes.DateTimeRange{
       lower: ~U[2022-07-31 00:00:00Z],
@@ -45,10 +45,10 @@ defmodule DbTypesDateTimeRangeDateTimeTest do
       upper_inclusive: false
     }
 
-    assert DbTypes.compare(li_ue, ~U[2022-07-31 00:00:00Z]) == :lcr
-    assert DbTypes.compare(li_ue, ~U[2022-08-01 00:00:00Z]) == :lt
-    assert DbTypes.compare(~U[2022-07-31 00:00:00Z], li_ue) == :rcl
-    assert DbTypes.compare(~U[2022-08-01 00:00:00Z], li_ue) == :gt
+    assert DbTypes.Range.compare(li_ue, ~U[2022-07-31 00:00:00Z]) == :lcr
+    assert DbTypes.Range.compare(li_ue, ~U[2022-08-01 00:00:00Z]) == :lt
+    assert DbTypes.Range.compare(~U[2022-07-31 00:00:00Z], li_ue) == :rcl
+    assert DbTypes.Range.compare(~U[2022-08-01 00:00:00Z], li_ue) == :gt
 
     le_ui = %DbTypes.DateTimeRange{
       lower: ~U[2022-07-31 00:00:00Z],
@@ -57,10 +57,10 @@ defmodule DbTypesDateTimeRangeDateTimeTest do
       upper_inclusive: true
     }
 
-    assert DbTypes.compare(le_ui, ~U[2022-07-31 00:00:00Z]) == :gt
-    assert DbTypes.compare(le_ui, ~U[2022-08-01 00:00:00Z]) == :lcr
-    assert DbTypes.compare(~U[2022-07-31 00:00:00Z], le_ui) == :lt
-    assert DbTypes.compare(~U[2022-08-01 00:00:00Z], le_ui) == :rcl
+    assert DbTypes.Range.compare(le_ui, ~U[2022-07-31 00:00:00Z]) == :gt
+    assert DbTypes.Range.compare(le_ui, ~U[2022-08-01 00:00:00Z]) == :lcr
+    assert DbTypes.Range.compare(~U[2022-07-31 00:00:00Z], le_ui) == :lt
+    assert DbTypes.Range.compare(~U[2022-08-01 00:00:00Z], le_ui) == :rcl
   end
 
   test "Can compute DateTimeRange/DateTimeRange inclusivity correctly" do
@@ -85,10 +85,10 @@ defmodule DbTypesDateTimeRangeDateTimeTest do
       upper_inclusive: true
     }
 
-    assert DbTypes.compare(li_ui, lower_control) == :gto
-    assert DbTypes.compare(li_ui, upper_control) == :lto
-    assert DbTypes.compare(lower_control, li_ui) == :lto
-    assert DbTypes.compare(upper_control, li_ui) == :gto
+    assert DbTypes.Range.compare(li_ui, lower_control) == :gto
+    assert DbTypes.Range.compare(li_ui, upper_control) == :lto
+    assert DbTypes.Range.compare(lower_control, li_ui) == :lto
+    assert DbTypes.Range.compare(upper_control, li_ui) == :gto
 
     li_ue = %DbTypes.DateTimeRange{
       lower: ~U[2022-07-31 00:00:00Z],
@@ -97,10 +97,10 @@ defmodule DbTypesDateTimeRangeDateTimeTest do
       upper_inclusive: false
     }
 
-    assert DbTypes.compare(li_ue, lower_control) == :gto
-    assert DbTypes.compare(li_ue, upper_control) == :lt
-    assert DbTypes.compare(lower_control, li_ue) == :lto
-    assert DbTypes.compare(upper_control, li_ue) == :gt
+    assert DbTypes.Range.compare(li_ue, lower_control) == :gto
+    assert DbTypes.Range.compare(li_ue, upper_control) == :lt
+    assert DbTypes.Range.compare(lower_control, li_ue) == :lto
+    assert DbTypes.Range.compare(upper_control, li_ue) == :gt
 
     le_ui = %DbTypes.DateTimeRange{
       lower: ~U[2022-07-31 00:00:00Z],
@@ -109,10 +109,10 @@ defmodule DbTypesDateTimeRangeDateTimeTest do
       upper_inclusive: true
     }
 
-    assert DbTypes.compare(le_ui, lower_control) == :gt
-    assert DbTypes.compare(le_ui, upper_control) == :lto
-    assert DbTypes.compare(lower_control, le_ui) == :lt
-    assert DbTypes.compare(upper_control, le_ui) == :gto
+    assert DbTypes.Range.compare(le_ui, lower_control) == :gt
+    assert DbTypes.Range.compare(le_ui, upper_control) == :lto
+    assert DbTypes.Range.compare(lower_control, le_ui) == :lt
+    assert DbTypes.Range.compare(upper_control, le_ui) == :gto
   end
 
   test "Can compute DateTimeRange/DateTime bounding correctly" do
@@ -125,10 +125,10 @@ defmodule DbTypesDateTimeRangeDateTimeTest do
       upper_inclusive: true
     }
 
-    assert DbTypes.compare(lu_ub, ~U[1066-01-01 00:00:00Z]) == :lcr
-    assert DbTypes.compare(lu_ub, ~U[2022-08-02 00:00:00Z]) == :lt
-    assert DbTypes.compare(~U[2022-07-31 00:00:00Z], lu_ub) == :rcl
-    assert DbTypes.compare(~U[2022-08-02 00:00:00Z], lu_ub) == :gt
+    assert DbTypes.Range.compare(lu_ub, ~U[1066-01-01 00:00:00Z]) == :lcr
+    assert DbTypes.Range.compare(lu_ub, ~U[2022-08-02 00:00:00Z]) == :lt
+    assert DbTypes.Range.compare(~U[2022-07-31 00:00:00Z], lu_ub) == :rcl
+    assert DbTypes.Range.compare(~U[2022-08-02 00:00:00Z], lu_ub) == :gt
 
     lb_uu = %DbTypes.DateTimeRange{
       lower: ~U[2022-07-31 00:00:00Z],
@@ -137,10 +137,10 @@ defmodule DbTypesDateTimeRangeDateTimeTest do
       upper_inclusive: false
     }
 
-    assert DbTypes.compare(lb_uu, ~U[1066-01-01 00:00:00Z]) == :gt
-    assert DbTypes.compare(lb_uu, ~U[2022-08-01 00:00:00Z]) == :lcr
-    assert DbTypes.compare(~U[2022-07-30 00:00:00Z], lb_uu) == :lt
-    assert DbTypes.compare(~U[2022-08-01 00:00:00Z], lb_uu) == :rcl
+    assert DbTypes.Range.compare(lb_uu, ~U[1066-01-01 00:00:00Z]) == :gt
+    assert DbTypes.Range.compare(lb_uu, ~U[2022-08-01 00:00:00Z]) == :lcr
+    assert DbTypes.Range.compare(~U[2022-07-30 00:00:00Z], lb_uu) == :lt
+    assert DbTypes.Range.compare(~U[2022-08-01 00:00:00Z], lb_uu) == :rcl
 
     lu_uu = %DbTypes.DateTimeRange{
       lower: :unbound,
@@ -149,10 +149,16 @@ defmodule DbTypesDateTimeRangeDateTimeTest do
       upper_inclusive: false
     }
 
-    assert DbTypes.compare(lu_uu, DateTime.add(DateTime.utc_now(), :rand.uniform(100_000) * -1)) ==
+    assert DbTypes.Range.compare(
+             lu_uu,
+             DateTime.add(DateTime.utc_now(), :rand.uniform(100_000) * -1)
+           ) ==
              :lcr
 
-    assert DbTypes.compare(DateTime.add(DateTime.utc_now(), :rand.uniform(1_000_000)), lu_uu) ==
+    assert DbTypes.Range.compare(
+             DateTime.add(DateTime.utc_now(), :rand.uniform(1_000_000)),
+             lu_uu
+           ) ==
              :rcl
   end
 
@@ -174,8 +180,8 @@ defmodule DbTypesDateTimeRangeDateTimeTest do
       upper_inclusive: true
     }
 
-    assert DbTypes.compare(lu_ub, control) == :lcr
-    assert DbTypes.compare(control, lu_ub) == :rcl
+    assert DbTypes.Range.compare(lu_ub, control) == :lcr
+    assert DbTypes.Range.compare(control, lu_ub) == :rcl
 
     lb_uu = %DbTypes.DateTimeRange{
       lower: ~U[2022-01-01 00:00:00Z],
@@ -184,8 +190,8 @@ defmodule DbTypesDateTimeRangeDateTimeTest do
       upper_inclusive: false
     }
 
-    assert DbTypes.compare(lb_uu, control) == :lcr
-    assert DbTypes.compare(control, lb_uu) == :rcl
+    assert DbTypes.Range.compare(lb_uu, control) == :lcr
+    assert DbTypes.Range.compare(control, lb_uu) == :rcl
 
     le_ui = %DbTypes.DateTimeRange{
       lower: :unbound,
@@ -194,8 +200,8 @@ defmodule DbTypesDateTimeRangeDateTimeTest do
       upper_inclusive: false
     }
 
-    assert DbTypes.compare(le_ui, control) == :lcr
-    assert DbTypes.compare(control, le_ui) == :rcl
+    assert DbTypes.Range.compare(le_ui, control) == :lcr
+    assert DbTypes.Range.compare(control, le_ui) == :rcl
   end
 
   test "Can compute DateTimeRange/DateTime result operators" do
@@ -208,28 +214,28 @@ defmodule DbTypesDateTimeRangeDateTimeTest do
 
     # :lt
 
-    assert DbTypes.compare(control, ~U[2022-07-01 00:00:00Z]) == :lt
-    assert DbTypes.compare(control, ~U[2023-01-01 00:00:00Z]) == :lt
+    assert DbTypes.Range.compare(control, ~U[2022-07-01 00:00:00Z]) == :lt
+    assert DbTypes.Range.compare(control, ~U[2023-01-01 00:00:00Z]) == :lt
 
-    assert DbTypes.compare(~U[2021-01-01 00:00:00Z], control) == :lt
-    assert DbTypes.compare(~U[2021-12-31 00:00:00Z], control) == :lt
+    assert DbTypes.Range.compare(~U[2021-01-01 00:00:00Z], control) == :lt
+    assert DbTypes.Range.compare(~U[2021-12-31 00:00:00Z], control) == :lt
 
     # :gt
-    assert DbTypes.compare(control, ~U[2021-07-01 00:00:00Z]) == :gt
-    assert DbTypes.compare(control, ~U[2021-12-31 00:00:00Z]) == :gt
+    assert DbTypes.Range.compare(control, ~U[2021-07-01 00:00:00Z]) == :gt
+    assert DbTypes.Range.compare(control, ~U[2021-12-31 00:00:00Z]) == :gt
 
-    assert DbTypes.compare(~U[2022-07-01 00:00:00Z], control) == :gt
-    assert DbTypes.compare(~U[2025-07-01 00:00:00Z], control) == :gt
+    assert DbTypes.Range.compare(~U[2022-07-01 00:00:00Z], control) == :gt
+    assert DbTypes.Range.compare(~U[2025-07-01 00:00:00Z], control) == :gt
 
     # :lcr
-    assert DbTypes.compare(control, ~U[2022-01-01 00:00:00Z]) == :lcr
-    assert DbTypes.compare(control, ~U[2022-06-30 00:00:00Z]) == :lcr
-    assert DbTypes.compare(control, ~U[2022-03-28 00:00:00Z]) == :lcr
+    assert DbTypes.Range.compare(control, ~U[2022-01-01 00:00:00Z]) == :lcr
+    assert DbTypes.Range.compare(control, ~U[2022-06-30 00:00:00Z]) == :lcr
+    assert DbTypes.Range.compare(control, ~U[2022-03-28 00:00:00Z]) == :lcr
 
     # :rcl
-    assert DbTypes.compare(~U[2022-01-01 00:00:00Z], control) == :rcl
-    assert DbTypes.compare(~U[2022-06-30 00:00:00Z], control) == :rcl
-    assert DbTypes.compare(~U[2022-02-28 00:00:00Z], control) == :rcl
+    assert DbTypes.Range.compare(~U[2022-01-01 00:00:00Z], control) == :rcl
+    assert DbTypes.Range.compare(~U[2022-06-30 00:00:00Z], control) == :rcl
+    assert DbTypes.Range.compare(~U[2022-02-28 00:00:00Z], control) == :rcl
   end
 
   test "Can compute DateTimeRange/DateTimeRange result operators" do
@@ -256,8 +262,8 @@ defmodule DbTypesDateTimeRangeDateTimeTest do
       upper_inclusive: true
     }
 
-    assert DbTypes.compare(control, eq1) == :eq
-    assert DbTypes.compare(eq2, control) == :eq
+    assert DbTypes.Range.compare(control, eq1) == :eq
+    assert DbTypes.Range.compare(eq2, control) == :eq
 
     # :lt
 
@@ -275,8 +281,8 @@ defmodule DbTypesDateTimeRangeDateTimeTest do
       upper_inclusive: true
     }
 
-    assert DbTypes.compare(control, lt1) == :lt
-    assert DbTypes.compare(lt2, control) == :lt
+    assert DbTypes.Range.compare(control, lt1) == :lt
+    assert DbTypes.Range.compare(lt2, control) == :lt
 
     # :gt
 
@@ -294,8 +300,8 @@ defmodule DbTypesDateTimeRangeDateTimeTest do
       upper_inclusive: true
     }
 
-    assert DbTypes.compare(control, gt1) == :gt
-    assert DbTypes.compare(gt2, control) == :gt
+    assert DbTypes.Range.compare(control, gt1) == :gt
+    assert DbTypes.Range.compare(gt2, control) == :gt
 
     # :lcr
 
@@ -313,8 +319,8 @@ defmodule DbTypesDateTimeRangeDateTimeTest do
       upper_inclusive: true
     }
 
-    assert DbTypes.compare(control, lcr1) == :lcr
-    assert DbTypes.compare(lcr2, control) == :lcr
+    assert DbTypes.Range.compare(control, lcr1) == :lcr
+    assert DbTypes.Range.compare(lcr2, control) == :lcr
 
     # :rcl
 
@@ -332,8 +338,8 @@ defmodule DbTypesDateTimeRangeDateTimeTest do
       upper_inclusive: true
     }
 
-    assert DbTypes.compare(control, rcl1) == :rcl
-    assert DbTypes.compare(rcl2, control) == :rcl
+    assert DbTypes.Range.compare(control, rcl1) == :rcl
+    assert DbTypes.Range.compare(rcl2, control) == :rcl
 
     # :gto
 
@@ -351,8 +357,8 @@ defmodule DbTypesDateTimeRangeDateTimeTest do
       upper_inclusive: true
     }
 
-    assert DbTypes.compare(control, gto1) == :gto
-    assert DbTypes.compare(gto2, control) == :gto
+    assert DbTypes.Range.compare(control, gto1) == :gto
+    assert DbTypes.Range.compare(gto2, control) == :gto
 
     # :lto
 
@@ -370,8 +376,8 @@ defmodule DbTypesDateTimeRangeDateTimeTest do
       upper_inclusive: true
     }
 
-    assert DbTypes.compare(control, lto1) == :lto
-    assert DbTypes.compare(lto2, control) == :lto
+    assert DbTypes.Range.compare(control, lto1) == :lto
+    assert DbTypes.Range.compare(lto2, control) == :lto
   end
 
   test "Can compute DateTime/DateTimeRange and DateTimeRange/DateTimeRange equality" do
@@ -382,8 +388,8 @@ defmodule DbTypesDateTimeRangeDateTimeTest do
       upper_inclusive: false
     }
 
-    assert DbTypes.compare(control, control) == :eq
-    assert DbTypes.compare(control, ~U[2022-01-01 00:00:00Z]) == :lcr
-    assert DbTypes.compare(~U[2022-01-01 00:00:00Z], control) == :rcl
+    assert DbTypes.Range.compare(control, control) == :eq
+    assert DbTypes.Range.compare(control, ~U[2022-01-01 00:00:00Z]) == :lcr
+    assert DbTypes.Range.compare(~U[2022-01-01 00:00:00Z], control) == :rcl
   end
 end
