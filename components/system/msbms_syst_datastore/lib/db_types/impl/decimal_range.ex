@@ -10,7 +10,7 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defimpl MsbmsSystDatastore.DbTypes, for: MsbmsSystDatastore.DbTypes.DecimalRange do
+defimpl MsbmsSystDatastore.DbTypes.Range, for: MsbmsSystDatastore.DbTypes.DecimalRange do
   alias MsbmsSystDatastore.DbTypes.Impl.DecimalRange
 
   def compare(left, right), do: DecimalRange.compare(left, right)

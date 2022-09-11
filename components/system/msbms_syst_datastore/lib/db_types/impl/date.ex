@@ -16,7 +16,7 @@
 # Date module functions handle these cases and so the functions defined here
 # should only be used in very narrow/limited circumstances.
 
-defimpl MsbmsSystDatastore.DbTypes, for: Date do
+defimpl MsbmsSystDatastore.DbTypes.Range, for: Date do
   alias MsbmsSystDatastore.DbTypes.Impl
 
   def compare(left, right), do: Impl.Date.compare(left, right)
