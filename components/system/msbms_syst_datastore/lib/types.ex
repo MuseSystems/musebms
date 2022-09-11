@@ -27,7 +27,7 @@ defmodule MsbmsSystDatastore.Types do
     instance.
 
   * `:start_server_instances` - If true, indicates that databases on the server
-    can be started and made available as application datastores.
+    can be started and made available as application Datastores.
 
   * `:server_pools` - The server pools in which the database server
     participates.
@@ -52,7 +52,7 @@ defmodule MsbmsSystDatastore.Types do
     long and should be a random string.
 
   * `:dbadmin_password` - The msbms_syst_dba role password for privileged
-    operations such as creating a new database/datastore or new database roles
+    operations such as creating a new database/Datastore or new database roles
     on the database server instance.
 
   * `:dbadmin_pool_size` - The pool size to use for creating connections for
@@ -128,7 +128,7 @@ defmodule MsbmsSystDatastore.Types do
     * `:database_owner_context` - if `true` the context represents the database
       owner role.  If `false` or not provided the database role is not used for
       this purpose.  Note that there should only be one context defined as the
-      database owner for any datastore.
+      database owner for any Datastore.
   """
   @type datastore_context :: %{
           optional(:context_name) => context_name(),
@@ -143,25 +143,25 @@ defmodule MsbmsSystDatastore.Types do
 
   @typedoc """
   Defines the options required for establishing the database connections which
-  make up a datastore.
+  make up a Datastore.
 
     * `:database_name` - The name of the database in the database server to
       which the connection will be made.  Often times this value will be the
       same as the String.t() form of the `:datastore_name` value.
 
-    * `:datastore_code` - Defines a datastore specific salting value for use in
+    * `:datastore_code` - Defines a Datastore specific salting value for use in
       certain security and cryptographic related functions.
 
     * `:datastore_name` - A name for use by the application to identify a given
       datastore.  This value will often time be the same as the `:database_name`
       value, except as an atom() rather than a String.t().
 
-    * `:contexts` - A list of available datastore context values defining which
-      contexts are available for this datastore.  See `datastore_context()` for
+    * `:contexts` - A list of available Datastore Context values defining which
+      contexts are available for this Datastore.  See `datastore_context()` for
       more information concerning the values of each entry in the list.
 
     * `:db_server` - The database server information for the server where the
-      datastore database resides.  See `db_server()` for additional details.
+      Datastore database resides.  See `db_server()` for additional details.
   """
   @type datastore_options :: %{
           required(:database_name) => String.t(),
@@ -172,9 +172,9 @@ defmodule MsbmsSystDatastore.Types do
         }
 
   @typedoc """
-  Values indicating the state of the database which backs a given datastore.
+  Values indicating the state of the database which backs a given Datastore.
 
-    * `:not_found` - The database for the datastore does not exist on the
+    * `:not_found` - The database for the Datastore does not exist on the
       database server.
 
     * `:ready` - The database is ready for further processing by the migrations
@@ -186,7 +186,7 @@ defmodule MsbmsSystDatastore.Types do
   Defines the available states in which a context may exist.
 
     * `:not_found` - The database role backing the context was not found on the
-      datastore database server.
+      Datastore database server.
 
     * `:not_ready` - The database role backing the context exists, but is not
       completely set up yet.  This is an interim stage that usually has to cross
@@ -211,18 +211,18 @@ defmodule MsbmsSystDatastore.Types do
   @type context_state :: %{context: context_name(), state: context_state_values()}
 
   @typedoc """
-  Defines the available states in which a datastore might exist in relation to
+  Defines the available states in which a Datastore might exist in relation to
   its schema migrations.
 
-    * `:not_initialized` - The datastore does not have the table which manages
+    * `:not_initialized` - The Datastore does not have the table which manages
       the migrations installed.  This is also the value reported when the
-      `database_state_values()` value for the datastore is `:not_found`.
+      `database_state_values()` value for the Datastore is `:not_found`.
 
-    * `:not_updated` - The datastore database exists and has been initialized,
+    * `:not_updated` - The Datastore database exists and has been initialized,
       but does not have the most recent migrations available applied per the
       migrations management table.
 
-    * `:ready` - The migrations are fully up-to-date and the datastore is ready
+    * `:ready` - The migrations are fully up-to-date and the Datastore is ready
       to serve the application as needed.
   """
   @type migration_state_values :: :not_initialized | :not_updated | :ready
