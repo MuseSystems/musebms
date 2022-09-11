@@ -28,6 +28,8 @@ defmodule MsbmsSystDatastore.DbTypes.Impl.Integer do
   alias MsbmsSystDatastore.DbTypes
   alias MsbmsSystDatastore.DbTypes.Impl.IntegerRange
 
+  @moduledoc false
+
   def compare(left, right) when is_integer(left) and is_integer(right) and left == right, do: :eq
   def compare(left, right) when is_integer(left) and is_integer(right) and left > right, do: :gt
   def compare(left, right) when is_integer(left) and is_integer(right) and left < right, do: :lt

@@ -28,6 +28,8 @@ defmodule MsbmsSystDatastore.DbTypes.Impl.Date do
   alias MsbmsSystDatastore.DbTypes
   alias MsbmsSystDatastore.DbTypes.Impl.DateRange
 
+  @moduledoc false
+
   def compare(left, %Date{} = right), do: Date.compare(left, right)
 
   def compare(left, %DbTypes.DateRange{} = right) do

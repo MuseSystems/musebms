@@ -227,6 +227,135 @@ defmodule MsbmsSystDatastore.Types do
   """
   @type migration_state_values :: :not_initialized | :not_updated | :ready
 
+  @typedoc """
+  Defines operators for use in comparison functions such as those implementing
+  the `MsbmsSystDatastore.DbTypes.Range` protocol.  The range related operator
+  values are generally the same as those defined by the PostgreSQL database
+  range types, but there are some small differences.
+
+    * `:gt` - left is greater than right.
+
+    * `:lt` - left is less than right.
+
+    * `:eq` - the values are equal.
+
+    * `:lcr` - left contains right.
+
+    * `:rcl` - right contains left.
+
+    * `:gto` - greater than overlapping.
+
+    * `:lto` - less than overlapping.
+
+  # Examples
+
+  Greater Than (`:gt`)
+
+      iex> left_range =
+      ...>   %MsbmsSystDatastore.DbTypes.IntegerRange{
+      ...>     lower: 200,
+      ...>     upper: 210
+      ...>   }
+      iex> right_range =
+      ...>   %MsbmsSystDatastore.DbTypes.IntegerRange{
+      ...>     lower: 100,
+      ...>     upper: 110
+      ...>   }
+      iex> MsbmsSystDatastore.DbTypes.Range.compare(left_range, right_range)
+      :gt
+
+  Less Than (`:lt`)
+
+      iex> left_range =
+      ...>   %MsbmsSystDatastore.DbTypes.IntegerRange{
+      ...>     lower: 100,
+      ...>     upper: 110
+      ...>   }
+      iex> right_range =
+      ...>   %MsbmsSystDatastore.DbTypes.IntegerRange{
+      ...>     lower: 200,
+      ...>     upper: 210
+      ...>   }
+      iex> MsbmsSystDatastore.DbTypes.Range.compare(left_range, right_range)
+      :lt
+
+  Equal (`:eq`)
+
+      iex> left_range =
+      ...>   %MsbmsSystDatastore.DbTypes.IntegerRange{
+      ...>     lower: 100,
+      ...>     upper: 110
+      ...>   }
+      iex> right_range =
+      ...>   %MsbmsSystDatastore.DbTypes.IntegerRange{
+      ...>     lower: 100,
+      ...>     upper: 110
+      ...>   }
+      iex> MsbmsSystDatastore.DbTypes.Range.compare(left_range, right_range)
+      :eq
+
+  Left Contains Right (`:lcr`)
+
+      iex> left_range =
+      ...>   %MsbmsSystDatastore.DbTypes.IntegerRange{
+      ...>     lower: 90,
+      ...>     upper: 110
+      ...>   }
+      iex> right_range =
+      ...>   %MsbmsSystDatastore.DbTypes.IntegerRange{
+      ...>     lower: 100,
+      ...>     upper: 110
+      ...>   }
+      iex> MsbmsSystDatastore.DbTypes.Range.compare(left_range, right_range)
+      :lcr
+
+  Right Contains Left (`:rcl`)
+
+      iex> left_range =
+      ...>   %MsbmsSystDatastore.DbTypes.IntegerRange{
+      ...>     lower: 100,
+      ...>     upper: 110
+      ...>   }
+      iex> right_range =
+      ...>   %MsbmsSystDatastore.DbTypes.IntegerRange{
+      ...>     lower: 100,
+      ...>     upper: 111
+      ...>   }
+      iex> MsbmsSystDatastore.DbTypes.Range.compare(left_range, right_range)
+      :rcl
+
+
+  Greater Than Overlapping (`:gto`)
+
+      iex> left_range =
+      ...>   %MsbmsSystDatastore.DbTypes.IntegerRange{
+      ...>     lower: 150,
+      ...>     upper: 250
+      ...>   }
+      iex> right_range =
+      ...>   %MsbmsSystDatastore.DbTypes.IntegerRange{
+      ...>     lower: 100,
+      ...>     upper: 175
+      ...>   }
+      iex> MsbmsSystDatastore.DbTypes.Range.compare(left_range, right_range)
+      :gto
+
+
+  Less Than Overlapping (`:lto`)
+
+      iex> left_range =
+      ...>   %MsbmsSystDatastore.DbTypes.IntegerRange{
+      ...>     lower: 100,
+      ...>     upper: 150
+      ...>   }
+      iex> right_range =
+      ...>   %MsbmsSystDatastore.DbTypes.IntegerRange{
+      ...>     lower: 125,
+      ...>     upper: 175
+      ...>   }
+      iex> MsbmsSystDatastore.DbTypes.Range.compare(left_range, right_range)
+      :lto
+  """
   @type db_type_comparison_operators ::
           :gt
           | :lt
