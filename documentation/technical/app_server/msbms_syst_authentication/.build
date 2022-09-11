@@ -1,4 +1,5 @@
 404.html
+DevSupport.html
 MsbmsSystAuthentication.Data.SystAccessAccountInstanceAssocs.html
 MsbmsSystAuthentication.Data.SystAccessAccounts.html
 MsbmsSystAuthentication.Data.SystCredentials.html
@@ -13,15 +14,15 @@ MsbmsSystAuthentication.Data.SystPasswordHistory.html
 MsbmsSystAuthentication.Types.html
 MsbmsSystAuthentication.html
 api-reference.html
-dist/app-bd1cb213813bf4825aa2.js
-dist/app-bd1cb213813bf4825aa2.js.LICENSE.txt
-dist/elixir-b6f1ed5df9b1d42a7309.css
+dist/app-b5f3440501744dc8be3d.js
+dist/app-b5f3440501744dc8be3d.js.LICENSE.txt
+dist/elixir-64c5e2b63575bddb1c5b.css
 dist/html/fonts/remixicon.eot
 dist/html/fonts/remixicon.svg
 dist/html/fonts/remixicon.ttf
 dist/html/fonts/remixicon.woff
 dist/html/fonts/remixicon.woff2
-dist/search_items-e95d8a7b29.js
-dist/sidebar_items-d09d42c976.js
+dist/search_items-1fe0c91006.js
+dist/sidebar_items-0b46b662e7.js
 index.html
 search.html

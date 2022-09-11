@@ -4,17 +4,17 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.28.4">
+    <meta name="generator" content="ExDoc v0.28.5">
     <meta name="project" content="msbms_syst_datastore v0.1.0">
 
     <title>MsbmsSystDatastore.Types — msbms_syst_datastore v0.1.0</title>
-    <link rel="stylesheet" href="dist/elixir-b6f1ed5df9b1d42a7309.css" />
+    <link rel="stylesheet" href="dist/elixir-64c5e2b63575bddb1c5b.css" />
 
-    <script src="dist/sidebar_items-5bc5626431.js"></script>
+    <script src="dist/sidebar_items-67f82232cf.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/app-bd1cb213813bf4825aa2.js"></script>
+    <script async src="dist/app-b5f3440501744dc8be3d.js"></script>
 
 
   </head>
@@ -169,7 +169,7 @@ accounts.</p></div>
 
         </div>
 
-          <div class="summary-synopsis"><p>Values indicating the state of the database which backs a given datastore.</p></div>
+          <div class="summary-synopsis"><p>Values indicating the state of the database which backs a given Datastore.</p></div>
 
       </div>
 
@@ -191,7 +191,7 @@ database role.</p></div>
         </div>
 
           <div class="summary-synopsis"><p>Defines the options required for establishing the database connections which
-make up a datastore.</p></div>
+make up a Datastore.</p></div>
 
       </div>
 
@@ -207,11 +207,24 @@ make up a datastore.</p></div>
 
       <div class="summary-row">
         <div class="summary-signature">
+          <a href="#t:db_type_comparison_operators/0" translate="no">db_type_comparison_operators()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Defines operators for use in comparison functions such as those implementing
+the <a href="MsbmsSystDatastore.DbTypes.Range.html"><code class="inline">MsbmsSystDatastore.DbTypes.Range</code></a> protocol.  The range related operator
+values are generally the same as those defined by the PostgreSQL database
+range types, but there are some small differences.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
           <a href="#t:migration_state_values/0" translate="no">migration_state_values()</a>
 
         </div>
 
-          <div class="summary-synopsis"><p>Defines the available states in which a datastore might exist in relation to
+          <div class="summary-synopsis"><p>Defines the available states in which a Datastore might exist in relation to
 its schema migrations.</p></div>
 
       </div>
@@ -323,7 +336,7 @@ accounts.</p>
       </div>
 
 <p>Defines the available states in which a context may exist.</p><ul><li><p><code class="inline">:not_found</code> - The database role backing the context was not found on the
-datastore database server.</p></li><li><p><code class="inline">:not_ready</code> - The database role backing the context exists, but is not
+Datastore database server.</p></li><li><p><code class="inline">:not_ready</code> - The database role backing the context exists, but is not
 completely set up yet.  This is an interim stage that usually has to cross
 transaction boundaries.</p></li><li><p><code class="inline">:not_started</code> - When starting contexts the system doesn't check for the
  existence of each context which in turn means that a start failure could
@@ -353,7 +366,7 @@ context have already been started.</p></li></ul>
 
       </div>
 
-<p>Values indicating the state of the database which backs a given datastore.</p><ul><li><p><code class="inline">:not_found</code> - The database for the datastore does not exist on the
+<p>Values indicating the state of the database which backs a given Datastore.</p><ul><li><p><code class="inline">:not_found</code> - The database for the Datastore does not exist on the
 database server.</p></li><li><p><code class="inline">:ready</code> - The database is ready for further processing by the migrations
 subsystem.</p></li></ul>
   </section>
@@ -410,7 +423,7 @@ would typically not be login roles, even though the are highly privileged
 when their context is active in a database session. (default: true)</p></li><li><p><code class="inline">:database_owner_context</code> - if <code class="inline">true</code> the context represents the database
 owner role.  If <code class="inline">false</code> or not provided the database role is not used for
 this purpose.  Note that there should only be one context defined as the
-database owner for any datastore.</p></li></ul>
+database owner for any Datastore.</p></li></ul>
   </section>
 </section>
 <section class="detail" id="t:datastore_options/0">
@@ -440,15 +453,15 @@ database owner for any datastore.</p></li></ul>
       </div>
 
 <p>Defines the options required for establishing the database connections which
-make up a datastore.</p><ul><li><p><code class="inline">:database_name</code> - The name of the database in the database server to
+make up a Datastore.</p><ul><li><p><code class="inline">:database_name</code> - The name of the database in the database server to
 which the connection will be made.  Often times this value will be the
-same as the String.t() form of the <code class="inline">:datastore_name</code> value.</p></li><li><p><code class="inline">:datastore_code</code> - Defines a datastore specific salting value for use in
+same as the String.t() form of the <code class="inline">:datastore_name</code> value.</p></li><li><p><code class="inline">:datastore_code</code> - Defines a Datastore specific salting value for use in
 certain security and cryptographic related functions.</p></li><li><p><code class="inline">:datastore_name</code> - A name for use by the application to identify a given
 datastore.  This value will often time be the same as the <code class="inline">:database_name</code>
-value, except as an atom() rather than a String.t().</p></li><li><p><code class="inline">:contexts</code> - A list of available datastore context values defining which
-contexts are available for this datastore.  See <code class="inline">datastore_context()</code> for
+value, except as an atom() rather than a String.t().</p></li><li><p><code class="inline">:contexts</code> - A list of available Datastore Context values defining which
+contexts are available for this Datastore.  See <code class="inline">datastore_context()</code> for
 more information concerning the values of each entry in the list.</p></li><li><p><code class="inline">:db_server</code> - The database server information for the server where the
-datastore database resides.  See <code class="inline">db_server()</code> for additional details.</p></li></ul>
+Datastore database resides.  See <code class="inline">db_server()</code> for additional details.</p></li></ul>
   </section>
 </section>
 <section class="detail" id="t:db_server/0">
@@ -487,7 +500,7 @@ provides information for where on the network the server can be found, and
 connection related parameters.  Also, the full administrative credentials are
 included.</p><ul><li><p><code class="inline">:server_name</code> - Provides a unique identifier for a database server
 instance.</p></li><li><p><code class="inline">:start_server_instances</code> - If true, indicates that databases on the server
-can be started and made available as application datastores.</p></li><li><p><code class="inline">:server_pools</code> - The server pools in which the database server
+can be started and made available as application Datastores.</p></li><li><p><code class="inline">:server_pools</code> - The server pools in which the database server
 participates.</p></li><li><p><code class="inline">:db_host</code> - The hostname or IP address of the database server on the
 network.</p></li><li><p><code class="inline">:db_port</code> - The TCP port on which the database server is listening for
 connections.</p></li><li><p><code class="inline">:db_show_sensitive</code> - If true, various logging events may show
@@ -497,9 +510,112 @@ established for the db_server instance.</p></li><li><p><code class="inline">:ser
 derivation, allows for the assignment of specific salting value for that is
 specific to a given database server.  This value must be at least 32 bytes
 long and should be a random string.</p></li><li><p><code class="inline">:dbadmin_password</code> - The msbms_syst_dba role password for privileged
-operations such as creating a new database/datastore or new database roles
+operations such as creating a new database/Datastore or new database roles
 on the database server instance.</p></li><li><p><code class="inline">:dbadmin_pool_size</code> - The pool size to use for creating connections for
 privileged operations using the msbms_syst_dba role.</p></li></ul>
+  </section>
+</section>
+<section class="detail" id="t:db_type_comparison_operators/0">
+
+  <div class="detail-header">
+    <a href="#t:db_type_comparison_operators/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">db_type_comparison_operators()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> db_type_comparison_operators() :: :gt | :lt | :eq | :lcr | :rcl | :gto | :lto</pre>
+
+      </div>
+
+<p>Defines operators for use in comparison functions such as those implementing
+the <a href="MsbmsSystDatastore.DbTypes.Range.html"><code class="inline">MsbmsSystDatastore.DbTypes.Range</code></a> protocol.  The range related operator
+values are generally the same as those defined by the PostgreSQL database
+range types, but there are some small differences.</p><ul><li><p><code class="inline">:gt</code> - left is greater than right.</p></li><li><p><code class="inline">:lt</code> - left is less than right.</p></li><li><p><code class="inline">:eq</code> - the values are equal.</p></li><li><p><code class="inline">:lcr</code> - left contains right.</p></li><li><p><code class="inline">:rcl</code> - right contains left.</p></li><li><p><code class="inline">:gto</code> - greater than overlapping.</p></li><li><p><code class="inline">:lto</code> - less than overlapping.</p></li></ul><h1>Examples</h1><p>Greater Than (<code class="inline">:gt</code>)</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">left_range</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="0347189459-1">%</span><span class="nc" data-group-id="0347189459-1">MsbmsSystDatastore.DbTypes.IntegerRange</span><span class="p" data-group-id="0347189459-1">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">210</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="0347189459-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">right_range</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="0347189459-2">%</span><span class="nc" data-group-id="0347189459-2">MsbmsSystDatastore.DbTypes.IntegerRange</span><span class="p" data-group-id="0347189459-2">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">110</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="0347189459-2">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystDatastore.DbTypes.Range</span><span class="o">.</span><span class="n">compare</span><span class="p" data-group-id="0347189459-3">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="n">right_range</span><span class="p" data-group-id="0347189459-3">)</span><span class="w">
+</span><span class="ss">:gt</span></code></pre><p>Less Than (<code class="inline">:lt</code>)</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">left_range</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="6179618670-1">%</span><span class="nc" data-group-id="6179618670-1">MsbmsSystDatastore.DbTypes.IntegerRange</span><span class="p" data-group-id="6179618670-1">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">110</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="6179618670-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">right_range</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="6179618670-2">%</span><span class="nc" data-group-id="6179618670-2">MsbmsSystDatastore.DbTypes.IntegerRange</span><span class="p" data-group-id="6179618670-2">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">210</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="6179618670-2">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystDatastore.DbTypes.Range</span><span class="o">.</span><span class="n">compare</span><span class="p" data-group-id="6179618670-3">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="n">right_range</span><span class="p" data-group-id="6179618670-3">)</span><span class="w">
+</span><span class="ss">:lt</span></code></pre><p>Equal (<code class="inline">:eq</code>)</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">left_range</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="4406305741-1">%</span><span class="nc" data-group-id="4406305741-1">MsbmsSystDatastore.DbTypes.IntegerRange</span><span class="p" data-group-id="4406305741-1">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">110</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="4406305741-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">right_range</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="4406305741-2">%</span><span class="nc" data-group-id="4406305741-2">MsbmsSystDatastore.DbTypes.IntegerRange</span><span class="p" data-group-id="4406305741-2">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">110</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="4406305741-2">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystDatastore.DbTypes.Range</span><span class="o">.</span><span class="n">compare</span><span class="p" data-group-id="4406305741-3">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="n">right_range</span><span class="p" data-group-id="4406305741-3">)</span><span class="w">
+</span><span class="ss">:eq</span></code></pre><p>Left Contains Right (<code class="inline">:lcr</code>)</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">left_range</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="6589910175-1">%</span><span class="nc" data-group-id="6589910175-1">MsbmsSystDatastore.DbTypes.IntegerRange</span><span class="p" data-group-id="6589910175-1">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">90</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">110</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="6589910175-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">right_range</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="6589910175-2">%</span><span class="nc" data-group-id="6589910175-2">MsbmsSystDatastore.DbTypes.IntegerRange</span><span class="p" data-group-id="6589910175-2">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">110</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="6589910175-2">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystDatastore.DbTypes.Range</span><span class="o">.</span><span class="n">compare</span><span class="p" data-group-id="6589910175-3">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="n">right_range</span><span class="p" data-group-id="6589910175-3">)</span><span class="w">
+</span><span class="ss">:lcr</span></code></pre><p>Right Contains Left (<code class="inline">:rcl</code>)</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">left_range</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="4179588916-1">%</span><span class="nc" data-group-id="4179588916-1">MsbmsSystDatastore.DbTypes.IntegerRange</span><span class="p" data-group-id="4179588916-1">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">110</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="4179588916-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">right_range</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="4179588916-2">%</span><span class="nc" data-group-id="4179588916-2">MsbmsSystDatastore.DbTypes.IntegerRange</span><span class="p" data-group-id="4179588916-2">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">111</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="4179588916-2">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystDatastore.DbTypes.Range</span><span class="o">.</span><span class="n">compare</span><span class="p" data-group-id="4179588916-3">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="n">right_range</span><span class="p" data-group-id="4179588916-3">)</span><span class="w">
+</span><span class="ss">:rcl</span></code></pre><p>Greater Than Overlapping (<code class="inline">:gto</code>)</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">left_range</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="3484397386-1">%</span><span class="nc" data-group-id="3484397386-1">MsbmsSystDatastore.DbTypes.IntegerRange</span><span class="p" data-group-id="3484397386-1">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">150</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">250</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="3484397386-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">right_range</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="3484397386-2">%</span><span class="nc" data-group-id="3484397386-2">MsbmsSystDatastore.DbTypes.IntegerRange</span><span class="p" data-group-id="3484397386-2">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">175</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="3484397386-2">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystDatastore.DbTypes.Range</span><span class="o">.</span><span class="n">compare</span><span class="p" data-group-id="3484397386-3">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="n">right_range</span><span class="p" data-group-id="3484397386-3">)</span><span class="w">
+</span><span class="ss">:gto</span></code></pre><p>Less Than Overlapping (<code class="inline">:lto</code>)</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">left_range</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="7548416317-1">%</span><span class="nc" data-group-id="7548416317-1">MsbmsSystDatastore.DbTypes.IntegerRange</span><span class="p" data-group-id="7548416317-1">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">150</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="7548416317-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">right_range</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="7548416317-2">%</span><span class="nc" data-group-id="7548416317-2">MsbmsSystDatastore.DbTypes.IntegerRange</span><span class="p" data-group-id="7548416317-2">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">125</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">175</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="7548416317-2">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystDatastore.DbTypes.Range</span><span class="o">.</span><span class="n">compare</span><span class="p" data-group-id="7548416317-3">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="n">right_range</span><span class="p" data-group-id="7548416317-3">)</span><span class="w">
+</span><span class="ss">:lto</span></code></pre>
   </section>
 </section>
 <section class="detail" id="t:migration_state_values/0">
@@ -522,12 +638,12 @@ privileged operations using the msbms_syst_dba role.</p></li></ul>
 
       </div>
 
-<p>Defines the available states in which a datastore might exist in relation to
-its schema migrations.</p><ul><li><p><code class="inline">:not_initialized</code> - The datastore does not have the table which manages
+<p>Defines the available states in which a Datastore might exist in relation to
+its schema migrations.</p><ul><li><p><code class="inline">:not_initialized</code> - The Datastore does not have the table which manages
 the migrations installed.  This is also the value reported when the
-<code class="inline">database_state_values()</code> value for the datastore is <code class="inline">:not_found</code>.</p></li><li><p><code class="inline">:not_updated</code> - The datastore database exists and has been initialized,
+<code class="inline">database_state_values()</code> value for the Datastore is <code class="inline">:not_found</code>.</p></li><li><p><code class="inline">:not_updated</code> - The Datastore database exists and has been initialized,
 but does not have the most recent migrations available applied per the
-migrations management table.</p></li><li><p><code class="inline">:ready</code> - The migrations are fully up-to-date and the datastore is ready
+migrations management table.</p></li><li><p><code class="inline">:ready</code> - The migrations are fully up-to-date and the Datastore is ready
 to serve the application as needed.</p></li></ul>
   </section>
 </section>
@@ -539,7 +655,7 @@ to serve the application as needed.</p></li></ul>
 
         <p>
           Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.28.4) for the
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.28.5) for the
 
             <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 

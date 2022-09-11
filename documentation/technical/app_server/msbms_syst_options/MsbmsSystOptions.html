@@ -4,17 +4,17 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.28.4">
+    <meta name="generator" content="ExDoc v0.28.5">
     <meta name="project" content="msbms_syst_options v0.1.0">
 
     <title>MsbmsSystOptions — msbms_syst_options v0.1.0</title>
-    <link rel="stylesheet" href="dist/elixir-b6f1ed5df9b1d42a7309.css" />
+    <link rel="stylesheet" href="dist/elixir-64c5e2b63575bddb1c5b.css" />
 
     <script src="dist/sidebar_items-6e9acb3756.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/app-bd1cb213813bf4825aa2.js"></script>
+    <script async src="dist/app-b5f3440501744dc8be3d.js"></script>
 
 
   </head>
@@ -252,10 +252,10 @@ raises.</p><p>The returned options will be in a map equivalent to the TOML file'
   </a>
   Examples
 </h2>
-<p>Typical call and return:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="7370897747-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="7370897747-1">)</span><span class="w">
-</span><span class="p" data-group-id="7370897747-2">%{</span><span class="w">
-  </span><span class="ss">dbserver</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="7370897747-3">[</span><span class="w">
-    </span><span class="p" data-group-id="7370897747-4">%{</span><span class="w">
+<p>Typical call and return:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="1032442809-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="1032442809-1">)</span><span class="w">
+</span><span class="p" data-group-id="1032442809-2">%{</span><span class="w">
+  </span><span class="ss">dbserver</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1032442809-3">[</span><span class="w">
+    </span><span class="p" data-group-id="1032442809-4">%{</span><span class="w">
       </span><span class="ss">db_host</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span><span class="w">
       </span><span class="ss">db_max_instances</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
       </span><span class="ss">db_port</span><span class="p">:</span><span class="w"> </span><span class="mi">5432</span><span class="p">,</span><span class="w">
@@ -265,9 +265,9 @@ raises.</p><p>The returned options will be in a map equivalent to the TOML file'
       </span><span class="ss">server_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;global_db&quot;</span><span class="p">,</span><span class="w">
       </span><span class="ss">server_salt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sklMRkLXzMQgzqpMpJZPk31Js88su39U/mooAXALhj0=&quot;</span><span class="p">,</span><span class="w">
       </span><span class="ss">start_server_instances</span><span class="p">:</span><span class="w"> </span><span class="no">false</span><span class="p">,</span><span class="w">
-      </span><span class="ss">server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="7370897747-5">[</span><span class="p" data-group-id="7370897747-5">]</span><span class="w">
-    </span><span class="p" data-group-id="7370897747-4">}</span><span class="p">,</span><span class="w">
-    </span><span class="p" data-group-id="7370897747-6">%{</span><span class="w">
+      </span><span class="ss">server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1032442809-5">[</span><span class="p" data-group-id="1032442809-5">]</span><span class="w">
+    </span><span class="p" data-group-id="1032442809-4">}</span><span class="p">,</span><span class="w">
+    </span><span class="p" data-group-id="1032442809-6">%{</span><span class="w">
       </span><span class="ss">db_host</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span><span class="w">
       </span><span class="ss">db_max_instances</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w">
       </span><span class="ss">db_port</span><span class="p">:</span><span class="w"> </span><span class="mi">5432</span><span class="p">,</span><span class="w">
@@ -277,13 +277,13 @@ raises.</p><p>The returned options will be in a map equivalent to the TOML file'
       </span><span class="ss">server_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;instance_db&quot;</span><span class="p">,</span><span class="w">
       </span><span class="ss">server_salt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;w1OfRx630x7svid8Tk3L9rLL1eEGSm0fq8XcLdveuSs=&quot;</span><span class="p">,</span><span class="w">
       </span><span class="ss">start_server_instances</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-      </span><span class="ss">server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="7370897747-7">[</span><span class="s">&quot;primary&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;linked&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;demo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;reserved&quot;</span><span class="p" data-group-id="7370897747-7">]</span><span class="w">
-    </span><span class="p" data-group-id="7370897747-6">}</span><span class="w">
-  </span><span class="p" data-group-id="7370897747-3">]</span><span class="p">,</span><span class="w">
-  </span><span class="ss">available_server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="7370897747-8">[</span><span class="s">&quot;primary&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;linked&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;demo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;reserved&quot;</span><span class="p" data-group-id="7370897747-8">]</span><span class="p">,</span><span class="w">
+      </span><span class="ss">server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1032442809-7">[</span><span class="s">&quot;primary&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;linked&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;demo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;reserved&quot;</span><span class="p" data-group-id="1032442809-7">]</span><span class="w">
+    </span><span class="p" data-group-id="1032442809-6">}</span><span class="w">
+  </span><span class="p" data-group-id="1032442809-3">]</span><span class="p">,</span><span class="w">
+  </span><span class="ss">available_server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1032442809-8">[</span><span class="s">&quot;primary&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;linked&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;demo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;reserved&quot;</span><span class="p" data-group-id="1032442809-8">]</span><span class="p">,</span><span class="w">
   </span><span class="ss">global_dbserver_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;global_db&quot;</span><span class="p">,</span><span class="w">
   </span><span class="ss">global_pepper_value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;jTtEdXRExP5YXHeARQ1W66lP6wDc9GyOvhFPvwnHhtc=&quot;</span><span class="w">
-</span><span class="p" data-group-id="7370897747-2">}</span></code></pre><p>Called with bad parameters:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="8741182207-1">(</span><span class="s">&quot;./bad_file_name.toml&quot;</span><span class="p" data-group-id="8741182207-1">)</span><span class="w">
+</span><span class="p" data-group-id="1032442809-2">}</span></code></pre><p>Called with bad parameters:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="5596319514-1">(</span><span class="s">&quot;./bad_file_name.toml&quot;</span><span class="p" data-group-id="5596319514-1">)</span><span class="w">
 </span><span class="gt">** (MsbmsSystError) Problem reading options file &#39;./bad_file_name.toml&#39;.</span></code></pre>
   </section>
 </section>
@@ -324,12 +324,12 @@ system.</li></ul><h2 id="get_options/1-examples" class="section-heading">
   </a>
   Examples
 </h2>
-<p>Typical call and return:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystOptions</span><span class="o">.</span><span class="n">get_options</span><span class="p" data-group-id="1712697003-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="1712697003-1">)</span><span class="w">
-</span><span class="p" data-group-id="1712697003-2">{</span><span class="w">
+<p>Typical call and return:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystOptions</span><span class="o">.</span><span class="n">get_options</span><span class="p" data-group-id="3558044515-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="3558044515-1">)</span><span class="w">
+</span><span class="p" data-group-id="3558044515-2">{</span><span class="w">
   </span><span class="ss">:ok</span><span class="p">,</span><span class="w">
-  </span><span class="p" data-group-id="1712697003-3">%{</span><span class="w">
-    </span><span class="ss">dbserver</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1712697003-4">[</span><span class="w">
-      </span><span class="p" data-group-id="1712697003-5">%{</span><span class="w">
+  </span><span class="p" data-group-id="3558044515-3">%{</span><span class="w">
+    </span><span class="ss">dbserver</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="3558044515-4">[</span><span class="w">
+      </span><span class="p" data-group-id="3558044515-5">%{</span><span class="w">
         </span><span class="ss">db_host</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span><span class="w">
         </span><span class="ss">db_max_instances</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
         </span><span class="ss">db_port</span><span class="p">:</span><span class="w"> </span><span class="mi">5432</span><span class="p">,</span><span class="w">
@@ -339,9 +339,9 @@ system.</li></ul><h2 id="get_options/1-examples" class="section-heading">
         </span><span class="ss">server_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;global_db&quot;</span><span class="p">,</span><span class="w">
         </span><span class="ss">server_salt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sklMRkLXzMQgzqpMpJZPk31Js88su39U/mooAXALhj0=&quot;</span><span class="p">,</span><span class="w">
         </span><span class="ss">start_server_instances</span><span class="p">:</span><span class="w"> </span><span class="no">false</span><span class="p">,</span><span class="w">
-        </span><span class="ss">server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1712697003-6">[</span><span class="p" data-group-id="1712697003-6">]</span><span class="w">
-      </span><span class="p" data-group-id="1712697003-5">}</span><span class="p">,</span><span class="w">
-      </span><span class="p" data-group-id="1712697003-7">%{</span><span class="w">
+        </span><span class="ss">server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="3558044515-6">[</span><span class="p" data-group-id="3558044515-6">]</span><span class="w">
+      </span><span class="p" data-group-id="3558044515-5">}</span><span class="p">,</span><span class="w">
+      </span><span class="p" data-group-id="3558044515-7">%{</span><span class="w">
         </span><span class="ss">db_host</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span><span class="w">
         </span><span class="ss">db_max_instances</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w">
         </span><span class="ss">db_port</span><span class="p">:</span><span class="w"> </span><span class="mi">5432</span><span class="p">,</span><span class="w">
@@ -351,15 +351,15 @@ system.</li></ul><h2 id="get_options/1-examples" class="section-heading">
         </span><span class="ss">server_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;instance_db&quot;</span><span class="p">,</span><span class="w">
         </span><span class="ss">server_salt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;w1OfRx630x7svid8Tk3L9rLL1eEGSm0fq8XcLdveuSs=&quot;</span><span class="p">,</span><span class="w">
         </span><span class="ss">start_server_instances</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-        </span><span class="ss">server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1712697003-8">[</span><span class="s">&quot;primary&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;linked&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;demo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;reserved&quot;</span><span class="p" data-group-id="1712697003-8">]</span><span class="w">
-      </span><span class="p" data-group-id="1712697003-7">}</span><span class="w">
-    </span><span class="p" data-group-id="1712697003-4">]</span><span class="p">,</span><span class="w">
-    </span><span class="ss">available_server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1712697003-9">[</span><span class="s">&quot;primary&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;linked&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;demo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;reserved&quot;</span><span class="p" data-group-id="1712697003-9">]</span><span class="p">,</span><span class="w">
+        </span><span class="ss">server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="3558044515-8">[</span><span class="s">&quot;primary&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;linked&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;demo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;reserved&quot;</span><span class="p" data-group-id="3558044515-8">]</span><span class="w">
+      </span><span class="p" data-group-id="3558044515-7">}</span><span class="w">
+    </span><span class="p" data-group-id="3558044515-4">]</span><span class="p">,</span><span class="w">
+    </span><span class="ss">available_server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="3558044515-9">[</span><span class="s">&quot;primary&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;linked&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;demo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;reserved&quot;</span><span class="p" data-group-id="3558044515-9">]</span><span class="p">,</span><span class="w">
     </span><span class="ss">global_dbserver_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;global_db&quot;</span><span class="p">,</span><span class="w">
     </span><span class="ss">global_pepper_value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;jTtEdXRExP5YXHeARQ1W66lP6wDc9GyOvhFPvwnHhtc=&quot;</span><span class="w">
-  </span><span class="p" data-group-id="1712697003-3">}</span><span class="w">
-</span><span class="p" data-group-id="1712697003-2">}</span></code></pre><p>Called with bad parameters:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="0688006463-1">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="0688006463-2">%</span><span class="nc" data-group-id="0688006463-2">MsbmsSystError</span><span class="p" data-group-id="0688006463-2">{</span><span class="p" data-group-id="0688006463-2">}</span><span class="p" data-group-id="0688006463-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystOptions</span><span class="o">.</span><span class="n">get_options</span><span class="p" data-group-id="0688006463-3">(</span><span class="s">&quot;./bad_file_name.toml&quot;</span><span class="p" data-group-id="0688006463-3">)</span></code></pre>
+  </span><span class="p" data-group-id="3558044515-3">}</span><span class="w">
+</span><span class="p" data-group-id="3558044515-2">}</span></code></pre><p>Called with bad parameters:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="7876839066-1">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7876839066-2">%</span><span class="nc" data-group-id="7876839066-2">MsbmsSystError</span><span class="p" data-group-id="7876839066-2">{</span><span class="p" data-group-id="7876839066-2">}</span><span class="p" data-group-id="7876839066-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystOptions</span><span class="o">.</span><span class="n">get_options</span><span class="p" data-group-id="7876839066-3">(</span><span class="s">&quot;./bad_file_name.toml&quot;</span><span class="p" data-group-id="7876839066-3">)</span></code></pre>
   </section>
 </section>
 
@@ -407,9 +407,9 @@ API - Parsing
   </a>
   Examples
 </h2>
-<p>Typical call for database server:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MsbmsSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="8471485598-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="8471485598-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystOptions</span><span class="o">.</span><span class="n">get_dbserver_by_name</span><span class="p" data-group-id="8471485598-2">(</span><span class="n">config_options</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;instance_db&quot;</span><span class="p" data-group-id="8471485598-2">)</span><span class="w">
-</span><span class="p" data-group-id="8471485598-3">%{</span><span class="w">
+<p>Typical call for database server:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MsbmsSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="9768922926-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="9768922926-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystOptions</span><span class="o">.</span><span class="n">get_dbserver_by_name</span><span class="p" data-group-id="9768922926-2">(</span><span class="n">config_options</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;instance_db&quot;</span><span class="p" data-group-id="9768922926-2">)</span><span class="w">
+</span><span class="p" data-group-id="9768922926-3">%{</span><span class="w">
   </span><span class="ss">db_host</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span><span class="w">
   </span><span class="ss">db_max_instances</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w">
   </span><span class="ss">db_port</span><span class="p">:</span><span class="w"> </span><span class="mi">5432</span><span class="p">,</span><span class="w">
@@ -419,9 +419,9 @@ API - Parsing
   </span><span class="ss">server_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;instance_db&quot;</span><span class="p">,</span><span class="w">
   </span><span class="ss">server_salt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;w1OfRx630x7svid8Tk3L9rLL1eEGSm0fq8XcLdveuSs=&quot;</span><span class="p">,</span><span class="w">
   </span><span class="ss">start_server_instances</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8471485598-4">[</span><span class="s">&quot;primary&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;linked&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;demo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;reserved&quot;</span><span class="p" data-group-id="8471485598-4">]</span><span class="w">
-</span><span class="p" data-group-id="8471485598-3">}</span></code></pre><p>Result in case of bad server name:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MsbmsSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="9328805778-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="9328805778-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystOptions</span><span class="o">.</span><span class="n">get_dbserver_by_name</span><span class="p" data-group-id="9328805778-2">(</span><span class="n">config_options</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;non_existent_db&quot;</span><span class="p" data-group-id="9328805778-2">)</span><span class="w">
+  </span><span class="ss">server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9768922926-4">[</span><span class="s">&quot;primary&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;linked&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;demo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;reserved&quot;</span><span class="p" data-group-id="9768922926-4">]</span><span class="w">
+</span><span class="p" data-group-id="9768922926-3">}</span></code></pre><p>Result in case of bad server name:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MsbmsSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="6637734340-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="6637734340-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystOptions</span><span class="o">.</span><span class="n">get_dbserver_by_name</span><span class="p" data-group-id="6637734340-2">(</span><span class="n">config_options</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;non_existent_db&quot;</span><span class="p" data-group-id="6637734340-2">)</span><span class="w">
 </span><span class="no">nil</span></code></pre>
   </section>
 </section>
@@ -458,8 +458,8 @@ server designated as hosting the global database.</p><h2 id="get_global_dbserver
   </a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MsbmsSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="6418797034-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="6418797034-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="6418797034-2">%{</span><span class="ss">server_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;global_db&quot;</span><span class="p" data-group-id="6418797034-2">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MsbmsSystOptions</span><span class="o">.</span><span class="n">get_global_dbserver</span><span class="p" data-group-id="6418797034-3">(</span><span class="n">config_options</span><span class="p" data-group-id="6418797034-3">)</span></code></pre>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MsbmsSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="2840575604-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="2840575604-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="2840575604-2">%{</span><span class="ss">server_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;global_db&quot;</span><span class="p" data-group-id="2840575604-2">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MsbmsSystOptions</span><span class="o">.</span><span class="n">get_global_dbserver</span><span class="p" data-group-id="2840575604-3">(</span><span class="n">config_options</span><span class="p" data-group-id="2840575604-3">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_global_dbserver_name/1">
@@ -494,8 +494,8 @@ server designated as hosting the global database.</p><h2 id="get_global_dbserver
   </a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MsbmsSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="6627264582-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="6627264582-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystOptions</span><span class="o">.</span><span class="n">get_global_dbserver_name</span><span class="p" data-group-id="6627264582-2">(</span><span class="n">config_options</span><span class="p" data-group-id="6627264582-2">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MsbmsSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="9212985327-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="9212985327-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystOptions</span><span class="o">.</span><span class="n">get_global_dbserver_name</span><span class="p" data-group-id="9212985327-2">(</span><span class="n">config_options</span><span class="p" data-group-id="9212985327-2">)</span><span class="w">
 </span><span class="s">&quot;global_db&quot;</span></code></pre>
   </section>
 </section>
@@ -536,8 +536,8 @@ until there's actual public deployment of the application.</p></blockquote><h2 i
   </a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MsbmsSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="5479621792-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="5479621792-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystOptions</span><span class="o">.</span><span class="n">get_global_pepper_value</span><span class="p" data-group-id="5479621792-2">(</span><span class="n">config_options</span><span class="p" data-group-id="5479621792-2">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MsbmsSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="8465106676-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="8465106676-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystOptions</span><span class="o">.</span><span class="n">get_global_pepper_value</span><span class="p" data-group-id="8465106676-2">(</span><span class="n">config_options</span><span class="p" data-group-id="8465106676-2">)</span><span class="w">
 </span><span class="s">&quot;jTtEdXRExP5YXHeARQ1W66lP6wDc9GyOvhFPvwnHhtc=&quot;</span></code></pre>
   </section>
 </section>
@@ -573,9 +573,9 @@ until there's actual public deployment of the application.</p></blockquote><h2 i
   </a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MsbmsSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="2212567843-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="2212567843-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystOptions</span><span class="o">.</span><span class="n">list_available_server_pools</span><span class="p" data-group-id="2212567843-2">(</span><span class="n">config_options</span><span class="p" data-group-id="2212567843-2">)</span><span class="w">
-</span><span class="p" data-group-id="2212567843-3">[</span><span class="s">&quot;primary&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;linked&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;demo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;reserved&quot;</span><span class="p" data-group-id="2212567843-3">]</span></code></pre>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MsbmsSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="6396435380-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="6396435380-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystOptions</span><span class="o">.</span><span class="n">list_available_server_pools</span><span class="p" data-group-id="6396435380-2">(</span><span class="n">config_options</span><span class="p" data-group-id="6396435380-2">)</span><span class="w">
+</span><span class="p" data-group-id="6396435380-3">[</span><span class="s">&quot;primary&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;linked&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;demo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;reserved&quot;</span><span class="p" data-group-id="6396435380-3">]</span></code></pre>
   </section>
 </section>
 <section class="detail" id="list_dbservers/2">
@@ -620,10 +620,10 @@ values defaults to the empty list if not explicitly provided.</p></li></ul><h2 i
   </a>
   Examples
 </h2>
-<p>Calling without filters:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MsbmsSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="9636684660-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="9636684660-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="9636684660-2">[</span><span class="bp">_</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="bp">_</span><span class="p" data-group-id="9636684660-2">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MsbmsSystOptions</span><span class="o">.</span><span class="n">list_dbservers</span><span class="p" data-group-id="9636684660-3">(</span><span class="n">config_options</span><span class="p" data-group-id="9636684660-3">)</span><span class="w">
-</span><span class="p" data-group-id="9636684660-4">[</span><span class="w">
-  </span><span class="p" data-group-id="9636684660-5">%{</span><span class="w">
+<p>Calling without filters:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MsbmsSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="2504440636-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="2504440636-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="2504440636-2">[</span><span class="bp">_</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="bp">_</span><span class="p" data-group-id="2504440636-2">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MsbmsSystOptions</span><span class="o">.</span><span class="n">list_dbservers</span><span class="p" data-group-id="2504440636-3">(</span><span class="n">config_options</span><span class="p" data-group-id="2504440636-3">)</span><span class="w">
+</span><span class="p" data-group-id="2504440636-4">[</span><span class="w">
+  </span><span class="p" data-group-id="2504440636-5">%{</span><span class="w">
     </span><span class="ss">db_host</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span><span class="w">
     </span><span class="ss">db_max_instances</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
     </span><span class="ss">db_port</span><span class="p">:</span><span class="w"> </span><span class="mi">5432</span><span class="p">,</span><span class="w">
@@ -633,9 +633,9 @@ values defaults to the empty list if not explicitly provided.</p></li></ul><h2 i
     </span><span class="ss">server_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;global_db&quot;</span><span class="p">,</span><span class="w">
     </span><span class="ss">server_salt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sklMRkLXzMQgzqpMpJZPk31Js88su39U/mooAXALhj0=&quot;</span><span class="p">,</span><span class="w">
     </span><span class="ss">start_server_instances</span><span class="p">:</span><span class="w"> </span><span class="no">false</span><span class="p">,</span><span class="w">
-    </span><span class="ss">server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9636684660-6">[</span><span class="p" data-group-id="9636684660-6">]</span><span class="w">
-  </span><span class="p" data-group-id="9636684660-5">}</span><span class="p">,</span><span class="w">
-  </span><span class="p" data-group-id="9636684660-7">%{</span><span class="w">
+    </span><span class="ss">server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2504440636-6">[</span><span class="p" data-group-id="2504440636-6">]</span><span class="w">
+  </span><span class="p" data-group-id="2504440636-5">}</span><span class="p">,</span><span class="w">
+  </span><span class="p" data-group-id="2504440636-7">%{</span><span class="w">
     </span><span class="ss">db_host</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span><span class="w">
     </span><span class="ss">db_max_instances</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w">
     </span><span class="ss">db_port</span><span class="p">:</span><span class="w"> </span><span class="mi">5432</span><span class="p">,</span><span class="w">
@@ -645,12 +645,12 @@ values defaults to the empty list if not explicitly provided.</p></li></ul><h2 i
     </span><span class="ss">server_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;instance_db&quot;</span><span class="p">,</span><span class="w">
     </span><span class="ss">server_salt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;w1OfRx630x7svid8Tk3L9rLL1eEGSm0fq8XcLdveuSs=&quot;</span><span class="p">,</span><span class="w">
     </span><span class="ss">start_server_instances</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-    </span><span class="ss">server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9636684660-8">[</span><span class="s">&quot;primary&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;linked&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;demo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;reserved&quot;</span><span class="p" data-group-id="9636684660-8">]</span><span class="w">
-  </span><span class="p" data-group-id="9636684660-7">}</span><span class="w">
-</span><span class="p" data-group-id="9636684660-4">]</span></code></pre><p>Calling with filters:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MsbmsSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="0466268761-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="0466268761-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="0466268761-2">[</span><span class="bp">_</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="bp">_</span><span class="p" data-group-id="0466268761-2">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MsbmsSystOptions</span><span class="o">.</span><span class="n">list_dbservers</span><span class="p" data-group-id="0466268761-3">(</span><span class="n">config_options</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="0466268761-4">[</span><span class="s">&quot;primary&quot;</span><span class="p" data-group-id="0466268761-4">]</span><span class="p" data-group-id="0466268761-3">)</span><span class="w">
-</span><span class="p" data-group-id="0466268761-5">[</span><span class="w">
-  </span><span class="p" data-group-id="0466268761-6">%{</span><span class="w">
+    </span><span class="ss">server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2504440636-8">[</span><span class="s">&quot;primary&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;linked&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;demo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;reserved&quot;</span><span class="p" data-group-id="2504440636-8">]</span><span class="w">
+  </span><span class="p" data-group-id="2504440636-7">}</span><span class="w">
+</span><span class="p" data-group-id="2504440636-4">]</span></code></pre><p>Calling with filters:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MsbmsSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="7365794431-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="7365794431-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="7365794431-2">[</span><span class="bp">_</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="bp">_</span><span class="p" data-group-id="7365794431-2">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MsbmsSystOptions</span><span class="o">.</span><span class="n">list_dbservers</span><span class="p" data-group-id="7365794431-3">(</span><span class="n">config_options</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7365794431-4">[</span><span class="s">&quot;primary&quot;</span><span class="p" data-group-id="7365794431-4">]</span><span class="p" data-group-id="7365794431-3">)</span><span class="w">
+</span><span class="p" data-group-id="7365794431-5">[</span><span class="w">
+  </span><span class="p" data-group-id="7365794431-6">%{</span><span class="w">
     </span><span class="ss">db_host</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span><span class="w">
     </span><span class="ss">db_max_instances</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w">
     </span><span class="ss">db_port</span><span class="p">:</span><span class="w"> </span><span class="mi">5432</span><span class="p">,</span><span class="w">
@@ -660,9 +660,9 @@ values defaults to the empty list if not explicitly provided.</p></li></ul><h2 i
     </span><span class="ss">server_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;instance_db&quot;</span><span class="p">,</span><span class="w">
     </span><span class="ss">server_salt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;w1OfRx630x7svid8Tk3L9rLL1eEGSm0fq8XcLdveuSs=&quot;</span><span class="p">,</span><span class="w">
     </span><span class="ss">start_server_instances</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-    </span><span class="ss">server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="0466268761-7">[</span><span class="s">&quot;primary&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;linked&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;demo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;reserved&quot;</span><span class="p" data-group-id="0466268761-7">]</span><span class="w">
-  </span><span class="p" data-group-id="0466268761-6">}</span><span class="w">
-</span><span class="p" data-group-id="0466268761-5">]</span></code></pre>
+    </span><span class="ss">server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="7365794431-7">[</span><span class="s">&quot;primary&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;linked&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;demo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;reserved&quot;</span><span class="p" data-group-id="7365794431-7">]</span><span class="w">
+  </span><span class="p" data-group-id="7365794431-6">}</span><span class="w">
+</span><span class="p" data-group-id="7365794431-5">]</span></code></pre>
   </section>
 </section>
 
@@ -673,7 +673,7 @@ values defaults to the empty list if not explicitly provided.</p></li></ul><h2 i
 
         <p>
           Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.28.4) for the
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.28.5) for the
 
             <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 
