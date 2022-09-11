@@ -4,17 +4,17 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.28.4">
+    <meta name="generator" content="ExDoc v0.28.5">
     <meta name="project" content="msbms_syst_error v0.1.0">
 
     <title>MsbmsSystError — msbms_syst_error v0.1.0</title>
-    <link rel="stylesheet" href="dist/elixir-b6f1ed5df9b1d42a7309.css" />
+    <link rel="stylesheet" href="dist/elixir-64c5e2b63575bddb1c5b.css" />
 
     <script src="dist/sidebar_items-9c8aa3c03c.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/app-bd1cb213813bf4825aa2.js"></script>
+    <script async src="dist/app-b5f3440501744dc8be3d.js"></script>
 
 
   </head>
@@ -101,11 +101,12 @@ msbms_syst_error
 
 
   <section id="moduledoc">
-<p>API for working with the MuseBMS error reporting subsystem.</p><p>This module defines a nested structure for reporting errors in contexts where a result type ends
-in an error state.  By capturing lower level errors and reporting them in a standard way, various
-application errors, especially non-fatal errors, can be handled appropriate and logged for later
-analysis.</p><p>The basic form of a reportable application error is: {:error, %MsbmsSystError{}} where
-%MsbmsSystError{} contains basic fields to identify the kind of error, the source of the error.</p><p>Functions in this API are used to work with the returned struct.</p>
+<p>API for working with the MuseBMS error reporting subsystem.</p><p>This module defines a nested structure for reporting errors in contexts where a result should be
+represented by an error result.  By capturing lower level errors and reporting them in a
+standard way, various application errors, especially non-fatal errors, can be handled as
+appropriate and logged for later analysis.</p><p>The basic form of a reportable application error is: <code class="inline">{:error, %MsbmsSystError{}}</code> where
+<code class="inline">%MsbmsSystError{}</code> contains basic fields to identify the kind of error, the source of the
+error, and other error related data.</p><p>Functions in this API are used to work with the returned exception.</p>
   </section>
 
 
@@ -129,7 +130,7 @@ analysis.</p><p>The basic form of a reportable application error is: {:error, %M
 
         </div>
 
-          <div class="summary-synopsis"><p>Defines a nestable exception format for reporting MuseBMS application exceptions.t().</p></div>
+          <div class="summary-synopsis"><p>Defines a nestable exception format for reporting MuseBMS application exceptions.</p></div>
 
       </div>
 
@@ -146,8 +147,7 @@ analysis.</p><p>The basic form of a reportable application error is: {:error, %M
 
         </div>
 
-          <div class="summary-synopsis"><p>The %MsbmsSystError{} struct (the Error Struct) may represent arbitrarily nested Error Structs in
-the <code class="inline">cause:</code> attribute of the Error Struct.</p></div>
+          <div class="summary-synopsis"><p>Returns the root cause of an <a href="MsbmsSystError.html#content"><code class="inline">MsbmsSystError</code></a> exception object.</p></div>
 
       </div>
 
@@ -182,7 +182,7 @@ Types
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@type</span> t() :: %MsbmsSystError{
-  __exception__: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
+  __exception__: true,
   cause: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>(),
   code: <a href="MsbmsSystError.Types.html#t:msbms_error/0">MsbmsSystError.Types.msbms_error</a>(),
   message: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()
@@ -190,7 +190,13 @@ Types
 
       </div>
 
-<p>Defines a nestable exception format for reporting MuseBMS application exceptions.t().</p><p>Fields in the exception are:</p><ul><li><p><strong>code</strong></p><p>Classifies the error into a specific kind of exception likely to be seen in application.  Useful for pattern matching, logging, and determining if any raised exception should be handled or not.</p></li><li><p><strong>message</strong></p><p>The text description of the error condition.  This should be meaningful to humans.</p></li><li><p><strong>cause</strong></p><p>This value may be either another %MsbmsSystError{} value representing a more fundamental cause or other metadata helpful in understanding the cause of the error. Values found here, in addition to other %MsbmsSystError{} values, could include maps of function parameters/values or lower level exceptions that originate from included dependencies or libraries like database connection libraries.</p></li></ul>
+<p>Defines a nestable exception format for reporting MuseBMS application exceptions.</p><p>Fields in the exception are:</p><ul><li><p><code class="inline">code</code> - classifies the error into a specific kind of exception likely to be seen in
+application.  Useful for pattern matching, logging, and determining if any raised exception
+should be handled or not.</p></li><li><p><code class="inline">message</code> - the text description of the error condition.  This should be meaningful to
+humans.</p></li><li><p><code class="inline">cause</code> - includes information that may be helpful in understanding the cause of the error
+condition.  This could include nested <code class="inline">t:MsbmsSystError/0</code> objects, exception data created
+outside of this exception framework, or pertinent data such as parameters and data that is
+directly related to the exception.</p></li></ul>
   </section>
 </section>
 
@@ -226,37 +232,38 @@ API - Error Parsing
 
       </div>
 
-<p>The %MsbmsSystError{} struct (the Error Struct) may represent arbitrarily nested Error Structs in
-the <code class="inline">cause:</code> attribute of the Error Struct.</p><p>This function will traverse the nesting and return the bottom most Error Struct.  If some other
-object, such as a standard error tuple is passed to the function, the function will simply return
-the value.</p><h2 id="get_root_cause/1-examples" class="section-heading">
+<p>Returns the root cause of an <a href="MsbmsSystError.html#content"><code class="inline">MsbmsSystError</code></a> exception object.</p><p>The <a href="MsbmsSystError.html#content"><code class="inline">MsbmsSystError</code></a> exception handling framework allows for nested exceptions to be reported
+stack trace style from lower levels of the application where an exception was caused into higher
+levels of the application which enter a failure state due to the lower level root cause.</p><p>This function will traverse the nesting and return the bottom most Error Struct.  If some other
+object, such as a standard error tuple is passed to the function, the function will simply
+return the value.</p><h2 id="get_root_cause/1-examples" class="section-heading">
   <a href="#get_root_cause/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
   <p class="sr-only">examples</p>
   </a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">my_err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="4245152634-1">%</span><span class="nc" data-group-id="4245152634-1">MsbmsSystError</span><span class="p" data-group-id="4245152634-1">{</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">my_err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="6308940827-1">%</span><span class="nc" data-group-id="6308940827-1">MsbmsSystError</span><span class="p" data-group-id="6308940827-1">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">           </span><span class="ss">code</span><span class="p">:</span><span class="w">    </span><span class="ss">:example_error</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">           </span><span class="ss">message</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Outer error message&quot;</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">           </span><span class="ss">cause</span><span class="p">:</span><span class="w">    </span><span class="p" data-group-id="4245152634-2">%</span><span class="nc" data-group-id="4245152634-2">MsbmsSystError</span><span class="p" data-group-id="4245152634-2">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">           </span><span class="ss">cause</span><span class="p">:</span><span class="w">    </span><span class="p" data-group-id="6308940827-2">%</span><span class="nc" data-group-id="6308940827-2">MsbmsSystError</span><span class="p" data-group-id="6308940827-2">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">                       </span><span class="ss">code</span><span class="p">:</span><span class="w">    </span><span class="ss">:example_error</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">                       </span><span class="ss">message</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Intermediate error message&quot;</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">                       </span><span class="ss">cause</span><span class="p">:</span><span class="w">    </span><span class="p" data-group-id="4245152634-3">%</span><span class="nc" data-group-id="4245152634-3">MsbmsSystError</span><span class="p" data-group-id="4245152634-3">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">                       </span><span class="ss">cause</span><span class="p">:</span><span class="w">    </span><span class="p" data-group-id="6308940827-3">%</span><span class="nc" data-group-id="6308940827-3">MsbmsSystError</span><span class="p" data-group-id="6308940827-3">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">                                   </span><span class="ss">code</span><span class="p">:</span><span class="w">    </span><span class="ss">:example_error</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">                                   </span><span class="ss">message</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Root error message&quot;</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">                                   </span><span class="ss">cause</span><span class="p">:</span><span class="w">    </span><span class="p" data-group-id="4245152634-4">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Example Error&quot;</span><span class="p" data-group-id="4245152634-4">}</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">                                 </span><span class="p" data-group-id="4245152634-3">}</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">                     </span><span class="p" data-group-id="4245152634-2">}</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">         </span><span class="p" data-group-id="4245152634-1">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystError</span><span class="o">.</span><span class="n">get_root_cause</span><span class="p" data-group-id="4245152634-5">(</span><span class="n">my_err</span><span class="p" data-group-id="4245152634-5">)</span><span class="w">
-</span><span class="p" data-group-id="4245152634-6">%</span><span class="nc" data-group-id="4245152634-6">MsbmsSystError</span><span class="p" data-group-id="4245152634-6">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">                                   </span><span class="ss">cause</span><span class="p">:</span><span class="w">    </span><span class="p" data-group-id="6308940827-4">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Example Error&quot;</span><span class="p" data-group-id="6308940827-4">}</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">                                 </span><span class="p" data-group-id="6308940827-3">}</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">                     </span><span class="p" data-group-id="6308940827-2">}</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">         </span><span class="p" data-group-id="6308940827-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystError</span><span class="o">.</span><span class="n">get_root_cause</span><span class="p" data-group-id="6308940827-5">(</span><span class="n">my_err</span><span class="p" data-group-id="6308940827-5">)</span><span class="w">
+</span><span class="p" data-group-id="6308940827-6">%</span><span class="nc" data-group-id="6308940827-6">MsbmsSystError</span><span class="p" data-group-id="6308940827-6">{</span><span class="w">
   </span><span class="ss">code</span><span class="p">:</span><span class="w">     </span><span class="ss">:example_error</span><span class="p">,</span><span class="w">
   </span><span class="ss">message</span><span class="p">:</span><span class="w">  </span><span class="s">&quot;Root error message&quot;</span><span class="p">,</span><span class="w">
-  </span><span class="ss">cause</span><span class="p">:</span><span class="w">    </span><span class="p" data-group-id="4245152634-7">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Example Error&quot;</span><span class="p" data-group-id="4245152634-7">}</span><span class="w">
-</span><span class="p" data-group-id="4245152634-6">}</span><span class="w">
+  </span><span class="ss">cause</span><span class="p">:</span><span class="w">    </span><span class="p" data-group-id="6308940827-7">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Example Error&quot;</span><span class="p" data-group-id="6308940827-7">}</span><span class="w">
+</span><span class="p" data-group-id="6308940827-6">}</span><span class="w">
 
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystError</span><span class="o">.</span><span class="n">get_root_cause</span><span class="p" data-group-id="4245152634-8">(</span><span class="p" data-group-id="4245152634-9">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Example Error&quot;</span><span class="p" data-group-id="4245152634-9">}</span><span class="p" data-group-id="4245152634-8">)</span><span class="w">
-</span><span class="p" data-group-id="4245152634-10">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Example Error&quot;</span><span class="p" data-group-id="4245152634-10">}</span></code></pre>
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystError</span><span class="o">.</span><span class="n">get_root_cause</span><span class="p" data-group-id="6308940827-8">(</span><span class="p" data-group-id="6308940827-9">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Example Error&quot;</span><span class="p" data-group-id="6308940827-9">}</span><span class="p" data-group-id="6308940827-8">)</span><span class="w">
+</span><span class="p" data-group-id="6308940827-10">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Example Error&quot;</span><span class="p" data-group-id="6308940827-10">}</span></code></pre>
   </section>
 </section>
 
@@ -267,7 +274,7 @@ the value.</p><h2 id="get_root_cause/1-examples" class="section-heading">
 
         <p>
           Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.28.4) for the
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.28.5) for the
 
             <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 
