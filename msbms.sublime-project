@@ -2,50 +2,47 @@
     "folders":
     [
         {
-            "path": "database"
+            "path": "database",
         },
         {
-            "path": "components/system/msbms_syst_error"
+            "path": "components/system/msbms_syst_error",
         },
         {
-            "path": "components/system/msbms_syst_utils"
+            "path": "components/system/msbms_syst_utils",
         },
         {
-            "path": "components/system/msbms_syst_rate_limiter"
+            "path": "components/system/msbms_syst_rate_limiter",
         },
         {
-            "path": "components/system/msbms_syst_datastore"
+            "path": "components/system/msbms_syst_datastore",
         },
         {
-            "path": "components/system/msbms_syst_options"
+            "path": "components/system/msbms_syst_options",
         },
         {
-            "path": "components/system/msbms_syst_settings"
+            "path": "components/system/msbms_syst_settings",
         },
         {
-            "path": "components/system/msbms_syst_enums"
+            "path": "components/system/msbms_syst_enums",
         },
         {
-            "path": "components/system/msbms_syst_instance_mgr"
+            "path": "components/system/msbms_syst_instance_mgr",
         },
         {
-            "path": "components/system/msbms_syst_authentication"
+            "path": "components/system/msbms_syst_authentication",
         },
         {
-            "path": "application/msbms"
+            "path": "application/msbms",
         },
         {
-            "path": "documentation"
+            "path": "documentation",
         },
         {
-            "path": "tools"
+            "path": "tools",
         },
         {
-            "path": ".github"
+            "path": ".github",
         },
-        {
-            "path": "."
-        }
     ],
     "settings":
     {
@@ -60,7 +57,7 @@
         "mix_format_command": "mix format",
         "make_path_relative": true,
         "lsp_format_on_save": true,
-        "use_root_dir": true
+        "use_root_dir": true,
     },
     "build_systems":
     [
@@ -72,7 +69,7 @@
             "keyfiles":
             [
                 "mix.exs"
-            ]
+            ],
         },
         {
             "name": "Test MsbmsSystUtils",
@@ -82,7 +79,7 @@
             "keyfiles":
             [
                 "mix.exs"
-            ]
+            ],
         },
         {
             "name": "Test MsbmsSystDatastore",
@@ -92,7 +89,7 @@
             "keyfiles":
             [
                 "mix.exs"
-            ]
+            ],
         },
         {
             "name": "Test MsbmsSystOptions",
@@ -102,7 +99,7 @@
             "keyfiles":
             [
                 "mix.exs"
-            ]
+            ],
         },
         {
             "name": "Test MsbmsSystSettings",
@@ -112,7 +109,7 @@
             "keyfiles":
             [
                 "mix.exs"
-            ]
+            ],
         },
         {
             "name": "Test MsbmsSystEnums",
@@ -122,7 +119,7 @@
             "keyfiles":
             [
                 "mix.exs"
-            ]
+            ],
         },
         {
             "name": "Test MsbmsSystRateLimiter",
@@ -132,7 +129,7 @@
             "keyfiles":
             [
                 "mix.exs"
-            ]
+            ],
         },
         {
             "name": "Test MsbmsSystInstanceMgr",
@@ -142,7 +139,7 @@
             "keyfiles":
             [
                 "mix.exs"
-            ]
+            ],
         },
         {
             "name": "Test MsbmsSystAuthentication",
@@ -152,7 +149,7 @@
             "keyfiles":
             [
                 "mix.exs"
-            ]
+            ],
         }
-    ]
+    ],
 }
