@@ -76,7 +76,7 @@ defmodule MsbmsSystDatastore.MixProject do
             MsbmsSystDatastore.DbTypes.Inet,
             MsbmsSystDatastore.DbTypes.IntegerRange,
             MsbmsSystDatastore.DbTypes.Interval,
-            MsbmsSystDatastore.DbTypes.TimestampRange
+            MsbmsSystDatastore.DbTypes.DateTimeRange
           ],
           "Datastore Service": [MsbmsSystDatastore.Datastore],
           "Datastore Context Service": [MsbmsSystDatastore.DatastoreContext],

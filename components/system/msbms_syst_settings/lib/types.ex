@@ -74,7 +74,7 @@ defmodule MsbmsSystSettings.Types do
           optional(:setting_date_range) => MsbmsSystDatastore.DbTypes.DateRange.t(),
           optional(:setting_time) => Time.t(),
           optional(:setting_timestamp) => DateTime.t(),
-          optional(:setting_timestamp_range) => MsbmsSystDatastore.DbTypes.TimestampRange.t(),
+          optional(:setting_timestamp_range) => MsbmsSystDatastore.DbTypes.DateTimeRange.t(),
           optional(:setting_json) => map(),
           optional(:setting_text) => String.t(),
           optional(:setting_uuid) => Ecto.UUID.t(),

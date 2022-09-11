@@ -1,5 +1,5 @@
-# Source File: timestamp_range.ex
-# Location:    musebms/components/system/msbms_syst_datastore/lib/db_types/impl/timestamp_range.ex
+# Source File: datetime_range.ex
+# Location:    musebms/components/system/msbms_syst_datastore/lib/db_types/impl/datetime_range.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,15 +10,15 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defimpl MsbmsSystDatastore.DbTypes, for: MsbmsSystDatastore.DbTypes.TimestampRange do
-  alias MsbmsSystDatastore.DbTypes.Impl.TimestampRange
+defimpl MsbmsSystDatastore.DbTypes, for: MsbmsSystDatastore.DbTypes.DateTimeRange do
+  alias MsbmsSystDatastore.DbTypes.Impl.DateTimeRange
 
-  def compare(left, right), do: TimestampRange.compare(left, right)
+  def compare(left, right), do: DateTimeRange.compare(left, right)
 
-  def test_compare(left, right, operator), do: TimestampRange.test_compare(left, right, operator)
+  def test_compare(left, right, operator), do: DateTimeRange.test_compare(left, right, operator)
 end
 
-defmodule MsbmsSystDatastore.DbTypes.Impl.TimestampRange do
+defmodule MsbmsSystDatastore.DbTypes.Impl.DateTimeRange do
   alias MsbmsSystDatastore.DbTypes
 
   # TODO: These may be candidates to set up as constants.  Right now I'm hoping
@@ -35,7 +35,7 @@ defmodule MsbmsSystDatastore.DbTypes.Impl.TimestampRange do
   #       doesn't chain each function directly into the next as a pipeline would
   #       be more flexible;  not worth re-engineering it just now.
 
-  defp compare_start(%DbTypes.TimestampRange{} = left, %DbTypes.TimestampRange{} = right, range) do
+  defp compare_start(%DbTypes.DateTimeRange{} = left, %DbTypes.DateTimeRange{} = right, range) do
     left_lower = calc_lower(left.lower, left.lower_inclusive)
     left_upper = calc_upper(left.upper, left.upper_inclusive)
 
@@ -45,7 +45,7 @@ defmodule MsbmsSystDatastore.DbTypes.Impl.TimestampRange do
     compare_coarse(left_lower, left_upper, right_lower, right_upper, range)
   end
 
-  defp compare_start(%DbTypes.TimestampRange{} = left, %DateTime{} = right, _range) do
+  defp compare_start(%DbTypes.DateTimeRange{} = left, %DateTime{} = right, _range) do
     left_lower = calc_lower(left.lower, left.lower_inclusive)
     left_upper = calc_upper(left.upper, left.upper_inclusive)
 
@@ -89,12 +89,12 @@ defmodule MsbmsSystDatastore.DbTypes.Impl.TimestampRange do
   defp compare_detail(lower, upper) when lower in [:eq, :gt] and upper == :gt, do: :gto
   defp compare_detail(lower, upper) when lower == :lt and upper in [:eq, :lt], do: :lto
 
-  def test_compare(%DbTypes.TimestampRange{} = left, %DbTypes.TimestampRange{} = right, operator)
+  def test_compare(%DbTypes.DateTimeRange{} = left, %DbTypes.DateTimeRange{} = right, operator)
       when operator in [:eq, :lt, :gt, :lcr, :rcl, :lto, :gto] do
     compare(left, right) == operator
   end
 
-  def test_compare(%DbTypes.TimestampRange{} = left, %DateTime{} = right, operator)
+  def test_compare(%DbTypes.DateTimeRange{} = left, %DateTime{} = right, operator)
       when operator in [:lt, :gt, :lcr],
       do: compare(left, right) == operator
 end
