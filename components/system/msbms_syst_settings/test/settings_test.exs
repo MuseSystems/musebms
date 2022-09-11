@@ -883,7 +883,7 @@ defmodule SettingsTest do
 
   test "Set/Get setting_timestamp_range Setting" do
     first_change = %{
-      setting_timestamp_range: %MsbmsSystDatastore.DbTypes.TimestampRange{
+      setting_timestamp_range: %MsbmsSystDatastore.DbTypes.DateTimeRange{
         lower: ~U[2022-04-13 01:00:00.000000Z],
         upper: ~U[2022-04-14 23:00:00.000000Z],
         lower_inclusive: true,
@@ -892,7 +892,7 @@ defmodule SettingsTest do
     }
 
     second_change = %{
-      setting_timestamp_range: %MsbmsSystDatastore.DbTypes.TimestampRange{
+      setting_timestamp_range: %MsbmsSystDatastore.DbTypes.DateTimeRange{
         lower: ~U[2022-04-12 01:30:00.000000Z],
         upper: ~U[2022-04-15 23:30:00.000000Z],
         lower_inclusive: false,
@@ -903,7 +903,7 @@ defmodule SettingsTest do
     nil_change = %{setting_timestamp_range: nil}
 
     assert %MsbmsSystSettings.Data.SystSettings{
-             setting_timestamp_range: %MsbmsSystDatastore.DbTypes.TimestampRange{
+             setting_timestamp_range: %MsbmsSystDatastore.DbTypes.DateTimeRange{
                lower: ~U[2022-01-01 01:00:00.000000Z],
                upper: :inf,
                lower_inclusive: true,
@@ -911,7 +911,7 @@ defmodule SettingsTest do
              }
            } = MsbmsSystSettings.get_setting_values("test_setting_one")
 
-    assert %MsbmsSystDatastore.DbTypes.TimestampRange{
+    assert %MsbmsSystDatastore.DbTypes.DateTimeRange{
              lower: ~U[2022-01-01 01:00:00.000000Z],
              upper: :inf,
              lower_inclusive: true,

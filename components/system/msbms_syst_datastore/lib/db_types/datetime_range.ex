@@ -1,5 +1,5 @@
-# Source File: timestamp_range.ex
-# Location:    musebms/components/system/msbms_syst_datastore/lib/db_types/timestamp_range.ex
+# Source File: datetime_range.ex
+# Location:    musebms/components/system/msbms_syst_datastore/lib/db_types/datetime_range.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,7 +10,7 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule MsbmsSystDatastore.DbTypes.TimestampRange do
+defmodule MsbmsSystDatastore.DbTypes.DateTimeRange do
   use Ecto.Type
 
   @moduledoc """
@@ -29,10 +29,10 @@ defmodule MsbmsSystDatastore.DbTypes.TimestampRange do
 
   defstruct lower: :empty, upper: :empty, lower_inclusive: true, upper_inclusive: false
 
-  @spec type :: :timestamprange
+  @spec type :: :datetimerange
   @impl true
   @doc false
-  def type, do: :timestamprange
+  def type, do: :datetimerange
 
   @spec cast(any()) :: {:ok, t()} | :error
   @impl true

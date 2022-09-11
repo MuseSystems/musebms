@@ -27,25 +27,25 @@ end
 
 defmodule MsbmsSystDatastore.DbTypes.Impl.DateTime do
   alias MsbmsSystDatastore.DbTypes
-  alias MsbmsSystDatastore.DbTypes.Impl.TimestampRange
+  alias MsbmsSystDatastore.DbTypes.Impl.DateTimeRange
 
   def compare(left, %DateTime{} = right), do: DateTime.compare(left, right)
 
-  def compare(left, %DbTypes.TimestampRange{} = right) do
-    left_range = %DbTypes.TimestampRange{
+  def compare(left, %DbTypes.DateTimeRange{} = right) do
+    left_range = %DbTypes.DateTimeRange{
       lower: left,
       upper: left,
       lower_inclusive: true,
       upper_inclusive: true
     }
 
-    TimestampRange.compare(left_range, right, :range_right)
+    DateTimeRange.compare(left_range, right, :range_right)
   end
 
   def test_compare(left, %DateTime{} = right, operator) when operator in [:eq, :gt, :lt],
     do: compare(left, right) == operator
 
-  def test_compare(left, %DbTypes.TimestampRange{} = right, operator)
+  def test_compare(left, %DbTypes.DateTimeRange{} = right, operator)
       when operator in [:lt, :gt, :rcl],
       do: compare(left, right) == operator
 end

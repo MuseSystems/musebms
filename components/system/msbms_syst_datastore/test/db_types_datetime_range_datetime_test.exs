@@ -1,5 +1,5 @@
-# Source File: db_types_date_range_date_test.exs
-# Location:    musebms/components/system/msbms_syst_datastore/test/db_types_date_range_date_test.exs
+# Source File: db_types_datetime_range_datetime_test.exs
+# Location:    musebms/components/system/msbms_syst_datastore/test/db_types_datetime_range_datetime_test.exs
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,12 +10,12 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule DbTypesTimestampRangeDateTimeTest do
+defmodule DbTypesDateTimeRangeDateTimeTest do
   use ExUnit.Case, async: true
 
   alias MsbmsSystDatastore.DbTypes
 
-  test "Can compute Date/Date result operators" do
+  test "Can compute DateTime/DateTime result operators" do
     assert DbTypes.compare(~U[2022-01-01 00:00:00Z], ~U[2022-01-01 00:00:00Z]) == :eq
     assert DbTypes.compare(~U[2022-01-01 00:00:00Z], ~U[2022-01-02 00:00:00Z]) == :lt
     assert DbTypes.compare(~U[2022-01-02 00:00:00Z], ~U[2022-01-01 00:00:00Z]) == :gt
@@ -25,8 +25,8 @@ defmodule DbTypesTimestampRangeDateTimeTest do
     assert DbTypes.test_compare(~U[2022-01-02 00:00:00Z], ~U[2022-01-01 00:00:00Z], :gt)
   end
 
-  test "Can compute DateRange/Date inclusivity correctly" do
-    li_ui = %DbTypes.TimestampRange{
+  test "Can compute DateTimeRange/DateTime inclusivity correctly" do
+    li_ui = %DbTypes.DateTimeRange{
       lower: ~U[2022-07-31 00:00:00Z],
       upper: ~U[2022-08-01 00:00:00Z],
       lower_inclusive: true,
@@ -38,7 +38,7 @@ defmodule DbTypesTimestampRangeDateTimeTest do
     assert DbTypes.compare(~U[2022-07-31 00:00:00Z], li_ui) == :rcl
     assert DbTypes.compare(~U[2022-08-01 00:00:00Z], li_ui) == :rcl
 
-    li_ue = %DbTypes.TimestampRange{
+    li_ue = %DbTypes.DateTimeRange{
       lower: ~U[2022-07-31 00:00:00Z],
       upper: ~U[2022-08-01 00:00:00Z],
       lower_inclusive: true,
@@ -50,7 +50,7 @@ defmodule DbTypesTimestampRangeDateTimeTest do
     assert DbTypes.compare(~U[2022-07-31 00:00:00Z], li_ue) == :rcl
     assert DbTypes.compare(~U[2022-08-01 00:00:00Z], li_ue) == :gt
 
-    le_ui = %DbTypes.TimestampRange{
+    le_ui = %DbTypes.DateTimeRange{
       lower: ~U[2022-07-31 00:00:00Z],
       upper: ~U[2022-08-01 00:00:00Z],
       lower_inclusive: false,
@@ -63,22 +63,22 @@ defmodule DbTypesTimestampRangeDateTimeTest do
     assert DbTypes.compare(~U[2022-08-01 00:00:00Z], le_ui) == :rcl
   end
 
-  test "Can compute DateRange/DateRange inclusivity correctly" do
-    lower_control = %DbTypes.TimestampRange{
+  test "Can compute DateTimeRange/DateTimeRange inclusivity correctly" do
+    lower_control = %DbTypes.DateTimeRange{
       lower: ~U[2022-06-01 00:00:00Z],
       upper: ~U[2022-07-31 00:00:00Z],
       lower_inclusive: true,
       upper_inclusive: true
     }
 
-    upper_control = %DbTypes.TimestampRange{
+    upper_control = %DbTypes.DateTimeRange{
       lower: ~U[2022-10-01 00:00:00Z],
       upper: ~U[2022-11-01 00:00:00Z],
       lower_inclusive: true,
       upper_inclusive: true
     }
 
-    li_ui = %DbTypes.TimestampRange{
+    li_ui = %DbTypes.DateTimeRange{
       lower: ~U[2022-07-31 00:00:00Z],
       upper: ~U[2022-10-01 00:00:00Z],
       lower_inclusive: true,
@@ -90,7 +90,7 @@ defmodule DbTypesTimestampRangeDateTimeTest do
     assert DbTypes.compare(lower_control, li_ui) == :lto
     assert DbTypes.compare(upper_control, li_ui) == :gto
 
-    li_ue = %DbTypes.TimestampRange{
+    li_ue = %DbTypes.DateTimeRange{
       lower: ~U[2022-07-31 00:00:00Z],
       upper: ~U[2022-10-01 00:00:00Z],
       lower_inclusive: true,
@@ -102,7 +102,7 @@ defmodule DbTypesTimestampRangeDateTimeTest do
     assert DbTypes.compare(lower_control, li_ue) == :lto
     assert DbTypes.compare(upper_control, li_ue) == :gt
 
-    le_ui = %DbTypes.TimestampRange{
+    le_ui = %DbTypes.DateTimeRange{
       lower: ~U[2022-07-31 00:00:00Z],
       upper: ~U[2022-10-01 00:00:00Z],
       lower_inclusive: false,
@@ -115,10 +115,10 @@ defmodule DbTypesTimestampRangeDateTimeTest do
     assert DbTypes.compare(upper_control, le_ui) == :gto
   end
 
-  test "Can compute DateRange/Date bounding correctly" do
+  test "Can compute DateTimeRange/DateTime bounding correctly" do
     # :empty and :unbound are synonyms, so mix them up across lower & upper.
     # Inclusivity doesn't matter for :unbound/:empty; they are always inclusive.
-    lu_ub = %DbTypes.TimestampRange{
+    lu_ub = %DbTypes.DateTimeRange{
       lower: :empty,
       upper: ~U[2022-08-01 00:00:00Z],
       lower_inclusive: true,
@@ -130,7 +130,7 @@ defmodule DbTypesTimestampRangeDateTimeTest do
     assert DbTypes.compare(~U[2022-07-31 00:00:00Z], lu_ub) == :rcl
     assert DbTypes.compare(~U[2022-08-02 00:00:00Z], lu_ub) == :gt
 
-    lb_uu = %DbTypes.TimestampRange{
+    lb_uu = %DbTypes.DateTimeRange{
       lower: ~U[2022-07-31 00:00:00Z],
       upper: :unbound,
       lower_inclusive: true,
@@ -142,7 +142,7 @@ defmodule DbTypesTimestampRangeDateTimeTest do
     assert DbTypes.compare(~U[2022-07-30 00:00:00Z], lb_uu) == :lt
     assert DbTypes.compare(~U[2022-08-01 00:00:00Z], lb_uu) == :rcl
 
-    lu_uu = %DbTypes.TimestampRange{
+    lu_uu = %DbTypes.DateTimeRange{
       lower: :unbound,
       upper: :empty,
       lower_inclusive: false,
@@ -156,18 +156,18 @@ defmodule DbTypesTimestampRangeDateTimeTest do
              :rcl
   end
 
-  test "Can compute DateRange/DateRange bounding correctly" do
+  test "Can compute DateTimeRange/DateTimeRange bounding correctly" do
     # :empty and :unbound are synonyms, so mix them up across lower & upper.
     # Inclusivity doesn't matter for :unbound/:empty; they are always inclusive.
 
-    control = %DbTypes.TimestampRange{
+    control = %DbTypes.DateTimeRange{
       lower: ~U[2022-01-01 00:00:00Z],
       upper: ~U[2022-07-01 00:00:00Z],
       lower_inclusive: true,
       upper_inclusive: true
     }
 
-    lu_ub = %DbTypes.TimestampRange{
+    lu_ub = %DbTypes.DateTimeRange{
       lower: :empty,
       upper: ~U[2022-07-01 00:00:00Z],
       lower_inclusive: true,
@@ -177,7 +177,7 @@ defmodule DbTypesTimestampRangeDateTimeTest do
     assert DbTypes.compare(lu_ub, control) == :lcr
     assert DbTypes.compare(control, lu_ub) == :rcl
 
-    lb_uu = %DbTypes.TimestampRange{
+    lb_uu = %DbTypes.DateTimeRange{
       lower: ~U[2022-01-01 00:00:00Z],
       upper: :unbound,
       lower_inclusive: true,
@@ -187,7 +187,7 @@ defmodule DbTypesTimestampRangeDateTimeTest do
     assert DbTypes.compare(lb_uu, control) == :lcr
     assert DbTypes.compare(control, lb_uu) == :rcl
 
-    le_ui = %DbTypes.TimestampRange{
+    le_ui = %DbTypes.DateTimeRange{
       lower: :unbound,
       upper: :empty,
       lower_inclusive: false,
@@ -198,8 +198,8 @@ defmodule DbTypesTimestampRangeDateTimeTest do
     assert DbTypes.compare(control, le_ui) == :rcl
   end
 
-  test "Can compute DateRange/Date result operators" do
-    control = %DbTypes.TimestampRange{
+  test "Can compute DateTimeRange/DateTime result operators" do
+    control = %DbTypes.DateTimeRange{
       lower: ~U[2022-01-01 00:00:00Z],
       upper: ~U[2022-07-01 00:00:00Z],
       lower_inclusive: true,
@@ -232,8 +232,8 @@ defmodule DbTypesTimestampRangeDateTimeTest do
     assert DbTypes.compare(~U[2022-02-28 00:00:00Z], control) == :rcl
   end
 
-  test "Can compute DateRange/DateRange result operators" do
-    control = %DbTypes.TimestampRange{
+  test "Can compute DateTimeRange/DateTimeRange result operators" do
+    control = %DbTypes.DateTimeRange{
       lower: ~U[2022-01-01 00:00:00Z],
       upper: ~U[2022-07-01 00:00:00Z],
       lower_inclusive: true,
@@ -242,14 +242,14 @@ defmodule DbTypesTimestampRangeDateTimeTest do
 
     # :eq
 
-    eq1 = %DbTypes.TimestampRange{
+    eq1 = %DbTypes.DateTimeRange{
       lower: ~U[2022-01-01 00:00:00Z],
       upper: ~U[2022-07-01 00:00:01Z],
       lower_inclusive: true,
       upper_inclusive: false
     }
 
-    eq2 = %DbTypes.TimestampRange{
+    eq2 = %DbTypes.DateTimeRange{
       lower: ~U[2021-12-31 23:59:59Z],
       upper: ~U[2022-07-01 00:00:00Z],
       lower_inclusive: false,
@@ -261,14 +261,14 @@ defmodule DbTypesTimestampRangeDateTimeTest do
 
     # :lt
 
-    lt1 = %DbTypes.TimestampRange{
+    lt1 = %DbTypes.DateTimeRange{
       lower: ~U[2022-07-02 00:00:00Z],
       upper: ~U[2022-12-31 00:00:00Z],
       lower_inclusive: true,
       upper_inclusive: true
     }
 
-    lt2 = %DbTypes.TimestampRange{
+    lt2 = %DbTypes.DateTimeRange{
       lower: ~U[2021-07-02 00:00:00Z],
       upper: ~U[2021-12-31 00:00:00Z],
       lower_inclusive: true,
@@ -280,14 +280,14 @@ defmodule DbTypesTimestampRangeDateTimeTest do
 
     # :gt
 
-    gt1 = %DbTypes.TimestampRange{
+    gt1 = %DbTypes.DateTimeRange{
       lower: ~U[2021-07-01 00:00:00Z],
       upper: ~U[2021-12-31 00:00:00Z],
       lower_inclusive: true,
       upper_inclusive: true
     }
 
-    gt2 = %DbTypes.TimestampRange{
+    gt2 = %DbTypes.DateTimeRange{
       lower: ~U[2022-07-02 00:00:00Z],
       upper: ~U[2022-12-31 00:00:00Z],
       lower_inclusive: true,
@@ -299,14 +299,14 @@ defmodule DbTypesTimestampRangeDateTimeTest do
 
     # :lcr
 
-    lcr1 = %DbTypes.TimestampRange{
+    lcr1 = %DbTypes.DateTimeRange{
       lower: ~U[2022-01-02 00:00:00Z],
       upper: ~U[2022-07-01 00:00:00Z],
       lower_inclusive: true,
       upper_inclusive: true
     }
 
-    lcr2 = %DbTypes.TimestampRange{
+    lcr2 = %DbTypes.DateTimeRange{
       lower: ~U[2022-01-01 00:00:00Z],
       upper: ~U[2022-07-02 00:00:00Z],
       lower_inclusive: true,
@@ -318,14 +318,14 @@ defmodule DbTypesTimestampRangeDateTimeTest do
 
     # :rcl
 
-    rcl1 = %DbTypes.TimestampRange{
+    rcl1 = %DbTypes.DateTimeRange{
       lower: ~U[2022-01-01 00:00:00Z],
       upper: ~U[2022-07-02 00:00:00Z],
       lower_inclusive: true,
       upper_inclusive: true
     }
 
-    rcl2 = %DbTypes.TimestampRange{
+    rcl2 = %DbTypes.DateTimeRange{
       lower: ~U[2022-01-02 00:00:00Z],
       upper: ~U[2022-07-01 00:00:00Z],
       lower_inclusive: true,
@@ -337,14 +337,14 @@ defmodule DbTypesTimestampRangeDateTimeTest do
 
     # :gto
 
-    gto1 = %DbTypes.TimestampRange{
+    gto1 = %DbTypes.DateTimeRange{
       lower: ~U[2021-08-01 00:00:00Z],
       upper: ~U[2022-01-01 00:00:00Z],
       lower_inclusive: true,
       upper_inclusive: true
     }
 
-    gto2 = %DbTypes.TimestampRange{
+    gto2 = %DbTypes.DateTimeRange{
       lower: ~U[2022-07-01 00:00:00Z],
       upper: ~U[2022-08-01 00:00:00Z],
       lower_inclusive: true,
@@ -356,14 +356,14 @@ defmodule DbTypesTimestampRangeDateTimeTest do
 
     # :lto
 
-    lto1 = %DbTypes.TimestampRange{
+    lto1 = %DbTypes.DateTimeRange{
       lower: ~U[2022-07-01 00:00:00Z],
       upper: ~U[2022-10-01 00:00:00Z],
       lower_inclusive: true,
       upper_inclusive: true
     }
 
-    lto2 = %DbTypes.TimestampRange{
+    lto2 = %DbTypes.DateTimeRange{
       lower: ~U[2021-07-01 00:00:00Z],
       upper: ~U[2022-01-01 00:00:00Z],
       lower_inclusive: true,
@@ -374,8 +374,8 @@ defmodule DbTypesTimestampRangeDateTimeTest do
     assert DbTypes.compare(lto2, control) == :lto
   end
 
-  test "Can compute Date/DateRange and DateRange/DateRange equality" do
-    control = %DbTypes.TimestampRange{
+  test "Can compute DateTime/DateTimeRange and DateTimeRange/DateTimeRange equality" do
+    control = %DbTypes.DateTimeRange{
       lower: ~U[2022-01-01 00:00:00Z],
       upper: ~U[2022-01-01 00:00:01Z],
       lower_inclusive: true,

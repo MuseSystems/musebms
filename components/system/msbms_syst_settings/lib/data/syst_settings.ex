@@ -40,7 +40,7 @@ defmodule MsbmsSystSettings.Data.SystSettings do
             setting_date_range: DbTypes.DateRange.t() | nil,
             setting_time: Time.t() | nil,
             setting_timestamp: DateTime.t() | nil,
-            setting_timestamp_range: DbTypes.TimestampRange.t() | nil,
+            setting_timestamp_range: DbTypes.DateTimeRange.t() | nil,
             setting_json: map() | nil,
             setting_text: String.t() | nil,
             setting_uuid: Ecto.UUID.t() | nil,
@@ -72,7 +72,7 @@ defmodule MsbmsSystSettings.Data.SystSettings do
     field(:setting_date_range, DbTypes.DateRange)
     field(:setting_time, :time)
     field(:setting_timestamp, :utc_datetime)
-    field(:setting_timestamp_range, DbTypes.TimestampRange)
+    field(:setting_timestamp_range, DbTypes.DateTimeRange)
     field(:setting_json, :map)
     field(:setting_text, :string)
     field(:setting_uuid, Ecto.UUID)
