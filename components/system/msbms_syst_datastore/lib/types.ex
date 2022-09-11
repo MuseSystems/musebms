@@ -226,4 +226,13 @@ defmodule MsbmsSystDatastore.Types do
       to serve the application as needed.
   """
   @type migration_state_values :: :not_initialized | :not_updated | :ready
+
+  @type db_type_comparison_operators ::
+          :gt
+          | :lt
+          | :eq
+          | :lcr
+          | :rcl
+          | :gto
+          | :lto
 end
