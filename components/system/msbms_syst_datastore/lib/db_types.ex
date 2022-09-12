@@ -45,7 +45,7 @@ defprotocol MsbmsSystDatastore.DbTypes do
       ...>     lower: 20,
       ...>     upper: 200
       ...>   }
-      iex> MsbmsSystDatastore.DbTypes.Range.compare(left_range, right_range)
+      iex> MsbmsSystDatastore.DbTypes.compare(left_range, right_range)
       :lto
 
   Comparing a range and a base type value where the range contains the base
@@ -56,7 +56,7 @@ defprotocol MsbmsSystDatastore.DbTypes do
       ...>     lower: 10,
       ...>     upper: 100
       ...>   }
-      iex> MsbmsSystDatastore.DbTypes.Range.compare(left_range, 50)
+      iex> MsbmsSystDatastore.DbTypes.compare(left_range, 50)
       :lcr
   """
   @spec compare(t, t) :: Types.db_type_comparison_operators()
@@ -93,7 +93,7 @@ defprotocol MsbmsSystDatastore.DbTypes do
       ...>     lower: 20,
       ...>     upper: 200
       ...>   }
-      iex> MsbmsSystDatastore.DbTypes.Range.test_compare(left_range, right_range, :lto)
+      iex> MsbmsSystDatastore.DbTypes.test_compare(left_range, right_range, :lto)
       true
 
 
@@ -106,7 +106,7 @@ defprotocol MsbmsSystDatastore.DbTypes do
       ...>     lower: 10,
       ...>     upper: 100
       ...>   }
-      iex> MsbmsSystDatastore.DbTypes.Range.test_compare(left_range, 50, :gt)
+      iex> MsbmsSystDatastore.DbTypes.test_compare(left_range, 50, :gt)
       false
   """
   @spec test_compare(t, t, Types.db_type_comparison_operators()) :: boolean()
