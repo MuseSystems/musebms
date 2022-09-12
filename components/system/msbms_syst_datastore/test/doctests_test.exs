@@ -14,5 +14,6 @@ defmodule DoctestsTest do
   use ExUnit.Case, async: true
 
   doctest MsbmsSystDatastore.DbTypes
+  doctest MsbmsSystDatastore.DbTypes.Range
   doctest MsbmsSystDatastore.Types
 end
