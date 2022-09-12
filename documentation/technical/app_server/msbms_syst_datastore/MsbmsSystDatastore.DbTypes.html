@@ -7,10 +7,10 @@
     <meta name="generator" content="ExDoc v0.28.5">
     <meta name="project" content="msbms_syst_datastore v0.1.0">
 
-    <title>MsbmsSystDatastore.DbTypes.Range — msbms_syst_datastore v0.1.0</title>
+    <title>MsbmsSystDatastore.DbTypes — msbms_syst_datastore v0.1.0</title>
     <link rel="stylesheet" href="dist/elixir-64c5e2b63575bddb1c5b.css" />
 
-    <script src="dist/sidebar_items-67f82232cf.js"></script>
+    <script src="dist/sidebar_items-b2aa6a240d.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -96,7 +96,7 @@ msbms_syst_datastore
 </button>
 
 
-  <span translate="no">MsbmsSystDatastore.DbTypes.Range</span> <small>protocol</small>
+  <span translate="no">MsbmsSystDatastore.DbTypes</span> <small>protocol</small>
   <small class="app-vsn" translate="no">(msbms_syst_datastore v0.1.0)</small>
 
 </h1>
@@ -235,23 +235,23 @@ effective operating describing the relationship.</p><h1>Parameters</h1><ul><li><
 be the left side when used with an infix operator such as <code class="inline">&gt;</code>.</p></li><li><p><code class="inline">right</code> - a range type or base type for use in the comparison which would
 be the right side when used with an infix operator such as <code class="inline">&gt;</code>.</p></li></ul><h1>Examples</h1><p>Comparing two ranges where the left and right overlap, but the left side is
 less than the right (returns &quot;Less Than Overlapping&quot;).</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">left_range</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="3419436986-1">%</span><span class="nc" data-group-id="3419436986-1">MsbmsSystDatastore.DbTypes.IntegerRange</span><span class="p" data-group-id="3419436986-1">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="0570708213-1">%</span><span class="nc" data-group-id="0570708213-1">MsbmsSystDatastore.DbTypes.IntegerRange</span><span class="p" data-group-id="0570708213-1">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="3419436986-1">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="0570708213-1">}</span><span class="w">
 </span><span class="gp unselectable">iex&gt; </span><span class="n">right_range</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="3419436986-2">%</span><span class="nc" data-group-id="3419436986-2">MsbmsSystDatastore.DbTypes.IntegerRange</span><span class="p" data-group-id="3419436986-2">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="0570708213-2">%</span><span class="nc" data-group-id="0570708213-2">MsbmsSystDatastore.DbTypes.IntegerRange</span><span class="p" data-group-id="0570708213-2">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="3419436986-2">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystDatastore.DbTypes.Range</span><span class="o">.</span><span class="n">compare</span><span class="p" data-group-id="3419436986-3">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="n">right_range</span><span class="p" data-group-id="3419436986-3">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="0570708213-2">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystDatastore.DbTypes</span><span class="o">.</span><span class="n">compare</span><span class="p" data-group-id="0570708213-3">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="n">right_range</span><span class="p" data-group-id="0570708213-3">)</span><span class="w">
 </span><span class="ss">:lto</span></code></pre><p>Comparing a range and a base type value where the range contains the base
 type value (returns &quot;Left Contains Right&quot;).</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">left_range</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="1356901382-1">%</span><span class="nc" data-group-id="1356901382-1">MsbmsSystDatastore.DbTypes.IntegerRange</span><span class="p" data-group-id="1356901382-1">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="4604372923-1">%</span><span class="nc" data-group-id="4604372923-1">MsbmsSystDatastore.DbTypes.IntegerRange</span><span class="p" data-group-id="4604372923-1">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="1356901382-1">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystDatastore.DbTypes.Range</span><span class="o">.</span><span class="n">compare</span><span class="p" data-group-id="1356901382-2">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="p" data-group-id="1356901382-2">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="4604372923-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystDatastore.DbTypes</span><span class="o">.</span><span class="n">compare</span><span class="p" data-group-id="4604372923-2">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="p" data-group-id="4604372923-2">)</span><span class="w">
 </span><span class="ss">:lcr</span></code></pre>
   </section>
 </section>
@@ -283,24 +283,24 @@ be the left side when used with an infix operator such as <code class="inline">&
 be the right side when used with an infix operator such as <code class="inline">&gt;</code>.</p></li><li><p><code class="inline">operator</code> - the desired operator to test.</p></li></ul><h1>Examples</h1><p>Comparing two ranges where the left and right overlap, but the left side is
 less than the right.  In this case we match the desired &quot;Less Than
 Overlapping&quot; operator resulting in a return value of <code class="inline">true</code>.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">left_range</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="3209378209-1">%</span><span class="nc" data-group-id="3209378209-1">MsbmsSystDatastore.DbTypes.IntegerRange</span><span class="p" data-group-id="3209378209-1">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="4019372133-1">%</span><span class="nc" data-group-id="4019372133-1">MsbmsSystDatastore.DbTypes.IntegerRange</span><span class="p" data-group-id="4019372133-1">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="3209378209-1">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="4019372133-1">}</span><span class="w">
 </span><span class="gp unselectable">iex&gt; </span><span class="n">right_range</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="3209378209-2">%</span><span class="nc" data-group-id="3209378209-2">MsbmsSystDatastore.DbTypes.IntegerRange</span><span class="p" data-group-id="3209378209-2">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="4019372133-2">%</span><span class="nc" data-group-id="4019372133-2">MsbmsSystDatastore.DbTypes.IntegerRange</span><span class="p" data-group-id="4019372133-2">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="3209378209-2">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystDatastore.DbTypes.Range</span><span class="o">.</span><span class="n">test_compare</span><span class="p" data-group-id="3209378209-3">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="n">right_range</span><span class="p">,</span><span class="w"> </span><span class="ss">:lto</span><span class="p" data-group-id="3209378209-3">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="4019372133-2">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystDatastore.DbTypes</span><span class="o">.</span><span class="n">test_compare</span><span class="p" data-group-id="4019372133-3">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="n">right_range</span><span class="p">,</span><span class="w"> </span><span class="ss">:lto</span><span class="p" data-group-id="4019372133-3">)</span><span class="w">
 </span><span class="no">true</span></code></pre><p>Comparing a range and a base type value where the range contains the base
 type value, but the desired operator is &quot;Greater Than&quot; which does not match
 resulting in a return value of <code class="inline">false</code>.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">left_range</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="7681590280-1">%</span><span class="nc" data-group-id="7681590280-1">MsbmsSystDatastore.DbTypes.IntegerRange</span><span class="p" data-group-id="7681590280-1">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="6593971456-1">%</span><span class="nc" data-group-id="6593971456-1">MsbmsSystDatastore.DbTypes.IntegerRange</span><span class="p" data-group-id="6593971456-1">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="7681590280-1">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystDatastore.DbTypes.Range</span><span class="o">.</span><span class="n">test_compare</span><span class="p" data-group-id="7681590280-2">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="ss">:gt</span><span class="p" data-group-id="7681590280-2">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="6593971456-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystDatastore.DbTypes</span><span class="o">.</span><span class="n">test_compare</span><span class="p" data-group-id="6593971456-2">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="ss">:gt</span><span class="p" data-group-id="6593971456-2">)</span><span class="w">
 </span><span class="no">false</span></code></pre>
   </section>
 </section>

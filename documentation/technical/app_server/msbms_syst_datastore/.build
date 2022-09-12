@@ -8,7 +8,7 @@ MsbmsSystDatastore.DbTypes.DecimalRange.html
 MsbmsSystDatastore.DbTypes.Inet.html
 MsbmsSystDatastore.DbTypes.IntegerRange.html
 MsbmsSystDatastore.DbTypes.Interval.html
-MsbmsSystDatastore.DbTypes.Range.html
+MsbmsSystDatastore.DbTypes.html
 MsbmsSystDatastore.Schema.html
 MsbmsSystDatastore.Types.html
 MsbmsSystDatastore.html
@@ -21,7 +21,7 @@ dist/html/fonts/remixicon.svg
 dist/html/fonts/remixicon.ttf
 dist/html/fonts/remixicon.woff
 dist/html/fonts/remixicon.woff2
-dist/search_items-13813b5852.js
-dist/sidebar_items-67f82232cf.js
+dist/search_items-cb0d223e4e.js
+dist/sidebar_items-b2aa6a240d.js
 index.html
 search.html
