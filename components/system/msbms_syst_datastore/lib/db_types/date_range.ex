@@ -19,7 +19,7 @@ defmodule MsbmsSystDatastore.DbTypes.DateRange do
   Derived from the Postgrex.Range data type.  For more information about this
   data type, see: [The PostgreSQL Documentation: Range Types](https://www.postgresql.org/docs/current/rangetypes.html)
 
-  This type implements the `MsbmsSystDatastore.DbTypes.Range` protocol.
+  This type implements the `MsbmsSystDatastore.DbTypes` protocol.
   """
 
   @type t :: %__MODULE__{

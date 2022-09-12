@@ -229,7 +229,7 @@ defmodule MsbmsSystDatastore.Types do
 
   @typedoc """
   Defines operators for use in comparison functions such as those implementing
-  the `MsbmsSystDatastore.DbTypes.Range` protocol.  The range related operator
+  the `MsbmsSystDatastore.DbTypes` protocol.  The range related operator
   values are generally the same as those defined by the PostgreSQL database
   range types, but there are some small differences.
 
@@ -261,7 +261,7 @@ defmodule MsbmsSystDatastore.Types do
       ...>     lower: 100,
       ...>     upper: 110
       ...>   }
-      iex> MsbmsSystDatastore.DbTypes.Range.compare(left_range, right_range)
+      iex> MsbmsSystDatastore.DbTypes.compare(left_range, right_range)
       :gt
 
   Less Than (`:lt`)
@@ -276,7 +276,7 @@ defmodule MsbmsSystDatastore.Types do
       ...>     lower: 200,
       ...>     upper: 210
       ...>   }
-      iex> MsbmsSystDatastore.DbTypes.Range.compare(left_range, right_range)
+      iex> MsbmsSystDatastore.DbTypes.compare(left_range, right_range)
       :lt
 
   Equal (`:eq`)
@@ -291,7 +291,7 @@ defmodule MsbmsSystDatastore.Types do
       ...>     lower: 100,
       ...>     upper: 110
       ...>   }
-      iex> MsbmsSystDatastore.DbTypes.Range.compare(left_range, right_range)
+      iex> MsbmsSystDatastore.DbTypes.compare(left_range, right_range)
       :eq
 
   Left Contains Right (`:lcr`)
@@ -306,7 +306,7 @@ defmodule MsbmsSystDatastore.Types do
       ...>     lower: 100,
       ...>     upper: 110
       ...>   }
-      iex> MsbmsSystDatastore.DbTypes.Range.compare(left_range, right_range)
+      iex> MsbmsSystDatastore.DbTypes.compare(left_range, right_range)
       :lcr
 
   Right Contains Left (`:rcl`)
@@ -321,7 +321,7 @@ defmodule MsbmsSystDatastore.Types do
       ...>     lower: 100,
       ...>     upper: 111
       ...>   }
-      iex> MsbmsSystDatastore.DbTypes.Range.compare(left_range, right_range)
+      iex> MsbmsSystDatastore.DbTypes.compare(left_range, right_range)
       :rcl
 
 
@@ -337,7 +337,7 @@ defmodule MsbmsSystDatastore.Types do
       ...>     lower: 100,
       ...>     upper: 175
       ...>   }
-      iex> MsbmsSystDatastore.DbTypes.Range.compare(left_range, right_range)
+      iex> MsbmsSystDatastore.DbTypes.compare(left_range, right_range)
       :gto
 
 
@@ -353,7 +353,7 @@ defmodule MsbmsSystDatastore.Types do
       ...>     lower: 125,
       ...>     upper: 175
       ...>   }
-      iex> MsbmsSystDatastore.DbTypes.Range.compare(left_range, right_range)
+      iex> MsbmsSystDatastore.DbTypes.compare(left_range, right_range)
       :lto
   """
   @type db_type_comparison_operators ::
