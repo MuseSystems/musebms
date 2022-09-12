@@ -18,6 +18,12 @@ defimpl MsbmsSystDatastore.DbTypes, for: MsbmsSystDatastore.DbTypes.DateTimeRang
   def test_compare(left, right, operator), do: DateTimeRange.test_compare(left, right, operator)
 end
 
+defimpl MsbmsSystDatastore.DbTypes.Range, for: MsbmsSystDatastore.DbTypes.DateTimeRange do
+  alias MsbmsSystDatastore.DbTypes.Impl.DateTimeRange
+
+  def bounds_compare(left, right), do: DateTimeRange.bounds_compare(left, right)
+end
+
 defmodule MsbmsSystDatastore.DbTypes.Impl.DateTimeRange do
   alias MsbmsSystDatastore.DbTypes
 
@@ -52,6 +58,30 @@ defmodule MsbmsSystDatastore.DbTypes.Impl.DateTimeRange do
     left_upper = calc_upper(left.upper, left.upper_inclusive)
 
     compare_coarse(left_lower, left_upper, right, right, :range_left)
+  end
+
+  def bounds_compare(%DbTypes.DateTimeRange{} = left, %DateTime{} = right) do
+    right_range = %DbTypes.DateTimeRange{
+      lower: right,
+      upper: right,
+      lower_inclusive: true,
+      upper_inclusive: true
+    }
+
+    bounds_compare(left, right_range)
+  end
+
+  def bounds_compare(%DbTypes.DateTimeRange{} = left, %DbTypes.DateTimeRange{} = right) do
+    left_lower = calc_lower(left.lower, left.lower_inclusive)
+    left_upper = calc_upper(left.upper, left.upper_inclusive)
+
+    right_lower = calc_lower(right.lower, right.lower_inclusive)
+    right_upper = calc_upper(right.upper, right.upper_inclusive)
+
+    lower_comparison = DateTime.compare(left_lower, right_lower)
+    upper_comparison = DateTime.compare(left_upper, right_upper)
+
+    %{lower_comparison: lower_comparison, upper_comparison: upper_comparison}
   end
 
   defp calc_lower(value, _inclusivity) when value in [:empty, :unbound], do: @start_of_time

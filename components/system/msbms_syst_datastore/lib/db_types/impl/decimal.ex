@@ -24,6 +24,12 @@ defimpl MsbmsSystDatastore.DbTypes, for: Decimal do
   def test_compare(left, right, operator), do: Impl.Decimal.test_compare(left, right, operator)
 end
 
+defimpl MsbmsSystDatastore.DbTypes.Range, for: Decimal do
+  alias MsbmsSystDatastore.DbTypes.Impl
+
+  def bounds_compare(left, right), do: Impl.Decimal.bounds_compare(left, right)
+end
+
 defmodule MsbmsSystDatastore.DbTypes.Impl.Decimal do
   alias MsbmsSystDatastore.DbTypes
   alias MsbmsSystDatastore.DbTypes.Impl.DecimalRange
@@ -41,6 +47,17 @@ defmodule MsbmsSystDatastore.DbTypes.Impl.Decimal do
     }
 
     DecimalRange.compare(left_range, right, :range_right)
+  end
+
+  def bounds_compare(left, %DbTypes.DecimalRange{} = right) do
+    left_range = %DbTypes.DecimalRange{
+      lower: left,
+      upper: left,
+      lower_inclusive: true,
+      upper_inclusive: true
+    }
+
+    DecimalRange.bounds_compare(left_range, right)
   end
 
   def test_compare(left, %Decimal{} = right, operator) when operator in [:eq, :gt, :lt],

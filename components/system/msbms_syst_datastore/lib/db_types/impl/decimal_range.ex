@@ -18,6 +18,12 @@ defimpl MsbmsSystDatastore.DbTypes, for: MsbmsSystDatastore.DbTypes.DecimalRange
   def test_compare(left, right, operator), do: DecimalRange.test_compare(left, right, operator)
 end
 
+defimpl MsbmsSystDatastore.DbTypes.Range, for: MsbmsSystDatastore.DbTypes.DecimalRange do
+  alias MsbmsSystDatastore.DbTypes.Impl.DecimalRange
+
+  def bounds_compare(left, right), do: DecimalRange.bounds_compare(left, right)
+end
+
 defmodule MsbmsSystDatastore.DbTypes.Impl.DecimalRange do
   alias MsbmsSystDatastore.DbTypes
 
@@ -50,6 +56,33 @@ defmodule MsbmsSystDatastore.DbTypes.Impl.DecimalRange do
     left_upper = calc_upper(left.upper, upper_max_exp, left.upper_inclusive)
 
     compare_coarse(left_lower, left_upper, right, right, :range_left)
+  end
+
+  def bounds_compare(%DbTypes.DecimalRange{} = left, %Decimal{} = right) do
+    right_range = %DbTypes.DecimalRange{
+      lower: right,
+      upper: right,
+      lower_inclusive: true,
+      upper_inclusive: true
+    }
+
+    bounds_compare(left, right_range)
+  end
+
+  def bounds_compare(%DbTypes.DecimalRange{} = left, %DbTypes.DecimalRange{} = right) do
+    lower_max_exp = calc_max_exp(left.lower, right.lower)
+    upper_max_exp = calc_max_exp(left.upper, right.upper)
+
+    left_lower = calc_lower(left.lower, lower_max_exp, left.lower_inclusive)
+    left_upper = calc_upper(left.upper, upper_max_exp, left.upper_inclusive)
+
+    right_lower = calc_lower(right.lower, lower_max_exp, right.lower_inclusive)
+    right_upper = calc_upper(right.upper, upper_max_exp, right.upper_inclusive)
+
+    lower_comparison = Decimal.compare(left_lower, right_lower)
+    upper_comparison = Decimal.compare(left_upper, right_upper)
+
+    %{lower_comparison: lower_comparison, upper_comparison: upper_comparison}
   end
 
   defp calc_max_exp(left, right) when left in [:empty, :unbound] and right in [:empty, :unbound],

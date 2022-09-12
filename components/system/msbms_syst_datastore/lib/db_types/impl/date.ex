@@ -24,6 +24,12 @@ defimpl MsbmsSystDatastore.DbTypes, for: Date do
   def test_compare(left, right, operator), do: Impl.Date.test_compare(left, right, operator)
 end
 
+defimpl MsbmsSystDatastore.DbTypes.Range, for: Date do
+  alias MsbmsSystDatastore.DbTypes.Impl
+
+  def bounds_compare(left, right), do: Impl.Date.bounds_compare(left, right)
+end
+
 defmodule MsbmsSystDatastore.DbTypes.Impl.Date do
   alias MsbmsSystDatastore.DbTypes
   alias MsbmsSystDatastore.DbTypes.Impl.DateRange
@@ -41,6 +47,17 @@ defmodule MsbmsSystDatastore.DbTypes.Impl.Date do
     }
 
     DateRange.compare(left_range, right, :range_right)
+  end
+
+  def bounds_compare(left, %DbTypes.DateRange{} = right) do
+    left_range = %DbTypes.DateRange{
+      lower: left,
+      upper: left,
+      lower_inclusive: true,
+      upper_inclusive: true
+    }
+
+    DateRange.bounds_compare(left_range, right)
   end
 
   def test_compare(left, %Date{} = right, operator) when operator in [:eq, :gt, :lt],

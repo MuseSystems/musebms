@@ -228,10 +228,13 @@ defmodule MsbmsSystDatastore.Types do
   @type migration_state_values :: :not_initialized | :not_updated | :ready
 
   @typedoc """
-  Defines operators for use in comparison functions such as those implementing
-  the `MsbmsSystDatastore.DbTypes` protocol.  The range related operator
-  values are generally the same as those defined by the PostgreSQL database
-  range types, but there are some small differences.
+  Defines operators for use in comparison functions.
+
+  These operators are used in conjunction with the `MsbmsSystDatastore.DbTypes`
+  and `MsbmsSystDatastore.DbTypes.Range` protocols.
+
+  The range related operator values are generally the same as those defined by
+  the PostgreSQL database range types, but there are some small differences.
 
     * `:gt` - left is greater than right.
 
@@ -364,4 +367,16 @@ defmodule MsbmsSystDatastore.Types do
           | :rcl
           | :gto
           | :lto
+
+  @typedoc """
+  The comparison operators for both the lower and upper bounds of a range type.
+
+  There are cases where normal comparisons are too coarse-grained to provide a
+  meaningful result when dealing with ranges.  In these cases you need the
+  detailed lower/upper comparison results.
+  """
+  @type bounds_compare_result :: %{
+          lower_comparison: db_type_comparison_operators(),
+          upper_comparison: db_type_comparison_operators()
+        }
 end

@@ -383,4 +383,127 @@ defmodule DbTypesIntegerRangeIntegerTest do
     assert DbTypes.compare(control, 100) == :lcr
     assert DbTypes.compare(100, control) == :rcl
   end
+
+  test "Can compute IntegerRange/IntegerRange bounds operators" do
+    control = %DbTypes.IntegerRange{
+      lower: 100,
+      upper: 199,
+      lower_inclusive: true,
+      upper_inclusive: true
+    }
+
+    # eq/eq
+
+    eq_eq_test = %DbTypes.IntegerRange{
+      lower: 100,
+      upper: 199,
+      lower_inclusive: true,
+      upper_inclusive: true
+    }
+
+    assert DbTypes.Range.bounds_compare(control, eq_eq_test) == %{
+             lower_comparison: :eq,
+             upper_comparison: :eq
+           }
+
+    # gt/gt
+
+    gt_gt_test = %DbTypes.IntegerRange{
+      lower: 99,
+      upper: 198,
+      lower_inclusive: true,
+      upper_inclusive: true
+    }
+
+    assert DbTypes.Range.bounds_compare(control, gt_gt_test) == %{
+             lower_comparison: :gt,
+             upper_comparison: :gt
+           }
+
+    # lt/lt
+
+    lt_lt_test = %DbTypes.IntegerRange{
+      lower: 101,
+      upper: 200,
+      lower_inclusive: true,
+      upper_inclusive: true
+    }
+
+    assert DbTypes.Range.bounds_compare(control, lt_lt_test) == %{
+             lower_comparison: :lt,
+             upper_comparison: :lt
+           }
+
+    # gt/lt
+
+    gt_lt_test = %DbTypes.IntegerRange{
+      lower: 98,
+      upper: 200,
+      lower_inclusive: true,
+      upper_inclusive: true
+    }
+
+    assert DbTypes.Range.bounds_compare(control, gt_lt_test) == %{
+             lower_comparison: :gt,
+             upper_comparison: :lt
+           }
+
+    # lt/gt
+
+    lt_gt_test = %DbTypes.IntegerRange{
+      lower: 101,
+      upper: 198,
+      lower_inclusive: true,
+      upper_inclusive: true
+    }
+
+    assert DbTypes.Range.bounds_compare(control, lt_gt_test) == %{
+             lower_comparison: :lt,
+             upper_comparison: :gt
+           }
+  end
+
+  test "Can compute Integer/IntegerRange bounds operators" do
+    control = %DbTypes.IntegerRange{
+      lower: 100,
+      upper: 199,
+      lower_inclusive: true,
+      upper_inclusive: true
+    }
+
+    # eq/gt
+
+    assert DbTypes.Range.bounds_compare(control, 100) == %{
+             lower_comparison: :eq,
+             upper_comparison: :gt
+           }
+
+    # gt/eq
+
+    assert DbTypes.Range.bounds_compare(199, control) == %{
+             lower_comparison: :gt,
+             upper_comparison: :eq
+           }
+
+    # gt/gt
+
+    assert DbTypes.Range.bounds_compare(control, 99) == %{
+             lower_comparison: :gt,
+             upper_comparison: :gt
+           }
+
+    # lt/lt
+
+    assert DbTypes.Range.bounds_compare(99, control) == %{
+             lower_comparison: :lt,
+             upper_comparison: :lt
+           }
+
+    # gt/lt
+
+    assert DbTypes.Range.bounds_compare(150, control) == %{
+             lower_comparison: :gt,
+             upper_comparison: :lt
+           }
+  end
 end
