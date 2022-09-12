@@ -14,13 +14,13 @@ defprotocol MsbmsSystDatastore.DbTypes do
   alias MsbmsSystDatastore.Types
 
   @moduledoc """
-  Defines functions which are useful in working with database supported range
-  types.
+  Defines the common functions which should be implemented for all custom
+  DbTypes implemented in MsbmsSystDatastore.
   """
 
   @doc """
-  Compares two ranges or a range and its related base type value and returns the
-  effective operating describing the relationship.
+  Compares two values and returns the effective operating describing the
+  relationship.
 
   # Parameters
 
@@ -58,14 +58,27 @@ defprotocol MsbmsSystDatastore.DbTypes do
       ...>   }
       iex> MsbmsSystDatastore.DbTypes.compare(left_range, 50)
       :lcr
+
+  Comparing interval base types where the left is less than the right (returns
+  "Less Than")
+
+      iex> left_interval =
+      ...>   %MsbmsSystDatastore.DbTypes.Interval{
+      ...>     days: 1
+      ...>   }
+      iex> right_interval =
+      ...>   %MsbmsSystDatastore.DbTypes.Interval{
+      ...>     months: 1
+      ...>   }
+      iex> MsbmsSystDatastore.DbTypes.compare(left_interval, right_interval)
+      :lt
   """
   @spec compare(t, t) :: Types.db_type_comparison_operators()
   def(compare(left, right))
 
   @doc """
-  Compares two ranges or a range and its related base type value and tests the
-  effective operator against that supplied by the user returning `true` or
-  `false`.
+  Compares two values and tests the resulting effective operator against that
+  supplied by the user returning `true` or `false`.
 
   # Parameters
 
@@ -108,6 +121,20 @@ defprotocol MsbmsSystDatastore.DbTypes do
       ...>   }
       iex> MsbmsSystDatastore.DbTypes.test_compare(left_range, 50, :gt)
       false
+
+  Comparing interval base types where the intervals are equal and testing for
+  equality resulting a `true` result.
+
+      iex> left_interval =
+      ...>   %MsbmsSystDatastore.DbTypes.Interval{
+      ...>     secs: 100
+      ...>   }
+      iex> right_interval =
+      ...>   %MsbmsSystDatastore.DbTypes.Interval{
+      ...>     secs: 100
+      ...>   }
+      iex> MsbmsSystDatastore.DbTypes.test_compare(left_interval, right_interval, :eq)
+      true
   """
   @spec test_compare(t, t, Types.db_type_comparison_operators()) :: boolean()
   def(test_compare(left, right, operator))
