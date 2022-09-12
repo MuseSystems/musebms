@@ -383,4 +383,127 @@ defmodule DbTypesDecimalRangeDecimalTest do
     assert DbTypes.compare(control, Decimal.new("100")) == :lcr
     assert DbTypes.compare(Decimal.new("100"), control) == :rcl
   end
+
+  test "Can compute DecimalRange/DecimalRange bounds operators" do
+    control = %DbTypes.DecimalRange{
+      lower: Decimal.new("100"),
+      upper: Decimal.new("199"),
+      lower_inclusive: true,
+      upper_inclusive: true
+    }
+
+    # eq/eq
+
+    eq_eq_test = %DbTypes.DecimalRange{
+      lower: Decimal.new("100"),
+      upper: Decimal.new("199"),
+      lower_inclusive: true,
+      upper_inclusive: true
+    }
+
+    assert DbTypes.Range.bounds_compare(control, eq_eq_test) == %{
+             lower_comparison: :eq,
+             upper_comparison: :eq
+           }
+
+    # gt/gt
+
+    gt_gt_test = %DbTypes.DecimalRange{
+      lower: Decimal.new("99"),
+      upper: Decimal.new("198"),
+      lower_inclusive: true,
+      upper_inclusive: true
+    }
+
+    assert DbTypes.Range.bounds_compare(control, gt_gt_test) == %{
+             lower_comparison: :gt,
+             upper_comparison: :gt
+           }
+
+    # lt/lt
+
+    lt_lt_test = %DbTypes.DecimalRange{
+      lower: Decimal.new("101"),
+      upper: Decimal.new("200"),
+      lower_inclusive: true,
+      upper_inclusive: true
+    }
+
+    assert DbTypes.Range.bounds_compare(control, lt_lt_test) == %{
+             lower_comparison: :lt,
+             upper_comparison: :lt
+           }
+
+    # gt/lt
+
+    gt_lt_test = %DbTypes.DecimalRange{
+      lower: Decimal.new("98"),
+      upper: Decimal.new("200"),
+      lower_inclusive: true,
+      upper_inclusive: true
+    }
+
+    assert DbTypes.Range.bounds_compare(control, gt_lt_test) == %{
+             lower_comparison: :gt,
+             upper_comparison: :lt
+           }
+
+    # lt/gt
+
+    lt_gt_test = %DbTypes.DecimalRange{
+      lower: Decimal.new("101"),
+      upper: Decimal.new("198"),
+      lower_inclusive: true,
+      upper_inclusive: true
+    }
+
+    assert DbTypes.Range.bounds_compare(control, lt_gt_test) == %{
+             lower_comparison: :lt,
+             upper_comparison: :gt
+           }
+  end
+
+  test "Can compute Decimal/DecimalRange bounds operators" do
+    control = %DbTypes.DecimalRange{
+      lower: Decimal.new("100"),
+      upper: Decimal.new("199"),
+      lower_inclusive: true,
+      upper_inclusive: true
+    }
+
+    # eq/gt
+
+    assert DbTypes.Range.bounds_compare(control, Decimal.new("100")) == %{
+             lower_comparison: :eq,
+             upper_comparison: :gt
+           }
+
+    # gt/eq
+
+    assert DbTypes.Range.bounds_compare(Decimal.new("199"), control) == %{
+             lower_comparison: :gt,
+             upper_comparison: :eq
+           }
+
+    # gt/gt
+
+    assert DbTypes.Range.bounds_compare(control, Decimal.new("99")) == %{
+             lower_comparison: :gt,
+             upper_comparison: :gt
+           }
+
+    # lt/lt
+
+    assert DbTypes.Range.bounds_compare(Decimal.new("99"), control) == %{
+             lower_comparison: :lt,
+             upper_comparison: :lt
+           }
+
+    # gt/lt
+
+    assert DbTypes.Range.bounds_compare(Decimal.new("150"), control) == %{
+             lower_comparison: :gt,
+             upper_comparison: :lt
+           }
+  end
 end

@@ -24,6 +24,12 @@ defimpl MsbmsSystDatastore.DbTypes, for: Integer do
   def test_compare(left, right, operator), do: Impl.Integer.test_compare(left, right, operator)
 end
 
+defimpl MsbmsSystDatastore.DbTypes.Range, for: Integer do
+  alias MsbmsSystDatastore.DbTypes.Impl
+
+  def bounds_compare(left, right), do: Impl.Integer.bounds_compare(left, right)
+end
+
 defmodule MsbmsSystDatastore.DbTypes.Impl.Integer do
   alias MsbmsSystDatastore.DbTypes
   alias MsbmsSystDatastore.DbTypes.Impl.IntegerRange
@@ -43,6 +49,17 @@ defmodule MsbmsSystDatastore.DbTypes.Impl.Integer do
     }
 
     IntegerRange.compare(left_range, right, :range_right)
+  end
+
+  def bounds_compare(left, %DbTypes.IntegerRange{} = right) when is_integer(left) do
+    left_range = %DbTypes.IntegerRange{
+      lower: left,
+      upper: left,
+      lower_inclusive: true,
+      upper_inclusive: true
+    }
+
+    IntegerRange.bounds_compare(left_range, right)
   end
 
   def test_compare(left, right, operator)

@@ -383,4 +383,127 @@ defmodule DbTypesDateRangeDateTest do
     assert DbTypes.compare(control, ~D[2022-01-01]) == :lcr
     assert DbTypes.compare(~D[2022-01-01], control) == :rcl
   end
+
+  test "Can compute DateRange/DateRange bounds operators" do
+    control = %DbTypes.DateRange{
+      lower: ~D[2022-09-01],
+      upper: ~D[2022-09-30],
+      lower_inclusive: true,
+      upper_inclusive: true
+    }
+
+    # eq/eq
+
+    eq_eq_test = %DbTypes.DateRange{
+      lower: ~D[2022-09-01],
+      upper: ~D[2022-09-30],
+      lower_inclusive: true,
+      upper_inclusive: true
+    }
+
+    assert DbTypes.Range.bounds_compare(control, eq_eq_test) == %{
+             lower_comparison: :eq,
+             upper_comparison: :eq
+           }
+
+    # gt/gt
+
+    gt_gt_test = %DbTypes.DateRange{
+      lower: ~D[2022-08-31],
+      upper: ~D[2022-09-29],
+      lower_inclusive: true,
+      upper_inclusive: true
+    }
+
+    assert DbTypes.Range.bounds_compare(control, gt_gt_test) == %{
+             lower_comparison: :gt,
+             upper_comparison: :gt
+           }
+
+    # lt/lt
+
+    lt_lt_test = %DbTypes.DateRange{
+      lower: ~D[2022-09-02],
+      upper: ~D[2022-10-01],
+      lower_inclusive: true,
+      upper_inclusive: true
+    }
+
+    assert DbTypes.Range.bounds_compare(control, lt_lt_test) == %{
+             lower_comparison: :lt,
+             upper_comparison: :lt
+           }
+
+    # gt/lt
+
+    gt_lt_test = %DbTypes.DateRange{
+      lower: ~D[2022-08-30],
+      upper: ~D[2022-10-01],
+      lower_inclusive: true,
+      upper_inclusive: true
+    }
+
+    assert DbTypes.Range.bounds_compare(control, gt_lt_test) == %{
+             lower_comparison: :gt,
+             upper_comparison: :lt
+           }
+
+    # lt/gt
+
+    lt_gt_test = %DbTypes.DateRange{
+      lower: ~D[2022-09-02],
+      upper: ~D[2022-09-29],
+      lower_inclusive: true,
+      upper_inclusive: true
+    }
+
+    assert DbTypes.Range.bounds_compare(control, lt_gt_test) == %{
+             lower_comparison: :lt,
+             upper_comparison: :gt
+           }
+  end
+
+  test "Can compute Date/DateRange bounds operators" do
+    control = %DbTypes.DateRange{
+      lower: ~D[2022-09-01],
+      upper: ~D[2022-09-30],
+      lower_inclusive: true,
+      upper_inclusive: true
+    }
+
+    # eq/gt
+
+    assert DbTypes.Range.bounds_compare(control, ~D[2022-09-01]) == %{
+             lower_comparison: :eq,
+             upper_comparison: :gt
+           }
+
+    # gt/eq
+
+    assert DbTypes.Range.bounds_compare(~D[2022-09-30], control) == %{
+             lower_comparison: :gt,
+             upper_comparison: :eq
+           }
+
+    # gt/gt
+
+    assert DbTypes.Range.bounds_compare(control, ~D[2022-08-31]) == %{
+             lower_comparison: :gt,
+             upper_comparison: :gt
+           }
+
+    # lt/lt
+
+    assert DbTypes.Range.bounds_compare(~D[2022-08-31], control) == %{
+             lower_comparison: :lt,
+             upper_comparison: :lt
+           }
+
+    # gt/lt
+
+    assert DbTypes.Range.bounds_compare(~D[2022-09-15], control) == %{
+             lower_comparison: :gt,
+             upper_comparison: :lt
+           }
+  end
 end
