@@ -16,7 +16,7 @@
 # but the Decimal module functions handle these cases and so the functions
 # defined here should only be used in very narrow/limited circumstances.
 
-defimpl MsbmsSystDatastore.DbTypes.Range, for: Decimal do
+defimpl MsbmsSystDatastore.DbTypes, for: Decimal do
   alias MsbmsSystDatastore.DbTypes.Impl
 
   def compare(left, right), do: Impl.Decimal.compare(left, right)

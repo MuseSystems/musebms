@@ -10,7 +10,7 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defprotocol MsbmsSystDatastore.DbTypes.Range do
+defprotocol MsbmsSystDatastore.DbTypes do
   alias MsbmsSystDatastore.Types
 
   @moduledoc """
