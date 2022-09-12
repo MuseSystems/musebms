@@ -10,7 +10,7 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defimpl MsbmsSystDatastore.DbTypes.Range, for: MsbmsSystDatastore.DbTypes.IntegerRange do
+defimpl MsbmsSystDatastore.DbTypes, for: MsbmsSystDatastore.DbTypes.IntegerRange do
   alias MsbmsSystDatastore.DbTypes.Impl.IntegerRange
 
   def compare(left, right), do: IntegerRange.compare(left, right)

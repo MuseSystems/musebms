@@ -30,8 +30,8 @@ defmodule DbTypesIntervalTest do
       microsecs: 2
     }
 
-    assert DbTypes.Range.compare(gt, control) == :gt
-    assert DbTypes.Range.test_compare(gt, control, :gt)
+    assert DbTypes.compare(gt, control) == :gt
+    assert DbTypes.test_compare(gt, control, :gt)
 
     lt = %DbTypes.Interval{
       months: 1,
@@ -40,8 +40,8 @@ defmodule DbTypesIntervalTest do
       microsecs: 2
     }
 
-    assert DbTypes.Range.compare(lt, control) == :lt
-    assert DbTypes.Range.test_compare(lt, control, :lt)
+    assert DbTypes.compare(lt, control) == :lt
+    assert DbTypes.test_compare(lt, control, :lt)
 
     eq = %DbTypes.Interval{
       months: 1,
@@ -50,7 +50,7 @@ defmodule DbTypesIntervalTest do
       microsecs: 1
     }
 
-    assert DbTypes.Range.compare(eq, control) == :eq
-    assert DbTypes.Range.test_compare(eq, control, :eq)
+    assert DbTypes.compare(eq, control) == :eq
+    assert DbTypes.test_compare(eq, control, :eq)
   end
 end

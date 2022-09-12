@@ -10,7 +10,7 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defimpl MsbmsSystDatastore.DbTypes.Range, for: MsbmsSystDatastore.DbTypes.Interval do
+defimpl MsbmsSystDatastore.DbTypes, for: MsbmsSystDatastore.DbTypes.Interval do
   alias MsbmsSystDatastore.DbTypes.Impl.Interval
 
   def compare(left, right), do: Interval.compare(left, right)
