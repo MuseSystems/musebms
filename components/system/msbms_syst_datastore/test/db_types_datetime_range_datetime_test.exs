@@ -509,4 +509,40 @@ defmodule DbTypesDateTimeRangeDateTimeTest do
              upper_comparison: :lt
            }
   end
+
+  test "Can extract DateTimeRange lower bound" do
+    inclusive_range = %DbTypes.DateTimeRange{
+      lower: ~U[2022-07-01 00:00:00Z],
+      upper: ~U[2022-09-30 23:59:59Z],
+      lower_inclusive: true
+    }
+
+    assert DbTypes.Range.lower(inclusive_range) == ~U[2022-07-01 00:00:00Z]
+
+    exclusive_range = %DbTypes.DateTimeRange{
+      lower: ~U[2022-07-01 00:00:00Z],
+      upper: ~U[2022-09-30 23:59:59Z],
+      lower_inclusive: false
+    }
+
+    assert DbTypes.Range.lower(exclusive_range) == ~U[2022-07-01 00:00:01Z]
+  end
+
+  test "Can extract DateTimeRange upper bound" do
+    inclusive_range = %DbTypes.DateTimeRange{
+      lower: ~U[2022-07-01 00:00:00Z],
+      upper: ~U[2022-09-30 23:59:59Z],
+      upper_inclusive: true
+    }
+
+    assert DbTypes.Range.upper(inclusive_range) == ~U[2022-09-30 23:59:59Z]
+
+    exclusive_range = %DbTypes.DateTimeRange{
+      lower: ~U[2022-07-01 00:00:00Z],
+      upper: ~U[2022-09-30 23:59:59Z],
+      upper_inclusive: false
+    }
+
+    assert DbTypes.Range.upper(exclusive_range) == ~U[2022-09-30 23:59:58Z]
+  end
 end

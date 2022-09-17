@@ -22,6 +22,8 @@ defimpl MsbmsSystDatastore.DbTypes.Range, for: MsbmsSystDatastore.DbTypes.Intege
   alias MsbmsSystDatastore.DbTypes.Impl.IntegerRange
 
   def bounds_compare(left, right), do: IntegerRange.bounds_compare(left, right)
+  def lower(range), do: IntegerRange.lower(range)
+  def upper(range), do: IntegerRange.upper(range)
 end
 
 defmodule MsbmsSystDatastore.DbTypes.Impl.IntegerRange do
@@ -75,6 +77,9 @@ defmodule MsbmsSystDatastore.DbTypes.Impl.IntegerRange do
 
     %{lower_comparison: lower_comparison, upper_comparison: upper_comparison}
   end
+
+  def lower(range), do: calc_lower(range.lower, range.lower_inclusive)
+  def upper(range), do: calc_upper(range.upper, range.upper_inclusive)
 
   defp calc_lower(value, _inclusivity) when value in [:empty, :unbound], do: :unbound
   defp calc_lower(value, true = _inclusivity), do: value

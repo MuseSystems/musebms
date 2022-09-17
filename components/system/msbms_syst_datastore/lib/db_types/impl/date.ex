@@ -28,6 +28,8 @@ defimpl MsbmsSystDatastore.DbTypes.Range, for: Date do
   alias MsbmsSystDatastore.DbTypes.Impl
 
   def bounds_compare(left, right), do: Impl.Date.bounds_compare(left, right)
+  def upper(value), do: value
+  def lower(value), do: value
 end
 
 defmodule MsbmsSystDatastore.DbTypes.Impl.Date do

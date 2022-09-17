@@ -506,4 +506,40 @@ defmodule DbTypesDecimalRangeDecimalTest do
              upper_comparison: :lt
            }
   end
+
+  test "Can extract DecimalRange lower bound" do
+    inclusive_range = %DbTypes.DecimalRange{
+      lower: Decimal.new("10.75"),
+      upper: Decimal.new("100.75"),
+      lower_inclusive: true
+    }
+
+    assert Decimal.eq?(DbTypes.Range.lower(inclusive_range), Decimal.new("10.75"))
+
+    exclusive_range = %DbTypes.DecimalRange{
+      lower: Decimal.new("10.75"),
+      upper: Decimal.new("100.75"),
+      lower_inclusive: false
+    }
+
+    assert Decimal.eq?(DbTypes.Range.lower(exclusive_range), Decimal.new("10.76"))
+  end
+
+  test "Can extract DecimalRange upper bound" do
+    inclusive_range = %DbTypes.DecimalRange{
+      lower: Decimal.new("10.75"),
+      upper: Decimal.new("100.75"),
+      upper_inclusive: true
+    }
+
+    assert Decimal.eq?(DbTypes.Range.upper(inclusive_range), Decimal.new("100.75"))
+
+    exclusive_range = %DbTypes.DecimalRange{
+      lower: Decimal.new("10.75"),
+      upper: Decimal.new("100.75"),
+      upper_inclusive: false
+    }
+
+    assert Decimal.eq?(DbTypes.Range.upper(exclusive_range), Decimal.new("100.74"))
+  end
 end
