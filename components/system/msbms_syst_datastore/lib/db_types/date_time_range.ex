@@ -1,5 +1,5 @@
-# Source File: datetime_range.ex
-# Location:    musebms/components/system/msbms_syst_datastore/lib/db_types/datetime_range.ex
+# Source File: date_time_range.ex
+# Location:    musebms/components/system/msbms_syst_datastore/lib/db_types/date_time_range.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
