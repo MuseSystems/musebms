@@ -75,4 +75,38 @@ defprotocol MsbmsSystDatastore.DbTypes.Range do
   """
   @spec bounds_compare(any(), any()) :: Types.bounds_compare_result()
   def(bounds_compare(left, right))
+
+  @doc """
+  Extracts and returns the lower bound of a range.
+
+  # Examples
+
+      iex> range =
+      ...>   %MsbmsSystDatastore.DbTypes.IntegerRange{
+      ...>     lower: 10,
+      ...>     upper: 100,
+      ...>     upper_inclusive: false
+      ...>   }
+      iex> MsbmsSystDatastore.DbTypes.Range.lower(range)
+      10
+  """
+  @spec lower(any()) :: any()
+  def(lower(range))
+
+  @doc """
+  Extracts and returns the upper bound of a range.
+
+  # Examples
+
+      iex> range =
+      ...>   %MsbmsSystDatastore.DbTypes.DecimalRange{
+      ...>     lower: Decimal.new("11.55"),
+      ...>     upper: Decimal.new("75.50"),
+      ...>     upper_inclusive: false
+      ...>   }
+      iex> MsbmsSystDatastore.DbTypes.Range.upper(range)
+      #Decimal<75.49>
+  """
+  @spec upper(any()) :: any()
+  def(upper(range))
 end

@@ -22,6 +22,8 @@ defimpl MsbmsSystDatastore.DbTypes.Range, for: MsbmsSystDatastore.DbTypes.DateRa
   alias MsbmsSystDatastore.DbTypes.Impl.DateRange
 
   def bounds_compare(left, right), do: DateRange.bounds_compare(left, right)
+  def lower(range), do: DateRange.lower(range)
+  def upper(range), do: DateRange.upper(range)
 end
 
 defmodule MsbmsSystDatastore.DbTypes.Impl.DateRange do
@@ -83,6 +85,9 @@ defmodule MsbmsSystDatastore.DbTypes.Impl.DateRange do
 
     %{lower_comparison: lower_comparison, upper_comparison: upper_comparison}
   end
+
+  def lower(range), do: calc_lower(range.lower, range.lower_inclusive)
+  def upper(range), do: calc_upper(range.upper, range.upper_inclusive)
 
   defp calc_lower(value, _inclusivity) when value in [:empty, :unbound], do: @start_of_time
   defp calc_lower(value, true = _inclusivity), do: value

@@ -22,6 +22,8 @@ defimpl MsbmsSystDatastore.DbTypes.Range, for: MsbmsSystDatastore.DbTypes.Decima
   alias MsbmsSystDatastore.DbTypes.Impl.DecimalRange
 
   def bounds_compare(left, right), do: DecimalRange.bounds_compare(left, right)
+  def lower(range), do: DecimalRange.lower(range)
+  def upper(range), do: DecimalRange.upper(range)
 end
 
 defmodule MsbmsSystDatastore.DbTypes.Impl.DecimalRange do
@@ -84,6 +86,9 @@ defmodule MsbmsSystDatastore.DbTypes.Impl.DecimalRange do
 
     %{lower_comparison: lower_comparison, upper_comparison: upper_comparison}
   end
+
+  def lower(range), do: calc_lower(range.lower, range.lower.exp, range.lower_inclusive)
+  def upper(range), do: calc_upper(range.upper, range.upper.exp, range.upper_inclusive)
 
   defp calc_max_exp(left, right) when left in [:empty, :unbound] and right in [:empty, :unbound],
     do: 0

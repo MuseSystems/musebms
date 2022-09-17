@@ -506,4 +506,40 @@ defmodule DbTypesIntegerRangeIntegerTest do
              upper_comparison: :lt
            }
   end
+
+  test "Can extract IntegerRange lower bound" do
+    inclusive_range = %DbTypes.IntegerRange{
+      lower: 10,
+      upper: 100,
+      lower_inclusive: true
+    }
+
+    assert DbTypes.Range.lower(inclusive_range) == 10
+
+    exclusive_range = %DbTypes.IntegerRange{
+      lower: 10,
+      upper: 100,
+      lower_inclusive: false
+    }
+
+    assert DbTypes.Range.lower(exclusive_range) == 11
+  end
+
+  test "Can extract IntegerRange upper bound" do
+    inclusive_range = %DbTypes.IntegerRange{
+      lower: 10,
+      upper: 100,
+      upper_inclusive: true
+    }
+
+    assert DbTypes.Range.upper(inclusive_range) == 100
+
+    exclusive_range = %DbTypes.IntegerRange{
+      lower: 10,
+      upper: 100,
+      upper_inclusive: false
+    }
+
+    assert DbTypes.Range.upper(exclusive_range) == 99
+  end
 end

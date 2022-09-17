@@ -28,6 +28,8 @@ defimpl MsbmsSystDatastore.DbTypes.Range, for: Decimal do
   alias MsbmsSystDatastore.DbTypes.Impl
 
   def bounds_compare(left, right), do: Impl.Decimal.bounds_compare(left, right)
+  def upper(value), do: value
+  def lower(value), do: value
 end
 
 defmodule MsbmsSystDatastore.DbTypes.Impl.Decimal do
