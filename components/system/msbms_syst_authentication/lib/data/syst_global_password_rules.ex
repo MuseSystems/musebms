@@ -13,6 +13,8 @@
 defmodule MsbmsSystAuthentication.Data.SystGlobalPasswordRules do
   use MsbmsSystDatastore.Schema
 
+  alias MsbmsSystAuthentication.Data.Validators
+
   alias MsbmsSystDatastore.DbTypes
 
   @moduledoc """
@@ -67,4 +69,9 @@ defmodule MsbmsSystAuthentication.Data.SystGlobalPasswordRules do
     field(:diag_row_version, :integer)
     field(:diag_update_count, :integer)
   end
+
+  @spec update_changeset(Data.SystGlobalPasswordRules.t(), Types.password_rule_params()) ::
+          Ecto.Changeset.t()
+  defdelegate update_changeset(global_password_rule, update_params),
+    to: Validators.SystGlobalPasswordRules
 end
