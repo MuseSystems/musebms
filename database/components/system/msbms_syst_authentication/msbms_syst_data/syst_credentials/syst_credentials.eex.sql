@@ -66,6 +66,10 @@ ALTER TABLE msbms_syst_data.syst_credentials OWNER TO <%= msbms_owner %>;
 REVOKE ALL ON TABLE msbms_syst_data.syst_credentials FROM public;
 GRANT ALL ON TABLE msbms_syst_data.syst_credentials TO <%= msbms_owner %>;
 
+CREATE TRIGGER c50_trig_b_i_syst_credentials_unique_check
+    BEFORE INSERT ON msbms_syst_data.syst_credentials
+    FOR EACH ROW EXECUTE PROCEDURE msbms_syst_data.trig_b_i_syst_credentials_unique_check();
+
 CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
     BEFORE INSERT OR UPDATE ON msbms_syst_data.syst_credentials
     FOR EACH ROW EXECUTE PROCEDURE msbms_syst_priv.trig_b_iu_set_diagnostic_columns();
