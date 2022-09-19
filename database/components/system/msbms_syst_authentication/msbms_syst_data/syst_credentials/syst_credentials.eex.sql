@@ -36,6 +36,8 @@ CREATE TABLE msbms_syst_data.syst_credentials
     ,last_updated
         timestamptz
         NOT NULL DEFAULT now( )
+    ,force_reset
+        timestamptz
     ,diag_timestamp_created
         timestamptz
         NOT NULL DEFAULT now( )
@@ -127,6 +129,12 @@ of last password change, for example).   This field is explicitly not for dating
 trivial or administrative changes which don't actually materially change the
 credential data; please consult the appropriate diagnostic fields for those use
 cases.$DOC$;
+
+COMMENT ON
+    COLUMN msbms_syst_data.syst_credentials.force_reset IS
+$DOC$Indicates whether or not certain credential types, such as passwords, must be
+updated.  When NOT NULL, the user must update their credential on the next
+login; when NULL updating the credential is not being administratively forced.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.syst_credentials.diag_timestamp_created IS
