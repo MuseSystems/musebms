@@ -24,6 +24,7 @@ defmodule MsbmsSystAuthentication.MixProject do
     {:argon2_elixir, "~> 3.0"},
     {:nimble_totp, "~> 0.1.0"},
     {:net_address, "~> 0.2.0"},
+    {:pathex, "~> 2.0"},
 
     # Muse Systems Business Management System Components
     {:msbms_syst_utils, path: "../msbms_syst_utils"},
