@@ -48,7 +48,7 @@ defmodule MsbmsSystAuthentication.Data.SystGlobalPasswordRules do
 
   @schema_prefix "msbms_syst"
 
-  schema "syst_global_network_rules" do
+  schema "syst_global_password_rules" do
     field(:password_length, DbTypes.IntegerRange)
     field(:max_age, DbTypes.Interval)
     field(:require_upper_case, :integer)
