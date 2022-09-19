@@ -21,13 +21,15 @@ BEGIN
         , credential_type_id
         , credential_for_identity_id
         , credential_data
-        , last_updated )
+        , last_updated
+        , force_reset )
     VALUES
         ( new.access_account_id
         , new.credential_type_id
         , new.credential_for_identity_id
         , new.credential_data
-        , new.last_updated )
+        , new.last_updated
+        , new.force_reset )
     RETURNING * INTO new;
 
     RETURN new;

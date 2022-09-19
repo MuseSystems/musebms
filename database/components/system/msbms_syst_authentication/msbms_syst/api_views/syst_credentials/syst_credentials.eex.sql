@@ -18,6 +18,7 @@ SELECT
   , credential_for_identity_id
   , credential_data
   , last_updated
+  , force_reset
   , diag_timestamp_created
   , diag_role_created
   , diag_timestamp_modified
@@ -110,6 +111,12 @@ of last password change, for example).   This field is explicitly not for dating
 trivial or administrative changes which don't actually materially change the
 credential data; please consult the appropriate diagnostic fields for those use
 cases.$DOC$;
+
+COMMENT ON
+    COLUMN msbms_syst.syst_credentials.force_reset IS
+$DOC$Indicates whether or not certain credential types, such as passwords, must be
+updated.  When NOT NULL, the user must update their credential on the next
+login; when NULL updating the credential is not being administratively forced.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst.syst_credentials.diag_timestamp_created IS

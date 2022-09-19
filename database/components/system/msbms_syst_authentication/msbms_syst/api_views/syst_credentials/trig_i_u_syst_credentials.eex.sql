@@ -46,6 +46,7 @@ BEGIN
     SET
         credential_data = new.credential_data
       , last_updated    = new.last_updated
+      , force_reset     = new.force_reset
     WHERE id = new.id
     RETURNING * INTO new;
 
