@@ -22,6 +22,7 @@ CREATE TABLE msbms_syst_data.syst_owner_password_rules
         CONSTRAINT syst_owner_password_rules_owner_fk
             REFERENCES msbms_syst_data.syst_owners ( id )
             ON DELETE CASCADE
+        CONSTRAINT syst_owner_password_rules_owner_udx UNIQUE
     ,password_length
         int4range
         NOT NULL DEFAULT int4range(8, 64, '[]')
