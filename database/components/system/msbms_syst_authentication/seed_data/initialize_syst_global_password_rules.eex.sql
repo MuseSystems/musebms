@@ -30,7 +30,7 @@ INSERT INTO msbms_syst_data.syst_global_password_rules
     , require_mfa
     , allowed_mfa_types )
 VALUES
-    ( int4range( 8, 512, '[]' )
+    ( int4range( 8, 128, '[]' )
     , interval '0 days'
     , 0
     , 0
