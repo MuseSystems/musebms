@@ -29,3 +29,9 @@ $DOC$A list of hashed passwords which are disallowed for use in the system when 
 password rule to disallow common/known compromised passwords is enabled.
 Currently the expectation is that common passwords will be stored as sha1
 hashes.$DOC$;
+
+COMMENT ON
+    COLUMN msbms_syst_data.syst_disallowed_passwords.password_hash IS
+$DOC$The SHA1 hash of the disallowed password.  The reason for using SHA1 here is
+that it is compatible with the "Have I Been Pwned" data and API products.  We
+also get some reasonable obscuring of possibly private data.$DOC$;
