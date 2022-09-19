@@ -28,7 +28,6 @@ defmodule MsbmsSystAuthentication.Data.SystPasswordHistory do
             access_account_id: Types.access_account_id() | nil,
             access_account: Data.SystAccessAccounts.t() | Ecto.Association.NotLoaded.t() | nil,
             credential_data: String.t() | nil,
-            last_updated: DateTime.t() | nil,
             diag_timestamp_created: DateTime.t() | nil,
             diag_role_created: String.t() | nil,
             diag_timestamp_modified: DateTime.t() | nil,
@@ -42,7 +41,6 @@ defmodule MsbmsSystAuthentication.Data.SystPasswordHistory do
 
   schema "syst_password_history" do
     field(:credential_data, :string)
-    field(:last_updated, :utc_datetime)
     field(:diag_timestamp_created, :utc_datetime)
     field(:diag_role_created, :string)
     field(:diag_timestamp_modified, :utc_datetime)
