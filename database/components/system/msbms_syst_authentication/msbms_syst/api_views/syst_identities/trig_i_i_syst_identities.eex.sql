@@ -23,7 +23,7 @@ BEGIN
         , validated
         , validates_identity_id
         , validation_requested
-        , validation_expires
+        , identity_expires
         , external_name )
     VALUES
         ( new.access_account_id
@@ -32,7 +32,7 @@ BEGIN
         , new.validated
         , new.validates_identity_id
         , new.validation_requested
-        , new.validation_expires
+        , new.identity_expires
         , new.external_name )
     RETURNING * INTO new;
 

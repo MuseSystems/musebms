@@ -37,7 +37,7 @@ defmodule MsbmsSystAuthentication.Data.SystIdentities do
             validates_identity_id: Types.identity_id() | nil,
             validates_identity: t() | Ecto.Association.NotLoaded.t() | nil,
             validation_requested: DateTime.t() | nil,
-            validation_expires: DateTime.t() | nil,
+            identity_expires: DateTime.t() | nil,
             external_name: String.t() | nil,
             diag_timestamp_created: DateTime.t() | nil,
             diag_role_created: String.t() | nil,
@@ -54,7 +54,7 @@ defmodule MsbmsSystAuthentication.Data.SystIdentities do
     field(:account_identifier, :string)
     field(:validated, :utc_datetime)
     field(:validation_requested, :utc_datetime)
-    field(:validation_expires, :utc_datetime)
+    field(:identity_expires, :utc_datetime)
     field(:external_name)
     field(:diag_timestamp_created, :utc_datetime)
     field(:diag_role_created, :string)

@@ -19,7 +19,7 @@ SELECT
   , validated
   , validates_identity_id
   , validation_requested
-  , validation_expires
+  , identity_expires
   , external_name
   , diag_timestamp_created
   , diag_role_created
@@ -117,9 +117,10 @@ $DOC$The timestamp on which the validation request was issued to the access acco
 holder.  This value will be null if the identity did not require validation.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst.syst_identities.validation_expires IS
-$DOC$The timetstamp at which a required validation request will expire.  When an
-identity validation is not required, this column will be null.$DOC$;
+    COLUMN msbms_syst.syst_identities.identity_expires IS
+$DOC$The timestamp at which the identity record expires.  For validation and
+recovery identities this would be the time of validation/recovery request
+expiration.  For perpetual identity types, this value will be NULL.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst.syst_identities.external_name IS

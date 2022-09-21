@@ -31,7 +31,7 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystIdentities do
       :validated,
       :validates_identity_id,
       :validation_requested,
-      :validation_expires,
+      :identity_expires,
       :external_name
     ])
     |> validate_common()
@@ -43,7 +43,7 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystIdentities do
     |> cast(update_params, [
       :validated,
       :validation_requested,
-      :validation_expires,
+      :identity_expires,
       :external_name
     ])
     |> validate_common()
