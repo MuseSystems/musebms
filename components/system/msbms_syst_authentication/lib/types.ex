@@ -91,7 +91,7 @@ defmodule MsbmsSystAuthentication.Types do
           optional(:validated) => DateTime.t(),
           optional(:validates_identity_id) => identity_id(),
           optional(:validation_requested) => DateTime.t(),
-          optional(:validation_expires) => DateTime.t(),
+          optional(:identity_expires) => DateTime.t(),
           optional(:external_name) => String.t()
         }
 
