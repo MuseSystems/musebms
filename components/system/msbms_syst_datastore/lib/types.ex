@@ -379,4 +379,22 @@ defmodule MsbmsSystDatastore.Types do
           lower_comparison: db_type_comparison_operators(),
           upper_comparison: db_type_comparison_operators()
         }
+
+  @typedoc """
+  Options which are expected by the `Timex` library.
+
+  The `MsbmsSystDatastore.DbTypes.Interval` struct can be converted into a form
+  which can be consumed by `Timex.shift/2` and this type defines the possible
+  return values.
+
+  Note that this type should closely match the `t:Timex.shift_options` types
+  except that we limit it to the types present in the
+  `t:MsbmsSystDatastore.DbTypes.Interval.t` data type.
+  """
+  @type timex_shift_options :: [
+          microseconds: integer(),
+          seconds: integer(),
+          days: integer(),
+          months: integer()
+        ]
 end
