@@ -25,6 +25,8 @@ defimpl String.Chars, for: MsbmsSystDatastore.DbTypes.Interval do
 end
 
 defmodule MsbmsSystDatastore.DbTypes.Impl.Interval do
+  alias MsbmsSystDatastore.DbTypes
+
   @moduledoc false
 
   def compare(left, right) do
@@ -84,4 +86,15 @@ defmodule MsbmsSystDatastore.DbTypes.Impl.Interval do
 
   defp maybe_add_instantaneous([]), do: ["instantaneous"]
   defp maybe_add_instantaneous(string_list), do: string_list
+
+  @spec to_timex_shift_options(DbTypes.Interval.t()) :: Types.timex_shift_options()
+  def to_timex_shift_options(%DbTypes.Interval{} = interval) do
+    [
+      months: interval.months,
+      days: interval.days,
+      seconds: interval.secs,
+      microseconds: interval.microsecs
+    ]
+    |> Keyword.filter(fn {_key, value} -> value != 0 end)
+  end
 end

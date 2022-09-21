@@ -15,5 +15,6 @@ defmodule DoctestsTest do
 
   doctest MsbmsSystDatastore.DbTypes
   doctest MsbmsSystDatastore.DbTypes.Range
+  doctest MsbmsSystDatastore.DbTypes.Interval
   doctest MsbmsSystDatastore.Types
 end

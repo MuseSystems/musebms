@@ -13,6 +13,9 @@
 defmodule MsbmsSystDatastore.DbTypes.Interval do
   use Ecto.Type
 
+  alias MsbmsSystDatastore.DbTypes.Impl
+  alias MsbmsSystDatastore.Types
+
   @moduledoc """
   An Elixir representation of the PostgreSQL `interval` data type.
 
@@ -57,4 +60,18 @@ defmodule MsbmsSystDatastore.DbTypes.Interval do
   end
 
   def dump(_), do: :error
+
+  @spec to_timex_shift_options(t()) :: Types.timex_shift_options()
+  @doc """
+  Converts an Interval into a form that can be used by the `Timex` library's
+  `Timex.shift/2` function.
+
+  ## Example
+
+      iex> example_interval =
+      ...>   %MsbmsSystDatastore.DbTypes.Interval{months: 1, days: 1, secs: 1, microsecs: 1}
+      iex> MsbmsSystDatastore.DbTypes.Interval.to_timex_shift_options(example_interval)
+      [months: 1, days: 1, seconds: 1, microseconds: 1]
+  """
+  defdelegate to_timex_shift_options(interval), to: Impl.Interval
 end

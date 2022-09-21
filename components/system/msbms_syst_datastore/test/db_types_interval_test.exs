@@ -53,4 +53,25 @@ defmodule DbTypesIntervalTest do
     assert DbTypes.compare(eq, control) == :eq
     assert DbTypes.test_compare(eq, control, :eq)
   end
+
+  test "Can convert Interval to Timex.shift_options" do
+    months = :rand.uniform(100)
+    days = :rand.uniform(100)
+    secs = :rand.uniform(100)
+    microsecs = :rand.uniform(100)
+
+    test_interval = %DbTypes.Interval{
+      months: months,
+      days: days,
+      secs: secs,
+      microsecs: microsecs
+    }
+
+    result_list = DbTypes.Interval.to_timex_shift_options(test_interval)
+
+    assert months == result_list[:months]
+    assert days == result_list[:days]
+    assert secs == result_list[:seconds]
+    assert microsecs == result_list[:microseconds]
+  end
 end
