@@ -35,6 +35,8 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystCredentials do
     |> validate_common()
   end
 
+  @spec update_changeset(Data.SystCredentials.t(), Types.credential_params()) ::
+          Ecto.Changeset.t()
   def update_changeset(credential, update_params) do
     credential
     |> cast(update_params, [:credential_data, :force_reset])

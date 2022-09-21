@@ -65,4 +65,11 @@ defmodule MsbmsSystAuthentication.Data.SystCredentials do
     belongs_to(:credential_type, MsbmsSystEnums.Data.SystEnumItems)
     belongs_to(:credential_for_identity, Data.SystIdentities)
   end
+
+  @spec insert_changeset(Types.credential_params()) :: Ecto.Changeset.t()
+  defdelegate insert_changeset(insert_params), to: Data.Validators.SystCredentials
+
+  @spec update_changeset(Data.SystCredentials.t(), Types.credential_params()) ::
+          Ecto.Changeset.t()
+  defdelegate update_changeset(credential, update_params), to: Data.Validators.SystCredentials
 end
