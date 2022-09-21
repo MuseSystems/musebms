@@ -31,7 +31,7 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystCredentials do
       :credential_for_identity_id,
       :force_reset
     ])
-    |> put_change(:last_updated, DateTime.utc_now())
+    |> put_last_updated()
     |> validate_common()
   end
 
@@ -40,16 +40,24 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystCredentials do
   def update_changeset(credential, update_params) do
     credential
     |> cast(update_params, [:credential_data, :force_reset])
-    |> maybe_set_last_updated()
+    |> maybe_set_credential_dates()
     |> validate_common()
     |> optimistic_lock(:diag_row_version)
   end
 
-  defp maybe_set_last_updated(%Ecto.Changeset{changes: %{credential_data: _}} = changeset) do
-    put_change(changeset, :last_updated, DateTime.utc_now())
+  defp maybe_set_credential_dates(%Ecto.Changeset{changes: %{credential_data: _}} = changeset) do
+    changeset
+    |> put_last_updated()
+    |> put_change(:force_reset, nil)
   end
 
-  defp maybe_set_last_updated(changeset), do: changeset
+  defp maybe_set_credential_dates(changeset), do: changeset
+
+  defp put_last_updated(changeset) do
+    curr_timestamp = DateTime.utc_now() |> DateTime.truncate(:second)
+
+    put_change(changeset, :last_updated, curr_timestamp)
+  end
 
   defp validate_common(changeset) do
     validate_required(changeset, [
