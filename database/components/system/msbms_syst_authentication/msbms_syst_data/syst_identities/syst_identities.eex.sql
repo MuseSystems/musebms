@@ -38,12 +38,11 @@ CREATE TABLE msbms_syst_data.syst_identities
         CONSTRAINT syst_identities_validates_identities_udx UNIQUE
     ,validation_requested
         timestamptz
-    ,validation_expires
+    ,identity_expires
         timestamptz
     ,CONSTRAINT syst_identities_primary_validator_chk
         CHECK ( ( validated IS NULL AND
                   validation_requested IS NULL AND
-                  validation_expires IS NULL AND
                   validates_identity_id IS NOT NULL ) OR validates_identity_id IS NULL )
     ,external_name
         text
@@ -143,9 +142,10 @@ $DOC$The timestamp on which the validation request was issued to the access acco
 holder.  This value will be null if the identity did not require validation.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_identities.validation_expires IS
-$DOC$The timetstamp at which a required validation request will expire.  When an
-identity validation is not required, this column will be null.$DOC$;
+    COLUMN msbms_syst_data.syst_identities.identity_expires IS
+$DOC$The timestamp at which the identity record expires.  For validation and
+recovery identities this would be the time of validation/recovery request
+expiration.  For perpetual identity types, this value will be NULL.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.syst_identities.external_name IS

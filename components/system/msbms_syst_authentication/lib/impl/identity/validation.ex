@@ -57,7 +57,7 @@ defmodule MsbmsSystAuthentication.Impl.IdentityValidation do
       Helpers.update_record(target_identity, %{
         validated: nil,
         validation_requested: date_now,
-        validation_expires: date_expires
+        identity_expires: date_expires
       })
 
     reset_target_identity
@@ -142,7 +142,7 @@ defmodule MsbmsSystAuthentication.Impl.IdentityValidation do
         from(i in Data.SystIdentities, where: i.id == ^validation_identity.validates_identity_id)
         |> MsbmsSystDatastore.one!()
         |> verify_not_validated()
-        |> Helpers.update_record(%{validation_requested: nil, validation_expires: nil})
+        |> Helpers.update_record(%{validation_requested: nil, identity_expires: nil})
 
       :ok = Helpers.delete_record(validation_identity)
 
@@ -163,10 +163,10 @@ defmodule MsbmsSystAuthentication.Impl.IdentityValidation do
   end
 
   defp verify_not_expired(
-         %Data.SystIdentities{validation_expires: validation_expires} = target_identity
+         %Data.SystIdentities{identity_expires: identity_expires} = target_identity
        )
-       when not is_nil(validation_expires) do
-    case DateTime.diff(validation_expires, DateTime.now!("Etc/UTC")) < 0 do
+       when not is_nil(identity_expires) do
+    case DateTime.diff(identity_expires, DateTime.now!("Etc/UTC")) < 0 do
       true ->
         raise MsbmsSystError,
           message: """
