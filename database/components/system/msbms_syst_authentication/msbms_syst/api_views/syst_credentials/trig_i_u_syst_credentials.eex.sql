@@ -17,9 +17,9 @@ $BODY$
 BEGIN
 
     IF
-        new.access_account_id          = old.access_account_id OR
-        new.credential_type_id         = old.credential_type_id OR
-        new.credential_for_identity_id = old.credential_for_identity_id
+        new.access_account_id          != old.access_account_id OR
+        new.credential_type_id         != old.credential_type_id OR
+        new.credential_for_identity_id != old.credential_for_identity_id
     THEN
         RAISE EXCEPTION
             USING
