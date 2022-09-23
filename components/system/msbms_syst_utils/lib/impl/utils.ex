@@ -23,7 +23,7 @@ defmodule MsbmsSystUtils.Impl.Utils do
     <<i1::unsigned-integer-32, i2::unsigned-integer-32, i3::unsigned-integer-32>> =
       :crypto.strong_rand_bytes(12)
 
-    :rand.seed(:exsss, {i1, i2, i3})
+    _ = :rand.seed(:exsss, {i1, i2, i3})
 
     for _ <- 1..string_length, into: [] do
       Enum.random(tokens)
