@@ -26,6 +26,7 @@ end
 
 defmodule MsbmsSystDatastore.DbTypes.Impl.Interval do
   alias MsbmsSystDatastore.DbTypes
+  alias MsbmsSystDatastore.Types
 
   @moduledoc false
 
