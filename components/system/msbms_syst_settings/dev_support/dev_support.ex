@@ -58,11 +58,9 @@ defmodule DevSupport do
   }
 
   def start_dev_environment(db_kind \\ :unit_testing) do
-    setup_database(db_kind)
+    _ = setup_database(db_kind)
 
-    MsbmsSystDatastore.set_datastore_context(get_datastore_context_id())
-
-    MsbmsSystDatastore.set_datastore_context(get_datastore_context_id())
+    _ = MsbmsSystDatastore.set_datastore_context(get_datastore_context_id())
   end
 
   def stop_dev_environment(), do: cleanup_database()
