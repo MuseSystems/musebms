@@ -74,7 +74,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
           MsbmsSystDatastore.Types.datastore_options(),
           Supervisor.supervisor() | nil
         ) ::
-          {:ok, {:all_started | :some_started, list(Types.context_state_values())}}
+          {:ok, :all_started | :some_started, list(Types.context_state_values())}
           | {:error, MsbmsSystError.t()}
   def start_datastore(datastore_options, supervisor_name) when is_map(datastore_options) do
     datastore_options.contexts
