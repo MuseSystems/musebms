@@ -53,16 +53,13 @@ defmodule MsbmsSystAuthentication.Impl.IdentityValidation do
     validation_request_identity
   end
 
-  defp reset_validation_target_identity(target_identity, opts) do
+  defp reset_validation_target_identity(target_identity, _opts) do
     date_now = DateTime.now!("Etc/UTC")
-
-    date_expires = DateTime.add(date_now, opts[:expiration_hours] * 60 * 60)
 
     {:ok, reset_target_identity} =
       Helpers.update_record(target_identity, %{
         validated: nil,
-        validation_requested: date_now,
-        identity_expires: date_expires
+        validation_requested: date_now
       })
 
     reset_target_identity
@@ -71,11 +68,15 @@ defmodule MsbmsSystAuthentication.Impl.IdentityValidation do
   defp create_validation_identity(target_identity, opts) do
     generated_account_identifier = get_random_string(opts[:identity_token_length], opts[:tokens])
 
+    date_now = DateTime.now!("Etc/UTC")
+    date_expires = DateTime.add(date_now, opts[:expiration_hours] * 60 * 60)
+
     validation_identity_params = %{
       access_account_id: target_identity.access_account_id,
       identity_type_name: "identity_types_sysdef_validation",
       account_identifier: generated_account_identifier,
-      validates_identity_id: target_identity.id
+      validates_identity_id: target_identity.id,
+      identity_expires: date_expires
     }
 
     Helpers.create_record(validation_identity_params)
