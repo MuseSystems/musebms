@@ -20,6 +20,8 @@ defmodule MsbmsSystAuthentication.Impl.Identity.AccountCode do
 
   require Logger
 
+  @behaviour MsbmsSystAuthentication.Impl.Identity
+
   @moduledoc false
 
   @default_api_token_params [identity_token_length: 12, tokens: :b32c]
@@ -39,20 +41,20 @@ defmodule MsbmsSystAuthentication.Impl.Identity.AccountCode do
     Helpers.create_identity(identity_params, opts)
   end
 
-  @spec identify_owned_access_account(
+  @spec identify_access_account_owned(
           MsbmsSystInstanceMgr.Types.owner_id(),
           Types.account_identifier()
         ) :: Data.SystAccessAccounts.t() | nil
-  def identify_owned_access_account(owner_id, account_code)
+  def identify_access_account_owned(owner_id, account_code)
       when is_binary(owner_id) and is_binary(account_code) do
     account_code
     |> Helpers.get_identification_query("identity_types_sysdef_account", owner_id)
     |> MsbmsSystDatastore.one()
   end
 
-  @spec identify_unowned_access_account(Types.account_identifier()) ::
+  @spec identify_access_account_unowned(Types.account_identifier()) ::
           Data.SystAccessAccounts.t() | nil
-  def identify_unowned_access_account(account_code) when is_binary(account_code) do
+  def identify_access_account_unowned(account_code) when is_binary(account_code) do
     account_code
     |> Helpers.get_identification_query("identity_types_sysdef_account", nil)
     |> MsbmsSystDatastore.one()
