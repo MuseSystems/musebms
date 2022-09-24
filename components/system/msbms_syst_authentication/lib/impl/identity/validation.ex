@@ -10,7 +10,7 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule MsbmsSystAuthentication.Impl.IdentityValidation do
+defmodule MsbmsSystAuthentication.Impl.Identity.Validation do
   import Ecto.Query
   import MsbmsSystUtils
 
