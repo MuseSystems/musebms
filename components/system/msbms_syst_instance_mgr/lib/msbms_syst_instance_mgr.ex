@@ -485,10 +485,8 @@ defmodule MsbmsSystInstanceMgr do
     * `startup_options` - a map of values containing the Startup Options
     obtained from the `MsbmsSystOptions` component.
   """
-  @spec get_instance_datastore_options(
-          Types.instance_id() | Data.SystInstances.t(),
-          startup_options :: map()
-        ) :: MsbmsSystDatastore.Types.datastore_options()
+  @spec get_instance_datastore_options(Types.instance_id() | Data.SystInstances.t(), map()) ::
+          MsbmsSystDatastore.Types.datastore_options()
   defdelegate get_instance_datastore_options(instance, startup_options), to: Impl.Instance
 
   @doc section: :instance_data
@@ -538,7 +536,7 @@ defmodule MsbmsSystInstanceMgr do
       for initialization of the Datastore.  See the documentation for
       `MsbmsSystDatastore.create_datastore/2` for more information.
   """
-  @spec initialize_instance(Types.instance_id(), startup_options :: map(), opts :: Keyword.t()) ::
+  @spec initialize_instance(Types.instance_id(), map(), Keyword.t()) ::
           {:ok, Data.SystInstances.t()} | {:error, MsbmsSystError.t()}
   defdelegate initialize_instance(instance_id, startup_options, opts \\ []), to: Impl.Instance
 
@@ -629,7 +627,7 @@ defmodule MsbmsSystInstanceMgr do
     * `startup_options` - a map of values containing the Startup Options
     obtained from the `MsbmsSystOptions` component.
   """
-  @spec purge_instance(Types.instance_id() | Data.SystInstances.t(), startup_options :: map()) ::
+  @spec purge_instance(Types.instance_id() | Data.SystInstances.t(), map()) ::
           :ok | {:error, MsbmsSystError.t()}
   defdelegate purge_instance(instance, startup_options), to: Impl.Instance
 
@@ -645,8 +643,7 @@ defmodule MsbmsSystInstanceMgr do
   configured in the system.  See the documentation for `start_application/3`
   for more information about this function and the available parameters.
   """
-  @spec start_all_applications(startup_options :: map(), opts :: Keyword.t()) ::
-          :ok | {:error, MsbmsSystError.t()}
+  @spec start_all_applications(map(), Keyword.t()) :: :ok | {:error, MsbmsSystError.t()}
   defdelegate start_all_applications(startup_options, opts \\ []), to: Runtime.Application
 
   @doc section: :service_management
@@ -683,11 +680,7 @@ defmodule MsbmsSystInstanceMgr do
       * other available options are passed to `start_instance/3`.  See the
       documentation for `start_instance/3` for the options it is able to accept.
   """
-  @spec start_application(
-          Types.application_id() | Data.SystApplications.t(),
-          startup_options :: map(),
-          opts :: Keyword.t()
-        ) ::
+  @spec start_application(Types.application_id() | Data.SystApplications.t(), map(), Keyword.t()) ::
           :ok | {:error, MsbmsSystError.t()}
   defdelegate start_application(application, startup_options, opts \\ []), to: Runtime.Application
 
@@ -700,7 +693,7 @@ defmodule MsbmsSystInstanceMgr do
   of Application shutdown, please see the documentation for
   `stop_application/2`.
   """
-  @spec stop_all_applications(opts :: Keyword.t()) :: :ok | {:error, MsbmsSystError.t()}
+  @spec stop_all_applications(Keyword.t()) :: :ok | {:error, MsbmsSystError.t()}
   defdelegate stop_all_applications(opts \\ []), to: Runtime.Application
 
   @doc section: :service_management
@@ -725,7 +718,7 @@ defmodule MsbmsSystInstanceMgr do
       `stop_instance/2` function for Instance shutdown.  See the
       `stop_instance/2` for full information of the available options.
   """
-  @spec stop_application(Types.application_id() | Data.SystApplications.t(), opts :: Keyword.t()) ::
+  @spec stop_application(Types.application_id() | Data.SystApplications.t(), Keyword.t()) ::
           :ok | {:error, MsbmsSystError.t()}
   defdelegate stop_application(application, opts \\ []), to: Runtime.Application
 
@@ -779,11 +772,8 @@ defmodule MsbmsSystInstanceMgr do
       provide this option as the most common migration bindings are
       automatically generated from Instance record data.
   """
-  @spec start_instance(
-          Types.instance_id() | Data.SystInstances.t(),
-          startup_options :: map(),
-          opts :: Keyword.t()
-        ) :: :ok | {:error, MsbmsSystError.t()}
+  @spec start_instance(Types.instance_id() | Data.SystInstances.t(), map(), Keyword.t()) ::
+          :ok | {:error, MsbmsSystError.t()}
   defdelegate start_instance(instance, startup_options, opts \\ []), to: Runtime.Application
 
   @doc section: :service_management
@@ -809,7 +799,7 @@ defmodule MsbmsSystInstanceMgr do
       Datastore.  See the documentation for
       `MsbmsSystDatastore.stop_datastore/2` for more information.
   """
-  @spec stop_instance(Types.instance_id() | Data.SystInstances.t(), opts :: Keyword.t()) ::
+  @spec stop_instance(Types.instance_id() | Data.SystInstances.t(), Keyword.t()) ::
           :ok | {:error, MsbmsSystError.t()}
   defdelegate stop_instance(instance, opts \\ []), to: Runtime.Application
 end

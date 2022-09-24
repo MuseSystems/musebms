@@ -49,7 +49,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
   @spec start_application(
           Types.application_id() | Data.SystApplications.t(),
           startup_options :: map(),
-          opts :: Keyword.t()
+          Keyword.t()
         ) ::
           :ok | {:error, MsbmsSystError.t()}
   def start_application(application_id, startup_options, opts) when is_binary(application_id) do
@@ -149,7 +149,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
 
   # Starts all Applications.
 
-  @spec start_all_applications(startup_options :: map(), opts :: Keyword.t()) ::
+  @spec start_all_applications(startup_options :: map(), Keyword.t()) ::
           :ok | {:error, MsbmsSystError.t()}
   def start_all_applications(startup_options, opts) do
     from(a in Data.SystApplications, select: [:id, :internal_name])
@@ -172,7 +172,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
   @spec start_instance(
           Types.instance_id() | Data.SystInstances.t(),
           startup_options :: map(),
-          opts :: Keyword.t()
+          Keyword.t()
         ) :: :ok | {:error, MsbmsSystError.t()}
   def start_instance(instance_id, startup_options, opts) when is_binary(instance_id) do
     from(
@@ -296,7 +296,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
     ) in ["instance_states_initialized", "instance_states_active"]
   end
 
-  @spec stop_instance(Types.instance_id() | Data.SystInstances.t(), opts :: Keyword.t()) ::
+  @spec stop_instance(Types.instance_id() | Data.SystInstances.t(), Keyword.t()) ::
           :ok | {:error, MsbmsSystError.t()}
   def stop_instance(instance_id, opts) when is_binary(instance_id) do
     from(i in Data.SystInstances, where: i.id == ^instance_id, preload: [:instance_contexts])
@@ -316,7 +316,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
       }
   end
 
-  # TODO: While we stop the datastore explicitly, I think this probably doesn't
+  # TODO: While we stop the Datastore explicitly, I think this probably doesn't
   #       do anything.  Stopping the Instance Supervisor I believe will stop the
   #       Datastore Contexts anyway since they're supervised processed.  Check
   #       out how necessary this is and if we should do something about it.
@@ -365,7 +365,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
 
   defp maybe_stop_instance_supervisor(_, _opts), do: nil
 
-  @spec stop_application(Types.application_id() | Data.SystApplications.t(), opts :: Keyword.t()) ::
+  @spec stop_application(Types.application_id() | Data.SystApplications.t(), Keyword.t()) ::
           :ok | {:error, MsbmsSystError.t()}
   def stop_application(application_id, opts) when is_binary(application_id) do
     from(a in Data.SystApplications, where: a.id == ^application_id, select: [:id, :internal_name])
@@ -426,7 +426,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
   #       conceivable that any individual Application stop could fail while
   #       others may succeed.  This shouldn't be a common case, but it should be
   #       better handled nonetheless.
-  @spec stop_all_applications(opts :: Keyword.t()) :: :ok | {:error, MsbmsSystError.t()}
+  @spec stop_all_applications(Keyword.t()) :: :ok | {:error, MsbmsSystError.t()}
   def stop_all_applications(opts) do
     from(a in Data.SystApplications, select: [:id, :internal_name])
     |> MsbmsSystDatastore.all()
