@@ -63,6 +63,11 @@ defmodule MsbmsSystAuthentication.Types do
           optional(:credential_data) => binary()
         }
 
+  @type credential_confirm_result() ::
+          :confirmed | :reset_forced | :reset_age | :reset_disallowed | :rejected
+
+  @type credential_set_failures() :: {:invalid_credential, Keyword.t()}
+
   @type credential_type_id() :: MsbmsSystEnums.Types.enum_item_id()
 
   @type credential_type_name() :: MsbmsSystEnums.Types.enum_item_name()
@@ -88,22 +93,24 @@ defmodule MsbmsSystAuthentication.Types do
           optional(:identity_type_id) => identity_type_name(),
           optional(:identity_type_name) => identity_type_name(),
           optional(:account_identifier) => account_identifier(),
-          optional(:validated) => DateTime.t(),
-          optional(:validates_identity_id) => identity_id(),
-          optional(:validation_requested) => DateTime.t(),
-          optional(:identity_expires) => DateTime.t(),
-          optional(:external_name) => String.t()
+          optional(:validated) => DateTime.t() | nil,
+          optional(:validates_identity_id) => identity_id() | nil,
+          optional(:validation_requested) => DateTime.t() | nil,
+          optional(:identity_expires) => DateTime.t() | nil,
+          optional(:external_name) => String.t() | nil
         }
 
-  @type instance_network_rule_params() :: %{
-          optional(:instance_id) => MsbmsSystInstanceMgr.Types.instance_id(),
-          optional(:instance_name) => MsbmsSystInstanceMgr.Types.instance_name(),
-          optional(:ordering) => pos_integer(),
-          optional(:functional_type) => String.t(),
-          optional(:ip_host_or_network) => DbTypes.Inet.t(),
-          optional(:ip_host_range_lower) => DbTypes.Inet.t(),
-          optional(:ip_host_range_upper) => DbTypes.Inet.t()
-        }
+  @type instance_network_rule_params() ::
+          %{
+            optional(:instance_id) => MsbmsSystInstanceMgr.Types.instance_id(),
+            optional(:instance_name) => MsbmsSystInstanceMgr.Types.instance_name(),
+            optional(:ordering) => pos_integer(),
+            optional(:functional_type) => String.t(),
+            optional(:ip_host_or_network) => DbTypes.Inet.t(),
+            optional(:ip_host_range_lower) => DbTypes.Inet.t(),
+            optional(:ip_host_range_upper) => DbTypes.Inet.t()
+          }
+          | nil
 
   @type owner_network_rule_params() :: %{
           optional(:owner_id) => MsbmsSystInstanceMgr.Types.owner_id(),
@@ -113,6 +120,21 @@ defmodule MsbmsSystAuthentication.Types do
           optional(:ip_host_or_network) => DbTypes.Inet.t(),
           optional(:ip_host_range_lower) => DbTypes.Inet.t(),
           optional(:ip_host_range_upper) => DbTypes.Inet.t()
+        }
+
+  @type password_rule() :: %{
+          optional(:access_account_id) => access_account_id() | nil,
+          optional(:owner_id) => MsbmsSystInstanceMgr.Types.owner_id() | nil,
+          optional(:password_length) => DbTypes.IntegerRange.t(),
+          optional(:max_age) => DbTypes.Interval.t(),
+          optional(:require_upper_case) => non_neg_integer(),
+          optional(:require_lower_case) => non_neg_integer(),
+          optional(:require_numbers) => non_neg_integer(),
+          optional(:require_symbols) => non_neg_integer(),
+          optional(:disallow_recently_used) => non_neg_integer(),
+          optional(:disallow_known_compromised) => boolean(),
+          optional(:require_mfa) => boolean(),
+          optional(:allowed_mfa_types) => list(String.t())
         }
 
   @type password_rule_params() :: %{
@@ -129,4 +151,14 @@ defmodule MsbmsSystAuthentication.Types do
           optional(:require_mfa) => boolean(),
           optional(:allowed_mfa_types) => list(String.t())
         }
+
+  @type password_rule_violations ::
+          {:password_rule_length_min, pos_integer()}
+          | {:password_rule_length_max, pos_integer()}
+          | {:password_rule_required_upper, pos_integer()}
+          | {:password_rule_required_lower, pos_integer()}
+          | {:password_rule_required_numbers, pos_integer()}
+          | {:password_rule_required_symbols, pos_integer()}
+          | {:password_rule_disallowed_password, true}
+          | {:password_rule_recent_password, true}
 end
