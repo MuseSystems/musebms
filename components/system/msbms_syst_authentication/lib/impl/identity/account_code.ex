@@ -24,18 +24,19 @@ defmodule MsbmsSystAuthentication.Impl.Identity.AccountCode do
 
   @moduledoc false
 
-  @default_api_token_params [identity_token_length: 12, tokens: :b32c]
+  @default_account_code_params [identity_token_length: 12, tokens: :b32c]
 
-  @spec create_identity(Types.access_account_id(), Keyword.t()) :: Data.SystIdentities.t()
-  def create_identity(access_account_id, opts) when is_binary(access_account_id) do
-    opts = resolve_options(opts, [{:create_validated, true} | @default_api_token_params])
+  @spec create_identity(Types.access_account_id(), String.t(), Keyword.t()) ::
+          Data.SystIdentities.t()
+  def create_identity(access_account_id, account_code, opts) when is_binary(access_account_id) do
+    opts = resolve_options(opts, [{:create_validated, true} | @default_account_code_params])
 
-    api_token = get_random_string(opts[:identity_token_length], opts[:tokens])
+    account_code = account_code || get_random_string(opts[:identity_token_length], opts[:tokens])
 
     identity_params = %{
       access_account_id: access_account_id,
       identity_type_name: "identity_types_sysdef_account",
-      account_identifier: api_token
+      account_identifier: account_code
     }
 
     Helpers.create_identity(identity_params, opts)
@@ -60,9 +61,9 @@ defmodule MsbmsSystAuthentication.Impl.Identity.AccountCode do
     |> MsbmsSystDatastore.one()
   end
 
-  @spec reset_identity_for_access_account(Types.access_account_id(), Keyword.t()) ::
+  @spec reset_identity_for_access_account_id(Types.access_account_id(), Keyword.t()) ::
           Data.SystIdentities.t()
-  def reset_identity_for_access_account(access_account_id, opts) do
+  def reset_identity_for_access_account_id(access_account_id, opts) do
     identity_type =
       MsbmsSystEnums.get_enum_item_by_name("identity_types", "identity_types_sysdef_account")
 
@@ -82,12 +83,12 @@ defmodule MsbmsSystAuthentication.Impl.Identity.AccountCode do
   end
 
   def reset_identity(%Data.SystIdentities{} = identity, opts) do
-    opts = resolve_options(opts, @default_api_token_params)
+    opts = resolve_options(opts, @default_account_code_params)
 
-    api_token = get_random_string(opts[:identity_token_length], opts[:tokens])
+    account_code = get_random_string(opts[:identity_token_length], opts[:tokens])
 
     update_params = %{
-      account_identifier: api_token
+      account_identifier: account_code
     }
 
     Helpers.update_record(identity, update_params)
