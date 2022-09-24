@@ -20,11 +20,13 @@ defmodule MsbmsSystAuthentication.Impl.Identity.ApiToken do
 
   require Logger
 
+  @behaviour MsbmsSystAuthentication.Impl.Identity
+
   @moduledoc false
 
-  @spec create_identity(Types.access_account_id(), Keyword.t()) ::
+  @spec create_identity(Types.access_account_id(), String.t(), Keyword.t()) ::
           Data.SystIdentities.t()
-  def create_identity(access_account_id, opts) when is_binary(access_account_id) do
+  def create_identity(access_account_id, api_token, opts) when is_binary(access_account_id) do
     opts =
       resolve_options(opts,
         create_validated: true,
@@ -33,7 +35,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.ApiToken do
         external_name: nil
       )
 
-    api_token = get_random_string(opts[:identity_token_length], opts[:tokens])
+    api_token = api_token || get_random_string(opts[:identity_token_length], opts[:tokens])
 
     identity_params = %{
       access_account_id: access_account_id,
@@ -45,20 +47,20 @@ defmodule MsbmsSystAuthentication.Impl.Identity.ApiToken do
     Helpers.create_identity(identity_params, opts)
   end
 
-  @spec identify_owned_access_account(
+  @spec identify_access_account_owned(
           MsbmsSystInstanceMgr.Types.owner_id(),
           Types.account_identifier()
         ) :: Data.SystAccessAccounts.t() | nil
-  def identify_owned_access_account(owner_id, api_token)
+  def identify_access_account_owned(owner_id, api_token)
       when is_binary(owner_id) and is_binary(api_token) do
     api_token
     |> Helpers.get_identification_query("identity_types_sysdef_api", owner_id)
     |> MsbmsSystDatastore.one()
   end
 
-  @spec identify_unowned_access_account(Types.account_identifier()) ::
+  @spec identify_access_account_unowned(Types.account_identifier()) ::
           Data.SystAccessAccounts.t() | nil
-  def identify_unowned_access_account(api_token) when is_binary(api_token) do
+  def identify_access_account_unowned(api_token) when is_binary(api_token) do
     api_token
     |> Helpers.get_identification_query("identity_types_sysdef_api", nil)
     |> MsbmsSystDatastore.one()
@@ -81,9 +83,4 @@ defmodule MsbmsSystAuthentication.Impl.Identity.ApiToken do
 
     Helpers.update_record(identity, update_params)
   end
-
-  @spec delete_identity(Types.identity_id() | Data.SystIdentities.t()) :: :ok
-  # Right now there's no specific api_token identity related logic, but it's
-  # conceivable there will be in future.
-  def delete_identity(identity), do: Helpers.delete_identity(identity)
 end

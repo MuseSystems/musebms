@@ -20,6 +20,11 @@ defmodule MsbmsSystAuthentication.Impl.IdentityValidation do
 
   require Logger
 
+  # Validation identities are sufficiently different from other kinds of
+  # identities that we shouldn't implement the
+  # MsbmsSystAuthentication.Impl.Identity behaviour here, though we should be
+  # true to its spirit when appropriate.
+
   @moduledoc false
 
   @spec request_identity_validation(Types.identity_id() | Data.SystIdentities.t(), Keyword.t()) ::
@@ -76,11 +81,11 @@ defmodule MsbmsSystAuthentication.Impl.IdentityValidation do
     Helpers.create_record(validation_identity_params)
   end
 
-  @spec identify_owned_access_account(
+  @spec identify_access_account_owned(
           MsbmsSystInstanceMgr.Types.owner_id(),
           Types.account_identifier()
         ) :: Data.SystAccessAccounts.t() | nil
-  def identify_owned_access_account(owner_id, validation_token)
+  def identify_access_account_owned(owner_id, validation_token)
       when is_binary(owner_id) and is_binary(validation_token) do
     validation_token
     |> Helpers.get_identification_query(
@@ -91,9 +96,9 @@ defmodule MsbmsSystAuthentication.Impl.IdentityValidation do
     |> MsbmsSystDatastore.one()
   end
 
-  @spec identify_unowned_access_account(Types.account_identifier()) ::
+  @spec identify_access_account_unowned(Types.account_identifier()) ::
           Data.SystAccessAccounts.t() | nil
-  def identify_unowned_access_account(validation_token) when is_binary(validation_token) do
+  def identify_access_account_unowned(validation_token) when is_binary(validation_token) do
     validation_token
     |> Helpers.get_identification_query(
       "identity_types_sysdef_validation",

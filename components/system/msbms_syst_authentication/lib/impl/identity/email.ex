@@ -19,6 +19,8 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Email do
 
   require Logger
 
+  @behaviour MsbmsSystAuthentication.Impl.Identity
+
   @moduledoc false
 
   @spec create_identity(
@@ -44,11 +46,11 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Email do
     Helpers.create_identity(identity_params, opts)
   end
 
-  @spec identify_owned_access_account(
+  @spec identify_access_account_owned(
           MsbmsSystInstanceMgr.Types.owner_id(),
           Types.account_identifier()
         ) :: Data.SystAccessAccounts.t() | nil
-  def identify_owned_access_account(owner_id, email_address)
+  def identify_access_account_owned(owner_id, email_address)
       when is_binary(owner_id) and is_binary(email_address) do
     email_address
     |> verify_email_address()
@@ -57,21 +59,15 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Email do
     |> MsbmsSystDatastore.one()
   end
 
-  @spec identify_unowned_access_account(Types.account_identifier()) ::
+  @spec identify_access_account_unowned(Types.account_identifier()) ::
           Data.SystAccessAccounts.t() | nil
-  def identify_unowned_access_account(email_address) when is_binary(email_address) do
+  def identify_access_account_unowned(email_address) when is_binary(email_address) do
     email_address
     |> verify_email_address()
     |> normalize_email_address()
     |> Helpers.get_identification_query("identity_types_sysdef_email", nil)
     |> MsbmsSystDatastore.one()
   end
-
-  @spec delete_identity(Types.identity_id() | Data.SystIdentities.t()) :: :ok
-  # Right now there's no specific email identity related logic, but it's
-  # conceivable there will be in future.  For example, we may want to prevent
-  # deletion of the last identity or last interactive login identity.
-  def delete_identity(identity), do: Helpers.delete_identity(identity)
 
   # This doesn't catch all RFC compliant email addresses; specifically "@" is
   # valid in the local part of the email address (when properly escaped) and

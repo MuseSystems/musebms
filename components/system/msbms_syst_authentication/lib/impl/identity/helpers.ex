@@ -36,8 +36,6 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Helpers do
     |> delete_identity()
   end
 
-  def delete_identity(%Data.SystIdentities{} = identity), do: delete_record(identity)
-
   def create_record(insert_params) do
     insert_params
     |> Data.SystIdentities.insert_changeset()
