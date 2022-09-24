@@ -49,6 +49,12 @@ PERFORM
               "display_name": "Identity Type / Validation",
               "external_name": "Validation",
               "syst_description": "A one time use identifier which, along with a one time use credential, validates that an access account has been setup correctly."
+            },
+            {
+              "internal_name": "identity_types_password_recovery",
+              "display_name": "Identity Type / Password Recovery",
+              "external_name": "Password Recovery",
+              "syst_description": "A one time use identifier which, along with a one time use credential, allows a user to reset their password after alternative method of authentication."
             }
           ],
           "enum_items": [
@@ -93,6 +99,18 @@ PERFORM
               "display_name": "Identity Type / Validation",
               "external_name": "Validation",
               "functional_type_name": "identity_types_validation",
+              "enum_default": false,
+              "functional_type_default": true,
+              "syst_defined": true,
+              "user_maintainable": false,
+              "syst_description": "A one time use identifier which, along with a one time use credential, validates that an access account has been setup correctly.",
+              "syst_options": {}
+            },
+            {
+              "internal_name": "identity_types_sysdef_password_recovery",
+              "display_name": "Identity Type / Password Recovery",
+              "external_name": "Password Recovery",
+              "functional_type_name": "identity_types_password_recovery",
               "enum_default": false,
               "functional_type_default": true,
               "syst_defined": true,
