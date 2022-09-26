@@ -144,5 +144,11 @@ defmodule MsbmsSystAuthentication.Impl.Identity do
   def identity_validated?(%Data.SystIdentities{}), do: {:ok, false}
 
   @spec delete_identity(Types.identity_id() | Data.SystIdentities.t()) :: :ok
+  def delete_identity(identity_id) when is_binary(identity_id) do
+    from(i in Data.SystIdentities, where: i.id == ^identity_id)
+    |> MsbmsSystDatastore.one()
+    |> delete_identity()
+  end
+
   def delete_identity(%Data.SystIdentities{} = identity), do: Helpers.delete_record(identity)
 end
