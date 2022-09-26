@@ -86,6 +86,11 @@ CREATE CONSTRAINT TRIGGER a50_trig_a_u_credential_types_enum_item_check
             msbms_syst_priv.trig_a_iu_enum_item_check(
                 'credential_types', 'credential_type_id');
 
+CREATE CONSTRAINT TRIGGER b50_trig_a_d_syst_credentials_delete_identity
+    AFTER DELETE ON msbms_syst_data.syst_credentials
+    FOR EACH ROW WHEN ( old.credential_for_identity_id IS NOT NULL)
+    EXECUTE PROCEDURE msbms_syst_data.trig_a_d_syst_credentials_delete_identity();
+
 COMMENT ON
     TABLE msbms_syst_data.syst_credentials IS
 $DOC$Hosts the credentials by which a user or external system will prove its identity.
