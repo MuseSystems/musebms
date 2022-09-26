@@ -30,12 +30,13 @@ defmodule MsbmsSystAuthentication.Impl.Identity.ApiToken do
     opts =
       resolve_options(opts,
         create_validated: true,
-        identity_token_length: 40,
-        tokens: :mixed_alphanum,
+        identity_token_length: 20,
+        identity_tokens: :mixed_alphanum,
         external_name: nil
       )
 
-    api_token = api_token || get_random_string(opts[:identity_token_length], opts[:tokens])
+    api_token =
+      api_token || get_random_string(opts[:identity_token_length], opts[:identity_tokens])
 
     identity_params = %{
       access_account_id: access_account_id,

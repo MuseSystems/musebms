@@ -40,7 +40,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Validation do
       resolve_options(opts,
         expiration_hours: 24,
         identity_token_length: 40,
-        tokens: :mixed_alphanum
+        identity_tokens: :mixed_alphanum
       )
 
     {:ok, validation_request_identity} =
@@ -66,7 +66,8 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Validation do
   end
 
   defp create_validation_identity(target_identity, opts) do
-    generated_account_identifier = get_random_string(opts[:identity_token_length], opts[:tokens])
+    generated_account_identifier =
+      get_random_string(opts[:identity_token_length], opts[:identity_tokens])
 
     date_now = DateTime.now!("Etc/UTC")
     date_expires = DateTime.add(date_now, opts[:expiration_hours] * 60 * 60)
