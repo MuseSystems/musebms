@@ -543,7 +543,7 @@ $AUTHENTICATION_TESTING_INIT$
             , account_identifier
             , validated
             , validation_requested
-            , validation_expires)
+            , identity_expires)
         SELECT
             aa.id
           , ( SELECT id
@@ -561,7 +561,7 @@ $AUTHENTICATION_TESTING_INIT$
             , account_identifier
             , validated
             , validation_requested
-            , validation_expires )
+            , identity_expires )
         SELECT
             aa.id
           , ( SELECT id
@@ -579,7 +579,7 @@ $AUTHENTICATION_TESTING_INIT$
             , account_identifier
             , validated
             , validation_requested
-            , validation_expires )
+            , identity_expires )
         SELECT
             aa.id
           , ( SELECT id
