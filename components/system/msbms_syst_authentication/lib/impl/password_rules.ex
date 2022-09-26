@@ -327,4 +327,26 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
   defp verify_rule_required_boolean(failure_list, rule, std_req, test_req)
        when std_req == true and test_req == false,
        do: [{rule, std_req} | failure_list]
+
+  @spec delete_owner_password_rules(MsbmsSystInstanceMgr.Types.owner_id()) ::
+          :ok | {:error, MsbmsSystError.t()}
+  def delete_owner_password_rules(owner_id) do
+    from(opwr in Data.SystOwnerPasswordRules, where: opwr.owner_id == ^owner_id)
+    |> MsbmsSystDatastore.one!()
+    |> MsbmsSystDatastore.delete!()
+
+    :ok
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure deleting Owner Password Rules.",
+          cause: error
+        }
+      }
+  end
 end
