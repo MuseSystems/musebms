@@ -142,6 +142,19 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccountInstanceAssoc do
       }
   end
 
+  @spec instance_access_granted?(
+          Types.access_account_id(),
+          MsbmsSystInstanceMgr.Types.instance_id()
+        ) :: boolean()
+  def instance_access_granted?(access_account_id, instance_id) do
+    from(aaia in Data.SystAccessAccountInstanceAssocs,
+      where:
+        aaia.access_account_id == ^access_account_id and aaia.instance_id == ^instance_id and
+          not is_nil(aaia.access_granted)
+    )
+    |> MsbmsSystDatastore.exists?()
+  end
+
   @spec decline_instance_invite(
           Types.access_account_id(),
           MsbmsSystInstanceMgr.Types.instance_id()
