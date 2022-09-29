@@ -1,9 +1,9 @@
-CREATE OR REPLACE FUNCTION msbms_syst.trig_i_u_syst_banned_hosts()
+CREATE OR REPLACE FUNCTION msbms_syst.trig_i_u_syst_disallowed_hosts()
 RETURNS trigger AS
 $BODY$
 
--- File:        trig_i_u_syst_banned_hosts.eex.sql
--- Location:    musebms/database/components/system/msbms_syst_authentication/msbms_syst/api_views/syst_banned_hosts/trig_i_u_syst_banned_hosts.eex.sql
+-- File:        trig_i_u_syst_disallowed_hosts.eex.sql
+-- Location:    musebms/database/components/system/msbms_syst_authentication/msbms_syst/api_views/syst_disallowed_hosts/trig_i_u_syst_disallowed_hosts.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -22,7 +22,7 @@ BEGIN
                       'this table.',
             DETAIL = msbms_syst_priv.get_exception_details(
                          p_proc_schema    => 'msbms_syst'
-                        ,p_proc_name      => 'trig_i_u_syst_banned_hosts'
+                        ,p_proc_name      => 'trig_i_u_syst_disallowed_hosts'
                         ,p_exception_name => 'invalid_api_view_call'
                         ,p_errcode        => 'PM008'
                         ,p_param_data     => jsonb_build_object('new', new, 'old', old)
@@ -43,11 +43,11 @@ $BODY$
     SECURITY DEFINER
     SET search_path TO msbms_syst, pg_temp;
 
-ALTER FUNCTION msbms_syst.trig_i_u_syst_banned_hosts()
+ALTER FUNCTION msbms_syst.trig_i_u_syst_disallowed_hosts()
     OWNER TO <%= msbms_owner %>;
 
-REVOKE EXECUTE ON FUNCTION msbms_syst.trig_i_u_syst_banned_hosts() FROM public;
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_u_syst_banned_hosts() TO <%= msbms_owner %>;
+REVOKE EXECUTE ON FUNCTION msbms_syst.trig_i_u_syst_disallowed_hosts() FROM public;
+GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_u_syst_disallowed_hosts() TO <%= msbms_owner %>;
 
-COMMENT ON FUNCTION msbms_syst.trig_i_u_syst_banned_hosts() IS
+COMMENT ON FUNCTION msbms_syst.trig_i_u_syst_disallowed_hosts() IS
 $DOC$trig_i_u_syst_password_history.eex.sql$DOC$;

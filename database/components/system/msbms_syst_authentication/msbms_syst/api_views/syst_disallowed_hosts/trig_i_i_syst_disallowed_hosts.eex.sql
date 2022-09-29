@@ -1,9 +1,9 @@
-CREATE OR REPLACE FUNCTION msbms_syst.trig_i_i_syst_banned_hosts()
+CREATE OR REPLACE FUNCTION msbms_syst.trig_i_i_syst_disallowed_hosts()
 RETURNS trigger AS
 $BODY$
 
--- File:        trig_i_i_syst_banned_hosts.eex.sql
--- Location:    musebms/database/components/system/msbms_syst_authentication/msbms_syst/api_views/syst_banned_hosts/trig_i_i_syst_banned_hosts.eex.sql
+-- File:        trig_i_i_syst_disallowed_hosts.eex.sql
+-- Location:    musebms/database/components/system/msbms_syst_authentication/msbms_syst/api_views/syst_disallowed_hosts/trig_i_i_syst_disallowed_hosts.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -16,10 +16,11 @@ $BODY$
 
 BEGIN
 
-    INSERT INTO msbms_syst_data.syst_banned_hosts
+    INSERT INTO msbms_syst_data.syst_disallowed_hosts
         ( host_address )
     VALUES
         ( new.host_address )
+    ON CONFLICT (host_address) DO NOTHING
     RETURNING * INTO new;
 
     RETURN new;
@@ -31,12 +32,12 @@ $BODY$
     SECURITY DEFINER
     SET search_path TO msbms_syst, pg_temp;
 
-ALTER FUNCTION msbms_syst.trig_i_i_syst_banned_hosts()
+ALTER FUNCTION msbms_syst.trig_i_i_syst_disallowed_hosts()
     OWNER TO <%= msbms_owner %>;
 
-REVOKE EXECUTE ON FUNCTION msbms_syst.trig_i_i_syst_banned_hosts() FROM public;
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_i_syst_banned_hosts() TO <%= msbms_owner %>;
+REVOKE EXECUTE ON FUNCTION msbms_syst.trig_i_i_syst_disallowed_hosts() FROM public;
+GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_i_syst_disallowed_hosts() TO <%= msbms_owner %>;
 
-COMMENT ON FUNCTION msbms_syst.trig_i_i_syst_banned_hosts() IS
+COMMENT ON FUNCTION msbms_syst.trig_i_i_syst_disallowed_hosts() IS
 $DOC$An INSTEAD OF trigger function which applies business rules when using the
-syst_banned_hosts API View for INSERT operations.$DOC$;
+syst_disallowed_hosts API View for INSERT operations.$DOC$;

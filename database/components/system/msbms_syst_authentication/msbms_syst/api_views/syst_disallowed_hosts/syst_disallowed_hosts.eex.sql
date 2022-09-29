@@ -1,5 +1,5 @@
--- File:        syst_banned_hosts.eex.sql
--- Location:    musebms/database/components/system/msbms_syst_authentication/msbms_syst/api_views/syst_banned_hosts/syst_banned_hosts.eex.sql
+-- File:        syst_disallowed_hosts.eex.sql
+-- Location:    musebms/database/components/system/msbms_syst_authentication/msbms_syst/api_views/syst_disallowed_hosts/syst_disallowed_hosts.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,7 +10,7 @@
 --
 -- muse.information@musesystems.com :: https://muse.systems
 
-CREATE VIEW msbms_syst.syst_banned_hosts AS
+CREATE VIEW msbms_syst.syst_disallowed_hosts AS
 SELECT
     id
   , host_address
@@ -21,26 +21,26 @@ SELECT
   , diag_role_modified
   , diag_row_version
   , diag_update_count
-FROM msbms_syst_data.syst_banned_hosts;
+FROM msbms_syst_data.syst_disallowed_hosts;
 
-ALTER VIEW msbms_syst.syst_banned_hosts OWNER TO <%= msbms_owner %>;
+ALTER VIEW msbms_syst.syst_disallowed_hosts OWNER TO <%= msbms_owner %>;
 
-REVOKE ALL ON TABLE msbms_syst.syst_banned_hosts FROM PUBLIC;
+REVOKE ALL ON TABLE msbms_syst.syst_disallowed_hosts FROM PUBLIC;
 
-CREATE TRIGGER a50_trig_i_i_syst_banned_hosts
-    INSTEAD OF INSERT ON msbms_syst.syst_banned_hosts
-    FOR EACH ROW EXECUTE PROCEDURE msbms_syst.trig_i_i_syst_banned_hosts();
+CREATE TRIGGER a50_trig_i_i_syst_disallowed_hosts
+    INSTEAD OF INSERT ON msbms_syst.syst_disallowed_hosts
+    FOR EACH ROW EXECUTE PROCEDURE msbms_syst.trig_i_i_syst_disallowed_hosts();
 
-CREATE TRIGGER a50_trig_i_u_syst_banned_hosts
-    INSTEAD OF UPDATE ON msbms_syst.syst_banned_hosts
-    FOR EACH ROW EXECUTE PROCEDURE msbms_syst.trig_i_u_syst_banned_hosts();
+CREATE TRIGGER a50_trig_i_u_syst_disallowed_hosts
+    INSTEAD OF UPDATE ON msbms_syst.syst_disallowed_hosts
+    FOR EACH ROW EXECUTE PROCEDURE msbms_syst.trig_i_u_syst_disallowed_hosts();
 
-CREATE TRIGGER a50_trig_i_d_syst_banned_hosts
-    INSTEAD OF DELETE ON msbms_syst.syst_banned_hosts
-    FOR EACH ROW EXECUTE PROCEDURE msbms_syst.trig_i_d_syst_banned_hosts();
+CREATE TRIGGER a50_trig_i_d_syst_disallowed_hosts
+    INSTEAD OF DELETE ON msbms_syst.syst_disallowed_hosts
+    FOR EACH ROW EXECUTE PROCEDURE msbms_syst.trig_i_d_syst_disallowed_hosts();
 
 COMMENT ON
-    VIEW msbms_syst.syst_banned_hosts IS
+    VIEW msbms_syst.syst_disallowed_hosts IS
 $DOC$A listing of IP addresses which are not allowed to attempt authentication.  This
 registry differs from the syst_*_network_rules tables in that IP addresses here
 are registered as the result of automatic system heuristics whereas the network
@@ -59,14 +59,14 @@ maintenance via this API may result in the invalid changes being ignored or may
 raise an exception.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst.syst_banned_hosts.id IS
+    COLUMN msbms_syst.syst_disallowed_hosts.id IS
 $DOC$The record's primary key.  The definitive identifier of the record in the
 system.
 
 This value is read only from this API view.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst.syst_banned_hosts.host_address IS
+    COLUMN msbms_syst.syst_disallowed_hosts.host_address IS
 $DOC$The IP address of the host disallowed from attempting to authenticate Access
 Accounts.
 
@@ -74,20 +74,20 @@ The value in this column must be set on insert, but may not be updated later via
 this API view.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst.syst_banned_hosts.diag_timestamp_created IS
+    COLUMN msbms_syst.syst_disallowed_hosts.diag_timestamp_created IS
 $DOC$The database server date/time when the transaction which created the record
 started.
 
 This value is read only from this API view.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst.syst_banned_hosts.diag_role_created IS
+    COLUMN msbms_syst.syst_disallowed_hosts.diag_role_created IS
 $DOC$The database role which created the record.
 
 This value is read only from this API view.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst.syst_banned_hosts.diag_timestamp_modified IS
+    COLUMN msbms_syst.syst_disallowed_hosts.diag_timestamp_modified IS
 $DOC$The database server date/time when the transaction which modified the record
 started.  This field will be the same as diag_timestamp_created for inserted
 records.
@@ -95,7 +95,7 @@ records.
 This value is read only from this API view.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst.syst_banned_hosts.diag_wallclock_modified IS
+    COLUMN msbms_syst.syst_disallowed_hosts.diag_wallclock_modified IS
 $DOC$The database server date/time at the moment the record was actually modified.
 For long running transactions this time may be significantly later than the
 value of diag_timestamp_modified.
@@ -103,13 +103,13 @@ value of diag_timestamp_modified.
 This value is read only from this API view.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst.syst_banned_hosts.diag_role_modified IS
+    COLUMN msbms_syst.syst_disallowed_hosts.diag_role_modified IS
 $DOC$The database role which modified the record.
 
 This value is read only from this API view.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst.syst_banned_hosts.diag_row_version IS
+    COLUMN msbms_syst.syst_disallowed_hosts.diag_row_version IS
 $DOC$The current version of the row.  The value here indicates how many actual
 data changes have been made to the row.  If an update of the row leaves all data
 fields the same, disregarding the updates to the diag_* columns, the row version
@@ -119,7 +119,7 @@ diag_update_count.
 This value is read only from this API view.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst.syst_banned_hosts.diag_update_count IS
+    COLUMN msbms_syst.syst_disallowed_hosts.diag_update_count IS
 $DOC$Records the number of times the record has been updated regardless as to if
 the update actually changed any data.  In this way needless or redundant record
 updates can be found.  This row starts at 0 and therefore may be the same as the
