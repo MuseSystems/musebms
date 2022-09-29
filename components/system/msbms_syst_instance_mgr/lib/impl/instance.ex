@@ -12,7 +12,6 @@
 
 defmodule MsbmsSystInstanceMgr.Impl.Instance do
   import Ecto.Query
-  import MsbmsSystUtils
 
   alias MsbmsSystInstanceMgr.Data
   alias MsbmsSystInstanceMgr.Types
@@ -136,7 +135,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
   @spec initialize_instance(Types.instance_id(), startup_options :: map(), opts :: Keyword.t()) ::
           {:ok, Data.SystInstances.t()} | {:error, MsbmsSystError.t()}
   def initialize_instance(instance_id, startup_options, opts) do
-    opts = resolve_options(opts, get_default_instance_state_ids())
+    opts = MsbmsSystUtils.resolve_options(opts, get_default_instance_state_ids())
 
     {:ok, initializing_instance} =
       from(i in Data.SystInstances, where: i.id == ^instance_id)

@@ -12,10 +12,11 @@
 
 defmodule MsbmsSystSettings.Data.SystSettings do
   use MsbmsSystDatastore.Schema
+
   import Ecto.Changeset
-  import MsbmsSystSettings.Impl.ChangesetHelpers
 
   alias MsbmsSystDatastore.DbTypes
+  alias MsbmsSystSettings.Impl.ChangesetHelpers
 
   @moduledoc """
   The primary data structure for applications settings data.
@@ -126,7 +127,7 @@ defmodule MsbmsSystSettings.Data.SystSettings do
   """
   @spec changeset(t(), map(), Keyword.t()) :: Ecto.Changeset.t()
   def changeset(syst_settings, change_params \\ %{}, opts \\ []) do
-    opts = resolve_options(opts)
+    opts = ChangesetHelpers.resolve_options(opts)
 
     syst_settings
     |> cast(change_params, [
@@ -149,10 +150,10 @@ defmodule MsbmsSystSettings.Data.SystSettings do
       :setting_uuid,
       :setting_blob
     ])
-    |> validate_internal_name(opts)
-    |> validate_display_name(opts)
-    |> validate_user_description(opts)
-    |> maybe_put_syst_defined()
+    |> ChangesetHelpers.validate_internal_name(opts)
+    |> ChangesetHelpers.validate_display_name(opts)
+    |> ChangesetHelpers.validate_user_description(opts)
+    |> ChangesetHelpers.maybe_put_syst_defined()
     |> optimistic_lock(:diag_row_version)
   end
 end

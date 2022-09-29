@@ -12,8 +12,10 @@
 
 defmodule MsbmsSystEnums.Data.SystEnums do
   use MsbmsSystDatastore.Schema
+
   import Ecto.Changeset
-  import MsbmsSystEnums.Impl.ChangesetHelpers
+
+  alias MsbmsSystEnums.Impl.ChangesetHelpers
 
   @moduledoc """
   The data structure defining available system enumerations (lists of values).
@@ -72,7 +74,7 @@ defmodule MsbmsSystEnums.Data.SystEnums do
 
   @spec changeset(t(), map(), Keyword.t()) :: Ecto.Changeset.t()
   def changeset(syst_enums, change_params \\ %{}, opts \\ []) do
-    opts = resolve_options(opts)
+    opts = ChangesetHelpers.resolve_options(opts)
 
     syst_enums
     |> cast(change_params, [
@@ -81,11 +83,11 @@ defmodule MsbmsSystEnums.Data.SystEnums do
       :user_description,
       :default_user_options
     ])
-    |> validate_internal_name(opts)
-    |> validate_display_name(opts)
-    |> validate_user_description(opts)
-    |> maybe_put_syst_defined()
-    |> maybe_put_user_maintainable()
+    |> ChangesetHelpers.validate_internal_name(opts)
+    |> ChangesetHelpers.validate_display_name(opts)
+    |> ChangesetHelpers.validate_user_description(opts)
+    |> ChangesetHelpers.maybe_put_syst_defined()
+    |> ChangesetHelpers.maybe_put_user_maintainable()
     |> optimistic_lock(:diag_row_version)
   end
 end

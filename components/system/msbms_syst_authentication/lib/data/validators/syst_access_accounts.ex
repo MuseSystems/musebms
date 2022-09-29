@@ -12,7 +12,6 @@
 
 defmodule MsbmsSystAuthentication.Data.Validators.SystAccessAccounts do
   import Ecto.Changeset
-  import MsbmsSystUtils
 
   alias MsbmsSystAuthentication.Data
   alias MsbmsSystAuthentication.Data.Helpers
@@ -23,7 +22,7 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystAccessAccounts do
 
   @spec insert_changeset(Types.access_account_params(), Keyword.t()) :: Ecto.Changeset.t()
   def insert_changeset(insert_params, opts) do
-    opts = resolve_options(opts, Helpers.OptionDefaults.defaults())
+    opts = MsbmsSystUtils.resolve_options(opts, Helpers.OptionDefaults.defaults())
 
     resolved_insert_params =
       Helpers.SystAccessAccounts.resolve_name_params(insert_params, :insert)
@@ -42,7 +41,7 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystAccessAccounts do
   @spec update_changeset(Data.SystAccessAccounts.t(), Types.access_account_params(), Keyword.t()) ::
           Ecto.Changeset.t()
   def update_changeset(access_account, update_params, opts) do
-    opts = resolve_options(opts, Helpers.OptionDefaults.defaults())
+    opts = MsbmsSystUtils.resolve_options(opts, Helpers.OptionDefaults.defaults())
 
     resolved_update_params =
       Helpers.SystAccessAccounts.resolve_name_params(update_params, :update)

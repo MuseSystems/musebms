@@ -11,8 +11,6 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MsbmsSystAuthentication.Impl.Identity.Email do
-  import MsbmsSystUtils
-
   alias MsbmsSystAuthentication.Data
   alias MsbmsSystAuthentication.Impl.Identity.Helpers
   alias MsbmsSystAuthentication.Types
@@ -30,7 +28,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Email do
         ) :: Data.SystIdentities.t()
   def create_identity(access_account_id, email_address, opts)
       when is_binary(access_account_id) and is_binary(email_address) do
-    opts = resolve_options(opts, create_validated: false)
+    opts = MsbmsSystUtils.resolve_options(opts, create_validated: false)
 
     email_address =
       email_address

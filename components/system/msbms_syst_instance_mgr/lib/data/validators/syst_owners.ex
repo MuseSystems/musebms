@@ -12,18 +12,17 @@
 
 defmodule MsbmsSystInstanceMgr.Data.Validators.SystOwners do
   import Ecto.Changeset
-  import MsbmsSystUtils
-  import MsbmsSystInstanceMgr.Data.Validators.General
 
   alias MsbmsSystInstanceMgr.Data
   alias MsbmsSystInstanceMgr.Data.Helpers
+  alias MsbmsSystInstanceMgr.Data.Validators
   alias MsbmsSystInstanceMgr.Types
 
   @moduledoc false
 
   @spec insert_changeset(Types.owner_params(), Keyword.t()) :: Ecto.Changeset.t()
   def insert_changeset(insert_params, opts \\ []) do
-    opts = resolve_options(opts, Helpers.OptionDefaults.defaults())
+    opts = MsbmsSystUtils.resolve_options(opts, Helpers.OptionDefaults.defaults())
 
     %Data.SystOwners{}
     |> cast(insert_params, [
@@ -32,14 +31,14 @@ defmodule MsbmsSystInstanceMgr.Data.Validators.SystOwners do
       :owner_state_id
     ])
     |> validate_required([:owner_state_id])
-    |> validate_internal_name(opts)
-    |> validate_display_name(opts)
+    |> Validators.General.validate_internal_name(opts)
+    |> Validators.General.validate_display_name(opts)
   end
 
   @spec update_changeset(Data.SystOwners.t(), Types.owner_params(), Keyword.t()) ::
           Ecto.Changeset.t()
   def update_changeset(owner, update_params \\ %{}, opts \\ []) do
-    opts = resolve_options(opts, Helpers.OptionDefaults.defaults())
+    opts = MsbmsSystUtils.resolve_options(opts, Helpers.OptionDefaults.defaults())
 
     owner
     |> cast(update_params, [
@@ -48,8 +47,8 @@ defmodule MsbmsSystInstanceMgr.Data.Validators.SystOwners do
       :owner_state_id
     ])
     |> validate_required([:owner_state_id])
-    |> validate_internal_name(opts)
-    |> validate_display_name(opts)
+    |> Validators.General.validate_internal_name(opts)
+    |> Validators.General.validate_display_name(opts)
     |> optimistic_lock(:diag_row_version)
   end
 end

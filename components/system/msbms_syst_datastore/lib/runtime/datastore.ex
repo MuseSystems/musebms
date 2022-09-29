@@ -15,8 +15,6 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
     otp_app: :msbms_syst_datastore,
     adapter: Ecto.Adapters.Postgres
 
-  import MsbmsSystUtils
-
   alias MsbmsSystDatastore.Types
 
   require Logger
@@ -49,7 +47,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
     {:ok, datastore_options} = validate_datastore_options(opts[:datastore_options])
 
     opts =
-      resolve_options(opts,
+      MsbmsSystUtils.resolve_options(opts,
         strategy: :one_for_one,
         name: datastore_options.datastore_name,
         restart: :transient,

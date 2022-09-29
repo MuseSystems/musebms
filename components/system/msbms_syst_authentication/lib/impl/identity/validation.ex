@@ -12,7 +12,6 @@
 
 defmodule MsbmsSystAuthentication.Impl.Identity.Validation do
   import Ecto.Query
-  import MsbmsSystUtils
 
   alias MsbmsSystAuthentication.Data
   alias MsbmsSystAuthentication.Impl.Identity.Helpers
@@ -37,7 +36,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Validation do
 
   def request_identity_validation(%Data.SystIdentities{} = target_identity, opts) do
     opts =
-      resolve_options(opts,
+      MsbmsSystUtils.resolve_options(opts,
         expiration_hours: 24,
         identity_token_length: 40,
         identity_tokens: :mixed_alphanum
@@ -67,7 +66,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Validation do
 
   defp create_validation_identity(target_identity, opts) do
     generated_account_identifier =
-      get_random_string(opts[:identity_token_length], opts[:identity_tokens])
+      MsbmsSystUtils.get_random_string(opts[:identity_token_length], opts[:identity_tokens])
 
     date_now = DateTime.now!("Etc/UTC")
     date_expires = DateTime.add(date_now, opts[:expiration_hours] * 60 * 60)
