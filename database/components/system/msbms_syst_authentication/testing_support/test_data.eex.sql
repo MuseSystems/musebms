@@ -41,7 +41,7 @@ $AUTHENTICATION_TESTING_INIT$
              ,
             ( digest( 'trustno1', 'sha1' ) );
 
-        INSERT INTO msbms_syst_data.syst_banned_hosts
+        INSERT INTO msbms_syst_data.syst_disallowed_hosts
             ( host_address )
         VALUES
             ( '10.123.123.1'::inet )

@@ -34,7 +34,7 @@ GRANT SELECT, INSERT, DELETE
     ON TABLE msbms_syst.syst_password_history TO <%= msbms_appusr %>;
 
 GRANT SELECT, INSERT, DELETE
-    ON TABLE msbms_syst.syst_banned_hosts TO <%= msbms_appusr %>;
+    ON TABLE msbms_syst.syst_disallowed_hosts TO <%= msbms_appusr %>;
 
 GRANT SELECT, INSERT, UPDATE, DELETE
     ON TABLE msbms_syst.syst_global_network_rules TO <%= msbms_appusr %>;
