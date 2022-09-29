@@ -82,28 +82,15 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Validation do
     Helpers.create_record(validation_identity_params)
   end
 
-  @spec identify_access_account_owned(
-          MsbmsSystInstanceMgr.Types.owner_id(),
-          Types.account_identifier()
-        ) :: Data.SystAccessAccounts.t() | nil
-  def identify_access_account_owned(owner_id, validation_token)
-      when is_binary(owner_id) and is_binary(validation_token) do
+  @spec identify_access_account(
+          Types.account_identifier(),
+          MsbmsSystInstanceMgr.Types.owner_id() | nil
+        ) :: Data.SystIdentities.t() | nil
+  def identify_access_account(validation_token, owner_id) when is_binary(validation_token) do
     validation_token
     |> Helpers.get_identification_query(
       "identity_types_sysdef_validation",
       owner_id,
-      :require_unvalidated
-    )
-    |> MsbmsSystDatastore.one()
-  end
-
-  @spec identify_access_account_unowned(Types.account_identifier()) ::
-          Data.SystAccessAccounts.t() | nil
-  def identify_access_account_unowned(validation_token) when is_binary(validation_token) do
-    validation_token
-    |> Helpers.get_identification_query(
-      "identity_types_sysdef_validation",
-      nil,
       :require_unvalidated
     )
     |> MsbmsSystDatastore.one()

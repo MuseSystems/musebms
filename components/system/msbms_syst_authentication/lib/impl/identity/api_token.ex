@@ -48,22 +48,13 @@ defmodule MsbmsSystAuthentication.Impl.Identity.ApiToken do
     Helpers.create_identity(identity_params, opts)
   end
 
-  @spec identify_access_account_owned(
-          MsbmsSystInstanceMgr.Types.owner_id(),
-          Types.account_identifier()
-        ) :: Data.SystAccessAccounts.t() | nil
-  def identify_access_account_owned(owner_id, api_token)
-      when is_binary(owner_id) and is_binary(api_token) do
+  @spec identify_access_account(
+          Types.account_identifier(),
+          MsbmsSystInstanceMgr.Types.owner_id() | nil
+        ) :: Data.SystIdentities.t() | nil
+  def identify_access_account(api_token, owner_id) when is_binary(api_token) do
     api_token
     |> Helpers.get_identification_query("identity_types_sysdef_api", owner_id)
-    |> MsbmsSystDatastore.one()
-  end
-
-  @spec identify_access_account_unowned(Types.account_identifier()) ::
-          Data.SystAccessAccounts.t() | nil
-  def identify_access_account_unowned(api_token) when is_binary(api_token) do
-    api_token
-    |> Helpers.get_identification_query("identity_types_sysdef_api", nil)
     |> MsbmsSystDatastore.one()
   end
 
