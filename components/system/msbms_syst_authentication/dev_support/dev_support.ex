@@ -13,6 +13,8 @@
 defmodule DevSupport do
   alias Mix.Tasks.Builddb
 
+  @mnesia_database_location Path.join([".mnesia"])
+
   @migration_test_source_root_dir "../../../database"
   @migration_unit_test_ds_type "cmp_msbms_syst_authentication_unit_test"
 
@@ -59,6 +61,7 @@ defmodule DevSupport do
 
   def start_dev_environment(db_kind \\ :unit_testing) do
     setup_database(db_kind)
+    setup_mnesia_database(db_kind)
 
     MsbmsSystDatastore.set_datastore_context(get_datastore_context_id())
 
@@ -84,7 +87,10 @@ defmodule DevSupport do
     MsbmsSystEnums.put_enums_service(:msbms_dev_enum_service)
   end
 
-  def stop_dev_environment(), do: cleanup_database()
+  def stop_dev_environment(db_kind \\ :unit_testing) do
+    cleanup_database()
+    cleanup_mnesia_database(db_kind)
+  end
 
   def get_datastore_context_id, do: @datastore_context_name
 
@@ -109,6 +115,19 @@ defmodule DevSupport do
     {:ok, _, _} = MsbmsSystDatastore.start_datastore(datastore_options)
   end
 
+  defp setup_mnesia_database(:unit_testing) do
+    MsbmsSystRateLimiter.init_rate_limiter()
+  end
+
+  defp setup_mnesia_database(:integration_testing) do
+    File.mkdir_p!(@mnesia_database_location)
+    Application.put_env(:mnesia, :dir, @mnesia_database_location)
+
+    :mnesia.stop()
+    :mnesia.create_schema([node()])
+    :mnesia.start()
+  end
+
   defp cleanup_database() do
     datastore_options = @datastore_options
 
@@ -116,6 +135,9 @@ defmodule DevSupport do
     :ok = MsbmsSystDatastore.drop_datastore(datastore_options)
     File.rm_rf!(Path.join(["priv/database"]))
   end
+
+  defp cleanup_mnesia_database(:unit_testing), do: nil
+  defp cleanup_mnesia_database(:integration_testing), do: File.rm_rf!(@mnesia_database_location)
 
   defp get_datastore_type(:unit_testing), do: @migration_unit_test_ds_type
 
