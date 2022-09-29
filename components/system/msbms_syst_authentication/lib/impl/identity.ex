@@ -26,13 +26,10 @@ defmodule MsbmsSystAuthentication.Impl.Identity do
   @callback create_identity(Types.access_account_id(), String.t(), Keyword.t()) ::
               Data.SystIdentities.t()
 
-  @callback identify_access_account_owned(
-              MsbmsSystInstanceMgr.Types.owner_id(),
-              Types.account_identifier()
-            ) :: Data.SystAccessAccounts.t() | nil
-
-  @callback identify_access_account_unowned(Types.account_identifier()) ::
-              Data.SystAccessAccounts.t() | nil
+  @callback identify_access_account(
+              Types.account_identifier(),
+              MsbmsSystInstanceMgr.Types.owner_id() | nil
+            ) :: Data.SystIdentities.t() | nil
 
   # General Identity functionality
 

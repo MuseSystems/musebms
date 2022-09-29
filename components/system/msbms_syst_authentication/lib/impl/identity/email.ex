@@ -44,26 +44,15 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Email do
     Helpers.create_identity(identity_params, opts)
   end
 
-  @spec identify_access_account_owned(
-          MsbmsSystInstanceMgr.Types.owner_id(),
-          Types.account_identifier()
-        ) :: Data.SystAccessAccounts.t() | nil
-  def identify_access_account_owned(owner_id, email_address)
-      when is_binary(owner_id) and is_binary(email_address) do
+  @spec identify_access_account(
+          Types.account_identifier(),
+          MsbmsSystInstanceMgr.Types.owner_id() | nil
+        ) :: Data.SystIdentities.t() | nil
+  def identify_access_account(email_address, owner_id) when is_binary(email_address) do
     email_address
     |> verify_email_address()
     |> normalize_email_address()
     |> Helpers.get_identification_query("identity_types_sysdef_email", owner_id)
-    |> MsbmsSystDatastore.one()
-  end
-
-  @spec identify_access_account_unowned(Types.account_identifier()) ::
-          Data.SystAccessAccounts.t() | nil
-  def identify_access_account_unowned(email_address) when is_binary(email_address) do
-    email_address
-    |> verify_email_address()
-    |> normalize_email_address()
-    |> Helpers.get_identification_query("identity_types_sysdef_email", nil)
     |> MsbmsSystDatastore.one()
   end
 
