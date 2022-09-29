@@ -12,7 +12,6 @@
 
 defmodule MsbmsSystAuthentication.Impl.Identity.AccountCode do
   import Ecto.Query
-  import MsbmsSystUtils
 
   alias MsbmsSystAuthentication.Data
   alias MsbmsSystAuthentication.Impl.Identity.Helpers
@@ -29,10 +28,14 @@ defmodule MsbmsSystAuthentication.Impl.Identity.AccountCode do
   @spec create_identity(Types.access_account_id(), Types.account_identifier(), Keyword.t()) ::
           Data.SystIdentities.t()
   def create_identity(access_account_id, account_code, opts) when is_binary(access_account_id) do
-    opts = resolve_options(opts, [{:create_validated, true} | @default_account_code_params])
+    opts =
+      MsbmsSystUtils.resolve_options(opts, [
+        {:create_validated, true} | @default_account_code_params
+      ])
 
     account_code =
-      account_code || get_random_string(opts[:identity_token_length], opts[:identity_tokens])
+      account_code ||
+        MsbmsSystUtils.get_random_string(opts[:identity_token_length], opts[:identity_tokens])
 
     identity_params = %{
       access_account_id: access_account_id,
@@ -84,9 +87,10 @@ defmodule MsbmsSystAuthentication.Impl.Identity.AccountCode do
   end
 
   def reset_identity(%Data.SystIdentities{} = identity, opts) do
-    opts = resolve_options(opts, @default_account_code_params)
+    opts = MsbmsSystUtils.resolve_options(opts, @default_account_code_params)
 
-    account_code = get_random_string(opts[:identity_token_length], opts[:identity_tokens])
+    account_code =
+      MsbmsSystUtils.get_random_string(opts[:identity_token_length], opts[:identity_tokens])
 
     update_params = %{
       account_identifier: account_code

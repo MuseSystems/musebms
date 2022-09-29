@@ -12,11 +12,10 @@
 
 defmodule MsbmsSystInstanceMgr.Data.Validators.SystInstances do
   import Ecto.Changeset
-  import MsbmsSystUtils
-  import MsbmsSystInstanceMgr.Data.Validators.General
 
   alias MsbmsSystInstanceMgr.Data
   alias MsbmsSystInstanceMgr.Data.Helpers
+  alias MsbmsSystInstanceMgr.Data.Validators
   alias MsbmsSystInstanceMgr.Types
 
   @moduledoc false
@@ -29,7 +28,7 @@ defmodule MsbmsSystInstanceMgr.Data.Validators.SystInstances do
 
   @spec insert_changeset(Types.instance_params(), Keyword.t()) :: Ecto.Changeset.t()
   def insert_changeset(insert_params, opts) do
-    opts = resolve_options(opts, Helpers.OptionDefaults.defaults())
+    opts = MsbmsSystUtils.resolve_options(opts, Helpers.OptionDefaults.defaults())
 
     resolved_insert_params = Helpers.SystInstances.resolve_name_params(insert_params, :insert)
 
@@ -46,8 +45,8 @@ defmodule MsbmsSystInstanceMgr.Data.Validators.SystInstances do
       :instance_code,
       :instance_options
     ])
-    |> validate_internal_name(opts)
-    |> validate_display_name(opts)
+    |> Validators.General.validate_internal_name(opts)
+    |> Validators.General.validate_display_name(opts)
     |> validate_instance_code(opts)
     |> validate_required([
       :application_id,
@@ -59,7 +58,7 @@ defmodule MsbmsSystInstanceMgr.Data.Validators.SystInstances do
   @spec update_changeset(Data.SystInstances.t(), Types.instance_params(), Keyword.t()) ::
           Ecto.Changeset.t()
   def update_changeset(instance, update_params, opts) do
-    opts = resolve_options(opts, Helpers.OptionDefaults.defaults())
+    opts = MsbmsSystUtils.resolve_options(opts, Helpers.OptionDefaults.defaults())
 
     resolved_update_params = Helpers.SystInstances.resolve_name_params(update_params, :update)
 
@@ -73,8 +72,8 @@ defmodule MsbmsSystInstanceMgr.Data.Validators.SystInstances do
       :instance_code,
       :instance_options
     ])
-    |> validate_internal_name(opts)
-    |> validate_display_name(opts)
+    |> Validators.General.validate_internal_name(opts)
+    |> Validators.General.validate_display_name(opts)
     |> validate_instance_code(opts)
     |> validate_required([
       :application_id,

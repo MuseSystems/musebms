@@ -12,11 +12,10 @@
 
 defmodule MsbmsSystInstanceMgr.Data.Validators.SystInstanceContexts do
   import Ecto.Changeset
-  import MsbmsSystUtils
-  import MsbmsSystInstanceMgr.Data.Validators.General
 
   alias MsbmsSystInstanceMgr.Data
   alias MsbmsSystInstanceMgr.Data.Helpers
+  alias MsbmsSystInstanceMgr.Data.Validators.General
   alias MsbmsSystInstanceMgr.Types
 
   @moduledoc false
@@ -27,7 +26,7 @@ defmodule MsbmsSystInstanceMgr.Data.Validators.SystInstanceContexts do
           Keyword.t()
         ) :: Ecto.Changeset.t()
   def update_changeset(instance_context, update_params, opts) do
-    opts = resolve_options(opts, Helpers.OptionDefaults.defaults())
+    opts = MsbmsSystUtils.resolve_options(opts, Helpers.OptionDefaults.defaults())
 
     instance_context
     |> cast(update_params, [
@@ -35,7 +34,7 @@ defmodule MsbmsSystInstanceMgr.Data.Validators.SystInstanceContexts do
       :db_pool_size,
       :context_code
     ])
-    |> validate_internal_name(opts)
+    |> Validators.General.validate_internal_name(opts)
     |> validate_context_code(opts)
     |> validate_required([
       :instance_id,

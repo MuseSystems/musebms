@@ -12,8 +12,10 @@
 
 defmodule MsbmsSystEnums.Data.SystEnumFunctionalTypes do
   use MsbmsSystDatastore.Schema
+
   import Ecto.Changeset
-  import MsbmsSystEnums.Impl.ChangesetHelpers
+
+  alias MsbmsSystEnums.Impl.ChangesetHelpers
 
   @moduledoc """
   The data structure defining the functional types associated with a given
@@ -75,7 +77,7 @@ defmodule MsbmsSystEnums.Data.SystEnumFunctionalTypes do
   @doc false
   @spec changeset(t(), map(), Keyword.t()) :: Ecto.Changeset.t()
   def changeset(syst_enum_functional_types, change_params \\ %{}, opts \\ []) do
-    opts = resolve_options(opts)
+    opts = ChangesetHelpers.resolve_options(opts)
 
     syst_enum_functional_types
     |> cast(change_params, [
@@ -85,11 +87,11 @@ defmodule MsbmsSystEnums.Data.SystEnumFunctionalTypes do
       :enum_id,
       :user_description
     ])
-    |> validate_internal_name(opts)
-    |> validate_display_name(opts)
-    |> validate_enum_id()
-    |> validate_external_name(opts)
-    |> validate_user_description(opts)
+    |> ChangesetHelpers.validate_internal_name(opts)
+    |> ChangesetHelpers.validate_display_name(opts)
+    |> ChangesetHelpers.validate_enum_id()
+    |> ChangesetHelpers.validate_external_name(opts)
+    |> ChangesetHelpers.validate_user_description(opts)
     |> optimistic_lock(:diag_row_version)
   end
 end

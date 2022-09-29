@@ -13,7 +13,8 @@
 defmodule MsbmsSystEnums.Data.SystEnumItems do
   use MsbmsSystDatastore.Schema
   import Ecto.Changeset
-  import MsbmsSystEnums.Impl.ChangesetHelpers
+
+  alias MsbmsSystEnums.Impl.ChangesetHelpers
 
   @moduledoc """
   The data structure defining individual enumerated values.
@@ -79,7 +80,7 @@ defmodule MsbmsSystEnums.Data.SystEnumItems do
 
   @spec changeset(t(), map(), Keyword.t()) :: Ecto.Changeset.t()
   def changeset(syst_enum_items, change_params \\ %{}, opts \\ []) do
-    opts = resolve_options(opts)
+    opts = ChangesetHelpers.resolve_options(opts)
 
     syst_enum_items
     |> cast(change_params, [
@@ -96,14 +97,14 @@ defmodule MsbmsSystEnums.Data.SystEnumItems do
     ])
     |> maybe_default_enum_default()
     |> maybe_default_functional_type_default()
-    |> validate_enum_id()
-    |> validate_functional_type_id()
-    |> validate_internal_name(opts)
-    |> validate_display_name(opts)
-    |> validate_external_name(opts)
-    |> validate_user_description(opts)
-    |> maybe_put_syst_defined()
-    |> maybe_put_user_maintainable()
+    |> ChangesetHelpers.validate_enum_id()
+    |> ChangesetHelpers.validate_functional_type_id()
+    |> ChangesetHelpers.validate_internal_name(opts)
+    |> ChangesetHelpers.validate_display_name(opts)
+    |> ChangesetHelpers.validate_external_name(opts)
+    |> ChangesetHelpers.validate_user_description(opts)
+    |> ChangesetHelpers.maybe_put_syst_defined()
+    |> ChangesetHelpers.maybe_put_user_maintainable()
     |> optimistic_lock(:diag_row_version)
   end
 
