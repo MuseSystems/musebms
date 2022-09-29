@@ -85,4 +85,6 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Helpers do
 
   defp get_ident_query_validation_predicate(query, :require_unvalidated),
     do: where(query, [identity: i], is_nil(i.validated))
+
+  defp get_ident_query_validation_predicate(query, :allow_unvalidated), do: query
 end
