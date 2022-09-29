@@ -31,6 +31,20 @@ defmodule MsbmsSystAuthentication.Impl.Hash do
     Argon2.verify_pass(credential_plaintext, credential_data)
   end
 
+  # The function below attempts to eliminate certain timing attacks which could
+  # otherwise see cases where we didn't run an actual verification of a
+  # credential.  Note that mimicking the hash process time by itself is may not
+  # be sufficient, just likely better than no effort.  In addition to hash
+  # processing there are various database queries and the like leading up to an
+  # attempt to process a hash which also contribute to total authentication
+  # time.  Depending on where authentication failed one or more of these queries
+  # or processes may not have run possibly revealing timing discrepancies that
+  # could be interpreted by an attacker.
+
+  def fake_credential_hash_verify(opts \\ []) do
+    Argon2.no_user_verify(opts)
+  end
+
   def weak_hash(plaintext) do
     :crypto.hash(:sha, plaintext)
   end
