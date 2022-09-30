@@ -42,7 +42,7 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystGlobalPasswordRules do
       :require_numbers,
       :require_symbols,
       :disallow_recently_used,
-      :disallow_known_compromised,
+      :disallow_compromised,
       :require_mfa,
       :allowed_mfa_types
     ])
@@ -54,7 +54,7 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystGlobalPasswordRules do
       :require_numbers,
       :require_symbols,
       :disallow_recently_used,
-      :disallow_known_compromised,
+      :disallow_compromised,
       :require_mfa,
       :allowed_mfa_types
     ])
