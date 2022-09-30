@@ -25,7 +25,7 @@ BEGIN
         , require_numbers
         , require_symbols
         , disallow_recently_used
-        , disallow_known_compromised
+        , disallow_compromised
         , require_mfa
         , allowed_mfa_types )
     VALUES
@@ -37,7 +37,7 @@ BEGIN
         , new.require_numbers
         , new.require_symbols
         , new.disallow_recently_used
-        , new.disallow_known_compromised
+        , new.disallow_compromised
         , new.require_mfa
         , new.allowed_mfa_types )
     RETURNING * INTO new;

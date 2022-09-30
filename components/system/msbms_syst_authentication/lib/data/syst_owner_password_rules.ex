@@ -39,7 +39,7 @@ defmodule MsbmsSystAuthentication.Data.SystOwnerPasswordRules do
             require_numbers: integer() | nil,
             require_symbols: integer() | nil,
             disallow_recently_used: integer() | nil,
-            disallow_known_compromised: boolean() | nil,
+            disallow_compromised: boolean() | nil,
             require_mfa: boolean() | nil,
             allowed_mfa_types: list(String.t()) | nil,
             diag_timestamp_created: DateTime.t() | nil,
@@ -61,7 +61,7 @@ defmodule MsbmsSystAuthentication.Data.SystOwnerPasswordRules do
     field(:require_numbers, :integer)
     field(:require_symbols, :integer)
     field(:disallow_recently_used, :integer)
-    field(:disallow_known_compromised, :boolean)
+    field(:disallow_compromised, :boolean)
     field(:require_mfa, :boolean)
     field(:allowed_mfa_types, {:array, :string})
     field(:diag_timestamp_created, :utc_datetime)

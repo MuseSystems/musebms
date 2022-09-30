@@ -26,7 +26,7 @@ INSERT INTO msbms_syst_data.syst_global_password_rules
     , require_numbers
     , require_symbols
     , disallow_recently_used
-    , disallow_known_compromised
+    , disallow_compromised
     , require_mfa
     , allowed_mfa_types )
 VALUES

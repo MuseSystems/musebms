@@ -20,7 +20,7 @@ SELECT
   , require_numbers
   , require_symbols
   , disallow_recently_used
-  , disallow_known_compromised
+  , disallow_compromised
   , require_mfa
   , allowed_mfa_types
   , diag_timestamp_created
@@ -121,7 +121,7 @@ should be checked in order to prevent password re-use.  Setting this value to
 zero or a negative number will disable the recently used password check.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst.syst_global_password_rules.disallow_known_compromised IS
+    COLUMN msbms_syst.syst_global_password_rules.disallow_compromised IS
 $DOC$When true new passwords submitted through the change password process will be
 checked against a list of common passwords and passwords known to have been
 compromised and disallow their use as password credentials in the system.

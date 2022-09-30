@@ -115,7 +115,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
         :require_numbers,
         :require_symbols,
         :disallow_recently_used,
-        :disallow_known_compromised,
+        :disallow_compromised,
         :require_mfa,
         :allowed_mfa_types
       ]
@@ -171,7 +171,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
   end
 
   defp set_required_rule_value(:required_rule_no_compromised, req_value, rule) do
-    update_path = path(:disallow_known_compromised, :map)
+    update_path = path(:disallow_compromised, :map)
     Pathex.over!(rule, update_path, fn _ -> req_value end)
   end
 
@@ -306,8 +306,8 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     verify_rule_required_boolean(
       failure_list,
       :required_rule_no_compromised,
-      std_rules.disallow_known_compromised,
-      test_rules.disallow_known_compromised
+      std_rules.disallow_compromised,
+      test_rules.disallow_compromised
     )
   end
 

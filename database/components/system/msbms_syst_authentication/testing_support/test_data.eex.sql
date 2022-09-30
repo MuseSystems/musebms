@@ -67,7 +67,7 @@ $AUTHENTICATION_TESTING_INIT$
             , require_numbers
             , require_symbols
             , disallow_recently_used
-            , disallow_known_compromised
+            , disallow_compromised
             , require_mfa
             , allowed_mfa_types )
         VALUES
@@ -92,7 +92,7 @@ $AUTHENTICATION_TESTING_INIT$
             , require_numbers
             , require_symbols
             , disallow_recently_used
-            , disallow_known_compromised
+            , disallow_compromised
             , require_mfa
             , allowed_mfa_types )
         VALUES
@@ -117,7 +117,7 @@ $AUTHENTICATION_TESTING_INIT$
             , require_numbers
             , require_symbols
             , disallow_recently_used
-            , disallow_known_compromised
+            , disallow_compromised
             , require_mfa
             , allowed_mfa_types )
         VALUES
@@ -142,7 +142,7 @@ $AUTHENTICATION_TESTING_INIT$
             , require_numbers
             , require_symbols
             , disallow_recently_used
-            , disallow_known_compromised
+            , disallow_compromised
             , require_mfa
             , allowed_mfa_types )
         VALUES

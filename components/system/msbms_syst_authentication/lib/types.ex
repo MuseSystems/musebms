@@ -132,7 +132,7 @@ defmodule MsbmsSystAuthentication.Types do
           optional(:require_numbers) => non_neg_integer(),
           optional(:require_symbols) => non_neg_integer(),
           optional(:disallow_recently_used) => non_neg_integer(),
-          optional(:disallow_known_compromised) => boolean(),
+          optional(:disallow_compromised) => boolean(),
           optional(:require_mfa) => boolean(),
           optional(:allowed_mfa_types) => list(String.t())
         }
@@ -147,7 +147,7 @@ defmodule MsbmsSystAuthentication.Types do
           optional(:require_numbers) => non_neg_integer(),
           optional(:require_symbols) => non_neg_integer(),
           optional(:disallow_recently_used) => non_neg_integer(),
-          optional(:disallow_known_compromised) => boolean(),
+          optional(:disallow_compromised) => boolean(),
           optional(:require_mfa) => boolean(),
           optional(:allowed_mfa_types) => list(String.t())
         }
