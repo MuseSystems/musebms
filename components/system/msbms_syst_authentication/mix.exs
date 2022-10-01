@@ -26,6 +26,7 @@ defmodule MsbmsSystAuthentication.MixProject do
     {:net_address, "~> 0.2.0"},
     {:pathex, "~> 2.0"},
     {:timex, "~> 3.0"},
+    {:gradient, github: "esl/gradient", only: [:dev], runtime: false},
 
     # Muse Systems Business Management System Components
     {:msbms_syst_utils, path: "../msbms_syst_utils"},
