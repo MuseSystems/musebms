@@ -24,6 +24,7 @@ defmodule MsbmsSystOptions.MixProject do
     {:toml,
      git: "https://github.com/MuseSystems/toml-elixir.git",
      branch: "feature/typeless-arrays-with-tests"},
+    {:gradient, github: "esl/gradient", only: [:dev], runtime: false},
 
     # Muse Systems Business Management System Components
     {:msbms_syst_error, path: "../msbms_syst_error"},

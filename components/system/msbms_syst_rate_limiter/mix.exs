@@ -23,6 +23,7 @@ defmodule MsbmsSystRateLimiter.MixProject do
     {:ex_doc, "~> 0.20", only: :dev, runtime: false},
     {:hammer_backend_mnesia, "~> 0.5", runtime: false},
     {:hammer, "~> 6.0", runtime: false},
+    {:gradient, github: "esl/gradient", only: [:dev], runtime: false},
 
     # Muse Systems Business Management System Components
     {:msbms_syst_error, path: "../msbms_syst_error"},
