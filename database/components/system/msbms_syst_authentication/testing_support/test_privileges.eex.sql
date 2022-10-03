@@ -53,3 +53,7 @@ GRANT SELECT, INSERT, UPDATE, DELETE
 
 GRANT SELECT, INSERT, UPDATE, DELETE
     ON TABLE msbms_syst.syst_disallowed_passwords TO <%= msbms_appusr %>;
+
+GRANT EXECUTE
+    ON FUNCTION msbms_syst.get_applied_network_rule( inet , uuid , uuid )
+    TO <%= msbms_appusr %>;
