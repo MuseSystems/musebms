@@ -335,9 +335,9 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
        when std_req == true and test_req == false,
        do: [{rule, std_req} | failure_list]
 
-  @spec delete_owner_password_rules(MsbmsSystInstanceMgr.Types.owner_id()) ::
+  @spec delete_password_rules(MsbmsSystInstanceMgr.Types.owner_id()) ::
           :ok | {:error, MsbmsSystError.t()}
-  def delete_owner_password_rules(owner_id) do
+  def delete_password_rules(owner_id) do
     from(opwr in Data.SystOwnerPasswordRules, where: opwr.owner_id == ^owner_id)
     |> MsbmsSystDatastore.one!()
     |> MsbmsSystDatastore.delete!()
