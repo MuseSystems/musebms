@@ -72,6 +72,13 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     |> MsbmsSystDatastore.one!()
   end
 
+  @spec get_password_rules(MsbmsSystInstanceMgr.Types.owner_id()) ::
+          Data.SystOwnerPasswordRules.t() | nil
+  def get_password_rules(owner_id) do
+    from(opwr in Data.SystOwnerPasswordRules, where: opwr.owner_id == ^owner_id)
+    |> MsbmsSystDatastore.one()
+  end
+
   @spec get_access_account_password_rule(Types.access_account_id()) :: Types.password_rule()
   def get_access_account_password_rule(access_account_id) when is_binary(access_account_id) do
     global_rule =
