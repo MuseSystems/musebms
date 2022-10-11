@@ -67,7 +67,8 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
 
   @spec get_global_password_rules() :: Data.SystGlobalPasswordRules.t()
   def get_global_password_rules do
-    # There should only ever be one SystGlobalPasswordRules record
+    # There should only ever be one SystGlobalPasswordRules record and always
+    # one.
     from(gpwr in Data.SystGlobalPasswordRules)
     |> MsbmsSystDatastore.one!()
   end
