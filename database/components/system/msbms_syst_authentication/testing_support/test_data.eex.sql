@@ -133,31 +133,6 @@ $AUTHENTICATION_TESTING_INIT$
             , FALSE
             , ARRAY['credential_types_secondary_totp']::text[] );
 
-        INSERT INTO msbms_syst_data.syst_owner_password_rules
-            ( owner_id
-            , password_length
-            , max_age
-            , require_upper_case
-            , require_lower_case
-            , require_numbers
-            , require_symbols
-            , disallow_recently_used
-            , disallow_compromised
-            , require_mfa
-            , allowed_mfa_types )
-        VALUES
-            ( (SELECT id FROM msbms_syst_data.syst_owners WHERE internal_name = 'owner4')
-            , int4range( 8, 512, '[]' )
-            , interval '0 days'
-            , 0
-            , 0
-            , 0
-            , 0
-            , 0
-            , TRUE
-            , FALSE
-            , ARRAY['credential_types_secondary_totp']::text[] );
-
         ------------------------------------------------------------------------
         -- Network Rule Creation
         ------------------------------------------------------------------------
