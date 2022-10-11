@@ -13,6 +13,8 @@
 defmodule MsbmsSystDatastore.DbTypes.Inet do
   use Ecto.Type
 
+  alias MsbmsSystDatastore.DbTypes.Impl
+
   @moduledoc """
   An Elixir representation of the PostgreSQL `inet` and `cidr` data types.
 
@@ -62,4 +64,10 @@ defmodule MsbmsSystDatastore.DbTypes.Inet do
   end
 
   def dump(_), do: :error
+
+  @spec to_postgrex_inet(t()) :: Postgrex.INET.t()
+  defdelegate to_postgrex_inet(address), to: Impl.Inet
+
+  @spec from_postgrex_inet(Postgrex.INET.t()) :: t()
+  defdelegate from_postgrex_inet(address), to: Impl.Inet
 end
