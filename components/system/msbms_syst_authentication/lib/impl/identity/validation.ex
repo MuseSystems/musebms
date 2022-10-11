@@ -135,7 +135,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Validation do
         from(i in Data.SystIdentities, where: i.id == ^validation_identity.validates_identity_id)
         |> MsbmsSystDatastore.one!()
         |> verify_not_validated()
-        |> Helpers.update_record(%{validation_requested: nil, identity_expires: nil})
+        |> Helpers.update_record(%{validation_requested: nil})
 
       :ok = Helpers.delete_record(validation_identity)
 
