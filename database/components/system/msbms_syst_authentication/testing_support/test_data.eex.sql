@@ -552,7 +552,7 @@ $AUTHENTICATION_TESTING_INIT$
           , aa.internal_name || '@musesystems.com' -- TODO: Change this to something more testable!
           , now( ) - interval '15 days'
           , now( ) - interval '20 days'
-          , now( ) - interval '10 days'
+          , NULL
         FROM msbms_syst_data.syst_access_accounts aa;
 
         INSERT INTO msbms_syst_data.syst_identities
@@ -570,7 +570,7 @@ $AUTHENTICATION_TESTING_INIT$
           , msbms_syst_priv.get_random_string(9)
           , now( ) - INTERVAL '15 days'
           , now( ) - INTERVAL '20 days'
-          , now( ) - INTERVAL '10 days'
+          , NULL
         FROM msbms_syst_data.syst_access_accounts aa;
 
         INSERT INTO msbms_syst_data.syst_identities
@@ -588,7 +588,7 @@ $AUTHENTICATION_TESTING_INIT$
           , msbms_syst_priv.get_random_string(16)
           , now( ) - INTERVAL '15 days'
           , now( ) - INTERVAL '20 days'
-          , now( ) - INTERVAL '10 days'
+          , NULL
         FROM msbms_syst_data.syst_access_accounts aa;
 
         ------------------------------------------------------------------------
