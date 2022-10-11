@@ -55,7 +55,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Validation do
   defp reset_validation_target_identity(target_identity, _opts) do
     date_now = DateTime.now!("Etc/UTC")
 
-    {:ok, reset_target_identity} =
+    reset_target_identity =
       Helpers.update_record(target_identity, %{
         validated: nil,
         validation_requested: date_now
@@ -131,7 +131,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Validation do
           {:ok, Data.SystIdentities.t()} | {:error, MsbmsSystError.t()}
   def revoke_identity_validation(validation_identity) do
     MsbmsSystDatastore.transaction(fn ->
-      {:ok, revoked_identity} =
+      revoked_identity =
         from(i in Data.SystIdentities, where: i.id == ^validation_identity.validates_identity_id)
         |> MsbmsSystDatastore.one!()
         |> verify_not_validated()
