@@ -56,5 +56,6 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystIdentities do
       :identity_type_id,
       :account_identifier
     ])
+    |> unique_constraint(:validates_identity_id, name: :syst_identities_validates_identities_udx)
   end
 end
