@@ -11,6 +11,7 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MsbmsSystAuthentication.Types do
+  alias MsbmsSystAuthentication.Data
   alias MsbmsSystDatastore.DbTypes
 
   #
@@ -54,6 +55,55 @@ defmodule MsbmsSystAuthentication.Types do
 
   @type account_identifier() :: String.t()
 
+  @type applied_network_rule() :: %{
+          required(:precedence) => network_rule_precedence(),
+          required(:network_rule_id) => Ecto.UUID.t() | nil,
+          required(:functional_type) => network_rule_functional_type()
+        }
+
+  @type authentication_extended_operations() ::
+          :require_mfa | :require_mfa_setup | :require_instance | :require_credential_reset
+
+  @type authentication_operations() ::
+          :check_global_network_rules
+          | :check_identifier_rate_limit
+          | :check_identity
+          | :check_credential
+          | :check_instance
+          | :check_instance_network_rules
+          | :check_host_rate_limit
+          | authentication_extended_operations()
+
+  @type authentication_state() :: %{
+          required(:status) => authentication_status(),
+          required(:access_account_id) => access_account_id() | nil,
+          required(:instance_id) => MsbmsSystInstanceMgr.Types.instance_id() | nil,
+          required(:identity_type_id) => identity_type_id(),
+          required(:host_address) => host_address(),
+          required(:applied_network_rule) => applied_network_rule() | nil,
+          required(:pending_operations) => list(authentication_operations()),
+          optional(:identifier) => account_identifier(),
+          optional(:plaintext_credential) => credential(),
+          optional(:owning_owner_id) => MsbmsSystInstanceMgr.Types.owner_id() | nil,
+          optional(:identity_id) => identity_id(),
+          optional(:identity) => Data.SystIdentities.t(),
+          optional(:reset_reason) => credential_reset_reason()
+        }
+
+  @type authentication_status() ::
+          :not_started
+          | :pending
+          | :rejected_host_check
+          | :rejected_rate_limited
+          | :rejected_validation
+          | :rejected_identity_expired
+          | :rejected
+          | :authenticated
+
+  @type credential() :: String.t()
+
+  @type credential_id() :: Ecto.UUID.t()
+
   @type credential_params() :: %{
           optional(:access_account_id) => access_account_id(),
           optional(:access_account_name) => access_account_name(),
@@ -64,13 +114,30 @@ defmodule MsbmsSystAuthentication.Types do
         }
 
   @type credential_confirm_result() ::
-          :confirmed | :reset_forced | :reset_age | :reset_disallowed | :rejected
+          {credential_confirm_state(), list(credential_extended_state())}
+
+  @type credential_confirm_state() :: :confirmed | :no_credential | :wrong_credential
+
+  @type credential_extended_state() :: :require_mfa | credential_reset_reason()
+
+  @type credential_reset_reason() :: :reset_forced | :reset_age | :reset_disallowed
 
   @type credential_set_failures() :: {:invalid_credential, Keyword.t()}
 
   @type credential_type_id() :: MsbmsSystEnums.Types.enum_item_id()
 
   @type credential_type_name() :: MsbmsSystEnums.Types.enum_item_name()
+
+  @type credential_types() ::
+          :credential_types_sysdef_password
+          | :credential_types_sysdef_mfa_totp
+          | :credential_types_sysdef_mfa_totp_recovery_code
+          | :credential_types_sysdef_mfa_known_host
+          | :credential_types_sysdef_token_api
+          | :credential_types_sysdef_token_validation
+          | :credential_types_sysdef_token_recovery
+
+  @type disallowed_host_id() :: Ecto.UUID.t()
 
   @type global_network_rule_params() :: %{
           optional(:template_rule) => boolean(),
@@ -81,11 +148,20 @@ defmodule MsbmsSystAuthentication.Types do
           optional(:ip_host_range_upper) => DbTypes.Inet.t()
         }
 
+  @type host_address() :: IP.addr()
+
   @type identity_id() :: Ecto.UUID.t()
 
   @type identity_type_id() :: MsbmsSystEnums.Types.enum_item_id()
 
   @type identity_type_name() :: MsbmsSystEnums.Types.enum_item_name()
+
+  @type identity_types() ::
+          :identity_types_sysdef_email
+          | :identity_types_sysdef_account
+          | :identity_types_sysdef_api
+          | :identity_types_sysdef_validation
+          | :identity_types_sysdef_password_recovery
 
   @type identity_params() :: %{
           optional(:access_account_id) => access_account_id(),
@@ -111,6 +187,11 @@ defmodule MsbmsSystAuthentication.Types do
             optional(:ip_host_range_upper) => DbTypes.Inet.t()
           }
           | nil
+
+  @type network_rule_functional_type() :: :allow | :deny
+
+  @type network_rule_precedence() ::
+          :disallowed | :global | :instance | :instance_owner | :implied
 
   @type owner_network_rule_params() :: %{
           optional(:owner_id) => MsbmsSystInstanceMgr.Types.owner_id(),
