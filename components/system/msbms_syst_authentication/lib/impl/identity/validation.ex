@@ -187,4 +187,24 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Validation do
   end
 
   defp verify_not_validated(target_identity), do: target_identity
+
+  @spec get_validation_identity_for_identity_id(Types.identity_id()) ::
+          {:ok, Data.SystIdentities.t() | nil} | {:error, MsbmsSystError.t()}
+  def get_validation_identity_for_identity_id(target_identity_id) do
+    from(i in Data.SystIdentities, where: i.validates_identity_id == ^target_identity_id)
+    |> MsbmsSystDatastore.one()
+    |> then(&{:ok, &1})
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure retrieving Validation Identity by Target Identity ID.",
+          cause: error
+        }
+      }
+  end
 end
