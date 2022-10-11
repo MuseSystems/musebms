@@ -430,6 +430,18 @@ $AUTHENTICATION_TESTING_INIT$
                     id
                 FROM msbms_syst_data.syst_enum_items
                 WHERE internal_name = 'access_account_states_sysdef_active' ) )
+
+             ,
+            ( 'password_history_test_accnt'
+            , 'Password History Test Account'
+            , ( SELECT id
+                FROM msbms_syst_data.syst_owners
+                WHERE internal_name = 'owner2' )
+            , FALSE
+            , ( SELECT
+                    id
+                FROM msbms_syst_data.syst_enum_items
+                WHERE internal_name = 'access_account_states_sysdef_active' ) )
              ,
             ( 'example_purge_accnt'
             , 'Example Purge Account'
@@ -664,6 +676,20 @@ $AUTHENTICATION_TESTING_INIT$
             , now( ) - INTERVAL '1 day' );
 
         INSERT INTO msbms_syst_data.syst_credentials
+            ( access_account_id, credential_type_id, credential_data, last_updated )
+        VALUES
+            ( ( SELECT id
+                FROM msbms_syst_data.syst_access_accounts
+                WHERE internal_name = 'password_history_test_accnt' )
+            , ( SELECT
+                    id
+                FROM msbms_syst_data.syst_enum_items
+                WHERE internal_name = 'credential_types_sysdef_password' )
+            -- password.history.test.password
+            , '$argon2id$v=19$m=65536,t=8,p=2$ASAhNdIdchaF4N4nj/VYhw$Un97xyYZo9ExoW4tqkWsrgs8fj1FZl6MJgvRBZA0d4E'
+            , now( ) - INTERVAL '1 day' );
+
+        INSERT INTO msbms_syst_data.syst_credentials
             ( access_account_id
             , credential_type_id
             , credential_for_identity_id
@@ -715,6 +741,26 @@ $AUTHENTICATION_TESTING_INIT$
             , '$argon2id$v=19$m=65536,t=8,p=2$IMiQN/YlkA+g20mMgsKV1w$/WP/6UFwnxo46oR4nN6/5MqncIu4JAsnRyCnkoiLS/I'
             , now( ) - INTERVAL '1 day' );
 
+        ------------------------------------------------------------------------
+        -- Password History Creation
+        ------------------------------------------------------------------------
+
+        INSERT INTO msbms_syst_data.syst_password_history
+            ( access_account_id, credential_data )
+        VALUES
+            ( ( SELECT
+                    id
+                FROM msbms_syst_data.syst_access_accounts
+                WHERE internal_name = 'password_history_test_accnt' )
+            , '$argon2id$v=19$m=65536,t=8,p=2$SlBSxy4bQcMu9UkayH6hOg$12DcQE3iI3IuPgqKpbEWNQwtcs1+SzAURaTygGKRdQE' -- PassHist#01!
+            )
+             ,
+            ( ( SELECT
+                    id
+                FROM msbms_syst_data.syst_access_accounts
+                WHERE internal_name = 'password_history_test_accnt' )
+            , '$argon2id$v=19$m=65536,t=8,p=2$AC7iCSdSXnho542OuE90rA$hU+oET8H8ovs3X2roWXsre5hENTUWxoxaSxqdM2sc+E' -- PassHist#02!
+            );
 
     END;
 $AUTHENTICATION_TESTING_INIT$;
