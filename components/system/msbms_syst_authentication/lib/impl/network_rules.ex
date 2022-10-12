@@ -141,12 +141,15 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
     target_host = %DbTypes.Inet{address: host_addr} |> DbTypes.Inet.to_postgrex_inet()
     target_instance_id = if instance_id != nil, do: Ecto.UUID.dump!(instance_id), else: nil
 
+    target_owner_id =
+      if instance_owner_id != nil, do: Ecto.UUID.dump!(instance_owner_id), else: nil
+
     from(
       nr in fragment(
         "msbms_syst.get_applied_network_rule(?, ?, ?)",
         ^target_host,
         ^target_instance_id,
-        ^instance_owner_id
+        ^target_owner_id
       ),
       select: %{
         precedence: nr.precedence,
