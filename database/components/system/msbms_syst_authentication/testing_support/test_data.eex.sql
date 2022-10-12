@@ -175,7 +175,7 @@ $AUTHENTICATION_TESTING_INIT$
           FALSE,
           1,
           'deny',
-          '10.124.124.2',
+          '10.131.131.0/24',
           NULL,
           NULL
         ),
@@ -183,13 +183,21 @@ $AUTHENTICATION_TESTING_INIT$
           FALSE,
           2,
           'allow',
-          '10.125.125.0/24',
+          '10.131.131.5',
           NULL,
           NULL
         ),
         (
           FALSE,
           3,
+          'allow',
+          '10.125.125.0/24',
+          NULL,
+          NULL
+        ),
+        (
+          FALSE,
+          4,
           'allow',
           NULL,
           '10.123.123.5',
@@ -210,7 +218,7 @@ $AUTHENTICATION_TESTING_INIT$
           (SELECT id FROM msbms_syst_data.syst_owners WHERE internal_name = 'owner1'),
           1,
           'deny',
-          '10.124.124.1',
+          '10.128.128.1',
           NULL,
           NULL
         ),
@@ -218,14 +226,14 @@ $AUTHENTICATION_TESTING_INIT$
           (SELECT id FROM msbms_syst_data.syst_owners WHERE internal_name = 'owner1'),
           2,
           'allow',
-          '10.124.124.0/24',
+          '10.128.128.0/24',
           NULL,
           NULL
         ),
         (
           (SELECT id FROM msbms_syst_data.syst_owners WHERE internal_name = 'owner1'),
           3,
-          'allow',
+          'deny',
           NULL,
           '10.123.123.1',
           '10.123.123.254'
