@@ -131,7 +131,11 @@ defmodule MsbmsSystAuthentication.Impl.Identity do
   end
 
   def identity_expired?(%Data.SystIdentities{} = identity) do
-    expired = DateTime.compare(DateTime.utc_now(), identity.identity_expires) == :gt
+    expired =
+      if identity.identity_expires == nil,
+        do: false,
+        else: DateTime.compare(DateTime.utc_now(), identity.identity_expires) == :gt
+
     {:ok, expired}
   rescue
     error ->
