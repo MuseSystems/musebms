@@ -413,10 +413,86 @@ $AUTHENTICATION_TESTING_INIT$
                     id
                 FROM msbms_syst_data.syst_enum_items
                 WHERE internal_name = 'access_account_states_sysdef_active' ) )
-
              ,
             ( 'password_history_test_accnt'
             , 'Password History Test Account'
+            , ( SELECT id
+                FROM msbms_syst_data.syst_owners
+                WHERE internal_name = 'owner2' )
+            , FALSE
+            , ( SELECT
+                    id
+                FROM msbms_syst_data.syst_enum_items
+                WHERE internal_name = 'access_account_states_sysdef_active' ) )
+             ,
+            ( 'identity_set_expired_test_accnt'
+            , 'Identity Set Expired Test Account'
+            , ( SELECT id
+                FROM msbms_syst_data.syst_owners
+                WHERE internal_name = 'owner2' )
+            , FALSE
+            , ( SELECT
+                    id
+                FROM msbms_syst_data.syst_enum_items
+                WHERE internal_name = 'access_account_states_sysdef_active' ) )
+             ,
+            ( 'identity_clear_expired_test_accnt'
+            , 'Identity Clear Expired Test Account'
+            , ( SELECT id
+                FROM msbms_syst_data.syst_owners
+                WHERE internal_name = 'owner2' )
+            , FALSE
+            , ( SELECT
+                    id
+                FROM msbms_syst_data.syst_enum_items
+                WHERE internal_name = 'access_account_states_sysdef_active' ) )
+             ,
+            ( 'identity_expired_test_accnt'
+            , 'Identity Expired Test Account'
+            , ( SELECT id
+                FROM msbms_syst_data.syst_owners
+                WHERE internal_name = 'owner2' )
+            , FALSE
+            , ( SELECT
+                    id
+                FROM msbms_syst_data.syst_enum_items
+                WHERE internal_name = 'access_account_states_sysdef_active' ) )
+             ,
+            ( 'identity_not_expired_test_accnt'
+            , 'Identity Not Expired Test Account'
+            , ( SELECT id
+                FROM msbms_syst_data.syst_owners
+                WHERE internal_name = 'owner2' )
+            , FALSE
+            , ( SELECT
+                    id
+                FROM msbms_syst_data.syst_enum_items
+                WHERE internal_name = 'access_account_states_sysdef_active' ) )
+             ,
+            ( 'identity_validated_test_accnt'
+            , 'Identity Validated Test Account'
+            , ( SELECT id
+                FROM msbms_syst_data.syst_owners
+                WHERE internal_name = 'owner2' )
+            , FALSE
+            , ( SELECT
+                    id
+                FROM msbms_syst_data.syst_enum_items
+                WHERE internal_name = 'access_account_states_sysdef_active' ) )
+             ,
+            ( 'identity_not_validated_test_accnt'
+            , 'Identity Not Validated Test Account'
+            , ( SELECT id
+                FROM msbms_syst_data.syst_owners
+                WHERE internal_name = 'owner2' )
+            , FALSE
+            , ( SELECT
+                    id
+                FROM msbms_syst_data.syst_enum_items
+                WHERE internal_name = 'access_account_states_sysdef_active' ) )
+             ,
+            ( 'identity_delete_test_accnt'
+            , 'Identity Delete Test Account'
             , ( SELECT id
                 FROM msbms_syst_data.syst_owners
                 WHERE internal_name = 'owner2' )
@@ -528,6 +604,139 @@ $AUTHENTICATION_TESTING_INIT$
             , now( ) - INTERVAL '10 days'
             , now( ) + INTERVAL '20 days' );
 
+        INSERT INTO msbms_syst_data.syst_access_account_instance_assocs
+            ( access_account_id
+            , instance_id
+            , access_granted
+            , invitation_issued
+            , invitation_expires
+            , invitation_declined )
+        SELECT
+            aa.id
+          , i.id
+          , now( ) - INTERVAL '20 days'
+          , now( ) - INTERVAL '40 days'
+          , now( ) - INTERVAL '10 days'
+          , NULL::timestamptz
+        FROM msbms_syst_data.syst_access_accounts aa
+            JOIN msbms_syst_data.syst_owners o ON o.id = aa.owning_owner_id
+            JOIN msbms_syst_data.syst_instances i ON i.owner_id = o.id
+        WHERE aa.internal_name = 'identity_set_expired_test_accnt';
+
+        INSERT INTO msbms_syst_data.syst_access_account_instance_assocs
+            ( access_account_id
+            , instance_id
+            , access_granted
+            , invitation_issued
+            , invitation_expires
+            , invitation_declined )
+        SELECT
+            aa.id
+          , i.id
+          , now( ) - INTERVAL '20 days'
+          , now( ) - INTERVAL '40 days'
+          , now( ) - INTERVAL '10 days'
+          , NULL::timestamptz
+        FROM msbms_syst_data.syst_access_accounts aa
+            JOIN msbms_syst_data.syst_owners o ON o.id = aa.owning_owner_id
+            JOIN msbms_syst_data.syst_instances i ON i.owner_id = o.id
+        WHERE aa.internal_name = 'identity_clear_expired_test_accnt';
+
+        INSERT INTO msbms_syst_data.syst_access_account_instance_assocs
+            ( access_account_id
+            , instance_id
+            , access_granted
+            , invitation_issued
+            , invitation_expires
+            , invitation_declined )
+        SELECT
+            aa.id
+          , i.id
+          , now( ) - INTERVAL '20 days'
+          , now( ) - INTERVAL '40 days'
+          , now( ) - INTERVAL '10 days'
+          , NULL::timestamptz
+        FROM msbms_syst_data.syst_access_accounts aa
+            JOIN msbms_syst_data.syst_owners o ON o.id = aa.owning_owner_id
+            JOIN msbms_syst_data.syst_instances i ON i.owner_id = o.id
+        WHERE aa.internal_name = 'identity_expired_test_accnt';
+
+        INSERT INTO msbms_syst_data.syst_access_account_instance_assocs
+            ( access_account_id
+            , instance_id
+            , access_granted
+            , invitation_issued
+            , invitation_expires
+            , invitation_declined )
+        SELECT
+            aa.id
+          , i.id
+          , now( ) - INTERVAL '20 days'
+          , now( ) - INTERVAL '40 days'
+          , now( ) - INTERVAL '10 days'
+          , NULL::timestamptz
+        FROM msbms_syst_data.syst_access_accounts aa
+            JOIN msbms_syst_data.syst_owners o ON o.id = aa.owning_owner_id
+            JOIN msbms_syst_data.syst_instances i ON i.owner_id = o.id
+        WHERE aa.internal_name = 'identity_not_expired_test_accnt';
+
+        INSERT INTO msbms_syst_data.syst_access_account_instance_assocs
+            ( access_account_id
+            , instance_id
+            , access_granted
+            , invitation_issued
+            , invitation_expires
+            , invitation_declined )
+        SELECT
+            aa.id
+          , i.id
+          , now( ) - INTERVAL '20 days'
+          , now( ) - INTERVAL '40 days'
+          , now( ) - INTERVAL '10 days'
+          , NULL::timestamptz
+        FROM msbms_syst_data.syst_access_accounts aa
+            JOIN msbms_syst_data.syst_owners o ON o.id = aa.owning_owner_id
+            JOIN msbms_syst_data.syst_instances i ON i.owner_id = o.id
+        WHERE aa.internal_name = 'identity_validated_test_accnt';
+
+        INSERT INTO msbms_syst_data.syst_access_account_instance_assocs
+            ( access_account_id
+            , instance_id
+            , access_granted
+            , invitation_issued
+            , invitation_expires
+            , invitation_declined )
+        SELECT
+            aa.id
+          , i.id
+          , now( ) - INTERVAL '20 days'
+          , now( ) - INTERVAL '40 days'
+          , now( ) - INTERVAL '10 days'
+          , NULL::timestamptz
+        FROM msbms_syst_data.syst_access_accounts aa
+            JOIN msbms_syst_data.syst_owners o ON o.id = aa.owning_owner_id
+            JOIN msbms_syst_data.syst_instances i ON i.owner_id = o.id
+        WHERE aa.internal_name = 'identity_delete_test_accnt';
+
+        INSERT INTO msbms_syst_data.syst_access_account_instance_assocs
+            ( access_account_id
+            , instance_id
+            , access_granted
+            , invitation_issued
+            , invitation_expires
+            , invitation_declined )
+        SELECT
+            aa.id
+          , i.id
+          , now( ) - INTERVAL '20 days'
+          , now( ) - INTERVAL '40 days'
+          , now( ) - INTERVAL '10 days'
+          , NULL::timestamptz
+        FROM msbms_syst_data.syst_access_accounts aa
+            JOIN msbms_syst_data.syst_owners o ON o.id = aa.owning_owner_id
+            JOIN msbms_syst_data.syst_instances i ON i.owner_id = o.id
+        WHERE aa.internal_name = 'identity_not_validated_test_accnt';
+
         ------------------------------------------------------------------------
         -- Identity Creation
         ------------------------------------------------------------------------
@@ -545,9 +754,18 @@ $AUTHENTICATION_TESTING_INIT$
               FROM msbms_syst_data.syst_enum_items
               WHERE internal_name = 'identity_types_sysdef_email' )
           , aa.internal_name || '@musesystems.com' -- TODO: Change this to something more testable!
-          , now( ) - interval '15 days'
+          , CASE
+              WHEN aa.internal_name != 'identity_not_validated_test_accnt' THEN
+                  now( ) - interval '15 days'
+            END
           , now( ) - interval '20 days'
-          , NULL
+          , CASE
+                WHEN
+                    aa.internal_name IN
+                        ( 'identity_clear_expired_test_accnt', 'identity_expired_test_accnt' )
+                THEN
+                    now( ) - INTERVAL '10 days'
+            END
         FROM msbms_syst_data.syst_access_accounts aa;
 
         INSERT INTO msbms_syst_data.syst_identities
