@@ -34,7 +34,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity do
   # General Identity functionality
 
   @spec set_identity_expiration(Types.identity_id() | Data.SystIdentities.t(), DateTime.t()) ::
-          :ok | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystIdentities.t()} | {:error, MsbmsSystError.t()}
   def set_identity_expiration(identity, %DateTime{} = expires_date) when is_binary(identity) do
     from(i in Data.SystIdentities, where: i.id == ^identity)
     |> MsbmsSystDatastore.one!()
