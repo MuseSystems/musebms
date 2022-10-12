@@ -35,9 +35,10 @@ defmodule MsbmsSystAuthentication.Impl.Identity do
 
   @spec set_identity_expiration(Types.identity_id() | Data.SystIdentities.t(), DateTime.t()) ::
           {:ok, Data.SystIdentities.t()} | {:error, MsbmsSystError.t()}
-  def set_identity_expiration(identity, %DateTime{} = expires_date) when is_binary(identity) do
-    from(i in Data.SystIdentities, where: i.id == ^identity)
-    |> MsbmsSystDatastore.one!()
+  def set_identity_expiration(identity_id, %DateTime{} = expires_date)
+      when is_binary(identity_id) do
+    identity_id
+    |> get_identity_record()
     |> set_identity_expiration(expires_date)
   rescue
     error ->
@@ -47,17 +48,14 @@ defmodule MsbmsSystAuthentication.Impl.Identity do
         :error,
         %MsbmsSystError{
           code: :undefined_error,
-          message: "Failure setting identity expiration by ID.",
+          message: "Failure setting Identity expiration by ID.",
           cause: error
         }
       }
   end
 
   def set_identity_expiration(%Data.SystIdentities{} = identity, %DateTime{} = expires_date) do
-    identity
-    |> Data.SystIdentities.update_changeset(%{identity_expires: expires_date})
-    |> MsbmsSystDatastore.update!(returning: true)
-    |> then(&{:ok, &1})
+    {:ok, Helpers.update_record(identity, %{identity_expires: expires_date})}
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -66,7 +64,44 @@ defmodule MsbmsSystAuthentication.Impl.Identity do
         :error,
         %MsbmsSystError{
           code: :undefined_error,
-          message: "Failure setting identity expiration.",
+          message: "Failure setting Identity expiration.",
+          cause: error
+        }
+      }
+  end
+
+  @spec clear_identity_expiration(Types.identity_id() | Data.SystIdentities.t()) ::
+          {:ok, Data.SystIdentities.t()} | {:error, MsbmsSystError.t()}
+
+  def clear_identity_expiration(identity_id) when is_binary(identity_id) do
+    identity_id
+    |> get_identity_record()
+    |> clear_identity_expiration()
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure clearing Identity expiration by ID.",
+          cause: error
+        }
+      }
+  end
+
+  def clear_identity_expiration(%Data.SystIdentities{} = identity) do
+    {:ok, Helpers.update_record(identity, %{identity_expires: nil})}
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure clearing Identity expiration.",
           cause: error
         }
       }
@@ -142,10 +177,15 @@ defmodule MsbmsSystAuthentication.Impl.Identity do
 
   @spec delete_identity(Types.identity_id() | Data.SystIdentities.t()) :: :ok
   def delete_identity(identity_id) when is_binary(identity_id) do
-    from(i in Data.SystIdentities, where: i.id == ^identity_id)
-    |> MsbmsSystDatastore.one()
+    identity_id
+    |> get_identity_record()
     |> delete_identity()
   end
 
   def delete_identity(%Data.SystIdentities{} = identity), do: Helpers.delete_record(identity)
+
+  defp get_identity_record(identity_id) when is_binary(identity_id) do
+    from(i in Data.SystIdentities, where: i.id == ^identity_id)
+    |> MsbmsSystDatastore.one!()
+  end
 end
