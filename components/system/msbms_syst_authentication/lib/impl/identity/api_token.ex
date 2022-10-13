@@ -25,7 +25,8 @@ defmodule MsbmsSystAuthentication.Impl.Identity.ApiToken do
 
   @spec create_identity(Types.access_account_id(), Types.account_identifier(), Keyword.t()) ::
           Data.SystIdentities.t()
-  def create_identity(access_account_id, api_token, opts) when is_binary(access_account_id) do
+  def create_identity(access_account_id, api_token, opts \\ [])
+      when is_binary(access_account_id) do
     opts =
       MsbmsSystUtils.resolve_options(opts,
         create_validated: true,
