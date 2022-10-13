@@ -25,7 +25,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.AccountCode do
 
   @default_account_code_params [identity_token_length: 12, identity_tokens: :b32c]
 
-  @spec create_identity(Types.access_account_id(), Types.account_identifier(), Keyword.t()) ::
+  @spec create_identity(Types.access_account_id(), Types.account_identifier() | nil, Keyword.t()) ::
           Data.SystIdentities.t()
   def create_identity(access_account_id, account_code, opts) when is_binary(access_account_id) do
     opts =
