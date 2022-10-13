@@ -23,7 +23,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.ApiToken do
 
   @moduledoc false
 
-  @spec create_identity(Types.access_account_id(), Types.account_identifier(), Keyword.t()) ::
+  @spec create_identity(Types.access_account_id(), Types.account_identifier() | nil, Keyword.t()) ::
           Data.SystIdentities.t()
   def create_identity(access_account_id, api_token, opts \\ [])
       when is_binary(access_account_id) do
