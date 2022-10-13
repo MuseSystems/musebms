@@ -26,6 +26,11 @@ defmodule MsbmsSystUtils do
   function will merge the user given options with a preset defined list of
   option defaults, always preferring the user given options.
 
+  Note that for keys in the `opts_given` argument that have `nil` values, the
+  default value of the argument is used instead; the default value may itself
+  may be `nil`, but one should be aware that `nil` is not always respected as a
+  given value.
+
   The result is a Keyword List of the merged lists.
 
   ## Parameters

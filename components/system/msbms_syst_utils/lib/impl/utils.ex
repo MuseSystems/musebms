@@ -15,7 +15,9 @@ defmodule MsbmsSystUtils.Impl.Utils do
 
   @spec resolve_options(Keyword.t(), Keyword.t()) :: Keyword.t()
   def resolve_options(opts_given, opts_default) do
-    Keyword.merge(opts_given || [], opts_default, fn _k, given, default -> given || default end)
+    Keyword.merge(opts_given || [], opts_default, fn _k, given, default ->
+      if given != nil, do: given, else: default
+    end)
   end
 
   @spec get_random_string(pos_integer(), charlist() | atom()) :: String.t()
