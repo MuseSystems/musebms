@@ -83,9 +83,7 @@ defmodule IdentityApiTokenTest do
 
     assert DateTime.compare(val_date, DateTime.utc_now()) in [:eq, :lt]
 
-    non_token_chars = Regex.replace(~r/[A-C]/, identifier, "")
-
-    assert String.length(non_token_chars) == 0
+    assert not (identifier =~ ~r/[^A-C]/)
 
     :ok = Impl.Identity.delete_identity(tokens_identity.id)
 
