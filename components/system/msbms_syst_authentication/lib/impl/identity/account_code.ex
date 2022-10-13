@@ -14,7 +14,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.AccountCode do
   import Ecto.Query
 
   alias MsbmsSystAuthentication.Data
-  alias MsbmsSystAuthentication.Impl.Identity.Helpers
+  alias MsbmsSystAuthentication.Impl
   alias MsbmsSystAuthentication.Types
 
   require Logger
@@ -44,7 +44,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.AccountCode do
       account_identifier: account_code
     }
 
-    Helpers.create_identity(identity_params, opts)
+    Impl.Identity.Helpers.create_identity(identity_params, opts)
   end
 
   @spec identify_access_account(
@@ -53,7 +53,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.AccountCode do
         ) :: Data.SystIdentities.t() | nil
   def identify_access_account(account_code, owner_id) when is_binary(account_code) do
     account_code
-    |> Helpers.get_identification_query("identity_types_sysdef_account", owner_id)
+    |> Impl.Identity.Helpers.get_identification_query("identity_types_sysdef_account", owner_id)
     |> MsbmsSystDatastore.one()
   end
 
@@ -81,13 +81,22 @@ defmodule MsbmsSystAuthentication.Impl.Identity.AccountCode do
   def reset_identity(%Data.SystIdentities{} = identity, opts) do
     opts = MsbmsSystUtils.resolve_options(opts, @default_account_code_params)
 
-    account_code =
-      MsbmsSystUtils.get_random_string(opts[:identity_token_length], opts[:identity_tokens])
+    result =
+      MsbmsSystDatastore.transaction(fn ->
+        :ok = Impl.Identity.delete_identity(identity.id)
 
-    update_params = %{
-      account_identifier: account_code
-    }
+        create_identity(identity.access_account_id, nil, opts)
+      end)
 
-    Helpers.update_record(identity, update_params)
+    process_reset_identity_result(result)
+  end
+
+  defp process_reset_identity_result({:ok, new_identity}), do: new_identity
+
+  defp process_reset_identity_result(error) do
+    raise MsbmsSystError,
+      code: :undefined_error,
+      message: "Failed to reset Account Code Identity",
+      cause: error
   end
 end
