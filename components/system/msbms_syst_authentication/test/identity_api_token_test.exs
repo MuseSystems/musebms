@@ -105,7 +105,7 @@ defmodule IdentityApiTokenTest do
     :ok = Impl.Identity.delete_identity(ext_name_identity.id)
   end
 
-  test "Can Identity Owned Access Account" do
+  test "Can identify Owned Access Account" do
     target =
       from(
         aa in Data.SystAccessAccounts,
@@ -127,7 +127,7 @@ defmodule IdentityApiTokenTest do
     assert Impl.Identity.ApiToken.identify_access_account(target.account_identifier, nil) == nil
   end
 
-  test "Can Identity Unowned Access Account" do
+  test "Can identify Unowned Access Account" do
     good_target =
       from(
         aa in Data.SystAccessAccounts,
