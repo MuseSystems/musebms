@@ -502,6 +502,41 @@ $AUTHENTICATION_TESTING_INIT$
                 FROM msbms_syst_data.syst_enum_items
                 WHERE internal_name = 'access_account_states_sysdef_active' ) )
              ,
+            ( 'identity_api_token_create_test_accnt'
+            , 'Identity API Token Create Test Account'
+            , ( SELECT id
+                FROM msbms_syst_data.syst_owners
+                WHERE internal_name = 'owner2' )
+            , FALSE
+            , ( SELECT
+                    id
+                FROM msbms_syst_data.syst_enum_items
+                WHERE internal_name = 'access_account_states_sysdef_active' ) )
+
+             ,
+            ( 'identity_email_create_test_accnt'
+            , 'Identity E-Mail Create Test Account'
+            , ( SELECT id
+                FROM msbms_syst_data.syst_owners
+                WHERE internal_name = 'owner2' )
+            , FALSE
+            , ( SELECT
+                    id
+                FROM msbms_syst_data.syst_enum_items
+                WHERE internal_name = 'access_account_states_sysdef_active' ) )
+
+             ,
+            ( 'identity_account_code_create_test_accnt'
+            , 'Identity Account Code Create Test Account'
+            , ( SELECT id
+                FROM msbms_syst_data.syst_owners
+                WHERE internal_name = 'owner2' )
+            , FALSE
+            , ( SELECT
+                    id
+                FROM msbms_syst_data.syst_enum_items
+                WHERE internal_name = 'access_account_states_sysdef_active' ) )
+             ,
             ( 'example_purge_accnt'
             , 'Example Purge Account'
             , ( SELECT id
@@ -737,6 +772,25 @@ $AUTHENTICATION_TESTING_INIT$
             JOIN msbms_syst_data.syst_instances i ON i.owner_id = o.id
         WHERE aa.internal_name = 'identity_not_validated_test_accnt';
 
+        INSERT INTO msbms_syst_data.syst_access_account_instance_assocs
+            ( access_account_id
+            , instance_id
+            , access_granted
+            , invitation_issued
+            , invitation_expires
+            , invitation_declined )
+        SELECT
+            aa.id
+          , i.id
+          , now( ) - INTERVAL '20 days'
+          , now( ) - INTERVAL '40 days'
+          , now( ) - INTERVAL '10 days'
+          , NULL::timestamptz
+        FROM msbms_syst_data.syst_access_accounts aa
+            JOIN msbms_syst_data.syst_owners o ON o.id = aa.owning_owner_id
+            JOIN msbms_syst_data.syst_instances i ON i.owner_id = o.id
+        WHERE aa.internal_name = 'access_account_states_sysdef_active';
+
         ------------------------------------------------------------------------
         -- Identity Creation
         ------------------------------------------------------------------------
@@ -766,7 +820,8 @@ $AUTHENTICATION_TESTING_INIT$
                 THEN
                     now( ) - INTERVAL '10 days'
             END
-        FROM msbms_syst_data.syst_access_accounts aa;
+        FROM msbms_syst_data.syst_access_accounts aa
+        WHERE aa.internal_name != 'identity_email_create_test_accnt';
 
         INSERT INTO msbms_syst_data.syst_identities
             ( access_account_id
@@ -784,7 +839,8 @@ $AUTHENTICATION_TESTING_INIT$
           , now( ) - INTERVAL '15 days'
           , now( ) - INTERVAL '20 days'
           , NULL
-        FROM msbms_syst_data.syst_access_accounts aa;
+        FROM msbms_syst_data.syst_access_accounts aa
+        WHERE aa.internal_name != 'identity_account_code_create_test_accnt';
 
         INSERT INTO msbms_syst_data.syst_identities
             ( access_account_id
@@ -802,7 +858,8 @@ $AUTHENTICATION_TESTING_INIT$
           , now( ) - INTERVAL '15 days'
           , now( ) - INTERVAL '20 days'
           , NULL
-        FROM msbms_syst_data.syst_access_accounts aa;
+        FROM msbms_syst_data.syst_access_accounts aa
+        WHERE aa.internal_name != 'identity_api_token_create_test_accnt';
 
         ------------------------------------------------------------------------
         -- Credential Creation
