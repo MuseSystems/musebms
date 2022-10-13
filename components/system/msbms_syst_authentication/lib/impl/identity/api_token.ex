@@ -1,5 +1,5 @@
-# Source File: api.ex
-# Location:    musebms/components/system/msbms_syst_authentication/lib/impl/identity/api.ex
+# Source File: api_token.ex
+# Location:    musebms/components/system/msbms_syst_authentication/lib/impl/identity/api_token.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
