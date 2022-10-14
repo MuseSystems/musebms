@@ -181,7 +181,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Validation do
     # Getting here really shouldn't be possible, but just in case...
 
     raise MsbmsSystError,
-      message: "You may not validate an already validated Identity.",
+      message: "Operation not valid for an already Validated Identity.",
       code: :undefined_error,
       cause: %{parameters: [identity: target_identity]}
   end
