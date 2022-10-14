@@ -19,7 +19,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Recovery do
 
   require Logger
 
-  # Validation identities are sufficiently different from other kinds of
+  # Recovery identities are sufficiently different from other kinds of
   # identities that we shouldn't implement the
   # MsbmsSystAuthentication.Impl.Identity behaviour here, though we should be
   # true to its spirit when appropriate.
