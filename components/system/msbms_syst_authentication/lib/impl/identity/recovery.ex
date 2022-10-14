@@ -54,7 +54,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Recovery do
 
     recovery_identity_params = %{
       access_account_id: target_identity.access_account_id,
-      identity_type_name: "identity_types_password_recovery",
+      identity_type_name: "identity_types_sysdef_password_recovery",
       account_identifier: generated_account_identifier,
       validates_identity_id: target_identity.id,
       identity_expires: date_expires
@@ -70,7 +70,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Recovery do
   def identify_access_account(recovery_token, owner_id) when is_binary(recovery_token) do
     recovery_token
     |> Helpers.get_identification_query(
-      "identity_types_password_recovery",
+      "identity_types_sysdef_password_recovery",
       owner_id,
       :require_validation
     )
