@@ -56,7 +56,6 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Recovery do
       access_account_id: target_identity.access_account_id,
       identity_type_name: "identity_types_sysdef_password_recovery",
       account_identifier: generated_account_identifier,
-      validates_identity_id: target_identity.id,
       identity_expires: date_expires
     }
 
