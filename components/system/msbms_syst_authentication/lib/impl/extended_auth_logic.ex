@@ -409,7 +409,10 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
     opts = MsbmsSystUtils.resolve_options(opts, owning_owner_id: nil)
 
     %{id: identity_type_id} =
-      MsbmsSystEnums.get_enum_item_by_name("identity_types", "identity_types_sysdef_recovery")
+      MsbmsSystEnums.get_enum_item_by_name(
+        "identity_types",
+        "identity_types_sysdef_password_recovery"
+      )
 
     pending_auth_state = %{
       status: :pending,
