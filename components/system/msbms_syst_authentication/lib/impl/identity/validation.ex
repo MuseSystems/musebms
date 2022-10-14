@@ -102,7 +102,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Validation do
     MsbmsSystDatastore.transaction(fn ->
       date_now = DateTime.now!("Etc/UTC")
 
-      {:ok, validated_identity} =
+      validated_identity =
         from(i in Data.SystIdentities, where: i.id == ^validation_identity.validates_identity_id)
         |> MsbmsSystDatastore.one!()
         |> verify_not_expired()
