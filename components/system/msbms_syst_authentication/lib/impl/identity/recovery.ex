@@ -59,7 +59,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Recovery do
       identity_expires: date_expires
     }
 
-    Helpers.create_record(recovery_identity_params)
+    Helpers.create_identity(recovery_identity_params, create_validated: false)
   end
 
   @spec identify_access_account(
