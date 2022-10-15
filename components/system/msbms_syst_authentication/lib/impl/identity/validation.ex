@@ -79,7 +79,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Validation do
       identity_expires: date_expires
     }
 
-    Helpers.create_record(validation_identity_params)
+    Helpers.create_identity(validation_identity_params, create_validated: false)
   end
 
   @spec identify_access_account(
