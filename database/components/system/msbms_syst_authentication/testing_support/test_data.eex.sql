@@ -512,7 +512,6 @@ $AUTHENTICATION_TESTING_INIT$
                     id
                 FROM msbms_syst_data.syst_enum_items
                 WHERE internal_name = 'access_account_states_sysdef_active' ) )
-
              ,
             ( 'identity_email_create_test_accnt'
             , 'Identity E-Mail Create Test Account'
@@ -586,8 +585,58 @@ $AUTHENTICATION_TESTING_INIT$
             , ( SELECT
                     id
                 FROM msbms_syst_data.syst_enum_items
+                WHERE internal_name = 'access_account_states_sysdef_active' ) ),
+            ( 'identity_recovery_request_test_accnt'
+            , 'Identity Request Recovery Test Account'
+            , ( SELECT id
+                FROM msbms_syst_data.syst_owners
+                WHERE internal_name = 'owner2' )
+            , FALSE
+            , ( SELECT
+                    id
+                FROM msbms_syst_data.syst_enum_items
                 WHERE internal_name = 'access_account_states_sysdef_active' ) )
              ,
+            ( 'identity_recovery_identify_test_accnt'
+            , 'Identity Identify Recovery Test Account'
+            , ( SELECT id
+                FROM msbms_syst_data.syst_owners
+                WHERE internal_name = 'owner2' )
+            , FALSE
+            , ( SELECT
+                    id
+                FROM msbms_syst_data.syst_enum_items
+                WHERE internal_name = 'access_account_states_sysdef_active' ) )
+             ,
+            ( 'identity_recovery_identify_unowned_test_accnt'
+            , 'Identity Identify Unowned Recovery Test Account'
+            , NULL
+            , FALSE
+            , ( SELECT
+                    id
+                FROM msbms_syst_data.syst_enum_items
+                WHERE internal_name = 'access_account_states_sysdef_active' ) )
+             ,
+            ( 'identity_recovery_confirm_test_accnt'
+            , 'Identity Confirm Recovery Test Account'
+            , ( SELECT id
+                FROM msbms_syst_data.syst_owners
+                WHERE internal_name = 'owner2' )
+            , FALSE
+            , ( SELECT
+                    id
+                FROM msbms_syst_data.syst_enum_items
+                WHERE internal_name = 'access_account_states_sysdef_active' ) )
+             ,
+            ( 'identity_recovery_revoke_test_accnt'
+            , 'Identity Revoke Recovery Test Account'
+            , NULL
+            , FALSE
+            , ( SELECT
+                    id
+                FROM msbms_syst_data.syst_enum_items
+                WHERE internal_name = 'access_account_states_sysdef_active' ) )
+            ,
             ( 'example_purge_accnt'
             , 'Example Purge Account'
             , ( SELECT id
@@ -668,7 +717,12 @@ $AUTHENTICATION_TESTING_INIT$
                                     , 'identity_validation_identify_test_accnt'
                                     , 'identity_validation_identify_unowned_test_accnt'
                                     , 'identity_validation_confirm_test_accnt'
-                                    , 'identity_validation_revoke_test_accnt' );
+                                    , 'identity_validation_revoke_test_accnt'
+                                    , 'identity_recovery_request_test_accnt'
+                                    , 'identity_recovery_identify_test_accnt'
+                                    , 'identity_recovery_identify_unowned_test_accnt'
+                                    , 'identity_recovery_confirm_test_accnt'
+                                    , 'identity_recovery_revoke_test_accnt' );
 
         -- Specialized inserts to facilitate testing
         INSERT INTO msbms_syst_data.syst_access_account_instance_assocs
@@ -816,6 +870,25 @@ $AUTHENTICATION_TESTING_INIT$
                                   , 'identity_validation_confirm_test_accnt'
                                   , 'identity_validation_revoke_test_accnt' )
             AND ei.internal_name = 'identity_types_sysdef_email';
+
+        -- Specific Purpose Identity Creation : Recovery Identities
+        INSERT INTO msbms_syst_data.syst_identities
+            ( access_account_id
+            , identity_type_id
+            , account_identifier
+            , identity_expires )
+        SELECT
+            aa.id
+          , ( SELECT id
+              FROM msbms_syst_data.syst_enum_items
+              WHERE internal_name = 'identity_types_sysdef_password_recovery' )
+          , msbms_syst_priv.get_random_string(40)
+          , now() + INTERVAL '24 Hours'
+        FROM msbms_syst_data.syst_access_accounts aa
+        WHERE aa.internal_name in ( 'identity_recovery_identify_test_accnt'
+                                  , 'identity_recovery_identify_unowned_test_accnt'
+                                  , 'identity_recovery_confirm_test_accnt'
+                                  , 'identity_recovery_revoke_test_accnt' );
 
         ------------------------------------------------------------------------
         -- Credential Creation
