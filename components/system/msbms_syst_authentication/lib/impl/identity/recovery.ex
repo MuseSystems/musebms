@@ -71,7 +71,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Recovery do
     |> Helpers.get_identification_query(
       "identity_types_sysdef_password_recovery",
       owner_id,
-      :require_validation
+      :require_unvalidated
     )
     |> MsbmsSystDatastore.one()
   end
