@@ -149,7 +149,8 @@ defmodule MsbmsSystAuthentication.Impl.Credential.GenericToken do
           Types.identity_id() | nil
         ) ::
           Data.SystCredentials.t() | nil
-  def get_credential_record(credential_type, access_account_id, identity_id) do
+  def get_credential_record(credential_type, access_account_id, identity_id)
+      when is_atom(credential_type) and is_binary(access_account_id) and is_binary(identity_id) do
     credential_type = Atom.to_string(credential_type)
 
     from(
@@ -175,6 +176,8 @@ defmodule MsbmsSystAuthentication.Impl.Credential.GenericToken do
         }
       }
   end
+
+  def get_credential_record(_credential_type, _access_account_id, _identity_id), do: nil
 
   # Token types involve a matched pair of Identity and Credential records and as
   # such any attempt to delete one will delete the other.  This deletion is done
