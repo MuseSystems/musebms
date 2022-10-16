@@ -192,12 +192,12 @@ defmodule MsbmsSystAuthentication.Impl.Credential.GenericToken do
 
   def delete_credential(credential_type, credential_id)
       when credential_type in @token_types and is_binary(credential_id) do
-    credential_type = Atom.to_string(credential_type)
+    cred_type_param = Atom.to_string(credential_type)
 
     from(c in Data.SystCredentials,
       join: ct in assoc(c, :credential_type),
       select: c,
-      where: c.id == ^credential_id and ct.internal_name == ^credential_type
+      where: c.id == ^credential_id and ct.internal_name == ^cred_type_param
     )
     |> MsbmsSystDatastore.one!()
     |> then(&delete_credential(credential_type, &1))
