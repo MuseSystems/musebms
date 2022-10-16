@@ -10,6 +10,14 @@
 --
 -- muse.information@musesystems.com  :: https://muse.systems
 
+-- TODO: Really this test script is too informal.  What we should be doing is
+--       describing the test data we want to create in a (generically speaking)
+--       array of which testing records we want to create and their desired
+--       attributes, and then write routines which process the description into
+--       the concrete records we want loaded.  An example of this approach is
+--       in initialize_identity_types.eex.sql; where the enumeration table is
+--       populated based on a JSON description of the records to create.
+
 DO
 $AUTHENTICATION_TESTING_INIT$
     BEGIN
