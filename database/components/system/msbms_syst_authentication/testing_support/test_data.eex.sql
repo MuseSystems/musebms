@@ -636,6 +636,78 @@ $AUTHENTICATION_TESTING_INIT$
                     id
                 FROM msbms_syst_data.syst_enum_items
                 WHERE internal_name = 'access_account_states_sysdef_active' ) )
+             ,
+            ( 'credential_api_token_create1_test_accnt'
+            , 'Credential API Token Create1 Test Account'
+            , ( SELECT id
+                FROM msbms_syst_data.syst_owners
+                WHERE internal_name = 'owner2' )
+            , FALSE
+            , ( SELECT
+                    id
+                FROM msbms_syst_data.syst_enum_items
+                WHERE internal_name = 'access_account_states_sysdef_active' ) )
+             ,
+            ( 'credential_api_token_create2_test_accnt'
+            , 'Credential API Token Create2 Test Account'
+            , ( SELECT id
+                FROM msbms_syst_data.syst_owners
+                WHERE internal_name = 'owner2' )
+            , FALSE
+            , ( SELECT
+                    id
+                FROM msbms_syst_data.syst_enum_items
+                WHERE internal_name = 'access_account_states_sysdef_active' ) )
+             ,
+            ( 'credential_api_token_create3_test_accnt'
+            , 'Credential API Token Create3 Test Account'
+            , ( SELECT id
+                FROM msbms_syst_data.syst_owners
+                WHERE internal_name = 'owner2' )
+            , FALSE
+            , ( SELECT
+                    id
+                FROM msbms_syst_data.syst_enum_items
+                WHERE internal_name = 'access_account_states_sysdef_active' ) )
+             ,
+            ( 'credential_api_token_create4_test_accnt'
+            , 'Credential API Token Create4 Test Account'
+            , ( SELECT id
+                FROM msbms_syst_data.syst_owners
+                WHERE internal_name = 'owner2' )
+            , FALSE
+            , ( SELECT
+                    id
+                FROM msbms_syst_data.syst_enum_items
+                WHERE internal_name = 'access_account_states_sysdef_active' ) )
+
+
+
+             ,
+            ( 'credential_api_token_delete_test_accnt'
+            , 'Credential API Token delete Test Account'
+            , ( SELECT id
+                FROM msbms_syst_data.syst_owners
+                WHERE internal_name = 'owner2' )
+            , FALSE
+            , ( SELECT
+                    id
+                FROM msbms_syst_data.syst_enum_items
+                WHERE internal_name = 'access_account_states_sysdef_active' ) )
+             ,
+            ( 'credential_api_token_delete_id_test_accnt'
+            , 'Credential API Token delete ID Test Account'
+            , ( SELECT id
+                FROM msbms_syst_data.syst_owners
+                WHERE internal_name = 'owner2' )
+            , FALSE
+            , ( SELECT
+                    id
+                FROM msbms_syst_data.syst_enum_items
+                WHERE internal_name = 'access_account_states_sysdef_active' ) )
+
+
+
             ,
             ( 'example_purge_accnt'
             , 'Example Purge Account'
@@ -722,7 +794,13 @@ $AUTHENTICATION_TESTING_INIT$
                                     , 'identity_recovery_identify_test_accnt'
                                     , 'identity_recovery_identify_unowned_test_accnt'
                                     , 'identity_recovery_confirm_test_accnt'
-                                    , 'identity_recovery_revoke_test_accnt' );
+                                    , 'identity_recovery_revoke_test_accnt'
+                                    , 'credential_api_token_create1_test_accnt'
+                                    , 'credential_api_token_create2_test_accnt'
+                                    , 'credential_api_token_create3_test_accnt'
+                                    , 'credential_api_token_create4_test_accnt'
+                                    , 'credential_api_token_delete_test_accnt'
+                                    , 'credential_api_token_delete_id_test_accnt' );
 
         -- Specialized inserts to facilitate testing
         INSERT INTO msbms_syst_data.syst_access_account_instance_assocs
