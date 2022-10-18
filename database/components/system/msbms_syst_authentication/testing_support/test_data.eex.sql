@@ -798,15 +798,15 @@ $AUTHENTICATION_TESTING_INIT$
                   "identity_expires_days": null,
                   "validation": {
                     "identity": {
-                        "account_identifier_length": 40,
-                        "identity_expires_days": 1
-                      },
-                    "credential": {
-                        "credential_plaintext": "qnD7z4gUIv2dApSBwNgg1Ux7SR4f8bXt9Bu4J1Yo",
-                        "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$Wt8fHvrs8GTKKO0Kq9Baow$UGm0swdeGxfw6DKDsM/hoRnNVKf5DTmtLj9UEPnfgAw",
-                        "last_updated_days": -10
-                      }
+                      "account_identifier_length": 40,
+                      "identity_expires_days": 1
                     },
+                    "credential": {
+                      "credential_plaintext": "qnD7z4gUIv2dApSBwNgg1Ux7SR4f8bXt9Bu4J1Yo",
+                      "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$Wt8fHvrs8GTKKO0Kq9Baow$UGm0swdeGxfw6DKDsM/hoRnNVKf5DTmtLj9UEPnfgAw",
+                      "last_updated_days": -10
+                    }
+                  },
                   "credential": null
                 }
               ],
@@ -838,15 +838,15 @@ $AUTHENTICATION_TESTING_INIT$
                   "identity_expires_days": null,
                   "validation": {
                     "identity": {
-                        "account_identifier_length": 40,
-                        "identity_expires_days": 1
-                      },
-                    "credential": {
-                        "credential_plaintext": "XkdXg1y8BLHnhzGXk9gYILrvH5gHNE6UnCld4CvP",
-                        "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$/PB8n2/MwpPG/lRmysb3Kg$23vfvwzm+EH58ZEwrOm6wsP9vxM1XOarMRieOMaNjwM",
-                        "last_updated_days": -10
-                      }
+                      "account_identifier_length": 40,
+                      "identity_expires_days": 1
                     },
+                    "credential": {
+                      "credential_plaintext": "XkdXg1y8BLHnhzGXk9gYILrvH5gHNE6UnCld4CvP",
+                      "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$/PB8n2/MwpPG/lRmysb3Kg$23vfvwzm+EH58ZEwrOm6wsP9vxM1XOarMRieOMaNjwM",
+                      "last_updated_days": -10
+                    }
+                  },
                   "credential": null
                 }
               ],
@@ -878,15 +878,15 @@ $AUTHENTICATION_TESTING_INIT$
                   "identity_expires_days": null,
                   "validation": {
                     "identity": {
-                        "account_identifier_length": 40,
-                        "identity_expires_days": 1
-                      },
-                    "credential": {
-                        "credential_plaintext": "Jt0hF7uCt6ILonJGxHhtxPchHKWzk3NjgLvaYXBF",
-                        "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$nMIKd72Q6sxDbTemdiWz8A$yJ1JgURszXZa1Db34twHlXvc9p0FZJxxxpUlN9DfS3o",
-                        "last_updated_days": -10
-                      }
+                      "account_identifier_length": 40,
+                      "identity_expires_days": 1
                     },
+                    "credential": {
+                      "credential_plaintext": "Jt0hF7uCt6ILonJGxHhtxPchHKWzk3NjgLvaYXBF",
+                      "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$nMIKd72Q6sxDbTemdiWz8A$yJ1JgURszXZa1Db34twHlXvc9p0FZJxxxpUlN9DfS3o",
+                      "last_updated_days": -10
+                    }
+                  },
                   "credential": null
                 }
               ],
@@ -918,15 +918,15 @@ $AUTHENTICATION_TESTING_INIT$
                   "identity_expires_days": null,
                   "validation": {
                     "identity": {
-                        "account_identifier_length": 40,
-                        "identity_expires_days": 1
-                      },
-                    "credential": {
-                        "credential_plaintext": "RLOoCQHdMBKXCyYvF7wvJdaaqWSjJ3iw8QzKoRvR",
-                        "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$CYKpLJdNHn5zLpn7r4V17g$x2ZRkPeFRvVxBGpe6HfPqRcV+IDQjdU3D/ZbL5DdjA4",
-                        "last_updated_days": -10
-                      }
+                      "account_identifier_length": 40,
+                      "identity_expires_days": 1
                     },
+                    "credential": {
+                      "credential_plaintext": "RLOoCQHdMBKXCyYvF7wvJdaaqWSjJ3iw8QzKoRvR",
+                      "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$CYKpLJdNHn5zLpn7r4V17g$x2ZRkPeFRvVxBGpe6HfPqRcV+IDQjdU3D/ZbL5DdjA4",
+                      "last_updated_days": -10
+                    }
+                  },
                   "credential": null
                 }
               ],
@@ -998,11 +998,11 @@ $AUTHENTICATION_TESTING_INIT$
                   "identity_expires_days": 1,
                   "validation": null,
                   "credential": {
-                      "credential_type_name": "credential_types_sysdef_token_recovery",
-                      "credential_plaintext": "IlfeZDnUjJYTx5RZwU2KofHALA5dCttFzREPauN2",
-                      "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$j6UoUu+BoYoh6ib3bNXCPw$lgGT0P/ccwiZ+BCf5pn/IxMyNO1EkSfTz4IYSZ5ozUI",
-                      "last_updated_days": -10
-                    }
+                    "credential_type_name": "credential_types_sysdef_token_recovery",
+                    "credential_plaintext": "IlfeZDnUjJYTx5RZwU2KofHALA5dCttFzREPauN2",
+                    "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$j6UoUu+BoYoh6ib3bNXCPw$lgGT0P/ccwiZ+BCf5pn/IxMyNO1EkSfTz4IYSZ5ozUI",
+                    "last_updated_days": -10
+                  }
                 }
               ],
               "credentials": [],
@@ -1043,11 +1043,11 @@ $AUTHENTICATION_TESTING_INIT$
                   "identity_expires_days": 1,
                   "validation": null,
                   "credential": {
-                      "credential_type_name": "credential_types_sysdef_token_recovery",
-                      "credential_plaintext": "sNvE0W76xzipySaWzvC7w320uqq0WDgKUarprbGR",
-                      "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$GPer4TJBid/JqbYNfi1xzg$KEUSEtI0YgTPdbPJZ3lftDBAVOkYb7AijJtZhI9VfZA",
-                      "last_updated_days": -10
-                    }
+                    "credential_type_name": "credential_types_sysdef_token_recovery",
+                    "credential_plaintext": "sNvE0W76xzipySaWzvC7w320uqq0WDgKUarprbGR",
+                    "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$GPer4TJBid/JqbYNfi1xzg$KEUSEtI0YgTPdbPJZ3lftDBAVOkYb7AijJtZhI9VfZA",
+                    "last_updated_days": -10
+                  }
                 }
               ],
               "credentials": [],
@@ -1088,11 +1088,11 @@ $AUTHENTICATION_TESTING_INIT$
                   "identity_expires_days": 1,
                   "validation": null,
                   "credential": {
-                      "credential_type_name": "credential_types_sysdef_token_recovery",
-                      "credential_plaintext": "esxVkpEhfUe4ZJdH9oUu8kIkahihgpHeGdWTX5dW",
-                      "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$xFhIkMVaVjbZEIZ/eRwvkQ$5/zTrs6eTpPu9oRE4UxGKfaDWHeXFUWaGDMceh+mvFY",
-                      "last_updated_days": -10
-                    }
+                    "credential_type_name": "credential_types_sysdef_token_recovery",
+                    "credential_plaintext": "esxVkpEhfUe4ZJdH9oUu8kIkahihgpHeGdWTX5dW",
+                    "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$xFhIkMVaVjbZEIZ/eRwvkQ$5/zTrs6eTpPu9oRE4UxGKfaDWHeXFUWaGDMceh+mvFY",
+                    "last_updated_days": -10
+                  }
                 }
               ],
               "credentials": [],
@@ -1133,11 +1133,11 @@ $AUTHENTICATION_TESTING_INIT$
                   "identity_expires_days": 1,
                   "validation": null,
                   "credential": {
-                      "credential_type_name": "credential_types_sysdef_token_recovery",
-                      "credential_plaintext": "TIWR3533FCirQhpnEeiY7qnag0e8mukTQKMXeUA2",
-                      "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$ua4Ry5BpkQrTUyB5FPoCyg$8jAzZGMRvACqtilv8yffZzIyC1OQq07J0gV0+uCIQ9g",
-                      "last_updated_days": -10
-                    }
+                    "credential_type_name": "credential_types_sysdef_token_recovery",
+                    "credential_plaintext": "TIWR3533FCirQhpnEeiY7qnag0e8mukTQKMXeUA2",
+                    "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$ua4Ry5BpkQrTUyB5FPoCyg$8jAzZGMRvACqtilv8yffZzIyC1OQq07J0gV0+uCIQ9g",
+                    "last_updated_days": -10
+                  }
                 }
               ],
               "credentials": [],
@@ -1338,11 +1338,11 @@ $AUTHENTICATION_TESTING_INIT$
                   "identity_expires_days": 1,
                   "validation": null,
                   "credential": {
-                      "credential_type_name": "credential_types_sysdef_token_api",
-                      "credential_plaintext": "m9n8hjd12GoElonrbSNwuHo6pTzSuKlOB3vXQPoo6jwZ73CB",
-                      "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$/0lP+TC+lrcnymLlez2f1Q$5SnuizyihWEMHvIIzDz3GU/ylmEaWfY2F+FVSZKFiFk",
-                      "last_updated_days": -10
-                    }
+                    "credential_type_name": "credential_types_sysdef_token_api",
+                    "credential_plaintext": "m9n8hjd12GoElonrbSNwuHo6pTzSuKlOB3vXQPoo6jwZ73CB",
+                    "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$/0lP+TC+lrcnymLlez2f1Q$5SnuizyihWEMHvIIzDz3GU/ylmEaWfY2F+FVSZKFiFk",
+                    "last_updated_days": -10
+                  }
                 }
               ],
               "credentials": [],
@@ -1383,11 +1383,11 @@ $AUTHENTICATION_TESTING_INIT$
                   "identity_expires_days": 1,
                   "validation": null,
                   "credential": {
-                      "credential_type_name": "credential_types_sysdef_token_api",
-                      "credential_plaintext": "t53eMYBTSUUX846j2EPu7e8EPVE3zw30AQSlaZoDTLIB0b4k",
-                      "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$+51I/mOJNUVNC6U1oQeBOQ$oRyNPBrxDk7KUn3dOTSRtsILm5hGmaQlwspjG+Xl6yk",
-                      "last_updated_days": -10
-                    }
+                    "credential_type_name": "credential_types_sysdef_token_api",
+                    "credential_plaintext": "t53eMYBTSUUX846j2EPu7e8EPVE3zw30AQSlaZoDTLIB0b4k",
+                    "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$+51I/mOJNUVNC6U1oQeBOQ$oRyNPBrxDk7KUn3dOTSRtsILm5hGmaQlwspjG+Xl6yk",
+                    "last_updated_days": -10
+                  }
                 }
               ],
               "credentials": [],
@@ -1428,11 +1428,11 @@ $AUTHENTICATION_TESTING_INIT$
                   "identity_expires_days": 1,
                   "validation": null,
                   "credential": {
-                      "credential_type_name": "credential_types_sysdef_token_api",
-                      "credential_plaintext": "HZgRmnCwJ0ND8uKynUUodg41jWf8fe7Y28MWAeSGr3yksdMs",
-                      "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$TYuXhFE8ummSK7wdPhrprQ$1ASZF0VWX3w7c5TobSZRooZonRDpjxvaMF1Sz+0wvIA",
-                      "last_updated_days": -10
-                    }
+                    "credential_type_name": "credential_types_sysdef_token_api",
+                    "credential_plaintext": "HZgRmnCwJ0ND8uKynUUodg41jWf8fe7Y28MWAeSGr3yksdMs",
+                    "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$TYuXhFE8ummSK7wdPhrprQ$1ASZF0VWX3w7c5TobSZRooZonRDpjxvaMF1Sz+0wvIA",
+                    "last_updated_days": -10
+                  }
                 }
               ],
               "credentials": [],
@@ -1473,11 +1473,11 @@ $AUTHENTICATION_TESTING_INIT$
                   "identity_expires_days": 1,
                   "validation": null,
                   "credential": {
-                      "credential_type_name": "credential_types_sysdef_token_api",
-                      "credential_plaintext": "J7RJY39PCI2CJ2P6BWSRA98XFG5SAZ0PIMTELMGLCC3X5PYD",
-                      "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$IMiQN/YlkA+g20mMgsKV1w$/WP/6UFwnxo46oR4nN6/5MqncIu4JAsnRyCnkoiLS/I",
-                      "last_updated_days": -10
-                    }
+                    "credential_type_name": "credential_types_sysdef_token_api",
+                    "credential_plaintext": "J7RJY39PCI2CJ2P6BWSRA98XFG5SAZ0PIMTELMGLCC3X5PYD",
+                    "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$IMiQN/YlkA+g20mMgsKV1w$/WP/6UFwnxo46oR4nN6/5MqncIu4JAsnRyCnkoiLS/I",
+                    "last_updated_days": -10
+                  }
                 }
               ],
               "credentials": [
@@ -1512,8 +1512,8 @@ $AUTHENTICATION_TESTING_INIT$
                   "validation_requested_days": -1,
                   "validation": {
                     "identity": {
-                        "account_identifier_length": 40,
-                        "identity_expires_days": 1
+                      "account_identifier_length": 40,
+                      "identity_expires_days": 1
                     },
                     "credential": null
                   }
@@ -1542,8 +1542,8 @@ $AUTHENTICATION_TESTING_INIT$
                   "validation_requested_days": -1,
                   "validation": {
                     "identity": {
-                        "account_identifier_length": 40,
-                        "identity_expires_days": 1
+                      "account_identifier_length": 40,
+                      "identity_expires_days": 1
                     },
                     "credential": null
                   }
@@ -1572,8 +1572,8 @@ $AUTHENTICATION_TESTING_INIT$
                   "validation_requested_days": -1,
                   "validation": {
                     "identity": {
-                        "account_identifier_length": 40,
-                        "identity_expires_days": 1
+                      "account_identifier_length": 40,
+                      "identity_expires_days": 1
                     },
                     "credential": null
                   }
@@ -1602,8 +1602,8 @@ $AUTHENTICATION_TESTING_INIT$
                   "validation_requested_days": -1,
                   "validation": {
                     "identity": {
-                        "account_identifier_length": 40,
-                        "identity_expires_days": 1
+                      "account_identifier_length": 40,
+                      "identity_expires_days": 1
                     },
                     "credential": null
                   }
@@ -1632,14 +1632,14 @@ $AUTHENTICATION_TESTING_INIT$
                   "validation_requested_days": -1,
                   "validation": {
                     "identity": {
-                        "account_identifier_length": 40,
-                        "identity_expires_days": 1
+                      "account_identifier_length": 40,
+                      "identity_expires_days": 1
                     },
                     "credential": {
-                        "credential_plaintext": "G0yRRAHw8R4dMlo5E3C3mnfXzLCMggXJYwbphTkFNkWrYLJt",
-                        "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$bJmyLATtCTGlXwxe/O8QlQ$HkUQXGSRNGO7r1tWOwIoluCT24FfB3JCcTFfUqO4iRg",
-                        "last_updated_days": -10
-                      }
+                      "credential_plaintext": "G0yRRAHw8R4dMlo5E3C3mnfXzLCMggXJYwbphTkFNkWrYLJt",
+                      "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$bJmyLATtCTGlXwxe/O8QlQ$HkUQXGSRNGO7r1tWOwIoluCT24FfB3JCcTFfUqO4iRg",
+                      "last_updated_days": -10
+                    }
                   }
                 }
               ]
@@ -1666,14 +1666,14 @@ $AUTHENTICATION_TESTING_INIT$
                   "validation_requested_days": -1,
                   "validation": {
                     "identity": {
-                        "account_identifier_length": 40,
-                        "identity_expires_days": 1
+                      "account_identifier_length": 40,
+                      "identity_expires_days": 1
                     },
                     "credential": {
-                        "credential_plaintext": "g1nDvyov70SzrceqFvrwap7YqAv3apFU8ZWYwd6QjEq5ubL9",
-                        "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$I0zrdkV0HG1ns3vO1rXQKg$Xyt+aY1AzvHVCxj3y4AJQHV3Jcm8eoIdOEy8vYzY6Rw",
-                        "last_updated_days": -10
-                      }
+                      "credential_plaintext": "g1nDvyov70SzrceqFvrwap7YqAv3apFU8ZWYwd6QjEq5ubL9",
+                      "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$I0zrdkV0HG1ns3vO1rXQKg$Xyt+aY1AzvHVCxj3y4AJQHV3Jcm8eoIdOEy8vYzY6Rw",
+                      "last_updated_days": -10
+                    }
                   }
                 }
               ]
@@ -1700,14 +1700,14 @@ $AUTHENTICATION_TESTING_INIT$
                   "validation_requested_days": -1,
                   "validation": {
                     "identity": {
-                        "account_identifier_length": 40,
-                        "identity_expires_days": 1
+                      "account_identifier_length": 40,
+                      "identity_expires_days": 1
                     },
                     "credential": {
-                        "credential_plaintext": "ryNLC1iAfn2rm17LLIDSOU0itgvU6WUZvkvHHzjlHBl1DDPG",
-                        "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$2Yr0TndTJQMjak9o3A1bvA$yy8n7qp6eO6GDGZJAkId8HQN/uJguzrJeMLrg9PUxaQ",
-                        "last_updated_days": -10
-                      }
+                      "credential_plaintext": "ryNLC1iAfn2rm17LLIDSOU0itgvU6WUZvkvHHzjlHBl1DDPG",
+                      "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$2Yr0TndTJQMjak9o3A1bvA$yy8n7qp6eO6GDGZJAkId8HQN/uJguzrJeMLrg9PUxaQ",
+                      "last_updated_days": -10
+                    }
                   }
                 }
               ]
@@ -1734,14 +1734,14 @@ $AUTHENTICATION_TESTING_INIT$
                   "validation_requested_days": -1,
                   "validation": {
                     "identity": {
-                        "account_identifier_length": 40,
-                        "identity_expires_days": 1
+                      "account_identifier_length": 40,
+                      "identity_expires_days": 1
                     },
                     "credential": {
-                        "credential_plaintext": "JAFEUJXrdSS2G67xybjxY1Mrk9GFB1dEKcDh01DmaYX04W9P",
-                        "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$tyVmDHOsxhfTC42PW93OyQ$6+y5Nc+MzEu2WjH5J8Y9+tiOlCaiT5x2XVmG5w31xrE",
-                        "last_updated_days": -10
-                      }
+                      "credential_plaintext": "JAFEUJXrdSS2G67xybjxY1Mrk9GFB1dEKcDh01DmaYX04W9P",
+                      "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$tyVmDHOsxhfTC42PW93OyQ$6+y5Nc+MzEu2WjH5J8Y9+tiOlCaiT5x2XVmG5w31xrE",
+                      "last_updated_days": -10
+                    }
                   }
                 }
               ]
@@ -1772,11 +1772,11 @@ $AUTHENTICATION_TESTING_INIT$
                   "identity_type_name": "identity_types_sysdef_password_recovery",
                   "account_identifier_length": 40,
                   "credential": {
-                      "credential_type_name": "credential_types_sysdef_token_recovery",
-                      "credential_plaintext": "xSU8rjv2JvFwoQF4C6FIoveFylNYwHYhv6myz7lZRkrrJL9i",
-                      "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$co7kfRrWMB6Iy9lTsILQgA$Go+oyi+4HblbcX0SZYB9i9Y/l/4Eu+8uEwYkdMgR8Xk",
-                      "last_updated_days": -10
-                    }
+                    "credential_type_name": "credential_types_sysdef_token_recovery",
+                    "credential_plaintext": "xSU8rjv2JvFwoQF4C6FIoveFylNYwHYhv6myz7lZRkrrJL9i",
+                    "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$co7kfRrWMB6Iy9lTsILQgA$Go+oyi+4HblbcX0SZYB9i9Y/l/4Eu+8uEwYkdMgR8Xk",
+                    "last_updated_days": -10
+                  }
                 }
               ]
             },
@@ -1922,11 +1922,11 @@ $AUTHENTICATION_TESTING_INIT$
                   "identity_type_name": "identity_types_sysdef_password_recovery",
                   "account_identifier_length": 40,
                   "credential": {
-                      "credential_type_name": "credential_types_sysdef_token_recovery",
-                      "credential_plaintext": "VhS09YQj5bsEz5cg0ZM2n0PsUjwXuIWNW8tgvLS1ra9SeMu2",
-                      "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$R53aBhCDd3toEF8VCecnmg$1S1oIk0FO38Aut6P6RZMHef5O3eKNtlooTi4Zokogfs",
-                      "last_updated_days": -10
-                    }
+                    "credential_type_name": "credential_types_sysdef_token_recovery",
+                    "credential_plaintext": "VhS09YQj5bsEz5cg0ZM2n0PsUjwXuIWNW8tgvLS1ra9SeMu2",
+                    "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$R53aBhCDd3toEF8VCecnmg$1S1oIk0FO38Aut6P6RZMHef5O3eKNtlooTi4Zokogfs",
+                    "last_updated_days": -10
+                  }
                 }
               ]
             },
@@ -1956,11 +1956,11 @@ $AUTHENTICATION_TESTING_INIT$
                   "identity_type_name": "identity_types_sysdef_password_recovery",
                   "account_identifier_length": 40,
                   "credential": {
-                      "credential_type_name": "credential_types_sysdef_token_recovery",
-                      "credential_plaintext": "DXWXTJ7uFQk7BF4kO0rKzZmOKhem8sMsm0m0LJAGICXEao5z",
-                      "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$9aSXkebdkx5Qzymh7fi9MA$mJgp2W3D+8d4cATWVue6MaosRFHx0JJmGMNFgU/0W1M",
-                      "last_updated_days": -10
-                    }
+                    "credential_type_name": "credential_types_sysdef_token_recovery",
+                    "credential_plaintext": "DXWXTJ7uFQk7BF4kO0rKzZmOKhem8sMsm0m0LJAGICXEao5z",
+                    "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$9aSXkebdkx5Qzymh7fi9MA$mJgp2W3D+8d4cATWVue6MaosRFHx0JJmGMNFgU/0W1M",
+                    "last_updated_days": -10
+                  }
                 }
               ]
             },
@@ -1990,11 +1990,11 @@ $AUTHENTICATION_TESTING_INIT$
                   "identity_type_name": "identity_types_sysdef_password_recovery",
                   "account_identifier_length": 40,
                   "credential": {
-                      "credential_type_name": "credential_types_sysdef_token_recovery",
-                      "credential_plaintext": "XU19cYhV8jsqDnA9PYLZaPRsOPQFMKjWjvxgglhkn1l78CN9",
-                      "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$ZnF9pu4d+4gxK3NT0EWYsQ$2mCokWvAR0oS+C1hfn02fqKnKw+C3IUoC61QZk4K//c",
-                      "last_updated_days": -10
-                    }
+                    "credential_type_name": "credential_types_sysdef_token_recovery",
+                    "credential_plaintext": "XU19cYhV8jsqDnA9PYLZaPRsOPQFMKjWjvxgglhkn1l78CN9",
+                    "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$ZnF9pu4d+4gxK3NT0EWYsQ$2mCokWvAR0oS+C1hfn02fqKnKw+C3IUoC61QZk4K//c",
+                    "last_updated_days": -10
+                  }
                 }
               ]
             }
