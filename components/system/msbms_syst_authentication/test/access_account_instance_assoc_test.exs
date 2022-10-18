@@ -15,8 +15,6 @@ defmodule AccessAccountInstanceAssocTest do
 
   import Ecto.Query
 
-  alias MsbmsSystAuthentication.Data
-
   test "Can invite Access Account to Instance Immediate Acceptance once" do
     {:ok, access_account} =
       MsbmsSystAuthentication.get_access_account_by_name("invite_to_instance_test_accnt")
@@ -113,8 +111,6 @@ defmodule AccessAccountInstanceAssocTest do
         select: i.id
       )
       |> MsbmsSystDatastore.one!()
-
-    test_now = DateTime.now!("Etc/UTC")
 
     assert :ok = MsbmsSystAuthentication.revoke_instance_access(access_account.id, instance_id)
 
