@@ -144,12 +144,6 @@ defmodule CredentialApiTokenTest do
   test "Can delete an API Token Credential record" do
     test_account = get_account_data("credential_api_token_delete_test_accnt")
 
-    {:ok, _} =
-      Impl.Credential.ApiToken.set_credential(
-        test_account.access_account_id,
-        test_account.identity_id
-      )
-
     cred_record =
       Impl.Credential.ApiToken.get_credential_record(
         test_account.access_account_id,
@@ -161,12 +155,6 @@ defmodule CredentialApiTokenTest do
 
   test "Can delete an API Token Credential record by ID" do
     test_account = get_account_data("credential_api_token_delete_id_test_accnt")
-
-    {:ok, _} =
-      Impl.Credential.ApiToken.set_credential(
-        test_account.access_account_id,
-        test_account.identity_id
-      )
 
     cred_record =
       Impl.Credential.ApiToken.get_credential_record(
