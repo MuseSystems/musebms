@@ -1489,6 +1489,254 @@ $AUTHENTICATION_TESTING_INIT$
                 }
               ],
               "password_history": []
+            },
+            {
+              "access_account_name": "credential_validation_create1_test_accnt",
+              "external_name": "",
+              "owning_owner_name": "owner2",
+              "allow_global_logins": false,
+              "access_account_state_name": "access_account_states_sysdef_active",
+              "instance_access": [
+                {
+                  "instance_name": null,
+                  "access_granted_days": -20,
+                  "invitation_issued_days": -40,
+                  "invitation_expires_days": -10,
+                  "invitation_declined_days": null
+                }
+              ],
+              "identities": [
+                {
+                  "identity_type_name": "identity_types_sysdef_email",
+                  "account_identifier": "credential_validation_create1_test_accnt@musesystems.com",
+                  "validation_requested_days": -1,
+                  "validation": {
+                    "identity": {
+                        "account_identifier_length": 40,
+                        "identity_expires_days": 1
+                    },
+                    "credential": null
+                  }
+                }
+              ]
+            },
+            {
+              "access_account_name": "credential_validation_create2_test_accnt",
+              "external_name": "",
+              "owning_owner_name": "owner2",
+              "allow_global_logins": false,
+              "access_account_state_name": "access_account_states_sysdef_active",
+              "instance_access": [
+                {
+                  "instance_name": null,
+                  "access_granted_days": -20,
+                  "invitation_issued_days": -40,
+                  "invitation_expires_days": -10,
+                  "invitation_declined_days": null
+                }
+              ],
+              "identities": [
+                {
+                  "identity_type_name": "identity_types_sysdef_email",
+                  "account_identifier": "credential_validation_create2_test_accnt@musesystems.com",
+                  "validation_requested_days": -1,
+                  "validation": {
+                    "identity": {
+                        "account_identifier_length": 40,
+                        "identity_expires_days": 1
+                    },
+                    "credential": null
+                  }
+                }
+              ]
+            },
+            {
+              "access_account_name": "credential_validation_create3_test_accnt",
+              "external_name": "",
+              "owning_owner_name": "owner2",
+              "allow_global_logins": false,
+              "access_account_state_name": "access_account_states_sysdef_active",
+              "instance_access": [
+                {
+                  "instance_name": null,
+                  "access_granted_days": -20,
+                  "invitation_issued_days": -40,
+                  "invitation_expires_days": -10,
+                  "invitation_declined_days": null
+                }
+              ],
+              "identities": [
+                {
+                  "identity_type_name": "identity_types_sysdef_email",
+                  "account_identifier": "credential_validation_create3_test_accnt@musesystems.com",
+                  "validation_requested_days": -1,
+                  "validation": {
+                    "identity": {
+                        "account_identifier_length": 40,
+                        "identity_expires_days": 1
+                    },
+                    "credential": null
+                  }
+                }
+              ]
+            },
+            {
+              "access_account_name": "credential_validation_create4_test_accnt",
+              "external_name": "",
+              "owning_owner_name": "owner2",
+              "allow_global_logins": false,
+              "access_account_state_name": "access_account_states_sysdef_active",
+              "instance_access": [
+                {
+                  "instance_name": null,
+                  "access_granted_days": -20,
+                  "invitation_issued_days": -40,
+                  "invitation_expires_days": -10,
+                  "invitation_declined_days": null
+                }
+              ],
+              "identities": [
+                {
+                  "identity_type_name": "identity_types_sysdef_email",
+                  "account_identifier": "credential_validation_create4_test_accnt@musesystems.com",
+                  "validation_requested_days": -1,
+                  "validation": {
+                    "identity": {
+                        "account_identifier_length": 40,
+                        "identity_expires_days": 1
+                    },
+                    "credential": null
+                  }
+                }
+              ]
+            },
+            {
+              "access_account_name": "credential_validation_confirm_test_accnt",
+              "external_name": "",
+              "owning_owner_name": "owner2",
+              "allow_global_logins": false,
+              "access_account_state_name": "access_account_states_sysdef_active",
+              "instance_access": [
+                {
+                  "instance_name": null,
+                  "access_granted_days": -20,
+                  "invitation_issued_days": -40,
+                  "invitation_expires_days": -10,
+                  "invitation_declined_days": null
+                }
+              ],
+              "identities": [
+                {
+                  "identity_type_name": "identity_types_sysdef_email",
+                  "account_identifier": "credential_validation_confirm_test_accnt@musesystems.com",
+                  "validation_requested_days": -1,
+                  "validation": {
+                    "identity": {
+                        "account_identifier_length": 40,
+                        "identity_expires_days": 1
+                    },
+                    "credential": {
+                        "credential_plaintext": "G0yRRAHw8R4dMlo5E3C3mnfXzLCMggXJYwbphTkFNkWrYLJt",
+                        "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$bJmyLATtCTGlXwxe/O8QlQ$HkUQXGSRNGO7r1tWOwIoluCT24FfB3JCcTFfUqO4iRg",
+                        "last_updated_days": -10
+                      }
+                  }
+                }
+              ]
+            },
+            {
+              "access_account_name": "credential_validation_retrieval_test_accnt",
+              "external_name": "",
+              "owning_owner_name": "owner2",
+              "allow_global_logins": false,
+              "access_account_state_name": "access_account_states_sysdef_active",
+              "instance_access": [
+                {
+                  "instance_name": null,
+                  "access_granted_days": -20,
+                  "invitation_issued_days": -40,
+                  "invitation_expires_days": -10,
+                  "invitation_declined_days": null
+                }
+              ],
+              "identities": [
+                {
+                  "identity_type_name": "identity_types_sysdef_email",
+                  "account_identifier": "credential_validation_retrieval_test_accnt@musesystems.com",
+                  "validation_requested_days": -1,
+                  "validation": {
+                    "identity": {
+                        "account_identifier_length": 40,
+                        "identity_expires_days": 1
+                    },
+                    "credential": {
+                        "credential_plaintext": "g1nDvyov70SzrceqFvrwap7YqAv3apFU8ZWYwd6QjEq5ubL9",
+                        "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$I0zrdkV0HG1ns3vO1rXQKg$Xyt+aY1AzvHVCxj3y4AJQHV3Jcm8eoIdOEy8vYzY6Rw",
+                        "last_updated_days": -10
+                      }
+                  }
+                }
+              ]
+            },
+            {
+              "access_account_name": "credential_validation_delete_test_accnt",
+              "external_name": "",
+              "owning_owner_name": "owner2",
+              "allow_global_logins": false,
+              "access_account_state_name": "access_account_states_sysdef_active",
+              "instance_access": [
+                {
+                  "instance_name": null,
+                  "access_granted_days": -20,
+                  "invitation_issued_days": -40,
+                  "invitation_expires_days": -10,
+                  "invitation_declined_days": null
+                }
+              ],
+              "identities": [
+                {
+                  "identity_type_name": "identity_types_sysdef_email",
+                  "account_identifier": "credential_validation_delete_test_accnt@musesystems.com",
+                  "validation_requested_days": -1,
+                  "validation": {
+                    "identity": {
+                        "account_identifier_length": 40,
+                        "identity_expires_days": 1
+                    },
+                    "credential": null
+                  }
+                }
+              ]
+            },
+            {
+              "access_account_name": "credential_validation_delete_id_test_accnt",
+              "external_name": "",
+              "owning_owner_name": "owner2",
+              "allow_global_logins": false,
+              "access_account_state_name": "access_account_states_sysdef_active",
+              "instance_access": [
+                {
+                  "instance_name": null,
+                  "access_granted_days": -20,
+                  "invitation_issued_days": -40,
+                  "invitation_expires_days": -10,
+                  "invitation_declined_days": null
+                }
+              ],
+              "identities": [
+                {
+                  "identity_type_name": "identity_types_sysdef_email",
+                  "account_identifier": "credential_validation_delete_id_test_accnt@musesystems.com",
+                  "validation_requested_days": -1,
+                  "validation": {
+                    "identity": {
+                        "account_identifier_length": 40,
+                        "identity_expires_days": 1
+                    },
+                    "credential": null
+                  }
+                }
+              ]
             }
           ]
         }
