@@ -1745,6 +1745,258 @@ $AUTHENTICATION_TESTING_INIT$
                   }
                 }
               ]
+            },
+            {
+              "access_account_name": "credential_recovery_confirm_test_accnt",
+              "external_name": "",
+              "owning_owner_name": "owner2",
+              "allow_global_logins": false,
+              "access_account_state_name": "access_account_states_sysdef_active",
+              "instance_access": [
+                {
+                  "instance_name": null,
+                  "access_granted_days": -20,
+                  "invitation_issued_days": -40,
+                  "invitation_expires_days": -10,
+                  "invitation_declined_days": null
+                }
+              ],
+              "identities": [
+                {
+                  "identity_type_name": "identity_types_sysdef_email",
+                  "account_identifier": "credential_recovery_confirm_test_accnt@musesystems.com",
+                  "validation_requested_days": -1,
+                  "validation": null
+                },
+                {
+                  "identity_type_name": "identity_types_sysdef_password_recovery",
+                  "account_identifier_length": 40,
+                  "credential": {
+                      "credential_type_name": "credential_types_sysdef_token_recovery",
+                      "credential_plaintext": "xSU8rjv2JvFwoQF4C6FIoveFylNYwHYhv6myz7lZRkrrJL9i",
+                      "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$co7kfRrWMB6Iy9lTsILQgA$Go+oyi+4HblbcX0SZYB9i9Y/l/4Eu+8uEwYkdMgR8Xk",
+                      "last_updated_days": -10
+                    }
+                }
+              ]
+            },
+            {
+              "access_account_name": "credential_recovery_create1_test_accnt",
+              "external_name": "",
+              "owning_owner_name": "owner2",
+              "allow_global_logins": false,
+              "access_account_state_name": "access_account_states_sysdef_active",
+              "instance_access": [
+                {
+                  "instance_name": null,
+                  "access_granted_days": -20,
+                  "invitation_issued_days": -40,
+                  "invitation_expires_days": -10,
+                  "invitation_declined_days": null
+                }
+              ],
+              "identities": [
+                {
+                  "identity_type_name": "identity_types_sysdef_email",
+                  "account_identifier": "credential_recovery_create1_test_accnt@musesystems.com",
+                  "validation_requested_days": -1,
+                  "validation": null
+                },
+                {
+                  "identity_type_name": "identity_types_sysdef_password_recovery",
+                  "account_identifier_length": 40,
+                  "credential": null
+                }
+              ]
+            },
+            {
+              "access_account_name": "credential_recovery_create2_test_accnt",
+              "external_name": "",
+              "owning_owner_name": "owner2",
+              "allow_global_logins": false,
+              "access_account_state_name": "access_account_states_sysdef_active",
+              "instance_access": [
+                {
+                  "instance_name": null,
+                  "access_granted_days": -20,
+                  "invitation_issued_days": -40,
+                  "invitation_expires_days": -10,
+                  "invitation_declined_days": null
+                }
+              ],
+              "identities": [
+                {
+                  "identity_type_name": "identity_types_sysdef_email",
+                  "account_identifier": "credential_recovery_create2_test_accnt@musesystems.com",
+                  "validation_requested_days": -1,
+                  "validation": null
+                },
+                {
+                  "identity_type_name": "identity_types_sysdef_password_recovery",
+                  "account_identifier_length": 40,
+                  "credential": null
+                }
+              ]
+            },
+            {
+              "access_account_name": "credential_recovery_create3_test_accnt",
+              "external_name": "",
+              "owning_owner_name": "owner2",
+              "allow_global_logins": false,
+              "access_account_state_name": "access_account_states_sysdef_active",
+              "instance_access": [
+                {
+                  "instance_name": null,
+                  "access_granted_days": -20,
+                  "invitation_issued_days": -40,
+                  "invitation_expires_days": -10,
+                  "invitation_declined_days": null
+                }
+              ],
+              "identities": [
+                {
+                  "identity_type_name": "identity_types_sysdef_email",
+                  "account_identifier": "credential_recovery_create3_test_accnt@musesystems.com",
+                  "validation_requested_days": -1,
+                  "validation": null
+                },
+                {
+                  "identity_type_name": "identity_types_sysdef_password_recovery",
+                  "account_identifier_length": 40,
+                  "credential": null
+                }
+              ]
+            },
+            {
+              "access_account_name": "credential_recovery_create4_test_accnt",
+              "external_name": "",
+              "owning_owner_name": "owner2",
+              "allow_global_logins": false,
+              "access_account_state_name": "access_account_states_sysdef_active",
+              "instance_access": [
+                {
+                  "instance_name": null,
+                  "access_granted_days": -20,
+                  "invitation_issued_days": -40,
+                  "invitation_expires_days": -10,
+                  "invitation_declined_days": null
+                }
+              ],
+              "identities": [
+                {
+                  "identity_type_name": "identity_types_sysdef_email",
+                  "account_identifier": "credential_recovery_create4_test_accnt@musesystems.com",
+                  "validation_requested_days": -1,
+                  "validation": null
+                },
+                {
+                  "identity_type_name": "identity_types_sysdef_password_recovery",
+                  "account_identifier_length": 40,
+                  "credential": null
+                }
+              ]
+            },
+            {
+              "access_account_name": "credential_recovery_retrieval_test_accnt",
+              "external_name": "",
+              "owning_owner_name": "owner2",
+              "allow_global_logins": false,
+              "access_account_state_name": "access_account_states_sysdef_active",
+              "instance_access": [
+                {
+                  "instance_name": null,
+                  "access_granted_days": -20,
+                  "invitation_issued_days": -40,
+                  "invitation_expires_days": -10,
+                  "invitation_declined_days": null
+                }
+              ],
+              "identities": [
+                {
+                  "identity_type_name": "identity_types_sysdef_email",
+                  "account_identifier": "credential_recovery_retrieval_test_accnt@musesystems.com",
+                  "validation_requested_days": -1,
+                  "validation": null
+                },
+                {
+                  "identity_type_name": "identity_types_sysdef_password_recovery",
+                  "account_identifier_length": 40,
+                  "credential": {
+                      "credential_type_name": "credential_types_sysdef_token_recovery",
+                      "credential_plaintext": "VhS09YQj5bsEz5cg0ZM2n0PsUjwXuIWNW8tgvLS1ra9SeMu2",
+                      "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$R53aBhCDd3toEF8VCecnmg$1S1oIk0FO38Aut6P6RZMHef5O3eKNtlooTi4Zokogfs",
+                      "last_updated_days": -10
+                    }
+                }
+              ]
+            },
+            {
+              "access_account_name": "credential_recovery_delete_id_test_accnt",
+              "external_name": "",
+              "owning_owner_name": "owner2",
+              "allow_global_logins": false,
+              "access_account_state_name": "access_account_states_sysdef_active",
+              "instance_access": [
+                {
+                  "instance_name": null,
+                  "access_granted_days": -20,
+                  "invitation_issued_days": -40,
+                  "invitation_expires_days": -10,
+                  "invitation_declined_days": null
+                }
+              ],
+              "identities": [
+                {
+                  "identity_type_name": "identity_types_sysdef_email",
+                  "account_identifier": "credential_recovery_delete_id_test_accnt@musesystems.com",
+                  "validation_requested_days": -1,
+                  "validation": null
+                },
+                {
+                  "identity_type_name": "identity_types_sysdef_password_recovery",
+                  "account_identifier_length": 40,
+                  "credential": {
+                      "credential_type_name": "credential_types_sysdef_token_recovery",
+                      "credential_plaintext": "DXWXTJ7uFQk7BF4kO0rKzZmOKhem8sMsm0m0LJAGICXEao5z",
+                      "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$9aSXkebdkx5Qzymh7fi9MA$mJgp2W3D+8d4cATWVue6MaosRFHx0JJmGMNFgU/0W1M",
+                      "last_updated_days": -10
+                    }
+                }
+              ]
+            },
+            {
+              "access_account_name": "credential_recovery_delete_test_accnt",
+              "external_name": "",
+              "owning_owner_name": "owner2",
+              "allow_global_logins": false,
+              "access_account_state_name": "access_account_states_sysdef_active",
+              "instance_access": [
+                {
+                  "instance_name": null,
+                  "access_granted_days": -20,
+                  "invitation_issued_days": -40,
+                  "invitation_expires_days": -10,
+                  "invitation_declined_days": null
+                }
+              ],
+              "identities": [
+                {
+                  "identity_type_name": "identity_types_sysdef_email",
+                  "account_identifier": "credential_recovery_delete_test_accnt@musesystems.com",
+                  "validation_requested_days": -1,
+                  "validation": null
+                },
+                {
+                  "identity_type_name": "identity_types_sysdef_password_recovery",
+                  "account_identifier_length": 40,
+                  "credential": {
+                      "credential_type_name": "credential_types_sysdef_token_recovery",
+                      "credential_plaintext": "XU19cYhV8jsqDnA9PYLZaPRsOPQFMKjWjvxgglhkn1l78CN9",
+                      "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$ZnF9pu4d+4gxK3NT0EWYsQ$2mCokWvAR0oS+C1hfn02fqKnKw+C3IUoC61QZk4K//c",
+                      "last_updated_days": -10
+                    }
+                }
+              ]
             }
           ]
         }
