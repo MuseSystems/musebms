@@ -1804,8 +1804,6 @@ $AUTHENTICATION_TESTING_INIT$
 
                     IF jsonb_typeof(var_identity_data.credential) = 'object' THEN
 
-                        RAISE WARNING '@@@@@@@@@@@@@@@: %', var_identity_data.credential;
-
                         INSERT INTO msbms_syst_data.syst_credentials
                             ( access_account_id
                             , credential_type_id
