@@ -26,7 +26,6 @@ load_files = [
     "components/system/msbms_syst_authentication/msbms_syst_data/syst_identities/trig_b_i_syst_identities_check_uniqueness.eex.sql",
     "components/system/msbms_syst_authentication/msbms_syst_data/syst_identities/syst_identities.eex.sql",
 
-    "components/system/msbms_syst_authentication/msbms_syst_data/syst_credentials/trig_b_i_syst_credentials_unique_check.eex.sql",
     "components/system/msbms_syst_authentication/msbms_syst_data/syst_credentials/trig_a_d_syst_credentials_delete_identity.eex.sql",
     "components/system/msbms_syst_authentication/msbms_syst_data/syst_credentials/syst_credentials.eex.sql",
 

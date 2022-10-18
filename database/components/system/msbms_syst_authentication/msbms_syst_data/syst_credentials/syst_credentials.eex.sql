@@ -30,6 +30,9 @@ CREATE TABLE msbms_syst_data.syst_credentials
         uuid
         CONSTRAINT syst_credentials_for_identities_fk
             REFERENCES msbms_syst_data.syst_identities (id) ON DELETE CASCADE
+    ,CONSTRAINT syst_credentials_udx
+        UNIQUE NULLS NOT DISTINCT
+            (access_account_id, credential_type_id, credential_for_identity_id)
     ,credential_data
         text
         NOT NULL
@@ -65,10 +68,6 @@ ALTER TABLE msbms_syst_data.syst_credentials OWNER TO <%= msbms_owner %>;
 
 REVOKE ALL ON TABLE msbms_syst_data.syst_credentials FROM public;
 GRANT ALL ON TABLE msbms_syst_data.syst_credentials TO <%= msbms_owner %>;
-
-CREATE TRIGGER c50_trig_b_i_syst_credentials_unique_check
-    BEFORE INSERT ON msbms_syst_data.syst_credentials
-    FOR EACH ROW EXECUTE PROCEDURE msbms_syst_data.trig_b_i_syst_credentials_unique_check();
 
 CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
     BEFORE INSERT OR UPDATE ON msbms_syst_data.syst_credentials
