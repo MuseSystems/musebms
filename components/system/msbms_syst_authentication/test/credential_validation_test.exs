@@ -119,12 +119,6 @@ defmodule CredentialValidationTest do
   test "Can delete an Validation Credential record" do
     test_account = get_account_data("credential_validation_delete_test_accnt")
 
-    {:ok, _} =
-      Impl.Credential.Validation.set_credential(
-        test_account.access_account_id,
-        test_account.identity_id
-      )
-
     cred_record =
       Impl.Credential.Validation.get_credential_record(
         test_account.access_account_id,
@@ -136,12 +130,6 @@ defmodule CredentialValidationTest do
 
   test "Can delete an Validation Credential record by ID" do
     test_account = get_account_data("credential_validation_delete_id_test_accnt")
-
-    {:ok, _} =
-      Impl.Credential.Validation.set_credential(
-        test_account.access_account_id,
-        test_account.identity_id
-      )
 
     cred_record =
       Impl.Credential.Validation.get_credential_record(
