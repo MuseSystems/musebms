@@ -85,7 +85,7 @@ defmodule AccessAccountTest do
       access_account_state_id: access_account_state.id
     }
 
-    assert {:ok, updated_account} =
+    assert {:ok, _updated_account} =
              MsbmsSystAuthentication.update_access_account(target_account_id, update_params)
   end
 

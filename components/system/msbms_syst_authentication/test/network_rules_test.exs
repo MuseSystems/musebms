@@ -18,8 +18,6 @@ defmodule NetworkRulesTest do
   alias MsbmsSystAuthentication.Data
   alias MsbmsSystAuthentication.Impl
 
-  alias MsbmsSystDatastore.DbTypes
-
   test "Can determine if host is disallowed or not" do
     assert Impl.NetworkRules.host_disallowed?(~i"10.123.123.3")
     assert not Impl.NetworkRules.host_disallowed?(~i"10.123.123.10")
