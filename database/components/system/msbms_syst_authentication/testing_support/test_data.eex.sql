@@ -1802,82 +1802,78 @@ $AUTHENTICATION_TESTING_INIT$
                     -- Identity Linked Credential
                     ----------------------------------------------------
 
-                    IF jsonb_typeof(var_identity_data.credential) = 'object' THEN
-
-                        INSERT INTO msbms_syst_data.syst_credentials
-                            ( access_account_id
-                            , credential_type_id
-                            , credential_for_identity_id
-                            , credential_data
-                            , last_updated )
-                        VALUES
-                            ( var_access_account_id
-                            , (SELECT id
-                               FROM msbms_syst_data.syst_enum_items
-                               WHERE internal_name = var_identity_data.credential ->> 'credential_type_name' )
-                            , var_primary_identity_id
-                            , var_identity_data.credential ->> 'credential_data'
-                            , now() +
-                              make_interval(
-                                  days =>
-                                      coalesce(
-                                          ( var_identity_data.credential ->> 'last_updated_days' )::integer,
-                                          0) ) );
-
-                    END IF;
+                    INSERT INTO msbms_syst_data.syst_credentials
+                        ( access_account_id
+                        , credential_type_id
+                        , credential_for_identity_id
+                        , credential_data
+                        , last_updated )
+                    SELECT
+                          var_access_account_id
+                        , (SELECT id
+                           FROM msbms_syst_data.syst_enum_items
+                           WHERE internal_name = var_identity_data.credential ->> 'credential_type_name' )
+                        , var_primary_identity_id
+                        , var_identity_data.credential ->> 'credential_data'
+                        , now() +
+                          make_interval(
+                              days =>
+                                  coalesce(
+                                      ( var_identity_data.credential ->> 'last_updated_days' )::integer,
+                                      0) )
+                    WHERE jsonb_typeof(var_identity_data.credential) = 'object';
 
                     ----------------------------------------------------
                     -- Identity Linked Validation Identity/Credential
                     ----------------------------------------------------
 
-                    IF jsonb_typeof(var_identity_data.validation) = 'object' THEN
+                    INSERT INTO msbms_syst_data.syst_identities
+                        ( access_account_id
+                        , identity_type_id
+                        , account_identifier
+                        , validates_identity_id
+                        , identity_expires )
+                    SELECT
+                          var_access_account_id
+                        , ( SELECT
+                                id
+                            FROM msbms_syst_data.syst_enum_items
+                            WHERE internal_name = 'identity_types_sysdef_validation' )
+                        , coalesce( var_identity_data.validation #>>
+                                        '{identity, account_identifier}',
+                                    msbms_syst_priv.get_random_string(
+                                        ( var_identity_data.validation #>>
+                                          '{identity, account_identifier_length}' )::integer ) )
+                        , var_primary_identity_id
+                        , now( ) +
+                          make_interval(
+                              days => ( var_identity_data.validation #>>
+                                        '{identity, identity_expires_days}' )::integer )
+                    WHERE jsonb_typeof(var_identity_data.validation -> 'identity') = 'object'
+                    RETURNING id INTO var_validation_identity_id;
 
-                        INSERT INTO msbms_syst_data.syst_identities
-                            ( access_account_id
-                            , identity_type_id
-                            , account_identifier
-                            , validates_identity_id
-                            , identity_expires )
-                        VALUES
-                            ( var_access_account_id
-                            , ( SELECT
-                                    id
-                                FROM msbms_syst_data.syst_enum_items
-                                WHERE internal_name = 'identity_types_sysdef_validation' )
-                            , coalesce( var_identity_data.validation #>>
-                                            '{identity, account_identifier}',
-                                        msbms_syst_priv.get_random_string(
-                                            ( var_identity_data.validation #>>
-                                              '{identity, account_identifier_length}' )::integer ) )
-                            , var_primary_identity_id
-                            , now( ) +
-                              make_interval(
-                                  days => ( var_identity_data.validation #>>
-                                            '{identity, identity_expires_days}' )::integer ) )
-                        RETURNING id INTO var_validation_identity_id;
-
-                        INSERT INTO msbms_syst_data.syst_credentials
-                            ( access_account_id
-                            , credential_type_id
-                            , credential_for_identity_id
-                            , credential_data
-                            , last_updated )
-                        VALUES
-                            ( var_access_account_id
-                            , ( SELECT
-                                    id
-                                FROM msbms_syst_data.syst_enum_items
-                                WHERE internal_name = 'credential_types_sysdef_token_validation' )
-                            , var_validation_identity_id
-                            , var_identity_data.validation #>> '{credential, credential_data}'
-                            , now( ) +
-                              make_interval(
-                                  days => coalesce(
-                                      ( var_identity_data.validation #>>
-                                        '{credential, last_updated_days}' )::integer,
-                                      0 ) ) );
-
-                    END IF;
+                    INSERT INTO msbms_syst_data.syst_credentials
+                        ( access_account_id
+                        , credential_type_id
+                        , credential_for_identity_id
+                        , credential_data
+                        , last_updated )
+                    SELECT
+                          var_access_account_id
+                        , ( SELECT
+                                id
+                            FROM msbms_syst_data.syst_enum_items
+                            WHERE internal_name = 'credential_types_sysdef_token_validation' )
+                        , var_validation_identity_id
+                        , var_identity_data.validation #>> '{credential, credential_data}'
+                        , now( ) +
+                          make_interval(
+                              days => coalesce(
+                                  ( var_identity_data.validation #>>
+                                    '{credential, last_updated_days}' )::integer,
+                                  0 ) )
+                    WHERE jsonb_typeof(var_identity_data.validation -> 'credential') = 'object'
+                      AND var_validation_identity_id IS NOT NULL;
 
                 END LOOP access_account_identities_loop;
 
