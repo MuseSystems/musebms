@@ -226,8 +226,10 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
 
   defp maybe_confirm_rule_password_age(rules, cred) do
     bypass_check = DbTypes.compare(rules.max_age, %DbTypes.Interval{}) == :eq
+
     shift_by = DbTypes.Interval.to_timex_shift_options(rules.max_age)
     last_valid_date = Timex.shift(cred.last_updated, shift_by)
+
     still_valid = Date.compare(Date.utc_today(), last_valid_date) in [:lt, :eq]
 
     if bypass_check or still_valid, do: :ok, else: :reset_age
