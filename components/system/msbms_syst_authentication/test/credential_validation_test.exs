@@ -21,21 +21,21 @@ defmodule CredentialValidationTest do
   test "Can Confirm Validation Credential" do
     test_account = get_account_data("credential_validation_confirm_test_accnt")
 
-    assert {:confirmed, []} ==
+    assert {:confirmed, []} =
              Impl.Credential.Validation.confirm_credential(
                test_account.access_account_id,
                test_account.identity_id,
                "G0yRRAHw8R4dMlo5E3C3mnfXzLCMggXJYwbphTkFNkWrYLJt"
              )
 
-    assert {:wrong_credential, []} ==
+    assert {:wrong_credential, []} =
              Impl.Credential.Validation.confirm_credential(
                test_account.access_account_id,
                test_account.identity_id,
                MsbmsSystUtils.get_random_string(48)
              )
 
-    assert {:no_credential, []} ==
+    assert {:no_credential, []} =
              Impl.Credential.Validation.confirm_credential(
                test_account.access_account_id,
                nil,
