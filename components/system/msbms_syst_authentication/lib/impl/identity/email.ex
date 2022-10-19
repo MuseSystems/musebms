@@ -23,7 +23,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Email do
 
   @spec create_identity(Types.access_account_id(), Types.account_identifier(), Keyword.t()) ::
           Data.SystIdentities.t()
-  def create_identity(access_account_id, email_address, opts)
+  def create_identity(access_account_id, email_address, opts \\ [])
       when is_binary(access_account_id) and is_binary(email_address) do
     opts = MsbmsSystUtils.resolve_options(opts, create_validated: false)
 
