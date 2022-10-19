@@ -21,21 +21,21 @@ defmodule CredentialApiTokenTest do
   test "Can Confirm API Token Credential" do
     test_account = get_account_data("owned_all_access")
 
-    assert {:confirmed, []} ==
+    assert {:confirmed, []} =
              Impl.Credential.ApiToken.confirm_credential(
                test_account.access_account_id,
                test_account.identity_id,
                "QNXWXLSYLB8O3PHMSLOEU9Y1WZF4PIIPUQREXSRRYLVBMPU2"
              )
 
-    assert {:wrong_credential, []} ==
+    assert {:wrong_credential, []} =
              Impl.Credential.ApiToken.confirm_credential(
                test_account.access_account_id,
                test_account.identity_id,
                MsbmsSystUtils.get_random_string(48)
              )
 
-    assert {:no_credential, []} ==
+    assert {:no_credential, []} =
              Impl.Credential.ApiToken.confirm_credential(
                test_account.access_account_id,
                nil,
