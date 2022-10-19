@@ -168,12 +168,8 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
 
     credential_state = get_credential_state(cred, pwd_text)
 
-    pwd_rules = Impl.PasswordRules.get_access_account_password_rule(cred.access_account_id)
-
     credential_extended_state =
-      []
-      |> maybe_require_mfa(pwd_rules)
-      |> maybe_get_reset_reason(cred, pwd_rules, pwd_text)
+      maybe_get_extended_confirmation_state(credential_state, cred, pwd_text)
 
     {credential_state, credential_extended_state}
   end
@@ -184,6 +180,16 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
       :confirmed
     end
   end
+
+  defp maybe_get_extended_confirmation_state(:confirmed = _credential_state, cred, pwd_text) do
+    pwd_rules = Impl.PasswordRules.get_access_account_password_rule(cred.access_account_id)
+
+    []
+    |> maybe_require_mfa(pwd_rules)
+    |> maybe_get_reset_reason(cred, pwd_rules, pwd_text)
+  end
+
+  defp maybe_get_extended_confirmation_state(_credential_state, _cred, _pwd_text), do: []
 
   defp maybe_get_reset_reason(extended_state, cred, pwd_rules, pwd_text) do
     # Checks below are ordered by cost; only return the cheapest reset reason
