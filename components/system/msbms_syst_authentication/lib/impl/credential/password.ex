@@ -263,9 +263,11 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
         ) ::
           {:ok, nil} | Types.credential_set_failures() | {:error, MsbmsSystError.t()}
   def set_credential(access_account_id, _identity_id \\ nil, pwd_text, _opts) do
-    with :ok <- maybe_test_credential(access_account_id, pwd_text) do
+    pwd_rules = Impl.PasswordRules.get_access_account_password_rule(access_account_id)
+
+    with :ok <- maybe_test_credential(pwd_rules, pwd_text) do
       cred = get_credential_record(access_account_id)
-      set_credential_data(cred, access_account_id, pwd_text)
+      set_credential_data(cred, pwd_rules, pwd_text)
     end
   rescue
     error ->
@@ -281,8 +283,8 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
       }
   end
 
-  defp maybe_test_credential(access_account_id, pwd_text) do
-    test_result = test_credential(access_account_id, pwd_text)
+  defp maybe_test_credential(pwd_rules, pwd_text) do
+    test_result = test_credential(pwd_rules, pwd_text)
 
     if test_result == [], do: :ok, else: {:invalid_credential, test_result}
   end
@@ -293,31 +295,68 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
   #       feature which would make this possible and so the function below may
   #       be worth revisiting at that time.
 
-  defp set_credential_data(nil = _cred, access_account_id, pwd_text) do
+  defp set_credential_data(nil = _cred, pwd_rules, pwd_text) do
     %{id: credential_type_id} =
       MsbmsSystEnums.get_enum_item_by_name("credential_types", "credential_types_sysdef_password")
 
-    password_hash = Impl.Hash.create_credential_hash(pwd_text)
+    pwd_hash = Impl.Hash.create_credential_hash(pwd_text)
 
-    %{
-      access_account_id: access_account_id,
-      credential_type_id: credential_type_id,
-      credential_data: password_hash
-    }
-    |> Data.SystCredentials.insert_changeset()
-    |> MsbmsSystDatastore.insert!()
+    {:ok, _} =
+      MsbmsSystDatastore.transaction(fn ->
+        _ = update_password_history(pwd_rules, pwd_hash)
+
+        %{
+          access_account_id: pwd_rules.access_account_id,
+          credential_type_id: credential_type_id,
+          credential_data: pwd_hash
+        }
+        |> Data.SystCredentials.insert_changeset()
+        |> MsbmsSystDatastore.insert!()
+      end)
 
     {:ok, nil}
   end
 
-  defp set_credential_data(cred, _access_account_id, pwd_text) do
-    password_hash = Impl.Hash.create_credential_hash(pwd_text)
+  defp set_credential_data(cred, pwd_rules, pwd_text) do
+    pwd_hash = Impl.Hash.create_credential_hash(pwd_text)
 
-    cred
-    |> Data.SystCredentials.update_changeset(%{credential_data: password_hash})
-    |> MsbmsSystDatastore.update!()
+    {:ok, _} =
+      MsbmsSystDatastore.transaction(fn ->
+        _ = update_password_history(pwd_rules, pwd_hash)
+
+        cred
+        |> Data.SystCredentials.update_changeset(%{credential_data: pwd_hash})
+        |> MsbmsSystDatastore.update!()
+      end)
 
     {:ok, nil}
+  end
+
+  defp update_password_history(pwd_rules, pwd_hash) do
+    pwd_retention = pwd_rules.disallow_recently_used
+
+    if pwd_retention > 0 do
+      Data.SystPasswordHistory.insert_changeset(pwd_rules.access_account_id, pwd_hash)
+      |> MsbmsSystDatastore.insert!()
+    end
+
+    ordering_qry =
+      from(ph in Data.SystPasswordHistory,
+        select: %{
+          id: ph.id,
+          recency: row_number() |> over(order_by: [desc: ph.diag_wallclock_modified])
+        },
+        where: ph.access_account_id == ^pwd_rules.access_account_id
+      )
+
+    delete_qry =
+      from(ph in Data.SystPasswordHistory,
+        join: oq in subquery(ordering_qry),
+        on: oq.id == ph.id,
+        where: oq.recency > ^pwd_retention
+      )
+
+    MsbmsSystDatastore.delete_all(delete_qry)
   end
 
   @spec get_credential_record(Types.access_account_id(), Types.identity_id() | nil) ::
