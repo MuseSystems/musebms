@@ -51,4 +51,8 @@ defmodule MsbmsSystAuthentication.Data.SystPasswordHistory do
 
     belongs_to(:access_account, Data.SystAccessAccounts)
   end
+
+  @spec insert_changeset(Types.access_account_id(), String.t()) :: Ecto.Changeset.t()
+  defdelegate insert_changeset(access_account_id, credential_data),
+    to: Data.Validators.SystPasswordHistory
 end
