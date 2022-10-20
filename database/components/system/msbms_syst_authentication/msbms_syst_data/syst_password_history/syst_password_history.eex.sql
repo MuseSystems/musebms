@@ -113,3 +113,5 @@ $DOC$Records the number of times the record has been updated regardless as to if
 the update actually changed any data.  In this way needless or redundant record
 updates can be found.  This row starts at 0 and therefore may be the same as the
 diag_row_version - 1.$DOC$;
+
+CREATE INDEX syst_password_history_access_account_idx ON msbms_syst_data.syst_password_history ( access_account_id );
