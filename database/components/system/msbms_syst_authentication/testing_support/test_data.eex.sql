@@ -2315,6 +2315,7 @@ $AUTHENTICATION_TESTING_INIT$
                         , credential_type_id
                         , credential_for_identity_id
                         , credential_data
+                        , force_reset
                         , last_updated )
                     SELECT
                           var_access_account_id
@@ -2323,6 +2324,10 @@ $AUTHENTICATION_TESTING_INIT$
                            WHERE internal_name = var_identity_data.credential ->> 'credential_type_name' )
                         , var_primary_identity_id
                         , var_identity_data.credential ->> 'credential_data'
+                        , CASE
+                            WHEN ( var_identity_data.credential ->> 'force_reset' )::boolean THEN
+                                now()
+                          END
                         , now() +
                           make_interval(
                               days =>
@@ -2365,6 +2370,7 @@ $AUTHENTICATION_TESTING_INIT$
                         , credential_type_id
                         , credential_for_identity_id
                         , credential_data
+                        , force_reset
                         , last_updated )
                     SELECT
                           var_access_account_id
@@ -2374,6 +2380,12 @@ $AUTHENTICATION_TESTING_INIT$
                             WHERE internal_name = 'credential_types_sysdef_token_validation' )
                         , var_validation_identity_id
                         , var_identity_data.validation #>> '{credential, credential_data}'
+                        , CASE
+                            WHEN
+                               ( var_identity_data.validation #>> '{credential, force_reset}' )::boolean
+                            THEN
+                                now()
+                          END
                         , now( ) +
                           make_interval(
                               days => coalesce(
@@ -2393,11 +2405,16 @@ $AUTHENTICATION_TESTING_INIT$
                     ( access_account_id
                     , credential_type_id
                     , credential_data
+                    , force_reset
                     , last_updated )
                 SELECT
                       var_access_account_id
                     , ei.id
                     , c ->> 'credential_data'
+                    , CASE
+                        WHEN ( c ->> 'force_reset' )::boolean THEN
+                            now()
+                      END
                     , now( ) +
                       make_interval( days => coalesce( ( c ->> 'last_updated_days' )::integer, 0 ) )
                 FROM jsonb_array_elements( var_account_data.credentials ) c
