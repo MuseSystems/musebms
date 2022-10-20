@@ -1,5 +1,5 @@
--- File:        test_data.eex.sql
--- Location:    musebms/database/components/system/msbms_syst_authentication/testing_support/test_data.eex.sql
+-- File:        test_data_unit_test.eex.sql
+-- Location:    musebms/database/components/system/msbms_syst_authentication/testing_support/test_data_unit_test.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -8,7 +8,7 @@
 -- See the LICENSE file in the project root for license terms and conditions.
 -- See the NOTICE file in the project root for copyright ownership information.
 --
--- muse.information@musesystems.com  :: https://muse.systems
+-- muse.information@musesystems.com :: https://muse.systems
 
 DO
 $AUTHENTICATION_TESTING_INIT$
