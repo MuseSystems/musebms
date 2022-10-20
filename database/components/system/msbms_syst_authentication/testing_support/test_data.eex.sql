@@ -34,7 +34,8 @@ $AUTHENTICATION_TESTING_INIT$
             "1234567890",
             "superman",
             "1qaz2wsx",
-            "trustno1"
+            "trustno1",
+            "Disallowed!Test#01"
           ],
           "disallowed_hosts": [
             "10.123.123.1",
@@ -474,6 +475,10 @@ $AUTHENTICATION_TESTING_INIT$
               "password_history": [
                 "$argon2id$v=19$m=65536,t=8,p=2$SlBSxy4bQcMu9UkayH6hOg$12DcQE3iI3IuPgqKpbEWNQwtcs1+SzAURaTygGKRdQE",
                 "$argon2id$v=19$m=65536,t=8,p=2$AC7iCSdSXnho542OuE90rA$hU+oET8H8ovs3X2roWXsre5hENTUWxoxaSxqdM2sc+E"
+              ],
+              "password_history_plaintext": [
+                "PassHist#01!",
+                "PassHist#02!"
               ]
             },
             {
@@ -1997,6 +2002,262 @@ $AUTHENTICATION_TESTING_INIT$
                   }
                 }
               ]
+            },
+            {
+              "access_account_name": "credential_password_confirm_mfa_test_accnt",
+              "external_name": "",
+              "owning_owner_name": "owner2",
+              "allow_global_logins": false,
+              "access_account_state_name": "access_account_states_sysdef_active",
+              "instance_access": [
+                {
+                  "instance_name": null,
+                  "access_granted_days": -20,
+                  "invitation_issued_days": -40,
+                  "invitation_expires_days": -10,
+                  "invitation_declined_days": null
+                }
+              ],
+              "identities": [],
+              "credentials": [
+                {
+                  "credential_type_name": "credential_types_sysdef_password",
+                  "credential_plaintext": "password.confirm.mfa.test.password",
+                  "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$BbmQew0h9aSrALejUIXywA$0d7OvaL0DgUpx/Um6KeJWsHqfEh00kyxy0j+zx0TTP8",
+                  "last_updated_days": -1
+                }
+              ],
+              "password_history": [],
+              "password_history_plaintext": []
+            },
+            {
+              "access_account_name": "credential_password_confirm_force_test_accnt",
+              "external_name": "",
+              "owning_owner_name": "owner2",
+              "allow_global_logins": false,
+              "access_account_state_name": "access_account_states_sysdef_active",
+              "instance_access": [
+                {
+                  "instance_name": null,
+                  "access_granted_days": -20,
+                  "invitation_issued_days": -40,
+                  "invitation_expires_days": -10,
+                  "invitation_declined_days": null
+                }
+              ],
+              "identities": [],
+              "credentials": [
+                {
+                  "credential_type_name": "credential_types_sysdef_password",
+                  "credential_plaintext": "password.confirm.force.test.password",
+                  "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$QXKxlO7z378OOaRgd6ES+g$/2d88fcFztMVRp9i4vd4WtCrNRqb7FY+5QfcSkYMnAE",
+                  "force_reset": true,
+                  "last_updated_days": -1
+                }
+              ],
+              "password_history": [],
+              "password_history_plaintext": []
+            },
+            {
+              "access_account_name": "credential_password_confirm_age_test_accnt",
+              "external_name": "",
+              "owning_owner_name": "owner2",
+              "allow_global_logins": false,
+              "access_account_state_name": "access_account_states_sysdef_active",
+              "instance_access": [
+                {
+                  "instance_name": null,
+                  "access_granted_days": -20,
+                  "invitation_issued_days": -40,
+                  "invitation_expires_days": -10,
+                  "invitation_declined_days": null
+                }
+              ],
+              "identities": [],
+              "credentials": [
+                {
+                  "credential_type_name": "credential_types_sysdef_password",
+                  "credential_plaintext": "password.confirm.age.test.password",
+                  "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$F8yhvU86nHfuTxJDMQSFpQ$qEBfImAsrCeQKW8gavxY4U0DokU/EwL7nP8NZIfv1X8",
+                  "last_updated_days": -11
+                }
+              ],
+              "password_history": [],
+              "password_history_plaintext": []
+            },
+            {
+              "access_account_name": "credential_password_confirm_disallowed_test_accnt",
+              "external_name": "",
+              "owning_owner_name": "owner2",
+              "allow_global_logins": false,
+              "access_account_state_name": "access_account_states_sysdef_active",
+              "instance_access": [
+                {
+                  "instance_name": null,
+                  "access_granted_days": -20,
+                  "invitation_issued_days": -40,
+                  "invitation_expires_days": -10,
+                  "invitation_declined_days": null
+                }
+              ],
+              "identities": [],
+              "credentials": [
+                {
+                  "credential_type_name": "credential_types_sysdef_password",
+                  "credential_plaintext": "Disallowed!Test#01",
+                  "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$SGGv12jMBNR6wn8VyCKx9w$9m7trhRQihTmDOeSmuCAXCT+NWrzcQGj5pv5j0PUGQc",
+                  "last_updated_days": -1
+                }
+              ],
+              "password_history": [],
+              "password_history_plaintext": []
+            },
+            {
+              "access_account_name": "credential_password_create_new_test_acct",
+              "external_name": "",
+              "owning_owner_name": "owner2",
+              "allow_global_logins": false,
+              "access_account_state_name": "access_account_states_sysdef_active",
+              "instance_access": [
+                {
+                  "instance_name": null,
+                  "access_granted_days": -20,
+                  "invitation_issued_days": -40,
+                  "invitation_expires_days": -10,
+                  "invitation_declined_days": null
+                }
+              ],
+              "identities": [],
+              "credentials": [],
+              "password_history": [],
+              "password_history_plaintext": []
+            },
+            {
+              "access_account_name": "credential_password_create_reject_test_acct",
+              "external_name": "",
+              "owning_owner_name": "owner2",
+              "allow_global_logins": false,
+              "access_account_state_name": "access_account_states_sysdef_active",
+              "instance_access": [
+                {
+                  "instance_name": null,
+                  "access_granted_days": -20,
+                  "invitation_issued_days": -40,
+                  "invitation_expires_days": -10,
+                  "invitation_declined_days": null
+                }
+              ],
+              "identities": [],
+              "credentials": [],
+              "password_history": [
+                "$argon2id$v=19$m=65536,t=8,p=2$zapgKhGDiGYUZcmjtNF1Pw$1WPvbxRjdGTKkFU06lDM5ds49vWkUDmxCtaMvsthMIs",
+                "$argon2id$v=19$m=65536,t=8,p=2$wxwcTdagb/2Ls/8PxtPtOA$J0GCMdpTfSFbvdoEeZsudt491ySHsXUfkrbj2kQFlrc"
+              ],
+              "password_history_plaintext": [
+                "PassHist#01!",
+                "PassHist#02!"
+              ]
+            },
+            {
+              "access_account_name": "credential_password_update_test_acct",
+              "external_name": "",
+              "owning_owner_name": "owner2",
+              "allow_global_logins": false,
+              "access_account_state_name": "access_account_states_sysdef_active",
+              "instance_access": [
+                {
+                  "instance_name": null,
+                  "access_granted_days": -20,
+                  "invitation_issued_days": -40,
+                  "invitation_expires_days": -10,
+                  "invitation_declined_days": null
+                }
+              ],
+              "identities": [],
+              "credentials": [
+                {
+                  "credential_type_name": "credential_types_sysdef_password",
+                  "credential_plaintext": "credential.password.before.update",
+                  "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$HH1MYyyR3ZdkiRC09GJPEw$mtA1WYR8B7d9jxZnFuuaFKcLZN+29O/Z0yZ+S02H2us",
+                  "last_updated_days": -1
+                }
+              ],
+              "password_history": [],
+              "password_history_plaintext": []
+            },
+            {
+              "access_account_name": "credential_password_reuse_test_acct",
+              "external_name": "",
+              "owning_owner_name": "owner2",
+              "allow_global_logins": false,
+              "access_account_state_name": "access_account_states_sysdef_active",
+              "instance_access": [
+                {
+                  "instance_name": null,
+                  "access_granted_days": -20,
+                  "invitation_issued_days": -40,
+                  "invitation_expires_days": -10,
+                  "invitation_declined_days": null
+                }
+              ],
+              "identities": [],
+              "credentials": [],
+              "password_history": [],
+              "password_history_plaintext": []
+            },
+            {
+              "access_account_name": "credential_password_delete1_test_acct",
+              "external_name": "",
+              "owning_owner_name": "owner2",
+              "allow_global_logins": false,
+              "access_account_state_name": "access_account_states_sysdef_active",
+              "instance_access": [
+                {
+                  "instance_name": null,
+                  "access_granted_days": -20,
+                  "invitation_issued_days": -40,
+                  "invitation_expires_days": -10,
+                  "invitation_declined_days": null
+                }
+              ],
+              "identities": [],
+              "credentials": [
+                {
+                  "credential_type_name": "credential_types_sysdef_password",
+                  "credential_plaintext": "credential.password.delete1",
+                  "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$DsW4xHRxVQWVyLD08JObrg$n/yPY+DFGflRfgMOxzHW5BMgAPahyTmYnkudiNDq1/o",
+                  "last_updated_days": -1
+                }
+              ],
+              "password_history": [],
+              "password_history_plaintext": []
+            },
+            {
+              "access_account_name": "credential_password_delete2_test_acct",
+              "external_name": "",
+              "owning_owner_name": "owner2",
+              "allow_global_logins": false,
+              "access_account_state_name": "access_account_states_sysdef_active",
+              "instance_access": [
+                {
+                  "instance_name": null,
+                  "access_granted_days": -20,
+                  "invitation_issued_days": -40,
+                  "invitation_expires_days": -10,
+                  "invitation_declined_days": null
+                }
+              ],
+              "identities": [],
+              "credentials": [
+                {
+                  "credential_type_name": "credential_types_sysdef_password",
+                  "credential_plaintext": "credential.password.delete2",
+                  "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$lvxXjFaoVjTYPj6MST433Q$arp9y6c2QeJiZQoyAUIn6aea6N/WfEiKCKakrKA0TFQ",
+                  "last_updated_days": -1
+                }
+              ],
+              "password_history": [],
+              "password_history_plaintext": []
             }
           ]
         }
