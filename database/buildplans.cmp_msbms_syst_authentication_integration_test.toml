@@ -1,5 +1,5 @@
-# Source File: msbms_syst_authentication_unit_test.toml
-# Location:    musebms/database/buildplans.cmp_msbms_syst_authentication_unit_test.toml
+# Source File: msbms_syst_authentication_integration_test.toml
+# Location:    musebms/database/buildplans.cmp_msbms_syst_authentication_integration_test.toml
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -40,5 +40,5 @@ load_files = [
     "components/system/msbms_syst_instance_mgr/testing_support/test_privileges.eex.sql",
     "components/system/msbms_syst_authentication/testing_support/test_privileges.eex.sql",
     "components/system/msbms_syst_instance_mgr/testing_support/test_data_unit_test.eex.sql",
-    "components/system/msbms_syst_authentication/testing_support/test_data_unit_test.eex.sql",
+    "components/system/msbms_syst_authentication/testing_support/test_data_integration_test.eex.sql",
 ]

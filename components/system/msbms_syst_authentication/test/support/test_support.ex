@@ -68,6 +68,7 @@ defmodule TestSupport do
 
   @migration_test_source_root_dir "../../../database"
   @migration_unit_test_ds_type "cmp_msbms_syst_authentication_unit_test"
+  @migration_integration_test_ds_type "cmp_msbms_syst_authentication_integration_test"
 
   def setup_testing_database(test_kind) do
     :ok = build_migrations(test_kind)
@@ -102,6 +103,7 @@ defmodule TestSupport do
   def get_testing_datastore_context_id, do: @datastore_context_name
 
   defp get_datastore_type(:unit_testing), do: @migration_unit_test_ds_type
+  defp get_datastore_type(:integration_testing), do: @migration_integration_test_ds_type
 
   defp build_migrations(test_kind) do
     Builddb.run([
