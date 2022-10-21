@@ -28,25 +28,11 @@ $BODY$
 
 BEGIN
 
-    RAISE EXCEPTION
-        USING
-            MESSAGE = 'This API view does not allow for record deletes for ' ||
-                      'this table.',
-            DETAIL = msbms_syst_priv.get_exception_details(
-                         p_proc_schema    => 'msbms_syst'
-                        ,p_proc_name      => 'trig_i_d_syst_disallowed_passwords'
-                        ,p_exception_name => 'invalid_api_view_call'
-                        ,p_errcode        => 'PM008'
-                        ,p_param_data     => jsonb_build_object('new', new, 'old', old)
-                        ,p_context_data   =>
-                            jsonb_build_object(
-                                 'tg_op',         tg_op
-                                ,'tg_when',       tg_when
-                                ,'tg_schema',     tg_table_schema
-                                ,'tg_table_name', tg_table_name)),
-            ERRCODE = 'PM008',
-            SCHEMA = tg_table_schema,
-            TABLE = tg_table_name;
+    DELETE FROM msbms_syst_data.syst_disallowed_passwords
+    WHERE password_hash = old.password_hash
+    RETURNING * INTO old;
+
+    RETURN old;
 
 END;
 $BODY$
