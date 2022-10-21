@@ -345,4 +345,101 @@ defmodule MsbmsSystAuthentication do
         ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MsbmsSystError.t()}
   defdelegate revoke_instance_access(access_account_id, instance_id),
     to: Impl.AccessAccountInstanceAssoc
+
+  @doc section: :disallowed_password_data
+  @doc """
+  Adds a new password to the Disallowed Passwords list.
+
+  Disallowed passwords are passwords that are commonly known, are known to have
+  been revealed in a successful hacking attack, or are otherwise not available
+  for users to choose for their authentication credential.  Enforcing that these
+  passwords are not available for use depends upon the effective
+  `disallow_compromised` Password Rule for the Access Account attempting
+  authentication.
+
+  An attempt to add a password which is already on the list will succeed as
+  though the password were not already part of the list.
+
+  ## Parameters
+
+    * `password` - The plaintext password to add to the list of disallowed
+    passwords.
+
+  ## Examples
+
+  Adding a password successfully will simply return `:ok`.
+
+      iex> MsbmsSystAuthentication.add_disallowed_password("Example Disallowed Password")
+      :ok
+
+  Any subsequent attempt to add the same password to the list again will appear
+  to succeed while silently doing nothing.
+
+      iex> MsbmsSystAuthentication.add_disallowed_password("Example Disallowed Password")
+      :ok
+  """
+  @spec add_disallowed_password(Types.credential()) :: :ok | {:error, MsbmsSystError.t()}
+  defdelegate add_disallowed_password(password), to: Impl.DisallowedPasswords
+
+  @doc section: :disallowed_password_data
+  @doc """
+  Indicates whether the requested password is disallowed.
+
+  This function returns a tuple in the form of `{:ok, <disallowed>}` where the
+  `disallowed` value is either `true` meaning that the requested password is
+  disallowed or `false` if the password is available for use.
+
+  Regardless of the return of this function, disallowed passwords are only
+  prevented for use if the effective `disallow_compromised` Password Rule for
+  the Access Account attempting authentication is set.
+
+  ## Parameters
+
+    * `password` - the plaintext password to test for disallowed status.
+
+  ## Examples
+
+    When a password has been previously disallowed and cannot be used as a
+    user credential.
+
+      iex> MsbmsSystAuthentication.password_disallowed("Is Disallowed")
+      {:ok, true}
+
+    When a password has not been previously disallowed.
+
+      iex> MsbmsSystAuthentication.password_disallowed("Is Not Disallowed")
+      {:ok, false}
+  """
+  @spec password_disallowed(Types.credential()) :: {:ok, boolean()} | {:error, MsbmsSystError.t()}
+  defdelegate password_disallowed(password), to: Impl.DisallowedPasswords
+
+  @doc section: :disallowed_password_data
+  @doc """
+  Removes a password from the disallowed passwords list.
+
+  On success, this function will return a success tuple indicating if the
+  requested password was deleted from the disallowed passwords list
+  (`{:ok, :deleted}`) or if the password simply wasn't found in the list
+  (`{:ok, :no_record}`).
+
+  ## Parameters
+
+    * `password` - the plaintext password to delete from the disallowed
+    passwords list.
+
+  ## Examples
+
+    Result when deleting a record from the list.
+
+      iex> MsbmsSystAuthentication.delete_disallowed_password("No Longer Disallowed")
+      {:ok, :deleted}
+
+    Result when trying to delete a record not already on the list.
+
+      iex> MsbmsSystAuthentication.delete_disallowed_password("Not on List")
+      {:ok, :no_record}
+  """
+  @spec delete_disallowed_password(Types.credential()) ::
+          {:ok, :deleted | :no_record} | {:error, MsbmsSystError.t()}
+  defdelegate delete_disallowed_password(password), to: Impl.DisallowedPasswords
 end

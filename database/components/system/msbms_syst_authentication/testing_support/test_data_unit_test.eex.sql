@@ -37,7 +37,9 @@ $AUTHENTICATION_TESTING_INIT$
             "trustno1",
             "Disallowed!Test#01",
             "Disallowed!Test#02",
-            "DeleteDisallowed!Test#02"
+            "DeleteDisallowed!Test#02",
+            "Is Disallowed",
+            "No Longer Disallowed"
           ],
           "disallowed_hosts": [
             "10.123.123.1",
