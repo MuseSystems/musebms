@@ -70,16 +70,9 @@ defmodule MsbmsSystAuthentication.Impl.DisallowedPasswords do
   def delete_disallowed_password(password) when is_binary(password) do
     pwd_hash = Impl.Hash.weak_hash(password)
 
-    delete_target_record =
-      from(dp in Data.SystDisallowedPasswords, where: dp.password_hash == ^pwd_hash)
-      |> MsbmsSystDatastore.one()
-
-    if delete_target_record != nil do
-      MsbmsSystDatastore.delete!(delete_target_record)
-      {:ok, :deleted}
-    else
-      {:ok, :no_record}
-    end
+    from(dp in Data.SystDisallowedPasswords, where: dp.password_hash == ^pwd_hash)
+    |> MsbmsSystDatastore.one()
+    |> maybe_delete_disallowed_password()
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -92,5 +85,12 @@ defmodule MsbmsSystAuthentication.Impl.DisallowedPasswords do
           cause: error
         }
       }
+  end
+
+  defp maybe_delete_disallowed_password(nil), do: {:ok, :no_record}
+
+  defp maybe_delete_disallowed_password(%Data.SystDisallowedPasswords{} = delete_target_record) do
+    MsbmsSystDatastore.delete!(delete_target_record)
+    {:ok, :deleted}
   end
 end
