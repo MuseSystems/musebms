@@ -13,9 +13,6 @@
 defmodule DisallowedPasswordTest do
   use AuthenticationTestCase, async: true
 
-  import Ecto.Query
-
-  alias MsbmsSystAuthentication.Data
   alias MsbmsSystAuthentication.Impl
 
   test "Can add Disallowed Password" do
