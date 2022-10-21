@@ -35,7 +35,9 @@ $AUTHENTICATION_TESTING_INIT$
             "superman",
             "1qaz2wsx",
             "trustno1",
-            "Disallowed!Test#01"
+            "Disallowed!Test#01",
+            "Disallowed!Test#02",
+            "DeleteDisallowed!Test#02"
           ],
           "disallowed_hosts": [
             "10.123.123.1",

@@ -118,7 +118,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
   # before verify_password_recently_used/4, but after all others.
   defp verify_password_no_compromised(violations_list, pwd_rules, pwd_text) do
     violation_found =
-      pwd_rules.disallow_compromised && violations_list == [] && check_compromised_pwd(pwd_text)
+      pwd_rules.disallow_compromised && violations_list == [] && check_disallowed_pwd(pwd_text)
 
     if violation_found do
       [{:password_rule_disallowed_password, true} | violations_list]
@@ -236,7 +236,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
   end
 
   defp maybe_confirm_rule_disallowed(%{disallow_compromised: true}, pwd_text) do
-    pwd_disallowed = check_compromised_pwd(pwd_text)
+    pwd_disallowed = check_disallowed_pwd(pwd_text)
 
     if pwd_disallowed, do: :reset_disallowed, else: :ok
   end
@@ -248,11 +248,17 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
 
   defp maybe_require_mfa(extended_state, _rules), do: extended_state
 
-  defp check_compromised_pwd(pwd_text) do
-    pwd_hash = Impl.Hash.weak_hash(pwd_text)
+  defp check_disallowed_pwd(pwd_text) do
+    case Impl.DisallowedPasswords.password_disallowed(pwd_text) do
+      {:ok, result} ->
+        result
 
-    from(dp in Data.SystDisallowedPasswords, where: dp.password_hash == ^pwd_hash)
-    |> MsbmsSystDatastore.exists?()
+      error ->
+        raise MsbmsSystError,
+          code: :undefined_error,
+          message: "Failed checking disallowed passwords.",
+          cause: error
+    end
   end
 
   @spec set_credential(
