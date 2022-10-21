@@ -32,6 +32,7 @@ BEGIN
         ( password_hash )
     VALUES
         ( new.password_hash )
+    ON CONFLICT ( password_hash ) DO NOTHING
     RETURNING * INTO new;
 
     RETURN new;
