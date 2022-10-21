@@ -71,8 +71,20 @@ defmodule MsbmsSystAuthentication.Impl.DisallowedPasswords do
     pwd_hash = Impl.Hash.weak_hash(password)
 
     from(dp in Data.SystDisallowedPasswords, where: dp.password_hash == ^pwd_hash)
-    |> MsbmsSystDatastore.one()
-    |> maybe_delete_disallowed_password()
+    |> MsbmsSystDatastore.delete_all()
+    |> case do
+      {0, _} ->
+        {:ok, :no_record}
+
+      {1, _} ->
+        {:ok, :deleted}
+
+      error ->
+        raise MsbmsSystError,
+          code: :undefined_error,
+          message: "Unexpected result from delete of disallowed password.",
+          cause: error
+    end
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -85,12 +97,5 @@ defmodule MsbmsSystAuthentication.Impl.DisallowedPasswords do
           cause: error
         }
       }
-  end
-
-  defp maybe_delete_disallowed_password(nil), do: {:ok, :no_record}
-
-  defp maybe_delete_disallowed_password(%Data.SystDisallowedPasswords{} = delete_target_record) do
-    MsbmsSystDatastore.delete!(delete_target_record)
-    {:ok, :deleted}
   end
 end
