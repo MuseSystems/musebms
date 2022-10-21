@@ -78,6 +78,7 @@ defmodule MsbmsSystAuthentication.MixProject do
           "API - Access Accounts": &(&1[:section] == :access_account_data),
           "API - Access Account Instance Assocs":
             &(&1[:section] == :access_account_instance_assoc_data),
+          "API - Disallowed Passwords": &(&1[:section] == :disallowed_password_data),
           "API - Runtime": &(&1[:section] == :service_management)
         ],
         groups_for_modules: [
