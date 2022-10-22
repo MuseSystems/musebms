@@ -137,9 +137,7 @@ defmodule PasswordRulesTest do
     assert insert_params.require_symbols == new_pwd_rules.require_symbols
     assert insert_params.disallow_recently_used == new_pwd_rules.disallow_recently_used
 
-    # Can't weaken global rules, our insert_params.disallow_compromised value is
-    # ignored.
-    assert true == new_pwd_rules.disallow_compromised
+    assert false == new_pwd_rules.disallow_compromised
 
     assert insert_params.require_mfa == new_pwd_rules.require_mfa
 
@@ -235,7 +233,10 @@ defmodule PasswordRulesTest do
     assert %{password_length: pwd_length} = effective_pwd_rules
 
     # Can't weaken global rules, so even though the owner rule defines a minimum
-    # password length of 6, the global minimum of 8 characters will apply.
+    # password length of 6, the global minimum of 8 characters will apply.  This
+    # holds for the disallowed_compromised as well which is owner defined as
+    # false, but globally defined as true (`true` is the stronger value).
+
     assert :eq ==
              DbTypes.compare(pwd_length, %DbTypes.IntegerRange{
                lower: 8,
@@ -243,5 +244,7 @@ defmodule PasswordRulesTest do
                lower_inclusive: true,
                upper_inclusive: true
              })
+
+    assert %{disallow_compromised: true} = effective_pwd_rules
   end
 end
