@@ -19,28 +19,28 @@ defmodule NetworkRulesTest do
   alias MsbmsSystAuthentication.Impl
 
   test "Can determine if host is disallowed or not" do
-    assert Impl.NetworkRules.host_disallowed?(~i"10.123.123.3")
-    assert not Impl.NetworkRules.host_disallowed?(~i"10.123.123.10")
+    assert {:ok, true} = Impl.NetworkRules.host_disallowed(~i"10.123.123.3")
+    assert {:ok, false} = Impl.NetworkRules.host_disallowed(~i"10.123.123.10")
   end
 
   test "Can create Disallowed Host" do
-    false = Impl.NetworkRules.host_disallowed?(~i"10.122.122.1")
+    {:ok, false} = Impl.NetworkRules.host_disallowed(~i"10.122.122.1")
     assert {:ok, _} = Impl.NetworkRules.create_disallowed_host(~i"10.122.122.1")
-    assert Impl.NetworkRules.host_disallowed?(~i"10.122.122.1")
+    assert {:ok, true} = Impl.NetworkRules.host_disallowed(~i"10.122.122.1")
   end
 
   test "Can delete Disallowed Host" do
-    true = Impl.NetworkRules.host_disallowed?(~i"10.123.123.5")
+    {:ok, true} = Impl.NetworkRules.host_disallowed(~i"10.123.123.5")
 
     {:ok, disallowed_host_record} =
       Impl.NetworkRules.get_disallowed_host_record_by_host(~i"10.123.123.5")
 
     assert :ok = Impl.NetworkRules.delete_disallowed_host(disallowed_host_record.id)
-    assert not Impl.NetworkRules.host_disallowed?(~i"10.123.123.5")
+    assert {:ok, false} = Impl.NetworkRules.host_disallowed(~i"10.123.123.5")
   end
 
   test "Can retrieve Disallowed Host by record ID" do
-    true = Impl.NetworkRules.host_disallowed?(~i"10.123.123.3")
+    {:ok, true} = Impl.NetworkRules.host_disallowed(~i"10.123.123.3")
 
     {:ok, subject_rec} = Impl.NetworkRules.get_disallowed_host_record_by_host(~i"10.123.123.3")
 
@@ -50,7 +50,7 @@ defmodule NetworkRulesTest do
   end
 
   test "Can get Disallowed Host record by Host Address" do
-    true = Impl.NetworkRules.host_disallowed?(~i"10.123.123.3")
+    {:ok, true} = Impl.NetworkRules.host_disallowed(~i"10.123.123.3")
 
     assert {:ok, %Data.SystDisallowedHosts{}} =
              Impl.NetworkRules.get_disallowed_host_record_by_host(~i"10.123.123.3")
