@@ -346,7 +346,7 @@ defmodule MsbmsSystAuthentication do
   defdelegate revoke_instance_access(access_account_id, instance_id),
     to: Impl.AccessAccountInstanceAssoc
 
-  @doc section: :disallowed_password_data
+  @doc section: :password_rule_data
   @doc """
   Adds a new password to the Disallowed Passwords list.
 
@@ -369,19 +369,19 @@ defmodule MsbmsSystAuthentication do
 
   Adding a password successfully will simply return `:ok`.
 
-      iex> MsbmsSystAuthentication.add_disallowed_password("Example Disallowed Password")
+      iex> MsbmsSystAuthentication.create_disallowed_password("Example Disallowed Password")
       :ok
 
   Any subsequent attempt to add the same password to the list again will appear
   to succeed while silently doing nothing.
 
-      iex> MsbmsSystAuthentication.add_disallowed_password("Example Disallowed Password")
+      iex> MsbmsSystAuthentication.create_disallowed_password("Example Disallowed Password")
       :ok
   """
-  @spec add_disallowed_password(Types.credential()) :: :ok | {:error, MsbmsSystError.t()}
-  defdelegate add_disallowed_password(password), to: Impl.DisallowedPasswords
+  @spec create_disallowed_password(Types.credential()) :: :ok | {:error, MsbmsSystError.t()}
+  defdelegate create_disallowed_password(password), to: Impl.PasswordRules
 
-  @doc section: :disallowed_password_data
+  @doc section: :password_rule_data
   @doc """
   Indicates whether the requested password is disallowed.
 
@@ -411,9 +411,9 @@ defmodule MsbmsSystAuthentication do
       {:ok, false}
   """
   @spec password_disallowed(Types.credential()) :: {:ok, boolean()} | {:error, MsbmsSystError.t()}
-  defdelegate password_disallowed(password), to: Impl.DisallowedPasswords
+  defdelegate password_disallowed(password), to: Impl.PasswordRules
 
-  @doc section: :disallowed_password_data
+  @doc section: :password_rule_data
   @doc """
   Removes a password from the disallowed passwords list.
 
@@ -441,5 +441,5 @@ defmodule MsbmsSystAuthentication do
   """
   @spec delete_disallowed_password(Types.credential()) ::
           {:ok, :deleted | :no_record} | {:error, MsbmsSystError.t()}
-  defdelegate delete_disallowed_password(password), to: Impl.DisallowedPasswords
+  defdelegate delete_disallowed_password(password), to: Impl.PasswordRules
 end
