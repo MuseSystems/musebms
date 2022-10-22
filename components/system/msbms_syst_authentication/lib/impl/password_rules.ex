@@ -16,12 +16,91 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
   use Pathex
 
   alias MsbmsSystAuthentication.Data
+  alias MsbmsSystAuthentication.Impl
   alias MsbmsSystAuthentication.Types
   alias MsbmsSystDatastore.DbTypes
 
   require Logger
 
   @moduledoc false
+
+  @spec create_disallowed_password(Types.credential()) :: :ok | {:error, MsbmsSystError.t()}
+  def create_disallowed_password(password) when is_binary(password) do
+    password
+    |> Impl.Hash.weak_hash()
+    |> Data.SystDisallowedPasswords.insert_changeset()
+    |> MsbmsSystDatastore.insert!()
+
+    :ok
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure adding Disallowed Password.",
+          cause: error
+        }
+      }
+  end
+
+  @spec password_disallowed(Types.credential()) ::
+          {:ok, boolean()} | {:error, MsbmsSystError.t()}
+  def password_disallowed(password) when is_binary(password) do
+    pwd_hash = Impl.Hash.weak_hash(password)
+
+    from(dp in Data.SystDisallowedPasswords, where: dp.password_hash == ^pwd_hash)
+    |> MsbmsSystDatastore.exists?()
+    |> then(&{:ok, &1})
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure testing if password is disallowed.",
+          cause: error
+        }
+      }
+  end
+
+  @spec delete_disallowed_password(Types.credential()) ::
+          {:ok, :deleted | :no_record} | {:error, MsbmsSystError.t()}
+  def delete_disallowed_password(password) when is_binary(password) do
+    pwd_hash = Impl.Hash.weak_hash(password)
+
+    from(dp in Data.SystDisallowedPasswords, where: dp.password_hash == ^pwd_hash)
+    |> MsbmsSystDatastore.delete_all()
+    |> case do
+      {0, _} ->
+        {:ok, :no_record}
+
+      {1, _} ->
+        {:ok, :deleted}
+
+      error ->
+        raise MsbmsSystError,
+          code: :undefined_error,
+          message: "Unexpected result from delete of disallowed password.",
+          cause: error
+    end
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure deleting Disallowed Password.",
+          cause: error
+        }
+      }
+  end
 
   @spec create_password_rules(MsbmsSystInstanceMgr.Types.owner_id(), Types.password_rule_params()) ::
           {:ok, Data.SystOwnerPasswordRules.t()} | {:error, MsbmsSystError.t()}

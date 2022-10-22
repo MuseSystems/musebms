@@ -18,6 +18,28 @@ defmodule PasswordRulesTest do
 
   alias MsbmsSystDatastore.DbTypes
 
+  test "Can add Disallowed Password" do
+    assert :ok = Impl.PasswordRules.create_disallowed_password("can_add_disallowed_password_test")
+
+    # The attempt to add a duplicate entry should still return :ok even though
+    # at the database level the insert is ignored (ON CONFLICT/DO NOTHING).
+
+    assert :ok = Impl.PasswordRules.create_disallowed_password("can_add_disallowed_password_test")
+  end
+
+  test "Can test if password is disallowed" do
+    assert {:ok, true} = Impl.PasswordRules.password_disallowed("Disallowed!Test#02")
+    assert {:ok, false} = Impl.PasswordRules.password_disallowed("NotDisallowed!Test#02")
+  end
+
+  test "Can delete Disallowed Password once" do
+    assert {:ok, :deleted} =
+             Impl.PasswordRules.delete_disallowed_password("DeleteDisallowed!Test#02")
+
+    assert {:ok, :no_record} =
+             Impl.PasswordRules.delete_disallowed_password("DeleteDisallowed!Test#02")
+  end
+
   test "Can retrieve Global Password Rules" do
     global_pwd_rules = Impl.PasswordRules.get_global_password_rules()
 
