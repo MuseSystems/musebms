@@ -30,7 +30,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
 
     insert_params
     |> Map.put(:owner_id, owner_id)
-    |> Map.merge(default_rules, fn _k, v1, v2 -> v1 || v2 end)
+    |> Map.merge(default_rules, fn _k, v1, v2 -> if v1 != nil, do: v1, else: v2 end)
     |> Data.SystOwnerPasswordRules.insert_changeset()
     |> MsbmsSystDatastore.insert!(returning: true)
     |> then(&{:ok, &1})
