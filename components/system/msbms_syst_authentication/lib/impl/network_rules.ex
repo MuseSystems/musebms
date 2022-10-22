@@ -21,12 +21,25 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
 
   @moduledoc false
 
-  @spec host_disallowed?(Types.host_address()) :: boolean()
-  def host_disallowed?(host_addr) when is_tuple(host_addr) do
+  @spec host_disallowed(Types.host_address()) :: {:ok, boolean()} | {:error, MsbmsSystError.t()}
+  def host_disallowed(host_addr) when is_tuple(host_addr) do
     target_host = %DbTypes.Inet{address: host_addr}
 
     from(dh in Data.SystDisallowedHosts, where: dh.host_address == ^target_host)
     |> MsbmsSystDatastore.exists?()
+    |> then(&{:ok, &1})
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure checking if host disallowed.",
+          cause: error
+        }
+      }
   end
 
   @spec create_disallowed_host(Types.host_address()) ::
