@@ -49,7 +49,7 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
 
     Data.SystDisallowedHosts.insert_changeset(target_host)
     |> MsbmsSystDatastore.insert!(returning: true)
-    |> then(&{:ok, &1})
+    |> then(&{:ok, if(&1.id == nil, do: nil, else: &1)})
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
