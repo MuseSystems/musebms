@@ -64,14 +64,49 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
       }
   end
 
+  @spec delete_disallowed_host_addr(Types.host_address()) ::
+          {:ok, :deleted | :not_found} | {:error, MsbmsSystError.t()}
+  def delete_disallowed_host_addr(host_addr) when not is_nil(host_addr) do
+    target_host = %DbTypes.Inet{address: host_addr}
+
+    from(dh in Data.SystDisallowedHosts, where: dh.host_address == ^target_host)
+    |> process_disallowed_host_delete()
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure deleting Disallowed Host by host IP address.",
+          cause: error
+        }
+      }
+  end
+
   @spec delete_disallowed_host(Types.disallowed_host_id() | Data.SystDisallowedHosts.t()) ::
-          :ok | {:error, MsbmsSystError.t()}
+          {:ok, :deleted | :not_found} | {:error, MsbmsSystError.t()}
+  def delete_disallowed_host(%Data.SystDisallowedHosts{} = disallowed_host) do
+    from(dh in Data.SystDisallowedHosts, where: dh.id == ^disallowed_host.id)
+    |> process_disallowed_host_delete()
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure deleting Disallowed Host.",
+          cause: error
+        }
+      }
+  end
+
   def delete_disallowed_host(disallowed_host_id) when is_binary(disallowed_host_id) do
     from(dh in Data.SystDisallowedHosts, where: dh.id == ^disallowed_host_id)
-    |> MsbmsSystDatastore.one!()
-    |> delete_disallowed_host()
-
-    :ok
+    |> process_disallowed_host_delete()
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -86,20 +121,22 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
       }
   end
 
-  def delete_disallowed_host(%Data.SystDisallowedHosts{} = disallowed_host) do
-    MsbmsSystDatastore.delete!(disallowed_host)
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+  defp process_disallowed_host_delete(query) do
+    query
+    |> MsbmsSystDatastore.delete_all()
+    |> case do
+      {0, _} ->
+        {:ok, :not_found}
 
-      {
-        :error,
-        %MsbmsSystError{
+      {1, _} ->
+        {:ok, :deleted}
+
+      cause ->
+        raise MsbmsSystError,
           code: :undefined_error,
-          message: "Failure deleting Disallowed Host.",
-          cause: error
-        }
-      }
+          message: "Failure deleting Disallowed Host by ID.",
+          cause: cause
+    end
   end
 
   @spec get_disallowed_host_record_by_id(Types.disallowed_host_id()) ::
