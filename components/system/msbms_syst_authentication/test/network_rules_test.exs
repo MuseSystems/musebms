@@ -29,14 +29,37 @@ defmodule NetworkRulesTest do
     assert {:ok, true} = Impl.NetworkRules.host_disallowed(~i"10.122.122.1")
   end
 
-  test "Can delete Disallowed Host" do
-    {:ok, true} = Impl.NetworkRules.host_disallowed(~i"10.123.123.5")
+  test "Can delete Disallowed Host by record ID" do
+    {:ok, true} = Impl.NetworkRules.host_disallowed(~i"10.10.250.1")
 
     {:ok, disallowed_host_record} =
-      Impl.NetworkRules.get_disallowed_host_record_by_host(~i"10.123.123.5")
+      Impl.NetworkRules.get_disallowed_host_record_by_host(~i"10.10.250.1")
 
-    assert :ok = Impl.NetworkRules.delete_disallowed_host(disallowed_host_record.id)
-    assert {:ok, false} = Impl.NetworkRules.host_disallowed(~i"10.123.123.5")
+    assert {:ok, :deleted} = Impl.NetworkRules.delete_disallowed_host(disallowed_host_record.id)
+    assert {:ok, false} = Impl.NetworkRules.host_disallowed(~i"10.10.250.1")
+
+    assert {:ok, :not_found} = Impl.NetworkRules.delete_disallowed_host(disallowed_host_record.id)
+  end
+
+  test "Can delete Disallowed Host by record" do
+    {:ok, true} = Impl.NetworkRules.host_disallowed(~i"10.10.250.2")
+
+    {:ok, disallowed_host_record} =
+      Impl.NetworkRules.get_disallowed_host_record_by_host(~i"10.10.250.2")
+
+    assert {:ok, :deleted} = Impl.NetworkRules.delete_disallowed_host(disallowed_host_record)
+    assert {:ok, false} = Impl.NetworkRules.host_disallowed(~i"10.10.250.2")
+
+    assert {:ok, :not_found} = Impl.NetworkRules.delete_disallowed_host(disallowed_host_record)
+  end
+
+  test "Can delete Disallowed Host by host IP address" do
+    {:ok, true} = Impl.NetworkRules.host_disallowed(~i"10.10.250.3")
+
+    assert {:ok, :deleted} = Impl.NetworkRules.delete_disallowed_host_addr(~i"10.10.250.3")
+    assert {:ok, false} = Impl.NetworkRules.host_disallowed(~i"10.10.250.3")
+
+    assert {:ok, :not_found} = Impl.NetworkRules.delete_disallowed_host_addr(~i"10.10.250.3")
   end
 
   test "Can retrieve Disallowed Host by record ID" do
