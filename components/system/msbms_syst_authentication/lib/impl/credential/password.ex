@@ -249,7 +249,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
   defp maybe_require_mfa(extended_state, _rules), do: extended_state
 
   defp check_disallowed_pwd(pwd_text) do
-    case Impl.DisallowedPasswords.password_disallowed(pwd_text) do
+    case Impl.PasswordRules.password_disallowed(pwd_text) do
       {:ok, result} ->
         result
 
