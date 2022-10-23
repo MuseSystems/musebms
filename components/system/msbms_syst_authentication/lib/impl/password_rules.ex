@@ -69,7 +69,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
   end
 
   @spec delete_disallowed_password(Types.credential()) ::
-          {:ok, :deleted | :no_record} | {:error, MsbmsSystError.t()}
+          {:ok, :deleted | :not_found} | {:error, MsbmsSystError.t()}
   def delete_disallowed_password(password) when is_binary(password) do
     pwd_hash = Impl.Hash.weak_hash(password)
 
@@ -77,7 +77,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     |> MsbmsSystDatastore.delete_all()
     |> case do
       {0, _} ->
-        {:ok, :no_record}
+        {:ok, :not_found}
 
       {1, _} ->
         {:ok, :deleted}
