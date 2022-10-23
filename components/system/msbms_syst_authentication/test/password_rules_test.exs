@@ -36,7 +36,7 @@ defmodule PasswordRulesTest do
     assert {:ok, :deleted} =
              Impl.PasswordRules.delete_disallowed_password("DeleteDisallowed!Test#02")
 
-    assert {:ok, :no_record} =
+    assert {:ok, :not_found} =
              Impl.PasswordRules.delete_disallowed_password("DeleteDisallowed!Test#02")
   end
 
