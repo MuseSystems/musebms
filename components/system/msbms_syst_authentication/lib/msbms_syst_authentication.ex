@@ -420,7 +420,7 @@ defmodule MsbmsSystAuthentication do
   On success, this function will return a success tuple indicating if the
   requested password was deleted from the disallowed passwords list
   (`{:ok, :deleted}`) or if the password simply wasn't found in the list
-  (`{:ok, :no_record}`).
+  (`{:ok, :not_found}`).
 
   ## Parameters
 
@@ -437,9 +437,9 @@ defmodule MsbmsSystAuthentication do
     Result when trying to delete a record not already on the list.
 
       iex> MsbmsSystAuthentication.delete_disallowed_password("Not on List")
-      {:ok, :no_record}
+      {:ok, :not_found}
   """
   @spec delete_disallowed_password(Types.credential()) ::
-          {:ok, :deleted | :no_record} | {:error, MsbmsSystError.t()}
+          {:ok, :deleted | :not_found} | {:error, MsbmsSystError.t()}
   defdelegate delete_disallowed_password(password), to: Impl.PasswordRules
 end
