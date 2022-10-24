@@ -21,7 +21,8 @@ defmodule MsbmsSystAuthentication.Impl.Credential do
               Types.credential() | nil,
               Keyword.t()
             ) ::
-              {:ok, Types.credential() | nil}
+              :ok
+              | {:ok, Types.credential()}
               | Types.credential_set_failures()
               | {:error, MsbmsSystError.t()}
 
