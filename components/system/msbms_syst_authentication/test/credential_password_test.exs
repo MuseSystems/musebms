@@ -179,7 +179,7 @@ defmodule CredentialPasswordTest do
     {:ok, access_account_id} =
       Impl.AccessAccount.get_access_account_id_by_name("credential_password_create_new_test_acct")
 
-    assert {:ok, nil} =
+    assert :ok =
              Impl.Credential.Password.set_credential(access_account_id, "TestPassword!123!", nil)
   end
 
@@ -195,12 +195,7 @@ defmodule CredentialPasswordTest do
 
     test_time = DateTime.truncate(DateTime.utc_now(), :second)
 
-    assert {:ok, nil} =
-             Impl.Credential.Password.set_credential(
-               access_account_id,
-               new_pwd,
-               nil
-             )
+    assert :ok = Impl.Credential.Password.set_credential(access_account_id, new_pwd, nil)
 
     assert {:confirmed, _} =
              Impl.Credential.Password.confirm_credential(
@@ -232,19 +227,9 @@ defmodule CredentialPasswordTest do
     new2_pwd = MsbmsSystUtils.get_random_string(64, '0123456789ABCDEFGHIJabcdefghij`~!@#$%^&*')
     new3_pwd = MsbmsSystUtils.get_random_string(64, '0123456789ABCDEFGHIJabcdefghij`~!@#$%^&*')
 
-    assert {:ok, nil} =
-             Impl.Credential.Password.set_credential(
-               access_account_id,
-               new1_pwd,
-               nil
-             )
+    assert :ok = Impl.Credential.Password.set_credential(access_account_id, new1_pwd, nil)
 
-    assert {:ok, nil} =
-             Impl.Credential.Password.set_credential(
-               access_account_id,
-               new2_pwd,
-               nil
-             )
+    assert :ok = Impl.Credential.Password.set_credential(access_account_id, new2_pwd, nil)
 
     assert {:invalid_credential, [{:password_rule_recent_password, _}]} =
              Impl.Credential.Password.set_credential(
@@ -253,19 +238,9 @@ defmodule CredentialPasswordTest do
                nil
              )
 
-    assert {:ok, nil} =
-             Impl.Credential.Password.set_credential(
-               access_account_id,
-               new3_pwd,
-               nil
-             )
+    assert :ok = Impl.Credential.Password.set_credential(access_account_id, new3_pwd, nil)
 
-    assert {:ok, nil} =
-             Impl.Credential.Password.set_credential(
-               access_account_id,
-               new1_pwd,
-               nil
-             )
+    assert :ok = Impl.Credential.Password.set_credential(access_account_id, new1_pwd, nil)
   end
 
   test "Cannot insert invalid Password Credential" do

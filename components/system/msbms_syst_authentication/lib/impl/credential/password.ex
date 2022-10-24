@@ -267,7 +267,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
           Types.credential(),
           Keyword.t()
         ) ::
-          {:ok, nil} | Types.credential_set_failures() | {:error, MsbmsSystError.t()}
+          :ok | Types.credential_set_failures() | {:error, MsbmsSystError.t()}
   def set_credential(access_account_id, _identity_id \\ nil, pwd_text, _opts) do
     pwd_rules = Impl.PasswordRules.get_access_account_password_rule(access_account_id)
 
@@ -320,7 +320,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
         |> MsbmsSystDatastore.insert!()
       end)
 
-    {:ok, nil}
+    :ok
   end
 
   defp set_credential_data(cred, pwd_rules, pwd_text) do
@@ -335,7 +335,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
         |> MsbmsSystDatastore.update!()
       end)
 
-    {:ok, nil}
+    :ok
   end
 
   defp update_password_history(pwd_rules, pwd_hash) do
