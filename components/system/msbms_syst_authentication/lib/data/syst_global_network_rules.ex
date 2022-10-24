@@ -13,6 +13,7 @@
 defmodule MsbmsSystAuthentication.Data.SystGlobalNetworkRules do
   use MsbmsSystDatastore.Schema
 
+  alias MsbmsSystAuthentication.Data
   alias MsbmsSystDatastore.DbTypes
 
   @moduledoc """
@@ -62,4 +63,12 @@ defmodule MsbmsSystAuthentication.Data.SystGlobalNetworkRules do
     field(:diag_row_version, :integer)
     field(:diag_update_count, :integer)
   end
+
+  @spec insert_changeset(Types.global_network_rule_params()) :: Ecto.Changeset.t()
+  defdelegate insert_changeset(insert_params), to: Data.Validators.SystGlobalNetworkRules
+
+  @spec update_changeset(Data.SystGlobalNetworkRules.t(), Types.global_network_rule_params()) ::
+          Ecto.Changeset.t()
+  defdelegate update_changeset(global_network_rule, update_params),
+    to: Data.Validators.SystGlobalNetworkRules
 end
