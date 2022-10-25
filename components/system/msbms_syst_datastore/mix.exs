@@ -25,9 +25,7 @@ defmodule MsbmsSystDatastore.MixProject do
     {:ex_doc, "~> 0.20", only: :dev, runtime: false},
     {:jason, "~> 1.0"},
     {:postgrex, "~> 0.10"},
-    {:toml,
-     git: "https://github.com/MuseSystems/toml-elixir.git",
-     branch: "feature/typeless-arrays-with-tests"},
+    {:toml, "~> 0.7"},
     {:gradient, github: "esl/gradient", only: [:dev], runtime: false},
 
     # Muse Systems Business Management System Components
