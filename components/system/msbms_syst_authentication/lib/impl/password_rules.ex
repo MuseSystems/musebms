@@ -267,25 +267,70 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     Pathex.over!(rule, update_path, fn _ -> req_value end)
   end
 
-  def verify_password_rules(test_rules) do
-    standard_rules = get_global_password_rules()
-    verify_password_rules(standard_rules, test_rules)
+  @spec verify_password_rules(Types.password_rule(), Types.password_rule()) ::
+          {:ok, Keyword.t(Types.password_rule_violations())} | {:error, MsbmsSystError.t()}
+  def verify_password_rules(test_rules, standard_rules) do
+    verify_password_rules!(test_rules, standard_rules)
+    |> then(&{:ok, &1})
+  rescue
+    error -> {:error, error}
   end
 
-  def verify_password_rules(standard_rules, test_rules) do
+  @spec verify_password_rules!(
+          Types.password_rule(),
+          Data.SystGlobalPasswordRules.t() | Types.password_rule()
+        ) ::
+          Keyword.t(Types.password_rule_violations())
+  def verify_password_rules!(%{} = test_rules, nil = _standard_rules) do
+    {:ok, standard_rules} = get_global_password_rules()
+    verify_password_rules!(test_rules, standard_rules)
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      raise MsbmsSystError,
+        code: :undefined_error,
+        message: "Failure verifying Password Rules or retrieving system Standard Rules.",
+        cause: error
+  end
+
+  def verify_password_rules!(%{} = test_rules, %{} = standard_rules) do
     []
-    |> verify_password_rule_length(standard_rules, test_rules)
-    |> verify_password_rule_max_age(standard_rules, test_rules)
-    |> verify_password_rule_req_upper_case(standard_rules, test_rules)
-    |> verify_password_rule_req_lower_case(standard_rules, test_rules)
-    |> verify_password_rule_req_numbers(standard_rules, test_rules)
-    |> verify_password_rule_req_symbols(standard_rules, test_rules)
-    |> verify_password_rule_recently_used(standard_rules, test_rules)
-    |> verify_password_rule_no_compromised(standard_rules, test_rules)
-    |> verify_password_rule_require_mfa(standard_rules, test_rules)
+    |> verify_password_rule_length(test_rules, standard_rules)
+    |> verify_password_rule_max_age(test_rules, standard_rules)
+    |> verify_password_rule_req_upper_case(test_rules, standard_rules)
+    |> verify_password_rule_req_lower_case(test_rules, standard_rules)
+    |> verify_password_rule_req_numbers(test_rules, standard_rules)
+    |> verify_password_rule_req_symbols(test_rules, standard_rules)
+    |> verify_password_rule_recently_used(test_rules, standard_rules)
+    |> verify_password_rule_no_compromised(test_rules, standard_rules)
+    |> verify_password_rule_require_mfa(test_rules, standard_rules)
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      raise MsbmsSystError,
+        code: :undefined_error,
+        message: "Failure verifying Test Password Rules against Standard Password Rules.",
+        cause: error
   end
 
-  defp verify_password_rule_length(failure_list, std_rules, test_rules) do
+  def verify_password_rules!(test_rules, standard_rules) do
+    cause = %{parameters: %{test_rules: test_rules, standard_rules: standard_rules}}
+
+    error = %MsbmsSystError{
+      code: :undefined_error,
+      message:
+        "Bad parameters while verifying Test Password Rules against Standard Password Rules.",
+      cause: cause
+    }
+
+    Logger.error(Exception.format(:error, error))
+
+    raise error
+  end
+
+  defp verify_password_rule_length(failure_list, test_rules, std_rules) do
     compare_result =
       DbTypes.Range.bounds_compare(std_rules.password_length, test_rules.password_length)
 
@@ -308,7 +353,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
 
   defp verify_rule_max_length(failure_list, _, _), do: failure_list
 
-  defp verify_password_rule_max_age(failure_list, std_rules, test_rules) do
+  defp verify_password_rule_max_age(failure_list, test_rules, std_rules) do
     compare_result = compare_max_age(std_rules.max_age, test_rules.max_age)
     verify_rule_max_age(failure_list, compare_result, std_rules.max_age)
   end
@@ -331,10 +376,10 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
 
   defp verify_rule_max_age(failure_list, _, _), do: failure_list
 
-  defp verify_password_rule_req_upper_case(failure_list, %{require_upper_case: 0}, _test_rules),
+  defp verify_password_rule_req_upper_case(failure_list, _test_rules, %{require_upper_case: 0}),
     do: failure_list
 
-  defp verify_password_rule_req_upper_case(failure_list, std_rules, test_rules) do
+  defp verify_password_rule_req_upper_case(failure_list, test_rules, std_rules) do
     verify_rule_required_min(
       failure_list,
       :required_rule_upper_case,
@@ -343,7 +388,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     )
   end
 
-  defp verify_password_rule_req_lower_case(failure_list, std_rules, test_rules) do
+  defp verify_password_rule_req_lower_case(failure_list, test_rules, std_rules) do
     verify_rule_required_min(
       failure_list,
       :required_rule_lower_case,
@@ -352,7 +397,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     )
   end
 
-  defp verify_password_rule_req_numbers(failure_list, std_rules, test_rules) do
+  defp verify_password_rule_req_numbers(failure_list, test_rules, std_rules) do
     verify_rule_required_min(
       failure_list,
       :required_rule_numbers,
@@ -361,7 +406,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     )
   end
 
-  defp verify_password_rule_req_symbols(failure_list, std_rules, test_rules) do
+  defp verify_password_rule_req_symbols(failure_list, test_rules, std_rules) do
     verify_rule_required_min(
       failure_list,
       :required_rule_symbols,
@@ -370,7 +415,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     )
   end
 
-  defp verify_password_rule_recently_used(failure_list, std_rules, test_rules) do
+  defp verify_password_rule_recently_used(failure_list, test_rules, std_rules) do
     verify_rule_required_min(
       failure_list,
       :required_rule_disallow_recent,
@@ -389,7 +434,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
        when is_integer(std_req) and is_integer(test_req),
        do: failure_list
 
-  defp verify_password_rule_no_compromised(failure_list, std_rules, test_rules) do
+  defp verify_password_rule_no_compromised(failure_list, test_rules, std_rules) do
     verify_rule_required_boolean(
       failure_list,
       :required_rule_no_compromised,
@@ -398,7 +443,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     )
   end
 
-  defp verify_password_rule_require_mfa(failure_list, std_rules, test_rules) do
+  defp verify_password_rule_require_mfa(failure_list, test_rules, std_rules) do
     verify_rule_required_boolean(
       failure_list,
       :required_rule_require_mfa,
