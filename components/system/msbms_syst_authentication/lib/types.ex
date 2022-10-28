@@ -233,7 +233,7 @@ defmodule MsbmsSystAuthentication.Types do
           optional(:allowed_mfa_types) => list(String.t())
         }
 
-  @type password_rule_violations ::
+  @type password_rule_violations() ::
           {:password_rule_length_min, pos_integer()}
           | {:password_rule_length_max, pos_integer()}
           | {:password_rule_required_upper, pos_integer()}
