@@ -50,6 +50,14 @@ defmodule MsbmsSystAuthentication.Impl.Credential.GenericToken do
       end
 
     {credential_state, []}
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      raise MsbmsSystError,
+        code: :undefined_error,
+        message: "Failure confirming Token Credential.",
+        cause: error
   end
 
   defp maybe_confirm_credential_exists(%Data.SystCredentials{}), do: :ok
@@ -167,14 +175,10 @@ defmodule MsbmsSystAuthentication.Impl.Credential.GenericToken do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      {
-        :error,
-        %MsbmsSystError{
-          code: :undefined_error,
-          message: "Failure retrieving token Credential record.",
-          cause: error
-        }
-      }
+      raise MsbmsSystError,
+        code: :undefined_error,
+        message: "Failure retrieving Token Credential.",
+        cause: error
   end
 
   def get_credential_record(_credential_type, _access_account_id, _identity_id), do: nil
@@ -188,7 +192,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.GenericToken do
           Types.credential_types(),
           Types.credential_id() | Data.SystCredentials.t()
         ) ::
-          :ok | {:error, MsbmsSystError.t()}
+          :ok
 
   def delete_credential(credential_type, credential_id)
       when credential_type in @token_types and is_binary(credential_id) do
@@ -205,14 +209,10 @@ defmodule MsbmsSystAuthentication.Impl.Credential.GenericToken do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      {
-        :error,
-        %MsbmsSystError{
-          code: :undefined_error,
-          message: "Failure deleting token Credential record by ID.",
-          cause: error
-        }
-      }
+      raise MsbmsSystError,
+        code: :undefined_error,
+        message: "Failure deleting API Token Credential.",
+        cause: error
   end
 
   def delete_credential(credential_type, %Data.SystCredentials{} = cred) do
@@ -223,27 +223,13 @@ defmodule MsbmsSystAuthentication.Impl.Credential.GenericToken do
       MsbmsSystDatastore.delete!(cred)
       :ok
     else
-      {:error,
-       %MsbmsSystError{
-         code: :undefined_error,
-         message: "Incorrect Credential Type for Credential record delete.",
-         cause: %{
-           parameters: [credential_type: credential_type, cred: cred],
-           target_cred_type_name: target_cred_type_name
-         }
-       }}
-    end
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MsbmsSystError{
-          code: :undefined_error,
-          message: "Failure deleting token Credential record.",
-          cause: error
+      raise MsbmsSystError,
+        code: :undefined_error,
+        message: "Incorrect Credential Type for Credential record delete.",
+        cause: %{
+          parameters: [credential_type: credential_type, cred: cred],
+          target_cred_type_name: target_cred_type_name
         }
-      }
+    end
   end
 end

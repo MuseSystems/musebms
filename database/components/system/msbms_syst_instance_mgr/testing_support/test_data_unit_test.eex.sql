@@ -128,7 +128,37 @@ BEGIN
          ,
         ( 'owner2', 'Owner 2 Inactive', ( SELECT id
                                           FROM msbms_syst_data.syst_enum_items
-                                          WHERE internal_name = 'owner_states_sysdef_inactive' ) );
+                                          WHERE internal_name = 'owner_states_sysdef_inactive' ) )
+
+         ,
+        ( 'owner5', 'Owner 5 Active', ( SELECT id
+                                          FROM msbms_syst_data.syst_enum_items
+                                          WHERE internal_name = 'owner_states_sysdef_active' ) )
+
+         ,
+        ( 'owner6', 'Owner 6 Inactive', ( SELECT id
+                                          FROM msbms_syst_data.syst_enum_items
+                                          WHERE internal_name = 'owner_states_sysdef_active' ) )
+
+         ,
+        ( 'owner7', 'Owner 7 Inactive', ( SELECT id
+                                          FROM msbms_syst_data.syst_enum_items
+                                          WHERE internal_name = 'owner_states_sysdef_active' ) )
+
+         ,
+        ( 'owner8', 'Owner 8 Inactive', ( SELECT id
+                                          FROM msbms_syst_data.syst_enum_items
+                                          WHERE internal_name = 'owner_states_sysdef_active' ) )
+
+         ,
+        ( 'owner9', 'Owner 9 Inactive', ( SELECT id
+                                          FROM msbms_syst_data.syst_enum_items
+                                          WHERE internal_name = 'owner_states_sysdef_active' ) )
+
+         ,
+        ( 'owner0', 'Owner 0 Inactive', ( SELECT id
+                                          FROM msbms_syst_data.syst_enum_items
+                                          WHERE internal_name = 'owner_states_sysdef_active' ) );
 
 
     --

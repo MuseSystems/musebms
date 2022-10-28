@@ -21,22 +21,43 @@ defmodule CredentialValidationTest do
   test "Can Confirm Validation Credential" do
     test_account = get_account_data("credential_validation_confirm_test_accnt")
 
-    assert {:confirmed, []} =
+    assert {:ok, {:confirmed, []}} =
              Impl.Credential.Validation.confirm_credential(
                test_account.access_account_id,
                test_account.identity_id,
                "G0yRRAHw8R4dMlo5E3C3mnfXzLCMggXJYwbphTkFNkWrYLJt"
              )
 
-    assert {:wrong_credential, []} =
+    assert {:ok, {:wrong_credential, []}} =
              Impl.Credential.Validation.confirm_credential(
                test_account.access_account_id,
                test_account.identity_id,
                MsbmsSystUtils.get_random_string(48)
              )
 
-    assert {:no_credential, []} =
+    assert {:ok, {:no_credential, []}} =
              Impl.Credential.Validation.confirm_credential(
+               test_account.access_account_id,
+               nil,
+               "G0yRRAHw8R4dMlo5E3C3mnfXzLCMggXJYwbphTkFNkWrYLJt"
+             )
+
+    assert {:confirmed, []} =
+             Impl.Credential.Validation.confirm_credential!(
+               test_account.access_account_id,
+               test_account.identity_id,
+               "G0yRRAHw8R4dMlo5E3C3mnfXzLCMggXJYwbphTkFNkWrYLJt"
+             )
+
+    assert {:wrong_credential, []} =
+             Impl.Credential.Validation.confirm_credential!(
+               test_account.access_account_id,
+               test_account.identity_id,
+               MsbmsSystUtils.get_random_string(48)
+             )
+
+    assert {:no_credential, []} =
+             Impl.Credential.Validation.confirm_credential!(
                test_account.access_account_id,
                nil,
                "G0yRRAHw8R4dMlo5E3C3mnfXzLCMggXJYwbphTkFNkWrYLJt"
@@ -106,21 +127,31 @@ defmodule CredentialValidationTest do
              )
   end
 
-  test "Can get an Validation Credential record" do
+  test "Can get an Validation Credential record / Success Tuple" do
     test_account = get_account_data("credential_validation_retrieval_test_accnt")
 
-    assert %Data.SystCredentials{} =
+    assert {:ok, %Data.SystCredentials{}} =
              Impl.Credential.Validation.get_credential_record(
                test_account.access_account_id,
                test_account.identity_id
              )
   end
 
-  test "Can delete an Validation Credential record" do
+  test "Can get an Validation Credential record / Raise on Error" do
+    test_account = get_account_data("credential_validation_retrieval_test_accnt")
+
+    assert %Data.SystCredentials{} =
+             Impl.Credential.Validation.get_credential_record!(
+               test_account.access_account_id,
+               test_account.identity_id
+             )
+  end
+
+  test "Can delete an Validation Credential record / Success Tuple" do
     test_account = get_account_data("credential_validation_delete_test_accnt")
 
     cred_record =
-      Impl.Credential.Validation.get_credential_record(
+      Impl.Credential.Validation.get_credential_record!(
         test_account.access_account_id,
         test_account.identity_id
       )
@@ -128,16 +159,40 @@ defmodule CredentialValidationTest do
     assert :ok = Impl.Credential.Validation.delete_credential(cred_record)
   end
 
-  test "Can delete an Validation Credential record by ID" do
+  test "Can delete an Validation Credential record / Raise on Error" do
+    test_account = get_account_data("credential_validation_delete1_test_accnt")
+
+    cred_record =
+      Impl.Credential.Validation.get_credential_record!(
+        test_account.access_account_id,
+        test_account.identity_id
+      )
+
+    assert :ok = Impl.Credential.Validation.delete_credential!(cred_record)
+  end
+
+  test "Can delete an Validation Credential record by ID / Success Tuple" do
     test_account = get_account_data("credential_validation_delete_id_test_accnt")
 
     cred_record =
-      Impl.Credential.Validation.get_credential_record(
+      Impl.Credential.Validation.get_credential_record!(
         test_account.access_account_id,
         test_account.identity_id
       )
 
     assert :ok = Impl.Credential.Validation.delete_credential(cred_record.id)
+  end
+
+  test "Can delete an Validation Credential record by ID / Raise on Error" do
+    test_account = get_account_data("credential_validation_delete1_id_test_accnt")
+
+    cred_record =
+      Impl.Credential.Validation.get_credential_record!(
+        test_account.access_account_id,
+        test_account.identity_id
+      )
+
+    assert :ok = Impl.Credential.Validation.delete_credential!(cred_record.id)
   end
 
   defp get_account_data(access_account_name) do

@@ -38,6 +38,7 @@ $AUTHENTICATION_TESTING_INIT$
             "Disallowed!Test#01",
             "Disallowed!Test#02",
             "DeleteDisallowed!Test#02",
+            "DeleteDisallowed!Test#02a",
             "Is Disallowed",
             "No Longer Disallowed"
           ],
@@ -89,6 +90,25 @@ $AUTHENTICATION_TESTING_INIT$
             },
             {
               "owner_name": "owner3",
+              "password_length": {
+                "lower": 8,
+                "upper": 512,
+                "inclusion": "[]"
+              },
+              "max_age_days": 0,
+              "require_upper_case": 0,
+              "require_lower_case": 0,
+              "require_numbers": 0,
+              "require_symbols": 0,
+              "disallow_recently_used": 0,
+              "disallow_compromised": true,
+              "require_mfa": false,
+              "allowed_mfa_types": [
+                "credential_types_secondary_totp"
+              ]
+            },
+            {
+              "owner_name": "owner5",
               "password_length": {
                 "lower": 8,
                 "upper": 512,
@@ -1358,6 +1378,51 @@ $AUTHENTICATION_TESTING_INIT$
               "password_history": []
             },
             {
+              "access_account_name": "credential_api_token_delete1_test_accnt",
+              "external_name": "Credential API Token delete1 Test Account",
+              "owning_owner_name": null,
+              "allow_global_logins": false,
+              "access_account_state_name": "access_account_states_sysdef_active",
+              "instance_access": [
+                {
+                  "instance_name": null,
+                  "access_granted_days": -20,
+                  "invitation_issued_days": -40,
+                  "invitation_expires_days": -10,
+                  "invitation_declined_days": null
+                }
+              ],
+              "identities": [
+                {
+                  "identity_type_name": "identity_types_sysdef_email",
+                  "account_identifier": "credential_api_token_delete1_test_accnt@musesystems.com",
+                  "account_identifier_length": null,
+                  "validated_days": -15,
+                  "validation_requested_days": -20,
+                  "identity_expires_days": null,
+                  "validation": null,
+                  "credential": null
+                },
+                {
+                  "identity_type_name": "identity_types_sysdef_api",
+                  "account_identifier": null,
+                  "account_identifier_length": 16,
+                  "validated_days": null,
+                  "validation_requested_days": null,
+                  "identity_expires_days": 1,
+                  "validation": null,
+                  "credential": {
+                    "credential_type_name": "credential_types_sysdef_token_api",
+                    "credential_plaintext": "m9n8hjd12GoElonrbSNwuHo6pTzSuKlOB3vXQPoo6jwZ73CB",
+                    "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$/0lP+TC+lrcnymLlez2f1Q$5SnuizyihWEMHvIIzDz3GU/ylmEaWfY2F+FVSZKFiFk",
+                    "last_updated_days": -10
+                  }
+                }
+              ],
+              "credentials": [],
+              "password_history": []
+            },
+            {
               "access_account_name": "credential_api_token_delete_id_test_accnt",
               "external_name": "Credential API Token delete ID Test Account",
               "owning_owner_name": null,
@@ -1376,6 +1441,51 @@ $AUTHENTICATION_TESTING_INIT$
                 {
                   "identity_type_name": "identity_types_sysdef_email",
                   "account_identifier": "credential_api_token_delete_id_test_accnt@musesystems.com",
+                  "account_identifier_length": null,
+                  "validated_days": -15,
+                  "validation_requested_days": -20,
+                  "identity_expires_days": null,
+                  "validation": null,
+                  "credential": null
+                },
+                {
+                  "identity_type_name": "identity_types_sysdef_api",
+                  "account_identifier": null,
+                  "account_identifier_length": 16,
+                  "validated_days": null,
+                  "validation_requested_days": null,
+                  "identity_expires_days": 1,
+                  "validation": null,
+                  "credential": {
+                    "credential_type_name": "credential_types_sysdef_token_api",
+                    "credential_plaintext": "t53eMYBTSUUX846j2EPu7e8EPVE3zw30AQSlaZoDTLIB0b4k",
+                    "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$+51I/mOJNUVNC6U1oQeBOQ$oRyNPBrxDk7KUn3dOTSRtsILm5hGmaQlwspjG+Xl6yk",
+                    "last_updated_days": -10
+                  }
+                }
+              ],
+              "credentials": [],
+              "password_history": []
+            },
+            {
+              "access_account_name": "credential_api_token_delete1_id_test_accnt",
+              "external_name": "Credential API Token delete ID Test Account",
+              "owning_owner_name": null,
+              "allow_global_logins": false,
+              "access_account_state_name": "access_account_states_sysdef_active",
+              "instance_access": [
+                {
+                  "instance_name": null,
+                  "access_granted_days": -20,
+                  "invitation_issued_days": -40,
+                  "invitation_expires_days": -10,
+                  "invitation_declined_days": null
+                }
+              ],
+              "identities": [
+                {
+                  "identity_type_name": "identity_types_sysdef_email",
+                  "account_identifier": "credential_api_token_delete1_id_test_accnt@musesystems.com",
                   "account_identifier_length": null,
                   "validated_days": -15,
                   "validation_requested_days": -20,
@@ -1722,6 +1832,40 @@ $AUTHENTICATION_TESTING_INIT$
               ]
             },
             {
+              "access_account_name": "credential_validation_delete1_test_accnt",
+              "external_name": "",
+              "owning_owner_name": "owner2",
+              "allow_global_logins": false,
+              "access_account_state_name": "access_account_states_sysdef_active",
+              "instance_access": [
+                {
+                  "instance_name": null,
+                  "access_granted_days": -20,
+                  "invitation_issued_days": -40,
+                  "invitation_expires_days": -10,
+                  "invitation_declined_days": null
+                }
+              ],
+              "identities": [
+                {
+                  "identity_type_name": "identity_types_sysdef_email",
+                  "account_identifier": "credential_validation_delete1_test_accnt@musesystems.com",
+                  "validation_requested_days": -1,
+                  "validation": {
+                    "identity": {
+                      "account_identifier_length": 40,
+                      "identity_expires_days": 1
+                    },
+                    "credential": {
+                      "credential_plaintext": "ryNLC1iAfn2rm17LLIDSOU0itgvU6WUZvkvHHzjlHBl1DDPG",
+                      "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$2Yr0TndTJQMjak9o3A1bvA$yy8n7qp6eO6GDGZJAkId8HQN/uJguzrJeMLrg9PUxaQ",
+                      "last_updated_days": -10
+                    }
+                  }
+                }
+              ]
+            },
+            {
               "access_account_name": "credential_validation_delete_id_test_accnt",
               "external_name": "",
               "owning_owner_name": "owner2",
@@ -1740,6 +1884,40 @@ $AUTHENTICATION_TESTING_INIT$
                 {
                   "identity_type_name": "identity_types_sysdef_email",
                   "account_identifier": "credential_validation_delete_id_test_accnt@musesystems.com",
+                  "validation_requested_days": -1,
+                  "validation": {
+                    "identity": {
+                      "account_identifier_length": 40,
+                      "identity_expires_days": 1
+                    },
+                    "credential": {
+                      "credential_plaintext": "JAFEUJXrdSS2G67xybjxY1Mrk9GFB1dEKcDh01DmaYX04W9P",
+                      "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$tyVmDHOsxhfTC42PW93OyQ$6+y5Nc+MzEu2WjH5J8Y9+tiOlCaiT5x2XVmG5w31xrE",
+                      "last_updated_days": -10
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "access_account_name": "credential_validation_delete1_id_test_accnt",
+              "external_name": "",
+              "owning_owner_name": "owner2",
+              "allow_global_logins": false,
+              "access_account_state_name": "access_account_states_sysdef_active",
+              "instance_access": [
+                {
+                  "instance_name": null,
+                  "access_granted_days": -20,
+                  "invitation_issued_days": -40,
+                  "invitation_expires_days": -10,
+                  "invitation_declined_days": null
+                }
+              ],
+              "identities": [
+                {
+                  "identity_type_name": "identity_types_sysdef_email",
+                  "account_identifier": "credential_validation_delete1_id_test_accnt@musesystems.com",
                   "validation_requested_days": -1,
                   "validation": {
                     "identity": {
@@ -1974,6 +2152,40 @@ $AUTHENTICATION_TESTING_INIT$
               ]
             },
             {
+              "access_account_name": "credential_recovery_delete1_id_test_accnt",
+              "external_name": "",
+              "owning_owner_name": "owner2",
+              "allow_global_logins": false,
+              "access_account_state_name": "access_account_states_sysdef_active",
+              "instance_access": [
+                {
+                  "instance_name": null,
+                  "access_granted_days": -20,
+                  "invitation_issued_days": -40,
+                  "invitation_expires_days": -10,
+                  "invitation_declined_days": null
+                }
+              ],
+              "identities": [
+                {
+                  "identity_type_name": "identity_types_sysdef_email",
+                  "account_identifier": "credential_recovery_delete1_id_test_accnt@musesystems.com",
+                  "validation_requested_days": -1,
+                  "validation": null
+                },
+                {
+                  "identity_type_name": "identity_types_sysdef_password_recovery",
+                  "account_identifier_length": 40,
+                  "credential": {
+                    "credential_type_name": "credential_types_sysdef_token_recovery",
+                    "credential_plaintext": "DXWXTJ7uFQk7BF4kO0rKzZmOKhem8sMsm0m0LJAGICXEao5z",
+                    "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$9aSXkebdkx5Qzymh7fi9MA$mJgp2W3D+8d4cATWVue6MaosRFHx0JJmGMNFgU/0W1M",
+                    "last_updated_days": -10
+                  }
+                }
+              ]
+            },
+            {
               "access_account_name": "credential_recovery_delete_test_accnt",
               "external_name": "",
               "owning_owner_name": "owner2",
@@ -1992,6 +2204,40 @@ $AUTHENTICATION_TESTING_INIT$
                 {
                   "identity_type_name": "identity_types_sysdef_email",
                   "account_identifier": "credential_recovery_delete_test_accnt@musesystems.com",
+                  "validation_requested_days": -1,
+                  "validation": null
+                },
+                {
+                  "identity_type_name": "identity_types_sysdef_password_recovery",
+                  "account_identifier_length": 40,
+                  "credential": {
+                    "credential_type_name": "credential_types_sysdef_token_recovery",
+                    "credential_plaintext": "XU19cYhV8jsqDnA9PYLZaPRsOPQFMKjWjvxgglhkn1l78CN9",
+                    "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$ZnF9pu4d+4gxK3NT0EWYsQ$2mCokWvAR0oS+C1hfn02fqKnKw+C3IUoC61QZk4K//c",
+                    "last_updated_days": -10
+                  }
+                }
+              ]
+            },
+            {
+              "access_account_name": "credential_recovery_delete1_test_accnt",
+              "external_name": "",
+              "owning_owner_name": "owner2",
+              "allow_global_logins": false,
+              "access_account_state_name": "access_account_states_sysdef_active",
+              "instance_access": [
+                {
+                  "instance_name": null,
+                  "access_granted_days": -20,
+                  "invitation_issued_days": -40,
+                  "invitation_expires_days": -10,
+                  "invitation_declined_days": null
+                }
+              ],
+              "identities": [
+                {
+                  "identity_type_name": "identity_types_sysdef_email",
+                  "account_identifier": "credential_recovery_delete1_test_accnt@musesystems.com",
                   "validation_requested_days": -1,
                   "validation": null
                 },
@@ -2257,6 +2503,60 @@ $AUTHENTICATION_TESTING_INIT$
                   "credential_type_name": "credential_types_sysdef_password",
                   "credential_plaintext": "credential.password.delete2",
                   "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$lvxXjFaoVjTYPj6MST433Q$arp9y6c2QeJiZQoyAUIn6aea6N/WfEiKCKakrKA0TFQ",
+                  "last_updated_days": -1
+                }
+              ],
+              "password_history": [],
+              "password_history_plaintext": []
+            },
+            {
+              "access_account_name": "credential_password_delete3_test_acct",
+              "external_name": "",
+              "owning_owner_name": "owner2",
+              "allow_global_logins": false,
+              "access_account_state_name": "access_account_states_sysdef_active",
+              "instance_access": [
+                {
+                  "instance_name": null,
+                  "access_granted_days": -20,
+                  "invitation_issued_days": -40,
+                  "invitation_expires_days": -10,
+                  "invitation_declined_days": null
+                }
+              ],
+              "identities": [],
+              "credentials": [
+                {
+                  "credential_type_name": "credential_types_sysdef_password",
+                  "credential_plaintext": "credential.password.delete3",
+                  "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$LVdWKfMBpGS4FlTS0If+0w$LqJJWVchQt8E4MG1E0X7fCRltznPnnqll6sfcSrfX0c",
+                  "last_updated_days": -1
+                }
+              ],
+              "password_history": [],
+              "password_history_plaintext": []
+            },
+            {
+              "access_account_name": "credential_password_delete4_test_acct",
+              "external_name": "",
+              "owning_owner_name": "owner2",
+              "allow_global_logins": false,
+              "access_account_state_name": "access_account_states_sysdef_active",
+              "instance_access": [
+                {
+                  "instance_name": null,
+                  "access_granted_days": -20,
+                  "invitation_issued_days": -40,
+                  "invitation_expires_days": -10,
+                  "invitation_declined_days": null
+                }
+              ],
+              "identities": [],
+              "credentials": [
+                {
+                  "credential_type_name": "credential_types_sysdef_password",
+                  "credential_plaintext": "credential.password.delete4",
+                  "credential_data": "$argon2id$v=19$m=65536,t=8,p=2$F8xYt/TZ/kExVr4P5WbXTA$q0uPo8W1RmvMqSIyeKXeQ1QqyvbZFMn1zjmdM7VXdY0",
                   "last_updated_days": -1
                 }
               ],
