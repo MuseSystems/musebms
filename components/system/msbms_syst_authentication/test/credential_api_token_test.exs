@@ -21,22 +21,43 @@ defmodule CredentialApiTokenTest do
   test "Can Confirm API Token Credential" do
     test_account = get_account_data("owned_all_access")
 
-    assert {:confirmed, []} =
+    assert {:ok, {:confirmed, []}} =
              Impl.Credential.ApiToken.confirm_credential(
                test_account.access_account_id,
                test_account.identity_id,
                "QNXWXLSYLB8O3PHMSLOEU9Y1WZF4PIIPUQREXSRRYLVBMPU2"
              )
 
-    assert {:wrong_credential, []} =
+    assert {:ok, {:wrong_credential, []}} =
              Impl.Credential.ApiToken.confirm_credential(
                test_account.access_account_id,
                test_account.identity_id,
                MsbmsSystUtils.get_random_string(48)
              )
 
-    assert {:no_credential, []} =
+    assert {:ok, {:no_credential, []}} =
              Impl.Credential.ApiToken.confirm_credential(
+               test_account.access_account_id,
+               nil,
+               "QNXWXLSYLB8O3PHMSLOEU9Y1WZF4PIIPUQREXSRRYLVBMPU2"
+             )
+
+    assert {:confirmed, []} =
+             Impl.Credential.ApiToken.confirm_credential!(
+               test_account.access_account_id,
+               test_account.identity_id,
+               "QNXWXLSYLB8O3PHMSLOEU9Y1WZF4PIIPUQREXSRRYLVBMPU2"
+             )
+
+    assert {:wrong_credential, []} =
+             Impl.Credential.ApiToken.confirm_credential!(
+               test_account.access_account_id,
+               test_account.identity_id,
+               MsbmsSystUtils.get_random_string(48)
+             )
+
+    assert {:no_credential, []} =
+             Impl.Credential.ApiToken.confirm_credential!(
                test_account.access_account_id,
                nil,
                "QNXWXLSYLB8O3PHMSLOEU9Y1WZF4PIIPUQREXSRRYLVBMPU2"
@@ -106,21 +127,31 @@ defmodule CredentialApiTokenTest do
              )
   end
 
-  test "Can get an API Token Credential record" do
+  test "Can get an API Token Credential record / Success Tuple" do
     test_account = get_account_data("unowned_all_access")
 
-    assert %Data.SystCredentials{} =
+    assert {:ok, %Data.SystCredentials{}} =
              Impl.Credential.ApiToken.get_credential_record(
                test_account.access_account_id,
                test_account.identity_id
              )
   end
 
-  test "Can delete an API Token Credential record" do
+  test "Can get an API Token Credential record / Raise on Error" do
+    test_account = get_account_data("unowned_all_access")
+
+    assert %Data.SystCredentials{} =
+             Impl.Credential.ApiToken.get_credential_record!(
+               test_account.access_account_id,
+               test_account.identity_id
+             )
+  end
+
+  test "Can delete an API Token Credential record / Success Tuple" do
     test_account = get_account_data("credential_api_token_delete_test_accnt")
 
     cred_record =
-      Impl.Credential.ApiToken.get_credential_record(
+      Impl.Credential.ApiToken.get_credential_record!(
         test_account.access_account_id,
         test_account.identity_id
       )
@@ -128,16 +159,40 @@ defmodule CredentialApiTokenTest do
     assert :ok = Impl.Credential.ApiToken.delete_credential(cred_record)
   end
 
-  test "Can delete an API Token Credential record by ID" do
+  test "Can delete an API Token Credential record / Raise on Error" do
+    test_account = get_account_data("credential_api_token_delete1_test_accnt")
+
+    cred_record =
+      Impl.Credential.ApiToken.get_credential_record!(
+        test_account.access_account_id,
+        test_account.identity_id
+      )
+
+    assert :ok = Impl.Credential.ApiToken.delete_credential!(cred_record)
+  end
+
+  test "Can delete an API Token Credential record by ID / Success Tuple" do
     test_account = get_account_data("credential_api_token_delete_id_test_accnt")
 
     cred_record =
-      Impl.Credential.ApiToken.get_credential_record(
+      Impl.Credential.ApiToken.get_credential_record!(
         test_account.access_account_id,
         test_account.identity_id
       )
 
     assert :ok = Impl.Credential.ApiToken.delete_credential(cred_record.id)
+  end
+
+  test "Can delete an API Token Credential record by ID / Raise on Error" do
+    test_account = get_account_data("credential_api_token_delete1_id_test_accnt")
+
+    cred_record =
+      Impl.Credential.ApiToken.get_credential_record!(
+        test_account.access_account_id,
+        test_account.identity_id
+      )
+
+    assert :ok = Impl.Credential.ApiToken.delete_credential!(cred_record.id)
   end
 
   defp get_account_data(access_account_name) do

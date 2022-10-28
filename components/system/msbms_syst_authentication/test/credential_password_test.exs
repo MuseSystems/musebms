@@ -42,14 +42,16 @@ defmodule CredentialPasswordTest do
     # }
 
     # Acceptable Password
-    assert [] = Impl.Credential.Password.test_credential(access_account_id, "AAaa11!!1234")
+    assert {:ok, []} = Impl.Credential.Password.test_credential(access_account_id, "AAaa11!!1234")
+    assert {:error, _} = Impl.Credential.Password.test_credential(access_account_id, nil)
+    assert [] = Impl.Credential.Password.test_credential!(access_account_id, "AAaa11!!1234")
 
     # password_rule_length_min
-    assert Impl.Credential.Password.test_credential(access_account_id, "AAaa11!!")
+    assert Impl.Credential.Password.test_credential!(access_account_id, "AAaa11!!")
            |> Enum.any?(fn element -> {:password_rule_length_min, _} = element end)
 
     # password_rule_length_max
-    assert Impl.Credential.Password.test_credential(
+    assert Impl.Credential.Password.test_credential!(
              access_account_id,
              "AAaa11!!1234567890123456789012345678912345678901234567890123" <>
                "45678AAaa11!!12345678901234567890123456789123456789012345678901234567"
@@ -57,27 +59,27 @@ defmodule CredentialPasswordTest do
            |> Enum.any?(fn element -> {:password_rule_length_max, _} = element end)
 
     # password_rule_required_upper
-    assert Impl.Credential.Password.test_credential(access_account_id, "aaaa11!!1234")
+    assert Impl.Credential.Password.test_credential!(access_account_id, "aaaa11!!1234")
            |> Enum.any?(fn element -> {:password_rule_required_upper, _} = element end)
 
     # password_rule_required_lower
-    assert Impl.Credential.Password.test_credential(access_account_id, "AAAa11!!1234")
+    assert Impl.Credential.Password.test_credential!(access_account_id, "AAAa11!!1234")
            |> Enum.any?(fn element -> {:password_rule_required_lower, _} = element end)
 
     # password_rule_required_numbers
-    assert Impl.Credential.Password.test_credential(access_account_id, "AAaa1n!!nnnn")
+    assert Impl.Credential.Password.test_credential!(access_account_id, "AAaa1n!!nnnn")
            |> Enum.any?(fn element -> {:password_rule_required_numbers, _} = element end)
 
     # password_rule_required_symbols
-    assert Impl.Credential.Password.test_credential(access_account_id, "AAaa11!11234")
+    assert Impl.Credential.Password.test_credential!(access_account_id, "AAaa11!11234")
            |> Enum.any?(fn element -> {:password_rule_required_symbols, _} = element end)
 
     # password_rule_disallowed_password
-    assert Impl.Credential.Password.test_credential(access_account_id, "Disallowed!Test#01")
+    assert Impl.Credential.Password.test_credential!(access_account_id, "Disallowed!Test#01")
            |> Enum.any?(fn element -> {:password_rule_disallowed_password, _} = element end)
 
     # password_rule_recent_password
-    assert Impl.Credential.Password.test_credential(access_account_id, "PassHist#01!")
+    assert Impl.Credential.Password.test_credential!(access_account_id, "PassHist#01!")
            |> Enum.any?(fn element -> {:password_rule_recent_password, _} = element end)
   end
 
@@ -85,15 +87,27 @@ defmodule CredentialPasswordTest do
     {:ok, access_account_id} =
       Impl.AccessAccount.get_access_account_id_by_name("owned_all_access")
 
-    assert {:wrong_credential, []} =
+    assert {:ok, {:wrong_credential, []}} =
              Impl.Credential.Password.confirm_credential(
                access_account_id,
                MsbmsSystUtils.get_random_string(48)
              )
 
     # Test with bogus access_account_id value to force :no_credential
-    assert {:no_credential, []} =
+    assert {:ok, {:no_credential, []}} =
              Impl.Credential.Password.confirm_credential(
+               "c51edfbd-db46-44dd-9385-e44b1d45d706",
+               "owned.all.access.test.password"
+             )
+
+    assert {:wrong_credential, []} =
+             Impl.Credential.Password.confirm_credential!(
+               access_account_id,
+               MsbmsSystUtils.get_random_string(48)
+             )
+
+    assert {:no_credential, []} =
+             Impl.Credential.Password.confirm_credential!(
                "c51edfbd-db46-44dd-9385-e44b1d45d706",
                "owned.all.access.test.password"
              )
@@ -103,8 +117,15 @@ defmodule CredentialPasswordTest do
     {:ok, access_account_id} =
       Impl.AccessAccount.get_access_account_id_by_name("owned_all_access")
 
-    assert {:confirmed, []} =
+    assert {:ok, {:confirmed, []}} =
              Impl.Credential.Password.confirm_credential(
+               access_account_id,
+               nil,
+               "owned.all.access.test.password"
+             )
+
+    assert {:confirmed, []} =
+             Impl.Credential.Password.confirm_credential!(
                access_account_id,
                nil,
                "owned.all.access.test.password"
@@ -118,7 +139,7 @@ defmodule CredentialPasswordTest do
       )
 
     assert {:confirmed, [:require_mfa | []]} =
-             Impl.Credential.Password.confirm_credential(
+             Impl.Credential.Password.confirm_credential!(
                access_account_id,
                "password.confirm.mfa.test.password"
              )
@@ -131,7 +152,7 @@ defmodule CredentialPasswordTest do
       )
 
     assert {:confirmed, ext_state} =
-             Impl.Credential.Password.confirm_credential(
+             Impl.Credential.Password.confirm_credential!(
                access_account_id,
                "password.confirm.force.test.password"
              )
@@ -150,7 +171,7 @@ defmodule CredentialPasswordTest do
       )
 
     assert {:confirmed, ext_state} =
-             Impl.Credential.Password.confirm_credential(
+             Impl.Credential.Password.confirm_credential!(
                access_account_id,
                "password.confirm.age.test.password"
              )
@@ -166,7 +187,7 @@ defmodule CredentialPasswordTest do
       )
 
     assert {:confirmed, ext_state} =
-             Impl.Credential.Password.confirm_credential(
+             Impl.Credential.Password.confirm_credential!(
                access_account_id,
                "Disallowed!Test#01"
              )
@@ -198,7 +219,7 @@ defmodule CredentialPasswordTest do
     assert :ok = Impl.Credential.Password.set_credential(access_account_id, new_pwd, nil)
 
     assert {:confirmed, _} =
-             Impl.Credential.Password.confirm_credential(
+             Impl.Credential.Password.confirm_credential!(
                access_account_id,
                new_pwd
              )
@@ -283,8 +304,11 @@ defmodule CredentialPasswordTest do
     {:ok, access_account_id} =
       Impl.AccessAccount.get_access_account_id_by_name("owned_all_access")
 
-    assert %Data.SystCredentials{} =
+    assert {:ok, %Data.SystCredentials{}} =
              Impl.Credential.Password.get_credential_record(access_account_id)
+
+    assert %Data.SystCredentials{} =
+             Impl.Credential.Password.get_credential_record!(access_account_id)
   end
 
   test "Can delete Credential by Access Account ID" do
@@ -292,6 +316,11 @@ defmodule CredentialPasswordTest do
       Impl.AccessAccount.get_access_account_id_by_name("credential_password_delete1_test_acct")
 
     assert :ok = Impl.Credential.Password.delete_credential(access_account_id)
+
+    {:ok, access_account_id} =
+      Impl.AccessAccount.get_access_account_id_by_name("credential_password_delete3_test_acct")
+
+    assert :ok = Impl.Credential.Password.delete_credential!(access_account_id)
   end
 
   test "Can delete Credential by Credential record" do
@@ -308,5 +337,19 @@ defmodule CredentialPasswordTest do
       |> MsbmsSystDatastore.one!()
 
     assert :ok = Impl.Credential.Password.delete_credential(cred)
+
+    {:ok, access_account_id} =
+      Impl.AccessAccount.get_access_account_id_by_name("credential_password_delete4_test_acct")
+
+    cred =
+      from(c in Data.SystCredentials,
+        join: ei in assoc(c, :credential_type),
+        where:
+          c.access_account_id == ^access_account_id and
+            ei.internal_name == "credential_types_sysdef_password"
+      )
+      |> MsbmsSystDatastore.one!()
+
+    assert :ok = Impl.Credential.Password.delete_credential!(cred)
   end
 end

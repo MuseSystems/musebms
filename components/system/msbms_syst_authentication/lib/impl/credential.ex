@@ -26,16 +26,29 @@ defmodule MsbmsSystAuthentication.Impl.Credential do
               | Types.credential_set_failures()
               | {:error, MsbmsSystError.t()}
 
-  @callback confirm_credential(
+  @callback confirm_credential!(
               Types.access_account_id(),
               Types.identity_id() | nil,
               Types.credential()
             ) ::
               Types.credential_confirm_result()
 
-  @callback get_credential_record(Types.access_account_id(), Types.identity_id() | nil) ::
+  @callback confirm_credential(
+              Types.access_account_id(),
+              Types.identity_id() | nil,
+              Types.credential()
+            ) ::
+              {:ok, Types.credential_confirm_result()}
+              | {:error, MsbmsSystError.t() | Exception.t()}
+
+  @callback get_credential_record!(Types.access_account_id(), Types.identity_id() | nil) ::
               Data.SystCredentials.t() | nil
 
+  @callback get_credential_record(Types.access_account_id(), Types.identity_id() | nil) ::
+              {:ok, Data.SystCredentials.t() | nil} | {:error, MsbmsSystError.t() | Exception.t()}
+
   @callback delete_credential(Types.credential_id() | Data.SystCredentials.t()) ::
-              :ok | {:error, MsbmsSystError.t()}
+              :ok | {:error, MsbmsSystError.t() | Exception.t()}
+
+  @callback delete_credential!(Types.credential_id() | Data.SystCredentials.t()) :: :ok
 end

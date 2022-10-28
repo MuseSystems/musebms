@@ -26,15 +26,31 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
   @moduledoc false
 
   @spec test_credential(Types.access_account_id() | Types.password_rule(), Types.credential()) ::
-          Keyword.t(Types.password_rule_violations())
-  def test_credential(access_account_id, pwd_plaintext)
-      when is_binary(access_account_id) do
-    access_account_id
-    |> Impl.PasswordRules.get_access_account_password_rule()
-    |> test_credential(pwd_plaintext)
+          {:ok, Keyword.t(Types.password_rule_violations())}
+          | {:error, MsbmsSystError.t() | Exception.t()}
+  def test_credential(access_account_id, pwd_plaintext) do
+    {:ok, test_credential!(access_account_id, pwd_plaintext)}
+  rescue
+    error -> {:error, error}
   end
 
-  def test_credential(%{access_account_id: _} = pwd_rules, pwd_plaintext) do
+  @spec test_credential!(Types.access_account_id() | Types.password_rule(), Types.credential()) ::
+          Keyword.t(Types.password_rule_violations())
+  def test_credential!(access_account_id, pwd_plaintext) when is_binary(access_account_id) do
+    access_account_id
+    |> Impl.PasswordRules.get_access_account_password_rule!()
+    |> test_credential!(pwd_plaintext)
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      raise MsbmsSystError,
+        code: :undefined_error,
+        message: "Failure testing Password Credential.",
+        cause: error
+  end
+
+  def test_credential!(%{access_account_id: _} = pwd_rules, pwd_plaintext) do
     []
     |> verify_password_length(pwd_rules, pwd_plaintext)
     |> verify_password_req_upper_case(pwd_rules, pwd_plaintext)
@@ -43,6 +59,14 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
     |> verify_password_req_symbols(pwd_rules, pwd_plaintext)
     |> verify_password_no_compromised(pwd_rules, pwd_plaintext)
     |> verify_password_recently_used(pwd_rules, pwd_plaintext)
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      raise MsbmsSystError,
+        code: :undefined_error,
+        message: "Failure testing Password Credential.",
+        cause: error
   end
 
   defp verify_password_length(violations_list, pwd_rules, pwd_text) do
@@ -117,8 +141,9 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
   # less expensive than verify_password_recently_used/4 and so should be called
   # before verify_password_recently_used/4, but after all others.
   defp verify_password_no_compromised(violations_list, pwd_rules, pwd_text) do
-    violation_found =
-      pwd_rules.disallow_compromised && violations_list == [] && check_disallowed_pwd(pwd_text)
+    pwd_disallowed = Impl.PasswordRules.password_disallowed?(pwd_text)
+
+    violation_found = pwd_rules.disallow_compromised && violations_list == [] && pwd_disallowed
 
     if violation_found do
       [{:password_rule_disallowed_password, true} | violations_list]
@@ -162,9 +187,21 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
           Types.identity_id() | nil,
           Types.credential()
         ) ::
-          Types.credential_confirm_result()
+          {:ok, Types.credential_confirm_result()} | {:error, MsbmsSystError.t() | Exception.t()}
   def confirm_credential(access_account_id, _identity_id \\ nil, pwd_text) do
-    cred = get_credential_record(access_account_id)
+    {:ok, confirm_credential!(access_account_id, pwd_text)}
+  rescue
+    error -> {:error, error}
+  end
+
+  @spec confirm_credential!(
+          Types.access_account_id(),
+          Types.identity_id() | nil,
+          Types.credential()
+        ) ::
+          Types.credential_confirm_result()
+  def confirm_credential!(access_account_id, _identity_id \\ nil, pwd_text) do
+    cred = get_credential_record!(access_account_id)
 
     credential_state = get_credential_state(cred, pwd_text)
 
@@ -172,6 +209,14 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
       maybe_get_extended_confirmation_state(credential_state, cred, pwd_text)
 
     {credential_state, credential_extended_state}
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      raise MsbmsSystError,
+        code: :undefined_error,
+        message: "Failure setting Password Credential.",
+        cause: error
   end
 
   defp get_credential_state(cred, pwd_text) do
@@ -182,7 +227,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
   end
 
   defp maybe_get_extended_confirmation_state(:confirmed = _credential_state, cred, pwd_text) do
-    pwd_rules = Impl.PasswordRules.get_access_account_password_rule(cred.access_account_id)
+    pwd_rules = Impl.PasswordRules.get_access_account_password_rule!(cred.access_account_id)
 
     []
     |> maybe_require_mfa(pwd_rules)
@@ -236,7 +281,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
   end
 
   defp maybe_confirm_rule_disallowed(%{disallow_compromised: true}, pwd_text) do
-    pwd_disallowed = check_disallowed_pwd(pwd_text)
+    pwd_disallowed = Impl.PasswordRules.password_disallowed?(pwd_text)
 
     if pwd_disallowed, do: :reset_disallowed, else: :ok
   end
@@ -248,19 +293,6 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
 
   defp maybe_require_mfa(extended_state, _rules), do: extended_state
 
-  defp check_disallowed_pwd(pwd_text) do
-    case Impl.PasswordRules.password_disallowed(pwd_text) do
-      {:ok, result} ->
-        result
-
-      error ->
-        raise MsbmsSystError,
-          code: :undefined_error,
-          message: "Failed checking disallowed passwords.",
-          cause: error
-    end
-  end
-
   @spec set_credential(
           Types.access_account_id(),
           Types.identity_id() | nil,
@@ -269,10 +301,10 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
         ) ::
           :ok | Types.credential_set_failures() | {:error, MsbmsSystError.t()}
   def set_credential(access_account_id, _identity_id \\ nil, pwd_text, _opts) do
-    pwd_rules = Impl.PasswordRules.get_access_account_password_rule(access_account_id)
-
-    with :ok <- maybe_test_credential(pwd_rules, pwd_text) do
-      cred = get_credential_record(access_account_id)
+    with {:ok, pwd_rules} <-
+           Impl.PasswordRules.get_access_account_password_rule(access_account_id),
+         :ok <- maybe_test_credential(pwd_rules, pwd_text) do
+      cred = get_credential_record!(access_account_id)
       set_credential_data(cred, pwd_rules, pwd_text)
     end
   rescue
@@ -290,7 +322,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
   end
 
   defp maybe_test_credential(pwd_rules, pwd_text) do
-    test_result = test_credential(pwd_rules, pwd_text)
+    test_result = test_credential!(pwd_rules, pwd_text)
 
     if test_result == [], do: :ok, else: {:invalid_credential, test_result}
   end
@@ -366,8 +398,16 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
   end
 
   @spec get_credential_record(Types.access_account_id(), Types.identity_id() | nil) ::
-          Data.SystCredentials.t() | nil
+          {:ok, Data.SystCredentials.t() | nil} | {:error, MsbmsSystError.t() | Exception.t()}
   def get_credential_record(access_account_id, _identity_id \\ nil) do
+    {:ok, get_credential_record!(access_account_id)}
+  rescue
+    error -> {:error, error}
+  end
+
+  @spec get_credential_record!(Types.access_account_id(), Types.identity_id() | nil) ::
+          Data.SystCredentials.t() | nil
+  def get_credential_record!(access_account_id, _identity_id \\ nil) do
     from(
       c in Data.SystCredentials,
       join: ct in assoc(c, :credential_type),
@@ -381,58 +421,59 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      {
-        :error,
-        %MsbmsSystError{
-          code: :undefined_error,
-          message: "Failure retrieving Password Credential record.",
-          cause: error
-        }
-      }
+      raise MsbmsSystError,
+        code: :undefined_error,
+        message: "Failure retrieving Password Credential record.",
+        cause: error
   end
 
   @spec delete_credential(Types.credential_id() | Data.SystCredentials.t()) ::
-          :ok | {:error, MsbmsSystError.t()}
-
-  def delete_credential(access_account_id) when is_binary(access_account_id) do
-    get_credential_record(access_account_id)
-    |> delete_credential()
+          :ok | {:error, MsbmsSystError.t() | Exception.t()}
+  def delete_credential(credential) do
+    delete_credential!(credential)
   rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MsbmsSystError{
-          code: :undefined_error,
-          message: "Failure deleting Password Credential by ID.",
-          cause: error
-        }
-      }
+    error -> {:error, error}
   end
 
-  def delete_credential(%Data.SystCredentials{} = cred) do
-    case MsbmsSystDatastore.delete(cred) do
-      {:ok, _} ->
+  @spec delete_credential!(Types.credential_id() | Data.SystCredentials.t()) :: :ok
+  def delete_credential!(access_account_id) when is_binary(access_account_id) do
+    from(c in Data.SystCredentials,
+      join: ei in assoc(c, :credential_type),
+      where:
+        c.access_account_id == ^access_account_id and
+          ei.internal_name == "credential_types_sysdef_password"
+    )
+    |> MsbmsSystDatastore.delete_all()
+    |> case do
+      {count, _} when count in [0, 1] ->
         :ok
 
-      error ->
+      error_result ->
         raise MsbmsSystError,
           code: :undefined_error,
-          message: "Database failure deleting Password Credential",
-          cause: error
+          message: "Delete Credential; bad database result.",
+          cause: error_result
     end
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      {
-        :error,
-        %MsbmsSystError{
-          code: :undefined_error,
-          message: "Failure deleting Password Credential.",
-          cause: error
-        }
-      }
+      raise MsbmsSystError,
+        code: :undefined_error,
+        message: "Failure deleting Password Credential by ID.",
+        cause: error
+  end
+
+  def delete_credential!(%Data.SystCredentials{} = credential) do
+    MsbmsSystDatastore.delete!(credential)
+    :ok
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      raise MsbmsSystError,
+        code: :undefined_error,
+        message: "Failure deleting Password Credential.",
+        cause: error
   end
 end
