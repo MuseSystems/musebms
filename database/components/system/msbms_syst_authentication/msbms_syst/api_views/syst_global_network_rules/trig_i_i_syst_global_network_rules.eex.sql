@@ -30,7 +30,13 @@ BEGIN
         , new.ip_host_or_network
         , new.ip_host_range_lower
         , new.ip_host_range_upper )
-    RETURNING * INTO new;
+    RETURNING
+        id, template_rule, ordering, functional_type, ip_host_or_network, ip_host_range_lower,
+        ip_host_range_upper,
+        family( coalesce( ip_host_or_network, ip_host_range_lower ) ),
+        diag_timestamp_created, diag_role_created, diag_timestamp_modified,
+        diag_wallclock_modified, diag_role_modified, diag_row_version,
+        diag_update_count INTO new;
 
     RETURN new;
 
