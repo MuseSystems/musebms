@@ -27,6 +27,7 @@ defmodule MsbmsSystDatastore.MixProject do
     {:postgrex, "~> 0.10"},
     {:toml, "~> 0.7"},
     {:gradient, github: "esl/gradient", only: [:dev], runtime: false},
+    {:net_address, "~> 0.2.0"},
 
     # Muse Systems Business Management System Components
     {:msbms_syst_error, path: "../msbms_syst_error"},

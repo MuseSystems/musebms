@@ -13,6 +13,9 @@
 defmodule MsbmsSystDatastore.DbTypes.Impl.Inet do
   alias MsbmsSystDatastore.DbTypes
 
+  require IP
+  require IP.Subnet
+
   @moduledoc false
 
   @spec to_postgrex_inet(DbTypes.Inet.t()) :: Postgrex.INET.t()
@@ -22,4 +25,16 @@ defmodule MsbmsSystDatastore.DbTypes.Impl.Inet do
   @spec from_postgrex_inet(Postgrex.INET.t()) :: DbTypes.Inet.t()
   def from_postgrex_inet(%Postgrex.INET{address: address, netmask: netmask}),
     do: %DbTypes.Inet{address: address, netmask: netmask}
+
+  @spec to_net_address(DbTypes.Inet.t()) :: IP.addr() | IP.Subnet.t()
+  def to_net_address(%DbTypes.Inet{address: address, netmask: nil}), do: address
+
+  def to_net_address(%DbTypes.Inet{address: address, netmask: mask}) when is_integer(mask),
+    do: IP.Subnet.of(address, mask)
+
+  @spec from_net_address(IP.addr() | IP.Subnet.t()) :: DbTypes.Inet.t()
+  def from_net_address(address) when IP.is_ip(address), do: %DbTypes.Inet{address: address}
+
+  def from_net_address(subnet) when IP.Subnet.is_subnet(subnet),
+    do: %DbTypes.Inet{address: subnet.routing_prefix, netmask: subnet.bit_length}
 end
