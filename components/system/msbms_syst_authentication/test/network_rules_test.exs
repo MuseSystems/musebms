@@ -81,43 +81,43 @@ defmodule NetworkRulesTest do
 
   test "Can get Implied Applied Network Rule" do
     assert %{precedence: :implied, functional_type: :allow} =
-             Impl.NetworkRules.get_applied_network_rule(~i"10.130.130.1")
+             Impl.NetworkRules.get_applied_network_rule!(~i"10.130.130.1")
   end
 
   test "Can get Disallowed Applied Network Rule" do
     assert %{precedence: :disallowed, functional_type: :deny} =
-             Impl.NetworkRules.get_applied_network_rule(~i"10.123.123.1")
+             Impl.NetworkRules.get_applied_network_rule!(~i"10.123.123.1")
   end
 
   test "Can get Global Applied Network Rule" do
-    assert %{precedence: :global, functional_type: :allow} =
+    assert {:ok, %{precedence: :global, functional_type: :allow}} =
              Impl.NetworkRules.get_applied_network_rule(~i"10.125.125.2")
 
     assert %{precedence: :global, functional_type: :deny} =
-             Impl.NetworkRules.get_applied_network_rule(~i"10.131.131.5")
+             Impl.NetworkRules.get_applied_network_rule!(~i"10.131.131.5")
   end
 
   test "Can get Owner Applied Network Rule" do
     {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner1")
 
-    assert %{precedence: :instance_owner, functional_type: :deny} =
+    assert {:ok, %{precedence: :instance_owner, functional_type: :deny}} =
              Impl.NetworkRules.get_applied_network_rule(~i"10.128.128.1", nil, owner_id)
 
     assert %{precedence: :instance_owner, functional_type: :allow} =
-             Impl.NetworkRules.get_applied_network_rule(~i"10.128.128.2", nil, owner_id)
+             Impl.NetworkRules.get_applied_network_rule!(~i"10.128.128.2", nil, owner_id)
   end
 
   test "Can get Instance Applied Network Rule" do
     {:ok, instance_id} =
       MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner1_instance_types_std")
 
-    assert %{precedence: :instance, functional_type: :deny} =
+    assert {:ok, %{precedence: :instance, functional_type: :deny}} =
              Impl.NetworkRules.get_applied_network_rule(~i"10.126.126.2", instance_id)
 
     assert %{precedence: :instance, functional_type: :allow} =
-             Impl.NetworkRules.get_applied_network_rule(~i"10.126.126.1", instance_id)
+             Impl.NetworkRules.get_applied_network_rule!(~i"10.126.126.1", instance_id)
 
     assert %{precedence: :instance, functional_type: :allow} =
-             Impl.NetworkRules.get_applied_network_rule(~i"10.126.126.10", instance_id)
+             Impl.NetworkRules.get_applied_network_rule!(~i"10.126.126.10", instance_id)
   end
 end
