@@ -17,8 +17,8 @@ $BODY$
 BEGIN
 
     IF
-        new.template_rule = old.template_rule OR
-        new.ip_family     = old.ip_family
+        new.template_rule != old.template_rule OR
+        new.ip_family     != old.ip_family
     THEN
         RAISE EXCEPTION
             USING
