@@ -21,25 +21,28 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
 
   @moduledoc false
 
-  @spec host_disallowed(Types.host_address()) :: {:ok, boolean()} | {:error, MsbmsSystError.t()}
+  @spec host_disallowed(Types.host_address()) ::
+          {:ok, boolean()} | {:error, MsbmsSystError.t() | Exception.t()}
   def host_disallowed(host_addr) when is_tuple(host_addr) do
+    {:ok, host_disallowed?(host_addr)}
+  rescue
+    error -> {:error, error}
+  end
+
+  @spec host_disallowed?(Types.host_address()) :: boolean()
+  def host_disallowed?(host_addr) when is_tuple(host_addr) do
     target_host = %DbTypes.Inet{address: host_addr}
 
     from(dh in Data.SystDisallowedHosts, where: dh.host_address == ^target_host)
     |> MsbmsSystDatastore.exists?()
-    |> then(&{:ok, &1})
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      {
-        :error,
-        %MsbmsSystError{
-          code: :undefined_error,
-          message: "Failure checking if host disallowed.",
-          cause: error
-        }
-      }
+      raise MsbmsSystError,
+        code: :undefined_error,
+        message: "Failure checking if host disallowed.",
+        cause: error
   end
 
   @spec create_disallowed_host(Types.host_address()) ::
@@ -65,8 +68,15 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
   end
 
   @spec delete_disallowed_host_addr(Types.host_address()) ::
-          {:ok, :deleted | :not_found} | {:error, MsbmsSystError.t()}
+          {:ok, :deleted | :not_found} | {:error, MsbmsSystError.t() | Exception.t()}
   def delete_disallowed_host_addr(host_addr) when not is_nil(host_addr) do
+    {:ok, delete_disallowed_host_addr!(host_addr)}
+  rescue
+    error -> {:error, error}
+  end
+
+  @spec delete_disallowed_host_addr!(Types.host_address()) :: :deleted | :not_found
+  def delete_disallowed_host_addr!(host_addr) when not is_nil(host_addr) do
     target_host = %DbTypes.Inet{address: host_addr}
 
     from(dh in Data.SystDisallowedHosts, where: dh.host_address == ^target_host)
@@ -75,50 +85,46 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      {
-        :error,
-        %MsbmsSystError{
-          code: :undefined_error,
-          message: "Failure deleting Disallowed Host by host IP address.",
-          cause: error
-        }
-      }
+      raise MsbmsSystError,
+        code: :undefined_error,
+        message: "Failure deleting Disallowed Host by host IP address.",
+        cause: error
   end
 
   @spec delete_disallowed_host(Types.disallowed_host_id() | Data.SystDisallowedHosts.t()) ::
-          {:ok, :deleted | :not_found} | {:error, MsbmsSystError.t()}
-  def delete_disallowed_host(%Data.SystDisallowedHosts{} = disallowed_host) do
+          {:ok, :deleted | :not_found} | {:error, MsbmsSystError.t() | Exception.t()}
+  def delete_disallowed_host(disallowed_host) do
+    {:ok, delete_disallowed_host!(disallowed_host)}
+  rescue
+    error -> {:error, error}
+  end
+
+  @spec delete_disallowed_host!(Types.disallowed_host_id() | Data.SystDisallowedHosts.t()) ::
+          :deleted | :not_found
+  def delete_disallowed_host!(%Data.SystDisallowedHosts{} = disallowed_host) do
     from(dh in Data.SystDisallowedHosts, where: dh.id == ^disallowed_host.id)
     |> process_disallowed_host_delete()
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      {
-        :error,
-        %MsbmsSystError{
-          code: :undefined_error,
-          message: "Failure deleting Disallowed Host.",
-          cause: error
-        }
-      }
+      raise MsbmsSystError,
+        code: :undefined_error,
+        message: "Failure deleting Disallowed Host.",
+        cause: error
   end
 
-  def delete_disallowed_host(disallowed_host_id) when is_binary(disallowed_host_id) do
+  def delete_disallowed_host!(disallowed_host_id) when is_binary(disallowed_host_id) do
     from(dh in Data.SystDisallowedHosts, where: dh.id == ^disallowed_host_id)
     |> process_disallowed_host_delete()
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      {
-        :error,
-        %MsbmsSystError{
-          code: :undefined_error,
-          message: "Failure deleting Disallowed Host by ID.",
-          cause: error
-        }
-      }
+      raise MsbmsSystError,
+        code: :undefined_error,
+        message: "Failure deleting Disallowed Host by ID.",
+        cause: error
   end
 
   defp process_disallowed_host_delete(query) do
@@ -126,10 +132,10 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
     |> MsbmsSystDatastore.delete_all()
     |> case do
       {0, _} ->
-        {:ok, :not_found}
+        :not_found
 
       {1, _} ->
-        {:ok, :deleted}
+        :deleted
 
       cause ->
         raise MsbmsSystError,
@@ -140,53 +146,71 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
   end
 
   @spec get_disallowed_host_record_by_id(Types.disallowed_host_id()) ::
-          {:ok, Data.SystDisallowedHosts} | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystDisallowedHosts.t()} | {:error, MsbmsSystError.t() | Exception.t()}
   def get_disallowed_host_record_by_id(disallowed_host_id) when is_binary(disallowed_host_id) do
+    {:ok, get_disallowed_host_record_by_id!(disallowed_host_id)}
+  rescue
+    error -> {:error, error}
+  end
+
+  @spec get_disallowed_host_record_by_id!(Types.disallowed_host_id()) ::
+          Data.SystDisallowedHosts.t()
+  def get_disallowed_host_record_by_id!(disallowed_host_id) when is_binary(disallowed_host_id) do
     from(dh in Data.SystDisallowedHosts, where: dh.id == ^disallowed_host_id)
     |> MsbmsSystDatastore.one!()
-    |> then(&{:ok, &1})
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      {
-        :error,
-        %MsbmsSystError{
-          code: :undefined_error,
-          message: "Failure retrieving Disallowed Host by ID.",
-          cause: error
-        }
-      }
+      raise MsbmsSystError,
+        code: :undefined_error,
+        message: "Failure retrieving Disallowed Host by ID.",
+        cause: error
   end
 
   @spec get_disallowed_host_record_by_host(Types.host_address()) ::
-          {:ok, Data.SystDisallowedHosts.t() | nil} | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystDisallowedHosts.t() | nil} | {:error, MsbmsSystError.t() | Exception.t()}
   def get_disallowed_host_record_by_host(host_addr) when is_tuple(host_addr) do
+    {:ok, get_disallowed_host_record_by_host!(host_addr)}
+  rescue
+    error -> {:error, error}
+  end
+
+  @spec get_disallowed_host_record_by_host!(Types.host_address()) ::
+          Data.SystDisallowedHosts.t() | nil
+  def get_disallowed_host_record_by_host!(host_addr) when is_tuple(host_addr) do
     target_host = %DbTypes.Inet{address: host_addr}
 
     from(dh in Data.SystDisallowedHosts, where: dh.host_address == ^target_host)
     |> MsbmsSystDatastore.one()
-    |> then(&{:ok, &1})
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      {
-        :error,
-        %MsbmsSystError{
-          code: :undefined_error,
-          message: "Failure retrieving Disallowed Host by host IP address.",
-          cause: error
-        }
-      }
+      raise MsbmsSystError,
+        code: :undefined_error,
+        message: "Failure retrieving Disallowed Host by host IP address.",
+        cause: error
   end
 
   @spec get_applied_network_rule(
           Types.host_address(),
           MsbmsSystInstanceMgr.Types.instance_id() | nil,
           MsbmsSystInstanceMgr.Types.owner_id() | nil
-        ) :: Types.applied_network_rule()
+        ) :: {:ok, Types.applied_network_rule()} | {:error, MsbmsSystError.t() | Exception.t()}
   def get_applied_network_rule(host_addr, instance_id \\ nil, instance_owner_id \\ nil)
+      when is_tuple(host_addr) do
+    {:ok, get_applied_network_rule!(host_addr, instance_id, instance_owner_id)}
+  rescue
+    error -> {:error, error}
+  end
+
+  @spec get_applied_network_rule!(
+          Types.host_address(),
+          MsbmsSystInstanceMgr.Types.instance_id() | nil,
+          MsbmsSystInstanceMgr.Types.owner_id() | nil
+        ) :: Types.applied_network_rule()
+  def get_applied_network_rule!(host_addr, instance_id \\ nil, instance_owner_id \\ nil)
       when is_tuple(host_addr) do
     target_host = %DbTypes.Inet{address: host_addr} |> DbTypes.Inet.to_postgrex_inet()
     target_instance_id = if instance_id != nil, do: Ecto.UUID.dump!(instance_id), else: nil
@@ -216,5 +240,14 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
         functional_type: String.to_atom(&1.functional_type)
       }
     )
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      raise MsbmsSystError,
+        code: :undefined_error,
+        message: "Failure retrieving Applied Network Rule.",
+        cause: error
+  end
   end
 end
