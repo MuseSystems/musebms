@@ -183,6 +183,38 @@ $AUTHENTICATION_TESTING_INIT$
               "ip_host_or_network": null,
               "ip_host_range_lower": "10.123.123.5",
               "ip_host_range_upper": "10.123.123.254"
+            },
+            {
+              "template_rule": false,
+              "ordering": 5,
+              "functional_type": "allow",
+              "ip_host_or_network": "10.131.131.5",
+              "ip_host_range_lower": null,
+              "ip_host_range_upper": null
+            },
+            {
+              "template_rule": false,
+              "ordering": 6,
+              "functional_type": "allow",
+              "ip_host_or_network": "10.125.125.0/24",
+              "ip_host_range_lower": null,
+              "ip_host_range_upper": null
+            },
+            {
+              "template_rule": false,
+              "ordering": 7,
+              "functional_type": "allow",
+              "ip_host_or_network": null,
+              "ip_host_range_lower": "10.123.123.5",
+              "ip_host_range_upper": "10.123.123.254"
+            },
+            {
+              "template_rule": false,
+              "ordering": 8,
+              "functional_type": "allow",
+              "ip_host_or_network": null,
+              "ip_host_range_lower": "10.123.123.5",
+              "ip_host_range_upper": "10.123.123.254"
             }
           ],
           "owner_network_rules": [
@@ -209,6 +241,38 @@ $AUTHENTICATION_TESTING_INIT$
               "ip_host_or_network": null,
               "ip_host_range_lower": "10.123.123.1",
               "ip_host_range_upper": "10.123.123.254"
+            },
+            {
+              "owner_name": "owner5",
+              "ordering": 1,
+              "functional_type": "deny",
+              "ip_host_or_network": "10.162.162.0/24",
+              "ip_host_range_lower": null,
+              "ip_host_range_upper": null
+            },
+            {
+              "owner_name": "owner5",
+              "ordering": 2,
+              "functional_type": "allow",
+              "ip_host_or_network": null,
+              "ip_host_range_lower": "10.160.160.200",
+              "ip_host_range_upper": "10.161.161.254"
+            },
+            {
+              "owner_name": "owner6",
+              "ordering": 1,
+              "functional_type": "deny",
+              "ip_host_or_network": "10.162.162.0/24",
+              "ip_host_range_lower": null,
+              "ip_host_range_upper": null
+            },
+            {
+              "owner_name": "owner6",
+              "ordering": 2,
+              "functional_type": "allow",
+              "ip_host_or_network": null,
+              "ip_host_range_lower": "10.160.160.200",
+              "ip_host_range_upper": "10.161.161.254"
             }
           ],
           "instance_network_rules": [
@@ -243,6 +307,38 @@ $AUTHENTICATION_TESTING_INIT$
               "ip_host_or_network": null,
               "ip_host_range_lower": "10.127.127.1",
               "ip_host_range_upper": "10.128.128.254"
+            },
+            {
+              "instance_name": "app1_owner7_instance_types_std",
+              "ordering": 1,
+              "functional_type": "allow",
+              "ip_host_or_network": "10.170.170.1",
+              "ip_host_range_lower": null,
+              "ip_host_range_upper": null
+            },
+            {
+              "instance_name": "app1_owner7_instance_types_std",
+              "ordering": 2,
+              "functional_type": "deny",
+              "ip_host_or_network": "10.170.170.2",
+              "ip_host_range_lower": null,
+              "ip_host_range_upper": null
+            },
+            {
+              "instance_name": "app1_owner8_instance_types_std",
+              "ordering": 1,
+              "functional_type": "allow",
+              "ip_host_or_network": "10.170.170.1",
+              "ip_host_range_lower": null,
+              "ip_host_range_upper": null
+            },
+            {
+              "instance_name": "app1_owner8_instance_types_std",
+              "ordering": 2,
+              "functional_type": "deny",
+              "ip_host_or_network": "10.170.170.2",
+              "ip_host_range_lower": null,
+              "ip_host_range_upper": null
             }
           ],
           "access_accounts": [
