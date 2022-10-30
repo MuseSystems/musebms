@@ -13,10 +13,12 @@
 defmodule NetworkRulesTest do
   use AuthenticationTestCase, async: true
 
-  import IP
+  import Ecto.Query
+  import IP, only: [sigil_i: 2]
 
   alias MsbmsSystAuthentication.Data
   alias MsbmsSystAuthentication.Impl
+  alias MsbmsSystDatastore.DbTypes
 
   test "Can determine if host is disallowed or not" do
     assert {:ok, true} = Impl.NetworkRules.host_disallowed(~i"10.123.123.3")
@@ -119,5 +121,463 @@ defmodule NetworkRulesTest do
 
     assert %{precedence: :instance, functional_type: :allow} =
              Impl.NetworkRules.get_applied_network_rule!(~i"10.126.126.10", instance_id)
+  end
+
+  test "Can create Global Network Rule" do
+    new_ordering =
+      from(gnr in Data.SystGlobalNetworkRules, select: max(gnr.ordering) |> coalesce(0))
+      |> MsbmsSystDatastore.one()
+      |> then(fn current_ordering -> (current_ordering || 0) + 1 end)
+
+    new_rule_params = %{
+      template_rule: false,
+      ordering: new_ordering,
+      functional_type: "allow",
+      ip_host_or_network: ~i"10.150.150.100"
+    }
+
+    assert {:ok, created_rule} = Impl.NetworkRules.create_global_network_rule(new_rule_params)
+
+    assert created_rule.template_rule == new_rule_params.template_rule
+    assert created_rule.ordering == new_rule_params.ordering
+    assert created_rule.functional_type == new_rule_params.functional_type
+
+    assert DbTypes.Inet.to_net_address(created_rule.ip_host_or_network) ==
+             new_rule_params.ip_host_or_network
+  end
+
+  test "Can create Owner Network Rule" do
+    {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner6")
+
+    new_ordering =
+      from(onr in Data.SystOwnerNetworkRules,
+        select: max(onr.ordering) |> coalesce(0),
+        where: onr.owner_id == ^owner_id
+      )
+      |> MsbmsSystDatastore.one()
+      |> then(fn current_ordering -> (current_ordering || 0) + 1 end)
+
+    new_rule_params = %{
+      ordering: new_ordering,
+      functional_type: "allow",
+      ip_host_or_network: ~i"10.150.150.110"
+    }
+
+    assert {:ok, created_rule} =
+             Impl.NetworkRules.create_owner_network_rule(owner_id, new_rule_params)
+
+    assert created_rule.owner_id == owner_id
+    assert created_rule.ordering == new_rule_params.ordering
+    assert created_rule.functional_type == new_rule_params.functional_type
+
+    assert DbTypes.Inet.to_net_address(created_rule.ip_host_or_network) ==
+             new_rule_params.ip_host_or_network
+  end
+
+  test "Can create Instance Network Rule" do
+    {:ok, instance_id} =
+      MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner6_instance_types_std")
+
+    new_ordering =
+      from(inr in Data.SystInstanceNetworkRules,
+        select: max(inr.ordering) |> coalesce(0),
+        where: inr.instance_id == ^instance_id
+      )
+      |> MsbmsSystDatastore.one()
+      |> then(fn current_ordering -> (current_ordering || 0) + 1 end)
+
+    new_rule_params = %{
+      ordering: new_ordering,
+      functional_type: "deny",
+      ip_host_range_lower: ~i"10.150.150.200",
+      ip_host_range_upper: ~i"10.150.150.254"
+    }
+
+    assert {:ok, created_rule} =
+             Impl.NetworkRules.create_instance_network_rule(instance_id, new_rule_params)
+
+    assert created_rule.instance_id == instance_id
+    assert created_rule.ordering == new_rule_params.ordering
+    assert created_rule.functional_type == new_rule_params.functional_type
+
+    assert DbTypes.Inet.to_net_address(created_rule.ip_host_range_lower) ==
+             new_rule_params.ip_host_range_lower
+
+    assert DbTypes.Inet.to_net_address(created_rule.ip_host_range_upper) ==
+             new_rule_params.ip_host_range_upper
+  end
+
+  test "Can update Global Network Rule / Success Tuple" do
+    global_rule =
+      from(gnr in Data.SystGlobalNetworkRules, where: not gnr.template_rule and gnr.ordering == 5)
+      |> MsbmsSystDatastore.one!()
+
+    update_params = %{
+      ordering: 10,
+      functional_type: "deny",
+      ip_host_or_network: ~i"10.173.173.5"
+    }
+
+    assert {:ok, updated_rule} =
+             Impl.NetworkRules.update_global_network_rule(global_rule.id, update_params)
+
+    assert updated_rule.ordering == update_params.ordering
+    assert updated_rule.functional_type == update_params.functional_type
+
+    assert DbTypes.Inet.to_net_address(updated_rule.ip_host_or_network) ==
+             update_params.ip_host_or_network
+  end
+
+  test "Can update Global Network Rule / Raise on Error" do
+    global_rule =
+      from(gnr in Data.SystGlobalNetworkRules, where: not gnr.template_rule and gnr.ordering == 6)
+      |> MsbmsSystDatastore.one!()
+
+    update_params = %{
+      ordering: 11,
+      functional_type: "deny",
+      ip_host_or_network: ~i"10.173.173.0/24"
+    }
+
+    assert updated_rule =
+             Impl.NetworkRules.update_global_network_rule!(global_rule.id, update_params)
+
+    assert updated_rule.ordering == update_params.ordering
+    assert updated_rule.functional_type == update_params.functional_type
+
+    assert DbTypes.Inet.to_net_address(updated_rule.ip_host_or_network) ==
+             update_params.ip_host_or_network
+  end
+
+  test "Can update Owner Network Rule / Success Tuple" do
+    {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner5")
+
+    owner_rule =
+      from(onr in Data.SystOwnerNetworkRules,
+        where: onr.owner_id == ^owner_id and onr.ordering == 1
+      )
+      |> MsbmsSystDatastore.one!()
+
+    update_params = %{
+      ordering: 3,
+      functional_type: "allow",
+      ip_host_or_network: ~i"10.172.172.0/24"
+    }
+
+    assert {:ok, updated_rule} =
+             Impl.NetworkRules.update_owner_network_rule(owner_rule.id, update_params)
+
+    assert updated_rule.ordering == update_params.ordering
+    assert updated_rule.functional_type == update_params.functional_type
+
+    assert DbTypes.Inet.to_net_address(updated_rule.ip_host_or_network) ==
+             update_params.ip_host_or_network
+  end
+
+  test "Can update Owner Network Rule / Raise on Error" do
+    {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner5")
+
+    owner_rule =
+      from(onr in Data.SystOwnerNetworkRules,
+        where: onr.owner_id == ^owner_id and onr.ordering == 2
+      )
+      |> MsbmsSystDatastore.one!()
+
+    update_params = %{
+      ordering: 4,
+      functional_type: "deny",
+      ip_host_range_lower: ~i"10.170.170.200",
+      ip_host_range_upper: ~i"10.171.171.254"
+    }
+
+    assert updated_rule =
+             Impl.NetworkRules.update_owner_network_rule!(owner_rule.id, update_params)
+
+    assert updated_rule.ordering == update_params.ordering
+    assert updated_rule.functional_type == update_params.functional_type
+
+    assert DbTypes.Inet.to_net_address(updated_rule.ip_host_range_lower) ==
+             update_params.ip_host_range_lower
+
+    assert DbTypes.Inet.to_net_address(updated_rule.ip_host_range_upper) ==
+             update_params.ip_host_range_upper
+  end
+
+  test "Can update Instance Network Rule / Success Tuple" do
+    {:ok, instance_id} =
+      MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner7_instance_types_std")
+
+    instance_rule =
+      from(inr in Data.SystInstanceNetworkRules,
+        where: inr.instance_id == ^instance_id and inr.ordering == 1
+      )
+      |> MsbmsSystDatastore.one!()
+
+    update_params = %{
+      ordering: 3,
+      functional_type: "deny",
+      ip_host_or_network: ~i"10.175.175.1"
+    }
+
+    assert {:ok, updated_rule} =
+             Impl.NetworkRules.update_instance_network_rule(instance_rule.id, update_params)
+
+    assert updated_rule.ordering == update_params.ordering
+    assert updated_rule.functional_type == update_params.functional_type
+
+    assert DbTypes.Inet.to_net_address(updated_rule.ip_host_or_network) ==
+             update_params.ip_host_or_network
+  end
+
+  test "Can update Instance Network Rule / Raise on Error" do
+    {:ok, instance_id} =
+      MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner7_instance_types_std")
+
+    instance_rule =
+      from(inr in Data.SystInstanceNetworkRules,
+        where: inr.instance_id == ^instance_id and inr.ordering == 2
+      )
+      |> MsbmsSystDatastore.one!()
+
+    update_params = %{
+      ordering: 4,
+      functional_type: "allow",
+      ip_host_or_network: ~i"10.175.175.2"
+    }
+
+    assert updated_rule =
+             Impl.NetworkRules.update_instance_network_rule!(instance_rule.id, update_params)
+
+    assert updated_rule.ordering == update_params.ordering
+    assert updated_rule.functional_type == update_params.functional_type
+
+    assert DbTypes.Inet.to_net_address(updated_rule.ip_host_or_network) ==
+             update_params.ip_host_or_network
+  end
+
+  test "Can get Global Network Rule / Success Tuple" do
+    global_rule =
+      from(gnr in Data.SystGlobalNetworkRules, where: gnr.template_rule and gnr.ordering == 2)
+      |> MsbmsSystDatastore.one!()
+
+    assert {:ok, test_rule} = Impl.NetworkRules.get_global_network_rule(global_rule.id)
+
+    assert test_rule.template_rule == global_rule.template_rule
+    assert test_rule.ordering == global_rule.ordering
+    assert test_rule.functional_type == global_rule.functional_type
+    assert test_rule.ip_host_or_network == global_rule.ip_host_or_network
+    assert test_rule.ip_host_range_lower == global_rule.ip_host_range_lower
+    assert test_rule.ip_host_range_upper == global_rule.ip_host_range_upper
+  end
+
+  test "Can get Global Network Rule / Raise on Error" do
+    global_rule =
+      from(gnr in Data.SystGlobalNetworkRules, where: not gnr.template_rule and gnr.ordering == 2)
+      |> MsbmsSystDatastore.one!()
+
+    assert test_rule = Impl.NetworkRules.get_global_network_rule!(global_rule.id)
+
+    assert test_rule.template_rule == global_rule.template_rule
+    assert test_rule.ordering == global_rule.ordering
+    assert test_rule.functional_type == global_rule.functional_type
+    assert test_rule.ip_host_or_network == global_rule.ip_host_or_network
+    assert test_rule.ip_host_range_lower == global_rule.ip_host_range_lower
+    assert test_rule.ip_host_range_upper == global_rule.ip_host_range_upper
+  end
+
+  test "Can get Owner Network Rule / Success Tuple" do
+    {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner1")
+
+    owner_rule =
+      from(onr in Data.SystOwnerNetworkRules,
+        where: onr.owner_id == ^owner_id and onr.ordering == 2
+      )
+      |> MsbmsSystDatastore.one!()
+
+    assert {:ok, test_rule} = Impl.NetworkRules.get_owner_network_rule(owner_rule.id)
+
+    assert test_rule.owner_id == owner_rule.owner_id
+    assert test_rule.ordering == owner_rule.ordering
+    assert test_rule.functional_type == owner_rule.functional_type
+    assert test_rule.ip_host_or_network == owner_rule.ip_host_or_network
+    assert test_rule.ip_host_range_lower == owner_rule.ip_host_range_lower
+    assert test_rule.ip_host_range_upper == owner_rule.ip_host_range_upper
+  end
+
+  test "Can get Owner Network Rule / Raise on Error" do
+    {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner1")
+
+    owner_rule =
+      from(onr in Data.SystOwnerNetworkRules,
+        where: onr.owner_id == ^owner_id and onr.ordering == 3
+      )
+      |> MsbmsSystDatastore.one!()
+
+    assert test_rule = Impl.NetworkRules.get_owner_network_rule!(owner_rule.id)
+
+    assert test_rule.owner_id == owner_rule.owner_id
+    assert test_rule.ordering == owner_rule.ordering
+    assert test_rule.functional_type == owner_rule.functional_type
+    assert test_rule.ip_host_or_network == owner_rule.ip_host_or_network
+    assert test_rule.ip_host_range_lower == owner_rule.ip_host_range_lower
+    assert test_rule.ip_host_range_upper == owner_rule.ip_host_range_upper
+  end
+
+  test "Can get Instance Network Rule / Success Tuple" do
+    {:ok, instance_id} =
+      MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner1_instance_types_std")
+
+    instance_rule =
+      from(inr in Data.SystInstanceNetworkRules,
+        where: inr.instance_id == ^instance_id and inr.ordering == 3
+      )
+      |> MsbmsSystDatastore.one!()
+
+    assert {:ok, test_rule} = Impl.NetworkRules.get_instance_network_rule(instance_rule.id)
+
+    assert test_rule.instance_id == instance_rule.instance_id
+    assert test_rule.ordering == instance_rule.ordering
+    assert test_rule.functional_type == instance_rule.functional_type
+    assert test_rule.ip_host_or_network == instance_rule.ip_host_or_network
+    assert test_rule.ip_host_range_lower == instance_rule.ip_host_range_lower
+    assert test_rule.ip_host_range_upper == instance_rule.ip_host_range_upper
+  end
+
+  test "Can get Instance Network Rule / Raise on Error" do
+    {:ok, instance_id} =
+      MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner1_instance_types_std")
+
+    instance_rule =
+      from(inr in Data.SystInstanceNetworkRules,
+        where: inr.instance_id == ^instance_id and inr.ordering == 4
+      )
+      |> MsbmsSystDatastore.one!()
+
+    assert test_rule = Impl.NetworkRules.get_instance_network_rule!(instance_rule.id)
+
+    assert test_rule.instance_id == instance_rule.instance_id
+    assert test_rule.ordering == instance_rule.ordering
+    assert test_rule.functional_type == instance_rule.functional_type
+    assert test_rule.ip_host_or_network == instance_rule.ip_host_or_network
+    assert test_rule.ip_host_range_lower == instance_rule.ip_host_range_lower
+    assert test_rule.ip_host_range_upper == instance_rule.ip_host_range_upper
+  end
+
+  test "Can delete Global Network Rule / Success Tuple" do
+    global_rule_id =
+      from(gnr in Data.SystGlobalNetworkRules,
+        where: not gnr.template_rule and gnr.ordering == 7,
+        select: gnr.id
+      )
+      |> MsbmsSystDatastore.one!()
+
+    assert :ok = Impl.NetworkRules.delete_global_network_rule(global_rule_id)
+
+    assert false ==
+             from(gnr in Data.SystGlobalNetworkRules,
+               where: gnr.id == ^global_rule_id,
+               select: gnr.id
+             )
+             |> MsbmsSystDatastore.exists?()
+  end
+
+  test "Can delete Global Network Rule / Raise on Error" do
+    global_rule_id =
+      from(gnr in Data.SystGlobalNetworkRules,
+        where: not gnr.template_rule and gnr.ordering == 8,
+        select: gnr.id
+      )
+      |> MsbmsSystDatastore.one!()
+
+    assert :ok = Impl.NetworkRules.delete_global_network_rule!(global_rule_id)
+
+    assert false ==
+             from(gnr in Data.SystGlobalNetworkRules,
+               where: gnr.id == ^global_rule_id,
+               select: gnr.id
+             )
+             |> MsbmsSystDatastore.exists?()
+  end
+
+  test "Can delete Owner Network Rule / Success Tuple" do
+    {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner6")
+
+    owner_rule_id =
+      from(onr in Data.SystOwnerNetworkRules,
+        where: onr.owner_id == ^owner_id and onr.ordering == 1,
+        select: onr.id
+      )
+      |> MsbmsSystDatastore.one!()
+
+    assert :ok = Impl.NetworkRules.delete_owner_network_rule(owner_rule_id)
+
+    assert false ==
+             from(onr in Data.SystOwnerNetworkRules,
+               where: onr.id == ^owner_rule_id,
+               select: onr.id
+             )
+             |> MsbmsSystDatastore.exists?()
+  end
+
+  test "Can delete Owner Network Rule / Raise on Error" do
+    {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner6")
+
+    owner_rule_id =
+      from(onr in Data.SystOwnerNetworkRules,
+        where: onr.owner_id == ^owner_id and onr.ordering == 2,
+        select: onr.id
+      )
+      |> MsbmsSystDatastore.one!()
+
+    assert :ok = Impl.NetworkRules.delete_owner_network_rule!(owner_rule_id)
+
+    assert false ==
+             from(onr in Data.SystOwnerNetworkRules,
+               where: onr.id == ^owner_rule_id,
+               select: onr.id
+             )
+             |> MsbmsSystDatastore.exists?()
+  end
+
+  test "Can delete Instance Network Rule / Success Tuple" do
+    {:ok, instance_id} =
+      MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner8_instance_types_std")
+
+    instance_rule_id =
+      from(inr in Data.SystInstanceNetworkRules,
+        where: inr.instance_id == ^instance_id and inr.ordering == 1,
+        select: inr.id
+      )
+      |> MsbmsSystDatastore.one!()
+
+    assert :ok = Impl.NetworkRules.delete_instance_network_rule(instance_rule_id)
+
+    assert false ==
+             from(inr in Data.SystInstanceNetworkRules,
+               where: inr.id == ^instance_rule_id,
+               select: inr.id
+             )
+             |> MsbmsSystDatastore.exists?()
+  end
+
+  test "Can delete Instance Network Rule / Raise on Error" do
+    {:ok, instance_id} =
+      MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner8_instance_types_std")
+
+    instance_rule_id =
+      from(inr in Data.SystInstanceNetworkRules,
+        where: inr.instance_id == ^instance_id and inr.ordering == 2,
+        select: inr.id
+      )
+      |> MsbmsSystDatastore.one!()
+
+    assert :ok = Impl.NetworkRules.delete_instance_network_rule!(instance_rule_id)
+
+    assert false ==
+             from(inr in Data.SystInstanceNetworkRules,
+               where: inr.id == ^instance_rule_id,
+               select: inr.id
+             )
+             |> MsbmsSystDatastore.exists?()
   end
 end
