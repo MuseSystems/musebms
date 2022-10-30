@@ -593,8 +593,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
   @spec delete_password_rules!(MsbmsSystInstanceMgr.Types.owner_id()) :: :ok
   def delete_password_rules!(owner_id) do
     from(opwr in Data.SystOwnerPasswordRules, where: opwr.owner_id == ^owner_id)
-    |> MsbmsSystDatastore.one!()
-    |> MsbmsSystDatastore.delete!()
+    |> MsbmsSystDatastore.delete_all()
 
     :ok
   rescue
