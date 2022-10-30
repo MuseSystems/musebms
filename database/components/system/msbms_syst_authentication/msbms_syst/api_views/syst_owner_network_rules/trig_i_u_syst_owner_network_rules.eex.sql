@@ -17,8 +17,8 @@ $BODY$
 BEGIN
 
     IF
-        new.owner_id  = old.owner_id OR
-        new.ip_family = old.ip_family
+        new.owner_id  != old.owner_id OR
+        new.ip_family != old.ip_family
     THEN
         RAISE EXCEPTION
             USING

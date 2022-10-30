@@ -17,8 +17,8 @@ $BODY$
 BEGIN
 
     IF
-        new.instance_id = old.instance_id OR
-        new.ip_family   = old.ip_family
+        new.instance_id != old.instance_id OR
+        new.ip_family   != old.ip_family
     THEN
         RAISE EXCEPTION
             USING
