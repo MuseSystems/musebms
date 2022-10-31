@@ -140,7 +140,6 @@ defmodule MsbmsSystAuthentication.Types do
   @type disallowed_host_id() :: Ecto.UUID.t()
 
   @type global_network_rule_params() :: %{
-          optional(:template_rule) => boolean(),
           optional(:ordering) => pos_integer(),
           optional(:functional_type) => String.t(),
           optional(:ip_host_or_network) => DbTypes.Inet.t(),

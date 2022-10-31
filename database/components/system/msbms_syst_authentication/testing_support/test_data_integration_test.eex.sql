@@ -99,16 +99,14 @@ $AUTHENTICATION_TESTING_INIT$
 
         INSERT INTO msbms_syst_data.syst_global_network_rules
             (
-              template_rule
-            , ordering
+              ordering
             , functional_type
             , ip_host_or_network
             , ip_host_range_lower
             , ip_host_range_upper
             )
         SELECT
-              (gnr ->> 'template_rule')::boolean
-            , (gnr ->> 'ordering')::integer
+              (gnr ->> 'ordering')::integer
             , gnr ->> 'functional_type'
             , (gnr ->> 'ip_host_or_network')::inet
             , (gnr ->> 'ip_host_range_lower')::inet
