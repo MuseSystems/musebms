@@ -16,14 +16,10 @@ CREATE TABLE msbms_syst_data.syst_global_network_rules
         uuid
         NOT NULL DEFAULT uuid_generate_v1( )
         CONSTRAINT syst_global_network_rules_pk PRIMARY KEY
-    ,template_rule
-        boolean
-        NOT NULL DEFAULT FALSE
     ,ordering
         integer
         NOT NULL
-    ,CONSTRAINT syst_global_network_rules_order_kind_udx
-        UNIQUE ( template_rule, ordering ) DEFERRABLE INITIALLY DEFERRED
+        CONSTRAINT syst_global_network_rules_ordering_udx UNIQUE
     ,functional_type
         text
         NOT NULL
@@ -95,25 +91,14 @@ $DOC$The record's primary key.  The definitive identifier of the record in the
 system.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst_data.syst_global_network_rules.template_rule IS
-$DOC$If true, the record is not applied to check incoming authentication requests
-but is applied as the default Owner IP rule set when the first new Instance for
-an owner is added to the system.
-
-When false, the rule is globally applied to all authentication requests prior to
-Owner and Instance IP rules being applied.$DOC$;
-
-COMMENT ON
     COLUMN msbms_syst_data.syst_global_network_rules.ordering IS
 $DOC$Defines the order in which IP rules are applied.  Lower values are applied
 prior to higher values.
 
-All records of either class template_rule = true and template_rule = false have
-unique ordering values within their class.  When a new record is inserted with
-the ordering value of an existing record of that class, it is treated as "insert
-before" the existing record and the existing record's ordering is increased by
-one; this reordering process is recursive until there are no more ordering value
-conflicts for that class of record.$DOC$;
+When a new record is inserted with an existing ordering value, it is treated as
+"insert before" the existing record and the existing record's ordering is
+increased by one; this reordering process is recursive until there are no more
+ordering value conflicts.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst_data.syst_global_network_rules.functional_type IS

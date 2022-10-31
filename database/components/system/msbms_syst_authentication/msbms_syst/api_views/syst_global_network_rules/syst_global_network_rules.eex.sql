@@ -13,7 +13,6 @@
 CREATE VIEW msbms_syst.syst_global_network_rules AS
 SELECT
     id
-  , template_rule
   , ordering
   , functional_type
   , ip_host_or_network
@@ -68,21 +67,14 @@ system.
 This value is read only from this API view.$DOC$;
 
 COMMENT ON
-    COLUMN msbms_syst.syst_global_network_rules.template_rule IS
-$DOC$If true, the record is not applied to check incoming authentication requests
-but is applied as the default Owner IP rule set when the first new Instance for
-an owner is added to the system.
-
-When false, the rule is globally applied to all authentication requests prior to
-Owner and Instance IP rules being applied.
-
-This value is read only from this API view.$DOC$;
-
-COMMENT ON
     COLUMN msbms_syst.syst_global_network_rules.ordering IS
 $DOC$Defines the order in which IP rules are applied.  Lower values are applied
-prior to higher values.  Note that all values of ordering should be unique
-within each of the two types of rules, template and non-template types.$DOC$;
+prior to higher values.
+
+When a new record is inserted with an existing ordering value, it is treated as
+"insert before" the existing record and the existing record's ordering is
+increased by one; this reordering process is recursive until there are no more
+ordering value conflicts.$DOC$;
 
 COMMENT ON
     COLUMN msbms_syst.syst_global_network_rules.functional_type IS

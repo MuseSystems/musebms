@@ -22,7 +22,6 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystGlobalNetworkRules do
   def insert_changeset(insert_params) do
     %Data.SystGlobalNetworkRules{}
     |> cast(insert_params, [
-      :template_rule,
       :ordering,
       :functional_type,
       :ip_host_or_network,
@@ -39,7 +38,6 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystGlobalNetworkRules do
   def update_changeset(global_network_rule, update_params) do
     global_network_rule
     |> cast(update_params, [
-      :template_rule,
       :ordering,
       :functional_type,
       :ip_host_or_network,
@@ -54,7 +52,6 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystGlobalNetworkRules do
 
   defp validate_common(changeset) do
     validate_required(changeset, [
-      :template_rule,
       :ordering,
       :functional_type
     ])

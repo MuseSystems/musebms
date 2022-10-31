@@ -129,31 +129,6 @@ $AUTHENTICATION_TESTING_INIT$
           ],
           "global_network_rules": [
             {
-              "template_rule": true,
-              "ordering": 1,
-              "functional_type": "deny",
-              "ip_host_or_network": "10.124.124.1",
-              "ip_host_range_lower": null,
-              "ip_host_range_upper": null
-            },
-            {
-              "template_rule": true,
-              "ordering": 2,
-              "functional_type": "allow",
-              "ip_host_or_network": "10.124.124.0/24",
-              "ip_host_range_lower": null,
-              "ip_host_range_upper": null
-            },
-            {
-              "template_rule": true,
-              "ordering": 3,
-              "functional_type": "allow",
-              "ip_host_or_network": null,
-              "ip_host_range_lower": "10.123.123.1",
-              "ip_host_range_upper": "10.123.123.254"
-            },
-            {
-              "template_rule": false,
               "ordering": 1,
               "functional_type": "deny",
               "ip_host_or_network": "10.131.131.0/24",
@@ -161,7 +136,6 @@ $AUTHENTICATION_TESTING_INIT$
               "ip_host_range_upper": null
             },
             {
-              "template_rule": false,
               "ordering": 2,
               "functional_type": "allow",
               "ip_host_or_network": "10.131.131.5",
@@ -169,7 +143,6 @@ $AUTHENTICATION_TESTING_INIT$
               "ip_host_range_upper": null
             },
             {
-              "template_rule": false,
               "ordering": 3,
               "functional_type": "allow",
               "ip_host_or_network": "10.125.125.0/24",
@@ -177,7 +150,6 @@ $AUTHENTICATION_TESTING_INIT$
               "ip_host_range_upper": null
             },
             {
-              "template_rule": false,
               "ordering": 4,
               "functional_type": "allow",
               "ip_host_or_network": null,
@@ -185,7 +157,6 @@ $AUTHENTICATION_TESTING_INIT$
               "ip_host_range_upper": "10.123.123.254"
             },
             {
-              "template_rule": false,
               "ordering": 5,
               "functional_type": "allow",
               "ip_host_or_network": "10.131.131.5",
@@ -193,7 +164,6 @@ $AUTHENTICATION_TESTING_INIT$
               "ip_host_range_upper": null
             },
             {
-              "template_rule": false,
               "ordering": 6,
               "functional_type": "allow",
               "ip_host_or_network": "10.125.125.0/24",
@@ -201,7 +171,6 @@ $AUTHENTICATION_TESTING_INIT$
               "ip_host_range_upper": null
             },
             {
-              "template_rule": false,
               "ordering": 7,
               "functional_type": "allow",
               "ip_host_or_network": null,
@@ -209,7 +178,6 @@ $AUTHENTICATION_TESTING_INIT$
               "ip_host_range_upper": "10.123.123.254"
             },
             {
-              "template_rule": false,
               "ordering": 8,
               "functional_type": "allow",
               "ip_host_or_network": null,
@@ -2728,16 +2696,14 @@ $AUTHENTICATION_TESTING_INIT$
 
         INSERT INTO msbms_syst_data.syst_global_network_rules
             (
-              template_rule
-            , ordering
+              ordering
             , functional_type
             , ip_host_or_network
             , ip_host_range_lower
             , ip_host_range_upper
             )
         SELECT
-              (gnr ->> 'template_rule')::boolean
-            , (gnr ->> 'ordering')::integer
+              (gnr ->> 'ordering')::integer
             , gnr ->> 'functional_type'
             , (gnr ->> 'ip_host_or_network')::inet
             , (gnr ->> 'ip_host_range_lower')::inet
