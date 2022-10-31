@@ -17,21 +17,19 @@ $BODY$
 BEGIN
 
     INSERT INTO msbms_syst_data.syst_global_network_rules
-        ( template_rule
-        , ordering
+        ( ordering
         , functional_type
         , ip_host_or_network
         , ip_host_range_lower
         , ip_host_range_upper )
     VALUES
-        ( new.template_rule
-        , new.ordering
+        ( new.ordering
         , new.functional_type
         , new.ip_host_or_network
         , new.ip_host_range_lower
         , new.ip_host_range_upper )
     RETURNING
-        id, template_rule, ordering, functional_type, ip_host_or_network, ip_host_range_lower,
+        id, ordering, functional_type, ip_host_or_network, ip_host_range_lower,
         ip_host_range_upper,
         family( coalesce( ip_host_or_network, ip_host_range_lower ) ),
         diag_timestamp_created, diag_role_created, diag_timestamp_modified,

@@ -16,10 +16,7 @@ $BODY$
 
 BEGIN
 
-    IF
-        new.template_rule != old.template_rule OR
-        new.ip_family     != old.ip_family
-    THEN
+    IF new.ip_family     != old.ip_family THEN
         RAISE EXCEPTION
             USING
                 MESSAGE = 'The requested data update included changes to fields disallowed ' ||
@@ -50,7 +47,7 @@ BEGIN
       , ip_host_range_upper = new.ip_host_range_upper
     WHERE id = new.id
     RETURNING
-        id, template_rule, ordering, functional_type, ip_host_or_network, ip_host_range_lower,
+        id, ordering, functional_type, ip_host_or_network, ip_host_range_lower,
         ip_host_range_upper,
         family( coalesce( ip_host_or_network, ip_host_range_lower ) ),
         diag_timestamp_created, diag_role_created, diag_timestamp_modified,

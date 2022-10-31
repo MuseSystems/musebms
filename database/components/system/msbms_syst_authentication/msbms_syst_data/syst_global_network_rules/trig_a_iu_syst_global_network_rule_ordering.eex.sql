@@ -18,7 +18,7 @@ BEGIN
 
     UPDATE msbms_syst_data.syst_global_network_rules
     SET ordering = ordering + 1
-    WHERE template_rule = new.template_rule AND ordering = new.ordering AND id != new.id;
+    WHERE ordering = new.ordering AND id != new.id;
 
     RETURN null;
 

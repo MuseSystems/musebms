@@ -130,7 +130,6 @@ defmodule NetworkRulesTest do
       |> then(fn current_ordering -> (current_ordering || 0) + 1 end)
 
     new_rule_params = %{
-      template_rule: false,
       ordering: new_ordering,
       functional_type: "allow",
       ip_host_or_network: ~i"10.150.150.100"
@@ -138,7 +137,6 @@ defmodule NetworkRulesTest do
 
     assert {:ok, created_rule} = Impl.NetworkRules.create_global_network_rule(new_rule_params)
 
-    assert created_rule.template_rule == new_rule_params.template_rule
     assert created_rule.ordering == new_rule_params.ordering
     assert created_rule.functional_type == new_rule_params.functional_type
 
@@ -209,7 +207,7 @@ defmodule NetworkRulesTest do
 
   test "Can update Global Network Rule / Success Tuple" do
     global_rule =
-      from(gnr in Data.SystGlobalNetworkRules, where: not gnr.template_rule and gnr.ordering == 5)
+      from(gnr in Data.SystGlobalNetworkRules, where: gnr.ordering == 5)
       |> MsbmsSystDatastore.one!()
 
     update_params = %{
@@ -230,7 +228,7 @@ defmodule NetworkRulesTest do
 
   test "Can update Global Network Rule / Raise on Error" do
     global_rule =
-      from(gnr in Data.SystGlobalNetworkRules, where: not gnr.template_rule and gnr.ordering == 6)
+      from(gnr in Data.SystGlobalNetworkRules, where: gnr.ordering == 6)
       |> MsbmsSystDatastore.one!()
 
     update_params = %{
@@ -357,12 +355,11 @@ defmodule NetworkRulesTest do
 
   test "Can get Global Network Rule / Success Tuple" do
     global_rule =
-      from(gnr in Data.SystGlobalNetworkRules, where: gnr.template_rule and gnr.ordering == 2)
+      from(gnr in Data.SystGlobalNetworkRules, where: gnr.ordering == 2)
       |> MsbmsSystDatastore.one!()
 
     assert {:ok, test_rule} = Impl.NetworkRules.get_global_network_rule(global_rule.id)
 
-    assert test_rule.template_rule == global_rule.template_rule
     assert test_rule.ordering == global_rule.ordering
     assert test_rule.functional_type == global_rule.functional_type
     assert test_rule.ip_host_or_network == global_rule.ip_host_or_network
@@ -372,12 +369,11 @@ defmodule NetworkRulesTest do
 
   test "Can get Global Network Rule / Raise on Error" do
     global_rule =
-      from(gnr in Data.SystGlobalNetworkRules, where: not gnr.template_rule and gnr.ordering == 2)
+      from(gnr in Data.SystGlobalNetworkRules, where: gnr.ordering == 2)
       |> MsbmsSystDatastore.one!()
 
     assert test_rule = Impl.NetworkRules.get_global_network_rule!(global_rule.id)
 
-    assert test_rule.template_rule == global_rule.template_rule
     assert test_rule.ordering == global_rule.ordering
     assert test_rule.functional_type == global_rule.functional_type
     assert test_rule.ip_host_or_network == global_rule.ip_host_or_network
@@ -465,10 +461,7 @@ defmodule NetworkRulesTest do
 
   test "Can delete Global Network Rule / Success Tuple" do
     global_rule_id =
-      from(gnr in Data.SystGlobalNetworkRules,
-        where: not gnr.template_rule and gnr.ordering == 7,
-        select: gnr.id
-      )
+      from(gnr in Data.SystGlobalNetworkRules, where: gnr.ordering == 7, select: gnr.id)
       |> MsbmsSystDatastore.one!()
 
     assert :ok = Impl.NetworkRules.delete_global_network_rule(global_rule_id)
@@ -483,10 +476,7 @@ defmodule NetworkRulesTest do
 
   test "Can delete Global Network Rule / Raise on Error" do
     global_rule_id =
-      from(gnr in Data.SystGlobalNetworkRules,
-        where: not gnr.template_rule and gnr.ordering == 8,
-        select: gnr.id
-      )
+      from(gnr in Data.SystGlobalNetworkRules, where: gnr.ordering == 8, select: gnr.id)
       |> MsbmsSystDatastore.one!()
 
     assert :ok = Impl.NetworkRules.delete_global_network_rule!(global_rule_id)

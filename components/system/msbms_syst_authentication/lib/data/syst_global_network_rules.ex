@@ -29,7 +29,6 @@ defmodule MsbmsSystAuthentication.Data.SystGlobalNetworkRules do
           %__MODULE__{
             __meta__: Ecto.Schema.Metadata.t(),
             id: Ecto.UUID.t() | nil,
-            template_rule: boolean() | nil,
             ordering: integer() | nil,
             functional_type: String.t() | nil,
             ip_host_or_network: DbTypes.Inet.t() | nil,
@@ -48,7 +47,6 @@ defmodule MsbmsSystAuthentication.Data.SystGlobalNetworkRules do
   @schema_prefix "msbms_syst"
 
   schema "syst_global_network_rules" do
-    field(:template_rule, :boolean)
     field(:ordering, :integer)
     field(:functional_type, :string)
     field(:ip_host_or_network, DbTypes.Inet)

@@ -56,9 +56,8 @@ $BODY$
              , ip_host_range_upper
            FROM msbms_syst_data.syst_global_network_rules
            WHERE
-                 NOT template_rule
-             AND ( ip_host_or_network >>= p_host_addr OR
-                   p_host_addr BETWEEN ip_host_range_lower AND ip_host_range_upper )
+               ( ip_host_or_network >>= p_host_addr OR
+                 p_host_addr BETWEEN ip_host_range_lower AND ip_host_range_upper )
            UNION
            SELECT
                3          AS precedence_sort
