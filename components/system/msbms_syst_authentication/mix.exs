@@ -88,6 +88,7 @@ defmodule MsbmsSystAuthentication.MixProject do
             MsbmsSystAuthentication.Data.SystAccessAccountInstanceAssocs,
             MsbmsSystAuthentication.Data.SystAccessAccounts,
             MsbmsSystAuthentication.Data.SystCredentials,
+            MsbmsSystAuthentication.Data.SystDisallowedHosts,
             MsbmsSystAuthentication.Data.SystDisallowedPasswords,
             MsbmsSystAuthentication.Data.SystGlobalNetworkRules,
             MsbmsSystAuthentication.Data.SystGlobalPasswordRules,
