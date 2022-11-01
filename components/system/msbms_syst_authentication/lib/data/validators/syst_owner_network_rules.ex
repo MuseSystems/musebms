@@ -21,11 +21,13 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystOwnerNetworkRules do
 
   @spec insert_changeset(Types.owner_network_rule_params()) :: Ecto.Changeset.t()
   def insert_changeset(insert_params) do
-    resolved_insert_params =
-      Helpers.SystOwnerNetworkRules.resolve_name_params(insert_params, :insert)
+    resolved_params =
+      insert_params
+      |> Helpers.SystOwnerNetworkRules.resolve_name_params(:insert)
+      |> Helpers.General.resolve_network_rule_params_func_type()
 
     %Data.SystOwnerNetworkRules{}
-    |> cast(resolved_insert_params, [
+    |> cast(resolved_params, [
       :owner_id,
       :ordering,
       :functional_type,
@@ -41,8 +43,10 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystOwnerNetworkRules do
   @spec update_changeset(Data.SystOwnerNetworkRules.t(), Types.owner_network_rule_params()) ::
           Ecto.Changeset.t()
   def update_changeset(owner_network_rule, update_params) do
+    resolved_params = Helpers.General.resolve_network_rule_params_func_type(update_params)
+
     owner_network_rule
-    |> cast(update_params, [
+    |> cast(resolved_params, [
       :ordering,
       :functional_type,
       :ip_host_or_network,

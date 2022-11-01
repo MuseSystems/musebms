@@ -43,6 +43,12 @@ defmodule MsbmsSystAuthentication.Data.Helpers.General do
 
   def resolve_instance_id(change_params), do: change_params
 
+  def resolve_network_rule_params_func_type(%{functional_type: type} = params)
+      when is_atom(type),
+      do: Map.put(params, :functional_type, Atom.to_string(params[:functional_type]))
+
+  def resolve_network_rule_params_func_type(params), do: params
+
   def resolve_credential_type_id(
         %{credential_type_name: credential_type_name} = change_params,
         _operation
