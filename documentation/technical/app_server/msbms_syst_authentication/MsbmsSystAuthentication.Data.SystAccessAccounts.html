@@ -4,21 +4,23 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.28.5">
+    <meta name="generator" content="ExDoc v0.29.0">
     <meta name="project" content="msbms_syst_authentication v0.1.0">
 
     <title>MsbmsSystAuthentication.Data.SystAccessAccounts — msbms_syst_authentication v0.1.0</title>
-    <link rel="stylesheet" href="dist/elixir-64c5e2b63575bddb1c5b.css" />
+    <link rel="stylesheet" href="dist/html-elixir-2YOS5DIE.css" />
 
-    <script src="dist/sidebar_items-0b46b662e7.js"></script>
+    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
+    <script src="dist/handlebars.templates-X7YVL3G2.js"></script>
+    <script src="dist/sidebar_items-2DDDE410.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/app-b5f3440501744dc8be3d.js"></script>
+    <script async src="dist/html-XN2TSG4M.js"></script>
 
 
   </head>
-  <body data-type="modules">
+  <body data-type="modules" class="page-module">
     <script>
 
       try {
@@ -35,12 +37,11 @@
 
 <div class="main">
 
+<button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
 
 <section class="sidebar">
-  <button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
-    <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
-  </button>
-
   <form class="sidebar-search" action="search.html">
     <button type="submit" class="search-button" aria-label="Submit Search">
       <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
@@ -186,10 +187,10 @@ Types
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@type</span> t() :: %MsbmsSystAuthentication.Data.SystAccessAccounts{
-  __meta__: <a href="https://hexdocs.pm/ecto/3.8.4/Ecto.Schema.Metadata.html#t:t/0">Ecto.Schema.Metadata.t</a>(),
+  __meta__: <a href="https://hexdocs.pm/ecto/3.9.1/Ecto.Schema.Metadata.html#t:t/0">Ecto.Schema.Metadata.t</a>(),
   access_account_instance_assocs: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
   access_account_state:
-    <a href="../../../../documentation/technical/app_server/msbms_syst_enums/MsbmsSystEnums.Data.SystEnumItems.html#t:t/0">MsbmsSystEnums.Data.SystEnumItems.t</a>() | <a href="https://hexdocs.pm/ecto/3.8.4/Ecto.Association.NotLoaded.html#t:t/0">Ecto.Association.NotLoaded.t</a>() | nil,
+    <a href="../../../../documentation/technical/app_server/msbms_syst_enums/MsbmsSystEnums.Data.SystEnumItems.html#t:t/0">MsbmsSystEnums.Data.SystEnumItems.t</a>() | <a href="https://hexdocs.pm/ecto/3.9.1/Ecto.Association.NotLoaded.html#t:t/0">Ecto.Association.NotLoaded.t</a>() | nil,
   access_account_state_id:
     <a href="MsbmsSystAuthentication.Types.html#t:access_account_state_id/0">MsbmsSystAuthentication.Types.access_account_state_id</a>() | nil,
   allow_global_logins: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>() | nil,
@@ -201,12 +202,12 @@ Types
   diag_update_count: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>() | nil,
   diag_wallclock_modified: <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0">DateTime.t</a>() | nil,
   external_name: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil,
-  id: <a href="https://hexdocs.pm/ecto/3.8.4/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>() | nil,
+  id: <a href="https://hexdocs.pm/ecto/3.9.1/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>() | nil,
   identities: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
   internal_name: <a href="MsbmsSystAuthentication.Types.html#t:access_account_name/0">MsbmsSystAuthentication.Types.access_account_name</a>() | nil,
   owning_owner:
     <a href="../../../../documentation/technical/app_server/msbms_syst_instance_mgr/MsbmsSystInstanceMgr.Data.SystOwners.html#t:t/0">MsbmsSystInstanceMgr.Data.SystOwners.t</a>()
-    | <a href="https://hexdocs.pm/ecto/3.8.4/Ecto.Association.NotLoaded.html#t:t/0">Ecto.Association.NotLoaded.t</a>()
+    | <a href="https://hexdocs.pm/ecto/3.9.1/Ecto.Association.NotLoaded.html#t:t/0">Ecto.Association.NotLoaded.t</a>()
     | nil,
   owning_owner_id: <a href="../../../../documentation/technical/app_server/msbms_syst_instance_mgr/MsbmsSystInstanceMgr.Types.html#t:owner_id/0">MsbmsSystInstanceMgr.Types.owner_id</a>() | nil,
   password_history: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()
@@ -252,7 +253,7 @@ Functions
   <a href="MsbmsSystAuthentication.Types.html#t:access_account_params/0">MsbmsSystAuthentication.Types.access_account_params</a>(),
   <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
 ) ::
-  <a href="https://hexdocs.pm/ecto/3.8.4/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>()</pre>
+  <a href="https://hexdocs.pm/ecto/3.9.1/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>()</pre>
 
       </div>
 
@@ -282,7 +283,7 @@ Functions
   <a href="MsbmsSystAuthentication.Types.html#t:access_account_params/0">MsbmsSystAuthentication.Types.access_account_params</a>(),
   <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
 ) ::
-  <a href="https://hexdocs.pm/ecto/3.8.4/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>()</pre>
+  <a href="https://hexdocs.pm/ecto/3.9.1/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>()</pre>
 
       </div>
 
@@ -297,7 +298,7 @@ Functions
 
         <p>
           Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.28.5) for the
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.29.0) for the
 
             <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 

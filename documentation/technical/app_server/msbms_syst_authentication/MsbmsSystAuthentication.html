@@ -4,21 +4,23 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.28.5">
+    <meta name="generator" content="ExDoc v0.29.0">
     <meta name="project" content="msbms_syst_authentication v0.1.0">
 
     <title>MsbmsSystAuthentication — msbms_syst_authentication v0.1.0</title>
-    <link rel="stylesheet" href="dist/elixir-64c5e2b63575bddb1c5b.css" />
+    <link rel="stylesheet" href="dist/html-elixir-2YOS5DIE.css" />
 
-    <script src="dist/sidebar_items-0b46b662e7.js"></script>
+    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
+    <script src="dist/handlebars.templates-X7YVL3G2.js"></script>
+    <script src="dist/sidebar_items-2DDDE410.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/app-b5f3440501744dc8be3d.js"></script>
+    <script async src="dist/html-XN2TSG4M.js"></script>
 
 
   </head>
-  <body data-type="modules">
+  <body data-type="modules" class="page-module">
     <script>
 
       try {
@@ -35,12 +37,11 @@
 
 <div class="main">
 
+<button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
 
 <section class="sidebar">
-  <button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
-    <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
-  </button>
-
   <form class="sidebar-search" action="search.html">
     <button type="submit" class="search-button" aria-label="Submit Search">
       <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
@@ -258,6 +259,332 @@ key values.</p></div>
 
   </div>
 
+  <div class="summary-api-password-rules summary">
+    <h2>
+      <a href="#api-password-rules">API - Password Rules</a>
+    </h2>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#create_disallowed_password/1" translate="no">create_disallowed_password(password)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Adds a new password to the Disallowed Passwords list.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#delete_disallowed_password/1" translate="no">delete_disallowed_password(password)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Removes a password from the disallowed passwords list.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#password_disallowed/1" translate="no">password_disallowed(password)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Indicates whether the requested password is disallowed.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#password_disallowed?/1" translate="no">password_disallowed?(password)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Indicates whether the requested password is disallowed, raising on error.</p></div>
+
+      </div>
+
+  </div>
+
+  <div class="summary-api-network-rules summary">
+    <h2>
+      <a href="#api-network-rules">API - Network Rules</a>
+    </h2>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#create_disallowed_host/1" translate="no">create_disallowed_host(host_address)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Adds a host IP address to the global disallowed hosts list.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#create_global_network_rule/1" translate="no">create_global_network_rule(insert_params)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Creates a new Global Network Rule using the provided parameters.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#create_instance_network_rule/2" translate="no">create_instance_network_rule(instance_id, insert_params)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Creates a new Instance Network Rule using the provided parameters.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#create_owner_network_rule/2" translate="no">create_owner_network_rule(owner_id, insert_params)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Creates a new Owner Network Rule using the provided parameters.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#delete_disallowed_host/1" translate="no">delete_disallowed_host(disallowed_host)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Deletes a host IP address from the Disallowed Hosts list based on either a
+<a href="MsbmsSystAuthentication.Data.SystDisallowedHosts.html"><code class="inline">MsbmsSystAuthentication.Data.SystDisallowedHosts</code></a> record or the ID of such a
+record.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#delete_disallowed_host_addr/1" translate="no">delete_disallowed_host_addr(host_addr)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Deletes a host IP address from the Disallowed Hosts list as looked up by the
+host IP address.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#delete_global_network_rule/1" translate="no">delete_global_network_rule(global_network_rule_id)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Deletes an existing Global Network Rule record as referenced by the record ID.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#delete_instance_network_rule/1" translate="no">delete_instance_network_rule(instance_network_rule_id)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Deletes an existing Instance Network Rule record as referenced by the record
+ID.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#delete_owner_network_rule/1" translate="no">delete_owner_network_rule(owner_network_rule_id)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Deletes an existing Owner Network Rule record as referenced by the record ID.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#get_applied_network_rule/3" translate="no">get_applied_network_rule(host_address, instance_id \\ nil, instance_owner_id \\ nil)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Returns the Network Rule which should be applied for the given Host IP Address.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#get_applied_network_rule!/3" translate="no">get_applied_network_rule!(host_address, instance_id \\ nil, instance_owner_id \\ nil)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Returns the Network Rule which should be applied for the given Host IP
+Address, raising on error.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#get_disallowed_host_record_by_host/1" translate="no">get_disallowed_host_record_by_host(host_addr)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Retrieves a Disallowed Host record from the database as identified by its host
+address.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#get_disallowed_host_record_by_host!/1" translate="no">get_disallowed_host_record_by_host!(host_addr)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Retrieves a Disallowed Host record from the database as identified by its host
+address, raising on error.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#get_disallowed_host_record_by_id/1" translate="no">get_disallowed_host_record_by_id(disallowed_host_id)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Retrieves a Disallowed Host record by the record ID.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#get_disallowed_host_record_by_id!/1" translate="no">get_disallowed_host_record_by_id!(disallowed_host_id)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Retrieves a Disallowed Host record by the record ID, raising on error.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#get_global_network_rule/1" translate="no">get_global_network_rule(global_network_rule_id)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Retrieves a Global Network Rule record based on its record ID.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#get_global_network_rule!/1" translate="no">get_global_network_rule!(global_network_rule_id)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Retrieves a Global Network Rule record based on its record ID, raising on
+error.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#get_instance_network_rule/1" translate="no">get_instance_network_rule(instance_network_rule_id)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Retrieves a Instance Network Rule record based on its record ID.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#get_instance_network_rule!/1" translate="no">get_instance_network_rule!(instance_network_rule_id)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Retrieves a Instance Network Rule record based on its record ID, raising on
+error.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#get_owner_network_rule/1" translate="no">get_owner_network_rule(owner_network_rule_id)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Retrieves a Owner Network Rule record based on its record ID.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#get_owner_network_rule!/1" translate="no">get_owner_network_rule!(owner_network_rule_id)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Retrieves a Owner Network Rule record based on its record ID, raising on
+error.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#host_disallowed/1" translate="no">host_disallowed(host_address)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Indicates whether the provided host IP address is to be denied access to the
+system.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#host_disallowed?/1" translate="no">host_disallowed?(host_address)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Indicates whether the provided host IP address is to be denied access to the
+system, raising on error.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#update_global_network_rule/2" translate="no">update_global_network_rule(global_network_rule, update_params)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Updates an existing Global Network Rule with new values.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#update_instance_network_rule/2" translate="no">update_instance_network_rule(instance_network_rule, update_params)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Updates an existing Instance Network Rule with new values.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#update_owner_network_rule/2" translate="no">update_owner_network_rule(owner_network_rule, update_params)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Updates an existing Owner Network Rule with new values.</p></div>
+
+      </div>
+
+  </div>
+
   </section>
 
 
@@ -307,16 +634,16 @@ define the new Access Account record.  Required attributes in this map are:
   </a>
   Example
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MsbmsSystEnums</span><span class="o">.</span><span class="n">get_default_enum_item</span><span class="p" data-group-id="8987060798-1">(</span><span class="s">&quot;access_account_states&quot;</span><span class="p" data-group-id="8987060798-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="8987060798-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8987060798-3">%</span><span class="nc" data-group-id="8987060798-3">MsbmsSystAuthentication.Data.SystAccessAccounts</span><span class="p" data-group-id="8987060798-3">{</span><span class="p" data-group-id="8987060798-3">}</span><span class="p" data-group-id="8987060798-2">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">create_access_account</span><span class="p" data-group-id="8987060798-4">(</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="p" data-group-id="8987060798-5">%{</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MsbmsSystEnums</span><span class="o">.</span><span class="n">get_default_enum_item</span><span class="p" data-group-id="1891385533-1">(</span><span class="s">&quot;access_account_states&quot;</span><span class="p" data-group-id="1891385533-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="1891385533-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="1891385533-3">%</span><span class="nc" data-group-id="1891385533-3">MsbmsSystAuthentication.Data.SystAccessAccounts</span><span class="p" data-group-id="1891385533-3">{</span><span class="p" data-group-id="1891385533-3">}</span><span class="p" data-group-id="1891385533-2">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">create_access_account</span><span class="p" data-group-id="1891385533-4">(</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="p" data-group-id="1891385533-5">%{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">      </span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example_create_accnt&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">      </span><span class="ss">external_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Create Access Account Example&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">      </span><span class="ss">access_account_state_id</span><span class="p">:</span><span class="w"> </span><span class="n">state</span><span class="o">.</span><span class="n">id</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">      </span><span class="ss">allow_global_logins</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="p" data-group-id="8987060798-5">}</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">   </span><span class="p" data-group-id="8987060798-4">)</span></code></pre>
+</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="p" data-group-id="1891385533-5">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">   </span><span class="p" data-group-id="1891385533-4">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_access_account_by_name/1">
@@ -356,11 +683,11 @@ retrieve.</li></ul><h2 id="get_access_account_by_name/1-example" class="section-
   </a>
   Example
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="8886828221-1">{</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="2486922375-1">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:ok</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="8886828221-2">%</span><span class="nc" data-group-id="8886828221-2">MsbmsSystAuthentication.Data.SystAccessAccounts</span><span class="p" data-group-id="8886828221-2">{</span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example_accnt&quot;</span><span class="p" data-group-id="8886828221-2">}</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="8886828221-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">get_access_account_by_name</span><span class="p" data-group-id="8886828221-3">(</span><span class="s">&quot;example_accnt&quot;</span><span class="p" data-group-id="8886828221-3">)</span></code></pre>
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="2486922375-2">%</span><span class="nc" data-group-id="2486922375-2">MsbmsSystAuthentication.Data.SystAccessAccounts</span><span class="p" data-group-id="2486922375-2">{</span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example_accnt&quot;</span><span class="p" data-group-id="2486922375-2">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="2486922375-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">get_access_account_by_name</span><span class="p" data-group-id="2486922375-3">(</span><span class="s">&quot;example_accnt&quot;</span><span class="p" data-group-id="2486922375-3">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_access_account_id_by_name/1">
@@ -400,9 +727,9 @@ retrieve the record ID.</li></ul><h2 id="get_access_account_id_by_name/1-example
   </a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="5831824035-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">access_account_id</span><span class="p" data-group-id="5831824035-1">}</span><span class="w">  </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">get_access_account_id_by_name</span><span class="p" data-group-id="5831824035-2">(</span><span class="s">&quot;example_accnt&quot;</span><span class="p" data-group-id="5831824035-2">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="n">is_binary</span><span class="p" data-group-id="5831824035-3">(</span><span class="n">access_account_id</span><span class="p" data-group-id="5831824035-3">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="9718684498-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">access_account_id</span><span class="p" data-group-id="9718684498-1">}</span><span class="w">  </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">get_access_account_id_by_name</span><span class="p" data-group-id="9718684498-2">(</span><span class="s">&quot;example_accnt&quot;</span><span class="p" data-group-id="9718684498-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_binary</span><span class="p" data-group-id="9718684498-3">(</span><span class="n">access_account_id</span><span class="p" data-group-id="9718684498-3">)</span><span class="w">
 </span><span class="no">true</span></code></pre>
   </section>
 </section>
@@ -444,9 +771,9 @@ representing the record to purge.</li></ul><h2 id="purge_access_account/1-exampl
   </a>
   Example
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="5835349335-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">target_access_account</span><span class="p" data-group-id="5835349335-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">get_access_account_by_name</span><span class="p" data-group-id="5835349335-2">(</span><span class="s">&quot;example_purge_accnt&quot;</span><span class="p" data-group-id="5835349335-2">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">purge_access_account</span><span class="p" data-group-id="5835349335-3">(</span><span class="n">target_access_account</span><span class="p" data-group-id="5835349335-3">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="0905129535-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">target_access_account</span><span class="p" data-group-id="0905129535-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">get_access_account_by_name</span><span class="p" data-group-id="0905129535-2">(</span><span class="s">&quot;example_purge_accnt&quot;</span><span class="p" data-group-id="0905129535-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">purge_access_account</span><span class="p" data-group-id="0905129535-3">(</span><span class="n">target_access_account</span><span class="p" data-group-id="0905129535-3">)</span><span class="w">
 </span><span class="ss">:ok</span></code></pre>
   </section>
 </section>
@@ -491,16 +818,16 @@ along with their new values.</p></li></ul><h2 id="update_access_account/2-exampl
   </a>
   Example
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="9199520137-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">target_access_account</span><span class="p" data-group-id="9199520137-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">get_access_account_by_name</span><span class="p" data-group-id="9199520137-2">(</span><span class="s">&quot;example_accnt&quot;</span><span class="p" data-group-id="9199520137-2">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="9199520137-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">updated_access_account</span><span class="p" data-group-id="9199520137-3">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">update_access_account</span><span class="p" data-group-id="9199520137-4">(</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="2736095813-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">target_access_account</span><span class="p" data-group-id="2736095813-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">get_access_account_by_name</span><span class="p" data-group-id="2736095813-2">(</span><span class="s">&quot;example_accnt&quot;</span><span class="p" data-group-id="2736095813-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="2736095813-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">updated_access_account</span><span class="p" data-group-id="2736095813-3">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">update_access_account</span><span class="p" data-group-id="2736095813-4">(</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="n">target_access_account</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="p" data-group-id="9199520137-5">%{</span><span class="ss">external_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Updated Example Account Name&quot;</span><span class="p" data-group-id="9199520137-5">}</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="9199520137-4">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="9199520137-6">%</span><span class="nc" data-group-id="9199520137-6">MsbmsSystAuthentication.Data.SystAccessAccounts</span><span class="p" data-group-id="9199520137-6">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="p" data-group-id="2736095813-5">%{</span><span class="ss">external_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Updated Example Account Name&quot;</span><span class="p" data-group-id="2736095813-5">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="2736095813-4">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="2736095813-6">%</span><span class="nc" data-group-id="2736095813-6">MsbmsSystAuthentication.Data.SystAccessAccounts</span><span class="p" data-group-id="2736095813-6">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">external_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Updated Example Account Name&quot;</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="9199520137-6">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">updated_access_account</span></code></pre>
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="2736095813-6">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">updated_access_account</span></code></pre>
   </section>
 </section>
 
@@ -818,11 +1145,1556 @@ previously been invited to access.</p></li></ul>
     </div>
   </section>
 
+  <section id="api-password-rules" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#api-password-rules">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+API - Password Rules
+    </h1>
+    <div class="api-password-rules-list">
+<section class="detail" id="create_disallowed_password/1">
+
+  <div class="detail-header">
+    <a href="#create_disallowed_password/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">create_disallowed_password(password)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> create_disallowed_password(<a href="MsbmsSystAuthentication.Types.html#t:credential/0">MsbmsSystAuthentication.Types.credential</a>()) ::
+  :ok | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Adds a new password to the Disallowed Passwords list.</p><p>Disallowed passwords are passwords that are commonly known, are known to have
+been revealed in a successful hacking attack, or are otherwise not available
+for users to choose for their authentication credential.  Enforcing that these
+passwords are not available for use depends upon the effective
+<code class="inline">disallow_compromised</code> Password Rule for the Access Account attempting
+authentication.</p><p>An attempt to add a password which is already on the list will succeed as
+though the password were not already part of the list.</p><h2 id="create_disallowed_password/1-parameters" class="section-heading">
+  <a href="#create_disallowed_password/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">password</code> - The plaintext password to add to the list of disallowed
+passwords.</li></ul><h2 id="create_disallowed_password/1-examples" class="section-heading">
+  <a href="#create_disallowed_password/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
+  Examples
+</h2>
+<p>Adding a password successfully will simply return <code class="inline">:ok</code>.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">create_disallowed_password</span><span class="p" data-group-id="6054855259-1">(</span><span class="s">&quot;Example Disallowed Password&quot;</span><span class="p" data-group-id="6054855259-1">)</span><span class="w">
+</span><span class="ss">:ok</span></code></pre><p>Any subsequent attempt to add the same password to the list again will appear
+to succeed while silently doing nothing.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">create_disallowed_password</span><span class="p" data-group-id="5872136369-1">(</span><span class="s">&quot;Example Disallowed Password&quot;</span><span class="p" data-group-id="5872136369-1">)</span><span class="w">
+</span><span class="ss">:ok</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="delete_disallowed_password/1">
+
+  <div class="detail-header">
+    <a href="#delete_disallowed_password/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">delete_disallowed_password(password)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> delete_disallowed_password(<a href="MsbmsSystAuthentication.Types.html#t:credential/0">MsbmsSystAuthentication.Types.credential</a>()) ::
+  {:ok, :deleted | :not_found} | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Removes a password from the disallowed passwords list.</p><p>On success, this function will return a success tuple indicating if the
+requested password was deleted from the disallowed passwords list
+(<code class="inline">{:ok, :deleted}</code>) or if the password simply wasn't found in the list
+(<code class="inline">{:ok, :not_found}</code>).</p><h2 id="delete_disallowed_password/1-parameters" class="section-heading">
+  <a href="#delete_disallowed_password/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">password</code> - the plaintext password to delete from the disallowed
+passwords list.</li></ul><h2 id="delete_disallowed_password/1-examples" class="section-heading">
+  <a href="#delete_disallowed_password/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
+  Examples
+</h2>
+<p>  Result when deleting a record from the list.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">delete_disallowed_password</span><span class="p" data-group-id="3415691757-1">(</span><span class="s">&quot;No Longer Disallowed&quot;</span><span class="p" data-group-id="3415691757-1">)</span><span class="w">
+</span><span class="p" data-group-id="3415691757-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="ss">:deleted</span><span class="p" data-group-id="3415691757-2">}</span></code></pre><p>  Result when trying to delete a record not already on the list.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">delete_disallowed_password</span><span class="p" data-group-id="4318406040-1">(</span><span class="s">&quot;Not on List&quot;</span><span class="p" data-group-id="4318406040-1">)</span><span class="w">
+</span><span class="p" data-group-id="4318406040-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="ss">:not_found</span><span class="p" data-group-id="4318406040-2">}</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="password_disallowed/1">
+
+  <div class="detail-header">
+    <a href="#password_disallowed/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">password_disallowed(password)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> password_disallowed(<a href="MsbmsSystAuthentication.Types.html#t:credential/0">MsbmsSystAuthentication.Types.credential</a>()) ::
+  {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()} | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Indicates whether the requested password is disallowed.</p><p>This function returns a tuple in the form of <code class="inline">{:ok, &lt;disallowed&gt;}</code> where the
+<code class="inline">disallowed</code> value is either <code class="inline">true</code> meaning that the requested password is
+disallowed or <code class="inline">false</code> if the password is available for use.</p><p>Regardless of the return of this function, disallowed passwords are only
+prevented for use if the effective <code class="inline">disallow_compromised</code> Password Rule for
+the Access Account attempting authentication is set.</p><h2 id="password_disallowed/1-parameters" class="section-heading">
+  <a href="#password_disallowed/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">password</code> - the plaintext password to test for disallowed status.</li></ul><h2 id="password_disallowed/1-examples" class="section-heading">
+  <a href="#password_disallowed/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
+  Examples
+</h2>
+<p>  When a password has been previously disallowed and cannot be used as a
+  user credential.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">password_disallowed</span><span class="p" data-group-id="7787680855-1">(</span><span class="s">&quot;Is Disallowed&quot;</span><span class="p" data-group-id="7787680855-1">)</span><span class="w">
+</span><span class="p" data-group-id="7787680855-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="no">true</span><span class="p" data-group-id="7787680855-2">}</span></code></pre><p>  When a password has not been previously disallowed.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">password_disallowed</span><span class="p" data-group-id="1856130689-1">(</span><span class="s">&quot;Is Not Disallowed&quot;</span><span class="p" data-group-id="1856130689-1">)</span><span class="w">
+</span><span class="p" data-group-id="1856130689-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="no">false</span><span class="p" data-group-id="1856130689-2">}</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="password_disallowed?/1">
+
+  <div class="detail-header">
+    <a href="#password_disallowed?/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">password_disallowed?(password)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> password_disallowed?(<a href="MsbmsSystAuthentication.Types.html#t:credential/0">MsbmsSystAuthentication.Types.credential</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
+
+      </div>
+
+<p>Indicates whether the requested password is disallowed, raising on error.</p><p>This function works the same as <code class="inline">disallowed_password/1</code> except this function
+returns a simple <code class="inline">boolean</code> value rather than a result tuple.  If an error is
+encountered an exception is raised.</p><h2 id="password_disallowed?/1-parameters" class="section-heading">
+  <a href="#password_disallowed?/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">password</code> - the plaintext password to test for disallowed status.</li></ul><h2 id="password_disallowed?/1-examples" class="section-heading">
+  <a href="#password_disallowed?/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
+  Examples
+</h2>
+<p>  When a password has been previously disallowed and cannot be used as a
+  user credential.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">password_disallowed?</span><span class="p" data-group-id="5701990910-1">(</span><span class="s">&quot;Is Disallowed&quot;</span><span class="p" data-group-id="5701990910-1">)</span><span class="w">
+</span><span class="no">true</span></code></pre><p>  When a password has not been previously disallowed.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">password_disallowed?</span><span class="p" data-group-id="2584381151-1">(</span><span class="s">&quot;Is Not Disallowed&quot;</span><span class="p" data-group-id="2584381151-1">)</span><span class="w">
+</span><span class="no">false</span></code></pre>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+  <section id="api-network-rules" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#api-network-rules">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+API - Network Rules
+    </h1>
+    <div class="api-network-rules-list">
+<section class="detail" id="create_disallowed_host/1">
+
+  <div class="detail-header">
+    <a href="#create_disallowed_host/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">create_disallowed_host(host_address)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> create_disallowed_host(<a href="MsbmsSystAuthentication.Types.html#t:host_address/0">MsbmsSystAuthentication.Types.host_address</a>()) ::
+  {:ok, <a href="MsbmsSystAuthentication.Data.SystDisallowedHosts.html#t:t/0">MsbmsSystAuthentication.Data.SystDisallowedHosts.t</a>()}
+  | {:error, MsbmsSystError.t({})}</pre>
+
+      </div>
+
+<p>Adds a host IP address to the global disallowed hosts list.</p><p>Disallowed hosts are IP addresses which are prevented from authenticating
+users with the system, and by extension prevents host access to application
+functions generally.  Hosts are disallowed on a global basis and may be added
+to the list based on system heuristics which detect suspicious activity.</p><p>Successfully adding a host to the list returns a success tuple and a struct
+representing the record just created.  Attempting to add a host which is
+already part of the list will also result in a success tuple, but no record is
+returned.</p><h2 id="create_disallowed_host/1-parameters" class="section-heading">
+  <a href="#create_disallowed_host/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">host_address</code> - the IP address of the host to disallow.</li></ul><h2 id="create_disallowed_host/1-examples" class="section-heading">
+  <a href="#create_disallowed_host/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
+  Examples
+</h2>
+<p>  Adding a new host to the list.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">IP</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="5772449782-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="5772449782-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="5772449782-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="no">false</span><span class="p" data-group-id="5772449782-2">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">host_disallowed</span><span class="p" data-group-id="5772449782-3">(</span><span class="sx">~i&quot;10.123.123.20&quot;</span><span class="p" data-group-id="5772449782-3">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="5772449782-4">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="5772449782-5">%</span><span class="nc" data-group-id="5772449782-5">MsbmsSystAuthentication.Data.SystDisallowedHosts</span><span class="p" data-group-id="5772449782-5">{</span><span class="p" data-group-id="5772449782-5">}</span><span class="p" data-group-id="5772449782-4">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">create_disallowed_host</span><span class="p" data-group-id="5772449782-6">(</span><span class="sx">~i&quot;10.123.123.20&quot;</span><span class="p" data-group-id="5772449782-6">)</span></code></pre><p>  Attempting to add a host already on the list.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">IP</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4269412539-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="4269412539-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="4269412539-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="no">true</span><span class="p" data-group-id="4269412539-2">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">host_disallowed</span><span class="p" data-group-id="4269412539-3">(</span><span class="sx">~i&quot;10.123.123.3&quot;</span><span class="p" data-group-id="4269412539-3">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="4269412539-4">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="no">nil</span><span class="p" data-group-id="4269412539-4">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">create_disallowed_host</span><span class="p" data-group-id="4269412539-5">(</span><span class="sx">~i&quot;10.123.123.3&quot;</span><span class="p" data-group-id="4269412539-5">)</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="create_global_network_rule/1">
+
+  <div class="detail-header">
+    <a href="#create_global_network_rule/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">create_global_network_rule(insert_params)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> create_global_network_rule(
+  <a href="MsbmsSystAuthentication.Types.html#t:global_network_rule_params/0">MsbmsSystAuthentication.Types.global_network_rule_params</a>()
+) ::
+  {:ok, <a href="MsbmsSystAuthentication.Data.SystGlobalNetworkRules.html#t:t/0">MsbmsSystAuthentication.Data.SystGlobalNetworkRules.t</a>()}
+  | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Creates a new Global Network Rule using the provided parameters.</p><p>Global Network Rules are checked prior to all attempted user authentication
+events and have precedence over Owner and Instance Network Rules, though they
+are secondary to the Disallowed Hosts list.</p><p>On successful creation, a result tuple in the form <code class="inline">{:ok, &lt;new record&gt;}</code> is
+returned where the &lt;new record&gt; is the fully populated Data struct of the
+record just created.  If an exception is raised this function will return a
+failure tuple in the form of <code class="inline">{:error, &lt;exception data&gt;}</code>.</p><h2 id="create_global_network_rule/1-parameters" class="section-heading">
+  <a href="#create_global_network_rule/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">insert_params</code> - a map representing the values to use when creating the
+new Global Network Rule.  The available parameter values are:</p><ul><li><p><code class="inline">ordering</code> - the order in which the new record should apply relative to
+other Global Network Rule records.  lower <code class="inline">ordering</code> values take
+precedence over higher <code class="inline">ordering</code> values.  If the <code class="inline">ordering</code> value in the
+parameters matches the <code class="inline">ordering</code> value of an existing Global Network Rule
+record, the inserted record will be treated as an &quot;insert before&quot; record,
+with the existing records being reordered to be after the new record,
+recursively.  This parameter is required.</p></li><li><p><code class="inline">functional_type</code> - defines what action the rule specifies once matched.
+The possible functional types are <code class="inline">:allow</code> which means the rule intends to
+explicitly allow the associated IP Address(es) to attempt authentication
+or <code class="inline">:deny</code> which explicitly prevents the IP Address(es) from attempting
+an authorization.  This parameter is required.</p></li><li><p><code class="inline">ip_host_or_network</code> - a single Host IP Address or a single CIDR network
+used in matching user Host IP Addresses to rules.  Note that if this value
+is provided that the <code class="inline">ip_host_range_lower</code> and <code class="inline">ip_host_range_upper</code>
+values must be nil or not provided.</p></li><li><p><code class="inline">ip_host_range_lower</code> - defines the lower bound of a simple range of IP
+Addresses, inclusive, to which rule should apply.  When this value is
+provided the <code class="inline">ip_host_range_upper</code> parameter must also be provided and the
+<code class="inline">ip_host_or_network</code> parameter value must be nil or not provided.</p></li><li><p><code class="inline">ip_host_range_upper</code> - defines the upper bound of a simple range of IP
+Addresses, inclusive, to which rule should apply.  When this value is
+provided the <code class="inline">ip_host_range_lower</code> parameter must also be provided and the
+<code class="inline">ip_host_or_network</code> parameter value must be nil or not provided.</p></li></ul></li></ul><p>  Note that either the <code class="inline">ip_host_or_network</code> parameter or the
+  <code class="inline">ip_host_range_lower</code> and <code class="inline">ip_host_range_upper</code> are required and exclusive.</p><h2 id="create_global_network_rule/1-example" class="section-heading">
+  <a href="#create_global_network_rule/1-example" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">example</p>
+  </a>
+  Example
+</h2>
+<p>  Adding a new &quot;Allow&quot; Global Network Rule for a CIDR network.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">IP</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="6497480595-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="6497480595-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">new_global_rule</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="6497480595-2">%{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">ordering</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">functional_type</span><span class="p">:</span><span class="w"> </span><span class="ss">:allow</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">ip_host_or_network</span><span class="p">:</span><span class="w"> </span><span class="sx">~i&quot;10.100.150.0/24&quot;</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="6497480595-2">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="6497480595-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="6497480595-4">%</span><span class="nc" data-group-id="6497480595-4">MsbmsSystAuthentication.Data.SystGlobalNetworkRules</span><span class="p" data-group-id="6497480595-4">{</span><span class="p" data-group-id="6497480595-4">}</span><span class="p" data-group-id="6497480595-3">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">create_global_network_rule</span><span class="p" data-group-id="6497480595-5">(</span><span class="n">new_global_rule</span><span class="p" data-group-id="6497480595-5">)</span></code></pre><p>  Adding a new &quot;Deny&quot; Global Network Rule for an IP Address range.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">IP</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8316175520-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="8316175520-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">new_global_rule</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="8316175520-2">%{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">ordering</span><span class="p">:</span><span class="w"> </span><span class="mi">21</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">functional_type</span><span class="p">:</span><span class="w"> </span><span class="ss">:deny</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">ip_host_or_network</span><span class="p">:</span><span class="w"> </span><span class="no">nil</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">ip_host_range_lower</span><span class="p">:</span><span class="w"> </span><span class="sx">~i&quot;10.100.151.1&quot;</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">ip_host_range_upper</span><span class="p">:</span><span class="w"> </span><span class="sx">~i&quot;10.100.152.254&quot;</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="8316175520-2">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="8316175520-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8316175520-4">%</span><span class="nc" data-group-id="8316175520-4">MsbmsSystAuthentication.Data.SystGlobalNetworkRules</span><span class="p" data-group-id="8316175520-4">{</span><span class="p" data-group-id="8316175520-4">}</span><span class="p" data-group-id="8316175520-3">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">create_global_network_rule</span><span class="p" data-group-id="8316175520-5">(</span><span class="n">new_global_rule</span><span class="p" data-group-id="8316175520-5">)</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="create_instance_network_rule/2">
+
+  <div class="detail-header">
+    <a href="#create_instance_network_rule/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">create_instance_network_rule(instance_id, insert_params)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> create_instance_network_rule(
+  <a href="../../../../documentation/technical/app_server/msbms_syst_instance_mgr/MsbmsSystInstanceMgr.Types.html#t:instance_id/0">MsbmsSystInstanceMgr.Types.instance_id</a>(),
+  <a href="MsbmsSystAuthentication.Types.html#t:instance_network_rule_params/0">MsbmsSystAuthentication.Types.instance_network_rule_params</a>()
+) ::
+  {:ok, <a href="MsbmsSystAuthentication.Data.SystInstanceNetworkRules.html#t:t/0">MsbmsSystAuthentication.Data.SystInstanceNetworkRules.t</a>()}
+  | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Creates a new Instance Network Rule using the provided parameters.</p><p>Instance Network Rules the checked after the Disallowed Hosts list, the Global
+Network Rules, and the Instance Network Rules and apply to all Instances owned
+by the specified Instance, unless a higher precedence rule already applies to the
+host.</p><p>On successful creation, a result tuple in the form <code class="inline">{:ok, &lt;new record&gt;}</code> is
+returned where the &lt;new record&gt; is the fully populated Data struct of the
+record just created.  If an exception is raised this function will return a
+failure tuple in the form of <code class="inline">{:error, &lt;exception data&gt;}</code>.</p><h2 id="create_instance_network_rule/2-parameters" class="section-heading">
+  <a href="#create_instance_network_rule/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">instance_id</code> - the record ID of the Instance for whom the Instance Network Rule is
+being created.</p></li><li><p><code class="inline">insert_params</code> - a map representing the values to use when creating the
+new Instance Network Rule.  The available parameter values are:</p><ul><li><p><code class="inline">ordering</code> - the order in which the new record should apply relative to
+other Instance Network Rule records.  lower <code class="inline">ordering</code> values take
+precedence over higher <code class="inline">ordering</code> values.  If the <code class="inline">ordering</code> value in the
+parameters matches the <code class="inline">ordering</code> value of an existing Instance Network Rule
+record, the inserted record will be treated as an &quot;insert before&quot; record,
+with the existing records being reordered to be after the new record,
+recursively.  This parameter is required.</p></li><li><p><code class="inline">functional_type</code> - defines what action the rule specifies once matched.
+The possible functional types are <code class="inline">:allow</code> which means the rule intends to
+explicitly allow the associated IP Address(es) to attempt authentication
+or <code class="inline">:deny</code> which explicitly prevents the IP Address(es) from attempting
+an authorization.  This parameter is required.</p></li><li><p><code class="inline">ip_host_or_network</code> - a single Host IP Address or a single CIDR network
+used in matching user Host IP Addresses to rules.  Note that if this value
+is provided that the <code class="inline">ip_host_range_lower</code> and <code class="inline">ip_host_range_upper</code>
+values must be nil or not provided.</p></li><li><p><code class="inline">ip_host_range_lower</code> - defines the lower bound of a simple range of IP
+Addresses, inclusive, to which rule should apply.  When this value is
+provided the <code class="inline">ip_host_range_upper</code> parameter must also be provided and the
+<code class="inline">ip_host_or_network</code> parameter value must be nil or not provided.</p></li><li><p><code class="inline">ip_host_range_upper</code> - defines the upper bound of a simple range of IP
+Addresses, inclusive, to which rule should apply.  When this value is
+provided the <code class="inline">ip_host_range_lower</code> parameter must also be provided and the
+<code class="inline">ip_host_or_network</code> parameter value must be nil or not provided.</p></li></ul></li></ul><p>  Note that either the <code class="inline">ip_host_or_network</code> parameter or the
+  <code class="inline">ip_host_range_lower</code> and <code class="inline">ip_host_range_upper</code> are required and exclusive.</p><h2 id="create_instance_network_rule/2-example" class="section-heading">
+  <a href="#create_instance_network_rule/2-example" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">example</p>
+  </a>
+  Example
+</h2>
+<p>  Adding a new &quot;Allow&quot; Instance Network Rule for a CIDR network.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">IP</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="0867635568-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="0867635568-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="0867635568-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">instance_id</span><span class="p" data-group-id="0867635568-2">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystInstanceMgr</span><span class="o">.</span><span class="n">get_instance_id_by_name</span><span class="p" data-group-id="0867635568-3">(</span><span class="s">&quot;app1_owner8_instance_types_std&quot;</span><span class="p" data-group-id="0867635568-3">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">new_instance_rule</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="0867635568-4">%{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">ordering</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">functional_type</span><span class="p">:</span><span class="w"> </span><span class="ss">:allow</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">ip_host_or_network</span><span class="p">:</span><span class="w"> </span><span class="sx">~i&quot;10.100.170.0/24&quot;</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="0867635568-4">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="0867635568-5">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="0867635568-6">%</span><span class="nc" data-group-id="0867635568-6">MsbmsSystAuthentication.Data.SystInstanceNetworkRules</span><span class="p" data-group-id="0867635568-6">{</span><span class="p" data-group-id="0867635568-6">}</span><span class="p" data-group-id="0867635568-5">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">create_instance_network_rule</span><span class="p" data-group-id="0867635568-7">(</span><span class="n">instance_id</span><span class="p">,</span><span class="w"> </span><span class="n">new_instance_rule</span><span class="p" data-group-id="0867635568-7">)</span></code></pre><p>  Adding a new &quot;Deny&quot; Instance Network Rule for an IP Address range.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">IP</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="0259192626-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="0259192626-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="0259192626-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">instance_id</span><span class="p" data-group-id="0259192626-2">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystInstanceMgr</span><span class="o">.</span><span class="n">get_instance_id_by_name</span><span class="p" data-group-id="0259192626-3">(</span><span class="s">&quot;app1_owner8_instance_types_std&quot;</span><span class="p" data-group-id="0259192626-3">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">new_instance_rule</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="0259192626-4">%{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">ordering</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">functional_type</span><span class="p">:</span><span class="w"> </span><span class="ss">:deny</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">ip_host_or_network</span><span class="p">:</span><span class="w"> </span><span class="no">nil</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">ip_host_range_lower</span><span class="p">:</span><span class="w"> </span><span class="sx">~i&quot;10.100.171.1&quot;</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">ip_host_range_upper</span><span class="p">:</span><span class="w"> </span><span class="sx">~i&quot;10.100.172.254&quot;</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="0259192626-4">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="0259192626-5">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="0259192626-6">%</span><span class="nc" data-group-id="0259192626-6">MsbmsSystAuthentication.Data.SystInstanceNetworkRules</span><span class="p" data-group-id="0259192626-6">{</span><span class="p" data-group-id="0259192626-6">}</span><span class="p" data-group-id="0259192626-5">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">create_instance_network_rule</span><span class="p" data-group-id="0259192626-7">(</span><span class="n">instance_id</span><span class="p">,</span><span class="w"> </span><span class="n">new_instance_rule</span><span class="p" data-group-id="0259192626-7">)</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="create_owner_network_rule/2">
+
+  <div class="detail-header">
+    <a href="#create_owner_network_rule/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">create_owner_network_rule(owner_id, insert_params)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> create_owner_network_rule(
+  <a href="../../../../documentation/technical/app_server/msbms_syst_instance_mgr/MsbmsSystInstanceMgr.Types.html#t:owner_id/0">MsbmsSystInstanceMgr.Types.owner_id</a>(),
+  <a href="MsbmsSystAuthentication.Types.html#t:owner_network_rule_params/0">MsbmsSystAuthentication.Types.owner_network_rule_params</a>()
+) ::
+  {:ok, <a href="MsbmsSystAuthentication.Data.SystOwnerNetworkRules.html#t:t/0">MsbmsSystAuthentication.Data.SystOwnerNetworkRules.t</a>()}
+  | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Creates a new Owner Network Rule using the provided parameters.</p><p>Owner Network Rules the checked after the Disallowed Hosts list, the Global
+Network Rules, and the Instance Network Rules and apply to all Instances owned
+by the specified Owner, unless a higher precedence rule already applies to the
+host.</p><p>On successful creation, a result tuple in the form <code class="inline">{:ok, &lt;new record&gt;}</code> is
+returned where the &lt;new record&gt; is the fully populated Data struct of the
+record just created.  If an exception is raised this function will return a
+failure tuple in the form of <code class="inline">{:error, &lt;exception data&gt;}</code>.</p><h2 id="create_owner_network_rule/2-parameters" class="section-heading">
+  <a href="#create_owner_network_rule/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">owner_id</code> - the record ID of the Owner for whom the Owner Network Rule is
+being created.</p></li><li><p><code class="inline">insert_params</code> - a map representing the values to use when creating the
+new Owner Network Rule.  The available parameter values are:</p><ul><li><p><code class="inline">ordering</code> - the order in which the new record should apply relative to
+other Owner Network Rule records.  lower <code class="inline">ordering</code> values take
+precedence over higher <code class="inline">ordering</code> values.  If the <code class="inline">ordering</code> value in the
+parameters matches the <code class="inline">ordering</code> value of an existing Owner Network Rule
+record, the inserted record will be treated as an &quot;insert before&quot; record,
+with the existing records being reordered to be after the new record,
+recursively.  This parameter is required.</p></li><li><p><code class="inline">functional_type</code> - defines what action the rule specifies once matched.
+The possible functional types are <code class="inline">:allow</code> which means the rule intends to
+explicitly allow the associated IP Address(es) to attempt authentication
+or <code class="inline">:deny</code> which explicitly prevents the IP Address(es) from attempting
+an authorization.  This parameter is required.</p></li><li><p><code class="inline">ip_host_or_network</code> - a single Host IP Address or a single CIDR network
+used in matching user Host IP Addresses to rules.  Note that if this value
+is provided that the <code class="inline">ip_host_range_lower</code> and <code class="inline">ip_host_range_upper</code>
+values must be nil or not provided.</p></li><li><p><code class="inline">ip_host_range_lower</code> - defines the lower bound of a simple range of IP
+Addresses, inclusive, to which rule should apply.  When this value is
+provided the <code class="inline">ip_host_range_upper</code> parameter must also be provided and the
+<code class="inline">ip_host_or_network</code> parameter value must be nil or not provided.</p></li><li><p><code class="inline">ip_host_range_upper</code> - defines the upper bound of a simple range of IP
+Addresses, inclusive, to which rule should apply.  When this value is
+provided the <code class="inline">ip_host_range_lower</code> parameter must also be provided and the
+<code class="inline">ip_host_or_network</code> parameter value must be nil or not provided.</p></li></ul></li></ul><p>  Note that either the <code class="inline">ip_host_or_network</code> parameter or the
+  <code class="inline">ip_host_range_lower</code> and <code class="inline">ip_host_range_upper</code> are required and exclusive.</p><h2 id="create_owner_network_rule/2-example" class="section-heading">
+  <a href="#create_owner_network_rule/2-example" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">example</p>
+  </a>
+  Example
+</h2>
+<p>  Adding a new &quot;Allow&quot; Owner Network Rule for a CIDR network.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">IP</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="5293673078-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="5293673078-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="5293673078-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">owner_id</span><span class="p" data-group-id="5293673078-2">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MsbmsSystInstanceMgr</span><span class="o">.</span><span class="n">get_owner_id_by_name</span><span class="p" data-group-id="5293673078-3">(</span><span class="s">&quot;owner8&quot;</span><span class="p" data-group-id="5293673078-3">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">new_owner_rule</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="5293673078-4">%{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">ordering</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">functional_type</span><span class="p">:</span><span class="w"> </span><span class="ss">:allow</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">ip_host_or_network</span><span class="p">:</span><span class="w"> </span><span class="sx">~i&quot;10.100.160.0/24&quot;</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="5293673078-4">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="5293673078-5">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="5293673078-6">%</span><span class="nc" data-group-id="5293673078-6">MsbmsSystAuthentication.Data.SystOwnerNetworkRules</span><span class="p" data-group-id="5293673078-6">{</span><span class="p" data-group-id="5293673078-6">}</span><span class="p" data-group-id="5293673078-5">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">create_owner_network_rule</span><span class="p" data-group-id="5293673078-7">(</span><span class="n">owner_id</span><span class="p">,</span><span class="w"> </span><span class="n">new_owner_rule</span><span class="p" data-group-id="5293673078-7">)</span></code></pre><p>  Adding a new &quot;Deny&quot; Owner Network Rule for an IP Address range.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">IP</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9817200766-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="9817200766-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="9817200766-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">owner_id</span><span class="p" data-group-id="9817200766-2">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MsbmsSystInstanceMgr</span><span class="o">.</span><span class="n">get_owner_id_by_name</span><span class="p" data-group-id="9817200766-3">(</span><span class="s">&quot;owner8&quot;</span><span class="p" data-group-id="9817200766-3">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">new_owner_rule</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="9817200766-4">%{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">ordering</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">functional_type</span><span class="p">:</span><span class="w"> </span><span class="ss">:deny</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">ip_host_or_network</span><span class="p">:</span><span class="w"> </span><span class="no">nil</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">ip_host_range_lower</span><span class="p">:</span><span class="w"> </span><span class="sx">~i&quot;10.100.161.1&quot;</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">ip_host_range_upper</span><span class="p">:</span><span class="w"> </span><span class="sx">~i&quot;10.100.162.254&quot;</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="9817200766-4">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="9817200766-5">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="9817200766-6">%</span><span class="nc" data-group-id="9817200766-6">MsbmsSystAuthentication.Data.SystOwnerNetworkRules</span><span class="p" data-group-id="9817200766-6">{</span><span class="p" data-group-id="9817200766-6">}</span><span class="p" data-group-id="9817200766-5">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">create_owner_network_rule</span><span class="p" data-group-id="9817200766-7">(</span><span class="n">owner_id</span><span class="p">,</span><span class="w"> </span><span class="n">new_owner_rule</span><span class="p" data-group-id="9817200766-7">)</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="delete_disallowed_host/1">
+
+  <div class="detail-header">
+    <a href="#delete_disallowed_host/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">delete_disallowed_host(disallowed_host)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> delete_disallowed_host(
+  <a href="MsbmsSystAuthentication.Types.html#t:disallowed_host_id/0">MsbmsSystAuthentication.Types.disallowed_host_id</a>()
+  | <a href="MsbmsSystAuthentication.Data.SystDisallowedHosts.html#t:t/0">MsbmsSystAuthentication.Data.SystDisallowedHosts.t</a>()
+) :: {:ok, :deleted | :not_found} | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Deletes a host IP address from the Disallowed Hosts list based on either a
+<a href="MsbmsSystAuthentication.Data.SystDisallowedHosts.html"><code class="inline">MsbmsSystAuthentication.Data.SystDisallowedHosts</code></a> record or the ID of such a
+record.</p><p>If the record is found and deleted a success tuple in the form <code class="inline">{:ok, :deleted}</code>
+is returned.  If the record is not found the success tuple <code class="inline">{:ok, :not_found}</code>
+is returned.</p><p>Once a host is removed from the Disallowed Hosts list, users are allowed to
+authenticate from the host, so long as no other effective Network Rule
+prevents the action.</p><h2 id="delete_disallowed_host/1-parameters" class="section-heading">
+  <a href="#delete_disallowed_host/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">disallowed_host</code> - either the fully populated
+<a href="MsbmsSystAuthentication.Data.SystDisallowedHosts.html"><code class="inline">MsbmsSystAuthentication.Data.SystDisallowedHosts</code></a> data struct for the
+record to delete or the ID of the record.  Note that when the data struct
+is provided Ecto optimistic locking is applied to the the delete operation.</li></ul><h2 id="delete_disallowed_host/1-examples" class="section-heading">
+  <a href="#delete_disallowed_host/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
+  Examples
+</h2>
+<p>  Deleting a host by record ID.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">IP</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1790606809-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="1790606809-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="1790606809-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">target_host_record</span><span class="p" data-group-id="1790606809-2">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">get_disallowed_host_record_by_host</span><span class="p" data-group-id="1790606809-3">(</span><span class="sx">~i&quot;10.10.250.4&quot;</span><span class="p" data-group-id="1790606809-3">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">delete_disallowed_host</span><span class="p" data-group-id="1790606809-4">(</span><span class="n">target_host_record</span><span class="o">.</span><span class="n">id</span><span class="p" data-group-id="1790606809-4">)</span><span class="w">
+</span><span class="p" data-group-id="1790606809-5">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="ss">:deleted</span><span class="p" data-group-id="1790606809-5">}</span></code></pre><p>  Deleting a host by record struct.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">IP</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8428747146-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="8428747146-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="8428747146-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">target_host_record</span><span class="p" data-group-id="8428747146-2">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">get_disallowed_host_record_by_host</span><span class="p" data-group-id="8428747146-3">(</span><span class="sx">~i&quot;10.10.250.5&quot;</span><span class="p" data-group-id="8428747146-3">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">delete_disallowed_host</span><span class="p" data-group-id="8428747146-4">(</span><span class="n">target_host_record</span><span class="p" data-group-id="8428747146-4">)</span><span class="w">
+</span><span class="p" data-group-id="8428747146-5">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="ss">:deleted</span><span class="p" data-group-id="8428747146-5">}</span></code></pre><p>  Deleting a struct for a no longer existent record.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">IP</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1283252338-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="1283252338-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="1283252338-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">target_host_record</span><span class="p" data-group-id="1283252338-2">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">get_disallowed_host_record_by_host</span><span class="p" data-group-id="1283252338-3">(</span><span class="sx">~i&quot;10.10.250.6&quot;</span><span class="p" data-group-id="1283252338-3">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">delete_disallowed_host</span><span class="p" data-group-id="1283252338-4">(</span><span class="n">target_host_record</span><span class="p" data-group-id="1283252338-4">)</span><span class="w">
+</span><span class="p" data-group-id="1283252338-5">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="ss">:deleted</span><span class="p" data-group-id="1283252338-5">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">delete_disallowed_host</span><span class="p" data-group-id="1283252338-6">(</span><span class="n">target_host_record</span><span class="p" data-group-id="1283252338-6">)</span><span class="w">
+</span><span class="p" data-group-id="1283252338-7">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="ss">:not_found</span><span class="p" data-group-id="1283252338-7">}</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="delete_disallowed_host_addr/1">
+
+  <div class="detail-header">
+    <a href="#delete_disallowed_host_addr/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">delete_disallowed_host_addr(host_addr)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> delete_disallowed_host_addr(<a href="MsbmsSystAuthentication.Types.html#t:host_address/0">MsbmsSystAuthentication.Types.host_address</a>()) ::
+  {:ok, :deleted | :not_found} | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Deletes a host IP address from the Disallowed Hosts list as looked up by the
+host IP address.</p><p>If the record is found and deleted a success tuple in the form <code class="inline">{:ok, :deleted}</code>
+is returned.  If the record is not found the success tuple <code class="inline">{:ok, :not_found}</code>
+is returned.  Any other condition would cause an error tuple to be returned.</p><p>Once a host is removed from the Disallowed Hosts list, users are allowed to
+authenticate from the host, so long as no other effective Network Rule
+prevents the action.</p><h2 id="delete_disallowed_host_addr/1-parameters" class="section-heading">
+  <a href="#delete_disallowed_host_addr/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">host_addr</code> - the IP address of the host that is no longer to be
+disallowed.</li></ul><h2 id="delete_disallowed_host_addr/1-examples" class="section-heading">
+  <a href="#delete_disallowed_host_addr/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
+  Examples
+</h2>
+<p>  Deleting a host that does exist in the list.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">IP</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4905074488-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="4905074488-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="4905074488-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="no">true</span><span class="p" data-group-id="4905074488-2">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">host_disallowed</span><span class="p" data-group-id="4905074488-3">(</span><span class="sx">~i&quot;10.10.251.1&quot;</span><span class="p" data-group-id="4905074488-3">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="4905074488-4">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="ss">:deleted</span><span class="p" data-group-id="4905074488-4">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">delete_disallowed_host_addr</span><span class="p" data-group-id="4905074488-5">(</span><span class="sx">~i&quot;10.10.251.1&quot;</span><span class="p" data-group-id="4905074488-5">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="4905074488-6">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="no">false</span><span class="p" data-group-id="4905074488-6">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">host_disallowed</span><span class="p" data-group-id="4905074488-7">(</span><span class="sx">~i&quot;10.10.251.1&quot;</span><span class="p" data-group-id="4905074488-7">)</span></code></pre><p>  Attempting to delete a host not already on the list.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">IP</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="5141932878-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="5141932878-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="5141932878-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="no">false</span><span class="p" data-group-id="5141932878-2">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">host_disallowed</span><span class="p" data-group-id="5141932878-3">(</span><span class="sx">~i&quot;10.10.251.10&quot;</span><span class="p" data-group-id="5141932878-3">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="5141932878-4">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="ss">:not_found</span><span class="p" data-group-id="5141932878-4">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">delete_disallowed_host_addr</span><span class="p" data-group-id="5141932878-5">(</span><span class="sx">~i&quot;10.10.251.10&quot;</span><span class="p" data-group-id="5141932878-5">)</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="delete_global_network_rule/1">
+
+  <div class="detail-header">
+    <a href="#delete_global_network_rule/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">delete_global_network_rule(global_network_rule_id)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> delete_global_network_rule(<a href="https://hexdocs.pm/ecto/3.9.1/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()) ::
+  :ok | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>() | <a href="https://hexdocs.pm/elixir/Exception.html#t:t/0">Exception.t</a>()}</pre>
+
+      </div>
+
+<p>Deletes an existing Global Network Rule record as referenced by the record ID.</p><p>On successful deletion, a simple result of <code class="inline">:ok</code> is returned.  On error, an
+error tuple in the form of <code class="inline">{:error, &lt;exception&gt;}</code> is returned.</p><h2 id="delete_global_network_rule/1-parameters" class="section-heading">
+  <a href="#delete_global_network_rule/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">global_network_rule_id</code> - The record ID of the Global Network Rule record
+to delete.</li></ul>
+  </section>
+</section>
+<section class="detail" id="delete_instance_network_rule/1">
+
+  <div class="detail-header">
+    <a href="#delete_instance_network_rule/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">delete_instance_network_rule(instance_network_rule_id)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> delete_instance_network_rule(<a href="https://hexdocs.pm/ecto/3.9.1/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()) ::
+  :ok | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>() | <a href="https://hexdocs.pm/elixir/Exception.html#t:t/0">Exception.t</a>()}</pre>
+
+      </div>
+
+<p>Deletes an existing Instance Network Rule record as referenced by the record
+ID.</p><p>On successful deletion, a simple result of <code class="inline">:ok</code> is returned.  On error, an
+error tuple in the form of <code class="inline">{:error, &lt;exception&gt;}</code> is returned.</p><h2 id="delete_instance_network_rule/1-parameters" class="section-heading">
+  <a href="#delete_instance_network_rule/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">instance_network_rule_id</code> - The record ID of the Instance Network Rule
+record to delete.</li></ul>
+  </section>
+</section>
+<section class="detail" id="delete_owner_network_rule/1">
+
+  <div class="detail-header">
+    <a href="#delete_owner_network_rule/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">delete_owner_network_rule(owner_network_rule_id)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> delete_owner_network_rule(<a href="https://hexdocs.pm/ecto/3.9.1/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()) ::
+  :ok | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>() | <a href="https://hexdocs.pm/elixir/Exception.html#t:t/0">Exception.t</a>()}</pre>
+
+      </div>
+
+<p>Deletes an existing Owner Network Rule record as referenced by the record ID.</p><p>On successful deletion, a simple result of <code class="inline">:ok</code> is returned.  On error, an
+error tuple in the form of <code class="inline">{:error, &lt;exception&gt;}</code> is returned.</p><h2 id="delete_owner_network_rule/1-parameters" class="section-heading">
+  <a href="#delete_owner_network_rule/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">owner_network_rule_id</code> - The record ID of the Owner Network Rule record
+to delete.</li></ul>
+  </section>
+</section>
+<section class="detail" id="get_applied_network_rule/3">
+
+    <span id="get_applied_network_rule/1"></span>
+
+    <span id="get_applied_network_rule/2"></span>
+
+  <div class="detail-header">
+    <a href="#get_applied_network_rule/3" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_applied_network_rule(host_address, instance_id \\ nil, instance_owner_id \\ nil)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_applied_network_rule(
+  <a href="MsbmsSystAuthentication.Types.html#t:host_address/0">MsbmsSystAuthentication.Types.host_address</a>(),
+  <a href="../../../../documentation/technical/app_server/msbms_syst_instance_mgr/MsbmsSystInstanceMgr.Types.html#t:instance_id/0">MsbmsSystInstanceMgr.Types.instance_id</a>() | nil,
+  <a href="../../../../documentation/technical/app_server/msbms_syst_instance_mgr/MsbmsSystInstanceMgr.Types.html#t:owner_id/0">MsbmsSystInstanceMgr.Types.owner_id</a>() | nil
+) ::
+  {:ok, <a href="MsbmsSystAuthentication.Types.html#t:applied_network_rule/0">MsbmsSystAuthentication.Types.applied_network_rule</a>()}
+  | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>() | <a href="https://hexdocs.pm/elixir/Exception.html#t:t/0">Exception.t</a>()}</pre>
+
+      </div>
+
+<p>Returns the Network Rule which should be applied for the given Host IP Address.</p><p>This function compares the provided Host IP Address against the applicable
+Network Rules which apply to it and return the specific rule which should be
+applied during the authentication process.</p><h2 id="get_applied_network_rule/3-network-rule-precedence" class="section-heading">
+  <a href="#get_applied_network_rule/3-network-rule-precedence" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">network-rule-precedence</p>
+  </a>
+  Network Rule Precedence
+</h2>
+<p>The specific rules to check for applicability depends on the other provided
+parameters.  The available Network Rule sets in order of precedence are:</p><ol><li><p><strong>Disallowed Hosts</strong>: Globally disallowed hosts are always checked first and
+no later rule can override the denial.  Only removing the host from the
+Disallowed Hosts List can reverse this denial.</p></li><li><p><strong>Global Network Rules</strong>: These are rules applied to all presented Host IP
+Addresses.</p></li><li><p><strong>Instance Network Rules</strong>: Rules defined by Instance Owners and are the
+most granular rule level available.  These Network Rules are only evaluated
+if the <code class="inline">instance_id</code> parameter is provided.</p></li><li><p><strong>Owner Network Rules</strong>: Network Rules which are applicable to all
+Instances of a given Owner, provided no superseding Instance Network Rule
+was found.  This rule set is included if either the <code class="inline">instance_id</code> or
+<code class="inline">owner_id</code> parameter is provided.</p></li><li><p><strong>Default Network Rule</strong>: When no explicitly defined Network Rule has
+been found for a host, this rule will apply implicitly.  The current rule
+grants access from any host.</p></li></ol><h2 id="get_applied_network_rule/3-return-value" class="section-heading">
+  <a href="#get_applied_network_rule/3-return-value" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">return-value</p>
+  </a>
+  Return Value
+</h2>
+<p>  This function returns a result tuple.  The value element of the result tuple
+  is a map of type <a href="MsbmsSystAuthentication.Types.html#t:applied_network_rule/0"><code class="inline">MsbmsSystAuthentication.Types.applied_network_rule/0</code></a>.
+  The map indicates which precedence group the rule came from, the ID of the
+  Network Rule record if the rule was derived from the various Network Rule
+  data tables, and the Functional Type of the rule: <code class="inline">:allow</code> meaning the
+  rule explicitly allows the host to attempt an authentication, or <code class="inline">:deny</code>
+  indicating that the host is not allowed to attempt authentication.</p><h2 id="get_applied_network_rule/3-parameters" class="section-heading">
+  <a href="#get_applied_network_rule/3-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">host_address</code> - the Host IP Address which the user wishes to authenticate
+from.</p></li><li><p><code class="inline">instance_id</code> - the record ID of an Instance to which the user wants to
+gain access.  This parameter is optional, though excluding this parameter
+will leave the Instance Network Rules might properly apply unevaluated.  If
+this parameter is provided, the Owner of the Instance is implied and there
+is no need to also supply the <code class="inline">owner_id</code> parameter.</p></li><li><p><code class="inline">owner_id</code> - the record ID of an Owner which owns the candidate Instances
+to which the user wishes to authenticate.  This parameter is not required if
+the <code class="inline">instance_id</code> parameter has been provided.  Otherwise, this parameter is
+optional, though if the Owner has not been resolved through this parameter
+or via the <code class="inline">instance_id</code>, the Owner Network Rules that might apply to the
+authentication attempt will not be applied.</p></li></ul><h2 id="get_applied_network_rule/3-examples" class="section-heading">
+  <a href="#get_applied_network_rule/3-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
+  Examples
+</h2>
+<p>  When the host is a member of the Disallowed Hosts lists.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">IP</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="6913991090-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="6913991090-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="6913991090-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="6913991090-3">%{</span><span class="ss">functional_type</span><span class="p">:</span><span class="w"> </span><span class="ss">:deny</span><span class="p">,</span><span class="w"> </span><span class="ss">network_rule_id</span><span class="p">:</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="ss">precedence</span><span class="p">:</span><span class="w"> </span><span class="ss">:disallowed</span><span class="p" data-group-id="6913991090-3">}</span><span class="p" data-group-id="6913991090-2">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">get_applied_network_rule</span><span class="p" data-group-id="6913991090-4">(</span><span class="sx">~i&quot;10.123.123.3&quot;</span><span class="p" data-group-id="6913991090-4">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_binary</span><span class="p" data-group-id="6913991090-5">(</span><span class="n">id</span><span class="p" data-group-id="6913991090-5">)</span><span class="w">
+</span><span class="no">true</span></code></pre><p>  When the Host IP Address does not match any explicitly defined rule and the
+  implicit rule applies.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">IP</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="0637928686-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="0637928686-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">get_applied_network_rule</span><span class="p" data-group-id="0637928686-2">(</span><span class="sx">~i&quot;10.124.124.3&quot;</span><span class="p" data-group-id="0637928686-2">)</span><span class="w">
+</span><span class="p" data-group-id="0637928686-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="0637928686-4">%{</span><span class="ss">functional_type</span><span class="p">:</span><span class="w"> </span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="ss">network_rule_id</span><span class="p">:</span><span class="w"> </span><span class="no">nil</span><span class="p">,</span><span class="w"> </span><span class="ss">precedence</span><span class="p">:</span><span class="w"> </span><span class="ss">:implied</span><span class="p" data-group-id="0637928686-4">}</span><span class="p" data-group-id="0637928686-3">}</span></code></pre><p>  When a Global Network Rule explicitly allows the Host IP Address to attempt
+  authentication.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">IP</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="3084370681-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="3084370681-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="3084370681-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3084370681-3">%{</span><span class="ss">functional_type</span><span class="p">:</span><span class="w"> </span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="ss">network_rule_id</span><span class="p">:</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="ss">precedence</span><span class="p">:</span><span class="w"> </span><span class="ss">:global</span><span class="p" data-group-id="3084370681-3">}</span><span class="p" data-group-id="3084370681-2">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">get_applied_network_rule</span><span class="p" data-group-id="3084370681-4">(</span><span class="sx">~i&quot;10.125.125.3&quot;</span><span class="p" data-group-id="3084370681-4">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_binary</span><span class="p" data-group-id="3084370681-5">(</span><span class="n">id</span><span class="p" data-group-id="3084370681-5">)</span><span class="w">
+</span><span class="no">true</span></code></pre><p>  Note that while the examples did not include Instance or Owner IDs, the
+  examples are none-the-less representative of cases where they are included.</p>
+  </section>
+</section>
+<section class="detail" id="get_applied_network_rule!/3">
+
+    <span id="get_applied_network_rule!/1"></span>
+
+    <span id="get_applied_network_rule!/2"></span>
+
+  <div class="detail-header">
+    <a href="#get_applied_network_rule!/3" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_applied_network_rule!(host_address, instance_id \\ nil, instance_owner_id \\ nil)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_applied_network_rule!(
+  <a href="MsbmsSystAuthentication.Types.html#t:host_address/0">MsbmsSystAuthentication.Types.host_address</a>(),
+  <a href="../../../../documentation/technical/app_server/msbms_syst_instance_mgr/MsbmsSystInstanceMgr.Types.html#t:instance_id/0">MsbmsSystInstanceMgr.Types.instance_id</a>() | nil,
+  <a href="../../../../documentation/technical/app_server/msbms_syst_instance_mgr/MsbmsSystInstanceMgr.Types.html#t:owner_id/0">MsbmsSystInstanceMgr.Types.owner_id</a>() | nil
+) :: <a href="MsbmsSystAuthentication.Types.html#t:applied_network_rule/0">MsbmsSystAuthentication.Types.applied_network_rule</a>()</pre>
+
+      </div>
+
+<p>Returns the Network Rule which should be applied for the given Host IP
+Address, raising on error.</p><p>This function works the same as <a href="#get_applied_network_rule/3"><code class="inline">get_applied_network_rule/3</code></a> except this
+function returns its result without wrapping it in a result tuple.  If an
+error is encountered an exception is raised.</p><h2 id="get_applied_network_rule!/3-parameters" class="section-heading">
+  <a href="#get_applied_network_rule!/3-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">host_address</code> - the Host IP Address which the user wishes to authenticate
+from.</p></li><li><p><code class="inline">instance_id</code> - the record ID of an Instance to which the user wants to
+gain access.  This parameter is optional, though excluding this parameter
+will leave the Instance Network Rules might properly apply unevaluated.  If
+this parameter is provided, the Owner of the Instance is implied and there
+is no need to also supply the <code class="inline">owner_id</code> parameter.</p></li><li><p><code class="inline">owner_id</code> - the record ID of an Owner which owns the candidate Instances
+to which the user wishes to authenticate.  This parameter is not required if
+the <code class="inline">instance_id</code> parameter has been provided.  Otherwise, this parameter is
+optional, though if the Owner has not been resolved through this parameter
+or via the <code class="inline">instance_id</code>, the Owner Network Rules that might apply to the
+authentication attempt will not be applied.</p></li></ul><h2 id="get_applied_network_rule!/3-examples" class="section-heading">
+  <a href="#get_applied_network_rule!/3-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
+  Examples
+</h2>
+<p>  When the host is a member of the Disallowed Hosts lists.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">IP</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="6431646336-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="6431646336-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="6431646336-2">%{</span><span class="ss">functional_type</span><span class="p">:</span><span class="w"> </span><span class="ss">:deny</span><span class="p">,</span><span class="w"> </span><span class="ss">network_rule_id</span><span class="p">:</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="ss">precedence</span><span class="p">:</span><span class="w"> </span><span class="ss">:disallowed</span><span class="p" data-group-id="6431646336-2">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">get_applied_network_rule!</span><span class="p" data-group-id="6431646336-3">(</span><span class="sx">~i&quot;10.123.123.3&quot;</span><span class="p" data-group-id="6431646336-3">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_binary</span><span class="p" data-group-id="6431646336-4">(</span><span class="n">id</span><span class="p" data-group-id="6431646336-4">)</span><span class="w">
+</span><span class="no">true</span></code></pre><p>  When the Host IP Address does not match any explicitly defined rule and the
+  implicit rule applies.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">IP</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4622548383-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="4622548383-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">get_applied_network_rule!</span><span class="p" data-group-id="4622548383-2">(</span><span class="sx">~i&quot;10.124.124.3&quot;</span><span class="p" data-group-id="4622548383-2">)</span><span class="w">
+</span><span class="p" data-group-id="4622548383-3">%{</span><span class="ss">functional_type</span><span class="p">:</span><span class="w"> </span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="ss">network_rule_id</span><span class="p">:</span><span class="w"> </span><span class="no">nil</span><span class="p">,</span><span class="w"> </span><span class="ss">precedence</span><span class="p">:</span><span class="w"> </span><span class="ss">:implied</span><span class="p" data-group-id="4622548383-3">}</span></code></pre><p>  When a Global Network Rule explicitly allows the Host IP Address to attempt
+  authentication.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">IP</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="0462843783-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="0462843783-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="0462843783-2">%{</span><span class="ss">functional_type</span><span class="p">:</span><span class="w"> </span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="ss">network_rule_id</span><span class="p">:</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="ss">precedence</span><span class="p">:</span><span class="w"> </span><span class="ss">:global</span><span class="p" data-group-id="0462843783-2">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">get_applied_network_rule!</span><span class="p" data-group-id="0462843783-3">(</span><span class="sx">~i&quot;10.125.125.3&quot;</span><span class="p" data-group-id="0462843783-3">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_binary</span><span class="p" data-group-id="0462843783-4">(</span><span class="n">id</span><span class="p" data-group-id="0462843783-4">)</span><span class="w">
+</span><span class="no">true</span></code></pre><p>  Note that while the examples did not include Instance or Owner IDs, the
+  examples are none-the-less representative of cases where they are included.</p>
+  </section>
+</section>
+<section class="detail" id="get_disallowed_host_record_by_host/1">
+
+  <div class="detail-header">
+    <a href="#get_disallowed_host_record_by_host/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_disallowed_host_record_by_host(host_addr)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_disallowed_host_record_by_host(<a href="MsbmsSystAuthentication.Types.html#t:host_address/0">MsbmsSystAuthentication.Types.host_address</a>()) ::
+  {:ok, <a href="MsbmsSystAuthentication.Data.SystDisallowedHosts.html#t:t/0">MsbmsSystAuthentication.Data.SystDisallowedHosts.t</a>() | nil}
+  | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Retrieves a Disallowed Host record from the database as identified by its host
+address.</p><h2 id="get_disallowed_host_record_by_host/1-parameters" class="section-heading">
+  <a href="#get_disallowed_host_record_by_host/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">host_address</code> - the IP address of the disallowed host record to retrieve.</li></ul><h2 id="get_disallowed_host_record_by_host/1-example" class="section-heading">
+  <a href="#get_disallowed_host_record_by_host/1-example" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">example</p>
+  </a>
+  Example
+</h2>
+<p>  Retrieving a Disallowed Host record by IP address.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">IP</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1774235162-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="1774235162-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="1774235162-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="1774235162-3">%</span><span class="nc" data-group-id="1774235162-3">MsbmsSystAuthentication.Data.SystDisallowedHosts</span><span class="p" data-group-id="1774235162-3">{</span><span class="p" data-group-id="1774235162-3">}</span><span class="p" data-group-id="1774235162-2">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">get_disallowed_host_record_by_host</span><span class="p" data-group-id="1774235162-4">(</span><span class="sx">~i&quot;10.123.123.4&quot;</span><span class="p" data-group-id="1774235162-4">)</span></code></pre><p>  Attempting to retrieve a record for a host not on the list.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">IP</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8604972816-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="8604972816-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">get_disallowed_host_record_by_host</span><span class="p" data-group-id="8604972816-2">(</span><span class="sx">~i&quot;10.125.120.20&quot;</span><span class="p" data-group-id="8604972816-2">)</span><span class="w">
+</span><span class="p" data-group-id="8604972816-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="no">nil</span><span class="p" data-group-id="8604972816-3">}</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="get_disallowed_host_record_by_host!/1">
+
+  <div class="detail-header">
+    <a href="#get_disallowed_host_record_by_host!/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_disallowed_host_record_by_host!(host_addr)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_disallowed_host_record_by_host!(
+  <a href="MsbmsSystAuthentication.Types.html#t:host_address/0">MsbmsSystAuthentication.Types.host_address</a>()
+) ::
+  <a href="MsbmsSystAuthentication.Data.SystDisallowedHosts.html#t:t/0">MsbmsSystAuthentication.Data.SystDisallowedHosts.t</a>() | nil</pre>
+
+      </div>
+
+<p>Retrieves a Disallowed Host record from the database as identified by its host
+address, raising on error.</p><p>This function works the same as <a href="#get_disallowed_host_record_by_host/1"><code class="inline">get_disallowed_host_record_by_host/1</code></a> except
+this function returns its result without wrapping it in a result tuple.  If an
+error is encountered an exception is raised.</p><h2 id="get_disallowed_host_record_by_host!/1-parameters" class="section-heading">
+  <a href="#get_disallowed_host_record_by_host!/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">host_address</code> - the IP address of the disallowed host record to retrieve.</li></ul><h2 id="get_disallowed_host_record_by_host!/1-example" class="section-heading">
+  <a href="#get_disallowed_host_record_by_host!/1-example" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">example</p>
+  </a>
+  Example
+</h2>
+<p>  Retrieving a Disallowed Host record by IP address.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">IP</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="6695914757-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="6695914757-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="6695914757-2">%</span><span class="nc" data-group-id="6695914757-2">MsbmsSystAuthentication.Data.SystDisallowedHosts</span><span class="p" data-group-id="6695914757-2">{</span><span class="p" data-group-id="6695914757-2">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">get_disallowed_host_record_by_host!</span><span class="p" data-group-id="6695914757-3">(</span><span class="sx">~i&quot;10.123.123.4&quot;</span><span class="p" data-group-id="6695914757-3">)</span></code></pre><p>  Attempting to retrieve a record for a host not on the list.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">IP</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9201920095-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="9201920095-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">get_disallowed_host_record_by_host!</span><span class="p" data-group-id="9201920095-2">(</span><span class="sx">~i&quot;10.125.120.20&quot;</span><span class="p" data-group-id="9201920095-2">)</span><span class="w">
+</span><span class="no">nil</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="get_disallowed_host_record_by_id/1">
+
+  <div class="detail-header">
+    <a href="#get_disallowed_host_record_by_id/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_disallowed_host_record_by_id(disallowed_host_id)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_disallowed_host_record_by_id(
+  <a href="MsbmsSystAuthentication.Types.html#t:disallowed_host_id/0">MsbmsSystAuthentication.Types.disallowed_host_id</a>()
+) ::
+  {:ok, <a href="MsbmsSystAuthentication.Data.SystDisallowedHosts.html#t:t/0">MsbmsSystAuthentication.Data.SystDisallowedHosts.t</a>()}
+  | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>() | <a href="https://hexdocs.pm/elixir/Exception.html#t:t/0">Exception.t</a>()}</pre>
+
+      </div>
+
+<p>Retrieves a Disallowed Host record by the record ID.</p><p>This function assumes the record exists.  If the record does not exist an
+error tuple will be returned.</p><h2 id="get_disallowed_host_record_by_id/1-parameters" class="section-heading">
+  <a href="#get_disallowed_host_record_by_id/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">disallowed_host_id</code> - the record ID of the Disallowed Host record to retrieve.</li></ul><h2 id="get_disallowed_host_record_by_id/1-example" class="section-heading">
+  <a href="#get_disallowed_host_record_by_id/1-example" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">example</p>
+  </a>
+  Example
+</h2>
+<p>  Retrieving a Disallowed Host record by record ID.</p><pre><code class="makeup elixir" translate="no"><span class="w">  </span><span class="p" data-group-id="1795095636-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="1795095636-2">%</span><span class="nc" data-group-id="1795095636-2">MsbmsSystAuthentication.Data.SystDisallowedHosts</span><span class="p" data-group-id="1795095636-2">{</span><span class="p" data-group-id="1795095636-2">}</span><span class="p" data-group-id="1795095636-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+    </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">get_disallowed_host_record_by_id</span><span class="p" data-group-id="1795095636-3">(</span><span class="w">
+      </span><span class="s">&quot;ad7f2030-5895-11ed-a888-0f8a20e745a9&quot;</span><span class="p" data-group-id="1795095636-3">)</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="get_disallowed_host_record_by_id!/1">
+
+  <div class="detail-header">
+    <a href="#get_disallowed_host_record_by_id!/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_disallowed_host_record_by_id!(disallowed_host_id)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_disallowed_host_record_by_id!(
+  <a href="MsbmsSystAuthentication.Types.html#t:disallowed_host_id/0">MsbmsSystAuthentication.Types.disallowed_host_id</a>()
+) ::
+  <a href="MsbmsSystAuthentication.Data.SystDisallowedHosts.html#t:t/0">MsbmsSystAuthentication.Data.SystDisallowedHosts.t</a>()</pre>
+
+      </div>
+
+<p>Retrieves a Disallowed Host record by the record ID, raising on error.</p><p>This function works the same as <a href="#get_disallowed_host_record_by_id/1"><code class="inline">get_disallowed_host_record_by_id/1</code></a> except
+this function returns its result without wrapping it in a result tuple.  If an
+error is encountered, including if the record does not exist, an exception is
+raised.</p><h2 id="get_disallowed_host_record_by_id!/1-parameters" class="section-heading">
+  <a href="#get_disallowed_host_record_by_id!/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">disallowed_host_id</code> - the record ID of the Disallowed Host record to retrieve.</li></ul><h2 id="get_disallowed_host_record_by_id!/1-example" class="section-heading">
+  <a href="#get_disallowed_host_record_by_id!/1-example" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">example</p>
+  </a>
+  Example
+</h2>
+<p>  Retrieving a Disallowed Host record by record ID.</p><pre><code class="makeup elixir" translate="no"><span class="w">  </span><span class="p" data-group-id="0904200477-1">%</span><span class="nc" data-group-id="0904200477-1">MsbmsSystAuthentication.Data.SystDisallowedHosts</span><span class="p" data-group-id="0904200477-1">{</span><span class="p" data-group-id="0904200477-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+    </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">get_disallowed_host_record_by_id!</span><span class="p" data-group-id="0904200477-2">(</span><span class="w">
+      </span><span class="s">&quot;ad7f2030-5895-11ed-a888-0f8a20e745a9&quot;</span><span class="p" data-group-id="0904200477-2">)</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="get_global_network_rule/1">
+
+  <div class="detail-header">
+    <a href="#get_global_network_rule/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_global_network_rule(global_network_rule_id)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_global_network_rule(<a href="https://hexdocs.pm/ecto/3.9.1/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()) ::
+  {:ok, <a href="MsbmsSystAuthentication.Data.SystGlobalNetworkRules.html#t:t/0">MsbmsSystAuthentication.Data.SystGlobalNetworkRules.t</a>()}
+  | {:ok, :not_found}
+  | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>() | <a href="https://hexdocs.pm/elixir/Exception.html#t:t/0">Exception.t</a>()}</pre>
+
+      </div>
+
+<p>Retrieves a Global Network Rule record based on its record ID.</p><p>For a given Global Network Rule record ID this function will return a result
+tuple in the form of <code class="inline">{:ok, &lt;record&gt;}</code> where <code class="inline">&lt;record&gt;</code> is the fully
+populated <a href="MsbmsSystAuthentication.Data.SystGlobalNetworkRules.html"><code class="inline">MsbmsSystAuthentication.Data.SystGlobalNetworkRules</code></a>.  If the
+record does not exist, then <code class="inline">{:ok, :not_found}</code> is returned.  Otherwise, an
+error tuple in the form of <code class="inline">{:error, &lt;exception&gt;}</code> is returned.</p><h2 id="get_global_network_rule/1-parameters" class="section-heading">
+  <a href="#get_global_network_rule/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">global_network_rule_id</code> - the record ID of the desired Global Network Rule
+record.</li></ul>
+  </section>
+</section>
+<section class="detail" id="get_global_network_rule!/1">
+
+  <div class="detail-header">
+    <a href="#get_global_network_rule!/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_global_network_rule!(global_network_rule_id)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_global_network_rule!(<a href="https://hexdocs.pm/ecto/3.9.1/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()) ::
+  <a href="MsbmsSystAuthentication.Data.SystGlobalNetworkRules.html#t:t/0">MsbmsSystAuthentication.Data.SystGlobalNetworkRules.t</a>() | :not_found</pre>
+
+      </div>
+
+<p>Retrieves a Global Network Rule record based on its record ID, raising on
+error.</p><p>This function works the same as <a href="#get_global_network_rule/1"><code class="inline">get_global_network_rule/1</code></a> except this
+function returns its result without wrapping it in a result tuple.  If an
+error is encountered, including if the record does not exist, an exception is
+raised.</p><h2 id="get_global_network_rule!/1-parameters" class="section-heading">
+  <a href="#get_global_network_rule!/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">global_network_rule_id</code> - the record ID of the desired Global Network Rule
+record.</li></ul>
+  </section>
+</section>
+<section class="detail" id="get_instance_network_rule/1">
+
+  <div class="detail-header">
+    <a href="#get_instance_network_rule/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_instance_network_rule(instance_network_rule_id)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_instance_network_rule(<a href="https://hexdocs.pm/ecto/3.9.1/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()) ::
+  {:ok, <a href="MsbmsSystAuthentication.Data.SystInstanceNetworkRules.html#t:t/0">MsbmsSystAuthentication.Data.SystInstanceNetworkRules.t</a>()}
+  | {:ok, :not_found}
+  | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>() | <a href="https://hexdocs.pm/elixir/Exception.html#t:t/0">Exception.t</a>()}</pre>
+
+      </div>
+
+<p>Retrieves a Instance Network Rule record based on its record ID.</p><p>For a given Instance Network Rule record ID this function will return a result
+tuple in the form of <code class="inline">{:ok, &lt;record&gt;}</code> where <code class="inline">&lt;record&gt;</code> is the fully
+populated <a href="MsbmsSystAuthentication.Data.SystInstanceNetworkRules.html"><code class="inline">MsbmsSystAuthentication.Data.SystInstanceNetworkRules</code></a>.  If the
+record does not exist, then <code class="inline">{:ok, :not_found}</code> is returned.  Otherwise, an
+error tuple in the form of <code class="inline">{:error, &lt;exception&gt;}</code> is returned.</p><h2 id="get_instance_network_rule/1-parameters" class="section-heading">
+  <a href="#get_instance_network_rule/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">instance_network_rule_id</code> - the record ID of the desired Instance Network
+Rule record.</li></ul>
+  </section>
+</section>
+<section class="detail" id="get_instance_network_rule!/1">
+
+  <div class="detail-header">
+    <a href="#get_instance_network_rule!/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_instance_network_rule!(instance_network_rule_id)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_instance_network_rule!(<a href="https://hexdocs.pm/ecto/3.9.1/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()) ::
+  <a href="MsbmsSystAuthentication.Data.SystInstanceNetworkRules.html#t:t/0">MsbmsSystAuthentication.Data.SystInstanceNetworkRules.t</a>() | :not_found</pre>
+
+      </div>
+
+<p>Retrieves a Instance Network Rule record based on its record ID, raising on
+error.</p><p>This function works the same as <a href="#get_instance_network_rule/1"><code class="inline">get_instance_network_rule/1</code></a> except this
+function returns its result without wrapping it in a result tuple.  If an
+error is encountered, including if the record does not exist, an exception is
+raised.</p><h2 id="get_instance_network_rule!/1-parameters" class="section-heading">
+  <a href="#get_instance_network_rule!/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">instance_network_rule_id</code> - the record ID of the desired Instance Network
+Rule record.</li></ul>
+  </section>
+</section>
+<section class="detail" id="get_owner_network_rule/1">
+
+  <div class="detail-header">
+    <a href="#get_owner_network_rule/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_owner_network_rule(owner_network_rule_id)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_owner_network_rule(<a href="https://hexdocs.pm/ecto/3.9.1/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()) ::
+  {:ok, <a href="MsbmsSystAuthentication.Data.SystOwnerNetworkRules.html#t:t/0">MsbmsSystAuthentication.Data.SystOwnerNetworkRules.t</a>()}
+  | {:ok, :not_found}
+  | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>() | <a href="https://hexdocs.pm/elixir/Exception.html#t:t/0">Exception.t</a>()}</pre>
+
+      </div>
+
+<p>Retrieves a Owner Network Rule record based on its record ID.</p><p>For a given Owner Network Rule record ID this function will return a result
+tuple in the form of <code class="inline">{:ok, &lt;record&gt;}</code> where <code class="inline">&lt;record&gt;</code> is the fully
+populated <a href="MsbmsSystAuthentication.Data.SystOwnerNetworkRules.html"><code class="inline">MsbmsSystAuthentication.Data.SystOwnerNetworkRules</code></a>.  If the
+record does not exist, then <code class="inline">{:ok, :not_found}</code> is returned.  Otherwise, an
+error tuple in the form of <code class="inline">{:error, &lt;exception&gt;}</code> is returned.</p><h2 id="get_owner_network_rule/1-parameters" class="section-heading">
+  <a href="#get_owner_network_rule/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">owner_network_rule_id</code> - the record ID of the desired Owner Network Rule
+record.</li></ul>
+  </section>
+</section>
+<section class="detail" id="get_owner_network_rule!/1">
+
+  <div class="detail-header">
+    <a href="#get_owner_network_rule!/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_owner_network_rule!(owner_network_rule_id)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_owner_network_rule!(<a href="https://hexdocs.pm/ecto/3.9.1/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()) ::
+  <a href="MsbmsSystAuthentication.Data.SystOwnerNetworkRules.html#t:t/0">MsbmsSystAuthentication.Data.SystOwnerNetworkRules.t</a>() | :not_found</pre>
+
+      </div>
+
+<p>Retrieves a Owner Network Rule record based on its record ID, raising on
+error.</p><p>This function works the same as <a href="#get_owner_network_rule/1"><code class="inline">get_owner_network_rule/1</code></a> except this
+function returns its result without wrapping it in a result tuple.  If an
+error is encountered, including if the record does not exist, an exception is
+raised.</p><h2 id="get_owner_network_rule!/1-parameters" class="section-heading">
+  <a href="#get_owner_network_rule!/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">owner_network_rule_id</code> - the record ID of the desired Owner Network Rule
+record.</li></ul>
+  </section>
+</section>
+<section class="detail" id="host_disallowed/1">
+
+  <div class="detail-header">
+    <a href="#host_disallowed/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">host_disallowed(host_address)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> host_disallowed(<a href="MsbmsSystAuthentication.Types.html#t:host_address/0">MsbmsSystAuthentication.Types.host_address</a>()) ::
+  {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()} | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Indicates whether the provided host IP address is to be denied access to the
+system.</p><p>This function returns a tuple in the form of <code class="inline">{:ok, &lt;disallowed&gt;}</code> where the
+<code class="inline">disallowed</code> value is either <code class="inline">true</code> meaning that the requested host is
+disallowed from authenticating with the system or <code class="inline">false</code> if the host is
+permitted to attempt an authentication.</p><h2 id="host_disallowed/1-parameters" class="section-heading">
+  <a href="#host_disallowed/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">host_address</code> - the host IP address to test.  Typically this will be the
+host address of a user wishing to authenticate with the system.</li></ul><h2 id="host_disallowed/1-examples" class="section-heading">
+  <a href="#host_disallowed/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
+  Examples
+</h2>
+<p>  An allowed host will return a <code class="inline">false</code> result tuple</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">IP</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1592282473-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="1592282473-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">host_disallowed</span><span class="p" data-group-id="1592282473-2">(</span><span class="sx">~i&quot;10.150.150.10&quot;</span><span class="p" data-group-id="1592282473-2">)</span><span class="w">
+</span><span class="p" data-group-id="1592282473-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="no">false</span><span class="p" data-group-id="1592282473-3">}</span></code></pre><p>  A disallowed host returns a <code class="inline">true</code> result tuple</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">IP</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1906194871-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="1906194871-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">host_disallowed</span><span class="p" data-group-id="1906194871-2">(</span><span class="sx">~i&quot;10.123.123.5&quot;</span><span class="p" data-group-id="1906194871-2">)</span><span class="w">
+</span><span class="p" data-group-id="1906194871-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="no">true</span><span class="p" data-group-id="1906194871-3">}</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="host_disallowed?/1">
+
+  <div class="detail-header">
+    <a href="#host_disallowed?/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">host_disallowed?(host_address)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> host_disallowed?(<a href="MsbmsSystAuthentication.Types.html#t:host_address/0">MsbmsSystAuthentication.Types.host_address</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
+
+      </div>
+
+<p>Indicates whether the provided host IP address is to be denied access to the
+system, raising on error.</p><p>This function works the same as <a href="#host_disallowed/1"><code class="inline">host_disallowed/1</code></a> except this function
+returns its result without wrapping it in a result tuple.  If an error is
+encountered an exception is raised.</p><h2 id="host_disallowed?/1-parameters" class="section-heading">
+  <a href="#host_disallowed?/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">host_address</code> - the host IP address to test.  Typically this will be the
+host address of a user wishing to authenticate with the system.</li></ul><h2 id="host_disallowed?/1-examples" class="section-heading">
+  <a href="#host_disallowed?/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
+  Examples
+</h2>
+<p>  An allowed host will return a <code class="inline">false</code> result tuple</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">IP</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1807882632-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="1807882632-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">host_disallowed?</span><span class="p" data-group-id="1807882632-2">(</span><span class="sx">~i&quot;10.150.150.10&quot;</span><span class="p" data-group-id="1807882632-2">)</span><span class="w">
+</span><span class="no">false</span></code></pre><p>  A disallowed host returns a <code class="inline">true</code> result tuple</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">IP</span><span class="p">,</span><span class="w"> </span><span class="ss">only</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1413079043-1">[</span><span class="ss">sigil_i</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="1413079043-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystAuthentication</span><span class="o">.</span><span class="n">host_disallowed?</span><span class="p" data-group-id="1413079043-2">(</span><span class="sx">~i&quot;10.123.123.5&quot;</span><span class="p" data-group-id="1413079043-2">)</span><span class="w">
+</span><span class="no">true</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="update_global_network_rule/2">
+
+  <div class="detail-header">
+    <a href="#update_global_network_rule/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">update_global_network_rule(global_network_rule, update_params)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> update_global_network_rule(
+  <a href="https://hexdocs.pm/ecto/3.9.1/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>() | <a href="MsbmsSystAuthentication.Data.SystGlobalNetworkRules.html#t:t/0">MsbmsSystAuthentication.Data.SystGlobalNetworkRules.t</a>(),
+  <a href="MsbmsSystAuthentication.Types.html#t:global_network_rule_params/0">MsbmsSystAuthentication.Types.global_network_rule_params</a>()
+) ::
+  {:ok, <a href="MsbmsSystAuthentication.Data.SystGlobalNetworkRules.html#t:t/0">MsbmsSystAuthentication.Data.SystGlobalNetworkRules.t</a>()}
+  | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>() | <a href="https://hexdocs.pm/elixir/Exception.html#t:t/0">Exception.t</a>()}</pre>
+
+      </div>
+
+<p>Updates an existing Global Network Rule with new values.</p><p>This function works similar to <a href="#create_global_network_rule/1"><code class="inline">create_global_network_rule/1</code></a> but updates an
+existing Global Network Rule record rather than creating a new one.</p><p>On successful update, a result tuple in the form <code class="inline">{:ok, &lt;record&gt;}</code> is returned
+where the &lt;record&gt; is the fully populated Data struct of the record just
+updated.  If an exception is raised this function will return a failure tuple
+in the form of <code class="inline">{:error, &lt;exception data&gt;}</code>.</p><h2 id="update_global_network_rule/2-parameters" class="section-heading">
+  <a href="#update_global_network_rule/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">global_network_rule</code> - this value is either a fully populated
+<a href="MsbmsSystAuthentication.Data.SystGlobalNetworkRules.html"><code class="inline">MsbmsSystAuthentication.Data.SystGlobalNetworkRules</code></a> struct of an existing
+Global Network Rule record or the ID of such a record.  If the data struct
+is provided, Ecto optimistic locking is applied to the update operation.</p></li><li><p><code class="inline">update_params</code> - a map representing the values to use when updating the
+Global Network Rule.  All parameters are optional, with omission meaning
+that the existing value should retain its current value.  The available
+parameter values are:</p><ul><li><p><code class="inline">ordering</code> - the order in which the record should apply relative to
+other Global Network Rule records.  lower <code class="inline">ordering</code> values take
+precedence over higher <code class="inline">ordering</code> values.  If the <code class="inline">ordering</code> value in the
+parameters matches the <code class="inline">ordering</code> value of an existing Global Network Rule
+record, the updated record will be treated as an &quot;insert before&quot; record,
+with the existing records being reordered to be after the newly updated
+record, recursively.</p></li><li><p><code class="inline">functional_type</code> - defines what action the rule specifies once matched.
+The possible functional types are <code class="inline">:allow</code> which means the rule intends to
+explicitly allow the associated IP Address(es) to attempt authentication
+or <code class="inline">:deny</code> which explicitly prevents the IP Address(es) from attempting
+an authorization.</p></li><li><p><code class="inline">ip_host_or_network</code> - a single Host IP Address or a single CIDR network
+used in matching user Host IP Addresses to rules.  Note that if this value
+is provided that the <code class="inline">ip_host_range_lower</code> and <code class="inline">ip_host_range_upper</code>
+values must be nil.</p></li><li><p><code class="inline">ip_host_range_lower</code> - defines the lower bound of a simple range of IP
+Addresses, inclusive, to which rule should apply.  When this value is
+provided the <code class="inline">ip_host_range_upper</code> parameter must also be provided and the
+<code class="inline">ip_host_or_network</code> parameter value must be nil.</p></li><li><p><code class="inline">ip_host_range_upper</code> - defines the upper bound of a simple range of IP
+Addresses, inclusive, to which rule should apply.  When this value is
+provided the <code class="inline">ip_host_range_lower</code> parameter must also be provided and the
+<code class="inline">ip_host_or_network</code> parameter value must be nil.</p></li></ul></li></ul><p>  Note that either the <code class="inline">ip_host_or_network</code> parameter or the
+  <code class="inline">ip_host_range_lower</code> and <code class="inline">ip_host_range_upper</code> are required and exclusive.</p>
+  </section>
+</section>
+<section class="detail" id="update_instance_network_rule/2">
+
+  <div class="detail-header">
+    <a href="#update_instance_network_rule/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">update_instance_network_rule(instance_network_rule, update_params)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> update_instance_network_rule(
+  <a href="https://hexdocs.pm/ecto/3.9.1/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>() | <a href="MsbmsSystAuthentication.Data.SystInstanceNetworkRules.html#t:t/0">MsbmsSystAuthentication.Data.SystInstanceNetworkRules.t</a>(),
+  <a href="MsbmsSystAuthentication.Types.html#t:instance_network_rule_params/0">MsbmsSystAuthentication.Types.instance_network_rule_params</a>()
+) ::
+  {:ok, <a href="MsbmsSystAuthentication.Data.SystInstanceNetworkRules.html#t:t/0">MsbmsSystAuthentication.Data.SystInstanceNetworkRules.t</a>()}
+  | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>() | <a href="https://hexdocs.pm/elixir/Exception.html#t:t/0">Exception.t</a>()}</pre>
+
+      </div>
+
+<p>Updates an existing Instance Network Rule with new values.</p><p>This function works similar to <a href="#create_instance_network_rule/2"><code class="inline">create_instance_network_rule/2</code></a> but updates an
+existing Instance Network Rule record rather than creating a new one.</p><p>On successful update, a result tuple in the form <code class="inline">{:ok, &lt;record&gt;}</code> is returned
+where the &lt;record&gt; is the fully populated Data struct of the record just
+updated.  If an exception is raised this function will return a failure tuple
+in the form of <code class="inline">{:error, &lt;exception data&gt;}</code>.</p><h2 id="update_instance_network_rule/2-parameters" class="section-heading">
+  <a href="#update_instance_network_rule/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">instance_network_rule</code> - this value is either a fully populated
+<a href="MsbmsSystAuthentication.Data.SystInstanceNetworkRules.html"><code class="inline">MsbmsSystAuthentication.Data.SystInstanceNetworkRules</code></a> struct of an
+existing Instance Network Rule record or the ID of such a record.  If the
+data struct  is provided, Ecto optimistic locking is applied to the update
+operation.</p></li><li><p><code class="inline">update_params</code> - a map representing the values to use when updating the
+Instance Network Rule.  All parameters are optional, with omission meaning
+that the existing value should retain its current value.  The available
+parameter values are:</p><ul><li><p><code class="inline">ordering</code> - the order in which the record should apply relative to
+other Instance Network Rule records.  lower <code class="inline">ordering</code> values take
+precedence over higher <code class="inline">ordering</code> values.  If the <code class="inline">ordering</code> value in the
+parameters matches the <code class="inline">ordering</code> value of an existing Instance Network Rule
+record, the updated record will be treated as an &quot;insert before&quot; record,
+with the existing records being reordered to be after the newly updated
+record, recursively.</p></li><li><p><code class="inline">functional_type</code> - defines what action the rule specifies once matched.
+The possible functional types are <code class="inline">:allow</code> which means the rule intends to
+explicitly allow the associated IP Address(es) to attempt authentication
+or <code class="inline">:deny</code> which explicitly prevents the IP Address(es) from attempting
+an authorization.</p></li><li><p><code class="inline">ip_host_or_network</code> - a single Host IP Address or a single CIDR network
+used in matching user Host IP Addresses to rules.  Note that if this value
+is provided that the <code class="inline">ip_host_range_lower</code> and <code class="inline">ip_host_range_upper</code>
+values must be nil.</p></li><li><p><code class="inline">ip_host_range_lower</code> - defines the lower bound of a simple range of IP
+Addresses, inclusive, to which rule should apply.  When this value is
+provided the <code class="inline">ip_host_range_upper</code> parameter must also be provided and the
+<code class="inline">ip_host_or_network</code> parameter value must be nil.</p></li><li><p><code class="inline">ip_host_range_upper</code> - defines the upper bound of a simple range of IP
+Addresses, inclusive, to which rule should apply.  When this value is
+provided the <code class="inline">ip_host_range_lower</code> parameter must also be provided and the
+<code class="inline">ip_host_or_network</code> parameter value must be nil.</p></li></ul></li></ul><p>  Note that either the <code class="inline">ip_host_or_network</code> parameter or the
+  <code class="inline">ip_host_range_lower</code> and <code class="inline">ip_host_range_upper</code> are required and exclusive.</p>
+  </section>
+</section>
+<section class="detail" id="update_owner_network_rule/2">
+
+  <div class="detail-header">
+    <a href="#update_owner_network_rule/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">update_owner_network_rule(owner_network_rule, update_params)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> update_owner_network_rule(
+  <a href="https://hexdocs.pm/ecto/3.9.1/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>() | <a href="MsbmsSystAuthentication.Data.SystOwnerNetworkRules.html#t:t/0">MsbmsSystAuthentication.Data.SystOwnerNetworkRules.t</a>(),
+  <a href="MsbmsSystAuthentication.Types.html#t:owner_network_rule_params/0">MsbmsSystAuthentication.Types.owner_network_rule_params</a>()
+) ::
+  {:ok, <a href="MsbmsSystAuthentication.Data.SystOwnerNetworkRules.html#t:t/0">MsbmsSystAuthentication.Data.SystOwnerNetworkRules.t</a>()}
+  | {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>() | <a href="https://hexdocs.pm/elixir/Exception.html#t:t/0">Exception.t</a>()}</pre>
+
+      </div>
+
+<p>Updates an existing Owner Network Rule with new values.</p><p>This function works similar to <a href="#create_owner_network_rule/2"><code class="inline">create_owner_network_rule/2</code></a> but updates an
+existing Owner Network Rule record rather than creating a new one.</p><p>On successful update, a result tuple in the form <code class="inline">{:ok, &lt;record&gt;}</code> is returned
+where the &lt;record&gt; is the fully populated Data struct of the record just
+updated.  If an exception is raised this function will return a failure tuple
+in the form of <code class="inline">{:error, &lt;exception data&gt;}</code>.</p><h2 id="update_owner_network_rule/2-parameters" class="section-heading">
+  <a href="#update_owner_network_rule/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">owner_network_rule</code> - this value is either a fully populated
+<a href="MsbmsSystAuthentication.Data.SystOwnerNetworkRules.html"><code class="inline">MsbmsSystAuthentication.Data.SystOwnerNetworkRules</code></a> struct of an existing
+Owner Network Rule record or the ID of such a record.  If the data struct
+is provided, Ecto optimistic locking is applied to the update operation.</p></li><li><p><code class="inline">update_params</code> - a map representing the values to use when updating the
+Owner Network Rule.  All parameters are optional, with omission meaning
+that the existing value should retain its current value.  The available
+parameter values are:</p><ul><li><p><code class="inline">ordering</code> - the order in which the record should apply relative to
+other Owner Network Rule records.  lower <code class="inline">ordering</code> values take
+precedence over higher <code class="inline">ordering</code> values.  If the <code class="inline">ordering</code> value in the
+parameters matches the <code class="inline">ordering</code> value of an existing Owner Network Rule
+record, the updated record will be treated as an &quot;insert before&quot; record,
+with the existing records being reordered to be after the newly updated
+record, recursively.</p></li><li><p><code class="inline">functional_type</code> - defines what action the rule specifies once matched.
+The possible functional types are <code class="inline">:allow</code> which means the rule intends to
+explicitly allow the associated IP Address(es) to attempt authentication
+or <code class="inline">:deny</code> which explicitly prevents the IP Address(es) from attempting
+an authorization.</p></li><li><p><code class="inline">ip_host_or_network</code> - a single Host IP Address or a single CIDR network
+used in matching user Host IP Addresses to rules.  Note that if this value
+is provided that the <code class="inline">ip_host_range_lower</code> and <code class="inline">ip_host_range_upper</code>
+values must be nil.</p></li><li><p><code class="inline">ip_host_range_lower</code> - defines the lower bound of a simple range of IP
+Addresses, inclusive, to which rule should apply.  When this value is
+provided the <code class="inline">ip_host_range_upper</code> parameter must also be provided and the
+<code class="inline">ip_host_or_network</code> parameter value must be nil.</p></li><li><p><code class="inline">ip_host_range_upper</code> - defines the upper bound of a simple range of IP
+Addresses, inclusive, to which rule should apply.  When this value is
+provided the <code class="inline">ip_host_range_lower</code> parameter must also be provided and the
+<code class="inline">ip_host_or_network</code> parameter value must be nil.</p></li></ul></li></ul><p>  Note that either the <code class="inline">ip_host_or_network</code> parameter or the
+  <code class="inline">ip_host_range_lower</code> and <code class="inline">ip_host_range_upper</code> are required and exclusive.</p>
+  </section>
+</section>
+
+    </div>
+  </section>
+
       <footer class="footer">
 
         <p>
           Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.28.5) for the
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.29.0) for the
 
             <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 
