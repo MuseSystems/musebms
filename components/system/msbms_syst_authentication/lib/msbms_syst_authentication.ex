@@ -471,4 +471,1095 @@ defmodule MsbmsSystAuthentication do
   @spec delete_disallowed_password(Types.credential()) ::
           {:ok, :deleted | :not_found} | {:error, MsbmsSystError.t()}
   defdelegate delete_disallowed_password(password), to: Impl.PasswordRules
+
+  @doc section: :network_rule_data
+  @doc """
+  Indicates whether the provided host IP address is to be denied access to the
+  system.
+
+  This function returns a tuple in the form of `{:ok, <disallowed>}` where the
+  `disallowed` value is either `true` meaning that the requested host is
+  disallowed from authenticating with the system or `false` if the host is
+  permitted to attempt an authentication.
+
+  ## Parameters
+
+    * `host_address` - the host IP address to test.  Typically this will be the
+    host address of a user wishing to authenticate with the system.
+
+  ## Examples
+
+    An allowed host will return a `false` result tuple
+
+      iex> import IP, only: [sigil_i: 2]
+      iex> MsbmsSystAuthentication.host_disallowed(~i"10.150.150.10")
+      {:ok, false}
+
+    A disallowed host returns a `true` result tuple
+
+      iex> import IP, only: [sigil_i: 2]
+      iex> MsbmsSystAuthentication.host_disallowed(~i"10.123.123.5")
+      {:ok, true}
+  """
+  @spec host_disallowed(Types.host_address()) :: {:ok, boolean()} | {:error, MsbmsSystError.t()}
+  defdelegate host_disallowed(host_address), to: Impl.NetworkRules
+
+  @doc section: :network_rule_data
+  @doc """
+  Indicates whether the provided host IP address is to be denied access to the
+  system, raising on error.
+
+  This function works the same as `host_disallowed/1` except this function
+  returns its result without wrapping it in a result tuple.  If an error is
+  encountered an exception is raised.
+
+  ## Parameters
+
+    * `host_address` - the host IP address to test.  Typically this will be the
+    host address of a user wishing to authenticate with the system.
+
+  ## Examples
+
+    An allowed host will return a `false` result tuple
+
+      iex> import IP, only: [sigil_i: 2]
+      iex> MsbmsSystAuthentication.host_disallowed?(~i"10.150.150.10")
+      false
+
+    A disallowed host returns a `true` result tuple
+
+      iex> import IP, only: [sigil_i: 2]
+      iex> MsbmsSystAuthentication.host_disallowed?(~i"10.123.123.5")
+      true
+  """
+  @spec host_disallowed?(Types.host_address()) :: boolean()
+  defdelegate host_disallowed?(host_address), to: Impl.NetworkRules
+
+  @doc section: :network_rule_data
+  @doc """
+  Adds a host IP address to the global disallowed hosts list.
+
+  Disallowed hosts are IP addresses which are prevented from authenticating
+  users with the system, and by extension prevents host access to application
+  functions generally.  Hosts are disallowed on a global basis and may be added
+  to the list based on system heuristics which detect suspicious activity.
+
+  Successfully adding a host to the list returns a success tuple and a struct
+  representing the record just created.  Attempting to add a host which is
+  already part of the list will also result in a success tuple, but no record is
+  returned.
+
+  ## Parameters
+
+    * `host_address` - the IP address of the host to disallow.
+
+  ## Examples
+
+    Adding a new host to the list.
+
+      iex> import IP, only: [sigil_i: 2]
+      iex> {:ok, false} = MsbmsSystAuthentication.host_disallowed(~i"10.123.123.20")
+      iex> {:ok, %MsbmsSystAuthentication.Data.SystDisallowedHosts{}} =
+      ...>   MsbmsSystAuthentication.create_disallowed_host(~i"10.123.123.20")
+
+    Attempting to add a host already on the list.
+
+      iex> import IP, only: [sigil_i: 2]
+      iex> {:ok, true} = MsbmsSystAuthentication.host_disallowed(~i"10.123.123.3")
+      iex> {:ok, nil} =
+      ...>   MsbmsSystAuthentication.create_disallowed_host(~i"10.123.123.3")
+  """
+  @spec create_disallowed_host(Types.host_address()) ::
+          {:ok, Data.SystDisallowedHosts.t()} | {:error, MsbmsSystError.t({})}
+  defdelegate create_disallowed_host(host_address), to: Impl.NetworkRules
+
+  @doc section: :network_rule_data
+  @doc """
+  Retrieves a Disallowed Host record from the database as identified by its host
+  address.
+
+  ## Parameters
+
+    * `host_address` - the IP address of the disallowed host record to retrieve.
+
+  ## Example
+
+    Retrieving a Disallowed Host record by IP address.
+
+      iex> import IP, only: [sigil_i: 2]
+      iex> {:ok, %MsbmsSystAuthentication.Data.SystDisallowedHosts{}} =
+      ...>   MsbmsSystAuthentication.get_disallowed_host_record_by_host(~i"10.123.123.4")
+
+    Attempting to retrieve a record for a host not on the list.
+
+      iex> import IP, only: [sigil_i: 2]
+      iex> MsbmsSystAuthentication.get_disallowed_host_record_by_host(~i"10.125.120.20")
+      {:ok, nil}
+  """
+  @spec get_disallowed_host_record_by_host(Types.host_address()) ::
+          {:ok, Data.SystDisallowedHosts.t() | nil} | {:error, MsbmsSystError.t()}
+  defdelegate get_disallowed_host_record_by_host(host_addr), to: Impl.NetworkRules
+
+  @doc section: :network_rule_data
+  @doc """
+  Retrieves a Disallowed Host record from the database as identified by its host
+  address, raising on error.
+
+  This function works the same as `get_disallowed_host_record_by_host/1` except
+  this function returns its result without wrapping it in a result tuple.  If an
+  error is encountered an exception is raised.
+
+  ## Parameters
+
+    * `host_address` - the IP address of the disallowed host record to retrieve.
+
+  ## Example
+
+    Retrieving a Disallowed Host record by IP address.
+
+      iex> import IP, only: [sigil_i: 2]
+      iex> %MsbmsSystAuthentication.Data.SystDisallowedHosts{} =
+      ...>   MsbmsSystAuthentication.get_disallowed_host_record_by_host!(~i"10.123.123.4")
+
+    Attempting to retrieve a record for a host not on the list.
+
+      iex> import IP, only: [sigil_i: 2]
+      iex> MsbmsSystAuthentication.get_disallowed_host_record_by_host!(~i"10.125.120.20")
+      nil
+  """
+  @spec get_disallowed_host_record_by_host!(Types.host_address()) ::
+          Data.SystDisallowedHosts.t() | nil
+  defdelegate get_disallowed_host_record_by_host!(host_addr), to: Impl.NetworkRules
+
+  @doc section: :network_rule_data
+  @doc """
+  Deletes a host IP address from the Disallowed Hosts list as looked up by the
+  host IP address.
+
+  If the record is found and deleted a success tuple in the form `{:ok, :deleted}`
+  is returned.  If the record is not found the success tuple `{:ok, :not_found}`
+  is returned.  Any other condition would cause an error tuple to be returned.
+
+  Once a host is removed from the Disallowed Hosts list, users are allowed to
+  authenticate from the host, so long as no other effective Network Rule
+  prevents the action.
+
+  ## Parameters
+
+    * `host_addr` - the IP address of the host that is no longer to be
+    disallowed.
+
+  ## Examples
+
+    Deleting a host that does exist in the list.
+
+      iex> import IP, only: [sigil_i: 2]
+      iex> {:ok, true} = MsbmsSystAuthentication.host_disallowed(~i"10.10.251.1")
+      iex> {:ok, :deleted} =
+      ...>   MsbmsSystAuthentication.delete_disallowed_host_addr(~i"10.10.251.1")
+      iex> {:ok, false} = MsbmsSystAuthentication.host_disallowed(~i"10.10.251.1")
+
+    Attempting to delete a host not already on the list.
+
+      iex> import IP, only: [sigil_i: 2]
+      iex> {:ok, false} = MsbmsSystAuthentication.host_disallowed(~i"10.10.251.10")
+      iex> {:ok, :not_found} =
+      ...>   MsbmsSystAuthentication.delete_disallowed_host_addr(~i"10.10.251.10")
+  """
+  @spec delete_disallowed_host_addr(Types.host_address()) ::
+          {:ok, :deleted | :not_found} | {:error, MsbmsSystError.t()}
+  defdelegate delete_disallowed_host_addr(host_addr), to: Impl.NetworkRules
+
+  @doc section: :network_rule_data
+  @doc """
+  Retrieves a Disallowed Host record by the record ID.
+
+  This function assumes the record exists.  If the record does not exist an
+  error tuple will be returned.
+
+  ## Parameters
+
+    * `disallowed_host_id` - the record ID of the Disallowed Host record to retrieve.
+
+  ## Example
+
+    Retrieving a Disallowed Host record by record ID.
+
+    ```elixir
+    {:ok, %MsbmsSystAuthentication.Data.SystDisallowedHosts{}} =
+      MsbmsSystAuthentication.get_disallowed_host_record_by_id(
+        "ad7f2030-5895-11ed-a888-0f8a20e745a9")
+    ```
+  """
+  @spec get_disallowed_host_record_by_id(Types.disallowed_host_id()) ::
+          {:ok, Data.SystDisallowedHosts.t()} | {:error, MsbmsSystError.t() | Exception.t()}
+  defdelegate get_disallowed_host_record_by_id(disallowed_host_id), to: Impl.NetworkRules
+
+  @doc section: :network_rule_data
+  @doc """
+  Retrieves a Disallowed Host record by the record ID, raising on error.
+
+  This function works the same as `get_disallowed_host_record_by_id/1` except
+  this function returns its result without wrapping it in a result tuple.  If an
+  error is encountered, including if the record does not exist, an exception is
+  raised.
+
+  ## Parameters
+
+    * `disallowed_host_id` - the record ID of the Disallowed Host record to retrieve.
+
+  ## Example
+
+    Retrieving a Disallowed Host record by record ID.
+
+    ```elixir
+    %MsbmsSystAuthentication.Data.SystDisallowedHosts{} =
+      MsbmsSystAuthentication.get_disallowed_host_record_by_id!(
+        "ad7f2030-5895-11ed-a888-0f8a20e745a9")
+    ```
+  """
+  @spec get_disallowed_host_record_by_id!(Types.disallowed_host_id()) ::
+          Data.SystDisallowedHosts.t()
+  defdelegate get_disallowed_host_record_by_id!(disallowed_host_id), to: Impl.NetworkRules
+
+  @doc section: :network_rule_data
+  @doc """
+  Deletes a host IP address from the Disallowed Hosts list based on either a
+  `MsbmsSystAuthentication.Data.SystDisallowedHosts` record or the ID of such a
+  record.
+
+  If the record is found and deleted a success tuple in the form `{:ok, :deleted}`
+  is returned.  If the record is not found the success tuple `{:ok, :not_found}`
+  is returned.
+
+  Once a host is removed from the Disallowed Hosts list, users are allowed to
+  authenticate from the host, so long as no other effective Network Rule
+  prevents the action.
+
+  ## Parameters
+
+    * `disallowed_host` - either the fully populated
+    `MsbmsSystAuthentication.Data.SystDisallowedHosts` data struct for the
+    record to delete or the ID of the record.  Note that when the data struct
+    is provided Ecto optimistic locking is applied to the the delete operation.
+
+
+  ## Examples
+
+    Deleting a host by record ID.
+
+      iex> import IP, only: [sigil_i: 2]
+      iex> {:ok, target_host_record} =
+      ...>   MsbmsSystAuthentication.get_disallowed_host_record_by_host(~i"10.10.250.4")
+      iex> MsbmsSystAuthentication.delete_disallowed_host(target_host_record.id)
+      {:ok, :deleted}
+
+    Deleting a host by record struct.
+
+      iex> import IP, only: [sigil_i: 2]
+      iex> {:ok, target_host_record} =
+      ...>   MsbmsSystAuthentication.get_disallowed_host_record_by_host(~i"10.10.250.5")
+      iex> MsbmsSystAuthentication.delete_disallowed_host(target_host_record)
+      {:ok, :deleted}
+
+    Deleting a struct for a no longer existent record.
+
+      iex> import IP, only: [sigil_i: 2]
+      iex> {:ok, target_host_record} =
+      ...>   MsbmsSystAuthentication.get_disallowed_host_record_by_host(~i"10.10.250.6")
+      iex> MsbmsSystAuthentication.delete_disallowed_host(target_host_record)
+      {:ok, :deleted}
+      iex> MsbmsSystAuthentication.delete_disallowed_host(target_host_record)
+      {:ok, :not_found}
+  """
+  @spec delete_disallowed_host(Types.disallowed_host_id() | Data.SystDisallowedHosts.t()) ::
+          {:ok, :deleted | :not_found} | {:error, MsbmsSystError.t()}
+  defdelegate delete_disallowed_host(disallowed_host), to: Impl.NetworkRules
+
+  @doc section: :network_rule_data
+  @doc """
+  Returns the Network Rule which should be applied for the given Host IP Address.
+
+  This function compares the provided Host IP Address against the applicable
+  Network Rules which apply to it and return the specific rule which should be
+  applied during the authentication process.
+
+  ## Network Rule Precedence
+
+  The specific rules to check for applicability depends on the other provided
+  parameters.  The available Network Rule sets in order of precedence are:
+
+    1. __Disallowed Hosts__: Globally disallowed hosts are always checked first and
+    no later rule can override the denial.  Only removing the host from the
+    Disallowed Hosts List can reverse this denial.
+
+    2. __Global Network Rules__: These are rules applied to all presented Host IP
+    Addresses.
+
+    3. __Instance Network Rules__: Rules defined by Instance Owners and are the
+    most granular rule level available.  These Network Rules are only evaluated
+    if the `instance_id` parameter is provided.
+
+    4. __Owner Network Rules__: Network Rules which are applicable to all
+    Instances of a given Owner, provided no superseding Instance Network Rule
+    was found.  This rule set is included if either the `instance_id` or
+    `owner_id` parameter is provided.
+
+    5. __Default Network Rule__: When no explicitly defined Network Rule has
+    been found for a host, this rule will apply implicitly.  The current rule
+    grants access from any host.
+
+  ## Return Value
+
+    This function returns a result tuple.  The value element of the result tuple
+    is a map of type `t:MsbmsSystAuthentication.Types.applied_network_rule/0`.
+    The map indicates which precedence group the rule came from, the ID of the
+    Network Rule record if the rule was derived from the various Network Rule
+    data tables, and the Functional Type of the rule: `:allow` meaning the
+    rule explicitly allows the host to attempt an authentication, or `:deny`
+    indicating that the host is not allowed to attempt authentication.
+
+  ## Parameters
+
+    * `host_address` - the Host IP Address which the user wishes to authenticate
+    from.
+
+    * `instance_id` - the record ID of an Instance to which the user wants to
+    gain access.  This parameter is optional, though excluding this parameter
+    will leave the Instance Network Rules might properly apply unevaluated.  If
+    this parameter is provided, the Owner of the Instance is implied and there
+    is no need to also supply the `owner_id` parameter.
+
+    * `owner_id` - the record ID of an Owner which owns the candidate Instances
+    to which the user wishes to authenticate.  This parameter is not required if
+    the `instance_id` parameter has been provided.  Otherwise, this parameter is
+    optional, though if the Owner has not been resolved through this parameter
+    or via the `instance_id`, the Owner Network Rules that might apply to the
+    authentication attempt will not be applied.
+
+  ## Examples
+
+    When the host is a member of the Disallowed Hosts lists.
+
+      iex> import IP, only: [sigil_i: 2]
+      iex> {:ok, %{functional_type: :deny, network_rule_id: id, precedence: :disallowed}} =
+      ...>   MsbmsSystAuthentication.get_applied_network_rule(~i"10.123.123.3")
+      iex> is_binary(id)
+      true
+
+    When the Host IP Address does not match any explicitly defined rule and the
+    implicit rule applies.
+
+      iex> import IP, only: [sigil_i: 2]
+      iex> MsbmsSystAuthentication.get_applied_network_rule(~i"10.124.124.3")
+      {:ok, %{functional_type: :allow, network_rule_id: nil, precedence: :implied}}
+
+    When a Global Network Rule explicitly allows the Host IP Address to attempt
+    authentication.
+
+      iex> import IP, only: [sigil_i: 2]
+      iex> {:ok, %{functional_type: :allow, network_rule_id: id, precedence: :global}} =
+      ...>   MsbmsSystAuthentication.get_applied_network_rule(~i"10.125.125.3")
+      iex> is_binary(id)
+      true
+
+    Note that while the examples did not include Instance or Owner IDs, the
+    examples are none-the-less representative of cases where they are included.
+
+  """
+  @spec get_applied_network_rule(
+          Types.host_address(),
+          MsbmsSystInstanceMgr.Types.instance_id() | nil,
+          MsbmsSystInstanceMgr.Types.owner_id() | nil
+        ) :: {:ok, Types.applied_network_rule()} | {:error, MsbmsSystError.t() | Exception.t()}
+  defdelegate get_applied_network_rule(
+                host_address,
+                instance_id \\ nil,
+                instance_owner_id \\ nil
+              ),
+              to: Impl.NetworkRules
+
+  @doc section: :network_rule_data
+  @doc """
+  Returns the Network Rule which should be applied for the given Host IP
+  Address, raising on error.
+
+  This function works the same as `get_applied_network_rule/3` except this
+  function returns its result without wrapping it in a result tuple.  If an
+  error is encountered an exception is raised.
+
+  ## Parameters
+
+    * `host_address` - the Host IP Address which the user wishes to authenticate
+    from.
+
+    * `instance_id` - the record ID of an Instance to which the user wants to
+    gain access.  This parameter is optional, though excluding this parameter
+    will leave the Instance Network Rules might properly apply unevaluated.  If
+    this parameter is provided, the Owner of the Instance is implied and there
+    is no need to also supply the `owner_id` parameter.
+
+    * `owner_id` - the record ID of an Owner which owns the candidate Instances
+    to which the user wishes to authenticate.  This parameter is not required if
+    the `instance_id` parameter has been provided.  Otherwise, this parameter is
+    optional, though if the Owner has not been resolved through this parameter
+    or via the `instance_id`, the Owner Network Rules that might apply to the
+    authentication attempt will not be applied.
+
+  ## Examples
+
+    When the host is a member of the Disallowed Hosts lists.
+
+      iex> import IP, only: [sigil_i: 2]
+      iex> %{functional_type: :deny, network_rule_id: id, precedence: :disallowed} =
+      ...>   MsbmsSystAuthentication.get_applied_network_rule!(~i"10.123.123.3")
+      iex> is_binary(id)
+      true
+
+    When the Host IP Address does not match any explicitly defined rule and the
+    implicit rule applies.
+
+      iex> import IP, only: [sigil_i: 2]
+      iex> MsbmsSystAuthentication.get_applied_network_rule!(~i"10.124.124.3")
+      %{functional_type: :allow, network_rule_id: nil, precedence: :implied}
+
+    When a Global Network Rule explicitly allows the Host IP Address to attempt
+    authentication.
+
+      iex> import IP, only: [sigil_i: 2]
+      iex> %{functional_type: :allow, network_rule_id: id, precedence: :global} =
+      ...>   MsbmsSystAuthentication.get_applied_network_rule!(~i"10.125.125.3")
+      iex> is_binary(id)
+      true
+
+    Note that while the examples did not include Instance or Owner IDs, the
+    examples are none-the-less representative of cases where they are included.
+  """
+  @spec get_applied_network_rule!(
+          Types.host_address(),
+          MsbmsSystInstanceMgr.Types.instance_id() | nil,
+          MsbmsSystInstanceMgr.Types.owner_id() | nil
+        ) :: Types.applied_network_rule()
+  defdelegate get_applied_network_rule!(
+                host_address,
+                instance_id \\ nil,
+                instance_owner_id \\ nil
+              ),
+              to: Impl.NetworkRules
+
+  @doc section: :network_rule_data
+  @doc """
+  Creates a new Global Network Rule using the provided parameters.
+
+  Global Network Rules are checked prior to all attempted user authentication
+  events and have precedence over Owner and Instance Network Rules, though they
+  are secondary to the Disallowed Hosts list.
+
+  On successful creation, a result tuple in the form `{:ok, <new record>}` is
+  returned where the <new record> is the fully populated Data struct of the
+  record just created.  If an exception is raised this function will return a
+  failure tuple in the form of `{:error, <exception data>}`.
+
+  ## Parameters
+
+    * `insert_params` - a map representing the values to use when creating the
+    new Global Network Rule.  The available parameter values are:
+
+      * `ordering` - the order in which the new record should apply relative to
+      other Global Network Rule records.  lower `ordering` values take
+      precedence over higher `ordering` values.  If the `ordering` value in the
+      parameters matches the `ordering` value of an existing Global Network Rule
+      record, the inserted record will be treated as an "insert before" record,
+      with the existing records being reordered to be after the new record,
+      recursively.  This parameter is required.
+
+      * `functional_type` - defines what action the rule specifies once matched.
+      The possible functional types are `:allow` which means the rule intends to
+      explicitly allow the associated IP Address(es) to attempt authentication
+      or `:deny` which explicitly prevents the IP Address(es) from attempting
+      an authorization.  This parameter is required.
+
+      * `ip_host_or_network` - a single Host IP Address or a single CIDR network
+      used in matching user Host IP Addresses to rules.  Note that if this value
+      is provided that the `ip_host_range_lower` and `ip_host_range_upper`
+      values must be nil or not provided.
+
+      * `ip_host_range_lower` - defines the lower bound of a simple range of IP
+      Addresses, inclusive, to which rule should apply.  When this value is
+      provided the `ip_host_range_upper` parameter must also be provided and the
+      `ip_host_or_network` parameter value must be nil or not provided.
+
+      * `ip_host_range_upper` - defines the upper bound of a simple range of IP
+      Addresses, inclusive, to which rule should apply.  When this value is
+      provided the `ip_host_range_lower` parameter must also be provided and the
+      `ip_host_or_network` parameter value must be nil or not provided.
+
+    Note that either the `ip_host_or_network` parameter or the
+    `ip_host_range_lower` and `ip_host_range_upper` are required and exclusive.
+
+  ## Example
+
+    Adding a new "Allow" Global Network Rule for a CIDR network.
+
+      iex> import IP, only: [sigil_i: 2]
+      iex> new_global_rule = %{
+      ...>   ordering: 20,
+      ...>   functional_type: :allow,
+      ...>   ip_host_or_network: ~i"10.100.150.0/24"
+      ...> }
+      iex> {:ok, %MsbmsSystAuthentication.Data.SystGlobalNetworkRules{}} =
+      ...>   MsbmsSystAuthentication.create_global_network_rule(new_global_rule)
+
+    Adding a new "Deny" Global Network Rule for an IP Address range.
+
+      iex> import IP, only: [sigil_i: 2]
+      iex> new_global_rule = %{
+      ...>   ordering: 21,
+      ...>   functional_type: :deny,
+      ...>   ip_host_or_network: nil,
+      ...>   ip_host_range_lower: ~i"10.100.151.1",
+      ...>   ip_host_range_upper: ~i"10.100.152.254"
+      ...> }
+      iex> {:ok, %MsbmsSystAuthentication.Data.SystGlobalNetworkRules{}} =
+      ...>   MsbmsSystAuthentication.create_global_network_rule(new_global_rule)
+  """
+  @spec create_global_network_rule(Types.global_network_rule_params()) ::
+          {:ok, Data.SystGlobalNetworkRules.t()} | {:error, MsbmsSystError.t()}
+  defdelegate create_global_network_rule(insert_params), to: Impl.NetworkRules
+
+  @doc section: :network_rule_data
+  @doc """
+  Creates a new Owner Network Rule using the provided parameters.
+
+  Owner Network Rules the checked after the Disallowed Hosts list, the Global
+  Network Rules, and the Instance Network Rules and apply to all Instances owned
+  by the specified Owner, unless a higher precedence rule already applies to the
+  host.
+
+  On successful creation, a result tuple in the form `{:ok, <new record>}` is
+  returned where the <new record> is the fully populated Data struct of the
+  record just created.  If an exception is raised this function will return a
+  failure tuple in the form of `{:error, <exception data>}`.
+
+  ## Parameters
+
+    * `owner_id` - the record ID of the Owner for whom the Owner Network Rule is
+    being created.
+
+    * `insert_params` - a map representing the values to use when creating the
+    new Owner Network Rule.  The available parameter values are:
+
+      * `ordering` - the order in which the new record should apply relative to
+      other Owner Network Rule records.  lower `ordering` values take
+      precedence over higher `ordering` values.  If the `ordering` value in the
+      parameters matches the `ordering` value of an existing Owner Network Rule
+      record, the inserted record will be treated as an "insert before" record,
+      with the existing records being reordered to be after the new record,
+      recursively.  This parameter is required.
+
+      * `functional_type` - defines what action the rule specifies once matched.
+      The possible functional types are `:allow` which means the rule intends to
+      explicitly allow the associated IP Address(es) to attempt authentication
+      or `:deny` which explicitly prevents the IP Address(es) from attempting
+      an authorization.  This parameter is required.
+
+      * `ip_host_or_network` - a single Host IP Address or a single CIDR network
+      used in matching user Host IP Addresses to rules.  Note that if this value
+      is provided that the `ip_host_range_lower` and `ip_host_range_upper`
+      values must be nil or not provided.
+
+      * `ip_host_range_lower` - defines the lower bound of a simple range of IP
+      Addresses, inclusive, to which rule should apply.  When this value is
+      provided the `ip_host_range_upper` parameter must also be provided and the
+      `ip_host_or_network` parameter value must be nil or not provided.
+
+      * `ip_host_range_upper` - defines the upper bound of a simple range of IP
+      Addresses, inclusive, to which rule should apply.  When this value is
+      provided the `ip_host_range_lower` parameter must also be provided and the
+      `ip_host_or_network` parameter value must be nil or not provided.
+
+    Note that either the `ip_host_or_network` parameter or the
+    `ip_host_range_lower` and `ip_host_range_upper` are required and exclusive.
+
+  ## Example
+
+    Adding a new "Allow" Owner Network Rule for a CIDR network.
+
+      iex> import IP, only: [sigil_i: 2]
+      iex> {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner8")
+      iex> new_owner_rule = %{
+      ...>   ordering: 1,
+      ...>   functional_type: :allow,
+      ...>   ip_host_or_network: ~i"10.100.160.0/24"
+      ...> }
+      iex> {:ok, %MsbmsSystAuthentication.Data.SystOwnerNetworkRules{}} =
+      ...>   MsbmsSystAuthentication.create_owner_network_rule(owner_id, new_owner_rule)
+
+    Adding a new "Deny" Owner Network Rule for an IP Address range.
+
+      iex> import IP, only: [sigil_i: 2]
+      iex> {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner8")
+      iex> new_owner_rule = %{
+      ...>   ordering: 2,
+      ...>   functional_type: :deny,
+      ...>   ip_host_or_network: nil,
+      ...>   ip_host_range_lower: ~i"10.100.161.1",
+      ...>   ip_host_range_upper: ~i"10.100.162.254"
+      ...> }
+      iex> {:ok, %MsbmsSystAuthentication.Data.SystOwnerNetworkRules{}} =
+      ...>   MsbmsSystAuthentication.create_owner_network_rule(owner_id, new_owner_rule)
+  """
+  @spec create_owner_network_rule(
+          MsbmsSystInstanceMgr.Types.owner_id(),
+          Types.owner_network_rule_params()
+        ) ::
+          {:ok, Data.SystOwnerNetworkRules.t()} | {:error, MsbmsSystError.t()}
+  defdelegate create_owner_network_rule(owner_id, insert_params), to: Impl.NetworkRules
+
+  @doc section: :network_rule_data
+  @doc """
+  Creates a new Instance Network Rule using the provided parameters.
+
+  Instance Network Rules the checked after the Disallowed Hosts list, the Global
+  Network Rules, and the Instance Network Rules and apply to all Instances owned
+  by the specified Instance, unless a higher precedence rule already applies to the
+  host.
+
+  On successful creation, a result tuple in the form `{:ok, <new record>}` is
+  returned where the <new record> is the fully populated Data struct of the
+  record just created.  If an exception is raised this function will return a
+  failure tuple in the form of `{:error, <exception data>}`.
+
+  ## Parameters
+
+    * `instance_id` - the record ID of the Instance for whom the Instance Network Rule is
+    being created.
+
+    * `insert_params` - a map representing the values to use when creating the
+    new Instance Network Rule.  The available parameter values are:
+
+      * `ordering` - the order in which the new record should apply relative to
+      other Instance Network Rule records.  lower `ordering` values take
+      precedence over higher `ordering` values.  If the `ordering` value in the
+      parameters matches the `ordering` value of an existing Instance Network Rule
+      record, the inserted record will be treated as an "insert before" record,
+      with the existing records being reordered to be after the new record,
+      recursively.  This parameter is required.
+
+      * `functional_type` - defines what action the rule specifies once matched.
+      The possible functional types are `:allow` which means the rule intends to
+      explicitly allow the associated IP Address(es) to attempt authentication
+      or `:deny` which explicitly prevents the IP Address(es) from attempting
+      an authorization.  This parameter is required.
+
+      * `ip_host_or_network` - a single Host IP Address or a single CIDR network
+      used in matching user Host IP Addresses to rules.  Note that if this value
+      is provided that the `ip_host_range_lower` and `ip_host_range_upper`
+      values must be nil or not provided.
+
+      * `ip_host_range_lower` - defines the lower bound of a simple range of IP
+      Addresses, inclusive, to which rule should apply.  When this value is
+      provided the `ip_host_range_upper` parameter must also be provided and the
+      `ip_host_or_network` parameter value must be nil or not provided.
+
+      * `ip_host_range_upper` - defines the upper bound of a simple range of IP
+      Addresses, inclusive, to which rule should apply.  When this value is
+      provided the `ip_host_range_lower` parameter must also be provided and the
+      `ip_host_or_network` parameter value must be nil or not provided.
+
+    Note that either the `ip_host_or_network` parameter or the
+    `ip_host_range_lower` and `ip_host_range_upper` are required and exclusive.
+
+  ## Example
+
+    Adding a new "Allow" Instance Network Rule for a CIDR network.
+
+      iex> import IP, only: [sigil_i: 2]
+      iex> {:ok, instance_id} =
+      ...>   MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner8_instance_types_std")
+      iex> new_instance_rule = %{
+      ...>   ordering: 1,
+      ...>   functional_type: :allow,
+      ...>   ip_host_or_network: ~i"10.100.170.0/24"
+      ...> }
+      iex> {:ok, %MsbmsSystAuthentication.Data.SystInstanceNetworkRules{}} =
+      ...>   MsbmsSystAuthentication.create_instance_network_rule(instance_id, new_instance_rule)
+
+    Adding a new "Deny" Instance Network Rule for an IP Address range.
+
+      iex> import IP, only: [sigil_i: 2]
+      iex> {:ok, instance_id} =
+      ...>   MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner8_instance_types_std")
+      iex> new_instance_rule = %{
+      ...>   ordering: 2,
+      ...>   functional_type: :deny,
+      ...>   ip_host_or_network: nil,
+      ...>   ip_host_range_lower: ~i"10.100.171.1",
+      ...>   ip_host_range_upper: ~i"10.100.172.254"
+      ...> }
+      iex> {:ok, %MsbmsSystAuthentication.Data.SystInstanceNetworkRules{}} =
+      ...>   MsbmsSystAuthentication.create_instance_network_rule(instance_id, new_instance_rule)
+  """
+  @spec create_instance_network_rule(
+          MsbmsSystInstanceMgr.Types.instance_id(),
+          Types.instance_network_rule_params()
+        ) ::
+          {:ok, Data.SystInstanceNetworkRules.t()} | {:error, MsbmsSystError.t()}
+  defdelegate create_instance_network_rule(instance_id, insert_params), to: Impl.NetworkRules
+
+  @doc section: :network_rule_data
+  @doc """
+  Updates an existing Global Network Rule with new values.
+
+  This function works similar to `create_global_network_rule/1` but updates an
+  existing Global Network Rule record rather than creating a new one.
+
+  On successful update, a result tuple in the form `{:ok, <record>}` is returned
+  where the <record> is the fully populated Data struct of the record just
+  updated.  If an exception is raised this function will return a failure tuple
+  in the form of `{:error, <exception data>}`.
+
+  ## Parameters
+
+    * `global_network_rule` - this value is either a fully populated
+    `MsbmsSystAuthentication.Data.SystGlobalNetworkRules` struct of an existing
+    Global Network Rule record or the ID of such a record.  If the data struct
+    is provided, Ecto optimistic locking is applied to the update operation.
+
+    * `update_params` - a map representing the values to use when updating the
+    Global Network Rule.  All parameters are optional, with omission meaning
+    that the existing value should retain its current value.  The available
+    parameter values are:
+
+      * `ordering` - the order in which the record should apply relative to
+      other Global Network Rule records.  lower `ordering` values take
+      precedence over higher `ordering` values.  If the `ordering` value in the
+      parameters matches the `ordering` value of an existing Global Network Rule
+      record, the updated record will be treated as an "insert before" record,
+      with the existing records being reordered to be after the newly updated
+      record, recursively.
+
+      * `functional_type` - defines what action the rule specifies once matched.
+      The possible functional types are `:allow` which means the rule intends to
+      explicitly allow the associated IP Address(es) to attempt authentication
+      or `:deny` which explicitly prevents the IP Address(es) from attempting
+      an authorization.
+
+      * `ip_host_or_network` - a single Host IP Address or a single CIDR network
+      used in matching user Host IP Addresses to rules.  Note that if this value
+      is provided that the `ip_host_range_lower` and `ip_host_range_upper`
+      values must be nil.
+
+      * `ip_host_range_lower` - defines the lower bound of a simple range of IP
+      Addresses, inclusive, to which rule should apply.  When this value is
+      provided the `ip_host_range_upper` parameter must also be provided and the
+      `ip_host_or_network` parameter value must be nil.
+
+      * `ip_host_range_upper` - defines the upper bound of a simple range of IP
+      Addresses, inclusive, to which rule should apply.  When this value is
+      provided the `ip_host_range_lower` parameter must also be provided and the
+      `ip_host_or_network` parameter value must be nil.
+
+    Note that either the `ip_host_or_network` parameter or the
+    `ip_host_range_lower` and `ip_host_range_upper` are required and exclusive.
+
+  """
+  @spec update_global_network_rule(
+          Ecto.UUID.t() | Data.SystGlobalNetworkRules.t(),
+          Types.global_network_rule_params()
+        ) :: {:ok, Data.SystGlobalNetworkRules.t()} | {:error, MsbmsSystError.t() | Exception.t()}
+  defdelegate update_global_network_rule(global_network_rule, update_params),
+    to: Impl.NetworkRules
+
+  @doc section: :network_rule_data
+  @doc """
+  Updates an existing Owner Network Rule with new values.
+
+  This function works similar to `create_owner_network_rule/2` but updates an
+  existing Owner Network Rule record rather than creating a new one.
+
+  On successful update, a result tuple in the form `{:ok, <record>}` is returned
+  where the <record> is the fully populated Data struct of the record just
+  updated.  If an exception is raised this function will return a failure tuple
+  in the form of `{:error, <exception data>}`.
+
+  ## Parameters
+
+    * `owner_network_rule` - this value is either a fully populated
+    `MsbmsSystAuthentication.Data.SystOwnerNetworkRules` struct of an existing
+    Owner Network Rule record or the ID of such a record.  If the data struct
+    is provided, Ecto optimistic locking is applied to the update operation.
+
+    * `update_params` - a map representing the values to use when updating the
+    Owner Network Rule.  All parameters are optional, with omission meaning
+    that the existing value should retain its current value.  The available
+    parameter values are:
+
+      * `ordering` - the order in which the record should apply relative to
+      other Owner Network Rule records.  lower `ordering` values take
+      precedence over higher `ordering` values.  If the `ordering` value in the
+      parameters matches the `ordering` value of an existing Owner Network Rule
+      record, the updated record will be treated as an "insert before" record,
+      with the existing records being reordered to be after the newly updated
+      record, recursively.
+
+      * `functional_type` - defines what action the rule specifies once matched.
+      The possible functional types are `:allow` which means the rule intends to
+      explicitly allow the associated IP Address(es) to attempt authentication
+      or `:deny` which explicitly prevents the IP Address(es) from attempting
+      an authorization.
+
+      * `ip_host_or_network` - a single Host IP Address or a single CIDR network
+      used in matching user Host IP Addresses to rules.  Note that if this value
+      is provided that the `ip_host_range_lower` and `ip_host_range_upper`
+      values must be nil.
+
+      * `ip_host_range_lower` - defines the lower bound of a simple range of IP
+      Addresses, inclusive, to which rule should apply.  When this value is
+      provided the `ip_host_range_upper` parameter must also be provided and the
+      `ip_host_or_network` parameter value must be nil.
+
+      * `ip_host_range_upper` - defines the upper bound of a simple range of IP
+      Addresses, inclusive, to which rule should apply.  When this value is
+      provided the `ip_host_range_lower` parameter must also be provided and the
+      `ip_host_or_network` parameter value must be nil.
+
+    Note that either the `ip_host_or_network` parameter or the
+    `ip_host_range_lower` and `ip_host_range_upper` are required and exclusive.
+  """
+  @spec update_owner_network_rule(
+          Ecto.UUID.t() | Data.SystOwnerNetworkRules.t(),
+          Types.owner_network_rule_params()
+        ) :: {:ok, Data.SystOwnerNetworkRules.t()} | {:error, MsbmsSystError.t() | Exception.t()}
+  defdelegate update_owner_network_rule(owner_network_rule, update_params), to: Impl.NetworkRules
+
+  @doc section: :network_rule_data
+  @doc """
+  Updates an existing Instance Network Rule with new values.
+
+  This function works similar to `create_instance_network_rule/2` but updates an
+  existing Instance Network Rule record rather than creating a new one.
+
+  On successful update, a result tuple in the form `{:ok, <record>}` is returned
+  where the <record> is the fully populated Data struct of the record just
+  updated.  If an exception is raised this function will return a failure tuple
+  in the form of `{:error, <exception data>}`.
+
+  ## Parameters
+
+    * `instance_network_rule` - this value is either a fully populated
+    `MsbmsSystAuthentication.Data.SystInstanceNetworkRules` struct of an
+    existing Instance Network Rule record or the ID of such a record.  If the
+    data struct  is provided, Ecto optimistic locking is applied to the update
+    operation.
+
+    * `update_params` - a map representing the values to use when updating the
+    Instance Network Rule.  All parameters are optional, with omission meaning
+    that the existing value should retain its current value.  The available
+    parameter values are:
+
+      * `ordering` - the order in which the record should apply relative to
+      other Instance Network Rule records.  lower `ordering` values take
+      precedence over higher `ordering` values.  If the `ordering` value in the
+      parameters matches the `ordering` value of an existing Instance Network Rule
+      record, the updated record will be treated as an "insert before" record,
+      with the existing records being reordered to be after the newly updated
+      record, recursively.
+
+      * `functional_type` - defines what action the rule specifies once matched.
+      The possible functional types are `:allow` which means the rule intends to
+      explicitly allow the associated IP Address(es) to attempt authentication
+      or `:deny` which explicitly prevents the IP Address(es) from attempting
+      an authorization.
+
+      * `ip_host_or_network` - a single Host IP Address or a single CIDR network
+      used in matching user Host IP Addresses to rules.  Note that if this value
+      is provided that the `ip_host_range_lower` and `ip_host_range_upper`
+      values must be nil.
+
+      * `ip_host_range_lower` - defines the lower bound of a simple range of IP
+      Addresses, inclusive, to which rule should apply.  When this value is
+      provided the `ip_host_range_upper` parameter must also be provided and the
+      `ip_host_or_network` parameter value must be nil.
+
+      * `ip_host_range_upper` - defines the upper bound of a simple range of IP
+      Addresses, inclusive, to which rule should apply.  When this value is
+      provided the `ip_host_range_lower` parameter must also be provided and the
+      `ip_host_or_network` parameter value must be nil.
+
+    Note that either the `ip_host_or_network` parameter or the
+    `ip_host_range_lower` and `ip_host_range_upper` are required and exclusive.
+  """
+  @spec update_instance_network_rule(
+          Ecto.UUID.t() | Data.SystInstanceNetworkRules.t(),
+          Types.instance_network_rule_params()
+        ) ::
+          {:ok, Data.SystInstanceNetworkRules.t()} | {:error, MsbmsSystError.t() | Exception.t()}
+  defdelegate update_instance_network_rule(instance_network_rule, update_params),
+    to: Impl.NetworkRules
+
+  @doc section: :network_rule_data
+  @doc """
+  Retrieves a Global Network Rule record based on its record ID.
+
+  For a given Global Network Rule record ID this function will return a result
+  tuple in the form of `{:ok, <record>}` where `<record>` is the fully
+  populated `MsbmsSystAuthentication.Data.SystGlobalNetworkRules`.  If the
+  record does not exist, then `{:ok, :not_found}` is returned.  Otherwise, an
+  error tuple in the form of `{:error, <exception>}` is returned.
+
+  ## Parameters
+
+  * `global_network_rule_id` - the record ID of the desired Global Network Rule
+  record.
+  """
+  @spec get_global_network_rule(Ecto.UUID.t()) ::
+          {:ok, Data.SystGlobalNetworkRules.t()}
+          | {:ok, :not_found}
+          | {:error, MsbmsSystError.t() | Exception.t()}
+  defdelegate get_global_network_rule(global_network_rule_id), to: Impl.NetworkRules
+  @doc section: :network_rule_data
+  @doc """
+  Retrieves a Global Network Rule record based on its record ID, raising on
+  error.
+
+  This function works the same as `get_global_network_rule/1` except this
+  function returns its result without wrapping it in a result tuple.  If an
+  error is encountered, including if the record does not exist, an exception is
+  raised.
+
+  ## Parameters
+
+  * `global_network_rule_id` - the record ID of the desired Global Network Rule
+  record.
+  """
+  @spec get_global_network_rule!(Ecto.UUID.t()) :: Data.SystGlobalNetworkRules.t() | :not_found
+  defdelegate get_global_network_rule!(global_network_rule_id), to: Impl.NetworkRules
+
+  @doc section: :network_rule_data
+  @doc """
+  Retrieves a Owner Network Rule record based on its record ID.
+
+  For a given Owner Network Rule record ID this function will return a result
+  tuple in the form of `{:ok, <record>}` where `<record>` is the fully
+  populated `MsbmsSystAuthentication.Data.SystOwnerNetworkRules`.  If the
+  record does not exist, then `{:ok, :not_found}` is returned.  Otherwise, an
+  error tuple in the form of `{:error, <exception>}` is returned.
+
+  ## Parameters
+
+  * `owner_network_rule_id` - the record ID of the desired Owner Network Rule
+  record.
+  """
+  @spec get_owner_network_rule(Ecto.UUID.t()) ::
+          {:ok, Data.SystOwnerNetworkRules.t()}
+          | {:ok, :not_found}
+          | {:error, MsbmsSystError.t() | Exception.t()}
+  defdelegate get_owner_network_rule(owner_network_rule_id), to: Impl.NetworkRules
+  @doc section: :network_rule_data
+  @doc """
+  Retrieves a Owner Network Rule record based on its record ID, raising on
+  error.
+
+  This function works the same as `get_owner_network_rule/1` except this
+  function returns its result without wrapping it in a result tuple.  If an
+  error is encountered, including if the record does not exist, an exception is
+  raised.
+
+  ## Parameters
+
+  * `owner_network_rule_id` - the record ID of the desired Owner Network Rule
+  record.
+  """
+  @spec get_owner_network_rule!(Ecto.UUID.t()) :: Data.SystOwnerNetworkRules.t() | :not_found
+  defdelegate get_owner_network_rule!(owner_network_rule_id), to: Impl.NetworkRules
+
+  @doc section: :network_rule_data
+  @doc """
+  Retrieves a Instance Network Rule record based on its record ID.
+
+  For a given Instance Network Rule record ID this function will return a result
+  tuple in the form of `{:ok, <record>}` where `<record>` is the fully
+  populated `MsbmsSystAuthentication.Data.SystInstanceNetworkRules`.  If the
+  record does not exist, then `{:ok, :not_found}` is returned.  Otherwise, an
+  error tuple in the form of `{:error, <exception>}` is returned.
+
+  ## Parameters
+
+  * `instance_network_rule_id` - the record ID of the desired Instance Network
+  Rule record.
+  """
+  @spec get_instance_network_rule(Ecto.UUID.t()) ::
+          {:ok, Data.SystInstanceNetworkRules.t()}
+          | {:ok, :not_found}
+          | {:error, MsbmsSystError.t() | Exception.t()}
+  defdelegate get_instance_network_rule(instance_network_rule_id), to: Impl.NetworkRules
+
+  @doc section: :network_rule_data
+  @doc """
+  Retrieves a Instance Network Rule record based on its record ID, raising on
+  error.
+
+  This function works the same as `get_instance_network_rule/1` except this
+  function returns its result without wrapping it in a result tuple.  If an
+  error is encountered, including if the record does not exist, an exception is
+  raised.
+
+  ## Parameters
+
+  * `instance_network_rule_id` - the record ID of the desired Instance Network
+  Rule record.
+  """
+  @spec get_instance_network_rule!(Ecto.UUID.t()) ::
+          Data.SystInstanceNetworkRules.t() | :not_found
+  defdelegate get_instance_network_rule!(instance_network_rule_id), to: Impl.NetworkRules
+
+  @doc section: :network_rule_data
+  @doc """
+  Deletes an existing Global Network Rule record as referenced by the record ID.
+
+  On successful deletion, a simple result of `:ok` is returned.  On error, an
+  error tuple in the form of `{:error, <exception>}` is returned.
+
+  ## Parameters
+
+    * `global_network_rule_id` - The record ID of the Global Network Rule record
+    to delete.
+  """
+  @spec delete_global_network_rule(Ecto.UUID.t()) ::
+          :ok | {:error, MsbmsSystError.t() | Exception.t()}
+  defdelegate delete_global_network_rule(global_network_rule_id), to: Impl.NetworkRules
+
+  @doc section: :network_rule_data
+  @doc """
+  Deletes an existing Owner Network Rule record as referenced by the record ID.
+
+  On successful deletion, a simple result of `:ok` is returned.  On error, an
+  error tuple in the form of `{:error, <exception>}` is returned.
+
+  ## Parameters
+
+    * `owner_network_rule_id` - The record ID of the Owner Network Rule record
+    to delete.
+  """
+  @spec delete_owner_network_rule(Ecto.UUID.t()) ::
+          :ok | {:error, MsbmsSystError.t() | Exception.t()}
+  defdelegate delete_owner_network_rule(owner_network_rule_id), to: Impl.NetworkRules
+
+  @doc section: :network_rule_data
+  @doc """
+  Deletes an existing Instance Network Rule record as referenced by the record
+  ID.
+
+  On successful deletion, a simple result of `:ok` is returned.  On error, an
+  error tuple in the form of `{:error, <exception>}` is returned.
+
+  ## Parameters
+
+    * `instance_network_rule_id` - The record ID of the Instance Network Rule
+    record to delete.
+  """
+  @spec delete_instance_network_rule(Ecto.UUID.t()) ::
+          :ok | {:error, MsbmsSystError.t() | Exception.t()}
+  defdelegate delete_instance_network_rule(instance_network_rule_id), to: Impl.NetworkRules
 end

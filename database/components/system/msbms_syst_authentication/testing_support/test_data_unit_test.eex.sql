@@ -40,14 +40,30 @@ $AUTHENTICATION_TESTING_INIT$
             "DeleteDisallowed!Test#02",
             "DeleteDisallowed!Test#02a",
             "Is Disallowed",
-            "No Longer Disallowed"
+            "No Longer Disallowed",
+            "Also No Longer Disallowed"
           ],
           "disallowed_hosts": [
             "10.123.123.1",
             "10.123.123.2",
             "10.123.123.3",
             "10.123.123.4",
-            "10.123.123.5"
+            "10.123.123.5",
+            "10.10.250.1",
+            "10.10.250.2",
+            "10.10.250.3",
+            "10.10.250.4",
+            "10.10.250.5",
+            "10.10.250.6",
+            "10.10.254.1",
+            "10.10.254.2",
+            "10.10.254.3",
+            "10.10.254.4",
+            "10.10.254.5",
+            "10.10.254.6",
+            "10.10.251.1",
+            "10.10.251.2",
+            "10.10.251.3"
           ],
           "owner_password_rules": [
             {
