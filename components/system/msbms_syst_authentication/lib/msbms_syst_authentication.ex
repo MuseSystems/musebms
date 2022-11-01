@@ -415,6 +415,35 @@ defmodule MsbmsSystAuthentication do
 
   @doc section: :password_rule_data
   @doc """
+  Indicates whether the requested password is disallowed, raising on error.
+
+  This function works the same as `disallowed_password/1` except this function
+  returns a simple `boolean` value rather than a result tuple.  If an error is
+  encountered an exception is raised.
+
+  ## Parameters
+
+    * `password` - the plaintext password to test for disallowed status.
+
+  ## Examples
+
+    When a password has been previously disallowed and cannot be used as a
+    user credential.
+
+      iex> MsbmsSystAuthentication.password_disallowed?("Is Disallowed")
+      true
+
+    When a password has not been previously disallowed.
+
+      iex> MsbmsSystAuthentication.password_disallowed?("Is Not Disallowed")
+      false
+
+  """
+  @spec password_disallowed?(Types.credential()) :: boolean()
+  defdelegate password_disallowed?(password), to: Impl.PasswordRules
+
+  @doc section: :password_rule_data
+  @doc """
   Removes a password from the disallowed passwords list.
 
   On success, this function will return a success tuple indicating if the
