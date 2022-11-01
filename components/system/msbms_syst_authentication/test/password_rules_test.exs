@@ -227,7 +227,7 @@ defmodule PasswordRulesTest do
     }
 
     assert {:ok, new_pwd_rules} =
-             Impl.PasswordRules.create_password_rules(owner_id, insert_params)
+             Impl.PasswordRules.create_owner_password_rules(owner_id, insert_params)
 
     assert :eq = DbTypes.compare(insert_params.password_length, new_pwd_rules.password_length)
     assert :eq = DbTypes.compare(insert_params.max_age, new_pwd_rules.max_age)
@@ -271,7 +271,8 @@ defmodule PasswordRulesTest do
       allowed_mfa_types: ["credential_types_secondary_totp"]
     }
 
-    assert new_pwd_rules = Impl.PasswordRules.create_password_rules!(owner_id, insert_params)
+    assert new_pwd_rules =
+             Impl.PasswordRules.create_owner_password_rules!(owner_id, insert_params)
 
     assert :eq = DbTypes.compare(insert_params.password_length, new_pwd_rules.password_length)
     assert :eq = DbTypes.compare(insert_params.max_age, new_pwd_rules.max_age)
@@ -298,7 +299,7 @@ defmodule PasswordRulesTest do
     {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner1")
 
     assert {:ok, %Data.SystOwnerPasswordRules{id: rule_id, owner_id: rule_owner_id}} =
-             Impl.PasswordRules.get_password_rules(owner_id)
+             Impl.PasswordRules.get_owner_password_rules(owner_id)
 
     assert owner_id == rule_owner_id
     assert is_binary(rule_id)
@@ -307,7 +308,7 @@ defmodule PasswordRulesTest do
   test "Can update Owner Password Rules / Success Tuple" do
     {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner2")
 
-    {:ok, original_pwd_rules} = Impl.PasswordRules.get_password_rules(owner_id)
+    {:ok, original_pwd_rules} = Impl.PasswordRules.get_owner_password_rules(owner_id)
 
     update_params = %{
       password_length: %DbTypes.IntegerRange{
@@ -340,8 +341,11 @@ defmodule PasswordRulesTest do
       allowed_mfa_types: original_pwd_rules.allowed_mfa_types
     }
 
-    {:ok, updated_pwd_rules} = Impl.PasswordRules.update_password_rules(owner_id, update_params)
-    {:ok, revert_pwd_rules} = Impl.PasswordRules.update_password_rules(owner_id, revert_params)
+    {:ok, updated_pwd_rules} =
+      Impl.PasswordRules.update_owner_password_rules(owner_id, update_params)
+
+    {:ok, revert_pwd_rules} =
+      Impl.PasswordRules.update_owner_password_rules(owner_id, revert_params)
 
     assert :eq = DbTypes.compare(update_params.password_length, updated_pwd_rules.password_length)
     assert :eq = DbTypes.compare(update_params.max_age, updated_pwd_rules.max_age)
@@ -377,7 +381,7 @@ defmodule PasswordRulesTest do
   test "Can update Owner Password Rules / Raise on Error" do
     {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner2")
 
-    {:ok, original_pwd_rules} = Impl.PasswordRules.get_password_rules(owner_id)
+    {:ok, original_pwd_rules} = Impl.PasswordRules.get_owner_password_rules(owner_id)
 
     update_params = %{
       password_length: %DbTypes.IntegerRange{
@@ -410,8 +414,8 @@ defmodule PasswordRulesTest do
       allowed_mfa_types: original_pwd_rules.allowed_mfa_types
     }
 
-    updated_pwd_rules = Impl.PasswordRules.update_password_rules!(owner_id, update_params)
-    revert_pwd_rules = Impl.PasswordRules.update_password_rules!(owner_id, revert_params)
+    updated_pwd_rules = Impl.PasswordRules.update_owner_password_rules!(owner_id, update_params)
+    revert_pwd_rules = Impl.PasswordRules.update_owner_password_rules!(owner_id, revert_params)
 
     assert :eq = DbTypes.compare(update_params.password_length, updated_pwd_rules.password_length)
     assert :eq = DbTypes.compare(update_params.max_age, updated_pwd_rules.max_age)
@@ -449,13 +453,13 @@ defmodule PasswordRulesTest do
 
     assert :ok = Impl.PasswordRules.delete_password_rules(owner_id)
 
-    assert :not_found = Impl.PasswordRules.get_password_rules!(owner_id)
+    assert :not_found = Impl.PasswordRules.get_owner_password_rules!(owner_id)
 
     {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner5")
 
     assert :ok = Impl.PasswordRules.delete_password_rules!(owner_id)
 
-    assert :not_found = Impl.PasswordRules.get_password_rules!(owner_id)
+    assert :not_found = Impl.PasswordRules.get_owner_password_rules!(owner_id)
   end
 
   test "Can get Access Account effective Password Rules / Success Tuple" do

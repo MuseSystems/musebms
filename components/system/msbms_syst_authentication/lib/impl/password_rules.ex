@@ -111,20 +111,23 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
         cause: error
   end
 
-  @spec create_password_rules(MsbmsSystInstanceMgr.Types.owner_id(), Types.password_rule_params()) ::
+  @spec create_owner_password_rules(
+          MsbmsSystInstanceMgr.Types.owner_id(),
+          Types.password_rule_params()
+        ) ::
           {:ok, Data.SystOwnerPasswordRules.t()} | {:error, MsbmsSystError.t() | Exception.t()}
-  def create_password_rules(owner_id, insert_params) when is_binary(owner_id) do
-    {:ok, create_password_rules!(owner_id, insert_params)}
+  def create_owner_password_rules(owner_id, insert_params) when is_binary(owner_id) do
+    {:ok, create_owner_password_rules!(owner_id, insert_params)}
   rescue
     error -> {:error, error}
   end
 
-  @spec create_password_rules!(
+  @spec create_owner_password_rules!(
           MsbmsSystInstanceMgr.Types.owner_id(),
           Types.password_rule_params()
         ) ::
           Data.SystOwnerPasswordRules.t()
-  def create_password_rules!(owner_id, insert_params) when is_binary(owner_id) do
+  def create_owner_password_rules!(owner_id, insert_params) when is_binary(owner_id) do
     default_rules = get_global_password_rules!() |> Map.from_struct()
 
     insert_params
@@ -195,23 +198,23 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
         cause: error
   end
 
-  @spec update_password_rules(
+  @spec update_owner_password_rules(
           MsbmsSystInstanceMgr.Types.owner_id(),
           Types.password_rule_params()
         ) ::
           {:ok, Data.SystOwnerPasswordRules.t()} | {:error, MsbmsSystError.t() | Exception.t()}
-  def update_password_rules(owner_id, update_params) do
-    {:ok, update_password_rules!(owner_id, update_params)}
+  def update_owner_password_rules(owner_id, update_params) do
+    {:ok, update_owner_password_rules!(owner_id, update_params)}
   rescue
     error -> {:error, error}
   end
 
-  @spec update_password_rules!(
+  @spec update_owner_password_rules!(
           MsbmsSystInstanceMgr.Types.owner_id(),
           Types.password_rule_params()
         ) ::
           Data.SystOwnerPasswordRules.t()
-  def update_password_rules!(owner_id, update_params) do
+  def update_owner_password_rules!(owner_id, update_params) do
     from(opwr in Data.SystOwnerPasswordRules, where: opwr.owner_id == ^owner_id)
     |> MsbmsSystDatastore.one!()
     |> Data.SystOwnerPasswordRules.update_changeset(update_params)
@@ -250,19 +253,19 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
         cause: error
   end
 
-  @spec get_password_rules(MsbmsSystInstanceMgr.Types.owner_id()) ::
+  @spec get_owner_password_rules(MsbmsSystInstanceMgr.Types.owner_id()) ::
           {:ok, Data.SystOwnerPasswordRules.t()}
           | {:ok, :not_found}
           | {:error, MsbmsSystError.t() | Exception.t()}
-  def get_password_rules(owner_id) do
-    {:ok, get_password_rules!(owner_id)}
+  def get_owner_password_rules(owner_id) do
+    {:ok, get_owner_password_rules!(owner_id)}
   rescue
     error -> {:error, error}
   end
 
-  @spec get_password_rules!(MsbmsSystInstanceMgr.Types.owner_id()) ::
+  @spec get_owner_password_rules!(MsbmsSystInstanceMgr.Types.owner_id()) ::
           Data.SystOwnerPasswordRules.t() | :not_found
-  def get_password_rules!(owner_id) do
+  def get_owner_password_rules!(owner_id) do
     from(opwr in Data.SystOwnerPasswordRules, where: opwr.owner_id == ^owner_id)
     |> MsbmsSystDatastore.one()
     |> case do
