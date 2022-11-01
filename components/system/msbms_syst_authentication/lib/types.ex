@@ -141,7 +141,7 @@ defmodule MsbmsSystAuthentication.Types do
 
   @type global_network_rule_params() :: %{
           optional(:ordering) => pos_integer(),
-          optional(:functional_type) => String.t(),
+          optional(:functional_type) => network_rule_functional_type() | String.t(),
           optional(:ip_host_or_network) => DbTypes.Inet.t(),
           optional(:ip_host_range_lower) => DbTypes.Inet.t(),
           optional(:ip_host_range_upper) => DbTypes.Inet.t()
@@ -180,7 +180,7 @@ defmodule MsbmsSystAuthentication.Types do
             optional(:instance_id) => MsbmsSystInstanceMgr.Types.instance_id(),
             optional(:instance_name) => MsbmsSystInstanceMgr.Types.instance_name(),
             optional(:ordering) => pos_integer(),
-            optional(:functional_type) => String.t(),
+            optional(:functional_type) => network_rule_functional_type() | String.t(),
             optional(:ip_host_or_network) => DbTypes.Inet.t(),
             optional(:ip_host_range_lower) => DbTypes.Inet.t(),
             optional(:ip_host_range_upper) => DbTypes.Inet.t()
@@ -196,7 +196,7 @@ defmodule MsbmsSystAuthentication.Types do
           optional(:owner_id) => MsbmsSystInstanceMgr.Types.owner_id(),
           optional(:owner_name) => MsbmsSystInstanceMgr.Types.owner_name(),
           optional(:ordering) => pos_integer(),
-          optional(:functional_type) => String.t(),
+          optional(:functional_type) => network_rule_functional_type() | String.t(),
           optional(:ip_host_or_network) => DbTypes.Inet.t(),
           optional(:ip_host_range_lower) => DbTypes.Inet.t(),
           optional(:ip_host_range_upper) => DbTypes.Inet.t()

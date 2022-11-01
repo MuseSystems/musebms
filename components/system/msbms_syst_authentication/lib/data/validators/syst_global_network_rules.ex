@@ -20,8 +20,10 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystGlobalNetworkRules do
 
   @spec insert_changeset(Types.global_network_rule_params()) :: Ecto.Changeset.t()
   def insert_changeset(insert_params) do
+    resolved_params = Data.Helpers.General.resolve_network_rule_params_func_type(insert_params)
+
     %Data.SystGlobalNetworkRules{}
-    |> cast(insert_params, [
+    |> cast(resolved_params, [
       :ordering,
       :functional_type,
       :ip_host_or_network,
@@ -36,8 +38,10 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystGlobalNetworkRules do
   @spec update_changeset(Data.SystGlobalNetworkRules.t(), Types.global_network_rule_params()) ::
           Ecto.Changeset.t()
   def update_changeset(global_network_rule, update_params) do
+    resolved_params = Data.Helpers.General.resolve_network_rule_params_func_type(update_params)
+
     global_network_rule
-    |> cast(update_params, [
+    |> cast(resolved_params, [
       :ordering,
       :functional_type,
       :ip_host_or_network,

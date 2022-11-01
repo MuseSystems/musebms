@@ -21,11 +21,13 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystInstanceNetworkRules do
 
   @spec insert_changeset(Types.instance_network_rule_params()) :: Ecto.Changeset.t()
   def insert_changeset(insert_params) do
-    resolved_insert_params =
-      Helpers.SystInstanceNetworkRules.resolve_name_params(insert_params, :insert)
+    resolved_params =
+      insert_params
+      |> Helpers.SystInstanceNetworkRules.resolve_name_params(:insert)
+      |> Helpers.General.resolve_network_rule_params_func_type()
 
     %Data.SystInstanceNetworkRules{}
-    |> cast(resolved_insert_params, [
+    |> cast(resolved_params, [
       :instance_id,
       :ordering,
       :functional_type,
@@ -41,8 +43,10 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystInstanceNetworkRules do
   @spec update_changeset(Data.SystInstanceNetworkRules.t(), Types.instance_network_rule_params()) ::
           Ecto.Changeset.t()
   def update_changeset(instance_network_rule, update_params) do
+    resolved_params = Helpers.General.resolve_network_rule_params_func_type(update_params)
+
     instance_network_rule
-    |> cast(update_params, [
+    |> cast(resolved_params, [
       :ordering,
       :functional_type,
       :ip_host_or_network,
