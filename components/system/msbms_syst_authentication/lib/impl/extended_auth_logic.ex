@@ -176,7 +176,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
   defp confirm_password_credential(auth_state) do
     if :check_credential in auth_state.pending_operations do
       confirm_result =
-        Impl.Credential.Password.confirm_credential(
+        Impl.Credential.Password.confirm_credential!(
           auth_state.access_account_id,
           auth_state.identity_id,
           auth_state.plaintext_credential
@@ -274,7 +274,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
   defp confirm_api_token_credential(auth_state) do
     if :check_credential in auth_state.pending_operations do
       confirm_result =
-        Impl.Credential.ApiToken.confirm_credential(
+        Impl.Credential.ApiToken.confirm_credential!(
           auth_state.access_account_id,
           auth_state.identity_id,
           auth_state.plaintext_credential
@@ -368,7 +368,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
   defp confirm_validation_credential(auth_state) do
     if :check_credential in auth_state.pending_operations do
       confirm_result =
-        Impl.Credential.Validation.confirm_credential(
+        Impl.Credential.Validation.confirm_credential!(
           auth_state.access_account_id,
           auth_state.identity_id,
           auth_state.plaintext_credential
@@ -480,7 +480,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
   defp confirm_recovery_credential(auth_state) do
     if :check_credential in auth_state.pending_operations do
       confirm_result =
-        Impl.Credential.Recovery.confirm_credential(
+        Impl.Credential.Recovery.confirm_credential!(
           auth_state.access_account_id,
           auth_state.identity_id,
           auth_state.plaintext_credential
@@ -648,7 +648,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
   defp confirm_global_network_rules(auth_state) do
     if :check_global_network_rules in auth_state.pending_operations do
       auth_state.host_address
-      |> Impl.NetworkRules.get_applied_network_rule()
+      |> Impl.NetworkRules.get_applied_network_rule!()
       |> process_network_rule_result(auth_state, :check_global_network_rules)
     else
       auth_state
@@ -658,7 +658,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
   defp confirm_instance_network_rules(auth_state) do
     if :check_instance_network_rules in auth_state.pending_operations do
       auth_state.host_address
-      |> Impl.NetworkRules.get_applied_network_rule(auth_state[:instance_id])
+      |> Impl.NetworkRules.get_applied_network_rule!(auth_state[:instance_id])
       |> process_network_rule_result(auth_state, :check_instance_network_rules)
     else
       auth_state
