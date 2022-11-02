@@ -19,7 +19,7 @@ CREATE TABLE msbms_syst_data.syst_global_network_rules
     ,ordering
         integer
         NOT NULL
-        CONSTRAINT syst_global_network_rules_ordering_udx UNIQUE
+        CONSTRAINT syst_global_network_rules_ordering_udx UNIQUE DEFERRABLE INITIALLY DEFERRED
     ,functional_type
         text
         NOT NULL
