@@ -472,6 +472,304 @@ defmodule MsbmsSystAuthentication do
           {:ok, :deleted | :not_found} | {:error, MsbmsSystError.t()}
   defdelegate delete_disallowed_password(password), to: Impl.PasswordRules
 
+  @doc section: :password_rule_data
+  @doc """
+  Creates Owner Password Rules for the requested Owner.
+
+  Owners may optionally define their own Password Rules for their users so long
+  as their desired rules are of equal or greater stringency than the Global
+  Password Rules.  If the new Owner Password Rules are defined to be less
+  stringent than the current Global Password Rules, the Owner Password Rules
+  will be saved as requested, but ignored when applied in favor of the more
+  stringent rule.
+
+  >#### Note {: .neutral}
+  >
+  > The term "stringency", or "weakening" which appears elsewhere in some
+  > documentation, must not be understood to necessarily mean a strengthening or
+  > weakening in security.  For example, an Owner may elect to set password
+  > rules which require that a password contain at least one each of lower,
+  > upper, number, and symbol characters.  Such a rule would be more stringent
+  > than the Global Password Rules default settings which have no such
+  > complexity requirements but would not be more secure than those default
+  > rules according to studies on the matter. In fact, defining rules with
+  > greater stringency may well result in less security than that offered by the
+  > default Global Password Rules.
+
+  ## Parameters
+
+    * `owner_id` - the record ID of the Owner for whom the Password Rules are
+    being created.
+
+    * `insert_params` - a map of the values to use when creating the new record.
+    See `t:MsbmsSystAuthentication.Types.password_rule_params/0` for details
+    regarding the available attributes.
+
+  """
+  @spec create_owner_password_rules(
+          MsbmsSystInstanceMgr.Types.owner_id(),
+          Types.password_rule_params()
+        ) ::
+          {:ok, Data.SystOwnerPasswordRules.t()} | {:error, MsbmsSystError.t() | Exception.t()}
+  defdelegate create_owner_password_rules(owner_id, insert_params), to: Impl.PasswordRules
+
+  @doc section: :password_rule_data
+  @doc """
+  Updates the Global Password Rules with new values.
+
+  The Global Password Rules are created at system installation time with a
+  default and recommended set of values, but these values may be customized as
+  desired any time after installation.
+
+  Note that the original Global Password Rules data will be retrieved for use in
+  the update process and that no Ecto optimistic locking will be employed with
+  this update.
+
+  ## Parameters
+
+    * `update_params` - a map of the values to use when updating the Global
+    Password Rules record. See
+    `t:MsbmsSystAuthentication.Types.password_rule_params/0` for details
+    regarding the available attributes.
+  """
+  @spec update_global_password_rules(Types.password_rule_params()) ::
+          {:ok, Data.SystGlobalPasswordRules.t()} | {:error, MsbmsSystError.t() | Exception.t()}
+  defdelegate update_global_password_rules(update_params), to: Impl.PasswordRules
+
+  @doc section: :password_rule_data
+  @doc """
+  Updates the Global Password Rules with new values using a caller provided
+  data source record.
+
+  This function works the same as described in `create_update_global_password_rules/1`
+  except that in this version the caller must also provide a source
+  data struct to act as the basis of the update.  Ecto optimistic locking will
+  be applied to the update process.
+
+  ## Parameters
+
+    * `global_password_rules` - a fully populated
+    `MsbmsSystAuthentication.Data.SystGlobalPasswordRules` record representing
+    the state of the Global Password Rules prior to the change.
+
+    * `update_params` - a map of the values to use when updating the Global
+    Password Rules record. See
+    `t:MsbmsSystAuthentication.Types.password_rule_params/0` for details
+    regarding the available attributes.
+  """
+  @spec update_global_password_rules(
+          Data.SystGlobalPasswordRules.t(),
+          Types.password_rule_params()
+        ) ::
+          {:ok, Data.SystGlobalPasswordRules.t()} | {:error, MsbmsSystError.t() | Exception.t()}
+  defdelegate update_global_password_rules(global_password_rules, update_params),
+    to: Impl.PasswordRules
+
+  @doc section: :password_rule_data
+  @doc """
+  Updates the Owner Password Rules with new values.
+
+  After creation, Owner Password Rules may be updated with new values as might
+  meet the specific needs of the Owner.
+
+  ## Parameters
+
+    * `owner` - the record ID of the Owner for whom the Password Rules are
+    being updated or the fully populated data struct representing the current
+    Owner Password Rules.  Note that if the data struct is provided Ecto
+    optimistic locking will be in effect.
+
+    * `update_params` - a map of the values to use when updating the Owner
+    Password Rules record. See
+    `t:MsbmsSystAuthentication.Types.password_rule_params/0` for details
+    regarding the available attributes.
+  """
+  @spec update_owner_password_rules(
+          MsbmsSystInstanceMgr.Types.owner_id() | Data.SystOwnerPasswordRules.t(),
+          Types.password_rule_params()
+        ) ::
+          {:ok, Data.SystOwnerPasswordRules.t()} | {:error, MsbmsSystError.t() | Exception.t()}
+  defdelegate update_owner_password_rules(owner, update_params), to: Impl.PasswordRules
+
+  @doc section: :password_rule_data
+  @doc """
+  Retrieves the currently active Global Password Rules.
+
+  On successful retrieval a success tuple in the form of `{:ok, <record>}` is
+  returned where record is a `MsbmsSystAuthentication.Data.SystGlobalPasswordRules`
+  struct.  Any exceptions are returned via an error tuple.
+  """
+  @spec get_global_password_rules() ::
+          {:ok, Data.SystGlobalPasswordRules.t()} | {:error, MsbmsSystError.t()}
+  defdelegate get_global_password_rules, to: Impl.PasswordRules
+
+  @doc section: :password_rule_data
+  @doc """
+  Retrieves the currently active Global Password Rules, raising on error.
+
+  This function works the same as `get_global_password_rules/0` except that
+  any errors cause an exception to be raised.
+  """
+  @spec get_global_password_rules!() :: Data.SystGlobalPasswordRules.t()
+  defdelegate get_global_password_rules!, to: Impl.PasswordRules
+
+  @doc section: :password_rule_data
+  @doc """
+  Retrieves the currently active Owner Password Rules for the requested Owner.
+
+  On successful retrieval a success tuple in the form of `{:ok, <record>}` is
+  returned where `<record>` is a populated
+  `MsbmsSystAuthentication.Data.SystownerPasswordRules` struct if Password Rules
+  for the requested Owner was found or `nil` otherwise.  Any exceptions are
+  returned via an error tuple.
+
+  ## Parameters
+
+    * `owner_id` - the Owner record ID for whom to retrieve Password Rules.
+  """
+  @spec get_owner_password_rules(MsbmsSystInstanceMgr.Types.owner_id()) ::
+          {:ok, Data.SystOwnerPasswordRules.t()}
+          | {:ok, :not_found}
+          | {:error, MsbmsSystError.t() | Exception.t()}
+  defdelegate get_owner_password_rules(owner_id), to: Impl.PasswordRules
+
+  @doc section: :password_rule_data
+  @doc """
+  Retrieves the currently active Owner Password Rules for the requested Owner,
+  raising on error.
+
+  This function works the same as `get_owner_password_rules/1` except that
+  any errors cause an exception to be raised.
+
+  ## Parameters
+
+    * `owner_id` - the Owner record ID for whom to retrieve Password Rules.
+  """
+  @spec get_owner_password_rules!(MsbmsSystInstanceMgr.Types.owner_id()) ::
+          Data.SystOwnerPasswordRules.t() | :not_found
+  defdelegate get_owner_password_rules!(owner_id), to: Impl.PasswordRules
+
+  @doc section: :password_rule_data
+  @doc """
+  Retrieves the Password Rules to apply for a requested Access Account as
+  identified by its record ID.
+
+  When evaluating the validity of candidate passwords for a user the system
+  retrieves the Global Password Rules and then the Access Account Owner Password
+  Rules, if such Rules have been defined.  The system will compare each of the
+  Rules in the Global and Owner Password Rules with each other and select the
+  rule which demands the greatest stringency.  This process results in a
+  composite Password Rule which can then be applied to test any candidate
+  password for validity. This calculated composite Password Rule is what is
+  returned by this function.
+
+  The return value is wrapped in a result tuple, `{:ok, <rule>}` on success and
+  `{:error, <exception>}` in cases of failure.
+
+  ## Parameters
+
+    * `access_account_id` - the Access Account record ID of the user.
+  """
+  @spec get_access_account_password_rule(Types.access_account_id()) ::
+          {:ok, Types.password_rule()} | {:error, MsbmsSystError.t() | Exception.t()}
+  defdelegate get_access_account_password_rule(access_account_id), to: Impl.PasswordRules
+
+  @doc section: :password_rule_data
+  @doc """
+  Retrieves the Password Rules to apply for a requested Access Account as
+  identified by its record ID, raising on error.
+
+  This function works the same as `get_access_account_password_rule/1` except
+  that any errors cause an exception to be raised.
+
+  ## Parameters
+
+    * `access_account_id` - the Access Account record ID of the user.
+  """
+  @spec get_access_account_password_rule!(Types.access_account_id()) :: Types.password_rule()
+  defdelegate get_access_account_password_rule!(access_account_id), to: Impl.PasswordRules
+
+  @doc section: :password_rule_data
+  @doc """
+  Compares a "Test" set of Password Rules against a "Standard" set of Password
+  Rules and reports on which of the "Test" Rules are considered less stringent
+  than the "Standard" Rules.
+
+  The primary use case for this function is to test how Owner Password Rules
+  ("Test" Rules) compare against the Global Password Rules ("Standard" Rules),
+  but the function can compare any two rules.
+
+  The return value of this function is wrapped in a result tuple. A result of
+  `{:ok, <rule violations>}` is returned on success and an error tuple in the
+  form of `{:error, <exception>}` is returned on error.  The `<rule violations>`
+  value is a Keyword List where each tuple's key represents the rule violated
+  and the tuple's value is the required value for that rule; whether the
+  required value is a minimum or maximum depends on the nature of the specific
+  rule being reported.
+
+  ## Parameters
+
+    * `test_rules` - a Password Rule which will be tested against the value
+    of the `standard_rules`.  Where the `test_rules` are less stringent than the
+    `standard_rules`, a violation is reported in the result.
+
+    * `standard_rules` - the "Standard" against which the `test_rules` are
+    judged.  This parameter is optional and when nil the Global Password
+    Rule is retrieved and used as the default "Standard" Rules.  Otherwise
+    either a generic `t:MsbmsSystAuthentication.Types.password_rules/0` value
+    or a populated `MsbmsSystAuthentication.Data.SystGlobalPasswordRules` data
+    struct may be provided.
+  """
+  @spec verify_password_rules(
+          Types.password_rule(),
+          Data.SystGlobalPasswordRules.t() | Types.password_rule() | nil
+        ) ::
+          {:ok, Keyword.t(Types.password_rule_violations())}
+          | {:error, MsbmsSystError.t() | Exception.t()}
+  defdelegate verify_password_rules(test_rules, standard_rules \\ nil), to: Impl.PasswordRules
+
+  @doc section: :password_rule_data
+  @doc """
+  Compares a "Test" set of Password Rules against a "Standard" set of Password
+  Rules and reports on which of the "Test" Rules are considered less stringent
+  than the "Standard" Rules, raising on error.
+
+  This function works the same as `verify_password_rules/2` except that any
+  errors cause an exception to be raised.
+
+  ## Parameters
+
+    * `test_rules` - a Password Rule which will be tested against the value
+    of the `standard_rules`.  Where the `test_rules` are less stringent than the
+    `standard_rules`, a violation is reported in the result.
+
+    * `standard_rules` - the "Standard" against which the `test_rules` are
+    judged.  This parameter is optional and when nil the Global Password
+    Rule is retrieved and used as the default "Standard" Rules.  Otherwise
+    either a generic `t:MsbmsSystAuthentication.Types.password_rules/0` value
+    or a populated `MsbmsSystAuthentication.Data.SystGlobalPasswordRules` data
+    struct may be provided.
+  """
+  @spec verify_password_rules!(
+          Types.password_rule(),
+          Data.SystGlobalPasswordRules.t() | Types.password_rule() | nil
+        ) ::
+          Keyword.t(Types.password_rule_violations())
+  defdelegate verify_password_rules!(test_rules, standard_rules \\ nil),
+    to: Impl.PasswordRules
+
+  @doc section: :password_rule_data
+  @doc """
+  Deletes an Owner Password Rules record from the system.
+
+  ## Parameters
+
+    * `owner_id` - the Owner record ID whose Password Rules are to be deleted.
+  """
+  @spec delete_owner_password_rules(MsbmsSystInstanceMgr.Types.owner_id()) ::
+          {:ok, :deleted | :not_found} | {:error, MsbmsSystError.t() | Exception.t()}
+  defdelegate delete_owner_password_rules(owner_id), to: Impl.PasswordRules
+
   @doc section: :network_rule_data
   @doc """
   Indicates whether the provided host IP address is to be denied access to the
