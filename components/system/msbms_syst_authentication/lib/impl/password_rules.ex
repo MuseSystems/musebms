@@ -419,7 +419,10 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     Pathex.over!(rule, update_path, fn _ -> req_value end)
   end
 
-  @spec verify_password_rules(Types.password_rule(), Types.password_rule()) ::
+  @spec verify_password_rules(
+          Types.password_rule(),
+          Data.SystGlobalPasswordRules.t() | Types.password_rule() | nil
+        ) ::
           {:ok, Keyword.t(Types.password_rule_violations())}
           | {:error, MsbmsSystError.t() | Exception.t()}
   def verify_password_rules(test_rules, standard_rules) do
@@ -431,7 +434,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
 
   @spec verify_password_rules!(
           Types.password_rule(),
-          Data.SystGlobalPasswordRules.t() | Types.password_rule()
+          Data.SystGlobalPasswordRules.t() | Types.password_rule() | nil
         ) ::
           Keyword.t(Types.password_rule_violations())
   def verify_password_rules!(%{} = test_rules, nil = _standard_rules) do
