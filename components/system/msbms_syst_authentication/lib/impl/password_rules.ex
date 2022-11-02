@@ -601,20 +601,32 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
        when std_req == true and test_req == false,
        do: [{rule, std_req} | failure_list]
 
-  @spec delete_password_rules(MsbmsSystInstanceMgr.Types.owner_id()) ::
-          :ok | {:error, MsbmsSystError.t() | Exception.t()}
-  def delete_password_rules(owner_id) do
-    delete_password_rules!(owner_id)
+  @spec delete_owner_password_rules(MsbmsSystInstanceMgr.Types.owner_id()) ::
+          {:ok, :deleted | :not_found} | {:error, MsbmsSystError.t() | Exception.t()}
+  def delete_owner_password_rules(owner_id) do
+    {:ok, delete_owner_password_rules!(owner_id)}
   rescue
     error -> {:error, error}
   end
 
-  @spec delete_password_rules!(MsbmsSystInstanceMgr.Types.owner_id()) :: :ok
-  def delete_password_rules!(owner_id) do
+  @spec delete_owner_password_rules!(MsbmsSystInstanceMgr.Types.owner_id()) ::
+          :deleted | :not_found
+  def delete_owner_password_rules!(owner_id) do
     from(opwr in Data.SystOwnerPasswordRules, where: opwr.owner_id == ^owner_id)
     |> MsbmsSystDatastore.delete_all()
+    |> case do
+      {1, _} ->
+        :deleted
 
-    :ok
+      {0, _} ->
+        :not_found
+
+      error ->
+        raise MsbmsSystError,
+          code: :undefined_error,
+          message: "Unknown error deleting Owner Password Rules",
+          cause: error
+    end
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
