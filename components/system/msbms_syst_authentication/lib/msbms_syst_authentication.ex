@@ -787,13 +787,13 @@ defmodule MsbmsSystAuthentication do
 
   ## Examples
 
-    An allowed host will return a `false` result tuple
+    An allowed host will return a `false` result tuple.
 
       iex> import IP, only: [sigil_i: 2]
       iex> MsbmsSystAuthentication.host_disallowed(~i"10.150.150.10")
       {:ok, false}
 
-    A disallowed host returns a `true` result tuple
+    A disallowed host returns a `true` result tuple.
 
       iex> import IP, only: [sigil_i: 2]
       iex> MsbmsSystAuthentication.host_disallowed(~i"10.123.123.5")
@@ -818,13 +818,13 @@ defmodule MsbmsSystAuthentication do
 
   ## Examples
 
-    An allowed host will return a `false` result tuple
+    An allowed host will return a `false` value.
 
       iex> import IP, only: [sigil_i: 2]
       iex> MsbmsSystAuthentication.host_disallowed?(~i"10.150.150.10")
       false
 
-    A disallowed host returns a `true` result tuple
+    A disallowed host returns a `true` value.
 
       iex> import IP, only: [sigil_i: 2]
       iex> MsbmsSystAuthentication.host_disallowed?(~i"10.123.123.5")
