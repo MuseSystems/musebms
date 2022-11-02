@@ -12,7 +12,7 @@
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
     <script src="dist/handlebars.templates-X7YVL3G2.js"></script>
-    <script src="dist/sidebar_items-2DDDE410.js"></script>
+    <script src="dist/sidebar_items-2066614C.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -326,6 +326,9 @@ msbms_syst_authentication
 
         </div>
 
+          <div class="summary-synopsis"><p>Defines the available parameters for use in creating or updating Global
+Network Rule records.</p></div>
+
       </div>
 
       <div class="summary-row">
@@ -382,6 +385,9 @@ msbms_syst_authentication
 
         </div>
 
+          <div class="summary-synopsis"><p>Defines the available parameters for use in creating or updating Instance
+Network Rule records.</p></div>
+
       </div>
 
       <div class="summary-row">
@@ -406,6 +412,9 @@ msbms_syst_authentication
 
         </div>
 
+          <div class="summary-synopsis"><p>Defines the available parameters for use in creating or updating Owner
+Network Rule records.</p></div>
+
       </div>
 
       <div class="summary-row">
@@ -421,6 +430,8 @@ msbms_syst_authentication
           <a href="#t:password_rule_params/0" translate="no">password_rule_params()</a>
 
         </div>
+
+          <div class="summary-synopsis"><p>A map of attributes used to create or update Global and Owner Password Rules.</p></div>
 
       </div>
 
@@ -1117,7 +1128,34 @@ Types
 
       </div>
 
-
+<p>Defines the available parameters for use in creating or updating Global
+Network Rule records.</p><h2 id="t:global_network_rule_params/0-map-attributes" class="section-heading">
+  <a href="#t:global_network_rule_params/0-map-attributes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">map-attributes</p>
+  </a>
+  Map Attributes
+</h2>
+<ul><li><p><code class="inline">ordering</code> - the order in which the new record should apply relative to
+other Global Network Rule records.  lower <code class="inline">ordering</code> values take precedence
+over higher <code class="inline">ordering</code> values.  If the <code class="inline">ordering</code> value in the parameters
+matches the <code class="inline">ordering</code> value of an existing Global Network Rule record, the
+inserted record will be treated as an &quot;insert before&quot; record, with the
+existing records being reordered to be after the new record, recursively.
+This attribute is required in record creation scenarios.</p></li><li><p><code class="inline">functional_type</code> - defines what action the rule specifies once matched.
+The possible functional types are <code class="inline">:allow</code> which means the rule intends to
+explicitly allow the associated IP Address(es) to attempt authentication
+or <code class="inline">:deny</code> which explicitly prevents the IP Address(es) from attempting
+an authorization.  This attribute is required in record creation scenarios.</p></li><li><p><code class="inline">ip_host_or_network</code> - a single Host IP Address or a single CIDR network
+used in matching user Host IP Addresses to rules.  Note that if this value
+is provided that the <code class="inline">ip_host_range_lower</code> and <code class="inline">ip_host_range_upper</code>
+values must be nil or not provided.</p></li><li><p><code class="inline">ip_host_range_lower</code> - defines the lower bound of a simple range of IP
+Addresses, inclusive, to which rule should apply.  When this value is
+provided the <code class="inline">ip_host_range_upper</code> attribute must also be provided and the
+<code class="inline">ip_host_or_network</code> attribute value must be nil or not provided.</p></li><li><p><code class="inline">ip_host_range_upper</code> - defines the upper bound of a simple range of IP
+Addresses, inclusive, to which rule should apply.  When this value is
+provided the <code class="inline">ip_host_range_lower</code> attribute must also be provided and the
+<code class="inline">ip_host_or_network</code> attribute value must be nil or not provided.</p></li></ul><p>Note that either the <code class="inline">ip_host_or_network</code> attribute or the
+<code class="inline">ip_host_range_lower</code> and <code class="inline">ip_host_range_upper</code> are required and exclusive.</p>
   </section>
 </section>
 <section class="detail" id="t:host_address/0">
@@ -1304,7 +1342,40 @@ Types
 
       </div>
 
-
+<p>Defines the available parameters for use in creating or updating Instance
+Network Rule records.</p><h2 id="t:instance_network_rule_params/0-map-attributes" class="section-heading">
+  <a href="#t:instance_network_rule_params/0-map-attributes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">map-attributes</p>
+  </a>
+  Map Attributes
+</h2>
+<ul><li><p><code class="inline">instance_id</code> - the value of this attribute identifies the Instance for
+which the Network Rule is being defined.  This value doesn't have to be set
+explicitly when using the <a href="MsbmsSystAuthentication.html"><code class="inline">MsbmsSystAuthentication</code></a> module API as the API
+calls set this value based on the function <code class="inline">instance_id</code> parameters they
+require.</p></li><li><p><code class="inline">instance_name</code> - an alternate means of identifying the Instance instead
+of the <code class="inline">instance_id</code> attribute.   Currently there is no API which makes use
+of this value.</p></li><li><p><code class="inline">ordering</code> - the order in which the new record should apply relative to
+other Instance Network Rule records.  lower <code class="inline">ordering</code> values take
+precedence over higher <code class="inline">ordering</code> values.  If the <code class="inline">ordering</code> value in the
+parameters matches the <code class="inline">ordering</code> value of an existing Instance Network Rule
+record, the inserted record will be treated as an &quot;insert before&quot; record,
+with the existing records being reordered to be after the new record,
+recursively. This attribute is required in record creation scenarios.</p></li><li><p><code class="inline">functional_type</code> - defines what action the rule specifies once matched.
+The possible functional types are <code class="inline">:allow</code> which means the rule intends to
+explicitly allow the associated IP Address(es) to attempt authentication
+or <code class="inline">:deny</code> which explicitly prevents the IP Address(es) from attempting
+an authorization.  This attribute is required in record creation scenarios.</p></li><li><p><code class="inline">ip_host_or_network</code> - a single Host IP Address or a single CIDR network
+used in matching user Host IP Addresses to rules.  Note that if this value
+is provided that the <code class="inline">ip_host_range_lower</code> and <code class="inline">ip_host_range_upper</code>
+values must be nil or not provided.</p></li><li><p><code class="inline">ip_host_range_lower</code> - defines the lower bound of a simple range of IP
+Addresses, inclusive, to which rule should apply.  When this value is
+provided the <code class="inline">ip_host_range_upper</code> attribute must also be provided and the
+<code class="inline">ip_host_or_network</code> attribute value must be nil or not provided.</p></li><li><p><code class="inline">ip_host_range_upper</code> - defines the upper bound of a simple range of IP
+Addresses, inclusive, to which rule should apply.  When this value is
+provided the <code class="inline">ip_host_range_lower</code> attribute must also be provided and the
+<code class="inline">ip_host_or_network</code> attribute value must be nil or not provided.</p></li></ul><p>Note that either the <code class="inline">ip_host_or_network</code> attribute or the
+<code class="inline">ip_host_range_lower</code> and <code class="inline">ip_host_range_upper</code> are required and exclusive.</p>
   </section>
 </section>
 <section class="detail" id="t:network_rule_functional_type/0">
@@ -1382,7 +1453,40 @@ Types
 
       </div>
 
-
+<p>Defines the available parameters for use in creating or updating Owner
+Network Rule records.</p><h2 id="t:owner_network_rule_params/0-map-attributes" class="section-heading">
+  <a href="#t:owner_network_rule_params/0-map-attributes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">map-attributes</p>
+  </a>
+  Map Attributes
+</h2>
+<ul><li><p><code class="inline">owner_id</code> - the value of this attribute identifies the Owner for which
+the Network Rule is being defined.  This value doesn't have to be set
+explicitly when using the <a href="MsbmsSystAuthentication.html"><code class="inline">MsbmsSystAuthentication</code></a> module API as the API
+calls set this value based on the function <code class="inline">owner_id</code> parameters they
+require.</p></li><li><p><code class="inline">owner_name</code> - an alternate means of identifying the Owner instead of the
+<code class="inline">owner_id</code> attribute.   Currently there is no API which makes use of this
+value.</p></li><li><p><code class="inline">ordering</code> - the order in which the new record should apply relative to
+other Owner Network Rule records.  lower <code class="inline">ordering</code> values take precedence
+over higher <code class="inline">ordering</code> values.  If the <code class="inline">ordering</code> value in the parameters
+matches the <code class="inline">ordering</code> value of an existing Owner Network Rule record, the
+inserted record will be treated as an &quot;insert before&quot; record, with the
+existing records being reordered to be after the new record, recursively.
+This attribute is required in record creation scenarios.</p></li><li><p><code class="inline">functional_type</code> - defines what action the rule specifies once matched.
+The possible functional types are <code class="inline">:allow</code> which means the rule intends to
+explicitly allow the associated IP Address(es) to attempt authentication
+or <code class="inline">:deny</code> which explicitly prevents the IP Address(es) from attempting
+an authorization.  This attribute is required in record creation scenarios.</p></li><li><p><code class="inline">ip_host_or_network</code> - a single Host IP Address or a single CIDR network
+used in matching user Host IP Addresses to rules.  Note that if this value
+is provided that the <code class="inline">ip_host_range_lower</code> and <code class="inline">ip_host_range_upper</code>
+values must be nil or not provided.</p></li><li><p><code class="inline">ip_host_range_lower</code> - defines the lower bound of a simple range of IP
+Addresses, inclusive, to which rule should apply.  When this value is
+provided the <code class="inline">ip_host_range_upper</code> attribute must also be provided and the
+<code class="inline">ip_host_or_network</code> attribute value must be nil or not provided.</p></li><li><p><code class="inline">ip_host_range_upper</code> - defines the upper bound of a simple range of IP
+Addresses, inclusive, to which rule should apply.  When this value is
+provided the <code class="inline">ip_host_range_lower</code> attribute must also be provided and the
+<code class="inline">ip_host_or_network</code> attribute value must be nil or not provided.</p></li></ul><p>Note that either the <code class="inline">ip_host_or_network</code> attribute or the
+<code class="inline">ip_host_range_lower</code> and <code class="inline">ip_host_range_upper</code> are required and exclusive.</p>
   </section>
 </section>
 <section class="detail" id="t:password_rule/0">
@@ -1454,7 +1558,46 @@ Types
 
       </div>
 
-
+<p>A map of attributes used to create or update Global and Owner Password Rules.</p><p>Note that only those attributes which are necessary to represent the desired
+rules are required to appear in the parameter submission.  All attributes not
+provided will take on a default value which assumes the specific rule has no
+effect.</p><h2 id="t:password_rule_params/0-map-attributes" class="section-heading">
+  <a href="#t:password_rule_params/0-map-attributes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">map-attributes</p>
+  </a>
+  Map Attributes
+</h2>
+<ul><li><p><code class="inline">password_length</code> - A value of type <code class="inline">t:MsbmsSystDatastore.DbTypes.IntegerRange/0</code>
+describing the password length in terms of the number of characters.  The
+lower bound defines the minimum number of characters a password may have and
+the upper bound is the most characters that can be added to password.</p></li><li><p><code class="inline">max_age</code> - A value of type <code class="inline">t:MsbmsSystDatastore.DbTypes.Interval/0</code>
+which, when added to the <code class="inline">last_updated</code> value of the Password Credential
+record, sets the expiration date of the password.  After the password's age
+has exceeded it's max age, the password must be reset prior to finalizing
+authentication. A zero interval value here means that password ages are not
+checked.  The zero interval is the default setting.</p></li><li><p><code class="inline">require_upper_case</code> - A positive integer which sets the minimum number
+of upper case characters that a valid password must posses.  A setting of
+zero here disables the requirement.</p></li><li><p><code class="inline">require_lower_case</code> - A positive integer which sets the minimum number
+of lower case characters that a valid password must posses.  A setting of
+zero here disables the requirement.</p></li><li><p><code class="inline">require_numbers</code> - A positive integer which sets the minimum number
+of number characters that a valid password must posses.  A setting of zero
+here disables the requirement.</p></li><li><p><code class="inline">require_symbols</code> - A positive integer which sets the minimum number
+of symbol characters that a valid password must posses.  A setting of zero
+here disables the requirement.</p></li><li><p><code class="inline">disallow_recently_used</code> - A positive integer representing the number of
+most recently used passwords to track and prohibit from re-use.  A zero
+setting for this attribute indicates that recently used passwords should not
+be tracked or prohibited.</p></li><li><p><code class="inline">disallow_compromised</code> - A boolean value which, if true, indicates that
+any new password requested by a user be first checked against the Disallowed
+Passwords list and, if found on the list, rejected for use.  When set true,
+the system will also check the password against the Disallowed Password list
+on authentication; if found on the list at authentication time, the user
+will be required to reset their password to something value not otherwise
+disallowed.  If set false the Disallowed Password list is not checked.</p></li><li><p><code class="inline">require_mfa</code> - A boolean value which indicates if multi-factor
+authentication is required for password authentication.  If true MFA is
+required, otherwise MFA is per user preference.  MFA may not be completely
+disabled.</p></li><li><p><code class="inline">allowed_mfa_types</code> - A list of strings identifying the allowed second
+factor methods. Currently only MFA type <code class="inline">credential_types_secondary_totp</code> is
+available.</p></li></ul>
   </section>
 </section>
 <section class="detail" id="t:password_rule_violations/0">
