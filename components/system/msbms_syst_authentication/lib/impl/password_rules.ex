@@ -199,24 +199,37 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
   end
 
   @spec update_owner_password_rules(
-          MsbmsSystInstanceMgr.Types.owner_id(),
+          MsbmsSystInstanceMgr.Types.owner_id() | Data.SystOwnerPasswordRules.t(),
           Types.password_rule_params()
         ) ::
           {:ok, Data.SystOwnerPasswordRules.t()} | {:error, MsbmsSystError.t() | Exception.t()}
-  def update_owner_password_rules(owner_id, update_params) do
-    {:ok, update_owner_password_rules!(owner_id, update_params)}
+  def update_owner_password_rules(owner, update_params) do
+    {:ok, update_owner_password_rules!(owner, update_params)}
   rescue
     error -> {:error, error}
   end
 
   @spec update_owner_password_rules!(
-          MsbmsSystInstanceMgr.Types.owner_id(),
+          MsbmsSystInstanceMgr.Types.owner_id() | Data.SystOwnerPasswordRules.t(),
           Types.password_rule_params()
         ) ::
           Data.SystOwnerPasswordRules.t()
-  def update_owner_password_rules!(owner_id, update_params) do
+  def update_owner_password_rules!(owner_id, update_params) when is_binary(owner_id) do
     from(opwr in Data.SystOwnerPasswordRules, where: opwr.owner_id == ^owner_id)
     |> MsbmsSystDatastore.one!()
+    |> update_owner_password_rules!(update_params)
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      raise MsbmsSystError,
+        code: :undefined_error,
+        message: "Failure updating Owner Password Rules.",
+        cause: error
+  end
+
+  def update_owner_password_rules!(%Data.SystOwnerPasswordRules{} = owner, update_params) do
+    owner
     |> Data.SystOwnerPasswordRules.update_changeset(update_params)
     |> MsbmsSystDatastore.update!(returning: true)
   rescue
