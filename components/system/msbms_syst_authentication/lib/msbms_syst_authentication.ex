@@ -1261,39 +1261,9 @@ defmodule MsbmsSystAuthentication do
   ## Parameters
 
     * `insert_params` - a map representing the values to use when creating the
-    new Global Network Rule.  The available parameter values are:
-
-      * `ordering` - the order in which the new record should apply relative to
-      other Global Network Rule records.  lower `ordering` values take
-      precedence over higher `ordering` values.  If the `ordering` value in the
-      parameters matches the `ordering` value of an existing Global Network Rule
-      record, the inserted record will be treated as an "insert before" record,
-      with the existing records being reordered to be after the new record,
-      recursively.  This parameter is required.
-
-      * `functional_type` - defines what action the rule specifies once matched.
-      The possible functional types are `:allow` which means the rule intends to
-      explicitly allow the associated IP Address(es) to attempt authentication
-      or `:deny` which explicitly prevents the IP Address(es) from attempting
-      an authorization.  This parameter is required.
-
-      * `ip_host_or_network` - a single Host IP Address or a single CIDR network
-      used in matching user Host IP Addresses to rules.  Note that if this value
-      is provided that the `ip_host_range_lower` and `ip_host_range_upper`
-      values must be nil or not provided.
-
-      * `ip_host_range_lower` - defines the lower bound of a simple range of IP
-      Addresses, inclusive, to which rule should apply.  When this value is
-      provided the `ip_host_range_upper` parameter must also be provided and the
-      `ip_host_or_network` parameter value must be nil or not provided.
-
-      * `ip_host_range_upper` - defines the upper bound of a simple range of IP
-      Addresses, inclusive, to which rule should apply.  When this value is
-      provided the `ip_host_range_lower` parameter must also be provided and the
-      `ip_host_or_network` parameter value must be nil or not provided.
-
-    Note that either the `ip_host_or_network` parameter or the
-    `ip_host_range_lower` and `ip_host_range_upper` are required and exclusive.
+    new Global Network Rule.  See
+    `t:MsbmsSystAuthentication.Types.global_network_rule_params/0` for the
+    available attributes.
 
   ## Example
 
@@ -1345,39 +1315,9 @@ defmodule MsbmsSystAuthentication do
     being created.
 
     * `insert_params` - a map representing the values to use when creating the
-    new Owner Network Rule.  The available parameter values are:
-
-      * `ordering` - the order in which the new record should apply relative to
-      other Owner Network Rule records.  lower `ordering` values take
-      precedence over higher `ordering` values.  If the `ordering` value in the
-      parameters matches the `ordering` value of an existing Owner Network Rule
-      record, the inserted record will be treated as an "insert before" record,
-      with the existing records being reordered to be after the new record,
-      recursively.  This parameter is required.
-
-      * `functional_type` - defines what action the rule specifies once matched.
-      The possible functional types are `:allow` which means the rule intends to
-      explicitly allow the associated IP Address(es) to attempt authentication
-      or `:deny` which explicitly prevents the IP Address(es) from attempting
-      an authorization.  This parameter is required.
-
-      * `ip_host_or_network` - a single Host IP Address or a single CIDR network
-      used in matching user Host IP Addresses to rules.  Note that if this value
-      is provided that the `ip_host_range_lower` and `ip_host_range_upper`
-      values must be nil or not provided.
-
-      * `ip_host_range_lower` - defines the lower bound of a simple range of IP
-      Addresses, inclusive, to which rule should apply.  When this value is
-      provided the `ip_host_range_upper` parameter must also be provided and the
-      `ip_host_or_network` parameter value must be nil or not provided.
-
-      * `ip_host_range_upper` - defines the upper bound of a simple range of IP
-      Addresses, inclusive, to which rule should apply.  When this value is
-      provided the `ip_host_range_lower` parameter must also be provided and the
-      `ip_host_or_network` parameter value must be nil or not provided.
-
-    Note that either the `ip_host_or_network` parameter or the
-    `ip_host_range_lower` and `ip_host_range_upper` are required and exclusive.
+    new Owner Network Rule.  See
+    `t:MsbmsSystAuthentication.Types.owner_network_rule_params/0` for the
+    available attributes.
 
   ## Example
 
@@ -1434,39 +1374,9 @@ defmodule MsbmsSystAuthentication do
     being created.
 
     * `insert_params` - a map representing the values to use when creating the
-    new Instance Network Rule.  The available parameter values are:
-
-      * `ordering` - the order in which the new record should apply relative to
-      other Instance Network Rule records.  lower `ordering` values take
-      precedence over higher `ordering` values.  If the `ordering` value in the
-      parameters matches the `ordering` value of an existing Instance Network Rule
-      record, the inserted record will be treated as an "insert before" record,
-      with the existing records being reordered to be after the new record,
-      recursively.  This parameter is required.
-
-      * `functional_type` - defines what action the rule specifies once matched.
-      The possible functional types are `:allow` which means the rule intends to
-      explicitly allow the associated IP Address(es) to attempt authentication
-      or `:deny` which explicitly prevents the IP Address(es) from attempting
-      an authorization.  This parameter is required.
-
-      * `ip_host_or_network` - a single Host IP Address or a single CIDR network
-      used in matching user Host IP Addresses to rules.  Note that if this value
-      is provided that the `ip_host_range_lower` and `ip_host_range_upper`
-      values must be nil or not provided.
-
-      * `ip_host_range_lower` - defines the lower bound of a simple range of IP
-      Addresses, inclusive, to which rule should apply.  When this value is
-      provided the `ip_host_range_upper` parameter must also be provided and the
-      `ip_host_or_network` parameter value must be nil or not provided.
-
-      * `ip_host_range_upper` - defines the upper bound of a simple range of IP
-      Addresses, inclusive, to which rule should apply.  When this value is
-      provided the `ip_host_range_lower` parameter must also be provided and the
-      `ip_host_or_network` parameter value must be nil or not provided.
-
-    Note that either the `ip_host_or_network` parameter or the
-    `ip_host_range_lower` and `ip_host_range_upper` are required and exclusive.
+    new Instance Network Rule.  See
+    `t:MsbmsSystAuthentication.Types.instance_network_rule_params/0` for the
+    available attributes.
 
   ## Example
 
@@ -1526,40 +1436,9 @@ defmodule MsbmsSystAuthentication do
 
     * `update_params` - a map representing the values to use when updating the
     Global Network Rule.  All parameters are optional, with omission meaning
-    that the existing value should retain its current value.  The available
-    parameter values are:
-
-      * `ordering` - the order in which the record should apply relative to
-      other Global Network Rule records.  lower `ordering` values take
-      precedence over higher `ordering` values.  If the `ordering` value in the
-      parameters matches the `ordering` value of an existing Global Network Rule
-      record, the updated record will be treated as an "insert before" record,
-      with the existing records being reordered to be after the newly updated
-      record, recursively.
-
-      * `functional_type` - defines what action the rule specifies once matched.
-      The possible functional types are `:allow` which means the rule intends to
-      explicitly allow the associated IP Address(es) to attempt authentication
-      or `:deny` which explicitly prevents the IP Address(es) from attempting
-      an authorization.
-
-      * `ip_host_or_network` - a single Host IP Address or a single CIDR network
-      used in matching user Host IP Addresses to rules.  Note that if this value
-      is provided that the `ip_host_range_lower` and `ip_host_range_upper`
-      values must be nil.
-
-      * `ip_host_range_lower` - defines the lower bound of a simple range of IP
-      Addresses, inclusive, to which rule should apply.  When this value is
-      provided the `ip_host_range_upper` parameter must also be provided and the
-      `ip_host_or_network` parameter value must be nil.
-
-      * `ip_host_range_upper` - defines the upper bound of a simple range of IP
-      Addresses, inclusive, to which rule should apply.  When this value is
-      provided the `ip_host_range_lower` parameter must also be provided and the
-      `ip_host_or_network` parameter value must be nil.
-
-    Note that either the `ip_host_or_network` parameter or the
-    `ip_host_range_lower` and `ip_host_range_upper` are required and exclusive.
+    that the existing value should retain its current value.  See
+    `t:MsbmsSystAuthentication.Types.global_network_rule_params/0` for the
+    available attributes.
 
   """
   @spec update_global_network_rule(
@@ -1590,40 +1469,9 @@ defmodule MsbmsSystAuthentication do
 
     * `update_params` - a map representing the values to use when updating the
     Owner Network Rule.  All parameters are optional, with omission meaning
-    that the existing value should retain its current value.  The available
-    parameter values are:
-
-      * `ordering` - the order in which the record should apply relative to
-      other Owner Network Rule records.  lower `ordering` values take
-      precedence over higher `ordering` values.  If the `ordering` value in the
-      parameters matches the `ordering` value of an existing Owner Network Rule
-      record, the updated record will be treated as an "insert before" record,
-      with the existing records being reordered to be after the newly updated
-      record, recursively.
-
-      * `functional_type` - defines what action the rule specifies once matched.
-      The possible functional types are `:allow` which means the rule intends to
-      explicitly allow the associated IP Address(es) to attempt authentication
-      or `:deny` which explicitly prevents the IP Address(es) from attempting
-      an authorization.
-
-      * `ip_host_or_network` - a single Host IP Address or a single CIDR network
-      used in matching user Host IP Addresses to rules.  Note that if this value
-      is provided that the `ip_host_range_lower` and `ip_host_range_upper`
-      values must be nil.
-
-      * `ip_host_range_lower` - defines the lower bound of a simple range of IP
-      Addresses, inclusive, to which rule should apply.  When this value is
-      provided the `ip_host_range_upper` parameter must also be provided and the
-      `ip_host_or_network` parameter value must be nil.
-
-      * `ip_host_range_upper` - defines the upper bound of a simple range of IP
-      Addresses, inclusive, to which rule should apply.  When this value is
-      provided the `ip_host_range_lower` parameter must also be provided and the
-      `ip_host_or_network` parameter value must be nil.
-
-    Note that either the `ip_host_or_network` parameter or the
-    `ip_host_range_lower` and `ip_host_range_upper` are required and exclusive.
+    that the existing value should retain its current value.  See
+    `t:MsbmsSystAuthentication.Types.owner_network_rule_params/0` for the
+    available attributes.
   """
   @spec update_owner_network_rule(
           Ecto.UUID.t() | Data.SystOwnerNetworkRules.t(),
@@ -1653,40 +1501,9 @@ defmodule MsbmsSystAuthentication do
 
     * `update_params` - a map representing the values to use when updating the
     Instance Network Rule.  All parameters are optional, with omission meaning
-    that the existing value should retain its current value.  The available
-    parameter values are:
-
-      * `ordering` - the order in which the record should apply relative to
-      other Instance Network Rule records.  lower `ordering` values take
-      precedence over higher `ordering` values.  If the `ordering` value in the
-      parameters matches the `ordering` value of an existing Instance Network Rule
-      record, the updated record will be treated as an "insert before" record,
-      with the existing records being reordered to be after the newly updated
-      record, recursively.
-
-      * `functional_type` - defines what action the rule specifies once matched.
-      The possible functional types are `:allow` which means the rule intends to
-      explicitly allow the associated IP Address(es) to attempt authentication
-      or `:deny` which explicitly prevents the IP Address(es) from attempting
-      an authorization.
-
-      * `ip_host_or_network` - a single Host IP Address or a single CIDR network
-      used in matching user Host IP Addresses to rules.  Note that if this value
-      is provided that the `ip_host_range_lower` and `ip_host_range_upper`
-      values must be nil.
-
-      * `ip_host_range_lower` - defines the lower bound of a simple range of IP
-      Addresses, inclusive, to which rule should apply.  When this value is
-      provided the `ip_host_range_upper` parameter must also be provided and the
-      `ip_host_or_network` parameter value must be nil.
-
-      * `ip_host_range_upper` - defines the upper bound of a simple range of IP
-      Addresses, inclusive, to which rule should apply.  When this value is
-      provided the `ip_host_range_lower` parameter must also be provided and the
-      `ip_host_or_network` parameter value must be nil.
-
-    Note that either the `ip_host_or_network` parameter or the
-    `ip_host_range_lower` and `ip_host_range_upper` are required and exclusive.
+    that the existing value should retain its current value.  See
+    `t:MsbmsSystAuthentication.Types.instance_network_rule_params/0` for the
+    available attributes.
   """
   @spec update_instance_network_rule(
           Ecto.UUID.t() | Data.SystInstanceNetworkRules.t(),
