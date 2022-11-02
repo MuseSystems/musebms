@@ -451,13 +451,17 @@ defmodule PasswordRulesTest do
   test "Can delete Owner Password Rules" do
     {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner3")
 
-    assert :ok = Impl.PasswordRules.delete_password_rules(owner_id)
+    assert {:ok, :deleted} = Impl.PasswordRules.delete_owner_password_rules(owner_id)
+
+    assert {:ok, :not_found} = Impl.PasswordRules.delete_owner_password_rules(owner_id)
 
     assert :not_found = Impl.PasswordRules.get_owner_password_rules!(owner_id)
 
     {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner5")
 
-    assert :ok = Impl.PasswordRules.delete_password_rules!(owner_id)
+    assert :deleted = Impl.PasswordRules.delete_owner_password_rules!(owner_id)
+
+    assert :not_found = Impl.PasswordRules.delete_owner_password_rules!(owner_id)
 
     assert :not_found = Impl.PasswordRules.get_owner_password_rules!(owner_id)
   end
