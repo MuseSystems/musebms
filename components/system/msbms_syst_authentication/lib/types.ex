@@ -139,6 +139,44 @@ defmodule MsbmsSystAuthentication.Types do
 
   @type disallowed_host_id() :: Ecto.UUID.t()
 
+  @typedoc """
+  Defines the available parameters for use in creating or updating Global
+  Network Rule records.
+
+  ## Map Attributes
+
+    * `ordering` - the order in which the new record should apply relative to
+    other Global Network Rule records.  lower `ordering` values take precedence
+    over higher `ordering` values.  If the `ordering` value in the parameters
+    matches the `ordering` value of an existing Global Network Rule record, the
+    inserted record will be treated as an "insert before" record, with the
+    existing records being reordered to be after the new record, recursively.
+    This attribute is required in record creation scenarios.
+
+    * `functional_type` - defines what action the rule specifies once matched.
+    The possible functional types are `:allow` which means the rule intends to
+    explicitly allow the associated IP Address(es) to attempt authentication
+    or `:deny` which explicitly prevents the IP Address(es) from attempting
+    an authorization.  This attribute is required in record creation scenarios.
+
+    * `ip_host_or_network` - a single Host IP Address or a single CIDR network
+    used in matching user Host IP Addresses to rules.  Note that if this value
+    is provided that the `ip_host_range_lower` and `ip_host_range_upper`
+    values must be nil or not provided.
+
+    * `ip_host_range_lower` - defines the lower bound of a simple range of IP
+    Addresses, inclusive, to which rule should apply.  When this value is
+    provided the `ip_host_range_upper` attribute must also be provided and the
+    `ip_host_or_network` attribute value must be nil or not provided.
+
+    * `ip_host_range_upper` - defines the upper bound of a simple range of IP
+    Addresses, inclusive, to which rule should apply.  When this value is
+    provided the `ip_host_range_lower` attribute must also be provided and the
+    `ip_host_or_network` attribute value must be nil or not provided.
+
+  Note that either the `ip_host_or_network` attribute or the
+  `ip_host_range_lower` and `ip_host_range_upper` are required and exclusive.
+  """
   @type global_network_rule_params() :: %{
           optional(:ordering) => pos_integer(),
           optional(:functional_type) => network_rule_functional_type() | String.t(),
@@ -175,6 +213,54 @@ defmodule MsbmsSystAuthentication.Types do
           optional(:external_name) => String.t() | nil
         }
 
+  @typedoc """
+  Defines the available parameters for use in creating or updating Instance
+  Network Rule records.
+
+  ## Map Attributes
+
+    * `instance_id` - the value of this attribute identifies the Instance for
+    which the Network Rule is being defined.  This value doesn't have to be set
+    explicitly when using the `MsbmsSystAuthentication` module API as the API
+    calls set this value based on the function `instance_id` parameters they
+    require.
+
+    * `instance_name` - an alternate means of identifying the Instance instead
+    of the `instance_id` attribute.   Currently there is no API which makes use
+    of this value.
+
+    * `ordering` - the order in which the new record should apply relative to
+    other Instance Network Rule records.  lower `ordering` values take
+    precedence over higher `ordering` values.  If the `ordering` value in the
+    parameters matches the `ordering` value of an existing Instance Network Rule
+    record, the inserted record will be treated as an "insert before" record,
+    with the existing records being reordered to be after the new record,
+    recursively. This attribute is required in record creation scenarios.
+
+    * `functional_type` - defines what action the rule specifies once matched.
+    The possible functional types are `:allow` which means the rule intends to
+    explicitly allow the associated IP Address(es) to attempt authentication
+    or `:deny` which explicitly prevents the IP Address(es) from attempting
+    an authorization.  This attribute is required in record creation scenarios.
+
+    * `ip_host_or_network` - a single Host IP Address or a single CIDR network
+    used in matching user Host IP Addresses to rules.  Note that if this value
+    is provided that the `ip_host_range_lower` and `ip_host_range_upper`
+    values must be nil or not provided.
+
+    * `ip_host_range_lower` - defines the lower bound of a simple range of IP
+    Addresses, inclusive, to which rule should apply.  When this value is
+    provided the `ip_host_range_upper` attribute must also be provided and the
+    `ip_host_or_network` attribute value must be nil or not provided.
+
+    * `ip_host_range_upper` - defines the upper bound of a simple range of IP
+    Addresses, inclusive, to which rule should apply.  When this value is
+    provided the `ip_host_range_lower` attribute must also be provided and the
+    `ip_host_or_network` attribute value must be nil or not provided.
+
+  Note that either the `ip_host_or_network` attribute or the
+  `ip_host_range_lower` and `ip_host_range_upper` are required and exclusive.
+  """
   @type instance_network_rule_params() ::
           %{
             optional(:instance_id) => MsbmsSystInstanceMgr.Types.instance_id(),
@@ -192,6 +278,54 @@ defmodule MsbmsSystAuthentication.Types do
   @type network_rule_precedence() ::
           :disallowed | :global | :instance | :instance_owner | :implied
 
+  @typedoc """
+  Defines the available parameters for use in creating or updating Owner
+  Network Rule records.
+
+  ## Map Attributes
+
+    * `owner_id` - the value of this attribute identifies the Owner for which
+    the Network Rule is being defined.  This value doesn't have to be set
+    explicitly when using the `MsbmsSystAuthentication` module API as the API
+    calls set this value based on the function `owner_id` parameters they
+    require.
+
+    * `owner_name` - an alternate means of identifying the Owner instead of the
+    `owner_id` attribute.   Currently there is no API which makes use of this
+    value.
+
+    * `ordering` - the order in which the new record should apply relative to
+    other Owner Network Rule records.  lower `ordering` values take precedence
+    over higher `ordering` values.  If the `ordering` value in the parameters
+    matches the `ordering` value of an existing Owner Network Rule record, the
+    inserted record will be treated as an "insert before" record, with the
+    existing records being reordered to be after the new record, recursively.
+    This attribute is required in record creation scenarios.
+
+    * `functional_type` - defines what action the rule specifies once matched.
+    The possible functional types are `:allow` which means the rule intends to
+    explicitly allow the associated IP Address(es) to attempt authentication
+    or `:deny` which explicitly prevents the IP Address(es) from attempting
+    an authorization.  This attribute is required in record creation scenarios.
+
+    * `ip_host_or_network` - a single Host IP Address or a single CIDR network
+    used in matching user Host IP Addresses to rules.  Note that if this value
+    is provided that the `ip_host_range_lower` and `ip_host_range_upper`
+    values must be nil or not provided.
+
+    * `ip_host_range_lower` - defines the lower bound of a simple range of IP
+    Addresses, inclusive, to which rule should apply.  When this value is
+    provided the `ip_host_range_upper` attribute must also be provided and the
+    `ip_host_or_network` attribute value must be nil or not provided.
+
+    * `ip_host_range_upper` - defines the upper bound of a simple range of IP
+    Addresses, inclusive, to which rule should apply.  When this value is
+    provided the `ip_host_range_lower` attribute must also be provided and the
+    `ip_host_or_network` attribute value must be nil or not provided.
+
+  Note that either the `ip_host_or_network` attribute or the
+  `ip_host_range_lower` and `ip_host_range_upper` are required and exclusive.
+  """
   @type owner_network_rule_params() :: %{
           optional(:owner_id) => MsbmsSystInstanceMgr.Types.owner_id(),
           optional(:owner_name) => MsbmsSystInstanceMgr.Types.owner_name(),
@@ -217,6 +351,67 @@ defmodule MsbmsSystAuthentication.Types do
           optional(:allowed_mfa_types) => list(String.t())
         }
 
+  @typedoc """
+  A map of attributes used to create or update Global and Owner Password Rules.
+
+  Note that only those attributes which are necessary to represent the desired
+  rules are required to appear in the parameter submission.  All attributes not
+  provided will take on a default value which assumes the specific rule has no
+  effect.
+
+  ## Map Attributes
+
+    * `password_length` - A value of type `t:MsbmsSystDatastore.DbTypes.IntegerRange/0`
+    describing the password length in terms of the number of characters.  The
+    lower bound defines the minimum number of characters a password may have and
+    the upper bound is the most characters that can be added to password.
+
+    * `max_age` - A value of type `t:MsbmsSystDatastore.DbTypes.Interval/0`
+    which, when added to the `last_updated` value of the Password Credential
+    record, sets the expiration date of the password.  After the password's age
+    has exceeded it's max age, the password must be reset prior to finalizing
+    authentication. A zero interval value here means that password ages are not
+    checked.  The zero interval is the default setting.
+
+    * `require_upper_case` - A positive integer which sets the minimum number
+    of upper case characters that a valid password must posses.  A setting of
+    zero here disables the requirement.
+
+    * `require_lower_case` - A positive integer which sets the minimum number
+    of lower case characters that a valid password must posses.  A setting of
+    zero here disables the requirement.
+
+    * `require_numbers` - A positive integer which sets the minimum number
+    of number characters that a valid password must posses.  A setting of zero
+    here disables the requirement.
+
+    * `require_symbols` - A positive integer which sets the minimum number
+    of symbol characters that a valid password must posses.  A setting of zero
+    here disables the requirement.
+
+    * `disallow_recently_used` - A positive integer representing the number of
+    most recently used passwords to track and prohibit from re-use.  A zero
+    setting for this attribute indicates that recently used passwords should not
+    be tracked or prohibited.
+
+    * `disallow_compromised` - A boolean value which, if true, indicates that
+    any new password requested by a user be first checked against the Disallowed
+    Passwords list and, if found on the list, rejected for use.  When set true,
+    the system will also check the password against the Disallowed Password list
+    on authentication; if found on the list at authentication time, the user
+    will be required to reset their password to something value not otherwise
+    disallowed.  If set false the Disallowed Password list is not checked.
+
+    * `require_mfa` - A boolean value which indicates if multi-factor
+    authentication is required for password authentication.  If true MFA is
+    required, otherwise MFA is per user preference.  MFA may not be completely
+    disabled.
+
+    * `allowed_mfa_types` - A list of strings identifying the allowed second
+    factor methods. Currently only MFA type `credential_types_secondary_totp` is
+    available.
+
+  """
   @type password_rule_params() :: %{
           optional(:owner_id) => MsbmsSystInstanceMgr.Types.owner_id() | nil,
           optional(:owner_name) => MsbmsSystInstanceMgr.Types.owner_name() | nil,
