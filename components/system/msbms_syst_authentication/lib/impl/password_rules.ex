@@ -218,7 +218,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     from(opwr in Data.SystOwnerPasswordRules, where: opwr.owner_id == ^owner_id)
     |> MsbmsSystDatastore.one!()
     |> Data.SystOwnerPasswordRules.update_changeset(update_params)
-    |> MsbmsSystDatastore.update!()
+    |> MsbmsSystDatastore.update!(returning: true)
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
