@@ -345,7 +345,7 @@ defmodule PasswordRulesTest do
       Impl.PasswordRules.update_owner_password_rules(owner_id, update_params)
 
     {:ok, revert_pwd_rules} =
-      Impl.PasswordRules.update_owner_password_rules(owner_id, revert_params)
+      Impl.PasswordRules.update_owner_password_rules(updated_pwd_rules, revert_params)
 
     assert :eq = DbTypes.compare(update_params.password_length, updated_pwd_rules.password_length)
     assert :eq = DbTypes.compare(update_params.max_age, updated_pwd_rules.max_age)
