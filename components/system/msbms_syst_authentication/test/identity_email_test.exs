@@ -23,7 +23,7 @@ defmodule IdentityEmailTest do
       Impl.AccessAccount.get_access_account_id_by_name("identity_email_create_test_accnt")
 
     # Default Options
-    assert default_identity =
+    assert {:ok, default_identity} =
              Impl.Identity.Email.create_identity(
                access_account_id,
                "identity_email_create_test_accnt@musesystems.com"
@@ -37,7 +37,7 @@ defmodule IdentityEmailTest do
 
     # Options: create_validated
 
-    assert default_identity =
+    assert {:ok, default_identity} =
              Impl.Identity.Email.create_identity(
                access_account_id,
                "identity_email_create_test_accnt@musesystems.com",
@@ -55,17 +55,15 @@ defmodule IdentityEmailTest do
 
     # Bad Email Address
 
-    assert_raise MsbmsSystError,
-                 fn ->
-                   Impl.Identity.Email.create_identity(
-                     access_account_id,
-                     "identity_email_create_test_accnt"
-                   )
-                 end
+    assert {:error, %MsbmsSystError{}} =
+             Impl.Identity.Email.create_identity(
+               access_account_id,
+               "identity_email_create_test_accnt"
+             )
 
     # Mixed Case Handling
 
-    assert default_identity =
+    assert {:ok, default_identity} =
              Impl.Identity.Email.create_identity(
                access_account_id,
                "Identity_Email_Create_Test_Accnt@MuseSystems.Com"

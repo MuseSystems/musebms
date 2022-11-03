@@ -23,7 +23,8 @@ defmodule IdentityApiTokenTest do
       Impl.AccessAccount.get_access_account_id_by_name("identity_api_token_create_test_accnt")
 
     # Default Options
-    assert default_identity = Impl.Identity.ApiToken.create_identity(access_account_id, nil)
+    assert {:ok, default_identity} =
+             Impl.Identity.ApiToken.create_identity(access_account_id, nil)
 
     assert %Data.SystIdentities{validated: val_date, account_identifier: identifier} =
              default_identity
@@ -35,7 +36,7 @@ defmodule IdentityApiTokenTest do
     :ok = Impl.Identity.delete_identity(default_identity.id)
 
     # Specific api_token value
-    assert specific_token_identity =
+    assert {:ok, specific_token_identity} =
              Impl.Identity.ApiToken.create_identity(access_account_id, "This Is A Test")
 
     assert %Data.SystIdentities{account_identifier: identifier} = specific_token_identity
@@ -45,7 +46,7 @@ defmodule IdentityApiTokenTest do
     :ok = Impl.Identity.delete_identity(specific_token_identity.id)
 
     # create_validated
-    assert not_validated_identity =
+    assert {:ok, not_validated_identity} =
              Impl.Identity.ApiToken.create_identity(access_account_id, nil,
                create_validated: false
              )
@@ -60,7 +61,7 @@ defmodule IdentityApiTokenTest do
     :ok = Impl.Identity.delete_identity(not_validated_identity.id)
 
     # identity_token_length
-    assert token_length_identity =
+    assert {:ok, token_length_identity} =
              Impl.Identity.ApiToken.create_identity(access_account_id, nil,
                identity_token_length: 40
              )
@@ -75,7 +76,7 @@ defmodule IdentityApiTokenTest do
     :ok = Impl.Identity.delete_identity(token_length_identity.id)
 
     # identity_tokens
-    assert tokens_identity =
+    assert {:ok, tokens_identity} =
              Impl.Identity.ApiToken.create_identity(access_account_id, nil, identity_tokens: 'ABC')
 
     assert %Data.SystIdentities{validated: val_date, account_identifier: identifier} =
@@ -88,7 +89,7 @@ defmodule IdentityApiTokenTest do
     :ok = Impl.Identity.delete_identity(tokens_identity.id)
 
     # external_name
-    assert ext_name_identity =
+    assert {:ok, ext_name_identity} =
              Impl.Identity.ApiToken.create_identity(access_account_id, nil,
                external_name: "API Token Test"
              )

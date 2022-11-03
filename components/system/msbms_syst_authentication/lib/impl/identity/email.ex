@@ -22,7 +22,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Email do
   @moduledoc false
 
   @spec create_identity(Types.access_account_id(), Types.account_identifier(), Keyword.t()) ::
-          Data.SystIdentities.t()
+          {:ok, Data.SystIdentities.t()} | {:error, MsbmsSystError.t() | Exception.t()}
   def create_identity(access_account_id, email_address, opts \\ [])
       when is_binary(access_account_id) and is_binary(email_address) do
     opts = MsbmsSystUtils.resolve_options(opts, create_validated: false)
@@ -38,7 +38,19 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Email do
       account_identifier: email_address
     }
 
-    Helpers.create_identity(identity_params, opts)
+    {:ok, Helpers.create_identity(identity_params, opts)}
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure creating Email Identity.",
+          cause: error
+        }
+      }
   end
 
   @spec identify_access_account(

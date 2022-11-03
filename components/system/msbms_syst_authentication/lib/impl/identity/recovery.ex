@@ -27,11 +27,23 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Recovery do
   @moduledoc false
 
   @spec request_identity_recovery(Types.identity_id() | Data.SystIdentities.t(), Keyword.t()) ::
-          Data.SystIdentities.t()
+          {:ok, Data.SystIdentities.t()} | {:error, MsbmsSystError.t() | Exception.t()}
   def request_identity_recovery(target_identity_id, opts) when is_binary(target_identity_id) do
     from(i in Data.SystIdentities, where: i.id == ^target_identity_id)
     |> MsbmsSystDatastore.one!()
     |> request_identity_recovery(opts)
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure creating Recovery Identity by ID.",
+          cause: error
+        }
+      }
   end
 
   def request_identity_recovery(%Data.SystIdentities{} = target_identity, opts) do
@@ -42,7 +54,19 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Recovery do
         identity_tokens: :mixed_alphanum
       )
 
-    create_recovery_identity(target_identity, opts)
+    {:ok, create_recovery_identity(target_identity, opts)}
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure creating Recovery Identity.",
+          cause: error
+        }
+      }
   end
 
   defp create_recovery_identity(target_identity, opts) do
