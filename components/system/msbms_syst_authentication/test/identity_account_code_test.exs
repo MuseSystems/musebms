@@ -23,7 +23,8 @@ defmodule IdentityAccountCodeTest do
       Impl.AccessAccount.get_access_account_id_by_name("identity_account_code_create_test_accnt")
 
     # Default Options
-    assert default_identity = Impl.Identity.AccountCode.create_identity(access_account_id, nil)
+    assert {:ok, default_identity} =
+             Impl.Identity.AccountCode.create_identity(access_account_id, nil)
 
     assert %Data.SystIdentities{validated: val_date, account_identifier: identifier} =
              default_identity
@@ -35,7 +36,7 @@ defmodule IdentityAccountCodeTest do
     :ok = Impl.Identity.delete_identity(default_identity.id)
 
     # Specific account_code value
-    assert specific_token_identity =
+    assert {:ok, specific_token_identity} =
              Impl.Identity.AccountCode.create_identity(access_account_id, "This Is A Test")
 
     assert %Data.SystIdentities{} = specific_token_identity
@@ -45,7 +46,7 @@ defmodule IdentityAccountCodeTest do
     :ok = Impl.Identity.delete_identity(specific_token_identity.id)
 
     # create_validated
-    assert not_validated_identity =
+    assert {:ok, not_validated_identity} =
              Impl.Identity.AccountCode.create_identity(access_account_id, nil,
                create_validated: false
              )
@@ -60,7 +61,7 @@ defmodule IdentityAccountCodeTest do
     :ok = Impl.Identity.delete_identity(not_validated_identity.id)
 
     # identity_token_length
-    assert token_length_identity =
+    assert {:ok, token_length_identity} =
              Impl.Identity.AccountCode.create_identity(access_account_id, nil,
                identity_token_length: 40
              )
@@ -75,7 +76,7 @@ defmodule IdentityAccountCodeTest do
     :ok = Impl.Identity.delete_identity(token_length_identity.id)
 
     # identity_tokens
-    assert tokens_identity =
+    assert {:ok, tokens_identity} =
              Impl.Identity.AccountCode.create_identity(access_account_id, nil,
                identity_tokens: 'ABC'
              )
@@ -162,37 +163,31 @@ defmodule IdentityAccountCodeTest do
       |> MsbmsSystDatastore.one!()
 
     # Default Options
-    assert default_identity =
+    assert {:ok, %Data.SystIdentities{} = default_identity} =
              Impl.Identity.AccountCode.reset_identity_for_access_account_id(
                target.access_account_id,
                []
              )
 
-    assert %Data.SystIdentities{} = default_identity
-
     assert String.length(default_identity.account_identifier) == 12
     assert target.account_identifier != default_identity.account_identifier
 
     # identity_token_length
-    assert token_length_identity =
+    assert {:ok, %Data.SystIdentities{} = token_length_identity} =
              Impl.Identity.AccountCode.reset_identity_for_access_account_id(
                target.access_account_id,
                identity_token_length: 40
              )
 
-    assert %Data.SystIdentities{} = token_length_identity
-
     assert String.length(token_length_identity.account_identifier) == 40
     assert default_identity.account_identifier != token_length_identity.account_identifier
 
     # identity_tokens
-    assert tokens_identity =
+    assert {:ok, %Data.SystIdentities{} = tokens_identity} =
              Impl.Identity.AccountCode.reset_identity_for_access_account_id(
                target.access_account_id,
                identity_tokens: 'ABC'
              )
-
-    assert %Data.SystIdentities{} = tokens_identity
 
     assert String.length(tokens_identity.account_identifier) == 12
     assert token_length_identity.account_identifier != tokens_identity.account_identifier
@@ -213,31 +208,26 @@ defmodule IdentityAccountCodeTest do
       |> MsbmsSystDatastore.one!()
 
     # Default Options
-    assert default_identity = Impl.Identity.AccountCode.reset_identity(target.id, [])
-
-    assert %Data.SystIdentities{} = default_identity
+    assert {:ok, %Data.SystIdentities{} = default_identity} =
+             Impl.Identity.AccountCode.reset_identity(target.id, [])
 
     assert String.length(default_identity.account_identifier) == 12
     assert target.account_identifier != default_identity.account_identifier
 
     # identity_token_length
-    assert token_length_identity =
+    assert {:ok, %Data.SystIdentities{} = token_length_identity} =
              Impl.Identity.AccountCode.reset_identity(default_identity.id,
                identity_token_length: 40
              )
-
-    assert %Data.SystIdentities{} = token_length_identity
 
     assert String.length(token_length_identity.account_identifier) == 40
     assert default_identity.account_identifier != token_length_identity.account_identifier
 
     # identity_tokens
-    assert tokens_identity =
+    assert {:ok, %Data.SystIdentities{} = tokens_identity} =
              Impl.Identity.AccountCode.reset_identity(token_length_identity.id,
                identity_tokens: 'ABC'
              )
-
-    assert %Data.SystIdentities{} = tokens_identity
 
     assert String.length(tokens_identity.account_identifier) == 12
     assert token_length_identity.account_identifier != tokens_identity.account_identifier
@@ -258,29 +248,24 @@ defmodule IdentityAccountCodeTest do
       |> MsbmsSystDatastore.one!()
 
     # Default Options
-    assert default_identity = Impl.Identity.AccountCode.reset_identity(target, [])
-
-    assert %Data.SystIdentities{} = default_identity
+    assert {:ok, %Data.SystIdentities{} = default_identity} =
+             Impl.Identity.AccountCode.reset_identity(target, [])
 
     assert String.length(default_identity.account_identifier) == 12
     assert target.account_identifier != default_identity.account_identifier
 
     # identity_token_length
-    assert token_length_identity =
+    assert {:ok, %Data.SystIdentities{} = token_length_identity} =
              Impl.Identity.AccountCode.reset_identity(default_identity, identity_token_length: 40)
-
-    assert %Data.SystIdentities{} = token_length_identity
 
     assert String.length(token_length_identity.account_identifier) == 40
     assert default_identity.account_identifier != token_length_identity.account_identifier
 
     # identity_tokens
-    assert tokens_identity =
+    assert {:ok, %Data.SystIdentities{} = tokens_identity} =
              Impl.Identity.AccountCode.reset_identity(token_length_identity,
                identity_tokens: 'ABC'
              )
-
-    assert %Data.SystIdentities{} = tokens_identity
 
     assert String.length(tokens_identity.account_identifier) == 12
     assert token_length_identity.account_identifier != tokens_identity.account_identifier

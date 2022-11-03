@@ -24,7 +24,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity do
   # Setup callbacks for Identity type specific calls
 
   @callback create_identity(Types.access_account_id(), String.t(), Keyword.t()) ::
-              Data.SystIdentities.t()
+              {:ok, Data.SystIdentities.t()} | {:error, MsbmsSystError.t() | Exception.t()}
 
   @callback identify_access_account(
               Types.account_identifier(),

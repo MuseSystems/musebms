@@ -50,7 +50,7 @@ defmodule IdentityRecoveryTest do
       upper: expires_end_time
     }
 
-    assert recovery_identity =
+    assert {:ok, recovery_identity} =
              Impl.Identity.Recovery.request_identity_recovery(target_identity.id, [])
 
     assert :rcl = DbTypes.compare(recovery_identity.identity_expires, expires_datetime_range)
@@ -73,7 +73,7 @@ defmodule IdentityRecoveryTest do
       upper: expires_end_time
     }
 
-    assert recovery_identity =
+    assert {:ok, recovery_identity} =
              Impl.Identity.Recovery.request_identity_recovery(target_identity.id,
                expiration_hours: hours_before_expire
              )
@@ -98,7 +98,7 @@ defmodule IdentityRecoveryTest do
 
     token_length_override = :rand.uniform(60) + 10
 
-    assert recovery_identity =
+    assert {:ok, recovery_identity} =
              Impl.Identity.Recovery.request_identity_recovery(target_identity.id,
                identity_token_length: token_length_override
              )
@@ -121,7 +121,7 @@ defmodule IdentityRecoveryTest do
       upper: expires_end_time
     }
 
-    assert recovery_identity =
+    assert {:ok, recovery_identity} =
              Impl.Identity.Recovery.request_identity_recovery(target_identity.id,
                identity_tokens: 'ABC'
              )
@@ -165,7 +165,7 @@ defmodule IdentityRecoveryTest do
       upper: expires_end_time
     }
 
-    assert recovery_identity =
+    assert {:ok, recovery_identity} =
              Impl.Identity.Recovery.request_identity_recovery(target_identity, [])
 
     assert :rcl = DbTypes.compare(recovery_identity.identity_expires, expires_datetime_range)
@@ -188,7 +188,7 @@ defmodule IdentityRecoveryTest do
       upper: expires_end_time
     }
 
-    assert recovery_identity =
+    assert {:ok, recovery_identity} =
              Impl.Identity.Recovery.request_identity_recovery(target_identity,
                expiration_hours: hours_before_expire
              )
@@ -213,7 +213,7 @@ defmodule IdentityRecoveryTest do
 
     token_length_override = :rand.uniform(60) + 10
 
-    assert recovery_identity =
+    assert {:ok, recovery_identity} =
              Impl.Identity.Recovery.request_identity_recovery(target_identity,
                identity_token_length: token_length_override
              )
@@ -236,7 +236,7 @@ defmodule IdentityRecoveryTest do
       upper: expires_end_time
     }
 
-    assert recovery_identity =
+    assert {:ok, recovery_identity} =
              Impl.Identity.Recovery.request_identity_recovery(target_identity,
                identity_tokens: 'ABC'
              )

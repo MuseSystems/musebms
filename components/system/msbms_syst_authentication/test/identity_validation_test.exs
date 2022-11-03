@@ -56,7 +56,7 @@ defmodule IdentityValidationTest do
       upper: expires_end_time
     }
 
-    assert validation_identity =
+    assert {:ok, validation_identity} =
              Impl.Identity.Validation.request_identity_validation(target_identity.id, [])
 
     updated_target_identity =
@@ -105,7 +105,7 @@ defmodule IdentityValidationTest do
       upper: expires_end_time
     }
 
-    assert validation_identity =
+    assert {:ok, validation_identity} =
              Impl.Identity.Validation.request_identity_validation(target_identity.id,
                expiration_hours: hours_before_expire
              )
@@ -156,7 +156,7 @@ defmodule IdentityValidationTest do
 
     token_length_override = :rand.uniform(60) + 10
 
-    assert validation_identity =
+    assert {:ok, validation_identity} =
              Impl.Identity.Validation.request_identity_validation(target_identity.id,
                identity_token_length: token_length_override
              )
@@ -205,7 +205,7 @@ defmodule IdentityValidationTest do
       upper: expires_end_time
     }
 
-    assert validation_identity =
+    assert {:ok, validation_identity} =
              Impl.Identity.Validation.request_identity_validation(target_identity.id,
                identity_tokens: 'ABC'
              )
@@ -275,7 +275,7 @@ defmodule IdentityValidationTest do
       upper: expires_end_time
     }
 
-    assert validation_identity =
+    assert {:ok, validation_identity} =
              Impl.Identity.Validation.request_identity_validation(target_identity, [])
 
     updated_target_identity =
@@ -322,7 +322,7 @@ defmodule IdentityValidationTest do
       upper: expires_end_time
     }
 
-    assert validation_identity =
+    assert {:ok, validation_identity} =
              Impl.Identity.Validation.request_identity_validation(updated_target_identity,
                expiration_hours: 48
              )
@@ -371,7 +371,7 @@ defmodule IdentityValidationTest do
       upper: expires_end_time
     }
 
-    assert validation_identity =
+    assert {:ok, validation_identity} =
              Impl.Identity.Validation.request_identity_validation(updated_target_identity,
                identity_token_length: 20
              )
@@ -420,7 +420,7 @@ defmodule IdentityValidationTest do
       upper: expires_end_time
     }
 
-    assert validation_identity =
+    assert {:ok, validation_identity} =
              Impl.Identity.Validation.request_identity_validation(updated_target_identity,
                identity_tokens: 'ABC'
              )

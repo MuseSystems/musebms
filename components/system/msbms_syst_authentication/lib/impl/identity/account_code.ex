@@ -26,7 +26,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.AccountCode do
   @default_account_code_params [identity_token_length: 12, identity_tokens: :b32c]
 
   @spec create_identity(Types.access_account_id(), Types.account_identifier() | nil, Keyword.t()) ::
-          Data.SystIdentities.t()
+          {:ok, Data.SystIdentities.t()} | {:error, MsbmsSystError.t() | Exception.t()}
   def create_identity(access_account_id, account_code, opts \\ [])
       when is_binary(access_account_id) do
     opts =
@@ -44,7 +44,19 @@ defmodule MsbmsSystAuthentication.Impl.Identity.AccountCode do
       account_identifier: account_code
     }
 
-    Impl.Identity.Helpers.create_identity(identity_params, opts)
+    {:ok, Impl.Identity.Helpers.create_identity(identity_params, opts)}
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure creating Account Code Identity.",
+          cause: error
+        }
+      }
   end
 
   @spec identify_access_account(
@@ -58,7 +70,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.AccountCode do
   end
 
   @spec reset_identity_for_access_account_id(Types.access_account_id(), Keyword.t()) ::
-          Data.SystIdentities.t()
+          {:ok, Data.SystIdentities.t()} | {:error, MsbmsSystError.t() | Exception.t()}
   def reset_identity_for_access_account_id(access_account_id, opts) do
     identity_type =
       MsbmsSystEnums.get_enum_item_by_name("identity_types", "identity_types_sysdef_account")
@@ -71,7 +83,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.AccountCode do
   end
 
   @spec reset_identity(Types.identity_id() | Data.SystIdentities.t(), Keyword.t()) ::
-          Data.SystIdentities.t()
+          {:ok, Data.SystIdentities.t()} | {:error, MsbmsSystError.t() | Exception.t()}
   def reset_identity(identity_id, opts) when is_binary(identity_id) do
     from(i in Data.SystIdentities, where: i.id == ^identity_id)
     |> MsbmsSystDatastore.one!()
@@ -89,6 +101,18 @@ defmodule MsbmsSystAuthentication.Impl.Identity.AccountCode do
       end)
 
     process_reset_identity_result(result)
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure resetting Recovery Identity.",
+          cause: error
+        }
+      }
   end
 
   defp process_reset_identity_result({:ok, new_identity}), do: new_identity
@@ -96,7 +120,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.AccountCode do
   defp process_reset_identity_result(error) do
     raise MsbmsSystError,
       code: :undefined_error,
-      message: "Failed to reset Account Code Identity",
+      message: "Account Code reset transaction exception.",
       cause: error
   end
 end
