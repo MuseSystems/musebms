@@ -188,7 +188,8 @@ defmodule MsbmsSystAuthentication.Impl.Identity do
 
   def delete_identity(%Data.SystIdentities{} = identity), do: Helpers.delete_record(identity)
 
-  defp get_identity_record(identity_id) when is_binary(identity_id) do
+  @spec get_identity_record(Types.identity_id()) :: Data.SystIdentities.t()
+  def get_identity_record(identity_id) when is_binary(identity_id) do
     from(i in Data.SystIdentities, where: i.id == ^identity_id)
     |> MsbmsSystDatastore.one!()
   end
