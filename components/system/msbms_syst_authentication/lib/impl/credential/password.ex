@@ -25,21 +25,25 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
 
   @moduledoc false
 
+  # TODO: Really think about logging in this context.  We don't want
+  #       plaintext_pwd to leak here.  No special care has been taken at this
+  #       point time.
+
   @spec test_credential(Types.access_account_id() | Types.password_rule(), Types.credential()) ::
           {:ok, Keyword.t(Types.password_rule_violations())}
           | {:error, MsbmsSystError.t() | Exception.t()}
-  def test_credential(access_account_id, pwd_plaintext) do
-    {:ok, test_credential!(access_account_id, pwd_plaintext)}
+  def test_credential(access_account_id, plaintext_pwd) do
+    {:ok, test_credential!(access_account_id, plaintext_pwd)}
   rescue
     error -> {:error, error}
   end
 
   @spec test_credential!(Types.access_account_id() | Types.password_rule(), Types.credential()) ::
           Keyword.t(Types.password_rule_violations())
-  def test_credential!(access_account_id, pwd_plaintext) when is_binary(access_account_id) do
+  def test_credential!(access_account_id, plaintext_pwd) when is_binary(access_account_id) do
     access_account_id
     |> Impl.PasswordRules.get_access_account_password_rule!()
-    |> test_credential!(pwd_plaintext)
+    |> test_credential!(plaintext_pwd)
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -50,15 +54,15 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
         cause: error
   end
 
-  def test_credential!(%{access_account_id: _} = pwd_rules, pwd_plaintext) do
+  def test_credential!(%{access_account_id: _} = pwd_rules, plaintext_pwd) do
     []
-    |> verify_password_length(pwd_rules, pwd_plaintext)
-    |> verify_password_req_upper_case(pwd_rules, pwd_plaintext)
-    |> verify_password_req_lower_case(pwd_rules, pwd_plaintext)
-    |> verify_password_req_numbers(pwd_rules, pwd_plaintext)
-    |> verify_password_req_symbols(pwd_rules, pwd_plaintext)
-    |> verify_password_no_compromised(pwd_rules, pwd_plaintext)
-    |> verify_password_recently_used(pwd_rules, pwd_plaintext)
+    |> verify_password_length(pwd_rules, plaintext_pwd)
+    |> verify_password_req_upper_case(pwd_rules, plaintext_pwd)
+    |> verify_password_req_lower_case(pwd_rules, plaintext_pwd)
+    |> verify_password_req_numbers(pwd_rules, plaintext_pwd)
+    |> verify_password_req_symbols(pwd_rules, plaintext_pwd)
+    |> verify_password_no_compromised(pwd_rules, plaintext_pwd)
+    |> verify_password_recently_used(pwd_rules, plaintext_pwd)
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
