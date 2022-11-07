@@ -75,6 +75,8 @@ defmodule MsbmsSystAuthentication.MixProject do
             "../../../../documentation/technical/app_server/msbms_syst_instance_mgr"
         ],
         groups_for_functions: [
+          "API - Authenticator Management": &(&1[:section] == :authenticator_management),
+          "API - Authentication": &(&1[:section] == :authentication),
           "API - Access Accounts": &(&1[:section] == :access_account_data),
           "API - Access Account Instance Assocs":
             &(&1[:section] == :access_account_instance_assoc_data),
