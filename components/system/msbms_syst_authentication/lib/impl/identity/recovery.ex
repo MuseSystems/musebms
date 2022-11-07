@@ -19,6 +19,11 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Recovery do
 
   require Logger
 
+  # The Recovery process currently only supports Password Credential recovery
+  # and there are number of places in this module and related modules where this
+  # assumption is coded directly.  While it is conceivable that we would want
+  # other recoverable credential types, we simply aren't supporting it yet.
+  #
   # Recovery identities are sufficiently different from other kinds of
   # identities that we shouldn't implement the
   # MsbmsSystAuthentication.Impl.Identity behaviour here, though we should be
@@ -26,13 +31,28 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Recovery do
 
   @moduledoc false
 
-  @spec request_identity_recovery(Types.identity_id() | Data.SystIdentities.t(), Keyword.t()) ::
+  @default_expiration_hours 24
+  @default_identity_token_length 40
+  @default_identity_tokens :mixed_alphanum
+
+  @spec request_credential_recovery(Types.access_account_id(), Keyword.t()) ::
           {:ok, Data.SystIdentities.t()} | {:error, MsbmsSystError.t() | Exception.t()}
-  def request_identity_recovery(target_identity_id, opts) when is_binary(target_identity_id) do
-    from(i in Data.SystIdentities, where: i.id == ^target_identity_id)
-    |> MsbmsSystDatastore.one!()
-    |> request_identity_recovery(opts)
+  def request_credential_recovery(access_account_id, opts) when is_binary(access_account_id) do
+    case access_account_credential_recoverable!(access_account_id) do
+      :ok ->
+        {:ok, create_recovery_identity(access_account_id, opts)}
+
+      error ->
+        raise MsbmsSystError,
+          code: :undefined_error,
+          message: "Failure creating Recovery Identity by ID.",
+          cause: error
+    end
   rescue
+    error in [MsbmsSystError] ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+      {:error, error}
+
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
@@ -46,30 +66,14 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Recovery do
       }
   end
 
-  def request_identity_recovery(%Data.SystIdentities{} = target_identity, opts) do
+  defp create_recovery_identity(access_account_id, opts) do
     opts =
       MsbmsSystUtils.resolve_options(opts,
-        expiration_hours: 24,
-        identity_token_length: 40,
-        identity_tokens: :mixed_alphanum
+        expiration_hours: @default_expiration_hours,
+        identity_token_length: @default_identity_token_length,
+        identity_tokens: @default_identity_tokens
       )
 
-    {:ok, create_recovery_identity(target_identity, opts)}
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {
-        :error,
-        %MsbmsSystError{
-          code: :undefined_error,
-          message: "Failure creating Recovery Identity.",
-          cause: error
-        }
-      }
-  end
-
-  defp create_recovery_identity(target_identity, opts) do
     generated_account_identifier =
       MsbmsSystUtils.get_random_string(opts[:identity_token_length], opts[:identity_tokens])
 
@@ -77,13 +81,54 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Recovery do
     date_expires = DateTime.add(date_now, opts[:expiration_hours] * 60 * 60)
 
     recovery_identity_params = %{
-      access_account_id: target_identity.access_account_id,
+      access_account_id: access_account_id,
       identity_type_name: "identity_types_sysdef_password_recovery",
       account_identifier: generated_account_identifier,
       identity_expires: date_expires
     }
 
     Helpers.create_identity(recovery_identity_params, create_validated: false)
+  end
+
+  @spec access_account_credential_recoverable!(Types.access_account_id()) ::
+          :ok | :not_found | :existing_recovery
+  def access_account_credential_recoverable!(access_account_id)
+      when is_binary(access_account_id) do
+    identity_qry =
+      from(i in Data.SystIdentities,
+        join: ei in assoc(i, :identity_type),
+        where:
+          i.access_account_id == ^access_account_id and
+            ei.internal_name == "identity_types_sysdef_password_recovery",
+        select: %{identity_id: i.id, identity_access_account_id: i.access_account_id}
+      )
+
+    credential_qry =
+      from(c in Data.SystCredentials,
+        join: ei in assoc(c, :credential_type),
+        where:
+          c.access_account_id == ^access_account_id and
+            ei.internal_name == "credential_types_sysdef_password",
+        select: %{credential_id: c.id, credential_access_account_id: c.access_account_id}
+      )
+
+    from(aa in Data.SystAccessAccounts,
+      left_join: i in subquery(identity_qry),
+      on: i.identity_access_account_id == aa.id,
+      left_join: c in subquery(credential_qry),
+      on: c.credential_access_account_id == aa.id,
+      where: aa.id == ^access_account_id,
+      select: %{
+        password_credential_exists: not is_nil(c.credential_access_account_id),
+        recovery_underway: not is_nil(i.identity_access_account_id)
+      }
+    )
+    |> MsbmsSystDatastore.one!()
+    |> case do
+      %{recovery_underway: true} -> :existing_recovery
+      %{password_credential_exists: false} -> :not_found
+      _ -> :ok
+    end
   end
 
   @spec identify_access_account(
@@ -100,9 +145,9 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Recovery do
     |> MsbmsSystDatastore.one()
   end
 
-  @spec confirm_identity_recovery(Data.SystIdentities.t()) ::
+  @spec confirm_credential_recovery(Data.SystIdentities.t()) ::
           :ok | {:error, MsbmsSystError.t()}
-  def confirm_identity_recovery(recovery_identity) do
+  def confirm_credential_recovery(recovery_identity) do
     :ok = Helpers.delete_record(recovery_identity)
   rescue
     error ->
@@ -118,9 +163,9 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Recovery do
       }
   end
 
-  @spec revoke_identity_recovery(Data.SystIdentities.t()) ::
+  @spec revoke_credential_recovery(Data.SystIdentities.t()) ::
           :ok | {:error, MsbmsSystError.t()}
-  def revoke_identity_recovery(recovery_identity) do
+  def revoke_credential_recovery(recovery_identity) do
     :ok = Helpers.delete_record(recovery_identity)
   rescue
     error ->
