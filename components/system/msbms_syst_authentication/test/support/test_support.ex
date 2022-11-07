@@ -70,7 +70,11 @@ defmodule TestSupport do
   @migration_unit_test_ds_type "cmp_msbms_syst_authentication_unit_test"
   @migration_integration_test_ds_type "cmp_msbms_syst_authentication_integration_test"
 
+  @mnesia_database_location Path.join([".mnesia"])
+
   def setup_testing_database(test_kind) do
+    setup_rate_limiter(test_kind)
+
     :ok = build_migrations(test_kind)
 
     datastore_options = @datastore_options
@@ -91,7 +95,22 @@ defmodule TestSupport do
     {:ok, _, _} = MsbmsSystDatastore.start_datastore(datastore_options)
   end
 
+  defp setup_rate_limiter(:unit_testing), do: MsbmsSystRateLimiter.init_rate_limiter()
+
+  defp setup_rate_limiter(:integration_testing) do
+    File.mkdir_p!(@mnesia_database_location)
+    Application.put_env(:mnesia, :dir, @mnesia_database_location)
+
+    :mnesia.stop()
+    :mnesia.create_schema([node()])
+    :mnesia.start()
+
+    MsbmsSystRateLimiter.init_rate_limiter()
+  end
+
   def cleanup_testing_database(test_kind) do
+    cleanup_rate_limiter(test_kind)
+
     datastore_type = get_datastore_type(test_kind)
     datastore_options = @datastore_options
 
@@ -99,6 +118,9 @@ defmodule TestSupport do
     :ok = MsbmsSystDatastore.drop_datastore(datastore_options)
     File.rm_rf!(Path.join(["priv/database", datastore_type]))
   end
+
+  defp cleanup_rate_limiter(:integration_testing), do: File.rm_rf!(@mnesia_database_location)
+  defp cleanup_rate_limiter(_), do: nil
 
   def get_testing_datastore_context_id, do: @datastore_context_name
 

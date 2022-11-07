@@ -110,7 +110,9 @@ defmodule MsbmsSystAuthentication.MixProject do
     [
       extra_applications: [
         :logger,
-        :crypto
+        :crypto,
+        :mnesia,
+        :msbms_syst_rate_limiter
       ]
     ]
   end
