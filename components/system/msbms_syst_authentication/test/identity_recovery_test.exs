@@ -20,18 +20,9 @@ defmodule IdentityRecoveryTest do
 
   alias MsbmsSystDatastore.DbTypes
 
-  test "Request Identity Recovery by target Identity ID" do
-    target_identity =
-      from(
-        aa in Data.SystAccessAccounts,
-        join: i in assoc(aa, :identities),
-        join: ei in assoc(i, :identity_type),
-        select: i,
-        where:
-          aa.internal_name == "identity_recovery_request_test_accnt" and
-            ei.internal_name == "identity_types_sysdef_email"
-      )
-      |> MsbmsSystDatastore.one!()
+  test "Can successfully Request Identity Recovery" do
+    {:ok, access_account_id} =
+      Impl.AccessAccount.get_access_account_id_by_name("identity_recovery_request_test_accnt")
 
     # Note that the DateTime comparisons are given a generous tolerance of
     # +/- 30 seconds since we really can't test an exact value.  The tolerance
@@ -51,7 +42,7 @@ defmodule IdentityRecoveryTest do
     }
 
     assert {:ok, recovery_identity} =
-             Impl.Identity.Recovery.request_identity_recovery(target_identity.id, [])
+             Impl.Identity.Recovery.request_credential_recovery(access_account_id, [])
 
     assert :rcl = DbTypes.compare(recovery_identity.identity_expires, expires_datetime_range)
 
@@ -74,7 +65,7 @@ defmodule IdentityRecoveryTest do
     }
 
     assert {:ok, recovery_identity} =
-             Impl.Identity.Recovery.request_identity_recovery(target_identity.id,
+             Impl.Identity.Recovery.request_credential_recovery(access_account_id,
                expiration_hours: hours_before_expire
              )
 
@@ -99,7 +90,7 @@ defmodule IdentityRecoveryTest do
     token_length_override = :rand.uniform(60) + 10
 
     assert {:ok, recovery_identity} =
-             Impl.Identity.Recovery.request_identity_recovery(target_identity.id,
+             Impl.Identity.Recovery.request_credential_recovery(access_account_id,
                identity_token_length: token_length_override
              )
 
@@ -122,7 +113,7 @@ defmodule IdentityRecoveryTest do
     }
 
     assert {:ok, recovery_identity} =
-             Impl.Identity.Recovery.request_identity_recovery(target_identity.id,
+             Impl.Identity.Recovery.request_credential_recovery(access_account_id,
                identity_tokens: 'ABC'
              )
 
@@ -135,122 +126,37 @@ defmodule IdentityRecoveryTest do
     :ok = Impl.Identity.delete_identity(recovery_identity)
   end
 
-  test "Request Identity Recovery by target Identity" do
-    target_identity =
-      from(
-        aa in Data.SystAccessAccounts,
-        join: i in assoc(aa, :identities),
-        join: ei in assoc(i, :identity_type),
-        select: i,
-        where:
-          aa.internal_name == "identity_recovery_request_test_accnt" and
-            ei.internal_name == "identity_types_sysdef_email"
+  test "Can test if Access Account is recoverable" do
+    {:ok, recoverable_access_account_id} =
+      Impl.AccessAccount.get_access_account_id_by_name(
+        "identity_recovery_is_recoverable_test_accnt"
       )
-      |> MsbmsSystDatastore.one!()
 
-    # Note that the DateTime comparisons are given a generous tolerance of
-    # +/- 30 seconds since we really can't test an exact value.  The tolerance
-    # is almost certainly unnecessarily wide, but small enough that any passing
-    # value would be sufficient for the expiration business requirement.
-
-    # default
-
-    start_time = DateTime.utc_now()
-
-    expires_start_time = DateTime.add(start_time, 24 * 60 * 60 - 30)
-    expires_end_time = DateTime.add(start_time, 24 * 60 * 60 + 30)
-
-    expires_datetime_range = %DbTypes.DateTimeRange{
-      lower: expires_start_time,
-      upper: expires_end_time
-    }
-
-    assert {:ok, recovery_identity} =
-             Impl.Identity.Recovery.request_identity_recovery(target_identity, [])
-
-    assert :rcl = DbTypes.compare(recovery_identity.identity_expires, expires_datetime_range)
-
-    assert String.length(recovery_identity.account_identifier) == 40
-
-    :ok = Impl.Identity.delete_identity(recovery_identity)
-
-    # expiration_hours
-
-    start_time = DateTime.utc_now()
-
-    hours_before_expire = :rand.uniform(60)
-
-    expires_start_time = DateTime.add(start_time, hours_before_expire * 60 * 60 - 30)
-    expires_end_time = DateTime.add(start_time, hours_before_expire * 60 * 60 + 30)
-
-    expires_datetime_range = %DbTypes.DateTimeRange{
-      lower: expires_start_time,
-      upper: expires_end_time
-    }
-
-    assert {:ok, recovery_identity} =
-             Impl.Identity.Recovery.request_identity_recovery(target_identity,
-               expiration_hours: hours_before_expire
+    assert :ok =
+             Impl.Identity.Recovery.access_account_credential_recoverable!(
+               recoverable_access_account_id
              )
 
-    assert :rcl = DbTypes.compare(recovery_identity.identity_expires, expires_datetime_range)
+    {:ok, no_pwd_access_account_id} =
+      Impl.AccessAccount.get_access_account_id_by_name("identity_recovery_no_password_test_accnt")
 
-    assert String.length(recovery_identity.account_identifier) == 40
-
-    :ok = Impl.Identity.delete_identity(recovery_identity)
-
-    # identity_token_length
-
-    start_time = DateTime.utc_now()
-
-    expires_start_time = DateTime.add(start_time, 24 * 60 * 60 - 30)
-    expires_end_time = DateTime.add(start_time, 24 * 60 * 60 + 30)
-
-    expires_datetime_range = %DbTypes.DateTimeRange{
-      lower: expires_start_time,
-      upper: expires_end_time
-    }
-
-    token_length_override = :rand.uniform(60) + 10
-
-    assert {:ok, recovery_identity} =
-             Impl.Identity.Recovery.request_identity_recovery(target_identity,
-               identity_token_length: token_length_override
+    assert :not_found =
+             Impl.Identity.Recovery.access_account_credential_recoverable!(
+               no_pwd_access_account_id
              )
 
-    assert :rcl = DbTypes.compare(recovery_identity.identity_expires, expires_datetime_range)
+    {:ok, existing_access_account_id} =
+      Impl.AccessAccount.get_access_account_id_by_name(
+        "identity_recovery_existing_recovery_test_accnt"
+      )
 
-    assert String.length(recovery_identity.account_identifier) == token_length_override
-
-    :ok = Impl.Identity.delete_identity(recovery_identity)
-
-    # identity_tokens
-
-    start_time = DateTime.utc_now()
-
-    expires_start_time = DateTime.add(start_time, 24 * 60 * 60 - 30)
-    expires_end_time = DateTime.add(start_time, 24 * 60 * 60 + 30)
-
-    expires_datetime_range = %DbTypes.DateTimeRange{
-      lower: expires_start_time,
-      upper: expires_end_time
-    }
-
-    assert {:ok, recovery_identity} =
-             Impl.Identity.Recovery.request_identity_recovery(target_identity,
-               identity_tokens: 'ABC'
+    assert :existing_recovery =
+             Impl.Identity.Recovery.access_account_credential_recoverable!(
+               existing_access_account_id
              )
-
-    assert :rcl = DbTypes.compare(recovery_identity.identity_expires, expires_datetime_range)
-
-    assert String.length(recovery_identity.account_identifier) == 40
-
-    assert not (recovery_identity.account_identifier =~ ~r/[^A-C]/)
-
-    :ok = Impl.Identity.delete_identity(recovery_identity)
   end
 
-  test "Identify Owned Access Account" do
+  test "Can identify Owned Access Account" do
     recovery_identity =
       from(
         i in Data.SystIdentities,
@@ -277,7 +183,7 @@ defmodule IdentityRecoveryTest do
            ) == nil
   end
 
-  test "Identify Unowned Access Account" do
+  test "Can identify Unowned Access Account" do
     recovery_identity =
       from(
         i in Data.SystIdentities,
@@ -299,7 +205,7 @@ defmodule IdentityRecoveryTest do
              )
   end
 
-  test "Can Confirm Recovery" do
+  test "Can confirm Recovery" do
     # The DateTime.truncate/2 call is needed here since DateTime.utc_now/0
     # produces a timestamp with a greater resolution than that returned from the
     # database. This can lead to validation_time seemingly being later than the
@@ -317,7 +223,7 @@ defmodule IdentityRecoveryTest do
       )
       |> MsbmsSystDatastore.one!()
 
-    assert :ok = Impl.Identity.Recovery.confirm_identity_recovery(target_identity)
+    assert :ok = Impl.Identity.Recovery.confirm_credential_recovery(target_identity)
 
     no_identity =
       from(
@@ -334,7 +240,7 @@ defmodule IdentityRecoveryTest do
     assert no_identity == nil
   end
 
-  test "Can Revoke Recovery Identity" do
+  test "Can revoke Recovery Identity" do
     target_identity =
       from(
         aa in Data.SystAccessAccounts,
@@ -347,7 +253,7 @@ defmodule IdentityRecoveryTest do
       )
       |> MsbmsSystDatastore.one!()
 
-    assert :ok = Impl.Identity.Recovery.revoke_identity_recovery(target_identity)
+    assert :ok = Impl.Identity.Recovery.revoke_credential_recovery(target_identity)
 
     no_identity =
       from(
