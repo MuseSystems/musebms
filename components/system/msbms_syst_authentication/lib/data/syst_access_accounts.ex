@@ -63,6 +63,7 @@ defmodule MsbmsSystAuthentication.Data.SystAccessAccounts do
     belongs_to(:owning_owner, MsbmsSystInstanceMgr.Data.SystOwners)
 
     has_many(:identities, Data.SystIdentities, foreign_key: :access_account_id)
+    has_many(:credentials, Data.SystCredentials, foreign_key: :access_account_id)
 
     has_many(:access_account_instance_assocs, Data.SystAccessAccountInstanceAssocs,
       foreign_key: :access_account_id
