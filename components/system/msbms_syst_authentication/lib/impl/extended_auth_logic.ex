@@ -711,7 +711,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
     Map.merge(auth_state, %{
       applied_network_rule: net_rule,
       status: failed_status,
-      pending_operations: [:check_host_rate_limit]
+      pending_operations: []
     })
   end
 
