@@ -806,6 +806,51 @@ defmodule MsbmsSystAuthentication do
           {:ok, :deleted | :not_found} | {:error, MsbmsSystError.t() | Exception.t()}
   defdelegate delete_owner_password_rules(owner_id), to: Impl.PasswordRules
 
+  @doc section: :password_rule_data
+  @doc """
+  Tests a candidate password against the effective Password Rules for a given
+  Access Account.
+
+  Prior to attempting to save a Password Credential, it should be tested for
+  compliance with the Global Password Rules and any Owner Password Rules that
+  exist for the Owner of the Access Account.  This function performs that test
+  and will return all of the violations detected.  If no issues are detected,
+  a success tuple with a value of empty list will be returned (`{:ok, []}`).
+
+  Note that this function is recommended to run prior to attempting to save a
+  Password Credential, but is not required.  Any function which can save a new
+  password to the database will independently test the candidate password
+  against the effective Password Rules prior to saving the Credential, erroring
+  on any invalid password.
+
+  ## Parameters
+
+    * `access_account_id` - the record ID of the Access Account for whom to
+    perform the test.  The applicable Password Rules may derive from the
+    Access Account Owner if the Access Account is in fact owned.
+
+    * `plaintext_pwd` - the candidate Password to test against the rules.
+
+  ## Examples
+
+    A successful password test.
+
+      iex> {:ok, access_account_id} =
+      ...>   MsbmsSystAuthentication.get_access_account_id_by_name("example_accnt")
+      iex> MsbmsSystAuthentication.test_credential(access_account_id, "A Passing Password.")
+      {:ok, []}
+
+    An invalid password test.
+
+      iex> {:ok, access_account_id} =
+      ...>   MsbmsSystAuthentication.get_access_account_id_by_name("example_accnt")
+      iex> MsbmsSystAuthentication.test_credential(access_account_id, "short")
+      {:ok, [password_rule_length_min: 8]}
+  """
+  @spec test_credential(Types.access_account_id() | Types.password_rule(), Types.credential()) ::
+          {:ok, Keyword.t(Types.password_rule_violations())}
+          | {:error, MsbmsSystError.t() | Exception.t()}
+  defdelegate test_credential(access_account_id, plaintext_pwd), to: Impl.Credential.Password
 
   # ==============================================================================================
   # ==============================================================================================
