@@ -194,4 +194,29 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Recovery do
         }
       }
   end
+
+  @spec get_recovery_identity_for_access_account_id(Types.access_account_id()) ::
+          {:ok, Data.SystIdentities.t() | nil} | {:error, MsbmsSystError.t()}
+  def get_recovery_identity_for_access_account_id(access_account_id) do
+    from(i in Data.SystIdentities,
+      join: ei in assoc(i, :identity_type),
+      where:
+        i.access_account_id == ^access_account_id and
+          ei.internal_name == "identity_types_sysdef_password_recovery"
+    )
+    |> MsbmsSystDatastore.one()
+    |> then(&{:ok, &1})
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {
+        :error,
+        %MsbmsSystError{
+          code: :undefined_error,
+          message: "Failure retrieving Recovery Identity by Access Account ID.",
+          cause: error
+        }
+      }
+  end
 end
