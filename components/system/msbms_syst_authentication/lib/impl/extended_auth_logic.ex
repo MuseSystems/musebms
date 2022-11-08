@@ -132,6 +132,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
     preliminary_auth_state =
       auth_state
       |> maybe_start_email_password_authentication()
+      |> maybe_clear_require_instance(opts[:instance_id])
       |> confirm_identifier_rate_limit(opts)
       |> confirm_global_network_rules()
       |> confirm_email_identity()
@@ -172,6 +173,20 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
   end
 
   defp maybe_start_email_password_authentication(auth_state), do: auth_state
+
+  defp maybe_clear_require_instance(%{status: :pending} = auth_state, instance_id)
+       when is_binary(instance_id) do
+    case Enum.member?(auth_state.pending_operations, :require_instance) do
+      true ->
+        new_ops = List.delete(auth_state.pending_operations, :require_instance)
+        Map.merge(auth_state, %{pending_operations: new_ops, instance_id: instance_id})
+
+      false ->
+        auth_state
+    end
+  end
+
+  defp maybe_clear_require_instance(auth_state, _instance_id), do: auth_state
 
   defp extended_email_password_ops_required?(auth_state) do
     extended_operations = MapSet.new(@email_password_extended_auth_ops)
