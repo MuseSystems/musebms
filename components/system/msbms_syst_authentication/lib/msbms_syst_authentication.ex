@@ -1859,6 +1859,38 @@ defmodule MsbmsSystAuthentication do
                 opts \\ []
               ),
               to: Impl.ExtendedMgmtLogic
+
+  @doc section: :authenticator_management
+  @doc """
+  """
+  @spec request_identity_validation(Types.identity_id() | Data.SystIdentities.t(), Keyword.t()) ::
+          {:ok, Types.authenticator_result()} | {:error, MsbmsSystError.t() | Exception.t()}
+  defdelegate request_identity_validation(target_identity, opts \\ []), to: Impl.ExtendedMgmtLogic
+
+  @doc section: :authenticator_management
+  @doc """
+  Revokes a Validation Authenticator ("Validator") issued for the requested
+  Identity.
+
+  While Validators will expire on their own if not confirmed first, there are
+  cases where Validators should be revoked prior to that time, such as if the
+  Validator communication to the user has been lost and a new Validator needs to
+  be generated.
+
+  The return value is a result tuple which indicates whether or not the
+  revocation happened (`{:ok, :deleted}`), if the Validator was not found
+  (`{:ok, :not_found}`), or an error tuple in any other circumstance.
+
+  ## Parameters
+
+    * `target_identity_id` - the record ID of the Identity record which the
+    Validator was meant to validate.  So if the Validator to revoke was for an
+    Email Identity, this value would be the ID of the Email Identity and not the
+    Validation Identity.
+  """
+  @spec revoke_validator_for_identity_id(Types.identity_id()) ::
+          {:ok, :deleted | :not_found} | {:error, MsbmsSystError.t() | Exception.t()}
+  defdelegate revoke_validator_for_identity_id(target_identity_id), to: Impl.ExtendedMgmtLogic
   # ==============================================================================================
   # ==============================================================================================
   #
@@ -1887,4 +1919,22 @@ defmodule MsbmsSystAuthentication do
           {:ok, Types.authentication_state()} | {:error, MsbmsSystError.t()}
   defdelegate authenticate_email_password(authentication_state, opts \\ []),
     to: Impl.ExtendedAuthLogic
+
+  @doc section: :authentication
+  @doc """
+  """
+  @spec authenticate_validation_token(
+          Types.identifier(),
+          Types.credential(),
+          IP.addr(),
+          Keyword.t()
+        ) ::
+          {:ok, Types.authentication_state()} | {:error, MsbmsSystError.t()}
+  defdelegate authenticate_validation_token(
+                identifier,
+                plaintext_token,
+                host_address,
+                opts \\ []
+              ),
+              to: Impl.ExtendedAuthLogic
 end
