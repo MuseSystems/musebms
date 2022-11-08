@@ -104,7 +104,6 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
           Keyword.t()
         ) ::
           {:ok, Types.authentication_state()} | {:error, MsbmsSystError.t()}
-
   def authenticate_email_password(email_addr, pwd_text, host_addr, opts) do
     opts = MsbmsSystUtils.resolve_options(opts, owning_owner_id: nil, instance_id: nil)
 
