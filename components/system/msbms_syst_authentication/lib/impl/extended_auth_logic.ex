@@ -63,6 +63,38 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
     :require_credential_reset
   ]
 
+  @email_password_operations [
+    :check_global_network_rules,
+    :check_identifier_rate_limit,
+    :check_identity,
+    :check_credential,
+    :check_instance,
+    :check_instance_network_rules
+  ]
+
+  @api_token_operations [
+    :check_global_network_rules,
+    :check_identifier_rate_limit,
+    :check_identity,
+    :check_credential,
+    :check_instance,
+    :check_instance_network_rules
+  ]
+
+  @validation_token_operations [
+    :check_global_network_rules,
+    :check_identifier_rate_limit,
+    :check_identity,
+    :check_credential
+  ]
+
+  @recovery_token_operations [
+    :check_global_network_rules,
+    :check_identifier_rate_limit,
+    :check_identity,
+    :check_credential
+  ]
+
   @moduledoc false
 
   @spec authenticate_email_password(
@@ -133,14 +165,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
   end
 
   defp maybe_start_email_password_authentication(%{status: :not_started} = auth_state) do
-    base_ops = [
-      :check_global_network_rules,
-      :check_identifier_rate_limit,
-      :check_identity,
-      :check_credential,
-      :check_instance,
-      :check_instance_network_rules
-    ]
+    base_ops = @email_password_operations
 
     all_ops = if auth_state.instance_id == nil, do: [:require_instance | base_ops], else: base_ops
 
@@ -215,14 +240,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
       identifier: identifier,
       owning_owner_id: opts[:owning_owner_id],
       plaintext_credential: token,
-      pending_operations: [
-        :check_global_network_rules,
-        :check_identifier_rate_limit,
-        :check_identity,
-        :check_credential,
-        :check_instance,
-        :check_instance_network_rules
-      ]
+      pending_operations: @api_token_operations
     }
 
     authenticate_api_token(pending_auth_state, opts)
@@ -312,12 +330,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
       identifier: identifier,
       owning_owner_id: opts[:owning_owner_id],
       plaintext_credential: token,
-      pending_operations: [
-        :check_global_network_rules,
-        :check_identifier_rate_limit,
-        :check_identity,
-        :check_credential
-      ]
+      pending_operations: @validation_token_operations
     }
 
     authenticate_validation_token(pending_auth_state, opts)
@@ -424,12 +437,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
       identifier: identifier,
       owning_owner_id: opts[:owning_owner_id],
       plaintext_credential: token,
-      pending_operations: [
-        :check_global_network_rules,
-        :check_identifier_rate_limit,
-        :check_identity,
-        :check_credential
-      ]
+      pending_operations: @recovery_token_operations
     }
 
     authenticate_recovery_token(pending_auth_state, opts)
