@@ -177,13 +177,13 @@ defmodule MsbmsSystAuthentication do
   specific Instance.
 
   The invitation process creates a `syst_access_account_instance_assocs` record
-  for the requested Access Account, Instance, and Credential Type and sets the
-  `invitation_issued` field to the current date/time.  Re-invitation will
-  update an existing `syst_access_account_instance_assocs` record resetting
-  invite data such as the invitation expiration date or resetting the declined
-  state if the record was previously declined by the Access Account holder.
-  Once a `syst_access_account_instance_assocs` record is accepted, it may not
-  be re-invited again using this process until the record is revoked (deleted).
+  for the requested Access Account and Instance and sets the `invitation_issued`
+  field to the current date/time.  Re-invitation will update an existing
+  `syst_access_account_instance_assocs` record resetting invite data such as the
+  invitation expiration date or resetting the declined state if the record was
+  previously declined by the Access Account holder. Once a
+  `syst_access_account_instance_assocs` record is accepted, it may not be re-
+  invited again using this process until the record is revoked (deleted).
 
   `syst_access_account_instance_assocs` are unique to the Access Account and
   Instance combination and only one such record may exist for that combination
