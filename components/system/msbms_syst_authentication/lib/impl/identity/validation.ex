@@ -184,7 +184,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Validation do
       true ->
         raise MsbmsSystError,
           message: """
-          The requested action may not be taken on a validation Identity.
+          The requested action may not be taken on a validation Identity
           record which has expired."
           """,
           code: :undefined_error,
