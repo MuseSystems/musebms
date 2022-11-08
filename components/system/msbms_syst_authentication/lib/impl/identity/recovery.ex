@@ -38,21 +38,10 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Recovery do
   @spec request_credential_recovery(Types.access_account_id(), Keyword.t()) ::
           {:ok, Data.SystIdentities.t()} | {:error, MsbmsSystError.t() | Exception.t()}
   def request_credential_recovery(access_account_id, opts) when is_binary(access_account_id) do
-    case access_account_credential_recoverable!(access_account_id) do
-      :ok ->
-        {:ok, create_recovery_identity(access_account_id, opts)}
-
-      error ->
-        raise MsbmsSystError,
-          code: :undefined_error,
-          message: "Failure creating Recovery Identity by ID.",
-          cause: error
-    end
+    access_account_id
+    |> access_account_credential_recoverable!()
+    |> maybe_create_recovery_identity(access_account_id, opts)
   rescue
-    error in [MsbmsSystError] ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-      {:error, error}
-
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
@@ -60,10 +49,35 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Recovery do
         :error,
         %MsbmsSystError{
           code: :undefined_error,
-          message: "Failure creating Recovery Identity by ID.",
+          message: "Failure creating Recovery Identity.",
           cause: error
         }
       }
+  end
+
+  defp maybe_create_recovery_identity(:ok, access_account_id, opts),
+    do: {:ok, create_recovery_identity(access_account_id, opts)}
+
+  defp maybe_create_recovery_identity(:not_found, _, _) do
+    {
+      :error,
+      %MsbmsSystError{
+        code: :undefined_error,
+        message: "Password Credential unrecoverable because it doesn't exist.",
+        cause: :not_found
+      }
+    }
+  end
+
+  defp maybe_create_recovery_identity(:existing_recovery, _, _) do
+    {
+      :error,
+      %MsbmsSystError{
+        code: :undefined_error,
+        message: "Password Credential is already being recovered.",
+        cause: :existing_recovery
+      }
+    }
   end
 
   defp create_recovery_identity(access_account_id, opts) do
