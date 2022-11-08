@@ -431,7 +431,6 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
           Keyword.t()
         ) ::
           {:ok, Types.authentication_state()} | {:error, MsbmsSystError.t()}
-
   def authenticate_recovery_token(identifier, token, host_addr, opts) do
     opts = MsbmsSystUtils.resolve_options(opts, owning_owner_id: nil)
 
@@ -780,6 +779,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
 
   defp process_host_rate_limit_result({:deny, _}, auth_state) do
     Impl.NetworkRules.create_disallowed_host(auth_state.host_address)
+
     Map.merge(auth_state, %{status: :rejected, pending_operations: []})
   end
 
