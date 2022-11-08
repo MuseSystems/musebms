@@ -386,7 +386,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
           auth_state.owning_owner_id
         )
 
-      process_identity(auth_state, identity)
+      process_identity(auth_state, identity, true)
     else
       auth_state
     end
@@ -493,7 +493,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
           auth_state.owning_owner_id
         )
 
-      process_identity(auth_state, identity)
+      process_identity(auth_state, identity, true)
     else
       auth_state
     end
@@ -535,7 +535,15 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
   # General Functionality
   #
 
-  defp process_identity(auth_state, nil = _identity) do
+  # Some Identity types are not subject to a validation process.  The
+  # syst_identities record for those Identities will record a `validated` value
+  # of NULL even though they are valid for use.  Forcing process_identity/3 to
+  # assume such an Identity is validated is the purpose of the `validated`
+  # parameter in `process_identity/3`.
+
+  defp process_identity(auth_state, identity), do: process_identity(auth_state, identity, false)
+
+  defp process_identity(auth_state, nil = _identity, _validated) do
     Impl.Hash.fake_credential_hash_verify()
 
     Map.merge(auth_state, %{
@@ -544,15 +552,17 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
     })
   end
 
-  defp process_identity(auth_state, %Data.SystIdentities{} = identity) do
+  defp process_identity(auth_state, %Data.SystIdentities{} = identity, validated) do
     identity_expired =
       if identity.identity_expires == nil,
         do: false,
         else: DbTypes.DateTime.compare(identity.identity_expires, DateTime.utc_now()) == :lt
 
+    identity_validated = identity.validated || validated
+
     status =
       cond do
-        identity.validated == nil -> :rejected_validation
+        identity_validated == false -> :rejected_validation
         identity_expired -> :rejected_identity_expired
         true -> auth_state.status
       end
