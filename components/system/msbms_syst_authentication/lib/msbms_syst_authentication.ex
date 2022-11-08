@@ -1784,6 +1784,81 @@ defmodule MsbmsSystAuthentication do
   # ==============================================================================================
   # ==============================================================================================
 
+  @doc section: :authenticator_management
+  @doc """
+  Creates an Email/Password Authenticator for an Access Account.
+
+  This function creates an Email Identity, Password Credential, and optionally
+  an Identity Validation Authenticator (created by default).  This function is
+  typically used on adding a new Access Account to the system.  The process is
+  wrapped in a database transaction so if any one part of the Authenticator
+  creation process fails, all parts should fail.
+
+  This function will fail if you attempt to create an Authenticator of this
+  type for an Access Account which already has one.  In the case of Email
+  Identity replacement, use the specific Identity process to create a new Email
+  Identity instead of this more expansive process.
+
+  On successful save of the Authenticator records, a success tuple is returned
+  where the value element of the tuple will include basic data that might be
+  required for later processing.
+
+  If Email/Password Authenticator was created requiring validation (the
+  default), the success tuple's value element will include data required to
+  process the Validation Authenticator:
+
+  ```elixir
+  {:ok,
+    %{
+      access_account_id: "c3c7fafd-5c45-11ed-ab46-f3d9be809bf9",
+      account_identifier: "SomeEmail@somedomain.com",
+      validation_credential: "Uo0kPoCOZd004g4X7IFWg3iJ7pz7XiBRBDkBGGiu",
+      validation_identifier: "5D7i6XmmH0HpYL72tePlEdSUMVL9ygMrEsDSGoTE"
+  }}
+  ```
+
+  Note that this is the only time the Validation Authenticator is provided and
+  the Validation Credential plaintext is not recoverable after this return value
+  is provided.
+
+  When a Validation Authenticator is not created, no validation data will be
+  included in the result:
+
+  ```elixir
+  {:ok,
+    %{
+      access_account_id: "c3c7fafd-5c45-11ed-ab46-f3d9be809bf9",
+      account_identifier: "SomeEmail@somedomain.com"
+  }}
+  ```
+
+  ## Parameters
+
+    * `access_account_id` - the Access Account for whom the Email/Password
+    Authenticator is being created.
+
+    * `email_address` - the email address which will identify the Access
+    Account.
+
+    * `plaintext_pwd` - the candidate password for use a the Credential in
+    Email/Password authentication processes.
+
+  """
+  @spec create_authenticator_email_password(
+          Types.access_account_id(),
+          Types.account_identifier(),
+          Types.credential(),
+          Keyword.t()
+        ) ::
+          {:ok, Types.authenticator_result()}
+          | {:error, MsbmsSystError.t() | Exception.t()}
+  defdelegate create_authenticator_email_password(
+                access_account_id,
+                email_address,
+                plaintext_pwd,
+                opts \\ []
+              ),
+              to: Impl.ExtendedMgmtLogic
   # ==============================================================================================
   # ==============================================================================================
   #
@@ -1791,4 +1866,25 @@ defmodule MsbmsSystAuthentication do
   #
   # ==============================================================================================
   # ==============================================================================================
+
+  @doc section: :authentication
+  @doc """
+  """
+  @spec authenticate_email_password(
+          Types.identifier(),
+          Types.credential(),
+          IP.addr(),
+          Keyword.t()
+        ) ::
+          {:ok, Types.authentication_state()} | {:error, MsbmsSystError.t()}
+  defdelegate authenticate_email_password(email_address, plaintext_pwd, host_address, opts \\ []),
+    to: Impl.ExtendedAuthLogic
+
+  @doc section: :authentication
+  @doc """
+  """
+  @spec authenticate_email_password(Types.authentication_state(), Keyword.t()) ::
+          {:ok, Types.authentication_state()} | {:error, MsbmsSystError.t()}
+  defdelegate authenticate_email_password(authentication_state, opts \\ []),
+    to: Impl.ExtendedAuthLogic
 end
