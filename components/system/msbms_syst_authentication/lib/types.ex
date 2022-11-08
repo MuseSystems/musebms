@@ -100,6 +100,14 @@ defmodule MsbmsSystAuthentication.Types do
           | :rejected
           | :authenticated
 
+  @type authenticator_result() :: %{
+          required(:access_account_id) => access_account_id(),
+          optional(:account_identifier) => account_identifier(),
+          optional(:credential) => credential(),
+          optional(:validation_identifier) => account_identifier() | nil,
+          optional(:validation_credential) => credential_id() | nil
+        }
+
   @type credential() :: String.t()
 
   @type credential_id() :: Ecto.UUID.t()
