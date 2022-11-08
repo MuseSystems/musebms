@@ -462,7 +462,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
     auth_state
     |> confirm_identifier_rate_limit(opts)
     |> confirm_global_network_rules()
-    |> confirm_recovery_identity()
+    |> confirm_credential_recovery()
     |> confirm_recovery_credential()
     |> confirm_host_rate_limit(opts)
     |> finalize_authentication()
@@ -484,7 +484,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
       }
   end
 
-  defp confirm_recovery_identity(auth_state) do
+  defp confirm_credential_recovery(auth_state) do
     if :check_identity in auth_state.pending_operations do
       identity =
         Impl.Identity.Recovery.identify_access_account(
@@ -517,7 +517,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
 
   defp confirm_successful_recovery(%{status: :authenticated} = auth_state) do
     with :ok <-
-           Impl.Identity.Recovery.confirm_identity_recovery(auth_state.identity) do
+           Impl.Identity.Recovery.confirm_credential_recovery(auth_state.identity) do
       auth_state
     else
       error ->
