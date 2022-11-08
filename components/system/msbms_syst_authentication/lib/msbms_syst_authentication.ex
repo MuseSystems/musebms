@@ -1891,6 +1891,29 @@ defmodule MsbmsSystAuthentication do
   @spec revoke_validator_for_identity_id(Types.identity_id()) ::
           {:ok, :deleted | :not_found} | {:error, MsbmsSystError.t() | Exception.t()}
   defdelegate revoke_validator_for_identity_id(target_identity_id), to: Impl.ExtendedMgmtLogic
+
+  @doc section: :authenticator_management
+  @doc """
+  """
+  @spec access_account_credential_recoverable!(Types.access_account_id()) ::
+          :ok | :not_found | :existing_recovery
+  defdelegate access_account_credential_recoverable!(access_account_id),
+    to: Impl.Identity.Recovery
+
+  @doc section: :authenticator_management
+  @doc """
+  """
+  @spec request_password_recovery(Types.access_account_id(), Keyword.t()) ::
+          {:ok, Types.authenticator_result()} | {:error, MsbmsSystError.t() | Exception.t()}
+  defdelegate request_password_recovery(access_account_id, opts), to: Impl.ExtendedMgmtLogic
+
+  @doc section: :authenticator_management
+  @doc """
+  """
+  @spec revoke_password_recovery(Types.access_account_id() | Data.SystIdentities.t()) ::
+          {:ok, :deleted | :not_found} | {:error, MsbmsSystError.t() | Exception.t()}
+  defdelegate revoke_password_recovery(access_account_id), to: Impl.ExtendedMgmtLogic
+
   # ==============================================================================================
   # ==============================================================================================
   #
@@ -1937,4 +1960,17 @@ defmodule MsbmsSystAuthentication do
                 opts \\ []
               ),
               to: Impl.ExtendedAuthLogic
+
+  @doc section: :authentication
+  @doc """
+  """
+  @spec authenticate_recovery_token(
+          Types.identifier(),
+          Types.credential(),
+          IP.addr(),
+          Keyword.t()
+        ) ::
+          {:ok, Types.authentication_state()} | {:error, MsbmsSystError.t()}
+  defdelegate authenticate_recovery_token(identifier, token, host_addr, opts \\ []),
+    to: Impl.ExtendedAuthLogic
 end
