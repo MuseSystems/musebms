@@ -49,14 +49,12 @@ defmodule MsbmsSystAuthentication.Impl.Identity.AccountCode do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      {
-        :error,
-        %MsbmsSystError{
-          code: :undefined_error,
-          message: "Failure creating Account Code Identity.",
-          cause: error
-        }
-      }
+      {:error,
+       %MsbmsSystError{
+         code: :undefined_error,
+         message: "Failure creating Account Code Identity.",
+         cause: error
+       }}
   end
 
   @spec identify_access_account(
@@ -105,13 +103,12 @@ defmodule MsbmsSystAuthentication.Impl.Identity.AccountCode do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      {
-        :error,
-        %MsbmsSystError{
-          code: :undefined_error,
-          message: "Failure resetting Recovery Identity.",
-          cause: error
-        }
+      {:error,
+       %MsbmsSystError{
+         code: :undefined_error,
+         message: "Failure retrieving Account Code.",
+         cause: error
+       }}
       }
   end
 
