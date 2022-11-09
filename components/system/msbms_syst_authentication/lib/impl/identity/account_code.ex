@@ -67,7 +67,11 @@ defmodule MsbmsSystAuthentication.Impl.Identity.AccountCode do
         ) :: Data.SystIdentities.t() | nil
   def identify_access_account(account_code, owner_id) when is_binary(account_code) do
     account_code
-    |> Impl.Identity.Helpers.get_identification_query("identity_types_sysdef_account", owner_id)
+    |> Impl.Identity.Helpers.get_identification_query(
+      "identity_types_sysdef_account",
+      owner_id,
+      :require_unvalidated
+    )
     |> MsbmsSystDatastore.one()
   end
 
