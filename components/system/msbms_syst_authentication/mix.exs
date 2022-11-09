@@ -77,6 +77,7 @@ defmodule MsbmsSystAuthentication.MixProject do
         groups_for_functions: [
           "API - Authenticator Management": &(&1[:section] == :authenticator_management),
           "API - Authentication": &(&1[:section] == :authentication),
+          "API - Account Codes": &(&1[:section] == :account_code),
           "API - Access Accounts": &(&1[:section] == :access_account_data),
           "API - Access Account Instance Assocs":
             &(&1[:section] == :access_account_instance_assoc_data),
