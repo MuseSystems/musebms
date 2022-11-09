@@ -23,16 +23,20 @@ defmodule MsbmsSystAuthentication.Impl.Identity.AccountCode do
 
   @moduledoc false
 
-  @default_account_code_params [identity_token_length: 12, identity_tokens: :b32c]
+  @default_identity_token_length 12
+  @default_identity_tokens :b32c
+  @default_create_validated false
 
   @spec create_identity(Types.access_account_id(), Types.account_identifier() | nil, Keyword.t()) ::
           {:ok, Data.SystIdentities.t()} | {:error, MsbmsSystError.t() | Exception.t()}
-  def create_identity(access_account_id, account_code, opts \\ [])
+  def create_identity(access_account_id, account_code, opts)
       when is_binary(access_account_id) do
     opts =
-      MsbmsSystUtils.resolve_options(opts, [
-        {:create_validated, true} | @default_account_code_params
-      ])
+      MsbmsSystUtils.resolve_options(opts,
+        identity_token_length: @default_identity_token_length,
+        identity_tokens: @default_identity_tokens,
+        create_validated: @default_create_validated
+      )
 
     account_code =
       account_code ||
