@@ -23,7 +23,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity do
 
   # Setup callbacks for Identity type specific calls
 
-  @callback create_identity(Types.access_account_id(), String.t(), Keyword.t()) ::
+  @callback create_identity(Types.access_account_id(), Types.account_identifier(), Keyword.t()) ::
               {:ok, Data.SystIdentities.t()} | {:error, MsbmsSystError.t() | Exception.t()}
 
   @callback identify_access_account(
@@ -179,14 +179,26 @@ defmodule MsbmsSystAuthentication.Impl.Identity do
 
   def identity_validated?(%Data.SystIdentities{}), do: {:ok, false}
 
-  @spec delete_identity(Types.identity_id() | Data.SystIdentities.t()) :: :ok
+  @spec delete_identity(Types.identity_id() | Data.SystIdentities.t()) :: :ok | :not_found
   def delete_identity(identity_id) when is_binary(identity_id) do
-    identity_id
-    |> get_identity_record()
-    |> delete_identity()
+    from(i in Data.SystIdentities, where: i.id == ^identity_id)
+    |> MsbmsSystDatastore.delete_all()
+    |> case do
+      {0, _} ->
+        :not_found
+
+      {1, _} ->
+        :ok
+
+      error ->
+        raise MsbmsSystError,
+          code: :undefined_error,
+          message: "Failure deleting Identity.",
+          cause: error
+    end
   end
 
-  def delete_identity(%Data.SystIdentities{} = identity), do: Helpers.delete_record(identity)
+  def delete_identity(%Data.SystIdentities{} = identity), do: delete_identity(identity.id)
 
   @spec get_identity_record(Types.identity_id()) :: Data.SystIdentities.t()
   def get_identity_record(identity_id) when is_binary(identity_id) do
