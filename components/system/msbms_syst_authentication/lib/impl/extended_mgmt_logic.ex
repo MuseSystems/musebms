@@ -65,14 +65,12 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      {
-        :error,
-        %MsbmsSystError{
-          code: :undefined_error,
-          message: "Exception while creating Email/Password Authenticator.",
-          cause: error
-        }
-      }
+      {:error,
+       %MsbmsSystError{
+         code: :undefined_error,
+         message: "Exception while creating Email/Password Authenticator.",
+         cause: error
+       }}
   end
 
   defp maybe_create_email_validator(true = _create_validated, _email_identity, _opts),
@@ -97,14 +95,12 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      {
-        :error,
-        %MsbmsSystError{
-          code: :undefined_error,
-          message: "Failure requesting Identity validation by Identity ID.",
-          cause: error
-        }
-      }
+      {:error,
+       %MsbmsSystError{
+         code: :undefined_error,
+         message: "Failure requesting Identity validation by Identity ID.",
+         cause: error
+       }}
   end
 
   def request_identity_validation(%Data.SystIdentities{} = target_identity, opts) do
@@ -193,14 +189,12 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      {
-        :error,
-        %MsbmsSystError{
-          code: :undefined_error,
-          message: "Failure revoking Identity validation.",
-          cause: error
-        }
-      }
+      {:error,
+       %MsbmsSystError{
+         code: :undefined_error,
+         message: "Failure revoking Identity validation.",
+         cause: error
+       }}
   end
 
   # ============================================================================
@@ -267,14 +261,12 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      {
-        :error,
-        %MsbmsSystError{
-          code: :undefined_error,
-          message: "Failure revoking Identity recovery.",
-          cause: error
-        }
-      }
+      {:error,
+       %MsbmsSystError{
+         code: :undefined_error,
+         message: "Failure revoking Identity recovery.",
+         cause: error
+       }}
   end
 
   # ============================================================================
@@ -282,6 +274,28 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
   # API Token Management
   #
   # ============================================================================
+
+  @spec create_authenticator_api_token(Types.access_account_id(), Keyword.t()) ::
+          {:ok, Types.authenticator_result()} | {:error, MsbmsSystError.t() | Exception.t()}
+  def create_authenticator_api_token(access_account_id, opts) do
+    opts = MsbmsSystUtils.resolve_options(opts, identity_token: nil, credential_token: nil)
+
+    authenticator_func = fn ->
+      nil
+    end
+
+    MsbmsSystDatastore.transaction(authenticator_func)
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {:error,
+       %MsbmsSystError{
+         code: :undefined_error,
+         message: "Exception while creating Email/Password Authenticator.",
+         cause: error
+       }}
+  end
 
   # ============================================================================
   #
