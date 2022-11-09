@@ -78,35 +78,71 @@ defmodule MsbmsSystAuthentication.Impl.Identity.AccountCode do
   @spec reset_identity_for_access_account_id(Types.access_account_id(), Keyword.t()) ::
           {:ok, Data.SystIdentities.t()} | {:error, MsbmsSystError.t() | Exception.t()}
   def reset_identity_for_access_account_id(access_account_id, opts) do
-    identity_type =
-      MsbmsSystEnums.get_enum_item_by_name("identity_types", "identity_types_sysdef_account")
+    reset_func = fn ->
+      from(i in Data.SystIdentities,
+        join: ei in assoc(i, :identity_type),
+        where:
+          i.access_account_id == ^access_account_id and
+            ei.internal_name == "identity_types_sysdef_account",
+        select: i.id
+      )
+      |> MsbmsSystDatastore.one()
+      |> maybe_delete_identity()
+      |> maybe_create_identity_after_delete(access_account_id, opts)
+      |> case do
+        {:ok, new_identity} ->
+          new_identity
 
+        error ->
+          MsbmsSystDatastore.rollback(%MsbmsSystError{
+            code: :undefined_error,
+            message: "Failure resetting Account Code Identity.",
+            cause: error
+          })
+      end
+    end
+
+    MsbmsSystDatastore.transaction(reset_func)
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {:error,
+       %MsbmsSystError{
+         code: :undefined_error,
+         message: "Exception while resetting Account Code Identity.",
+         cause: error
+       }}
+  end
+
+  defp maybe_delete_identity(identity_id) when is_binary(identity_id),
+    do: Impl.Identity.delete_identity(identity_id)
+
+  defp maybe_delete_identity(nil = _identity_id), do: :not_found
+
+  defp maybe_create_identity_after_delete(delete_result, access_account_id, opts)
+       when delete_result in [:ok, :not_found],
+       do: create_identity(access_account_id, opts[:account_code], opts)
+
+  defp maybe_create_identity_after_delete(delete_result, _access_account_id, _opts) do
+    raise MsbmsSystError,
+      code: :undefined_error,
+      message: "Unexpected Account Code Identity deletion result.",
+      cause: delete_result
+  end
+
+  @spec get_account_code_by_access_account_id(Types.access_account_id()) ::
+          {:ok, Data.SystIdentities.t() | :not_found} | {:error, MsbmsSystError.t()}
+  def get_account_code_by_access_account_id(access_account_id)
+      when is_binary(access_account_id) do
     from(i in Data.SystIdentities,
-      where: i.access_account_id == ^access_account_id and i.identity_type_id == ^identity_type.id
+      join: ei in assoc(i, :identity_type),
+      where:
+        i.access_account_id == ^access_account_id and
+          ei.internal_name == "identity_types_sysdef_account"
     )
-    |> MsbmsSystDatastore.one!()
-    |> reset_identity(opts)
-  end
-
-  @spec reset_identity(Types.identity_id() | Data.SystIdentities.t(), Keyword.t()) ::
-          {:ok, Data.SystIdentities.t()} | {:error, MsbmsSystError.t() | Exception.t()}
-  def reset_identity(identity_id, opts) when is_binary(identity_id) do
-    from(i in Data.SystIdentities, where: i.id == ^identity_id)
-    |> MsbmsSystDatastore.one!()
-    |> reset_identity(opts)
-  end
-
-  def reset_identity(%Data.SystIdentities{} = identity, opts) do
-    opts = MsbmsSystUtils.resolve_options(opts, @default_account_code_params)
-
-    result =
-      MsbmsSystDatastore.transaction(fn ->
-        :ok = Impl.Identity.delete_identity(identity.id)
-
-        create_identity(identity.access_account_id, nil, opts)
-      end)
-
-    process_reset_identity_result(result)
+    |> MsbmsSystDatastore.one()
+    |> process_account_code_lookup_result()
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -117,15 +153,17 @@ defmodule MsbmsSystAuthentication.Impl.Identity.AccountCode do
          message: "Failure retrieving Account Code.",
          cause: error
        }}
-      }
   end
 
-  defp process_reset_identity_result({:ok, new_identity}), do: new_identity
+  defp process_account_code_lookup_result(%Data.SystIdentities{} = identity),
+    do: {:ok, identity}
 
-  defp process_reset_identity_result(error) do
+  defp process_account_code_lookup_result(nil), do: {:ok, :not_found}
+
+  defp process_account_code_lookup_result(error) do
     raise MsbmsSystError,
       code: :undefined_error,
-      message: "Account Code reset transaction exception.",
+      message: "Exception retrieving Account Code.",
       cause: error
   end
 end
