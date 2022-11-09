@@ -1938,7 +1938,7 @@ defmodule MsbmsSystAuthentication do
   """
   @spec request_password_recovery(Types.access_account_id(), Keyword.t()) ::
           {:ok, Types.authenticator_result()} | {:error, MsbmsSystError.t() | Exception.t()}
-  defdelegate request_password_recovery(access_account_id, opts), to: Impl.ExtendedMgmtLogic
+  defdelegate request_password_recovery(access_account_id, opts \\ []), to: Impl.ExtendedMgmtLogic
 
   @doc section: :authenticator_management
   @doc """
