@@ -853,6 +853,25 @@ $AUTHENTICATION_TESTING_INIT$
               "password_history": []
             },
             {
+              "access_account_name": "identity_account_code_no_code_test_accnt",
+              "external_name": "Identity Account Code No Code Test Account",
+              "owning_owner_name": "owner2",
+              "allow_global_logins": false,
+              "access_account_state_name": "access_account_states_sysdef_active",
+              "instance_access": [
+                {
+                  "instance_name": null,
+                  "access_granted_days": -20,
+                  "invitation_issued_days": -40,
+                  "invitation_expires_days": -10,
+                  "invitation_declined_days": null
+                }
+              ],
+              "identities": [],
+              "credentials": [],
+              "password_history": []
+            },
+            {
               "access_account_name": "identity_validation_request_test_accnt",
               "external_name": "Identity Request Validation Test Account",
               "owning_owner_name": "owner2",
