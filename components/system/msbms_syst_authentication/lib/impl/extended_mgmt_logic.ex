@@ -288,4 +288,49 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
   # Account Code Management
   #
   # ============================================================================
+
+  @spec create_or_reset_account_code(Types.access_account_id(), Keyword.t()) ::
+          {:ok, Types.authenticator_result()} | {:error, MsbmsSystError.t() | Exception.t()}
+  def create_or_reset_account_code(access_account_id, opts) do
+    access_account_id
+    |> Impl.Identity.AccountCode.reset_identity_for_access_account_id(opts)
+    |> process_account_code_create_result()
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {:error,
+       %MsbmsSystError{
+         code: :undefined_error,
+         message: "Failure creating Account Code Authenticator.",
+         cause: error
+       }}
+  end
+
+  defp process_account_code_create_result({:ok, %Data.SystIdentities{} = identity}) do
+    {:ok,
+     %{
+       access_account_id: identity.access_account_id,
+       account_identifier: identity.account_identifier
+     }}
+  end
+
+  defp process_account_code_create_result(error) do
+    {:error,
+     %MsbmsSystError{
+       code: :undefined_error,
+       message: "Unexpected result processing Account Code creation.",
+       cause: error
+     }}
+  end
+
+  @spec revoke_account_code(Types.access_account_id()) ::
+          {:ok, :deleted | :not_found} | {:error, MsbmsSystError.t()}
+  def revoke_account_code(access_account_id) when is_binary(access_account_id) do
+    with {:ok, %Data.SystIdentities{} = identity} <-
+           Impl.Identity.AccountCode.get_account_code_by_access_account_id(access_account_id),
+         :ok <- Impl.Identity.delete_identity(identity) do
+      {:ok, :deleted}
+    end
+  end
 end

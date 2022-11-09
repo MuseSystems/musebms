@@ -522,6 +522,32 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
 
   defp confirm_successful_recovery(auth_state), do: auth_state
 
+  @spec identify_access_account_by_code(
+          Types.account_identifier(),
+          MsbmsSystInstanceMgr.Types.owner_id() | nil
+        ) ::
+          {:ok, Data.SystIdentities.t() | :not_found} | {:error, MsbmsSystError.t()}
+  def identify_access_account_by_code(account_code, owner_id) when is_binary(account_code) do
+    account_code
+    |> Impl.Identity.AccountCode.identify_access_account(owner_id)
+    |> process_identify_account_code_result()
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {:error,
+       %MsbmsSystError{
+         code: :undefined_error,
+         message: "Failure identifying Account Code.",
+         cause: error
+       }}
+  end
+
+  defp process_identify_account_code_result(%Data.SystIdentities{} = identity),
+    do: {:ok, identity}
+
+  defp process_identify_account_code_result(nil), do: {:ok, :not_found}
+
   #
   # General Functionality
   #
