@@ -1771,10 +1771,43 @@ defmodule MsbmsSystAuthentication do
   # ==============================================================================================
   # ==============================================================================================
   #
-  # Recovery Identity Management
+  # Account Code Identity Management
   #
   # ==============================================================================================
   # ==============================================================================================
+
+  @doc section: :account_code
+  @doc """
+  """
+  @spec create_or_reset_account_code(Types.access_account_id(), Keyword.t()) ::
+          {:ok, Types.authenticator_result()} | {:error, MsbmsSystError.t() | Exception.t()}
+  defdelegate create_or_reset_account_code(access_account_id, opts \\ []),
+    to: Impl.ExtendedMgmtLogic
+
+  @doc section: :account_code
+  @doc """
+  """
+  @spec identify_access_account_by_code(
+          Types.account_identifier(),
+          MsbmsSystInstanceMgr.Types.owner_id() | nil
+        ) ::
+          {:ok, Data.SystIdentities.t() | :not_found} | {:error, MsbmsSystError.t()}
+  defdelegate identify_access_account_by_code(account_code, owner_id), to: Impl.ExtendedAuthLogic
+
+  @doc section: :account_code
+  @doc """
+  """
+  @spec get_account_code_by_access_account_id(Types.access_account_id()) ::
+          {:ok, Data.SystIdentities.t() | :not_found} | {:error, MsbmsSystError.t()}
+  defdelegate get_account_code_by_access_account_id(access_account_id),
+    to: Impl.Identity.AccountCode
+
+  @doc section: :account_code
+  @doc """
+  """
+  @spec revoke_account_code(Types.access_account_id()) ::
+          {:ok, :deleted | :not_found} | {:error, MsbmsSystError.t()}
+  defdelegate revoke_account_code(access_account_id), to: Impl.ExtendedMgmtLogic
 
   # ==============================================================================================
   # ==============================================================================================
