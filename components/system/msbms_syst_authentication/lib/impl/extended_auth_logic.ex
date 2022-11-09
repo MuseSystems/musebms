@@ -154,14 +154,12 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      {
-        :error,
-        %MsbmsSystError{
-          code: :undefined_error,
-          message: "Failure authenticating Email/Password.",
-          cause: error
-        }
-      }
+      {:error,
+       %MsbmsSystError{
+         code: :undefined_error,
+         message: "Failure authenticating Email/Password.",
+         cause: error
+       }}
   end
 
   defp maybe_start_email_password_authentication(%{status: :not_started} = auth_state) do
@@ -279,14 +277,12 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      {
-        :error,
-        %MsbmsSystError{
-          code: :undefined_error,
-          message: "Failure authenticating API Token.",
-          cause: error
-        }
-      }
+      {:error,
+       %MsbmsSystError{
+         code: :undefined_error,
+         message: "Failure authenticating API Token.",
+         cause: error
+       }}
   end
 
   defp confirm_api_token_identity(auth_state) do
@@ -368,14 +364,12 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      {
-        :error,
-        %MsbmsSystError{
-          code: :undefined_error,
-          message: "Failure authenticating Validation Token.",
-          cause: error
-        }
-      }
+      {:error,
+       %MsbmsSystError{
+         code: :undefined_error,
+         message: "Failure authenticating Validation Token.",
+         cause: error
+       }}
   end
 
   defp confirm_validation_identity(auth_state) do
@@ -474,14 +468,12 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      {
-        :error,
-        %MsbmsSystError{
-          code: :undefined_error,
-          message: "Failure authenticating Recovery Token.",
-          cause: error
-        }
-      }
+      {:error,
+       %MsbmsSystError{
+         code: :undefined_error,
+         message: "Failure authenticating Recovery Token.",
+         cause: error
+       }}
   end
 
   defp confirm_credential_recovery(auth_state) do
