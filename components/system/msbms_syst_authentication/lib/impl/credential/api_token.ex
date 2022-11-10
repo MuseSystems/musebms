@@ -50,7 +50,9 @@ defmodule MsbmsSystAuthentication.Impl.Credential.ApiToken do
           Types.credential() | nil,
           Keyword.t()
         ) ::
-          {:ok, String.t()} | Types.credential_set_failures() | {:error, MsbmsSystError.t()}
+          {:ok, Types.credential()}
+          | Types.credential_set_failures()
+          | {:error, MsbmsSystError.t()}
   def set_credential(access_account_id, identity_id, token \\ nil, opts \\ []) do
     opts =
       MsbmsSystUtils.resolve_options(opts,
