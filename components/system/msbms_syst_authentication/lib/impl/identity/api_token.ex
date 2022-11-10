@@ -76,7 +76,10 @@ defmodule MsbmsSystAuthentication.Impl.Identity.ApiToken do
           String.t() | nil
         ) :: Data.SystIdentities.t()
   def update_identity_external_name(identity_id, external_name) when is_binary(identity_id) do
-    from(i in Data.SystIdentities, where: i.id == ^identity_id)
+    from(i in Data.SystIdentities,
+      join: ei in assoc(i, :identity_type),
+      where: ei.internal_name == "identity_types_sysdef_api" and i.id == ^identity_id
+    )
     |> MsbmsSystDatastore.one!()
     |> update_identity_external_name(external_name)
   end
