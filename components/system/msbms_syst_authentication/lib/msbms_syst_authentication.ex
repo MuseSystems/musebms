@@ -1947,6 +1947,31 @@ defmodule MsbmsSystAuthentication do
           {:ok, :deleted | :not_found} | {:error, MsbmsSystError.t() | Exception.t()}
   defdelegate revoke_password_recovery(access_account_id), to: Impl.ExtendedMgmtLogic
 
+  @doc section: :authenticator_management
+  @doc """
+  """
+  @spec create_authenticator_api_token(Types.access_account_id(), Keyword.t()) ::
+          {:ok, Types.authenticator_result()} | {:error, MsbmsSystError.t() | Exception.t()}
+  defdelegate create_authenticator_api_token(access_account_id, opts \\ []),
+    to: Impl.ExtendedMgmtLogic
+
+  @doc section: :authenticator_management
+  @doc """
+  """
+  @spec update_api_token_external_name(
+          Types.identity_id() | Data.SystIdentities.t(),
+          String.t() | nil
+        ) ::
+          {:ok, Data.SystIdentities.t()} | {:error, MsbmsSystError.t()}
+  defdelegate update_api_token_external_name(identity, external_name), to: Impl.ExtendedMgmtLogic
+
+  @doc section: :authenticator_management
+  @doc """
+  """
+  @spec revoke_api_token(Types.identity_id() | Data.SystIdentities.t()) ::
+          {:ok, :deleted | :not_found} | {:error, MsbmsSystError.t()}
+  defdelegate revoke_api_token(identity), to: Impl.ExtendedMgmtLogic
+
   # ==============================================================================================
   # ==============================================================================================
   #
@@ -2005,5 +2030,20 @@ defmodule MsbmsSystAuthentication do
         ) ::
           {:ok, Types.authentication_state()} | {:error, MsbmsSystError.t()}
   defdelegate authenticate_recovery_token(identifier, token, host_addr, opts \\ []),
+    to: Impl.ExtendedAuthLogic
+
+  @doc section: :authentication
+  @doc """
+  """
+  @spec authenticate_api_token(
+          Types.identifier(),
+          Types.credential(),
+          IP.addr(),
+          MsbmsSystInstanceMgr.Types.instance_id(),
+          Keyword.t()
+        ) ::
+          {:ok, Types.authentication_state()} | {:error, MsbmsSystError.t()}
+
+  defdelegate authenticate_api_token(identifier, token, host_addr, instance_id, opts \\ []),
     to: Impl.ExtendedAuthLogic
 end
