@@ -281,7 +281,32 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
     opts = MsbmsSystUtils.resolve_options(opts, identity_token: nil, credential_token: nil)
 
     authenticator_func = fn ->
-      nil
+      with {:ok, identity} <-
+             Impl.Identity.ApiToken.create_identity(
+               access_account_id,
+               opts[:identity_token],
+               opts
+             ),
+           {:ok, credential} <-
+             Impl.Credential.ApiToken.set_credential(
+               access_account_id,
+               identity.id,
+               opts[:credential_token],
+               opts
+             ) do
+        %{
+          access_account_id: access_account_id,
+          account_identifier: identity.account_identifier,
+          credential: credential
+        }
+      else
+        error ->
+          MsbmsSystDatastore.rollback(%MsbmsSystError{
+            code: :undefined_error,
+            message: "Failed creating API Token Authenticator.",
+            cause: error
+          })
+      end
     end
 
     MsbmsSystDatastore.transaction(authenticator_func)
@@ -293,6 +318,43 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
        %MsbmsSystError{
          code: :undefined_error,
          message: "Exception while creating Email/Password Authenticator.",
+         cause: error
+       }}
+  end
+
+  @spec update_api_token_external_name(
+          Types.identity_id() | Data.SystIdentities.t(),
+          String.t() | nil
+        ) ::
+          {:ok, Data.SystIdentities.t()} | {:error, MsbmsSystError.t()}
+  def update_api_token_external_name(identity, external_name) do
+    {:ok, Impl.Identity.ApiToken.update_identity_external_name(identity, external_name)}
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {:error,
+       %MsbmsSystError{
+         code: :undefined_error,
+         message: "Failure setting API Token External Name.",
+         cause: error
+       }}
+  end
+
+  @spec revoke_api_token(Types.identity_id() | Data.SystIdentities.t()) ::
+          {:ok, :deleted | :not_found} | {:error, MsbmsSystError.t()}
+  def revoke_api_token(identity) do
+    identity
+    |> Impl.Identity.delete_identity("identity_types_sysdef_api")
+    |> then(&{:ok, &1})
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {:error,
+       %MsbmsSystError{
+         code: :undefined_error,
+         message: "Failure revoking API Token Identity.",
          cause: error
        }}
   end
