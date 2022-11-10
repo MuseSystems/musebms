@@ -34,7 +34,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
           {:ok, Types.authenticator_result()}
           | {:error, MsbmsSystError.t() | Exception.t()}
   def create_authenticator_email_password(access_account_id, email_addr, plaintext_pwd, opts) do
-    opts = MsbmsSystUtils.resolve_options(opts, create_validated: false, validation_token: nil)
+    opts = MsbmsSystUtils.resolve_options(opts, create_validated: false, credential_token: nil)
 
     authenticator_func = fn ->
       with {:ok, email_identity} <-
@@ -138,7 +138,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
            Impl.Credential.Validation.set_credential(
              validation_identity.access_account_id,
              validation_identity.id,
-             opts[:validation_token],
+             opts[:credential_token],
              opts
            ) do
       {:ok,
