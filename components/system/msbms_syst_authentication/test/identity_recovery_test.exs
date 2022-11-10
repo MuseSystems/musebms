@@ -48,7 +48,8 @@ defmodule IdentityRecoveryTest do
 
     assert String.length(recovery_identity.account_identifier) == 40
 
-    :ok = Impl.Identity.delete_identity(recovery_identity)
+    :deleted =
+      Impl.Identity.delete_identity(recovery_identity, "identity_types_sysdef_password_recovery")
 
     # expiration_hours
 
@@ -73,7 +74,8 @@ defmodule IdentityRecoveryTest do
 
     assert String.length(recovery_identity.account_identifier) == 40
 
-    :ok = Impl.Identity.delete_identity(recovery_identity)
+    :deleted =
+      Impl.Identity.delete_identity(recovery_identity, "identity_types_sysdef_password_recovery")
 
     # identity_token_length
 
@@ -98,7 +100,8 @@ defmodule IdentityRecoveryTest do
 
     assert String.length(recovery_identity.account_identifier) == token_length_override
 
-    :ok = Impl.Identity.delete_identity(recovery_identity)
+    :deleted =
+      Impl.Identity.delete_identity(recovery_identity, "identity_types_sysdef_password_recovery")
 
     # identity_tokens
 
@@ -123,7 +126,8 @@ defmodule IdentityRecoveryTest do
 
     assert not (recovery_identity.account_identifier =~ ~r/[^A-C]/)
 
-    :ok = Impl.Identity.delete_identity(recovery_identity)
+    :deleted =
+      Impl.Identity.delete_identity(recovery_identity, "identity_types_sysdef_password_recovery")
   end
 
   test "Can test if Access Account is recoverable" do

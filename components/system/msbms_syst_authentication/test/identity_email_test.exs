@@ -33,7 +33,7 @@ defmodule IdentityEmailTest do
 
     assert "identity_email_create_test_accnt@musesystems.com" = identifier
 
-    :ok = Impl.Identity.delete_identity(default_identity.id)
+    :deleted = Impl.Identity.delete_identity(default_identity.id, "identity_types_sysdef_email")
 
     # Options: create_validated
 
@@ -51,7 +51,7 @@ defmodule IdentityEmailTest do
 
     assert "identity_email_create_test_accnt@musesystems.com" = identifier
 
-    :ok = Impl.Identity.delete_identity(default_identity.id)
+    :deleted = Impl.Identity.delete_identity(default_identity.id, "identity_types_sysdef_email")
 
     # Bad Email Address
 

@@ -33,7 +33,7 @@ defmodule IdentityApiTokenTest do
 
     assert String.length(identifier) == 20
 
-    :ok = Impl.Identity.delete_identity(default_identity.id)
+    :deleted = Impl.Identity.delete_identity(default_identity.id, "identity_types_sysdef_api")
 
     # Specific api_token value
     assert {:ok, specific_token_identity} =
@@ -43,7 +43,8 @@ defmodule IdentityApiTokenTest do
 
     assert identifier == "This Is A Test"
 
-    :ok = Impl.Identity.delete_identity(specific_token_identity.id)
+    :deleted =
+      Impl.Identity.delete_identity(specific_token_identity.id, "identity_types_sysdef_api")
 
     # create_validated
     assert {:ok, not_validated_identity} =
@@ -58,7 +59,8 @@ defmodule IdentityApiTokenTest do
 
     assert String.length(identifier) == 20
 
-    :ok = Impl.Identity.delete_identity(not_validated_identity.id)
+    :deleted =
+      Impl.Identity.delete_identity(not_validated_identity.id, "identity_types_sysdef_api")
 
     # identity_token_length
     assert {:ok, token_length_identity} =
@@ -73,7 +75,8 @@ defmodule IdentityApiTokenTest do
 
     assert String.length(identifier) == 40
 
-    :ok = Impl.Identity.delete_identity(token_length_identity.id)
+    :deleted =
+      Impl.Identity.delete_identity(token_length_identity.id, "identity_types_sysdef_api")
 
     # identity_tokens
     assert {:ok, tokens_identity} =
@@ -86,7 +89,7 @@ defmodule IdentityApiTokenTest do
 
     assert not (identifier =~ ~r/[^A-C]/)
 
-    :ok = Impl.Identity.delete_identity(tokens_identity.id)
+    :deleted = Impl.Identity.delete_identity(tokens_identity.id, "identity_types_sysdef_api")
 
     # external_name
     assert {:ok, ext_name_identity} =
@@ -101,7 +104,7 @@ defmodule IdentityApiTokenTest do
 
     assert "API Token Test" = external_name
 
-    :ok = Impl.Identity.delete_identity(ext_name_identity.id)
+    :deleted = Impl.Identity.delete_identity(ext_name_identity.id, "identity_types_sysdef_api")
   end
 
   test "Can identify Owned Access Account" do

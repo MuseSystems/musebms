@@ -179,16 +179,21 @@ defmodule MsbmsSystAuthentication.Impl.Identity do
 
   def identity_validated?(%Data.SystIdentities{}), do: {:ok, false}
 
-  @spec delete_identity(Types.identity_id() | Data.SystIdentities.t()) :: :ok | :not_found
-  def delete_identity(identity_id) when is_binary(identity_id) do
-    from(i in Data.SystIdentities, where: i.id == ^identity_id)
+  @spec delete_identity(Types.identity_id() | Data.SystIdentities.t(), Types.identity_type_name()) ::
+          :deleted | :not_found
+  def delete_identity(identity_id, identity_type_name)
+      when is_binary(identity_id) and is_binary(identity_type_name) do
+    from(i in Data.SystIdentities,
+      join: ei in assoc(i, :identity_type),
+      where: i.id == ^identity_id and ei.internal_name == ^identity_type_name
+    )
     |> MsbmsSystDatastore.delete_all()
     |> case do
       {0, _} ->
         :not_found
 
       {1, _} ->
-        :ok
+        :deleted
 
       error ->
         raise MsbmsSystError,
@@ -198,7 +203,8 @@ defmodule MsbmsSystAuthentication.Impl.Identity do
     end
   end
 
-  def delete_identity(%Data.SystIdentities{} = identity), do: delete_identity(identity.id)
+  def delete_identity(%Data.SystIdentities{} = identity, identity_type_name),
+    do: delete_identity(identity.id, identity_type_name)
 
   @spec get_identity_record(Types.identity_id()) :: Data.SystIdentities.t()
   def get_identity_record(identity_id) when is_binary(identity_id) do
