@@ -283,7 +283,7 @@ defmodule IntegrationTest do
   #
   # ==============================================================================================
 
-  test "Step 2.XX: Add Unowned Access Accounts" do
+  test "Step 2.01: Add Unowned Access Accounts" do
     state = MsbmsSystEnums.get_default_enum_item("access_account_states")
 
     assert {:ok, %MsbmsSystAuthentication.Data.SystAccessAccounts{}} =
@@ -295,7 +295,7 @@ defmodule IntegrationTest do
              })
   end
 
-  test "Step 2.XX: Test Password for Unowned Access Account" do
+  test "Step 2.02: Test Password for Unowned Access Account" do
     {:ok, access_account_id} =
       MsbmsSystAuthentication.get_access_account_id_by_name("unowned_access_account")
 
@@ -309,7 +309,7 @@ defmodule IntegrationTest do
              MsbmsSystAuthentication.test_credential(access_account_id, "A valid password.")
   end
 
-  test "Step 2.XX: Attempt Bad Password for Unowned Access Account" do
+  test "Step 2.03: Attempt Bad Password for Unowned Access Account" do
     # This test is more about testing the error result tuple of
     # create_authenticator_email_password/4.  We want to be sure that password
     # rule violations are easier to get to than some misc errors can be.
@@ -327,7 +327,7 @@ defmodule IntegrationTest do
     assert {:invalid_credential, [password_rule_length_min: 8]} = cause
   end
 
-  test "Step 2.XX: Create Email/Password for Unowned Access Account" do
+  test "Step 2.04: Create Email/Password for Unowned Access Account" do
     # For the Unowned Access Account type, create_validated will default to
     # false as this is the common realistic scenario.  Owned Access Accounts
     # will more likely be created already validated.
@@ -348,7 +348,7 @@ defmodule IntegrationTest do
     assert nil != authenticator_result[:validation_credential]
   end
 
-  test "Step 2.XX: Violate Rate Limit for Unowned Access Account Validation Identity" do
+  test "Step 2.05: Violate Rate Limit for Unowned Access Account Validation Identity" do
     validator_identity =
       from(vi in Data.SystIdentities,
         join: emi in Data.SystIdentities,
@@ -371,7 +371,7 @@ defmodule IntegrationTest do
              )
   end
 
-  test "Step 2.XX: Revoke Validation Identity for Unowned Access Account Email" do
+  test "Step 2.06: Revoke Validation Identity for Unowned Access Account Email" do
     email_identity_id =
       from(i in Data.SystIdentities,
         join: ei in assoc(i, :identity_type),
@@ -391,7 +391,7 @@ defmodule IntegrationTest do
              MsbmsSystAuthentication.revoke_validator_for_identity_id(email_identity_id)
   end
 
-  test "Step 2.XX: Try to set Email/Password again for Unowned Access Account" do
+  test "Step 2.07: Try to set Email/Password again for Unowned Access Account" do
     # A little test to be sure that create_authenticator_email_password/4 has no
     # obvious bypasses.
 
@@ -406,7 +406,7 @@ defmodule IntegrationTest do
              )
   end
 
-  test "Step 2.XX: Create New Email Validator for Unowned Access Account" do
+  test "Step 2.08: Create New Email Validator for Unowned Access Account" do
     email_identity =
       from(i in Data.SystIdentities,
         join: ei in assoc(i, :identity_type),
@@ -428,7 +428,7 @@ defmodule IntegrationTest do
     assert "My Known Token" = validator_result[:validation_credential]
   end
 
-  test "Step 2.XX: Validator confirmation for Unowned Access Account" do
+  test "Step 2.09: Validator confirmation for Unowned Access Account" do
     validator_identity =
       from(vi in Data.SystIdentities,
         join: emi in Data.SystIdentities,
@@ -496,7 +496,7 @@ defmodule IntegrationTest do
            |> MsbmsSystDatastore.exists?()
   end
 
-  test "Step 2.XX: Invite Unowned Access Account to Instances" do
+  test "Step 2.10: Invite Unowned Access Account to Instances" do
     # Basic Invite
 
     {:ok, access_account_id} =
@@ -540,7 +540,7 @@ defmodule IntegrationTest do
     assert Date.utc_today() == DateTime.to_date(invited_aaia_owner3.access_granted)
   end
 
-  test "Step 2.XX: Accept Instance Invite to Unowned Access Account" do
+  test "Step 2.11: Accept Instance Invite to Unowned Access Account" do
     {:ok, access_account_id} =
       MsbmsSystAuthentication.get_access_account_id_by_name("unowned_access_account")
 
@@ -553,7 +553,7 @@ defmodule IntegrationTest do
     assert %Data.SystAccessAccountInstanceAssocs{} = aaia_record
   end
 
-  test "Step 2.XX: Decline Instance Invite to Unowned Access Account" do
+  test "Step 2.12: Decline Instance Invite to Unowned Access Account" do
     {:ok, access_account_id} =
       MsbmsSystAuthentication.get_access_account_id_by_name("unowned_access_account")
 
@@ -566,7 +566,7 @@ defmodule IntegrationTest do
     assert %Data.SystAccessAccountInstanceAssocs{} = aaia_record
   end
 
-  test "Step 2.XX: Authenticate Unowned Access Account using Email/Password" do
+  test "Step 2.13: Authenticate Unowned Access Account using Email/Password" do
     # Instance access invite was explicitly accepted in earlier step.
     {:ok, instance1_id} =
       MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner1_instance_types_std")
@@ -596,7 +596,7 @@ defmodule IntegrationTest do
     assert %{status: :authenticated} = auth_status3
   end
 
-  test "Step 2.XX: Fail Authentication Unowned Access Account / Bad Password" do
+  test "Step 2.14: Fail Authentication Unowned Access Account / Bad Password" do
     {:ok, instance_id} =
       MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner1_instance_types_std")
 
@@ -611,7 +611,7 @@ defmodule IntegrationTest do
     assert %{status: :rejected} = auth_status
   end
 
-  test "Step 2.XX: Fail Authentication Unowned Access Account / Bad Instance" do
+  test "Step 2.15: Fail Authentication Unowned Access Account / Bad Instance" do
     # This instance access was declined in an earlier step.
     {:ok, instance_id} =
       MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner2_instance_types_std")
@@ -627,7 +627,7 @@ defmodule IntegrationTest do
     assert %{status: :rejected} = auth_status
   end
 
-  test "Step 2.XX: Fail Authentication Unowned Access Account / Bad Email Case" do
+  test "Step 2.16: Fail Authentication Unowned Access Account / Bad Email Case" do
     {:ok, instance_id} =
       MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner1_instance_types_std")
 
@@ -642,7 +642,7 @@ defmodule IntegrationTest do
     assert %{status: :rejected} = auth_status
   end
 
-  test "Step 2.XX: Authentication Continuance Unowned Access Account / Instance" do
+  test "Step 2.17: Authentication Continuance Unowned Access Account / Instance" do
     assert {:ok, parial_auth_status} =
              MsbmsSystAuthentication.authenticate_email_password(
                "UnownedAccessAccount@musesystems.com",
@@ -664,7 +664,7 @@ defmodule IntegrationTest do
     assert %{status: :authenticated} = complete_auth_status
   end
 
-  test "Step 2.XX: Failed Continuance Unowned Access Account / Bad Instance" do
+  test "Step 2.18: Failed Continuance Unowned Access Account / Bad Instance" do
     assert {:ok, partial_auth_status} =
              MsbmsSystAuthentication.authenticate_email_password(
                "UnownedAccessAccount@musesystems.com",
@@ -686,14 +686,14 @@ defmodule IntegrationTest do
     assert %{status: :rejected} = rejected_auth_status
   end
 
-  test "Step 2.XX: Test if Unowned Access Account Password is Recoverable" do
+  test "Step 2.19: Test if Unowned Access Account Password is Recoverable" do
     {:ok, access_account_id} =
       MsbmsSystAuthentication.get_access_account_id_by_name("unowned_access_account")
 
     assert :ok = MsbmsSystAuthentication.access_account_credential_recoverable!(access_account_id)
   end
 
-  test "Step 2.XX: Create Unowned Access Account Email/Password Recovery Authenticator" do
+  test "Step 2.20: Create Unowned Access Account Email/Password Recovery Authenticator" do
     {:ok, access_account_id} =
       MsbmsSystAuthentication.get_access_account_id_by_name("unowned_access_account")
 
@@ -709,7 +709,7 @@ defmodule IntegrationTest do
     assert "My Known Token" = recovery_result[:credential]
   end
 
-  test "Step 2.XX: Cannot Double Unowned Access Account Email/Password Recovery Authenticator" do
+  test "Step 2.21: Cannot Double Unowned Access Account Email/Password Recovery Authenticator" do
     {:ok, access_account_id} =
       MsbmsSystAuthentication.get_access_account_id_by_name("unowned_access_account")
 
@@ -722,7 +722,7 @@ defmodule IntegrationTest do
              )
   end
 
-  test "Step 2.XX: Revoke Unowned Access Account Email/Password Recovery Authenticator" do
+  test "Step 2.22: Revoke Unowned Access Account Email/Password Recovery Authenticator" do
     {:ok, access_account_id} =
       MsbmsSystAuthentication.get_access_account_id_by_name("unowned_access_account")
 
@@ -734,7 +734,7 @@ defmodule IntegrationTest do
     assert :ok = MsbmsSystAuthentication.access_account_credential_recoverable!(access_account_id)
   end
 
-  test "Step 2.XX: Confirm Unowned Access Account Email/Password Recovery Authenticator" do
+  test "Step 2.23: Confirm Unowned Access Account Email/Password Recovery Authenticator" do
     # A previous test left no outstanding recovery to authenticate, so recreate here.
     {:ok, access_account_id} =
       MsbmsSystAuthentication.get_access_account_id_by_name("unowned_access_account")
@@ -791,7 +791,7 @@ defmodule IntegrationTest do
     assert :ok = MsbmsSystAuthentication.access_account_credential_recoverable!(access_account_id)
   end
 
-  test "Step 2.XX: Create Account Code for Unowned Access Account" do
+  test "Step 2.24: Create Account Code for Unowned Access Account" do
     {:ok, access_account_id} =
       MsbmsSystAuthentication.get_access_account_id_by_name("unowned_access_account")
 
@@ -804,7 +804,7 @@ defmodule IntegrationTest do
     assert authenticator_result.account_identifier == "Unowned Access Account Code"
   end
 
-  test "Step 2.XX: Identify Unowned Access Account by Account Code" do
+  test "Step 2.25: Identify Unowned Access Account by Account Code" do
     assert {:ok, :not_found} =
              MsbmsSystAuthentication.identify_access_account_by_code("A Bad Code", nil)
 
@@ -815,7 +815,7 @@ defmodule IntegrationTest do
              )
   end
 
-  test "Step 2.XX: Reset Unowned Access Account Code" do
+  test "Step 2.26: Reset Unowned Access Account Code" do
     {:ok, %Data.SystIdentities{} = identity} =
       MsbmsSystAuthentication.identify_access_account_by_code(
         "Unowned Access Account Code",
@@ -829,7 +829,7 @@ defmodule IntegrationTest do
     assert authenticator_result.account_identifier != "Unowned Access Account Code"
   end
 
-  test "Step 2.XX: Get Account Code by Unowned Access Account ID" do
+  test "Step 2.27: Get Account Code by Unowned Access Account ID" do
     {:ok, access_account_id} =
       MsbmsSystAuthentication.get_access_account_id_by_name("unowned_access_account")
 
@@ -840,7 +840,7 @@ defmodule IntegrationTest do
              MsbmsSystAuthentication.get_account_code_by_access_account_id(access_account_id)
   end
 
-  test "Step 2.XX: Revoke Account Code by Unowned Access Account ID" do
+  test "Step 2.28: Revoke Account Code by Unowned Access Account ID" do
     {:ok, access_account_id} =
       MsbmsSystAuthentication.get_access_account_id_by_name("unowned_access_account")
 
@@ -849,7 +849,7 @@ defmodule IntegrationTest do
     assert {:ok, :deleted} = MsbmsSystAuthentication.revoke_account_code(access_account_id)
   end
 
-  test "Step 2.XX: Create API Token for Unowned Access Account" do
+  test "Step 2.29: Create API Token for Unowned Access Account" do
     {:ok, access_account_id} =
       MsbmsSystAuthentication.get_access_account_id_by_name("unowned_access_account")
 
@@ -870,7 +870,7 @@ defmodule IntegrationTest do
              )
   end
 
-  test "Step 2.XX: Authenticate API Token for Unowned Access Account" do
+  test "Step 2.30: Authenticate API Token for Unowned Access Account" do
     {:ok, instance_id} =
       MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner1_instance_types_std")
 
@@ -923,7 +923,7 @@ defmodule IntegrationTest do
     assert auth_state.access_account_id == access_account_id
   end
 
-  test "Step 2.XX: Set Unowned Access Account API Token External Name" do
+  test "Step 2.31: Set Unowned Access Account API Token External Name" do
     {:ok, access_account_id} =
       MsbmsSystAuthentication.get_access_account_id_by_name("unowned_access_account")
 
@@ -947,7 +947,7 @@ defmodule IntegrationTest do
     assert updated_identity.external_name == "A Test API Token"
   end
 
-  test "Step 2.XX: Revoke Unowned Access Account API Token" do
+  test "Step 2.32: Revoke Unowned Access Account API Token" do
     {:ok, access_account_id} =
       MsbmsSystAuthentication.get_access_account_id_by_name("unowned_access_account")
 
