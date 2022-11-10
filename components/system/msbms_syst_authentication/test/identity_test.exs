@@ -104,6 +104,7 @@ defmodule IdentityTest do
         owner_id
       )
 
-    assert :ok = Impl.Identity.delete_identity(delete_identity.id)
+    assert :deleted =
+             Impl.Identity.delete_identity(delete_identity.id, "identity_types_sysdef_email")
   end
 end

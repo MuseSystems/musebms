@@ -342,9 +342,18 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
           {:ok, :deleted | :not_found} | {:error, MsbmsSystError.t()}
   def revoke_account_code(access_account_id) when is_binary(access_account_id) do
     with {:ok, %Data.SystIdentities{} = identity} <-
-           Impl.Identity.AccountCode.get_account_code_by_access_account_id(access_account_id),
-         :ok <- Impl.Identity.delete_identity(identity) do
-      {:ok, :deleted}
+           Impl.Identity.AccountCode.get_account_code_by_access_account_id(access_account_id) do
+      {:ok, Impl.Identity.delete_identity(identity, "identity_types_sysdef_account")}
     end
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {:error,
+       %MsbmsSystError{
+         code: :undefined_error,
+         message: "Failure revoking Account Code Authenticator.",
+         cause: error
+       }}
   end
 end

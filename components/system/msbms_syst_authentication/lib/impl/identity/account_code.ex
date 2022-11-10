@@ -116,12 +116,12 @@ defmodule MsbmsSystAuthentication.Impl.Identity.AccountCode do
   end
 
   defp maybe_delete_identity(identity_id) when is_binary(identity_id),
-    do: Impl.Identity.delete_identity(identity_id)
+    do: Impl.Identity.delete_identity(identity_id, "identity_types_sysdef_account")
 
   defp maybe_delete_identity(nil = _identity_id), do: :not_found
 
   defp maybe_create_identity_after_delete(delete_result, access_account_id, opts)
-       when delete_result in [:ok, :not_found],
+       when delete_result in [:deleted, :not_found],
        do: create_identity(access_account_id, opts[:account_code], opts)
 
   defp maybe_create_identity_after_delete(delete_result, _access_account_id, _opts) do

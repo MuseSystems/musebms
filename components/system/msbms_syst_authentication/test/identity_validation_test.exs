@@ -83,7 +83,8 @@ defmodule IdentityValidationTest do
 
     assert String.length(validation_identity.account_identifier) == 40
 
-    :ok = Impl.Identity.delete_identity(validation_identity)
+    :deleted =
+      Impl.Identity.delete_identity(validation_identity, "identity_types_sysdef_validation")
 
     # expiration_hours
 
@@ -134,7 +135,8 @@ defmodule IdentityValidationTest do
 
     assert String.length(validation_identity.account_identifier) == 40
 
-    :ok = Impl.Identity.delete_identity(validation_identity)
+    :deleted =
+      Impl.Identity.delete_identity(validation_identity, "identity_types_sysdef_validation")
 
     # identity_token_length
 
@@ -185,7 +187,8 @@ defmodule IdentityValidationTest do
 
     assert String.length(validation_identity.account_identifier) == token_length_override
 
-    :ok = Impl.Identity.delete_identity(validation_identity)
+    :deleted =
+      Impl.Identity.delete_identity(validation_identity, "identity_types_sysdef_validation")
 
     # identity_tokens
 
@@ -236,7 +239,8 @@ defmodule IdentityValidationTest do
 
     assert not (validation_identity.account_identifier =~ ~r/[^A-C]/)
 
-    :ok = Impl.Identity.delete_identity(validation_identity)
+    :deleted =
+      Impl.Identity.delete_identity(validation_identity, "identity_types_sysdef_validation")
   end
 
   test "Request Identity Validation by target Identity" do
@@ -302,7 +306,8 @@ defmodule IdentityValidationTest do
 
     assert String.length(validation_identity.account_identifier) == 40
 
-    :ok = Impl.Identity.delete_identity(validation_identity)
+    :deleted =
+      Impl.Identity.delete_identity(validation_identity, "identity_types_sysdef_validation")
 
     # expiration_hours
 
@@ -351,7 +356,8 @@ defmodule IdentityValidationTest do
 
     assert String.length(validation_identity.account_identifier) == 40
 
-    :ok = Impl.Identity.delete_identity(validation_identity)
+    :deleted =
+      Impl.Identity.delete_identity(validation_identity, "identity_types_sysdef_validation")
 
     # identity_token_length
 
@@ -400,7 +406,8 @@ defmodule IdentityValidationTest do
 
     assert String.length(validation_identity.account_identifier) == 20
 
-    :ok = Impl.Identity.delete_identity(validation_identity)
+    :deleted =
+      Impl.Identity.delete_identity(validation_identity, "identity_types_sysdef_validation")
 
     # identity_tokens
 
@@ -451,7 +458,8 @@ defmodule IdentityValidationTest do
 
     assert not (validation_identity.account_identifier =~ ~r/[^A-C]/)
 
-    :ok = Impl.Identity.delete_identity(validation_identity)
+    :deleted =
+      Impl.Identity.delete_identity(validation_identity, "identity_types_sysdef_validation")
   end
 
   test "Identify Owned Access Account" do
