@@ -27,12 +27,24 @@ defmodule MsbmsSystAuthentication.Data.Helpers.General do
 
   def resolve_owner_id(%{owning_owner_name: owner_name} = access_account_params)
       when is_binary(owner_name) do
-    {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name(owner_name)
+    owner_id =
+      owner_name
+      |> MsbmsSystInstanceMgr.get_owner_id_by_name()
+      |> process_owner_id_by_name_result()
 
     Map.put(access_account_params, :owning_owner_id, owner_id)
   end
 
   def resolve_owner_id(access_account_params), do: access_account_params
+
+  defp process_owner_id_by_name_result({:ok, owner_id}), do: owner_id
+
+  defp process_owner_id_by_name_result(error) do
+    raise MsbmsSystError,
+      code: :undefined_error,
+      message: "Failure resolving Owning Owner ID from Owner Name",
+      cause: error
+  end
 
   def resolve_instance_id(%{instance_name: instance_name} = change_params)
       when is_binary(instance_name) do
