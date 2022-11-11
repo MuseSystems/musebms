@@ -15,7 +15,7 @@ defmodule MsbmsSystAuthentication.Data.Helpers.SystAccessAccountInstanceAssocs d
 
   alias MsbmsSystAuthentication.Data.Helpers
 
-  def resolve_name_params(change_params, operation) do
+  def resolve_name_params(change_params, _operation) do
     change_params
     |> Helpers.General.resolve_access_account_id()
     |> Helpers.General.resolve_instance_id()
