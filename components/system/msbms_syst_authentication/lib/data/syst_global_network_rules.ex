@@ -14,6 +14,7 @@ defmodule MsbmsSystAuthentication.Data.SystGlobalNetworkRules do
   use MsbmsSystDatastore.Schema
 
   alias MsbmsSystAuthentication.Data
+  alias MsbmsSystAuthentication.Types
   alias MsbmsSystDatastore.DbTypes
 
   @moduledoc """

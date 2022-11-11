@@ -14,6 +14,7 @@ defmodule MsbmsSystAuthentication.Data.SystOwnerPasswordRules do
   use MsbmsSystDatastore.Schema
 
   alias MsbmsSystAuthentication.Data.Validators
+  alias MsbmsSystAuthentication.Types
 
   alias MsbmsSystDatastore.DbTypes
 
@@ -79,8 +80,7 @@ defmodule MsbmsSystAuthentication.Data.SystOwnerPasswordRules do
           Ecto.Changeset.t()
   defdelegate insert_changeset(insert_params), to: Validators.SystOwnerPasswordRules
 
-  @spec update_changeset(Data.SystOwnerPasswordRules.t(), Types.password_rule_params()) ::
-          Ecto.Changeset.t()
+  @spec update_changeset(t(), Types.password_rule_params()) :: Ecto.Changeset.t()
   defdelegate update_changeset(owner_password_rule, update_params),
     to: Validators.SystOwnerPasswordRules
 end

@@ -14,6 +14,7 @@ defmodule MsbmsSystAuthentication.Data.SystInstanceNetworkRules do
   use MsbmsSystDatastore.Schema
 
   alias MsbmsSystAuthentication.Data
+  alias MsbmsSystAuthentication.Types
   alias MsbmsSystDatastore.DbTypes
 
   @moduledoc """
@@ -70,8 +71,7 @@ defmodule MsbmsSystAuthentication.Data.SystInstanceNetworkRules do
   @spec insert_changeset(Types.instance_network_rule_params()) :: Ecto.Changeset.t()
   defdelegate insert_changeset(insert_params), to: Data.Validators.SystInstanceNetworkRules
 
-  @spec update_changeset(Data.SystInstanceNetworkRules.t(), Types.instance_network_rule_params()) ::
-          Ecto.Changeset.t()
+  @spec update_changeset(t(), Types.instance_network_rule_params()) :: Ecto.Changeset.t()
   defdelegate update_changeset(instance_id, update_params),
     to: Data.Validators.SystInstanceNetworkRules
 end

@@ -293,7 +293,7 @@ defmodule MsbmsSystAuthentication do
   @spec decline_instance_invite(
           Types.access_account_instance_assoc_id()
           | Data.SystAccessAccountInstanceAssocs.t()
-        ) :: :ok | {:error, MsbmsSystError.t()}
+        ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MsbmsSystError.t()}
   defdelegate decline_instance_invite(access_account_instance_assoc),
     to: Impl.AccessAccountInstanceAssoc
 
@@ -958,7 +958,7 @@ defmodule MsbmsSystAuthentication do
       ...>   MsbmsSystAuthentication.create_disallowed_host(~i"10.123.123.3")
   """
   @spec create_disallowed_host(Types.host_address()) ::
-          {:ok, Data.SystDisallowedHosts.t()} | {:error, MsbmsSystError.t({})}
+          {:ok, Data.SystDisallowedHosts.t()} | {:error, MsbmsSystError.t()}
   defdelegate create_disallowed_host(host_address), to: Impl.NetworkRules
 
   @doc section: :network_rule_data
@@ -1984,7 +1984,7 @@ defmodule MsbmsSystAuthentication do
   @doc """
   """
   @spec authenticate_email_password(
-          Types.identifier(),
+          Types.account_identifier(),
           Types.credential(),
           IP.addr(),
           Keyword.t()
@@ -2005,7 +2005,7 @@ defmodule MsbmsSystAuthentication do
   @doc """
   """
   @spec authenticate_validation_token(
-          Types.identifier(),
+          Types.account_identifier(),
           Types.credential(),
           IP.addr(),
           Keyword.t()
@@ -2023,7 +2023,7 @@ defmodule MsbmsSystAuthentication do
   @doc """
   """
   @spec authenticate_recovery_token(
-          Types.identifier(),
+          Types.account_identifier(),
           Types.credential(),
           IP.addr(),
           Keyword.t()
@@ -2036,7 +2036,7 @@ defmodule MsbmsSystAuthentication do
   @doc """
   """
   @spec authenticate_api_token(
-          Types.identifier(),
+          Types.account_identifier(),
           Types.credential(),
           IP.addr(),
           MsbmsSystInstanceMgr.Types.instance_id(),
