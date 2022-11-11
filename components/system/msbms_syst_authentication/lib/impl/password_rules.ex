@@ -44,7 +44,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      raise MsbmsSystError,
+      reraise MsbmsSystError,
         code: :undefined_error,
         message: "Failure adding Disallowed Password.",
         cause: error
@@ -68,7 +68,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      raise MsbmsSystError,
+      reraise MsbmsSystError,
         code: :undefined_error,
         message: "Failure testing if password is disallowed.",
         cause: error
@@ -105,7 +105,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      raise MsbmsSystError,
+      reraise MsbmsSystError,
         code: :undefined_error,
         message: "Failure deleting Disallowed Password.",
         cause: error
@@ -139,7 +139,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      raise MsbmsSystError,
+      reraise MsbmsSystError,
         code: :undefined_error,
         message: "Failure creating Owner Password Rules.",
         cause: error
@@ -162,7 +162,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      raise MsbmsSystError,
+      reraise MsbmsSystError,
         code: :undefined_error,
         message: "Failure retrieving or updating Global Password Rules.",
         cause: error
@@ -192,7 +192,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      raise MsbmsSystError,
+      reraise MsbmsSystError,
         code: :undefined_error,
         message: "Failure updating Global Password Rules.",
         cause: error
@@ -222,7 +222,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      raise MsbmsSystError,
+      reraise MsbmsSystError,
         code: :undefined_error,
         message: "Failure updating Owner Password Rules.",
         cause: error
@@ -236,7 +236,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      raise MsbmsSystError,
+      reraise MsbmsSystError,
         code: :undefined_error,
         message: "Failure updating Owner Password Rules.",
         cause: error
@@ -260,7 +260,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      raise MsbmsSystError,
+      reraise MsbmsSystError,
         code: :undefined_error,
         message: "Failure retrieving Global Password Rules.",
         cause: error
@@ -289,7 +289,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      raise MsbmsSystError,
+      reraise MsbmsSystError,
         code: :undefined_error,
         message: "Failure retrieving Owner Password Rules.",
         cause: error
@@ -318,7 +318,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      raise MsbmsSystError,
+      reraise MsbmsSystError,
         code: :undefined_error,
         message: "Failure retrieving Access Account effective Password Rules.",
         cause: error
@@ -444,7 +444,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      raise MsbmsSystError,
+      reraise MsbmsSystError,
         code: :undefined_error,
         message: "Failure verifying Password Rules or retrieving system Standard Rules.",
         cause: error
@@ -465,7 +465,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      raise MsbmsSystError,
+      reraise MsbmsSystError,
         code: :undefined_error,
         message: "Failure verifying Test Password Rules against Standard Password Rules.",
         cause: error
@@ -631,7 +631,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      raise MsbmsSystError,
+      reraise MsbmsSystError,
         code: :undefined_error,
         message: "Failure deleting Owner Password Rules.",
         cause: error

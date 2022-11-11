@@ -41,7 +41,7 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      raise MsbmsSystError,
+      reraise MsbmsSystError,
         code: :undefined_error,
         message: "Failure checking if host disallowed.",
         cause: error
@@ -59,14 +59,12 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      {
-        :error,
-        %MsbmsSystError{
-          code: :undefined_error,
-          message: "Failure creating Disallowed Host.",
-          cause: error
-        }
-      }
+      {:error,
+       %MsbmsSystError{
+         code: :undefined_error,
+         message: "Failure creating Disallowed Host.",
+         cause: error
+       }}
   end
 
   @spec delete_disallowed_host_addr(Types.host_address()) ::
@@ -87,7 +85,7 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      raise MsbmsSystError,
+      reraise MsbmsSystError,
         code: :undefined_error,
         message: "Failure deleting Disallowed Host by host IP address.",
         cause: error
@@ -110,7 +108,7 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      raise MsbmsSystError,
+      reraise MsbmsSystError,
         code: :undefined_error,
         message: "Failure deleting Disallowed Host.",
         cause: error
@@ -123,7 +121,7 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      raise MsbmsSystError,
+      reraise MsbmsSystError,
         code: :undefined_error,
         message: "Failure deleting Disallowed Host by ID.",
         cause: error
@@ -164,7 +162,7 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      raise MsbmsSystError,
+      reraise MsbmsSystError,
         code: :undefined_error,
         message: "Failure retrieving Disallowed Host by ID.",
         cause: error
@@ -189,7 +187,7 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      raise MsbmsSystError,
+      reraise MsbmsSystError,
         code: :undefined_error,
         message: "Failure retrieving Disallowed Host by host IP address.",
         cause: error
@@ -246,7 +244,7 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      raise MsbmsSystError,
+      reraise MsbmsSystError,
         code: :undefined_error,
         message: "Failure retrieving Applied Network Rule.",
         cause: error
@@ -264,14 +262,12 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      {
-        :error,
-        %MsbmsSystError{
-          code: :undefined_error,
-          message: "Failure creating Global Network Rule.",
-          cause: error
-        }
-      }
+      {:error,
+       %MsbmsSystError{
+         code: :undefined_error,
+         message: "Failure creating Global Network Rule.",
+         cause: error
+       }}
   end
 
   @spec create_owner_network_rule(
@@ -290,14 +286,12 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      {
-        :error,
-        %MsbmsSystError{
-          code: :undefined_error,
-          message: "Failure creating Owner Network Rule.",
-          cause: error
-        }
-      }
+      {:error,
+       %MsbmsSystError{
+         code: :undefined_error,
+         message: "Failure creating Owner Network Rule.",
+         cause: error
+       }}
   end
 
   @spec create_instance_network_rule(
@@ -316,14 +310,12 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      {
-        :error,
-        %MsbmsSystError{
-          code: :undefined_error,
-          message: "Failure creating Owner Network Rule.",
-          cause: error
-        }
-      }
+      {:error,
+       %MsbmsSystError{
+         code: :undefined_error,
+         message: "Failure creating Owner Network Rule.",
+         cause: error
+       }}
   end
 
   @spec update_global_network_rule(
@@ -349,7 +341,7 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      raise MsbmsSystError,
+      reraise MsbmsSystError,
         code: :undefined_error,
         message: "Failure retrieving or updating Global Network Rule.",
         cause: error
@@ -368,7 +360,7 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      raise MsbmsSystError,
+      reraise MsbmsSystError,
         code: :undefined_error,
         message: "Failure updating Global Network Rule.",
         cause: error
@@ -397,7 +389,7 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      raise MsbmsSystError,
+      reraise MsbmsSystError,
         code: :undefined_error,
         message: "Failure retrieving or updating Owner Network Rule.",
         cause: error
@@ -416,7 +408,7 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      raise MsbmsSystError,
+      reraise MsbmsSystError,
         code: :undefined_error,
         message: "Failure updating Owner Network Rule.",
         cause: error
@@ -446,7 +438,7 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      raise MsbmsSystError,
+      reraise MsbmsSystError,
         code: :undefined_error,
         message: "Failure retrieving or updating Instance Network Rule.",
         cause: error
@@ -465,7 +457,7 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      raise MsbmsSystError,
+      reraise MsbmsSystError,
         code: :undefined_error,
         message: "Failure updating Instance Network Rule.",
         cause: error
@@ -492,7 +484,7 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      raise MsbmsSystError,
+      reraise MsbmsSystError,
         code: :undefined_error,
         message: "Failure retrieving Global Network Rule.",
         cause: error
@@ -519,7 +511,7 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      raise MsbmsSystError,
+      reraise MsbmsSystError,
         code: :undefined_error,
         message: "Failure retrieving Owner Network Rule.",
         cause: error
@@ -547,7 +539,7 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      raise MsbmsSystError,
+      reraise MsbmsSystError,
         code: :undefined_error,
         message: "Failure retrieving Instance Network Rule.",
         cause: error
@@ -572,7 +564,7 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      raise MsbmsSystError,
+      reraise MsbmsSystError,
         code: :undefined_error,
         message: "Failure deleting Global Network Rule by record ID.",
         cause: error
@@ -596,7 +588,7 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      raise MsbmsSystError,
+      reraise MsbmsSystError,
         code: :undefined_error,
         message: "Failure deleting Owner Network Rule by record ID.",
         cause: error
@@ -621,7 +613,7 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      raise MsbmsSystError,
+      reraise MsbmsSystError,
         code: :undefined_error,
         message: "Failure deleting Instance Network Rule by record ID.",
         cause: error
