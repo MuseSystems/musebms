@@ -80,7 +80,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Owner do
   end
 
   @spec get_owner_by_name(Types.owner_name()) ::
-          Data.SystOwners.t() | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystOwners.t()} | {:error, MsbmsSystError.t()}
   def get_owner_by_name(owner_name) when is_binary(owner_name) do
     from(
       o in Data.SystOwners,
@@ -106,7 +106,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Owner do
   end
 
   @spec get_owner_id_by_name(Types.owner_name()) ::
-          {:ok, Data.SystOwners.t()} | {:error, MsbmsSystError.t()}
+          {:ok, Types.owner_id()} | {:error, MsbmsSystError.t()}
   def get_owner_id_by_name(owner_name) when is_binary(owner_name) do
     from(o in Data.SystOwners, select: o.id, where: o.internal_name == ^owner_name)
     |> MsbmsSystDatastore.one!()

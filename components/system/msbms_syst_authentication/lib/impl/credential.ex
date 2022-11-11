@@ -11,6 +11,7 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MsbmsSystAuthentication.Impl.Credential do
+  alias MsbmsSystAuthentication.Data
   alias MsbmsSystAuthentication.Types
 
   @moduledoc false

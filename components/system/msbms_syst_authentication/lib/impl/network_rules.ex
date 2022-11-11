@@ -48,7 +48,7 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
   end
 
   @spec create_disallowed_host(Types.host_address()) ::
-          {:ok, Data.SystDisallowedHosts.t()} | {:error, MsbmsSystError.t({})}
+          {:ok, Data.SystDisallowedHosts.t()} | {:error, MsbmsSystError.t()}
   def create_disallowed_host(host_addr) when is_tuple(host_addr) do
     target_host = %DbTypes.Inet{address: host_addr}
 

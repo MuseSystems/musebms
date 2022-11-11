@@ -98,7 +98,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
   @moduledoc false
 
   @spec authenticate_email_password(
-          Types.identifier(),
+          Types.account_identifier(),
           Types.credential(),
           IP.addr(),
           Keyword.t()
@@ -243,7 +243,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
   end
 
   @spec authenticate_api_token(
-          Types.identifier(),
+          Types.account_identifier(),
           Types.credential(),
           IP.addr(),
           MsbmsSystInstanceMgr.Types.instance_id(),
@@ -332,7 +332,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
   end
 
   @spec authenticate_validation_token(
-          Types.identifier(),
+          Types.account_identifier(),
           Types.credential(),
           IP.addr(),
           Keyword.t()
@@ -434,7 +434,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
   defp confirm_successful_validation(auth_state), do: auth_state
 
   @spec authenticate_recovery_token(
-          Types.identifier(),
+          Types.account_identifier(),
           Types.credential(),
           IP.addr(),
           Keyword.t()

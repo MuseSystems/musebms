@@ -14,6 +14,7 @@ defmodule MsbmsSystAuthentication.Data.SystOwnerNetworkRules do
   use MsbmsSystDatastore.Schema
 
   alias MsbmsSystAuthentication.Data
+  alias MsbmsSystAuthentication.Types
   alias MsbmsSystDatastore.DbTypes
 
   @moduledoc """
@@ -70,8 +71,7 @@ defmodule MsbmsSystAuthentication.Data.SystOwnerNetworkRules do
   @spec insert_changeset(Types.owner_network_rule_params()) :: Ecto.Changeset.t()
   defdelegate insert_changeset(insert_params), to: Data.Validators.SystOwnerNetworkRules
 
-  @spec update_changeset(Data.SystOwnerNetworkRules.t(), Types.owner_network_rule_params()) ::
-          Ecto.Changeset.t()
+  @spec update_changeset(t(), Types.owner_network_rule_params()) :: Ecto.Changeset.t()
   defdelegate update_changeset(owner_network_rule, update_params),
     to: Data.Validators.SystOwnerNetworkRules
 end
