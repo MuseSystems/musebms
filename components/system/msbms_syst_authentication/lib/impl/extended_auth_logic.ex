@@ -419,10 +419,10 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
   end
 
   defp confirm_successful_validation(%{status: :authenticated} = auth_state) do
-    with {:ok, _identity} <-
-           Impl.Identity.Validation.confirm_identity_validation(auth_state.identity) do
-      auth_state
-    else
+    case Impl.Identity.Validation.confirm_identity_validation(auth_state.identity) do
+      {:ok, _identity} ->
+        auth_state
+
       error ->
         raise MsbmsSystError,
           code: :undefined_error,
@@ -523,10 +523,10 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
   end
 
   defp confirm_successful_recovery(%{status: :authenticated} = auth_state) do
-    with :ok <-
-           Impl.Identity.Recovery.confirm_credential_recovery(auth_state.identity) do
-      auth_state
-    else
+    case Impl.Identity.Recovery.confirm_credential_recovery(auth_state.identity) do
+      :ok ->
+        auth_state
+
       error ->
         raise MsbmsSystError,
           code: :undefined_error,

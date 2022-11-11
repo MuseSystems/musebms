@@ -104,11 +104,12 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
   end
 
   def request_identity_validation(%Data.SystIdentities{} = target_identity, opts) do
-    with {:ok, validator} <- create_validator(target_identity, opts) do
-      validator
-      |> Map.put(:access_account_id, target_identity.access_account_id)
-      |> then(&{:ok, &1})
-    else
+    case create_validator(target_identity, opts) do
+      {:ok, validator} ->
+        validator
+        |> Map.put(:access_account_id, target_identity.access_account_id)
+        |> then(&{:ok, &1})
+
       error ->
         raise MsbmsSystError,
           code: :undefined_error,
