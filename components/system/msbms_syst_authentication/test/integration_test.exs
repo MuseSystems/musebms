@@ -970,7 +970,16 @@ defmodule IntegrationTest do
   #
   # ==============================================================================================
 
-  test "Step 3.XX: Add Owned Access Accounts" do
+  # Note that Owned Access Account functionality doesn't significantly differ
+  # from Unowned Access Accounts in most ways; the primary difference is during
+  # the authentication process where we have no known Access Account and have to
+  # resolve that via an Identity record's account_identifier field.  Identifiers
+  # are only unique by Owner so this is the case we most have to focus on
+  # special Owned Access Account testing.  This being the case, only those tests
+  # needed for later authentication related tests and the authentication tests
+  # themselves will be made here.
+
+  test "Step 3.01: Add Owned Access Accounts" do
     {:ok, owner1_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner1")
 
     state = MsbmsSystEnums.get_default_enum_item("access_account_states")
@@ -1012,7 +1021,112 @@ defmodule IntegrationTest do
              })
   end
 
-  test "Step 3.XX: Invite Owned Access Account to Instances" do
+  test "Step 3.02: Test Password for Owned Access Account" do
+    {:ok, owner1_access_account_id} =
+      MsbmsSystAuthentication.get_access_account_id_by_name("owner1_access_account")
+
+    assert {:ok, [password_rule_length_min: 8]} =
+             MsbmsSystAuthentication.test_credential(owner1_access_account_id, "short")
+
+    assert {:ok, [password_rule_disallowed_password: true]} =
+             MsbmsSystAuthentication.test_credential(
+               owner1_access_account_id,
+               "DisallowedPassword#123#"
+             )
+
+    assert {:ok, []} =
+             MsbmsSystAuthentication.test_credential(owner1_access_account_id, "a1b2c3d4")
+
+    {:ok, owner2_access_account_id} =
+      MsbmsSystAuthentication.get_access_account_id_by_name("owner2_access_account")
+
+    assert {:ok, [password_rule_disallowed_password: true]} =
+             MsbmsSystAuthentication.test_credential(
+               owner2_access_account_id,
+               "DisallowedPassword#123#"
+             )
+
+    assert {:ok, owner2_violations} =
+             MsbmsSystAuthentication.test_credential(owner2_access_account_id, "a1b2c3d4")
+
+    assert Enum.member?(owner2_violations, {:password_rule_length_min, 12})
+    assert Enum.member?(owner2_violations, {:password_rule_required_upper, 2})
+    assert Enum.member?(owner2_violations, {:password_rule_required_symbols, 2})
+  end
+
+  test "Step 3.03: Create Email/Password for Owned Access Account" do
+    # For the Unowned Access Account type, create_validated will default to
+    # false as this is the common realistic scenario.  Owned Access Accounts
+    # will more likely be created already validated.
+
+    {:ok, owner1_access_account_id} =
+      MsbmsSystAuthentication.get_access_account_id_by_name("owner1_access_account")
+
+    assert {:ok, owner1_result} =
+             MsbmsSystAuthentication.create_authenticator_email_password(
+               owner1_access_account_id,
+               "owned.access.account@MuseSystems.Com",
+               "owner1.password",
+               create_validated: true
+             )
+
+    assert owner1_access_account_id == owner1_result.access_account_id
+    assert "owned.access.account@musesystems.com" == owner1_result.account_identifier
+    assert nil == owner1_result[:validation_identifier]
+    assert nil == owner1_result[:validation_credential]
+
+    {:ok, owner2_access_account_id} =
+      MsbmsSystAuthentication.get_access_account_id_by_name("owner2_access_account")
+
+    # Note that the email address (account_identifier) can be the same across
+    # owners so that gets tested here.
+    assert {:ok, owner2_result} =
+             MsbmsSystAuthentication.create_authenticator_email_password(
+               owner2_access_account_id,
+               "owned.access.account@MuseSystems.Com",
+               "Owner2.Password.123",
+               create_validated: true
+             )
+
+    assert owner2_access_account_id == owner2_result.access_account_id
+    assert "owned.access.account@musesystems.com" == owner2_result.account_identifier
+    assert nil == owner2_result[:validation_identifier]
+    assert nil == owner2_result[:validation_credential]
+  end
+
+  test "Step 3.04: Violate Rate Limit for Owned Access Account Email Identity" do
+    {:ok, owner1_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner1")
+
+    assert :rejected_rate_limited =
+             violate_email_rate_limit(
+               "owned.access.account@MuseSystems.Com",
+               ~i"10.123.123.123",
+               owner1_id,
+               100
+             )
+
+    {:ok, owner2_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner2")
+
+    assert {:ok, %{status: :rejected_rate_limited}} =
+             MsbmsSystAuthentication.authenticate_email_password(
+               "owned.access.account@musesystems.com",
+               MsbmsSystUtils.get_random_string(40),
+               ~i"10.123.123.123",
+               owning_owner_id: owner2_id
+             )
+
+    _ = MsbmsSystRateLimiter.delete_counters(:identifier, "owned.access.account@musesystems.com")
+
+    assert {:ok, %{status: :rejected}} =
+             MsbmsSystAuthentication.authenticate_email_password(
+               "owned.access.account@musesystems.com",
+               MsbmsSystUtils.get_random_string(40),
+               ~i"10.123.123.123",
+               owning_owner_id: owner2_id
+             )
+  end
+
+  test "Step 3.04: Invite Owned Access Account to Instances" do
     # Basic Invite
 
     {:ok, owner1_account_id} =
@@ -1022,9 +1136,11 @@ defmodule IntegrationTest do
       MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner1_instance_types_std")
 
     assert {:ok, %Data.SystAccessAccountInstanceAssocs{} = invited_aaia_owner1} =
-             MsbmsSystAuthentication.invite_to_instance(owner1_account_id, owner1_instance_id)
+             MsbmsSystAuthentication.invite_to_instance(owner1_account_id, owner1_instance_id,
+               create_accepted: true
+             )
 
-    assert nil == invited_aaia_owner1.access_granted
+    assert nil != invited_aaia_owner1.access_granted
 
     # Invite w/Custom Expiration
 
@@ -1045,21 +1161,165 @@ defmodule IntegrationTest do
              DbTypes.compare(test_date, DateTime.to_date(invited_aaia_owner2.invitation_expires))
 
     assert nil == invited_aaia_owner2.access_granted
+  end
 
-    # Invite w/Create Accepted Option
+  test "Step 3.05: Accept Instance Invite to Owned Access Account" do
+    {:ok, access_account_id} =
+      MsbmsSystAuthentication.get_access_account_id_by_name("owner2_access_account")
 
-    {:ok, owner3_account_id} =
-      MsbmsSystAuthentication.get_access_account_id_by_name("owner3_access_account")
+    {:ok, instance_id} =
+      MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner2_instance_types_std")
 
-    {:ok, owner3_instance_id} =
-      MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner3_instance_types_std")
+    assert {:ok, aaia_record} =
+             MsbmsSystAuthentication.accept_instance_invite(access_account_id, instance_id)
 
-    assert {:ok, %Data.SystAccessAccountInstanceAssocs{} = invited_aaia_owner3} =
-             MsbmsSystAuthentication.invite_to_instance(owner3_account_id, owner3_instance_id,
-               create_accepted: true
+    assert %Data.SystAccessAccountInstanceAssocs{} = aaia_record
+  end
+
+  test "Step 3.06: Authenticate Owned Access Account using Email/Password" do
+    # Instance access invite was explicitly accepted in earlier step.
+    {:ok, instance1_id} =
+      MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner1_instance_types_std")
+
+    {:ok, owner1_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner1")
+
+    assert {:ok, auth_status1} =
+             MsbmsSystAuthentication.authenticate_email_password(
+               "owned.access.account@MuseSystems.Com",
+               "owner1.password",
+               ~i"10.100.170.10",
+               instance_id: instance1_id,
+               owning_owner_id: owner1_id
              )
 
-    assert Date.utc_today() == DateTime.to_date(invited_aaia_owner3.access_granted)
+    assert %{status: :authenticated} = auth_status1
+
+    # Instance access was created as accepted.
+    {:ok, instance2_id} =
+      MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner2_instance_types_std")
+
+    {:ok, owner2_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner2")
+
+    assert {:ok, auth_status2} =
+             MsbmsSystAuthentication.authenticate_email_password(
+               "owned.access.account@MuseSystems.Com",
+               "Owner2.Password.123",
+               ~i"10.100.170.10",
+               instance_id: instance2_id,
+               owning_owner_id: owner2_id
+             )
+
+    assert %{status: :pending} = auth_status2
+    assert Enum.member?(auth_status2.pending_operations, :require_mfa)
+
+    # TODO: MFA isn't yet implemented so closing the pending authentication
+    #       status in a test will come later.
+  end
+
+  test "Step 3.07: Create Account Code for Owned Access Account" do
+    {:ok, access_account_id} =
+      MsbmsSystAuthentication.get_access_account_id_by_name("owner1_access_account")
+
+    assert {:ok, authenticator_result} =
+             MsbmsSystAuthentication.create_or_reset_account_code(access_account_id,
+               account_code: "Owner1 Access Account Code"
+             )
+
+    assert authenticator_result.access_account_id == access_account_id
+    assert authenticator_result.account_identifier == "Owner1 Access Account Code"
+  end
+
+  test "Step 3.08: Identify Owned Access Account by Account Code" do
+    {:ok, owner1_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner1")
+
+    assert {:ok, :not_found} =
+             MsbmsSystAuthentication.identify_access_account_by_code("A Bad Code", nil)
+
+    assert {:ok, :not_found} =
+             MsbmsSystAuthentication.identify_access_account_by_code(
+               "Owner1 Access Account Code",
+               nil
+             )
+
+    assert {:ok, %Data.SystIdentities{}} =
+             MsbmsSystAuthentication.identify_access_account_by_code(
+               "Owner1 Access Account Code",
+               owner1_id
+             )
+  end
+
+  test "Step 3.09: Create API Token for Owned Access Account" do
+    {:ok, access_account_id} =
+      MsbmsSystAuthentication.get_access_account_id_by_name("owner1_access_account")
+
+    assert {:ok, authenticator_result} =
+             MsbmsSystAuthentication.create_authenticator_api_token(access_account_id,
+               identity_token: "owner1_api_token_identity",
+               credential_token: "owner1_api_token_credential"
+             )
+
+    assert authenticator_result.access_account_id == access_account_id
+    assert authenticator_result.account_identifier == "owner1_api_token_identity"
+    assert authenticator_result.credential == "owner1_api_token_credential"
+  end
+
+  test "Step 3.10: Authenticate API Token for Owned Access Account" do
+    {:ok, instance_id} =
+      MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner1_instance_types_std")
+
+    {:ok, access_account_id} =
+      MsbmsSystAuthentication.get_access_account_id_by_name("owner1_access_account")
+
+    {:ok, owner1_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner1")
+
+    # Some failure modes
+
+    assert {:ok, bad_instance_state} =
+             MsbmsSystAuthentication.authenticate_api_token(
+               "owner1_api_token_identity",
+               "owner1_api_token_credential",
+               ~i"10.100.170.10",
+               nil,
+               owning_owner_id: owner1_id
+             )
+
+    assert bad_instance_state.status == :rejected
+
+    assert {:ok, bad_host_state} =
+             MsbmsSystAuthentication.authenticate_api_token(
+               "owner1_api_token_identity",
+               "owner1_api_token_credential",
+               ~i"10.100.160.10",
+               instance_id,
+               owning_owner_id: owner1_id
+             )
+
+    assert bad_host_state.status == :rejected_host_check
+
+    assert {:ok, bad_credential_state} =
+             MsbmsSystAuthentication.authenticate_api_token(
+               "owner1_api_token_identity",
+               "bad_api_token_credential",
+               ~i"10.100.170.10",
+               instance_id,
+               owning_owner_id: owner1_id
+             )
+
+    assert bad_credential_state.status == :rejected
+
+    # Successful auth test
+
+    assert {:ok, auth_state} =
+             MsbmsSystAuthentication.authenticate_api_token(
+               "owner1_api_token_identity",
+               "owner1_api_token_credential",
+               ~i"10.100.170.10",
+               instance_id,
+               owning_owner_id: owner1_id
+             )
+
+    assert auth_state.status == :authenticated
+    assert auth_state.access_account_id == access_account_id
   end
 
   # ==============================================================================================
@@ -1068,7 +1328,7 @@ defmodule IntegrationTest do
   #
   # ==============================================================================================
 
-  # Identity Rate Limit Support
+  # Identity Rate Limit Support / Validator
 
   defp violate_validator_rate_limit(identifier, host_addr, owner_id, limit),
     do: violate_validator_rate_limit(identifier, host_addr, owner_id, :rejected, limit)
@@ -1089,6 +1349,29 @@ defmodule IntegrationTest do
   end
 
   defp violate_validator_rate_limit(_identifier, _host_addr, _owner_id, status, _limit),
+    do: status
+
+  # Identity Rate Limit Support / Email
+
+  defp violate_email_rate_limit(identifier, host_addr, owner_id, limit),
+    do: violate_email_rate_limit(identifier, host_addr, owner_id, :rejected, limit)
+
+  defp violate_email_rate_limit(_identifier, _host_addr, _owner_id, :rejected, 0),
+    do: :test_limit_reached
+
+  defp violate_email_rate_limit(identifier, host_addr, owner_id, :rejected, limit) do
+    {:ok, auth_state} =
+      MsbmsSystAuthentication.authenticate_email_password(
+        identifier,
+        MsbmsSystUtils.get_random_string(40),
+        host_addr,
+        owning_owner_id: owner_id
+      )
+
+    violate_email_rate_limit(identifier, host_addr, owner_id, auth_state.status, limit - 1)
+  end
+
+  defp violate_email_rate_limit(_identifier, _host_addr, _owner_id, status, _limit),
     do: status
 
   # Host Rate Limit Support
