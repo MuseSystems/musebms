@@ -119,15 +119,6 @@ defmodule DevSupport do
     MsbmsSystRateLimiter.init_rate_limiter()
   end
 
-  defp setup_mnesia_database(:integration_testing) do
-    File.mkdir_p!(@mnesia_database_location)
-    Application.put_env(:mnesia, :dir, @mnesia_database_location)
-
-    :mnesia.stop()
-    :mnesia.create_schema([node()])
-    :mnesia.start()
-  end
-
   defp cleanup_database() do
     datastore_options = @datastore_options
 
@@ -137,7 +128,6 @@ defmodule DevSupport do
   end
 
   defp cleanup_mnesia_database(:unit_testing), do: nil
-  defp cleanup_mnesia_database(:integration_testing), do: File.rm_rf!(@mnesia_database_location)
 
   defp get_datastore_type(:unit_testing), do: @migration_unit_test_ds_type
 
