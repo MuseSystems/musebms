@@ -18,6 +18,21 @@ defmodule IdentityEmailTest do
   alias MsbmsSystAuthentication.Data
   alias MsbmsSystAuthentication.Impl
 
+  test "Can validate Email Address format" do
+    assert "AValid!EmailAddress@MuseSystems.Com" =
+             Impl.Identity.Email.verify_email_address("AValid!EmailAddress@MuseSystems.Com")
+
+    assert_raise MsbmsSystError,
+                 fn ->
+                   Impl.Identity.Email.verify_email_address("AValid!EmailAddress")
+                 end
+  end
+
+  test "Can normalize Email Address" do
+    assert "AValid!EmailAddress@musesystems.com" =
+             Impl.Identity.Email.normalize_email_address("AValid!EmailAddress@MuseSystems.Com")
+  end
+
   test "Can create Email Identity" do
     {:ok, access_account_id} =
       Impl.AccessAccount.get_access_account_id_by_name("identity_email_create_test_accnt")

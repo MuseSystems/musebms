@@ -71,7 +71,8 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Email do
   # separating "@" were missing.  But we should properly handle the vast
   # majority of cases as embedded "@" should be very rare (and expected to be
   # unreliable).
-  defp verify_email_address(email_address) when is_binary(email_address) do
+  @spec verify_email_address(Types.account_identifier()) :: Types.account_identifier()
+  def verify_email_address(email_address) when is_binary(email_address) do
     if Regex.match?(~r/.+@.+/, email_address) do
       email_address
     else
@@ -82,7 +83,8 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Email do
     end
   end
 
-  defp normalize_email_address(email_address) when is_binary(email_address) do
+  @spec normalize_email_address(Types.account_identifier()) :: Types.account_identifier()
+  def normalize_email_address(email_address) when is_binary(email_address) do
     Regex.replace(~r/(.+)@(.+)$/, email_address, fn _, local_part, domain_part ->
       local_part <> "@" <> String.downcase(domain_part)
     end)
