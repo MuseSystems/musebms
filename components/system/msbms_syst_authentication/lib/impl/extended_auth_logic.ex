@@ -811,7 +811,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
   defp process_host_rate_limit_result({:allow, _}, auth_state), do: auth_state
 
   defp process_host_rate_limit_result({:deny, _}, auth_state) do
-    Impl.NetworkRules.create_disallowed_host(auth_state.host_address)
+    _ = Impl.NetworkRules.create_disallowed_host(auth_state.host_address)
 
     Map.merge(auth_state, %{status: :rejected, pending_operations: []})
   end
