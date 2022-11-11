@@ -110,6 +110,11 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
     %{id: identity_type_id} =
       MsbmsSystEnums.get_enum_item_by_name("identity_types", "identity_types_sysdef_email")
 
+    resolved_email_addr =
+      email_addr
+      |> Impl.Identity.Email.verify_email_address()
+      |> Impl.Identity.Email.normalize_email_address()
+
     not_started_auth_state = %{
       status: :not_started,
       access_account_id: nil,
@@ -117,13 +122,23 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
       identity_type_id: identity_type_id,
       host_address: host_addr,
       applied_network_rule: nil,
-      identifier: email_addr,
+      identifier: resolved_email_addr,
       owning_owner_id: opts[:owning_owner_id],
       plaintext_credential: pwd_text,
       pending_operations: []
     }
 
     authenticate_email_password(not_started_auth_state, opts)
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {:error,
+       %MsbmsSystError{
+         code: :undefined_error,
+         message: "Failure authenticating Email/Password.",
+         cause: error
+       }}
   end
 
   @spec authenticate_email_password(Types.authentication_state(), Keyword.t()) ::
@@ -157,7 +172,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
       {:error,
        %MsbmsSystError{
          code: :undefined_error,
-         message: "Failure authenticating Email/Password.",
+         message: "Failure authenticating Email/Password via Authentication State.",
          cause: error
        }}
   end
