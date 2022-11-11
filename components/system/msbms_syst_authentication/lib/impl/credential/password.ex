@@ -48,7 +48,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      raise MsbmsSystError,
+      reraise MsbmsSystError,
         code: :undefined_error,
         message: "Failure testing Password Credential.",
         cause: error
@@ -67,7 +67,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      raise MsbmsSystError,
+      reraise MsbmsSystError,
         code: :undefined_error,
         message: "Failure testing Password Credential.",
         cause: error
@@ -217,7 +217,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      raise MsbmsSystError,
+      reraise MsbmsSystError,
         code: :undefined_error,
         message: "Failure setting Password Credential.",
         cause: error
@@ -315,14 +315,12 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      {
-        :error,
-        %MsbmsSystError{
-          code: :undefined_error,
-          message: "Failure setting Password Credential.",
-          cause: error
-        }
-      }
+      {:error,
+       %MsbmsSystError{
+         code: :undefined_error,
+         message: "Failure setting Password Credential.",
+         cause: error
+       }}
   end
 
   defp maybe_test_credential(pwd_rules, pwd_text) do
@@ -425,7 +423,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      raise MsbmsSystError,
+      reraise MsbmsSystError,
         code: :undefined_error,
         message: "Failure retrieving Password Credential record.",
         cause: error
@@ -462,7 +460,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      raise MsbmsSystError,
+      reraise MsbmsSystError,
         code: :undefined_error,
         message: "Failure deleting Password Credential by ID.",
         cause: error
@@ -475,7 +473,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      raise MsbmsSystError,
+      reraise MsbmsSystError,
         code: :undefined_error,
         message: "Failure deleting Password Credential.",
         cause: error

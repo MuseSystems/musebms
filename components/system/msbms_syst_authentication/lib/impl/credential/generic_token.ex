@@ -54,7 +54,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.GenericToken do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      raise MsbmsSystError,
+      reraise MsbmsSystError,
         code: :undefined_error,
         message: "Failure confirming Token Credential.",
         cause: error
@@ -105,14 +105,12 @@ defmodule MsbmsSystAuthentication.Impl.Credential.GenericToken do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      {
-        :error,
-        %MsbmsSystError{
-          code: :undefined_error,
-          message: "Failure setting APi Token Credential.",
-          cause: error
-        }
-      }
+      {:error,
+       %MsbmsSystError{
+         code: :undefined_error,
+         message: "Failure setting APi Token Credential.",
+         cause: error
+       }}
   end
 
   defp set_credential_data(credential_type, nil = _cred, access_account_id, identity_id, token) do
@@ -175,7 +173,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.GenericToken do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      raise MsbmsSystError,
+      reraise MsbmsSystError,
         code: :undefined_error,
         message: "Failure retrieving Token Credential.",
         cause: error
@@ -209,7 +207,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.GenericToken do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      raise MsbmsSystError,
+      reraise MsbmsSystError,
         code: :undefined_error,
         message: "Failure deleting API Token Credential.",
         cause: error
