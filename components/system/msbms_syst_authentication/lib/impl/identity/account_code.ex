@@ -25,7 +25,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.AccountCode do
 
   @default_identity_token_length 12
   @default_identity_tokens :b32c
-  @default_create_validated false
+  @default_create_validated true
 
   @spec create_identity(Types.access_account_id(), Types.account_identifier() | nil, Keyword.t()) ::
           {:ok, Data.SystIdentities.t()} | {:error, MsbmsSystError.t() | Exception.t()}
@@ -67,11 +67,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.AccountCode do
         ) :: Data.SystIdentities.t() | nil
   def identify_access_account(account_code, owner_id) when is_binary(account_code) do
     account_code
-    |> Impl.Identity.Helpers.get_identification_query(
-      "identity_types_sysdef_account",
-      owner_id,
-      :require_unvalidated
-    )
+    |> Impl.Identity.Helpers.get_identification_query("identity_types_sysdef_account", owner_id)
     |> MsbmsSystDatastore.one()
   end
 

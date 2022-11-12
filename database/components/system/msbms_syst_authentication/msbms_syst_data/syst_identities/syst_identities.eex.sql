@@ -38,10 +38,6 @@ CREATE TABLE msbms_syst_data.syst_identities
         CONSTRAINT syst_identities_validates_identities_udx UNIQUE
     ,validation_requested
         timestamptz
-    ,CONSTRAINT syst_identities_primary_validator_chk
-        CHECK ( ( validated IS NULL AND
-                  validation_requested IS NULL AND
-                  validates_identity_id IS NOT NULL ) OR validates_identity_id IS NULL )
     ,identity_expires
         timestamptz
     ,external_name
