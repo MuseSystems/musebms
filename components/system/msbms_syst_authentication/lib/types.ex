@@ -22,10 +22,59 @@ defmodule MsbmsSystAuthentication.Types do
   Types used by the Authentication module.
   """
 
+  @typedoc """
+  Defines the expected type of Access Account record ID values.
+  """
   @type access_account_id() :: Ecto.UUID.t()
 
+  @typedoc """
+  Defines the expected type of Access Account Instance Association record ID
+  values.
+  """
   @type access_account_instance_assoc_id() :: Ecto.UUID.t()
 
+  @typedoc """
+  Defines the expected shape and types of Access Account Instance Association
+  Parameters.
+
+  These parameters are passed to the database Changeset functions for tasks such
+  as record creation or updating.
+
+  ## Attributes
+
+    * `access_account_id` - the Access Account record ID which will be
+    associated with the Instance.
+
+    * `access_account_name` - an alternate method of identifying an Access
+    Account record by using its Internal Name value.  This can be used instead
+    of the `access_account_id` attribute.
+
+    * `instance_id` - the record ID of the Instance to which the designated
+    Access Account record will be associated.
+
+    * `instance_name` - an alternate method of identifying the target Instance
+    record by using its Internal Name value.  This can be used instead of the
+    `instance_id` attribute.
+
+    * `access_granted` - when populated the value indicates both that the Access
+    Account has access to the Instance and indicates specifically when that
+    access was granted.  When `nil` this value means that the Access Account has
+    been invited to the access the Instance, but that the Access Account holder
+    (the user) has not yet accepted the invitation.
+
+    * `invitation_issued` - the specific date and time when the Access Account
+    was invited to access the Instance.  When `nil` the invitation has not yet
+    been issued.
+
+    * `invitation_expires` - the date and time by which an invitation for access
+    must be accepted by the Access Account holder.  If the Access Account holder
+    has not accepted the invitation by the value of this attribute, the record
+    is considered invalid and the invitation must be reissued.
+
+    * `invitation_declined` - the date and time at which the Access Account
+    holder declined an invitation to access an Instance.  If this value is `nil`
+    then the Access Account holder has not specifically declined the request.
+  """
   @type access_account_instance_assoc_params() :: %{
           optional(:access_account_id) => access_account_id(),
           optional(:access_account_name) => access_account_name(),
@@ -37,8 +86,45 @@ defmodule MsbmsSystAuthentication.Types do
           optional(:invitation_declined) => DateTime.t()
         }
 
+  @typedoc """
+  Defines the type of Access Account Internal Name values.
+  """
   @type access_account_name() :: String.t()
 
+  @typedoc """
+  Defines the shape and expected types of Access Account Changeset parameters.
+
+  ## Attributes
+
+    * `internal_name` - a candidate key for the Access Account record. This
+    value must be unique system wide.
+
+    * `external_name` - an externally/user visible name of the Access Account.
+    This value does not require uniqueness, though care should be exercised in
+    contexts where it may be displayed alongside other Access Accounts to avoid
+    confusion.
+
+    * `owning_owner_id` - the record ID of the Owner which manages the Access
+    Account, if the Access Account is in fact Owner managed.  If the Access '
+    Account is not Owner managed this attribute should be left `nil`.
+
+    * `owning_owner_name` - an alternative means of identifying the Access
+    Account's Owner using the Internal Name of the Owner instead of its ID.
+
+    * `allow_global_logins` - if true, the Access Account can log into the
+    system without specification of an Owner or Instance for context.  Typically
+    this is is used for unowned Access Accounts which may log into a global
+    interface and then select their desired Application Instance from a list of
+    those they have been granted access to.  If false, a specific Owner or
+    Instance context is required.
+
+    * `access_account_state_id` - identifies the current life-cycle state of the
+    Access Account.
+
+    * `access_account_state_name` - an alternative means of identifying the
+    Access Account State using the Internal Name of the State instead of its
+    record ID.
+  """
   @type access_account_params() :: %{
           optional(:internal_name) => access_account_name(),
           optional(:external_name) => String.t(),
@@ -49,21 +135,90 @@ defmodule MsbmsSystAuthentication.Types do
           optional(:access_account_state_name) => access_account_name()
         }
 
+  @typedoc """
+  Defines the type of Access Account State record ID values.
+  """
   @type access_account_state_id() :: MsbmsSystEnums.Types.enum_item_id()
 
+  @typedoc """
+  Defines the type of Access Account State Internal Name values.
+  """
   @type access_account_state_name() :: MsbmsSystEnums.Types.enum_item_name()
 
+  @typedoc """
+  The expected type of values used to identify an Access Account.
+
+  The value of the Account Identifier will vary by context.  For example, in the
+  case of Email Identities, the Account Identifier will be an email address; for
+  API Token Identities, the Account Identifier will likely be a pre-generated
+  short string of random characters.
+  """
   @type account_identifier() :: String.t()
 
+  @typedoc """
+  Represents the return value of functions which evaluate whether or not a
+  specific originating host IP address is allowed to attempt an authentication.
+
+  When an authentication is attempted, a number of different rules and data
+  sources may determine what kind of connection is allowed based on the host IP
+  address from which the attempt appears to be originating and the destination
+  Instance for which the authentication is being processed.  To normalize the
+  return from the evaluation of these different network based evaluations we
+  define a simplified `t:applied_network_rule/0` value to represent the
+  actionable data of the evaluation.
+
+  ## Attributes
+
+    * `precedence` - this will indicate the precedence of the applied Network
+    Rule.  This value can aid in identifying the origin of a given applied
+    allowance or denial.
+
+    * `network_rule_id` - this is the record ID of the rule which was evaluated
+    to govern the authentication attempt.  Which specific relation the ID refers
+    to will depend on the specific precedence of the rule applied.  This value
+    may be `nil` if the implied default Network Rule is applied since, by
+    definition, this means no other explicitly defined Network Rule was found.
+
+    * `functional_type` - May be either `:allow` or `:deny`.  `:allow` means
+    that the Network Rule evaluation allows the host IP address to attempt
+    authentication.  `:deny` indicates that the host IP address may not attempt
+    an authentication.
+  """
   @type applied_network_rule() :: %{
           required(:precedence) => network_rule_precedence(),
           required(:network_rule_id) => Ecto.UUID.t() | nil,
           required(:functional_type) => network_rule_functional_type()
         }
 
+  @typedoc """
+  Defines required operations during an authentication attempt which are
+  considered `extended`, meaning that they interrupt the normal authentication
+  flow.
+
+  Certain authentication methods, such as Email/Password authentication, have
+  certain defined points where an authentication attempt may be interrupted.
+  Examples of such interruptions include when Multi-Factor Authentication is
+  required or when the password requires resetting prior to proceeding.  In all
+  of these cases, we have some action that must take place, including possibly
+  user interactive actions, which must be completed before the full
+  authentication process can complete successfully.
+
+  This type defines the known extended operations which can force this
+  functionality.
+  """
   @type authentication_extended_operations() ::
           :require_mfa | :require_mfa_setup | :require_instance | :require_credential_reset
 
+  @typedoc """
+  A list of known operations which may occur during an authentication attempt.
+
+  Each type of authentication defines the steps which that kind of
+  authentication requires to be completed prior to considering the attempt
+  "authenticated".  This type defines references to all of the known operations
+  that may be required and then includes the
+  `t:authentication_extended_operations/0` which may cause an interruption to
+  to the authentication process.
+  """
   @type authentication_operations() ::
           :check_global_network_rules
           | :check_identifier_rate_limit
@@ -74,6 +229,65 @@ defmodule MsbmsSystAuthentication.Types do
           | :check_host_rate_limit
           | authentication_extended_operations()
 
+  @typedoc """
+  The return type describing the result of authentication attempts via the
+  authentication functions.
+
+  When a user attempts to validate an Access Account, the result is returned as
+  a value of this type. This includes whether or not an authentication attempt
+  was successful or rejected.
+
+  An result indicating that the status is pending may also be returned from an
+  attempt if the authentication requires intervention to complete successfully.
+
+  ## Attributes
+
+    * `status` - the result of the authentication attempt.
+
+    * `access_account_id` - the Access Account record ID if the authentication
+    attempt has successfully completed the identification operation.
+
+    * `instance_id` - the Instance ID that the Access Account holder is
+    attempting to authenticate to.  For certain authentication types, this value
+    may initially be `nil`, but must be non-nil prior to a successful completion
+    of the authentication process.
+
+    * `identity_type_id` - the record ID referencing the Identity Type used to
+    identify the Access Account.
+
+    * `host_address` -  the apparent Host IP Address from which the
+    authentication attempt originated.
+
+    * `applied_network_rule` - the Network Rule that was applied during the
+    authentication attempt.  This value may be `nil` if the evaluation of the
+    Network Rules has not yet made.
+
+    * `pending_operations` - the ordered list of remaining authentication
+    operations which must complete successfully prior to the authentication
+    being successfully completed.
+
+    * `identifier` - the user supplied account identifier used to identify the
+    Access Account.
+
+    * `plaintext_credential` - the unencrypted, user supplied credential to
+    test during the authentication process.  This value will be made `nil` as
+    soon as it has been tested or is created `nil` for the Account Code
+    Authenticator which isn't a true authentication method (it's just a lookup).
+
+    * `owning_owner_id` - an Owner record ID for the Owner which manages the
+    authenticating Access Account in cases where it's an Owned Access Account.
+
+    * `identity_id` - the record ID of the Identity record located to identify
+    the Access Account.
+
+    * `identity` - the Identity record data struct.  This should be the same
+    record as that identified by the `identity_id` attribute
+
+    * `reset_reason` - in cases where a pending operation of
+    `:require_credential_reset` is added to the authentication process, this
+    value indicates the reason for the reset.  Available values are defined in
+    `t:credential_reset_reason/0`.
+  """
   @type authentication_state() :: %{
           required(:status) => authentication_status(),
           required(:access_account_id) => access_account_id() | nil,
@@ -90,6 +304,54 @@ defmodule MsbmsSystAuthentication.Types do
           optional(:reset_reason) => credential_reset_reason()
         }
 
+  @typedoc """
+  The understood life-cycle states of the authentication process.
+
+  Any authentication process will exist in one of the states defined by the
+  list below.  The list is used to populate the `status` field of the
+  `t:authentication_state/0` type.
+
+  Note that while the authentication process may provide the caller information
+  regarding the nature of any rejection, the developer should nonetheless make
+  well considered judgements regarding what, if any, detail to disclose to the
+  user attempting authentication.  More often than not no specificity for a
+  rejection should be given.
+
+    * `:not_started` - the authentication process has not yet begun.
+
+    * `:pending` - the authentication process is underway.   It is possible for
+    a call to an authentication function to return a `:pending` authentication
+    state status.  In these cases the authentication has been interrupted and
+    requires intervention to proceed.
+
+    * `:rejected_host_check` - the authentication process has rejected the
+    authentication attempt because the apparent Host IP Address is not allowed
+    to authenticate as presented.
+
+    * `:rejected_rate_limited` - the authentication process has rejected the
+    authentication attempt because the identifier has failed to successfully
+    authenticate within the prescribed number of tries within a prescribed
+    duration.
+
+    * `:rejected_validation` - the authentication process has rejected the
+    authentication attempt because the identity used to identify the Access
+    Account is subject to prior validation/confirmation by the Access Account
+    holder.  This is the case with newly created Email Identities, for example.
+
+    * `:rejected_identity_expired` - the authentication process has rejected the
+    authentication attempt because the Identity record used to identity the
+    Access Account is beyond its configured expiration date and may not be use
+    again until the Identity's expiration has been reset.  Note that not all
+    Identity records expire.
+
+    * `:rejected` - the authentication process has rejected the authentication
+    attempt for undeclared reasons.  Examples of reasons that can prompt this
+    authentication end state are a user providing a wrong password or no
+    Instance to access being identified.
+
+    * `:authenticated` - the authentication process has finished successfully
+    and the Access Account is now authenticated for the identified Instance.
+  """
   @type authentication_status() ::
           :not_started
           | :pending
@@ -100,6 +362,47 @@ defmodule MsbmsSystAuthentication.Types do
           | :rejected
           | :authenticated
 
+  @typedoc """
+  The return type used when creating Authenticators via the API.
+
+  The included values and attributes will vary somewhat from Authenticator type
+  to Authenticator type, but they will all follow this basic form.
+
+  ## Attributes
+
+    * `access_account_id` - the Access Account record ID for which the
+    Authenticator has been created.
+
+    * `account_identifier` - the Access Account Identifier for use in
+    identifying the Access Account in the authentication process.  Depending on
+    the Authenticator type, this could be a restatement of what the user
+    provided, such as an Email address, or may be system generated such as the
+    identifier for user with an API Token.
+
+    * `credential` - the plaintext Credential created for the Authenticator.
+    This attribute is only returned in cases where the typical Authenticator
+    creation flow includes the system randomly generating the Credential.  For
+    example, an API Token Credential is automatically created by the system and
+    the Credential must be communicated to the user once created.  Note that
+    even in these cases the only time the Credential is available for disclosure
+    to the user is immediately after the Authenticator creation via this value.
+    Once the return result is discarded the Credential is unrecoverable.
+
+    * `validation_identifier` - when creating an Email/Password Authenticator,
+    the default options mandate that validating the Email Identity is required.
+    Assuming the default is not overridden, the system generated Identifier for
+    the user to use to validate the Email Identity is provided via this
+    attribute.  If validation is not required this attribute will not be present
+    in the return value of the Authenticator creation call.
+
+    * `validation_credential` - the (usually) system generated Credential in
+    plaintext which compliments the `validation_identifier` value.  This
+    attribute is either included or excluded on the same terms as the
+    `validation_identifier`.  Note that the return of this value after
+    the creation of an Email/Password Authenticator is the only time that this
+    value is available in plaintext; after this point the plaintext is not
+    retrievable.
+  """
   @type authenticator_result() :: %{
           required(:access_account_id) => access_account_id(),
           optional(:account_identifier) => account_identifier(),
@@ -108,10 +411,44 @@ defmodule MsbmsSystAuthentication.Types do
           optional(:validation_credential) => credential_id() | nil
         }
 
+  @typedoc """
+  Defines the type expected for user provided plaintext Credentials.
+  """
   @type credential() :: String.t()
 
+  @typedoc """
+  Defines the Credential record ID type.
+  """
   @type credential_id() :: Ecto.UUID.t()
 
+  @typedoc """
+  A type to facilitate data maintenance operations related to Credential
+  records.
+
+  ## Attributes
+
+    * `access_account_id` - identifies the Access Account to which the
+    Credential pertains as identified by its record ID.
+
+    * `access_account_name` - an alternative method of using the Access Account
+    internal name to identify the Access Account.
+
+    * `credential_type_id` - the record ID of the Credential Type which
+    classifies the Credential record.
+
+    * `credential_type_name` - an alternative method of identifying the
+    Credential Type using its Internal Name.
+
+    * `credential_for_identity_id` - certain Credentials are only valid when
+    used in conjunction with specific Identity records.  This value records the
+    record ID of the Identity record to which the Credential record belongs.
+
+    * `credential_data` - the hashed or encrypted value of the Credential.  The
+    specific details of what is stored in this value will depend on the method
+    used to secure the Credential, but the most typical scenario includes both
+    the credential hash and the record specific salting value used in creating
+    the hash.
+  """
   @type credential_params() :: %{
           optional(:access_account_id) => access_account_id(),
           optional(:access_account_name) => access_account_name(),
@@ -121,21 +458,108 @@ defmodule MsbmsSystAuthentication.Types do
           optional(:credential_data) => binary()
         }
 
+  @typedoc """
+  Used to define the return value of an attempted Credential Confirmation.
+
+  Attempting to confirm a user provided Credential returns a tuple where the
+  first element is an indication of whether or not a valid Credential was
+  supplied by the user and the second element is a list of extended states which
+  might indicate that additional processing is required even if the Credential
+  is successfully confirmed.  If no additional processing is required the second
+  element will simply be an empty list.
+  """
   @type credential_confirm_result() ::
           {credential_confirm_state(), list(credential_extended_state())}
 
+  @typedoc """
+  Defines the possible outcomes of an attempt to confirm a user provided
+  Credential.
+
+  This type is used to set the available values of the first element of the
+  `t:credential_confirm_result/0` tuple.
+
+    * `:confirmed` - the Credential provided by the user is confirmed as being
+    correct.
+
+    * `:no_credential` - no matching Credential record of the correct type was
+    found for the Access Account.
+
+    * `:wrong_credential` - the user provided Credential does not match the
+    stored Credential record for that Access Account.
+
+  While outcomes other than confirm give some information to the caller, the
+  specific reason for the failure should usually not be disclosed to the user
+  attempting authentication; users should just see a binary confirmed/
+  unconfirmed state without additional details regarding a failure.
+  """
   @type credential_confirm_state() :: :confirmed | :no_credential | :wrong_credential
 
+  @typedoc """
+  Known extended Credential confirmation states indicating required post-
+  confirmation actions.
+
+  This type defines the values which may appear in a list as the second element
+  of `t:credential_confirm_result/0`.
+
+    * `:require_mfa` - when present this value indicates that even though a
+    Credential confirmation succeeded, an additional multi-factor credential
+    confirmation is required prior to the authentication attempt resulting in
+    an authenticated status.  This will be true when the Access Account has
+    one or more configured MFA Credentials and the primary Authenticator is one
+    that supports MFA Credential confirmation (e.g. Password Credentials support
+    MFA Credential confirmation).
+
+  Additional states that can be represented as extended states here include the
+  Credential reset related reasons defined in `t:credential_reset_reason/0`.
+  """
   @type credential_extended_state() :: :require_mfa | credential_reset_reason()
 
+  @typedoc """
+  Provides additional Credential Extended State values when Credential resets
+  are required.
+
+  These values are related in that they all deal with a primary Credential reset
+  being required and describe the reason for such a requirement.  This is
+  information useful to users that must take action.
+
+  Note that currently the only Credential type that may require Credential reset
+  is the Password Credential Type.
+
+    * `reset_forced` - the reset is required because it has been
+    administratively forced.  See the `force_reset` field of
+    `MsbmsSystAuthentication.Data.SystCredentials` for more.
+
+    * `reset_age` - the Password Credential has exceeded the applicable Max Age
+    Password Rule and must be updated.
+
+    * `reset_disallowed` - the password used in the Credential has been found to
+    be included in the Disallowed Passwords list and may no longer be used for
+    authentication.
+  """
   @type credential_reset_reason() :: :reset_forced | :reset_age | :reset_disallowed
 
-  @type credential_set_failures() :: {:invalid_credential, Keyword.t()}
+  @typedoc """
+  A extended return value used when Credentials setting operations have failed.
 
+  This type allows the reason for failure to be communicated.  This will most
+  often be when a candidate password has failed the effective Password Rule and
+  will describe which specific Password Rules have been violated.
+  """
+  @type credential_set_failures() :: {:invalid_credential, Keyword.t(password_rule_violations())}
+
+  @typedoc """
+  The Credential Type record ID database type.
+  """
   @type credential_type_id() :: MsbmsSystEnums.Types.enum_item_id()
 
+  @typedoc """
+  Defines the expected type of the Credential Type record Internal Name.
+  """
   @type credential_type_name() :: MsbmsSystEnums.Types.enum_item_name()
 
+  @typedoc """
+  The Credential Types known by the system.
+  """
   @type credential_types() ::
           :credential_types_sysdef_password
           | :credential_types_sysdef_mfa_totp
@@ -145,13 +569,16 @@ defmodule MsbmsSystAuthentication.Types do
           | :credential_types_sysdef_token_validation
           | :credential_types_sysdef_token_recovery
 
+  @typedoc """
+  The Disallowed Host record ID database type.
+  """
   @type disallowed_host_id() :: Ecto.UUID.t()
 
   @typedoc """
   Defines the available parameters for use in creating or updating Global
   Network Rule records.
 
-  ## Map Attributes
+  ## Attributes
 
     * `ordering` - the order in which the new record should apply relative to
     other Global Network Rule records.  lower `ordering` values take precedence
@@ -193,14 +620,30 @@ defmodule MsbmsSystAuthentication.Types do
           optional(:ip_host_range_upper) => DbTypes.Inet.t()
         }
 
+  @typedoc """
+  Defines the data type and structure of Host IP Addresses.
+  """
   @type host_address() :: IP.addr()
 
+  @typedoc """
+  Establishes the data type of the Identity record ID.
+  """
   @type identity_id() :: Ecto.UUID.t()
 
+  @typedoc """
+  Defines the Identity Type record ID data type.
+  """
   @type identity_type_id() :: MsbmsSystEnums.Types.enum_item_id()
 
+  @typedoc """
+  Defines the expected data type of the Identity Type record Internal Name
+  value.
+  """
   @type identity_type_name() :: MsbmsSystEnums.Types.enum_item_name()
 
+  @typedoc """
+  Defines the list of Identity Types known to the system.
+  """
   @type identity_types() ::
           :identity_types_sysdef_email
           | :identity_types_sysdef_account
@@ -208,6 +651,53 @@ defmodule MsbmsSystAuthentication.Types do
           | :identity_types_sysdef_validation
           | :identity_types_sysdef_password_recovery
 
+  @typedoc """
+  Defines a map of attributes for use in Identity record Changeset processing.
+
+
+  ## Attributes
+
+    * `access_account_id` - the record ID of the Access Account for which the
+    record is being defined.
+
+    * `access_account_name` - an alternative means of selecting the Access
+    Account using its Internal Name value.
+
+    * `identity_type_id` - the record ID of the Identity Type of the Identity.
+
+    * `identity_type_name` - an alternative means of selecting the Identity Type
+    of the record using the Identity Type Internal Name value.
+
+    * `account_identifier` - the identifier presented by the Access Account
+    holder to identify their Access Account.  For example, for Email Identities
+    this value would be the Access Account holder's email address.
+
+    * `validated` - this value indicates both that the Identity record
+    is valid for use in identification requests and the timestamp at which that
+    valid condition came into effect.  When `nil`, the Identity record is not
+    valid to use for identifying Access Accounts.
+
+    * `validates_identity_id` - if the Identity record is of type
+    `identity_types_sysdef_validation` this value will reference the record
+    which is to be validated on confirmation of the validation request.  In all
+    other instances the value should be `nil`.
+
+    * `validation_requested` - if the Identity record is of type
+    `identity_types_sysdef_validation` this value will record the timestamp when
+    the validation was requested.
+
+    * `identity_expires` - the optional timestamp of when the Identity record
+    expires and after which the Identity record may not be used for
+    identification purposes.  If this value is `nil`, the Identity record may be
+    used indefinitely.
+
+    * `external_name` - certain Identities, such as API Token Identities, allow
+    the Access Account holder to provide names with which they will more easily
+    recognize in maintenance tasks.  This value allows for the establishment of
+    a user defined name for the Identity record.  Note that this value does not
+    need to be unique on any basis and therefore is unsuitable for use in
+    looking up Identity records.
+  """
   @type identity_params() :: %{
           optional(:access_account_id) => access_account_id(),
           optional(:access_account_name) => access_account_name(),
@@ -225,7 +715,7 @@ defmodule MsbmsSystAuthentication.Types do
   Defines the available parameters for use in creating or updating Instance
   Network Rule records.
 
-  ## Map Attributes
+  ## Attributes
 
     * `instance_id` - the value of this attribute identifies the Instance for
     which the Network Rule is being defined.  This value doesn't have to be set
@@ -281,8 +771,49 @@ defmodule MsbmsSystAuthentication.Types do
           }
           | nil
 
+  @typedoc """
+  Establishes the two basic operations that Network Rule may define.
+
+    * `:allow` - this essentially whitelists any host IP address(es) or networks
+    defined by the Network Rule, allowing an authentication attempt.
+
+    * `:deny` - this value denies any specified host IP address(es) or networks
+    from attempting an authentication.
+  """
   @type network_rule_functional_type() :: :allow | :deny
 
+  @typedoc """
+  The known precedence classes of Network Rule definitions.
+
+  Network Rules are applied in order of their Precedence Class and then of their
+  ordering value withing the Precedence Class; first matching found becomes the
+  Applied Network Rule.
+
+  Each Precedence Class is a group of rules defined within the same scope of
+  applicability which can range from being globally applicable to applying only
+  to a single Instance.  The known Precedence Classes in order of application
+  are:
+
+    * `:disallowed` - disallowed hosts are individual host IP addresses which
+    are denied access on a global basis, effectively banning their use with the
+    system.  Defined by `MsbmsSystAuthentication.Data.SystDisallowedHosts`.
+
+    * `:global` - Network Rules which are defined to apply global without regard
+    to Owner or Instance.  Such rules may explicitly whitelist or blacklist
+    hosts.  Defined by `MsbmsSystAuthentication.Data.SystGlobalNetworkRules`.
+
+    * `:instance` - Network Rules which apply to only a specific Application
+    Instance.  Defined by `MsbmsSystAuthentication.Data.SystInstanceNetworkRules`.
+
+    * `:instance_owner` - Network Rules which apply to all Application Instances
+    belonging to a specific Owner.  Defined by
+    `MsbmsSystAuthentication.Data.SystOwnerNetworkRules`.
+
+    * `:implied` - when no explicitly defined applicable Disallowed Host or
+    Network Rule records can be found, the system will use an implicit globally
+    applied rule to Apply to the authentication attempt.  The `:implied` rule
+    allows any host to attempt authentication.
+  """
   @type network_rule_precedence() ::
           :disallowed | :global | :instance | :instance_owner | :implied
 
@@ -290,7 +821,7 @@ defmodule MsbmsSystAuthentication.Types do
   Defines the available parameters for use in creating or updating Owner
   Network Rule records.
 
-  ## Map Attributes
+  ## Attributes
 
     * `owner_id` - the value of this attribute identifies the Owner for which
     the Network Rule is being defined.  This value doesn't have to be set
@@ -344,6 +875,78 @@ defmodule MsbmsSystAuthentication.Types do
           optional(:ip_host_range_upper) => DbTypes.Inet.t()
         }
 
+  @typedoc """
+  Defines a generic Password Rule record allowing Password Rules originating
+  from different database sources a common representation.
+
+  Password Rules are defined in two different database tables,
+  `MsbmsSystAuthentication.Data.SystGlobalPasswordRules` and
+  `MsbmsSystAuthentication.Data.SystOwnerPasswordRules`.  This type defines a
+  common representation of Password Rule data for those parts of the system that
+  apply Password Rules after the applicable Password Rules have been resolved.
+
+  ## Attributes
+
+    * `access_account_id` - the Access Account for which the effective Password
+    Rules has been resolved.
+
+    * `owner_id` - the Owner record ID of the Owner which owns the Access
+    Account.  The Access Account's Owner may have established Password Rules
+    which would apply to the Access Account.  A value here does not mean that
+    the Owner's rules necessarily are part of the resolved Password Rule, just
+    that they would have been considered.
+
+    * `password_length` - the resolved value of type
+    `t:MsbmsSystDatastore.DbTypes.IntegerRange/0` describing the password length
+    in terms of the number of characters.  The lower bound defines the minimum
+    number of characters a password may have and the upper bound is the most
+    characters that can be added to password.
+
+    * `max_age` - the resolved value of type `t:MsbmsSystDatastore.DbTypes.Interval/0`
+    which, when added to the `last_updated` value of the Password Credential
+    record, sets the expiration date of the password.  After the password's age
+    has exceeded it's max age, the password must be reset prior to finalizing
+    authentication. A zero interval value here means that password ages are not
+    checked.  The zero interval is the default setting.
+
+    * `require_upper_case` - the resolved minimum number of upper case
+    characters that a valid password must posses.  A setting of zero here
+    disables the requirement.
+
+    * `require_lower_case` - the resolved minimum number of lower case
+    characters that a valid password must posses.  A setting of zero here
+    disables the requirement.
+
+    * `require_numbers` - the resolved minimum number of number characters that
+    a valid password must posses.  A setting of zero here disables the
+    requirement.
+
+    * `require_symbols` - the resolved minimum number of symbol characters that
+    a valid password must posses.  A setting of zero here disables the
+    requirement.
+
+    * `disallow_recently_used` - A positive integer representing the number of
+    most recently used passwords to track and prohibit from re-use.  A zero
+    setting for this attribute indicates that recently used passwords should not
+    be tracked or prohibited.
+
+    * `disallow_compromised` - A boolean value which, if true, indicates that
+    any new password requested by a user be first checked against the Disallowed
+    Passwords list and, if found on the list, rejected for use.  When set true,
+    the system will also check the password against the Disallowed Password list
+    on authentication; if found on the list at authentication time, the user
+    will be required to reset their password to something value not otherwise
+    disallowed.  If set false the Disallowed Password list is not checked.
+
+    * `require_mfa` - A boolean value which indicates if multi-factor
+    authentication is required for password authentication.  If true MFA is
+    required, otherwise MFA is per user preference.  MFA may not be completely
+    disabled.
+
+    * `allowed_mfa_types` - A list of strings identifying the allowed second
+    factor methods. Currently only MFA type `credential_types_secondary_totp` is
+    available.
+  """
   @type password_rule() :: %{
           optional(:access_account_id) => access_account_id() | nil,
           optional(:owner_id) => MsbmsSystInstanceMgr.Types.owner_id() | nil,
@@ -367,7 +970,7 @@ defmodule MsbmsSystAuthentication.Types do
   provided will take on a default value which assumes the specific rule has no
   effect.
 
-  ## Map Attributes
+  ## Attributes
 
     * `password_length` - A value of type `t:MsbmsSystDatastore.DbTypes.IntegerRange/0`
     describing the password length in terms of the number of characters.  The
@@ -435,6 +1038,45 @@ defmodule MsbmsSystAuthentication.Types do
           optional(:allowed_mfa_types) => list(String.t())
         }
 
+  @typedoc """
+  Defines the known Password Rule violations.
+
+  Various functions evaluation a candidate password against the set of
+  applicable Password Rules and return lists of violations for resolution.  The
+  possible violations are:
+
+    * `:password_rule_length_min` - the candidate password violates the minimum
+    password length rule.  The accompanying value is the required number of
+    characters the password must contain.
+
+    * `:password_rule_length_max` -  the candidate password violates the maximum
+    password length rule.  The accompanying value is the maximum permitted
+    number of characters that the password may contain.
+
+    * `:password_rule_required_upper` - the candidate password violates the
+    minimum upper case characters rule.  The accompanying value is the required
+    number of upper case characters.
+
+    * `:password_rule_required_lower` - the candidate password violates the
+    minimum lower case characters rule.  The accompanying value is the required
+    number of lower case characters.
+
+    * `:password_rule_required_numbers` - the candidate password violates the
+    minimum number characters rule.  The accompanying value is the required
+    number of number characters.
+
+    * `:password_rule_required_symbols` - the candidate password violates the
+    minimum symbol characters rule.  The accompanying value is the required
+    number of symbol characters.
+
+    * `:password_rule_disallowed_password` - the candidate password is known
+    password which is disallowed from use in the system.  A new allowed password
+    must be selected.
+
+    * `:password_rule_recent_password` - the candidate password has been too
+    recently used for this Access Account and another not recently used password
+    must be selected.
+  """
   @type password_rule_violations() ::
           {:password_rule_length_min, pos_integer()}
           | {:password_rule_length_max, pos_integer()}
