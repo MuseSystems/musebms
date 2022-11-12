@@ -18,6 +18,8 @@ defmodule IdentityAccountCodeTest do
   alias MsbmsSystAuthentication.Data
   alias MsbmsSystAuthentication.Impl
 
+  @moduletag :capture_log
+
   test "Can create Account Code Identity" do
     {:ok, access_account_id} =
       Impl.AccessAccount.get_access_account_id_by_name("identity_account_code_create_test_accnt")

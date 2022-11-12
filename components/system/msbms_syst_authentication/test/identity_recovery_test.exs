@@ -20,6 +20,8 @@ defmodule IdentityRecoveryTest do
 
   alias MsbmsSystDatastore.DbTypes
 
+  @moduletag :capture_log
+
   test "Can successfully Request Identity Recovery" do
     {:ok, access_account_id} =
       Impl.AccessAccount.get_access_account_id_by_name("identity_recovery_request_test_accnt")

@@ -18,6 +18,8 @@ defmodule CredentialRecoveryTest do
   alias MsbmsSystAuthentication.Data
   alias MsbmsSystAuthentication.Impl
 
+  @moduletag :capture_log
+
   test "Can confirm Recovery Credential" do
     test_account = get_account_data("credential_recovery_confirm_test_accnt")
 

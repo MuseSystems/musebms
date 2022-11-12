@@ -20,6 +20,8 @@ defmodule IdentityValidationTest do
 
   alias MsbmsSystDatastore.DbTypes
 
+  @moduletag :capture_log
+
   test "Request Identity Validation by target Identity ID" do
     target_identity =
       from(

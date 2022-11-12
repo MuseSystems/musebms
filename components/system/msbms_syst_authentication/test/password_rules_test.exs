@@ -20,6 +20,8 @@ defmodule PasswordRulesTest do
 
   alias MsbmsSystDatastore.DbTypes
 
+  @moduletag :capture_log
+
   test "Can add Disallowed Password" do
     assert :ok = Impl.PasswordRules.create_disallowed_password("can_add_disallowed_password_test")
 

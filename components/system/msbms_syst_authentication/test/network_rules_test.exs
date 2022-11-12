@@ -20,6 +20,8 @@ defmodule NetworkRulesTest do
   alias MsbmsSystAuthentication.Impl
   alias MsbmsSystDatastore.DbTypes
 
+  @moduletag :capture_log
+
   test "Can determine if host is disallowed or not" do
     assert {:ok, true} = Impl.NetworkRules.host_disallowed(~i"10.123.123.3")
     assert {:ok, false} = Impl.NetworkRules.host_disallowed(~i"10.123.123.10")

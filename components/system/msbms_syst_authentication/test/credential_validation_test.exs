@@ -18,6 +18,8 @@ defmodule CredentialValidationTest do
   alias MsbmsSystAuthentication.Data
   alias MsbmsSystAuthentication.Impl
 
+  @moduletag :capture_log
+
   test "Can Confirm Validation Credential" do
     test_account = get_account_data("credential_validation_confirm_test_accnt")
 

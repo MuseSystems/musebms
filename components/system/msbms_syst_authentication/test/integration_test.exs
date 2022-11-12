@@ -20,6 +20,7 @@ defmodule IntegrationTest do
   alias MsbmsSystDatastore.DbTypes
 
   @moduletag :integration
+  @moduletag :capture_log
 
   # ==============================================================================================
   #
