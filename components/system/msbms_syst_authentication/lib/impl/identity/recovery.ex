@@ -34,10 +34,19 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Recovery do
   @default_expiration_hours 24
   @default_identity_token_length 40
   @default_identity_tokens :mixed_alphanum
+  @default_create_validated true
 
   @spec request_credential_recovery(Types.access_account_id(), Keyword.t()) ::
           {:ok, Data.SystIdentities.t()} | {:error, MsbmsSystError.t() | Exception.t()}
   def request_credential_recovery(access_account_id, opts) when is_binary(access_account_id) do
+    opts =
+      MsbmsSystUtils.resolve_options(opts,
+        expiration_hours: @default_expiration_hours,
+        identity_token_length: @default_identity_token_length,
+        identity_tokens: @default_identity_tokens,
+        create_validated: @default_create_validated
+      )
+
     access_account_id
     |> access_account_credential_recoverable!()
     |> maybe_create_recovery_identity(access_account_id, opts)
@@ -81,13 +90,6 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Recovery do
   end
 
   defp create_recovery_identity(access_account_id, opts) do
-    opts =
-      MsbmsSystUtils.resolve_options(opts,
-        expiration_hours: @default_expiration_hours,
-        identity_token_length: @default_identity_token_length,
-        identity_tokens: @default_identity_tokens
-      )
-
     generated_account_identifier =
       MsbmsSystUtils.get_random_string(opts[:identity_token_length], opts[:identity_tokens])
 
@@ -101,7 +103,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Recovery do
       identity_expires: date_expires
     }
 
-    Helpers.create_identity(recovery_identity_params, create_validated: false)
+    Helpers.create_identity(recovery_identity_params, opts)
   end
 
   @spec access_account_credential_recoverable!(Types.access_account_id()) ::
@@ -151,11 +153,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Recovery do
         ) :: Data.SystIdentities.t() | nil
   def identify_access_account(recovery_token, owner_id) when is_binary(recovery_token) do
     recovery_token
-    |> Helpers.get_identification_query(
-      "identity_types_sysdef_password_recovery",
-      owner_id,
-      :require_unvalidated
-    )
+    |> Helpers.get_identification_query("identity_types_sysdef_password_recovery", owner_id)
     |> MsbmsSystDatastore.one()
   end
 

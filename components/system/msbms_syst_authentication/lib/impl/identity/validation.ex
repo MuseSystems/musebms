@@ -19,6 +19,11 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Validation do
 
   require Logger
 
+  @default_expiration_hours 24
+  @default_identity_token_length 40
+  @default_identity_tokens :mixed_alphanum
+  @default_create_validated true
+
   # Validation identities are sufficiently different from other kinds of
   # identities that we shouldn't implement the
   # MsbmsSystAuthentication.Impl.Identity behaviour here, though we should be
@@ -49,9 +54,10 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Validation do
   def request_identity_validation(%Data.SystIdentities{} = target_identity, opts) do
     opts =
       MsbmsSystUtils.resolve_options(opts,
-        expiration_hours: 24,
-        identity_token_length: 40,
-        identity_tokens: :mixed_alphanum
+        expiration_hours: @default_expiration_hours,
+        identity_token_length: @default_identity_token_length,
+        identity_tokens: @default_identity_tokens,
+        create_validated: @default_create_validated
       )
 
     MsbmsSystDatastore.transaction(fn ->
@@ -100,7 +106,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Validation do
       identity_expires: date_expires
     }
 
-    Helpers.create_identity(validation_identity_params, create_validated: false)
+    Helpers.create_identity(validation_identity_params, opts)
   end
 
   @spec identify_access_account(
@@ -109,11 +115,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Validation do
         ) :: Data.SystIdentities.t() | nil
   def identify_access_account(validation_token, owner_id) when is_binary(validation_token) do
     validation_token
-    |> Helpers.get_identification_query(
-      "identity_types_sysdef_validation",
-      owner_id,
-      :require_unvalidated
-    )
+    |> Helpers.get_identification_query("identity_types_sysdef_validation", owner_id)
     |> MsbmsSystDatastore.one()
   end
 

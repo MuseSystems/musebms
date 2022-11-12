@@ -28,7 +28,10 @@ defmodule IdentityAccountCodeTest do
     assert {:ok, default_identity} =
              Impl.Identity.AccountCode.create_identity(access_account_id, nil, [])
 
-    assert %Data.SystIdentities{validated: nil, account_identifier: identifier} = default_identity
+    assert %Data.SystIdentities{validated: val_date, account_identifier: identifier} =
+             default_identity
+
+    assert val_date != nil
 
     assert String.length(identifier) == 12
 
@@ -51,8 +54,10 @@ defmodule IdentityAccountCodeTest do
                identity_token_length: 40
              )
 
-    assert %Data.SystIdentities{validated: nil, account_identifier: identifier} =
+    assert %Data.SystIdentities{validated: val_date, account_identifier: identifier} =
              token_length_identity
+
+    assert val_date != nil
 
     assert String.length(identifier) == 40
 
@@ -65,7 +70,10 @@ defmodule IdentityAccountCodeTest do
                identity_tokens: 'ABC'
              )
 
-    assert %Data.SystIdentities{validated: nil, account_identifier: identifier} = tokens_identity
+    assert %Data.SystIdentities{validated: val_date, account_identifier: identifier} =
+             tokens_identity
+
+    assert val_date != nil
 
     assert not (identifier =~ ~r/[^A-C]/)
 

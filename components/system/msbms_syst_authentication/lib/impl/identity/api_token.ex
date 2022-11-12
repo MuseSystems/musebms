@@ -23,16 +23,21 @@ defmodule MsbmsSystAuthentication.Impl.Identity.ApiToken do
 
   @moduledoc false
 
+  @default_create_validated true
+  @default_identity_token_length 20
+  @default_identity_tokens :mixed_alphanum
+  @default_external_name nil
+
   @spec create_identity(Types.access_account_id(), Types.account_identifier() | nil, Keyword.t()) ::
           {:ok, Data.SystIdentities.t()} | {:error, MsbmsSystError.t() | Exception.t()}
   def create_identity(access_account_id, api_token, opts \\ [])
       when is_binary(access_account_id) do
     opts =
       MsbmsSystUtils.resolve_options(opts,
-        create_validated: true,
-        identity_token_length: 20,
-        identity_tokens: :mixed_alphanum,
-        external_name: nil
+        create_validated: @default_create_validated,
+        identity_token_length: @default_identity_token_length,
+        identity_tokens: @default_identity_tokens,
+        external_name: @default_external_name
       )
 
     api_token =

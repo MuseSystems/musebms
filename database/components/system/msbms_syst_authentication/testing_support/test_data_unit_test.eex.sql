@@ -372,7 +372,7 @@ $AUTHENTICATION_TESTING_INIT$
                   "identity_type_name": "identity_types_sysdef_account",
                   "account_identifier": null,
                   "account_identifier_length": 12,
-                  "validated_days": null,
+                  "validated_days": -15,
                   "validation_requested_days": -20,
                   "identity_expires_days": null,
                   "validation": null,
@@ -434,7 +434,7 @@ $AUTHENTICATION_TESTING_INIT$
                   "identity_type_name": "identity_types_sysdef_account",
                   "account_identifier": null,
                   "account_identifier_length": 12,
-                  "validated_days": null,
+                  "validated_days": -15,
                   "validation_requested_days": -20,
                   "identity_expires_days": null,
                   "validation": null,
@@ -1193,7 +1193,7 @@ $AUTHENTICATION_TESTING_INIT$
                   "identity_type_name": "identity_types_sysdef_password_recovery",
                   "account_identifier": null,
                   "account_identifier_length": 40,
-                  "validated_days": -15,
+                  "validated_days": -1,
                   "validation_requested_days": -20,
                   "identity_expires_days": null,
                   "validation": null,
@@ -1243,7 +1243,7 @@ $AUTHENTICATION_TESTING_INIT$
                   "identity_type_name": "identity_types_sysdef_password_recovery",
                   "account_identifier": null,
                   "account_identifier_length": 40,
-                  "validated_days": null,
+                  "validated_days": -1,
                   "validation_requested_days": null,
                   "identity_expires_days": 1,
                   "validation": null,
@@ -1288,7 +1288,7 @@ $AUTHENTICATION_TESTING_INIT$
                   "identity_type_name": "identity_types_sysdef_password_recovery",
                   "account_identifier": null,
                   "account_identifier_length": 40,
-                  "validated_days": null,
+                  "validated_days": -1,
                   "validation_requested_days": null,
                   "identity_expires_days": 1,
                   "validation": null,
@@ -1333,7 +1333,7 @@ $AUTHENTICATION_TESTING_INIT$
                   "identity_type_name": "identity_types_sysdef_password_recovery",
                   "account_identifier": null,
                   "account_identifier_length": 40,
-                  "validated_days": null,
+                  "validated_days": -1,
                   "validation_requested_days": null,
                   "identity_expires_days": 1,
                   "validation": null,
@@ -1378,7 +1378,7 @@ $AUTHENTICATION_TESTING_INIT$
                   "identity_type_name": "identity_types_sysdef_password_recovery",
                   "account_identifier": null,
                   "account_identifier_length": 40,
-                  "validated_days": null,
+                  "validated_days": -1,
                   "validation_requested_days": null,
                   "identity_expires_days": 1,
                   "validation": null,
@@ -1423,7 +1423,7 @@ $AUTHENTICATION_TESTING_INIT$
                   "identity_type_name": "identity_types_sysdef_api",
                   "account_identifier": null,
                   "account_identifier_length": 16,
-                  "validated_days": null,
+                  "validated_days": -15,
                   "validation_requested_days": null,
                   "identity_expires_days": 1,
                   "validation": null,
@@ -1463,7 +1463,7 @@ $AUTHENTICATION_TESTING_INIT$
                   "identity_type_name": "identity_types_sysdef_api",
                   "account_identifier": null,
                   "account_identifier_length": 16,
-                  "validated_days": null,
+                  "validated_days": -15,
                   "validation_requested_days": null,
                   "identity_expires_days": 1,
                   "validation": null,
@@ -1503,7 +1503,7 @@ $AUTHENTICATION_TESTING_INIT$
                   "identity_type_name": "identity_types_sysdef_api",
                   "account_identifier": null,
                   "account_identifier_length": 16,
-                  "validated_days": null,
+                  "validated_days": -15,
                   "validation_requested_days": null,
                   "identity_expires_days": 1,
                   "validation": null,
@@ -1543,7 +1543,7 @@ $AUTHENTICATION_TESTING_INIT$
                   "identity_type_name": "identity_types_sysdef_api",
                   "account_identifier": null,
                   "account_identifier_length": 16,
-                  "validated_days": null,
+                  "validated_days": -15,
                   "validation_requested_days": null,
                   "identity_expires_days": 1,
                   "validation": null,
@@ -1583,7 +1583,7 @@ $AUTHENTICATION_TESTING_INIT$
                   "identity_type_name": "identity_types_sysdef_api",
                   "account_identifier": null,
                   "account_identifier_length": 16,
-                  "validated_days": null,
+                  "validated_days": -15,
                   "validation_requested_days": null,
                   "identity_expires_days": 1,
                   "validation": null,
@@ -1628,7 +1628,7 @@ $AUTHENTICATION_TESTING_INIT$
                   "identity_type_name": "identity_types_sysdef_api",
                   "account_identifier": null,
                   "account_identifier_length": 16,
-                  "validated_days": null,
+                  "validated_days": -15,
                   "validation_requested_days": null,
                   "identity_expires_days": 1,
                   "validation": null,
@@ -1673,7 +1673,7 @@ $AUTHENTICATION_TESTING_INIT$
                   "identity_type_name": "identity_types_sysdef_api",
                   "account_identifier": null,
                   "account_identifier_length": 16,
-                  "validated_days": null,
+                  "validated_days": -15,
                   "validation_requested_days": null,
                   "identity_expires_days": 1,
                   "validation": null,
@@ -1718,7 +1718,7 @@ $AUTHENTICATION_TESTING_INIT$
                   "identity_type_name": "identity_types_sysdef_api",
                   "account_identifier": null,
                   "account_identifier_length": 16,
-                  "validated_days": null,
+                  "validated_days": -15,
                   "validation_requested_days": null,
                   "identity_expires_days": 1,
                   "validation": null,
@@ -1763,7 +1763,7 @@ $AUTHENTICATION_TESTING_INIT$
                   "identity_type_name": "identity_types_sysdef_api",
                   "account_identifier": null,
                   "account_identifier_length": 16,
-                  "validated_days": null,
+                  "validated_days": -15,
                   "validation_requested_days": null,
                   "identity_expires_days": 1,
                   "validation": null,
@@ -1808,7 +1808,7 @@ $AUTHENTICATION_TESTING_INIT$
                   "identity_type_name": "identity_types_sysdef_api",
                   "account_identifier": null,
                   "account_identifier_length": 16,
-                  "validated_days": null,
+                  "validated_days": -15,
                   "validation_requested_days": null,
                   "identity_expires_days": 1,
                   "validation": null,
@@ -2212,6 +2212,7 @@ $AUTHENTICATION_TESTING_INIT$
                 },
                 {
                   "identity_type_name": "identity_types_sysdef_password_recovery",
+                  "validated_days": -1,
                   "account_identifier_length": 40,
                   "credential": null
                 }
@@ -2241,6 +2242,7 @@ $AUTHENTICATION_TESTING_INIT$
                 },
                 {
                   "identity_type_name": "identity_types_sysdef_password_recovery",
+                  "validated_days": -1,
                   "account_identifier_length": 40,
                   "credential": null
                 }
@@ -2270,6 +2272,7 @@ $AUTHENTICATION_TESTING_INIT$
                 },
                 {
                   "identity_type_name": "identity_types_sysdef_password_recovery",
+                  "validated_days": -1,
                   "account_identifier_length": 40,
                   "credential": null
                 }
@@ -2299,6 +2302,7 @@ $AUTHENTICATION_TESTING_INIT$
                 },
                 {
                   "identity_type_name": "identity_types_sysdef_password_recovery",
+                  "validated_days": -1,
                   "account_identifier_length": 40,
                   "credential": null
                 }
@@ -2328,6 +2332,7 @@ $AUTHENTICATION_TESTING_INIT$
                 },
                 {
                   "identity_type_name": "identity_types_sysdef_password_recovery",
+                  "validated_days": -1,
                   "account_identifier_length": 40,
                   "credential": {
                     "credential_type_name": "credential_types_sysdef_token_recovery",
@@ -2362,6 +2367,7 @@ $AUTHENTICATION_TESTING_INIT$
                 },
                 {
                   "identity_type_name": "identity_types_sysdef_password_recovery",
+                  "validated_days": -1,
                   "account_identifier_length": 40,
                   "credential": {
                     "credential_type_name": "credential_types_sysdef_token_recovery",
@@ -2396,6 +2402,7 @@ $AUTHENTICATION_TESTING_INIT$
                 },
                 {
                   "identity_type_name": "identity_types_sysdef_password_recovery",
+                  "validated_days": -1,
                   "account_identifier_length": 40,
                   "credential": {
                     "credential_type_name": "credential_types_sysdef_token_recovery",
@@ -2430,6 +2437,7 @@ $AUTHENTICATION_TESTING_INIT$
                 },
                 {
                   "identity_type_name": "identity_types_sysdef_password_recovery",
+                  "validated_days": -1,
                   "account_identifier_length": 40,
                   "credential": {
                     "credential_type_name": "credential_types_sysdef_token_recovery",
@@ -2464,6 +2472,7 @@ $AUTHENTICATION_TESTING_INIT$
                 },
                 {
                   "identity_type_name": "identity_types_sysdef_password_recovery",
+                  "validated_days": -1,
                   "account_identifier_length": 40,
                   "credential": {
                     "credential_type_name": "credential_types_sysdef_token_recovery",
@@ -3129,6 +3138,7 @@ $AUTHENTICATION_TESTING_INIT$
                         , identity_type_id
                         , account_identifier
                         , validates_identity_id
+                        , validated
                         , identity_expires )
                     SELECT
                           var_access_account_id
@@ -3142,6 +3152,7 @@ $AUTHENTICATION_TESTING_INIT$
                                         ( var_identity_data.validation #>>
                                           '{identity, account_identifier_length}' )::integer ) )
                         , var_primary_identity_id
+                        , now( )
                         , now( ) +
                           make_interval(
                               days => ( var_identity_data.validation #>>
