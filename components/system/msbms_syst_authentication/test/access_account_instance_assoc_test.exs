@@ -15,6 +15,8 @@ defmodule AccessAccountInstanceAssocTest do
 
   import Ecto.Query
 
+  @moduletag :capture_log
+
   test "Can invite Access Account to Instance Immediate Acceptance once" do
     {:ok, access_account} =
       MsbmsSystAuthentication.get_access_account_by_name("invite_to_instance_test_accnt")

@@ -15,6 +15,8 @@ defmodule HashTest do
 
   alias MsbmsSystAuthentication.Impl
 
+  @moduletag :capture_log
+
   test "Can Create and Verify a Credential Hash" do
     test_credential = MsbmsSystUtils.get_random_string(128, :mixed_alphanum)
 

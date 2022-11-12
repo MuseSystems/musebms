@@ -15,6 +15,8 @@ defmodule AccessAccountTest do
 
   alias MsbmsSystAuthentication.Data
 
+  @moduletag :capture_log
+
   test "Can create an unowned Access Account" do
     access_account_state = MsbmsSystEnums.get_default_enum_item("access_account_states")
 

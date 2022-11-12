@@ -18,6 +18,8 @@ defmodule CredentialApiTokenTest do
   alias MsbmsSystAuthentication.Data
   alias MsbmsSystAuthentication.Impl
 
+  @moduletag :capture_log
+
   test "Can Confirm API Token Credential" do
     test_account = get_account_data("owned_all_access")
 

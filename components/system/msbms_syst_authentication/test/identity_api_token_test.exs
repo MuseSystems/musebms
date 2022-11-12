@@ -18,6 +18,8 @@ defmodule IdentityApiTokenTest do
   alias MsbmsSystAuthentication.Data
   alias MsbmsSystAuthentication.Impl
 
+  @moduletag :capture_log
+
   test "Can create API Token Identity" do
     {:ok, access_account_id} =
       Impl.AccessAccount.get_access_account_id_by_name("identity_api_token_create_test_accnt")

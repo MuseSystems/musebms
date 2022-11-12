@@ -18,6 +18,8 @@ defmodule CredentialPasswordTest do
   alias MsbmsSystAuthentication.Data
   alias MsbmsSystAuthentication.Impl
 
+  @moduletag :capture_log
+
   test "Can test Credential by Access Account ID" do
     {:ok, access_account_id} =
       Impl.AccessAccount.get_access_account_id_by_name("password_history_test_accnt")

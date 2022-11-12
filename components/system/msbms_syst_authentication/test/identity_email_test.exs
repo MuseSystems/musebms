@@ -18,6 +18,8 @@ defmodule IdentityEmailTest do
   alias MsbmsSystAuthentication.Data
   alias MsbmsSystAuthentication.Impl
 
+  @moduletag :capture_log
+
   test "Can validate Email Address format" do
     assert "AValid!EmailAddress@MuseSystems.Com" =
              Impl.Identity.Email.verify_email_address("AValid!EmailAddress@MuseSystems.Com")

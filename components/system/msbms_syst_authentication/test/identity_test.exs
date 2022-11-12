@@ -16,6 +16,8 @@ defmodule IdentityTest do
   alias MsbmsSystAuthentication.Data
   alias MsbmsSystAuthentication.Impl
 
+  @moduletag :capture_log
+
   test "Can set Identity expiration" do
     {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner2")
 
