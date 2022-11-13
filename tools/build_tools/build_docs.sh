@@ -108,3 +108,21 @@ cd ../../../
 #  Database
 #
 ################################################################################
+
+#
+# Global Database
+#
+
+# cd documentation
+# rm -Rf technical/database/global
+# mkdir -p technical/database/global
+# java -jar schemaspy/schemaspy-6.1.0.jar -t pgsql11 -dp schemaspy/postgresql-42.5.0.jar -db global_doc -host 127.0.0.1 -port 5432 -schemas msbms_syst_data,msbms_syst_priv,msbms_syst  -u documentation -p 'documentation' -o source/products/musebms/documentation/database/global
+
+#
+# Instance Database
+#
+
+# cd documentation
+# rm -Rf technical/database/instance
+# mkdir -p technical/database/instance
+# java -jar schemaspy/schemaspy-6.1.0.jar -t pgsql11 -dp schemaspy/postgresql-42.5.0.jar -db instance_doc -host 127.0.0.1 -port 5432 -schemas msbms_syst_data,msbms_syst_priv,msbms_syst  -u documentation -p 'documentation' -o source/products/musebms/documentation/database/global
