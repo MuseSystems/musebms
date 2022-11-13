@@ -133,29 +133,27 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
   end
 
   defp create_validator(identity, opts) do
-    with {:ok, validation_identity} <-
-           Impl.Identity.Validation.request_identity_validation(identity, opts),
-         {:ok, validation_credential} <-
-           Impl.Credential.Validation.set_credential(
-             validation_identity.access_account_id,
-             validation_identity.id,
-             opts[:credential_token],
-             opts
-           ) do
-      {:ok,
-       %{
-         validation_identifier: validation_identity.account_identifier,
-         validation_credential: validation_credential
-       }}
-    else
-      error ->
-        {:error,
-         %MsbmsSystError{
-           code: :undefined_error,
-           message: "Error creating Validation Authenticator",
-           cause: error
-         }}
+    validator_func = fn ->
+      with {:ok, validation_identity} <-
+             Impl.Identity.Validation.request_identity_validation(identity, opts),
+           {:ok, validation_credential} <-
+             Impl.Credential.Validation.set_credential(
+               validation_identity.access_account_id,
+               validation_identity.id,
+               opts[:credential_token],
+               opts
+             ) do
+        %{
+          validation_identifier: validation_identity.account_identifier,
+          validation_credential: validation_credential
+        }
+      else
+        {:error, %MsbmsSystError{cause: cause}} ->
+          MsbmsSystDatastore.rollback(cause)
+      end
     end
+
+    MsbmsSystDatastore.transaction(validator_func)
   end
 
   # There's a good argument that revoke_validator_for_identity_id/1 belongs in
@@ -207,22 +205,28 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
   @spec request_password_recovery(Types.access_account_id(), Keyword.t()) ::
           {:ok, Types.authenticator_result()} | {:error, MsbmsSystError.t() | Exception.t()}
   def request_password_recovery(access_account_id, opts) do
-    with {:ok, recovery_identity} <-
-           Impl.Identity.Recovery.request_credential_recovery(access_account_id, opts),
-         {:ok, recovery_credential} <-
-           Impl.Credential.Recovery.set_credential(
-             recovery_identity.access_account_id,
-             recovery_identity.id,
-             opts[:recovery_token],
-             opts
-           ) do
-      {:ok,
-       %{
-         access_account_id: recovery_identity.access_account_id,
-         account_identifier: recovery_identity.account_identifier,
-         credential: recovery_credential
-       }}
+    recovery_func = fn ->
+      with {:ok, recovery_identity} <-
+             Impl.Identity.Recovery.request_credential_recovery(access_account_id, opts),
+           {:ok, recovery_credential} <-
+             Impl.Credential.Recovery.set_credential(
+               recovery_identity.access_account_id,
+               recovery_identity.id,
+               opts[:recovery_token],
+               opts
+             ) do
+        %{
+          access_account_id: recovery_identity.access_account_id,
+          account_identifier: recovery_identity.account_identifier,
+          credential: recovery_credential
+        }
+      else
+        {:error, %MsbmsSystError{cause: cause}} ->
+          MsbmsSystDatastore.rollback(cause)
+      end
     end
+
+    MsbmsSystDatastore.transaction(recovery_func)
   rescue
     error in [MsbmsSystError] ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
