@@ -947,7 +947,7 @@ defmodule MsbmsSystAuthentication.Types do
     factor methods. Currently only MFA type `credential_types_secondary_totp` is
     available.
   """
-  @type password_rule() :: %{
+  @type password_rules() :: %{
           optional(:access_account_id) => access_account_id() | nil,
           optional(:owner_id) => MsbmsSystInstanceMgr.Types.owner_id() | nil,
           optional(:password_length) => DbTypes.IntegerRange.t(),
