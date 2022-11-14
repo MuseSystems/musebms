@@ -212,7 +212,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
              Impl.Credential.Recovery.set_credential(
                recovery_identity.access_account_id,
                recovery_identity.id,
-               opts[:recovery_token],
+               opts[:credential_token],
                opts
              ) do
         %{
