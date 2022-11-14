@@ -68,7 +68,7 @@ defmodule GlobalDbMigrationsTest do
 
   @migration_test_source_root_dir "../../database"
   @migration_test_destination_dir "priv/database_build_testing"
-  @migration_test_datastore_type "application/msbms_global"
+  @migration_test_datastore_type "app_msbms_global"
 
   @datastore_context_name :global_build_app_context
 
