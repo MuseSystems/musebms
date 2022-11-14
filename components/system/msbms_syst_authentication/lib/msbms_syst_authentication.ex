@@ -2302,7 +2302,7 @@ defmodule MsbmsSystAuthentication do
           Keyword.t()
         ) ::
           {:ok, Types.authentication_state()} | {:error, MsbmsSystError.t()}
-  defdelegate authenticate_recovery_token(identifier, token, host_addr, opts \\ []),
+  defdelegate authenticate_recovery_token(identifier, plaintext_token, host_addr, opts \\ []),
     to: Impl.ExtendedAuthLogic
 
   @doc section: :authentication
@@ -2317,6 +2317,12 @@ defmodule MsbmsSystAuthentication do
         ) ::
           {:ok, Types.authentication_state()} | {:error, MsbmsSystError.t()}
 
-  defdelegate authenticate_api_token(identifier, token, host_addr, instance_id, opts \\ []),
-    to: Impl.ExtendedAuthLogic
+  defdelegate authenticate_api_token(
+                identifier,
+                plaintext_token,
+                host_addr,
+                instance_id,
+                opts \\ []
+              ),
+              to: Impl.ExtendedAuthLogic
 end
