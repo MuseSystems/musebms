@@ -702,7 +702,7 @@ defmodule IntegrationTest do
 
     assert {:ok, recovery_result} =
              MsbmsSystAuthentication.request_password_recovery(access_account_id,
-               recovery_token: "My Known Token"
+               credential_token: "My Known Token"
              )
 
     assert access_account_id == recovery_result.access_account_id
@@ -719,7 +719,7 @@ defmodule IntegrationTest do
 
     assert {:error, %MsbmsSystError{cause: :existing_recovery}} =
              MsbmsSystAuthentication.request_password_recovery(access_account_id,
-               recovery_token: "My Known Token"
+               credential_token: "My Known Token"
              )
   end
 
@@ -742,7 +742,7 @@ defmodule IntegrationTest do
 
     {:ok, recovery_result} =
       MsbmsSystAuthentication.request_password_recovery(access_account_id,
-        recovery_token: "My Known Token"
+        credential_token: "My Known Token"
       )
 
     assert :existing_recovery =
