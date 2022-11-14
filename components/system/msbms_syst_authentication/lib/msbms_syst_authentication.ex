@@ -2216,7 +2216,7 @@ defmodule MsbmsSystAuthentication do
   @doc section: :authenticator_management
   @doc """
   """
-  @spec revoke_password_recovery(Types.access_account_id() | Data.SystIdentities.t()) ::
+  @spec revoke_password_recovery(Types.access_account_id()) ::
           {:ok, :deleted | :not_found} | {:error, MsbmsSystError.t() | Exception.t()}
   defdelegate revoke_password_recovery(access_account_id), to: Impl.ExtendedMgmtLogic
 
