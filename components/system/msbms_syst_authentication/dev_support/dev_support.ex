@@ -13,8 +13,6 @@
 defmodule DevSupport do
   alias Mix.Tasks.Builddb
 
-  @mnesia_database_location Path.join([".mnesia"])
-
   @migration_test_source_root_dir "../../../database"
   @migration_unit_test_ds_type "cmp_msbms_syst_authentication_unit_test"
 
