@@ -139,7 +139,12 @@ defmodule MsbmsSystAuthentication do
     Recovery Token Identity, the Recovery Token Identity/Credential pair is
     immediately deleted from the system.  Recovery Token Identities are
     typically created with an expiration timestamp after which it may not longer
-    be used.
+    be used.  Finally note that the existence of a Recovery Token in no way
+    prevents the Password Credential from being used in authentication; it is
+    expected if a recovery process is started accidentally or in attempt at a
+    malicious recovery of the Password Credential, that the Recovery Identity/
+    Credential will simply be ignored by the Access Account holder and allowed
+    to expire.
 
   #### Credentials
 
@@ -2051,6 +2056,38 @@ defmodule MsbmsSystAuthentication do
   @doc """
   Creates a new Account Code for an Access Account or resets the Account Code if
   is already exists.
+
+  On successful Account Code Identity creation or reset, an Authenticator Result
+  value is returned via a success tuple (`{:ok, <result>}`).  The expected form
+  of the result for a new Account Code is:
+
+      %{
+        access_account_id: "c3c7fafd-5c45-11ed-ab46-f3d9be809bf9",
+        account_identifier: "QY7QJTWH7MSK"
+      }
+
+  There is no associated Credential or Validator for this Identity Type.
+
+  ## Parameters
+
+    * `access_account_id` - the record ID of the Access Account that will be
+    identified by the Account Code Identity.
+
+    * `opts` - a Keyword list of optional settings which can influence the
+    behavior of the function call.  Available options are:
+
+      * `account_code` - this option overrides the randomly generated Account
+      Code with the value of this option.  By default the system randomly
+      generates the Account Code.
+
+      * `identity_token_length` - overrides the number of characters to randomly
+      generate for use as the Account Code Identifier.  The default value is 12.
+
+      * `identity_tokens` - overrides the character set used to create the
+      randomly generated Account Code Identifier.  The default value is `:b32c`.
+      See the `MsbmsSystUtils.get_random_string/2` documentation for the
+      `tokens` parameter which receives this option for more information
+      regarding valid values for this setting.
   """
   @spec create_or_reset_account_code(Types.access_account_id(), Keyword.t()) ::
           {:ok, Types.authenticator_result()} | {:error, MsbmsSystError.t() | Exception.t()}
@@ -2059,6 +2096,21 @@ defmodule MsbmsSystAuthentication do
 
   @doc section: :account_code
   @doc """
+  Identifies an Access Account by its Account Code identifier.
+
+  On successful identification, the Account Code Identity record which was found
+  based on the supplied parameters is returned via a success tuple.  If the
+  function completes successfully but no Identity record is found for the
+  Identifier a value of `{:ok, :not_found}` is returned.
+
+  ## Parameters
+
+    * `account_code` - the Account Code identifier which will identify the
+    Access Account
+
+    * `owner_id` - if the expected Access Account is an Owned Access Account,
+    the Owner must be identified.  If the Access Account is Unowned, this
+    parameter should be `nil`.
   """
   @spec identify_access_account_by_code(
           Types.account_identifier(),
@@ -2069,6 +2121,16 @@ defmodule MsbmsSystAuthentication do
 
   @doc section: :account_code
   @doc """
+  Retrieves the Account Code Identity record defined for the requested Access
+  Account if one exists.
+
+  If no Account Code Identity exists for the requested Access Account a tuple in
+  the form of `{:ok, :not_found}` is returned.
+
+  ## Parameters
+
+    * `access_account_id` - the Access Account record ID for which to retrieve
+    the Account Code Identity.
   """
   @spec get_account_code_by_access_account_id(Types.access_account_id()) ::
           {:ok, Data.SystIdentities.t() | :not_found} | {:error, MsbmsSystError.t()}
@@ -2077,6 +2139,18 @@ defmodule MsbmsSystAuthentication do
 
   @doc section: :account_code
   @doc """
+  Revokes a previously create Account Code Identity from an Access Account,
+  deleting it from the system.
+
+  On successful deletion a success tuple in the form `{:ok, :deleted}` is
+  returned.  If no existing Account Code Identity is found a tuple in this form
+  `{:ok, :not_found}` is returned.  All other outcomes are error conditions
+  resulting in the return of an error tuple.
+
+  ## Parameters
+
+    * `access_account_id` - the Access Account record ID from which to revoke
+    the Account Code Identity.
   """
   @spec revoke_account_code(Types.access_account_id()) ::
           {:ok, :deleted | :not_found} | {:error, MsbmsSystError.t()}
@@ -2113,15 +2187,15 @@ defmodule MsbmsSystAuthentication do
   default), the success tuple's value element will include data required to
   process the Validation Authenticator:
 
-  ```elixir
-  {:ok,
-    %{
-      access_account_id: "c3c7fafd-5c45-11ed-ab46-f3d9be809bf9",
-      account_identifier: "SomeEmail@somedomain.com",
-      validation_credential: "Uo0kPoCOZd004g4X7IFWg3iJ7pz7XiBRBDkBGGiu",
-      validation_identifier: "5D7i6XmmH0HpYL72tePlEdSUMVL9ygMrEsDSGoTE"
-  }}
-  ```
+
+      {:ok,
+        %{
+          access_account_id: "c3c7fafd-5c45-11ed-ab46-f3d9be809bf9",
+          account_identifier: "SomeEmail@somedomain.com",
+          validation_credential: "Uo0kPoCOZd004g4X7IFWg3iJ7pz7XiBRBDkBGGiu",
+          validation_identifier: "5D7i6XmmH0HpYL72tePlEdSUMVL9ygMrEsDSGoTE"
+      }}
+
 
   Note that this is the only time the Validation Authenticator is provided and
   the Validation Credential plaintext is not recoverable after this return value
@@ -2130,13 +2204,13 @@ defmodule MsbmsSystAuthentication do
   When a Validation Authenticator is not created, no validation data will be
   included in the result:
 
-  ```elixir
-  {:ok,
-    %{
-      access_account_id: "c3c7fafd-5c45-11ed-ab46-f3d9be809bf9",
-      account_identifier: "SomeEmail@somedomain.com"
-  }}
-  ```
+
+      {:ok,
+        %{
+          access_account_id: "c3c7fafd-5c45-11ed-ab46-f3d9be809bf9",
+          account_identifier: "SomeEmail@somedomain.com"
+      }}
+
 
   ## Parameters
 
@@ -2168,6 +2242,72 @@ defmodule MsbmsSystAuthentication do
 
   @doc section: :authenticator_management
   @doc """
+  Requests the creation of a Validation Token Authenticator for the specified
+  Identity.
+
+  On successful creation of the requested Validation Token Authenticator, an
+  Authenticator Result will be returned as the value element of a success tuple:
+
+      { :ok,
+        %{
+          access_account_id: "c3c7fafd-5c45-11ed-ab46-f3d9be809bf9",
+          validation_identifier: "psYFOfuULJPTbs5MUvOYTyt71fAbQCj7XcmerRlQ",
+          validation_credential: "zz29w7l5Ev7vuRlGFHcPPjLTXjepdbYlyQwbBjDe"
+      }}
+
+  Importantly, the system generated Validation Token identifier and plaintext
+  credential are returned to the caller.  This is the only opportunity to obtain
+  the plaintext credential; after the return value of the function is disposed
+  of there is no way to once again retrieve the plaintext of the Validation
+  Token Credential.
+
+  Once the Validation Token Authenticator has been successfully created, the
+  target Identity (typically an Email Identity) may not be used for
+  authentication until the Validation Token itself has been successfully
+  authenticated via the `authenticate_validation_token/4` function.
+
+  The created Validation Token Authenticator will expire after a time.  After
+  expiration the the Authenticator will no longer be to be authenticated by
+  `authenticate_validation_token/4`.  The only way to validate the target
+  Identity at that point is to create a new Validation Token Authenticator for
+  the Identity using this function.
+
+  ## Parameters
+
+    * `target_identity` - either the record ID or the
+    `MsbmsSystAuthentication.Data.SystIdentities` struct of the Identity record
+    to validate.  Typically this Identity will be an Email Identity.
+
+    * `opts` - a Keyword List of options which can change the behavior to the
+    Identity validation request.  The available options are:
+
+      * `expiration_hours` - overrides the default number of hours after which
+      to consider the Validation Authenticator expired.  By default the
+      Validation Authenticator expires 24 hours after creation.
+
+      * `identity_token_length` - this option overrides the default number of
+      random characters to generate for the Validation Token Identity
+      identifier.  The default number of characters generated is 40.
+
+      * `identity_tokens` - overrides the default character set to use in the
+      generation of the Validation Token Identity identifier.  The default value
+      is `:mixed_alphanum`.  See the `MsbmsSystUtils.get_random_string/2`
+      documentation for the `tokens` parameter which receives this option for
+      more information regarding valid values for this setting.
+
+      * `credential_token_length` - this option overrides the default number of
+      random characters to generate for the Validation Token Credential. The
+      default number of characters generated is 40.
+
+      * `credential_tokens` - overrides the default character set to use in the
+      generation of the Validation Token Credential.  The default value is
+      `:mixed_alphanum`.  See the `MsbmsSystUtils.get_random_string/2`
+      documentation for the `tokens` parameter which receives this option for
+      more information regarding valid values for this setting.
+
+      * `credential_token` - overrides the system generated Validation
+      Credential with the value of this option.  The default is to allow the
+      system to automatically generate the credential.
   """
   @spec request_identity_validation(Types.identity_id() | Data.SystIdentities.t(), Keyword.t()) ::
           {:ok, Types.authenticator_result()} | {:error, MsbmsSystError.t() | Exception.t()}
@@ -2200,6 +2340,20 @@ defmodule MsbmsSystAuthentication do
 
   @doc section: :authenticator_management
   @doc """
+  Indicates if an Access Account's Password Credential is recoverable or not.
+
+  Access Account Password Credentials are only recoverable when they: 1) exist,
+  and 2) are not already awaiting recovery.  When the Password Credential is
+  recoverable this function will return a simple `:ok` value.  If the Access
+  Account's Password Credential already has an issued recovery underway, the
+  value `:existing_recovery` is returned.  If the Access Account lacks a
+  Password Credential record to recover, the value `:not_found` is returned. Any
+  errors encountered cause the function to raise an exception.
+
+  ## Parameters
+
+    * `access_account_id` - the record ID of the Access Account which owns the
+    Password Credential to test for recoverability.
   """
   @spec access_account_credential_recoverable!(Types.access_account_id()) ::
           :ok | :not_found | :existing_recovery
@@ -2208,6 +2362,73 @@ defmodule MsbmsSystAuthentication do
 
   @doc section: :authenticator_management
   @doc """
+  Requests to start a Password Credential recovery process for the specified
+  Access Account.
+
+  Assuming that the Access Account's Password Credential exists and isn't
+  already being recovered, this function will create a new Recovery Token
+  Authenticator for the Access Account's Password Credential.
+
+  On successful creation of the requested Recovery Token Authenticator, an
+  Authenticator Result will be returned as the value element of a success tuple:
+
+      { :ok,
+        %{
+          access_account_id: "c3c7fafd-5c45-11ed-ab46-f3d9be809bf9",
+          account_identifier: "acdyItesdmUvUoM7mKwPKd3mrBBnH87L2WA1DPip",
+          credential: "WYbFG2vkJOLD5ITX9tSE5OTZ9JlHdJE8BQ8Ukiiq"
+      }}
+
+  Importantly, the system generated Recovery Token account identifier and
+  plaintext credential are returned to the caller.  This is the only opportunity
+  to obtain the plaintext credential; after the return value of the function is
+  disposed of there is no way to once again retrieve the plaintext of the
+  Recovery Token Credential.
+
+  The existence of a Recovery Token Authenticator for a Password Credential does
+  not prevent that Password Credential from continuing to be used in the
+  authentication process.
+
+  A Recovery Token Authenticator will expire after a time.  After expiration the
+  Recovery Token will no longer be able to be authenticated with
+  `authenticate_recovery_token/4`.  Any further recovery of the Password
+  Credential will require a new Recovery Token be created.
+
+  ## Parameters
+
+    * `access_account_id` - the record ID of the Access Account to which the
+    Password Credential needing recovering belongs.
+
+    * `opts` - a Keyword List of options which can change the behavior to the
+    password recovery request.  The available options are:
+
+      * `expiration_hours` - overrides the default number of hours after which
+      to consider the Recovery Authenticator expired.  By default the Recovery
+      Authenticator expires 24 hours after creation.
+
+      * `identity_token_length` - this option overrides the default number of
+      random characters to generate for the Recovery Token Identity identifier.
+      The default number of characters generated is 40.
+
+      * `identity_tokens` - overrides the default character set to use in the
+      generation of the Recovery Token Identity identifier.  The default value
+      is `:mixed_alphanum`.  See the `MsbmsSystUtils.get_random_string/2`
+      documentation for the `tokens` parameter which receives this option for
+      more information regarding valid values for this setting.
+
+      * `credential_token_length` - this option overrides the default number of
+      random characters to generate for the Recovery Token Credential. The
+      default number of characters generated is 40.
+
+      * `credential_tokens` - overrides the default character set to use in the
+      generation of the Recovery Token Credential.  The default value is
+      `:mixed_alphanum`.  See the `MsbmsSystUtils.get_random_string/2`
+      documentation for the `tokens` parameter which receives this option for
+      more information regarding valid values for this setting.
+
+      * `credential_token` - overrides the system generated Recovery Credential
+      with the value of this option.  The default is to allow the system to
+      automatically generate the credential.
   """
   @spec request_password_recovery(Types.access_account_id(), Keyword.t()) ::
           {:ok, Types.authenticator_result()} | {:error, MsbmsSystError.t() | Exception.t()}
@@ -2215,6 +2436,25 @@ defmodule MsbmsSystAuthentication do
 
   @doc section: :authenticator_management
   @doc """
+  Revokes the Recovery Token Authenticator for a previously initiated Password
+  Credential recovery.
+
+  While Recovery Token Authenticators expire of their own accord after a time,
+  they may also explicitly be revoked.  In reality this means simply deleting
+  the Recovery Token Authenticator from the system.
+
+  The return value of this function on successful execution will be the success
+  tuple `{:ok, :deleted}`.  If a recovery is not already underway for the
+  requested Access Account, the function will return successfully but will
+  indicate that no action took place with a return of `{:ok, :not_found}`.  Any
+  other condition is an error condition and the return value will be an error
+  tuple indicating the nature of the issue.
+
+  ## Parameters
+
+    * `access_account_id` - identifies the Access Account for whom the Recovery
+    Token Authenticator should be revoked.  The expected value is the record ID
+    of the Access Account.
   """
   @spec revoke_password_recovery(Types.access_account_id()) ::
           {:ok, :deleted | :not_found} | {:error, MsbmsSystError.t() | Exception.t()}
@@ -2222,6 +2462,59 @@ defmodule MsbmsSystAuthentication do
 
   @doc section: :authenticator_management
   @doc """
+  Creates an API Token Authenticator for the requested Access Account.
+
+  On successful API Token Authenticator creation, a success tuple is returned
+  where the value element is an Authenticator Result in the form of:
+
+      { :ok,
+        %{
+          access_account_id: "c3c7fafd-5c45-11ed-ab46-f3d9be809bf9",
+          account_identifier: "EQH2jj38ha4qnYWAC8VZ",
+          credential: "8N5Tp81aeOCrYW9PECANrcwKCroSet3MlMp5BbKb"
+      }}
+
+  It is important to note that this result value is the only time that the API
+  Token Credential plaintext is available.  After the function result is
+  discarded the credential is no longer obtainable in plaintext form.
+
+  ## Parameters
+
+    * `access_account_id` - the record ID of the Access Account for which to
+    create the API Token Authenticator.
+
+    * `opts` - a Keyword List of optional values which changes the default
+    behavior of the Authenticator creation process.  Available options are:
+
+      * `identity_token_length` - this option overrides the default number of
+      random characters to generate for the API Token Identity identifier. The
+      default number of characters generated is 20.
+
+      * `identity_tokens` - overrides the default character set to use in the
+      generation of the API Token Identity identifier.  The default value is
+      `:mixed_alphanum`.  See the `MsbmsSystUtils.get_random_string/2`
+      documentation for the `tokens` parameter which receives this option for
+      more information regarding valid values for this setting.
+
+      * `external_name` - API Token Identities permit Access Account holder
+      naming of the Identity as it may be common for an one Access Account to
+      require multiple API Token Authenticators for different purposes.  This
+      option allows that name to be set at Identity creation time.  The default
+      value is `nil`.
+
+      * `credential_token_length` - this option overrides the default number of
+      random characters to generate for the API Token Credential. The default
+      number of characters generated is 40.
+
+      * `credential_tokens` - overrides the default character set to use in the
+      generation of the API Token Credential.  The default value is
+      `:mixed_alphanum`.  See the `MsbmsSystUtils.get_random_string/2`
+      documentation for the `tokens` parameter which receives this option for
+      more information regarding valid values for this setting.
+
+      * `credential_token` - overrides the system generated API Token Credential
+      with the value of this option.  The default is to allow the system to
+      automatically generate the credential.
   """
   @spec create_authenticator_api_token(Types.access_account_id(), Keyword.t()) ::
           {:ok, Types.authenticator_result()} | {:error, MsbmsSystError.t() | Exception.t()}
@@ -2230,6 +2523,24 @@ defmodule MsbmsSystAuthentication do
 
   @doc section: :authenticator_management
   @doc """
+  Updates the External Name value of an existing API Token Identity.
+
+  API Token Identities permit Access Account holder naming of the Identity as it
+  may be common for an one Access Account to require multiple API Token
+  Authenticators for different purposes.
+
+  On success this function returns a success tuple where the value element of
+  the tuple is the updated `MsbmsSystAuthentication.Data.SystIdentities` struct.
+  On error, an error tuple is returned.
+
+  ## Parameters
+
+    * `identity` - either the record ID of the API Token Identity to update or
+    the current-state `MsbmsSystAuthentication.Data.SystIdentities` struct of
+    that record.
+
+    * `external_name` - the text of the updated External Name value or `nil` to
+    remove the text of an existing non-nil value.
   """
   @spec update_api_token_external_name(
           Types.identity_id() | Data.SystIdentities.t(),
@@ -2240,6 +2551,22 @@ defmodule MsbmsSystAuthentication do
 
   @doc section: :authenticator_management
   @doc """
+  Revokes the request API Token Authenticator by deleting it from the system.
+
+  API Token Authenticators will regularly need to be decommissioned from the
+  system by the Access Account holders they represent.  By revoking an API
+  Token it is deleted from system.
+
+  A successful deletion will return a success tuple if the form
+  `{:ok, :deleted}`.  If the API Token Identity is not found this function will
+  return a success tuple of `{:ok, :not_found}`.  Any other outcome is an error
+  and results in an error tuple being returned.
+
+  ## Parameters
+
+    * `identity` - either the record ID of the API Token Identity to revoke or
+    the current-state `MsbmsSystAuthentication.Data.SystIdentities` struct of
+    that record.
   """
   @spec revoke_api_token(Types.identity_id() | Data.SystIdentities.t()) ::
           {:ok, :deleted | :not_found} | {:error, MsbmsSystError.t()}
@@ -2255,6 +2582,69 @@ defmodule MsbmsSystAuthentication do
 
   @doc section: :authentication
   @doc """
+  Identities and authenticates an Access Account using an Email/Password
+  Authenticator.
+
+  The return value of this function is a result tuple where a success tuple
+  (`{:ok, <value>}`) indicates that the function processed without error, not
+  that the authentication was successful.  The value element of the success
+  tuple, the Authentication State, carries information about the outcome of the
+  authentication attempt; see
+  `t:MsbmsSystAuthentication.Types.authentication_state/0` for more about the
+  specific information carried by the Authentication State value.  Otherwise,
+  an error tuple is returned indicating the nature of the processing failure.
+
+  Email/Password authentication is an interruptible process, meaning that this
+  function may return prior to the authentication having been fully processed to
+  a final result.  The two most common examples of when this partial processing
+  may happen are 1) the Application Instance was not initially identified; and
+  2) further authentication is required such as when Multi-Factor Authentication
+  is required.  In these cases the returned Authentication State is resubmitted
+  for process via `authenticate_email_password/2` along with the updated
+  information which allows authentication processing to complete.
+
+  ## Parameters
+
+    * `email_address` - this is the username in the form of an email address
+    used to identify the correct Email Identity record which in turn identifies
+    a specific Access Account.
+
+    * `plaintext_pwd` - the Access Account holder's password as submitted in
+    plaintext.  This is the credential that will be authenticated using the
+    Password Credential record belonging to the identified Access Account.
+
+    * `host_address` - the apparent origin host IP address from where the
+    authentication attempt is originating.  This value is used in the
+    enforcement of applicable Network Rules.
+
+    * `opts` - a Keyword List of values that either optionally override default
+    behaviors of this function, are optionally required, or are required on a
+    deferred basis (eventually required).  The available options are:
+
+      * `owning_owner_id` - if the Access Account is an Owned Access Account,
+      this value must be set to the record ID of the Access Account's Owner.
+      Otherwise it must be set `nil` or not provided.  The default value is
+      `nil`.
+
+      * `instance_id` - the record ID of the Application Instance to which the
+      Access Account holder wishes to authenticate.  This is not required when
+      the Email/Password authentication process is initiated but is required for
+      it to complete.  If this value is not initially provided, the function
+      will be `interrupted` returning an Authentication State status value of
+      `:pending`.  Deferral may be appropriate if, for example, we want to allow
+      the Access Account holder to select the specific Instance they wish to
+      access from a list of their permitted Instances.  The default value of
+      this option is `nil`.
+
+      * `host_ban_rate_limit` - overrides the default host IP address based Rate
+      Limit.  The value is set via a tuple in the following form:
+      `{<Maximum Attempts>, <Time Window in Seconds>}`.  The default value is 30
+      attempts over a time window of 2 hours.
+
+      * `identifier_rate_limit` - overrides the default identifier based Rate
+      Limit.  The value is set via a tuple in the following form:
+      `{<Maximum Attempts>, <Time Window in Seconds>}`.  The default value is 5
+      attempts over a time window of 30 minutes.
   """
   @spec authenticate_email_password(
           Types.account_identifier(),
@@ -2268,6 +2658,27 @@ defmodule MsbmsSystAuthentication do
 
   @doc section: :authentication
   @doc """
+  Identifies and authenticates an Access Account on the basis of a starting
+  Authentication State value constructed for Email/Password authentication.
+
+  This function works the same as `authenticate_email_password/4` except that it
+  expects an existing Authentication State value to contain the basic
+  information to process the authentication, with other parameters provided via
+  the `opts` parameter.  This function is typically used to continue a
+  previously interrupted call to `authenticate_email_password/4` and supplying
+  it the necessary additional information to continue processing the
+  authentication to completion.
+
+  The options available for use here are the same as for
+  `authenticate_email_password/4`.  However the options specified here are only
+  valid if they are applied to authentication process operations that are still
+  pending when this function is called.  Options influencing operations
+  previously processed, such as `owning_owner_id` as used in Access Account
+  identification will simply be ignored if they are different in the resumption
+  of the process than they were in the initiating call.
+
+  See `authenticate_email_password/4` for a discussion of the possible return
+  values.
   """
   @spec authenticate_email_password(Types.authentication_state(), Keyword.t()) ::
           {:ok, Types.authentication_state()} | {:error, MsbmsSystError.t()}
@@ -2276,6 +2687,59 @@ defmodule MsbmsSystAuthentication do
 
   @doc section: :authentication
   @doc """
+  Confirms a specific Access Account Identity record as being valid for use.
+
+  The return value of this function is a result tuple where a success tuple
+  (`{:ok, <value>}`) indicates that the function processed without error, not
+  that the validation was successful.  The value element of the success
+  tuple, the Authentication State, carries information about the actual outcome
+  of the authentication attempt; see
+  `t:MsbmsSystAuthentication.Types.authentication_state/0` for more about the
+  specific information carried by the Authentication State value.  Otherwise,
+  an error tuple is returned indicating the nature of the processing failure.
+
+  If the Authentication State's status is returned as `:authenticated`, the
+  validation process succeeded.  On success the target Identity record has its
+  `validated` field set to the current date/time and the Validation
+  Authenticator is deleted from the system.
+
+  The authentication process executed by this function is not interruptible.
+  The initial call to this function must contain all parameter values required
+  to fully complete the authentication process.  Any missing information will
+  cause the authentication attempt to be rejected.
+
+  ## Parameters
+
+    * `identifier` - the identifier defined by the Validation Token identifier.
+    Typically this would have been a system generated random string of
+    characters available at Validation Token Authenticator creation time.
+
+    * `plaintext_token` - the plaintext Validation Token credential.  Typically
+    this would have been a system generated random string of characters
+    available at Validation Token Authenticator creation time.
+
+    * `host_address` - the apparent origin host IP address from where the
+    authentication attempt is originating.  This value is used in the
+    enforcement of applicable Network Rules.
+
+    * `opts` - a Keyword List of values that either optionally override default
+    behaviors of this function or are optionally required.  The available
+    options are:
+
+      * `owning_owner_id` - if the Access Account is an Owned Access Account,
+      this value must be set to the record ID of the Access Account's Owner.
+      Otherwise it must be set `nil` or not provided.  The default value is
+      `nil`.
+
+      * `host_ban_rate_limit` - overrides the default host IP address based Rate
+      Limit.  The value is set via a tuple in the following form:
+      `{<Maximum Attempts>, <Time Window in Seconds>}`.  The default value is 30
+      attempts over a time window of 2 hours.
+
+      * `identifier_rate_limit` - overrides the default identifier based Rate
+      Limit.  The value is set via a tuple in the following form:
+      `{<Maximum Attempts>, <Time Window in Seconds>}`.  The default value is 5
+      attempts over a time window of 30 minutes.
   """
   @spec authenticate_validation_token(
           Types.account_identifier(),
@@ -2294,6 +2758,60 @@ defmodule MsbmsSystAuthentication do
 
   @doc section: :authentication
   @doc """
+  Confirms an Access Account's password Recovery Token Authenticator.
+
+  The return value of this function is a result tuple where a success tuple
+  (`{:ok, <value>}`) indicates that the function processed without error, not
+  that the Recovery Token Authenticator was successfully authenticated.  The
+  value element of the success tuple, the Authentication State, carries
+  information about the actual outcome of the authentication attempt; see
+  `t:MsbmsSystAuthentication.Types.authentication_state/0` for more about the
+  specific information carried by the Authentication State value.  Otherwise,
+  an error tuple is returned indicating the nature of the processing failure.
+
+  If the Authentication State's status is returned as `:authenticated`, the
+  process of Password Credential recovery may be undertaken.  On success the
+  Recovery Token Authenticator is deleted from the system, but no further action
+  is taken by this function.  The actual process of recovering a password is
+  external to this function.
+
+  The authentication process executed by this function is not interruptible.
+  The initial call to this function must contain all parameter values required
+  to fully complete the authentication process.  Any missing information will
+  cause the authentication attempt to be rejected.
+
+  ## Parameters
+
+    * `identifier` - the identifier defined by the Recovery Token identifier.
+    Typically this would have been a system generated random string of
+    characters available at Recovery Token Authenticator creation time.
+
+    * `plaintext_token` - the plaintext Recovery Token credential.  Typically
+    this would have been a system generated random string of characters
+    available at Recovery Token Authenticator creation time.
+
+    * `host_address` - the apparent origin host IP address from where the
+    authentication attempt is originating.  This value is used in the
+    enforcement of applicable Network Rules.
+
+    * `opts` - a Keyword List of values that either optionally override default
+    behaviors of this function or are optionally required.  The available
+    options are:
+
+      * `owning_owner_id` - if the Access Account is an Owned Access Account,
+      this value must be set to the record ID of the Access Account's Owner.
+      Otherwise it must be set `nil` or not provided.  The default value is
+      `nil`.
+
+      * `host_ban_rate_limit` - overrides the default host IP address based Rate
+      Limit.  The value is set via a tuple in the following form:
+      `{<Maximum Attempts>, <Time Window in Seconds>}`.  The default value is 30
+      attempts over a time window of 2 hours.
+
+      * `identifier_rate_limit` - overrides the default identifier based Rate
+      Limit.  The value is set via a tuple in the following form:
+      `{<Maximum Attempts>, <Time Window in Seconds>}`.  The default value is 5
+      attempts over a time window of 30 minutes.
   """
   @spec authenticate_recovery_token(
           Types.account_identifier(),
@@ -2307,6 +2825,61 @@ defmodule MsbmsSystAuthentication do
 
   @doc section: :authentication
   @doc """
+  Identities and authenticates an Access Account using an API Token
+  Authenticator.
+
+  The return value of this function is a result tuple where a success tuple
+  (`{:ok, <value>}`) indicates that the function processed without error, not
+  that the API Token Authenticator was successfully authenticated.  The value
+  element of the success tuple, the Authentication State, carries information
+  about the actual outcome of the authentication attempt; see
+  `t:MsbmsSystAuthentication.Types.authentication_state/0` for more about the
+  specific information carried by the Authentication State value.  Otherwise,
+  an error tuple is returned indicating the nature of the processing failure.
+
+  The authentication process executed by this function is not interruptible.
+  The initial call to this function must contain all parameter values required
+  to fully complete the authentication process.  Any missing information will
+  cause the authentication attempt to be rejected.
+
+  ## Parameters
+
+    * `identifier` - the identifier defined by the API Token identifier.
+    Typically this would have been a system generated random string of
+    characters available at API Token Authenticator creation time.
+
+    * `plaintext_token` - the plaintext API Token credential.  Typically this
+    would have been a system generated random string of characters available at
+    API Token Authenticator creation time.
+
+    * `host_address` - the apparent origin host IP address from where the
+    authentication attempt is originating.  This value is used in the
+    enforcement of applicable Network Rules.
+
+    * `opts` - a Keyword List of values that either optionally override default
+    behaviors of this function or are optionally required.  The available
+    options are:
+
+      * `owning_owner_id` - if the Access Account is an Owned Access Account,
+      this value must be set to the record ID of the Access Account's Owner.
+      Otherwise it must be set `nil` or not provided.  The default value is
+      `nil`.
+
+      * `instance_id` - the record ID of the Application Instance to which the
+      Access Account holder wishes to authenticate.  This value is required must
+      be provided at function call time or the Authentication State will be
+      returned in a `:rejected` status.  There is no default value (default
+      `nil`).
+
+      * `host_ban_rate_limit` - overrides the default host IP address based Rate
+      Limit.  The value is set via a tuple in the following form:
+      `{<Maximum Attempts>, <Time Window in Seconds>}`.  The default value is 30
+      attempts over a time window of 2 hours.
+
+      * `identifier_rate_limit` - overrides the default identifier based Rate
+      Limit.  The value is set via a tuple in the following form:
+      `{<Maximum Attempts>, <Time Window in Seconds>}`.  The default value is 5
+      attempts over a time window of 30 minutes.
   """
   @spec authenticate_api_token(
           Types.account_identifier(),
