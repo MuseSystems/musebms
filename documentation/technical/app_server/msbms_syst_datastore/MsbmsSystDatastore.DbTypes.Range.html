@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.29.0">
+    <meta name="project" content="msbms_syst_datastore v0.1.0">
+
+    <title>MsbmsSystDatastore.DbTypes.Range — msbms_syst_datastore v0.1.0</title>
+    <link rel="stylesheet" href="dist/html-elixir-2YOS5DIE.css" />
+
+    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
+    <script src="dist/handlebars.templates-X7YVL3G2.js"></script>
+    <script src="dist/sidebar_items-8070266A.js"></script>
+
+      <script src="docs_config.js"></script>
+
+    <script async src="dist/html-XN2TSG4M.js"></script>
+
+
+  </head>
+  <body data-type="modules" class="page-protocol">
+    <script>
+
+      try {
+        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
+
+        if (settings.theme === 'dark' ||
+           ((settings.theme === 'system' || settings.theme == null) &&
+             window.matchMedia('(prefers-color-scheme: dark)').matches)
+           ) {
+          document.body.classList.add('dark')
+        }
+      } catch (error) { }
+    </script>
+
+<div class="main">
+
+<button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<section class="sidebar">
+  <form class="sidebar-search" action="search.html">
+    <button type="submit" class="search-button" aria-label="Submit Search">
+      <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
+    </button>
+    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
+      <i class="ri-close-line ri-lg" aria-hidden="true" title="Cancel search"></i>
+    </button>
+    <label class="search-label">
+      <p class="sr-only">Search</p>
+      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
+    </label>
+  </form>
+
+  <div class="autocomplete">
+    <div class="autocomplete-results">
+    </div>
+  </div>
+
+  <div class="sidebar-header">
+
+    <div class="sidebar-projectDetails">
+      <a href="MsbmsSystDatastore.html" class="sidebar-projectName" translate="no">
+msbms_syst_datastore
+      </a>
+      <strong class="sidebar-projectVersion" translate="no">
+        v0.1.0
+      </strong>
+    </div>
+    <ul class="sidebar-listNav">
+      <li><a id="extras-list-link" href="#full-list">Pages</a></li>
+
+        <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+
+
+        <li><a id="tasks-list-link" href="#full-list"><span translate="no">Mix</span> Tasks</a></li>
+
+    </ul>
+  </div>
+
+  <div class="gradient"></div>
+  <ul id="full-list" class="sidebar-fullList"></ul>
+</section>
+
+<section class="content">
+  <output role="status" id="toast"></output>
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+<h1>
+<button class="settings display-settings">
+  <i class="ri-settings-3-line"></i>
+  <span class="sr-only">Settings</span>
+</button>
+
+
+  <span translate="no">MsbmsSystDatastore.DbTypes.Range</span> <small>protocol</small>
+  <small class="app-vsn" translate="no">(msbms_syst_datastore v0.1.0)</small>
+
+</h1>
+
+
+  <section id="moduledoc">
+<p>Defines the common functions which should be implemented for all database
+range types.</p>
+  </section>
+
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+      Summary
+    </h1>
+
+  <div class="summary-types summary">
+    <h2>
+      <a href="#types">Types</a>
+    </h2>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:t/0" translate="no">t()</a>
+
+        </div>
+
+      </div>
+
+  </div>
+
+  <div class="summary-functions summary">
+    <h2>
+      <a href="#functions">Functions</a>
+    </h2>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#bounds_compare/2" translate="no">bounds_compare(left, right)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Compares a range with either a range or related base type and returns a map
+indicating the applicable comparison operator for the lower and upper bound
+of the range.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#lower/1" translate="no">lower(range)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Extracts and returns the lower bound of a range.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#upper/1" translate="no">upper(range)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Extracts and returns the upper bound of a range.</p></div>
+
+      </div>
+
+  </div>
+
+  </section>
+
+
+  <section id="types" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#types">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+Types
+    </h1>
+    <div class="types-list">
+<section class="detail" id="t:t/0">
+
+  <div class="detail-header">
+    <a href="#t:t/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">t()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> t() :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+
+    </div>
+  </section>
+
+  <section id="functions" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#functions">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+Functions
+    </h1>
+    <div class="functions-list">
+<section class="detail" id="bounds_compare/2">
+
+  <div class="detail-header">
+    <a href="#bounds_compare/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">bounds_compare(left, right)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> bounds_compare(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) :: <a href="MsbmsSystDatastore.Types.html#t:bounds_compare_result/0">MsbmsSystDatastore.Types.bounds_compare_result</a>()</pre>
+
+      </div>
+
+<p>Compares a range with either a range or related base type and returns a map
+indicating the applicable comparison operator for the lower and upper bound
+of the range.</p><h2 id="bounds_compare/2-examples" class="section-heading">
+  <a href="#bounds_compare/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
+  Examples
+</h2>
+<p>Comparing two ranges where both the lower and upper values of the left range
+are less than the corresponding values of the right side.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">left_range</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="2798625955-1">%</span><span class="nc" data-group-id="2798625955-1">MsbmsSystDatastore.DbTypes.IntegerRange</span><span class="p" data-group-id="2798625955-1">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="2798625955-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">right_range</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="2798625955-2">%</span><span class="nc" data-group-id="2798625955-2">MsbmsSystDatastore.DbTypes.IntegerRange</span><span class="p" data-group-id="2798625955-2">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="2798625955-2">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystDatastore.DbTypes.Range</span><span class="o">.</span><span class="n">bounds_compare</span><span class="p" data-group-id="2798625955-3">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="n">right_range</span><span class="p" data-group-id="2798625955-3">)</span><span class="w">
+</span><span class="p" data-group-id="2798625955-4">%{</span><span class="ss">lower_comparison</span><span class="p">:</span><span class="w"> </span><span class="ss">:lt</span><span class="p">,</span><span class="w"> </span><span class="ss">upper_comparison</span><span class="p">:</span><span class="w"> </span><span class="ss">:lt</span><span class="p" data-group-id="2798625955-4">}</span></code></pre><p>Comparing a range value on the left side with a base value on the right. In
+this case the left side value is less than the right side value, but
+equal to the upper left side value.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">left_range</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="2221237954-1">%</span><span class="nc" data-group-id="2221237954-1">MsbmsSystDatastore.DbTypes.IntegerRange</span><span class="p" data-group-id="2221237954-1">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper_inclusive</span><span class="p">:</span><span class="w"> </span><span class="no">false</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="2221237954-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystDatastore.DbTypes.Range</span><span class="o">.</span><span class="n">bounds_compare</span><span class="p" data-group-id="2221237954-2">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="mi">99</span><span class="p" data-group-id="2221237954-2">)</span><span class="w">
+</span><span class="p" data-group-id="2221237954-3">%{</span><span class="ss">lower_comparison</span><span class="p">:</span><span class="w"> </span><span class="ss">:lt</span><span class="p">,</span><span class="w"> </span><span class="ss">upper_comparison</span><span class="p">:</span><span class="w"> </span><span class="ss">:eq</span><span class="p" data-group-id="2221237954-3">}</span></code></pre><p>Comparing two ranges where the right side range is contained by the left side
+range.  The left side lower bound is less than the right side lower bound and
+the left side upper bound is greater than the right side upper bound.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">left_range</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="3953776455-1">%</span><span class="nc" data-group-id="3953776455-1">MsbmsSystDatastore.DbTypes.IntegerRange</span><span class="p" data-group-id="3953776455-1">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper_inclusive</span><span class="p">:</span><span class="w"> </span><span class="no">false</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="3953776455-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">right_range</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="3953776455-2">%</span><span class="nc" data-group-id="3953776455-2">MsbmsSystDatastore.DbTypes.IntegerRange</span><span class="p" data-group-id="3953776455-2">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="3953776455-2">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystDatastore.DbTypes.Range</span><span class="o">.</span><span class="n">bounds_compare</span><span class="p" data-group-id="3953776455-3">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="n">right_range</span><span class="p" data-group-id="3953776455-3">)</span><span class="w">
+</span><span class="p" data-group-id="3953776455-4">%{</span><span class="ss">lower_comparison</span><span class="p">:</span><span class="w"> </span><span class="ss">:lt</span><span class="p">,</span><span class="w"> </span><span class="ss">upper_comparison</span><span class="p">:</span><span class="w"> </span><span class="ss">:gt</span><span class="p" data-group-id="3953776455-4">}</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="lower/1">
+
+  <div class="detail-header">
+    <a href="#lower/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">lower(range)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> lower(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()</pre>
+
+      </div>
+
+<p>Extracts and returns the lower bound of a range.</p><h1>Examples</h1><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">range</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="3034426908-1">%</span><span class="nc" data-group-id="3034426908-1">MsbmsSystDatastore.DbTypes.IntegerRange</span><span class="p" data-group-id="3034426908-1">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper_inclusive</span><span class="p">:</span><span class="w"> </span><span class="no">false</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="3034426908-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystDatastore.DbTypes.Range</span><span class="o">.</span><span class="n">lower</span><span class="p" data-group-id="3034426908-2">(</span><span class="n">range</span><span class="p" data-group-id="3034426908-2">)</span><span class="w">
+</span><span class="mi">10</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="upper/1">
+
+  <div class="detail-header">
+    <a href="#upper/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">upper(range)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> upper(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()</pre>
+
+      </div>
+
+<p>Extracts and returns the upper bound of a range.</p><h1>Examples</h1><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">range</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="0450823010-1">%</span><span class="nc" data-group-id="0450823010-1">MsbmsSystDatastore.DbTypes.DecimalRange</span><span class="p" data-group-id="0450823010-1">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="nc">Decimal</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="0450823010-2">(</span><span class="s">&quot;11.55&quot;</span><span class="p" data-group-id="0450823010-2">)</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="nc">Decimal</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="0450823010-3">(</span><span class="s">&quot;75.50&quot;</span><span class="p" data-group-id="0450823010-3">)</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper_inclusive</span><span class="p">:</span><span class="w"> </span><span class="no">false</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="0450823010-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystDatastore.DbTypes.Range</span><span class="o">.</span><span class="n">upper</span><span class="p" data-group-id="0450823010-4">(</span><span class="n">range</span><span class="p" data-group-id="0450823010-4">)</span><span class="w">
+</span><span class="p" data-group-id="0450823010-5">#</span><span class="nc" data-group-id="0450823010-5">Decimal</span><span class="p" data-group-id="0450823010-5">&lt;</span><span class="mf">75.49</span><span class="p" data-group-id="0450823010-5">&gt;</span></code></pre>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+      <footer class="footer">
+
+        <p>
+          Built using
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.29.0) for the
+
+            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+        </p>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+
+
+  </body>
+</html>

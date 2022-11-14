@@ -4,21 +4,23 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.28.5">
+    <meta name="generator" content="ExDoc v0.29.0">
     <meta name="project" content="msbms_syst_datastore v0.1.0">
 
     <title>MsbmsSystDatastore — msbms_syst_datastore v0.1.0</title>
-    <link rel="stylesheet" href="dist/elixir-64c5e2b63575bddb1c5b.css" />
+    <link rel="stylesheet" href="dist/html-elixir-2YOS5DIE.css" />
 
-    <script src="dist/sidebar_items-b2aa6a240d.js"></script>
+    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
+    <script src="dist/handlebars.templates-X7YVL3G2.js"></script>
+    <script src="dist/sidebar_items-8070266A.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/app-b5f3440501744dc8be3d.js"></script>
+    <script async src="dist/html-XN2TSG4M.js"></script>
 
 
   </head>
-  <body data-type="modules">
+  <body data-type="modules" class="page-module">
     <script>
 
       try {
@@ -35,12 +37,11 @@
 
 <div class="main">
 
+<button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
 
 <section class="sidebar">
-  <button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
-    <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
-  </button>
-
   <form class="sidebar-search" action="search.html">
     <button type="submit" class="search-button" aria-label="Submit Search">
       <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
@@ -143,21 +144,21 @@ msbms_syst_datastore
 
       <div class="summary-row">
         <div class="summary-signature">
-          <a href="#delete!/2" translate="no">delete!(struct_or_changeset, opts \\ [])</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.delete!/2</code>.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
           <a href="#delete/2" translate="no">delete(struct_or_changeset, opts \\ [])</a>
 
         </div>
 
           <div class="summary-synopsis"><p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.delete/2</code>.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#delete!/2" translate="no">delete!(struct_or_changeset, opts \\ [])</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.delete!/2</code>.</p></div>
 
       </div>
 
@@ -183,16 +184,6 @@ msbms_syst_datastore
 
       <div class="summary-row">
         <div class="summary-signature">
-          <a href="#get!/3" translate="no">get!(queryable, id, opts \\ [])</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.get!/3</code>.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
           <a href="#get/3" translate="no">get(queryable, id, opts \\ [])</a>
 
         </div>
@@ -203,11 +194,11 @@ msbms_syst_datastore
 
       <div class="summary-row">
         <div class="summary-signature">
-          <a href="#get_by!/3" translate="no">get_by!(queryable, clauses, opts \\ [])</a>
+          <a href="#get!/3" translate="no">get!(queryable, id, opts \\ [])</a>
 
         </div>
 
-          <div class="summary-synopsis"><p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.get_by!/3</code>.</p></div>
+          <div class="summary-synopsis"><p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.get!/3</code>.</p></div>
 
       </div>
 
@@ -223,21 +214,21 @@ msbms_syst_datastore
 
       <div class="summary-row">
         <div class="summary-signature">
-          <a href="#in_transaction?/0" translate="no">in_transaction?()</a>
+          <a href="#get_by!/3" translate="no">get_by!(queryable, clauses, opts \\ [])</a>
 
         </div>
 
-          <div class="summary-synopsis"><p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.in_transaction?/0</code>.</p></div>
+          <div class="summary-synopsis"><p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.get_by!/3</code>.</p></div>
 
       </div>
 
       <div class="summary-row">
         <div class="summary-signature">
-          <a href="#insert!/2" translate="no">insert!(struct_or_changeset, opts \\ [])</a>
+          <a href="#in_transaction?/0" translate="no">in_transaction?()</a>
 
         </div>
 
-          <div class="summary-synopsis"><p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.insert!/2</code>.</p></div>
+          <div class="summary-synopsis"><p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.in_transaction?/0</code>.</p></div>
 
       </div>
 
@@ -253,21 +244,21 @@ msbms_syst_datastore
 
       <div class="summary-row">
         <div class="summary-signature">
-          <a href="#insert_all/3" translate="no">insert_all(schema_or_source, entries_or_query, opts \\ [])</a>
+          <a href="#insert!/2" translate="no">insert!(struct_or_changeset, opts \\ [])</a>
 
         </div>
 
-          <div class="summary-synopsis"><p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.insert_all/3</code>.</p></div>
+          <div class="summary-synopsis"><p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.insert!/2</code>.</p></div>
 
       </div>
 
       <div class="summary-row">
         <div class="summary-signature">
-          <a href="#insert_or_update!/2" translate="no">insert_or_update!(changeset, opts \\ [])</a>
+          <a href="#insert_all/3" translate="no">insert_all(schema_or_source, entries_or_query, opts \\ [])</a>
 
         </div>
 
-          <div class="summary-synopsis"><p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.insert_or_update!/2</code>.</p></div>
+          <div class="summary-synopsis"><p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.insert_all/3</code>.</p></div>
 
       </div>
 
@@ -283,6 +274,16 @@ msbms_syst_datastore
 
       <div class="summary-row">
         <div class="summary-signature">
+          <a href="#insert_or_update!/2" translate="no">insert_or_update!(changeset, opts \\ [])</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.insert_or_update!/2</code>.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
           <a href="#load/2" translate="no">load(module_or_map, data)</a>
 
         </div>
@@ -293,21 +294,21 @@ msbms_syst_datastore
 
       <div class="summary-row">
         <div class="summary-signature">
-          <a href="#one!/2" translate="no">one!(queryable, opts \\ [])</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.one!/2</code>.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
           <a href="#one/2" translate="no">one(queryable, opts \\ [])</a>
 
         </div>
 
           <div class="summary-synopsis"><p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.one/2</code>.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#one!/2" translate="no">one!(queryable, opts \\ [])</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.one!/2</code>.</p></div>
 
       </div>
 
@@ -333,16 +334,6 @@ msbms_syst_datastore
 
       <div class="summary-row">
         <div class="summary-signature">
-          <a href="#query_for_many!/3" translate="no">query_for_many!(query, query_params \\ [], opts \\ [])</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Executes a database query and returns all rows.  Raises on error.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
           <a href="#query_for_many/3" translate="no">query_for_many(query, query_params \\ [], opts \\ [])</a>
 
         </div>
@@ -353,11 +344,11 @@ msbms_syst_datastore
 
       <div class="summary-row">
         <div class="summary-signature">
-          <a href="#query_for_none!/3" translate="no">query_for_none!(query, query_params \\ [], opts \\ [])</a>
+          <a href="#query_for_many!/3" translate="no">query_for_many!(query, query_params \\ [], opts \\ [])</a>
 
         </div>
 
-          <div class="summary-synopsis"><p>Executes a database query but returns no results.  Raises on error.</p></div>
+          <div class="summary-synopsis"><p>Executes a database query and returns all rows.  Raises on error.</p></div>
 
       </div>
 
@@ -373,11 +364,11 @@ msbms_syst_datastore
 
       <div class="summary-row">
         <div class="summary-signature">
-          <a href="#query_for_one!/3" translate="no">query_for_one!(query, query_params \\ [], opts \\ [])</a>
+          <a href="#query_for_none!/3" translate="no">query_for_none!(query, query_params \\ [], opts \\ [])</a>
 
         </div>
 
-          <div class="summary-synopsis"><p>Executes a database query and returns a single row.  Raises on error.</p></div>
+          <div class="summary-synopsis"><p>Executes a database query but returns no results.  Raises on error.</p></div>
 
       </div>
 
@@ -393,11 +384,11 @@ msbms_syst_datastore
 
       <div class="summary-row">
         <div class="summary-signature">
-          <a href="#query_for_value!/3" translate="no">query_for_value!(query, query_params \\ [], opts \\ [])</a>
+          <a href="#query_for_one!/3" translate="no">query_for_one!(query, query_params \\ [], opts \\ [])</a>
 
         </div>
 
-          <div class="summary-synopsis"><p>Executes a database query returning a single value.  Raises on error.</p></div>
+          <div class="summary-synopsis"><p>Executes a database query and returns a single row.  Raises on error.</p></div>
 
       </div>
 
@@ -413,6 +404,16 @@ msbms_syst_datastore
 
       <div class="summary-row">
         <div class="summary-signature">
+          <a href="#query_for_value!/3" translate="no">query_for_value!(query, query_params \\ [], opts \\ [])</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Executes a database query returning a single value.  Raises on error.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
           <a href="#record_count/2" translate="no">record_count(queryable, opts)</a>
 
         </div>
@@ -423,21 +424,21 @@ msbms_syst_datastore
 
       <div class="summary-row">
         <div class="summary-signature">
-          <a href="#reload!/2" translate="no">reload!(struct_or_structs, opts \\ [])</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.reload!/2</code>.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
           <a href="#reload/2" translate="no">reload(struct_or_structs, opts \\ [])</a>
 
         </div>
 
           <div class="summary-synopsis"><p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.reload/2</code>.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#reload!/2" translate="no">reload!(struct_or_structs, opts \\ [])</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.reload!/2</code>.</p></div>
 
       </div>
 
@@ -473,21 +474,21 @@ msbms_syst_datastore
 
       <div class="summary-row">
         <div class="summary-signature">
-          <a href="#update!/2" translate="no">update!(changeset, opts \\ [])</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.update!/2</code>.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
           <a href="#update/2" translate="no">update(changeset, opts \\ [])</a>
 
         </div>
 
           <div class="summary-synopsis"><p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.update/2</code>.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#update!/2" translate="no">update!(changeset, opts \\ [])</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.update!/2</code>.</p></div>
 
       </div>
 
@@ -714,30 +715,11 @@ API - Query
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> all(<a href="https://hexdocs.pm/ecto/3.8.4/Ecto.Queryable.html#t:t/0">Ecto.Queryable.t</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: [<a href="https://hexdocs.pm/ecto/3.8.4/Ecto.Schema.html#t:t/0">Ecto.Schema.t</a>()]</pre>
+          <pre translate="no"><span class="attribute">@spec</span> all(<a href="https://hexdocs.pm/ecto/3.9.1/Ecto.Queryable.html#t:t/0">Ecto.Queryable.t</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: [<a href="https://hexdocs.pm/ecto/3.9.1/Ecto.Schema.html#t:t/0">Ecto.Schema.t</a>()]</pre>
 
       </div>
 
 <p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.all/2</code>.</p>
-  </section>
-</section>
-<section class="detail" id="delete!/2">
-
-    <span id="delete!/1"></span>
-
-  <div class="detail-header">
-    <a href="#delete!/2" class="detail-link" title="Link to this function">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature" translate="no">delete!(struct_or_changeset, opts \\ [])</h1>
-
-
-  </div>
-
-  <section class="docstring">
-
-<p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.delete!/2</code>.</p>
   </section>
 </section>
 <section class="detail" id="delete/2">
@@ -757,6 +739,25 @@ API - Query
   <section class="docstring">
 
 <p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.delete/2</code>.</p>
+  </section>
+</section>
+<section class="detail" id="delete!/2">
+
+    <span id="delete!/1"></span>
+
+  <div class="detail-header">
+    <a href="#delete!/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">delete!(struct_or_changeset, opts \\ [])</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.delete!/2</code>.</p>
   </section>
 </section>
 <section class="detail" id="delete_all/2">
@@ -797,25 +798,6 @@ API - Query
 <p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.exists?/2</code>.</p>
   </section>
 </section>
-<section class="detail" id="get!/3">
-
-    <span id="get!/2"></span>
-
-  <div class="detail-header">
-    <a href="#get!/3" class="detail-link" title="Link to this function">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature" translate="no">get!(queryable, id, opts \\ [])</h1>
-
-
-  </div>
-
-  <section class="docstring">
-
-<p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.get!/3</code>.</p>
-  </section>
-</section>
 <section class="detail" id="get/3">
 
     <span id="get/2"></span>
@@ -835,23 +817,23 @@ API - Query
 <p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.get/3</code>.</p>
   </section>
 </section>
-<section class="detail" id="get_by!/3">
+<section class="detail" id="get!/3">
 
-    <span id="get_by!/2"></span>
+    <span id="get!/2"></span>
 
   <div class="detail-header">
-    <a href="#get_by!/3" class="detail-link" title="Link to this function">
+    <a href="#get!/3" class="detail-link" title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">get_by!(queryable, clauses, opts \\ [])</h1>
+    <h1 class="signature" translate="no">get!(queryable, id, opts \\ [])</h1>
 
 
   </div>
 
   <section class="docstring">
 
-<p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.get_by!/3</code>.</p>
+<p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.get!/3</code>.</p>
   </section>
 </section>
 <section class="detail" id="get_by/3">
@@ -873,6 +855,25 @@ API - Query
 <p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.get_by/3</code>.</p>
   </section>
 </section>
+<section class="detail" id="get_by!/3">
+
+    <span id="get_by!/2"></span>
+
+  <div class="detail-header">
+    <a href="#get_by!/3" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_by!(queryable, clauses, opts \\ [])</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.get_by!/3</code>.</p>
+  </section>
+</section>
 <section class="detail" id="in_transaction?/0">
 
   <div class="detail-header">
@@ -888,25 +889,6 @@ API - Query
   <section class="docstring">
 
 <p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.in_transaction?/0</code>.</p>
-  </section>
-</section>
-<section class="detail" id="insert!/2">
-
-    <span id="insert!/1"></span>
-
-  <div class="detail-header">
-    <a href="#insert!/2" class="detail-link" title="Link to this function">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature" translate="no">insert!(struct_or_changeset, opts \\ [])</h1>
-
-
-  </div>
-
-  <section class="docstring">
-
-<p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.insert!/2</code>.</p>
   </section>
 </section>
 <section class="detail" id="insert/2">
@@ -928,6 +910,25 @@ API - Query
 <p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.insert/2</code>.</p>
   </section>
 </section>
+<section class="detail" id="insert!/2">
+
+    <span id="insert!/1"></span>
+
+  <div class="detail-header">
+    <a href="#insert!/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">insert!(struct_or_changeset, opts \\ [])</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.insert!/2</code>.</p>
+  </section>
+</section>
 <section class="detail" id="insert_all/3">
 
     <span id="insert_all/2"></span>
@@ -945,25 +946,6 @@ API - Query
   <section class="docstring">
 
 <p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.insert_all/3</code>.</p>
-  </section>
-</section>
-<section class="detail" id="insert_or_update!/2">
-
-    <span id="insert_or_update!/1"></span>
-
-  <div class="detail-header">
-    <a href="#insert_or_update!/2" class="detail-link" title="Link to this function">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature" translate="no">insert_or_update!(changeset, opts \\ [])</h1>
-
-
-  </div>
-
-  <section class="docstring">
-
-<p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.insert_or_update!/2</code>.</p>
   </section>
 </section>
 <section class="detail" id="insert_or_update/2">
@@ -985,6 +967,25 @@ API - Query
 <p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.insert_or_update/2</code>.</p>
   </section>
 </section>
+<section class="detail" id="insert_or_update!/2">
+
+    <span id="insert_or_update!/1"></span>
+
+  <div class="detail-header">
+    <a href="#insert_or_update!/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">insert_or_update!(changeset, opts \\ [])</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.insert_or_update!/2</code>.</p>
+  </section>
+</section>
 <section class="detail" id="load/2">
 
   <div class="detail-header">
@@ -1000,25 +1001,6 @@ API - Query
   <section class="docstring">
 
 <p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.load/2</code>.</p>
-  </section>
-</section>
-<section class="detail" id="one!/2">
-
-    <span id="one!/1"></span>
-
-  <div class="detail-header">
-    <a href="#one!/2" class="detail-link" title="Link to this function">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature" translate="no">one!(queryable, opts \\ [])</h1>
-
-
-  </div>
-
-  <section class="docstring">
-
-<p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.one!/2</code>.</p>
   </section>
 </section>
 <section class="detail" id="one/2">
@@ -1038,6 +1020,25 @@ API - Query
   <section class="docstring">
 
 <p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.one/2</code>.</p>
+  </section>
+</section>
+<section class="detail" id="one!/2">
+
+    <span id="one!/1"></span>
+
+  <div class="detail-header">
+    <a href="#one!/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">one!(queryable, opts \\ [])</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.one!/2</code>.</p>
   </section>
 </section>
 <section class="detail" id="preload/3">
@@ -1078,37 +1079,6 @@ API - Query
 <p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.prepare_query/3</code>.</p>
   </section>
 </section>
-<section class="detail" id="query_for_many!/3">
-
-    <span id="query_for_many!/1"></span>
-
-    <span id="query_for_many!/2"></span>
-
-  <div class="detail-header">
-    <a href="#query_for_many!/3" class="detail-link" title="Link to this function">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature" translate="no">query_for_many!(query, query_params \\ [], opts \\ [])</h1>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <div class="specs">
-
-          <pre translate="no"><span class="attribute">@spec</span> query_for_many!(<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">iodata</a>(), [<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()], <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: %{
-  :rows =&gt; nil | [[<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()] | <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">binary</a>()],
-  :num_rows =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>(),
-  optional(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()
-}</pre>
-
-      </div>
-
-<p>Executes a database query and returns all rows.  Raises on error.</p>
-  </section>
-</section>
 <section class="detail" id="query_for_many/3">
 
     <span id="query_for_many/1"></span>
@@ -1143,18 +1113,18 @@ API - Query
 <p>Executes a database query and returns all rows.</p>
   </section>
 </section>
-<section class="detail" id="query_for_none!/3">
+<section class="detail" id="query_for_many!/3">
 
-    <span id="query_for_none!/1"></span>
+    <span id="query_for_many!/1"></span>
 
-    <span id="query_for_none!/2"></span>
+    <span id="query_for_many!/2"></span>
 
   <div class="detail-header">
-    <a href="#query_for_none!/3" class="detail-link" title="Link to this function">
+    <a href="#query_for_many!/3" class="detail-link" title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">query_for_none!(query, query_params \\ [], opts \\ [])</h1>
+    <h1 class="signature" translate="no">query_for_many!(query, query_params \\ [], opts \\ [])</h1>
 
 
   </div>
@@ -1163,11 +1133,15 @@ API - Query
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> query_for_none!(<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">iodata</a>(), [<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()], <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: :ok</pre>
+          <pre translate="no"><span class="attribute">@spec</span> query_for_many!(<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">iodata</a>(), [<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()], <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: %{
+  :rows =&gt; nil | [[<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()] | <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">binary</a>()],
+  :num_rows =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>(),
+  optional(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()
+}</pre>
 
       </div>
 
-<p>Executes a database query but returns no results.  Raises on error.</p>
+<p>Executes a database query and returns all rows.  Raises on error.</p>
   </section>
 </section>
 <section class="detail" id="query_for_none/3">
@@ -1198,18 +1172,18 @@ API - Query
 <p>Executes a database query but returns no results.</p>
   </section>
 </section>
-<section class="detail" id="query_for_one!/3">
+<section class="detail" id="query_for_none!/3">
 
-    <span id="query_for_one!/1"></span>
+    <span id="query_for_none!/1"></span>
 
-    <span id="query_for_one!/2"></span>
+    <span id="query_for_none!/2"></span>
 
   <div class="detail-header">
-    <a href="#query_for_one!/3" class="detail-link" title="Link to this function">
+    <a href="#query_for_none!/3" class="detail-link" title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">query_for_one!(query, query_params \\ [], opts \\ [])</h1>
+    <h1 class="signature" translate="no">query_for_none!(query, query_params \\ [], opts \\ [])</h1>
 
 
   </div>
@@ -1218,11 +1192,11 @@ API - Query
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> query_for_one!(<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">iodata</a>(), [<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()], <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: [<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()]</pre>
+          <pre translate="no"><span class="attribute">@spec</span> query_for_none!(<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">iodata</a>(), [<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()], <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: :ok</pre>
 
       </div>
 
-<p>Executes a database query and returns a single row.  Raises on error.</p>
+<p>Executes a database query but returns no results.  Raises on error.</p>
   </section>
 </section>
 <section class="detail" id="query_for_one/3">
@@ -1253,18 +1227,18 @@ API - Query
 <p>Executes a database query and returns a single row.</p>
   </section>
 </section>
-<section class="detail" id="query_for_value!/3">
+<section class="detail" id="query_for_one!/3">
 
-    <span id="query_for_value!/1"></span>
+    <span id="query_for_one!/1"></span>
 
-    <span id="query_for_value!/2"></span>
+    <span id="query_for_one!/2"></span>
 
   <div class="detail-header">
-    <a href="#query_for_value!/3" class="detail-link" title="Link to this function">
+    <a href="#query_for_one!/3" class="detail-link" title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">query_for_value!(query, query_params \\ [], opts \\ [])</h1>
+    <h1 class="signature" translate="no">query_for_one!(query, query_params \\ [], opts \\ [])</h1>
 
 
   </div>
@@ -1273,11 +1247,11 @@ API - Query
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> query_for_value!(<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">iodata</a>(), [<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()], <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()</pre>
+          <pre translate="no"><span class="attribute">@spec</span> query_for_one!(<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">iodata</a>(), [<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()], <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: [<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()]</pre>
 
       </div>
 
-<p>Executes a database query returning a single value.  Raises on error.</p>
+<p>Executes a database query and returns a single row.  Raises on error.</p>
   </section>
 </section>
 <section class="detail" id="query_for_value/3">
@@ -1308,6 +1282,33 @@ API - Query
 <p>Executes a database query returning a single value.</p>
   </section>
 </section>
+<section class="detail" id="query_for_value!/3">
+
+    <span id="query_for_value!/1"></span>
+
+    <span id="query_for_value!/2"></span>
+
+  <div class="detail-header">
+    <a href="#query_for_value!/3" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">query_for_value!(query, query_params \\ [], opts \\ [])</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> query_for_value!(<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">iodata</a>(), [<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()], <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()</pre>
+
+      </div>
+
+<p>Executes a database query returning a single value.  Raises on error.</p>
+  </section>
+</section>
 <section class="detail" id="record_count/2">
 
   <div class="detail-header">
@@ -1323,25 +1324,6 @@ API - Query
   <section class="docstring">
 
 <p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.record_count/2</code>.</p>
-  </section>
-</section>
-<section class="detail" id="reload!/2">
-
-    <span id="reload!/1"></span>
-
-  <div class="detail-header">
-    <a href="#reload!/2" class="detail-link" title="Link to this function">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature" translate="no">reload!(struct_or_structs, opts \\ [])</h1>
-
-
-  </div>
-
-  <section class="docstring">
-
-<p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.reload!/2</code>.</p>
   </section>
 </section>
 <section class="detail" id="reload/2">
@@ -1361,6 +1343,25 @@ API - Query
   <section class="docstring">
 
 <p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.reload/2</code>.</p>
+  </section>
+</section>
+<section class="detail" id="reload!/2">
+
+    <span id="reload!/1"></span>
+
+  <div class="detail-header">
+    <a href="#reload!/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">reload!(struct_or_structs, opts \\ [])</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.reload!/2</code>.</p>
   </section>
 </section>
 <section class="detail" id="rollback/1">
@@ -1418,32 +1419,13 @@ API - Query
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> transaction(
-  (... -&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) | <a href="https://hexdocs.pm/ecto/3.8.4/Ecto.Multi.html#t:t/0">Ecto.Multi.t</a>(),
+  (... -&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) | <a href="https://hexdocs.pm/ecto/3.9.1/Ecto.Multi.html#t:t/0">Ecto.Multi.t</a>(),
   <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">keyword</a>()
 ) :: {:error, <a href="../../../../documentation/technical/app_server/msbms_syst_error/MsbmsSystError.html#t:t/0">MsbmsSystError.t</a>()} | {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
 
       </div>
 
 <p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.ecto_transaction/2</code>.</p>
-  </section>
-</section>
-<section class="detail" id="update!/2">
-
-    <span id="update!/1"></span>
-
-  <div class="detail-header">
-    <a href="#update!/2" class="detail-link" title="Link to this function">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature" translate="no">update!(changeset, opts \\ [])</h1>
-
-
-  </div>
-
-  <section class="docstring">
-
-<p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.update!/2</code>.</p>
   </section>
 </section>
 <section class="detail" id="update/2">
@@ -1463,6 +1445,25 @@ API - Query
   <section class="docstring">
 
 <p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.update/2</code>.</p>
+  </section>
+</section>
+<section class="detail" id="update!/2">
+
+    <span id="update!/1"></span>
+
+  <div class="detail-header">
+    <a href="#update!/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">update!(changeset, opts \\ [])</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>See <code class="inline">MsbmsSystDatastore.Runtime.Datastore.update!/2</code>.</p>
   </section>
 </section>
 <section class="detail" id="update_all/3">
@@ -1536,7 +1537,7 @@ API - Runtime
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> set_datastore_context(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>() | <a href="https://hexdocs.pm/ecto/3.8.4/Ecto.Repo.html#t:t/0">Ecto.Repo.t</a>() | <a href="https://hexdocs.pm/ecto/3.8.4/Ecto.Adapter.html#t:adapter_meta/0">Ecto.Adapter.adapter_meta</a>()) ::
+          <pre translate="no"><span class="attribute">@spec</span> set_datastore_context(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>() | <a href="https://hexdocs.pm/ecto/3.9.1/Ecto.Repo.html#t:t/0">Ecto.Repo.t</a>() | <a href="https://hexdocs.pm/ecto/3.9.1/Ecto.Adapter.html#t:adapter_meta/0">Ecto.Adapter.adapter_meta</a>()) ::
   <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>() | <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()</pre>
 
       </div>
@@ -1941,7 +1942,7 @@ and contexts, respectively, of the provided Datastore options definition.</p>
 
         <p>
           Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.28.5) for the
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.29.0) for the
 
             <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 

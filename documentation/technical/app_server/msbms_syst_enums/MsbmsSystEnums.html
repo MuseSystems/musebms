@@ -4,21 +4,23 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.28.5">
+    <meta name="generator" content="ExDoc v0.29.0">
     <meta name="project" content="msbms_syst_enums v0.1.0">
 
     <title>MsbmsSystEnums — msbms_syst_enums v0.1.0</title>
-    <link rel="stylesheet" href="dist/elixir-64c5e2b63575bddb1c5b.css" />
+    <link rel="stylesheet" href="dist/html-elixir-2YOS5DIE.css" />
 
-    <script src="dist/sidebar_items-86b19fc4d8.js"></script>
+    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
+    <script src="dist/handlebars.templates-X7YVL3G2.js"></script>
+    <script src="dist/sidebar_items-86B19FC4.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/app-b5f3440501744dc8be3d.js"></script>
+    <script async src="dist/html-XN2TSG4M.js"></script>
 
 
   </head>
-  <body data-type="modules">
+  <body data-type="modules" class="page-module">
     <script>
 
       try {
@@ -35,12 +37,11 @@
 
 <div class="main">
 
+<button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
 
 <section class="sidebar">
-  <button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
-    <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
-  </button>
-
   <form class="sidebar-search" action="search.html">
     <button type="submit" class="search-button" aria-label="Submit Search">
       <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
@@ -438,20 +439,20 @@ available and required attributes.</li></ul><h2 id="create_enum/1-examples" clas
   Examples
 </h2>
 <pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">example_enumeration</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="6244726075-1">%{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="2302481335-1">%{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example_create_enum&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="ss">display_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Create Example Enum&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="ss">user_description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Demonstrate enumeration creation.&quot;</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="ss">functional_types</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="6244726075-2">[</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">       </span><span class="p" data-group-id="6244726075-3">%{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="ss">functional_types</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2302481335-2">[</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">       </span><span class="p" data-group-id="2302481335-3">%{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">         </span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example_create_enum_functional_type&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">         </span><span class="ss">display_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Create Example Enum / Functional Type&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">         </span><span class="ss">external_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Functional Type&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">         </span><span class="ss">user_description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Demonstrate Functional Type Creation&quot;</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">       </span><span class="p" data-group-id="6244726075-3">}</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="p" data-group-id="6244726075-2">]</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="ss">enum_items</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="6244726075-4">[</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">       </span><span class="p" data-group-id="6244726075-5">%{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">       </span><span class="p" data-group-id="2302481335-3">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="p" data-group-id="2302481335-2">]</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="ss">enum_items</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2302481335-4">[</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">       </span><span class="p" data-group-id="2302481335-5">%{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">         </span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example_create_enum_item&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">         </span><span class="ss">display_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Create Example Enum / Enum Item&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">         </span><span class="ss">external_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Enum Item&quot;</span><span class="p">,</span><span class="w">
@@ -459,10 +460,10 @@ available and required attributes.</li></ul><h2 id="create_enum/1-examples" clas
 </span><span class="gp unselectable">...&gt; </span><span class="w">         </span><span class="ss">enum_default</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">         </span><span class="ss">functional_type_default</span><span class="p">:</span><span class="w"> </span><span class="no">false</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">         </span><span class="ss">functional_type_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example_create_enum_functional_type&quot;</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">       </span><span class="p" data-group-id="6244726075-5">}</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="p" data-group-id="6244726075-4">]</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">   </span><span class="p" data-group-id="6244726075-1">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystEnums</span><span class="o">.</span><span class="n">create_enum</span><span class="p" data-group-id="6244726075-6">(</span><span class="n">example_enumeration</span><span class="p" data-group-id="6244726075-6">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">       </span><span class="p" data-group-id="2302481335-5">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="p" data-group-id="2302481335-4">]</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">   </span><span class="p" data-group-id="2302481335-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystEnums</span><span class="o">.</span><span class="n">create_enum</span><span class="p" data-group-id="2302481335-6">(</span><span class="n">example_enumeration</span><span class="p" data-group-id="2302481335-6">)</span><span class="w">
 </span><span class="ss">:ok</span></code></pre>
   </section>
 </section>
@@ -530,7 +531,7 @@ enumeration that has been referenced in other application data records.</p><h2 i
   </a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystEnums</span><span class="o">.</span><span class="n">get_enum_syst_defined</span><span class="p" data-group-id="0701381209-1">(</span><span class="s">&quot;example_enumeration&quot;</span><span class="p" data-group-id="0701381209-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystEnums</span><span class="o">.</span><span class="n">get_enum_syst_defined</span><span class="p" data-group-id="6770513193-1">(</span><span class="s">&quot;example_enumeration&quot;</span><span class="p" data-group-id="6770513193-1">)</span><span class="w">
 </span><span class="no">false</span></code></pre>
   </section>
 </section>
@@ -568,7 +569,7 @@ maintainable.</li></ul><h2 id="get_enum_user_maintainable/1-examples" class="sec
   </a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystEnums</span><span class="o">.</span><span class="n">get_enum_user_maintainable</span><span class="p" data-group-id="4218269592-1">(</span><span class="w"> </span><span class="s">&quot;example_enumeration&quot;</span><span class="p" data-group-id="4218269592-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystEnums</span><span class="o">.</span><span class="n">get_enum_user_maintainable</span><span class="p" data-group-id="7201977136-1">(</span><span class="w"> </span><span class="s">&quot;example_enumeration&quot;</span><span class="p" data-group-id="7201977136-1">)</span><span class="w">
 </span><span class="no">true</span></code></pre>
   </section>
 </section>
@@ -608,7 +609,7 @@ including the <code class="inline">enum_items</code> association populated as we
   </a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystEnums</span><span class="o">.</span><span class="n">get_enum_values</span><span class="p" data-group-id="8180507017-1">(</span><span class="s">&quot;example_enumeration&quot;</span><span class="p" data-group-id="8180507017-1">)</span></code></pre>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystEnums</span><span class="o">.</span><span class="n">get_enum_values</span><span class="p" data-group-id="3469743965-1">(</span><span class="s">&quot;example_enumeration&quot;</span><span class="p" data-group-id="3469743965-1">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="list_all_enums/0">
@@ -800,12 +801,12 @@ belongs.</p></li><li><p><code class="inline">enum_item_id</code> - the record ID
   </a>
   Example
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">example_enum_item</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MsbmsSystEnums</span><span class="o">.</span><span class="n">get_enum_item_by_name</span><span class="p" data-group-id="4454899521-1">(</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">example_enum_item</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MsbmsSystEnums</span><span class="o">.</span><span class="n">get_enum_item_by_name</span><span class="p" data-group-id="6433072330-1">(</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="s">&quot;example_enumeration&quot;</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="s">&quot;example_enum_item_one&quot;</span><span class="p" data-group-id="4454899521-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystEnums</span><span class="o">.</span><span class="n">get_functional_type_by_enum_item_id</span><span class="p" data-group-id="4454899521-2">(</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="s">&quot;example_enum_item_one&quot;</span><span class="p" data-group-id="6433072330-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystEnums</span><span class="o">.</span><span class="n">get_functional_type_by_enum_item_id</span><span class="p" data-group-id="6433072330-2">(</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="s">&quot;example_enumeration&quot;</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="n">example_enum_item</span><span class="o">.</span><span class="n">id</span><span class="p" data-group-id="4454899521-2">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="n">example_enum_item</span><span class="o">.</span><span class="n">id</span><span class="p" data-group-id="6433072330-2">)</span><span class="w">
 </span><span class="s">&quot;example_enum_func_type_1&quot;</span></code></pre>
   </section>
 </section>
@@ -1009,18 +1010,18 @@ than the entire enumeration.</li></ul></li></ul><h2 id="get_default_enum_item/2-
   </a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="3457876951-1">%</span><span class="nc" data-group-id="3457876951-1">MsbmsSystEnums.Data.SystEnumItems</span><span class="p" data-group-id="3457876951-1">{</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="1000572563-1">%</span><span class="nc" data-group-id="1000572563-1">MsbmsSystEnums.Data.SystEnumItems</span><span class="p" data-group-id="1000572563-1">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example_enum_item_two&quot;</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="3457876951-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystEnums</span><span class="o">.</span><span class="n">get_default_enum_item</span><span class="p" data-group-id="3457876951-2">(</span><span class="s">&quot;example_enumeration&quot;</span><span class="p" data-group-id="3457876951-2">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="1000572563-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystEnums</span><span class="o">.</span><span class="n">get_default_enum_item</span><span class="p" data-group-id="1000572563-2">(</span><span class="s">&quot;example_enumeration&quot;</span><span class="p" data-group-id="1000572563-2">)</span><span class="w">
 
-</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="3457876951-3">%</span><span class="nc" data-group-id="3457876951-3">MsbmsSystEnums.Data.SystEnumItems</span><span class="p" data-group-id="3457876951-3">{</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="1000572563-3">%</span><span class="nc" data-group-id="1000572563-3">MsbmsSystEnums.Data.SystEnumItems</span><span class="p" data-group-id="1000572563-3">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example_enum_item_one&quot;</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="3457876951-3">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystEnums</span><span class="o">.</span><span class="n">get_default_enum_item</span><span class="p" data-group-id="3457876951-4">(</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="1000572563-3">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystEnums</span><span class="o">.</span><span class="n">get_default_enum_item</span><span class="p" data-group-id="1000572563-4">(</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="s">&quot;example_enumeration&quot;</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="p" data-group-id="3457876951-5">[</span><span class="ss">functional_type_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example_enum_func_type_1&quot;</span><span class="p" data-group-id="3457876951-5">]</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="3457876951-4">)</span></code></pre>
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="p" data-group-id="1000572563-5">[</span><span class="ss">functional_type_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example_enum_func_type_1&quot;</span><span class="p" data-group-id="1000572563-5">]</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="1000572563-4">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_enum_item_by_id/2">
@@ -1039,7 +1040,7 @@ than the entire enumeration.</li></ul></li></ul><h2 id="get_default_enum_item/2-
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> get_enum_item_by_id(<a href="MsbmsSystEnums.Types.html#t:enum_name/0">MsbmsSystEnums.Types.enum_name</a>(), <a href="https://hexdocs.pm/ecto/3.8.4/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()) ::
+          <pre translate="no"><span class="attribute">@spec</span> get_enum_item_by_id(<a href="MsbmsSystEnums.Types.html#t:enum_name/0">MsbmsSystEnums.Types.enum_name</a>(), <a href="https://hexdocs.pm/ecto/3.9.1/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()) ::
   <a href="MsbmsSystEnums.Data.SystEnumItems.html#t:t/0">MsbmsSystEnums.Data.SystEnumItems.t</a>()</pre>
 
       </div>
@@ -1094,13 +1095,13 @@ Enumeration Item record.</p></li><li><p><code class="inline">enum_item_name</cod
   </a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="7521170900-1">%</span><span class="nc" data-group-id="7521170900-1">MsbmsSystEnums.Data.SystEnumItems</span><span class="p" data-group-id="7521170900-1">{</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="3180311883-1">%</span><span class="nc" data-group-id="3180311883-1">MsbmsSystEnums.Data.SystEnumItems</span><span class="p" data-group-id="3180311883-1">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example_enum_item_one&quot;</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="7521170900-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystEnums</span><span class="o">.</span><span class="n">get_enum_item_by_name</span><span class="p" data-group-id="7521170900-2">(</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="3180311883-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MsbmsSystEnums</span><span class="o">.</span><span class="n">get_enum_item_by_name</span><span class="p" data-group-id="3180311883-2">(</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="s">&quot;example_enumeration&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="s">&quot;example_enum_item_one&quot;</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="7521170900-2">)</span></code></pre>
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="3180311883-2">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="list_enum_items/1">
@@ -1240,7 +1241,7 @@ been set.</p><h2 id="get_enums_service/0-examples" class="section-heading">
   </a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystEnums</span><span class="o">.</span><span class="n">get_enums_service</span><span class="p" data-group-id="3454768766-1">(</span><span class="p" data-group-id="3454768766-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystEnums</span><span class="o">.</span><span class="n">get_enums_service</span><span class="p" data-group-id="2473106006-1">(</span><span class="p" data-group-id="2473106006-1">)</span><span class="w">
 </span><span class="ss">:enums_instance</span></code></pre>
   </section>
 </section>
@@ -1287,7 +1288,7 @@ the process.</li></ul><h2 id="put_enums_service/1-examples" class="section-headi
   </a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystEnums</span><span class="o">.</span><span class="n">put_enums_service</span><span class="p" data-group-id="4718040340-1">(</span><span class="ss">:enums_instance</span><span class="p" data-group-id="4718040340-1">)</span></code></pre>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MsbmsSystEnums</span><span class="o">.</span><span class="n">put_enums_service</span><span class="p" data-group-id="7881261146-1">(</span><span class="ss">:enums_instance</span><span class="p" data-group-id="7881261146-1">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="start_link/1">
@@ -1333,7 +1334,7 @@ modifying database data.</p>
 
         <p>
           Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.28.5) for the
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.29.0) for the
 
             <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 
