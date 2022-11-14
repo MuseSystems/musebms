@@ -74,7 +74,7 @@ defmodule MsbmsSystUtils do
 
       * `b32e` - will return values from the set
       `0123456789ABCDEFGHIJKLMNOPQRSTUV`.  This equates to the character set
-      used by Elixir's Integer.to_string(x, 32).
+      used by Elixir's `Integer.to_string(x, 32)`.
 
       * `b32c` - will return values from the set
       `0123456789ABCDEFGHJKMNPQRSTVWXYZ`.  This is the Base32 character set
