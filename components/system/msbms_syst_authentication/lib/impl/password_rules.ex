@@ -296,14 +296,14 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
   end
 
   @spec get_access_account_password_rule(Types.access_account_id()) ::
-          {:ok, Types.password_rule()} | {:error, MsbmsSystError.t() | Exception.t()}
+          {:ok, Types.password_rules()} | {:error, MsbmsSystError.t() | Exception.t()}
   def get_access_account_password_rule(access_account_id) when is_binary(access_account_id) do
     {:ok, get_access_account_password_rule!(access_account_id)}
   rescue
     error -> {:error, error}
   end
 
-  @spec get_access_account_password_rule!(Types.access_account_id()) :: Types.password_rule()
+  @spec get_access_account_password_rule!(Types.access_account_id()) :: Types.password_rules()
   def get_access_account_password_rule!(access_account_id) when is_binary(access_account_id) do
     global_rule =
       get_global_password_rules!() |> parse_data_struct_to_generic_rule(access_account_id)
@@ -420,8 +420,8 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
   end
 
   @spec verify_password_rules(
-          Types.password_rule(),
-          Data.SystGlobalPasswordRules.t() | Types.password_rule() | nil
+          Types.password_rules(),
+          Data.SystGlobalPasswordRules.t() | Types.password_rules() | nil
         ) ::
           {:ok, Keyword.t(Types.password_rule_violations())}
           | {:error, MsbmsSystError.t() | Exception.t()}
@@ -433,8 +433,8 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
   end
 
   @spec verify_password_rules!(
-          Types.password_rule(),
-          Data.SystGlobalPasswordRules.t() | Types.password_rule() | nil
+          Types.password_rules(),
+          Data.SystGlobalPasswordRules.t() | Types.password_rules() | nil
         ) ::
           Keyword.t(Types.password_rule_violations())
   def verify_password_rules!(%{} = test_rules, nil = _standard_rules) do

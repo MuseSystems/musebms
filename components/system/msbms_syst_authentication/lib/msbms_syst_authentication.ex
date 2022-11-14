@@ -983,7 +983,7 @@ defmodule MsbmsSystAuthentication do
     * `access_account_id` - the Access Account record ID of the user.
   """
   @spec get_access_account_password_rule(Types.access_account_id()) ::
-          {:ok, Types.password_rule()} | {:error, MsbmsSystError.t() | Exception.t()}
+          {:ok, Types.password_rules()} | {:error, MsbmsSystError.t() | Exception.t()}
   defdelegate get_access_account_password_rule(access_account_id), to: Impl.PasswordRules
 
   @doc section: :password_rule_data
@@ -998,7 +998,7 @@ defmodule MsbmsSystAuthentication do
 
     * `access_account_id` - the Access Account record ID of the user.
   """
-  @spec get_access_account_password_rule!(Types.access_account_id()) :: Types.password_rule()
+  @spec get_access_account_password_rule!(Types.access_account_id()) :: Types.password_rules()
   defdelegate get_access_account_password_rule!(access_account_id), to: Impl.PasswordRules
 
   @doc section: :password_rule_data
@@ -1033,8 +1033,8 @@ defmodule MsbmsSystAuthentication do
     struct may be provided.
   """
   @spec verify_password_rules(
-          Types.password_rule(),
-          Data.SystGlobalPasswordRules.t() | Types.password_rule() | nil
+          Types.password_rules(),
+          Data.SystGlobalPasswordRules.t() | Types.password_rules() | nil
         ) ::
           {:ok, Keyword.t(Types.password_rule_violations())}
           | {:error, MsbmsSystError.t() | Exception.t()}
@@ -1063,8 +1063,8 @@ defmodule MsbmsSystAuthentication do
     struct may be provided.
   """
   @spec verify_password_rules!(
-          Types.password_rule(),
-          Data.SystGlobalPasswordRules.t() | Types.password_rule() | nil
+          Types.password_rules(),
+          Data.SystGlobalPasswordRules.t() | Types.password_rules() | nil
         ) ::
           Keyword.t(Types.password_rule_violations())
   defdelegate verify_password_rules!(test_rules, standard_rules \\ nil),
@@ -1123,7 +1123,7 @@ defmodule MsbmsSystAuthentication do
       iex> MsbmsSystAuthentication.test_credential(access_account_id, "short")
       {:ok, [password_rule_length_min: 8]}
   """
-  @spec test_credential(Types.access_account_id() | Types.password_rule(), Types.credential()) ::
+  @spec test_credential(Types.access_account_id() | Types.password_rules(), Types.credential()) ::
           {:ok, Keyword.t(Types.password_rule_violations())}
           | {:error, MsbmsSystError.t() | Exception.t()}
   defdelegate test_credential(access_account_id, plaintext_pwd), to: Impl.Credential.Password
