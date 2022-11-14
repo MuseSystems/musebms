@@ -21,6 +21,9 @@ defmodule MsbmsSystAuthentication.Impl.Credential.ApiToken do
 
   @moduledoc false
 
+  @default_credential_token_length 40
+  @default_credential_tokens :mixed_alphanum
+
   @token_type :credential_types_sysdef_token_api
 
   @spec confirm_credential(
@@ -56,8 +59,8 @@ defmodule MsbmsSystAuthentication.Impl.Credential.ApiToken do
   def set_credential(access_account_id, identity_id, token \\ nil, opts \\ []) do
     opts =
       MsbmsSystUtils.resolve_options(opts,
-        credential_token_length: 40,
-        credential_tokens: :mixed_alphanum
+        credential_token_length: @default_credential_token_length,
+        credential_tokens: @default_credential_tokens
       )
 
     GenericToken.set_credential(@token_type, access_account_id, identity_id, token, opts)
