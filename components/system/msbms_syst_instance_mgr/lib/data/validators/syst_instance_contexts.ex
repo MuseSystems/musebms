@@ -15,7 +15,7 @@ defmodule MsbmsSystInstanceMgr.Data.Validators.SystInstanceContexts do
 
   alias MsbmsSystInstanceMgr.Data
   alias MsbmsSystInstanceMgr.Data.Helpers
-  alias MsbmsSystInstanceMgr.Data.Validators.General
+  alias MsbmsSystInstanceMgr.Data.Validators
   alias MsbmsSystInstanceMgr.Types
 
   @moduledoc false
