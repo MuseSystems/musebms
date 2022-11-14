@@ -243,7 +243,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
        }}
   end
 
-  @spec revoke_password_recovery(Types.access_account_id() | Data.SystIdentities.t()) ::
+  @spec revoke_password_recovery(Types.access_account_id()) ::
           {:ok, :deleted | :not_found} | {:error, MsbmsSystError.t() | Exception.t()}
   def revoke_password_recovery(access_account_id) when is_binary(access_account_id) do
     with {:ok, %Data.SystIdentities{} = recovery_identity} <-
