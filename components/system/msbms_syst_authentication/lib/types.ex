@@ -897,12 +897,12 @@ defmodule MsbmsSystAuthentication.Types do
     that they would have been considered.
 
     * `password_length` - the resolved value of type
-    `t:MsbmsSystDatastore.DbTypes.IntegerRange/0` describing the password length
-    in terms of the number of characters.  The lower bound defines the minimum
-    number of characters a password may have and the upper bound is the most
-    characters that can be added to password.
+    `t:MsbmsSystDatastore.DbTypes.IntegerRange.t/0` describing the password
+    length in terms of the number of characters.  The lower bound defines the
+    minimum number of characters a password may have and the upper bound is the
+    most characters that can be added to password.
 
-    * `max_age` - the resolved value of type `t:MsbmsSystDatastore.DbTypes.Interval/0`
+    * `max_age` - the resolved value of type `t:MsbmsSystDatastore.DbTypes.Interval.t/0`
     which, when added to the `last_updated` value of the Password Credential
     record, sets the expiration date of the password.  After the password's age
     has exceeded it's max age, the password must be reset prior to finalizing
@@ -972,12 +972,12 @@ defmodule MsbmsSystAuthentication.Types do
 
   ## Attributes
 
-    * `password_length` - A value of type `t:MsbmsSystDatastore.DbTypes.IntegerRange/0`
+    * `password_length` - A value of type `t:MsbmsSystDatastore.DbTypes.IntegerRange.t/0`
     describing the password length in terms of the number of characters.  The
     lower bound defines the minimum number of characters a password may have and
     the upper bound is the most characters that can be added to password.
 
-    * `max_age` - A value of type `t:MsbmsSystDatastore.DbTypes.Interval/0`
+    * `max_age` - A value of type `t:MsbmsSystDatastore.DbTypes.Interval.t/0`
     which, when added to the `last_updated` value of the Password Credential
     record, sets the expiration date of the password.  After the password's age
     has exceeded it's max age, the password must be reset prior to finalizing
