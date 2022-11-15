@@ -113,16 +113,14 @@ cd ../../../
 # Global Database
 #
 
-# cd documentation
-# rm -Rf technical/database/global
-# mkdir -p technical/database/global
-# java -jar schemaspy/schemaspy-6.1.0.jar -t pgsql11 -dp schemaspy/postgresql-42.5.0.jar -db global_doc -host 127.0.0.1 -port 5432 -schemas msbms_syst_data,msbms_syst_priv,msbms_syst  -u documentation -p 'documentation' -o source/products/musebms/documentation/database/global
+# rm -Rf documentation/technical/database/global
+# mkdir -p documentation/technical/database/global
+# java -jar tools/build_tools/schemaspy/schemaspy-6.1.0.jar -t pgsql11 -dp tools/build_tools/schemaspy/postgresql-42.5.0.jar -db msbms_dev_global -host 127.0.0.1 -port 5432 -schemas msbms_syst,msbms_syst_data,msbms_syst_datastore,msbms_syst_priv  -u documentation -p 'documentation' -o documentation/technical/database/global
 
 #
 # Instance Database
 #
 
-# cd documentation
-# rm -Rf technical/database/instance
-# mkdir -p technical/database/instance
-# java -jar schemaspy/schemaspy-6.1.0.jar -t pgsql11 -dp schemaspy/postgresql-42.5.0.jar -db instance_doc -host 127.0.0.1 -port 5432 -schemas msbms_syst_data,msbms_syst_priv,msbms_syst  -u documentation -p 'documentation' -o source/products/musebms/documentation/database/global
+# rm -Rf documentation/technical/database/instance
+# mkdir -p documentation/technical/database/instance
+# java -jar tools/build_tools/schemaspy/schemaspy-6.1.0.jar -t pgsql11 -dp tools/build_tools/schemaspy/postgresql-42.5.0.jar -db msbms_dev_instance -host 127.0.0.1 -port 5432 -schemas msbms_appl,msbms_appl_data,msbms_appl_priv,msbms_syst,msbms_syst_data,msbms_syst_datastore,msbms_syst_priv,msbms_user,msbms_user_data,msbms_user_priv -u documentation -p 'documentation' -o documentation/technical/database/instance
