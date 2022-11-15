@@ -128,12 +128,14 @@ defmodule DevSupport do
   def start_dev_environment() do
     _ = setup_global_database()
     _ = setup_instance_database()
+    :ok
   end
 
   def stop_dev_environment() do
     _ = cleanup_global_database()
     _ = cleanup_instance_database()
     File.rm_rf!(Path.join(["priv/database"]))
+    :ok
   end
 
   defp setup_global_database() do
