@@ -7,11 +7,10 @@
 \set ON_ERROR_STOP true
 \c postgres
 
+-- Clean-up testing database objects
+
 DROP DATABASE IF EXISTS test_global_build;
 DROP DATABASE IF EXISTS test_instance_build;
-
-DROP ROLE IF EXISTS msbms_access;
-DROP ROLE IF EXISTS msbms_syst_dba;
 
 DROP ROLE IF EXISTS global_build_api_user;
 DROP ROLE IF EXISTS global_build_app_user;
@@ -20,5 +19,23 @@ DROP ROLE IF EXISTS global_build_owner;
 DROP ROLE IF EXISTS instance_build_api_user;
 DROP ROLE IF EXISTS instance_build_app_user;
 DROP ROLE IF EXISTS instance_build_owner;
+
+-- Clean-up dev-support database objects
+
+DROP DATABASE IF EXISTS msbms_dev_global;
+DROP DATABASE IF EXISTS msbms_dev_instance;
+
+DROP ROLE IF EXISTS msbms_dev_global_api_user;
+DROP ROLE IF EXISTS msbms_dev_global_app_user;
+DROP ROLE IF EXISTS msbms_dev_global_owner;
+
+DROP ROLE IF EXISTS msbms_dev_instance_api_user;
+DROP ROLE IF EXISTS msbms_dev_instance_app_user;
+DROP ROLE IF EXISTS msbms_dev_instance_owner;
+
+-- General clean-up
+
+DROP ROLE IF EXISTS msbms_access;
+DROP ROLE IF EXISTS msbms_syst_dba;
 
 \ir bootstrap_database.psql
