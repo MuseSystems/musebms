@@ -29,6 +29,11 @@ defmodule Msbms.MixProject do
     {:msbms_syst_datastore, path: "../../components/system/msbms_syst_datastore"}
   ]
 
+  @dialyzer_opts [
+    flags: ["-Wunmatched_returns", :error_handling, :underspecs],
+    plt_add_apps: [:mix]
+  ]
+
   # ------------------------------------------------------------
 
   def project do
@@ -40,7 +45,9 @@ defmodule Msbms.MixProject do
       elixir: "~> 1.14",
       deps: @deps,
       build_embedded: in_production,
-      start_permanent: in_production
+      start_permanent: in_production,
+      dialyzer: @dialyzer_opts,
+      elixirc_paths: elixirc_paths(Mix.env())
     ]
   end
 
@@ -53,4 +60,8 @@ defmodule Msbms.MixProject do
       ]
     ]
   end
+
+  defp elixirc_paths(:dev), do: elixirc_paths() ++ ["dev_support"]
+  defp elixirc_paths(_), do: elixirc_paths()
+  defp elixirc_paths(), do: ["lib"]
 end
