@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>syst_access_account_instance_assocs - global_doc Database</title>
+        <title>syst_access_account_instance_assocs - msbms_dev_global Database</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../../index.html" class="navbar-brand"><b>global_doc</b> Database</a>
+                            <a href="../../index.html" class="navbar-brand"><b>msbms_dev_global</b> Database</a>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -157,29 +157,6 @@ system.</p></td>
                                     </td>
                                     <td><p>The access account which is being granted authentication rights to the given<br />
 instance.</p></td>
-                                </tr>
-                                <tr>
-                                    <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="credential_type_id">credential_type_id</span></td>
-                                    <td>uuid</td>
-                                    <td>2147483647</td>
-                                    <td title=''></td>
-                                    <td title=''></td>
-                                    <td>null</td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                        </table>
-                                    </td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                            <tr>
-                                                <td title="syst_access_account_instance_assocs.credential_type_id references syst_enum_values.id via syst_access_account_instance_assocs_credential_types_fk"><a href='syst_enum_values.html'>syst_enum_values</a><span class='relatedKey'>.id</span></td>
-                                                <td class="constraint detail">syst_access_account_instance_assocs_credential_types_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                    <td><p>Allows a specific kind of credential to be used to authenticate the access<br />
-account to the instance.  Typically this is to control the ability to connect as<br />
-a user or using API tokens.</p></td>
                                 </tr>
                                 <tr>
                                     <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="instance_id">instance_id</span></td>
@@ -442,6 +419,12 @@ diag_row_version - 1.</p></td>
                                     <td><span title='Ascending'>Asc</span></td>
                                     <td>id</td>
                                 </tr>
+                                <tr>
+                                    <td class='uniqueKey' title='Unique Key'><i class='icon ion-key iconkey'></i> syst_access_account_instance_assoc_a_c_i_udx</td>
+                                    <td>Must be unique</td>
+                                    <td><span title='Ascending'>Asc</span>/<span title='Ascending'>Asc</span></td>
+                                    <td>access_account_id + instance_id</td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div><!-- /.box-body -->
@@ -465,25 +448,25 @@ diag_row_version - 1.</p></td>
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="syst_access_account_instance_assocs.html" target="_top" title="syst_access_account_instance_assocs" alt="" coords="653,127,1189,636">
-<area shape="rect" id="node2" href="syst_access_accounts.html" target="_top" title="syst_access_accounts" alt="" coords="329,5,609,211">
-<area shape="rect" id="node3" href="syst_enum_values.html" target="_top" title="syst_enum_values" alt="" coords="5,285,285,520">
-<area shape="rect" id="node4" href="syst_instances.html" target="_top" title="syst_instances" alt="" coords="329,264,609,587">
+<area shape="rect" id="node1" href="syst_access_account_instance_assocs.html" target="_top" title="syst_access_account_instance_assocs" alt="" coords="329,71,865,551">
+<area shape="rect" id="node2" href="syst_access_accounts.html" target="_top" title="syst_access_accounts" alt="" coords="5,5,285,211">
+<area shape="rect" id="node3" href="syst_instances.html" target="_top" title="syst_instances" alt="" coords="5,228,285,551">
 </map>
                                         <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/syst_access_account_instance_assocs.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="twodegreesDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
-<area shape="rect" id="node1" href="syst_access_account_instance_assocs.html" target="_top" title="syst_access_account_instance_assocs" alt="" coords="1523,98,2059,607">
-<area shape="rect" id="node2" href="syst_access_accounts.html" target="_top" title="syst_access_accounts" alt="" coords="1199,611,1479,817">
-<area shape="rect" id="node3" href="syst_enum_values.html" target="_top" title="syst_enum_values" alt="" coords="599,389,879,623">
-<area shape="rect" id="node4" href="syst_instances.html" target="_top" title="syst_instances" alt="" coords="1199,235,1479,558">
-<area shape="rect" id="node5" href="syst_owners.html" target="_top" title="syst_owners" alt="" coords="943,465,1135,553">
-<area shape="rect" id="node8" href="syst_enum_functional_types.html" target="_top" title="syst_enum_functional_types" alt="" coords="236,530,555,618">
-<area shape="rect" id="node9" href="syst_enums.html" target="_top" title="syst_enums" alt="" coords="5,494,192,582">
-<area shape="rect" id="node10" href="syst_applications.html" target="_top" title="syst_applications" alt="" coords="923,287,1155,375">
-<area shape="rect" id="node6" href="syst_credentials.html" target="_top" title="syst_credentials" alt="" coords="2103,625,2327,713">
-<area shape="rect" id="node7" href="syst_identities.html" target="_top" title="syst_identities" alt="" coords="1685,625,1896,713">
+<area shape="rect" id="node1" href="syst_access_account_instance_assocs.html" target="_top" title="syst_access_account_instance_assocs" alt="" coords="880,252,1416,732">
+<area shape="rect" id="node2" href="syst_access_accounts.html" target="_top" title="syst_access_accounts" alt="" coords="556,144,836,349">
+<area shape="rect" id="node3" href="syst_instances.html" target="_top" title="syst_instances" alt="" coords="556,367,836,689">
+<area shape="rect" id="node4" href="syst_enum_items.html" target="_top" title="syst_enum_items" alt="" coords="5,485,236,573">
+<area shape="rect" id="node5" href="syst_owners.html" target="_top" title="syst_owners" alt="" coords="300,521,492,609">
+<area shape="rect" id="node10" href="syst_applications.html" target="_top" title="syst_applications" alt="" coords="280,380,512,468">
+<area shape="rect" id="node6" href="syst_credentials.html" target="_top" title="syst_credentials" alt="" coords="1460,73,1684,161">
+<area shape="rect" id="node7" href="syst_identities.html" target="_top" title="syst_identities" alt="" coords="1043,5,1253,93">
+<area shape="rect" id="node8" href="syst_instance_contexts.html" target="_top" title="syst_instance_contexts" alt="" coords="1008,749,1288,837">
+<area shape="rect" id="node9" href="syst_instance_network_rules.html" target="_top" title="syst_instance_network_rules" alt="" coords="985,855,1311,943">
+<area shape="rect" id="node11" href="syst_password_history.html" target="_top" title="syst_password_history" alt="" coords="1010,147,1286,235">
 </map>
                                         <a name='diagram'><img id="twodegreesDegreeImg" src="../diagrams/tables/syst_access_account_instance_assocs.2degrees.png" usemap="#twoDegreesRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>

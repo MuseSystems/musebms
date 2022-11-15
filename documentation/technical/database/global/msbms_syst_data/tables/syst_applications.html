@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>syst_applications - global_doc Database</title>
+        <title>syst_applications - msbms_dev_global Database</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../../index.html" class="navbar-brand"><b>global_doc</b> Database</a>
+                            <a href="../../index.html" class="navbar-brand"><b>msbms_dev_global</b> Database</a>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -126,6 +126,14 @@ authentication infrastructure.</p>
                                     <td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
+                                                <td title="syst_application_contexts.application_id references syst_applications.id via syst_application_contexts_applications_fk"><a href='syst_application_contexts.html'>syst_application_contexts</a><span class='relatedKey'>.application_id</span></td>
+                                                <td class="constraint detail">syst_application_contexts_applications_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="syst_instance_type_applications.application_id references syst_applications.id via syst_instance_type_applications_applications_fk"><a href='syst_instance_type_applications.html'>syst_instance_type_applications</a><span class='relatedKey'>.application_id</span></td>
+                                                <td class="constraint detail">syst_instance_type_applications_applications_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
+                                            </tr>
+                                            <tr>
                                                 <td title="syst_instances.application_id references syst_applications.id via syst_instances_applications_fk"><a href='syst_instances.html'>syst_instances</a><span class='relatedKey'>.application_id</span></td>
                                                 <td class="constraint detail">syst_instances_applications_fk<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
@@ -172,6 +180,24 @@ system.</p></td>
                                     </td>
                                     <td><p>A friendly name and candidate key for the record, suitable for use in user<br />
 interactions</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="syst_description">syst_description</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title=''></td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>A system default description describing the application being represented by the<br />
+record.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_timestamp_created">diag_timestamp_created</span></td>
@@ -369,18 +395,25 @@ diag_row_version - 1.</p></td>
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="syst_instances.html" target="_top" title="syst_instances" alt="" coords="480,5,760,328">
-<area shape="rect" id="node2" href="syst_applications.html" target="_top" title="syst_applications" alt="" coords="5,91,436,453">
+<area shape="rect" id="node1" href="syst_application_contexts.html" target="_top" title="syst_application_contexts" alt="" coords="506,5,807,211">
+<area shape="rect" id="node2" href="syst_applications.html" target="_top" title="syst_applications" alt="" coords="5,284,436,676">
+<area shape="rect" id="node3" href="syst_instance_type_applications.html" target="_top" title="syst_instance_type_applications" alt="" coords="480,228,833,404">
+<area shape="rect" id="node4" href="syst_instances.html" target="_top" title="syst_instances" alt="" coords="517,421,797,744">
 </map>
                                         <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/syst_applications.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="twodegreesDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
-<area shape="rect" id="node1" href="syst_access_account_instance_assocs.html" target="_top" title="syst_access_account_instance_assocs" alt="" coords="1087,155,1487,243">
-<area shape="rect" id="node2" href="syst_enum_values.html" target="_top" title="syst_enum_values" alt="" coords="5,440,244,528">
-<area shape="rect" id="node3" href="syst_instances.html" target="_top" title="syst_instances" alt="" coords="763,301,1043,624">
-<area shape="rect" id="node4" href="syst_applications.html" target="_top" title="syst_applications" alt="" coords="288,79,719,441">
-<area shape="rect" id="node5" href="syst_owners.html" target="_top" title="syst_owners" alt="" coords="407,531,599,619">
+<area shape="rect" id="node1" href="syst_access_account_instance_assocs.html" target="_top" title="syst_access_account_instance_assocs" alt="" coords="1152,475,1552,563">
+<area shape="rect" id="node2" href="syst_instances.html" target="_top" title="syst_instances" alt="" coords="791,421,1071,744">
+<area shape="rect" id="node4" href="syst_applications.html" target="_top" title="syst_applications" alt="" coords="280,163,711,555">
+<area shape="rect" id="node8" href="syst_enum_items.html" target="_top" title="syst_enum_items" alt="" coords="5,553,236,641">
+<area shape="rect" id="node10" href="syst_owners.html" target="_top" title="syst_owners" alt="" coords="399,644,591,732">
+<area shape="rect" id="node3" href="syst_application_contexts.html" target="_top" title="syst_application_contexts" alt="" coords="781,199,1082,404">
+<area shape="rect" id="node5" href="syst_instance_contexts.html" target="_top" title="syst_instance_contexts" alt="" coords="1212,259,1492,347">
+<area shape="rect" id="node6" href="syst_instance_network_rules.html" target="_top" title="syst_instance_network_rules" alt="" coords="1189,369,1515,457">
+<area shape="rect" id="node7" href="syst_instance_type_applications.html" target="_top" title="syst_instance_type_applications" alt="" coords="755,5,1108,181">
+<area shape="rect" id="node9" href="syst_instance_type_contexts.html" target="_top" title="syst_instance_type_contexts" alt="" coords="1190,151,1514,239">
 </map>
                                         <a name='diagram'><img id="twodegreesDegreeImg" src="../diagrams/tables/syst_applications.2degrees.png" usemap="#twoDegreesRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>

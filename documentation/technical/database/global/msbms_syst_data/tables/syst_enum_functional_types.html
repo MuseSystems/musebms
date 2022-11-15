@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>syst_enum_functional_types - global_doc Database</title>
+        <title>syst_enum_functional_types - msbms_dev_global Database</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../../index.html" class="navbar-brand"><b>global_doc</b> Database</a>
+                            <a href="../../index.html" class="navbar-brand"><b>msbms_dev_global</b> Database</a>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -73,7 +73,7 @@
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
-                    <h1>syst_enum_functional_types</h1><p><span id="recordNumber">24</span> rows</p><br />
+                    <h1>syst_enum_functional_types</h1><p><span id="recordNumber">30</span> rows</p><br />
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <i class="fa fa-file-text-o"></i>
@@ -127,8 +127,8 @@ enumerations require functional types.</p>
                                     <td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
-                                                <td title="syst_enum_values.functional_type_id references syst_enum_functional_types.id via syst_enum_values_enum_functional_type_fk"><a href='syst_enum_values.html'>syst_enum_values</a><span class='relatedKey'>.functional_type_id</span></td>
-                                                <td class="constraint detail">syst_enum_values_enum_functional_type_fk<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td title="syst_enum_items.functional_type_id references syst_enum_functional_types.id via syst_enum_items_enum_functional_type_fk"><a href='syst_enum_items.html'>syst_enum_items</a><span class='relatedKey'>.functional_type_id</span></td>
+                                                <td class="constraint detail">syst_enum_items_enum_functional_type_fk<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -446,24 +446,23 @@ diag_row_version - 1.</p></td>
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
 <area shape="rect" id="node1" href="syst_enum_functional_types.html" target="_top" title="syst_enum_functional_types" alt="" coords="329,144,781,624">
-<area shape="rect" id="node2" href="syst_enums.html" target="_top" title="syst_enums" alt="" coords="5,167,285,372">
-<area shape="rect" id="node3" href="syst_enum_values.html" target="_top" title="syst_enum_values" alt="" coords="825,5,1105,240">
+<area shape="rect" id="node2" href="syst_enums.html" target="_top" title="syst_enums" alt="" coords="5,167,285,343">
+<area shape="rect" id="node3" href="syst_enum_items.html" target="_top" title="syst_enum_items" alt="" coords="825,5,1105,240">
 </map>
                                         <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/syst_enum_functional_types.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="twodegreesDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
-<area shape="rect" id="node1" href="syst_access_account_instance_assocs.html" target="_top" title="syst_access_account_instance_assocs" alt="" coords="1977,38,2377,126">
-<area shape="rect" id="node2" href="syst_access_accounts.html" target="_top" title="syst_access_accounts" alt="" coords="1664,144,1933,232">
-<area shape="rect" id="node3" href="syst_enum_values.html" target="_top" title="syst_enum_values" alt="" coords="1104,110,1384,345">
-<area shape="rect" id="node4" href="syst_instances.html" target="_top" title="syst_instances" alt="" coords="1693,38,1904,126">
-<area shape="rect" id="node5" href="syst_owners.html" target="_top" title="syst_owners" alt="" coords="1428,113,1620,201">
-<area shape="rect" id="node8" href="syst_enum_functional_types.html" target="_top" title="syst_enum_functional_types" alt="" coords="608,249,1060,729">
-<area shape="rect" id="node9" href="syst_enums.html" target="_top" title="syst_enums" alt="" coords="284,417,564,622">
-<area shape="rect" id="node6" href="syst_credentials.html" target="_top" title="syst_credentials" alt="" coords="2421,201,2645,289">
-<area shape="rect" id="node7" href="syst_identities.html" target="_top" title="syst_identities" alt="" coords="2072,201,2283,289">
-<area shape="rect" id="node10" href="syst_feature_map.html" target="_top" title="syst_feature_map" alt="" coords="5,604,240,692">
-<area shape="rect" id="node11" href="syst_feature_enum_assigns.html" target="_top" title="syst_feature_enum_assigns" alt="" coords="677,746,991,834">
+<area shape="rect" id="node1" href="syst_access_accounts.html" target="_top" title="syst_access_accounts" alt="" coords="1547,116,1816,204">
+<area shape="rect" id="node2" href="syst_enum_items.html" target="_top" title="syst_enum_items" alt="" coords="825,152,1105,387">
+<area shape="rect" id="node3" href="syst_owners.html" target="_top" title="syst_owners" alt="" coords="1230,87,1422,175">
+<area shape="rect" id="node6" href="syst_enum_functional_types.html" target="_top" title="syst_enum_functional_types" alt="" coords="329,291,781,771">
+<area shape="rect" id="node7" href="syst_enums.html" target="_top" title="syst_enums" alt="" coords="5,215,285,391">
+<area shape="rect" id="node4" href="syst_credentials.html" target="_top" title="syst_credentials" alt="" coords="2115,159,2339,247">
+<area shape="rect" id="node5" href="syst_identities.html" target="_top" title="syst_identities" alt="" coords="1860,159,2071,247">
+<area shape="rect" id="node8" href="syst_feature_enum_assigns.html" target="_top" title="syst_feature_enum_assigns" alt="" coords="399,149,712,237">
+<area shape="rect" id="node9" href="syst_instance_type_applications.html" target="_top" title="syst_instance_type_applications" alt="" coords="1149,300,1503,388">
+<area shape="rect" id="node10" href="syst_instances.html" target="_top" title="syst_instances" alt="" coords="1576,5,1787,93">
 </map>
                                         <a name='diagram'><img id="twodegreesDegreeImg" src="../diagrams/tables/syst_enum_functional_types.2degrees.png" usemap="#twoDegreesRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>

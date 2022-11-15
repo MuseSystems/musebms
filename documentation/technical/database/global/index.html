@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>global_doc Database</title>
+        <title>msbms_dev_global Database</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
@@ -48,8 +48,8 @@
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <div class="callout callout-info">
-                        <h4>SchemaSpy Analysis of global_doc</h4>
-                        <p>Generated on Thu Mar 31 04:50 PDT 2022</p>
+                        <h4>SchemaSpy Analysis of msbms_dev_global</h4>
+                        <p>Generated on Tue Nov 15 04:59 PST 2022</p>
                     </div>
                 </section>
                 <!-- Main content -->
@@ -60,12 +60,12 @@
                             <span class="label label-primary pull-right"><i class="fa fa-cog fa-2x"></i></span>
                         </div><!-- /.box-header -->
                         <div class="box-body">
-                            <p>Database Type: PostgreSQL - 14.2 (Ubuntu 14.2-1.pgdg20.04+1)</p>
+                            <p>Database Type: PostgreSQL - 15.1 (Ubuntu 15.1-1.pgdg22.04+1)</p>
                         </div><!-- /.box-body -->
                     </div>
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">2 Schemas</h3>
+                            <h3 class="box-title">4 Schemas</h3>
                             <span class="label label-primary pull-right"><i class="fa fa-database fa-2x"></i></span>
                         </div><!-- /.box-header -->
                         <div class="box-body">
@@ -78,10 +78,20 @@
                                 </thead>
                                 <tbody>
                                     <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="msbms_syst/index.html">msbms_syst</a></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Public API for system operations.  The important distinction is that business<br />
+data is not stored here. This schema contains procedures, functions, and views<br />
+suitable for calling outside of the application or via user customizations.</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="msbms_syst_data/index.html">msbms_syst_data</a></td>
                                         <td class="comment detail" style="display: table-cell;"><p>Schema container for system operations related data tables and application<br />
 defined types.  The data in this schema is not related to user business data,<br />
 but rather facilitates the operation of the application as a software system.</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="msbms_syst_datastore/index.html">msbms_syst_datastore</a></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Datastore and migrations management schema.</p></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="msbms_syst_priv/index.html">msbms_syst_priv</a></td>

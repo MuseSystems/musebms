@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>syst_settings - instance_doc Database</title>
+        <title>syst_settings - msbms_dev_instance Database</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../../index.html" class="navbar-brand"><b>instance_doc</b> Database</a>
+                            <a href="../../index.html" class="navbar-brand"><b>msbms_dev_instance</b> Database</a>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -174,6 +174,24 @@ system.</p></td>
 interfaces.</p></td>
                                 </tr>
                                 <tr>
+                                    <td><span id="syst_defined">syst_defined</span></td>
+                                    <td>bool</td>
+                                    <td>1</td>
+                                    <td title=''></td>
+                                    <td title=''></td>
+                                    <td>false</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>When true, indicates that the setting was created as part of the system and is<br />
+expected to exist.  If false, the setting is user created and maintained.</p></td>
+                                </tr>
+                                <tr>
                                     <td><span id="syst_description">syst_description</span></td>
                                     <td>text</td>
                                     <td>2147483647</td>
@@ -210,7 +228,7 @@ this column is not NULL, this text will be displayed to users in preference to<b
 the description found in syst_description.</p></td>
                                 </tr>
                                 <tr>
-                                    <td><span id="config_flag">config_flag</span></td>
+                                    <td><span id="setting_flag">setting_flag</span></td>
                                     <td>bool</td>
                                     <td>1</td>
                                     <td title='nullable'>√</td>
@@ -227,7 +245,7 @@ the description found in syst_description.</p></td>
                                     <td><p>A boolean configuration point.</p></td>
                                 </tr>
                                 <tr>
-                                    <td><span id="config_integer">config_integer</span></td>
+                                    <td><span id="setting_integer">setting_integer</span></td>
                                     <td>int8</td>
                                     <td>19</td>
                                     <td title='nullable'>√</td>
@@ -244,7 +262,24 @@ the description found in syst_description.</p></td>
                                     <td><p>An integer configuration point</p></td>
                                 </tr>
                                 <tr>
-                                    <td><span id="config_decimal">config_decimal</span></td>
+                                    <td><span id="setting_integer_range">setting_integer_range</span></td>
+                                    <td>int8range</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>An integer range configuration point.</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="setting_decimal">setting_decimal</span></td>
                                     <td>numeric</td>
                                     <td>0</td>
                                     <td title='nullable'>√</td>
@@ -261,7 +296,24 @@ the description found in syst_description.</p></td>
                                     <td><p>An decimal configuration point (not floating point).</p></td>
                                 </tr>
                                 <tr>
-                                    <td><span id="config_interval">config_interval</span></td>
+                                    <td><span id="setting_decimal_range">setting_decimal_range</span></td>
+                                    <td>numrange</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>A decimal range configuration point.</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="setting_interval">setting_interval</span></td>
                                     <td>interval</td>
                                     <td>49,6</td>
                                     <td title='nullable'>√</td>
@@ -278,7 +330,7 @@ the description found in syst_description.</p></td>
                                     <td><p>An interval configuration point.</p></td>
                                 </tr>
                                 <tr>
-                                    <td><span id="config_date">config_date</span></td>
+                                    <td><span id="setting_date">setting_date</span></td>
                                     <td>date</td>
                                     <td>13</td>
                                     <td title='nullable'>√</td>
@@ -295,7 +347,24 @@ the description found in syst_description.</p></td>
                                     <td><p>A date configuation point.</p></td>
                                 </tr>
                                 <tr>
-                                    <td><span id="config_time">config_time</span></td>
+                                    <td><span id="setting_date_range">setting_date_range</span></td>
+                                    <td>daterange</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>A date range configuration point.</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="setting_time">setting_time</span></td>
                                     <td>time</td>
                                     <td>15,6</td>
                                     <td title='nullable'>√</td>
@@ -312,7 +381,7 @@ the description found in syst_description.</p></td>
                                     <td><p>A time configuration point (without time zone).</p></td>
                                 </tr>
                                 <tr>
-                                    <td><span id="config_timestamp">config_timestamp</span></td>
+                                    <td><span id="setting_timestamp">setting_timestamp</span></td>
                                     <td>timestamptz</td>
                                     <td>35,6</td>
                                     <td title='nullable'>√</td>
@@ -329,7 +398,24 @@ the description found in syst_description.</p></td>
                                     <td><p>A full datetime configuration point including time zone.</p></td>
                                 </tr>
                                 <tr>
-                                    <td><span id="config_json">config_json</span></td>
+                                    <td><span id="setting_timestamp_range">setting_timestamp_range</span></td>
+                                    <td>tstzrange</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>A range of timestamps with time zone configuration points.</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="setting_json">setting_json</span></td>
                                     <td>jsonb</td>
                                     <td>2147483647</td>
                                     <td title='nullable'>√</td>
@@ -347,7 +433,7 @@ the description found in syst_description.</p></td>
 allowed.</p></td>
                                 </tr>
                                 <tr>
-                                    <td><span id="config_text">config_text</span></td>
+                                    <td><span id="setting_text">setting_text</span></td>
                                     <td>text</td>
                                     <td>2147483647</td>
                                     <td title='nullable'>√</td>
@@ -364,7 +450,7 @@ allowed.</p></td>
                                     <td><p>A text configuration point.</p></td>
                                 </tr>
                                 <tr>
-                                    <td><span id="config_uuid">config_uuid</span></td>
+                                    <td><span id="setting_uuid">setting_uuid</span></td>
                                     <td>uuid</td>
                                     <td>2147483647</td>
                                     <td title='nullable'>√</td>
@@ -381,7 +467,7 @@ allowed.</p></td>
                                     <td><p>A UUID configuration point.</p></td>
                                 </tr>
                                 <tr>
-                                    <td><span id="config_blob">config_blob</span></td>
+                                    <td><span id="setting_blob">setting_blob</span></td>
                                     <td>bytea</td>
                                     <td>2147483647</td>
                                     <td title='nullable'>√</td>
@@ -593,16 +679,16 @@ diag_row_version - 1.</p></td>
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="syst_feature_setting_assigns.html" target="_top" title="syst_feature_setting_assigns" alt="" coords="488,5,815,181">
-<area shape="rect" id="node2" href="syst_settings.html" target="_top" title="syst_settings" alt="" coords="5,61,444,805">
+<area shape="rect" id="node1" href="syst_feature_setting_assigns.html" target="_top" title="syst_feature_setting_assigns" alt="" coords="520,5,847,181">
+<area shape="rect" id="node2" href="syst_settings.html" target="_top" title="syst_settings" alt="" coords="5,61,476,952">
 </map>
                                         <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/syst_settings.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="twodegreesDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
-<area shape="rect" id="node1" href="syst_feature_setting_assigns.html" target="_top" title="syst_feature_setting_assigns" alt="" coords="488,15,815,191">
-<area shape="rect" id="node2" href="syst_feature_map.html" target="_top" title="syst_feature_map" alt="" coords="107,5,342,93">
-<area shape="rect" id="node3" href="syst_settings.html" target="_top" title="syst_settings" alt="" coords="5,111,444,855">
+<area shape="rect" id="node1" href="syst_feature_setting_assigns.html" target="_top" title="syst_feature_setting_assigns" alt="" coords="520,15,847,191">
+<area shape="rect" id="node2" href="syst_feature_map.html" target="_top" title="syst_feature_map" alt="" coords="123,5,358,93">
+<area shape="rect" id="node3" href="syst_settings.html" target="_top" title="syst_settings" alt="" coords="5,111,476,1001">
 </map>
                                         <a name='diagram'><img id="twodegreesDegreeImg" src="../diagrams/tables/syst_settings.2degrees.png" usemap="#twoDegreesRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>

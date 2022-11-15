@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>global_doc Database</title>
+        <title>msbms_dev_global Database</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../../index.html" class="navbar-brand"><b>global_doc</b> Database</a>
+                            <a href="../../index.html" class="navbar-brand"><b>msbms_dev_global</b> Database</a>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -157,7 +157,7 @@ be suitable for use in setting the RAISE DETAILS variable.</p></p>
                             </div>
                         </div>
                         <div class="box-body">
-                            <textarea id="sql-script-codemirror" name="sql-script-codemirror" rows="" style="display: none;">&#10;&#10;-- Source File: get_exception_details.eex.sql&#10;-- Location:    database/common/msbms_syst_priv/functions/get_exception_details.eex.sql&#10;-- Project:     Muse Systems Business Management System&#10;--&#10;-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems&#10;-- This file may include content copyrighted and licensed from third parties.&#10;--&#10;-- See the LICENSE file in the project root for license terms and conditions.&#10;-- See the NOTICE file in the project root for copyright ownership information.&#10;--&#10;-- muse.information@musesystems.com  :: https://muse.systems&#10;&#10;&#10;    SELECT&#10;        jsonb_pretty(&#10;            jsonb_build_object(&#10;                 &#39;procedure_schema&#39;,      p_proc_schema&#10;                ,&#39;procedure_name&#39;,        p_proc_name&#10;                ,&#39;exception_name&#39;,        p_exception_name&#10;                ,&#39;sqlstate&#39;,              p_errcode&#10;                ,&#39;parameters&#39;,            p_param_data&#10;                ,&#39;context&#39;,               p_context_data&#10;                ,&#39;transaction_timestamp&#39;, now()&#10;                ,&#39;wallclock_timestamp&#39;,   clock_timestamp()));&#10;&#10;</textarea>
+                            <textarea id="sql-script-codemirror" name="sql-script-codemirror" rows="" style="display: none;">&#10;&#10;-- File:        get_exception_details.eex.sql&#10;-- Location:    musebms/database/all/msbms_syst_priv/functions/get_exception_details.eex.sql&#10;-- Project:     Muse Systems Business Management System&#10;--&#10;-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems&#10;-- This file may include content copyrighted and licensed from third parties.&#10;--&#10;-- See the LICENSE file in the project root for license terms and conditions.&#10;-- See the NOTICE file in the project root for copyright ownership information.&#10;--&#10;-- muse.information@musesystems.com  :: https://muse.systems&#10;&#10;&#10;    SELECT&#10;        jsonb_pretty(&#10;            jsonb_build_object(&#10;                 &#39;procedure_schema&#39;,      p_proc_schema&#10;                ,&#39;procedure_name&#39;,        p_proc_name&#10;                ,&#39;exception_name&#39;,        p_exception_name&#10;                ,&#39;sqlstate&#39;,              p_errcode&#10;                ,&#39;parameters&#39;,            p_param_data&#10;                ,&#39;context&#39;,               p_context_data&#10;                ,&#39;transaction_timestamp&#39;, now()&#10;                ,&#39;wallclock_timestamp&#39;,   clock_timestamp()));&#10;&#10;</textarea>
                         </div>
                     </div>
                 </section>
