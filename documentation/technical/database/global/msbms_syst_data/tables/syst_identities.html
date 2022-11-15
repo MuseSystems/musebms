@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>syst_identities - global_doc Database</title>
+        <title>syst_identities - msbms_dev_global Database</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../../index.html" class="navbar-brand"><b>global_doc</b> Database</a>
+                            <a href="../../index.html" class="navbar-brand"><b>msbms_dev_global</b> Database</a>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -178,7 +178,7 @@ system.</p></td>
                                     <td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
-                                                <td title="syst_identities.identity_type_id references syst_enum_values.id via syst_identities_identity_types_fk"><a href='syst_enum_values.html'>syst_enum_values</a><span class='relatedKey'>.id</span></td>
+                                                <td title="syst_identities.identity_type_id references syst_enum_items.id via syst_identities_identity_types_fk"><a href='syst_enum_items.html'>syst_enum_items</a><span class='relatedKey'>.id</span></td>
                                                 <td class="constraint detail">syst_identities_identity_types_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
                                             </tr>
                                         </table>
@@ -188,7 +188,7 @@ influences the kind of credentials that can be used to complete the<br />
 authentication process.</p></td>
                                 </tr>
                                 <tr>
-                                    <td><span id="identifier">identifier</span></td>
+                                    <td class='indexedColumn' title='Indexed'><i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i><span id="account_identifier">account_identifier</span></td>
                                     <td>text</td>
                                     <td>2147483647</td>
                                     <td title=''></td>
@@ -270,7 +270,7 @@ validation, this field is null.</p></td>
 holder.  This value will be null if the identity did not require validation.</p></td>
                                 </tr>
                                 <tr>
-                                    <td><span id="validation_expires">validation_expires</span></td>
+                                    <td><span id="identity_expires">identity_expires</span></td>
                                     <td>timestamptz</td>
                                     <td>35,6</td>
                                     <td title='nullable'>√</td>
@@ -284,16 +284,17 @@ holder.  This value will be null if the identity did not require validation.</p>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The timetstamp at which a required validation request will expire.  When an<br />
-identity validation is not required, this column will be null.</p></td>
+                                    <td><p>The timestamp at which the identity record expires.  For validation and<br />
+recovery identities this would be the time of validation/recovery request<br />
+expiration.  For perpetual identity types, this value will be NULL.</p></td>
                                 </tr>
                                 <tr>
-                                    <td><span id="primary_contact">primary_contact</span></td>
-                                    <td>bool</td>
-                                    <td>1</td>
+                                    <td><span id="external_name">external_name</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
                                     <td title=''></td>
-                                    <td title=''></td>
-                                    <td>false</td>
+                                    <td>null</td>
                                     <td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
@@ -302,9 +303,10 @@ identity validation is not required, this column will be null.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>Indicates that the identity is also used for communicating with the access<br />
-account holder.  This value may only be true if the identity_type_id value is<br />
-of functional type &lsquo;email&rsquo;.</p></td>
+                                    <td><p>An optional external identifier for use in user displays and similar scenarios.<br />
+This value is not unique and not suitable for anything more than informal record<br />
+identification by the user.  Some identity types may record a default value<br />
+automatically in this column.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_timestamp_created">diag_timestamp_created</span></td>
@@ -467,6 +469,24 @@ diag_row_version - 1.</p></td>
                                     <td><span title='Ascending'>Asc</span></td>
                                     <td>id</td>
                                 </tr>
+                                <tr>
+                                    <td title='Indexed'>syst_identities_access_account_idx</td>
+                                    <td>Performance</td>
+                                    <td><span title='Ascending'>Asc</span></td>
+                                    <td>access_account_id</td>
+                                </tr>
+                                <tr>
+                                    <td title='Indexed'>syst_identities_account_type_identifier_idx</td>
+                                    <td>Performance</td>
+                                    <td><span title='Ascending'>Asc</span>/<span title='Ascending'>Asc</span>/<span title='Ascending'>Asc</span></td>
+                                    <td>identity_type_id + access_account_id + account_identifier</td>
+                                </tr>
+                                <tr>
+                                    <td class='uniqueKey' title='Unique Key'><i class='icon ion-key iconkey'></i> syst_identities_validates_identities_udx</td>
+                                    <td>Must be unique</td>
+                                    <td><span title='Ascending'>Asc</span></td>
+                                    <td>validates_identity_id</td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div><!-- /.box-body -->
@@ -491,7 +511,7 @@ diag_row_version - 1.</p></td>
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
 <area shape="rect" id="node1" href="syst_access_accounts.html" target="_top" title="syst_access_accounts" alt="" coords="329,5,609,211">
-<area shape="rect" id="node2" href="syst_enum_values.html" target="_top" title="syst_enum_values" alt="" coords="5,188,285,423">
+<area shape="rect" id="node2" href="syst_enum_items.html" target="_top" title="syst_enum_items" alt="" coords="5,188,285,423">
 <area shape="rect" id="node3" href="syst_credentials.html" target="_top" title="syst_credentials" alt="" coords="1128,129,1408,335">
 <area shape="rect" id="node4" href="syst_identities.html" target="_top" title="syst_identities" alt="" coords="653,288,1084,827">
 </map>
@@ -499,15 +519,17 @@ diag_row_version - 1.</p></td>
                                     </div>
                                     <div class="chart tab-pane " id="twodegreesDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
-<area shape="rect" id="node1" href="syst_access_account_instance_assocs.html" target="_top" title="syst_access_account_instance_assocs" alt="" coords="1498,38,1898,126">
-<area shape="rect" id="node2" href="syst_access_accounts.html" target="_top" title="syst_access_accounts" alt="" coords="1159,143,1439,349">
-<area shape="rect" id="node3" href="syst_enum_values.html" target="_top" title="syst_enum_values" alt="" coords="599,145,879,379">
-<area shape="rect" id="node4" href="syst_instances.html" target="_top" title="syst_instances" alt="" coords="1193,38,1404,126">
-<area shape="rect" id="node5" href="syst_owners.html" target="_top" title="syst_owners" alt="" coords="923,147,1115,235">
-<area shape="rect" id="node8" href="syst_enum_functional_types.html" target="_top" title="syst_enum_functional_types" alt="" coords="236,286,555,374">
-<area shape="rect" id="node9" href="syst_enums.html" target="_top" title="syst_enums" alt="" coords="5,250,192,338">
-<area shape="rect" id="node6" href="syst_credentials.html" target="_top" title="syst_credentials" alt="" coords="1957,267,2237,473">
-<area shape="rect" id="node7" href="syst_identities.html" target="_top" title="syst_identities" alt="" coords="1483,426,1913,965">
+<area shape="rect" id="node1" href="syst_access_account_instance_assocs.html" target="_top" title="syst_access_account_instance_assocs" alt="" coords="1659,208,2059,296">
+<area shape="rect" id="node2" href="syst_access_accounts.html" target="_top" title="syst_access_accounts" alt="" coords="1320,5,1600,211">
+<area shape="rect" id="node3" href="syst_instances.html" target="_top" title="syst_instances" alt="" coords="1355,228,1565,316">
+<area shape="rect" id="node4" href="syst_enum_items.html" target="_top" title="syst_enum_items" alt="" coords="599,237,879,472">
+<area shape="rect" id="node5" href="syst_owners.html" target="_top" title="syst_owners" alt="" coords="1003,128,1195,216">
+<area shape="rect" id="node8" href="syst_enum_functional_types.html" target="_top" title="syst_enum_functional_types" alt="" coords="236,379,555,467">
+<area shape="rect" id="node9" href="syst_enums.html" target="_top" title="syst_enums" alt="" coords="5,343,192,431">
+<area shape="rect" id="node6" href="syst_credentials.html" target="_top" title="syst_credentials" alt="" coords="2119,235,2399,440">
+<area shape="rect" id="node7" href="syst_identities.html" target="_top" title="syst_identities" alt="" coords="1644,393,2075,932">
+<area shape="rect" id="node10" href="syst_instance_type_applications.html" target="_top" title="syst_instance_type_applications" alt="" coords="923,405,1276,493">
+<area shape="rect" id="node11" href="syst_password_history.html" target="_top" title="syst_password_history" alt="" coords="1721,8,1997,96">
 </map>
                                         <a name='diagram'><img id="twodegreesDegreeImg" src="../diagrams/tables/syst_identities.2degrees.png" usemap="#twoDegreesRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>

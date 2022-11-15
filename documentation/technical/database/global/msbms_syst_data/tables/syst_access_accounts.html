@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>syst_access_accounts - global_doc Database</title>
+        <title>syst_access_accounts - msbms_dev_global Database</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../../index.html" class="navbar-brand"><b>global_doc</b> Database</a>
+                            <a href="../../index.html" class="navbar-brand"><b>msbms_dev_global</b> Database</a>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -85,8 +85,8 @@
                         </div><!-- /.box-header -->
                         <div class="box-body clearfix">
                             <p>Contains the known login accounts which are used solely for the purpose of<br />
-authentication of users.  Authorization is handled on a per-instance basis within the<br />
-application.</p>
+authentication of users.  Authorization is handled on a per-instance basis<br />
+within the application.</p>
                         </div><!-- /.box-body -->
                     </div>
                 </section>
@@ -137,6 +137,10 @@ application.</p>
                                             <tr>
                                                 <td title="syst_identities.access_account_id references syst_access_accounts.id via syst_identities_access_accounts_fk"><a href='syst_identities.html'>syst_identities</a><span class='relatedKey'>.access_account_id</span></td>
                                                 <td class="constraint detail">syst_identities_access_accounts_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="syst_password_history.access_account_id references syst_access_accounts.id via syst_password_history_access_account_fk"><a href='syst_password_history.html'>syst_password_history</a><span class='relatedKey'>.access_account_id</span></td>
+                                                <td class="constraint detail">syst_password_history_access_account_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -235,7 +239,12 @@ used for a different, but unrelated, owner.  In this case you have multiple<br /
 access accounts with possibly the same identifier; to resolve the conflict, it<br />
 is required therefore to know which owner or instance the access accounts holder<br />
 is trying to access.  In the allow global case we can just ask the account<br />
-holder but in the disallow global case we need to know it in advance.</p></td>
+holder but in the disallow global case we need to know it in advance.</p>
+<p>Another way to think about global logins is in relation to user interface.  A<br />
+global login interface may present the user with a choice of instance owners and<br />
+then their instances whereas the non-global login user must go directly to the<br />
+login interface for a specific owner (be that URL or other client-side specific<br />
+identification.)</p></td>
                                 </tr>
                                 <tr>
                                     <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="access_account_state_id">access_account_state_id</span></td>
@@ -251,7 +260,7 @@ holder but in the disallow global case we need to know it in advance.</p></td>
                                     <td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
-                                                <td title="syst_access_accounts.access_account_state_id references syst_enum_values.id via syst_access_accounts_access_account_states_fk"><a href='syst_enum_values.html'>syst_enum_values</a><span class='relatedKey'>.id</span></td>
+                                                <td title="syst_access_accounts.access_account_state_id references syst_enum_items.id via syst_access_accounts_access_account_states_fk"><a href='syst_enum_items.html'>syst_enum_items</a><span class='relatedKey'>.id</span></td>
                                                 <td class="constraint detail">syst_access_accounts_access_account_states_fk<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
@@ -448,26 +457,31 @@ diag_row_version - 1.</p></td>
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="syst_access_account_instance_assocs.html" target="_top" title="syst_access_account_instance_assocs" alt="" coords="1128,5,1528,211">
-<area shape="rect" id="node2" href="syst_access_accounts.html" target="_top" title="syst_access_accounts" alt="" coords="653,85,1084,536">
-<area shape="rect" id="node3" href="syst_enum_values.html" target="_top" title="syst_enum_values" alt="" coords="5,359,285,593">
-<area shape="rect" id="node4" href="syst_owners.html" target="_top" title="syst_owners" alt="" coords="329,176,609,381">
-<area shape="rect" id="node5" href="syst_credentials.html" target="_top" title="syst_credentials" alt="" coords="1572,455,1852,660">
-<area shape="rect" id="node6" href="syst_identities.html" target="_top" title="syst_identities" alt="" coords="1188,589,1468,795">
+<area shape="rect" id="node1" href="syst_access_account_instance_assocs.html" target="_top" title="syst_access_account_instance_assocs" alt="" coords="1128,5,1528,181">
+<area shape="rect" id="node2" href="syst_access_accounts.html" target="_top" title="syst_access_accounts" alt="" coords="653,95,1084,545">
+<area shape="rect" id="node3" href="syst_enum_items.html" target="_top" title="syst_enum_items" alt="" coords="5,476,285,711">
+<area shape="rect" id="node4" href="syst_owners.html" target="_top" title="syst_owners" alt="" coords="329,216,609,421">
+<area shape="rect" id="node5" href="syst_credentials.html" target="_top" title="syst_credentials" alt="" coords="1572,464,1852,669">
+<area shape="rect" id="node6" href="syst_identities.html" target="_top" title="syst_identities" alt="" coords="1188,599,1468,833">
+<area shape="rect" id="node7" href="syst_password_history.html" target="_top" title="syst_password_history" alt="" coords="1188,235,1468,381">
 </map>
                                         <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/syst_access_accounts.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="twodegreesDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
-<area shape="rect" id="node1" href="syst_access_account_instance_assocs.html" target="_top" title="syst_access_account_instance_assocs" alt="" coords="1721,5,2121,211">
-<area shape="rect" id="node2" href="syst_access_accounts.html" target="_top" title="syst_access_accounts" alt="" coords="1247,201,1677,652">
-<area shape="rect" id="node3" href="syst_enum_values.html" target="_top" title="syst_enum_values" alt="" coords="599,265,879,500">
-<area shape="rect" id="node4" href="syst_instances.html" target="_top" title="syst_instances" alt="" coords="1357,96,1567,184">
-<area shape="rect" id="node5" href="syst_owners.html" target="_top" title="syst_owners" alt="" coords="923,177,1203,383">
-<area shape="rect" id="node8" href="syst_enum_functional_types.html" target="_top" title="syst_enum_functional_types" alt="" coords="236,407,555,495">
-<area shape="rect" id="node9" href="syst_enums.html" target="_top" title="syst_enums" alt="" coords="5,371,192,459">
-<area shape="rect" id="node6" href="syst_credentials.html" target="_top" title="syst_credentials" alt="" coords="2165,571,2445,776">
-<area shape="rect" id="node7" href="syst_identities.html" target="_top" title="syst_identities" alt="" coords="1781,705,2061,911">
+<area shape="rect" id="node1" href="syst_access_account_instance_assocs.html" target="_top" title="syst_access_account_instance_assocs" alt="" coords="1795,517,2195,693">
+<area shape="rect" id="node2" href="syst_access_accounts.html" target="_top" title="syst_access_accounts" alt="" coords="1320,32,1751,483">
+<area shape="rect" id="node3" href="syst_instances.html" target="_top" title="syst_instances" alt="" coords="1430,711,1641,799">
+<area shape="rect" id="node4" href="syst_enum_items.html" target="_top" title="syst_enum_items" alt="" coords="599,720,879,955">
+<area shape="rect" id="node5" href="syst_owners.html" target="_top" title="syst_owners" alt="" coords="959,529,1239,735">
+<area shape="rect" id="node8" href="syst_enum_functional_types.html" target="_top" title="syst_enum_functional_types" alt="" coords="236,861,555,949">
+<area shape="rect" id="node9" href="syst_enums.html" target="_top" title="syst_enums" alt="" coords="5,825,192,913">
+<area shape="rect" id="node6" href="syst_credentials.html" target="_top" title="syst_credentials" alt="" coords="2239,717,2519,923">
+<area shape="rect" id="node7" href="syst_identities.html" target="_top" title="syst_identities" alt="" coords="1855,852,2135,1087">
+<area shape="rect" id="node10" href="syst_instance_type_applications.html" target="_top" title="syst_instance_type_applications" alt="" coords="923,888,1276,976">
+<area shape="rect" id="node11" href="syst_owner_network_rules.html" target="_top" title="syst_owner_network_rules" alt="" coords="1382,500,1689,588">
+<area shape="rect" id="node12" href="syst_owner_password_rules.html" target="_top" title="syst_owner_password_rules" alt="" coords="1377,605,1694,693">
+<area shape="rect" id="node13" href="syst_password_history.html" target="_top" title="syst_password_history" alt="" coords="1855,5,2135,152">
 </map>
                                         <a name='diagram'><img id="twodegreesDegreeImg" src="../diagrams/tables/syst_access_accounts.2degrees.png" usemap="#twoDegreesRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>

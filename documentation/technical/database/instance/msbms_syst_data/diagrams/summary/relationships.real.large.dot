@@ -304,10 +304,10 @@ digraph "largeRelationshipsDiagram" {
     target="_top"
     tooltip="syst_enum_functional_types"
   ];
-  "syst_enum_values" [
+  "syst_enum_items" [
    label=<
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
-      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT"><B>syst_enum_values</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT"><B>syst_enum_items</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
       <TR><TD PORT="id" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"><IMG SRC="../../images/primaryKeys.png"/></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">id</TD></TR></TABLE></TD></TR>
       <TR><TD PORT="internal_name" COLSPAN="3" BGCOLOR="#ffffff" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">internal_name</TD></TR></TABLE></TD></TR>
       <TR><TD PORT="display_name" COLSPAN="3" BGCOLOR="#ffffff" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">display_name</TD></TR></TABLE></TD></TR>
@@ -332,9 +332,9 @@ digraph "largeRelationshipsDiagram" {
       <TR><TD PORT="diag_update_count" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">diag_update_count</TD></TR></TABLE></TD></TR>
       <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 2</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">9 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">13 &gt;</TD></TR>
     </TABLE>>
-    URL="tables/syst_enum_values.html"
+    URL="tables/syst_enum_items.html"
     target="_top"
-    tooltip="syst_enum_values"
+    tooltip="syst_enum_items"
   ];
   "syst_enums" [
    label=<
@@ -345,7 +345,6 @@ digraph "largeRelationshipsDiagram" {
       <TR><TD PORT="display_name" COLSPAN="3" BGCOLOR="#ffffff" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">display_name</TD></TR></TABLE></TD></TR>
       <TR><TD PORT="syst_description" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">syst_description</TD></TR></TABLE></TD></TR>
       <TR><TD PORT="user_description" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">user_description</TD></TR></TABLE></TD></TR>
-      <TR><TD PORT="feature_id" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"><IMG SRC="../../images/foreignKeys.png"/></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">feature_id</TD></TR></TABLE></TD></TR>
       <TR><TD PORT="syst_defined" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">syst_defined</TD></TR></TABLE></TD></TR>
       <TR><TD PORT="user_maintainable" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">user_maintainable</TD></TR></TABLE></TD></TR>
       <TR><TD PORT="default_syst_options" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">default_syst_options</TD></TR></TABLE></TD></TR>
@@ -357,7 +356,7 @@ digraph "largeRelationshipsDiagram" {
       <TR><TD PORT="diag_role_modified" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">diag_role_modified</TD></TR></TABLE></TD></TR>
       <TR><TD PORT="diag_row_version" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">diag_row_version</TD></TR></TABLE></TD></TR>
       <TR><TD PORT="diag_update_count" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">diag_update_count</TD></TR></TABLE></TD></TR>
-      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 1</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">19 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">4 &gt;</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">  </TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">19 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">4 &gt;</TD></TR>
     </TABLE>>
     URL="tables/syst_enums.html"
     target="_top"
@@ -406,7 +405,7 @@ digraph "largeRelationshipsDiagram" {
       <TR><TD PORT="diag_role_modified" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">diag_role_modified</TD></TR></TABLE></TD></TR>
       <TR><TD PORT="diag_row_version" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">diag_row_version</TD></TR></TABLE></TD></TR>
       <TR><TD PORT="diag_update_count" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">diag_update_count</TD></TR></TABLE></TD></TR>
-      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 2</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">109 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">7 &gt;</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 2</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">109 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">6 &gt;</TD></TR>
     </TABLE>>
     URL="tables/syst_feature_map.html"
     target="_top"
@@ -515,7 +514,7 @@ digraph "largeRelationshipsDiagram" {
       <TR><TD PORT="diag_role_modified" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="215" HEIGHT="16">diag_role_modified</TD></TR></TABLE></TD></TR>
       <TR><TD PORT="diag_row_version" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="215" HEIGHT="16">diag_row_version</TD></TR></TABLE></TD></TR>
       <TR><TD PORT="diag_update_count" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="215" HEIGHT="16">diag_update_count</TD></TR></TABLE></TD></TR>
-      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">  </TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">1 &gt;</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">  </TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">6 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">1 &gt;</TD></TR>
     </TABLE>>
     URL="tables/syst_numbering_segment_types.html"
     target="_top"
@@ -666,19 +665,24 @@ digraph "largeRelationshipsDiagram" {
       <TR><TD PORT="id" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"><IMG SRC="../../images/primaryKeys.png"/></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">id</TD></TR></TABLE></TD></TR>
       <TR><TD PORT="internal_name" COLSPAN="3" BGCOLOR="#ffffff" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">internal_name</TD></TR></TABLE></TD></TR>
       <TR><TD PORT="display_name" COLSPAN="3" BGCOLOR="#ffffff" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">display_name</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="syst_defined" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">syst_defined</TD></TR></TABLE></TD></TR>
       <TR><TD PORT="syst_description" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">syst_description</TD></TR></TABLE></TD></TR>
       <TR><TD PORT="user_description" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">user_description</TD></TR></TABLE></TD></TR>
-      <TR><TD PORT="config_flag" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">config_flag</TD></TR></TABLE></TD></TR>
-      <TR><TD PORT="config_integer" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">config_integer</TD></TR></TABLE></TD></TR>
-      <TR><TD PORT="config_decimal" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">config_decimal</TD></TR></TABLE></TD></TR>
-      <TR><TD PORT="config_interval" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">config_interval</TD></TR></TABLE></TD></TR>
-      <TR><TD PORT="config_date" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">config_date</TD></TR></TABLE></TD></TR>
-      <TR><TD PORT="config_time" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">config_time</TD></TR></TABLE></TD></TR>
-      <TR><TD PORT="config_timestamp" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">config_timestamp</TD></TR></TABLE></TD></TR>
-      <TR><TD PORT="config_json" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">config_json</TD></TR></TABLE></TD></TR>
-      <TR><TD PORT="config_text" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">config_text</TD></TR></TABLE></TD></TR>
-      <TR><TD PORT="config_uuid" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">config_uuid</TD></TR></TABLE></TD></TR>
-      <TR><TD PORT="config_blob" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">config_blob</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="setting_flag" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">setting_flag</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="setting_integer" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">setting_integer</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="setting_integer_range" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">setting_integer_range</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="setting_decimal" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">setting_decimal</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="setting_decimal_range" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">setting_decimal_range</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="setting_interval" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">setting_interval</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="setting_date" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">setting_date</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="setting_date_range" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">setting_date_range</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="setting_time" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">setting_time</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="setting_timestamp" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">setting_timestamp</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="setting_timestamp_range" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">setting_timestamp_range</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="setting_json" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">setting_json</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="setting_text" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">setting_text</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="setting_uuid" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">setting_uuid</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="setting_blob" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">setting_blob</TD></TR></TABLE></TD></TR>
       <TR><TD PORT="diag_timestamp_created" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">diag_timestamp_created</TD></TR></TABLE></TD></TR>
       <TR><TD PORT="diag_role_created" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">diag_role_created</TD></TR></TABLE></TD></TR>
       <TR><TD PORT="diag_timestamp_modified" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">diag_timestamp_modified</TD></TR></TABLE></TD></TR>
@@ -692,25 +696,24 @@ digraph "largeRelationshipsDiagram" {
     target="_top"
     tooltip="syst_settings"
   ];
-  "msbms_appl_data.mstr_contacts":"contact_state_id":w -> "syst_enum_values":"id":e [arrowhead=none dir=back arrowtail=crowodot];
-  "msbms_appl_data.mstr_contacts":"contact_type_id":w -> "syst_enum_values":"id":e [arrowhead=none dir=back arrowtail=crowodot];
+  "msbms_appl_data.mstr_contacts":"contact_state_id":w -> "syst_enum_items":"id":e [arrowhead=none dir=back arrowtail=crowodot];
+  "msbms_appl_data.mstr_contacts":"contact_type_id":w -> "syst_enum_items":"id":e [arrowhead=none dir=back arrowtail=crowodot];
   "msbms_appl_data.mstr_country_address_format_assocs":"address_format_id":w -> "syst_complex_format_values":"id":e [arrowhead=none dir=back arrowtail=crowodot];
   "msbms_appl_data.mstr_country_name_format_assocs":"name_format_id":w -> "syst_complex_format_values":"id":e [arrowhead=none dir=back arrowtail=crowodot];
   "msbms_appl_data.mstr_country_phone_format_assocs":"phone_format_id":w -> "syst_complex_format_values":"id":e [arrowhead=none dir=back arrowtail=crowodot];
-  "msbms_appl_data.mstr_entities":"entity_state_id":w -> "syst_enum_values":"id":e [arrowhead=none dir=back arrowtail=crowodot];
-  "msbms_appl_data.mstr_entities":"entity_type_id":w -> "syst_enum_values":"id":e [arrowhead=none dir=back arrowtail=crowodot];
-  "msbms_appl_data.mstr_entity_person_roles":"entity_person_role_id":w -> "syst_enum_values":"id":e [arrowhead=none dir=back arrowtail=crowodot];
-  "msbms_appl_data.mstr_person_contact_roles":"person_contact_role_id":w -> "syst_enum_values":"id":e [arrowhead=none dir=back arrowtail=crowodot];
-  "msbms_appl_data.mstr_persons":"person_state_id":w -> "syst_enum_values":"id":e [arrowhead=none dir=back arrowtail=crowodot];
-  "msbms_appl_data.mstr_persons":"person_type_id":w -> "syst_enum_values":"id":e [arrowhead=none dir=back arrowtail=crowodot];
-  "msbms_appl_data.mstr_places":"place_state_id":w -> "syst_enum_values":"id":e [arrowhead=none dir=back arrowtail=crowodot];
-  "msbms_appl_data.mstr_places":"place_type_id":w -> "syst_enum_values":"id":e [arrowhead=none dir=back arrowtail=crowodot];
+  "msbms_appl_data.mstr_entities":"entity_state_id":w -> "syst_enum_items":"id":e [arrowhead=none dir=back arrowtail=crowodot];
+  "msbms_appl_data.mstr_entities":"entity_type_id":w -> "syst_enum_items":"id":e [arrowhead=none dir=back arrowtail=crowodot];
+  "msbms_appl_data.mstr_entity_person_roles":"entity_person_role_id":w -> "syst_enum_items":"id":e [arrowhead=none dir=back arrowtail=crowodot];
+  "msbms_appl_data.mstr_person_contact_roles":"person_contact_role_id":w -> "syst_enum_items":"id":e [arrowhead=none dir=back arrowtail=crowodot];
+  "msbms_appl_data.mstr_persons":"person_state_id":w -> "syst_enum_items":"id":e [arrowhead=none dir=back arrowtail=crowodot];
+  "msbms_appl_data.mstr_persons":"person_type_id":w -> "syst_enum_items":"id":e [arrowhead=none dir=back arrowtail=crowodot];
+  "msbms_appl_data.mstr_places":"place_state_id":w -> "syst_enum_items":"id":e [arrowhead=none dir=back arrowtail=crowodot];
+  "msbms_appl_data.mstr_places":"place_type_id":w -> "syst_enum_items":"id":e [arrowhead=none dir=back arrowtail=crowodot];
   "syst_complex_format_values":"complex_format_id":w -> "syst_complex_formats":"id":e [arrowhead=none dir=back arrowtail=crowodot];
   "syst_complex_formats":"feature_id":w -> "syst_feature_map":"id":e [arrowhead=none dir=back arrowtail=crowodot];
   "syst_enum_functional_types":"enum_id":w -> "syst_enums":"id":e [arrowhead=none dir=back arrowtail=crowodot];
-  "syst_enum_values":"enum_id":w -> "syst_enums":"id":e [arrowhead=none dir=back arrowtail=crowodot];
-  "syst_enum_values":"functional_type_id":w -> "syst_enum_functional_types":"id":e [arrowhead=none dir=back arrowtail=crowodot];
-  "syst_enums":"feature_id":w -> "syst_feature_map":"id":e [arrowhead=none dir=back arrowtail=crowodot];
+  "syst_enum_items":"enum_id":w -> "syst_enums":"id":e [arrowhead=none dir=back arrowtail=crowodot];
+  "syst_enum_items":"functional_type_id":w -> "syst_enum_functional_types":"id":e [arrowhead=none dir=back arrowtail=crowodot];
   "syst_feature_enum_assigns":"enum_id":w -> "syst_enums":"id":e [arrowhead=none dir=back arrowtail=crowodot];
   "syst_feature_enum_assigns":"feature_map_id":w -> "syst_feature_map":"id":e [arrowhead=none dir=back arrowtail=crowodot];
   "syst_feature_map":"feature_map_level_id":w -> "syst_feature_map_levels":"id":e [arrowhead=none dir=back arrowtail=crowodot];
@@ -719,15 +722,15 @@ digraph "largeRelationshipsDiagram" {
   "syst_feature_relation_assigns":"relation_id":w -> "syst_relations":"id":e [arrowhead=none dir=back arrowtail=crowodot];
   "syst_feature_setting_assigns":"feature_map_id":w -> "syst_feature_map":"id":e [arrowhead=none dir=back arrowtail=crowodot];
   "syst_feature_setting_assigns":"setting_id":w -> "syst_settings":"id":e [arrowhead=none dir=back arrowtail=crowodot];
-  "syst_interaction_logs":"interaction_type_id":w -> "syst_enum_values":"id":e [arrowhead=none dir=back arrowtail=crowodot];
-  "syst_interaction_logs":"interface_type_id":w -> "syst_enum_values":"id":e [arrowhead=none dir=back arrowtail=crowodot];
+  "syst_interaction_logs":"interaction_type_id":w -> "syst_enum_items":"id":e [arrowhead=none dir=back arrowtail=crowodot];
+  "syst_interaction_logs":"interface_type_id":w -> "syst_enum_items":"id":e [arrowhead=none dir=back arrowtail=crowodot];
   "syst_numbering_segments":"enum_id":w -> "syst_enums":"id":e [arrowhead=none dir=back arrowtail=crowodot];
   "syst_numbering_segments":"numbering_id":w -> "syst_numberings":"id":e [arrowhead=none dir=back arrowtail=crowodot];
   "syst_numbering_segments":"numbering_segment_type_id":w -> "syst_numbering_segment_types":"id":e [arrowhead=none dir=back arrowtail=crowodot];
   "syst_numbering_segments":"numbering_sequence_id":w -> "syst_numbering_sequences":"id":e [arrowhead=none dir=back arrowtail=crowodot];
   "syst_numbering_sequence_values":"id":w -> "syst_numbering_sequences":"id":e [arrowhead=none dir=back arrowtail=teeodot];
   "syst_numberings":"feature_id":w -> "syst_feature_map":"id":e [arrowhead=none dir=back arrowtail=crowodot];
-  "syst_person_logins":"login_state_id":w -> "syst_enum_values":"id":e [arrowhead=none dir=back arrowtail=crowodot];
+  "syst_person_logins":"login_state_id":w -> "syst_enum_items":"id":e [arrowhead=none dir=back arrowtail=crowodot];
   "syst_person_logins":"owning_entity_id":w -> "msbms_appl_data.mstr_entities":"id":e [arrowhead=none dir=back arrowtail=crowodot];
   "syst_person_logins":"person_id":w -> "msbms_appl_data.mstr_persons":"id":e [arrowhead=none dir=back arrowtail=crowodot];
 }

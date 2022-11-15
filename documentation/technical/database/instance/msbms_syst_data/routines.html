@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>instance_doc Database</title>
+        <title>msbms_dev_instance Database</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../index.html" class="navbar-brand"><b>instance_doc</b> Database</a>
+                            <a href="../index.html" class="navbar-brand"><b>msbms_dev_instance</b> Database</a>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -96,6 +96,74 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <tr>
+                                        <td><a href="routines/trig_b_i_syst_enum_items_maintain_sort_order.html">trig_b_i_syst_enum_items_maintain_sort_order</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>For INSERTed records with a null sort_order value, this trigger will assign a<br />
+default value assuming the new record should be inserted at the end of the sort.</p>
+<p>If the inserted record was already assigned a sort_order value, the inserted<br />
+value is respected.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_b_iu_syst_enum_items_validate_functional_types.html">trig_b_iu_syst_enum_items_validate_functional_types</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Ensures that if the parent syst_enums record has syst_enum_functional_types<br />
+records defined, a syst_enum_items record will reference one of those<br />
+functional types.  Note that this trigger function is intended to be use by<br />
+constraint triggers.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_a_i_syst_numbering_sequence_create_value.html">trig_a_i_syst_numbering_sequence_create_value</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Automatically creates a msbms_syst_data.syst_numbering_sequence_values record<br />
+based on the configuration of the sequence in the syst_numbering_sequences<br />
+record.  If a sequence is incrementing, the minimum value is used set as the<br />
+next value; if the sequence is decrementing, the maximum value is used to set<br />
+the starting value.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_b_i_syst_enum_functional_type_validate_new_allowed.html">trig_b_i_syst_enum_functional_type_validate_new_allowed</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Checks to see if this is the first functional type being added for the<br />
+enumeration and, if so, that no syst_enum_items records already exist.  Adding a<br />
+first functional type for an enumeration which already has defined enumeration<br />
+items implies that the enumeration items must be assigned a functional type in<br />
+the same operation to keep data consistency.  In practice, this would be<br />
+difficult since there would almost certainly have to be multiple functional<br />
+types available in order to avoid making bogus assignments; it would be much<br />
+more difficult to manage such a process as compared to simply disallowing the<br />
+scenario.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_a_iu_syst_enum_items_maintain_sort_order.html">trig_a_iu_syst_enum_items_maintain_sort_order</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Automatically maintains the sort order of syst_enum_item records in cases where<br />
+sort ordering collides with existing syst_enum_items records for the same<br />
+enum_id.  On insert or update when the new sort_order value matches that of an<br />
+existing record for the enumeration, the system will sort the match record after<br />
+the new/updated record. This will cascade for all syst_enum_items records<br />
+matching the enum_id until the last one is updated.</p></td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>

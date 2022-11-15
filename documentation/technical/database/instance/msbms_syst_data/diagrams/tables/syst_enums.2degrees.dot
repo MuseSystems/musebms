@@ -18,34 +18,29 @@ digraph "twoDegreesRelationshipsDiagram" {
   edge [
     arrowsize="0.8"
   ];
-  "msbms_appl_data.mstr_contacts":"elipses":w -> "syst_enum_values":"id":e [arrowhead=none dir=back arrowtail=crowodot];
-  "msbms_appl_data.mstr_contacts":"elipses":w -> "syst_enum_values":"id":e [arrowhead=none dir=back arrowtail=crowodot];
-  "msbms_appl_data.mstr_entities":"elipses":w -> "syst_enum_values":"id":e [arrowhead=none dir=back arrowtail=crowodot];
-  "msbms_appl_data.mstr_entities":"elipses":w -> "syst_enum_values":"id":e [arrowhead=none dir=back arrowtail=crowodot];
-  "msbms_appl_data.mstr_entity_person_roles":"elipses":w -> "syst_enum_values":"id":e [arrowhead=none dir=back arrowtail=crowodot];
-  "msbms_appl_data.mstr_person_contact_roles":"elipses":w -> "syst_enum_values":"id":e [arrowhead=none dir=back arrowtail=crowodot];
-  "msbms_appl_data.mstr_persons":"elipses":w -> "syst_enum_values":"id":e [arrowhead=none dir=back arrowtail=crowodot];
-  "msbms_appl_data.mstr_persons":"elipses":w -> "syst_enum_values":"id":e [arrowhead=none dir=back arrowtail=crowodot];
-  "msbms_appl_data.mstr_places":"elipses":w -> "syst_enum_values":"id":e [arrowhead=none dir=back arrowtail=crowodot];
-  "msbms_appl_data.mstr_places":"elipses":w -> "syst_enum_values":"id":e [arrowhead=none dir=back arrowtail=crowodot];
-  "syst_complex_formats":"elipses":w -> "syst_feature_map":"id":e [arrowhead=none dir=back arrowtail=crowodot];
+  "msbms_appl_data.mstr_contacts":"elipses":w -> "syst_enum_items":"id":e [arrowhead=none dir=back arrowtail=crowodot];
+  "msbms_appl_data.mstr_contacts":"elipses":w -> "syst_enum_items":"id":e [arrowhead=none dir=back arrowtail=crowodot];
+  "msbms_appl_data.mstr_entities":"elipses":w -> "syst_enum_items":"id":e [arrowhead=none dir=back arrowtail=crowodot];
+  "msbms_appl_data.mstr_entities":"elipses":w -> "syst_enum_items":"id":e [arrowhead=none dir=back arrowtail=crowodot];
+  "msbms_appl_data.mstr_entity_person_roles":"elipses":w -> "syst_enum_items":"id":e [arrowhead=none dir=back arrowtail=crowodot];
+  "msbms_appl_data.mstr_person_contact_roles":"elipses":w -> "syst_enum_items":"id":e [arrowhead=none dir=back arrowtail=crowodot];
+  "msbms_appl_data.mstr_persons":"elipses":w -> "syst_enum_items":"id":e [arrowhead=none dir=back arrowtail=crowodot];
+  "msbms_appl_data.mstr_persons":"elipses":w -> "syst_enum_items":"id":e [arrowhead=none dir=back arrowtail=crowodot];
+  "msbms_appl_data.mstr_places":"elipses":w -> "syst_enum_items":"id":e [arrowhead=none dir=back arrowtail=crowodot];
+  "msbms_appl_data.mstr_places":"elipses":w -> "syst_enum_items":"id":e [arrowhead=none dir=back arrowtail=crowodot];
   "syst_enum_functional_types":"enum_id":w -> "syst_enums":"id.type":e [arrowhead=none dir=back arrowtail=crowodot];
-  "syst_enum_values":"enum_id":w -> "syst_enums":"id.type":e [arrowhead=none dir=back arrowtail=crowodot];
-  "syst_enum_values":"functional_type_id":w -> "syst_enum_functional_types":"id":e [arrowhead=none dir=back arrowtail=crowodot];
-  "syst_enums":"feature_id":w -> "syst_feature_map":"id":e [arrowhead=none dir=back arrowtail=crowodot];
+  "syst_enum_items":"enum_id":w -> "syst_enums":"id.type":e [arrowhead=none dir=back arrowtail=crowodot];
+  "syst_enum_items":"functional_type_id":w -> "syst_enum_functional_types":"id":e [arrowhead=none dir=back arrowtail=crowodot];
   "syst_feature_enum_assigns":"enum_id":w -> "syst_enums":"id.type":e [arrowhead=none dir=back arrowtail=crowodot];
-  "syst_feature_enum_assigns":"feature_map_id":w -> "syst_feature_map":"id":e [arrowhead=none dir=back arrowtail=crowodot];
-  "syst_feature_map":"feature_map_level_id":w -> "syst_feature_map_levels":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
-  "syst_feature_relation_assigns":"elipses":w -> "syst_feature_map":"id":e [arrowhead=none dir=back arrowtail=crowodot];
-  "syst_feature_setting_assigns":"elipses":w -> "syst_feature_map":"id":e [arrowhead=none dir=back arrowtail=crowodot];
-  "syst_interaction_logs":"elipses":w -> "syst_enum_values":"id":e [arrowhead=none dir=back arrowtail=crowodot];
-  "syst_interaction_logs":"elipses":w -> "syst_enum_values":"id":e [arrowhead=none dir=back arrowtail=crowodot];
+  "syst_feature_enum_assigns":"feature_map_id":w -> "syst_feature_map":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
+  "syst_interaction_logs":"elipses":w -> "syst_enum_items":"id":e [arrowhead=none dir=back arrowtail=crowodot];
+  "syst_interaction_logs":"elipses":w -> "syst_enum_items":"id":e [arrowhead=none dir=back arrowtail=crowodot];
   "syst_numbering_segments":"enum_id":w -> "syst_enums":"id.type":e [arrowhead=none dir=back arrowtail=crowodot];
   "syst_numbering_segments":"numbering_id":w -> "syst_numberings":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
   "syst_numbering_segments":"numbering_segment_type_id":w -> "syst_numbering_segment_types":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
   "syst_numbering_segments":"numbering_sequence_id":w -> "syst_numbering_sequences":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
-  "syst_numberings":"elipses":w -> "syst_feature_map":"id":e [arrowhead=none dir=back arrowtail=crowodot];
-  "syst_person_logins":"elipses":w -> "syst_enum_values":"id":e [arrowhead=none dir=back arrowtail=crowodot];
+  "syst_numberings":"elipses":w -> "syst_feature_map":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
+  "syst_person_logins":"elipses":w -> "syst_enum_items":"id":e [arrowhead=none dir=back arrowtail=crowodot];
   "syst_person_logins":"elipses":w -> "msbms_appl_data.mstr_entities":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
   "syst_person_logins":"elipses":w -> "msbms_appl_data.mstr_persons":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
   "msbms_appl_data.mstr_contacts" [
@@ -114,17 +109,6 @@ digraph "twoDegreesRelationshipsDiagram" {
     target="_top"
     tooltip="msbms_appl_data.mstr_places"
   ];
-  "syst_complex_formats" [
-   label=<
-    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
-      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT"><B>syst_complex_formats</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
-      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
-      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 1</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">1 &gt;</TD></TR>
-    </TABLE>>
-    URL="syst_complex_formats.html"
-    target="_top"
-    tooltip="syst_complex_formats"
-  ];
   "syst_enum_functional_types" [
    label=<
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
@@ -140,10 +124,10 @@ digraph "twoDegreesRelationshipsDiagram" {
     target="_top"
     tooltip="syst_enum_functional_types"
   ];
-  "syst_enum_values" [
+  "syst_enum_items" [
    label=<
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
-      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT"><B>syst_enum_values</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT"><B>syst_enum_items</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
       <TR><TD PORT="id" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"><IMG SRC="../../images/primaryKeys.png"/></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">id</TD></TR></TABLE></TD></TR>
       <TR><TD PORT="internal_name" COLSPAN="3" BGCOLOR="#ffffff" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">internal_name</TD></TR></TABLE></TD></TR>
       <TR><TD PORT="display_name" COLSPAN="3" BGCOLOR="#ffffff" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">display_name</TD></TR></TABLE></TD></TR>
@@ -152,9 +136,9 @@ digraph "twoDegreesRelationshipsDiagram" {
       <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
       <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 2</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">9 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">13 &gt;</TD></TR>
     </TABLE>>
-    URL="syst_enum_values.html"
+    URL="syst_enum_items.html"
     target="_top"
-    tooltip="syst_enum_values"
+    tooltip="syst_enum_items"
   ];
   "syst_enums" [
    label=<
@@ -165,7 +149,6 @@ digraph "twoDegreesRelationshipsDiagram" {
       <TR><TD PORT="display_name" COLSPAN="2" BGCOLOR="#ffffff" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">display_name</TD></TR></TABLE></TD><TD PORT="display_name.type" ALIGN="LEFT">text[2147483647]</TD></TR>
       <TR><TD PORT="syst_description" COLSPAN="2" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">syst_description</TD></TR></TABLE></TD><TD PORT="syst_description.type" ALIGN="LEFT">text[2147483647]</TD></TR>
       <TR><TD PORT="user_description" COLSPAN="2" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">user_description</TD></TR></TABLE></TD><TD PORT="user_description.type" ALIGN="LEFT">text[2147483647]</TD></TR>
-      <TR><TD PORT="feature_id" COLSPAN="2" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"><IMG SRC="../../images/foreignKeys.png"/></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">feature_id</TD></TR></TABLE></TD><TD PORT="feature_id.type" ALIGN="LEFT">uuid[2147483647]</TD></TR>
       <TR><TD PORT="syst_defined" COLSPAN="2" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">syst_defined</TD></TR></TABLE></TD><TD PORT="syst_defined.type" ALIGN="LEFT">bool[1]</TD></TR>
       <TR><TD PORT="user_maintainable" COLSPAN="2" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">user_maintainable</TD></TR></TABLE></TD><TD PORT="user_maintainable.type" ALIGN="LEFT">bool[1]</TD></TR>
       <TR><TD PORT="default_syst_options" COLSPAN="2" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">default_syst_options</TD></TR></TABLE></TD><TD PORT="default_syst_options.type" ALIGN="LEFT">jsonb[2147483647]</TD></TR>
@@ -177,7 +160,7 @@ digraph "twoDegreesRelationshipsDiagram" {
       <TR><TD PORT="diag_role_modified" COLSPAN="2" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">diag_role_modified</TD></TR></TABLE></TD><TD PORT="diag_role_modified.type" ALIGN="LEFT">text[2147483647]</TD></TR>
       <TR><TD PORT="diag_row_version" COLSPAN="2" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">diag_row_version</TD></TR></TABLE></TD><TD PORT="diag_row_version.type" ALIGN="LEFT">int8[19]</TD></TR>
       <TR><TD PORT="diag_update_count" COLSPAN="2" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">diag_update_count</TD></TR></TABLE></TD><TD PORT="diag_update_count.type" ALIGN="LEFT">int8[19]</TD></TR>
-      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 1</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">19 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">4 &gt;</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 0</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">19 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">4 &gt;</TD></TR>
     </TABLE>>
     URL="syst_enums.html"
     target="_top"
@@ -201,50 +184,12 @@ digraph "twoDegreesRelationshipsDiagram" {
    label=<
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
       <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT"><B>syst_feature_map</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
-      <TR><TD PORT="id" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"><IMG SRC="../../images/primaryKeys.png"/></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">id</TD></TR></TABLE></TD></TR>
-      <TR><TD PORT="internal_name" COLSPAN="3" BGCOLOR="#ffffff" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">internal_name</TD></TR></TABLE></TD></TR>
-      <TR><TD PORT="display_name" COLSPAN="3" BGCOLOR="#ffffff" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">display_name</TD></TR></TABLE></TD></TR>
-      <TR><TD PORT="feature_map_level_id" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"><IMG SRC="../../images/foreignKeys.png"/></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">feature_map_level_id</TD></TR></TABLE></TD></TR>
-      <TR><TD PORT="parent_feature_map_id" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"><IMG SRC="../../images/foreignKeys.png"/></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="173" HEIGHT="16">parent_feature_map_id</TD></TR></TABLE></TD></TR>
       <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
-      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 2</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">109 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">7 &gt;</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 2</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">109 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">6 &gt;</TD></TR>
     </TABLE>>
     URL="syst_feature_map.html"
     target="_top"
     tooltip="syst_feature_map"
-  ];
-  "syst_feature_map_levels" [
-   label=<
-    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
-      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT"><B>syst_feature_map_levels</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
-      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
-      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">  </TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">4 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">1 &gt;</TD></TR>
-    </TABLE>>
-    URL="syst_feature_map_levels.html"
-    target="_top"
-    tooltip="syst_feature_map_levels"
-  ];
-  "syst_feature_relation_assigns" [
-   label=<
-    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
-      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT"><B>syst_feature_relation_assigns</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
-      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
-      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 2</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">  </TD></TR>
-    </TABLE>>
-    URL="syst_feature_relation_assigns.html"
-    target="_top"
-    tooltip="syst_feature_relation_assigns"
-  ];
-  "syst_feature_setting_assigns" [
-   label=<
-    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
-      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT"><B>syst_feature_setting_assigns</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
-      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
-      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 2</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">  </TD></TR>
-    </TABLE>>
-    URL="syst_feature_setting_assigns.html"
-    target="_top"
-    tooltip="syst_feature_setting_assigns"
   ];
   "syst_interaction_logs" [
    label=<
@@ -262,7 +207,7 @@ digraph "twoDegreesRelationshipsDiagram" {
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
       <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT"><B>syst_numbering_segment_types</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
       <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
-      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">  </TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">1 &gt;</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">  </TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">6 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">1 &gt;</TD></TR>
     </TABLE>>
     URL="syst_numbering_segment_types.html"
     target="_top"

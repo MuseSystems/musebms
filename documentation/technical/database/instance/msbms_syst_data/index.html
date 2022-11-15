@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>instance_doc Database</title>
+        <title>msbms_dev_instance Database</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../index.html" class="navbar-brand"><b>instance_doc</b> Database</a>
+                            <a href="../index.html" class="navbar-brand"><b>msbms_dev_instance</b> Database</a>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -77,12 +77,12 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="callout callout-info">
-                                <h4>SchemaSpy Analysis of instance_doc</h4>
-                                <p>Generated on Thu Mar 31 04:50 PDT 2022</p>
+                                <h4>SchemaSpy Analysis of msbms_dev_instance</h4>
+                                <p>Generated on Tue Nov 15 04:59 PST 2022</p>
                             </div>
                         </div>
                     </div>
-                    <a href="instance_doc.msbms_syst_data.xml" title="XML Representation">XML Representation</a><br />
+                    <a href="msbms_dev_instance.msbms_syst_data.xml" title="XML Representation">XML Representation</a><br />
                     <a href="insertionOrder.txt" title="Useful for loading data into a database">Insertion Order</a>
                     <a href="deletionOrder.txt" title="Useful for purging data from a database">Deletion Order</a>
                 </section>
@@ -118,7 +118,7 @@
                                 <span class="info-box-icon bg-green"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></span>
                                 <div class="info-box-content">
                                     <span class="info-box-text">COLUMNS</span>
-                                    <span class="info-box-number">279</span>
+                                    <span class="info-box-number">283</span>
                                 </div>
                                 <!-- /.info-box-content -->
                             </div>
@@ -130,7 +130,7 @@
                                 <span class="info-box-icon bg-yellow"><i class="ion ion-key"></i></span>
                                 <div class="info-box-content">
                                     <span class="info-box-text">Constraints</span>
-                                    <span class="info-box-number">25</span>
+                                    <span class="info-box-number">24</span>
                                 </div>
                                 <!-- /.info-box-content -->
                             </div>
@@ -154,7 +154,7 @@
                                 <span class="info-box-icon bg-navy"><i class="fa fa-file-code-o" aria-hidden="true"></i></span>
                                 <div class="info-box-content">
                                     <span class="info-box-text">Routines</span>
-                                    <span class="info-box-number">0</span>
+                                    <span class="info-box-number">5</span>
                                 </div>
                                 <!-- /.info-box-content -->
                             </div>
@@ -168,7 +168,7 @@
                             <span class="label label-primary pull-right"><i class="fa fa-cog fa-2x"></i></span>
                         </div><!-- /.box-header -->
                         <div class="box-body">
-                            <p>Database Type: PostgreSQL - 14.2 (Ubuntu 14.2-1.pgdg20.04+1)</p>
+                            <p>Database Type: PostgreSQL - 15.1 (Ubuntu 15.1-1.pgdg22.04+1)</p>
                         </div><!-- /.box-body -->
                     </div>
                     <div class="box box-primary">
@@ -246,15 +246,6 @@ defines the configuration settings which influence behavior the behavior of the<
 sequence.</p></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
-                                        <td class="detail"><a href="tables/syst_numbering_segments.html">syst_numbering_segments</a></td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">4</td>
-                                        <td class="detail" align="right">19</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Defines the segments which make up a &ldquo;numbering&rdquo; in the application.  Segments</p></td>
-                                    </tr>
-                                    <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/syst_feature_enum_assigns.html">syst_feature_enum_assigns</a></td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">2</td>
@@ -265,6 +256,15 @@ sequence.</p></td>
 application features.  This is a many-to-many relationship.  The expectation is<br />
 that this association will be used in organizing certain configuration or<br />
 permissioning displays into a tree-like structure.</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/syst_numbering_segments.html">syst_numbering_segments</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">4</td>
+                                        <td class="detail" align="right">19</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Defines the segments which make up a &ldquo;numbering&rdquo; in the application.  Segments</p></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/syst_numberings.html">syst_numberings</a></td>
@@ -281,7 +281,7 @@ created or user created.</p></td>
                                         <td class="detail" align="right">1</td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">12</td>
-                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">6</td>
                                         <td class="detail" align="right">Table</td>
                                         <td class="comment detail" style="display: table-cell;"><p>Enumerates the available kinds of segments which may be used to construct an<br />
 application numbering system.  Note that as of this writing, these records are<br />
@@ -298,6 +298,16 @@ not considered user configurable beyond setting a custom user_description value.
 application features.  This is a many-to-many relationship.  The expectation is<br />
 that this association will be used in organizing certain configuration or<br />
 permissioning displays into a tree-like structure.</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/syst_enum_items.html">syst_enum_items</a></td>
+                                        <td class="detail" align="right">13</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">22</td>
+                                        <td class="detail" align="right">9</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>The list of values provided by an enumeration as well as related behavioral and<br />
+informational metadata.</p></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/syst_feature_map_levels.html">syst_feature_map_levels</a></td>
@@ -325,22 +335,12 @@ permissioning displays into a tree-like structure.</p></td>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/syst_enums.html">syst_enums</a></td>
                                         <td class="detail" align="right">4</td>
-                                        <td class="detail" align="right">1</td>
-                                        <td class="detail" align="right">17</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">16</td>
                                         <td class="detail" align="right">19</td>
                                         <td class="detail" align="right">Table</td>
                                         <td class="comment detail" style="display: table-cell;"><p>Enumerates the enumerations known to the system along with additional metadata<br />
 useful in applying them appropriately.</p></td>
-                                    </tr>
-                                    <tr class="tbl even" valign="top">
-                                        <td class="detail"><a href="tables/syst_enum_values.html">syst_enum_values</a></td>
-                                        <td class="detail" align="right">13</td>
-                                        <td class="detail" align="right">2</td>
-                                        <td class="detail" align="right">22</td>
-                                        <td class="detail" align="right">9</td>
-                                        <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>The list of values provided by an enumeration as well as related behavioral and<br />
-informational metadata.</p></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/syst_complex_formats.html">syst_complex_formats</a></td>
@@ -357,7 +357,7 @@ fields are available and how they should be ordered or arranged.</p></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/syst_feature_map.html">syst_feature_map</a></td>
-                                        <td class="detail" align="right">7</td>
+                                        <td class="detail" align="right">6</td>
                                         <td class="detail" align="right">2</td>
                                         <td class="detail" align="right">19</td>
                                         <td class="detail" align="right">109</td>
@@ -370,7 +370,7 @@ driving nested directories to aide users in navigating forms or configurations.<
                                         <td class="detail"><a href="tables/syst_settings.html">syst_settings</a></td>
                                         <td class="detail" align="right">1</td>
                                         <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">23</td>
+                                        <td class="detail" align="right">28</td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">Table</td>
                                         <td class="comment detail" style="display: table-cell;"><p>Configuration data which establishes application behaviors, defaults, and<br />

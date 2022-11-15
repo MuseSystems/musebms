@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>syst_numbering_segments - instance_doc Database</title>
+        <title>syst_numbering_segments - msbms_dev_instance Database</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../../index.html" class="navbar-brand"><b>instance_doc</b> Database</a>
+                            <a href="../../index.html" class="navbar-brand"><b>msbms_dev_instance</b> Database</a>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -552,20 +552,20 @@ diag_row_version - 1.</p></td>
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>syst_numbering_segments_display_length_validation_chk</td>
-                                    <td>((display_length &gt;= 0))</td>
-                                </tr>
-                                <tr>
                                     <td>syst_numbering_segments_fixed_text_validation_chk</td>
                                     <td>(((fixed_text IS NULL) OR (length(fixed_text) &lt;= display_length)))</td>
                                 </tr>
                                 <tr>
-                                    <td>syst_numbering_segments_padding_side_validation_chk</td>
-                                    <td>(((NOT use_padding) OR ((padding_side IS NOT NULL) AND (padding_side = ANY (ARRAY[&#39;start&#39;::text, &#39;end&#39;::text])))))</td>
+                                    <td>syst_numbering_segments_display_length_validation_chk</td>
+                                    <td>((display_length &gt;= 0))</td>
                                 </tr>
                                 <tr>
                                     <td>syst_numbering_segments_padding_text_validation_chk</td>
                                     <td>(((NOT use_padding) OR (padding_text IS NOT NULL)))</td>
+                                </tr>
+                                <tr>
+                                    <td>syst_numbering_segments_padding_side_validation_chk</td>
+                                    <td>(((NOT use_padding) OR ((padding_side IS NOT NULL) AND (padding_side = ANY (ARRAY[&#39;start&#39;::text, &#39;end&#39;::text])))))</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -591,25 +591,25 @@ diag_row_version - 1.</p></td>
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
 <area shape="rect" id="node1" href="syst_numbering_segments.html" target="_top" title="syst_numbering_segments" alt="" coords="400,132,857,759">
-<area shape="rect" id="node2" href="syst_enums.html" target="_top" title="syst_enums" alt="" coords="41,424,321,629">
+<area shape="rect" id="node2" href="syst_enums.html" target="_top" title="syst_enums" alt="" coords="41,424,321,600">
 <area shape="rect" id="node3" href="syst_numberings.html" target="_top" title="syst_numberings" alt="" coords="41,5,321,211">
 <area shape="rect" id="node4" href="syst_numbering_segment_types.html" target="_top" title="syst_numbering_segment_types" alt="" coords="5,228,356,404">
-<area shape="rect" id="node5" href="syst_numbering_sequences.html" target="_top" title="syst_numbering_sequences" alt="" coords="24,647,337,823">
+<area shape="rect" id="node5" href="syst_numbering_sequences.html" target="_top" title="syst_numbering_sequences" alt="" coords="24,617,337,793">
 </map>
                                         <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/syst_numbering_segments.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="twodegreesDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
-<area shape="rect" id="node1" href="syst_enum_functional_types.html" target="_top" title="syst_enum_functional_types" alt="" coords="748,111,1067,199">
-<area shape="rect" id="node2" href="syst_enums.html" target="_top" title="syst_enums" alt="" coords="319,100,599,305">
-<area shape="rect" id="node4" href="syst_feature_map.html" target="_top" title="syst_feature_map" alt="" coords="5,191,240,279">
-<area shape="rect" id="node3" href="syst_enum_values.html" target="_top" title="syst_enum_values" alt="" coords="1180,145,1419,233">
-<area shape="rect" id="node5" href="syst_feature_enum_assigns.html" target="_top" title="syst_feature_enum_assigns" alt="" coords="751,5,1064,93">
-<area shape="rect" id="node6" href="syst_numbering_segments.html" target="_top" title="syst_numbering_segments" alt="" coords="679,291,1136,917">
-<area shape="rect" id="node7" href="syst_numberings.html" target="_top" title="syst_numberings" alt="" coords="319,323,599,528">
-<area shape="rect" id="node8" href="syst_numbering_segment_types.html" target="_top" title="syst_numbering_segment_types" alt="" coords="284,545,635,721">
-<area shape="rect" id="node9" href="syst_numbering_sequences.html" target="_top" title="syst_numbering_sequences" alt="" coords="303,835,616,1011">
-<area shape="rect" id="node10" href="syst_numbering_sequence_values.html" target="_top" title="syst_numbering_sequence_values" alt="" coords="725,935,1090,1023">
+<area shape="rect" id="node1" href="syst_enum_functional_types.html" target="_top" title="syst_enum_functional_types" alt="" coords="748,5,1067,93">
+<area shape="rect" id="node2" href="syst_enums.html" target="_top" title="syst_enums" alt="" coords="319,67,599,243">
+<area shape="rect" id="node3" href="syst_enum_items.html" target="_top" title="syst_enum_items" alt="" coords="1180,40,1411,128">
+<area shape="rect" id="node4" href="syst_feature_enum_assigns.html" target="_top" title="syst_feature_enum_assigns" alt="" coords="751,155,1064,243">
+<area shape="rect" id="node5" href="syst_feature_map.html" target="_top" title="syst_feature_map" alt="" coords="5,305,240,393">
+<area shape="rect" id="node6" href="syst_numbering_segments.html" target="_top" title="syst_numbering_segments" alt="" coords="679,264,1136,891">
+<area shape="rect" id="node7" href="syst_numberings.html" target="_top" title="syst_numberings" alt="" coords="319,296,599,501">
+<area shape="rect" id="node8" href="syst_numbering_segment_types.html" target="_top" title="syst_numbering_segment_types" alt="" coords="284,519,635,695">
+<area shape="rect" id="node9" href="syst_numbering_sequences.html" target="_top" title="syst_numbering_sequences" alt="" coords="303,809,616,985">
+<area shape="rect" id="node10" href="syst_numbering_sequence_values.html" target="_top" title="syst_numbering_sequence_values" alt="" coords="725,908,1090,996">
 </map>
                                         <a name='diagram'><img id="twodegreesDegreeImg" src="../diagrams/tables/syst_numbering_segments.2degrees.png" usemap="#twoDegreesRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>

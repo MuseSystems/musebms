@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>syst_owners - global_doc Database</title>
+        <title>syst_owners - msbms_dev_global Database</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../../index.html" class="navbar-brand"><b>global_doc</b> Database</a>
+                            <a href="../../index.html" class="navbar-brand"><b>msbms_dev_global</b> Database</a>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -133,6 +133,14 @@ have commissioned the use of an application instance.</p>
                                                 <td title="syst_instances.owner_id references syst_owners.id via syst_instances_owners_fk"><a href='syst_instances.html'>syst_instances</a><span class='relatedKey'>.owner_id</span></td>
                                                 <td class="constraint detail">syst_instances_owners_fk<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
+                                            <tr>
+                                                <td title="syst_owner_network_rules.owner_id references syst_owners.id via syst_owner_network_rules_owner_fk"><a href='syst_owner_network_rules.html'>syst_owner_network_rules</a><span class='relatedKey'>.owner_id</span></td>
+                                                <td class="constraint detail">syst_owner_network_rules_owner_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="syst_owner_password_rules.owner_id references syst_owners.id via syst_owner_password_rules_owner_fk"><a href='syst_owner_password_rules.html'>syst_owner_password_rules</a><span class='relatedKey'>.owner_id</span></td>
+                                                <td class="constraint detail">syst_owner_password_rules_owner_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
+                                            </tr>
                                         </table>
                                     </td>
                                     <td>
@@ -191,7 +199,7 @@ interactions</p></td>
                                     <td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
-                                                <td title="syst_owners.owner_state_id references syst_enum_values.id via syst_owner_owner_states_fk"><a href='syst_enum_values.html'>syst_enum_values</a><span class='relatedKey'>.id</span></td>
+                                                <td title="syst_owners.owner_state_id references syst_enum_items.id via syst_owner_owner_states_fk"><a href='syst_enum_items.html'>syst_enum_items</a><span class='relatedKey'>.id</span></td>
                                                 <td class="constraint detail">syst_owner_owner_states_fk<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
@@ -394,25 +402,33 @@ diag_row_version - 1.</p></td>
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="syst_access_accounts.html" target="_top" title="syst_access_accounts" alt="" coords="804,5,1084,211">
-<area shape="rect" id="node2" href="syst_enum_values.html" target="_top" title="syst_enum_values" alt="" coords="5,308,285,543">
-<area shape="rect" id="node3" href="syst_owners.html" target="_top" title="syst_owners" alt="" coords="329,401,760,793">
-<area shape="rect" id="node4" href="syst_instances.html" target="_top" title="syst_instances" alt="" coords="804,228,1084,551">
+<area shape="rect" id="node1" href="syst_access_accounts.html" target="_top" title="syst_access_accounts" alt="" coords="823,5,1103,211">
+<area shape="rect" id="node2" href="syst_enum_items.html" target="_top" title="syst_enum_items" alt="" coords="5,557,285,792">
+<area shape="rect" id="node3" href="syst_owners.html" target="_top" title="syst_owners" alt="" coords="329,327,760,719">
+<area shape="rect" id="node4" href="syst_instances.html" target="_top" title="syst_instances" alt="" coords="823,585,1103,908">
+<area shape="rect" id="node5" href="syst_owner_network_rules.html" target="_top" title="syst_owner_network_rules" alt="" coords="809,228,1116,404">
+<area shape="rect" id="node6" href="syst_owner_password_rules.html" target="_top" title="syst_owner_password_rules" alt="" coords="804,421,1121,568">
 </map>
                                         <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/syst_owners.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="twodegreesDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
-<area shape="rect" id="node1" href="syst_access_account_instance_assocs.html" target="_top" title="syst_access_account_instance_assocs" alt="" coords="1721,463,2121,551">
-<area shape="rect" id="node2" href="syst_access_accounts.html" target="_top" title="syst_access_accounts" alt="" coords="1397,461,1677,666">
-<area shape="rect" id="node3" href="syst_enum_values.html" target="_top" title="syst_enum_values" alt="" coords="599,358,879,593">
-<area shape="rect" id="node4" href="syst_instances.html" target="_top" title="syst_instances" alt="" coords="1397,90,1677,413">
-<area shape="rect" id="node5" href="syst_owners.html" target="_top" title="syst_owners" alt="" coords="923,267,1353,659">
-<area shape="rect" id="node8" href="syst_enum_functional_types.html" target="_top" title="syst_enum_functional_types" alt="" coords="236,499,555,587">
-<area shape="rect" id="node9" href="syst_enums.html" target="_top" title="syst_enums" alt="" coords="5,463,192,551">
-<area shape="rect" id="node10" href="syst_applications.html" target="_top" title="syst_applications" alt="" coords="1022,90,1254,178">
-<area shape="rect" id="node6" href="syst_credentials.html" target="_top" title="syst_credentials" alt="" coords="2165,531,2389,619">
-<area shape="rect" id="node7" href="syst_identities.html" target="_top" title="syst_identities" alt="" coords="1816,358,2027,446">
+<area shape="rect" id="node1" href="syst_access_account_instance_assocs.html" target="_top" title="syst_access_account_instance_assocs" alt="" coords="1795,584,2195,672">
+<area shape="rect" id="node2" href="syst_access_accounts.html" target="_top" title="syst_access_accounts" alt="" coords="1434,446,1714,652">
+<area shape="rect" id="node3" href="syst_instances.html" target="_top" title="syst_instances" alt="" coords="1434,774,1714,1097">
+<area shape="rect" id="node4" href="syst_enum_items.html" target="_top" title="syst_enum_items" alt="" coords="599,654,879,889">
+<area shape="rect" id="node5" href="syst_owners.html" target="_top" title="syst_owners" alt="" coords="923,285,1353,677">
+<area shape="rect" id="node13" href="syst_applications.html" target="_top" title="syst_applications" alt="" coords="1022,781,1254,869">
+<area shape="rect" id="node8" href="syst_enum_functional_types.html" target="_top" title="syst_enum_functional_types" alt="" coords="236,796,555,884">
+<area shape="rect" id="node9" href="syst_enums.html" target="_top" title="syst_enums" alt="" coords="5,760,192,848">
+<area shape="rect" id="node6" href="syst_credentials.html" target="_top" title="syst_credentials" alt="" coords="2239,117,2463,205">
+<area shape="rect" id="node7" href="syst_identities.html" target="_top" title="syst_identities" alt="" coords="1889,117,2100,205">
+<area shape="rect" id="node10" href="syst_instance_contexts.html" target="_top" title="syst_instance_contexts" alt="" coords="1855,748,2135,836">
+<area shape="rect" id="node11" href="syst_instance_network_rules.html" target="_top" title="syst_instance_network_rules" alt="" coords="1832,853,2157,941">
+<area shape="rect" id="node12" href="syst_instance_type_applications.html" target="_top" title="syst_instance_type_applications" alt="" coords="1397,669,1751,757">
+<area shape="rect" id="node14" href="syst_owner_network_rules.html" target="_top" title="syst_owner_network_rules" alt="" coords="1421,89,1727,265">
+<area shape="rect" id="node15" href="syst_owner_password_rules.html" target="_top" title="syst_owner_password_rules" alt="" coords="1415,282,1733,429">
+<area shape="rect" id="node16" href="syst_password_history.html" target="_top" title="syst_password_history" alt="" coords="1857,449,2133,537">
 </map>
                                         <a name='diagram'><img id="twodegreesDegreeImg" src="../diagrams/tables/syst_owners.2degrees.png" usemap="#twoDegreesRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>

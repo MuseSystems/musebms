@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>instance_doc Database</title>
+        <title>msbms_dev_instance Database</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../index.html" class="navbar-brand"><b>instance_doc</b> Database</a>
+                            <a href="../index.html" class="navbar-brand"><b>msbms_dev_instance</b> Database</a>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -97,65 +97,33 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><a href="routines/trig_a_iu_enum_value_check.html">trig_a_iu_enum_value_check</a></td>
+                                        <td><a href="routines/encode_base36.html">encode_base36</a></td>
                                         <td>FUNCTION</td>
-                                        <td>PLPGSQL</td>
-                                        <td>false</td>
-                                        <td>trigger</td>
+                                        <td>SQL</td>
+                                        <td>true</td>
+                                        <td>text</td>
                                         <td>INVOKER</td>
-                                        <td><p>A constraint trigger function to provide foreign key like validation of columns<br />
-which reference syst_enum_values.  This relationship requires the additional<br />
-check that only values from the desired enumeration are used in assigning to<br />
-records.</p></td>
+                                        <td><p>Encodes a big integer value into Base36 representation.</p></td>
                                     </tr>
                                     <tr>
-                                        <td><a href="routines/trig_a_iu_complex_format_value_check.html">trig_a_iu_complex_format_value_check</a></td>
+                                        <td><a href="routines/nonstandard_decode.html">nonstandard_decode</a></td>
                                         <td>FUNCTION</td>
                                         <td>PLPGSQL</td>
-                                        <td>false</td>
-                                        <td>trigger</td>
+                                        <td>true</td>
+                                        <td>bigint</td>
                                         <td>INVOKER</td>
-                                        <td><p>A constraint trigger function to provide foreign key like validation of columns<br />
-which reference syst_complex_format_values.  This relationship requires the<br />
-additional check so that only values from the desired format are used in<br />
-assigning to records.</p></td>
+                                        <td><p>Performs a decode operation, similar to the standard decode function, but for<br />
+non-standard decoding schemes, such as Base32 or Base36.</p></td>
                                     </tr>
                                     <tr>
-                                        <td><a href="routines/set_next_sequence_values.html">set_next_sequence_values</a></td>
+                                        <td><a href="routines/encode_base32.html">encode_base32</a></td>
                                         <td>FUNCTION</td>
-                                        <td>PLPGSQL</td>
-                                        <td>false</td>
-                                        <td>void</td>
+                                        <td>SQL</td>
+                                        <td>true</td>
+                                        <td>text</td>
                                         <td>INVOKER</td>
-                                        <td><p>Set the value of a numbering sequence.  Using this function ensures that the<br />
-targeted new value is within the acceptable ranges of the sequence.  Note that<br />
-this function is only needed when setting the value to an entirely new value and<br />
-it is not needed after a value has been retrieved from the numbering sequence.</p></td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="routines/trig_a_i_syst_numbering_sequence_create_value.html">trig_a_i_syst_numbering_sequence_create_value</a></td>
-                                        <td>FUNCTION</td>
-                                        <td>PLPGSQL</td>
-                                        <td>false</td>
-                                        <td>trigger</td>
-                                        <td>INVOKER</td>
-                                        <td><p>Automatically creates a msbms_syst_data.syst_numbering_sequence_values record<br />
-based on the configuration of the sequence in the syst_numbering_sequences<br />
-record.  If a sequence is incrementing, the minimum value is used set as the<br />
-next value; if the sequence is decrementing, the maximum value is used to set<br />
-the starting value.</p></td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="routines/trig_a_iu_syst_enum_values_check_functional_types.html">trig_a_iu_syst_enum_values_check_functional_types</a></td>
-                                        <td>FUNCTION</td>
-                                        <td>PLPGSQL</td>
-                                        <td>false</td>
-                                        <td>trigger</td>
-                                        <td>INVOKER</td>
-                                        <td><p>Ensures that if the parent syst_enums record has syst_enum_functional_types<br />
-records defined, a syst_enum_values record will reference one of those<br />
-functional types.  Note that this trigger function is intended to be use by<br />
-constraint triggers.</p></td>
+                                        <td><p>Encodes a big integer value into Base32 representation.  The representation here<br />
+is that designed by Douglas Crockford (<a href="https://www.crockford.com/base32.html">https://www.crockford.com/base32.html</a>).</p></td>
                                     </tr>
                                     <tr>
                                         <td><a href="routines/initialize_enum.html">initialize_enum</a></td>
@@ -169,17 +137,14 @@ will create a new enumeration along with its optional functional types and<br />
 starting value records.</p></td>
                                     </tr>
                                     <tr>
-                                        <td><a href="routines/trig_b_iu_set_diagnostic_columns.html">trig_b_iu_set_diagnostic_columns</a></td>
+                                        <td><a href="routines/get_random_string.html">get_random_string</a></td>
                                         <td>FUNCTION</td>
-                                        <td>PLPGSQL</td>
+                                        <td>SQL</td>
                                         <td>false</td>
-                                        <td>trigger</td>
+                                        <td>text</td>
                                         <td>INVOKER</td>
-                                        <td><p>Automatically maintains the common table diagnostic columns whenever data is<br />
-inserted or updated.  For UPDATE transactions, the trigger will determine if<br />
-there are &lsquo;real data changes&rsquo;, meaning any fields other than the common<br />
-diagnostic columns being changed by the transaction.  If not, only the<br />
-diag_update_count column will be updated.</p></td>
+                                        <td><p>Returns a random text string, by default consisting of alpha-numeric symbols, of<br />
+the requested length. Arbitrary characters may be provided my the caller.</p></td>
                                     </tr>
                                     <tr>
                                         <td><a href="routines/get_exception_details.html">get_exception_details</a></td>
@@ -204,6 +169,84 @@ syst_feature_map_levels record.  If the level record is functional type<br />
 nonassignable, an exception is raised.  Note that this function expects to be<br />
 executed by a constraint trigger and that the table associated with the trigger<br />
 should have a column feature_map_id referenced to syst_feature_map.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_a_iu_complex_format_value_check.html">trig_a_iu_complex_format_value_check</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>A constraint trigger function to provide foreign key like validation of columns<br />
+which reference syst_complex_format_values.  This relationship requires the<br />
+additional check so that only values from the desired format are used in<br />
+assigning to records.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/nonstandard_encode.html">nonstandard_encode</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>true</td>
+                                        <td>text</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Performs an encode operation, similar to the standard encode function, but for<br />
+non-standard encoding schemes, such as Base32 or Base36.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/set_next_sequence_values.html">set_next_sequence_values</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>void</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Set the value of a numbering sequence.  Using this function ensures that the<br />
+targeted new value is within the acceptable ranges of the sequence.  Note that<br />
+this function is only needed when setting the value to an entirely new value and<br />
+it is not needed after a value has been retrieved from the numbering sequence.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/decode_base36.html">decode_base36</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>true</td>
+                                        <td>bigint</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Decodes integers represented in Base36 notation.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_b_iu_set_diagnostic_columns.html">trig_b_iu_set_diagnostic_columns</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Automatically maintains the common table diagnostic columns whenever data is<br />
+inserted or updated.  For UPDATE transactions, the trigger will determine if<br />
+there are &lsquo;real data changes&rsquo;, meaning any fields other than the common<br />
+diagnostic columns being changed by the transaction.  If not, only the<br />
+diag_update_count column will be updated.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/decode_base32.html">decode_base32</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>true</td>
+                                        <td>bigint</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Decodes integers represented in Base32.  The representation here<br />
+is that designed by Douglas Crockford (<a href="https://www.crockford.com/base32.html">https://www.crockford.com/base32.html</a>).</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_a_iu_enum_item_check.html">trig_a_iu_enum_item_check</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>A constraint trigger function to provide foreign key like validation of columns<br />
+which reference syst_enum_items.  This relationship requires the additional<br />
+check that only values from the desired enumeration are used in assigning to<br />
+records.</p></td>
                                     </tr>
                                     <tr>
                                         <td><a href="routines/get_next_sequence_value.html">get_next_sequence_value</a></td>

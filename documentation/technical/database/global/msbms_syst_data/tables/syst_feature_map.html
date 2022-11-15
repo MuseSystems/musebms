@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>syst_feature_map - global_doc Database</title>
+        <title>syst_feature_map - msbms_dev_global Database</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../../index.html" class="navbar-brand"><b>global_doc</b> Database</a>
+                            <a href="../../index.html" class="navbar-brand"><b>msbms_dev_global</b> Database</a>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -126,10 +126,6 @@ driving nested directories to aide users in navigating forms or configurations.<
                                     <td>uuid_generate_v1()</td>
                                     <td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
-                                            <tr>
-                                                <td title="syst_enums.feature_id references syst_feature_map.id via syst_enums_feature_fk"><a href='syst_enums.html'>syst_enums</a><span class='relatedKey'>.feature_id</span></td>
-                                                <td class="constraint detail">syst_enums_feature_fk<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
-                                            </tr>
                                             <tr>
                                                 <td title="syst_feature_enum_assigns.feature_map_id references syst_feature_map.id via syst_feature_enum_assigns_feature_map_fk"><a href='syst_feature_enum_assigns.html'>syst_feature_enum_assigns</a><span class='relatedKey'>.feature_map_id</span></td>
                                                 <td class="constraint detail">syst_feature_enum_assigns_feature_map_fk<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
@@ -563,27 +559,24 @@ diag_row_version - 1.</p></td>
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="syst_enums.html" target="_top" title="syst_enums" alt="" coords="841,87,1121,292">
-<area shape="rect" id="node2" href="syst_feature_map.html" target="_top" title="syst_feature_map" alt="" coords="340,255,771,881">
-<area shape="rect" id="node4" href="syst_feature_map_levels.html" target="_top" title="syst_feature_map_levels" alt="" coords="5,375,296,551">
-<area shape="rect" id="node3" href="syst_feature_enum_assigns.html" target="_top" title="syst_feature_enum_assigns" alt="" coords="1191,5,1504,181">
-<area shape="rect" id="node5" href="syst_feature_relation_assigns.html" target="_top" title="syst_feature_relation_assigns" alt="" coords="815,309,1147,485">
-<area shape="rect" id="node6" href="syst_feature_setting_assigns.html" target="_top" title="syst_feature_setting_assigns" alt="" coords="817,503,1144,679">
+<area shape="rect" id="node1" href="syst_feature_enum_assigns.html" target="_top" title="syst_feature_enum_assigns" alt="" coords="824,5,1137,181">
+<area shape="rect" id="node2" href="syst_feature_map.html" target="_top" title="syst_feature_map" alt="" coords="340,225,771,852">
+<area shape="rect" id="node3" href="syst_feature_map_levels.html" target="_top" title="syst_feature_map_levels" alt="" coords="5,345,296,521">
+<area shape="rect" id="node4" href="syst_feature_relation_assigns.html" target="_top" title="syst_feature_relation_assigns" alt="" coords="815,199,1147,375">
+<area shape="rect" id="node5" href="syst_feature_setting_assigns.html" target="_top" title="syst_feature_setting_assigns" alt="" coords="817,392,1144,568">
 </map>
                                         <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/syst_feature_map.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="twodegreesDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
-<area shape="rect" id="node1" href="syst_enum_functional_types.html" target="_top" title="syst_enum_functional_types" alt="" coords="1191,199,1509,287">
-<area shape="rect" id="node2" href="syst_enums.html" target="_top" title="syst_enums" alt="" coords="841,175,1121,380">
-<area shape="rect" id="node4" href="syst_feature_map.html" target="_top" title="syst_feature_map" alt="" coords="340,167,771,793">
-<area shape="rect" id="node3" href="syst_enum_values.html" target="_top" title="syst_enum_values" alt="" coords="1553,233,1792,321">
-<area shape="rect" id="node6" href="syst_feature_map_levels.html" target="_top" title="syst_feature_map_levels" alt="" coords="5,287,296,463">
-<area shape="rect" id="node5" href="syst_feature_enum_assigns.html" target="_top" title="syst_feature_enum_assigns" alt="" coords="1193,5,1507,181">
-<area shape="rect" id="node7" href="syst_feature_relation_assigns.html" target="_top" title="syst_feature_relation_assigns" alt="" coords="815,445,1147,621">
-<area shape="rect" id="node8" href="syst_relations.html" target="_top" title="syst_relations" alt="" coords="453,811,658,899">
-<area shape="rect" id="node9" href="syst_feature_setting_assigns.html" target="_top" title="syst_feature_setting_assigns" alt="" coords="817,735,1144,911">
-<area shape="rect" id="node10" href="syst_settings.html" target="_top" title="syst_settings" alt="" coords="456,916,655,1004">
+<area shape="rect" id="node1" href="syst_feature_enum_assigns.html" target="_top" title="syst_feature_enum_assigns" alt="" coords="824,27,1137,203">
+<area shape="rect" id="node2" href="syst_enums.html" target="_top" title="syst_enums" alt="" coords="462,5,649,93">
+<area shape="rect" id="node3" href="syst_feature_map.html" target="_top" title="syst_feature_map" alt="" coords="340,135,771,761">
+<area shape="rect" id="node4" href="syst_feature_map_levels.html" target="_top" title="syst_feature_map_levels" alt="" coords="5,255,296,431">
+<area shape="rect" id="node5" href="syst_feature_relation_assigns.html" target="_top" title="syst_feature_relation_assigns" alt="" coords="815,301,1147,477">
+<area shape="rect" id="node6" href="syst_relations.html" target="_top" title="syst_relations" alt="" coords="453,779,658,867">
+<area shape="rect" id="node7" href="syst_feature_setting_assigns.html" target="_top" title="syst_feature_setting_assigns" alt="" coords="817,659,1144,835">
+<area shape="rect" id="node8" href="syst_settings.html" target="_top" title="syst_settings" alt="" coords="456,884,655,972">
 </map>
                                         <a name='diagram'><img id="twodegreesDegreeImg" src="../diagrams/tables/syst_feature_map.2degrees.png" usemap="#twoDegreesRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>

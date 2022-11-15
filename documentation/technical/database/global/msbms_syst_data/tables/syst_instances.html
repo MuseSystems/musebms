@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>syst_instances - global_doc Database</title>
+        <title>syst_instances - msbms_dev_global Database</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../../index.html" class="navbar-brand"><b>global_doc</b> Database</a>
+                            <a href="../../index.html" class="navbar-brand"><b>msbms_dev_global</b> Database</a>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -127,6 +127,14 @@
                                             <tr>
                                                 <td title="syst_access_account_instance_assocs.instance_id references syst_instances.id via syst_access_account_instance_assocs_instances_fk"><a href='syst_access_account_instance_assocs.html'>syst_access_account_instance_assocs</a><span class='relatedKey'>.instance_id</span></td>
                                                 <td class="constraint detail">syst_access_account_instance_assocs_instances_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="syst_instance_contexts.instance_id references syst_instances.id via syst_instance_contexts_instances_fk"><a href='syst_instance_contexts.html'>syst_instance_contexts</a><span class='relatedKey'>.instance_id</span></td>
+                                                <td class="constraint detail">syst_instance_contexts_instances_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="syst_instance_network_rules.instance_id references syst_instances.id via syst_instance_network_rules_instance_fk"><a href='syst_instance_network_rules.html'>syst_instance_network_rules</a><span class='relatedKey'>.instance_id</span></td>
+                                                <td class="constraint detail">syst_instance_network_rules_instance_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
                                             </tr>
                                             <tr>
                                                 <td title="syst_instances.owning_instance_id references syst_instances.id via syst_instances_owning_instance_fk"><a href='syst_instances.html'>syst_instances</a><span class='relatedKey'>.owning_instance_id</span></td>
@@ -211,7 +219,7 @@ interactions</p></td>
                                     <td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
-                                                <td title="syst_instances.instance_type_id references syst_enum_values.id via syst_instances_enum_instance_type_fk"><a href='syst_enum_values.html'>syst_enum_values</a><span class='relatedKey'>.id</span></td>
+                                                <td title="syst_instances.instance_type_id references syst_enum_items.id via syst_instances_enum_instance_type_fk"><a href='syst_enum_items.html'>syst_enum_items</a><span class='relatedKey'>.id</span></td>
                                                 <td class="constraint detail">syst_instances_enum_instance_type_fk<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
@@ -234,7 +242,7 @@ instances created for different reasons based on the assigned instance type.</p>
                                     <td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
-                                                <td title="syst_instances.instance_state_id references syst_enum_values.id via syst_instances_enum_instance_state_fk"><a href='syst_enum_values.html'>syst_enum_values</a><span class='relatedKey'>.id</span></td>
+                                                <td title="syst_instances.instance_state_id references syst_enum_items.id via syst_instances_enum_instance_state_fk"><a href='syst_enum_items.html'>syst_enum_items</a><span class='relatedKey'>.id</span></td>
                                                 <td class="constraint detail">syst_instances_enum_instance_state_fk<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
@@ -269,82 +277,6 @@ and which credential types are allowed to be used to authenticate to the owner&r
 instances.</p></td>
                                 </tr>
                                 <tr>
-                                    <td><span id="dbserver_name">dbserver_name</span></td>
-                                    <td>text</td>
-                                    <td>2147483647</td>
-                                    <td title=''></td>
-                                    <td title=''></td>
-                                    <td>null</td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                        </table>
-                                    </td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                        </table>
-                                    </td>
-                                    <td><p>References a database server found in the msbms_startup_options.toml file.<br />
-While this file may override certain defaults set for the server in that file,<br />
-we need to use the references in that file to know where we should connect.</p></td>
-                                </tr>
-                                <tr>
-                                    <td><span id="db_app_context_pool_size">db_app_context_pool_size</span></td>
-                                    <td>int4</td>
-                                    <td>10</td>
-                                    <td title=''></td>
-                                    <td title=''></td>
-                                    <td>10</td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                        </table>
-                                    </td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                        </table>
-                                    </td>
-                                    <td><p>The number of pooled database connections available to the application access<br />
-context.  The application will checkout connections from the pool as needed and<br />
-otherwise queue requests as necessary (within limits).</p></td>
-                                </tr>
-                                <tr>
-                                    <td><span id="db_api_context_pool_size">db_api_context_pool_size</span></td>
-                                    <td>int4</td>
-                                    <td>10</td>
-                                    <td title=''></td>
-                                    <td title=''></td>
-                                    <td>3</td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                        </table>
-                                    </td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                        </table>
-                                    </td>
-                                    <td><p>The number of pooled database connections available to the API access context.<br />
-The application will checkout connections from the pool as needed and otherwise<br />
-queue requests as necessary (within limits).</p></td>
-                                </tr>
-                                <tr>
-                                    <td><span id="instance_code">instance_code</span></td>
-                                    <td>bytea</td>
-                                    <td>2147483647</td>
-                                    <td title=''></td>
-                                    <td title=''></td>
-                                    <td>gen_random_bytes(32)</td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                        </table>
-                                    </td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                        </table>
-                                    </td>
-                                    <td><p>A randomly generated sequence of bytes used in instance database connection<br />
-authentication.  Note that this value, while random, should be no fewer than 32<br />
-bytes long.</p></td>
-                                </tr>
-                                <tr>
                                     <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="owning_instance_id">owning_instance_id</span></td>
                                     <td>uuid</td>
                                     <td>2147483647</td>
@@ -370,6 +302,62 @@ with some sort of production instance where the real work is performed.  This<br
 kind of association becomes clearer in SaaS environments where a primary<br />
 instance is contracted for, but other supporting instances, such as a sandbox,<br />
 should follow certain account related actions of the primary.</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="dbserver_name">dbserver_name</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Identifies on which database server the instance is hosted. If empty, no<br />
+server has been assigned and the instance is unstartable.</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="instance_code">instance_code</span></td>
+                                    <td>bytea</td>
+                                    <td>2147483647</td>
+                                    <td title=''></td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>This is a random sequence of bytes intended for use in certain algorithmic<br />
+credential generation.  Note that losing this value may prevent the Instance<br />
+from being started due to bad credentials; there may be other consequences as<br />
+well.</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="instance_options">instance_options</span></td>
+                                    <td>jsonb</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>A key/value store of values which define application or instance specific<br />
+options.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_timestamp_created">diag_timestamp_created</span></td>
@@ -567,16 +555,8 @@ diag_row_version - 1.</p></td>
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>syst_instances_db_app_context_pool_size_no_neg_chk</td>
-                                    <td>((db_app_context_pool_size &gt; 0))</td>
-                                </tr>
-                                <tr>
                                     <td>syst_instances_self_ownership_chk</td>
                                     <td>(((owning_instance_id IS NULL) OR (owning_instance_id &lt;&gt; id)))</td>
-                                </tr>
-                                <tr>
-                                    <td>syst_instances_db_api_context_pool_size_no_neg_chk</td>
-                                    <td>((db_api_context_pool_size &gt; 0))</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -601,26 +581,34 @@ diag_row_version - 1.</p></td>
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="syst_access_account_instance_assocs.html" target="_top" title="syst_access_account_instance_assocs" alt="" coords="1136,5,1536,211">
-<area shape="rect" id="node2" href="syst_enum_values.html" target="_top" title="syst_enum_values" alt="" coords="5,271,285,505">
-<area shape="rect" id="node3" href="syst_instances.html" target="_top" title="syst_instances" alt="" coords="653,132,1092,759">
-<area shape="rect" id="node4" href="syst_applications.html" target="_top" title="syst_applications" alt="" coords="329,99,609,275">
-<area shape="rect" id="node5" href="syst_owners.html" target="_top" title="syst_owners" alt="" coords="329,364,609,569">
+<area shape="rect" id="node1" href="syst_access_account_instance_assocs.html" target="_top" title="syst_access_account_instance_assocs" alt="" coords="1136,5,1536,181">
+<area shape="rect" id="node2" href="syst_instances.html" target="_top" title="syst_instances" alt="" coords="653,255,1092,852">
+<area shape="rect" id="node5" href="syst_applications.html" target="_top" title="syst_applications" alt="" coords="329,217,609,393">
+<area shape="rect" id="node6" href="syst_enum_items.html" target="_top" title="syst_enum_items" alt="" coords="5,407,285,641">
+<area shape="rect" id="node7" href="syst_owners.html" target="_top" title="syst_owners" alt="" coords="329,483,609,688">
+<area shape="rect" id="node3" href="syst_instance_contexts.html" target="_top" title="syst_instance_contexts" alt="" coords="1196,199,1476,404">
+<area shape="rect" id="node4" href="syst_instance_network_rules.html" target="_top" title="syst_instance_network_rules" alt="" coords="1173,421,1499,597">
 </map>
                                         <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/syst_instances.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="twodegreesDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
-<area shape="rect" id="node1" href="syst_access_account_instance_assocs.html" target="_top" title="syst_access_account_instance_assocs" alt="" coords="1729,223,2129,428">
-<area shape="rect" id="node2" href="syst_access_accounts.html" target="_top" title="syst_access_accounts" alt="" coords="1331,149,1601,237">
-<area shape="rect" id="node3" href="syst_enum_values.html" target="_top" title="syst_enum_values" alt="" coords="599,196,879,431">
-<area shape="rect" id="node4" href="syst_instances.html" target="_top" title="syst_instances" alt="" coords="1247,315,1685,941">
-<area shape="rect" id="node5" href="syst_owners.html" target="_top" title="syst_owners" alt="" coords="923,501,1203,707">
-<area shape="rect" id="node8" href="syst_enum_functional_types.html" target="_top" title="syst_enum_functional_types" alt="" coords="236,337,555,425">
-<area shape="rect" id="node9" href="syst_enums.html" target="_top" title="syst_enums" alt="" coords="5,301,192,389">
-<area shape="rect" id="node10" href="syst_applications.html" target="_top" title="syst_applications" alt="" coords="923,272,1203,448">
-<area shape="rect" id="node6" href="syst_credentials.html" target="_top" title="syst_credentials" alt="" coords="2173,81,2397,169">
-<area shape="rect" id="node7" href="syst_identities.html" target="_top" title="syst_identities" alt="" coords="1824,81,2035,169">
+<area shape="rect" id="node1" href="syst_access_account_instance_assocs.html" target="_top" title="syst_access_account_instance_assocs" alt="" coords="1729,244,2129,420">
+<area shape="rect" id="node2" href="syst_access_accounts.html" target="_top" title="syst_access_accounts" alt="" coords="1331,139,1601,227">
+<area shape="rect" id="node3" href="syst_instances.html" target="_top" title="syst_instances" alt="" coords="1247,479,1685,1076">
+<area shape="rect" id="node4" href="syst_enum_items.html" target="_top" title="syst_enum_items" alt="" coords="599,401,879,636">
+<area shape="rect" id="node5" href="syst_owners.html" target="_top" title="syst_owners" alt="" coords="923,313,1203,519">
+<area shape="rect" id="node7" href="syst_applications.html" target="_top" title="syst_applications" alt="" coords="923,1043,1203,1219">
+<area shape="rect" id="node10" href="syst_enum_functional_types.html" target="_top" title="syst_enum_functional_types" alt="" coords="236,543,555,631">
+<area shape="rect" id="node11" href="syst_enums.html" target="_top" title="syst_enums" alt="" coords="5,507,192,595">
+<area shape="rect" id="node6" href="syst_application_contexts.html" target="_top" title="syst_application_contexts" alt="" coords="1315,1093,1617,1181">
+<area shape="rect" id="node8" href="syst_credentials.html" target="_top" title="syst_credentials" alt="" coords="2173,87,2397,175">
+<area shape="rect" id="node9" href="syst_identities.html" target="_top" title="syst_identities" alt="" coords="1824,87,2035,175">
+<area shape="rect" id="node12" href="syst_instance_contexts.html" target="_top" title="syst_instance_contexts" alt="" coords="1789,824,2069,1029">
+<area shape="rect" id="node13" href="syst_instance_network_rules.html" target="_top" title="syst_instance_network_rules" alt="" coords="1767,452,2092,628">
+<area shape="rect" id="node14" href="syst_instance_type_applications.html" target="_top" title="syst_instance_type_applications" alt="" coords="1289,1199,1643,1287">
+<area shape="rect" id="node15" href="syst_owner_network_rules.html" target="_top" title="syst_owner_network_rules" alt="" coords="1313,244,1619,332">
+<area shape="rect" id="node16" href="syst_owner_password_rules.html" target="_top" title="syst_owner_password_rules" alt="" coords="1307,349,1625,437">
 </map>
                                         <a name='diagram'><img id="twodegreesDegreeImg" src="../diagrams/tables/syst_instances.2degrees.png" usemap="#twoDegreesRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>
