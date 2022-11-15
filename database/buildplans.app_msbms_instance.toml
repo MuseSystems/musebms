@@ -39,6 +39,13 @@ load_files = [
     "application/msbms_instance/components/msbms_syst_enums/privileges.eex.sql",
 
     #
+    #  MsbmsSystFeatures
+    #
+
+    {type = "plan", file = "components/system/msbms_syst_features/subplans.msbms_syst_features.toml"},
+     "application/msbms_instance/gen_seed_data/initialize_feature_mapping.eex.sql",
+
+    #
     # MsbmsSystFormats
     #
 
@@ -49,13 +56,6 @@ load_files = [
     #
 
     {type = "plan", file = "components/system/msbms_syst_numberings/subplans.msbms_syst_numberings.toml"},
-
-    #
-    #  MsbmsSystFeatures
-    #
-
-    {type = "plan", file = "components/system/msbms_syst_features/subplans.msbms_syst_features.toml"},
-     "application/msbms_instance/gen_seed_data/initialize_feature_mapping.eex.sql",
 
     #
     # Instance Schema Loading
