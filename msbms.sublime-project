@@ -20,7 +20,7 @@
             "path": "components/system/mscmp_syst_options",
         },
         {
-            "path": "components/system/msbms_syst_settings",
+            "path": "components/system/mscmp_syst_settings",
         },
         {
             "path": "components/system/msbms_syst_enums",
