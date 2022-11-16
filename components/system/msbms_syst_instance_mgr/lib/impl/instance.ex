@@ -75,9 +75,9 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
         startup_options
       ) do
     instance_dbserver =
-      MsbmsSystOptions.get_dbserver_by_name(startup_options, instance.dbserver_name)
+      MscmpSystOptions.get_dbserver_by_name(startup_options, instance.dbserver_name)
 
-    global_pepper = MsbmsSystOptions.get_global_pepper_value(startup_options)
+    global_pepper = MscmpSystOptions.get_global_pepper_value(startup_options)
 
     contexts =
       Enum.map(
@@ -115,7 +115,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
           instance_context.context_code,
           @password_magic,
           instance_dbserver.server_salt,
-          MsbmsSystOptions.get_global_pepper_value(startup_options),
+          MscmpSystOptions.get_global_pepper_value(startup_options),
           instance_data.instance_code
         ]),
       starting_pool_size: instance_context.db_pool_size,

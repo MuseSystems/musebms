@@ -1,5 +1,5 @@
 # Source File: options_file_test.exs
-# Location:    musebms/components/system/msbms_syst_options/test/options_file_test.exs
+# Location:    musebms/components/system/mscmp_syst_options/test/options_file_test.exs
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -17,18 +17,18 @@ defmodule OptionsFileTest do
 
   test "Can get_options/1 Return Options" do
     assert {:ok, %{global_dbserver_name: "global_db"}} =
-             MsbmsSystOptions.get_options(@default_path)
+             MscmpSystOptions.get_options(@default_path)
   end
 
   test "Can get_options/1 Return MscmpSystError Tuple" do
-    assert {:error, %MscmpSystError{}} = MsbmsSystOptions.get_options("bad_path.toml")
+    assert {:error, %MscmpSystError{}} = MscmpSystOptions.get_options("bad_path.toml")
   end
 
   test "Can get_options!/1 Return Options" do
-    assert %{global_dbserver_name: "global_db"} = MsbmsSystOptions.get_options!(@default_path)
+    assert %{global_dbserver_name: "global_db"} = MscmpSystOptions.get_options!(@default_path)
   end
 
   test "Does get_options!/1 Raise with Bad File" do
-    assert_raise MscmpSystError, fn -> MsbmsSystOptions.get_options!("bad_path.toml") end
+    assert_raise MscmpSystError, fn -> MscmpSystOptions.get_options!("bad_path.toml") end
   end
 end

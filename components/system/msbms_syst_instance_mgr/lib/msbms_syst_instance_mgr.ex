@@ -483,7 +483,7 @@ defmodule MsbmsSystInstanceMgr do
     struct for the target Instance.
 
     * `startup_options` - a map of values containing the Startup Options
-    obtained from the `MsbmsSystOptions` component.
+    obtained from the `MscmpSystOptions` component.
   """
   @spec get_instance_datastore_options(Types.instance_id() | Data.SystInstances.t(), map()) ::
           MscmpSystDb.Types.datastore_options()
@@ -511,7 +511,7 @@ defmodule MsbmsSystInstanceMgr do
     * `instance_id` - the record ID of the Instance to initialize.
 
     * `startup_options` - a map of values containing the Startup Options
-    obtained from the `MsbmsSystOptions` component.
+    obtained from the `MscmpSystOptions` component.
 
     * `opts` - a Keyword List of optional values used during the initialization
     process.  The available options include:
@@ -625,7 +625,7 @@ defmodule MsbmsSystInstanceMgr do
     `MsbmsSystInstanceMgr.Data.SystInstances` struct of the Instance to purge.
 
     * `startup_options` - a map of values containing the Startup Options
-    obtained from the `MsbmsSystOptions` component.
+    obtained from the `MscmpSystOptions` component.
   """
   @spec purge_instance(Types.instance_id() | Data.SystInstances.t(), map()) ::
           :ok | {:error, MscmpSystError.t()}
@@ -668,7 +668,7 @@ defmodule MsbmsSystInstanceMgr do
     Application to start.
 
     * `startup_options` - a map of values containing the Startup Options
-    obtained from the `MsbmsSystOptions` component.
+    obtained from the `MscmpSystOptions` component.
 
     * `opts` - a Keyword List of optional values used during the initialization
     process.  The available options include:
@@ -744,7 +744,7 @@ defmodule MsbmsSystInstanceMgr do
     `MsbmsSystInstanceMgr.Data.SystInstances` struct of the Instance to start.
 
     * `startup_options` - a map of values containing the Startup Options
-    obtained from the `MsbmsSystOptions` component.
+    obtained from the `MscmpSystOptions` component.
 
     * `opts` - a Keyword List of optional values used during the initialization
     process.  The available options include:

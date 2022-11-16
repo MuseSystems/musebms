@@ -1,11 +1,11 @@
-defmodule MsbmsSystOptions do
+defmodule MscmpSystOptions do
   @moduledoc """
   API for retrieving and working with option files stored in the application server file system.
   """
 
-  alias MsbmsSystOptions.Impl.OptionsFile
-  alias MsbmsSystOptions.Impl.OptionsParser
-  alias MsbmsSystOptions.Types
+  alias MscmpSystOptions.Impl.OptionsFile
+  alias MscmpSystOptions.Impl.OptionsParser
+  alias MscmpSystOptions.Types
 
   @doc section: :file_handling
   @doc """
@@ -26,7 +26,7 @@ defmodule MsbmsSystOptions do
 
   Typical call and return:
 
-      iex> MsbmsSystOptions.get_options("./testing_options.toml")
+      iex> MscmpSystOptions.get_options("./testing_options.toml")
       {
         :ok,
         %{
@@ -65,7 +65,7 @@ defmodule MsbmsSystOptions do
   Called with bad parameters:
 
       iex> {:error, %MscmpSystError{}} =
-      ...>   MsbmsSystOptions.get_options("./bad_file_name.toml")
+      ...>   MscmpSystOptions.get_options("./bad_file_name.toml")
   """
   @spec get_options(String.t()) :: {:ok, map()} | {:error, MscmpSystError.t()}
   defdelegate get_options(options_file_path), to: OptionsFile
@@ -81,7 +81,7 @@ defmodule MsbmsSystOptions do
 
   Typical call and return:
 
-      iex> MsbmsSystOptions.get_options!("./testing_options.toml")
+      iex> MscmpSystOptions.get_options!("./testing_options.toml")
       %{
         dbserver: [
           %{
@@ -116,7 +116,7 @@ defmodule MsbmsSystOptions do
 
   Called with bad parameters:
 
-      iex> MsbmsSystOptions.get_options!("./bad_file_name.toml")
+      iex> MscmpSystOptions.get_options!("./bad_file_name.toml")
       ** (MscmpSystError) Problem reading options file './bad_file_name.toml'.
   """
   @spec get_options!(String.t()) :: map()
@@ -132,8 +132,8 @@ defmodule MsbmsSystOptions do
 
   ## Examples
 
-      iex> config_options = MsbmsSystOptions.get_options!("./testing_options.toml")
-      iex> MsbmsSystOptions.get_global_dbserver_name(config_options)
+      iex> config_options = MscmpSystOptions.get_options!("./testing_options.toml")
+      iex> MscmpSystOptions.get_global_dbserver_name(config_options)
       "global_db"
   """
   @spec get_global_dbserver_name(map()) :: String.t()
@@ -149,8 +149,8 @@ defmodule MsbmsSystOptions do
     * `options` - the options file data as read by `get_options/1`.
 
   ## Examples
-      iex> config_options = MsbmsSystOptions.get_options!("./testing_options.toml")
-      iex> %{server_name: "global_db"} = MsbmsSystOptions.get_global_dbserver(config_options)
+      iex> config_options = MscmpSystOptions.get_options!("./testing_options.toml")
+      iex> %{server_name: "global_db"} = MscmpSystOptions.get_global_dbserver(config_options)
 
   """
   @spec get_global_dbserver(map()) :: MscmpSystDb.Types.db_server()
@@ -174,8 +174,8 @@ defmodule MsbmsSystOptions do
     * `options` - the options file data as read by `get_options/1`.
 
   ## Examples
-      iex> config_options = MsbmsSystOptions.get_options!("./testing_options.toml")
-      iex> MsbmsSystOptions.get_global_pepper_value(config_options)
+      iex> config_options = MscmpSystOptions.get_options!("./testing_options.toml")
+      iex> MscmpSystOptions.get_global_pepper_value(config_options)
       "jTtEdXRExP5YXHeARQ1W66lP6wDc9GyOvhFPvwnHhtc="
   """
   @spec get_global_pepper_value(map()) :: binary()
@@ -190,8 +190,8 @@ defmodule MsbmsSystOptions do
     * `options` - the options file data as read by `get_options/1`.
 
   ## Examples
-      iex> config_options = MsbmsSystOptions.get_options!("./testing_options.toml")
-      iex> MsbmsSystOptions.list_available_server_pools(config_options)
+      iex> config_options = MscmpSystOptions.get_options!("./testing_options.toml")
+      iex> MscmpSystOptions.list_available_server_pools(config_options)
       ["primary", "linked", "demo", "reserved"]
   """
   @spec list_available_server_pools(map()) :: list(Types.server_pool())
@@ -217,8 +217,8 @@ defmodule MsbmsSystOptions do
 
   Calling without filters:
 
-      iex> config_options = MsbmsSystOptions.get_options!("./testing_options.toml")
-      iex> [_ | _] = MsbmsSystOptions.list_dbservers(config_options)
+      iex> config_options = MscmpSystOptions.get_options!("./testing_options.toml")
+      iex> [_ | _] = MscmpSystOptions.list_dbservers(config_options)
       [
         %{
           db_host: "127.0.0.1",
@@ -248,8 +248,8 @@ defmodule MsbmsSystOptions do
 
   Calling with filters:
 
-      iex> config_options = MsbmsSystOptions.get_options!("./testing_options.toml")
-      iex> [_ | _] = MsbmsSystOptions.list_dbservers(config_options, ["primary"])
+      iex> config_options = MscmpSystOptions.get_options!("./testing_options.toml")
+      iex> [_ | _] = MscmpSystOptions.list_dbservers(config_options, ["primary"])
       [
         %{
           db_host: "127.0.0.1",
@@ -284,8 +284,8 @@ defmodule MsbmsSystOptions do
 
   Typical call for database server:
 
-      iex> config_options = MsbmsSystOptions.get_options!("./testing_options.toml")
-      iex> MsbmsSystOptions.get_dbserver_by_name(config_options, "instance_db")
+      iex> config_options = MscmpSystOptions.get_options!("./testing_options.toml")
+      iex> MscmpSystOptions.get_dbserver_by_name(config_options, "instance_db")
       %{
         db_host: "127.0.0.1",
         db_max_instances: 30,
@@ -301,8 +301,8 @@ defmodule MsbmsSystOptions do
 
   Result in case of bad server name:
 
-      iex> config_options = MsbmsSystOptions.get_options!("./testing_options.toml")
-      iex> MsbmsSystOptions.get_dbserver_by_name(config_options, "non_existent_db")
+      iex> config_options = MscmpSystOptions.get_options!("./testing_options.toml")
+      iex> MscmpSystOptions.get_dbserver_by_name(config_options, "non_existent_db")
       nil
   """
   @spec get_dbserver_by_name(map(), String.t()) :: MscmpSystDb.Types.db_server()

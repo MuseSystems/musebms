@@ -17,7 +17,7 @@
             "path": "components/system/mscmp_syst_db",
         },
         {
-            "path": "components/system/msbms_syst_options",
+            "path": "components/system/mscmp_syst_options",
         },
         {
             "path": "components/system/msbms_syst_settings",
