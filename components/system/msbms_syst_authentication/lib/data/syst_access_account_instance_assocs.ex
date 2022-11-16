@@ -31,9 +31,9 @@ defmodule MsbmsSystAuthentication.Data.SystAccessAccountInstanceAssocs do
             id: Ecto.UUID.t() | nil,
             access_account_id: Types.access_account_id() | nil,
             access_account: Data.SystAccessAccounts.t() | Ecto.Association.NotLoaded.t() | nil,
-            instance_id: MsbmsSystInstanceMgr.Types.instance_id() | nil,
+            instance_id: MscmpSystInstance.Types.instance_id() | nil,
             instance:
-              MsbmsSystInstanceMgr.Data.SystInstances.t() | Ecto.Association.NotLoaded.t() | nil,
+              MscmpSystInstance.Data.SystInstances.t() | Ecto.Association.NotLoaded.t() | nil,
             access_granted: DateTime.t() | nil,
             invitation_issued: DateTime.t() | nil,
             invitation_expires: DateTime.t() | nil,
@@ -63,7 +63,7 @@ defmodule MsbmsSystAuthentication.Data.SystAccessAccountInstanceAssocs do
     field(:diag_update_count, :integer)
 
     belongs_to(:access_account, Data.SystAccessAccounts)
-    belongs_to(:instance, MsbmsSystInstanceMgr.Data.SystInstances)
+    belongs_to(:instance, MscmpSystInstance.Data.SystInstances)
   end
 
   @spec insert_changeset(Types.access_account_instance_assoc_params()) :: Ecto.Changeset.t()

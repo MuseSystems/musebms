@@ -102,7 +102,7 @@ defmodule NetworkRulesTest do
   end
 
   test "Can get Owner Applied Network Rule" do
-    {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner1")
+    {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner1")
 
     assert {:ok, %{precedence: :instance_owner, functional_type: :deny}} =
              Impl.NetworkRules.get_applied_network_rule(~i"10.128.128.1", nil, owner_id)
@@ -113,7 +113,7 @@ defmodule NetworkRulesTest do
 
   test "Can get Instance Applied Network Rule" do
     {:ok, instance_id} =
-      MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner1_instance_types_std")
+      MscmpSystInstance.get_instance_id_by_name("app1_owner1_instance_types_std")
 
     assert {:ok, %{precedence: :instance, functional_type: :deny}} =
              Impl.NetworkRules.get_applied_network_rule(~i"10.126.126.2", instance_id)
@@ -147,7 +147,7 @@ defmodule NetworkRulesTest do
   end
 
   test "Can create Owner Network Rule" do
-    {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner6")
+    {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner6")
 
     new_ordering =
       from(onr in Data.SystOwnerNetworkRules,
@@ -176,7 +176,7 @@ defmodule NetworkRulesTest do
 
   test "Can create Instance Network Rule" do
     {:ok, instance_id} =
-      MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner6_instance_types_std")
+      MscmpSystInstance.get_instance_id_by_name("app1_owner6_instance_types_std")
 
     new_ordering =
       from(inr in Data.SystInstanceNetworkRules,
@@ -250,7 +250,7 @@ defmodule NetworkRulesTest do
   end
 
   test "Can update Owner Network Rule / Success Tuple" do
-    {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner5")
+    {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner5")
 
     owner_rule =
       from(onr in Data.SystOwnerNetworkRules,
@@ -275,7 +275,7 @@ defmodule NetworkRulesTest do
   end
 
   test "Can update Owner Network Rule / Raise on Error" do
-    {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner5")
+    {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner5")
 
     owner_rule =
       from(onr in Data.SystOwnerNetworkRules,
@@ -305,7 +305,7 @@ defmodule NetworkRulesTest do
 
   test "Can update Instance Network Rule / Success Tuple" do
     {:ok, instance_id} =
-      MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner7_instance_types_std")
+      MscmpSystInstance.get_instance_id_by_name("app1_owner7_instance_types_std")
 
     instance_rule =
       from(inr in Data.SystInstanceNetworkRules,
@@ -331,7 +331,7 @@ defmodule NetworkRulesTest do
 
   test "Can update Instance Network Rule / Raise on Error" do
     {:ok, instance_id} =
-      MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner7_instance_types_std")
+      MscmpSystInstance.get_instance_id_by_name("app1_owner7_instance_types_std")
 
     instance_rule =
       from(inr in Data.SystInstanceNetworkRules,
@@ -384,7 +384,7 @@ defmodule NetworkRulesTest do
   end
 
   test "Can get Owner Network Rule / Success Tuple" do
-    {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner1")
+    {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner1")
 
     owner_rule =
       from(onr in Data.SystOwnerNetworkRules,
@@ -403,7 +403,7 @@ defmodule NetworkRulesTest do
   end
 
   test "Can get Owner Network Rule / Raise on Error" do
-    {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner1")
+    {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner1")
 
     owner_rule =
       from(onr in Data.SystOwnerNetworkRules,
@@ -423,7 +423,7 @@ defmodule NetworkRulesTest do
 
   test "Can get Instance Network Rule / Success Tuple" do
     {:ok, instance_id} =
-      MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner1_instance_types_std")
+      MscmpSystInstance.get_instance_id_by_name("app1_owner1_instance_types_std")
 
     instance_rule =
       from(inr in Data.SystInstanceNetworkRules,
@@ -443,7 +443,7 @@ defmodule NetworkRulesTest do
 
   test "Can get Instance Network Rule / Raise on Error" do
     {:ok, instance_id} =
-      MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner1_instance_types_std")
+      MscmpSystInstance.get_instance_id_by_name("app1_owner1_instance_types_std")
 
     instance_rule =
       from(inr in Data.SystInstanceNetworkRules,
@@ -492,7 +492,7 @@ defmodule NetworkRulesTest do
   end
 
   test "Can delete Owner Network Rule / Success Tuple" do
-    {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner6")
+    {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner6")
 
     owner_rule_id =
       from(onr in Data.SystOwnerNetworkRules,
@@ -512,7 +512,7 @@ defmodule NetworkRulesTest do
   end
 
   test "Can delete Owner Network Rule / Raise on Error" do
-    {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner6")
+    {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner6")
 
     owner_rule_id =
       from(onr in Data.SystOwnerNetworkRules,
@@ -533,7 +533,7 @@ defmodule NetworkRulesTest do
 
   test "Can delete Instance Network Rule / Success Tuple" do
     {:ok, instance_id} =
-      MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner8_instance_types_std")
+      MscmpSystInstance.get_instance_id_by_name("app1_owner8_instance_types_std")
 
     instance_rule_id =
       from(inr in Data.SystInstanceNetworkRules,
@@ -554,7 +554,7 @@ defmodule NetworkRulesTest do
 
   test "Can delete Instance Network Rule / Raise on Error" do
     {:ok, instance_id} =
-      MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner8_instance_types_std")
+      MscmpSystInstance.get_instance_id_by_name("app1_owner8_instance_types_std")
 
     instance_rule_id =
       from(inr in Data.SystInstanceNetworkRules,

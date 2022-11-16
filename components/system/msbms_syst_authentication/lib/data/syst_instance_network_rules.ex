@@ -30,9 +30,9 @@ defmodule MsbmsSystAuthentication.Data.SystInstanceNetworkRules do
           %__MODULE__{
             __meta__: Ecto.Schema.Metadata.t(),
             id: Ecto.UUID.t() | nil,
-            instance_id: MsbmsSystInstanceMgr.Types.instance_id() | nil,
+            instance_id: MscmpSystInstance.Types.instance_id() | nil,
             instance:
-              MsbmsSystInstanceMgr.Data.SystInstances.t() | Ecto.Association.NotLoaded.t() | nil,
+              MscmpSystInstance.Data.SystInstances.t() | Ecto.Association.NotLoaded.t() | nil,
             ordering: integer() | nil,
             functional_type: String.t() | nil,
             ip_host_or_network: DbTypes.Inet.t() | nil,
@@ -65,7 +65,7 @@ defmodule MsbmsSystAuthentication.Data.SystInstanceNetworkRules do
     field(:diag_row_version, :integer)
     field(:diag_update_count, :integer)
 
-    belongs_to(:instance, MsbmsSystInstanceMgr.Data.SystInstances)
+    belongs_to(:instance, MscmpSystInstance.Data.SystInstances)
   end
 
   @spec insert_changeset(Types.instance_network_rule_params()) :: Ecto.Changeset.t()

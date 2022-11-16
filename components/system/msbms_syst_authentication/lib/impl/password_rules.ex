@@ -112,7 +112,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
   end
 
   @spec create_owner_password_rules(
-          MsbmsSystInstanceMgr.Types.owner_id(),
+          MscmpSystInstance.Types.owner_id(),
           Types.password_rule_params()
         ) ::
           {:ok, Data.SystOwnerPasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
@@ -123,7 +123,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
   end
 
   @spec create_owner_password_rules!(
-          MsbmsSystInstanceMgr.Types.owner_id(),
+          MscmpSystInstance.Types.owner_id(),
           Types.password_rule_params()
         ) ::
           Data.SystOwnerPasswordRules.t()
@@ -199,7 +199,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
   end
 
   @spec update_owner_password_rules(
-          MsbmsSystInstanceMgr.Types.owner_id() | Data.SystOwnerPasswordRules.t(),
+          MscmpSystInstance.Types.owner_id() | Data.SystOwnerPasswordRules.t(),
           Types.password_rule_params()
         ) ::
           {:ok, Data.SystOwnerPasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
@@ -210,7 +210,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
   end
 
   @spec update_owner_password_rules!(
-          MsbmsSystInstanceMgr.Types.owner_id() | Data.SystOwnerPasswordRules.t(),
+          MscmpSystInstance.Types.owner_id() | Data.SystOwnerPasswordRules.t(),
           Types.password_rule_params()
         ) ::
           Data.SystOwnerPasswordRules.t()
@@ -266,7 +266,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
         cause: error
   end
 
-  @spec get_owner_password_rules(MsbmsSystInstanceMgr.Types.owner_id()) ::
+  @spec get_owner_password_rules(MscmpSystInstance.Types.owner_id()) ::
           {:ok, Data.SystOwnerPasswordRules.t()}
           | {:ok, :not_found}
           | {:error, MscmpSystError.t() | Exception.t()}
@@ -276,7 +276,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     error -> {:error, error}
   end
 
-  @spec get_owner_password_rules!(MsbmsSystInstanceMgr.Types.owner_id()) ::
+  @spec get_owner_password_rules!(MscmpSystInstance.Types.owner_id()) ::
           Data.SystOwnerPasswordRules.t() | :not_found
   def get_owner_password_rules!(owner_id) do
     from(opwr in Data.SystOwnerPasswordRules, where: opwr.owner_id == ^owner_id)
@@ -601,7 +601,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
        when std_req == true and test_req == false,
        do: [{rule, std_req} | failure_list]
 
-  @spec delete_owner_password_rules(MsbmsSystInstanceMgr.Types.owner_id()) ::
+  @spec delete_owner_password_rules(MscmpSystInstance.Types.owner_id()) ::
           {:ok, :deleted | :not_found} | {:error, MscmpSystError.t() | Exception.t()}
   def delete_owner_password_rules(owner_id) do
     {:ok, delete_owner_password_rules!(owner_id)}
@@ -609,7 +609,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     error -> {:error, error}
   end
 
-  @spec delete_owner_password_rules!(MsbmsSystInstanceMgr.Types.owner_id()) ::
+  @spec delete_owner_password_rules!(MscmpSystInstance.Types.owner_id()) ::
           :deleted | :not_found
   def delete_owner_password_rules!(owner_id) do
     from(opwr in Data.SystOwnerPasswordRules, where: opwr.owner_id == ^owner_id)

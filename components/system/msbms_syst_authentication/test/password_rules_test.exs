@@ -208,7 +208,7 @@ defmodule PasswordRulesTest do
   end
 
   test "Can create Owner Password Rules / Success Tuple" do
-    {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner4")
+    {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner4")
 
     insert_params = %{
       password_length: %DbTypes.IntegerRange{
@@ -253,7 +253,7 @@ defmodule PasswordRulesTest do
   end
 
   test "Can create Owner Password Rules / Raise on Error" do
-    {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner4")
+    {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner4")
 
     insert_params = %{
       password_length: %DbTypes.IntegerRange{
@@ -298,7 +298,7 @@ defmodule PasswordRulesTest do
   end
 
   test "Can retrieve Owner Password Rules" do
-    {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner1")
+    {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner1")
 
     assert {:ok, %Data.SystOwnerPasswordRules{id: rule_id, owner_id: rule_owner_id}} =
              Impl.PasswordRules.get_owner_password_rules(owner_id)
@@ -308,7 +308,7 @@ defmodule PasswordRulesTest do
   end
 
   test "Can update Owner Password Rules / Success Tuple" do
-    {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner2")
+    {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner2")
 
     {:ok, original_pwd_rules} = Impl.PasswordRules.get_owner_password_rules(owner_id)
 
@@ -381,7 +381,7 @@ defmodule PasswordRulesTest do
   end
 
   test "Can update Owner Password Rules / Raise on Error" do
-    {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner2")
+    {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner2")
 
     {:ok, original_pwd_rules} = Impl.PasswordRules.get_owner_password_rules(owner_id)
 
@@ -451,7 +451,7 @@ defmodule PasswordRulesTest do
   end
 
   test "Can delete Owner Password Rules" do
-    {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner3")
+    {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner3")
 
     assert {:ok, :deleted} = Impl.PasswordRules.delete_owner_password_rules(owner_id)
 
@@ -459,7 +459,7 @@ defmodule PasswordRulesTest do
 
     assert :not_found = Impl.PasswordRules.get_owner_password_rules!(owner_id)
 
-    {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner5")
+    {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner5")
 
     assert :deleted = Impl.PasswordRules.delete_owner_password_rules!(owner_id)
 

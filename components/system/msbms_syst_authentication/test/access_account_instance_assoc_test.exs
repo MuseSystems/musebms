@@ -23,7 +23,7 @@ defmodule AccessAccountInstanceAssocTest do
 
     instance_id =
       from(
-        i in MsbmsSystInstanceMgr.Data.SystInstances,
+        i in MscmpSystInstance.Data.SystInstances,
         join: o in assoc(i, :owner),
         join: is in assoc(i, :instance_state),
         where:
@@ -57,7 +57,7 @@ defmodule AccessAccountInstanceAssocTest do
 
     instance_id =
       from(
-        i in MsbmsSystInstanceMgr.Data.SystInstances,
+        i in MscmpSystInstance.Data.SystInstances,
         where: i.internal_name == "app1_owner1_instance_types_std",
         select: i.id
       )
@@ -84,7 +84,7 @@ defmodule AccessAccountInstanceAssocTest do
 
     instance_id =
       from(
-        i in MsbmsSystInstanceMgr.Data.SystInstances,
+        i in MscmpSystInstance.Data.SystInstances,
         where: i.internal_name == "app1_owner1_instance_types_std",
         select: i.id
       )
@@ -108,7 +108,7 @@ defmodule AccessAccountInstanceAssocTest do
 
     instance_id =
       from(
-        i in MsbmsSystInstanceMgr.Data.SystInstances,
+        i in MscmpSystInstance.Data.SystInstances,
         where: i.internal_name == "app1_owner1_instance_types_std",
         select: i.id
       )

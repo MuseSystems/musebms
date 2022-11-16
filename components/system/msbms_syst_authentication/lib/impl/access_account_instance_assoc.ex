@@ -22,7 +22,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccountInstanceAssoc do
 
   @spec invite_to_instance(
           Types.access_account_id(),
-          MsbmsSystInstanceMgr.Types.instance_id(),
+          MscmpSystInstance.Types.instance_id(),
           Keyword.t()
         ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
   def invite_to_instance(access_account_id, instance_id, opts)
@@ -76,7 +76,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccountInstanceAssoc do
 
   @spec accept_instance_invite(
           Types.access_account_id(),
-          MsbmsSystInstanceMgr.Types.instance_id()
+          MscmpSystInstance.Types.instance_id()
         ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
   def accept_instance_invite(access_account_id, instance_id)
       when is_binary(access_account_id) and is_binary(instance_id) do
@@ -144,7 +144,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccountInstanceAssoc do
 
   @spec instance_access_granted?(
           Types.access_account_id(),
-          MsbmsSystInstanceMgr.Types.instance_id()
+          MscmpSystInstance.Types.instance_id()
         ) :: boolean()
   def instance_access_granted?(access_account_id, instance_id) do
     from(aaia in Data.SystAccessAccountInstanceAssocs,
@@ -157,7 +157,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccountInstanceAssoc do
 
   @spec decline_instance_invite(
           Types.access_account_id(),
-          MsbmsSystInstanceMgr.Types.instance_id()
+          MscmpSystInstance.Types.instance_id()
         ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
   def decline_instance_invite(access_account_id, instance_id)
       when is_binary(access_account_id) and is_binary(instance_id) do
@@ -225,7 +225,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccountInstanceAssoc do
 
   @spec revoke_instance_access(
           Types.access_account_id(),
-          MsbmsSystInstanceMgr.Types.instance_id()
+          MscmpSystInstance.Types.instance_id()
         ) :: :ok | {:error, MscmpSystError.t()}
   def revoke_instance_access(access_account_id, instance_id)
       when is_binary(access_account_id) and is_binary(instance_id) do

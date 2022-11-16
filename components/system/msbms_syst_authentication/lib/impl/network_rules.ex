@@ -195,8 +195,8 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
 
   @spec get_applied_network_rule(
           Types.host_address(),
-          MsbmsSystInstanceMgr.Types.instance_id() | nil,
-          MsbmsSystInstanceMgr.Types.owner_id() | nil
+          MscmpSystInstance.Types.instance_id() | nil,
+          MscmpSystInstance.Types.owner_id() | nil
         ) :: {:ok, Types.applied_network_rule()} | {:error, MscmpSystError.t() | Exception.t()}
   def get_applied_network_rule(host_addr, instance_id \\ nil, instance_owner_id \\ nil)
       when is_tuple(host_addr) do
@@ -207,8 +207,8 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
 
   @spec get_applied_network_rule!(
           Types.host_address(),
-          MsbmsSystInstanceMgr.Types.instance_id() | nil,
-          MsbmsSystInstanceMgr.Types.owner_id() | nil
+          MscmpSystInstance.Types.instance_id() | nil,
+          MscmpSystInstance.Types.owner_id() | nil
         ) :: Types.applied_network_rule()
   def get_applied_network_rule!(host_addr, instance_id \\ nil, instance_owner_id \\ nil)
       when is_tuple(host_addr) do
@@ -271,7 +271,7 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
   end
 
   @spec create_owner_network_rule(
-          MsbmsSystInstanceMgr.Types.owner_id(),
+          MscmpSystInstance.Types.owner_id(),
           Types.owner_network_rule_params()
         ) ::
           {:ok, Data.SystOwnerNetworkRules.t()} | {:error, MscmpSystError.t()}
@@ -295,7 +295,7 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
   end
 
   @spec create_instance_network_rule(
-          MsbmsSystInstanceMgr.Types.instance_id(),
+          MscmpSystInstance.Types.instance_id(),
           Types.instance_network_rule_params()
         ) ::
           {:ok, Data.SystInstanceNetworkRules.t()} | {:error, MscmpSystError.t()}

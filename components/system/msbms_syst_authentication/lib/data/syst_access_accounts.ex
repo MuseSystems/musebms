@@ -29,9 +29,9 @@ defmodule MsbmsSystAuthentication.Data.SystAccessAccounts do
             id: Ecto.UUID.t() | nil,
             internal_name: Types.access_account_name() | nil,
             external_name: String.t() | nil,
-            owning_owner_id: MsbmsSystInstanceMgr.Types.owner_id() | nil,
+            owning_owner_id: MscmpSystInstance.Types.owner_id() | nil,
             owning_owner:
-              MsbmsSystInstanceMgr.Data.SystOwners.t() | Ecto.Association.NotLoaded.t() | nil,
+              MscmpSystInstance.Data.SystOwners.t() | Ecto.Association.NotLoaded.t() | nil,
             allow_global_logins: boolean() | nil,
             access_account_state_id: Types.access_account_state_id() | nil,
             access_account_state:
@@ -60,7 +60,7 @@ defmodule MsbmsSystAuthentication.Data.SystAccessAccounts do
     field(:diag_update_count, :integer)
 
     belongs_to(:access_account_state, MscmpSystEnums.Data.SystEnumItems)
-    belongs_to(:owning_owner, MsbmsSystInstanceMgr.Data.SystOwners)
+    belongs_to(:owning_owner, MscmpSystInstance.Data.SystOwners)
 
     has_many(:identities, Data.SystIdentities, foreign_key: :access_account_id)
     has_many(:credentials, Data.SystCredentials, foreign_key: :access_account_id)

@@ -19,7 +19,7 @@ defmodule IdentityTest do
   @moduletag :capture_log
 
   test "Can set Identity expiration" do
-    {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner2")
+    {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner2")
 
     %Data.SystIdentities{} =
       unexpired_identity =
@@ -37,7 +37,7 @@ defmodule IdentityTest do
   end
 
   test "Can clear Identity expiration" do
-    {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner2")
+    {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner2")
 
     %Data.SystIdentities{} =
       expired_identity =
@@ -54,7 +54,7 @@ defmodule IdentityTest do
   end
 
   test "Can test if Identity is expired" do
-    {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner2")
+    {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner2")
 
     %Data.SystIdentities{} =
       expired_identity =
@@ -76,7 +76,7 @@ defmodule IdentityTest do
   end
 
   test "Can test if Identity is validated" do
-    {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner2")
+    {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner2")
 
     %Data.SystIdentities{} =
       validated_identity =
@@ -97,7 +97,7 @@ defmodule IdentityTest do
   end
 
   test "Can delete Identity" do
-    {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner2")
+    {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner2")
 
     %Data.SystIdentities{} =
       delete_identity =

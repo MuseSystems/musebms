@@ -35,7 +35,7 @@ defmodule MsbmsSystAuthentication.MixProject do
     {:mscmp_syst_db, path: "../mscmp_syst_db"},
     {:mscmp_syst_enums, path: "../mscmp_syst_enums"},
     {:mscmp_syst_options, path: "../mscmp_syst_options"},
-    {:msbms_syst_instance_mgr, path: "../msbms_syst_instance_mgr"}
+    {:mscmp_syst_instance, path: "../mscmp_syst_instance"}
   ]
 
   @dialyzer_opts [
@@ -69,8 +69,8 @@ defmodule MsbmsSystAuthentication.MixProject do
           mscmp_syst_limiter: "../../../../documentation/technical/app_server/mscmp_syst_limiter",
           mscmp_syst_enums: "../../../../documentation/technical/app_server/mscmp_syst_enums",
           mscmp_syst_options: "../../../../documentation/technical/app_server/mscmp_syst_options",
-          msbms_syst_instance_mgr:
-            "../../../../documentation/technical/app_server/msbms_syst_instance_mgr"
+          mscmp_syst_instance:
+            "../../../../documentation/technical/app_server/mscmp_syst_instance"
         ],
         groups_for_functions: [
           "API - Authenticator Management": &(&1[:section] == :authenticator_management),

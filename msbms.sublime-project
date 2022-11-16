@@ -26,7 +26,7 @@
             "path": "components/system/mscmp_syst_enums",
         },
         {
-            "path": "components/system/msbms_syst_instance_mgr",
+            "path": "components/system/mscmp_syst_instance",
         },
         {
             "path": "components/system/msbms_syst_authentication",

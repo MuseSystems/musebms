@@ -149,7 +149,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Recovery do
 
   @spec identify_access_account(
           Types.account_identifier(),
-          MsbmsSystInstanceMgr.Types.owner_id() | nil
+          MscmpSystInstance.Types.owner_id() | nil
         ) :: Data.SystIdentities.t() | nil
   def identify_access_account(recovery_token, owner_id) when is_binary(recovery_token) do
     recovery_token

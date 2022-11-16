@@ -68,7 +68,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.ApiToken do
 
   @spec identify_access_account(
           Types.account_identifier(),
-          MsbmsSystInstanceMgr.Types.owner_id() | nil
+          MscmpSystInstance.Types.owner_id() | nil
         ) :: Data.SystIdentities.t() | nil
   def identify_access_account(api_token, owner_id) when is_binary(api_token) do
     api_token
