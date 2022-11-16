@@ -24,8 +24,8 @@ defmodule InstanceTest do
 
     assert {:ok,
             %Data.SystInstances{
-              instance_state: %MsbmsSystEnums.Data.SystEnumItems{
-                functional_type: %MsbmsSystEnums.Data.SystEnumFunctionalTypes{}
+              instance_state: %MscmpSystEnums.Data.SystEnumItems{
+                functional_type: %MscmpSystEnums.Data.SystEnumFunctionalTypes{}
               }
             }} = MsbmsSystInstanceMgr.get_instance_by_name(instance_record.internal_name)
   end

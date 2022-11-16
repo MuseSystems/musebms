@@ -18,7 +18,7 @@ defmodule OwnerTest do
   alias MsbmsSystInstanceMgr.Data
 
   test "Can Create Owner" do
-    new_owner_state = MsbmsSystEnums.get_default_enum_item("owner_states")
+    new_owner_state = MscmpSystEnums.get_default_enum_item("owner_states")
 
     new_owner_params = %{
       internal_name: "create_test",
@@ -34,7 +34,7 @@ defmodule OwnerTest do
   end
 
   test "Can Update Owner by ID" do
-    new_owner_state = MsbmsSystEnums.get_default_enum_item("owner_states")
+    new_owner_state = MscmpSystEnums.get_default_enum_item("owner_states")
 
     new_owner_params = %{
       internal_name: "update_test1",
@@ -45,7 +45,7 @@ defmodule OwnerTest do
     {:ok, new_owner} = MsbmsSystInstanceMgr.create_owner(new_owner_params)
 
     update_owner_state =
-      MsbmsSystEnums.get_default_enum_item(
+      MscmpSystEnums.get_default_enum_item(
         "owner_states",
         functional_type_name: "owner_states_suspended"
       )
@@ -65,7 +65,7 @@ defmodule OwnerTest do
   end
 
   test "Can Update Owner by Struct" do
-    new_owner_state = MsbmsSystEnums.get_default_enum_item("owner_states")
+    new_owner_state = MscmpSystEnums.get_default_enum_item("owner_states")
 
     new_owner_params = %{
       internal_name: "update_test2",
@@ -76,7 +76,7 @@ defmodule OwnerTest do
     {:ok, new_owner} = MsbmsSystInstanceMgr.create_owner(new_owner_params)
 
     update_owner_state =
-      MsbmsSystEnums.get_default_enum_item(
+      MscmpSystEnums.get_default_enum_item(
         "owner_states",
         functional_type_name: "owner_states_suspended"
       )
@@ -97,7 +97,7 @@ defmodule OwnerTest do
 
   test "Can Purge Owner by ID" do
     new_owner_state =
-      MsbmsSystEnums.get_default_enum_item("owner_states",
+      MscmpSystEnums.get_default_enum_item("owner_states",
         functional_type_name: "owner_states_purge_eligible"
       )
 
@@ -114,7 +114,7 @@ defmodule OwnerTest do
 
   test "Can Purge Owner by Bare Struct" do
     new_owner_state =
-      MsbmsSystEnums.get_default_enum_item("owner_states",
+      MscmpSystEnums.get_default_enum_item("owner_states",
         functional_type_name: "owner_states_purge_eligible"
       )
 
@@ -137,8 +137,8 @@ defmodule OwnerTest do
     assert {:ok, test_owner} = MsbmsSystInstanceMgr.get_owner_by_name(owner_record.internal_name)
 
     assert %Data.SystOwners{
-             owner_state: %MsbmsSystEnums.Data.SystEnumItems{
-               functional_type: %MsbmsSystEnums.Data.SystEnumFunctionalTypes{}
+             owner_state: %MscmpSystEnums.Data.SystEnumItems{
+               functional_type: %MscmpSystEnums.Data.SystEnumFunctionalTypes{}
              }
            } = test_owner
 
@@ -158,7 +158,7 @@ defmodule OwnerTest do
 
   test "Can Purge Owner by Preloaded Struct" do
     new_owner_state =
-      MsbmsSystEnums.get_default_enum_item("owner_states",
+      MscmpSystEnums.get_default_enum_item("owner_states",
         functional_type_name: "owner_states_purge_eligible"
       )
 

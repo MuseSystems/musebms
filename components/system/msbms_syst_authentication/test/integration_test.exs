@@ -285,7 +285,7 @@ defmodule IntegrationTest do
   # ==============================================================================================
 
   test "Step 2.01: Add Unowned Access Accounts" do
-    state = MsbmsSystEnums.get_default_enum_item("access_account_states")
+    state = MscmpSystEnums.get_default_enum_item("access_account_states")
 
     assert {:ok, %MsbmsSystAuthentication.Data.SystAccessAccounts{}} =
              MsbmsSystAuthentication.create_access_account(%{
@@ -983,7 +983,7 @@ defmodule IntegrationTest do
   test "Step 3.01: Add Owned Access Accounts" do
     {:ok, owner1_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner1")
 
-    state = MsbmsSystEnums.get_default_enum_item("access_account_states")
+    state = MscmpSystEnums.get_default_enum_item("access_account_states")
 
     assert {:ok, %MsbmsSystAuthentication.Data.SystAccessAccounts{} = access_account1} =
              MsbmsSystAuthentication.create_access_account(%{

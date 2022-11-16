@@ -29,7 +29,7 @@ defmodule MsbmsSystInstanceMgr.Data.SystInstanceTypeApplications do
             id: Ecto.UUID.t() | nil,
             instance_type_id: Ecto.UUID.t() | nil,
             instance_type:
-              MsbmsSystEnums.Data.SystEnumItems.t()
+              MscmpSystEnums.Data.SystEnumItems.t()
               | Ecto.Association.NotLoaded.t()
               | nil,
             application_id: Ecto.UUID.t() | nil,
@@ -56,7 +56,7 @@ defmodule MsbmsSystInstanceMgr.Data.SystInstanceTypeApplications do
     field(:diag_row_version, :integer)
     field(:diag_update_count, :integer)
 
-    belongs_to(:instance_type, MsbmsSystEnums.Data.SystEnumItems, foreign_key: :instance_type_id)
+    belongs_to(:instance_type, MscmpSystEnums.Data.SystEnumItems, foreign_key: :instance_type_id)
 
     belongs_to(:application, Data.SystApplications, foreign_key: :application_id)
 

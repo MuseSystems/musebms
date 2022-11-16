@@ -166,7 +166,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
          %Data.SystInstances{instance_state_id: instance_state_id} = instance
        ) do
     functional_type_name =
-      MsbmsSystEnums.get_functional_type_by_enum_item_id("instance_states", instance_state_id)
+      MscmpSystEnums.get_functional_type_by_enum_item_id("instance_states", instance_state_id)
 
     verify_initialization_eligibility(functional_type_name, instance)
   end
@@ -226,27 +226,27 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
   @spec get_default_instance_state_ids() :: Keyword.t()
   def get_default_instance_state_ids do
     initializing_state_id =
-      MsbmsSystEnums.get_default_enum_item("instance_states",
+      MscmpSystEnums.get_default_enum_item("instance_states",
         functional_type_name: "instance_states_initializing"
       ).id
 
     active_state_id =
-      MsbmsSystEnums.get_default_enum_item("instance_states",
+      MscmpSystEnums.get_default_enum_item("instance_states",
         functional_type_name: "instance_states_active"
       ).id
 
     failed_state_id =
-      MsbmsSystEnums.get_default_enum_item("instance_states",
+      MscmpSystEnums.get_default_enum_item("instance_states",
         functional_type_name: "instance_states_failed"
       ).id
 
     initialized_state_id =
-      MsbmsSystEnums.get_default_enum_item("instance_states",
+      MscmpSystEnums.get_default_enum_item("instance_states",
         functional_type_name: "instance_states_initialized"
       ).id
 
     migrating_state_id =
-      MsbmsSystEnums.get_default_enum_item("instance_states",
+      MscmpSystEnums.get_default_enum_item("instance_states",
         functional_type_name: "instance_states_migrating"
       ).id
 
@@ -363,8 +363,8 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
 
   def purge_instance(
         %Data.SystInstances{
-          instance_state: %MsbmsSystEnums.Data.SystEnumItems{
-            functional_type: %MsbmsSystEnums.Data.SystEnumFunctionalTypes{
+          instance_state: %MscmpSystEnums.Data.SystEnumItems{
+            functional_type: %MscmpSystEnums.Data.SystEnumFunctionalTypes{
               internal_name: functional_type
             }
           }

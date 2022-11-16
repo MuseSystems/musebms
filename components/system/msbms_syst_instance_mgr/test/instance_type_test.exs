@@ -92,7 +92,7 @@ defmodule InstanceTypeTest do
     assert :ok = MsbmsSystInstanceMgr.delete_instance_type(create_params.internal_name)
 
     assert is_nil(
-             MsbmsSystEnums.get_enum_item_by_name("instance_types", create_params.internal_name)
+             MscmpSystEnums.get_enum_item_by_name("instance_types", create_params.internal_name)
            )
   end
 end

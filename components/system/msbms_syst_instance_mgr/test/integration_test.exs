@@ -70,7 +70,7 @@ defmodule IntegrationTest do
   end
 
   test "Step 2: Create Instance Type Applications" do
-    instance_type = MsbmsSystEnums.get_enum_item_by_name("instance_types", "instance_types_sml")
+    instance_type = MscmpSystEnums.get_enum_item_by_name("instance_types", "instance_types_sml")
 
     application_id =
       from(a in Data.SystApplications, where: a.internal_name == "app1", select: a.id)
@@ -82,7 +82,7 @@ defmodule IntegrationTest do
                application_id
              )
 
-    instance_type = MsbmsSystEnums.get_enum_item_by_name("instance_types", "instance_types_std")
+    instance_type = MscmpSystEnums.get_enum_item_by_name("instance_types", "instance_types_std")
 
     application_id =
       from(a in Data.SystApplications, where: a.internal_name == "app2", select: a.id)
@@ -123,7 +123,7 @@ defmodule IntegrationTest do
   end
 
   test "Step 4: Create Owners" do
-    owner1_state = MsbmsSystEnums.get_default_enum_item("owner_states")
+    owner1_state = MscmpSystEnums.get_default_enum_item("owner_states")
 
     owner1_params = %{
       internal_name: "owner1",
@@ -138,7 +138,7 @@ defmodule IntegrationTest do
     assert owner1.owner_state_id == owner1_params.owner_state_id
 
     owner2_state =
-      MsbmsSystEnums.get_default_enum_item(
+      MscmpSystEnums.get_default_enum_item(
         "owner_states",
         functional_type_name: "owner_states_inactive"
       )
@@ -240,7 +240,7 @@ defmodule IntegrationTest do
       Enum.each(context_states, &assert(%{context: _, state: :ready} = &1))
 
       assert "instance_states_initialized" =
-               MsbmsSystEnums.get_functional_type_by_enum_item_id(
+               MscmpSystEnums.get_functional_type_by_enum_item_id(
                  "instance_states",
                  initialized_instance.instance_state_id
                )
@@ -284,8 +284,8 @@ defmodule IntegrationTest do
   end
 
   test "Step 10: Purge Instances" do
-    %MsbmsSystEnums.Data.SystEnumItems{id: purge_instance_state_id} =
-      MsbmsSystEnums.get_default_enum_item(
+    %MscmpSystEnums.Data.SystEnumItems{id: purge_instance_state_id} =
+      MscmpSystEnums.get_default_enum_item(
         "instance_states",
         functional_type_name: "instance_states_purge_eligible"
       )

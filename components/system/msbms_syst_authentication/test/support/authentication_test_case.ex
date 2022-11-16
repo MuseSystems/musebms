@@ -23,7 +23,7 @@ defmodule AuthenticationTestCase do
   end
 
   setup do
-    MsbmsSystEnums.put_enums_service(:authentication)
+    MscmpSystEnums.put_enums_service(:authentication)
     :ok
   end
 end

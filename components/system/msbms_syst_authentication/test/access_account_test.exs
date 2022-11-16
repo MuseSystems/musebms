@@ -18,7 +18,7 @@ defmodule AccessAccountTest do
   @moduletag :capture_log
 
   test "Can create an unowned Access Account" do
-    access_account_state = MsbmsSystEnums.get_default_enum_item("access_account_states")
+    access_account_state = MscmpSystEnums.get_default_enum_item("access_account_states")
 
     create_params = %{
       internal_name: "create_unowned_test_account",
@@ -42,7 +42,7 @@ defmodule AccessAccountTest do
   end
 
   test "Can create an owned Access Account" do
-    access_account_state = MsbmsSystEnums.get_default_enum_item("access_account_states")
+    access_account_state = MscmpSystEnums.get_default_enum_item("access_account_states")
 
     {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner1")
 
@@ -75,7 +75,7 @@ defmodule AccessAccountTest do
       MsbmsSystAuthentication.get_access_account_id_by_name("update_test_accnt")
 
     access_account_state =
-      MsbmsSystEnums.get_enum_item_by_name(
+      MscmpSystEnums.get_enum_item_by_name(
         "access_account_states",
         "access_account_states_sysdef_purge_eligible"
       )

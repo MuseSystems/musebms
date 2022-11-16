@@ -72,7 +72,7 @@ defmodule MsbmsSystInstanceMgr do
   Instance.
 
   Note that Instance Type records are a special case of the
-  `MsbmsSystEnums.Data.SystEnumItems` record.  The Enum Name for Instance Type
+  `MscmpSystEnums.Data.SystEnumItems` record.  The Enum Name for Instance Type
   is, unsurprisingly, `instance_types`.
 
   #### Instance Type Applications
@@ -121,9 +121,9 @@ defmodule MsbmsSystInstanceMgr do
 
   ## Special Notes
 
-  This component requires that an instance of the `MsbmsSystEnums` service has
+  This component requires that an instance of the `MscmpSystEnums` service has
   been configured and started.  Many of the API calls in this component will
-  fail if the `MsbmsSystEnums` services are not available.
+  fail if the `MscmpSystEnums` services are not available.
 
   """
 
@@ -133,7 +133,7 @@ defmodule MsbmsSystInstanceMgr do
 
   @doc section: :instance_type_data
   @doc """
-  Creates a new Instance Type record via the `MsbmsSystEnums` service.
+  Creates a new Instance Type record via the `MscmpSystEnums` service.
 
   ## Parameters
 
@@ -143,12 +143,12 @@ defmodule MsbmsSystInstanceMgr do
     for Instance Type creation.
   """
   @spec create_instance_type(Types.instance_type_params()) ::
-          {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MscmpSystError.t()}
+          {:ok, MscmpSystEnums.Data.SystEnumItems.t()} | {:error, MscmpSystError.t()}
   defdelegate create_instance_type(instance_type_params), to: Impl.InstanceType
 
   @doc section: :instance_type_data
   @doc """
-  Updates an existing Instance Type record via the `MsbmsSystEnums` service.
+  Updates an existing Instance Type record via the `MscmpSystEnums` service.
 
   ## Parameters
 
@@ -160,13 +160,13 @@ defmodule MsbmsSystInstanceMgr do
     contexts.
   """
   @spec update_instance_type(Types.instance_type_name(), Types.instance_type_params() | %{}) ::
-          {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MscmpSystError.t()}
+          {:ok, MscmpSystEnums.Data.SystEnumItems.t()} | {:error, MscmpSystError.t()}
   defdelegate update_instance_type(instance_type_name, instance_type_params \\ %{}),
     to: Impl.InstanceType
 
   @doc section: :instance_type_data
   @doc """
-  Deletes an Instance Type from the `MsbmsSystEnums` service.
+  Deletes an Instance Type from the `MscmpSystEnums` service.
 
   Note that an attempt to delete an in-use Instance Type will result in a
   constraint error.

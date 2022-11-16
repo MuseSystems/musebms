@@ -18,10 +18,10 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceType do
   @moduledoc false
 
   @spec create_instance_type(Types.instance_type_params()) ::
-          {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MscmpSystError.t()}
+          {:ok, MscmpSystEnums.Data.SystEnumItems.t()} | {:error, MscmpSystError.t()}
   def create_instance_type(instance_type_params) do
     create_enum_item_result =
-      MsbmsSystEnums.create_enum_item("instance_types", instance_type_params)
+      MscmpSystEnums.create_enum_item("instance_types", instance_type_params)
 
     get_change_return_value(instance_type_params.internal_name, create_enum_item_result)
   rescue
@@ -39,10 +39,10 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceType do
   end
 
   @spec update_instance_type(Types.instance_type_name(), Types.instance_type_params()) ::
-          {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MscmpSystError.t()}
+          {:ok, MscmpSystEnums.Data.SystEnumItems.t()} | {:error, MscmpSystError.t()}
   def update_instance_type(instance_type_name, instance_type_params) do
     update_enum_item_result =
-      MsbmsSystEnums.set_enum_item_values(
+      MscmpSystEnums.set_enum_item_values(
         "instance_types",
         instance_type_name,
         instance_type_params
@@ -66,7 +66,7 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceType do
   end
 
   defp get_change_return_value(instance_type_name, :ok) do
-    instance_type = MsbmsSystEnums.get_enum_item_by_name("instance_types", instance_type_name)
+    instance_type = MscmpSystEnums.get_enum_item_by_name("instance_types", instance_type_name)
     {:ok, instance_type}
   end
 
@@ -74,7 +74,7 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceType do
 
   @spec delete_instance_type(Types.instance_type_name()) :: :ok | {:error, MscmpSystError.t()}
   def delete_instance_type(instance_type_name) do
-    MsbmsSystEnums.delete_enum_item("instance_types", instance_type_name)
+    MscmpSystEnums.delete_enum_item("instance_types", instance_type_name)
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))

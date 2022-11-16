@@ -81,7 +81,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
     {:ok, _} = start_application_supervisor(supervisor_name)
 
     current_datastore_context = MscmpSystDb.current_datastore_context()
-    current_enums_service = MsbmsSystEnums.get_enums_service()
+    current_enums_service = MscmpSystEnums.get_enums_service()
 
     from(
       i in Data.SystInstances,
@@ -96,7 +96,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
         &1,
         fn instance ->
           _ = MscmpSystDb.set_datastore_context(current_datastore_context)
-          _ = MsbmsSystEnums.put_enums_service(current_enums_service)
+          _ = MscmpSystEnums.put_enums_service(current_enums_service)
           start_instance(instance, startup_options, opts)
         end,
         opts
@@ -289,7 +289,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
   end
 
   defp valid_startup_instance_state?(%Data.SystInstances{} = instance) do
-    MsbmsSystEnums.get_functional_type_by_enum_item_id(
+    MscmpSystEnums.get_functional_type_by_enum_item_id(
       "instance_states",
       instance.instance_state_id
     ) in ["instance_states_initialized", "instance_states_active"]

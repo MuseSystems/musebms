@@ -28,7 +28,7 @@ defmodule MsbmsSystInstanceMgr.Data.SystOwners do
             display_name: String.t() | nil,
             owner_state_id: Ecto.UUID.t() | nil,
             owner_state:
-              MsbmsSystEnums.Data.SystEnumItems.t() | Ecto.Association.NotLoaded.t() | nil,
+              MscmpSystEnums.Data.SystEnumItems.t() | Ecto.Association.NotLoaded.t() | nil,
             diag_timestamp_created: DateTime.t() | nil,
             diag_role_created: String.t() | nil,
             diag_timestamp_modified: DateTime.t() | nil,
@@ -51,7 +51,7 @@ defmodule MsbmsSystInstanceMgr.Data.SystOwners do
     field(:diag_row_version, :integer)
     field(:diag_update_count, :integer)
 
-    belongs_to(:owner_state, MsbmsSystEnums.Data.SystEnumItems)
+    belongs_to(:owner_state, MscmpSystEnums.Data.SystEnumItems)
 
     has_many(:instances, Data.SystInstances, foreign_key: :owner_id)
   end

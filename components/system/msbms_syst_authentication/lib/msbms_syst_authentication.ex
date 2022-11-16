@@ -331,7 +331,7 @@ defmodule MsbmsSystAuthentication do
 
   ## Example
 
-      iex> state = MsbmsSystEnums.get_default_enum_item("access_account_states")
+      iex> state = MscmpSystEnums.get_default_enum_item("access_account_states")
       iex> {:ok, %MsbmsSystAuthentication.Data.SystAccessAccounts{}} =
       ...>   MsbmsSystAuthentication.create_access_account(
       ...>     %{

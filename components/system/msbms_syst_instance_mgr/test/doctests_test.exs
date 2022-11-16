@@ -15,7 +15,7 @@ defmodule DoctestsTest do
 
   setup_all do
     _ = MscmpSystDb.set_datastore_context(TestSupport.get_testing_datastore_context_id())
-    MsbmsSystEnums.put_enums_service(:instance_mgr)
+    MscmpSystEnums.put_enums_service(:instance_mgr)
 
     :ok
   end
