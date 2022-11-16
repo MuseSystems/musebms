@@ -61,7 +61,7 @@ defmodule DevSupport do
     _ = setup_database(db_kind)
     _ = setup_mnesia_database(db_kind)
 
-    _ = MsbmsSystDatastore.set_datastore_context(get_datastore_context_id())
+    _ = MscmpSystDb.set_datastore_context(get_datastore_context_id())
 
     enum_service_spec = %{
       id: MsbmsDevEnumService,
@@ -81,7 +81,7 @@ defmodule DevSupport do
 
     _ = DynamicSupervisor.start_child(Msbms.DevSupervisor, enum_service_spec)
 
-    _ = MsbmsSystDatastore.set_datastore_context(get_datastore_context_id())
+    _ = MscmpSystDb.set_datastore_context(get_datastore_context_id())
     _ = MsbmsSystEnums.put_enums_service(:msbms_dev_enum_service)
   end
 
@@ -100,17 +100,17 @@ defmodule DevSupport do
 
     database_owner = Enum.find(datastore_options.contexts, &(&1[:database_owner_context] == true))
 
-    {:ok, :ready, _} = MsbmsSystDatastore.create_datastore(datastore_options)
+    {:ok, :ready, _} = MscmpSystDb.create_datastore(datastore_options)
 
     {:ok, _} =
-      MsbmsSystDatastore.upgrade_datastore(
+      MscmpSystDb.upgrade_datastore(
         datastore_options,
         datastore_type,
         msbms_owner: database_owner.database_role,
         msbms_appusr: "msbms_dev_app_user"
       )
 
-    {:ok, _, _} = MsbmsSystDatastore.start_datastore(datastore_options)
+    {:ok, _, _} = MscmpSystDb.start_datastore(datastore_options)
   end
 
   defp setup_mnesia_database(:unit_testing) do
@@ -120,8 +120,8 @@ defmodule DevSupport do
   defp cleanup_database() do
     datastore_options = @datastore_options
 
-    :ok = MsbmsSystDatastore.stop_datastore(datastore_options)
-    :ok = MsbmsSystDatastore.drop_datastore(datastore_options)
+    :ok = MscmpSystDb.stop_datastore(datastore_options)
+    :ok = MscmpSystDb.drop_datastore(datastore_options)
     File.rm_rf!(Path.join(["priv/database"]))
   end
 

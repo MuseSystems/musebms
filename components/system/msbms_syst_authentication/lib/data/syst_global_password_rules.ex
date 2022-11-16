@@ -11,11 +11,11 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MsbmsSystAuthentication.Data.SystGlobalPasswordRules do
-  use MsbmsSystDatastore.Schema
+  use MscmpSystDb.Schema
 
   alias MsbmsSystAuthentication.Data.Validators
   alias MsbmsSystAuthentication.Types
-  alias MsbmsSystDatastore.DbTypes
+  alias MscmpSystDb.DbTypes
 
   @moduledoc """
   Establishes rules defining the minimum allowed password complexity

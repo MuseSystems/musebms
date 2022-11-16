@@ -25,7 +25,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Owner do
   def create_owner(owner_params) do
     owner_params
     |> Data.SystOwners.insert_changeset()
-    |> MsbmsSystDatastore.insert!(returning: true)
+    |> MscmpSystDb.insert!(returning: true)
     |> then(&{:ok, &1})
   rescue
     error ->
@@ -44,7 +44,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Owner do
   @spec update_owner(Types.owner_id() | Data.SystOwners.t(), Types.owner_params()) ::
           {:ok, Data.SystOwners.t()} | {:error, MscmpSystError.t()}
   def update_owner(owner_id, owner_params) when is_binary(owner_id) do
-    MsbmsSystDatastore.get!(Data.SystOwners, owner_id)
+    MscmpSystDb.get!(Data.SystOwners, owner_id)
     |> update_owner(owner_params)
   rescue
     error ->
@@ -63,7 +63,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Owner do
   def update_owner(%Data.SystOwners{} = owner, owner_params) do
     owner
     |> Data.SystOwners.update_changeset(owner_params)
-    |> MsbmsSystDatastore.update!(returning: true)
+    |> MscmpSystDb.update!(returning: true)
     |> then(&{:ok, &1})
   rescue
     error ->
@@ -89,7 +89,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Owner do
       where: o.internal_name == ^owner_name,
       preload: [owner_state: {os, functional_type: osft}]
     )
-    |> MsbmsSystDatastore.one!()
+    |> MscmpSystDb.one!()
     |> then(&{:ok, &1})
   rescue
     error ->
@@ -109,7 +109,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Owner do
           {:ok, Types.owner_id()} | {:error, MscmpSystError.t()}
   def get_owner_id_by_name(owner_name) when is_binary(owner_name) do
     from(o in Data.SystOwners, select: o.id, where: o.internal_name == ^owner_name)
-    |> MsbmsSystDatastore.one!()
+    |> MscmpSystDb.one!()
     |> then(&{:ok, &1})
   rescue
     error ->
@@ -134,7 +134,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Owner do
       where: o.id == ^owner_id,
       preload: [owner_state: {os, functional_type: osft}]
     )
-    |> MsbmsSystDatastore.one!()
+    |> MscmpSystDb.one!()
     |> purge_owner()
   rescue
     error ->
@@ -161,7 +161,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Owner do
       ) do
     case functional_type do
       "owner_states_purge_eligible" ->
-        MsbmsSystDatastore.delete!(owner)
+        MscmpSystDb.delete!(owner)
         :ok
 
       _ ->

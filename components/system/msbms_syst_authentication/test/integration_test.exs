@@ -17,7 +17,7 @@ defmodule IntegrationTest do
   import IP, only: [sigil_i: 2]
 
   alias MsbmsSystAuthentication.Data
-  alias MsbmsSystDatastore.DbTypes
+  alias MscmpSystDb.DbTypes
 
   @moduletag :integration
   @moduletag :capture_log
@@ -361,7 +361,7 @@ defmodule IntegrationTest do
             ei.internal_name == "identity_types_sysdef_email" and
             is_nil(emi.validated)
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     assert :rejected_rate_limited =
              violate_validator_rate_limit(
@@ -383,7 +383,7 @@ defmodule IntegrationTest do
             is_nil(i.validated),
         select: i.id
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     assert {:ok, :deleted} =
              MsbmsSystAuthentication.revoke_validator_for_identity_id(email_identity_id)
@@ -417,7 +417,7 @@ defmodule IntegrationTest do
             ei.internal_name == "identity_types_sysdef_email" and
             is_nil(i.validated)
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     assert {:ok, validator_result} =
              MsbmsSystAuthentication.request_identity_validation(email_identity.id,
@@ -441,7 +441,7 @@ defmodule IntegrationTest do
             ei.internal_name == "identity_types_sysdef_email" and
             is_nil(emi.validated)
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     # First try some failure modes
     assert {:ok, disallowed_host_state} =
@@ -483,7 +483,7 @@ defmodule IntegrationTest do
                  ei.internal_name == "identity_types_sysdef_email" and
                  not is_nil(i.validated)
            )
-           |> MsbmsSystDatastore.exists?()
+           |> MscmpSystDb.exists?()
 
     refute from(vi in Data.SystIdentities,
              join: emi in Data.SystIdentities,
@@ -494,7 +494,7 @@ defmodule IntegrationTest do
                aa.internal_name == "unowned_access_account" and
                  ei.internal_name == "identity_types_sysdef_email"
            )
-           |> MsbmsSystDatastore.exists?()
+           |> MscmpSystDb.exists?()
   end
 
   test "Step 2.10: Invite Unowned Access Account to Instances" do
@@ -935,7 +935,7 @@ defmodule IntegrationTest do
           ei.internal_name == "identity_types_sysdef_api" and
             i.access_account_id == ^access_account_id
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     assert is_nil(target_identity.external_name)
 
@@ -959,7 +959,7 @@ defmodule IntegrationTest do
           ei.internal_name == "identity_types_sysdef_api" and
             i.access_account_id == ^access_account_id
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     assert {:ok, :deleted} = MsbmsSystAuthentication.revoke_api_token(target_identity.id)
     assert {:ok, :not_found} = MsbmsSystAuthentication.revoke_api_token(target_identity.id)

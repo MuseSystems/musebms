@@ -17,7 +17,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
   alias MsbmsSystAuthentication.Impl
   alias MsbmsSystAuthentication.Types
 
-  alias MsbmsSystDatastore.DbTypes
+  alias MscmpSystDb.DbTypes
 
   require Logger
 
@@ -180,7 +180,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
       where: ph.access_account_id == ^access_account_id,
       select: ph.credential_data
     )
-    |> MsbmsSystDatastore.all()
+    |> MscmpSystDb.all()
     |> Enum.reduce(false, fn hash, found ->
       found || Impl.Hash.verify_credential_hash(hash, pwd_text)
     end)
@@ -342,7 +342,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
     pwd_hash = Impl.Hash.create_credential_hash(pwd_text)
 
     {:ok, _} =
-      MsbmsSystDatastore.transaction(fn ->
+      MscmpSystDb.transaction(fn ->
         _ = update_password_history(pwd_rules, pwd_hash)
 
         %{
@@ -351,7 +351,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
           credential_data: pwd_hash
         }
         |> Data.SystCredentials.insert_changeset()
-        |> MsbmsSystDatastore.insert!()
+        |> MscmpSystDb.insert!()
       end)
 
     :ok
@@ -361,12 +361,12 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
     pwd_hash = Impl.Hash.create_credential_hash(pwd_text)
 
     {:ok, _} =
-      MsbmsSystDatastore.transaction(fn ->
+      MscmpSystDb.transaction(fn ->
         _ = update_password_history(pwd_rules, pwd_hash)
 
         cred
         |> Data.SystCredentials.update_changeset(%{credential_data: pwd_hash})
-        |> MsbmsSystDatastore.update!()
+        |> MscmpSystDb.update!()
       end)
 
     :ok
@@ -377,7 +377,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
 
     if pwd_retention > 0 do
       Data.SystPasswordHistory.insert_changeset(pwd_rules.access_account_id, pwd_hash)
-      |> MsbmsSystDatastore.insert!()
+      |> MscmpSystDb.insert!()
     end
 
     ordering_qry =
@@ -396,7 +396,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
         where: oq.recency > ^pwd_retention
       )
 
-    MsbmsSystDatastore.delete_all(delete_qry)
+    MscmpSystDb.delete_all(delete_qry)
   end
 
   @spec get_credential_record(Types.access_account_id(), Types.identity_id() | nil) ::
@@ -418,7 +418,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
           c.access_account_id == ^access_account_id,
       select: c
     )
-    |> MsbmsSystDatastore.one()
+    |> MscmpSystDb.one()
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -445,7 +445,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
         c.access_account_id == ^access_account_id and
           ei.internal_name == "credential_types_sysdef_password"
     )
-    |> MsbmsSystDatastore.delete_all()
+    |> MscmpSystDb.delete_all()
     |> case do
       {count, _} when count in [0, 1] ->
         :ok
@@ -467,7 +467,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
   end
 
   def delete_credential!(%Data.SystCredentials{} = credential) do
-    MsbmsSystDatastore.delete!(credential)
+    MscmpSystDb.delete!(credential)
     :ok
   rescue
     error ->

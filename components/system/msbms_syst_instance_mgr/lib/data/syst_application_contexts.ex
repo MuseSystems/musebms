@@ -11,7 +11,7 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MsbmsSystInstanceMgr.Data.SystApplicationContexts do
-  use MsbmsSystDatastore.Schema
+  use MscmpSystDb.Schema
 
   alias MsbmsSystInstanceMgr.Data
   alias MsbmsSystInstanceMgr.Types

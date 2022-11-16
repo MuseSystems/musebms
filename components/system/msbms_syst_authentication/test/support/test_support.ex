@@ -82,17 +82,17 @@ defmodule TestSupport do
 
     database_owner = Enum.find(datastore_options.contexts, &(&1[:database_owner_context] == true))
 
-    {:ok, :ready, _} = MsbmsSystDatastore.create_datastore(datastore_options)
+    {:ok, :ready, _} = MscmpSystDb.create_datastore(datastore_options)
 
     {:ok, _} =
-      MsbmsSystDatastore.upgrade_datastore(
+      MscmpSystDb.upgrade_datastore(
         datastore_options,
         datastore_type,
         msbms_owner: database_owner.database_role,
         msbms_appusr: "msbms_syst_authentication_app_user"
       )
 
-    {:ok, _, _} = MsbmsSystDatastore.start_datastore(datastore_options)
+    {:ok, _, _} = MscmpSystDb.start_datastore(datastore_options)
   end
 
   defp setup_rate_limiter(:unit_testing), do: MscmpSystLimiter.init_rate_limiter()
@@ -114,8 +114,8 @@ defmodule TestSupport do
     datastore_type = get_datastore_type(test_kind)
     datastore_options = @datastore_options
 
-    :ok = MsbmsSystDatastore.stop_datastore(datastore_options)
-    :ok = MsbmsSystDatastore.drop_datastore(datastore_options)
+    :ok = MscmpSystDb.stop_datastore(datastore_options)
+    :ok = MscmpSystDb.drop_datastore(datastore_options)
     File.rm_rf!(Path.join(["priv/database", datastore_type]))
   end
 

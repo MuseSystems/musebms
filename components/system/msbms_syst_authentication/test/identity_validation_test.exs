@@ -18,7 +18,7 @@ defmodule IdentityValidationTest do
   alias MsbmsSystAuthentication.Data
   alias MsbmsSystAuthentication.Impl
 
-  alias MsbmsSystDatastore.DbTypes
+  alias MscmpSystDb.DbTypes
 
   @moduletag :capture_log
 
@@ -33,7 +33,7 @@ defmodule IdentityValidationTest do
           aa.internal_name == "identity_validation_request_test_accnt" and
             ei.internal_name == "identity_types_sysdef_email"
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     # Note that the DateTime comparisons are given a generous tolerance of
     # +/- 30 seconds since we really can't test an exact value.  The tolerance
@@ -71,7 +71,7 @@ defmodule IdentityValidationTest do
           aa.internal_name == "identity_validation_request_test_accnt" and
             ei.internal_name == "identity_types_sysdef_email"
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     assert {:ok, false} = Impl.Identity.identity_validated?(updated_target_identity)
 
@@ -123,7 +123,7 @@ defmodule IdentityValidationTest do
           aa.internal_name == "identity_validation_request_test_accnt" and
             ei.internal_name == "identity_types_sysdef_email"
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     assert {:ok, false} = Impl.Identity.identity_validated?(updated_target_identity)
 
@@ -175,7 +175,7 @@ defmodule IdentityValidationTest do
           aa.internal_name == "identity_validation_request_test_accnt" and
             ei.internal_name == "identity_types_sysdef_email"
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     assert {:ok, false} = Impl.Identity.identity_validated?(updated_target_identity)
 
@@ -225,7 +225,7 @@ defmodule IdentityValidationTest do
           aa.internal_name == "identity_validation_request_test_accnt" and
             ei.internal_name == "identity_types_sysdef_email"
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     assert {:ok, false} = Impl.Identity.identity_validated?(updated_target_identity)
 
@@ -256,7 +256,7 @@ defmodule IdentityValidationTest do
           aa.internal_name == "identity_validation_request_test_accnt" and
             ei.internal_name == "identity_types_sysdef_email"
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     # Note that the DateTime comparisons are given a generous tolerance of
     # +/- 30 seconds since we really can't test an exact value.  The tolerance
@@ -294,7 +294,7 @@ defmodule IdentityValidationTest do
           aa.internal_name == "identity_validation_request_test_accnt" and
             ei.internal_name == "identity_types_sysdef_email"
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     assert {:ok, false} = Impl.Identity.identity_validated?(updated_target_identity)
 
@@ -344,7 +344,7 @@ defmodule IdentityValidationTest do
           aa.internal_name == "identity_validation_request_test_accnt" and
             ei.internal_name == "identity_types_sysdef_email"
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     assert {:ok, false} = Impl.Identity.identity_validated?(updated_target_identity)
 
@@ -394,7 +394,7 @@ defmodule IdentityValidationTest do
           aa.internal_name == "identity_validation_request_test_accnt" and
             ei.internal_name == "identity_types_sysdef_email"
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     assert {:ok, false} = Impl.Identity.identity_validated?(updated_target_identity)
 
@@ -444,7 +444,7 @@ defmodule IdentityValidationTest do
           aa.internal_name == "identity_validation_request_test_accnt" and
             ei.internal_name == "identity_types_sysdef_email"
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     assert {:ok, false} = Impl.Identity.identity_validated?(updated_target_identity)
 
@@ -475,7 +475,7 @@ defmodule IdentityValidationTest do
             ei.internal_name == "identity_types_sysdef_validation",
         preload: [access_account: aa]
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     validation_identity_id = validation_identity.id
 
@@ -502,7 +502,7 @@ defmodule IdentityValidationTest do
             ei.internal_name == "identity_types_sysdef_validation",
         preload: [access_account: aa]
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     validation_identity_id = validation_identity.id
 
@@ -531,7 +531,7 @@ defmodule IdentityValidationTest do
           aa.internal_name == "identity_validation_confirm_test_accnt" and
             ei.internal_name == "identity_types_sysdef_validation"
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     assert {:ok, validated_identity} =
              Impl.Identity.Validation.confirm_identity_validation(target_identity)
@@ -548,7 +548,7 @@ defmodule IdentityValidationTest do
           aa.internal_name == "identity_validation_confirm_test_accnt" and
             ei.internal_name == "identity_types_sysdef_validation"
       )
-      |> MsbmsSystDatastore.one()
+      |> MscmpSystDb.one()
 
     assert no_identity == nil
   end
@@ -564,7 +564,7 @@ defmodule IdentityValidationTest do
           aa.internal_name == "identity_validation_revoke_test_accnt" and
             ei.internal_name == "identity_types_sysdef_validation"
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     assert {:ok, revoked_identity} =
              Impl.Identity.Validation.revoke_identity_validation(target_identity)
@@ -582,7 +582,7 @@ defmodule IdentityValidationTest do
           aa.internal_name == "identity_validation_revoke_test_accnt" and
             ei.internal_name == "identity_types_sysdef_validation"
       )
-      |> MsbmsSystDatastore.one()
+      |> MscmpSystDb.one()
 
     assert no_identity == nil
   end
@@ -598,7 +598,7 @@ defmodule IdentityValidationTest do
           aa.internal_name == "identity_validation_identify_test_accnt" and
             ei.internal_name == "identity_types_sysdef_validation"
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     target_identity_id =
       from(
@@ -610,7 +610,7 @@ defmodule IdentityValidationTest do
           aa.internal_name == "identity_validation_identify_test_accnt" and
             ei.internal_name == "identity_types_sysdef_email"
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     assert {:ok, %Data.SystIdentities{id: ^validation_identity_id}} =
              Impl.Identity.Validation.get_validation_identity_for_identity_id(target_identity_id)

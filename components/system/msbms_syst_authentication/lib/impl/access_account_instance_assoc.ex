@@ -152,7 +152,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccountInstanceAssoc do
         aaia.access_account_id == ^access_account_id and aaia.instance_id == ^instance_id and
           not is_nil(aaia.access_granted)
     )
-    |> MsbmsSystDatastore.exists?()
+    |> MscmpSystDb.exists?()
   end
 
   @spec decline_instance_invite(
@@ -291,11 +291,11 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccountInstanceAssoc do
     from(aaia in Data.SystAccessAccountInstanceAssocs,
       where: aaia.access_account_id == ^access_account_id and aaia.instance_id == ^instance_id
     )
-    |> MsbmsSystDatastore.one()
+    |> MscmpSystDb.one()
   end
 
   defp get_access_account_instance_assoc(record_id) when is_binary(record_id) do
-    MsbmsSystDatastore.get!(Data.SystAccessAccountInstanceAssocs, record_id)
+    MscmpSystDb.get!(Data.SystAccessAccountInstanceAssocs, record_id)
   end
 
   defp verify_not_accepted(
@@ -352,19 +352,19 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccountInstanceAssoc do
   defp create_record(insert_params) do
     insert_params
     |> Data.SystAccessAccountInstanceAssocs.insert_changeset()
-    |> MsbmsSystDatastore.insert!(returning: true)
+    |> MscmpSystDb.insert!(returning: true)
     |> then(&{:ok, &1})
   end
 
   defp update_record(target_record, update_params) do
     target_record
     |> Data.SystAccessAccountInstanceAssocs.update_changeset(update_params)
-    |> MsbmsSystDatastore.update!(returning: true)
+    |> MscmpSystDb.update!(returning: true)
     |> then(&{:ok, &1})
   end
 
   defp delete_record(target_record) do
-    MsbmsSystDatastore.delete!(target_record)
+    MscmpSystDb.delete!(target_record)
     :ok
   end
 end

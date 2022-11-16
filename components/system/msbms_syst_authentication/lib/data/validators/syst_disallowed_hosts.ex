@@ -14,7 +14,7 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystDisallowedHosts do
   import Ecto.Changeset
 
   alias MsbmsSystAuthentication.Data
-  alias MsbmsSystDatastore.DbTypes
+  alias MscmpSystDb.DbTypes
 
   @moduledoc false
 

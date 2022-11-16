@@ -24,7 +24,7 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceTypeApplication do
       when is_binary(instance_type_id) and is_binary(application_id) do
     %{instance_type_id: instance_type_id, application_id: application_id}
     |> Data.SystInstanceTypeApplications.insert_changeset()
-    |> MsbmsSystDatastore.insert!(returning: true)
+    |> MscmpSystDb.insert!(returning: true)
     |> then(&{:ok, &1})
   rescue
     error ->
@@ -46,7 +46,7 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceTypeApplication do
         ) :: :ok | {:error, MscmpSystError.t()}
   def delete_instance_type_application(instance_type_application_id)
       when is_binary(instance_type_application_id) do
-    MsbmsSystDatastore.get!(Data.SystInstanceTypeApplications, instance_type_application_id)
+    MscmpSystDb.get!(Data.SystInstanceTypeApplications, instance_type_application_id)
     |> delete_instance_type_application()
   rescue
     error ->
@@ -65,7 +65,7 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceTypeApplication do
   def delete_instance_type_application(
         %Data.SystInstanceTypeApplications{} = instance_type_application
       ) do
-    MsbmsSystDatastore.delete!(instance_type_application)
+    MscmpSystDb.delete!(instance_type_application)
     :ok
   rescue
     error ->

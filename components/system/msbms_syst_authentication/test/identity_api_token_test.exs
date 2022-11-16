@@ -120,7 +120,7 @@ defmodule IdentityApiTokenTest do
           aa.internal_name == "owned_all_access" and
             ei.internal_name == "identity_types_sysdef_api"
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     assert %Data.SystIdentities{} =
              Impl.Identity.ApiToken.identify_access_account(
@@ -142,7 +142,7 @@ defmodule IdentityApiTokenTest do
           aa.internal_name == "unowned_all_access" and
             ei.internal_name == "identity_types_sysdef_api"
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     assert %Data.SystIdentities{} =
              Impl.Identity.ApiToken.identify_access_account(
@@ -160,7 +160,7 @@ defmodule IdentityApiTokenTest do
           aa.internal_name == "owned_all_access" and
             ei.internal_name == "identity_types_sysdef_api"
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     assert Impl.Identity.ApiToken.identify_access_account(bad_target.account_identifier, nil) ==
              nil
@@ -179,7 +179,7 @@ defmodule IdentityApiTokenTest do
           aa.internal_name == "unowned_all_access" and
             ei.internal_name == "identity_types_sysdef_api"
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     assert %Data.SystIdentities{external_name: ^test_name} =
              Impl.Identity.ApiToken.update_identity_external_name(target.identity_id, test_name)
@@ -198,7 +198,7 @@ defmodule IdentityApiTokenTest do
           aa.internal_name == "owned_all_access" and
             ei.internal_name == "identity_types_sysdef_api"
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     assert %Data.SystIdentities{external_name: ^test_name} =
              Impl.Identity.ApiToken.update_identity_external_name(target, test_name)

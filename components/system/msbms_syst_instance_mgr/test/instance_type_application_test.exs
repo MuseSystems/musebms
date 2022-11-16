@@ -24,7 +24,7 @@ defmodule InstanceTypeApplicationTest do
 
     application_id =
       from(a in Data.SystApplications, where: a.internal_name == "app1", select: a.id)
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     assert {:ok, _} =
              MsbmsSystInstanceMgr.create_instance_type_application(
@@ -40,7 +40,7 @@ defmodule InstanceTypeApplicationTest do
 
     application_id =
       from(a in Data.SystApplications, where: a.internal_name == "app2", select: a.id)
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     {:ok, instance_type_application} =
       MsbmsSystInstanceMgr.create_instance_type_application(instance_type.id, application_id)

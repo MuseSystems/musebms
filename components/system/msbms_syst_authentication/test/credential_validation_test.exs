@@ -206,6 +206,6 @@ defmodule CredentialValidationTest do
         aa.internal_name == ^access_account_name and
           ei.internal_name == "identity_types_sysdef_validation"
     )
-    |> MsbmsSystDatastore.one!()
+    |> MscmpSystDb.one!()
   end
 end

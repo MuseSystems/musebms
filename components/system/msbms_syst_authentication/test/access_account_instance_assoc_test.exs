@@ -31,7 +31,7 @@ defmodule AccessAccountInstanceAssocTest do
         select: i.id,
         limit: 1
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     test_now = DateTime.now!("Etc/UTC")
 
@@ -61,7 +61,7 @@ defmodule AccessAccountInstanceAssocTest do
         where: i.internal_name == "app1_owner1_instance_types_std",
         select: i.id
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     test_now = DateTime.now!("Etc/UTC")
 
@@ -88,7 +88,7 @@ defmodule AccessAccountInstanceAssocTest do
         where: i.internal_name == "app1_owner1_instance_types_std",
         select: i.id
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     test_now = DateTime.now!("Etc/UTC")
 
@@ -112,7 +112,7 @@ defmodule AccessAccountInstanceAssocTest do
         where: i.internal_name == "app1_owner1_instance_types_std",
         select: i.id
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     assert :ok = MsbmsSystAuthentication.revoke_instance_access(access_account.id, instance_id)
 

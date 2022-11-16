@@ -128,7 +128,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.GenericToken do
       credential_for_identity_id: identity_id
     }
     |> Data.SystCredentials.insert_changeset()
-    |> MsbmsSystDatastore.insert!()
+    |> MscmpSystDb.insert!()
 
     {:ok, token}
   end
@@ -146,7 +146,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.GenericToken do
     from(i in Data.SystIdentities,
       where: i.id == ^identity_id and i.access_account_id == ^access_account_id
     )
-    |> MsbmsSystDatastore.exists?()
+    |> MscmpSystDb.exists?()
   end
 
   @spec get_credential_record(
@@ -168,7 +168,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.GenericToken do
           c.credential_for_identity_id == ^identity_id,
       select: c
     )
-    |> MsbmsSystDatastore.one()
+    |> MscmpSystDb.one()
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -201,7 +201,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.GenericToken do
       select: c,
       where: c.id == ^credential_id and ct.internal_name == ^cred_type_param
     )
-    |> MsbmsSystDatastore.one!()
+    |> MscmpSystDb.one!()
     |> then(&delete_credential(credential_type, &1))
   rescue
     error ->
@@ -218,7 +218,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.GenericToken do
       MsbmsSystEnums.get_enum_item_by_id("credential_types", cred.credential_type_id)
 
     if target_cred_type_name == Atom.to_string(credential_type) do
-      MsbmsSystDatastore.delete!(cred)
+      MscmpSystDb.delete!(cred)
       :ok
     else
       raise MscmpSystError,

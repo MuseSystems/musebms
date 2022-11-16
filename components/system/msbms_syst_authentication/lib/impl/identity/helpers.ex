@@ -32,24 +32,24 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Helpers do
 
   def delete_identity(identity_id) when is_binary(identity_id) do
     from(i in Data.SystIdentities, where: i.id == ^identity_id)
-    |> MsbmsSystDatastore.one!()
+    |> MscmpSystDb.one!()
     |> delete_identity()
   end
 
   def create_record(insert_params) do
     insert_params
     |> Data.SystIdentities.insert_changeset()
-    |> MsbmsSystDatastore.insert!(returning: true)
+    |> MscmpSystDb.insert!(returning: true)
   end
 
   def update_record(identity, update_params) do
     identity
     |> Data.SystIdentities.update_changeset(update_params)
-    |> MsbmsSystDatastore.update!(returning: true)
+    |> MscmpSystDb.update!(returning: true)
   end
 
   def delete_record(identity) do
-    MsbmsSystDatastore.delete!(identity)
+    MscmpSystDb.delete!(identity)
     :ok
   end
 

@@ -68,7 +68,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.AccountCode do
   def identify_access_account(account_code, owner_id) when is_binary(account_code) do
     account_code
     |> Impl.Identity.Helpers.get_identification_query("identity_types_sysdef_account", owner_id)
-    |> MsbmsSystDatastore.one()
+    |> MscmpSystDb.one()
   end
 
   @spec reset_identity_for_access_account_id(Types.access_account_id(), Keyword.t()) ::
@@ -82,7 +82,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.AccountCode do
             ei.internal_name == "identity_types_sysdef_account",
         select: i.id
       )
-      |> MsbmsSystDatastore.one()
+      |> MscmpSystDb.one()
       |> maybe_delete_identity()
       |> maybe_create_identity_after_delete(access_account_id, opts)
       |> case do
@@ -90,7 +90,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.AccountCode do
           new_identity
 
         error ->
-          MsbmsSystDatastore.rollback(%MscmpSystError{
+          MscmpSystDb.rollback(%MscmpSystError{
             code: :undefined_error,
             message: "Failure resetting Account Code Identity.",
             cause: error
@@ -98,7 +98,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.AccountCode do
       end
     end
 
-    MsbmsSystDatastore.transaction(reset_func)
+    MscmpSystDb.transaction(reset_func)
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -137,7 +137,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.AccountCode do
         i.access_account_id == ^access_account_id and
           ei.internal_name == "identity_types_sysdef_account"
     )
-    |> MsbmsSystDatastore.one()
+    |> MscmpSystDb.one()
     |> process_account_code_lookup_result()
   rescue
     error ->

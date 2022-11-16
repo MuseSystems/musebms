@@ -11,10 +11,10 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MsbmsSystAuthentication.Data.SystDisallowedHosts do
-  use MsbmsSystDatastore.Schema
+  use MscmpSystDb.Schema
 
   alias MsbmsSystAuthentication.Data.Validators
-  alias MsbmsSystDatastore.DbTypes
+  alias MscmpSystDb.DbTypes
 
   @moduledoc """
   A simple listing of "banned" IP address which are not allowed to authenticate

@@ -25,7 +25,7 @@ defmodule InstanceTypeContextTest do
         where: ac.login_context,
         limit: 1
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     id_test_params = %{
       default_db_pool_size: instance_type_context.default_db_pool_size + 1

@@ -20,7 +20,7 @@ defmodule InstanceTest do
   test "Can Retrieve Instance Record by Internal Name" do
     instance_record =
       from(i in Data.SystInstances, limit: 1)
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     assert {:ok,
             %Data.SystInstances{
@@ -33,7 +33,7 @@ defmodule InstanceTest do
   test "Can Retreive Instance Record ID by Internal Name" do
     instance_record =
       from(i in Data.SystInstances, limit: 1)
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     assert {:ok, test_instance_id} =
              MsbmsSystInstanceMgr.get_instance_id_by_name(instance_record.internal_name)

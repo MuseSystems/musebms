@@ -11,11 +11,11 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MsbmsSystSettings.Data.SystSettings do
-  use MsbmsSystDatastore.Schema
+  use MscmpSystDb.Schema
 
   import Ecto.Changeset
 
-  alias MsbmsSystDatastore.DbTypes
+  alias MscmpSystDb.DbTypes
   alias MsbmsSystSettings.Impl.ChangesetHelpers
 
   @moduledoc """

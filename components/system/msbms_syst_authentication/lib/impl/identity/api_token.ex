@@ -73,7 +73,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.ApiToken do
   def identify_access_account(api_token, owner_id) when is_binary(api_token) do
     api_token
     |> Helpers.get_identification_query("identity_types_sysdef_api", owner_id)
-    |> MsbmsSystDatastore.one()
+    |> MscmpSystDb.one()
   end
 
   @spec update_identity_external_name(
@@ -85,7 +85,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.ApiToken do
       join: ei in assoc(i, :identity_type),
       where: ei.internal_name == "identity_types_sysdef_api" and i.id == ^identity_id
     )
-    |> MsbmsSystDatastore.one!()
+    |> MscmpSystDb.one!()
     |> update_identity_external_name(external_name)
   end
 

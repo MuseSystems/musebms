@@ -49,10 +49,10 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
         })
       else
         {:invalid_credential, _} = cred_violations ->
-          MsbmsSystDatastore.rollback(cred_violations)
+          MscmpSystDb.rollback(cred_violations)
 
         error ->
-          MsbmsSystDatastore.rollback(%MscmpSystError{
+          MscmpSystDb.rollback(%MscmpSystError{
             code: :undefined_error,
             message: "Failed creating Email/Password Authenticator.",
             cause: error
@@ -60,7 +60,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
       end
     end
 
-    MsbmsSystDatastore.transaction(authenticator_func)
+    MscmpSystDb.transaction(authenticator_func)
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -149,11 +149,11 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
         }
       else
         {:error, %MscmpSystError{cause: cause}} ->
-          MsbmsSystDatastore.rollback(cause)
+          MscmpSystDb.rollback(cause)
       end
     end
 
-    MsbmsSystDatastore.transaction(validator_func)
+    MscmpSystDb.transaction(validator_func)
   end
 
   # There's a good argument that revoke_validator_for_identity_id/1 belongs in
@@ -222,11 +222,11 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
         }
       else
         {:error, %MscmpSystError{cause: cause}} ->
-          MsbmsSystDatastore.rollback(cause)
+          MscmpSystDb.rollback(cause)
       end
     end
 
-    MsbmsSystDatastore.transaction(recovery_func)
+    MscmpSystDb.transaction(recovery_func)
   rescue
     error in [MscmpSystError] ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -306,7 +306,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
         }
       else
         error ->
-          MsbmsSystDatastore.rollback(%MscmpSystError{
+          MscmpSystDb.rollback(%MscmpSystError{
             code: :undefined_error,
             message: "Failed creating API Token Authenticator.",
             cause: error
@@ -314,7 +314,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
       end
     end
 
-    MsbmsSystDatastore.transaction(authenticator_func)
+    MscmpSystDb.transaction(authenticator_func)
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))

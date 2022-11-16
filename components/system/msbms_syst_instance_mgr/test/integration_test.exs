@@ -74,7 +74,7 @@ defmodule IntegrationTest do
 
     application_id =
       from(a in Data.SystApplications, where: a.internal_name == "app1", select: a.id)
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     assert {:ok, _} =
              MsbmsSystInstanceMgr.create_instance_type_application(
@@ -86,7 +86,7 @@ defmodule IntegrationTest do
 
     application_id =
       from(a in Data.SystApplications, where: a.internal_name == "app2", select: a.id)
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     assert {:ok, _} =
              MsbmsSystInstanceMgr.create_instance_type_application(
@@ -104,7 +104,7 @@ defmodule IntegrationTest do
       preload: [instance_type_application: {ita, instance_type: it}, application_context: ac],
       where: ac.login_context
     )
-    |> MsbmsSystDatastore.all()
+    |> MscmpSystDb.all()
     |> Enum.each(fn instance_type_context ->
       db_pool_size =
         case instance_type_context.instance_type_application.instance_type.internal_name do
@@ -224,7 +224,7 @@ defmodule IntegrationTest do
 
   test "Step 6: Initialize Instances" do
     from(i in Data.SystInstances)
-    |> MsbmsSystDatastore.all()
+    |> MscmpSystDb.all()
     |> Enum.each(fn test_instance ->
       assert {:ok, initialized_instance} =
                MsbmsSystInstanceMgr.initialize_instance(test_instance.id, @startup_options)
@@ -235,8 +235,7 @@ defmodule IntegrationTest do
           @startup_options
         )
 
-      assert {:ok, :ready, context_states} =
-               MsbmsSystDatastore.get_datastore_state(datastore_options)
+      assert {:ok, :ready, context_states} = MscmpSystDb.get_datastore_state(datastore_options)
 
       Enum.each(context_states, &assert(%{context: _, state: :ready} = &1))
 
@@ -263,20 +262,20 @@ defmodule IntegrationTest do
       where: a.login_context and a.start_context,
       select: [:internal_name]
     )
-    |> MsbmsSystDatastore.all()
+    |> MscmpSystDb.all()
     |> Enum.each(fn context ->
-      starting_datastore_context = MsbmsSystDatastore.current_datastore_context()
+      starting_datastore_context = MscmpSystDb.current_datastore_context()
 
-      MsbmsSystDatastore.set_datastore_context(String.to_atom(context.internal_name))
+      MscmpSystDb.set_datastore_context(String.to_atom(context.internal_name))
 
-      assert MsbmsSystDatastore.query_for_value!("""
+      assert MscmpSystDb.query_for_value!("""
              SELECT true
                FROM testing.test_header
               WHERE test_value = '#{context.internal_name}'
               LIMIT 1;
              """)
 
-      MsbmsSystDatastore.set_datastore_context(starting_datastore_context)
+      MscmpSystDb.set_datastore_context(starting_datastore_context)
     end)
   end
 
@@ -294,10 +293,10 @@ defmodule IntegrationTest do
     update_params = %{instance_state_id: purge_instance_state_id}
 
     from(i in Data.SystInstances)
-    |> MsbmsSystDatastore.all()
+    |> MscmpSystDb.all()
     |> Enum.each(fn test_instance ->
       Data.SystInstances.update_changeset(test_instance, update_params)
-      |> MsbmsSystDatastore.update!()
+      |> MscmpSystDb.update!()
 
       assert :ok = MsbmsSystInstanceMgr.purge_instance(test_instance.id, @startup_options)
     end)

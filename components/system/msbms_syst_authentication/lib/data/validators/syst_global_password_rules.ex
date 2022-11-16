@@ -16,7 +16,7 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystGlobalPasswordRules do
   alias MsbmsSystAuthentication.Data
   alias MsbmsSystAuthentication.Types
 
-  alias MsbmsSystDatastore.DbTypes
+  alias MscmpSystDb.DbTypes
 
   @moduledoc false
 

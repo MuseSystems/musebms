@@ -313,7 +313,7 @@ defmodule SettingsTest do
     # TODO: Note that the range types seem to munge around ranges not already set to be '[)' to be
     # '[)' via changing values if needed.  I guess this is OK for now, but may be worth revisiting.
     first_change = %{
-      setting_integer_range: %MsbmsSystDatastore.DbTypes.IntegerRange{
+      setting_integer_range: %MscmpSystDb.DbTypes.IntegerRange{
         lower: 111,
         upper: 11_111,
         lower_inclusive: true,
@@ -322,7 +322,7 @@ defmodule SettingsTest do
     }
 
     second_change = %{
-      setting_integer_range: %MsbmsSystDatastore.DbTypes.IntegerRange{
+      setting_integer_range: %MscmpSystDb.DbTypes.IntegerRange{
         lower: 222,
         upper: 22_222,
         lower_inclusive: false,
@@ -333,7 +333,7 @@ defmodule SettingsTest do
     nil_change = %{setting_integer_range: nil}
 
     assert %MsbmsSystSettings.Data.SystSettings{
-             setting_integer_range: %MsbmsSystDatastore.DbTypes.IntegerRange{
+             setting_integer_range: %MscmpSystDb.DbTypes.IntegerRange{
                lower: 1,
                upper: 11,
                lower_inclusive: true,
@@ -341,7 +341,7 @@ defmodule SettingsTest do
              }
            } = MsbmsSystSettings.get_setting_values("test_setting_one")
 
-    assert %MsbmsSystDatastore.DbTypes.IntegerRange{
+    assert %MscmpSystDb.DbTypes.IntegerRange{
              lower: 1,
              upper: 11,
              lower_inclusive: true,
@@ -358,7 +358,7 @@ defmodule SettingsTest do
                second_change
              )
 
-    assert %MsbmsSystDatastore.DbTypes.IntegerRange{
+    assert %MscmpSystDb.DbTypes.IntegerRange{
              lower: 223,
              lower_inclusive: true,
              upper: 22_223,
@@ -376,7 +376,7 @@ defmodule SettingsTest do
                first_change.setting_integer_range
              )
 
-    assert %MsbmsSystDatastore.DbTypes.IntegerRange{
+    assert %MscmpSystDb.DbTypes.IntegerRange{
              lower: 111,
              lower_inclusive: true,
              upper: 11_112,
@@ -466,7 +466,7 @@ defmodule SettingsTest do
     # TODO: Note that the range types seem to munge around ranges not already set to be '[)' to be
     # '[)' via changing values if needed.  I guess this is OK for now, but may be worth revisiting.
     first_change = %{
-      setting_decimal_range: %MsbmsSystDatastore.DbTypes.DecimalRange{
+      setting_decimal_range: %MscmpSystDb.DbTypes.DecimalRange{
         lower: Decimal.new("111.999"),
         upper: Decimal.new("11111.999"),
         lower_inclusive: true,
@@ -475,7 +475,7 @@ defmodule SettingsTest do
     }
 
     second_change = %{
-      setting_decimal_range: %MsbmsSystDatastore.DbTypes.DecimalRange{
+      setting_decimal_range: %MscmpSystDb.DbTypes.DecimalRange{
         lower: Decimal.new("222.999"),
         upper: Decimal.new("22222.999"),
         lower_inclusive: false,
@@ -485,7 +485,7 @@ defmodule SettingsTest do
 
     nil_change = %{setting_decimal_range: nil}
 
-    starting_value = %MsbmsSystDatastore.DbTypes.DecimalRange{
+    starting_value = %MscmpSystDb.DbTypes.DecimalRange{
       lower: Decimal.new("1.1"),
       upper: Decimal.new("11.11"),
       lower_inclusive: true,
@@ -546,7 +546,7 @@ defmodule SettingsTest do
 
   test "Set/Get setting_interval Setting" do
     first_change = %{
-      setting_interval: %MsbmsSystDatastore.DbTypes.Interval{
+      setting_interval: %MscmpSystDb.DbTypes.Interval{
         months: 1,
         days: 1,
         secs: 1,
@@ -555,7 +555,7 @@ defmodule SettingsTest do
     }
 
     second_change = %{
-      setting_interval: %MsbmsSystDatastore.DbTypes.Interval{
+      setting_interval: %MscmpSystDb.DbTypes.Interval{
         months: 2,
         days: 2,
         secs: 2,
@@ -566,7 +566,7 @@ defmodule SettingsTest do
     nil_change = %{setting_interval: nil}
 
     assert %MsbmsSystSettings.Data.SystSettings{
-             setting_interval: %MsbmsSystDatastore.DbTypes.Interval{
+             setting_interval: %MscmpSystDb.DbTypes.Interval{
                months: 1,
                days: 0,
                secs: 0,
@@ -574,7 +574,7 @@ defmodule SettingsTest do
              }
            } = MsbmsSystSettings.get_setting_values("test_setting_one")
 
-    assert %MsbmsSystDatastore.DbTypes.Interval{
+    assert %MscmpSystDb.DbTypes.Interval{
              months: 1,
              days: 0,
              secs: 0,
@@ -683,7 +683,7 @@ defmodule SettingsTest do
 
   test "Set/Get setting_date_range Setting" do
     first_change = %{
-      setting_date_range: %MsbmsSystDatastore.DbTypes.DateRange{
+      setting_date_range: %MscmpSystDb.DbTypes.DateRange{
         lower: ~D[2022-04-13],
         upper: ~D[2022-04-14],
         lower_inclusive: true,
@@ -692,7 +692,7 @@ defmodule SettingsTest do
     }
 
     second_change = %{
-      setting_date_range: %MsbmsSystDatastore.DbTypes.DateRange{
+      setting_date_range: %MscmpSystDb.DbTypes.DateRange{
         lower: ~D[2022-04-12],
         upper: ~D[2022-04-15],
         lower_inclusive: false,
@@ -703,7 +703,7 @@ defmodule SettingsTest do
     nil_change = %{setting_date_range: nil}
 
     assert %MsbmsSystSettings.Data.SystSettings{
-             setting_date_range: %MsbmsSystDatastore.DbTypes.DateRange{
+             setting_date_range: %MscmpSystDb.DbTypes.DateRange{
                lower: ~D[2022-01-01],
                upper: ~D[2023-01-01],
                lower_inclusive: true,
@@ -711,7 +711,7 @@ defmodule SettingsTest do
              }
            } = MsbmsSystSettings.get_setting_values("test_setting_one")
 
-    assert %MsbmsSystDatastore.DbTypes.DateRange{
+    assert %MscmpSystDb.DbTypes.DateRange{
              lower: ~D[2022-01-01],
              upper: ~D[2023-01-01],
              lower_inclusive: true,
@@ -728,7 +728,7 @@ defmodule SettingsTest do
                second_change
              )
 
-    second_change_comparison = %MsbmsSystDatastore.DbTypes.DateRange{
+    second_change_comparison = %MscmpSystDb.DbTypes.DateRange{
       lower: ~D[2022-04-13],
       upper: ~D[2022-04-16],
       lower_inclusive: true,
@@ -748,7 +748,7 @@ defmodule SettingsTest do
                first_change.setting_date_range
              )
 
-    first_change_comparison = %MsbmsSystDatastore.DbTypes.DateRange{
+    first_change_comparison = %MscmpSystDb.DbTypes.DateRange{
       lower: ~D[2022-04-13],
       upper: ~D[2022-04-15],
       lower_inclusive: true,
@@ -883,7 +883,7 @@ defmodule SettingsTest do
 
   test "Set/Get setting_timestamp_range Setting" do
     first_change = %{
-      setting_timestamp_range: %MsbmsSystDatastore.DbTypes.DateTimeRange{
+      setting_timestamp_range: %MscmpSystDb.DbTypes.DateTimeRange{
         lower: ~U[2022-04-13 01:00:00.000000Z],
         upper: ~U[2022-04-14 23:00:00.000000Z],
         lower_inclusive: true,
@@ -892,7 +892,7 @@ defmodule SettingsTest do
     }
 
     second_change = %{
-      setting_timestamp_range: %MsbmsSystDatastore.DbTypes.DateTimeRange{
+      setting_timestamp_range: %MscmpSystDb.DbTypes.DateTimeRange{
         lower: ~U[2022-04-12 01:30:00.000000Z],
         upper: ~U[2022-04-15 23:30:00.000000Z],
         lower_inclusive: false,
@@ -903,7 +903,7 @@ defmodule SettingsTest do
     nil_change = %{setting_timestamp_range: nil}
 
     assert %MsbmsSystSettings.Data.SystSettings{
-             setting_timestamp_range: %MsbmsSystDatastore.DbTypes.DateTimeRange{
+             setting_timestamp_range: %MscmpSystDb.DbTypes.DateTimeRange{
                lower: ~U[2022-01-01 01:00:00.000000Z],
                upper: :inf,
                lower_inclusive: true,
@@ -911,7 +911,7 @@ defmodule SettingsTest do
              }
            } = MsbmsSystSettings.get_setting_values("test_setting_one")
 
-    assert %MsbmsSystDatastore.DbTypes.DateTimeRange{
+    assert %MscmpSystDb.DbTypes.DateTimeRange{
              lower: ~U[2022-01-01 01:00:00.000000Z],
              upper: :inf,
              lower_inclusive: true,

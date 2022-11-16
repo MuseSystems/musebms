@@ -14,7 +14,7 @@
             "path": "components/system/mscmp_syst_limiter",
         },
         {
-            "path": "components/system/msbms_syst_datastore",
+            "path": "components/system/mscmp_syst_db",
         },
         {
             "path": "components/system/msbms_syst_options",

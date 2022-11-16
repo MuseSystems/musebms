@@ -17,7 +17,7 @@ defmodule MsbmsSystAuthentication.Data.Validators.SystOwnerPasswordRules do
   alias MsbmsSystAuthentication.Data.Helpers
   alias MsbmsSystAuthentication.Types
 
-  alias MsbmsSystDatastore.DbTypes
+  alias MscmpSystDb.DbTypes
 
   @moduledoc false
 

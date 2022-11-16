@@ -26,7 +26,7 @@ defmodule MsbmsSystSettings.MixProject do
     # Muse Systems Business Management System Components
     {:mscmp_syst_error, path: "../mscmp_syst_error"},
     {:mscmp_syst_utils, path: "../mscmp_syst_utils"},
-    {:msbms_syst_datastore, path: "../msbms_syst_datastore"}
+    {:mscmp_syst_db, path: "../mscmp_syst_db"}
   ]
 
   @dialyzer_opts [
@@ -53,8 +53,7 @@ defmodule MsbmsSystSettings.MixProject do
         main: "MsbmsSystSettings",
         output: "../../../documentation/technical/app_server/msbms_syst_settings",
         deps: [
-          msbms_syst_datastore:
-            "../../../../documentation/technical/app_server/msbms_syst_datastore",
+          mscmp_syst_db: "../../../../documentation/technical/app_server/mscmp_syst_db",
           mscmp_syst_error: "../../../../documentation/technical/app_server/mscmp_syst_error",
           mscmp_syst_utils: "../../../../documentation/technical/app_server/mscmp_syst_utils"
         ],

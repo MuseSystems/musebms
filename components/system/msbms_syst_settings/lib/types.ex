@@ -28,7 +28,7 @@ defmodule MsbmsSystSettings.Types do
   @typedoc """
   The expected form of the parameters used to start the Settings service.
   """
-  @type setting_service_params() :: {service_name(), MsbmsSystDatastore.Types.context_name()}
+  @type setting_service_params() :: {service_name(), MscmpSystDb.Types.context_name()}
 
   @typedoc """
   Identification of each unique Setting managed by the Settings Service instance.
@@ -66,15 +66,15 @@ defmodule MsbmsSystSettings.Types do
           optional(:user_description) => String.t(),
           optional(:setting_flag) => boolean(),
           optional(:setting_integer) => integer(),
-          optional(:setting_integer_range) => MsbmsSystDatastore.DbTypes.IntegerRange.t(),
+          optional(:setting_integer_range) => MscmpSystDb.DbTypes.IntegerRange.t(),
           optional(:setting_decimal) => Decimal.t(),
-          optional(:setting_decimal_range) => MsbmsSystDatastore.DbTypes.DecimalRange.t(),
-          optional(:setting_interval) => MsbmsSystDatastore.DbTypes.Interval.t(),
+          optional(:setting_decimal_range) => MscmpSystDb.DbTypes.DecimalRange.t(),
+          optional(:setting_interval) => MscmpSystDb.DbTypes.Interval.t(),
           optional(:setting_date) => Date.t(),
-          optional(:setting_date_range) => MsbmsSystDatastore.DbTypes.DateRange.t(),
+          optional(:setting_date_range) => MscmpSystDb.DbTypes.DateRange.t(),
           optional(:setting_time) => Time.t(),
           optional(:setting_timestamp) => DateTime.t(),
-          optional(:setting_timestamp_range) => MsbmsSystDatastore.DbTypes.DateTimeRange.t(),
+          optional(:setting_timestamp_range) => MscmpSystDb.DbTypes.DateTimeRange.t(),
           optional(:setting_json) => map(),
           optional(:setting_text) => String.t(),
           optional(:setting_uuid) => Ecto.UUID.t(),
