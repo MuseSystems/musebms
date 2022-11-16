@@ -23,7 +23,7 @@ erl_crash.dump
 *.ez
 
 # Ignore package tarball (built via "mix hex.build").
-msbms_syst_rate_limiter-*.tar
+mscmp_syst_limiter-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/

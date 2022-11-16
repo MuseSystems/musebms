@@ -1,5 +1,5 @@
-# Source File: doctests_test.exs
-# Location:    musebms/components/system/msbms_syst_rate_limiter/test/doctests_test.exs
+# Source File: test.exs
+# Location:    musebms/components/system/mscmp_syst_limiter/config/test.exs
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,8 +10,6 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule DoctestsTest do
-  use ExUnit.Case, async: true
+import Config
 
-  doctest MsbmsSystRateLimiter
-end
+config :logger, level: :info

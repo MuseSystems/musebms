@@ -1116,7 +1116,7 @@ defmodule IntegrationTest do
                owning_owner_id: owner2_id
              )
 
-    _ = MsbmsSystRateLimiter.delete_counters(:identifier, "owned.access.account@musesystems.com")
+    _ = MscmpSystLimiter.delete_counters(:identifier, "owned.access.account@musesystems.com")
 
     assert {:ok, %{status: :rejected}} =
              MsbmsSystAuthentication.authenticate_email_password(

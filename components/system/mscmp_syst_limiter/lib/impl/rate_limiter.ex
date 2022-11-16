@@ -1,5 +1,5 @@
 # Source File: rate_limiter.ex
-# Location:    musebms/components/system/msbms_syst_rate_limiter/lib/impl/rate_limiter.ex
+# Location:    musebms/components/system/mscmp_syst_limiter/lib/impl/rate_limiter.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,8 +10,8 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule MsbmsSystRateLimiter.Impl.RateLimiter do
-  alias MsbmsSystRateLimiter.Types
+defmodule MscmpSystLimiter.Impl.RateLimiter do
+  alias MscmpSystLimiter.Types
 
   require Logger
 

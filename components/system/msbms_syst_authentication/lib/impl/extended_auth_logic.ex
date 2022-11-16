@@ -839,7 +839,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
   defp check_rate_limit(counter_type, target, rate_limit) do
     {attempts, time_window} = rate_limit
 
-    MsbmsSystRateLimiter.check_rate(counter_type, target, time_window, attempts)
+    MscmpSystLimiter.check_rate(counter_type, target, time_window, attempts)
   end
 
   defp maybe_reset_rate_limits(%{status: status} = auth_state)
@@ -857,7 +857,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
     do: reset_rate_limit(:host_ban, IP.to_string(host_addr))
 
   defp reset_rate_limit(counter_type, target),
-    do: MsbmsSystRateLimiter.delete_counters(counter_type, target)
+    do: MscmpSystLimiter.delete_counters(counter_type, target)
 
   defp finalize_authentication(%{status: :pending, pending_operations: []} = auth_state),
     do: Map.put(auth_state, :status, :authenticated)

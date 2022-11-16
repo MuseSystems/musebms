@@ -1,5 +1,5 @@
 # Source File: test_support.ex
-# Location:    musebms/components/system/msbms_syst_rate_limiter/test/support/test_support.ex
+# Location:    musebms/components/system/mscmp_syst_limiter/test/support/test_support.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -34,7 +34,7 @@ defmodule TestSupport do
     :mnesia.start()
   end
 
-  def setup_testing_database(:unit_testing), do: MsbmsSystRateLimiter.init_rate_limiter()
+  def setup_testing_database(:unit_testing), do: MscmpSystLimiter.init_rate_limiter()
 
   def cleanup_testing_database(:integration_testing) do
     File.rm_rf!(@mnesia_database_location)

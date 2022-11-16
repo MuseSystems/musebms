@@ -1,5 +1,5 @@
-# Source File: msbms_syst_rate_limiter.ex
-# Location:    musebms/components/system/msbms_syst_rate_limiter/lib/msbms_syst_rate_limiter.ex
+# Source File: mscmp_syst_limiter.ex
+# Location:    musebms/components/system/mscmp_syst_limiter/lib/mscmp_syst_limiter.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,10 +10,10 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule MsbmsSystRateLimiter do
-  alias MsbmsSystRateLimiter.Impl
-  alias MsbmsSystRateLimiter.Runtime
-  alias MsbmsSystRateLimiter.Types
+defmodule MscmpSystLimiter do
+  alias MscmpSystLimiter.Impl
+  alias MscmpSystLimiter.Runtime
+  alias MscmpSystLimiter.Types
 
   @moduledoc """
   API for establishing rate limits for usage of finite system resources.
@@ -33,10 +33,10 @@ defmodule MsbmsSystRateLimiter do
 
   ## Third Party Functionality
 
-  This version of the `MsbmsSystRateLimiter` component is primarily a wrapper
+  This version of the `MscmpSystLimiter` component is primarily a wrapper
   around the third party [`Hammer`](https://github.com/ExHammer/hammer) and
   [`Hammer.Backend.Mnesia`](https://github.com/ExHammer/hammer-backend-mnesia)
-  libraries.  `MsbmsSystRateLimiter` offers a slightly different API to the
+  libraries.  `MscmpSystLimiter` offers a slightly different API to the
   wrapped libraries and changes some return values to be more consistent with
   the Muse Systems Business Management System standards and practices.  We also
   reuse and incorporate some of the documentation from these projects into our
@@ -60,14 +60,14 @@ defmodule MsbmsSystRateLimiter do
   Using this component assumes certain setups and configurations are performed
   by the client application:
 
-  1. __Configure MsbmsSystRateLimiter__ - The rate limiter allows several
+  1. __Configure MscmpSystLimiter__ - The rate limiter allows several
   configuration points to be set to customize the behavior of service.  Add:
 
     ```elixir
-    config :msbms_syst_rate_limiter,
+    config :mscmp_syst_limiter,
         expiry_ms: 60_000 * 60 * 2,
         cleanup_interval_ms: 60_000 * 10,
-        table_name: :msbms_syst_rate_limiter_counters
+        table_name: :mscmp_syst_limiter_counters
     ```
     with the desired values to `config.exs`.  The values expressed in the
     example are also the defaults for these values if the configuration is not
@@ -84,10 +84,10 @@ defmodule MsbmsSystRateLimiter do
 
     * `table_name` - the name of the backend database table to use for
     tracking counters.  Typically this value should be allowed to default
-    (`:msbms_syst_rate_limiter_counters`) unless there's a compelling reason
+    (`:mscmp_syst_limiter_counters`) unless there's a compelling reason
     to do otherwise.
 
-  2. __Setup Mnesia__ - MsbmsSystRateLimiter keeps its counters in the Mnesia
+  2. __Setup Mnesia__ - MscmpSystLimiter keeps its counters in the Mnesia
   database allowing for distribution of the rate limit counters across nodes.
   MsbmsSystRaleLimiter expects the client application to have setup and called
   `:mnesia.create_schema/1` prior to trying to use the provided services.
@@ -118,7 +118,7 @@ defmodule MsbmsSystRateLimiter do
     * __Call Table Creation Function__ - If adding a `start_phases` definition
     to the application specification is not desirable, the table creation can
     also be completed by explicitly calling
-    `MsbmsSystRateLimiter.init_rate_limiter/1` function.
+    `MscmpSystLimiter.init_rate_limiter/1` function.
   """
 
   @doc section: :rate_limiter_data
@@ -134,7 +134,7 @@ defmodule MsbmsSystRateLimiter do
 
   ## Example
 
-      iex> MsbmsSystRateLimiter.get_counter_name(:example_counter_name, "123")
+      iex> MscmpSystLimiter.get_counter_name(:example_counter_name, "123")
       "example_counter_name_123"
   """
 
@@ -150,7 +150,7 @@ defmodule MsbmsSystRateLimiter do
   calls from being constantly supplied.  The only parameter that the returned
   function requires is the `counter_id` value of the specific counter of the
   type to test; all other parameters typically required by
-  `MsbmsSystRateLimiter.check_rate/4` are captured by the returned closure.
+  `MscmpSystLimiter.check_rate/4` are captured by the returned closure.
 
   ## Parameters
 
@@ -167,16 +167,16 @@ defmodule MsbmsSystRateLimiter do
   ## Example
 
   Note that The returned anonymous function is equivalent to making a call to
-  the more verbose `MsbmsSystRateLimiter.check_rate/4`:
+  the more verbose `MscmpSystLimiter.check_rate/4`:
 
       iex> my_check_rate_function =
-      ...>   MsbmsSystRateLimiter.get_check_rate_function(
+      ...>   MscmpSystLimiter.get_check_rate_function(
       ...>     :example_counter_get_func,
       ...>     60_000,
       ...>     3)
       iex> my_check_rate_function.("id1")
       {:allow, 1}
-      iex> MsbmsSystRateLimiter.check_rate(
+      iex> MscmpSystLimiter.check_rate(
       ...>   :example_counter_get_func,
       ...>   "id1",
       ...>   60_000,
@@ -216,13 +216,13 @@ defmodule MsbmsSystRateLimiter do
 
   ## Example
 
-      iex> MsbmsSystRateLimiter.check_rate(:check_rate_counter, "id1", 60_000, 3)
+      iex> MscmpSystLimiter.check_rate(:check_rate_counter, "id1", 60_000, 3)
       {:allow, 1}
-      iex> MsbmsSystRateLimiter.check_rate(:check_rate_counter, "id1", 60_000, 3)
+      iex> MscmpSystLimiter.check_rate(:check_rate_counter, "id1", 60_000, 3)
       {:allow, 2}
-      iex> MsbmsSystRateLimiter.check_rate(:check_rate_counter, "id1", 60_000, 3)
+      iex> MscmpSystLimiter.check_rate(:check_rate_counter, "id1", 60_000, 3)
       {:allow, 3}
-      iex> MsbmsSystRateLimiter.check_rate(:check_rate_counter, "id1", 60_000, 3)
+      iex> MscmpSystLimiter.check_rate(:check_rate_counter, "id1", 60_000, 3)
       {:deny, 3}
 
   """
@@ -235,7 +235,7 @@ defmodule MsbmsSystRateLimiter do
 
   @doc section: :rate_limiter_data
   @doc """
-  Checks the rate same as `MsbmsSystRateLimiter.check_rate/4`, but allows for a
+  Checks the rate same as `MscmpSystLimiter.check_rate/4`, but allows for a
   variable increment to be set for the call.
 
   ## Parameters
@@ -256,21 +256,21 @@ defmodule MsbmsSystRateLimiter do
 
   ## Example
 
-      iex> MsbmsSystRateLimiter.check_rate_with_increment(
+      iex> MscmpSystLimiter.check_rate_with_increment(
       ...>   :check_with_increment,
       ...>   "id1",
       ...>   60_000,
       ...>   10,
       ...>   7)
       {:allow, 7}
-      iex> MsbmsSystRateLimiter.check_rate_with_increment(
+      iex> MscmpSystLimiter.check_rate_with_increment(
       ...>   :check_with_increment,
       ...>   "id1",
       ...>   60_000,
       ...>   10,
       ...>   2)
       {:allow, 9}
-      iex> MsbmsSystRateLimiter.check_rate(:check_with_increment, "id1", 60_000, 10)
+      iex> MscmpSystLimiter.check_rate(:check_with_increment, "id1", 60_000, 10)
       {:allow, 10}
   """
 
@@ -334,9 +334,9 @@ defmodule MsbmsSystRateLimiter do
 
   ## Example
 
-      iex> MsbmsSystRateLimiter.check_rate(:delete_test_counter, "id1", 60_000, 3)
+      iex> MscmpSystLimiter.check_rate(:delete_test_counter, "id1", 60_000, 3)
       {:allow, 1}
-      iex> MsbmsSystRateLimiter.delete_counters(:delete_test_counter, "id1")
+      iex> MscmpSystLimiter.delete_counters(:delete_test_counter, "id1")
       {:ok, 1}
   """
 
@@ -348,7 +348,7 @@ defmodule MsbmsSystRateLimiter do
   @doc """
   Initializes the rate limiter table.
 
-  This function must be called per the instructions of `MsbmsSystRateLimiter`
+  This function must be called per the instructions of `MscmpSystLimiter`
   prior to the checking the rate of any counter.
 
   ## Parameters
