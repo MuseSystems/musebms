@@ -14,7 +14,7 @@ defmodule MsbmsSystOptions do
 
   If successful a tuple with a first value of `:ok` and second value containing
   a map of the options is returned.  When errors are found, a tuple with a first
-  value of `:error` and second value of the relevant `MsbmsSystError` exception
+  value of `:error` and second value of the relevant `MscmpSystError` exception
   is returned.
 
   ## Parameters
@@ -64,10 +64,10 @@ defmodule MsbmsSystOptions do
 
   Called with bad parameters:
 
-      iex> {:error, %MsbmsSystError{}} =
+      iex> {:error, %MscmpSystError{}} =
       ...>   MsbmsSystOptions.get_options("./bad_file_name.toml")
   """
-  @spec get_options(String.t()) :: {:ok, map()} | {:error, MsbmsSystError.t()}
+  @spec get_options(String.t()) :: {:ok, map()} | {:error, MscmpSystError.t()}
   defdelegate get_options(options_file_path), to: OptionsFile
 
   @doc section: :file_handling
@@ -117,7 +117,7 @@ defmodule MsbmsSystOptions do
   Called with bad parameters:
 
       iex> MsbmsSystOptions.get_options!("./bad_file_name.toml")
-      ** (MsbmsSystError) Problem reading options file './bad_file_name.toml'.
+      ** (MscmpSystError) Problem reading options file './bad_file_name.toml'.
   """
   @spec get_options!(String.t()) :: map()
   defdelegate get_options!(options_file_path), to: OptionsFile

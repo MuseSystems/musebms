@@ -29,7 +29,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.ApiToken do
   @default_external_name nil
 
   @spec create_identity(Types.access_account_id(), Types.account_identifier() | nil, Keyword.t()) ::
-          {:ok, Data.SystIdentities.t()} | {:error, MsbmsSystError.t() | Exception.t()}
+          {:ok, Data.SystIdentities.t()} | {:error, MscmpSystError.t() | Exception.t()}
   def create_identity(access_account_id, api_token, opts \\ [])
       when is_binary(access_account_id) do
     opts =
@@ -58,7 +58,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.ApiToken do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure creating API Token Identity.",
           cause: error

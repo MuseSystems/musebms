@@ -31,7 +31,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
 
   @spec test_credential(Types.access_account_id() | Types.password_rules(), Types.credential()) ::
           {:ok, Keyword.t(Types.password_rule_violations())}
-          | {:error, MsbmsSystError.t() | Exception.t()}
+          | {:error, MscmpSystError.t() | Exception.t()}
   def test_credential(access_account_id, plaintext_pwd) do
     {:ok, test_credential!(access_account_id, plaintext_pwd)}
   rescue
@@ -48,7 +48,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      reraise MsbmsSystError,
+      reraise MscmpSystError,
         code: :undefined_error,
         message: "Failure testing Password Credential.",
         cause: error
@@ -67,7 +67,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      reraise MsbmsSystError,
+      reraise MscmpSystError,
         code: :undefined_error,
         message: "Failure testing Password Credential.",
         cause: error
@@ -191,7 +191,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
           Types.identity_id() | nil,
           Types.credential()
         ) ::
-          {:ok, Types.credential_confirm_result()} | {:error, MsbmsSystError.t() | Exception.t()}
+          {:ok, Types.credential_confirm_result()} | {:error, MscmpSystError.t() | Exception.t()}
   def confirm_credential(access_account_id, _identity_id \\ nil, pwd_text) do
     {:ok, confirm_credential!(access_account_id, pwd_text)}
   rescue
@@ -217,7 +217,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      reraise MsbmsSystError,
+      reraise MscmpSystError,
         code: :undefined_error,
         message: "Failure setting Password Credential.",
         cause: error
@@ -303,7 +303,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
           Types.credential(),
           Keyword.t()
         ) ::
-          :ok | Types.credential_set_failures() | {:error, MsbmsSystError.t()}
+          :ok | Types.credential_set_failures() | {:error, MscmpSystError.t()}
   def set_credential(access_account_id, _identity_id \\ nil, pwd_text, _opts) do
     with {:ok, pwd_rules} <-
            Impl.PasswordRules.get_access_account_password_rule(access_account_id),
@@ -316,7 +316,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
       {:error,
-       %MsbmsSystError{
+       %MscmpSystError{
          code: :undefined_error,
          message: "Failure setting Password Credential.",
          cause: error
@@ -400,7 +400,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
   end
 
   @spec get_credential_record(Types.access_account_id(), Types.identity_id() | nil) ::
-          {:ok, Data.SystCredentials.t() | nil} | {:error, MsbmsSystError.t() | Exception.t()}
+          {:ok, Data.SystCredentials.t() | nil} | {:error, MscmpSystError.t() | Exception.t()}
   def get_credential_record(access_account_id, _identity_id \\ nil) do
     {:ok, get_credential_record!(access_account_id)}
   rescue
@@ -423,14 +423,14 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      reraise MsbmsSystError,
+      reraise MscmpSystError,
         code: :undefined_error,
         message: "Failure retrieving Password Credential record.",
         cause: error
   end
 
   @spec delete_credential(Types.credential_id() | Data.SystCredentials.t()) ::
-          :ok | {:error, MsbmsSystError.t() | Exception.t()}
+          :ok | {:error, MscmpSystError.t() | Exception.t()}
   def delete_credential(credential) do
     delete_credential!(credential)
   rescue
@@ -451,7 +451,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
         :ok
 
       error_result ->
-        raise MsbmsSystError,
+        raise MscmpSystError,
           code: :undefined_error,
           message: "Delete Credential; bad database result.",
           cause: error_result
@@ -460,7 +460,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      reraise MsbmsSystError,
+      reraise MscmpSystError,
         code: :undefined_error,
         message: "Failure deleting Password Credential by ID.",
         cause: error
@@ -473,7 +473,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      reraise MsbmsSystError,
+      reraise MscmpSystError,
         code: :undefined_error,
         message: "Failure deleting Password Credential.",
         cause: error

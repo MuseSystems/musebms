@@ -25,7 +25,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
   @moduledoc false
 
   @spec create_disallowed_password(Types.credential()) ::
-          :ok | {:error, MsbmsSystError.t() | Exception.t()}
+          :ok | {:error, MscmpSystError.t() | Exception.t()}
   def create_disallowed_password(password) do
     create_disallowed_password!(password)
   rescue
@@ -44,14 +44,14 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      reraise MsbmsSystError,
+      reraise MscmpSystError,
         code: :undefined_error,
         message: "Failure adding Disallowed Password.",
         cause: error
   end
 
   @spec password_disallowed(Types.credential()) ::
-          {:ok, boolean()} | {:error, MsbmsSystError.t()}
+          {:ok, boolean()} | {:error, MscmpSystError.t()}
   def password_disallowed(password) when is_binary(password) do
     {:ok, password_disallowed?(password)}
   rescue
@@ -68,14 +68,14 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      reraise MsbmsSystError,
+      reraise MscmpSystError,
         code: :undefined_error,
         message: "Failure testing if password is disallowed.",
         cause: error
   end
 
   @spec delete_disallowed_password(Types.credential()) ::
-          {:ok, :deleted | :not_found} | {:error, MsbmsSystError.t() | Exception.t()}
+          {:ok, :deleted | :not_found} | {:error, MscmpSystError.t() | Exception.t()}
   def delete_disallowed_password(password) do
     {:ok, delete_disallowed_password!(password)}
   rescue
@@ -96,7 +96,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
         :not_found
 
       error ->
-        raise MsbmsSystError,
+        raise MscmpSystError,
           code: :undefined_error,
           message: "Unexpected result from delete of disallowed password.",
           cause: error
@@ -105,7 +105,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      reraise MsbmsSystError,
+      reraise MscmpSystError,
         code: :undefined_error,
         message: "Failure deleting Disallowed Password.",
         cause: error
@@ -115,7 +115,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
           MsbmsSystInstanceMgr.Types.owner_id(),
           Types.password_rule_params()
         ) ::
-          {:ok, Data.SystOwnerPasswordRules.t()} | {:error, MsbmsSystError.t() | Exception.t()}
+          {:ok, Data.SystOwnerPasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
   def create_owner_password_rules(owner_id, insert_params) when is_binary(owner_id) do
     {:ok, create_owner_password_rules!(owner_id, insert_params)}
   rescue
@@ -139,14 +139,14 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      reraise MsbmsSystError,
+      reraise MscmpSystError,
         code: :undefined_error,
         message: "Failure creating Owner Password Rules.",
         cause: error
   end
 
   @spec update_global_password_rules(Types.password_rule_params()) ::
-          {:ok, Data.SystGlobalPasswordRules.t()} | {:error, MsbmsSystError.t() | Exception.t()}
+          {:ok, Data.SystGlobalPasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
   def update_global_password_rules(update_params) do
     {:ok, update_global_password_rules!(update_params)}
   rescue
@@ -162,7 +162,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      reraise MsbmsSystError,
+      reraise MscmpSystError,
         code: :undefined_error,
         message: "Failure retrieving or updating Global Password Rules.",
         cause: error
@@ -172,7 +172,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
           Data.SystGlobalPasswordRules.t(),
           Types.password_rule_params()
         ) ::
-          {:ok, Data.SystGlobalPasswordRules.t()} | {:error, MsbmsSystError.t() | Exception.t()}
+          {:ok, Data.SystGlobalPasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
   def update_global_password_rules(global_password_rules, update_params) do
     {:ok, update_global_password_rules!(global_password_rules, update_params)}
   rescue
@@ -192,7 +192,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      reraise MsbmsSystError,
+      reraise MscmpSystError,
         code: :undefined_error,
         message: "Failure updating Global Password Rules.",
         cause: error
@@ -202,7 +202,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
           MsbmsSystInstanceMgr.Types.owner_id() | Data.SystOwnerPasswordRules.t(),
           Types.password_rule_params()
         ) ::
-          {:ok, Data.SystOwnerPasswordRules.t()} | {:error, MsbmsSystError.t() | Exception.t()}
+          {:ok, Data.SystOwnerPasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
   def update_owner_password_rules(owner, update_params) do
     {:ok, update_owner_password_rules!(owner, update_params)}
   rescue
@@ -222,7 +222,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      reraise MsbmsSystError,
+      reraise MscmpSystError,
         code: :undefined_error,
         message: "Failure updating Owner Password Rules.",
         cause: error
@@ -236,14 +236,14 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      reraise MsbmsSystError,
+      reraise MscmpSystError,
         code: :undefined_error,
         message: "Failure updating Owner Password Rules.",
         cause: error
   end
 
   @spec get_global_password_rules() ::
-          {:ok, Data.SystGlobalPasswordRules.t()} | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystGlobalPasswordRules.t()} | {:error, MscmpSystError.t()}
   def get_global_password_rules do
     {:ok, get_global_password_rules!()}
   rescue
@@ -260,7 +260,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      reraise MsbmsSystError,
+      reraise MscmpSystError,
         code: :undefined_error,
         message: "Failure retrieving Global Password Rules.",
         cause: error
@@ -269,7 +269,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
   @spec get_owner_password_rules(MsbmsSystInstanceMgr.Types.owner_id()) ::
           {:ok, Data.SystOwnerPasswordRules.t()}
           | {:ok, :not_found}
-          | {:error, MsbmsSystError.t() | Exception.t()}
+          | {:error, MscmpSystError.t() | Exception.t()}
   def get_owner_password_rules(owner_id) do
     {:ok, get_owner_password_rules!(owner_id)}
   rescue
@@ -289,14 +289,14 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      reraise MsbmsSystError,
+      reraise MscmpSystError,
         code: :undefined_error,
         message: "Failure retrieving Owner Password Rules.",
         cause: error
   end
 
   @spec get_access_account_password_rule(Types.access_account_id()) ::
-          {:ok, Types.password_rules()} | {:error, MsbmsSystError.t() | Exception.t()}
+          {:ok, Types.password_rules()} | {:error, MscmpSystError.t() | Exception.t()}
   def get_access_account_password_rule(access_account_id) when is_binary(access_account_id) do
     {:ok, get_access_account_password_rule!(access_account_id)}
   rescue
@@ -318,7 +318,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      reraise MsbmsSystError,
+      reraise MscmpSystError,
         code: :undefined_error,
         message: "Failure retrieving Access Account effective Password Rules.",
         cause: error
@@ -424,7 +424,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
           Data.SystGlobalPasswordRules.t() | Types.password_rules() | nil
         ) ::
           {:ok, Keyword.t(Types.password_rule_violations())}
-          | {:error, MsbmsSystError.t() | Exception.t()}
+          | {:error, MscmpSystError.t() | Exception.t()}
   def verify_password_rules(test_rules, standard_rules) do
     verify_password_rules!(test_rules, standard_rules)
     |> then(&{:ok, &1})
@@ -444,7 +444,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      reraise MsbmsSystError,
+      reraise MscmpSystError,
         code: :undefined_error,
         message: "Failure verifying Password Rules or retrieving system Standard Rules.",
         cause: error
@@ -465,7 +465,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      reraise MsbmsSystError,
+      reraise MscmpSystError,
         code: :undefined_error,
         message: "Failure verifying Test Password Rules against Standard Password Rules.",
         cause: error
@@ -602,7 +602,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
        do: [{rule, std_req} | failure_list]
 
   @spec delete_owner_password_rules(MsbmsSystInstanceMgr.Types.owner_id()) ::
-          {:ok, :deleted | :not_found} | {:error, MsbmsSystError.t() | Exception.t()}
+          {:ok, :deleted | :not_found} | {:error, MscmpSystError.t() | Exception.t()}
   def delete_owner_password_rules(owner_id) do
     {:ok, delete_owner_password_rules!(owner_id)}
   rescue
@@ -622,7 +622,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
         :not_found
 
       error ->
-        raise MsbmsSystError,
+        raise MscmpSystError,
           code: :undefined_error,
           message: "Unknown error deleting Owner Password Rules",
           cause: error
@@ -631,7 +631,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      reraise MsbmsSystError,
+      reraise MscmpSystError,
         code: :undefined_error,
         message: "Failure deleting Owner Password Rules.",
         cause: error

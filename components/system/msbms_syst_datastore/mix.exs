@@ -30,7 +30,7 @@ defmodule MsbmsSystDatastore.MixProject do
     {:net_address, "~> 0.2.0"},
 
     # Muse Systems Business Management System Components
-    {:msbms_syst_error, path: "../msbms_syst_error"},
+    {:mscmp_syst_error, path: "../mscmp_syst_error"},
     {:msbms_syst_utils, path: "../msbms_syst_utils"}
   ]
 
@@ -57,7 +57,7 @@ defmodule MsbmsSystDatastore.MixProject do
         main: "MsbmsSystDatastore",
         output: "../../../documentation/technical/app_server/msbms_syst_datastore",
         deps: [
-          msbms_syst_error: "../../../../documentation/technical/app_server/msbms_syst_error",
+          mscmp_syst_error: "../../../../documentation/technical/app_server/mscmp_syst_error",
           msbms_syst_utils: "../../../../documentation/technical/app_server/msbms_syst_utils"
         ],
         nest_modules_by_prefix: [MsbmsSystDatastore.DbTypes],

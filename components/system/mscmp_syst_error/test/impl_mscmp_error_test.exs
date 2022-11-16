@@ -1,5 +1,5 @@
-# Source File: impl_msbms_error_test.exs
-# Location:    musebms/components/system/msbms_syst_error/test/impl_msbms_error_test.exs
+# Source File: impl_mscmp_error_test.exs
+# Location:    musebms/components/system/mscmp_syst_error/test/impl_mscmp_error_test.exs
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,19 +10,19 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule MsbmsSystError.ImplMsbmsErrorTest do
+defmodule MscmpSystError.ImplMscmpErrorTest do
   use ExUnit.Case
 
-  alias MsbmsSystError.Impl.MsbmsError
+  alias MscmpSystError.Impl.MscmpError
 
   test "Get root cause from error data" do
-    test_err = %MsbmsSystError{
+    test_err = %MscmpSystError{
       code: :example_error,
       message: "Outer error message",
-      cause: %MsbmsSystError{
+      cause: %MscmpSystError{
         code: :example_error,
         message: "Intermediate error message",
-        cause: %MsbmsSystError{
+        cause: %MscmpSystError{
           code: :example_error,
           message: "Root error message",
           cause: {:error, "Example Error"}
@@ -30,10 +30,10 @@ defmodule MsbmsSystError.ImplMsbmsErrorTest do
       }
     }
 
-    root_err = MsbmsError.get_root_cause(test_err)
+    root_err = MscmpError.get_root_cause(test_err)
 
-    assert %MsbmsSystError{message: "Root error message"} = root_err
+    assert %MscmpSystError{message: "Root error message"} = root_err
 
-    assert {:error, "test error"} = MsbmsError.get_root_cause({:error, "test error"})
+    assert {:error, "test error"} = MscmpError.get_root_cause({:error, "test error"})
   end
 end

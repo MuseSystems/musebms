@@ -24,7 +24,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Email do
   @default_create_validated false
 
   @spec create_identity(Types.access_account_id(), Types.account_identifier(), Keyword.t()) ::
-          {:ok, Data.SystIdentities.t()} | {:error, MsbmsSystError.t() | Exception.t()}
+          {:ok, Data.SystIdentities.t()} | {:error, MscmpSystError.t() | Exception.t()}
   def create_identity(access_account_id, email_address, opts \\ [])
       when is_binary(access_account_id) and is_binary(email_address) do
     opts = MsbmsSystUtils.resolve_options(opts, create_validated: @default_create_validated)
@@ -47,7 +47,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Email do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure creating Email Identity.",
           cause: error
@@ -78,7 +78,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Email do
     if Regex.match?(~r/.+@.+/, email_address) do
       email_address
     else
-      raise MsbmsSystError,
+      raise MscmpSystError,
         message: "The value passed was not a valid email address.",
         code: :undefined_error,
         cause: %{parameters: [email_address: email_address]}

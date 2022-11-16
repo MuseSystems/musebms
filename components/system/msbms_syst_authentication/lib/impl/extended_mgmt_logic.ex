@@ -32,7 +32,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
           Keyword.t()
         ) ::
           {:ok, Types.authenticator_result()}
-          | {:error, MsbmsSystError.t() | Exception.t()}
+          | {:error, MscmpSystError.t() | Exception.t()}
   def create_authenticator_email_password(access_account_id, email_addr, plaintext_pwd, opts) do
     opts = MsbmsSystUtils.resolve_options(opts, create_validated: false, credential_token: nil)
 
@@ -52,7 +52,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
           MsbmsSystDatastore.rollback(cred_violations)
 
         error ->
-          MsbmsSystDatastore.rollback(%MsbmsSystError{
+          MsbmsSystDatastore.rollback(%MscmpSystError{
             code: :undefined_error,
             message: "Failed creating Email/Password Authenticator.",
             cause: error
@@ -66,7 +66,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
       {:error,
-       %MsbmsSystError{
+       %MscmpSystError{
          code: :undefined_error,
          message: "Exception while creating Email/Password Authenticator.",
          cause: error
@@ -86,7 +86,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
   # ============================================================================
 
   @spec request_identity_validation(Types.identity_id() | Data.SystIdentities.t(), Keyword.t()) ::
-          {:ok, Types.authenticator_result()} | {:error, MsbmsSystError.t() | Exception.t()}
+          {:ok, Types.authenticator_result()} | {:error, MscmpSystError.t() | Exception.t()}
   def request_identity_validation(target_identity_id, opts) when is_binary(target_identity_id) do
     target_identity_id
     |> Impl.Identity.get_identity_record()
@@ -96,7 +96,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
       {:error,
-       %MsbmsSystError{
+       %MscmpSystError{
          code: :undefined_error,
          message: "Failure requesting Identity validation by Identity ID.",
          cause: error
@@ -111,13 +111,13 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
         |> then(&{:ok, &1})
 
       error ->
-        raise MsbmsSystError,
+        raise MscmpSystError,
           code: :undefined_error,
           message: "Failure requesting Identity Validation.",
           cause: error
     end
   rescue
-    error in [MsbmsSystError] ->
+    error in [MscmpSystError] ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
       {:error, error}
 
@@ -125,7 +125,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
       {:error,
-       %MsbmsSystError{
+       %MscmpSystError{
          code: :undefined_error,
          message: "Error creating Validation Authenticator",
          cause: error
@@ -148,7 +148,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
           validation_credential: validation_credential
         }
       else
-        {:error, %MsbmsSystError{cause: cause}} ->
+        {:error, %MscmpSystError{cause: cause}} ->
           MsbmsSystDatastore.rollback(cause)
       end
     end
@@ -165,7 +165,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
   # composite function.
 
   @spec revoke_validator_for_identity_id(Types.identity_id()) ::
-          {:ok, :deleted | :not_found} | {:error, MsbmsSystError.t() | Exception.t()}
+          {:ok, :deleted | :not_found} | {:error, MscmpSystError.t() | Exception.t()}
   def revoke_validator_for_identity_id(target_identity_id) do
     with {:ok, %Data.SystIdentities{} = validation_identity} <-
            Impl.Identity.Validation.get_validation_identity_for_identity_id(target_identity_id),
@@ -178,7 +178,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
 
       error ->
         {:error,
-         %MsbmsSystError{
+         %MscmpSystError{
            code: :undefined_error,
            message: "Failed processing Identity validation revocation.",
            cause: error
@@ -189,7 +189,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
       {:error,
-       %MsbmsSystError{
+       %MscmpSystError{
          code: :undefined_error,
          message: "Failure revoking Identity validation.",
          cause: error
@@ -203,7 +203,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
   # ============================================================================
 
   @spec request_password_recovery(Types.access_account_id(), Keyword.t()) ::
-          {:ok, Types.authenticator_result()} | {:error, MsbmsSystError.t() | Exception.t()}
+          {:ok, Types.authenticator_result()} | {:error, MscmpSystError.t() | Exception.t()}
   def request_password_recovery(access_account_id, opts) do
     recovery_func = fn ->
       with {:ok, recovery_identity} <-
@@ -221,14 +221,14 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
           credential: recovery_credential
         }
       else
-        {:error, %MsbmsSystError{cause: cause}} ->
+        {:error, %MscmpSystError{cause: cause}} ->
           MsbmsSystDatastore.rollback(cause)
       end
     end
 
     MsbmsSystDatastore.transaction(recovery_func)
   rescue
-    error in [MsbmsSystError] ->
+    error in [MscmpSystError] ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
       {:error, error}
 
@@ -236,7 +236,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
       {:error,
-       %MsbmsSystError{
+       %MscmpSystError{
          code: :undefined_error,
          message: "Error creating Recovery Authenticator",
          cause: error
@@ -244,7 +244,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
   end
 
   @spec revoke_password_recovery(Types.access_account_id()) ::
-          {:ok, :deleted | :not_found} | {:error, MsbmsSystError.t() | Exception.t()}
+          {:ok, :deleted | :not_found} | {:error, MscmpSystError.t() | Exception.t()}
   def revoke_password_recovery(access_account_id) when is_binary(access_account_id) do
     with {:ok, %Data.SystIdentities{} = recovery_identity} <-
            Impl.Identity.Recovery.get_recovery_identity_for_access_account_id(access_account_id),
@@ -256,7 +256,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
 
       error ->
         {:error,
-         %MsbmsSystError{
+         %MscmpSystError{
            code: :undefined_error,
            message: "Failed processing Identity recovery revocation.",
            cause: error
@@ -267,7 +267,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
       {:error,
-       %MsbmsSystError{
+       %MscmpSystError{
          code: :undefined_error,
          message: "Failure revoking Identity recovery.",
          cause: error
@@ -281,7 +281,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
   # ============================================================================
 
   @spec create_authenticator_api_token(Types.access_account_id(), Keyword.t()) ::
-          {:ok, Types.authenticator_result()} | {:error, MsbmsSystError.t() | Exception.t()}
+          {:ok, Types.authenticator_result()} | {:error, MscmpSystError.t() | Exception.t()}
   def create_authenticator_api_token(access_account_id, opts) do
     opts = MsbmsSystUtils.resolve_options(opts, identity_token: nil, credential_token: nil)
 
@@ -306,7 +306,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
         }
       else
         error ->
-          MsbmsSystDatastore.rollback(%MsbmsSystError{
+          MsbmsSystDatastore.rollback(%MscmpSystError{
             code: :undefined_error,
             message: "Failed creating API Token Authenticator.",
             cause: error
@@ -320,7 +320,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
       {:error,
-       %MsbmsSystError{
+       %MscmpSystError{
          code: :undefined_error,
          message: "Exception while creating Email/Password Authenticator.",
          cause: error
@@ -331,7 +331,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
           Types.identity_id() | Data.SystIdentities.t(),
           String.t() | nil
         ) ::
-          {:ok, Data.SystIdentities.t()} | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystIdentities.t()} | {:error, MscmpSystError.t()}
   def update_api_token_external_name(identity, external_name) do
     {:ok, Impl.Identity.ApiToken.update_identity_external_name(identity, external_name)}
   rescue
@@ -339,7 +339,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
       {:error,
-       %MsbmsSystError{
+       %MscmpSystError{
          code: :undefined_error,
          message: "Failure setting API Token External Name.",
          cause: error
@@ -347,7 +347,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
   end
 
   @spec revoke_api_token(Types.identity_id() | Data.SystIdentities.t()) ::
-          {:ok, :deleted | :not_found} | {:error, MsbmsSystError.t()}
+          {:ok, :deleted | :not_found} | {:error, MscmpSystError.t()}
   def revoke_api_token(identity) do
     identity
     |> Impl.Identity.delete_identity("identity_types_sysdef_api")
@@ -357,7 +357,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
       {:error,
-       %MsbmsSystError{
+       %MscmpSystError{
          code: :undefined_error,
          message: "Failure revoking API Token Identity.",
          cause: error
@@ -371,7 +371,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
   # ============================================================================
 
   @spec create_or_reset_account_code(Types.access_account_id(), Keyword.t()) ::
-          {:ok, Types.authenticator_result()} | {:error, MsbmsSystError.t() | Exception.t()}
+          {:ok, Types.authenticator_result()} | {:error, MscmpSystError.t() | Exception.t()}
   def create_or_reset_account_code(access_account_id, opts) do
     access_account_id
     |> Impl.Identity.AccountCode.reset_identity_for_access_account_id(opts)
@@ -381,7 +381,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
       {:error,
-       %MsbmsSystError{
+       %MscmpSystError{
          code: :undefined_error,
          message: "Failure creating Account Code Authenticator.",
          cause: error
@@ -398,7 +398,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
 
   defp process_account_code_create_result(error) do
     {:error,
-     %MsbmsSystError{
+     %MscmpSystError{
        code: :undefined_error,
        message: "Unexpected result processing Account Code creation.",
        cause: error
@@ -406,7 +406,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
   end
 
   @spec revoke_account_code(Types.access_account_id()) ::
-          {:ok, :deleted | :not_found} | {:error, MsbmsSystError.t()}
+          {:ok, :deleted | :not_found} | {:error, MscmpSystError.t()}
   def revoke_account_code(access_account_id) when is_binary(access_account_id) do
     with {:ok, %Data.SystIdentities{} = identity} <-
            Impl.Identity.AccountCode.get_account_code_by_access_account_id(access_account_id) do
@@ -417,7 +417,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedMgmtLogic do
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
       {:error,
-       %MsbmsSystError{
+       %MscmpSystError{
          code: :undefined_error,
          message: "Failure revoking Account Code Authenticator.",
          cause: error

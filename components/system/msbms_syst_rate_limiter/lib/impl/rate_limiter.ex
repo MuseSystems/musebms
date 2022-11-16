@@ -25,7 +25,7 @@ defmodule MsbmsSystRateLimiter.Impl.RateLimiter do
           (counter_id :: Types.counter_id() ->
              {:allow, count :: integer()}
              | {:deny, limit :: integer()}
-             | {:error, MsbmsSystError.t()})
+             | {:error, MscmpSystError.t()})
   def get_check_rate_function(counter_type, scale_ms, limit) do
     fn counter_id ->
       check_rate(counter_type, counter_id, scale_ms, limit)
@@ -35,7 +35,7 @@ defmodule MsbmsSystRateLimiter.Impl.RateLimiter do
   @spec check_rate(Types.counter_type(), Types.counter_id(), integer(), integer()) ::
           {:allow, count :: integer()}
           | {:deny, limit :: integer()}
-          | {:error, MsbmsSystError.t()}
+          | {:error, MscmpSystError.t()}
   def check_rate(counter_type, counter_id, scale_ms, limit) do
     get_counter_name(counter_type, counter_id)
     |> Hammer.check_rate(scale_ms, limit)
@@ -45,7 +45,7 @@ defmodule MsbmsSystRateLimiter.Impl.RateLimiter do
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
       {:error,
-       %MsbmsSystError{
+       %MscmpSystError{
          code: :undefined_error,
          message: "Failure checking rate limit counter.",
          cause: error
@@ -61,7 +61,7 @@ defmodule MsbmsSystRateLimiter.Impl.RateLimiter do
         ) ::
           {:allow, count :: integer()}
           | {:deny, limit :: integer()}
-          | {:error, MsbmsSystError.t()}
+          | {:error, MscmpSystError.t()}
   def check_rate_with_increment(counter_type, counter_id, scale_ms, limit, increment) do
     get_counter_name(counter_type, counter_id)
     |> Hammer.check_rate_inc(scale_ms, limit, increment)
@@ -71,7 +71,7 @@ defmodule MsbmsSystRateLimiter.Impl.RateLimiter do
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
       {:error,
-       %MsbmsSystError{
+       %MscmpSystError{
          code: :undefined_error,
          message: "Failure checking rate limit counter with increment.",
          cause: error
@@ -79,7 +79,7 @@ defmodule MsbmsSystRateLimiter.Impl.RateLimiter do
   end
 
   defp process_hammer_check_rate_result({:error, reason}) do
-    raise MsbmsSystError,
+    raise MscmpSystError,
       code: :undefined_error,
       message: "Internal error checking rate limit counter.",
       cause: reason
@@ -96,7 +96,7 @@ defmodule MsbmsSystRateLimiter.Impl.RateLimiter do
              created_at :: integer() | nil,
              updated_at :: integer() | nil
            }}
-          | {:error, MsbmsSystError.t()}
+          | {:error, MscmpSystError.t()}
   def inspect_counter(counter_type, counter_id, scale_ms, limit) do
     get_counter_name(counter_type, counter_id)
     |> Hammer.inspect_bucket(scale_ms, limit)
@@ -106,7 +106,7 @@ defmodule MsbmsSystRateLimiter.Impl.RateLimiter do
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
       {:error,
-       %MsbmsSystError{
+       %MscmpSystError{
          code: :undefined_error,
          message: "Failure inspecting rate limit counter.",
          cause: error
@@ -114,7 +114,7 @@ defmodule MsbmsSystRateLimiter.Impl.RateLimiter do
   end
 
   defp process_hammer_inspect_bucket_result({:error, reason}) do
-    raise MsbmsSystError,
+    raise MscmpSystError,
       code: :undefined_error,
       message: "Internal error inspecting rate limit counter.",
       cause: reason
@@ -123,7 +123,7 @@ defmodule MsbmsSystRateLimiter.Impl.RateLimiter do
   defp process_hammer_inspect_bucket_result(result), do: result
 
   @spec delete_counters(Types.counter_type(), Types.counter_id()) ::
-          {:ok, integer()} | {:error, MsbmsSystError.t()}
+          {:ok, integer()} | {:error, MscmpSystError.t()}
   def delete_counters(counter_type, counter_id) do
     get_counter_name(counter_type, counter_id)
     |> Hammer.delete_buckets()
@@ -133,7 +133,7 @@ defmodule MsbmsSystRateLimiter.Impl.RateLimiter do
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
       {:error,
-       %MsbmsSystError{
+       %MscmpSystError{
          code: :undefined_error,
          message: "Failure deleting rate counters.",
          cause: error
@@ -141,7 +141,7 @@ defmodule MsbmsSystRateLimiter.Impl.RateLimiter do
   end
 
   defp process_hammer_delete_result({:error, reason}) do
-    raise MsbmsSystError,
+    raise MscmpSystError,
       code: :undefined_error,
       message: "Internal error deleting rate counters.",
       cause: reason

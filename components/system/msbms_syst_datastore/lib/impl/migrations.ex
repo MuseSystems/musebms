@@ -40,7 +40,7 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
   ##########################
 
   @spec build_migrations(String.t(), Keyword.t()) ::
-          {:ok, list(Path.t())} | {:error, MsbmsSystError.t()}
+          {:ok, list(Path.t())} | {:error, MscmpSystError.t()}
   def build_migrations(datastore_type, opts \\ []) do
     opts =
       MsbmsSystUtils.resolve_options(opts,
@@ -80,7 +80,7 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :file_error,
           message: "Failure building migrations.",
           cause: error
@@ -174,7 +174,7 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
         :ok
       else
         error ->
-          raise MsbmsSystError,
+          raise MscmpSystError,
             code: :file_error,
             message: "Failure creating database migrations.",
             cause: error
@@ -210,7 +210,7 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
     |> Enum.reduce("", &(&2 <> process_load_file_item(&1, source_root, version)))
   end
 
-  @spec(clean_existing_migrations(String.t(), Keyword.t()) :: :ok, {:error, MsbmsSystError.t()})
+  @spec(clean_existing_migrations(String.t(), Keyword.t()) :: :ok, {:error, MscmpSystError.t()})
   def clean_existing_migrations(datastore_type, opts \\ []) do
     opts = MsbmsSystUtils.resolve_options(opts, migrations_root_dir: @default_migrations_root_dir)
 
@@ -224,7 +224,7 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :database_error,
           message: "Failure retrieving Datastore State.",
           cause: error
@@ -245,7 +245,7 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
   ################################
 
   @spec get_datastore_version(Keyword.t()) ::
-          {:ok, String.t()} | {:error, MsbmsSystError.t()}
+          {:ok, String.t()} | {:error, MscmpSystError.t()}
   def get_datastore_version(opts \\ []) do
     opts =
       MsbmsSystUtils.resolve_options(opts,
@@ -274,7 +274,7 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :database_error,
           message: "Failure retrieving datastore version.",
           cause: error
@@ -310,7 +310,7 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
   end
 
   @spec initialize_datastore(String.t(), Keyword.t()) ::
-          :ok | {:error, MsbmsSystError.t()}
+          :ok | {:error, MscmpSystError.t()}
   def initialize_datastore(datastore_owner, opts \\ []) do
     opts =
       MsbmsSystUtils.resolve_options(opts,
@@ -339,7 +339,7 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :database_error,
           message: "Failure creating migrations management schema.",
           cause: error
@@ -348,7 +348,7 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
   end
 
   @spec apply_outstanding_migrations(String.t(), Keyword.t(), Keyword.t()) ::
-          {:error, MsbmsSystError.t()} | {:ok, list}
+          {:error, MscmpSystError.t()} | {:ok, list}
   def apply_outstanding_migrations(datastore_type, migration_bindings, opts \\ []) do
     opts =
       MsbmsSystUtils.resolve_options(opts,
@@ -390,7 +390,7 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :database_error,
           message: "Failure retrieving datastore version.",
           cause: error
@@ -475,7 +475,7 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
         }
 
       error ->
-        raise MsbmsSystError,
+        raise MscmpSystError,
           code: :file_error,
           message: "Failed to parse migration version information from #{filename}",
           cause: error

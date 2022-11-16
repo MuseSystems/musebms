@@ -1,5 +1,5 @@
-# Source File: msbms_error.ex
-# Location:    musebms/components/system/msbms_syst_error/lib/impl/msbms_error.ex
+# Source File: test.exs
+# Location:    musebms/components/system/mscmp_syst_error/config/test.exs
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,14 +10,6 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule MsbmsSystError.Impl.MsbmsError do
-  @moduledoc false
+import Config
 
-  @spec get_root_cause(any()) :: any()
-  def get_root_cause(%MsbmsSystError{cause: next_error = %MsbmsSystError{}}) do
-    next_error
-    |> get_root_cause()
-  end
-
-  def get_root_cause(last_error), do: last_error
-end
+config :logger, level: :info

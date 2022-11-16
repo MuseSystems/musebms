@@ -31,7 +31,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Validation do
           Types.identity_id() | nil,
           Types.credential()
         ) ::
-          {:ok, Types.credential_confirm_result()} | {:error, MsbmsSystError.t() | Exception.t()}
+          {:ok, Types.credential_confirm_result()} | {:error, MscmpSystError.t() | Exception.t()}
   def confirm_credential(access_account_id, identity_id, token) do
     {:ok, confirm_credential!(access_account_id, identity_id, token)}
   rescue
@@ -55,7 +55,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Validation do
         ) ::
           {:ok, Types.credential()}
           | Types.credential_set_failures()
-          | {:error, MsbmsSystError.t()}
+          | {:error, MscmpSystError.t()}
   def set_credential(access_account_id, identity_id, token \\ nil, opts \\ []) do
     opts =
       MsbmsSystUtils.resolve_options(opts,
@@ -67,7 +67,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Validation do
   end
 
   @spec get_credential_record(Types.access_account_id(), Types.identity_id() | nil) ::
-          {:ok, Data.SystCredentials.t() | nil} | {:error, MsbmsSystError.t() | Exception.t()}
+          {:ok, Data.SystCredentials.t() | nil} | {:error, MscmpSystError.t() | Exception.t()}
   def get_credential_record(access_account_id, identity_id) do
     {:ok, get_credential_record!(access_account_id, identity_id)}
   rescue
@@ -80,7 +80,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Validation do
     do: GenericToken.get_credential_record(@token_type, access_account_id, identity_id)
 
   @spec delete_credential(Types.credential_id() | Data.SystCredentials.t()) ::
-          :ok | {:error, MsbmsSystError.t() | Exception.t()}
+          :ok | {:error, MscmpSystError.t() | Exception.t()}
   def delete_credential(credential) do
     delete_credential!(credential)
   rescue

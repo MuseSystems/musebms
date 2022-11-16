@@ -25,7 +25,7 @@ defmodule MsbmsSystOptions.MixProject do
     {:gradient, github: "esl/gradient", only: [:dev], runtime: false},
 
     # Muse Systems Business Management System Components
-    {:msbms_syst_error, path: "../msbms_syst_error"},
+    {:mscmp_syst_error, path: "../mscmp_syst_error"},
     {:msbms_syst_datastore, path: "../msbms_syst_datastore"}
   ]
 
@@ -48,7 +48,7 @@ defmodule MsbmsSystOptions.MixProject do
         deps: [
           msbms_syst_datastore:
             "../../../../documentation/technical/app_server/msbms_syst_datastore",
-          msbms_syst_error: "../../../../documentation/technical/app_server/msbms_syst_error"
+          mscmp_syst_error: "../../../../documentation/technical/app_server/mscmp_syst_error"
         ],
         groups_for_functions: [
           "API - File Handling": &(&1[:section] == :file_handling),

@@ -54,7 +54,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.GenericToken do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      reraise MsbmsSystError,
+      reraise MscmpSystError,
         code: :undefined_error,
         message: "Failure confirming Token Credential.",
         cause: error
@@ -78,7 +78,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.GenericToken do
         ) ::
           {:ok, Types.credential()}
           | Types.credential_set_failures()
-          | {:error, MsbmsSystError.t()}
+          | {:error, MscmpSystError.t()}
   def set_credential(credential_type, access_account_id, identity_id, token, opts)
       when credential_type in @token_types do
     identity_ownership_confirmed = identity_ownership_confirmed?(access_account_id, identity_id)
@@ -95,7 +95,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.GenericToken do
       set_credential_data(credential_type, cred, access_account_id, identity_id, token)
     else
       {:error,
-       %MsbmsSystError{
+       %MscmpSystError{
          code: :undefined_error,
          message: "Identity for this Credential is owned by a different Access Account.",
          cause: %{parameters: %{access_account_id: access_account_id, identity_id: identity_id}}
@@ -106,7 +106,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.GenericToken do
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
       {:error,
-       %MsbmsSystError{
+       %MscmpSystError{
          code: :undefined_error,
          message: "Failure setting APi Token Credential.",
          cause: error
@@ -135,7 +135,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.GenericToken do
 
   defp set_credential_data(_credential_type, _cred, _access_account_id, _identity_id, _api_token) do
     {:error,
-     %MsbmsSystError{
+     %MscmpSystError{
        code: :undefined_error,
        message: "Token Credential records may not be updated.",
        cause: nil
@@ -173,7 +173,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.GenericToken do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      reraise MsbmsSystError,
+      reraise MscmpSystError,
         code: :undefined_error,
         message: "Failure retrieving Token Credential.",
         cause: error
@@ -207,7 +207,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.GenericToken do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      reraise MsbmsSystError,
+      reraise MscmpSystError,
         code: :undefined_error,
         message: "Failure deleting API Token Credential.",
         cause: error
@@ -221,7 +221,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.GenericToken do
       MsbmsSystDatastore.delete!(cred)
       :ok
     else
-      raise MsbmsSystError,
+      raise MscmpSystError,
         code: :undefined_error,
         message: "Incorrect Credential Type for Credential record delete.",
         cause: %{

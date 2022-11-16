@@ -30,7 +30,7 @@ defmodule MsbmsSystEnums.Runtime.Server do
   ##
 
   @spec start_link(MsbmsSystEnums.Types.enum_service_params()) ::
-          {:ok, pid()} | {:error, MsbmsSystError.t()}
+          {:ok, pid()} | {:error, MscmpSystError.t()}
   def start_link({enums_service_name, _datastore_context_name} = params) do
     case GenServer.start_link(__MODULE__, params, name: enums_service_name) do
       {:ok, pid} ->
@@ -39,7 +39,7 @@ defmodule MsbmsSystEnums.Runtime.Server do
       abort_reason ->
         {
           :error,
-          %MsbmsSystError{
+          %MscmpSystError{
             code: :process_error,
             message: "Enumerations Service start aborted.",
             cause: abort_reason
@@ -52,7 +52,7 @@ defmodule MsbmsSystEnums.Runtime.Server do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :process_error,
           message: "Failure starting Enumerations Service.",
           cause: error
@@ -66,7 +66,7 @@ defmodule MsbmsSystEnums.Runtime.Server do
 
   @impl true
   @spec init(MsbmsSystEnums.Types.enum_service_params()) ::
-          {:ok, map()} | {:stop, MsbmsSystError.t()}
+          {:ok, map()} | {:stop, MscmpSystError.t()}
   def init({service_name, datastore_context_name}) do
     _ = ProcessUtils.put_enums_service(service_name)
 

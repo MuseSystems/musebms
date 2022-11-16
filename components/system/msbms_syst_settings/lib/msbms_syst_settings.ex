@@ -58,7 +58,7 @@ defmodule MsbmsSystSettings do
   @spec start_link(
           {MsbmsSystSettings.Types.service_name(), MsbmsSystDatastore.Types.context_name()}
         ) ::
-          {:ok, pid()} | {:error, MsbmsSystError.t()}
+          {:ok, pid()} | {:error, MscmpSystError.t()}
   defdelegate start_link(params), to: MsbmsSystSettings.Runtime.Server
 
   @doc section: :service_management
@@ -163,7 +163,7 @@ defmodule MsbmsSystSettings do
       :ok
   """
   @spec create_setting(MsbmsSystSettings.Types.setting_params()) ::
-          :ok | {:error, MsbmsSystError.t()}
+          :ok | {:error, MscmpSystError.t()}
   def create_setting(creation_params) do
     GenServer.call(ProcessUtils.get_settings_service(), {:create, creation_params})
   end
@@ -195,7 +195,7 @@ defmodule MsbmsSystSettings do
           MsbmsSystSettings.Types.setting_name(),
           MsbmsSystSettings.Types.setting_types(),
           any()
-        ) :: :ok | {:error, MsbmsSystError.t()}
+        ) :: :ok | {:error, MscmpSystError.t()}
   def set_setting_value(setting_name, setting_type, setting_value) do
     update_params = Map.put_new(%{}, setting_type, setting_value)
     GenServer.call(ProcessUtils.get_settings_service(), {:update, setting_name, update_params})
@@ -239,7 +239,7 @@ defmodule MsbmsSystSettings do
   @spec set_setting_values(
           MsbmsSystSettings.Types.setting_name(),
           MsbmsSystSettings.Types.setting_service_params()
-        ) :: :ok | {:error, MsbmsSystError.t()}
+        ) :: :ok | {:error, MscmpSystError.t()}
   def set_setting_values(setting_name, update_params) do
     GenServer.call(ProcessUtils.get_settings_service(), {:update, setting_name, update_params})
   end
@@ -323,7 +323,7 @@ defmodule MsbmsSystSettings do
       :ok
   """
   @spec delete_setting(MsbmsSystSettings.Types.setting_name()) ::
-          :ok | {:error, MsbmsSystError.t()}
+          :ok | {:error, MscmpSystError.t()}
   def delete_setting(setting_name) do
     GenServer.call(ProcessUtils.get_settings_service(), {:delete, setting_name})
   end

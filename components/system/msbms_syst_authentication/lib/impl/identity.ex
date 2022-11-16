@@ -24,7 +24,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity do
   # Setup callbacks for Identity type specific calls
 
   @callback create_identity(Types.access_account_id(), Types.account_identifier(), Keyword.t()) ::
-              {:ok, Data.SystIdentities.t()} | {:error, MsbmsSystError.t() | Exception.t()}
+              {:ok, Data.SystIdentities.t()} | {:error, MscmpSystError.t() | Exception.t()}
 
   @callback identify_access_account(
               Types.account_identifier(),
@@ -34,7 +34,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity do
   # General Identity functionality
 
   @spec set_identity_expiration(Types.identity_id() | Data.SystIdentities.t(), DateTime.t()) ::
-          {:ok, Data.SystIdentities.t()} | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystIdentities.t()} | {:error, MscmpSystError.t()}
   def set_identity_expiration(identity_id, %DateTime{} = expires_date)
       when is_binary(identity_id) do
     identity_id
@@ -46,7 +46,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure setting Identity expiration by ID.",
           cause: error
@@ -62,7 +62,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure setting Identity expiration.",
           cause: error
@@ -71,7 +71,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity do
   end
 
   @spec clear_identity_expiration(Types.identity_id() | Data.SystIdentities.t()) ::
-          {:ok, Data.SystIdentities.t()} | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystIdentities.t()} | {:error, MscmpSystError.t()}
 
   def clear_identity_expiration(identity_id) when is_binary(identity_id) do
     identity_id
@@ -83,7 +83,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure clearing Identity expiration by ID.",
           cause: error
@@ -99,7 +99,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure clearing Identity expiration.",
           cause: error
@@ -108,7 +108,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity do
   end
 
   @spec identity_expired?(Types.identity_id() | Data.SystIdentities.t()) ::
-          {:ok, boolean()} | {:error, MsbmsSystError.t()}
+          {:ok, boolean()} | {:error, MscmpSystError.t()}
   def identity_expired?(identity) when is_binary(identity) do
     from(i in Data.SystIdentities,
       where: i.id == ^identity,
@@ -122,7 +122,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure testing identity expiration by ID.",
           cause: error
@@ -143,7 +143,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure testing identity expiration.",
           cause: error
@@ -152,7 +152,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity do
   end
 
   @spec identity_validated?(Types.identity_id() | Data.SystIdentities.t()) ::
-          {:ok, boolean()} | {:error, MsbmsSystError.t()}
+          {:ok, boolean()} | {:error, MscmpSystError.t()}
   def identity_validated?(identity) when is_binary(identity) do
     from(i in Data.SystIdentities,
       where: i.id == ^identity,
@@ -166,7 +166,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure testing identity validated by ID.",
           cause: error
@@ -196,7 +196,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity do
         :deleted
 
       error ->
-        raise MsbmsSystError,
+        raise MscmpSystError,
           code: :undefined_error,
           message: "Failure deleting Identity.",
           cause: error

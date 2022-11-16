@@ -61,7 +61,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
   rescue
     error ->
       {:error,
-       %MsbmsSystError{
+       %MscmpSystError{
          code: :undefined_error,
          message: "The datastore failed to start.",
          cause: error
@@ -73,7 +73,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
           Supervisor.supervisor() | nil
         ) ::
           {:ok, :all_started | :some_started, list(Types.context_state_values())}
-          | {:error, MsbmsSystError.t()}
+          | {:error, MscmpSystError.t()}
   def start_datastore(datastore_options, supervisor_name) when is_map(datastore_options) do
     datastore_options.contexts
     |> Enum.filter(&(&1.login_context and &1.start_context))
@@ -82,7 +82,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
       {_context_states, :error} ->
         {
           :error,
-          %MsbmsSystError{
+          %MscmpSystError{
             code: :database_error,
             message: "Failure starting all datastore contexts",
             cause: []
@@ -96,7 +96,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
     error ->
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :database_error,
           message: "Failure to start datastore.",
           cause: error
@@ -174,7 +174,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
       {:error,
-       %MsbmsSystError{
+       %MscmpSystError{
          code: :undefined_error,
          message: "Failure starting Datastore Context.",
          cause: error
@@ -190,7 +190,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
 
   defp validate_datastore_context(datastore_context) do
     {:error,
-     %MsbmsSystError{
+     %MscmpSystError{
        code: :invalid_parameter,
        message: "The datastore_context parameter must be provided and valid.",
        cause: %{parameters: datastore_context}
@@ -198,7 +198,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
   end
 
   @spec start_datastore_context(Types.datastore_options(), atom() | Types.datastore_context()) ::
-          {:ok, pid()} | {:error, MsbmsSystError.t()}
+          {:ok, pid()} | {:error, MscmpSystError.t()}
   def start_datastore_context(datastore_options, context) when is_map(context) do
     [
       name: context.context_name,
@@ -218,7 +218,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
     error ->
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :database_error,
           message: "Failure to start datastore contexts.",
           cause: error
@@ -238,7 +238,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
   defp maybe_context_start_result({:error, {:already_started, ds_pid}}), do: {:ok, ds_pid}
 
   defp maybe_context_start_result({:error, reason}) do
-    raise MsbmsSystError,
+    raise MscmpSystError,
       code: :database_error,
       message: "Failed to start datastore context.",
       cause: reason
@@ -250,7 +250,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
 
   defp validate_datastore_options(datastore_options) do
     {:error,
-     %MsbmsSystError{
+     %MscmpSystError{
        code: :invalid_parameter,
        message: "The datastore_options parameter must be provided and valid.",
        cause: %{parameters: datastore_options}
@@ -263,7 +263,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
           | list(%{context_name: Types.context_name()}),
           non_neg_integer()
         ) ::
-          :ok | {:error, MsbmsSystError.t()}
+          :ok | {:error, MscmpSystError.t()}
   def stop_datastore(%{contexts: contexts}, shutdown_timeout),
     do: stop_datastore(contexts, shutdown_timeout)
 
@@ -275,7 +275,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
     error ->
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :database_error,
           message: "Failure to start datastore contexts.",
           cause: error
@@ -299,7 +299,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
     Supervisor.stop(context, :normal, :infinity)
   end
 
-  @spec query_for_none(iodata(), [term()], Keyword.t()) :: :ok | {:error, MsbmsSystError.t()}
+  @spec query_for_none(iodata(), [term()], Keyword.t()) :: :ok | {:error, MscmpSystError.t()}
   def query_for_none(query, query_params \\ [], opts \\ []) do
     case query(query, query_params, opts) do
       {:ok, _query_result} ->
@@ -307,7 +307,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
 
       {_result, error_result} ->
         {:error,
-         %MsbmsSystError{
+         %MscmpSystError{
            code: :database_error,
            message: "Failed to verify query success.",
            cause: error_result
@@ -322,7 +322,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
         :ok
 
       {:error, reason} ->
-        raise MsbmsSystError,
+        raise MscmpSystError,
           code: :database_error,
           message: "Failed querying for single value.",
           cause: reason
@@ -330,7 +330,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
   end
 
   @spec query_for_value(iodata(), [term()], Keyword.t()) ::
-          {:ok, any()} | {:error, MsbmsSystError.t()}
+          {:ok, any()} | {:error, MscmpSystError.t()}
   def query_for_value(query, query_params \\ [], opts \\ []) do
     case query(query, query_params, opts) do
       {:ok, %{num_rows: 1, rows: [[result_value | _] | _]}} ->
@@ -338,7 +338,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
 
       {_result, error_result} ->
         {:error,
-         %MsbmsSystError{
+         %MscmpSystError{
            code: :database_error,
            message: "Failed to retrieve current datastore version.",
            cause: error_result
@@ -353,7 +353,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
         result_value
 
       {:error, reason} ->
-        raise MsbmsSystError,
+        raise MscmpSystError,
           code: :database_error,
           message: "Failed querying for single value.",
           cause: reason
@@ -361,7 +361,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
   end
 
   @spec query_for_one(iodata(), [term()], Keyword.t()) ::
-          {:ok, [any()]} | {:error, MsbmsSystError.t()}
+          {:ok, [any()]} | {:error, MscmpSystError.t()}
   def query_for_one(query, query_params \\ [], opts \\ []) do
     case query(query, query_params, opts) do
       {:ok, %{num_rows: 1, rows: [result_row | _]}} ->
@@ -369,7 +369,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
 
       {_result, error_result} ->
         {:error,
-         %MsbmsSystError{
+         %MscmpSystError{
            code: :database_error,
            message: "Failed to retrieve current datastore version.",
            cause: error_result
@@ -384,7 +384,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
         result_value
 
       {:error, reason} ->
-        raise MsbmsSystError,
+        raise MscmpSystError,
           code: :database_error,
           message: "Failed querying for single row.",
           cause: reason
@@ -398,7 +398,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
              :num_rows => non_neg_integer(),
              optional(atom()) => any()
            }}
-          | {:error, MsbmsSystError.t()}
+          | {:error, MscmpSystError.t()}
   def query_for_many(query, query_params \\ [], opts \\ []) do
     case query(query, query_params, opts) do
       query_result = {:ok, _result} ->
@@ -406,7 +406,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
 
       {_result, error_result} ->
         {:error,
-         %MsbmsSystError{
+         %MscmpSystError{
            code: :database_error,
            message: "Failed to retrieve current datastore version.",
            cause: error_result
@@ -425,7 +425,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
         result_value
 
       {:error, reason} ->
-        raise MsbmsSystError,
+        raise MscmpSystError,
           code: :database_error,
           message: "Failed querying for rows.",
           cause: reason
@@ -446,7 +446,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
   @spec ecto_transaction(
           fun_or_multi :: (... -> any()) | Ecto.Multi.t(),
           opts :: Keyword.t()
-        ) :: {:ok, any()} | {:error, MsbmsSystError.t()}
+        ) :: {:ok, any()} | {:error, MscmpSystError.t()}
   def ecto_transaction(job, opts \\ []) do
     case transaction(job, opts) do
       transaction_result = {:ok, _result} ->
@@ -455,7 +455,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
       {:error, reason} ->
         {
           :error,
-          %MsbmsSystError{
+          %MscmpSystError{
             code: :database_error,
             message: "Failed processing requested database transaction.",
             cause: reason

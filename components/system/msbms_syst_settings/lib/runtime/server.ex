@@ -31,7 +31,7 @@ defmodule MsbmsSystSettings.Runtime.Server do
   ##
 
   @spec start_link(MsbmsSystSettings.Types.setting_service_params()) ::
-          {:ok, pid()} | {:error, MsbmsSystError.t()}
+          {:ok, pid()} | {:error, MscmpSystError.t()}
   def start_link({settings_service_name, _datastore_context_name} = params) do
     case GenServer.start_link(__MODULE__, params, name: settings_service_name) do
       {:ok, pid} ->
@@ -40,7 +40,7 @@ defmodule MsbmsSystSettings.Runtime.Server do
       abort_reason ->
         {
           :error,
-          %MsbmsSystError{
+          %MscmpSystError{
             code: :process_error,
             message: "Settings Service start aborted.",
             cause: abort_reason
@@ -53,7 +53,7 @@ defmodule MsbmsSystSettings.Runtime.Server do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :process_error,
           message: "Failure starting Settings Service.",
           cause: error
@@ -67,7 +67,7 @@ defmodule MsbmsSystSettings.Runtime.Server do
 
   @impl true
   @spec init(MsbmsSystSettings.Types.setting_service_params()) ::
-          {:ok, map()} | {:stop, MsbmsSystError.t()}
+          {:ok, map()} | {:stop, MscmpSystError.t()}
   def init({service_name, datastore_context_name}) do
     _ = ProcessUtils.put_settings_service(service_name)
     ets_table_name = Settings.get_ets_table_from_service_name(service_name)

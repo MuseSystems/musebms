@@ -1,5 +1,5 @@
 # Source File: types.ex
-# Location:    musebms/components/system/msbms_syst_error/lib/types.ex
+# Location:    musebms/components/system/mscmp_syst_error/lib/types.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,9 +10,9 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule MsbmsSystError.Types do
+defmodule MscmpSystError.Types do
   @moduledoc """
-  Defines the public types exposed by the MsbmsSystError component.
+  Defines the public types exposed by the MscmpSystError component.
   """
 
   @typedoc """
@@ -22,7 +22,7 @@ defmodule MsbmsSystError.Types do
   that makes decisions on whether to handle an error/exception to be able to
   understand the nature of the error.
   """
-  @type msbms_error ::
+  @type mscmp_error ::
           :undefined_error
           | :database_error
           | :example_error

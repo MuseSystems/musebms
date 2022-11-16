@@ -15,7 +15,7 @@ defmodule MsbmsSystDatastore do
   """
   @spec get_datastore_state(Types.datastore_options(), Keyword.t()) ::
           {:ok, Types.database_state_values(), list(Types.context_state())}
-          | {:error, MsbmsSystError.t()}
+          | {:error, MscmpSystError.t()}
   defdelegate get_datastore_state(datastore_options, opts \\ []), to: Dba
 
   @doc section: :datastore_management
@@ -27,7 +27,7 @@ defmodule MsbmsSystDatastore do
   """
   @spec create_datastore(Types.datastore_options(), Keyword.t()) ::
           {:ok, Types.database_state_values(), list(Types.context_state())}
-          | {:error, MsbmsSystError.t()}
+          | {:error, MscmpSystError.t()}
   defdelegate create_datastore(datastore_options, opts \\ []), to: Dba
 
   @doc section: :datastore_management
@@ -45,7 +45,7 @@ defmodule MsbmsSystDatastore do
   will result in data loss.__
   """
   @spec drop_datastore(Types.datastore_options(), Keyword.t()) ::
-          :ok | {:error, MsbmsSystError.t()}
+          :ok | {:error, MscmpSystError.t()}
   defdelegate drop_datastore(datastore_options, opts \\ []), to: Dba
 
   @doc section: :datastore_management
@@ -61,7 +61,7 @@ defmodule MsbmsSystDatastore do
   results of this function.
   """
   @spec get_datastore_context_states(Types.datastore_options(), Keyword.t()) ::
-          {:ok, nonempty_list(Types.context_state())} | {:error, MsbmsSystError.t()}
+          {:ok, nonempty_list(Types.context_state())} | {:error, MscmpSystError.t()}
   defdelegate get_datastore_context_states(datastore_contexts, opts \\ []), to: Dba
 
   @doc section: :datastore_management
@@ -78,7 +78,7 @@ defmodule MsbmsSystDatastore do
           nonempty_list(Types.datastore_context()),
           Keyword.t()
         ) ::
-          {:ok, nonempty_list(Types.context_state())} | {:error, MsbmsSystError.t()}
+          {:ok, nonempty_list(Types.context_state())} | {:error, MscmpSystError.t()}
   defdelegate create_datastore_contexts(datastore_options, datastore_contexts, opts \\ []),
     to: Dba
 
@@ -97,7 +97,7 @@ defmodule MsbmsSystDatastore do
           nonempty_list(Types.datastore_context()),
           Keyword.t()
         ) ::
-          :ok | {:error, MsbmsSystError.t()}
+          :ok | {:error, MscmpSystError.t()}
   defdelegate drop_datastore_contexts(datastore_options, datastore_contexts, opts \\ []), to: Dba
 
   @doc section: :datastore_migrations
@@ -105,7 +105,7 @@ defmodule MsbmsSystDatastore do
   Returns the most recently installed database migration version number.
   """
   @spec get_datastore_version(Types.datastore_options(), Keyword.t()) ::
-          {:ok, String.t()} | {:error, MsbmsSystError.t()}
+          {:ok, String.t()} | {:error, MscmpSystError.t()}
   defdelegate get_datastore_version(datastore_options, opts \\ []), to: Privileged
 
   @doc section: :datastore_migrations
@@ -123,7 +123,7 @@ defmodule MsbmsSystDatastore do
           Keyword.t(),
           Keyword.t()
         ) ::
-          {:ok, [String.t()]} | {:error, MsbmsSystError.t()}
+          {:ok, [String.t()]} | {:error, MscmpSystError.t()}
   defdelegate upgrade_datastore(
                 datastore_options,
                 datastore_type,
@@ -138,7 +138,7 @@ defmodule MsbmsSystDatastore do
   """
   @spec start_datastore(Types.datastore_options(), Supervisor.supervisor() | nil) ::
           {:ok, :all_started | :some_started, list(Types.context_state_values())}
-          | {:error, MsbmsSystError.t()}
+          | {:error, MscmpSystError.t()}
   defdelegate start_datastore(datastore_options, supervisor_name \\ nil), to: Datastore
 
   @doc section: :service_management
@@ -146,7 +146,7 @@ defmodule MsbmsSystDatastore do
   Starts a database connection for the specific Datastore context provided.
   """
   @spec start_datastore_context(Types.datastore_options(), atom() | Types.datastore_context()) ::
-          {:ok, pid()} | {:error, MsbmsSystError.t()}
+          {:ok, pid()} | {:error, MscmpSystError.t()}
   defdelegate start_datastore_context(datastore_options, context), to: Datastore
 
   @doc section: :service_management
@@ -159,7 +159,7 @@ defmodule MsbmsSystDatastore do
           | list(%{context_name: Types.context_name()}),
           non_neg_integer()
         ) ::
-          :ok | {:error, MsbmsSystError.t()}
+          :ok | {:error, MscmpSystError.t()}
   defdelegate stop_datastore(datastore_options_or_contexts, db_shutdown_timeout \\ 60_000),
     to: Datastore
 
@@ -176,7 +176,7 @@ defmodule MsbmsSystDatastore do
   @doc """
   Executes a database query but returns no results.
   """
-  @spec query_for_none(iodata(), [term()], Keyword.t()) :: :ok | {:error, MsbmsSystError.t()}
+  @spec query_for_none(iodata(), [term()], Keyword.t()) :: :ok | {:error, MscmpSystError.t()}
   defdelegate query_for_none(query, query_params \\ [], opts \\ []), to: Datastore
 
   @doc section: :query
@@ -192,7 +192,7 @@ defmodule MsbmsSystDatastore do
   Executes a database query returning a single value.
   """
   @spec query_for_value(iodata(), [term()], Keyword.t()) ::
-          {:ok, any()} | {:error, MsbmsSystError.t()}
+          {:ok, any()} | {:error, MscmpSystError.t()}
   defdelegate query_for_value(query, query_params \\ [], opts \\ []), to: Datastore
 
   @doc section: :query
@@ -207,7 +207,7 @@ defmodule MsbmsSystDatastore do
   Executes a database query and returns a single row.
   """
   @spec query_for_one(iodata(), [term()], Keyword.t()) ::
-          {:ok, [any()]} | {:error, MsbmsSystError.t()}
+          {:ok, [any()]} | {:error, MscmpSystError.t()}
   defdelegate query_for_one(query, query_params \\ [], opts \\ []), to: Datastore
 
   @doc section: :query
@@ -228,7 +228,7 @@ defmodule MsbmsSystDatastore do
              :num_rows => non_neg_integer(),
              optional(atom()) => any()
            }}
-          | {:error, MsbmsSystError.t()}
+          | {:error, MscmpSystError.t()}
   defdelegate query_for_many(query, query_params \\ [], opts \\ []), to: Datastore
 
   @doc section: :query
@@ -257,7 +257,7 @@ defmodule MsbmsSystDatastore do
   defdelegate current_datastore_context(), to: Datastore
 
   @doc section: :query
-  @spec transaction(fun | Ecto.Multi.t(), keyword) :: {:error, MsbmsSystError.t()} | {:ok, any}
+  @spec transaction(fun | Ecto.Multi.t(), keyword) :: {:error, MscmpSystError.t()} | {:ok, any}
   defdelegate transaction(job, opts \\ []), to: Datastore, as: :ecto_transaction
 
   @doc section: :query

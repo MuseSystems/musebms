@@ -32,7 +32,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Validation do
   @moduledoc false
 
   @spec request_identity_validation(Types.identity_id() | Data.SystIdentities.t(), Keyword.t()) ::
-          {:ok, Data.SystIdentities.t()} | {:error, MsbmsSystError.t() | Exception.t()}
+          {:ok, Data.SystIdentities.t()} | {:error, MscmpSystError.t() | Exception.t()}
   def request_identity_validation(target_identity_id, opts) when is_binary(target_identity_id) do
     from(i in Data.SystIdentities, where: i.id == ^target_identity_id)
     |> MsbmsSystDatastore.one!()
@@ -43,7 +43,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Validation do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure creating Validation Identity by ID.",
           cause: error
@@ -71,7 +71,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Validation do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure creating Validation Identity.",
           cause: error
@@ -120,7 +120,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Validation do
   end
 
   @spec confirm_identity_validation(Data.SystIdentities.t()) ::
-          {:ok, Data.SystIdentities.t()} | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystIdentities.t()} | {:error, MscmpSystError.t()}
   def confirm_identity_validation(validation_identity) do
     MsbmsSystDatastore.transaction(fn ->
       date_now = DateTime.now!("Etc/UTC")
@@ -142,7 +142,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Validation do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure confirming Identity validation.",
           cause: error
@@ -151,7 +151,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Validation do
   end
 
   @spec revoke_identity_validation(Data.SystIdentities.t()) ::
-          {:ok, Data.SystIdentities.t()} | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystIdentities.t()} | {:error, MscmpSystError.t()}
   def revoke_identity_validation(validation_identity) do
     MsbmsSystDatastore.transaction(fn ->
       revoked_identity =
@@ -170,7 +170,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Validation do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure revoking Identity validation.",
           cause: error
@@ -184,7 +184,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Validation do
        when not is_nil(identity_expires) do
     case DateTime.diff(identity_expires, DateTime.now!("Etc/UTC")) < 0 do
       true ->
-        raise MsbmsSystError,
+        raise MscmpSystError,
           message: """
           The requested action may not be taken on a validation Identity
           record which has expired."
@@ -203,7 +203,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Validation do
        when not is_nil(validated) do
     # Getting here really shouldn't be possible, but just in case...
 
-    raise MsbmsSystError,
+    raise MscmpSystError,
       message: "Operation not valid for an already Validated Identity.",
       code: :undefined_error,
       cause: %{parameters: [identity: target_identity]}
@@ -212,7 +212,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Validation do
   defp verify_not_validated(target_identity), do: target_identity
 
   @spec get_validation_identity_for_identity_id(Types.identity_id()) ::
-          {:ok, Data.SystIdentities.t() | nil} | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystIdentities.t() | nil} | {:error, MscmpSystError.t()}
   def get_validation_identity_for_identity_id(target_identity_id) do
     from(i in Data.SystIdentities, where: i.validates_identity_id == ^target_identity_id)
     |> MsbmsSystDatastore.one()
@@ -223,7 +223,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Validation do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure retrieving Validation Identity by Target Identity ID.",
           cause: error

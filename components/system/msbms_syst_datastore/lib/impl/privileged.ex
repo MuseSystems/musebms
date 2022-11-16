@@ -43,7 +43,7 @@ defmodule MsbmsSystDatastore.Impl.Privileged do
   @priv_application_name "MSBMS Datastore Privileged Access"
 
   @spec get_datastore_version(Types.datastore_options(), Keyword.t()) ::
-          {:ok, String.t()} | {:error, MsbmsSystError.t()}
+          {:ok, String.t()} | {:error, MscmpSystError.t()}
   def get_datastore_version(datastore_options, opts) do
     opts = MsbmsSystUtils.resolve_options(opts, db_shutdown_timeout: @default_db_shutdown_timeout)
 
@@ -64,7 +64,7 @@ defmodule MsbmsSystDatastore.Impl.Privileged do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :database_error,
           message: "Failure retrieving datastore version.",
           cause: error
@@ -73,7 +73,7 @@ defmodule MsbmsSystDatastore.Impl.Privileged do
   end
 
   @spec initialize_datastore(Types.datastore_options(), Keyword.t()) ::
-          :ok | {:error, MsbmsSystError.t()}
+          :ok | {:error, MscmpSystError.t()}
   def initialize_datastore(datastore_options, opts \\ []) do
     opts = MsbmsSystUtils.resolve_options(opts, db_shutdown_timeout: @default_db_shutdown_timeout)
 
@@ -90,7 +90,7 @@ defmodule MsbmsSystDatastore.Impl.Privileged do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :database_error,
           message: "Failure initializing datastore.",
           cause: error
@@ -99,7 +99,7 @@ defmodule MsbmsSystDatastore.Impl.Privileged do
   end
 
   @spec upgrade_datastore(Types.datastore_options(), String.t(), Keyword.t(), Keyword.t()) ::
-          {:ok, [String.t()]} | {:error, MsbmsSystError.t()}
+          {:ok, [String.t()]} | {:error, MscmpSystError.t()}
   def upgrade_datastore(datastore_options, datastore_type, migration_bindings, opts \\ []) do
     opts = MsbmsSystUtils.resolve_options(opts, db_shutdown_timeout: @default_db_shutdown_timeout)
 
@@ -125,7 +125,7 @@ defmodule MsbmsSystDatastore.Impl.Privileged do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :database_error,
           message: "Failure upgrading datastore.",
           cause: error
@@ -183,7 +183,7 @@ defmodule MsbmsSystDatastore.Impl.Privileged do
       error ->
         {
           :error,
-          %MsbmsSystError{
+          %MscmpSystError{
             code: :database_error,
             message: "Failure starting privileged dataastore.",
             cause: error

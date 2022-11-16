@@ -67,7 +67,7 @@ defmodule MsbmsSystRateLimiter.Runtime.Application do
   end
 
   @spec init_rate_limiter(Keyword.t()) ::
-          {:ok, detail :: atom()} | {:error, MsbmsSystError.t()}
+          {:ok, detail :: atom()} | {:error, MscmpSystError.t()}
   def init_rate_limiter(opts) do
     {_backend, config_opts} = Application.get_env(:hammer, :backend)
 
@@ -81,7 +81,7 @@ defmodule MsbmsSystRateLimiter.Runtime.Application do
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
       {:error,
-       %MsbmsSystError{
+       %MscmpSystError{
          code: :undefined_error,
          message: "Failure initializing rate limiter.",
          cause: error
@@ -92,7 +92,7 @@ defmodule MsbmsSystRateLimiter.Runtime.Application do
     do: {:ok, :resource_exists}
 
   defp process_create_mnesia_table_result({:aborted, _} = reason) do
-    raise MsbmsSystError,
+    raise MscmpSystError,
       code: :undefined_error,
       message: "Internal error initializing rate limiter.",
       cause: reason

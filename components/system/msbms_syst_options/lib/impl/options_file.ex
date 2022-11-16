@@ -21,7 +21,7 @@ defmodule MsbmsSystOptions.Impl.OptionsFile do
   ######
 
   @spec get_options(options_file_path :: String.t()) ::
-          {:ok, map()} | {:error, MsbmsSystError.t()}
+          {:ok, map()} | {:error, MscmpSystError.t()}
   def get_options(options_file_path) when is_binary(options_file_path) do
     options_file_path
     |> maybe_file_read()
@@ -32,7 +32,7 @@ defmodule MsbmsSystOptions.Impl.OptionsFile do
     with error = {:error, _reason} <- File.read(options_file_path) do
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :file_error,
           message: "Problem reading options file '#{options_file_path}'.",
           cause: error
@@ -45,7 +45,7 @@ defmodule MsbmsSystOptions.Impl.OptionsFile do
     with error = {:error, _reason} <- Toml.decode(file_contents, keys: :atoms) do
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :invalid_data,
           message: "Problem decoding the options file.",
           cause: error
@@ -67,10 +67,10 @@ defmodule MsbmsSystOptions.Impl.OptionsFile do
     options_map
   end
 
-  defp extract_or_raise_options_map!({:error, msbms_error = %MsbmsSystError{}}) do
-    raise MsbmsSystError,
-      message: msbms_error.message,
-      code: msbms_error.code,
-      cause: msbms_error.cause
+  defp extract_or_raise_options_map!({:error, mscmp_error = %MscmpSystError{}}) do
+    raise MscmpSystError,
+      message: mscmp_error.message,
+      code: mscmp_error.code,
+      cause: mscmp_error.cause
   end
 end

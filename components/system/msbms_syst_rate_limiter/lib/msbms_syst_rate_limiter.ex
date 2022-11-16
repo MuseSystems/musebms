@@ -190,7 +190,7 @@ defmodule MsbmsSystRateLimiter do
           (counter_id :: Types.counter_id() ->
              {:allow, count :: integer()}
              | {:deny, limit :: integer()}
-             | {:error, MsbmsSystError.t()})
+             | {:error, MscmpSystError.t()})
   defdelegate get_check_rate_function(counter_type, scale_ms, limit), to: Impl.RateLimiter
 
   @doc section: :rate_limiter_data
@@ -230,7 +230,7 @@ defmodule MsbmsSystRateLimiter do
   @spec check_rate(Types.counter_type(), Types.counter_id(), integer(), integer()) ::
           {:allow, count :: integer()}
           | {:deny, limit :: integer()}
-          | {:error, MsbmsSystError.t()}
+          | {:error, MscmpSystError.t()}
   defdelegate check_rate(counter_type, counter_id, scale_ms, limit), to: Impl.RateLimiter
 
   @doc section: :rate_limiter_data
@@ -283,7 +283,7 @@ defmodule MsbmsSystRateLimiter do
         ) ::
           {:allow, count :: integer()}
           | {:deny, limit :: integer()}
-          | {:error, MsbmsSystError.t()}
+          | {:error, MscmpSystError.t()}
   defdelegate check_rate_with_increment(counter_type, counter_id, scale_ms, limit, increment),
     to: Impl.RateLimiter
 
@@ -316,7 +316,7 @@ defmodule MsbmsSystRateLimiter do
              created_at :: integer() | nil,
              updated_at :: integer() | nil
            }}
-          | {:error, MsbmsSystError.t()}
+          | {:error, MscmpSystError.t()}
   defdelegate inspect_counter(counter_type, counter_id, scale_ms, limit), to: Impl.RateLimiter
 
   @doc section: :rate_limiter_data
@@ -341,7 +341,7 @@ defmodule MsbmsSystRateLimiter do
   """
 
   @spec delete_counters(Types.counter_type(), Types.counter_id()) ::
-          {:ok, integer()} | {:error, MsbmsSystError.t()}
+          {:ok, integer()} | {:error, MscmpSystError.t()}
   defdelegate delete_counters(counter_type, counter_id), to: Impl.RateLimiter
 
   @doc section: :service_management
@@ -361,6 +361,6 @@ defmodule MsbmsSystRateLimiter do
   """
 
   @spec init_rate_limiter(Keyword.t()) ::
-          {:ok, detail :: atom()} | {:error, MsbmsSystError.t()}
+          {:ok, detail :: atom()} | {:error, MscmpSystError.t()}
   defdelegate init_rate_limiter(opts \\ []), to: Runtime.Application
 end

@@ -21,7 +21,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccount do
   @moduledoc false
 
   @spec create_access_account(Types.access_account_params()) ::
-          {:ok, Data.SystAccessAccounts.t()} | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystAccessAccounts.t()} | {:error, MscmpSystError.t()}
   def create_access_account(access_account_params) do
     access_account_params
     |> Data.SystAccessAccounts.insert_changeset()
@@ -33,7 +33,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccount do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure creating Access Account.",
           cause: error
@@ -45,7 +45,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccount do
           Types.access_account_id() | Data.SystAccessAccounts.t(),
           Types.access_account_params()
         ) ::
-          {:ok, Data.SystAccessAccounts.t()} | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystAccessAccounts.t()} | {:error, MscmpSystError.t()}
   def update_access_account(access_account_id, access_account_params)
       when is_binary(access_account_id) do
     MsbmsSystDatastore.get!(Data.SystAccessAccounts, access_account_id)
@@ -56,7 +56,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccount do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure updating Access Account by ID.",
           cause: error
@@ -75,7 +75,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccount do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure updating Access Account.",
           cause: error
@@ -84,7 +84,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccount do
   end
 
   @spec get_access_account_id_by_name(Types.access_account_name()) ::
-          {:ok, Types.access_account_id()} | {:error, MsbmsSystError.t()}
+          {:ok, Types.access_account_id()} | {:error, MscmpSystError.t()}
   def get_access_account_id_by_name(access_account_name) when is_binary(access_account_name) do
     from(aa in Data.SystAccessAccounts,
       select: aa.id,
@@ -98,7 +98,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccount do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure retrieving Access Account ID by internal name.",
           cause: error
@@ -107,7 +107,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccount do
   end
 
   @spec get_access_account_by_name(Types.access_account_name()) ::
-          Data.SystAccessAccounts.t() | {:error, MsbmsSystError.t()}
+          Data.SystAccessAccounts.t() | {:error, MscmpSystError.t()}
   def get_access_account_by_name(access_account_name) do
     from(
       aa in Data.SystAccessAccounts,
@@ -124,7 +124,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccount do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure retrieving Access Account data.",
           cause: error
@@ -133,7 +133,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccount do
   end
 
   @spec purge_access_account(Types.access_account_id() | Data.SystAccessAccounts.t()) ::
-          :ok | {:error, MsbmsSystError.t()}
+          :ok | {:error, MscmpSystError.t()}
   def purge_access_account(access_account_id) when is_binary(access_account_id) do
     from(
       aa in Data.SystAccessAccounts,
@@ -161,7 +161,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccount do
         :ok
 
       _ ->
-        raise MsbmsSystError,
+        raise MscmpSystError,
           code: :invalid_parameter,
           message: "Invalid Access Account State Functional Type for purge.",
           cause: %{parameters: [functional_type: functional_type]}
@@ -172,7 +172,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccount do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure purging Access Account.",
           cause: error

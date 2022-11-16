@@ -50,7 +50,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
           startup_options :: map(),
           Keyword.t()
         ) ::
-          :ok | {:error, MsbmsSystError.t()}
+          :ok | {:error, MscmpSystError.t()}
   def start_application(application_id, startup_options, opts) when is_binary(application_id) do
     from(a in Data.SystApplications, where: a.id == ^application_id, select: [:id, :internal_name])
     |> MsbmsSystDatastore.one!()
@@ -61,7 +61,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure starting Application by ID.",
           cause: error
@@ -110,7 +110,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
 
         {:error, _} = error ->
           {:error,
-           %MsbmsSystError{
+           %MscmpSystError{
              code: :undefined_error,
              message: "Failure starting Instance.",
              cause: error
@@ -123,7 +123,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure starting Application.",
           cause: error
@@ -149,7 +149,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
   # Starts all Applications.
 
   @spec start_all_applications(startup_options :: map(), Keyword.t()) ::
-          :ok | {:error, MsbmsSystError.t()}
+          :ok | {:error, MscmpSystError.t()}
   def start_all_applications(startup_options, opts) do
     from(a in Data.SystApplications, select: [:id, :internal_name])
     |> MsbmsSystDatastore.all()
@@ -160,7 +160,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure starting Applications.",
           cause: error
@@ -172,7 +172,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
           Types.instance_id() | Data.SystInstances.t(),
           startup_options :: map(),
           Keyword.t()
-        ) :: :ok | {:error, MsbmsSystError.t()}
+        ) :: :ok | {:error, MscmpSystError.t()}
   def start_instance(instance_id, startup_options, opts) when is_binary(instance_id) do
     from(
       i in Data.SystInstances,
@@ -188,7 +188,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure starting Instance by ID.",
           cause: error
@@ -259,7 +259,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure starting Instance.",
           cause: error
@@ -296,7 +296,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
   end
 
   @spec stop_instance(Types.instance_id() | Data.SystInstances.t(), Keyword.t()) ::
-          :ok | {:error, MsbmsSystError.t()}
+          :ok | {:error, MscmpSystError.t()}
   def stop_instance(instance_id, opts) when is_binary(instance_id) do
     from(i in Data.SystInstances, where: i.id == ^instance_id, preload: [:instance_contexts])
     |> MsbmsSystDatastore.one!()
@@ -307,7 +307,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure stopping Instance by ID.",
           cause: error
@@ -340,7 +340,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure stopping Instance.",
           cause: error
@@ -365,7 +365,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
   defp maybe_stop_instance_supervisor(_, _opts), do: nil
 
   @spec stop_application(Types.application_id() | Data.SystApplications.t(), Keyword.t()) ::
-          :ok | {:error, MsbmsSystError.t()}
+          :ok | {:error, MscmpSystError.t()}
   def stop_application(application_id, opts) when is_binary(application_id) do
     from(a in Data.SystApplications, where: a.id == ^application_id, select: [:id, :internal_name])
     |> MsbmsSystDatastore.one!()
@@ -376,7 +376,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure stopping Application by ID.",
           cause: error
@@ -403,7 +403,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure stopping Application.",
           cause: error
@@ -425,7 +425,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
   #       conceivable that any individual Application stop could fail while
   #       others may succeed.  This shouldn't be a common case, but it should be
   #       better handled nonetheless.
-  @spec stop_all_applications(Keyword.t()) :: :ok | {:error, MsbmsSystError.t()}
+  @spec stop_all_applications(Keyword.t()) :: :ok | {:error, MscmpSystError.t()}
   def stop_all_applications(opts) do
     from(a in Data.SystApplications, select: [:id, :internal_name])
     |> MsbmsSystDatastore.all()
@@ -436,7 +436,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure stopping all started Applications.",
           cause: error

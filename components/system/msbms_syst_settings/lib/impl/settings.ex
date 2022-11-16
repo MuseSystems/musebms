@@ -81,7 +81,7 @@ defmodule MsbmsSystSettings.Impl.Settings do
     |> :ets.select([{{:_, :"$1"}, [], [:"$1"]}])
   end
 
-  @spec create_setting(Types.setting_params()) :: :ok | {:error, MsbmsSystError.t()}
+  @spec create_setting(Types.setting_params()) :: :ok | {:error, MscmpSystError.t()}
   def create_setting(creation_params) when is_map(creation_params) do
     ets_table_name = get_ets_table_from_service_name(ProcessUtils.get_settings_service())
 
@@ -97,7 +97,7 @@ defmodule MsbmsSystSettings.Impl.Settings do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure creating new setting.",
           cause: error
@@ -106,7 +106,7 @@ defmodule MsbmsSystSettings.Impl.Settings do
   end
 
   @spec update_setting(Types.setting_name(), Types.setting_params()) ::
-          :ok | {:error, MsbmsSystError.t()}
+          :ok | {:error, MscmpSystError.t()}
   def update_setting(setting_name, update_params)
       when is_binary(setting_name) and is_map(update_params) do
     ets_table_name = get_ets_table_from_service_name(ProcessUtils.get_settings_service())
@@ -123,7 +123,7 @@ defmodule MsbmsSystSettings.Impl.Settings do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure updating setting.",
           cause: error
@@ -131,7 +131,7 @@ defmodule MsbmsSystSettings.Impl.Settings do
       }
   end
 
-  @spec delete_setting(Types.setting_name()) :: :ok | {:error, MsbmsSystError.t()}
+  @spec delete_setting(Types.setting_name()) :: :ok | {:error, MscmpSystError.t()}
   def delete_setting(setting_name) when is_binary(setting_name) do
     ets_table_name = get_ets_table_from_service_name(ProcessUtils.get_settings_service())
 
@@ -148,7 +148,7 @@ defmodule MsbmsSystSettings.Impl.Settings do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure deleting setting.",
           cause: error

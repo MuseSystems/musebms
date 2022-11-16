@@ -109,17 +109,17 @@ defmodule Mix.Tasks.Builddb do
     1. `"path/to/file.sql"` - A simple string is interpreted as the path to an
        SQL file to load into a migration.
 
-    2. `{type = "sql", file = "path/to/file.sql"}` - This is the same as the 
+    2. `{type = "sql", file = "path/to/file.sql"}` - This is the same as the
        simple file path of form 1.  Using this form could allow for a slightly
        cleaner representation if sat in a group of sub-plan Load File Items.
 
     3. `{type = "plan", file = "path/to/subplan.toml"}` - In this form the path
-       indicates that the file is a nested build plan, or sub-plan, whose 
+       indicates that the file is a nested build plan, or sub-plan, whose
        directives should be followed at this location.  A sub-plan is itself a
        normal build plan.  By convention, a sub-plan file name should take the
-       form: `subplans.<descriptive_name>.toml`; unlike the build plan naming 
-       convention, following the sub-plan naming convention is not required.  
-       While build plans may be nested arbitrarily deep, a best practice is to 
+       form: `subplans.<descriptive_name>.toml`; unlike the build plan naming
+       convention, following the sub-plan naming convention is not required.
+       While build plans may be nested arbitrarily deep, a best practice is to
        only use a single level of nesting.
 
   Each table in the array is a specific build plan which will build a single
@@ -158,7 +158,7 @@ defmodule Mix.Tasks.Builddb do
       :ok
     else
       error ->
-        raise MsbmsSystError,
+        raise MscmpSystError,
           code: :file_error,
           message: "Failure building migrations.",
           cause: error
@@ -189,7 +189,7 @@ defmodule Mix.Tasks.Builddb do
   defp validate_type(type) when is_binary(type), do: type
 
   defp validate_type(bad_options) do
-    raise MsbmsSystError,
+    raise MscmpSystError,
       code: :invalid_parameter,
       message: "The '--type' parameter was missing or invalid but is required.",
       cause: bad_options

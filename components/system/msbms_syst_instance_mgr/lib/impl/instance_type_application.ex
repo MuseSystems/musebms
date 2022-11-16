@@ -19,7 +19,7 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceTypeApplication do
   @moduledoc false
 
   @spec create_instance_type_application(Types.instance_type_id(), Types.application_id()) ::
-          {:ok, Data.SystInstanceTypeApplications.t()} | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystInstanceTypeApplications.t()} | {:error, MscmpSystError.t()}
   def create_instance_type_application(instance_type_id, application_id)
       when is_binary(instance_type_id) and is_binary(application_id) do
     %{instance_type_id: instance_type_id, application_id: application_id}
@@ -32,7 +32,7 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceTypeApplication do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure creating Instance Type Application association.",
           cause: error
@@ -43,7 +43,7 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceTypeApplication do
   @spec delete_instance_type_application(
           Types.instance_type_application_id()
           | Data.SystInstanceTypeApplications.t()
-        ) :: :ok | {:error, MsbmsSystError.t()}
+        ) :: :ok | {:error, MscmpSystError.t()}
   def delete_instance_type_application(instance_type_application_id)
       when is_binary(instance_type_application_id) do
     MsbmsSystDatastore.get!(Data.SystInstanceTypeApplications, instance_type_application_id)
@@ -54,7 +54,7 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceTypeApplication do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure deleting Instance Type Application association by ID.",
           cause: error
@@ -73,7 +73,7 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceTypeApplication do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure deleting Instance Type Application association.",
           cause: error

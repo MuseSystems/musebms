@@ -1,5 +1,5 @@
 # Source File: mix.exs
-# Location:    musebms/components/system/msbms_syst_error/mix.exs
+# Location:    musebms/components/system/mscmp_syst_error/mix.exs
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,10 +10,10 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule MsbmsSystError.MixProject do
+defmodule MscmpSystError.MixProject do
   use Mix.Project
 
-  @name :msbms_syst_error
+  @name :mscmp_syst_error
   @version "0.1.0"
 
   @deps [
@@ -39,15 +39,15 @@ defmodule MsbmsSystError.MixProject do
       build_embedded: in_production,
       start_permanent: in_production,
       docs: [
-        name: "MsbmsSystError",
-        main: "MsbmsSystError",
-        output: "../../../documentation/technical/app_server/msbms_syst_error",
+        name: "MscmpSystError",
+        main: "MscmpSystError",
+        output: "../../../documentation/technical/app_server/mscmp_syst_error",
         groups_for_functions: [
           "API - Error Parsing": &(&1[:section] == :error_parsing)
         ],
         groups_for_modules: [
-          API: [MsbmsSystError],
-          "Supporting Types": [MsbmsSystError.Types]
+          API: [MscmpSystError],
+          "Supporting Types": [MscmpSystError.Types]
         ]
       ]
     ]

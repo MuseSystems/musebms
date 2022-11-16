@@ -143,7 +143,7 @@ defmodule MsbmsSystInstanceMgr do
     for Instance Type creation.
   """
   @spec create_instance_type(Types.instance_type_params()) ::
-          {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MsbmsSystError.t()}
+          {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MscmpSystError.t()}
   defdelegate create_instance_type(instance_type_params), to: Impl.InstanceType
 
   @doc section: :instance_type_data
@@ -160,7 +160,7 @@ defmodule MsbmsSystInstanceMgr do
     contexts.
   """
   @spec update_instance_type(Types.instance_type_name(), Types.instance_type_params() | %{}) ::
-          {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MsbmsSystError.t()}
+          {:ok, MsbmsSystEnums.Data.SystEnumItems.t()} | {:error, MscmpSystError.t()}
   defdelegate update_instance_type(instance_type_name, instance_type_params \\ %{}),
     to: Impl.InstanceType
 
@@ -177,7 +177,7 @@ defmodule MsbmsSystInstanceMgr do
     from the system.
   """
   @spec delete_instance_type(Types.instance_type_name()) ::
-          :ok | {:error, MsbmsSystError.t()}
+          :ok | {:error, MscmpSystError.t()}
   defdelegate delete_instance_type(instance_type_name), to: Impl.InstanceType
 
   #
@@ -202,7 +202,7 @@ defmodule MsbmsSystInstanceMgr do
   @spec create_instance_type_application(
           Types.instance_type_id(),
           Types.application_id()
-        ) :: {:ok, Data.SystInstanceTypeApplications.t()} | {:error, MsbmsSystError.t()}
+        ) :: {:ok, Data.SystInstanceTypeApplications.t()} | {:error, MscmpSystError.t()}
   defdelegate create_instance_type_application(instance_type_id, application_id),
     to: Impl.InstanceTypeApplication
 
@@ -225,7 +225,7 @@ defmodule MsbmsSystInstanceMgr do
           Types.instance_type_application_id()
           | Data.SystInstanceTypeApplications.t()
         ) ::
-          :ok | {:error, MsbmsSystError.t()}
+          :ok | {:error, MscmpSystError.t()}
   defdelegate delete_instance_type_application(instance_type_application),
     to: Impl.InstanceTypeApplication
 
@@ -272,7 +272,7 @@ defmodule MsbmsSystInstanceMgr do
           Types.instance_type_context_id()
           | Data.SystInstanceTypeContexts.t(),
           Types.instance_type_context_params() | %{}
-        ) :: {:ok, Data.SystInstanceTypeContexts.t()} | {:error, MsbmsSystError.t()}
+        ) :: {:ok, Data.SystInstanceTypeContexts.t()} | {:error, MscmpSystError.t()}
   defdelegate update_instance_type_context(
                 instance_type_context,
                 instance_type_context_params \\ %{}
@@ -307,7 +307,7 @@ defmodule MsbmsSystInstanceMgr do
 
   """
   @spec create_owner(Types.owner_params()) ::
-          {:ok, Data.SystOwners.t()} | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystOwners.t()} | {:error, MscmpSystError.t()}
   defdelegate create_owner(owner_params), to: Impl.Owner
 
   @doc section: :owner_data
@@ -336,7 +336,7 @@ defmodule MsbmsSystInstanceMgr do
       an error will result.
   """
   @spec update_owner(Types.owner_id() | Data.SystOwners.t(), Types.owner_params()) ::
-          {:ok, Data.SystOwners.t()} | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystOwners.t()} | {:error, MscmpSystError.t()}
   defdelegate update_owner(owner, update_params), to: Impl.Owner
 
   @doc section: :owner_data
@@ -352,7 +352,7 @@ defmodule MsbmsSystInstanceMgr do
     ...>   MsbmsSystInstanceMgr.get_owner_by_name("owner1")
   """
   @spec get_owner_by_name(Types.owner_name()) ::
-          {:ok, Data.SystOwners.t()} | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystOwners.t()} | {:error, MscmpSystError.t()}
   defdelegate get_owner_by_name(owner_name), to: Impl.Owner
 
   @doc section: :owner_data
@@ -366,7 +366,7 @@ defmodule MsbmsSystInstanceMgr do
     true
   """
   @spec get_owner_id_by_name(Types.owner_name()) ::
-          {:ok, Types.owner_id()} | {:error, MsbmsSystError.t()}
+          {:ok, Types.owner_id()} | {:error, MscmpSystError.t()}
   defdelegate get_owner_id_by_name(owner_name), to: Impl.Owner
 
   @doc section: :owner_data
@@ -382,7 +382,7 @@ defmodule MsbmsSystInstanceMgr do
     `MsbmsSystInstanceMgr.Data.SystOwners` struct representing the Owner to
     purge.
   """
-  @spec purge_owner(Types.owner_id() | Data.SystOwners.t()) :: :ok | {:error, MsbmsSystError.t()}
+  @spec purge_owner(Types.owner_id() | Data.SystOwners.t()) :: :ok | {:error, MscmpSystError.t()}
   defdelegate purge_owner(owner), to: Impl.Owner
 
   #
@@ -468,7 +468,7 @@ defmodule MsbmsSystInstanceMgr do
 
   """
   @spec create_instance(Types.instance_params()) ::
-          {:ok, Data.SystInstances.t()} | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystInstances.t()} | {:error, MscmpSystError.t()}
   defdelegate create_instance(instance_params), to: Impl.Instance
 
   @doc section: :instance_data
@@ -537,7 +537,7 @@ defmodule MsbmsSystInstanceMgr do
       `MsbmsSystDatastore.create_datastore/2` for more information.
   """
   @spec initialize_instance(Types.instance_id(), map(), Keyword.t()) ::
-          {:ok, Data.SystInstances.t()} | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystInstances.t()} | {:error, MscmpSystError.t()}
   defdelegate initialize_instance(instance_id, startup_options, opts \\ []), to: Impl.Instance
 
   @doc section: :instance_data
@@ -553,7 +553,7 @@ defmodule MsbmsSystInstanceMgr do
     which to place the Instance record.
   """
   @spec set_instance_state(Data.SystInstances.t(), Types.instance_state_id()) ::
-          {:ok, Data.SystInstances.t()} | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystInstances.t()} | {:error, MscmpSystError.t()}
   defdelegate set_instance_state(instance, instance_state_id), to: Impl.Instance
 
   @doc section: :instance_data
@@ -582,7 +582,7 @@ defmodule MsbmsSystInstanceMgr do
       ...>   MsbmsSystInstanceMgr.get_instance_by_name("app1_owner1_instance_types_sml")
   """
   @spec get_instance_by_name(Types.instance_name()) ::
-          {:ok, Data.SystInstances.t()} | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystInstances.t()} | {:error, MscmpSystError.t()}
   defdelegate get_instance_by_name(instance_name), to: Impl.Instance
 
   @doc section: :instance_data
@@ -601,7 +601,7 @@ defmodule MsbmsSystInstanceMgr do
       true
   """
   @spec get_instance_id_by_name(Types.instance_name()) ::
-          {:ok, Types.instance_id()} | {:error, MsbmsSystError.t()}
+          {:ok, Types.instance_id()} | {:error, MscmpSystError.t()}
   defdelegate get_instance_id_by_name(instance_name), to: Impl.Instance
 
   @doc section: :instance_data
@@ -628,7 +628,7 @@ defmodule MsbmsSystInstanceMgr do
     obtained from the `MsbmsSystOptions` component.
   """
   @spec purge_instance(Types.instance_id() | Data.SystInstances.t(), map()) ::
-          :ok | {:error, MsbmsSystError.t()}
+          :ok | {:error, MscmpSystError.t()}
   defdelegate purge_instance(instance, startup_options), to: Impl.Instance
 
   #
@@ -643,7 +643,7 @@ defmodule MsbmsSystInstanceMgr do
   configured in the system.  See the documentation for `start_application/3`
   for more information about this function and the available parameters.
   """
-  @spec start_all_applications(map(), Keyword.t()) :: :ok | {:error, MsbmsSystError.t()}
+  @spec start_all_applications(map(), Keyword.t()) :: :ok | {:error, MscmpSystError.t()}
   defdelegate start_all_applications(startup_options, opts \\ []), to: Runtime.Application
 
   @doc section: :service_management
@@ -681,7 +681,7 @@ defmodule MsbmsSystInstanceMgr do
       documentation for `start_instance/3` for the options it is able to accept.
   """
   @spec start_application(Types.application_id() | Data.SystApplications.t(), map(), Keyword.t()) ::
-          :ok | {:error, MsbmsSystError.t()}
+          :ok | {:error, MscmpSystError.t()}
   defdelegate start_application(application, startup_options, opts \\ []), to: Runtime.Application
 
   @doc section: :service_management
@@ -693,7 +693,7 @@ defmodule MsbmsSystInstanceMgr do
   of Application shutdown, please see the documentation for
   `stop_application/2`.
   """
-  @spec stop_all_applications(Keyword.t()) :: :ok | {:error, MsbmsSystError.t()}
+  @spec stop_all_applications(Keyword.t()) :: :ok | {:error, MscmpSystError.t()}
   defdelegate stop_all_applications(opts \\ []), to: Runtime.Application
 
   @doc section: :service_management
@@ -719,7 +719,7 @@ defmodule MsbmsSystInstanceMgr do
       `stop_instance/2` for full information of the available options.
   """
   @spec stop_application(Types.application_id() | Data.SystApplications.t(), Keyword.t()) ::
-          :ok | {:error, MsbmsSystError.t()}
+          :ok | {:error, MscmpSystError.t()}
   defdelegate stop_application(application, opts \\ []), to: Runtime.Application
 
   @doc section: :service_management
@@ -773,7 +773,7 @@ defmodule MsbmsSystInstanceMgr do
       automatically generated from Instance record data.
   """
   @spec start_instance(Types.instance_id() | Data.SystInstances.t(), map(), Keyword.t()) ::
-          :ok | {:error, MsbmsSystError.t()}
+          :ok | {:error, MscmpSystError.t()}
   defdelegate start_instance(instance, startup_options, opts \\ []), to: Runtime.Application
 
   @doc section: :service_management
@@ -800,6 +800,6 @@ defmodule MsbmsSystInstanceMgr do
       `MsbmsSystDatastore.stop_datastore/2` for more information.
   """
   @spec stop_instance(Types.instance_id() | Data.SystInstances.t(), Keyword.t()) ::
-          :ok | {:error, MsbmsSystError.t()}
+          :ok | {:error, MscmpSystError.t()}
   defdelegate stop_instance(instance, opts \\ []), to: Runtime.Application
 end
