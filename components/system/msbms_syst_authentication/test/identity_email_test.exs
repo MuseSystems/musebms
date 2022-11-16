@@ -24,7 +24,7 @@ defmodule IdentityEmailTest do
     assert "AValid!EmailAddress@MuseSystems.Com" =
              Impl.Identity.Email.verify_email_address("AValid!EmailAddress@MuseSystems.Com")
 
-    assert_raise MsbmsSystError,
+    assert_raise MscmpSystError,
                  fn ->
                    Impl.Identity.Email.verify_email_address("AValid!EmailAddress")
                  end
@@ -72,7 +72,7 @@ defmodule IdentityEmailTest do
 
     # Bad Email Address
 
-    assert {:error, %MsbmsSystError{}} =
+    assert {:error, %MscmpSystError{}} =
              Impl.Identity.Email.create_identity(
                access_account_id,
                "identity_email_create_test_accnt"

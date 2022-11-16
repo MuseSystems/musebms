@@ -24,7 +24,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccountInstanceAssoc do
           Types.access_account_id(),
           MsbmsSystInstanceMgr.Types.instance_id(),
           Keyword.t()
-        ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MsbmsSystError.t()}
+        ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
   def invite_to_instance(access_account_id, instance_id, opts)
       when is_binary(access_account_id) and is_binary(instance_id) do
     opts = MsbmsSystUtils.resolve_options(opts, create_accepted: false, expiration_days: 30)
@@ -55,7 +55,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccountInstanceAssoc do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure inviting Access Account to Instance.",
           cause: error
@@ -77,7 +77,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccountInstanceAssoc do
   @spec accept_instance_invite(
           Types.access_account_id(),
           MsbmsSystInstanceMgr.Types.instance_id()
-        ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MsbmsSystError.t()}
+        ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
   def accept_instance_invite(access_account_id, instance_id)
       when is_binary(access_account_id) and is_binary(instance_id) do
     get_access_account_instance_assoc(access_account_id, instance_id)
@@ -88,7 +88,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccountInstanceAssoc do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure accepting Access Account invitation to Instance by composite key.",
           cause: error
@@ -100,7 +100,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccountInstanceAssoc do
           Types.access_account_instance_assoc_id()
           | Data.SystAccessAccountInstanceAssocs.t()
         ) ::
-          {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
   def accept_instance_invite(access_account_instance_assoc_id)
       when is_binary(access_account_instance_assoc_id) do
     access_account_instance_assoc_id
@@ -112,7 +112,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccountInstanceAssoc do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure accepting Access Account invitation to Instance by ID.",
           cause: error
@@ -134,7 +134,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccountInstanceAssoc do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure accepting Access Account invitation to Instance.",
           cause: error
@@ -158,7 +158,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccountInstanceAssoc do
   @spec decline_instance_invite(
           Types.access_account_id(),
           MsbmsSystInstanceMgr.Types.instance_id()
-        ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MsbmsSystError.t()}
+        ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
   def decline_instance_invite(access_account_id, instance_id)
       when is_binary(access_account_id) and is_binary(instance_id) do
     get_access_account_instance_assoc(access_account_id, instance_id)
@@ -169,7 +169,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccountInstanceAssoc do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure declining Access Account invitation to Instance by composite key.",
           cause: error
@@ -181,7 +181,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccountInstanceAssoc do
           Types.access_account_instance_assoc_id()
           | Data.SystAccessAccountInstanceAssocs.t()
         ) ::
-          {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
   def decline_instance_invite(access_account_instance_assoc_id)
       when is_binary(access_account_instance_assoc_id) do
     access_account_instance_assoc_id
@@ -193,7 +193,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccountInstanceAssoc do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure declining Access Account invitation to Instance by ID.",
           cause: error
@@ -215,7 +215,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccountInstanceAssoc do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure declining Access Account invitation to Instance.",
           cause: error
@@ -226,7 +226,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccountInstanceAssoc do
   @spec revoke_instance_access(
           Types.access_account_id(),
           MsbmsSystInstanceMgr.Types.instance_id()
-        ) :: :ok | {:error, MsbmsSystError.t()}
+        ) :: :ok | {:error, MscmpSystError.t()}
   def revoke_instance_access(access_account_id, instance_id)
       when is_binary(access_account_id) and is_binary(instance_id) do
     get_access_account_instance_assoc(access_account_id, instance_id)
@@ -237,7 +237,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccountInstanceAssoc do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure revoking Access Account invitation to Instance by composite key.",
           cause: error
@@ -249,7 +249,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccountInstanceAssoc do
           Types.access_account_instance_assoc_id()
           | Data.SystAccessAccountInstanceAssocs.t()
         ) ::
-          :ok | {:error, MsbmsSystError.t()}
+          :ok | {:error, MscmpSystError.t()}
   def revoke_instance_access(access_account_instance_assoc_id)
       when is_binary(access_account_instance_assoc_id) do
     access_account_instance_assoc_id
@@ -261,7 +261,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccountInstanceAssoc do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure revoking Access Account invitation to Instance by ID.",
           cause: error
@@ -279,7 +279,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccountInstanceAssoc do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure revoking Access Account invitation to Instance.",
           cause: error
@@ -302,7 +302,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccountInstanceAssoc do
          %Data.SystAccessAccountInstanceAssocs{access_granted: access_granted} = record
        )
        when not is_nil(access_granted) do
-    raise MsbmsSystError,
+    raise MscmpSystError,
       message: """
       The requested action may not be taken on an Access Account/Instance Assoc.
       record which has already been accepted."
@@ -319,7 +319,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccountInstanceAssoc do
        when not is_nil(invitation_expires) do
     case DateTime.diff(invitation_expires, DateTime.now!("Etc/UTC")) < 0 do
       true ->
-        raise MsbmsSystError,
+        raise MscmpSystError,
           message: """
           The requested action may not be taken on an Access Account/Instance Assoc.
           record which has expired."
@@ -338,7 +338,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccountInstanceAssoc do
          %Data.SystAccessAccountInstanceAssocs{invitation_declined: invitation_declined} = record
        )
        when not is_nil(invitation_declined) do
-    raise MsbmsSystError,
+    raise MscmpSystError,
       message: """
       The requested action may not be taken on an Access Account/Instance Assoc.
       record which has been declined."

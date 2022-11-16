@@ -55,7 +55,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
   # consider allowing an outright crash in this case since our state would be
   # invalid and perhaps not regularly recoverable.
 
-  @spec refresh_enum_from_database(Types.enum_name()) :: :ok | {:error, MsbmsSystError.t()}
+  @spec refresh_enum_from_database(Types.enum_name()) :: :ok | {:error, MscmpSystError.t()}
   def refresh_enum_from_database(enum_name) do
     ets_table_name = get_ets_table_from_service_name(ProcessUtils.get_enums_service())
 
@@ -73,7 +73,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure refreshing enumeration from database.",
           cause: error
@@ -166,7 +166,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
     enum_item.enum_default == true
   end
 
-  @spec create_enum(Types.enum_params()) :: :ok | {:error, MsbmsSystError.t()}
+  @spec create_enum(Types.enum_params()) :: :ok | {:error, MscmpSystError.t()}
   def create_enum(enum_params) do
     {:ok, _} =
       Ecto.Multi.new()
@@ -190,7 +190,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure creating enumeration.",
           cause: error
@@ -238,7 +238,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
   defp create_enum_items_for_enum(multi, _changes, _enum_params), do: multi
 
   @spec create_enum_functional_type(Types.enum_name(), Types.enum_functional_type_params()) ::
-          :ok | {:error, MsbmsSystError.t()}
+          :ok | {:error, MscmpSystError.t()}
   def create_enum_functional_type(enum_name, functional_type_params) do
     %Data.SystEnums{id: enum_id} = get_enum_values(enum_name)
 
@@ -255,7 +255,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure creating enumeration functional type.",
           cause: error
@@ -264,7 +264,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
   end
 
   @spec create_enum_item(Types.enum_name(), Types.enum_item_params()) ::
-          :ok | {:error, MsbmsSystError.t()}
+          :ok | {:error, MscmpSystError.t()}
   def create_enum_item(enum_name, enum_item_params) do
     %Data.SystEnums{id: enum_id, functional_types: functional_types} = get_enum_values(enum_name)
 
@@ -288,7 +288,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure creating enumeration item.",
           cause: error
@@ -309,7 +309,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
   defp maybe_get_functional_type_id(functional_types, functional_type_name)
        when (is_nil(functional_types) or functional_types == []) and
               is_binary(functional_type_name) do
-    raise MsbmsSystError,
+    raise MscmpSystError,
       code: :undefined_error,
       message: "New enum item requests a functional type but the enumeration has none.",
       cause: %{
@@ -321,7 +321,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
   defp maybe_get_functional_type_id(functional_types, functional_type_name)
        when is_list(functional_types) and length(functional_types) > 0 and
               is_nil(functional_type_name) do
-    raise MsbmsSystError,
+    raise MscmpSystError,
       code: :undefined_error,
       message: "New enum item for this enumeration must identify a functional type.",
       cause: %{
@@ -336,14 +336,14 @@ defmodule MsbmsSystEnums.Impl.Enums do
     do: functional_type_id
 
   defp validated_functional_type_id!(functional_type_id) do
-    raise MsbmsSystError,
+    raise MscmpSystError,
       code: :undefined_error,
       message: "Failed to resolve functional type ID.",
       cause: %{functional_type_id: functional_type_id}
   end
 
   @spec set_enum_values(Types.enum_name(), Types.enum_params()) ::
-          :ok | {:error, MsbmsSystError.t()}
+          :ok | {:error, MscmpSystError.t()}
   def set_enum_values(enum_name, enum_params) do
     ets_table_name = get_ets_table_from_service_name(ProcessUtils.get_enums_service())
 
@@ -362,7 +362,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure setting enumeration values.",
           cause: error
@@ -375,7 +375,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
           Types.enum_functional_type_name(),
           Types.enum_functional_type_params()
         ) ::
-          :ok | {:error, MsbmsSystError.t()}
+          :ok | {:error, MscmpSystError.t()}
   def set_enum_functional_type_values(
         enum_name,
         functional_type_name,
@@ -396,7 +396,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure setting enumeration functional type values.",
           cause: error
@@ -405,7 +405,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
   end
 
   @spec set_enum_item_values(Types.enum_name(), Types.enum_item_name(), Types.enum_item_params()) ::
-          :ok | {:error, MsbmsSystError.t()}
+          :ok | {:error, MscmpSystError.t()}
   def set_enum_item_values(enum_name, enum_item_name, enum_item_params) do
     ets_table_name = get_ets_table_from_service_name(ProcessUtils.get_enums_service())
 
@@ -422,7 +422,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure setting enumeration item values.",
           cause: error
@@ -430,7 +430,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
       }
   end
 
-  @spec delete_enum(Types.enum_name()) :: :ok | {:error, MsbmsSystError.t()}
+  @spec delete_enum(Types.enum_name()) :: :ok | {:error, MscmpSystError.t()}
   def delete_enum(enum_name) do
     ets_table_name = get_ets_table_from_service_name(ProcessUtils.get_enums_service())
 
@@ -447,7 +447,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure deleting an enumeration.",
           cause: error
@@ -456,7 +456,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
   end
 
   @spec delete_enum_functional_type(Types.enum_name(), Types.enum_functional_type_name()) ::
-          :ok | {:error, MsbmsSystError.t()}
+          :ok | {:error, MscmpSystError.t()}
   def delete_enum_functional_type(enum_name, functional_type_name) do
     delete_qry =
       from(f in Data.SystEnumFunctionalTypes,
@@ -472,7 +472,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure deleting an enumeration functional type.",
           cause: error
@@ -481,7 +481,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
   end
 
   @spec delete_enum_item(Types.enum_name(), Types.enum_item_name()) ::
-          :ok | {:error, MsbmsSystError.t()}
+          :ok | {:error, MscmpSystError.t()}
   def delete_enum_item(enum_name, enum_item_name) do
     delete_qry = from(f in Data.SystEnumItems, where: f.internal_name == ^enum_item_name)
 
@@ -494,7 +494,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure deleting an enumeration item.",
           cause: error

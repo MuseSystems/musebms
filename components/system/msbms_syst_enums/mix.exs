@@ -24,7 +24,7 @@ defmodule MsbmsSystEnums.MixProject do
     {:gradient, github: "esl/gradient", only: [:dev], runtime: false},
 
     # Muse Systems Business Management System Components
-    {:msbms_syst_error, path: "../msbms_syst_error"},
+    {:mscmp_syst_error, path: "../mscmp_syst_error"},
     {:msbms_syst_utils, path: "../msbms_syst_utils"},
     {:msbms_syst_datastore, path: "../msbms_syst_datastore"}
   ]
@@ -51,7 +51,7 @@ defmodule MsbmsSystEnums.MixProject do
       deps: [
         msbms_syst_datastore:
           "../../../../documentation/technical/app_server/msbms_syst_datastore",
-        msbms_syst_error: "../../../../documentation/technical/app_server/msbms_syst_error",
+        mscmp_syst_error: "../../../../documentation/technical/app_server/mscmp_syst_error",
         msbms_syst_utils: "../../../../documentation/technical/app_server/msbms_syst_utils"
       ],
       docs: [

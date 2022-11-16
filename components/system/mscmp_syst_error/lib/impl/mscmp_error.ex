@@ -1,5 +1,5 @@
-# Source File: config.exs
-# Location:    musebms/components/system/msbms_syst_error/config/config.exs
+# Source File: mscmp_error.ex
+# Location:    musebms/components/system/mscmp_syst_error/lib/impl/mscmp_error.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,6 +10,14 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-import Config
+defmodule MscmpSystError.Impl.MscmpError do
+  @moduledoc false
 
-import_config "#{Mix.env()}.exs"
+  @spec get_root_cause(any()) :: any()
+  def get_root_cause(%MscmpSystError{cause: next_error = %MscmpSystError{}}) do
+    next_error
+    |> get_root_cause()
+  end
+
+  def get_root_cause(last_error), do: last_error
+end

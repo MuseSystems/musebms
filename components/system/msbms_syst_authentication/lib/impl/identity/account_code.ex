@@ -28,7 +28,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.AccountCode do
   @default_create_validated true
 
   @spec create_identity(Types.access_account_id(), Types.account_identifier() | nil, Keyword.t()) ::
-          {:ok, Data.SystIdentities.t()} | {:error, MsbmsSystError.t() | Exception.t()}
+          {:ok, Data.SystIdentities.t()} | {:error, MscmpSystError.t() | Exception.t()}
   def create_identity(access_account_id, account_code, opts)
       when is_binary(access_account_id) do
     opts =
@@ -54,7 +54,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.AccountCode do
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
       {:error,
-       %MsbmsSystError{
+       %MscmpSystError{
          code: :undefined_error,
          message: "Failure creating Account Code Identity.",
          cause: error
@@ -72,7 +72,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.AccountCode do
   end
 
   @spec reset_identity_for_access_account_id(Types.access_account_id(), Keyword.t()) ::
-          {:ok, Data.SystIdentities.t()} | {:error, MsbmsSystError.t() | Exception.t()}
+          {:ok, Data.SystIdentities.t()} | {:error, MscmpSystError.t() | Exception.t()}
   def reset_identity_for_access_account_id(access_account_id, opts) do
     reset_func = fn ->
       from(i in Data.SystIdentities,
@@ -90,7 +90,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.AccountCode do
           new_identity
 
         error ->
-          MsbmsSystDatastore.rollback(%MsbmsSystError{
+          MsbmsSystDatastore.rollback(%MscmpSystError{
             code: :undefined_error,
             message: "Failure resetting Account Code Identity.",
             cause: error
@@ -104,7 +104,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.AccountCode do
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
       {:error,
-       %MsbmsSystError{
+       %MscmpSystError{
          code: :undefined_error,
          message: "Exception while resetting Account Code Identity.",
          cause: error
@@ -121,14 +121,14 @@ defmodule MsbmsSystAuthentication.Impl.Identity.AccountCode do
        do: create_identity(access_account_id, opts[:account_code], opts)
 
   defp maybe_create_identity_after_delete(delete_result, _access_account_id, _opts) do
-    raise MsbmsSystError,
+    raise MscmpSystError,
       code: :undefined_error,
       message: "Unexpected Account Code Identity deletion result.",
       cause: delete_result
   end
 
   @spec get_account_code_by_access_account_id(Types.access_account_id()) ::
-          {:ok, Data.SystIdentities.t() | :not_found} | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystIdentities.t() | :not_found} | {:error, MscmpSystError.t()}
   def get_account_code_by_access_account_id(access_account_id)
       when is_binary(access_account_id) do
     from(i in Data.SystIdentities,
@@ -144,7 +144,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.AccountCode do
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
       {:error,
-       %MsbmsSystError{
+       %MscmpSystError{
          code: :undefined_error,
          message: "Failure retrieving Account Code.",
          cause: error
@@ -157,7 +157,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.AccountCode do
   defp process_account_code_lookup_result(nil), do: {:ok, :not_found}
 
   defp process_account_code_lookup_result(error) do
-    raise MsbmsSystError,
+    raise MscmpSystError,
       code: :undefined_error,
       message: "Exception retrieving Account Code.",
       cause: error

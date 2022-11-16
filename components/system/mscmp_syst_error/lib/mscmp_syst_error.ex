@@ -1,5 +1,5 @@
-# Source File: msbms_syst_error.ex
-# Location:    musebms/components/system/msbms_syst_error/lib/msbms_syst_error.ex
+# Source File: mscmp_syst_error.ex
+# Location:    musebms/components/system/mscmp_syst_error/lib/mscmp_syst_error.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,7 +10,7 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule MsbmsSystError do
+defmodule MscmpSystError do
   @moduledoc """
   API for working with the MuseBMS error reporting subsystem.
 
@@ -19,15 +19,15 @@ defmodule MsbmsSystError do
   standard way, various application errors, especially non-fatal errors, can be handled as
   appropriate and logged for later analysis.
 
-  The basic form of a reportable application error is: `{:error, %MsbmsSystError{}}` where
-  `%MsbmsSystError{}` contains basic fields to identify the kind of error, the source of the
+  The basic form of a reportable application error is: `{:error, %MscmpSystError{}}` where
+  `%MscmpSystError{}` contains basic fields to identify the kind of error, the source of the
   error, and other error related data.
 
   Functions in this API are used to work with the returned exception.
   """
 
-  alias MsbmsSystError.Impl.MsbmsError
-  alias MsbmsSystError.Types
+  alias MscmpSystError.Impl.MscmpError
+  alias MscmpSystError.Types
 
   @typedoc """
   Defines a nestable exception format for reporting MuseBMS application exceptions.
@@ -41,12 +41,12 @@ defmodule MsbmsSystError do
     humans.
 
     * `cause` - includes information that may be helpful in understanding the cause of the error
-    condition.  This could include nested `t:MsbmsSystError/0` objects, exception data created
+    condition.  This could include nested `t:MscmpSystError/0` objects, exception data created
     outside of this exception framework, or pertinent data such as parameters and data that is
     directly related to the exception.
   """
   @type t :: %__MODULE__{
-          code: Types.msbms_error(),
+          code: Types.mscmp_error(),
           message: String.t(),
           cause: any()
         }
@@ -58,9 +58,9 @@ defmodule MsbmsSystError do
 
   @doc section: :error_parsing
   @doc """
-  Returns the root cause of an `MsbmsSystError` exception object.
+  Returns the root cause of an `MscmpSystError` exception object.
 
-  The `MsbmsSystError` exception handling framework allows for nested exceptions to be reported
+  The `MscmpSystError` exception handling framework allows for nested exceptions to be reported
   stack trace style from lower levels of the application where an exception was caused into higher
   levels of the application which enter a failure state due to the lower level root cause.
 
@@ -69,29 +69,29 @@ defmodule MsbmsSystError do
   return the value.
 
   ## Examples
-      iex> my_err = %MsbmsSystError{
+      iex> my_err = %MscmpSystError{
       ...>            code:    :example_error,
       ...>            message: "Outer error message",
-      ...>            cause:    %MsbmsSystError{
+      ...>            cause:    %MscmpSystError{
       ...>                        code:    :example_error,
       ...>                        message: "Intermediate error message",
-      ...>                        cause:    %MsbmsSystError{
+      ...>                        cause:    %MscmpSystError{
       ...>                                    code:    :example_error,
       ...>                                    message: "Root error message",
       ...>                                    cause:    {:error, "Example Error"},
       ...>                                  },
       ...>                      },
       ...>          }
-      iex> MsbmsSystError.get_root_cause(my_err)
-      %MsbmsSystError{
+      iex> MscmpSystError.get_root_cause(my_err)
+      %MscmpSystError{
         code:     :example_error,
         message:  "Root error message",
         cause:    {:error, "Example Error"}
       }
 
-      iex> MsbmsSystError.get_root_cause({:error, "Example Error"})
+      iex> MscmpSystError.get_root_cause({:error, "Example Error"})
       {:error, "Example Error"}
   """
   @spec get_root_cause(any()) :: any()
-  defdelegate get_root_cause(error), to: MsbmsError
+  defdelegate get_root_cause(error), to: MscmpError
 end

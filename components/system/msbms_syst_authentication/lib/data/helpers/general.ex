@@ -40,7 +40,7 @@ defmodule MsbmsSystAuthentication.Data.Helpers.General do
   defp process_owner_id_by_name_result({:ok, owner_id}), do: owner_id
 
   defp process_owner_id_by_name_result(error) do
-    raise MsbmsSystError,
+    raise MscmpSystError,
       code: :undefined_error,
       message: "Failure resolving Owning Owner ID from Owner Name",
       cause: error

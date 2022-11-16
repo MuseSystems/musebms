@@ -318,7 +318,7 @@ defmodule IntegrationTest do
     {:ok, access_account_id} =
       MsbmsSystAuthentication.get_access_account_id_by_name("unowned_access_account")
 
-    assert {:error, %MsbmsSystError{cause: cause}} =
+    assert {:error, %MscmpSystError{cause: cause}} =
              MsbmsSystAuthentication.create_authenticator_email_password(
                access_account_id,
                "UnownedAccessAccount@MuseSystems.Com",
@@ -399,7 +399,7 @@ defmodule IntegrationTest do
     {:ok, access_account_id} =
       MsbmsSystAuthentication.get_access_account_id_by_name("unowned_access_account")
 
-    assert {:error, %MsbmsSystError{}} =
+    assert {:error, %MscmpSystError{}} =
              MsbmsSystAuthentication.create_authenticator_email_password(
                access_account_id,
                "UnownedAccessAccount@MuseSystems.Com",
@@ -717,7 +717,7 @@ defmodule IntegrationTest do
     assert :existing_recovery =
              MsbmsSystAuthentication.access_account_credential_recoverable!(access_account_id)
 
-    assert {:error, %MsbmsSystError{cause: :existing_recovery}} =
+    assert {:error, %MscmpSystError{cause: :existing_recovery}} =
              MsbmsSystAuthentication.request_password_recovery(access_account_id,
                credential_token: "My Known Token"
              )

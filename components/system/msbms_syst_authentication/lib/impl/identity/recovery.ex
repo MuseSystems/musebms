@@ -37,7 +37,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Recovery do
   @default_create_validated true
 
   @spec request_credential_recovery(Types.access_account_id(), Keyword.t()) ::
-          {:ok, Data.SystIdentities.t()} | {:error, MsbmsSystError.t() | Exception.t()}
+          {:ok, Data.SystIdentities.t()} | {:error, MscmpSystError.t() | Exception.t()}
   def request_credential_recovery(access_account_id, opts) when is_binary(access_account_id) do
     opts =
       MsbmsSystUtils.resolve_options(opts,
@@ -56,7 +56,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Recovery do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure creating Recovery Identity.",
           cause: error
@@ -70,7 +70,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Recovery do
   defp maybe_create_recovery_identity(:not_found, _, _) do
     {
       :error,
-      %MsbmsSystError{
+      %MscmpSystError{
         code: :undefined_error,
         message: "Password Credential unrecoverable because it doesn't exist.",
         cause: :not_found
@@ -81,7 +81,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Recovery do
   defp maybe_create_recovery_identity(:existing_recovery, _, _) do
     {
       :error,
-      %MsbmsSystError{
+      %MscmpSystError{
         code: :undefined_error,
         message: "Password Credential is already being recovered.",
         cause: :existing_recovery
@@ -158,7 +158,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Recovery do
   end
 
   @spec confirm_credential_recovery(Data.SystIdentities.t()) ::
-          :ok | {:error, MsbmsSystError.t()}
+          :ok | {:error, MscmpSystError.t()}
   def confirm_credential_recovery(recovery_identity) do
     :ok = Helpers.delete_record(recovery_identity)
   rescue
@@ -167,7 +167,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Recovery do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure confirming Recovery Identity.",
           cause: error
@@ -176,7 +176,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Recovery do
   end
 
   @spec revoke_credential_recovery(Data.SystIdentities.t()) ::
-          :ok | {:error, MsbmsSystError.t()}
+          :ok | {:error, MscmpSystError.t()}
   def revoke_credential_recovery(recovery_identity) do
     :ok = Helpers.delete_record(recovery_identity)
   rescue
@@ -185,7 +185,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Recovery do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure revoking Recovery Identity.",
           cause: error
@@ -194,7 +194,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Recovery do
   end
 
   @spec get_recovery_identity_for_access_account_id(Types.access_account_id()) ::
-          {:ok, Data.SystIdentities.t() | nil} | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystIdentities.t() | nil} | {:error, MscmpSystError.t()}
   def get_recovery_identity_for_access_account_id(access_account_id) do
     from(i in Data.SystIdentities,
       join: ei in assoc(i, :identity_type),
@@ -210,7 +210,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Recovery do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure retrieving Recovery Identity by Access Account ID.",
           cause: error

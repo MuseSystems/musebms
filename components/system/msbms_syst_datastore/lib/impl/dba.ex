@@ -43,7 +43,7 @@ defmodule MsbmsSystDatastore.Impl.Dba do
 
   @spec get_datastore_state(Types.datastore_options(), Keyword.t()) ::
           {:ok, Types.database_state_values(), list(Types.context_state())}
-          | {:error, MsbmsSystError.t()}
+          | {:error, MscmpSystError.t()}
   def get_datastore_state(datastore_options, opts \\ []) do
     opts = MsbmsSystUtils.resolve_options(opts, db_shutdown_timeout: @default_db_shutdown_timeout)
 
@@ -67,7 +67,7 @@ defmodule MsbmsSystDatastore.Impl.Dba do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :database_error,
           message: "Failure retrieving Datastore State.",
           cause: error
@@ -77,7 +77,7 @@ defmodule MsbmsSystDatastore.Impl.Dba do
 
   @spec create_datastore(Types.datastore_options(), Keyword.t()) ::
           {:ok, Types.database_state_values(), list(Types.context_state())}
-          | {:error, MsbmsSystError.t()}
+          | {:error, MscmpSystError.t()}
   def create_datastore(datastore_options, opts \\ []) do
     opts = MsbmsSystUtils.resolve_options(opts, db_shutdown_timeout: @default_db_shutdown_timeout)
 
@@ -107,7 +107,7 @@ defmodule MsbmsSystDatastore.Impl.Dba do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :database_error,
           message: "Failure creating datastore.",
           cause: error
@@ -116,7 +116,7 @@ defmodule MsbmsSystDatastore.Impl.Dba do
   end
 
   @spec drop_datastore(Types.datastore_options(), Keyword.t()) ::
-          :ok | {:error, MsbmsSystError.t()}
+          :ok | {:error, MscmpSystError.t()}
   def drop_datastore(datastore_options, opts \\ []) do
     opts = MsbmsSystUtils.resolve_options(opts, db_shutdown_timeout: @default_db_shutdown_timeout)
 
@@ -141,7 +141,7 @@ defmodule MsbmsSystDatastore.Impl.Dba do
     error ->
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :database_error,
           message: "Failure dropping datastore.",
           cause: error
@@ -150,7 +150,7 @@ defmodule MsbmsSystDatastore.Impl.Dba do
   end
 
   @spec get_datastore_context_states(Types.datastore_options(), Keyword.t()) ::
-          {:ok, nonempty_list(Types.context_state())} | {:error, MsbmsSystError.t()}
+          {:ok, nonempty_list(Types.context_state())} | {:error, MscmpSystError.t()}
   def get_datastore_context_states(datastore_options, opts \\ []) do
     opts = MsbmsSystUtils.resolve_options(opts, db_shutdown_timeout: @default_db_shutdown_timeout)
 
@@ -171,7 +171,7 @@ defmodule MsbmsSystDatastore.Impl.Dba do
     error ->
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :database_error,
           message: "Failure dropping datastore.",
           cause: error
@@ -184,7 +184,7 @@ defmodule MsbmsSystDatastore.Impl.Dba do
           nonempty_list(Types.datastore_context()),
           Keyword.t()
         ) ::
-          {:ok, nonempty_list(Types.context_state())} | {:error, MsbmsSystError.t()}
+          {:ok, nonempty_list(Types.context_state())} | {:error, MscmpSystError.t()}
   def create_datastore_contexts(datastore_options, new_contexts, opts \\ []) do
     opts = MsbmsSystUtils.resolve_options(opts, db_shutdown_timeout: @default_db_shutdown_timeout)
 
@@ -202,7 +202,7 @@ defmodule MsbmsSystDatastore.Impl.Dba do
     error ->
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :database_error,
           message: "Failure dropping datastore.",
           cause: error
@@ -215,7 +215,7 @@ defmodule MsbmsSystDatastore.Impl.Dba do
           nonempty_list(Types.datastore_context()),
           Keyword.t()
         ) ::
-          :ok | {:error, MsbmsSystError.t()}
+          :ok | {:error, MscmpSystError.t()}
   def drop_datastore_contexts(datastore_options, delete_contexts, opts \\ []) do
     opts = MsbmsSystUtils.resolve_options(opts, db_shutdown_timeout: @default_db_shutdown_timeout)
 
@@ -234,7 +234,7 @@ defmodule MsbmsSystDatastore.Impl.Dba do
     error ->
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :database_error,
           message: "Failure dropping Datastore Context.",
           cause: error
@@ -284,7 +284,7 @@ defmodule MsbmsSystDatastore.Impl.Dba do
       error ->
         {
           :error,
-          %MsbmsSystError{
+          %MscmpSystError{
             code: :database_error,
             message: "Failure starting DBA Dataastore.",
             cause: error
@@ -349,7 +349,7 @@ defmodule MsbmsSystDatastore.Impl.Dba do
   end
 
   defp parse_db_roles_exist_results({_result_kind, result_value}) do
-    raise MsbmsSystError,
+    raise MscmpSystError,
       code: :database_error,
       message: "Failed to retrieve datastore context states.",
       cause: result_value
@@ -444,7 +444,7 @@ defmodule MsbmsSystDatastore.Impl.Dba do
   defp parse_create_database_role_result({:ok, _database_result}), do: :ok
 
   defp parse_create_database_role_result({:error, reason}) do
-    raise MsbmsSystError,
+    raise MscmpSystError,
       code: :database_error,
       message: "Failed to create database role for context.",
       cause: reason
@@ -490,7 +490,7 @@ defmodule MsbmsSystDatastore.Impl.Dba do
   defp parse_apply_connect_priv_result(:ok), do: :ok
 
   defp parse_apply_connect_priv_result({:error, reason}) do
-    raise MsbmsSystError,
+    raise MscmpSystError,
       code: :database_error,
       message: "Failed to apply CONNECT privilege to database role.",
       cause: reason
@@ -506,13 +506,13 @@ defmodule MsbmsSystDatastore.Impl.Dba do
       :ok
     else
       {:error, exception} ->
-        raise MsbmsSystError,
+        raise MscmpSystError,
           code: :database_error,
           message: "Failure dropping datastore database.",
           cause: exception
 
       other ->
-        raise MsbmsSystError,
+        raise MscmpSystError,
           code: :database_error,
           message: "Failure dropping datastore database.",
           cause: other
@@ -538,7 +538,7 @@ defmodule MsbmsSystDatastore.Impl.Dba do
   defp parse_drop_database_role_result({:ok, _database_result}), do: :ok
 
   defp parse_drop_database_role_result({:error, reason}) do
-    raise MsbmsSystError,
+    raise MscmpSystError,
       code: :database_error,
       message: "Failed to drop database role for context.",
       cause: reason
@@ -568,7 +568,7 @@ defmodule MsbmsSystDatastore.Impl.Dba do
   defp parse_revoke_connect_priv_result(:ok), do: :ok
 
   defp parse_revoke_connect_priv_result({:error, reason}) do
-    raise MsbmsSystError,
+    raise MscmpSystError,
       code: :database_error,
       message: "Failed to revoke CONNECT privilege to database role.",
       cause: reason

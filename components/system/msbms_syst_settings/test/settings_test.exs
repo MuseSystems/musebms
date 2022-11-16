@@ -82,28 +82,28 @@ defmodule SettingsTest do
     assert %MsbmsSystSettings.Data.SystSettings{internal_name: "test_success_setting"} =
              :ets.lookup_element(:settings_instance, "test_success_setting", 2)
 
-    assert {:error, %MsbmsSystError{}} = MsbmsSystSettings.create_setting(success_setting)
+    assert {:error, %MscmpSystError{}} = MsbmsSystSettings.create_setting(success_setting)
 
     assert :ok = MsbmsSystSettings.delete_setting(success_setting.internal_name)
 
     assert catch_error(:ets.lookup_element(:settings_instance, "test_success_setting", 2))
 
-    assert {:error, %MsbmsSystError{}} = MsbmsSystSettings.create_setting(short_desc_setting)
+    assert {:error, %MscmpSystError{}} = MsbmsSystSettings.create_setting(short_desc_setting)
 
-    assert {:error, %MsbmsSystError{}} = MsbmsSystSettings.create_setting(long_desc_setting)
+    assert {:error, %MscmpSystError{}} = MsbmsSystSettings.create_setting(long_desc_setting)
 
-    assert {:error, %MsbmsSystError{}} = MsbmsSystSettings.delete_setting("test_setting_one")
+    assert {:error, %MscmpSystError{}} = MsbmsSystSettings.delete_setting("test_setting_one")
 
-    assert {:error, %MsbmsSystError{}} =
+    assert {:error, %MscmpSystError{}} =
              MsbmsSystSettings.create_setting(short_internal_name_setting)
 
-    assert {:error, %MsbmsSystError{}} =
+    assert {:error, %MscmpSystError{}} =
              MsbmsSystSettings.create_setting(long_internal_name_setting)
 
-    assert {:error, %MsbmsSystError{}} =
+    assert {:error, %MscmpSystError{}} =
              MsbmsSystSettings.create_setting(short_display_name_setting)
 
-    assert {:error, %MsbmsSystError{}} =
+    assert {:error, %MscmpSystError{}} =
              MsbmsSystSettings.create_setting(long_display_name_setting)
   end
 
@@ -128,13 +128,13 @@ defmodule SettingsTest do
     assert %MsbmsSystSettings.Data.SystSettings{display_name: "Updated Test Setting One"} =
              MsbmsSystSettings.get_setting_values("test_setting_one")
 
-    assert {:error, %MsbmsSystError{}} =
+    assert {:error, %MscmpSystError{}} =
              MsbmsSystSettings.set_setting_values(
                "test_setting_one",
                long_change
              )
 
-    assert {:error, %MsbmsSystError{}} =
+    assert {:error, %MscmpSystError{}} =
              MsbmsSystSettings.set_setting_values(
                "test_setting_one",
                short_change
@@ -190,13 +190,13 @@ defmodule SettingsTest do
              user_description: nil
            } = MsbmsSystSettings.get_setting_values("test_setting_one")
 
-    assert {:error, %MsbmsSystError{}} =
+    assert {:error, %MscmpSystError{}} =
              MsbmsSystSettings.set_setting_values(
                "test_setting_one",
                long_change
              )
 
-    assert {:error, %MsbmsSystError{}} =
+    assert {:error, %MscmpSystError{}} =
              MsbmsSystSettings.set_setting_values(
                "test_setting_one",
                short_change

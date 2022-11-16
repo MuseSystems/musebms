@@ -103,7 +103,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
           IP.addr(),
           Keyword.t()
         ) ::
-          {:ok, Types.authentication_state()} | {:error, MsbmsSystError.t()}
+          {:ok, Types.authentication_state()} | {:error, MscmpSystError.t()}
   def authenticate_email_password(email_addr, pwd_text, host_addr, opts) do
     opts = MsbmsSystUtils.resolve_options(opts, owning_owner_id: nil, instance_id: nil)
 
@@ -134,7 +134,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
       {:error,
-       %MsbmsSystError{
+       %MscmpSystError{
          code: :undefined_error,
          message: "Failure authenticating Email/Password.",
          cause: error
@@ -142,7 +142,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
   end
 
   @spec authenticate_email_password(Types.authentication_state(), Keyword.t()) ::
-          {:ok, Types.authentication_state()} | {:error, MsbmsSystError.t()}
+          {:ok, Types.authentication_state()} | {:error, MscmpSystError.t()}
   def authenticate_email_password(auth_state, opts) do
     preliminary_auth_state =
       auth_state
@@ -170,7 +170,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
       {:error,
-       %MsbmsSystError{
+       %MscmpSystError{
          code: :undefined_error,
          message: "Failure authenticating Email/Password via Authentication State.",
          cause: error
@@ -249,7 +249,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
           MsbmsSystInstanceMgr.Types.instance_id(),
           Keyword.t()
         ) ::
-          {:ok, Types.authentication_state()} | {:error, MsbmsSystError.t()}
+          {:ok, Types.authentication_state()} | {:error, MscmpSystError.t()}
 
   def authenticate_api_token(identifier, token, host_addr, instance_id, opts) do
     opts = MsbmsSystUtils.resolve_options(opts, owning_owner_id: nil)
@@ -274,7 +274,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
   end
 
   @spec authenticate_api_token(Types.authentication_state(), Keyword.t()) ::
-          {:ok, Types.authentication_state()} | {:error, MsbmsSystError.t()}
+          {:ok, Types.authentication_state()} | {:error, MscmpSystError.t()}
   def authenticate_api_token(auth_state, opts) do
     auth_state
     |> confirm_identifier_rate_limit(opts)
@@ -293,7 +293,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
       {:error,
-       %MsbmsSystError{
+       %MscmpSystError{
          code: :undefined_error,
          message: "Failure authenticating API Token.",
          cause: error
@@ -337,7 +337,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
           IP.addr(),
           Keyword.t()
         ) ::
-          {:ok, Types.authentication_state()} | {:error, MsbmsSystError.t()}
+          {:ok, Types.authentication_state()} | {:error, MscmpSystError.t()}
 
   def authenticate_validation_token(identifier, token, host_addr, opts) do
     opts = MsbmsSystUtils.resolve_options(opts, owning_owner_id: nil)
@@ -362,7 +362,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
   end
 
   @spec authenticate_validation_token(Types.authentication_state(), Keyword.t()) ::
-          {:ok, Types.authentication_state()} | {:error, MsbmsSystError.t()}
+          {:ok, Types.authentication_state()} | {:error, MscmpSystError.t()}
   def authenticate_validation_token(auth_state, opts) do
     auth_state
     |> confirm_identifier_rate_limit(opts)
@@ -380,7 +380,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
       {:error,
-       %MsbmsSystError{
+       %MscmpSystError{
          code: :undefined_error,
          message: "Failure authenticating Validation Token.",
          cause: error
@@ -424,7 +424,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
         auth_state
 
       error ->
-        raise MsbmsSystError,
+        raise MscmpSystError,
           code: :undefined_error,
           message: "Failure confirming Validation success.",
           error: error
@@ -439,7 +439,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
           IP.addr(),
           Keyword.t()
         ) ::
-          {:ok, Types.authentication_state()} | {:error, MsbmsSystError.t()}
+          {:ok, Types.authentication_state()} | {:error, MscmpSystError.t()}
   def authenticate_recovery_token(identifier, token, host_addr, opts) do
     opts = MsbmsSystUtils.resolve_options(opts, owning_owner_id: nil)
 
@@ -466,7 +466,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
   end
 
   @spec authenticate_recovery_token(Types.authentication_state(), Keyword.t()) ::
-          {:ok, Types.authentication_state()} | {:error, MsbmsSystError.t()}
+          {:ok, Types.authentication_state()} | {:error, MscmpSystError.t()}
   def authenticate_recovery_token(auth_state, opts) do
     auth_state
     |> confirm_identifier_rate_limit(opts)
@@ -484,7 +484,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
       {:error,
-       %MsbmsSystError{
+       %MscmpSystError{
          code: :undefined_error,
          message: "Failure authenticating Recovery Token.",
          cause: error
@@ -528,7 +528,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
         auth_state
 
       error ->
-        raise MsbmsSystError,
+        raise MscmpSystError,
           code: :undefined_error,
           message: "Failure confirming Validation success.",
           error: error
@@ -541,7 +541,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
           Types.account_identifier(),
           MsbmsSystInstanceMgr.Types.owner_id() | nil
         ) ::
-          {:ok, Data.SystIdentities.t() | :not_found} | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystIdentities.t() | :not_found} | {:error, MscmpSystError.t()}
   def identify_access_account_by_code(account_code, owner_id) when is_binary(account_code) do
     account_code
     |> Impl.Identity.AccountCode.identify_access_account(owner_id)
@@ -551,7 +551,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
       {:error,
-       %MsbmsSystError{
+       %MscmpSystError{
          code: :undefined_error,
          message: "Failure identifying Account Code.",
          cause: error
@@ -769,7 +769,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
   end
 
   defp process_identifier_rate_limit_result(error, _auth_state) do
-    raise MsbmsSystError,
+    raise MscmpSystError,
       code: :undefined_error,
       message: "Error processing Identifier Rate Limit",
       cause: error
@@ -817,7 +817,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
   end
 
   defp process_host_rate_limit_result(error, _auth_state) do
-    raise MsbmsSystError,
+    raise MscmpSystError,
       code: :undefined_error,
       message: "Error processing Host Rate Limit",
       cause: error

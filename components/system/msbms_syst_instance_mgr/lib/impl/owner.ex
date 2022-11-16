@@ -21,7 +21,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Owner do
   @moduledoc false
 
   @spec create_owner(Types.owner_params()) ::
-          {:ok, Data.SystOwners.t()} | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystOwners.t()} | {:error, MscmpSystError.t()}
   def create_owner(owner_params) do
     owner_params
     |> Data.SystOwners.insert_changeset()
@@ -33,7 +33,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Owner do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure creating Owner.",
           cause: error
@@ -42,7 +42,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Owner do
   end
 
   @spec update_owner(Types.owner_id() | Data.SystOwners.t(), Types.owner_params()) ::
-          {:ok, Data.SystOwners.t()} | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystOwners.t()} | {:error, MscmpSystError.t()}
   def update_owner(owner_id, owner_params) when is_binary(owner_id) do
     MsbmsSystDatastore.get!(Data.SystOwners, owner_id)
     |> update_owner(owner_params)
@@ -52,7 +52,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Owner do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure updating Owner by ID.",
           cause: error
@@ -71,7 +71,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Owner do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure updating Owner.",
           cause: error
@@ -80,7 +80,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Owner do
   end
 
   @spec get_owner_by_name(Types.owner_name()) ::
-          {:ok, Data.SystOwners.t()} | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystOwners.t()} | {:error, MscmpSystError.t()}
   def get_owner_by_name(owner_name) when is_binary(owner_name) do
     from(
       o in Data.SystOwners,
@@ -97,7 +97,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Owner do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure retrieving Owner data.",
           cause: error
@@ -106,7 +106,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Owner do
   end
 
   @spec get_owner_id_by_name(Types.owner_name()) ::
-          {:ok, Types.owner_id()} | {:error, MsbmsSystError.t()}
+          {:ok, Types.owner_id()} | {:error, MscmpSystError.t()}
   def get_owner_id_by_name(owner_name) when is_binary(owner_name) do
     from(o in Data.SystOwners, select: o.id, where: o.internal_name == ^owner_name)
     |> MsbmsSystDatastore.one!()
@@ -117,7 +117,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Owner do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure retrieving Owner ID.",
           cause: error
@@ -125,7 +125,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Owner do
       }
   end
 
-  @spec purge_owner(Types.owner_id() | Data.SystOwners.t()) :: :ok | {:error, MsbmsSystError.t()}
+  @spec purge_owner(Types.owner_id() | Data.SystOwners.t()) :: :ok | {:error, MscmpSystError.t()}
   def purge_owner(owner_id) when is_binary(owner_id) do
     from(
       o in Data.SystOwners,
@@ -142,7 +142,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Owner do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure purging Owner by ID.",
           cause: error
@@ -165,7 +165,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Owner do
         :ok
 
       _ ->
-        raise MsbmsSystError,
+        raise MscmpSystError,
           code: :invalid_parameter,
           message: "Invalid Owner State Functional Type for purge.",
           cause: %{parameters: [functional_type: functional_type]}
@@ -176,7 +176,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Owner do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure deleting Owner.",
           cause: error

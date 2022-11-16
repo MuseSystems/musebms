@@ -344,7 +344,7 @@ defmodule MsbmsSystAuthentication do
   """
 
   @spec create_access_account(Types.access_account_params()) ::
-          {:ok, Data.SystAccessAccounts.t()} | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystAccessAccounts.t()} | {:error, MscmpSystError.t()}
   defdelegate create_access_account(access_account_params), to: Impl.AccessAccount
 
   @doc section: :access_account_data
@@ -365,7 +365,7 @@ defmodule MsbmsSystAuthentication do
   """
 
   @spec get_access_account_id_by_name(Types.access_account_name()) ::
-          {:ok, Types.access_account_id()} | {:error, MsbmsSystError.t()}
+          {:ok, Types.access_account_id()} | {:error, MscmpSystError.t()}
   defdelegate get_access_account_id_by_name(access_account_name), to: Impl.AccessAccount
 
   @doc section: :access_account_data
@@ -391,7 +391,7 @@ defmodule MsbmsSystAuthentication do
   """
 
   @spec get_access_account_by_name(Types.access_account_name()) ::
-          Data.SystAccessAccounts.t() | {:error, MsbmsSystError.t()}
+          Data.SystAccessAccounts.t() | {:error, MscmpSystError.t()}
   defdelegate get_access_account_by_name(access_account_name), to: Impl.AccessAccount
 
   @doc section: :access_account_data
@@ -425,7 +425,7 @@ defmodule MsbmsSystAuthentication do
           Types.access_account_id() | Data.SystAccessAccounts.t(),
           Types.access_account_params()
         ) ::
-          {:ok, Data.SystAccessAccounts.t()} | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystAccessAccounts.t()} | {:error, MscmpSystError.t()}
   defdelegate update_access_account(access_account, access_account_params), to: Impl.AccessAccount
 
   @doc section: :access_account_data
@@ -447,7 +447,7 @@ defmodule MsbmsSystAuthentication do
       :ok
   """
   @spec purge_access_account(Types.access_account_id() | Data.SystAccessAccounts.t()) ::
-          :ok | {:error, MsbmsSystError.t()}
+          :ok | {:error, MscmpSystError.t()}
   defdelegate purge_access_account(access_account), to: Impl.AccessAccount
 
   # ==============================================================================================
@@ -501,7 +501,7 @@ defmodule MsbmsSystAuthentication do
           Types.access_account_id(),
           MsbmsSystInstanceMgr.Types.instance_id(),
           Keyword.t()
-        ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MsbmsSystError.t()}
+        ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
   defdelegate invite_to_instance(access_account_id, instance_id, opts \\ []),
     to: Impl.AccessAccountInstanceAssoc
 
@@ -528,7 +528,7 @@ defmodule MsbmsSystAuthentication do
   @spec accept_instance_invite(
           Types.access_account_instance_assoc_id()
           | Data.SystAccessAccountInstanceAssocs.t()
-        ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MsbmsSystError.t()}
+        ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
   defdelegate accept_instance_invite(access_account_instance_assoc),
     to: Impl.AccessAccountInstanceAssoc
 
@@ -552,7 +552,7 @@ defmodule MsbmsSystAuthentication do
   @spec accept_instance_invite(
           Types.access_account_id(),
           MsbmsSystInstanceMgr.Types.instance_id()
-        ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MsbmsSystError.t()}
+        ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
   defdelegate accept_instance_invite(access_account_id, instance_id),
     to: Impl.AccessAccountInstanceAssoc
 
@@ -580,7 +580,7 @@ defmodule MsbmsSystAuthentication do
   @spec decline_instance_invite(
           Types.access_account_instance_assoc_id()
           | Data.SystAccessAccountInstanceAssocs.t()
-        ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MsbmsSystError.t()}
+        ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
   defdelegate decline_instance_invite(access_account_instance_assoc),
     to: Impl.AccessAccountInstanceAssoc
 
@@ -604,7 +604,7 @@ defmodule MsbmsSystAuthentication do
   @spec decline_instance_invite(
           Types.access_account_id(),
           MsbmsSystInstanceMgr.Types.instance_id()
-        ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MsbmsSystError.t()}
+        ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
   defdelegate decline_instance_invite(access_account_id, instance_id),
     to: Impl.AccessAccountInstanceAssoc
 
@@ -632,7 +632,7 @@ defmodule MsbmsSystAuthentication do
   @spec revoke_instance_access(
           Types.access_account_instance_assoc_id()
           | Data.SystAccessAccountInstanceAssocs.t()
-        ) :: :ok | {:error, MsbmsSystError.t()}
+        ) :: :ok | {:error, MscmpSystError.t()}
   defdelegate revoke_instance_access(access_account_instance_assoc),
     to: Impl.AccessAccountInstanceAssoc
 
@@ -657,7 +657,7 @@ defmodule MsbmsSystAuthentication do
   @spec revoke_instance_access(
           Types.access_account_id(),
           MsbmsSystInstanceMgr.Types.instance_id()
-        ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MsbmsSystError.t()}
+        ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
   defdelegate revoke_instance_access(access_account_id, instance_id),
     to: Impl.AccessAccountInstanceAssoc
 
@@ -701,7 +701,7 @@ defmodule MsbmsSystAuthentication do
       iex> MsbmsSystAuthentication.create_disallowed_password("Example Disallowed Password")
       :ok
   """
-  @spec create_disallowed_password(Types.credential()) :: :ok | {:error, MsbmsSystError.t()}
+  @spec create_disallowed_password(Types.credential()) :: :ok | {:error, MscmpSystError.t()}
   defdelegate create_disallowed_password(password), to: Impl.PasswordRules
 
   @doc section: :password_rule_data
@@ -733,7 +733,7 @@ defmodule MsbmsSystAuthentication do
       iex> MsbmsSystAuthentication.password_disallowed("Is Not Disallowed")
       {:ok, false}
   """
-  @spec password_disallowed(Types.credential()) :: {:ok, boolean()} | {:error, MsbmsSystError.t()}
+  @spec password_disallowed(Types.credential()) :: {:ok, boolean()} | {:error, MscmpSystError.t()}
   defdelegate password_disallowed(password), to: Impl.PasswordRules
 
   @doc section: :password_rule_data
@@ -792,7 +792,7 @@ defmodule MsbmsSystAuthentication do
       {:ok, :not_found}
   """
   @spec delete_disallowed_password(Types.credential()) ::
-          {:ok, :deleted | :not_found} | {:error, MsbmsSystError.t()}
+          {:ok, :deleted | :not_found} | {:error, MscmpSystError.t()}
   defdelegate delete_disallowed_password(password), to: Impl.PasswordRules
 
   @doc section: :password_rule_data
@@ -822,7 +822,7 @@ defmodule MsbmsSystAuthentication do
           MsbmsSystInstanceMgr.Types.owner_id(),
           Types.password_rule_params()
         ) ::
-          {:ok, Data.SystOwnerPasswordRules.t()} | {:error, MsbmsSystError.t() | Exception.t()}
+          {:ok, Data.SystOwnerPasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate create_owner_password_rules(owner_id, insert_params), to: Impl.PasswordRules
 
   @doc section: :password_rule_data
@@ -845,7 +845,7 @@ defmodule MsbmsSystAuthentication do
     regarding the available attributes.
   """
   @spec update_global_password_rules(Types.password_rule_params()) ::
-          {:ok, Data.SystGlobalPasswordRules.t()} | {:error, MsbmsSystError.t() | Exception.t()}
+          {:ok, Data.SystGlobalPasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate update_global_password_rules(update_params), to: Impl.PasswordRules
 
   @doc section: :password_rule_data
@@ -873,7 +873,7 @@ defmodule MsbmsSystAuthentication do
           Data.SystGlobalPasswordRules.t(),
           Types.password_rule_params()
         ) ::
-          {:ok, Data.SystGlobalPasswordRules.t()} | {:error, MsbmsSystError.t() | Exception.t()}
+          {:ok, Data.SystGlobalPasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate update_global_password_rules(global_password_rules, update_params),
     to: Impl.PasswordRules
 
@@ -900,7 +900,7 @@ defmodule MsbmsSystAuthentication do
           MsbmsSystInstanceMgr.Types.owner_id() | Data.SystOwnerPasswordRules.t(),
           Types.password_rule_params()
         ) ::
-          {:ok, Data.SystOwnerPasswordRules.t()} | {:error, MsbmsSystError.t() | Exception.t()}
+          {:ok, Data.SystOwnerPasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate update_owner_password_rules(owner, update_params), to: Impl.PasswordRules
 
   @doc section: :password_rule_data
@@ -912,7 +912,7 @@ defmodule MsbmsSystAuthentication do
   struct.  Any exceptions are returned via an error tuple.
   """
   @spec get_global_password_rules() ::
-          {:ok, Data.SystGlobalPasswordRules.t()} | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystGlobalPasswordRules.t()} | {:error, MscmpSystError.t()}
   defdelegate get_global_password_rules, to: Impl.PasswordRules
 
   @doc section: :password_rule_data
@@ -942,7 +942,7 @@ defmodule MsbmsSystAuthentication do
   @spec get_owner_password_rules(MsbmsSystInstanceMgr.Types.owner_id()) ::
           {:ok, Data.SystOwnerPasswordRules.t()}
           | {:ok, :not_found}
-          | {:error, MsbmsSystError.t() | Exception.t()}
+          | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate get_owner_password_rules(owner_id), to: Impl.PasswordRules
 
   @doc section: :password_rule_data
@@ -983,7 +983,7 @@ defmodule MsbmsSystAuthentication do
     * `access_account_id` - the Access Account record ID of the user.
   """
   @spec get_access_account_password_rule(Types.access_account_id()) ::
-          {:ok, Types.password_rules()} | {:error, MsbmsSystError.t() | Exception.t()}
+          {:ok, Types.password_rules()} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate get_access_account_password_rule(access_account_id), to: Impl.PasswordRules
 
   @doc section: :password_rule_data
@@ -1037,7 +1037,7 @@ defmodule MsbmsSystAuthentication do
           Data.SystGlobalPasswordRules.t() | Types.password_rules() | nil
         ) ::
           {:ok, Keyword.t(Types.password_rule_violations())}
-          | {:error, MsbmsSystError.t() | Exception.t()}
+          | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate verify_password_rules(test_rules, standard_rules \\ nil), to: Impl.PasswordRules
 
   @doc section: :password_rule_data
@@ -1079,7 +1079,7 @@ defmodule MsbmsSystAuthentication do
     * `owner_id` - the Owner record ID whose Password Rules are to be deleted.
   """
   @spec delete_owner_password_rules(MsbmsSystInstanceMgr.Types.owner_id()) ::
-          {:ok, :deleted | :not_found} | {:error, MsbmsSystError.t() | Exception.t()}
+          {:ok, :deleted | :not_found} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate delete_owner_password_rules(owner_id), to: Impl.PasswordRules
 
   @doc section: :password_rule_data
@@ -1125,7 +1125,7 @@ defmodule MsbmsSystAuthentication do
   """
   @spec test_credential(Types.access_account_id() | Types.password_rules(), Types.credential()) ::
           {:ok, Keyword.t(Types.password_rule_violations())}
-          | {:error, MsbmsSystError.t() | Exception.t()}
+          | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate test_credential(access_account_id, plaintext_pwd), to: Impl.Credential.Password
 
   # ==============================================================================================
@@ -1165,7 +1165,7 @@ defmodule MsbmsSystAuthentication do
       iex> MsbmsSystAuthentication.host_disallowed(~i"10.123.123.5")
       {:ok, true}
   """
-  @spec host_disallowed(Types.host_address()) :: {:ok, boolean()} | {:error, MsbmsSystError.t()}
+  @spec host_disallowed(Types.host_address()) :: {:ok, boolean()} | {:error, MscmpSystError.t()}
   defdelegate host_disallowed(host_address), to: Impl.NetworkRules
 
   @doc section: :network_rule_data
@@ -1234,7 +1234,7 @@ defmodule MsbmsSystAuthentication do
       ...>   MsbmsSystAuthentication.create_disallowed_host(~i"10.123.123.3")
   """
   @spec create_disallowed_host(Types.host_address()) ::
-          {:ok, Data.SystDisallowedHosts.t()} | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystDisallowedHosts.t()} | {:error, MscmpSystError.t()}
   defdelegate create_disallowed_host(host_address), to: Impl.NetworkRules
 
   @doc section: :network_rule_data
@@ -1261,7 +1261,7 @@ defmodule MsbmsSystAuthentication do
       {:ok, nil}
   """
   @spec get_disallowed_host_record_by_host(Types.host_address()) ::
-          {:ok, Data.SystDisallowedHosts.t() | nil} | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystDisallowedHosts.t() | nil} | {:error, MscmpSystError.t()}
   defdelegate get_disallowed_host_record_by_host(host_addr), to: Impl.NetworkRules
 
   @doc section: :network_rule_data
@@ -1331,7 +1331,7 @@ defmodule MsbmsSystAuthentication do
       ...>   MsbmsSystAuthentication.delete_disallowed_host_addr(~i"10.10.251.10")
   """
   @spec delete_disallowed_host_addr(Types.host_address()) ::
-          {:ok, :deleted | :not_found} | {:error, MsbmsSystError.t()}
+          {:ok, :deleted | :not_found} | {:error, MscmpSystError.t()}
   defdelegate delete_disallowed_host_addr(host_addr), to: Impl.NetworkRules
 
   @doc section: :network_rule_data
@@ -1356,7 +1356,7 @@ defmodule MsbmsSystAuthentication do
     ```
   """
   @spec get_disallowed_host_record_by_id(Types.disallowed_host_id()) ::
-          {:ok, Data.SystDisallowedHosts.t()} | {:error, MsbmsSystError.t() | Exception.t()}
+          {:ok, Data.SystDisallowedHosts.t()} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate get_disallowed_host_record_by_id(disallowed_host_id), to: Impl.NetworkRules
 
   @doc section: :network_rule_data
@@ -1437,7 +1437,7 @@ defmodule MsbmsSystAuthentication do
       {:ok, :not_found}
   """
   @spec delete_disallowed_host(Types.disallowed_host_id() | Data.SystDisallowedHosts.t()) ::
-          {:ok, :deleted | :not_found} | {:error, MsbmsSystError.t()}
+          {:ok, :deleted | :not_found} | {:error, MscmpSystError.t()}
   defdelegate delete_disallowed_host(disallowed_host), to: Impl.NetworkRules
 
   @doc section: :network_rule_data
@@ -1535,7 +1535,7 @@ defmodule MsbmsSystAuthentication do
           Types.host_address(),
           MsbmsSystInstanceMgr.Types.instance_id() | nil,
           MsbmsSystInstanceMgr.Types.owner_id() | nil
-        ) :: {:ok, Types.applied_network_rule()} | {:error, MsbmsSystError.t() | Exception.t()}
+        ) :: {:ok, Types.applied_network_rule()} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate get_applied_network_rule(
                 host_address,
                 instance_id \\ nil,
@@ -1658,7 +1658,7 @@ defmodule MsbmsSystAuthentication do
       ...>   MsbmsSystAuthentication.create_global_network_rule(new_global_rule)
   """
   @spec create_global_network_rule(Types.global_network_rule_params()) ::
-          {:ok, Data.SystGlobalNetworkRules.t()} | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystGlobalNetworkRules.t()} | {:error, MscmpSystError.t()}
   defdelegate create_global_network_rule(insert_params), to: Impl.NetworkRules
 
   @doc section: :network_rule_data
@@ -1717,7 +1717,7 @@ defmodule MsbmsSystAuthentication do
           MsbmsSystInstanceMgr.Types.owner_id(),
           Types.owner_network_rule_params()
         ) ::
-          {:ok, Data.SystOwnerNetworkRules.t()} | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystOwnerNetworkRules.t()} | {:error, MscmpSystError.t()}
   defdelegate create_owner_network_rule(owner_id, insert_params), to: Impl.NetworkRules
 
   @doc section: :network_rule_data
@@ -1778,7 +1778,7 @@ defmodule MsbmsSystAuthentication do
           MsbmsSystInstanceMgr.Types.instance_id(),
           Types.instance_network_rule_params()
         ) ::
-          {:ok, Data.SystInstanceNetworkRules.t()} | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystInstanceNetworkRules.t()} | {:error, MscmpSystError.t()}
   defdelegate create_instance_network_rule(instance_id, insert_params), to: Impl.NetworkRules
 
   @doc section: :network_rule_data
@@ -1810,7 +1810,7 @@ defmodule MsbmsSystAuthentication do
   @spec update_global_network_rule(
           Ecto.UUID.t() | Data.SystGlobalNetworkRules.t(),
           Types.global_network_rule_params()
-        ) :: {:ok, Data.SystGlobalNetworkRules.t()} | {:error, MsbmsSystError.t() | Exception.t()}
+        ) :: {:ok, Data.SystGlobalNetworkRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate update_global_network_rule(global_network_rule, update_params),
     to: Impl.NetworkRules
 
@@ -1842,7 +1842,7 @@ defmodule MsbmsSystAuthentication do
   @spec update_owner_network_rule(
           Ecto.UUID.t() | Data.SystOwnerNetworkRules.t(),
           Types.owner_network_rule_params()
-        ) :: {:ok, Data.SystOwnerNetworkRules.t()} | {:error, MsbmsSystError.t() | Exception.t()}
+        ) :: {:ok, Data.SystOwnerNetworkRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate update_owner_network_rule(owner_network_rule, update_params), to: Impl.NetworkRules
 
   @doc section: :network_rule_data
@@ -1875,7 +1875,7 @@ defmodule MsbmsSystAuthentication do
           Ecto.UUID.t() | Data.SystInstanceNetworkRules.t(),
           Types.instance_network_rule_params()
         ) ::
-          {:ok, Data.SystInstanceNetworkRules.t()} | {:error, MsbmsSystError.t() | Exception.t()}
+          {:ok, Data.SystInstanceNetworkRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate update_instance_network_rule(instance_network_rule, update_params),
     to: Impl.NetworkRules
 
@@ -1897,7 +1897,7 @@ defmodule MsbmsSystAuthentication do
   @spec get_global_network_rule(Ecto.UUID.t()) ::
           {:ok, Data.SystGlobalNetworkRules.t()}
           | {:ok, :not_found}
-          | {:error, MsbmsSystError.t() | Exception.t()}
+          | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate get_global_network_rule(global_network_rule_id), to: Impl.NetworkRules
   @doc section: :network_rule_data
   @doc """
@@ -1935,7 +1935,7 @@ defmodule MsbmsSystAuthentication do
   @spec get_owner_network_rule(Ecto.UUID.t()) ::
           {:ok, Data.SystOwnerNetworkRules.t()}
           | {:ok, :not_found}
-          | {:error, MsbmsSystError.t() | Exception.t()}
+          | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate get_owner_network_rule(owner_network_rule_id), to: Impl.NetworkRules
   @doc section: :network_rule_data
   @doc """
@@ -1973,7 +1973,7 @@ defmodule MsbmsSystAuthentication do
   @spec get_instance_network_rule(Ecto.UUID.t()) ::
           {:ok, Data.SystInstanceNetworkRules.t()}
           | {:ok, :not_found}
-          | {:error, MsbmsSystError.t() | Exception.t()}
+          | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate get_instance_network_rule(instance_network_rule_id), to: Impl.NetworkRules
 
   @doc section: :network_rule_data
@@ -2008,7 +2008,7 @@ defmodule MsbmsSystAuthentication do
     to delete.
   """
   @spec delete_global_network_rule(Ecto.UUID.t()) ::
-          :ok | {:error, MsbmsSystError.t() | Exception.t()}
+          :ok | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate delete_global_network_rule(global_network_rule_id), to: Impl.NetworkRules
 
   @doc section: :network_rule_data
@@ -2024,7 +2024,7 @@ defmodule MsbmsSystAuthentication do
     to delete.
   """
   @spec delete_owner_network_rule(Ecto.UUID.t()) ::
-          :ok | {:error, MsbmsSystError.t() | Exception.t()}
+          :ok | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate delete_owner_network_rule(owner_network_rule_id), to: Impl.NetworkRules
 
   @doc section: :network_rule_data
@@ -2041,7 +2041,7 @@ defmodule MsbmsSystAuthentication do
     record to delete.
   """
   @spec delete_instance_network_rule(Ecto.UUID.t()) ::
-          :ok | {:error, MsbmsSystError.t() | Exception.t()}
+          :ok | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate delete_instance_network_rule(instance_network_rule_id), to: Impl.NetworkRules
 
   # ==============================================================================================
@@ -2090,7 +2090,7 @@ defmodule MsbmsSystAuthentication do
       regarding valid values for this setting.
   """
   @spec create_or_reset_account_code(Types.access_account_id(), Keyword.t()) ::
-          {:ok, Types.authenticator_result()} | {:error, MsbmsSystError.t() | Exception.t()}
+          {:ok, Types.authenticator_result()} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate create_or_reset_account_code(access_account_id, opts \\ []),
     to: Impl.ExtendedMgmtLogic
 
@@ -2116,7 +2116,7 @@ defmodule MsbmsSystAuthentication do
           Types.account_identifier(),
           MsbmsSystInstanceMgr.Types.owner_id() | nil
         ) ::
-          {:ok, Data.SystIdentities.t() | :not_found} | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystIdentities.t() | :not_found} | {:error, MscmpSystError.t()}
   defdelegate identify_access_account_by_code(account_code, owner_id), to: Impl.ExtendedAuthLogic
 
   @doc section: :account_code
@@ -2133,7 +2133,7 @@ defmodule MsbmsSystAuthentication do
     the Account Code Identity.
   """
   @spec get_account_code_by_access_account_id(Types.access_account_id()) ::
-          {:ok, Data.SystIdentities.t() | :not_found} | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystIdentities.t() | :not_found} | {:error, MscmpSystError.t()}
   defdelegate get_account_code_by_access_account_id(access_account_id),
     to: Impl.Identity.AccountCode
 
@@ -2153,7 +2153,7 @@ defmodule MsbmsSystAuthentication do
     the Account Code Identity.
   """
   @spec revoke_account_code(Types.access_account_id()) ::
-          {:ok, :deleted | :not_found} | {:error, MsbmsSystError.t()}
+          {:ok, :deleted | :not_found} | {:error, MscmpSystError.t()}
   defdelegate revoke_account_code(access_account_id), to: Impl.ExtendedMgmtLogic
 
   # ==============================================================================================
@@ -2231,7 +2231,7 @@ defmodule MsbmsSystAuthentication do
           Keyword.t()
         ) ::
           {:ok, Types.authenticator_result()}
-          | {:error, MsbmsSystError.t() | Exception.t()}
+          | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate create_authenticator_email_password(
                 access_account_id,
                 email_address,
@@ -2310,7 +2310,7 @@ defmodule MsbmsSystAuthentication do
       system to automatically generate the credential.
   """
   @spec request_identity_validation(Types.identity_id() | Data.SystIdentities.t(), Keyword.t()) ::
-          {:ok, Types.authenticator_result()} | {:error, MsbmsSystError.t() | Exception.t()}
+          {:ok, Types.authenticator_result()} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate request_identity_validation(target_identity, opts \\ []), to: Impl.ExtendedMgmtLogic
 
   @doc section: :authenticator_management
@@ -2335,7 +2335,7 @@ defmodule MsbmsSystAuthentication do
     Validation Identity.
   """
   @spec revoke_validator_for_identity_id(Types.identity_id()) ::
-          {:ok, :deleted | :not_found} | {:error, MsbmsSystError.t() | Exception.t()}
+          {:ok, :deleted | :not_found} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate revoke_validator_for_identity_id(target_identity_id), to: Impl.ExtendedMgmtLogic
 
   @doc section: :authenticator_management
@@ -2431,7 +2431,7 @@ defmodule MsbmsSystAuthentication do
       automatically generate the credential.
   """
   @spec request_password_recovery(Types.access_account_id(), Keyword.t()) ::
-          {:ok, Types.authenticator_result()} | {:error, MsbmsSystError.t() | Exception.t()}
+          {:ok, Types.authenticator_result()} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate request_password_recovery(access_account_id, opts \\ []), to: Impl.ExtendedMgmtLogic
 
   @doc section: :authenticator_management
@@ -2457,7 +2457,7 @@ defmodule MsbmsSystAuthentication do
     of the Access Account.
   """
   @spec revoke_password_recovery(Types.access_account_id()) ::
-          {:ok, :deleted | :not_found} | {:error, MsbmsSystError.t() | Exception.t()}
+          {:ok, :deleted | :not_found} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate revoke_password_recovery(access_account_id), to: Impl.ExtendedMgmtLogic
 
   @doc section: :authenticator_management
@@ -2517,7 +2517,7 @@ defmodule MsbmsSystAuthentication do
       automatically generate the credential.
   """
   @spec create_authenticator_api_token(Types.access_account_id(), Keyword.t()) ::
-          {:ok, Types.authenticator_result()} | {:error, MsbmsSystError.t() | Exception.t()}
+          {:ok, Types.authenticator_result()} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate create_authenticator_api_token(access_account_id, opts \\ []),
     to: Impl.ExtendedMgmtLogic
 
@@ -2546,7 +2546,7 @@ defmodule MsbmsSystAuthentication do
           Types.identity_id() | Data.SystIdentities.t(),
           String.t() | nil
         ) ::
-          {:ok, Data.SystIdentities.t()} | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystIdentities.t()} | {:error, MscmpSystError.t()}
   defdelegate update_api_token_external_name(identity, external_name), to: Impl.ExtendedMgmtLogic
 
   @doc section: :authenticator_management
@@ -2569,7 +2569,7 @@ defmodule MsbmsSystAuthentication do
     that record.
   """
   @spec revoke_api_token(Types.identity_id() | Data.SystIdentities.t()) ::
-          {:ok, :deleted | :not_found} | {:error, MsbmsSystError.t()}
+          {:ok, :deleted | :not_found} | {:error, MscmpSystError.t()}
   defdelegate revoke_api_token(identity), to: Impl.ExtendedMgmtLogic
 
   # ==============================================================================================
@@ -2652,7 +2652,7 @@ defmodule MsbmsSystAuthentication do
           IP.addr(),
           Keyword.t()
         ) ::
-          {:ok, Types.authentication_state()} | {:error, MsbmsSystError.t()}
+          {:ok, Types.authentication_state()} | {:error, MscmpSystError.t()}
   defdelegate authenticate_email_password(email_address, plaintext_pwd, host_address, opts \\ []),
     to: Impl.ExtendedAuthLogic
 
@@ -2681,7 +2681,7 @@ defmodule MsbmsSystAuthentication do
   values.
   """
   @spec authenticate_email_password(Types.authentication_state(), Keyword.t()) ::
-          {:ok, Types.authentication_state()} | {:error, MsbmsSystError.t()}
+          {:ok, Types.authentication_state()} | {:error, MscmpSystError.t()}
   defdelegate authenticate_email_password(authentication_state, opts \\ []),
     to: Impl.ExtendedAuthLogic
 
@@ -2747,7 +2747,7 @@ defmodule MsbmsSystAuthentication do
           IP.addr(),
           Keyword.t()
         ) ::
-          {:ok, Types.authentication_state()} | {:error, MsbmsSystError.t()}
+          {:ok, Types.authentication_state()} | {:error, MscmpSystError.t()}
   defdelegate authenticate_validation_token(
                 identifier,
                 plaintext_token,
@@ -2819,7 +2819,7 @@ defmodule MsbmsSystAuthentication do
           IP.addr(),
           Keyword.t()
         ) ::
-          {:ok, Types.authentication_state()} | {:error, MsbmsSystError.t()}
+          {:ok, Types.authentication_state()} | {:error, MscmpSystError.t()}
   defdelegate authenticate_recovery_token(identifier, plaintext_token, host_addr, opts \\ []),
     to: Impl.ExtendedAuthLogic
 
@@ -2888,7 +2888,7 @@ defmodule MsbmsSystAuthentication do
           MsbmsSystInstanceMgr.Types.instance_id(),
           Keyword.t()
         ) ::
-          {:ok, Types.authentication_state()} | {:error, MsbmsSystError.t()}
+          {:ok, Types.authentication_state()} | {:error, MscmpSystError.t()}
 
   defdelegate authenticate_api_token(
                 identifier,

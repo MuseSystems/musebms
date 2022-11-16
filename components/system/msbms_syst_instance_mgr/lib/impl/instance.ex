@@ -27,7 +27,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
   @moduledoc false
 
   @spec create_instance(Types.instance_params()) ::
-          {:ok, Data.SystInstances.t()} | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystInstances.t()} | {:error, MscmpSystError.t()}
   def create_instance(instance_params) do
     instance_params
     |> Data.SystInstances.insert_changeset()
@@ -38,7 +38,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
       {:error,
-       %MsbmsSystError{
+       %MscmpSystError{
          code: :undefined_error,
          message: "Failure creating new Instance.",
          cause: error
@@ -133,7 +133,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
   end
 
   @spec initialize_instance(Types.instance_id(), startup_options :: map(), opts :: Keyword.t()) ::
-          {:ok, Data.SystInstances.t()} | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystInstances.t()} | {:error, MscmpSystError.t()}
   def initialize_instance(instance_id, startup_options, opts) do
     opts = MsbmsSystUtils.resolve_options(opts, get_default_instance_state_ids())
 
@@ -154,7 +154,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure initializing Instance.",
           cause: error
@@ -175,7 +175,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
 
   defp verify_initialization_eligibility(state_functional_type, instance)
        when is_binary(state_functional_type) do
-    raise MsbmsSystError,
+    raise MscmpSystError,
       code: :invalid_parameter,
       message: "The requested Instance is not in a valid state for initialization.",
       cause: %{instance_state_functional_type_name: state_functional_type, instance: instance}
@@ -186,7 +186,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
   #       disallowed state transitions.  Battle for a different day.
 
   @spec set_instance_state(Data.SystInstances.t(), Types.instance_state_id()) ::
-          {:ok, Data.SystInstances.t()} | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystInstances.t()} | {:error, MscmpSystError.t()}
   def set_instance_state(instance, instance_state_id) do
     instance
     |> Data.SystInstances.update_changeset(%{instance_state_id: instance_state_id})
@@ -198,7 +198,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure setting Instance State.",
           cause: error
@@ -216,7 +216,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
     {:ok, _} = set_instance_state(instance, opts[:failed_state_id])
 
     {:error,
-     %MsbmsSystError{
+     %MscmpSystError{
        code: :undefined_error,
        message: "Instance initialization error found.",
        cause: error
@@ -288,7 +288,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
   # Populated in this case means that statusing information is populated.
 
   @spec get_instance_by_name(Types.instance_name()) ::
-          {:ok, Data.SystInstances.t()} | {:error, MsbmsSystError.t()}
+          {:ok, Data.SystInstances.t()} | {:error, MscmpSystError.t()}
   def get_instance_by_name(instance_name) when is_binary(instance_name) do
     from(
       i in Data.SystInstances,
@@ -305,7 +305,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure retrieving Instance by internal name.",
           cause: error
@@ -316,7 +316,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
   # Returns the ID of a SystInstances record as looked up by its internal name.
 
   @spec get_instance_id_by_name(Types.instance_name()) ::
-          {:ok, Types.instance_id()} | {:error, MsbmsSystError.t()}
+          {:ok, Types.instance_id()} | {:error, MscmpSystError.t()}
   def get_instance_id_by_name(instance_name) do
     from(i in Data.SystInstances, select: i.id, where: i.internal_name == ^instance_name)
     |> MsbmsSystDatastore.one!()
@@ -327,7 +327,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure retrieving Instance ID by internal name.",
           cause: error
@@ -336,7 +336,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
   end
 
   @spec purge_instance(Types.instance_id() | Data.SystInstances.t(), startup_options :: map()) ::
-          :ok | {:error, MsbmsSystError.t()}
+          :ok | {:error, MscmpSystError.t()}
   def purge_instance(instance_id, startup_options) when is_binary(instance_id) do
     from(
       i in Data.SystInstances,
@@ -353,7 +353,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure deleting Instance by ID.",
           cause: error
@@ -378,7 +378,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure purging Instance.",
           cause: error
@@ -398,7 +398,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
 
   defp maybe_perform_instance_purge(functional_type, _instance, _startup_options),
     do:
-      raise(MsbmsSystError,
+      raise(MscmpSystError,
         code: :invalid_parameter,
         message: "Invalid Instance State Functional Type for purge.",
         cause: %{parameters: [functional_type: functional_type]}

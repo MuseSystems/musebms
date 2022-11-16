@@ -20,8 +20,8 @@ defmodule OptionsFileTest do
              MsbmsSystOptions.get_options(@default_path)
   end
 
-  test "Can get_options/1 Return MsbmsSystError Tuple" do
-    assert {:error, %MsbmsSystError{}} = MsbmsSystOptions.get_options("bad_path.toml")
+  test "Can get_options/1 Return MscmpSystError Tuple" do
+    assert {:error, %MscmpSystError{}} = MsbmsSystOptions.get_options("bad_path.toml")
   end
 
   test "Can get_options!/1 Return Options" do
@@ -29,6 +29,6 @@ defmodule OptionsFileTest do
   end
 
   test "Does get_options!/1 Raise with Bad File" do
-    assert_raise MsbmsSystError, fn -> MsbmsSystOptions.get_options!("bad_path.toml") end
+    assert_raise MscmpSystError, fn -> MsbmsSystOptions.get_options!("bad_path.toml") end
   end
 end

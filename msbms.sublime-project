@@ -5,7 +5,7 @@
             "path": "database",
         },
         {
-            "path": "components/system/msbms_syst_error",
+            "path": "components/system/mscmp_syst_error",
         },
         {
             "path": "components/system/msbms_syst_utils",
@@ -58,6 +58,13 @@
         "make_path_relative": true,
         "lsp_format_on_save": true,
         "use_root_dir": true,
+        "LSP":
+        {
+			"lsp-elixir":
+			{
+				"enabled": false
+			}
+		},
     },
     "build_systems":
     [

@@ -21,7 +21,7 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceTypeContext do
   @spec update_instance_type_context(
           Types.instance_type_context_id() | Data.SystInstanceTypeContexts.t(),
           Types.instance_type_context_params()
-        ) :: {:ok, Data.SystInstanceTypeContexts.t()} | {:error, MsbmsSystError.t()}
+        ) :: {:ok, Data.SystInstanceTypeContexts.t()} | {:error, MscmpSystError.t()}
   def update_instance_type_context(instance_type_context_id, instance_type_context_params)
       when is_binary(instance_type_context_id) do
     MsbmsSystDatastore.get!(Data.SystInstanceTypeContexts, instance_type_context_id)
@@ -32,7 +32,7 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceTypeContext do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure updating Instance Type Context by ID.",
           cause: error
@@ -54,7 +54,7 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceTypeContext do
 
       {
         :error,
-        %MsbmsSystError{
+        %MscmpSystError{
           code: :undefined_error,
           message: "Failure updating Instance Type Context.",
           cause: error

@@ -1,5 +1,5 @@
-# Source File: test.exs
-# Location:    musebms/components/system/msbms_syst_error/config/test.exs
+# Source File: dev.exs
+# Location:    musebms/components/system/mscmp_syst_error/config/dev.exs
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -12,4 +12,4 @@
 
 import Config
 
-config :logger, level: :info
+config :logger, level: :debug

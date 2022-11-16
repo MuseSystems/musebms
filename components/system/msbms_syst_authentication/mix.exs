@@ -30,7 +30,7 @@ defmodule MsbmsSystAuthentication.MixProject do
 
     # Muse Systems Business Management System Components
     {:msbms_syst_utils, path: "../msbms_syst_utils"},
-    {:msbms_syst_error, path: "../msbms_syst_error"},
+    {:mscmp_syst_error, path: "../mscmp_syst_error"},
     {:msbms_syst_rate_limiter, path: "../msbms_syst_rate_limiter"},
     {:msbms_syst_datastore, path: "../msbms_syst_datastore"},
     {:msbms_syst_enums, path: "../msbms_syst_enums"},
@@ -65,7 +65,7 @@ defmodule MsbmsSystAuthentication.MixProject do
         deps: [
           msbms_syst_datastore:
             "../../../../documentation/technical/app_server/msbms_syst_datastore",
-          msbms_syst_error: "../../../../documentation/technical/app_server/msbms_syst_error",
+          mscmp_syst_error: "../../../../documentation/technical/app_server/mscmp_syst_error",
           msbms_syst_utils: "../../../../documentation/technical/app_server/msbms_syst_utils",
           msbms_syst_rate_limiter:
             "../../../../documentation/technical/app_server/msbms_syst_rate_limiter",

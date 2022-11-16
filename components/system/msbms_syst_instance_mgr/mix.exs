@@ -25,7 +25,7 @@ defmodule MsbmsSystInstanceMgr.MixProject do
 
     # Muse Systems Business Management System Components
     {:msbms_syst_utils, path: "../msbms_syst_utils"},
-    {:msbms_syst_error, path: "../msbms_syst_error"},
+    {:mscmp_syst_error, path: "../mscmp_syst_error"},
     {:msbms_syst_datastore, path: "../msbms_syst_datastore"},
     {:msbms_syst_enums, path: "../msbms_syst_enums"},
     {:msbms_syst_options, path: "../msbms_syst_options"}
@@ -57,7 +57,7 @@ defmodule MsbmsSystInstanceMgr.MixProject do
         output: "../../../documentation/technical/app_server/msbms_syst_instance_mgr",
         deps: [
           msbms_syst_utils: "../../../../documentation/technical/app_server/msbms_syst_utils",
-          msbms_syst_error: "../../../../documentation/technical/app_server/msbms_syst_error",
+          mscmp_syst_error: "../../../../documentation/technical/app_server/mscmp_syst_error",
           msbms_syst_datastore:
             "../../../../documentation/technical/app_server/msbms_syst_datastore",
           msbms_syst_enums: "../../../../documentation/technical/app_server/msbms_syst_enums",
