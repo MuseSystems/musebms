@@ -45,43 +45,43 @@ cd ~/source/products/musebms
 cd ~/source/products/musebms
 cd components/system/mscmp_syst_error
 rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
-mix deps.clean --all; mix deps.unlock --all; mix deps.get; mix compile; mix dialyzer.clean; mix dialyzer --plt
+mix deps.clean --all; mix deps.unlock --all; mix deps.get; MIX_ENV=test mix compile; mix dialyzer.clean; mix dialyzer --plt
 cd ../../../
 cd components/system/mscmp_syst_utils
 rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
-mix deps.clean --all; mix deps.unlock --all; mix deps.get; mix compile; mix dialyzer.clean; mix dialyzer --plt
+mix deps.clean --all; mix deps.unlock --all; mix deps.get; MIX_ENV=test mix compile; mix dialyzer.clean; mix dialyzer --plt
 cd ../../../
 cd components/system/mscmp_syst_options
 rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
-mix deps.clean --all; mix deps.unlock --all; mix deps.get; mix compile; mix dialyzer.clean; mix dialyzer --plt
+mix deps.clean --all; mix deps.unlock --all; mix deps.get; MIX_ENV=test mix compile; mix dialyzer.clean; mix dialyzer --plt
 cd ../../../
 cd components/system/mscmp_syst_limiter
 rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
-mix deps.clean --all; mix deps.unlock --all; mix deps.get; mix compile; mix dialyzer.clean; mix dialyzer --plt
+mix deps.clean --all; mix deps.unlock --all; mix deps.get; MIX_ENV=test mix compile; mix dialyzer.clean; mix dialyzer --plt
 cd ../../../
 cd components/system/mscmp_syst_db
 rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
-mix deps.clean --all; mix deps.unlock --all; mix deps.get; mix compile; mix dialyzer.clean; mix dialyzer --plt
+mix deps.clean --all; mix deps.unlock --all; mix deps.get; MIX_ENV=test mix compile; mix dialyzer.clean; mix dialyzer --plt
 cd ../../../
 cd components/system/mscmp_syst_settings
 rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
-mix deps.clean --all; mix deps.unlock --all; mix deps.get; mix compile; mix dialyzer.clean; mix dialyzer --plt
+mix deps.clean --all; mix deps.unlock --all; mix deps.get; MIX_ENV=test mix compile; mix dialyzer.clean; mix dialyzer --plt
 cd ../../../
 cd components/system/mscmp_syst_enums
 rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
-mix deps.clean --all; mix deps.unlock --all; mix deps.get; mix compile; mix dialyzer.clean; mix dialyzer --plt
+mix deps.clean --all; mix deps.unlock --all; mix deps.get; MIX_ENV=test mix compile; mix dialyzer.clean; mix dialyzer --plt
 cd ../../../
 cd components/system/mscmp_syst_instance
 rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
-mix deps.clean --all; mix deps.unlock --all; mix deps.get; mix compile; mix dialyzer.clean; mix dialyzer --plt
+mix deps.clean --all; mix deps.unlock --all; mix deps.get; MIX_ENV=test mix compile; mix dialyzer.clean; mix dialyzer --plt
 cd ../../../
 cd components/system/mscmp_syst_authn
 rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
-mix deps.clean --all; mix deps.unlock --all; mix deps.get; mix compile; mix dialyzer.clean; mix dialyzer --plt
+mix deps.clean --all; mix deps.unlock --all; mix deps.get; MIX_ENV=test mix compile; mix dialyzer.clean; mix dialyzer --plt
 cd ../../../
 cd application/msbms
 rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
-mix deps.clean --all; mix deps.unlock --all; mix deps.get; mix compile; mix dialyzer.clean; mix dialyzer --plt
+mix deps.clean --all; mix deps.unlock --all; mix deps.get; MIX_ENV=test mix compile; mix dialyzer.clean; mix dialyzer --plt
 cd ~/source/products/musebms
 
 ===========================
@@ -89,43 +89,43 @@ cd ~/source/products/musebms
 cd ~/source/products/musebms
 cd components/system/mscmp_syst_error
 rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
-mix deps.clean --all; mix deps.get; mix compile; mix dialyzer --plt &
+mix deps.clean --all; mix deps.get; MIX_ENV=test mix compile; mix dialyzer --plt &
 cd ../../../
 cd components/system/mscmp_syst_utils
 rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
-mix deps.clean --all; mix deps.get; mix compile; mix dialyzer --plt &
+mix deps.clean --all; mix deps.get; MIX_ENV=test mix compile; mix dialyzer --plt &
 cd ../../../
 cd components/system/mscmp_syst_options
 rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
-mix deps.clean --all; mix deps.get; mix compile; mix dialyzer --plt &
+mix deps.clean --all; mix deps.get; MIX_ENV=test mix compile; mix dialyzer --plt &
 cd ../../../
 cd components/system/mscmp_syst_limiter
 rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
-mix deps.clean --all; mix deps.get; mix compile; mix dialyzer --plt &
+mix deps.clean --all; mix deps.get; MIX_ENV=test mix compile; mix dialyzer --plt &
 cd ../../../
 cd components/system/mscmp_syst_db
 rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
-mix deps.clean --all; mix deps.get; mix compile; mix dialyzer --plt &
+mix deps.clean --all; mix deps.get; MIX_ENV=test mix compile; mix dialyzer --plt &
 cd ../../../
 cd components/system/mscmp_syst_settings
 rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
-mix deps.clean --all; mix deps.get; mix compile; mix dialyzer --plt &
+mix deps.clean --all; mix deps.get; MIX_ENV=test mix compile; mix dialyzer --plt &
 cd ../../../
 cd components/system/mscmp_syst_enums
 rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
-mix deps.clean --all; mix deps.get; mix compile; mix dialyzer --plt &
+mix deps.clean --all; mix deps.get; MIX_ENV=test mix compile; mix dialyzer --plt &
 cd ../../../
 cd components/system/mscmp_syst_instance
 rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
-mix deps.clean --all; mix deps.get; mix compile; mix dialyzer --plt &
+mix deps.clean --all; mix deps.get; MIX_ENV=test mix compile; mix dialyzer --plt &
 cd ../../../
 cd components/system/mscmp_syst_authn
 rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
-mix deps.clean --all; mix deps.get; mix compile; mix dialyzer --plt &
+mix deps.clean --all; mix deps.get; MIX_ENV=test mix compile; mix dialyzer --plt &
 cd ../../../
 cd application/msbms
 rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
-mix deps.clean --all; mix deps.get; mix compile; mix dialyzer --plt &
+mix deps.clean --all; mix deps.get; MIX_ENV=test mix compile; mix dialyzer --plt &
 cd ~/source/products/musebms
 
 =============================
@@ -134,43 +134,43 @@ cd ~/source/products/musebms
 cd ~/source/products/musebms
 cd components/system/mscmp_syst_error
 rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
-mix deps.clean --all; mix deps.unlock --all; mix deps.get; mix compile
+mix deps.clean --all; mix deps.unlock --all; mix deps.get; MIX_ENV=test mix compile
 cd ../../../
 cd components/system/mscmp_syst_utils
 rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
-mix deps.clean --all; mix deps.unlock --all; mix deps.get; mix compile
+mix deps.clean --all; mix deps.unlock --all; mix deps.get; MIX_ENV=test mix compile
 cd ../../../
 cd components/system/mscmp_syst_options
 rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
-mix deps.clean --all; mix deps.unlock --all; mix deps.get; mix compile
+mix deps.clean --all; mix deps.unlock --all; mix deps.get; MIX_ENV=test mix compile
 cd ../../../
 cd components/system/mscmp_syst_limiter
 rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
-mix deps.clean --all; mix deps.unlock --all; mix deps.get; mix compile
+mix deps.clean --all; mix deps.unlock --all; mix deps.get; MIX_ENV=test mix compile
 cd ../../../
 cd components/system/mscmp_syst_db
 rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
-mix deps.clean --all; mix deps.unlock --all; mix deps.get; mix compile
+mix deps.clean --all; mix deps.unlock --all; mix deps.get; MIX_ENV=test mix compile
 cd ../../../
 cd components/system/mscmp_syst_settings
 rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
-mix deps.clean --all; mix deps.unlock --all; mix deps.get; mix compile
+mix deps.clean --all; mix deps.unlock --all; mix deps.get; MIX_ENV=test mix compile
 cd ../../../
 cd components/system/mscmp_syst_enums
 rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
-mix deps.clean --all; mix deps.unlock --all; mix deps.get; mix compile
+mix deps.clean --all; mix deps.unlock --all; mix deps.get; MIX_ENV=test mix compile
 cd ../../../
 cd components/system/mscmp_syst_instance
 rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
-mix deps.clean --all; mix deps.unlock --all; mix deps.get; mix compile
+mix deps.clean --all; mix deps.unlock --all; mix deps.get; MIX_ENV=test mix compile
 cd ../../../
 cd components/system/mscmp_syst_authn
 rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
-mix deps.clean --all; mix deps.unlock --all; mix deps.get; mix compile
+mix deps.clean --all; mix deps.unlock --all; mix deps.get; MIX_ENV=test mix compile
 cd ../../../
 cd application/msbms
 rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
-mix deps.clean --all; mix deps.unlock --all; mix deps.get; mix compile
+mix deps.clean --all; mix deps.unlock --all; mix deps.get; MIX_ENV=test mix compile
 cd ~/source/products/musebms
 cd components/system/mscmp_syst_error
 mix dialyzer.clean; mix dialyzer --plt
@@ -199,3 +199,49 @@ cd ../../../
 cd application/msbms
 mix dialyzer.clean; mix dialyzer --plt
 cd ~/source/products/musebms
+
+===========================
+
+cd ~/source/products/musebms
+cd components/system/mscmp_syst_error
+rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
+mix deps.clean --all; mix deps.get; MIX_ENV=test mix compile
+cd ../../../
+cd components/system/mscmp_syst_utils
+rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
+mix deps.clean --all; mix deps.get; MIX_ENV=test mix compile
+cd ../../../
+cd components/system/mscmp_syst_options
+rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
+mix deps.clean --all; mix deps.get; MIX_ENV=test mix compile
+cd ../../../
+cd components/system/mscmp_syst_limiter
+rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
+mix deps.clean --all; mix deps.get; MIX_ENV=test mix compile
+cd ../../../
+cd components/system/mscmp_syst_db
+rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
+mix deps.clean --all; mix deps.get; MIX_ENV=test mix compile
+cd ../../../
+cd components/system/mscmp_syst_settings
+rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
+mix deps.clean --all; mix deps.get; MIX_ENV=test mix compile
+cd ../../../
+cd components/system/mscmp_syst_enums
+rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
+mix deps.clean --all; mix deps.get; MIX_ENV=test mix compile
+cd ../../../
+cd components/system/mscmp_syst_instance
+rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
+mix deps.clean --all; mix deps.get; MIX_ENV=test mix compile
+cd ../../../
+cd components/system/mscmp_syst_authn
+rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
+mix deps.clean --all; mix deps.get; MIX_ENV=test mix compile
+cd ../../../
+cd application/msbms
+rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
+mix deps.clean --all; mix deps.get; MIX_ENV=test mix compile
+cd ~/source/products/musebms
+
+=============================
