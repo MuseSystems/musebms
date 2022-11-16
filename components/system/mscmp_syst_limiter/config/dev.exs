@@ -1,5 +1,5 @@
 # Source File: dev.exs
-# Location:    musebms/components/system/msbms_syst_rate_limiter/config/dev.exs
+# Location:    musebms/components/system/mscmp_syst_limiter/config/dev.exs
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

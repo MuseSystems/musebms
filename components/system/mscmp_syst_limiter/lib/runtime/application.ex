@@ -1,5 +1,5 @@
 # Source File: application.ex
-# Location:    musebms/components/system/msbms_syst_rate_limiter/lib/runtime/application.ex
+# Location:    musebms/components/system/mscmp_syst_limiter/lib/runtime/application.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,19 +10,19 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule MsbmsSystRateLimiter.Runtime.Application do
+defmodule MscmpSystLimiter.Runtime.Application do
   require Logger
 
   @default_backend Hammer.Backend.Mnesia
   @default_expiry_ms 60_000 * 60 * 2
   @default_cleanup_interval_ms 60_000 * 10
-  @default_table_name :msbms_syst_rate_limiter_counters
+  @default_table_name :mscmp_syst_limiter_counters
 
   @moduledoc false
 
   # start/2 is called automatically on OTP application start-up.
   #
-  # TODO: There's a good argument to be made that MsbmsSystRateLimiter shouldn't
+  # TODO: There's a good argument to be made that MscmpSystLimiter shouldn't
   #       be a startable application at all.  Rather it should be started via
   #       a start_link call by the consuming application.  This would mean that
   #       it could be started under an application defined supervision tree.
@@ -33,19 +33,19 @@ defmodule MsbmsSystRateLimiter.Runtime.Application do
   def start(_type, args \\ []) do
     expiry_ms =
       args[:expiry_ms] ||
-        Application.get_env(:msbms_syst_rate_limiter, :expiry_ms, @default_expiry_ms)
+        Application.get_env(:mscmp_syst_limiter, :expiry_ms, @default_expiry_ms)
 
     cleanup_interval_ms =
       args[:cleanup_interval_ms] ||
         Application.get_env(
-          :msbms_syst_rate_limiter,
+          :mscmp_syst_limiter,
           :cleanup_interval_ms,
           @default_cleanup_interval_ms
         )
 
     table_name =
       args[:table_name] ||
-        Application.get_env(:msbms_syst_rate_limiter, :table_name, @default_table_name)
+        Application.get_env(:mscmp_syst_limiter, :table_name, @default_table_name)
 
     hammer_config =
       {@default_backend,
@@ -53,7 +53,7 @@ defmodule MsbmsSystRateLimiter.Runtime.Application do
 
     Application.put_env(:hammer, :backend, hammer_config)
 
-    Hammer.Supervisor.start_link(hammer_config, name: MsbmsSystRateLimiter.Supervisor)
+    Hammer.Supervisor.start_link(hammer_config, name: MscmpSystLimiter.Supervisor)
   end
 
   @spec start_phase(atom(), Application.start_type(), term()) :: :ok | {:error, reason :: term()}

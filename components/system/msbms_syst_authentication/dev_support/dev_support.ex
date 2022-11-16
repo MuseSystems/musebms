@@ -114,7 +114,7 @@ defmodule DevSupport do
   end
 
   defp setup_mnesia_database(:unit_testing) do
-    MsbmsSystRateLimiter.init_rate_limiter()
+    MscmpSystLimiter.init_rate_limiter()
   end
 
   defp cleanup_database() do

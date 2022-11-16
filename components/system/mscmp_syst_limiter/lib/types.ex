@@ -1,5 +1,5 @@
 # Source File: types.ex
-# Location:    musebms/components/system/msbms_syst_rate_limiter/lib/types.ex
+# Location:    musebms/components/system/mscmp_syst_limiter/lib/types.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,17 +10,17 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule MsbmsSystRateLimiter.Types do
+defmodule MscmpSystLimiter.Types do
   #
   # Note that the ordering of typespecs here is alphabetical.
   #
 
   @moduledoc """
-  Defines public types for use with the MsbmsSystRateLimiter module.
+  Defines public types for use with the MscmpSystLimiter module.
   """
 
   @typedoc """
-  A unique identifier for the specific counter within the requested counter 
+  A unique identifier for the specific counter within the requested counter
   type.
   """
   @type counter_id() :: String.t()

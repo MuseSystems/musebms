@@ -1,5 +1,5 @@
 # Source File: test_helper.exs
-# Location:    musebms/components/system/msbms_syst_rate_limiter/test/test_helper.exs
+# Location:    musebms/components/system/mscmp_syst_limiter/test/test_helper.exs
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

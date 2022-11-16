@@ -1,5 +1,5 @@
 # Source File: mix.exs
-# Location:    musebms/components/system/msbms_syst_rate_limiter/mix.exs
+# Location:    musebms/components/system/mscmp_syst_limiter/mix.exs
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,10 +10,10 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule MsbmsSystRateLimiter.MixProject do
+defmodule MscmpSystLimiter.MixProject do
   use Mix.Project
 
-  @name :msbms_syst_rate_limiter
+  @name :mscmp_syst_limiter
   @version "0.1.0"
 
   @deps [
@@ -50,9 +50,9 @@ defmodule MsbmsSystRateLimiter.MixProject do
       dialyzer: @dialyzer_opts,
       elixirc_paths: elixirc_paths(Mix.env()),
       docs: [
-        name: "MsbmsSystRateLimiter",
-        main: "MsbmsSystRateLimiter",
-        output: "../../../documentation/technical/app_server/msbms_syst_rate_limiter",
+        name: "MscmpSystLimiter",
+        main: "MscmpSystLimiter",
+        output: "../../../documentation/technical/app_server/mscmp_syst_limiter",
         deps: [
           mscmp_syst_error: "../../../../documentation/technical/app_server/mscmp_syst_error",
           mscmp_syst_utils: "../../../../documentation/technical/app_server/mscmp_syst_utils"
@@ -62,8 +62,8 @@ defmodule MsbmsSystRateLimiter.MixProject do
           "API - Runtime": &(&1[:section] == :service_management)
         ],
         groups_for_modules: [
-          API: [MsbmsSystRateLimiter],
-          "Supporting Types": [MsbmsSystRateLimiter.Types]
+          API: [MscmpSystLimiter],
+          "Supporting Types": [MscmpSystLimiter.Types]
         ]
       ]
     ]
@@ -75,7 +75,7 @@ defmodule MsbmsSystRateLimiter.MixProject do
         :logger,
         :mnesia
       ],
-      mod: {MsbmsSystRateLimiter.Runtime.Application, []}
+      mod: {MscmpSystLimiter.Runtime.Application, []}
     ]
   end
 
