@@ -31,7 +31,7 @@ defmodule MsbmsSystInstanceMgr.Data.SystInstanceTypeContexts do
             instance_type_application:
               Data.SystInstanceTypeApplications.t() | Ecto.Association.NotLoaded.t() | nil,
             instance_type:
-              MsbmsSystEnums.Data.SystEnumItems.t()
+              MscmpSystEnums.Data.SystEnumItems.t()
               | Ecto.Association.NotLoaded.t()
               | nil,
             application: Data.SystApplications.t() | Ecto.Association.NotLoaded.t() | nil,

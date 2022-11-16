@@ -138,12 +138,12 @@ defmodule MsbmsSystAuthentication.Types do
   @typedoc """
   Defines the type of Access Account State record ID values.
   """
-  @type access_account_state_id() :: MsbmsSystEnums.Types.enum_item_id()
+  @type access_account_state_id() :: MscmpSystEnums.Types.enum_item_id()
 
   @typedoc """
   Defines the type of Access Account State Internal Name values.
   """
-  @type access_account_state_name() :: MsbmsSystEnums.Types.enum_item_name()
+  @type access_account_state_name() :: MscmpSystEnums.Types.enum_item_name()
 
   @typedoc """
   The expected type of values used to identify an Access Account.
@@ -550,12 +550,12 @@ defmodule MsbmsSystAuthentication.Types do
   @typedoc """
   The Credential Type record ID database type.
   """
-  @type credential_type_id() :: MsbmsSystEnums.Types.enum_item_id()
+  @type credential_type_id() :: MscmpSystEnums.Types.enum_item_id()
 
   @typedoc """
   Defines the expected type of the Credential Type record Internal Name.
   """
-  @type credential_type_name() :: MsbmsSystEnums.Types.enum_item_name()
+  @type credential_type_name() :: MscmpSystEnums.Types.enum_item_name()
 
   @typedoc """
   The Credential Types known by the system.
@@ -633,13 +633,13 @@ defmodule MsbmsSystAuthentication.Types do
   @typedoc """
   Defines the Identity Type record ID data type.
   """
-  @type identity_type_id() :: MsbmsSystEnums.Types.enum_item_id()
+  @type identity_type_id() :: MscmpSystEnums.Types.enum_item_id()
 
   @typedoc """
   Defines the expected data type of the Identity Type record Internal Name
   value.
   """
-  @type identity_type_name() :: MsbmsSystEnums.Types.enum_item_name()
+  @type identity_type_name() :: MscmpSystEnums.Types.enum_item_name()
 
   @typedoc """
   Defines the list of Identity Types known to the system.

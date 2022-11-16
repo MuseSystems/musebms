@@ -31,7 +31,7 @@ defmodule MsbmsSystAuthentication.Data.SystIdentities do
             access_account: Data.SystAccessAccounts.t() | Ecto.Association.NotLoaded.t() | nil,
             identity_type_id: Types.identity_type_id() | nil,
             identity_type:
-              MsbmsSystEnums.Data.SystEnumItems.t() | Ecto.Association.NotLoaded.t() | nil,
+              MscmpSystEnums.Data.SystEnumItems.t() | Ecto.Association.NotLoaded.t() | nil,
             account_identifier: String.t() | nil,
             validated: DateTime.t() | nil,
             validates_identity_id: Types.identity_id() | nil,
@@ -65,7 +65,7 @@ defmodule MsbmsSystAuthentication.Data.SystIdentities do
     field(:diag_update_count, :integer)
 
     belongs_to(:access_account, Data.SystAccessAccounts)
-    belongs_to(:identity_type, MsbmsSystEnums.Data.SystEnumItems)
+    belongs_to(:identity_type, MscmpSystEnums.Data.SystEnumItems)
     belongs_to(:validates_identity, Data.SystIdentities)
   end
 

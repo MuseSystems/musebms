@@ -27,7 +27,7 @@ defmodule MsbmsSystAuthentication.Data.Helpers.SystAccessAccounts do
       )
       when is_binary(access_account_state_name) do
     access_account_state =
-      MsbmsSystEnums.get_enum_item_by_name("access_account_states", access_account_state_name)
+      MscmpSystEnums.get_enum_item_by_name("access_account_states", access_account_state_name)
 
     Map.put(access_account_params, :access_account_state_id, access_account_state.id)
   end
@@ -42,7 +42,7 @@ defmodule MsbmsSystAuthentication.Data.Helpers.SystAccessAccounts do
 
   def resolve_access_account_state_id(access_account_params, :insert) do
     access_account_state =
-      MsbmsSystEnums.get_default_enum_item("access_account_states",
+      MscmpSystEnums.get_default_enum_item("access_account_states",
         functional_type_name: "access_account_states_pending"
       )
 

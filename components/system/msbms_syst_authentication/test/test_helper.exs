@@ -29,7 +29,7 @@ MscmpSystDb.set_datastore_context(TestSupport.get_testing_datastore_context_id()
 enum_service_spec = %{
   id: MsbmsSystAuthenticationTestingEnumService,
   start: {
-    MsbmsSystEnums,
+    MscmpSystEnums,
     :start_link,
     [{:authentication, TestSupport.get_testing_datastore_context_id()}]
   }

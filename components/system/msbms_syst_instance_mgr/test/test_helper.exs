@@ -38,7 +38,7 @@ ExUnit.start()
 enum_service_spec = %{
   id: MsbmsSystInstanceMgrTestingEnumService,
   start: {
-    MsbmsSystEnums,
+    MscmpSystEnums,
     :start_link,
     [{:instance_mgr, TestSupport.get_testing_datastore_context_id()}]
   }

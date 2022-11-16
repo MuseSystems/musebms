@@ -62,7 +62,7 @@ defmodule MsbmsSystAuthentication.Data.SystCredentials do
     field(:diag_update_count, :integer)
 
     belongs_to(:access_account, Data.SystAccessAccounts)
-    belongs_to(:credential_type, MsbmsSystEnums.Data.SystEnumItems)
+    belongs_to(:credential_type, MscmpSystEnums.Data.SystEnumItems)
     belongs_to(:credential_for_identity, Data.SystIdentities)
   end
 

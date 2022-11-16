@@ -40,7 +40,7 @@ defmodule MsbmsSystInstanceMgr.Data.Helpers.SystInstances do
         _operation
       )
       when is_binary(instance_type_name) do
-    instance_type = MsbmsSystEnums.get_enum_item_by_name("instance_types", instance_type_name)
+    instance_type = MscmpSystEnums.get_enum_item_by_name("instance_types", instance_type_name)
     Map.put(instance_params, :instance_type_id, instance_type.id)
   end
 
@@ -53,7 +53,7 @@ defmodule MsbmsSystInstanceMgr.Data.Helpers.SystInstances do
   end
 
   def resolve_instance_type_id(instance_params, :insert) do
-    default_instance_type = MsbmsSystEnums.get_default_enum_item("instance_types")
+    default_instance_type = MscmpSystEnums.get_default_enum_item("instance_types")
     Map.put(instance_params, :instance_type_id, default_instance_type.id)
   end
 
@@ -64,7 +64,7 @@ defmodule MsbmsSystInstanceMgr.Data.Helpers.SystInstances do
         _operation
       )
       when is_binary(instance_state_name) do
-    instance_state = MsbmsSystEnums.get_enum_item_by_name("instance_states", instance_state_name)
+    instance_state = MscmpSystEnums.get_enum_item_by_name("instance_states", instance_state_name)
     Map.put(instance_params, :instance_state_id, instance_state.id)
   end
 
@@ -78,7 +78,7 @@ defmodule MsbmsSystInstanceMgr.Data.Helpers.SystInstances do
 
   def resolve_instance_state_id(instance_params, :insert) do
     default_instance_state =
-      MsbmsSystEnums.get_default_enum_item(
+      MscmpSystEnums.get_default_enum_item(
         "instance_states",
         functional_type_name: "instance_states_uninitialized"
       )

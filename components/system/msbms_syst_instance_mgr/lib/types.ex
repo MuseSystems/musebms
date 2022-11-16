@@ -142,12 +142,12 @@ defmodule MsbmsSystInstanceMgr.Types do
   instance state, those fields are optional.
   """
   @type instance_state_params :: %{
-          optional(:internal_name) => MsbmsSystEnums.Types.enum_item_name(),
+          optional(:internal_name) => MscmpSystEnums.Types.enum_item_name(),
           optional(:display_name) => String.t(),
           optional(:external_name) => String.t(),
           optional(:user_description) => String.t(),
           optional(:enum_default) => boolean(),
-          optional(:functional_type_name) => MsbmsSystEnums.Types.enum_functional_type_name()
+          optional(:functional_type_name) => MscmpSystEnums.Types.enum_functional_type_name()
         }
 
   @typedoc """
@@ -212,7 +212,7 @@ defmodule MsbmsSystInstanceMgr.Types do
   optional.
   """
   @type instance_type_params :: %{
-          optional(:internal_name) => MsbmsSystEnums.Types.enum_item_name(),
+          optional(:internal_name) => MscmpSystEnums.Types.enum_item_name(),
           optional(:display_name) => String.t(),
           optional(:external_name) => String.t(),
           optional(:user_description) => String.t(),
@@ -270,11 +270,11 @@ defmodule MsbmsSystInstanceMgr.Types do
   optional.
   """
   @type owner_state_params :: %{
-          optional(:internal_name) => MsbmsSystEnums.Types.enum_item_name(),
+          optional(:internal_name) => MscmpSystEnums.Types.enum_item_name(),
           optional(:display_name) => String.t(),
           optional(:external_name) => String.t(),
           optional(:user_description) => String.t(),
           optional(:enum_default) => boolean(),
-          optional(:functional_type_name) => MsbmsSystEnums.Types.enum_functional_type_name()
+          optional(:functional_type_name) => MscmpSystEnums.Types.enum_functional_type_name()
         }
 end

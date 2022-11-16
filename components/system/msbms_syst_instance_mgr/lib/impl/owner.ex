@@ -152,8 +152,8 @@ defmodule MsbmsSystInstanceMgr.Impl.Owner do
 
   def purge_owner(
         %Data.SystOwners{
-          owner_state: %MsbmsSystEnums.Data.SystEnumItems{
-            functional_type: %MsbmsSystEnums.Data.SystEnumFunctionalTypes{
+          owner_state: %MscmpSystEnums.Data.SystEnumItems{
+            functional_type: %MscmpSystEnums.Data.SystEnumFunctionalTypes{
               internal_name: functional_type
             }
           }

@@ -66,7 +66,7 @@ defmodule DevSupport do
     enum_service_spec = %{
       id: MsbmsDevEnumService,
       start: {
-        MsbmsSystEnums,
+        MscmpSystEnums,
         :start_link,
         [{:msbms_dev_enum_service, get_datastore_context_id()}]
       }
@@ -81,7 +81,7 @@ defmodule DevSupport do
 
     _ = DynamicSupervisor.start_child(Msbms.DevSupervisor, enum_service_spec)
 
-    _ = MsbmsSystEnums.put_enums_service(:msbms_dev_enum_service)
+    _ = MscmpSystEnums.put_enums_service(:msbms_dev_enum_service)
   end
 
   def stop_dev_environment(), do: cleanup_database()

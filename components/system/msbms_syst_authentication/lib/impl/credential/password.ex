@@ -337,7 +337,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Password do
 
   defp set_credential_data(nil = _cred, pwd_rules, pwd_text) do
     %{id: credential_type_id} =
-      MsbmsSystEnums.get_enum_item_by_name("credential_types", "credential_types_sysdef_password")
+      MscmpSystEnums.get_enum_item_by_name("credential_types", "credential_types_sysdef_password")
 
     pwd_hash = Impl.Hash.create_credential_hash(pwd_text)
 

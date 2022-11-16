@@ -108,7 +108,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
     opts = MscmpSystUtils.resolve_options(opts, owning_owner_id: nil, instance_id: nil)
 
     %{id: identity_type_id} =
-      MsbmsSystEnums.get_enum_item_by_name("identity_types", "identity_types_sysdef_email")
+      MscmpSystEnums.get_enum_item_by_name("identity_types", "identity_types_sysdef_email")
 
     resolved_email_addr =
       email_addr
@@ -255,7 +255,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
     opts = MscmpSystUtils.resolve_options(opts, owning_owner_id: nil)
 
     %{id: identity_type_id} =
-      MsbmsSystEnums.get_enum_item_by_name("identity_types", "identity_types_sysdef_api")
+      MscmpSystEnums.get_enum_item_by_name("identity_types", "identity_types_sysdef_api")
 
     pending_auth_state = %{
       status: :pending,
@@ -343,7 +343,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
     opts = MscmpSystUtils.resolve_options(opts, owning_owner_id: nil)
 
     %{id: identity_type_id} =
-      MsbmsSystEnums.get_enum_item_by_name("identity_types", "identity_types_sysdef_validation")
+      MscmpSystEnums.get_enum_item_by_name("identity_types", "identity_types_sysdef_validation")
 
     pending_auth_state = %{
       status: :pending,
@@ -444,7 +444,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
     opts = MscmpSystUtils.resolve_options(opts, owning_owner_id: nil)
 
     %{id: identity_type_id} =
-      MsbmsSystEnums.get_enum_item_by_name(
+      MscmpSystEnums.get_enum_item_by_name(
         "identity_types",
         "identity_types_sysdef_password_recovery"
       )

@@ -148,8 +148,8 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccount do
 
   def purge_access_account(
         %Data.SystAccessAccounts{
-          access_account_state: %MsbmsSystEnums.Data.SystEnumItems{
-            functional_type: %MsbmsSystEnums.Data.SystEnumFunctionalTypes{
+          access_account_state: %MscmpSystEnums.Data.SystEnumItems{
+            functional_type: %MscmpSystEnums.Data.SystEnumFunctionalTypes{
               internal_name: functional_type
             }
           }

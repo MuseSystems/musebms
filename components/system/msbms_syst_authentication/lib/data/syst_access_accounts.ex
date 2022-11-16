@@ -35,7 +35,7 @@ defmodule MsbmsSystAuthentication.Data.SystAccessAccounts do
             allow_global_logins: boolean() | nil,
             access_account_state_id: Types.access_account_state_id() | nil,
             access_account_state:
-              MsbmsSystEnums.Data.SystEnumItems.t() | Ecto.Association.NotLoaded.t() | nil,
+              MscmpSystEnums.Data.SystEnumItems.t() | Ecto.Association.NotLoaded.t() | nil,
             diag_timestamp_created: DateTime.t() | nil,
             diag_role_created: String.t() | nil,
             diag_timestamp_modified: DateTime.t() | nil,
@@ -59,7 +59,7 @@ defmodule MsbmsSystAuthentication.Data.SystAccessAccounts do
     field(:diag_row_version, :integer)
     field(:diag_update_count, :integer)
 
-    belongs_to(:access_account_state, MsbmsSystEnums.Data.SystEnumItems)
+    belongs_to(:access_account_state, MscmpSystEnums.Data.SystEnumItems)
     belongs_to(:owning_owner, MsbmsSystInstanceMgr.Data.SystOwners)
 
     has_many(:identities, Data.SystIdentities, foreign_key: :access_account_id)

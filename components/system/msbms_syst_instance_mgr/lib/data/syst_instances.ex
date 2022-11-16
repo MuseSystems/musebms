@@ -30,10 +30,10 @@ defmodule MsbmsSystInstanceMgr.Data.SystInstances do
             application: Data.SystApplications.t() | Ecto.Association.NotLoaded.t() | nil,
             instance_type_id: Ecto.UUID.t() | nil,
             instance_type:
-              MsbmsSystEnums.Data.SystEnumItems.t() | Ecto.Association.NotLoaded.t() | nil,
+              MscmpSystEnums.Data.SystEnumItems.t() | Ecto.Association.NotLoaded.t() | nil,
             instance_state_id: Ecto.UUID.t() | nil,
             instance_state:
-              MsbmsSystEnums.Data.SystEnumItems.t() | Ecto.Association.NotLoaded.t() | nil,
+              MscmpSystEnums.Data.SystEnumItems.t() | Ecto.Association.NotLoaded.t() | nil,
             owner_id: Ecto.UUID.t() | nil,
             owner: Data.SystOwners.t() | Ecto.Association.NotLoaded.t() | nil,
             owning_instance_id: Ecto.UUID.t() | nil,
@@ -67,8 +67,8 @@ defmodule MsbmsSystInstanceMgr.Data.SystInstances do
     field(:diag_update_count, :integer)
 
     belongs_to(:application, Data.SystApplications)
-    belongs_to(:instance_type, MsbmsSystEnums.Data.SystEnumItems)
-    belongs_to(:instance_state, MsbmsSystEnums.Data.SystEnumItems)
+    belongs_to(:instance_type, MscmpSystEnums.Data.SystEnumItems)
+    belongs_to(:instance_state, MscmpSystEnums.Data.SystEnumItems)
     belongs_to(:owner, Data.SystOwners)
     belongs_to(:owning_instance, Data.SystInstances)
 
