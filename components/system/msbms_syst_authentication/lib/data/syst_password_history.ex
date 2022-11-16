@@ -11,7 +11,7 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MsbmsSystAuthentication.Data.SystPasswordHistory do
-  use MsbmsSystDatastore.Schema
+  use MscmpSystDb.Schema
 
   alias MsbmsSystAuthentication.Data
   alias MsbmsSystAuthentication.Types

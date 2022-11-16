@@ -139,7 +139,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Recovery do
         recovery_underway: not is_nil(i.identity_access_account_id)
       }
     )
-    |> MsbmsSystDatastore.one!()
+    |> MscmpSystDb.one!()
     |> case do
       %{recovery_underway: true} -> :existing_recovery
       %{password_credential_exists: false} -> :not_found
@@ -154,7 +154,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Recovery do
   def identify_access_account(recovery_token, owner_id) when is_binary(recovery_token) do
     recovery_token
     |> Helpers.get_identification_query("identity_types_sysdef_password_recovery", owner_id)
-    |> MsbmsSystDatastore.one()
+    |> MscmpSystDb.one()
   end
 
   @spec confirm_credential_recovery(Data.SystIdentities.t()) ::
@@ -202,7 +202,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Recovery do
         i.access_account_id == ^access_account_id and
           ei.internal_name == "identity_types_sysdef_password_recovery"
     )
-    |> MsbmsSystDatastore.one()
+    |> MscmpSystDb.one()
     |> then(&{:ok, &1})
   rescue
     error ->

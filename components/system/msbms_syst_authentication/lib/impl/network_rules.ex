@@ -15,7 +15,7 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
 
   alias MsbmsSystAuthentication.Data
   alias MsbmsSystAuthentication.Types
-  alias MsbmsSystDatastore.DbTypes
+  alias MscmpSystDb.DbTypes
 
   require IP
   require IP.Subnet
@@ -36,7 +36,7 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
     target_host = %DbTypes.Inet{address: host_addr}
 
     from(dh in Data.SystDisallowedHosts, where: dh.host_address == ^target_host)
-    |> MsbmsSystDatastore.exists?()
+    |> MscmpSystDb.exists?()
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -53,7 +53,7 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
     target_host = %DbTypes.Inet{address: host_addr}
 
     Data.SystDisallowedHosts.insert_changeset(target_host)
-    |> MsbmsSystDatastore.insert!(returning: true)
+    |> MscmpSystDb.insert!(returning: true)
     |> then(&{:ok, if(&1.id == nil, do: nil, else: &1)})
   rescue
     error ->
@@ -129,7 +129,7 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
 
   defp process_disallowed_host_delete(query) do
     query
-    |> MsbmsSystDatastore.delete_all()
+    |> MscmpSystDb.delete_all()
     |> case do
       {0, _} ->
         :not_found
@@ -157,7 +157,7 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
           Data.SystDisallowedHosts.t()
   def get_disallowed_host_record_by_id!(disallowed_host_id) when is_binary(disallowed_host_id) do
     from(dh in Data.SystDisallowedHosts, where: dh.id == ^disallowed_host_id)
-    |> MsbmsSystDatastore.one!()
+    |> MscmpSystDb.one!()
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -182,7 +182,7 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
     target_host = %DbTypes.Inet{address: host_addr}
 
     from(dh in Data.SystDisallowedHosts, where: dh.host_address == ^target_host)
-    |> MsbmsSystDatastore.one()
+    |> MscmpSystDb.one()
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -231,7 +231,7 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
         functional_type: nr.functional_type
       }
     )
-    |> MsbmsSystDatastore.one!()
+    |> MscmpSystDb.one!()
     |> then(
       &%{
         precedence: String.to_atom(&1.precedence),
@@ -256,7 +256,7 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
     insert_params
     |> maybe_convert_params_net_addresses()
     |> Data.SystGlobalNetworkRules.insert_changeset()
-    |> MsbmsSystDatastore.insert!(returning: true)
+    |> MscmpSystDb.insert!(returning: true)
     |> then(&{:ok, &1})
   rescue
     error ->
@@ -280,7 +280,7 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
     |> maybe_convert_params_net_addresses()
     |> Map.put(:owner_id, owner_id)
     |> Data.SystOwnerNetworkRules.insert_changeset()
-    |> MsbmsSystDatastore.insert!(returning: true)
+    |> MscmpSystDb.insert!(returning: true)
     |> then(&{:ok, &1})
   rescue
     error ->
@@ -304,7 +304,7 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
     |> maybe_convert_params_net_addresses()
     |> Map.put(:instance_id, instance_id)
     |> Data.SystInstanceNetworkRules.insert_changeset()
-    |> MsbmsSystDatastore.insert!(returning: true)
+    |> MscmpSystDb.insert!(returning: true)
     |> then(&{:ok, &1})
   rescue
     error ->
@@ -355,7 +355,7 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
 
     global_network_rule
     |> Data.SystGlobalNetworkRules.update_changeset(resolved_params)
-    |> MsbmsSystDatastore.update!(returning: true)
+    |> MscmpSystDb.update!(returning: true)
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -403,7 +403,7 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
 
     owner_network_rule
     |> Data.SystOwnerNetworkRules.update_changeset(resolved_params)
-    |> MsbmsSystDatastore.update!(returning: true)
+    |> MscmpSystDb.update!(returning: true)
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -452,7 +452,7 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
 
     instance_network_rule
     |> Data.SystInstanceNetworkRules.update_changeset(resolved_params)
-    |> MsbmsSystDatastore.update!(returning: true)
+    |> MscmpSystDb.update!(returning: true)
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -477,7 +477,7 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
   def get_global_network_rule!(global_network_rule_id) do
     db_result =
       from(gnr in Data.SystGlobalNetworkRules, where: gnr.id == ^global_network_rule_id)
-      |> MsbmsSystDatastore.one()
+      |> MscmpSystDb.one()
 
     if db_result == nil, do: :not_found, else: db_result
   rescue
@@ -504,7 +504,7 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
   def get_owner_network_rule!(owner_network_rule_id) do
     db_result =
       from(onr in Data.SystOwnerNetworkRules, where: onr.id == ^owner_network_rule_id)
-      |> MsbmsSystDatastore.one()
+      |> MscmpSystDb.one()
 
     if db_result == nil, do: :not_found, else: db_result
   rescue
@@ -532,7 +532,7 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
   def get_instance_network_rule!(instance_network_rule_id) do
     db_result =
       from(inr in Data.SystInstanceNetworkRules, where: inr.id == ^instance_network_rule_id)
-      |> MsbmsSystDatastore.one()
+      |> MscmpSystDb.one()
 
     if db_result == nil, do: :not_found, else: db_result
   rescue
@@ -557,7 +557,7 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
   def delete_global_network_rule!(global_network_rule_id)
       when is_binary(global_network_rule_id) do
     from(gnr in Data.SystGlobalNetworkRules, where: gnr.id == ^global_network_rule_id)
-    |> MsbmsSystDatastore.delete_all()
+    |> MscmpSystDb.delete_all()
 
     :ok
   rescue
@@ -581,7 +581,7 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
   @spec delete_owner_network_rule!(Ecto.UUID.t()) :: :ok
   def delete_owner_network_rule!(owner_network_rule_id) when is_binary(owner_network_rule_id) do
     from(gnr in Data.SystOwnerNetworkRules, where: gnr.id == ^owner_network_rule_id)
-    |> MsbmsSystDatastore.delete_all()
+    |> MscmpSystDb.delete_all()
 
     :ok
   rescue
@@ -606,7 +606,7 @@ defmodule MsbmsSystAuthentication.Impl.NetworkRules do
   def delete_instance_network_rule!(instance_network_rule_id)
       when is_binary(instance_network_rule_id) do
     from(gnr in Data.SystInstanceNetworkRules, where: gnr.id == ^instance_network_rule_id)
-    |> MsbmsSystDatastore.delete_all()
+    |> MscmpSystDb.delete_all()
 
     :ok
   rescue

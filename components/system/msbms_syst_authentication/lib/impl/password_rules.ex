@@ -18,7 +18,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
   alias MsbmsSystAuthentication.Data
   alias MsbmsSystAuthentication.Impl
   alias MsbmsSystAuthentication.Types
-  alias MsbmsSystDatastore.DbTypes
+  alias MscmpSystDb.DbTypes
 
   require Logger
 
@@ -37,7 +37,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     password
     |> Impl.Hash.weak_hash()
     |> Data.SystDisallowedPasswords.insert_changeset()
-    |> MsbmsSystDatastore.insert!()
+    |> MscmpSystDb.insert!()
 
     :ok
   rescue
@@ -63,7 +63,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     pwd_hash = Impl.Hash.weak_hash(password)
 
     from(dp in Data.SystDisallowedPasswords, where: dp.password_hash == ^pwd_hash)
-    |> MsbmsSystDatastore.exists?()
+    |> MscmpSystDb.exists?()
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -87,7 +87,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     pwd_hash = Impl.Hash.weak_hash(password)
 
     from(dp in Data.SystDisallowedPasswords, where: dp.password_hash == ^pwd_hash)
-    |> MsbmsSystDatastore.delete_all()
+    |> MscmpSystDb.delete_all()
     |> case do
       {1, _} ->
         :deleted
@@ -134,7 +134,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     |> Map.put(:owner_id, owner_id)
     |> Map.merge(default_rules, fn _k, v1, v2 -> if v1 != nil, do: v1, else: v2 end)
     |> Data.SystOwnerPasswordRules.insert_changeset()
-    |> MsbmsSystDatastore.insert!(returning: true)
+    |> MscmpSystDb.insert!(returning: true)
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -187,7 +187,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
   def update_global_password_rules!(global_password_rules, update_params) do
     global_password_rules
     |> Data.SystGlobalPasswordRules.update_changeset(update_params)
-    |> MsbmsSystDatastore.update!(returning: true)
+    |> MscmpSystDb.update!(returning: true)
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -216,7 +216,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
           Data.SystOwnerPasswordRules.t()
   def update_owner_password_rules!(owner_id, update_params) when is_binary(owner_id) do
     from(opwr in Data.SystOwnerPasswordRules, where: opwr.owner_id == ^owner_id)
-    |> MsbmsSystDatastore.one!()
+    |> MscmpSystDb.one!()
     |> update_owner_password_rules!(update_params)
   rescue
     error ->
@@ -231,7 +231,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
   def update_owner_password_rules!(%Data.SystOwnerPasswordRules{} = owner, update_params) do
     owner
     |> Data.SystOwnerPasswordRules.update_changeset(update_params)
-    |> MsbmsSystDatastore.update!(returning: true)
+    |> MscmpSystDb.update!(returning: true)
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -255,7 +255,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
     # There should only ever be one SystGlobalPasswordRules record and always
     # one.
     from(gpwr in Data.SystGlobalPasswordRules)
-    |> MsbmsSystDatastore.one!()
+    |> MscmpSystDb.one!()
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
@@ -280,7 +280,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
           Data.SystOwnerPasswordRules.t() | :not_found
   def get_owner_password_rules!(owner_id) do
     from(opwr in Data.SystOwnerPasswordRules, where: opwr.owner_id == ^owner_id)
-    |> MsbmsSystDatastore.one()
+    |> MscmpSystDb.one()
     |> case do
       %Data.SystOwnerPasswordRules{} = result -> result
       nil -> :not_found
@@ -332,7 +332,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
       where: aa.id == ^access_account_id,
       select: opwr
     )
-    |> MsbmsSystDatastore.one()
+    |> MscmpSystDb.one()
     |> parse_data_struct_to_generic_rule(access_account_id)
   end
 
@@ -613,7 +613,7 @@ defmodule MsbmsSystAuthentication.Impl.PasswordRules do
           :deleted | :not_found
   def delete_owner_password_rules!(owner_id) do
     from(opwr in Data.SystOwnerPasswordRules, where: opwr.owner_id == ^owner_id)
-    |> MsbmsSystDatastore.delete_all()
+    |> MscmpSystDb.delete_all()
     |> case do
       {1, _} ->
         :deleted

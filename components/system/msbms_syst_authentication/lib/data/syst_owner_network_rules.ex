@@ -11,11 +11,11 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MsbmsSystAuthentication.Data.SystOwnerNetworkRules do
-  use MsbmsSystDatastore.Schema
+  use MscmpSystDb.Schema
 
   alias MsbmsSystAuthentication.Data
   alias MsbmsSystAuthentication.Types
-  alias MsbmsSystDatastore.DbTypes
+  alias MscmpSystDb.DbTypes
 
   @moduledoc """
   Expresses Owner specific rules concerning which hosts, as identified by

@@ -24,7 +24,7 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceTypeContext do
         ) :: {:ok, Data.SystInstanceTypeContexts.t()} | {:error, MscmpSystError.t()}
   def update_instance_type_context(instance_type_context_id, instance_type_context_params)
       when is_binary(instance_type_context_id) do
-    MsbmsSystDatastore.get!(Data.SystInstanceTypeContexts, instance_type_context_id)
+    MscmpSystDb.get!(Data.SystInstanceTypeContexts, instance_type_context_id)
     |> update_instance_type_context(instance_type_context_params)
   rescue
     error ->
@@ -46,7 +46,7 @@ defmodule MsbmsSystInstanceMgr.Impl.InstanceTypeContext do
       ) do
     instance_type_context
     |> Data.SystInstanceTypeContexts.update_changeset(instance_type_context_params)
-    |> MsbmsSystDatastore.update!(returning: true)
+    |> MscmpSystDb.update!(returning: true)
     |> then(&{:ok, &1})
   rescue
     error ->

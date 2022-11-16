@@ -52,12 +52,10 @@ defmodule MsbmsSystSettings do
   `Registry` module.
 
   The `datastore_context_name` is an atom which represents a started
-  `MsbmsSystDatastore` context.  This context will be used for accessing and
+  `MscmpSystDb` context.  This context will be used for accessing and
   modifying database data.
   """
-  @spec start_link(
-          {MsbmsSystSettings.Types.service_name(), MsbmsSystDatastore.Types.context_name()}
-        ) ::
+  @spec start_link({MsbmsSystSettings.Types.service_name(), MscmpSystDb.Types.context_name()}) ::
           {:ok, pid()} | {:error, MscmpSystError.t()}
   defdelegate start_link(params), to: MsbmsSystSettings.Runtime.Server
 
@@ -225,7 +223,7 @@ defmodule MsbmsSystSettings do
       ...>   user_description: "An example of updating the user description.",
       ...>   setting_integer: 6758,
       ...>   setting_date_range:
-      ...>      %MsbmsSystDatastore.DbTypes.DateRange{
+      ...>      %MscmpSystDb.DbTypes.DateRange{
       ...>        lower: ~D[2022-04-01],
       ...>        upper: ~D[2022-04-12],
       ...>        upper_inclusive: true
@@ -258,7 +256,7 @@ defmodule MsbmsSystSettings do
       iex> MsbmsSystSettings.get_setting_value(
       ...>   "get_example_setting",
       ...>   :setting_decimal_range)
-      %MsbmsSystDatastore.DbTypes.DecimalRange{
+      %MscmpSystDb.DbTypes.DecimalRange{
         lower: Decimal.new("1.1"),
         upper: Decimal.new("99.99"),
         lower_inclusive: true,

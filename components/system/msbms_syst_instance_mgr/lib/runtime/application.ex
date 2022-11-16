@@ -53,7 +53,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
           :ok | {:error, MscmpSystError.t()}
   def start_application(application_id, startup_options, opts) when is_binary(application_id) do
     from(a in Data.SystApplications, where: a.id == ^application_id, select: [:id, :internal_name])
-    |> MsbmsSystDatastore.one!()
+    |> MscmpSystDb.one!()
     |> start_application(startup_options, opts)
   rescue
     error ->
@@ -80,7 +80,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
 
     {:ok, _} = start_application_supervisor(supervisor_name)
 
-    current_datastore_context = MsbmsSystDatastore.current_datastore_context()
+    current_datastore_context = MscmpSystDb.current_datastore_context()
     current_enums_service = MsbmsSystEnums.get_enums_service()
 
     from(
@@ -89,13 +89,13 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
       where: a.id == ^application_id,
       preload: [application: a, instance_contexts: [:application_context]]
     )
-    |> MsbmsSystDatastore.all()
+    |> MscmpSystDb.all()
     |> then(
       &Task.Supervisor.async_stream_nolink(
         @task_mgr_name,
         &1,
         fn instance ->
-          _ = MsbmsSystDatastore.set_datastore_context(current_datastore_context)
+          _ = MscmpSystDb.set_datastore_context(current_datastore_context)
           _ = MsbmsSystEnums.put_enums_service(current_enums_service)
           start_instance(instance, startup_options, opts)
         end,
@@ -152,7 +152,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
           :ok | {:error, MscmpSystError.t()}
   def start_all_applications(startup_options, opts) do
     from(a in Data.SystApplications, select: [:id, :internal_name])
-    |> MsbmsSystDatastore.all()
+    |> MscmpSystDb.all()
     |> Enum.each(&start_application(&1, startup_options, opts))
   rescue
     error ->
@@ -180,7 +180,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
       where: i.id == ^instance_id,
       preload: [application: a, instance_contexts: [:application_context]]
     )
-    |> MsbmsSystDatastore.one!()
+    |> MscmpSystDb.one!()
     |> start_instance(startup_options, opts)
   rescue
     error ->
@@ -233,7 +233,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
       )
 
     {:ok, _} =
-      MsbmsSystDatastore.upgrade_datastore(
+      MscmpSystDb.upgrade_datastore(
         datastore_options,
         instance.application.internal_name,
         opts[:migration_bindings],
@@ -243,7 +243,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
     datastore_supervisor_name = get_datastore_supervisor_name(instance)
 
     datastore_child_spec =
-      MsbmsSystDatastore.Datastore.child_spec(
+      MscmpSystDb.Datastore.child_spec(
         datastore_options,
         name: datastore_supervisor_name
       )
@@ -299,7 +299,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
           :ok | {:error, MscmpSystError.t()}
   def stop_instance(instance_id, opts) when is_binary(instance_id) do
     from(i in Data.SystInstances, where: i.id == ^instance_id, preload: [:instance_contexts])
-    |> MsbmsSystDatastore.one!()
+    |> MscmpSystDb.one!()
     |> stop_instance(opts)
   rescue
     error ->
@@ -329,7 +329,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
     :ok =
       instance_contexts
       |> Enum.map(&%{context_name: String.to_atom(&1.internal_name)})
-      |> MsbmsSystDatastore.stop_datastore(opts)
+      |> MscmpSystDb.stop_datastore(opts)
 
     :ok = stop_instance_supervisor(instance_name, opts)
 
@@ -368,7 +368,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
           :ok | {:error, MscmpSystError.t()}
   def stop_application(application_id, opts) when is_binary(application_id) do
     from(a in Data.SystApplications, where: a.id == ^application_id, select: [:id, :internal_name])
-    |> MsbmsSystDatastore.one!()
+    |> MscmpSystDb.one!()
     |> stop_application(opts)
   rescue
     error ->
@@ -393,7 +393,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
       where: a.id == ^application_id,
       preload: [:instance_contexts]
     )
-    |> MsbmsSystDatastore.all()
+    |> MscmpSystDb.all()
     |> Enum.each(&stop_instance(&1, opts))
 
     stop_application_supervisor(application_name, opts)
@@ -428,7 +428,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
   @spec stop_all_applications(Keyword.t()) :: :ok | {:error, MscmpSystError.t()}
   def stop_all_applications(opts) do
     from(a in Data.SystApplications, select: [:id, :internal_name])
-    |> MsbmsSystDatastore.all()
+    |> MscmpSystDb.all()
     |> Enum.each(&stop_application(&1, opts))
   rescue
     error ->

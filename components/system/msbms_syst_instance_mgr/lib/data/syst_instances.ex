@@ -11,7 +11,7 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MsbmsSystInstanceMgr.Data.SystInstances do
-  use MsbmsSystDatastore.Schema
+  use MscmpSystDb.Schema
 
   alias MsbmsSystInstanceMgr.Data
   alias MsbmsSystInstanceMgr.Types

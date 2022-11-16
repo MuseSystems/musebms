@@ -29,7 +29,7 @@ defmodule MsbmsSystInstanceMgr.Data.Helpers.SystInstances do
   def resolve_application_id(%{application_name: application_name} = instance_params)
       when is_binary(application_name) do
     from(a in Data.SystApplications, where: a.internal_name == ^application_name, select: a.id)
-    |> MsbmsSystDatastore.one!()
+    |> MscmpSystDb.one!()
     |> then(&Map.put(instance_params, :application_id, &1))
   end
 
@@ -91,7 +91,7 @@ defmodule MsbmsSystInstanceMgr.Data.Helpers.SystInstances do
   def resolve_owner_id(%{owner_name: owner_name} = instance_params)
       when is_binary(owner_name) do
     from(o in Data.SystOwners, where: o.internal_name == ^owner_name, select: o.id)
-    |> MsbmsSystDatastore.one!()
+    |> MscmpSystDb.one!()
     |> then(&Map.put(instance_params, :owner_id, &1))
   end
 
@@ -104,7 +104,7 @@ defmodule MsbmsSystInstanceMgr.Data.Helpers.SystInstances do
       )
       when is_binary(owning_instance_name) do
     from(i in Data.SystInstances, where: i.internal_name == ^owning_instance_name, select: i.id)
-    |> MsbmsSystDatastore.one!()
+    |> MscmpSystDb.one!()
     |> then(&Map.put(instance_params, :owning_instance_id, &1))
   end
 

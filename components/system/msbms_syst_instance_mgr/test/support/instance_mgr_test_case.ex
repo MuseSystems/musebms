@@ -18,7 +18,7 @@ defmodule InstanceMgrTestCase do
   setup do
     [
       datastore_context:
-        MsbmsSystDatastore.set_datastore_context(TestSupport.get_testing_datastore_context_id())
+        MscmpSystDb.set_datastore_context(TestSupport.get_testing_datastore_context_id())
     ]
   end
 

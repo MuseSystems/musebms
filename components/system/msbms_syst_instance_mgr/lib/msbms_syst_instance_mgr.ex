@@ -34,7 +34,7 @@ defmodule MsbmsSystInstanceMgr do
   as "Database Access Contexts".
 
   Datastore and Datastore Context management is provided by the
-  `MsbmsSystDatastore` component.
+  `MscmpSystDb` component.
 
   #### Owners
 
@@ -486,7 +486,7 @@ defmodule MsbmsSystInstanceMgr do
     obtained from the `MsbmsSystOptions` component.
   """
   @spec get_instance_datastore_options(Types.instance_id() | Data.SystInstances.t(), map()) ::
-          MsbmsSystDatastore.Types.datastore_options()
+          MscmpSystDb.Types.datastore_options()
   defdelegate get_instance_datastore_options(instance, startup_options), to: Impl.Instance
 
   @doc section: :instance_data
@@ -534,7 +534,7 @@ defmodule MsbmsSystInstanceMgr do
       * `db_shutdown_timeout` - a timeout value used to limit the time allowed
       for a clean shutdown of the DBA and Privileged database connections used
       for initialization of the Datastore.  See the documentation for
-      `MsbmsSystDatastore.create_datastore/2` for more information.
+      `MscmpSystDb.create_datastore/2` for more information.
   """
   @spec initialize_instance(Types.instance_id(), map(), Keyword.t()) ::
           {:ok, Data.SystInstances.t()} | {:error, MscmpSystError.t()}
@@ -797,7 +797,7 @@ defmodule MsbmsSystInstanceMgr do
       * `db_shutdown_timeout` - a timeout value used to limit the time allowed
       for a clean shutdown of the database connections used for operating
       Datastore.  See the documentation for
-      `MsbmsSystDatastore.stop_datastore/2` for more information.
+      `MscmpSystDb.stop_datastore/2` for more information.
   """
   @spec stop_instance(Types.instance_id() | Data.SystInstances.t(), Keyword.t()) ::
           :ok | {:error, MscmpSystError.t()}

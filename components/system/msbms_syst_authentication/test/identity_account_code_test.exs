@@ -91,7 +91,7 @@ defmodule IdentityAccountCodeTest do
           aa.internal_name == "owned_all_access" and
             ei.internal_name == "identity_types_sysdef_account"
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     assert %Data.SystIdentities{} =
              Impl.Identity.AccountCode.identify_access_account(
@@ -114,7 +114,7 @@ defmodule IdentityAccountCodeTest do
           aa.internal_name == "unowned_all_access" and
             ei.internal_name == "identity_types_sysdef_account"
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     assert %Data.SystIdentities{} =
              Impl.Identity.AccountCode.identify_access_account(
@@ -132,7 +132,7 @@ defmodule IdentityAccountCodeTest do
           aa.internal_name == "owned_all_access" and
             ei.internal_name == "identity_types_sysdef_account"
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     assert Impl.Identity.AccountCode.identify_access_account(bad_target.account_identifier, nil) ==
              nil
@@ -149,7 +149,7 @@ defmodule IdentityAccountCodeTest do
           aa.internal_name == "unowned_all_access" and
             ei.internal_name == "identity_types_sysdef_account"
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     # Default Options
     assert {:ok, %Data.SystIdentities{} = default_identity} =

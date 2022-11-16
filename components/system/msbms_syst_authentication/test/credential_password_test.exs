@@ -233,7 +233,7 @@ defmodule CredentialPasswordTest do
           c.access_account_id == ^access_account_id and
             ei.internal_name == "credential_types_sysdef_password"
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     assert DateTime.compare(test_time, cred.last_updated) in [:eq, :lt]
   end
@@ -336,7 +336,7 @@ defmodule CredentialPasswordTest do
           c.access_account_id == ^access_account_id and
             ei.internal_name == "credential_types_sysdef_password"
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     assert :ok = Impl.Credential.Password.delete_credential(cred)
 
@@ -350,7 +350,7 @@ defmodule CredentialPasswordTest do
           c.access_account_id == ^access_account_id and
             ei.internal_name == "credential_types_sysdef_password"
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     assert :ok = Impl.Credential.Password.delete_credential!(cred)
   end

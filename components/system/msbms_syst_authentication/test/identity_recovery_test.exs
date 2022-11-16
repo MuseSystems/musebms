@@ -18,7 +18,7 @@ defmodule IdentityRecoveryTest do
   alias MsbmsSystAuthentication.Data
   alias MsbmsSystAuthentication.Impl
 
-  alias MsbmsSystDatastore.DbTypes
+  alias MscmpSystDb.DbTypes
 
   @moduletag :capture_log
 
@@ -173,7 +173,7 @@ defmodule IdentityRecoveryTest do
             ei.internal_name == "identity_types_sysdef_password_recovery",
         preload: [access_account: aa]
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     recovery_identity_id = recovery_identity.id
 
@@ -200,7 +200,7 @@ defmodule IdentityRecoveryTest do
             ei.internal_name == "identity_types_sysdef_password_recovery",
         preload: [access_account: aa]
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     recovery_identity_id = recovery_identity.id
 
@@ -227,7 +227,7 @@ defmodule IdentityRecoveryTest do
           aa.internal_name == "identity_recovery_confirm_test_accnt" and
             ei.internal_name == "identity_types_sysdef_password_recovery"
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     assert :ok = Impl.Identity.Recovery.confirm_credential_recovery(target_identity)
 
@@ -241,7 +241,7 @@ defmodule IdentityRecoveryTest do
           aa.internal_name == "identity_recovery_confirm_test_accnt" and
             ei.internal_name == "identity_types_sysdef_password_recovery"
       )
-      |> MsbmsSystDatastore.one()
+      |> MscmpSystDb.one()
 
     assert no_identity == nil
   end
@@ -257,7 +257,7 @@ defmodule IdentityRecoveryTest do
           aa.internal_name == "identity_recovery_revoke_test_accnt" and
             ei.internal_name == "identity_types_sysdef_password_recovery"
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     assert :ok = Impl.Identity.Recovery.revoke_credential_recovery(target_identity)
 
@@ -271,7 +271,7 @@ defmodule IdentityRecoveryTest do
           aa.internal_name == "identity_recovery_revoke_test_accnt" and
             ei.internal_name == "identity_types_sysdef_password_recovery"
       )
-      |> MsbmsSystDatastore.one()
+      |> MscmpSystDb.one()
 
     assert no_identity == nil
   end

@@ -32,7 +32,7 @@ defmodule MsbmsSystAuthentication.MixProject do
     {:mscmp_syst_utils, path: "../mscmp_syst_utils"},
     {:mscmp_syst_error, path: "../mscmp_syst_error"},
     {:mscmp_syst_limiter, path: "../mscmp_syst_limiter"},
-    {:msbms_syst_datastore, path: "../msbms_syst_datastore"},
+    {:mscmp_syst_db, path: "../mscmp_syst_db"},
     {:msbms_syst_enums, path: "../msbms_syst_enums"},
     {:msbms_syst_options, path: "../msbms_syst_options"},
     {:msbms_syst_instance_mgr, path: "../msbms_syst_instance_mgr"}
@@ -63,8 +63,7 @@ defmodule MsbmsSystAuthentication.MixProject do
         main: "MsbmsSystAuthentication",
         output: "../../../documentation/technical/app_server/msbms_syst_authentication",
         deps: [
-          msbms_syst_datastore:
-            "../../../../documentation/technical/app_server/msbms_syst_datastore",
+          mscmp_syst_db: "../../../../documentation/technical/app_server/mscmp_syst_db",
           mscmp_syst_error: "../../../../documentation/technical/app_server/mscmp_syst_error",
           mscmp_syst_utils: "../../../../documentation/technical/app_server/mscmp_syst_utils",
           mscmp_syst_limiter: "../../../../documentation/technical/app_server/mscmp_syst_limiter",

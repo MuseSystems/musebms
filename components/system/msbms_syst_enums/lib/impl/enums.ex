@@ -42,7 +42,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
     from(e in Data.SystEnums,
       preload: [enum_items: [:functional_type], functional_types: []]
     )
-    |> MsbmsSystDatastore.all()
+    |> MscmpSystDb.all()
     |> Enum.each(&:ets.insert(ets_table_name, {&1.internal_name, &1}))
   end
 
@@ -63,7 +63,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
       preload: [enum_items: [:functional_type], functional_types: []],
       where: e.internal_name == ^enum_name
     )
-    |> MsbmsSystDatastore.one!()
+    |> MscmpSystDb.one!()
     |> then(&:ets.insert(ets_table_name, {&1.internal_name, &1}))
 
     :ok
@@ -181,7 +181,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
         Ecto.Multi.new()
         |> create_enum_items_for_enum(changes, enum_params)
       end)
-      |> MsbmsSystDatastore.transaction()
+      |> MscmpSystDb.transaction()
 
     refresh_enum_from_database(enum_params.internal_name)
   rescue
@@ -246,7 +246,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
 
     %Data.SystEnumFunctionalTypes{}
     |> Data.SystEnumFunctionalTypes.changeset(resolved_functional_type)
-    |> MsbmsSystDatastore.insert!()
+    |> MscmpSystDb.insert!()
 
     refresh_enum_from_database(enum_name)
   rescue
@@ -279,7 +279,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
 
     %Data.SystEnumItems{}
     |> Data.SystEnumItems.changeset(resolved_enum_item_params)
-    |> MsbmsSystDatastore.insert!()
+    |> MscmpSystDb.insert!()
 
     refresh_enum_from_database(enum_name)
   rescue
@@ -351,7 +351,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
 
     :ets.lookup_element(ets_table_name, enum_name, 2)
     |> Data.SystEnums.changeset(enum_params)
-    |> MsbmsSystDatastore.update!()
+    |> MscmpSystDb.update!()
 
     if enum_name != resolved_internal_name, do: :ets.delete(ets_table_name, enum_name)
 
@@ -387,7 +387,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
 
     Enum.find(functional_types, &(&1.internal_name == functional_type_name))
     |> Data.SystEnumFunctionalTypes.changeset(functional_type_params)
-    |> MsbmsSystDatastore.update!()
+    |> MscmpSystDb.update!()
 
     refresh_enum_from_database(enum_name)
   rescue
@@ -413,7 +413,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
 
     Enum.find(enum_items, &(&1.internal_name == enum_item_name))
     |> Data.SystEnumItems.changeset(enum_item_params)
-    |> MsbmsSystDatastore.update!()
+    |> MscmpSystDb.update!()
 
     refresh_enum_from_database(enum_name)
   rescue
@@ -436,7 +436,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
 
     delete_qry = from(e in Data.SystEnums, where: e.internal_name == ^enum_name)
 
-    {1, _rows} = MsbmsSystDatastore.delete_all(delete_qry)
+    {1, _rows} = MscmpSystDb.delete_all(delete_qry)
 
     true = :ets.delete(ets_table_name, enum_name)
 
@@ -463,7 +463,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
         where: f.internal_name == ^functional_type_name
       )
 
-    {1, _rows} = MsbmsSystDatastore.delete_all(delete_qry)
+    {1, _rows} = MscmpSystDb.delete_all(delete_qry)
 
     refresh_enum_from_database(enum_name)
   rescue
@@ -485,7 +485,7 @@ defmodule MsbmsSystEnums.Impl.Enums do
   def delete_enum_item(enum_name, enum_item_name) do
     delete_qry = from(f in Data.SystEnumItems, where: f.internal_name == ^enum_item_name)
 
-    {1, _rows} = MsbmsSystDatastore.delete_all(delete_qry)
+    {1, _rows} = MscmpSystDb.delete_all(delete_qry)
 
     refresh_enum_from_database(enum_name)
   rescue

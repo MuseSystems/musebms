@@ -18,7 +18,7 @@ defmodule PasswordRulesTest do
   alias MsbmsSystAuthentication.Data
   alias MsbmsSystAuthentication.Impl
 
-  alias MsbmsSystDatastore.DbTypes
+  alias MscmpSystDb.DbTypes
 
   @moduletag :capture_log
 
@@ -249,7 +249,7 @@ defmodule PasswordRulesTest do
            )
 
     from(opwr in Data.SystOwnerPasswordRules, where: opwr.owner_id == ^owner_id)
-    |> MsbmsSystDatastore.delete_all()
+    |> MscmpSystDb.delete_all()
   end
 
   test "Can create Owner Password Rules / Raise on Error" do
@@ -294,7 +294,7 @@ defmodule PasswordRulesTest do
            )
 
     from(opwr in Data.SystOwnerPasswordRules, where: opwr.owner_id == ^owner_id)
-    |> MsbmsSystDatastore.delete_all()
+    |> MscmpSystDb.delete_all()
   end
 
   test "Can retrieve Owner Password Rules" do

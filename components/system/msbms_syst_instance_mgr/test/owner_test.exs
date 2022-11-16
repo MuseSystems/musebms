@@ -132,7 +132,7 @@ defmodule OwnerTest do
   test "Can Retrieve Owner by Name" do
     owner_record =
       from(o in Data.SystOwners, limit: 1)
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     assert {:ok, test_owner} = MsbmsSystInstanceMgr.get_owner_by_name(owner_record.internal_name)
 
@@ -148,7 +148,7 @@ defmodule OwnerTest do
   test "Can Retrieve Owner ID by Name" do
     owner_record =
       from(o in Data.SystOwners, limit: 1)
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     assert {:ok, test_owner_id} =
              MsbmsSystInstanceMgr.get_owner_id_by_name(owner_record.internal_name)
@@ -178,7 +178,7 @@ defmodule OwnerTest do
                where: o.id == ^new_owner.id,
                preload: [owner_state: {os, functional_type: osft}]
              )
-             |> MsbmsSystDatastore.one!()
+             |> MscmpSystDb.one!()
              |> MsbmsSystInstanceMgr.purge_owner()
   end
 end

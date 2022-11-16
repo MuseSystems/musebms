@@ -11,12 +11,12 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MsbmsSystAuthentication.Data.SystOwnerPasswordRules do
-  use MsbmsSystDatastore.Schema
+  use MscmpSystDb.Schema
 
   alias MsbmsSystAuthentication.Data.Validators
   alias MsbmsSystAuthentication.Types
 
-  alias MsbmsSystDatastore.DbTypes
+  alias MscmpSystDb.DbTypes
 
   @moduledoc """
   Establishes Owner specific rules defining the minimum allowed password

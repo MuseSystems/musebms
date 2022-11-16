@@ -39,7 +39,7 @@ defmodule MsbmsSystSettings.Impl.Settings do
 
     :ets.delete_all_objects(ets_table_name)
 
-    MsbmsSystDatastore.all(Data.SystSettings)
+    MscmpSystDb.all(Data.SystSettings)
     |> Enum.each(&:ets.insert(ets_table_name, {&1.internal_name, &1}))
   end
 
@@ -87,7 +87,7 @@ defmodule MsbmsSystSettings.Impl.Settings do
 
     creation_params
     |> then(&Data.SystSettings.changeset(%Data.SystSettings{}, &1))
-    |> MsbmsSystDatastore.insert!(returning: true)
+    |> MscmpSystDb.insert!(returning: true)
     |> then(&:ets.insert(ets_table_name, {&1.internal_name, &1}))
 
     :ok
@@ -113,7 +113,7 @@ defmodule MsbmsSystSettings.Impl.Settings do
 
     :ets.lookup_element(ets_table_name, setting_name, 2)
     |> Data.SystSettings.changeset(update_params)
-    |> MsbmsSystDatastore.update!(returning: true)
+    |> MscmpSystDb.update!(returning: true)
     |> then(&:ets.update_element(ets_table_name, setting_name, {2, &1}))
 
     :ok
@@ -137,7 +137,7 @@ defmodule MsbmsSystSettings.Impl.Settings do
 
     delete_qry = from(s in Data.SystSettings, where: s.internal_name == ^setting_name)
 
-    {1, _rows} = MsbmsSystDatastore.delete_all(delete_qry)
+    {1, _rows} = MscmpSystDb.delete_all(delete_qry)
 
     true = :ets.delete(ets_table_name, setting_name)
 

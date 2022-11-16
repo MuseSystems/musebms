@@ -11,7 +11,7 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MsbmsSystEnums.Data.SystEnumFunctionalTypes do
-  use MsbmsSystDatastore.Schema
+  use MscmpSystDb.Schema
 
   import Ecto.Changeset
 

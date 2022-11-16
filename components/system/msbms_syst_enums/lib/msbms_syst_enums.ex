@@ -24,10 +24,10 @@ defmodule MsbmsSystEnums do
   `Registry` module.
 
   The `datastore_context_name` is an atom which represents a started
-  `MsbmsSystDatastore` context.  This context will be used for accessing and
+  `MscmpSystDb` context.  This context will be used for accessing and
   modifying database data.
   """
-  @spec start_link({Types.service_name(), MsbmsSystDatastore.Types.context_name()}) ::
+  @spec start_link({Types.service_name(), MscmpSystDb.Types.context_name()}) ::
           {:ok, pid()} | {:error, MscmpSystError.t()}
   defdelegate start_link(params), to: Runtime.Server
 

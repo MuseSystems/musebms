@@ -114,7 +114,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity do
       where: i.id == ^identity,
       select: struct(i, [:identity_expires])
     )
-    |> MsbmsSystDatastore.one!()
+    |> MscmpSystDb.one!()
     |> identity_expired?()
   rescue
     error ->
@@ -158,7 +158,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity do
       where: i.id == ^identity,
       select: struct(i, [:validated])
     )
-    |> MsbmsSystDatastore.one!()
+    |> MscmpSystDb.one!()
     |> identity_validated?()
   rescue
     error ->
@@ -187,7 +187,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity do
       join: ei in assoc(i, :identity_type),
       where: i.id == ^identity_id and ei.internal_name == ^identity_type_name
     )
-    |> MsbmsSystDatastore.delete_all()
+    |> MscmpSystDb.delete_all()
     |> case do
       {0, _} ->
         :not_found
@@ -209,6 +209,6 @@ defmodule MsbmsSystAuthentication.Impl.Identity do
   @spec get_identity_record(Types.identity_id()) :: Data.SystIdentities.t()
   def get_identity_record(identity_id) when is_binary(identity_id) do
     from(i in Data.SystIdentities, where: i.id == ^identity_id)
-    |> MsbmsSystDatastore.one!()
+    |> MscmpSystDb.one!()
   end
 end

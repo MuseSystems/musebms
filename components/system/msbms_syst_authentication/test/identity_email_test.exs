@@ -102,7 +102,7 @@ defmodule IdentityEmailTest do
           aa.internal_name == "owned_all_access" and
             ei.internal_name == "identity_types_sysdef_email"
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     assert %Data.SystIdentities{} =
              Impl.Identity.Email.identify_access_account(
@@ -124,7 +124,7 @@ defmodule IdentityEmailTest do
           aa.internal_name == "unowned_all_access" and
             ei.internal_name == "identity_types_sysdef_email"
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     assert %Data.SystIdentities{} =
              Impl.Identity.Email.identify_access_account(
@@ -142,7 +142,7 @@ defmodule IdentityEmailTest do
           aa.internal_name == "owned_all_access" and
             ei.internal_name == "identity_types_sysdef_email"
       )
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
 
     assert Impl.Identity.Email.identify_access_account(bad_target.account_identifier, nil) == nil
   end

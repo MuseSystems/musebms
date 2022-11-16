@@ -64,7 +64,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Email do
     |> verify_email_address()
     |> normalize_email_address()
     |> Helpers.get_identification_query("identity_types_sysdef_email", owner_id)
-    |> MsbmsSystDatastore.one()
+    |> MscmpSystDb.one()
   end
 
   # This doesn't catch all RFC compliant email addresses; specifically "@" is

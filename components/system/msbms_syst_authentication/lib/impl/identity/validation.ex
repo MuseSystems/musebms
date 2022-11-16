@@ -35,7 +35,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Validation do
           {:ok, Data.SystIdentities.t()} | {:error, MscmpSystError.t() | Exception.t()}
   def request_identity_validation(target_identity_id, opts) when is_binary(target_identity_id) do
     from(i in Data.SystIdentities, where: i.id == ^target_identity_id)
-    |> MsbmsSystDatastore.one!()
+    |> MscmpSystDb.one!()
     |> request_identity_validation(opts)
   rescue
     error ->
@@ -60,7 +60,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Validation do
         create_validated: @default_create_validated
       )
 
-    MsbmsSystDatastore.transaction(fn ->
+    MscmpSystDb.transaction(fn ->
       target_identity
       |> reset_validation_target_identity(opts)
       |> create_validation_identity(opts)
@@ -116,18 +116,18 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Validation do
   def identify_access_account(validation_token, owner_id) when is_binary(validation_token) do
     validation_token
     |> Helpers.get_identification_query("identity_types_sysdef_validation", owner_id)
-    |> MsbmsSystDatastore.one()
+    |> MscmpSystDb.one()
   end
 
   @spec confirm_identity_validation(Data.SystIdentities.t()) ::
           {:ok, Data.SystIdentities.t()} | {:error, MscmpSystError.t()}
   def confirm_identity_validation(validation_identity) do
-    MsbmsSystDatastore.transaction(fn ->
+    MscmpSystDb.transaction(fn ->
       date_now = DateTime.now!("Etc/UTC")
 
       validated_identity =
         from(i in Data.SystIdentities, where: i.id == ^validation_identity.validates_identity_id)
-        |> MsbmsSystDatastore.one!()
+        |> MscmpSystDb.one!()
         |> verify_not_expired()
         |> verify_not_validated()
         |> Helpers.update_record(%{validated: date_now})
@@ -153,10 +153,10 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Validation do
   @spec revoke_identity_validation(Data.SystIdentities.t()) ::
           {:ok, Data.SystIdentities.t()} | {:error, MscmpSystError.t()}
   def revoke_identity_validation(validation_identity) do
-    MsbmsSystDatastore.transaction(fn ->
+    MscmpSystDb.transaction(fn ->
       revoked_identity =
         from(i in Data.SystIdentities, where: i.id == ^validation_identity.validates_identity_id)
-        |> MsbmsSystDatastore.one!()
+        |> MscmpSystDb.one!()
         |> verify_not_validated()
         |> Helpers.update_record(%{validation_requested: nil})
 
@@ -215,7 +215,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Validation do
           {:ok, Data.SystIdentities.t() | nil} | {:error, MscmpSystError.t()}
   def get_validation_identity_for_identity_id(target_identity_id) do
     from(i in Data.SystIdentities, where: i.validates_identity_id == ^target_identity_id)
-    |> MsbmsSystDatastore.one()
+    |> MscmpSystDb.one()
     |> then(&{:ok, &1})
   rescue
     error ->

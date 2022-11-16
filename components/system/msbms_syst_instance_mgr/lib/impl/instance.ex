@@ -31,7 +31,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
   def create_instance(instance_params) do
     instance_params
     |> Data.SystInstances.insert_changeset()
-    |> MsbmsSystDatastore.insert!(returning: true)
+    |> MscmpSystDb.insert!(returning: true)
     |> then(&{:ok, &1})
   rescue
     error ->
@@ -52,7 +52,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
           Types.instance_id() | Data.SystInstances.t(),
           startup_options :: map()
         ) ::
-          MsbmsSystDatastore.Types.datastore_options()
+          MscmpSystDb.Types.datastore_options()
   def get_instance_datastore_options(instance_id, startup_options) when is_binary(instance_id) do
     from(i in Data.SystInstances,
       as: :instances,
@@ -65,7 +65,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
       where: i.id == ^instance_id,
       preload: [application: a, instance_contexts: {ic, application_context: ac}]
     )
-    |> MsbmsSystDatastore.one!()
+    |> MscmpSystDb.one!()
     |> get_instance_datastore_options(startup_options)
   end
 
@@ -139,14 +139,14 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
 
     {:ok, initializing_instance} =
       from(i in Data.SystInstances, where: i.id == ^instance_id)
-      |> MsbmsSystDatastore.one!()
+      |> MscmpSystDb.one!()
       |> verify_initialization_eligibility()
       |> set_instance_state(opts[:initializing_state_id])
 
     datastore_options = get_instance_datastore_options(initializing_instance.id, startup_options)
 
     datastore_options
-    |> MsbmsSystDatastore.create_datastore(opts)
+    |> MscmpSystDb.create_datastore(opts)
     |> process_create_datastore_result(initializing_instance, datastore_options, opts)
   rescue
     error ->
@@ -190,7 +190,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
   def set_instance_state(instance, instance_state_id) do
     instance
     |> Data.SystInstances.update_changeset(%{instance_state_id: instance_state_id})
-    |> MsbmsSystDatastore.update!(returning: true)
+    |> MscmpSystDb.update!(returning: true)
     |> then(&{:ok, &1})
   rescue
     error ->
@@ -211,7 +211,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
   end
 
   defp process_create_datastore_result(error, instance, datastore_options, opts) do
-    :ok = MsbmsSystDatastore.drop_datastore(datastore_options)
+    :ok = MscmpSystDb.drop_datastore(datastore_options)
 
     {:ok, _} = set_instance_state(instance, opts[:failed_state_id])
 
@@ -278,7 +278,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
       where: i.id == ^instance_id,
       select: {ac.internal_name, ic.internal_name}
     )
-    |> MsbmsSystDatastore.all()
+    |> MscmpSystDb.all()
     |> Enum.map(&{String.to_atom(elem(&1, 0)), elem(&1, 1)})
   end
 
@@ -297,7 +297,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
       where: i.internal_name == ^instance_name,
       preload: [instance_state: {is, functional_type: isft}]
     )
-    |> MsbmsSystDatastore.one!()
+    |> MscmpSystDb.one!()
     |> then(&{:ok, &1})
   rescue
     error ->
@@ -319,7 +319,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
           {:ok, Types.instance_id()} | {:error, MscmpSystError.t()}
   def get_instance_id_by_name(instance_name) do
     from(i in Data.SystInstances, select: i.id, where: i.internal_name == ^instance_name)
-    |> MsbmsSystDatastore.one!()
+    |> MscmpSystDb.one!()
     |> then(&{:ok, &1})
   rescue
     error ->
@@ -345,7 +345,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
       where: i.id == ^instance_id,
       preload: [instance_state: {is, functional_type: isft}]
     )
-    |> MsbmsSystDatastore.one!()
+    |> MscmpSystDb.one!()
     |> purge_instance(startup_options)
   rescue
     error ->
@@ -391,8 +391,8 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
 
   defp maybe_perform_instance_purge("instance_states_purge_eligible", instance, startup_options) do
     datastore_options = get_instance_datastore_options(instance, startup_options)
-    :ok = MsbmsSystDatastore.drop_datastore(datastore_options)
-    _ = MsbmsSystDatastore.delete!(instance)
+    :ok = MscmpSystDb.drop_datastore(datastore_options)
+    _ = MscmpSystDb.delete!(instance)
     :ok
   end
 

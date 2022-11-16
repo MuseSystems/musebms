@@ -25,7 +25,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccount do
   def create_access_account(access_account_params) do
     access_account_params
     |> Data.SystAccessAccounts.insert_changeset()
-    |> MsbmsSystDatastore.insert!(returning: true)
+    |> MscmpSystDb.insert!(returning: true)
     |> then(&{:ok, &1})
   rescue
     error ->
@@ -48,7 +48,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccount do
           {:ok, Data.SystAccessAccounts.t()} | {:error, MscmpSystError.t()}
   def update_access_account(access_account_id, access_account_params)
       when is_binary(access_account_id) do
-    MsbmsSystDatastore.get!(Data.SystAccessAccounts, access_account_id)
+    MscmpSystDb.get!(Data.SystAccessAccounts, access_account_id)
     |> update_access_account(access_account_params)
   rescue
     error ->
@@ -67,7 +67,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccount do
   def update_access_account(%Data.SystAccessAccounts{} = access_account, access_account_params) do
     access_account
     |> Data.SystAccessAccounts.update_changeset(access_account_params)
-    |> MsbmsSystDatastore.update!(returning: true)
+    |> MscmpSystDb.update!(returning: true)
     |> then(&{:ok, &1})
   rescue
     error ->
@@ -90,7 +90,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccount do
       select: aa.id,
       where: aa.internal_name == ^access_account_name
     )
-    |> MsbmsSystDatastore.one!()
+    |> MscmpSystDb.one!()
     |> then(&{:ok, &1})
   rescue
     error ->
@@ -116,7 +116,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccount do
       where: aa.internal_name == ^access_account_name,
       preload: [access_account_state: {aas, functional_type: aasft}]
     )
-    |> MsbmsSystDatastore.one!()
+    |> MscmpSystDb.one!()
     |> then(&{:ok, &1})
   rescue
     error ->
@@ -142,7 +142,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccount do
       where: aa.id == ^access_account_id,
       preload: [access_account_state: {aas, functional_type: aasft}]
     )
-    |> MsbmsSystDatastore.one!()
+    |> MscmpSystDb.one!()
     |> purge_access_account()
   end
 
@@ -157,7 +157,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccount do
       ) do
     case functional_type do
       "access_account_states_purge_eligible" ->
-        MsbmsSystDatastore.delete!(access_account)
+        MscmpSystDb.delete!(access_account)
         :ok
 
       _ ->

@@ -14,7 +14,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
   alias MsbmsSystAuthentication.Data
   alias MsbmsSystAuthentication.Impl
   alias MsbmsSystAuthentication.Types
-  alias MsbmsSystDatastore.DbTypes
+  alias MscmpSystDb.DbTypes
 
   # TODO: This whole module and approach feels too complex.  The flexibility
   #       built into the authentication flow is helpful in allowing us to

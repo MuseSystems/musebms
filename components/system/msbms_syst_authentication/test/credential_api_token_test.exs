@@ -206,6 +206,6 @@ defmodule CredentialApiTokenTest do
         aa.internal_name == ^access_account_name and
           ei.internal_name == "identity_types_sysdef_api"
     )
-    |> MsbmsSystDatastore.one!()
+    |> MscmpSystDb.one!()
   end
 end

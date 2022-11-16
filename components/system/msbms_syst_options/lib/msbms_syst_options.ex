@@ -141,7 +141,7 @@ defmodule MsbmsSystOptions do
 
   @doc section: :options_parsing
   @doc """
-  Returns the `t:MsbmsSystDatastore.Types.db_server/0` data for the database
+  Returns the `t:MscmpSystDb.Types.db_server/0` data for the database
   server designated as hosting the global database.
 
   ## Parameters
@@ -153,7 +153,7 @@ defmodule MsbmsSystOptions do
       iex> %{server_name: "global_db"} = MsbmsSystOptions.get_global_dbserver(config_options)
 
   """
-  @spec get_global_dbserver(map()) :: MsbmsSystDatastore.Types.db_server()
+  @spec get_global_dbserver(map()) :: MscmpSystDb.Types.db_server()
   defdelegate get_global_dbserver(options), to: OptionsParser
 
   @doc section: :options_parsing
@@ -267,7 +267,7 @@ defmodule MsbmsSystOptions do
 
   """
   @spec list_dbservers(map(), list(Types.server_pool())) ::
-          list(MsbmsSystDatastore.Types.db_server())
+          list(MscmpSystDb.Types.db_server())
   defdelegate list_dbservers(options, filters \\ []), to: OptionsParser
 
   @doc section: :options_parsing
@@ -305,6 +305,6 @@ defmodule MsbmsSystOptions do
       iex> MsbmsSystOptions.get_dbserver_by_name(config_options, "non_existent_db")
       nil
   """
-  @spec get_dbserver_by_name(map(), String.t()) :: MsbmsSystDatastore.Types.db_server()
+  @spec get_dbserver_by_name(map(), String.t()) :: MscmpSystDb.Types.db_server()
   defdelegate get_dbserver_by_name(options, dbserver_name), to: OptionsParser
 end
