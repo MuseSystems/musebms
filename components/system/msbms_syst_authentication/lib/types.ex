@@ -78,8 +78,8 @@ defmodule MsbmsSystAuthentication.Types do
   @type access_account_instance_assoc_params() :: %{
           optional(:access_account_id) => access_account_id(),
           optional(:access_account_name) => access_account_name(),
-          optional(:instance_id) => MsbmsSystInstanceMgr.Types.instance_id(),
-          optional(:instance_name) => MsbmsSystInstanceMgr.Types.instance_name(),
+          optional(:instance_id) => MscmpSystInstance.Types.instance_id(),
+          optional(:instance_name) => MscmpSystInstance.Types.instance_name(),
           optional(:access_granted) => DateTime.t(),
           optional(:invitation_issued) => DateTime.t(),
           optional(:invitation_expires) => DateTime.t(),
@@ -128,8 +128,8 @@ defmodule MsbmsSystAuthentication.Types do
   @type access_account_params() :: %{
           optional(:internal_name) => access_account_name(),
           optional(:external_name) => String.t(),
-          optional(:owning_owner_id) => MsbmsSystInstanceMgr.Types.owner_id(),
-          optional(:owning_owner_name) => MsbmsSystInstanceMgr.Types.owner_name(),
+          optional(:owning_owner_id) => MscmpSystInstance.Types.owner_id(),
+          optional(:owning_owner_name) => MscmpSystInstance.Types.owner_name(),
           optional(:allow_global_logins) => boolean(),
           optional(:access_account_state_id) => access_account_state_id(),
           optional(:access_account_state_name) => access_account_name()
@@ -291,14 +291,14 @@ defmodule MsbmsSystAuthentication.Types do
   @type authentication_state() :: %{
           required(:status) => authentication_status(),
           required(:access_account_id) => access_account_id() | nil,
-          required(:instance_id) => MsbmsSystInstanceMgr.Types.instance_id() | nil,
+          required(:instance_id) => MscmpSystInstance.Types.instance_id() | nil,
           required(:identity_type_id) => identity_type_id(),
           required(:host_address) => host_address(),
           required(:applied_network_rule) => applied_network_rule() | nil,
           required(:pending_operations) => list(authentication_operations()),
           optional(:identifier) => account_identifier(),
           optional(:plaintext_credential) => credential(),
-          optional(:owning_owner_id) => MsbmsSystInstanceMgr.Types.owner_id() | nil,
+          optional(:owning_owner_id) => MscmpSystInstance.Types.owner_id() | nil,
           optional(:identity_id) => identity_id(),
           optional(:identity) => Data.SystIdentities.t(),
           optional(:reset_reason) => credential_reset_reason()
@@ -761,8 +761,8 @@ defmodule MsbmsSystAuthentication.Types do
   """
   @type instance_network_rule_params() ::
           %{
-            optional(:instance_id) => MsbmsSystInstanceMgr.Types.instance_id(),
-            optional(:instance_name) => MsbmsSystInstanceMgr.Types.instance_name(),
+            optional(:instance_id) => MscmpSystInstance.Types.instance_id(),
+            optional(:instance_name) => MscmpSystInstance.Types.instance_name(),
             optional(:ordering) => pos_integer(),
             optional(:functional_type) => network_rule_functional_type() | String.t(),
             optional(:ip_host_or_network) => DbTypes.Inet.t(),
@@ -866,8 +866,8 @@ defmodule MsbmsSystAuthentication.Types do
   `ip_host_range_lower` and `ip_host_range_upper` are required and exclusive.
   """
   @type owner_network_rule_params() :: %{
-          optional(:owner_id) => MsbmsSystInstanceMgr.Types.owner_id(),
-          optional(:owner_name) => MsbmsSystInstanceMgr.Types.owner_name(),
+          optional(:owner_id) => MscmpSystInstance.Types.owner_id(),
+          optional(:owner_name) => MscmpSystInstance.Types.owner_name(),
           optional(:ordering) => pos_integer(),
           optional(:functional_type) => network_rule_functional_type() | String.t(),
           optional(:ip_host_or_network) => DbTypes.Inet.t(),
@@ -949,7 +949,7 @@ defmodule MsbmsSystAuthentication.Types do
   """
   @type password_rules() :: %{
           optional(:access_account_id) => access_account_id() | nil,
-          optional(:owner_id) => MsbmsSystInstanceMgr.Types.owner_id() | nil,
+          optional(:owner_id) => MscmpSystInstance.Types.owner_id() | nil,
           optional(:password_length) => DbTypes.IntegerRange.t(),
           optional(:max_age) => DbTypes.Interval.t(),
           optional(:require_upper_case) => non_neg_integer(),
@@ -1024,8 +1024,8 @@ defmodule MsbmsSystAuthentication.Types do
 
   """
   @type password_rule_params() :: %{
-          optional(:owner_id) => MsbmsSystInstanceMgr.Types.owner_id() | nil,
-          optional(:owner_name) => MsbmsSystInstanceMgr.Types.owner_name() | nil,
+          optional(:owner_id) => MscmpSystInstance.Types.owner_id() | nil,
+          optional(:owner_name) => MscmpSystInstance.Types.owner_name() | nil,
           optional(:password_length) => DbTypes.IntegerRange.t(),
           optional(:max_age) => DbTypes.Interval.t(),
           optional(:require_upper_case) => non_neg_integer(),

@@ -29,7 +29,7 @@ defmodule MsbmsSystAuthentication.Data.Helpers.General do
       when is_binary(owner_name) do
     owner_id =
       owner_name
-      |> MsbmsSystInstanceMgr.get_owner_id_by_name()
+      |> MscmpSystInstance.get_owner_id_by_name()
       |> process_owner_id_by_name_result()
 
     Map.put(access_account_params, :owning_owner_id, owner_id)
@@ -48,7 +48,7 @@ defmodule MsbmsSystAuthentication.Data.Helpers.General do
 
   def resolve_instance_id(%{instance_name: instance_name} = change_params)
       when is_binary(instance_name) do
-    {:ok, instance_id} = MsbmsSystInstanceMgr.get_instance_id_by_name(instance_name)
+    {:ok, instance_id} = MscmpSystInstance.get_instance_id_by_name(instance_name)
 
     Map.put(change_params, :instance_id, instance_id)
   end

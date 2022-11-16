@@ -113,7 +113,7 @@ defmodule IntegrationTest do
     #   "allowed_mfa_types": ["credential_types_secondary_totp"]
     # }
 
-    {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner2")
+    {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner2")
 
     pwd_rule_params = %{
       password_length: %DbTypes.IntegerRange{lower: 12, upper: 64, upper_inclusive: true},
@@ -200,7 +200,7 @@ defmodule IntegrationTest do
   end
 
   test "Step 1.06: Add Owner Network Rules" do
-    {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner2")
+    {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner2")
 
     # The following sequence of rules should result in a file set of Owner
     # Network Rules which look like:
@@ -234,7 +234,7 @@ defmodule IntegrationTest do
 
   test "Step 1.07: Add Instance Network Rules" do
     {:ok, instance_id} =
-      MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner2_instance_types_std")
+      MscmpSystInstance.get_instance_id_by_name("app1_owner2_instance_types_std")
 
     # The following sequence of rules should result in a file set of Owner
     # Network Rules which look like:
@@ -504,7 +504,7 @@ defmodule IntegrationTest do
       MsbmsSystAuthentication.get_access_account_id_by_name("unowned_access_account")
 
     {:ok, owner1_instance_id} =
-      MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner1_instance_types_std")
+      MscmpSystInstance.get_instance_id_by_name("app1_owner1_instance_types_std")
 
     assert {:ok, %Data.SystAccessAccountInstanceAssocs{} = invited_aaia_owner1} =
              MsbmsSystAuthentication.invite_to_instance(access_account_id, owner1_instance_id)
@@ -514,7 +514,7 @@ defmodule IntegrationTest do
     # Invite w/Custom Expiration
 
     {:ok, owner2_instance_id} =
-      MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner2_instance_types_std")
+      MscmpSystInstance.get_instance_id_by_name("app1_owner2_instance_types_std")
 
     assert {:ok, %Data.SystAccessAccountInstanceAssocs{} = invited_aaia_owner2} =
              MsbmsSystAuthentication.invite_to_instance(access_account_id, owner2_instance_id,
@@ -531,7 +531,7 @@ defmodule IntegrationTest do
     # Invite w/Create Accepted Option
 
     {:ok, owner3_instance_id} =
-      MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner3_instance_types_std")
+      MscmpSystInstance.get_instance_id_by_name("app1_owner3_instance_types_std")
 
     assert {:ok, %Data.SystAccessAccountInstanceAssocs{} = invited_aaia_owner3} =
              MsbmsSystAuthentication.invite_to_instance(access_account_id, owner3_instance_id,
@@ -546,7 +546,7 @@ defmodule IntegrationTest do
       MsbmsSystAuthentication.get_access_account_id_by_name("unowned_access_account")
 
     {:ok, instance_id} =
-      MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner1_instance_types_std")
+      MscmpSystInstance.get_instance_id_by_name("app1_owner1_instance_types_std")
 
     assert {:ok, aaia_record} =
              MsbmsSystAuthentication.accept_instance_invite(access_account_id, instance_id)
@@ -559,7 +559,7 @@ defmodule IntegrationTest do
       MsbmsSystAuthentication.get_access_account_id_by_name("unowned_access_account")
 
     {:ok, instance_id} =
-      MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner2_instance_types_std")
+      MscmpSystInstance.get_instance_id_by_name("app1_owner2_instance_types_std")
 
     assert {:ok, aaia_record} =
              MsbmsSystAuthentication.decline_instance_invite(access_account_id, instance_id)
@@ -570,7 +570,7 @@ defmodule IntegrationTest do
   test "Step 2.13: Authenticate Unowned Access Account using Email/Password" do
     # Instance access invite was explicitly accepted in earlier step.
     {:ok, instance1_id} =
-      MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner1_instance_types_std")
+      MscmpSystInstance.get_instance_id_by_name("app1_owner1_instance_types_std")
 
     assert {:ok, auth_status1} =
              MsbmsSystAuthentication.authenticate_email_password(
@@ -584,7 +584,7 @@ defmodule IntegrationTest do
 
     # Instance access was created as accepted.
     {:ok, instance3_id} =
-      MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner3_instance_types_std")
+      MscmpSystInstance.get_instance_id_by_name("app1_owner3_instance_types_std")
 
     assert {:ok, auth_status3} =
              MsbmsSystAuthentication.authenticate_email_password(
@@ -599,7 +599,7 @@ defmodule IntegrationTest do
 
   test "Step 2.14: Fail Authentication Unowned Access Account / Bad Password" do
     {:ok, instance_id} =
-      MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner1_instance_types_std")
+      MscmpSystInstance.get_instance_id_by_name("app1_owner1_instance_types_std")
 
     assert {:ok, auth_status} =
              MsbmsSystAuthentication.authenticate_email_password(
@@ -615,7 +615,7 @@ defmodule IntegrationTest do
   test "Step 2.15: Fail Authentication Unowned Access Account / Bad Instance" do
     # This instance access was declined in an earlier step.
     {:ok, instance_id} =
-      MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner2_instance_types_std")
+      MscmpSystInstance.get_instance_id_by_name("app1_owner2_instance_types_std")
 
     assert {:ok, auth_status} =
              MsbmsSystAuthentication.authenticate_email_password(
@@ -630,7 +630,7 @@ defmodule IntegrationTest do
 
   test "Step 2.16: Fail Authentication Unowned Access Account / Bad Email Case" do
     {:ok, instance_id} =
-      MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner1_instance_types_std")
+      MscmpSystInstance.get_instance_id_by_name("app1_owner1_instance_types_std")
 
     assert {:ok, auth_status} =
              MsbmsSystAuthentication.authenticate_email_password(
@@ -655,7 +655,7 @@ defmodule IntegrationTest do
     assert Enum.member?(parial_auth_status.pending_operations, :require_instance)
 
     {:ok, instance_id} =
-      MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner1_instance_types_std")
+      MscmpSystInstance.get_instance_id_by_name("app1_owner1_instance_types_std")
 
     assert {:ok, complete_auth_status} =
              MsbmsSystAuthentication.authenticate_email_password(parial_auth_status,
@@ -677,7 +677,7 @@ defmodule IntegrationTest do
     assert Enum.member?(partial_auth_status.pending_operations, :require_instance)
 
     {:ok, instance_id} =
-      MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner2_instance_types_std")
+      MscmpSystInstance.get_instance_id_by_name("app1_owner2_instance_types_std")
 
     assert {:ok, rejected_auth_status} =
              MsbmsSystAuthentication.authenticate_email_password(partial_auth_status,
@@ -873,7 +873,7 @@ defmodule IntegrationTest do
 
   test "Step 2.30: Authenticate API Token for Unowned Access Account" do
     {:ok, instance_id} =
-      MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner1_instance_types_std")
+      MscmpSystInstance.get_instance_id_by_name("app1_owner1_instance_types_std")
 
     {:ok, access_account_id} =
       MsbmsSystAuthentication.get_access_account_id_by_name("unowned_access_account")
@@ -981,7 +981,7 @@ defmodule IntegrationTest do
   # themselves will be made here.
 
   test "Step 3.01: Add Owned Access Accounts" do
-    {:ok, owner1_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner1")
+    {:ok, owner1_id} = MscmpSystInstance.get_owner_id_by_name("owner1")
 
     state = MscmpSystEnums.get_default_enum_item("access_account_states")
 
@@ -996,7 +996,7 @@ defmodule IntegrationTest do
 
     assert access_account1.owning_owner_id == owner1_id
 
-    {:ok, owner2_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner2")
+    {:ok, owner2_id} = MscmpSystInstance.get_owner_id_by_name("owner2")
 
     assert {:ok, %MsbmsSystAuthentication.Data.SystAccessAccounts{}} =
              MsbmsSystAuthentication.create_access_account(%{
@@ -1010,7 +1010,7 @@ defmodule IntegrationTest do
     # Owner 3 Access Account is just being created for later testing; doesn't
     # add much here.
 
-    {:ok, owner3_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner3")
+    {:ok, owner3_id} = MscmpSystInstance.get_owner_id_by_name("owner3")
 
     assert {:ok, %MsbmsSystAuthentication.Data.SystAccessAccounts{}} =
              MsbmsSystAuthentication.create_access_account(%{
@@ -1096,7 +1096,7 @@ defmodule IntegrationTest do
   end
 
   test "Step 3.04: Violate Rate Limit for Owned Access Account Email Identity" do
-    {:ok, owner1_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner1")
+    {:ok, owner1_id} = MscmpSystInstance.get_owner_id_by_name("owner1")
 
     assert :rejected_rate_limited =
              violate_email_rate_limit(
@@ -1106,7 +1106,7 @@ defmodule IntegrationTest do
                100
              )
 
-    {:ok, owner2_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner2")
+    {:ok, owner2_id} = MscmpSystInstance.get_owner_id_by_name("owner2")
 
     assert {:ok, %{status: :rejected_rate_limited}} =
              MsbmsSystAuthentication.authenticate_email_password(
@@ -1134,7 +1134,7 @@ defmodule IntegrationTest do
       MsbmsSystAuthentication.get_access_account_id_by_name("owner1_access_account")
 
     {:ok, owner1_instance_id} =
-      MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner1_instance_types_std")
+      MscmpSystInstance.get_instance_id_by_name("app1_owner1_instance_types_std")
 
     assert {:ok, %Data.SystAccessAccountInstanceAssocs{} = invited_aaia_owner1} =
              MsbmsSystAuthentication.invite_to_instance(owner1_account_id, owner1_instance_id,
@@ -1149,7 +1149,7 @@ defmodule IntegrationTest do
       MsbmsSystAuthentication.get_access_account_id_by_name("owner2_access_account")
 
     {:ok, owner2_instance_id} =
-      MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner2_instance_types_std")
+      MscmpSystInstance.get_instance_id_by_name("app1_owner2_instance_types_std")
 
     assert {:ok, %Data.SystAccessAccountInstanceAssocs{} = invited_aaia_owner2} =
              MsbmsSystAuthentication.invite_to_instance(owner2_account_id, owner2_instance_id,
@@ -1169,7 +1169,7 @@ defmodule IntegrationTest do
       MsbmsSystAuthentication.get_access_account_id_by_name("owner2_access_account")
 
     {:ok, instance_id} =
-      MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner2_instance_types_std")
+      MscmpSystInstance.get_instance_id_by_name("app1_owner2_instance_types_std")
 
     assert {:ok, aaia_record} =
              MsbmsSystAuthentication.accept_instance_invite(access_account_id, instance_id)
@@ -1180,9 +1180,9 @@ defmodule IntegrationTest do
   test "Step 3.06: Authenticate Owned Access Account using Email/Password" do
     # Instance access invite was explicitly accepted in earlier step.
     {:ok, instance1_id} =
-      MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner1_instance_types_std")
+      MscmpSystInstance.get_instance_id_by_name("app1_owner1_instance_types_std")
 
-    {:ok, owner1_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner1")
+    {:ok, owner1_id} = MscmpSystInstance.get_owner_id_by_name("owner1")
 
     assert {:ok, auth_status1} =
              MsbmsSystAuthentication.authenticate_email_password(
@@ -1197,9 +1197,9 @@ defmodule IntegrationTest do
 
     # Instance access was created as accepted.
     {:ok, instance2_id} =
-      MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner2_instance_types_std")
+      MscmpSystInstance.get_instance_id_by_name("app1_owner2_instance_types_std")
 
-    {:ok, owner2_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner2")
+    {:ok, owner2_id} = MscmpSystInstance.get_owner_id_by_name("owner2")
 
     assert {:ok, auth_status2} =
              MsbmsSystAuthentication.authenticate_email_password(
@@ -1231,7 +1231,7 @@ defmodule IntegrationTest do
   end
 
   test "Step 3.08: Identify Owned Access Account by Account Code" do
-    {:ok, owner1_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner1")
+    {:ok, owner1_id} = MscmpSystInstance.get_owner_id_by_name("owner1")
 
     assert {:ok, :not_found} =
              MsbmsSystAuthentication.identify_access_account_by_code("A Bad Code", nil)
@@ -1266,12 +1266,12 @@ defmodule IntegrationTest do
 
   test "Step 3.10: Authenticate API Token for Owned Access Account" do
     {:ok, instance_id} =
-      MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner1_instance_types_std")
+      MscmpSystInstance.get_instance_id_by_name("app1_owner1_instance_types_std")
 
     {:ok, access_account_id} =
       MsbmsSystAuthentication.get_access_account_id_by_name("owner1_access_account")
 
-    {:ok, owner1_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner1")
+    {:ok, owner1_id} = MscmpSystInstance.get_owner_id_by_name("owner1")
 
     # Some failure modes
 

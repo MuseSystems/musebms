@@ -30,9 +30,8 @@ defmodule MsbmsSystAuthentication.Data.SystOwnerPasswordRules do
           %__MODULE__{
             __meta__: Ecto.Schema.Metadata.t(),
             id: Ecto.UUID.t() | nil,
-            owner_id: MsbmsSystInstanceMgr.Types.owner_id() | nil,
-            owner:
-              MsbmsSystInstanceMgr.Data.SystOwners.t() | Ecto.Association.NotLoaded.t() | nil,
+            owner_id: MscmpSystInstance.Types.owner_id() | nil,
+            owner: MscmpSystInstance.Data.SystOwners.t() | Ecto.Association.NotLoaded.t() | nil,
             password_length: DbTypes.IntegerRange.t() | nil,
             max_age: DbTypes.Interval.t() | nil,
             require_upper_case: integer() | nil,
@@ -73,7 +72,7 @@ defmodule MsbmsSystAuthentication.Data.SystOwnerPasswordRules do
     field(:diag_row_version, :integer)
     field(:diag_update_count, :integer)
 
-    belongs_to(:owner, MsbmsSystInstanceMgr.Data.SystOwners)
+    belongs_to(:owner, MscmpSystInstance.Data.SystOwners)
   end
 
   @spec insert_changeset(Types.password_rule_params()) ::

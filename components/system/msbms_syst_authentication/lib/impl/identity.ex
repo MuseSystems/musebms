@@ -28,7 +28,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity do
 
   @callback identify_access_account(
               Types.account_identifier(),
-              MsbmsSystInstanceMgr.Types.owner_id() | nil
+              MscmpSystInstance.Types.owner_id() | nil
             ) :: Data.SystIdentities.t() | nil
 
   # General Identity functionality

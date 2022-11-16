@@ -246,7 +246,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
           Types.account_identifier(),
           Types.credential(),
           IP.addr(),
-          MsbmsSystInstanceMgr.Types.instance_id(),
+          MscmpSystInstance.Types.instance_id(),
           Keyword.t()
         ) ::
           {:ok, Types.authentication_state()} | {:error, MscmpSystError.t()}
@@ -539,7 +539,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
 
   @spec identify_access_account_by_code(
           Types.account_identifier(),
-          MsbmsSystInstanceMgr.Types.owner_id() | nil
+          MscmpSystInstance.Types.owner_id() | nil
         ) ::
           {:ok, Data.SystIdentities.t() | :not_found} | {:error, MscmpSystError.t()}
   def identify_access_account_by_code(account_code, owner_id) when is_binary(account_code) do

@@ -44,7 +44,7 @@ defmodule AccessAccountTest do
   test "Can create an owned Access Account" do
     access_account_state = MscmpSystEnums.get_default_enum_item("access_account_states")
 
-    {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner1")
+    {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner1")
 
     create_params = %{
       owning_owner_id: owner_id,
@@ -95,7 +95,7 @@ defmodule AccessAccountTest do
     {:ok, target_account_id} =
       MsbmsSystAuthentication.get_access_account_id_by_name("bad_update_test_accnt")
 
-    {:ok, owner2} = MsbmsSystInstanceMgr.get_owner_by_name("owner2")
+    {:ok, owner2} = MscmpSystInstance.get_owner_by_name("owner2")
 
     update_params = %{
       owning_owner_id: owner2.id

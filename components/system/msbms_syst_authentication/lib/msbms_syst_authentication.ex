@@ -49,7 +49,7 @@ defmodule MsbmsSystAuthentication do
 
   Below are listed the conceptual ideas that need to be understood to use this
   component effectively.  Concepts in this Component depend heavily on a number
-  of concepts derived from the `MsbmsSystInstanceMgr` Component so familiarity
+  of concepts derived from the `MscmpSystInstance` Component so familiarity
   with that Component will be helpful in understanding the ideas and functioning
   of this authentication component.
 
@@ -499,7 +499,7 @@ defmodule MsbmsSystAuthentication do
   """
   @spec invite_to_instance(
           Types.access_account_id(),
-          MsbmsSystInstanceMgr.Types.instance_id(),
+          MscmpSystInstance.Types.instance_id(),
           Keyword.t()
         ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
   defdelegate invite_to_instance(access_account_id, instance_id, opts \\ []),
@@ -551,7 +551,7 @@ defmodule MsbmsSystAuthentication do
   """
   @spec accept_instance_invite(
           Types.access_account_id(),
-          MsbmsSystInstanceMgr.Types.instance_id()
+          MscmpSystInstance.Types.instance_id()
         ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
   defdelegate accept_instance_invite(access_account_id, instance_id),
     to: Impl.AccessAccountInstanceAssoc
@@ -603,7 +603,7 @@ defmodule MsbmsSystAuthentication do
   """
   @spec decline_instance_invite(
           Types.access_account_id(),
-          MsbmsSystInstanceMgr.Types.instance_id()
+          MscmpSystInstance.Types.instance_id()
         ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
   defdelegate decline_instance_invite(access_account_id, instance_id),
     to: Impl.AccessAccountInstanceAssoc
@@ -656,7 +656,7 @@ defmodule MsbmsSystAuthentication do
   """
   @spec revoke_instance_access(
           Types.access_account_id(),
-          MsbmsSystInstanceMgr.Types.instance_id()
+          MscmpSystInstance.Types.instance_id()
         ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
   defdelegate revoke_instance_access(access_account_id, instance_id),
     to: Impl.AccessAccountInstanceAssoc
@@ -819,7 +819,7 @@ defmodule MsbmsSystAuthentication do
 
   """
   @spec create_owner_password_rules(
-          MsbmsSystInstanceMgr.Types.owner_id(),
+          MscmpSystInstance.Types.owner_id(),
           Types.password_rule_params()
         ) ::
           {:ok, Data.SystOwnerPasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
@@ -897,7 +897,7 @@ defmodule MsbmsSystAuthentication do
     regarding the available attributes.
   """
   @spec update_owner_password_rules(
-          MsbmsSystInstanceMgr.Types.owner_id() | Data.SystOwnerPasswordRules.t(),
+          MscmpSystInstance.Types.owner_id() | Data.SystOwnerPasswordRules.t(),
           Types.password_rule_params()
         ) ::
           {:ok, Data.SystOwnerPasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
@@ -939,7 +939,7 @@ defmodule MsbmsSystAuthentication do
 
     * `owner_id` - the Owner record ID for whom to retrieve Password Rules.
   """
-  @spec get_owner_password_rules(MsbmsSystInstanceMgr.Types.owner_id()) ::
+  @spec get_owner_password_rules(MscmpSystInstance.Types.owner_id()) ::
           {:ok, Data.SystOwnerPasswordRules.t()}
           | {:ok, :not_found}
           | {:error, MscmpSystError.t() | Exception.t()}
@@ -957,7 +957,7 @@ defmodule MsbmsSystAuthentication do
 
     * `owner_id` - the Owner record ID for whom to retrieve Password Rules.
   """
-  @spec get_owner_password_rules!(MsbmsSystInstanceMgr.Types.owner_id()) ::
+  @spec get_owner_password_rules!(MscmpSystInstance.Types.owner_id()) ::
           Data.SystOwnerPasswordRules.t() | :not_found
   defdelegate get_owner_password_rules!(owner_id), to: Impl.PasswordRules
 
@@ -1078,7 +1078,7 @@ defmodule MsbmsSystAuthentication do
 
     * `owner_id` - the Owner record ID whose Password Rules are to be deleted.
   """
-  @spec delete_owner_password_rules(MsbmsSystInstanceMgr.Types.owner_id()) ::
+  @spec delete_owner_password_rules(MscmpSystInstance.Types.owner_id()) ::
           {:ok, :deleted | :not_found} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate delete_owner_password_rules(owner_id), to: Impl.PasswordRules
 
@@ -1533,8 +1533,8 @@ defmodule MsbmsSystAuthentication do
   """
   @spec get_applied_network_rule(
           Types.host_address(),
-          MsbmsSystInstanceMgr.Types.instance_id() | nil,
-          MsbmsSystInstanceMgr.Types.owner_id() | nil
+          MscmpSystInstance.Types.instance_id() | nil,
+          MscmpSystInstance.Types.owner_id() | nil
         ) :: {:ok, Types.applied_network_rule()} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate get_applied_network_rule(
                 host_address,
@@ -1601,8 +1601,8 @@ defmodule MsbmsSystAuthentication do
   """
   @spec get_applied_network_rule!(
           Types.host_address(),
-          MsbmsSystInstanceMgr.Types.instance_id() | nil,
-          MsbmsSystInstanceMgr.Types.owner_id() | nil
+          MscmpSystInstance.Types.instance_id() | nil,
+          MscmpSystInstance.Types.owner_id() | nil
         ) :: Types.applied_network_rule()
   defdelegate get_applied_network_rule!(
                 host_address,
@@ -1690,7 +1690,7 @@ defmodule MsbmsSystAuthentication do
     Adding a new "Allow" Owner Network Rule for a CIDR network.
 
       iex> import IP, only: [sigil_i: 2]
-      iex> {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner8")
+      iex> {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner8")
       iex> new_owner_rule = %{
       ...>   ordering: 1,
       ...>   functional_type: :allow,
@@ -1702,7 +1702,7 @@ defmodule MsbmsSystAuthentication do
     Adding a new "Deny" Owner Network Rule for an IP Address range.
 
       iex> import IP, only: [sigil_i: 2]
-      iex> {:ok, owner_id} = MsbmsSystInstanceMgr.get_owner_id_by_name("owner8")
+      iex> {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner8")
       iex> new_owner_rule = %{
       ...>   ordering: 2,
       ...>   functional_type: :deny,
@@ -1714,7 +1714,7 @@ defmodule MsbmsSystAuthentication do
       ...>   MsbmsSystAuthentication.create_owner_network_rule(owner_id, new_owner_rule)
   """
   @spec create_owner_network_rule(
-          MsbmsSystInstanceMgr.Types.owner_id(),
+          MscmpSystInstance.Types.owner_id(),
           Types.owner_network_rule_params()
         ) ::
           {:ok, Data.SystOwnerNetworkRules.t()} | {:error, MscmpSystError.t()}
@@ -1750,7 +1750,7 @@ defmodule MsbmsSystAuthentication do
 
       iex> import IP, only: [sigil_i: 2]
       iex> {:ok, instance_id} =
-      ...>   MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner8_instance_types_std")
+      ...>   MscmpSystInstance.get_instance_id_by_name("app1_owner8_instance_types_std")
       iex> new_instance_rule = %{
       ...>   ordering: 1,
       ...>   functional_type: :allow,
@@ -1763,7 +1763,7 @@ defmodule MsbmsSystAuthentication do
 
       iex> import IP, only: [sigil_i: 2]
       iex> {:ok, instance_id} =
-      ...>   MsbmsSystInstanceMgr.get_instance_id_by_name("app1_owner8_instance_types_std")
+      ...>   MscmpSystInstance.get_instance_id_by_name("app1_owner8_instance_types_std")
       iex> new_instance_rule = %{
       ...>   ordering: 2,
       ...>   functional_type: :deny,
@@ -1775,7 +1775,7 @@ defmodule MsbmsSystAuthentication do
       ...>   MsbmsSystAuthentication.create_instance_network_rule(instance_id, new_instance_rule)
   """
   @spec create_instance_network_rule(
-          MsbmsSystInstanceMgr.Types.instance_id(),
+          MscmpSystInstance.Types.instance_id(),
           Types.instance_network_rule_params()
         ) ::
           {:ok, Data.SystInstanceNetworkRules.t()} | {:error, MscmpSystError.t()}
@@ -2114,7 +2114,7 @@ defmodule MsbmsSystAuthentication do
   """
   @spec identify_access_account_by_code(
           Types.account_identifier(),
-          MsbmsSystInstanceMgr.Types.owner_id() | nil
+          MscmpSystInstance.Types.owner_id() | nil
         ) ::
           {:ok, Data.SystIdentities.t() | :not_found} | {:error, MscmpSystError.t()}
   defdelegate identify_access_account_by_code(account_code, owner_id), to: Impl.ExtendedAuthLogic
@@ -2885,7 +2885,7 @@ defmodule MsbmsSystAuthentication do
           Types.account_identifier(),
           Types.credential(),
           IP.addr(),
-          MsbmsSystInstanceMgr.Types.instance_id(),
+          MscmpSystInstance.Types.instance_id(),
           Keyword.t()
         ) ::
           {:ok, Types.authentication_state()} | {:error, MscmpSystError.t()}

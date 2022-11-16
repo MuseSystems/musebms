@@ -30,9 +30,8 @@ defmodule MsbmsSystAuthentication.Data.SystOwnerNetworkRules do
           %__MODULE__{
             __meta__: Ecto.Schema.Metadata.t(),
             id: Ecto.UUID.t() | nil,
-            owner_id: MsbmsSystInstanceMgr.Types.owner_id() | nil,
-            owner:
-              MsbmsSystInstanceMgr.Data.SystOwners.t() | Ecto.Association.NotLoaded.t() | nil,
+            owner_id: MscmpSystInstance.Types.owner_id() | nil,
+            owner: MscmpSystInstance.Data.SystOwners.t() | Ecto.Association.NotLoaded.t() | nil,
             ordering: integer() | nil,
             functional_type: String.t() | nil,
             ip_host_or_network: DbTypes.Inet.t() | nil,
@@ -65,7 +64,7 @@ defmodule MsbmsSystAuthentication.Data.SystOwnerNetworkRules do
     field(:diag_row_version, :integer)
     field(:diag_update_count, :integer)
 
-    belongs_to(:owner, MsbmsSystInstanceMgr.Data.SystOwners)
+    belongs_to(:owner, MscmpSystInstance.Data.SystOwners)
   end
 
   @spec insert_changeset(Types.owner_network_rule_params()) :: Ecto.Changeset.t()
