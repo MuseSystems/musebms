@@ -26,7 +26,7 @@ defmodule MsbmsSystInstanceMgr.Data.Validators.SystInstanceContexts do
           Keyword.t()
         ) :: Ecto.Changeset.t()
   def update_changeset(instance_context, update_params, opts) do
-    opts = MsbmsSystUtils.resolve_options(opts, Helpers.OptionDefaults.defaults())
+    opts = MscmpSystUtils.resolve_options(opts, Helpers.OptionDefaults.defaults())
 
     instance_context
     |> cast(update_params, [

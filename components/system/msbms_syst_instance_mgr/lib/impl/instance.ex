@@ -135,7 +135,7 @@ defmodule MsbmsSystInstanceMgr.Impl.Instance do
   @spec initialize_instance(Types.instance_id(), startup_options :: map(), opts :: Keyword.t()) ::
           {:ok, Data.SystInstances.t()} | {:error, MscmpSystError.t()}
   def initialize_instance(instance_id, startup_options, opts) do
-    opts = MsbmsSystUtils.resolve_options(opts, get_default_instance_state_ids())
+    opts = MscmpSystUtils.resolve_options(opts, get_default_instance_state_ids())
 
     {:ok, initializing_instance} =
       from(i in Data.SystInstances, where: i.id == ^instance_id)

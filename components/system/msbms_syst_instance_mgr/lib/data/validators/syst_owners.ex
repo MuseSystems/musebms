@@ -22,7 +22,7 @@ defmodule MsbmsSystInstanceMgr.Data.Validators.SystOwners do
 
   @spec insert_changeset(Types.owner_params(), Keyword.t()) :: Ecto.Changeset.t()
   def insert_changeset(insert_params, opts \\ []) do
-    opts = MsbmsSystUtils.resolve_options(opts, Helpers.OptionDefaults.defaults())
+    opts = MscmpSystUtils.resolve_options(opts, Helpers.OptionDefaults.defaults())
 
     %Data.SystOwners{}
     |> cast(insert_params, [
@@ -38,7 +38,7 @@ defmodule MsbmsSystInstanceMgr.Data.Validators.SystOwners do
   @spec update_changeset(Data.SystOwners.t(), Types.owner_params(), Keyword.t()) ::
           Ecto.Changeset.t()
   def update_changeset(owner, update_params \\ %{}, opts \\ []) do
-    opts = MsbmsSystUtils.resolve_options(opts, Helpers.OptionDefaults.defaults())
+    opts = MscmpSystUtils.resolve_options(opts, Helpers.OptionDefaults.defaults())
 
     owner
     |> cast(update_params, [

@@ -33,7 +33,7 @@ defmodule MsbmsSystSettings.Impl.ChangesetHelpers do
   # a changeset.
   @spec resolve_options(Keyword.t()) :: Keyword.t()
   def resolve_options(opts_given) do
-    MsbmsSystUtils.resolve_options(opts_given,
+    MscmpSystUtils.resolve_options(opts_given,
       min_internal_name_length: @default_min_internal_name_length,
       max_internal_name_length: @default_max_internal_name_length,
       min_display_name_length: @default_min_display_name_length,

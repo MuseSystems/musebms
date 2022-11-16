@@ -43,7 +43,7 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
           {:ok, list(Path.t())} | {:error, MscmpSystError.t()}
   def build_migrations(datastore_type, opts \\ []) do
     opts =
-      MsbmsSystUtils.resolve_options(opts,
+      MscmpSystUtils.resolve_options(opts,
         source_root_dir: @default_source_root_dir,
         migrations_root_dir: @default_migrations_root_dir,
         clean_migrations: false
@@ -212,7 +212,7 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
 
   @spec(clean_existing_migrations(String.t(), Keyword.t()) :: :ok, {:error, MscmpSystError.t()})
   def clean_existing_migrations(datastore_type, opts \\ []) do
-    opts = MsbmsSystUtils.resolve_options(opts, migrations_root_dir: @default_migrations_root_dir)
+    opts = MscmpSystUtils.resolve_options(opts, migrations_root_dir: @default_migrations_root_dir)
 
     :ok =
       [opts[:migrations_root_dir], datastore_type]
@@ -248,7 +248,7 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
           {:ok, String.t()} | {:error, MscmpSystError.t()}
   def get_datastore_version(opts \\ []) do
     opts =
-      MsbmsSystUtils.resolve_options(opts,
+      MscmpSystUtils.resolve_options(opts,
         migrations_schema: @default_migrations_schema,
         migrations_table: @default_migrations_table
       )
@@ -313,7 +313,7 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
           :ok | {:error, MscmpSystError.t()}
   def initialize_datastore(datastore_owner, opts \\ []) do
     opts =
-      MsbmsSystUtils.resolve_options(opts,
+      MscmpSystUtils.resolve_options(opts,
         migrations_schema: @default_migrations_schema,
         migrations_table: @default_migrations_table
       )
@@ -351,7 +351,7 @@ defmodule MsbmsSystDatastore.Impl.Migrations do
           {:error, MscmpSystError.t()} | {:ok, list}
   def apply_outstanding_migrations(datastore_type, migration_bindings, opts \\ []) do
     opts =
-      MsbmsSystUtils.resolve_options(opts,
+      MscmpSystUtils.resolve_options(opts,
         migrations_root_dir: @default_migrations_root_dir,
         migrations_schema: @default_migrations_schema,
         migrations_table: @default_migrations_table

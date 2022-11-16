@@ -53,7 +53,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Validation do
 
   def request_identity_validation(%Data.SystIdentities{} = target_identity, opts) do
     opts =
-      MsbmsSystUtils.resolve_options(opts,
+      MscmpSystUtils.resolve_options(opts,
         expiration_hours: @default_expiration_hours,
         identity_token_length: @default_identity_token_length,
         identity_tokens: @default_identity_tokens,
@@ -93,7 +93,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Validation do
 
   defp create_validation_identity(target_identity, opts) do
     generated_account_identifier =
-      MsbmsSystUtils.get_random_string(opts[:identity_token_length], opts[:identity_tokens])
+      MscmpSystUtils.get_random_string(opts[:identity_token_length], opts[:identity_tokens])
 
     date_now = DateTime.now!("Etc/UTC")
     date_expires = DateTime.add(date_now, opts[:expiration_hours] * 60 * 60)

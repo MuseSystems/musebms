@@ -58,7 +58,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.Recovery do
           | {:error, MscmpSystError.t()}
   def set_credential(access_account_id, identity_id, token \\ nil, opts \\ []) do
     opts =
-      MsbmsSystUtils.resolve_options(opts,
+      MscmpSystUtils.resolve_options(opts,
         credential_token_length: @default_credential_token_length,
         credential_tokens: @default_credential_tokens
       )

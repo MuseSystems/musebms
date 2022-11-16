@@ -167,7 +167,7 @@ defmodule IdentityApiTokenTest do
   end
 
   test "Can update Identity External Name by ID" do
-    test_name = MsbmsSystUtils.get_random_string(20)
+    test_name = MscmpSystUtils.get_random_string(20)
 
     target =
       from(
@@ -186,7 +186,7 @@ defmodule IdentityApiTokenTest do
   end
 
   test "Can update Identity External Name" do
-    test_name = MsbmsSystUtils.get_random_string(20)
+    test_name = MscmpSystUtils.get_random_string(20)
 
     target =
       from(

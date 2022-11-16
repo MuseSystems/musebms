@@ -1,5 +1,5 @@
-# Source File: msbms_syst_utils.ex
-# Location:    musebms/components/system/msbms_syst_utils/lib/msbms_syst_utils.ex
+# Source File: mscmp_syst_utils.ex
+# Location:    musebms/components/system/mscmp_syst_utils/lib/mscmp_syst_utils.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,8 +10,8 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule MsbmsSystUtils do
-  alias MsbmsSystUtils.Impl
+defmodule MscmpSystUtils do
+  alias MscmpSystUtils.Impl
 
   @moduledoc """
   Common utility functions generally useful across components.
@@ -47,7 +47,7 @@ defmodule MsbmsSystUtils do
 
       iex> given_options = [test_value_one: 1]
       iex> default_options = [test_value_one: 0, test_value_two: 2]
-      iex> MsbmsSystUtils.resolve_options(given_options, default_options)
+      iex> MscmpSystUtils.resolve_options(given_options, default_options)
       [test_value_one: 1, test_value_two: 2]
   """
   @spec resolve_options(Keyword.t(), Keyword.t()) :: Keyword.t()

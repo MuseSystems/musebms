@@ -28,7 +28,7 @@ defmodule MsbmsSystInstanceMgr.Data.Validators.SystInstances do
 
   @spec insert_changeset(Types.instance_params(), Keyword.t()) :: Ecto.Changeset.t()
   def insert_changeset(insert_params, opts) do
-    opts = MsbmsSystUtils.resolve_options(opts, Helpers.OptionDefaults.defaults())
+    opts = MscmpSystUtils.resolve_options(opts, Helpers.OptionDefaults.defaults())
 
     resolved_insert_params = Helpers.SystInstances.resolve_name_params(insert_params, :insert)
 
@@ -58,7 +58,7 @@ defmodule MsbmsSystInstanceMgr.Data.Validators.SystInstances do
   @spec update_changeset(Data.SystInstances.t(), Types.instance_params(), Keyword.t()) ::
           Ecto.Changeset.t()
   def update_changeset(instance, update_params, opts) do
-    opts = MsbmsSystUtils.resolve_options(opts, Helpers.OptionDefaults.defaults())
+    opts = MscmpSystUtils.resolve_options(opts, Helpers.OptionDefaults.defaults())
 
     resolved_update_params = Helpers.SystInstances.resolve_name_params(update_params, :update)
 

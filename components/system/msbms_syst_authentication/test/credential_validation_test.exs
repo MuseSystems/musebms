@@ -34,7 +34,7 @@ defmodule CredentialValidationTest do
              Impl.Credential.Validation.confirm_credential(
                test_account.access_account_id,
                test_account.identity_id,
-               MsbmsSystUtils.get_random_string(48)
+               MscmpSystUtils.get_random_string(48)
              )
 
     assert {:ok, {:no_credential, []}} =
@@ -55,7 +55,7 @@ defmodule CredentialValidationTest do
              Impl.Credential.Validation.confirm_credential!(
                test_account.access_account_id,
                test_account.identity_id,
-               MsbmsSystUtils.get_random_string(48)
+               MscmpSystUtils.get_random_string(48)
              )
 
     assert {:no_credential, []} =
@@ -81,7 +81,7 @@ defmodule CredentialValidationTest do
     # Specified Token
     test_account = get_account_data("credential_validation_create2_test_accnt")
 
-    specified_token = MsbmsSystUtils.get_random_string(40)
+    specified_token = MscmpSystUtils.get_random_string(40)
 
     assert {:ok, ^specified_token} =
              Impl.Credential.Validation.set_credential(

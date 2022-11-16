@@ -2085,7 +2085,7 @@ defmodule MsbmsSystAuthentication do
 
       * `identity_tokens` - overrides the character set used to create the
       randomly generated Account Code Identifier.  The default value is `:b32c`.
-      See the `MsbmsSystUtils.get_random_string/2` documentation for the
+      See the `MscmpSystUtils.get_random_string/2` documentation for the
       `tokens` parameter which receives this option for more information
       regarding valid values for this setting.
   """
@@ -2291,7 +2291,7 @@ defmodule MsbmsSystAuthentication do
 
       * `identity_tokens` - overrides the default character set to use in the
       generation of the Validation Token Identity identifier.  The default value
-      is `:mixed_alphanum`.  See the `MsbmsSystUtils.get_random_string/2`
+      is `:mixed_alphanum`.  See the `MscmpSystUtils.get_random_string/2`
       documentation for the `tokens` parameter which receives this option for
       more information regarding valid values for this setting.
 
@@ -2301,7 +2301,7 @@ defmodule MsbmsSystAuthentication do
 
       * `credential_tokens` - overrides the default character set to use in the
       generation of the Validation Token Credential.  The default value is
-      `:mixed_alphanum`.  See the `MsbmsSystUtils.get_random_string/2`
+      `:mixed_alphanum`.  See the `MscmpSystUtils.get_random_string/2`
       documentation for the `tokens` parameter which receives this option for
       more information regarding valid values for this setting.
 
@@ -2412,7 +2412,7 @@ defmodule MsbmsSystAuthentication do
 
       * `identity_tokens` - overrides the default character set to use in the
       generation of the Recovery Token Identity identifier.  The default value
-      is `:mixed_alphanum`.  See the `MsbmsSystUtils.get_random_string/2`
+      is `:mixed_alphanum`.  See the `MscmpSystUtils.get_random_string/2`
       documentation for the `tokens` parameter which receives this option for
       more information regarding valid values for this setting.
 
@@ -2422,7 +2422,7 @@ defmodule MsbmsSystAuthentication do
 
       * `credential_tokens` - overrides the default character set to use in the
       generation of the Recovery Token Credential.  The default value is
-      `:mixed_alphanum`.  See the `MsbmsSystUtils.get_random_string/2`
+      `:mixed_alphanum`.  See the `MscmpSystUtils.get_random_string/2`
       documentation for the `tokens` parameter which receives this option for
       more information regarding valid values for this setting.
 
@@ -2492,7 +2492,7 @@ defmodule MsbmsSystAuthentication do
 
       * `identity_tokens` - overrides the default character set to use in the
       generation of the API Token Identity identifier.  The default value is
-      `:mixed_alphanum`.  See the `MsbmsSystUtils.get_random_string/2`
+      `:mixed_alphanum`.  See the `MscmpSystUtils.get_random_string/2`
       documentation for the `tokens` parameter which receives this option for
       more information regarding valid values for this setting.
 
@@ -2508,7 +2508,7 @@ defmodule MsbmsSystAuthentication do
 
       * `credential_tokens` - overrides the default character set to use in the
       generation of the API Token Credential.  The default value is
-      `:mixed_alphanum`.  See the `MsbmsSystUtils.get_random_string/2`
+      `:mixed_alphanum`.  See the `MscmpSystUtils.get_random_string/2`
       documentation for the `tokens` parameter which receives this option for
       more information regarding valid values for this setting.
 
