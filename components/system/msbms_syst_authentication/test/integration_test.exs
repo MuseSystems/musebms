@@ -772,7 +772,7 @@ defmodule IntegrationTest do
     assert {:ok, bad_token_state} =
              MsbmsSystAuthentication.authenticate_recovery_token(
                recovery_result.account_identifier,
-               MsbmsSystUtils.get_random_string(20),
+               MscmpSystUtils.get_random_string(20),
                ~i"10.100.170.10"
              )
 
@@ -1111,7 +1111,7 @@ defmodule IntegrationTest do
     assert {:ok, %{status: :rejected_rate_limited}} =
              MsbmsSystAuthentication.authenticate_email_password(
                "owned.access.account@musesystems.com",
-               MsbmsSystUtils.get_random_string(40),
+               MscmpSystUtils.get_random_string(40),
                ~i"10.123.123.123",
                owning_owner_id: owner2_id
              )
@@ -1121,7 +1121,7 @@ defmodule IntegrationTest do
     assert {:ok, %{status: :rejected}} =
              MsbmsSystAuthentication.authenticate_email_password(
                "owned.access.account@musesystems.com",
-               MsbmsSystUtils.get_random_string(40),
+               MscmpSystUtils.get_random_string(40),
                ~i"10.123.123.123",
                owning_owner_id: owner2_id
              )
@@ -1341,7 +1341,7 @@ defmodule IntegrationTest do
     {:ok, auth_state} =
       MsbmsSystAuthentication.authenticate_validation_token(
         identifier,
-        MsbmsSystUtils.get_random_string(40),
+        MscmpSystUtils.get_random_string(40),
         host_addr,
         owning_owner_id: owner_id
       )
@@ -1364,7 +1364,7 @@ defmodule IntegrationTest do
     {:ok, auth_state} =
       MsbmsSystAuthentication.authenticate_email_password(
         identifier,
-        MsbmsSystUtils.get_random_string(40),
+        MscmpSystUtils.get_random_string(40),
         host_addr,
         owning_owner_id: owner_id
       )
@@ -1386,8 +1386,8 @@ defmodule IntegrationTest do
   defp violate_host_rate_limit(host_addr, :rejected, limit) do
     {:ok, auth_state} =
       MsbmsSystAuthentication.authenticate_validation_token(
-        MsbmsSystUtils.get_random_string(40),
-        MsbmsSystUtils.get_random_string(40),
+        MscmpSystUtils.get_random_string(40),
+        MscmpSystUtils.get_random_string(40),
         host_addr
       )
 

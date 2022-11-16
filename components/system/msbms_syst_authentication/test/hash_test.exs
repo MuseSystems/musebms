@@ -18,15 +18,15 @@ defmodule HashTest do
   @moduletag :capture_log
 
   test "Can Create and Verify a Credential Hash" do
-    test_credential = MsbmsSystUtils.get_random_string(128, :mixed_alphanum)
+    test_credential = MscmpSystUtils.get_random_string(128, :mixed_alphanum)
 
     assert new_hash = Impl.Hash.create_credential_hash(test_credential)
     assert true == Impl.Hash.verify_credential_hash(new_hash, test_credential)
   end
 
   test "Can fail Credential Hash Verification" do
-    test_credential = MsbmsSystUtils.get_random_string(128, :mixed_alphanum)
-    bad_credential = MsbmsSystUtils.get_random_string(128, :mixed_alphanum)
+    test_credential = MscmpSystUtils.get_random_string(128, :mixed_alphanum)
+    bad_credential = MscmpSystUtils.get_random_string(128, :mixed_alphanum)
 
     assert new_hash = Impl.Hash.create_credential_hash(test_credential)
     assert false == Impl.Hash.verify_credential_hash(new_hash, bad_credential)
@@ -38,7 +38,7 @@ defmodule HashTest do
   end
 
   test "Can generate a Weak Hash consistently" do
-    test_value = MsbmsSystUtils.get_random_string(128, :mixed_alphanum)
+    test_value = MscmpSystUtils.get_random_string(128, :mixed_alphanum)
 
     assert Impl.Hash.weak_hash(test_value) == Impl.Hash.weak_hash(test_value)
   end

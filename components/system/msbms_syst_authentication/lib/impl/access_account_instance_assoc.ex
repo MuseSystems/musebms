@@ -27,7 +27,7 @@ defmodule MsbmsSystAuthentication.Impl.AccessAccountInstanceAssoc do
         ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
   def invite_to_instance(access_account_id, instance_id, opts)
       when is_binary(access_account_id) and is_binary(instance_id) do
-    opts = MsbmsSystUtils.resolve_options(opts, create_accepted: false, expiration_days: 30)
+    opts = MscmpSystUtils.resolve_options(opts, create_accepted: false, expiration_days: 30)
 
     date_now = DateTime.now!("Etc/UTC")
     date_invitation = date_now

@@ -27,7 +27,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Email do
           {:ok, Data.SystIdentities.t()} | {:error, MscmpSystError.t() | Exception.t()}
   def create_identity(access_account_id, email_address, opts \\ [])
       when is_binary(access_account_id) and is_binary(email_address) do
-    opts = MsbmsSystUtils.resolve_options(opts, create_validated: @default_create_validated)
+    opts = MscmpSystUtils.resolve_options(opts, create_validated: @default_create_validated)
 
     email_address =
       email_address

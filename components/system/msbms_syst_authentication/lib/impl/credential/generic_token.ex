@@ -86,7 +86,7 @@ defmodule MsbmsSystAuthentication.Impl.Credential.GenericToken do
     if identity_ownership_confirmed do
       token =
         token ||
-          MsbmsSystUtils.get_random_string(
+          MscmpSystUtils.get_random_string(
             opts[:credential_token_length],
             opts[:credential_tokens]
           )

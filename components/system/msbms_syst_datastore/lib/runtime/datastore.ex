@@ -47,7 +47,7 @@ defmodule MsbmsSystDatastore.Runtime.Datastore do
     {:ok, datastore_options} = validate_datastore_options(opts[:datastore_options])
 
     opts =
-      MsbmsSystUtils.resolve_options(opts,
+      MscmpSystUtils.resolve_options(opts,
         strategy: :one_for_one,
         name: datastore_options.datastore_name,
         restart: :transient,

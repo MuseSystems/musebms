@@ -105,7 +105,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
         ) ::
           {:ok, Types.authentication_state()} | {:error, MscmpSystError.t()}
   def authenticate_email_password(email_addr, pwd_text, host_addr, opts) do
-    opts = MsbmsSystUtils.resolve_options(opts, owning_owner_id: nil, instance_id: nil)
+    opts = MscmpSystUtils.resolve_options(opts, owning_owner_id: nil, instance_id: nil)
 
     %{id: identity_type_id} =
       MsbmsSystEnums.get_enum_item_by_name("identity_types", "identity_types_sysdef_email")
@@ -252,7 +252,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
           {:ok, Types.authentication_state()} | {:error, MscmpSystError.t()}
 
   def authenticate_api_token(identifier, token, host_addr, instance_id, opts) do
-    opts = MsbmsSystUtils.resolve_options(opts, owning_owner_id: nil)
+    opts = MscmpSystUtils.resolve_options(opts, owning_owner_id: nil)
 
     %{id: identity_type_id} =
       MsbmsSystEnums.get_enum_item_by_name("identity_types", "identity_types_sysdef_api")
@@ -340,7 +340,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
           {:ok, Types.authentication_state()} | {:error, MscmpSystError.t()}
 
   def authenticate_validation_token(identifier, token, host_addr, opts) do
-    opts = MsbmsSystUtils.resolve_options(opts, owning_owner_id: nil)
+    opts = MscmpSystUtils.resolve_options(opts, owning_owner_id: nil)
 
     %{id: identity_type_id} =
       MsbmsSystEnums.get_enum_item_by_name("identity_types", "identity_types_sysdef_validation")
@@ -441,7 +441,7 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
         ) ::
           {:ok, Types.authentication_state()} | {:error, MscmpSystError.t()}
   def authenticate_recovery_token(identifier, token, host_addr, opts) do
-    opts = MsbmsSystUtils.resolve_options(opts, owning_owner_id: nil)
+    opts = MscmpSystUtils.resolve_options(opts, owning_owner_id: nil)
 
     %{id: identity_type_id} =
       MsbmsSystEnums.get_enum_item_by_name(
@@ -825,13 +825,13 @@ defmodule MsbmsSystAuthentication.Impl.ExtendedAuthLogic do
 
   defp check_identifier_rate_limit(identifier, opts) do
     opts =
-      MsbmsSystUtils.resolve_options(opts, identifier_rate_limit: @identifier_default_rate_limit)
+      MscmpSystUtils.resolve_options(opts, identifier_rate_limit: @identifier_default_rate_limit)
 
     check_rate_limit(:identifier, identifier, opts[:identifier_rate_limit])
   end
 
   defp check_host_ban_rate_limit(host_addr, opts) do
-    opts = MsbmsSystUtils.resolve_options(opts, host_ban_rate_limit: @host_ban_default_rate_limit)
+    opts = MscmpSystUtils.resolve_options(opts, host_ban_rate_limit: @host_ban_default_rate_limit)
 
     check_rate_limit(:host_ban, IP.to_string(host_addr), opts[:host_ban_rate_limit])
   end

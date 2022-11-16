@@ -33,7 +33,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.ApiToken do
   def create_identity(access_account_id, api_token, opts \\ [])
       when is_binary(access_account_id) do
     opts =
-      MsbmsSystUtils.resolve_options(opts,
+      MscmpSystUtils.resolve_options(opts,
         create_validated: @default_create_validated,
         identity_token_length: @default_identity_token_length,
         identity_tokens: @default_identity_tokens,
@@ -42,7 +42,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.ApiToken do
 
     api_token =
       api_token ||
-        MsbmsSystUtils.get_random_string(opts[:identity_token_length], opts[:identity_tokens])
+        MscmpSystUtils.get_random_string(opts[:identity_token_length], opts[:identity_tokens])
 
     identity_params = %{
       access_account_id: access_account_id,

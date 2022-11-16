@@ -45,7 +45,7 @@ defmodule MsbmsSystDatastore.Impl.Privileged do
   @spec get_datastore_version(Types.datastore_options(), Keyword.t()) ::
           {:ok, String.t()} | {:error, MscmpSystError.t()}
   def get_datastore_version(datastore_options, opts) do
-    opts = MsbmsSystUtils.resolve_options(opts, db_shutdown_timeout: @default_db_shutdown_timeout)
+    opts = MscmpSystUtils.resolve_options(opts, db_shutdown_timeout: @default_db_shutdown_timeout)
 
     starting_datastore_context = Datastore.get_dynamic_repo()
 
@@ -75,7 +75,7 @@ defmodule MsbmsSystDatastore.Impl.Privileged do
   @spec initialize_datastore(Types.datastore_options(), Keyword.t()) ::
           :ok | {:error, MscmpSystError.t()}
   def initialize_datastore(datastore_options, opts \\ []) do
-    opts = MsbmsSystUtils.resolve_options(opts, db_shutdown_timeout: @default_db_shutdown_timeout)
+    opts = MscmpSystUtils.resolve_options(opts, db_shutdown_timeout: @default_db_shutdown_timeout)
 
     database_owner = Enum.find(datastore_options.contexts, &(&1[:database_owner_context] == true))
 
@@ -101,7 +101,7 @@ defmodule MsbmsSystDatastore.Impl.Privileged do
   @spec upgrade_datastore(Types.datastore_options(), String.t(), Keyword.t(), Keyword.t()) ::
           {:ok, [String.t()]} | {:error, MscmpSystError.t()}
   def upgrade_datastore(datastore_options, datastore_type, migration_bindings, opts \\ []) do
-    opts = MsbmsSystUtils.resolve_options(opts, db_shutdown_timeout: @default_db_shutdown_timeout)
+    opts = MscmpSystUtils.resolve_options(opts, db_shutdown_timeout: @default_db_shutdown_timeout)
 
     starting_datastore_context = Datastore.current_datastore_context()
 

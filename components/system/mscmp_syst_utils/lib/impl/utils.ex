@@ -1,5 +1,5 @@
 # Source File: utils.ex
-# Location:    musebms/components/system/msbms_syst_utils/lib/impl/utils.ex
+# Location:    musebms/components/system/mscmp_syst_utils/lib/impl/utils.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,7 +10,7 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule MsbmsSystUtils.Impl.Utils do
+defmodule MscmpSystUtils.Impl.Utils do
   @moduledoc false
 
   @spec resolve_options(Keyword.t(), Keyword.t()) :: Keyword.t()

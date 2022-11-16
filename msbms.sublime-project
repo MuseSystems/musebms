@@ -8,7 +8,7 @@
             "path": "components/system/mscmp_syst_error",
         },
         {
-            "path": "components/system/msbms_syst_utils",
+            "path": "components/system/mscmp_syst_utils",
         },
         {
             "path": "components/system/msbms_syst_rate_limiter",

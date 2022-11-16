@@ -40,7 +40,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Recovery do
           {:ok, Data.SystIdentities.t()} | {:error, MscmpSystError.t() | Exception.t()}
   def request_credential_recovery(access_account_id, opts) when is_binary(access_account_id) do
     opts =
-      MsbmsSystUtils.resolve_options(opts,
+      MscmpSystUtils.resolve_options(opts,
         expiration_hours: @default_expiration_hours,
         identity_token_length: @default_identity_token_length,
         identity_tokens: @default_identity_tokens,
@@ -91,7 +91,7 @@ defmodule MsbmsSystAuthentication.Impl.Identity.Recovery do
 
   defp create_recovery_identity(access_account_id, opts) do
     generated_account_identifier =
-      MsbmsSystUtils.get_random_string(opts[:identity_token_length], opts[:identity_tokens])
+      MscmpSystUtils.get_random_string(opts[:identity_token_length], opts[:identity_tokens])
 
     date_now = DateTime.now!("Etc/UTC")
     date_expires = DateTime.add(date_now, opts[:expiration_hours] * 60 * 60)

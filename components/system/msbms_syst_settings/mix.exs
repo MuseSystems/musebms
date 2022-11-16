@@ -25,7 +25,7 @@ defmodule MsbmsSystSettings.MixProject do
 
     # Muse Systems Business Management System Components
     {:mscmp_syst_error, path: "../mscmp_syst_error"},
-    {:msbms_syst_utils, path: "../msbms_syst_utils"},
+    {:mscmp_syst_utils, path: "../mscmp_syst_utils"},
     {:msbms_syst_datastore, path: "../msbms_syst_datastore"}
   ]
 
@@ -56,7 +56,7 @@ defmodule MsbmsSystSettings.MixProject do
           msbms_syst_datastore:
             "../../../../documentation/technical/app_server/msbms_syst_datastore",
           mscmp_syst_error: "../../../../documentation/technical/app_server/mscmp_syst_error",
-          msbms_syst_utils: "../../../../documentation/technical/app_server/msbms_syst_utils"
+          mscmp_syst_utils: "../../../../documentation/technical/app_server/mscmp_syst_utils"
         ],
         nest_modules_by_prefix: [MsbmsSystSettings.DbTypes],
         groups_for_functions: [

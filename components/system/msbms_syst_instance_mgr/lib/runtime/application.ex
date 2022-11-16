@@ -74,7 +74,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
         startup_options,
         opts
       ) do
-    opts = MsbmsSystUtils.resolve_options(opts, max_concurrency: default_max_concurrency())
+    opts = MscmpSystUtils.resolve_options(opts, max_concurrency: default_max_concurrency())
 
     supervisor_name = get_application_supervisor_name(application)
 
@@ -205,7 +205,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
         opts
       ) do
     resolved_migration_bindings =
-      MsbmsSystUtils.resolve_options(
+      MscmpSystUtils.resolve_options(
         opts[:migration_bindings],
         Impl.Instance.get_standard_migration_bindings(instance.id)
       )
@@ -213,7 +213,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
     default_options = Impl.Instance.get_default_instance_state_ids()
 
     opts =
-      MsbmsSystUtils.resolve_options(opts, default_options)
+      MscmpSystUtils.resolve_options(opts, default_options)
       |> Keyword.put(:migration_bindings, resolved_migration_bindings)
 
     true = valid_startup_instance_state?(instance)
@@ -352,7 +352,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
     do: stop_instance(instance_id, opts)
 
   defp stop_instance_supervisor(instance_name, opts) do
-    opts = MsbmsSystUtils.resolve_options(opts, supervisor_shutdown_timeout: 60_000)
+    opts = MscmpSystUtils.resolve_options(opts, supervisor_shutdown_timeout: 60_000)
 
     Registry.lookup(@registry, {:instance_supervisor, instance_name})
     |> maybe_stop_instance_supervisor(opts)
@@ -412,7 +412,7 @@ defmodule MsbmsSystInstanceMgr.Runtime.Application do
   end
 
   defp stop_application_supervisor(application_name, opts) do
-    opts = MsbmsSystUtils.resolve_options(opts, supervisor_shutdown_timeout: 60_000)
+    opts = MscmpSystUtils.resolve_options(opts, supervisor_shutdown_timeout: 60_000)
 
     DynamicSupervisor.stop(
       {:via, Registry, {@registry, {:application_supervisor, application_name}}},

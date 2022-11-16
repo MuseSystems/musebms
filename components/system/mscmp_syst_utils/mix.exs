@@ -1,5 +1,5 @@
 # Source File: mix.exs
-# Location:    musebms/components/system/msbms_syst_utils/mix.exs
+# Location:    musebms/components/system/mscmp_syst_utils/mix.exs
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,10 +10,10 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule MsbmsSystUtils.MixProject do
+defmodule MscmpSystUtils.MixProject do
   use Mix.Project
 
-  @name :msbms_syst_utils
+  @name :mscmp_syst_utils
   @version "0.1.0"
 
   @deps [
@@ -44,15 +44,15 @@ defmodule MsbmsSystUtils.MixProject do
       dialyzer: @dialyzer_opts,
       elixirc_paths: elixirc_paths(Mix.env()),
       docs: [
-        name: "MsbmsSystUtils",
-        main: "MsbmsSystUtils",
-        output: "../../../documentation/technical/app_server/msbms_syst_utils",
+        name: "MscmpSystUtils",
+        main: "MscmpSystUtils",
+        output: "../../../documentation/technical/app_server/mscmp_syst_utils",
         groups_for_functions: [
           "API - Function Opts": &(&1[:section] == :options_management),
           "API - String Utilities": &(&1[:section] == :string_utilities)
         ],
         groups_for_modules: [
-          API: [MsbmsSystUtils]
+          API: [MscmpSystUtils]
         ]
       ]
     ]

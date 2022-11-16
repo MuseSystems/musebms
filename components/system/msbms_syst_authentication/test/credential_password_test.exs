@@ -92,7 +92,7 @@ defmodule CredentialPasswordTest do
     assert {:ok, {:wrong_credential, []}} =
              Impl.Credential.Password.confirm_credential(
                access_account_id,
-               MsbmsSystUtils.get_random_string(48)
+               MscmpSystUtils.get_random_string(48)
              )
 
     # Test with bogus access_account_id value to force :no_credential
@@ -105,7 +105,7 @@ defmodule CredentialPasswordTest do
     assert {:wrong_credential, []} =
              Impl.Credential.Password.confirm_credential!(
                access_account_id,
-               MsbmsSystUtils.get_random_string(48)
+               MscmpSystUtils.get_random_string(48)
              )
 
     assert {:no_credential, []} =
@@ -214,7 +214,7 @@ defmodule CredentialPasswordTest do
     # according to the rules, but I expect that with 64 characters the chances
     # of randomly generating an invalid password is low.
 
-    new_pwd = MsbmsSystUtils.get_random_string(64, '0123456789ABCDEFGHIJabcdefghij`~!@#$%^&*')
+    new_pwd = MscmpSystUtils.get_random_string(64, '0123456789ABCDEFGHIJabcdefghij`~!@#$%^&*')
 
     test_time = DateTime.truncate(DateTime.utc_now(), :second)
 
@@ -246,9 +246,9 @@ defmodule CredentialPasswordTest do
     # according to the rules, but I expect that with 64 characters the chances
     # of randomly generating an invalid password is low.
 
-    new1_pwd = MsbmsSystUtils.get_random_string(64, '0123456789ABCDEFGHIJabcdefghij`~!@#$%^&*')
-    new2_pwd = MsbmsSystUtils.get_random_string(64, '0123456789ABCDEFGHIJabcdefghij`~!@#$%^&*')
-    new3_pwd = MsbmsSystUtils.get_random_string(64, '0123456789ABCDEFGHIJabcdefghij`~!@#$%^&*')
+    new1_pwd = MscmpSystUtils.get_random_string(64, '0123456789ABCDEFGHIJabcdefghij`~!@#$%^&*')
+    new2_pwd = MscmpSystUtils.get_random_string(64, '0123456789ABCDEFGHIJabcdefghij`~!@#$%^&*')
+    new3_pwd = MscmpSystUtils.get_random_string(64, '0123456789ABCDEFGHIJabcdefghij`~!@#$%^&*')
 
     assert :ok = Impl.Credential.Password.set_credential(access_account_id, new1_pwd, nil)
 
