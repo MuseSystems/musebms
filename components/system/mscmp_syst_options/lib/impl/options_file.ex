@@ -1,5 +1,5 @@
 # Source File: options_file.ex
-# Location:    musebms/components/system/msbms_syst_options/lib/impl/options_file.ex
+# Location:    musebms/components/system/mscmp_syst_options/lib/impl/options_file.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,7 +10,7 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule MsbmsSystOptions.Impl.OptionsFile do
+defmodule MscmpSystOptions.Impl.OptionsFile do
   @moduledoc false
 
   ######

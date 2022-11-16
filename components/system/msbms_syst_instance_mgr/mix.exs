@@ -28,7 +28,7 @@ defmodule MsbmsSystInstanceMgr.MixProject do
     {:mscmp_syst_error, path: "../mscmp_syst_error"},
     {:mscmp_syst_db, path: "../mscmp_syst_db"},
     {:msbms_syst_enums, path: "../msbms_syst_enums"},
-    {:msbms_syst_options, path: "../msbms_syst_options"}
+    {:mscmp_syst_options, path: "../mscmp_syst_options"}
   ]
 
   @dialyzer_opts [
@@ -60,7 +60,7 @@ defmodule MsbmsSystInstanceMgr.MixProject do
           mscmp_syst_error: "../../../../documentation/technical/app_server/mscmp_syst_error",
           mscmp_syst_db: "../../../../documentation/technical/app_server/mscmp_syst_db",
           msbms_syst_enums: "../../../../documentation/technical/app_server/msbms_syst_enums",
-          msbms_syst_options: "../../../../documentation/technical/app_server/msbms_syst_options"
+          mscmp_syst_options: "../../../../documentation/technical/app_server/mscmp_syst_options"
         ],
         groups_for_functions: [
           "API - Runtime": &(&1[:section] == :service_management),

@@ -1,5 +1,5 @@
 # Source File: mix.exs
-# Location:    musebms/components/system/msbms_syst_options/mix.exs
+# Location:    musebms/components/system/mscmp_syst_options/mix.exs
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,10 +10,10 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule MsbmsSystOptions.MixProject do
+defmodule MscmpSystOptions.MixProject do
   use Mix.Project
 
-  @name :msbms_syst_options
+  @name :mscmp_syst_options
   @version "0.1.0"
 
   @deps [
@@ -42,9 +42,9 @@ defmodule MsbmsSystOptions.MixProject do
       build_embedded: in_production,
       start_permanent: in_production,
       docs: [
-        name: "MsbmsSystOptions",
-        main: "MsbmsSystOptions",
-        output: "../../../documentation/technical/app_server/msbms_syst_options",
+        name: "MscmpSystOptions",
+        main: "MscmpSystOptions",
+        output: "../../../documentation/technical/app_server/mscmp_syst_options",
         deps: [
           mscmp_syst_db: "../../../../documentation/technical/app_server/mscmp_syst_db",
           mscmp_syst_error: "../../../../documentation/technical/app_server/mscmp_syst_error"
@@ -54,8 +54,8 @@ defmodule MsbmsSystOptions.MixProject do
           "API - Parsing": &(&1[:section] == :options_parsing)
         ],
         groups_for_modules: [
-          API: [MsbmsSystOptions],
-          "Supporting Types": [MsbmsSystOptions.Types]
+          API: [MscmpSystOptions],
+          "Supporting Types": [MscmpSystOptions.Types]
         ]
       ]
     ]
