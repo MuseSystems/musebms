@@ -3,7 +3,7 @@ RETURNS trigger AS
 $BODY$
 
 -- File:        trig_a_iu_feature_map_level_assignable_check.eex.sql
--- Location:    musebms/database/components/system/msbms_syst_features/msbms_syst_priv/trigger_functions/trig_a_iu_feature_map_level_assignable_check.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_features/msbms_syst_priv/trigger_functions/trig_a_iu_feature_map_level_assignable_check.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
