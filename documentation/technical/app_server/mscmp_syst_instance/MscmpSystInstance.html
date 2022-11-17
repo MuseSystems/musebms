@@ -1,0 +1,1531 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.29.0">
+    <meta name="project" content="mscmp_syst_instance v0.1.0">
+
+    <title>MscmpSystInstance — mscmp_syst_instance v0.1.0</title>
+    <link rel="stylesheet" href="dist/html-elixir-2YOS5DIE.css" />
+
+    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
+    <script src="dist/handlebars.templates-X7YVL3G2.js"></script>
+    <script src="dist/sidebar_items-0819640F.js"></script>
+
+      <script src="docs_config.js"></script>
+
+    <script async src="dist/html-XN2TSG4M.js"></script>
+
+
+  </head>
+  <body data-type="modules" class="page-module">
+    <script>
+
+      try {
+        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
+
+        if (settings.theme === 'dark' ||
+           ((settings.theme === 'system' || settings.theme == null) &&
+             window.matchMedia('(prefers-color-scheme: dark)').matches)
+           ) {
+          document.body.classList.add('dark')
+        }
+      } catch (error) { }
+    </script>
+
+<div class="main">
+
+<button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<section class="sidebar">
+  <form class="sidebar-search" action="search.html">
+    <button type="submit" class="search-button" aria-label="Submit Search">
+      <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
+    </button>
+    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
+      <i class="ri-close-line ri-lg" aria-hidden="true" title="Cancel search"></i>
+    </button>
+    <label class="search-label">
+      <p class="sr-only">Search</p>
+      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
+    </label>
+  </form>
+
+  <div class="autocomplete">
+    <div class="autocomplete-results">
+    </div>
+  </div>
+
+  <div class="sidebar-header">
+
+    <div class="sidebar-projectDetails">
+      <a href="MscmpSystInstance.html" class="sidebar-projectName" translate="no">
+mscmp_syst_instance
+      </a>
+      <strong class="sidebar-projectVersion" translate="no">
+        v0.1.0
+      </strong>
+    </div>
+    <ul class="sidebar-listNav">
+      <li><a id="extras-list-link" href="#full-list">Pages</a></li>
+
+        <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+
+
+    </ul>
+  </div>
+
+  <div class="gradient"></div>
+  <ul id="full-list" class="sidebar-fullList"></ul>
+</section>
+
+<section class="content">
+  <output role="status" id="toast"></output>
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+<h1>
+<button class="settings display-settings">
+  <i class="ri-settings-3-line"></i>
+  <span class="sr-only">Settings</span>
+</button>
+
+
+  <span translate="no">MscmpSystInstance</span> 
+  <small class="app-vsn" translate="no">(mscmp_syst_instance v0.1.0)</small>
+
+</h1>
+
+
+  <section id="moduledoc">
+<p>API allowing for the management of application Instances.</p><p>&quot;Instances&quot; are instances of running application environments.  Instances are
+established to host the application for different purposes, such as for
+running the application for production, training, and testing purposes; or as
+a means to implement multi-tenancy where each tenant application environment
+is an Instance.</p><p>Each Instance also requires supporting data in order to facilitate runtime
+actions, such as defining database roles with which to access database data.
+Such supporting information is also managed via this component.</p><h2 id="module-concepts" class="section-heading">
+  <a href="#module-concepts" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">concepts</p>
+  </a>
+  Concepts
+</h2>
+<p>Instances are organized into a framework of other data types which allows us
+to better analyze and manage them and provides supplemental information
+required for Instance operation.</p><h4>Datastores &amp; Datastore Contexts</h4><p>Each Instance is associated with a single Datastore.  A Datastore is the
+database created to store the Instance's application data.  Datastore Contexts
+are the database roles with which the Instance will access the database; this
+allows for application database connections secured to an appropriate range
+of actions and limited to an appropriate number of concurrent database
+connections.  Or to put it another way, Datastore Contexts can be thought of
+as &quot;Database Access Contexts&quot;.</p><p>Datastore and Datastore Context management is provided by the
+<a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.html"><code class="inline">MscmpSystDb</code></a> component.</p><h4>Owners</h4><p>Owners represent the known tenants of the system.  An Owner will own Instances
+of Applications.  Owners have states which determine if they are active, not
+active, or even if they may be purged from the system.</p><h4>Applications</h4><p>Each Instance is an operational instance of a specific Application.  An
+Application is simply what an end user would understand to be application:
+computer software which solves some problem for them better than could be
+solved without such software.</p><p>Applications in this component are added and maintained directly via database
+migrations therefore there is no API provided to manage applications and there
+are no user maintainable Application attributes.</p><h4>Application Contexts</h4><p>Application Context records define the expected Datastore Context records that
+must be created for each Instance.  Each Application Context will be
+represent data ownership, data access restriction, and/or connection pool
+resource constraint.  When created Instances will have its own database roles
+created for each of the defined Application Contexts.</p><h4>Instance Types</h4><p>Instance Type records are used to define the default resource utilization
+classes that are available for creating new Instances.  These defaults include
+such starting values as the number of database connections to use for each
+Application Context and which server pools may host the Instance.</p><p>After Instance creation, the Instance Type serves no further role for the
+Instance.</p><p>Note that Instance Type records are a special case of the
+<a href="../../../../documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.Data.SystEnumItems.html"><code class="inline">MscmpSystEnums.Data.SystEnumItems</code></a> record.  The Enum Name for Instance Type
+is, unsurprisingly, <code class="inline">instance_types</code>.</p><h4>Instance Type Applications</h4><p>Establishes that a given Instance Type will support a particular Application.</p><h4>Instance Type Contexts</h4><p>Defines defaults used in creating Instance Context records at Instance
+creation time.</p><p>When an association is made between an Instance Type and an Application via
+a Instance Type Application association, a new Instance Type Context record is
+created for the combination of the Instance Type and each of the Application's
+defined Application Contexts.</p><p>At Instance creation time, the Instance Type Context defaults are copied
+into Instance specific Instance Context records to define the actual database
+roles which the instance will use to interact with the database.</p><p>Note that Instance Type Context records are automatically created and
+destroyed via the creation of Instance Type Application records by way of
+database triggers; therefore the only application API related to these
+records is for updating them.</p><h4>Instances</h4><p>An Instance represents the single environment of a specific Application and a
+specific Owner.  Instance records are used to know which database server to
+connect to, what Instance Context records are used for connecting to the
+database, and the current state of the Instance including whether or not it's
+been updated with the Application database definition, is in a usable state,
+or can be purged from the system.</p><h4>Instance Contexts</h4><p>An Instance's Instance Context records define specifically how an Instance
+will connect to its Datastore including such information as how many
+connections should be opened to the database.</p><p>Database triggers are responsible for creating and destroying Instance Context
+records.  On creation, the Instance Context is created with default values
+defined by Instance Type Context records for the type of Instance being
+created.  The default values set on Instance Context creation may be
+overridden via this API as desired.</p><h2 id="module-special-notes" class="section-heading">
+  <a href="#module-special-notes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">special-notes</p>
+  </a>
+  Special Notes
+</h2>
+<p>This component requires that an instance of the <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.html"><code class="inline">MscmpSystEnums</code></a> service has
+been configured and started.  Many of the API calls in this component will
+fail if the <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.html"><code class="inline">MscmpSystEnums</code></a> services are not available.</p>
+  </section>
+
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+      Summary
+    </h1>
+
+  <div class="summary-owners summary">
+    <h2>
+      <a href="#owners">Owners</a>
+    </h2>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#create_owner/1" translate="no">create_owner(owner_params)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Creates a new Owner record.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#get_owner_by_name/1" translate="no">get_owner_by_name(owner_name)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Retrieves an Owner record by its internal name.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#get_owner_id_by_name/1" translate="no">get_owner_id_by_name(owner_name)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Retrieves the Owner record ID by Owner internal name.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#purge_owner/1" translate="no">purge_owner(owner)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Removes an Owner record from the system.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#update_owner/2" translate="no">update_owner(owner, update_params)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Updates an Owner record.</p></div>
+
+      </div>
+
+  </div>
+
+  <div class="summary-instance-types summary">
+    <h2>
+      <a href="#instance-types">Instance Types</a>
+    </h2>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#create_instance_type/1" translate="no">create_instance_type(instance_type_params)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Creates a new Instance Type record via the <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.html"><code class="inline">MscmpSystEnums</code></a> service.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#create_instance_type_application/2" translate="no">create_instance_type_application(instance_type_id, application_id)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Creates an Instance Type/Application association.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#delete_instance_type/1" translate="no">delete_instance_type(instance_type_name)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Deletes an Instance Type from the <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.html"><code class="inline">MscmpSystEnums</code></a> service.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#delete_instance_type_application/1" translate="no">delete_instance_type_application(instance_type_application)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Disassociates the Instance Type/Application support relationship.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#update_instance_type/2" translate="no">update_instance_type(instance_type_name, instance_type_params \\ %{})</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Updates an existing Instance Type record via the <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.html"><code class="inline">MscmpSystEnums</code></a> service.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#update_instance_type_context/2" translate="no">update_instance_type_context(instance_type_context, instance_type_context_params \\ %{})</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Updates Instance Type Context default values which are applied to new Instance
+Contexts.</p></div>
+
+      </div>
+
+  </div>
+
+  <div class="summary-instances summary">
+    <h2>
+      <a href="#instances">Instances</a>
+    </h2>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#create_instance/1" translate="no">create_instance(instance_params)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Creates a new Instance record.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#get_default_instance_state_ids/0" translate="no">get_default_instance_state_ids()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Returns a Keyword List of the default values for each Instance State's
+functional type.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#get_instance_by_name/1" translate="no">get_instance_by_name(instance_name)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Returns the SystInstances record identified by its internal name.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#get_instance_datastore_options/2" translate="no">get_instance_datastore_options(instance, startup_options)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Retrieves the Datastore Options based on the Instance database record and the
+provided Startup Options.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#get_instance_id_by_name/1" translate="no">get_instance_id_by_name(instance_name)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Returns the ID of the Instance record as identified by its internal name.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#initialize_instance/3" translate="no">initialize_instance(instance_id, startup_options, opts \\ [])</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Initializes an uninitialized Instance.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#purge_instance/2" translate="no">purge_instance(instance, startup_options)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Purges an eligible Instance from the system.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#set_instance_state/2" translate="no">set_instance_state(instance, instance_state_id)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Sets the Instance State of an Instance.</p></div>
+
+      </div>
+
+  </div>
+
+  <div class="summary-runtime summary">
+    <h2>
+      <a href="#runtime">Runtime</a>
+    </h2>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#start_all_applications/2" translate="no">start_all_applications(startup_options, opts \\ [])</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Starts all Applications and each Application's child Instances.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#start_application/3" translate="no">start_application(application, startup_options, opts \\ [])</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Starts the requested Application and its child Instances.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#start_instance/3" translate="no">start_instance(instance, startup_options, opts \\ [])</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Starts an Instance and places it under the appropriate Application's
+supervisor.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#stop_all_applications/1" translate="no">stop_all_applications(opts \\ [])</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Stops all Applications, Application Supervisors, and their child Instances.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#stop_application/2" translate="no">stop_application(application, opts \\ [])</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Shuts down the Supervisor process of the requested Application and all of its
+child processes, including Instances.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#stop_instance/2" translate="no">stop_instance(instance, opts \\ [])</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Stops an Instance.</p></div>
+
+      </div>
+
+  </div>
+
+  </section>
+
+
+  <section id="owners" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#owners">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+Owners
+    </h1>
+    <div class="owners-list">
+<section class="detail" id="create_owner/1">
+
+  <div class="detail-header">
+    <a href="#create_owner/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">create_owner(owner_params)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> create_owner(<a href="MscmpSystInstance.Types.html#t:owner_params/0">MscmpSystInstance.Types.owner_params</a>()) ::
+  {:ok, <a href="MscmpSystInstance.Data.SystOwners.html#t:t/0">MscmpSystInstance.Data.SystOwners.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Creates a new Owner record.</p><h2 id="create_owner/1-parameters" class="section-heading">
+  <a href="#create_owner/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">owner_params</code> - a map of Owner record attributes to use when creating a
+new record.</p><ul><li><p><code class="inline">internal_name</code> - a predetermined unique identifier for the Owner
+record for use in programmatic contexts.  This attribute is required and
+must be unique in the system.</p></li><li><p><code class="inline">display_name</code> - a unique, friendly name identifying the owner and for
+use in user interfaces.  This attribute is required and must be unique in
+the system.</p></li><li><p><code class="inline">owner_state_id</code> - the Owner State value with which to create the new
+Owner record.  If not provided in the function call, this attribute will
+be defaulted to the configured Owner State default value for the
+enumeration.</p></li></ul></li></ul>
+  </section>
+</section>
+<section class="detail" id="get_owner_by_name/1">
+
+  <div class="detail-header">
+    <a href="#get_owner_by_name/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_owner_by_name(owner_name)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_owner_by_name(<a href="MscmpSystInstance.Types.html#t:owner_name/0">MscmpSystInstance.Types.owner_name</a>()) ::
+  {:ok, <a href="MscmpSystInstance.Data.SystOwners.html#t:t/0">MscmpSystInstance.Data.SystOwners.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Retrieves an Owner record by its internal name.</p><p>This retrieval operation will also populate the associated records of Owner
+State and the Owner State Functional Type.</p><h2 id="get_owner_by_name/1-examples" class="section-heading">
+  <a href="#get_owner_by_name/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
+  Examples
+</h2>
+<p>  iex&gt; {:ok, %MscmpSystInstance.Data.SystOwners{internal_name: &quot;owner1&quot;}} =
+  ...&gt;   MscmpSystInstance.get_owner_by_name(&quot;owner1&quot;)</p>
+  </section>
+</section>
+<section class="detail" id="get_owner_id_by_name/1">
+
+  <div class="detail-header">
+    <a href="#get_owner_id_by_name/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_owner_id_by_name(owner_name)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_owner_id_by_name(<a href="MscmpSystInstance.Types.html#t:owner_name/0">MscmpSystInstance.Types.owner_name</a>()) ::
+  {:ok, <a href="MscmpSystInstance.Types.html#t:owner_id/0">MscmpSystInstance.Types.owner_id</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Retrieves the Owner record ID by Owner internal name.</p><h2 id="get_owner_id_by_name/1-examples" class="section-heading">
+  <a href="#get_owner_id_by_name/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
+  Examples
+</h2>
+<p>  iex&gt; {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name(&quot;owner1&quot;)
+  iex&gt; is_binary(owner_id)
+  true</p>
+  </section>
+</section>
+<section class="detail" id="purge_owner/1">
+
+  <div class="detail-header">
+    <a href="#purge_owner/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">purge_owner(owner)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> purge_owner(
+  <a href="MscmpSystInstance.Types.html#t:owner_id/0">MscmpSystInstance.Types.owner_id</a>()
+  | <a href="MscmpSystInstance.Data.SystOwners.html#t:t/0">MscmpSystInstance.Data.SystOwners.t</a>()
+) ::
+  :ok | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Removes an Owner record from the system.</p><p>Note that only Owner records in an Owner State of functional type
+<code class="inline">owner_states_purge_eligible</code> may be purged from the system.</p><h2 id="purge_owner/1-parameters" class="section-heading">
+  <a href="#purge_owner/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">owner</code> - either the record ID of an Owner record to delete or the
+<a href="MscmpSystInstance.Data.SystOwners.html"><code class="inline">MscmpSystInstance.Data.SystOwners</code></a> struct representing the Owner to
+purge.</li></ul>
+  </section>
+</section>
+<section class="detail" id="update_owner/2">
+
+  <div class="detail-header">
+    <a href="#update_owner/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">update_owner(owner, update_params)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> update_owner(
+  <a href="MscmpSystInstance.Types.html#t:owner_id/0">MscmpSystInstance.Types.owner_id</a>() | <a href="MscmpSystInstance.Data.SystOwners.html#t:t/0">MscmpSystInstance.Data.SystOwners.t</a>(),
+  <a href="MscmpSystInstance.Types.html#t:owner_params/0">MscmpSystInstance.Types.owner_params</a>()
+) :: {:ok, <a href="MscmpSystInstance.Data.SystOwners.html#t:t/0">MscmpSystInstance.Data.SystOwners.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Updates an Owner record.</p><h2 id="update_owner/2-parameters" class="section-heading">
+  <a href="#update_owner/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">owner</code> - This value must either by the record ID of an existing Owner
+record or the <a href="MscmpSystInstance.Data.SystOwners.html"><code class="inline">MscmpSystInstance.Data.SystOwners</code></a> struct representing an
+existing owner.</p></li><li><p><code class="inline">update_params</code> - a map of Owner record attributes to be updated.  For
+update operations only those attributes to be updates must be provided.</p><ul><li><p><code class="inline">internal_name</code> - a predetermined unique identifier for the Owner
+record for use in programmatic contexts.  This attribute must be unique in
+the system and may not be nil.</p></li><li><p><code class="inline">display_name</code> - a unique, friendly name identifying the owner and for
+use in user interfaces.  This attribute must be unique in the system and
+may not be nil.</p></li><li><p><code class="inline">owner_state_id</code> - the record ID value of the new Owner State of the
+Owner record.  Note that if this attribute is provided, but is set nil,
+an error will result.</p></li></ul></li></ul>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+  <section id="instance-types" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#instance-types">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+Instance Types
+    </h1>
+    <div class="instance-types-list">
+<section class="detail" id="create_instance_type/1">
+
+  <div class="detail-header">
+    <a href="#create_instance_type/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">create_instance_type(instance_type_params)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> create_instance_type(<a href="MscmpSystInstance.Types.html#t:instance_type_params/0">MscmpSystInstance.Types.instance_type_params</a>()) ::
+  {:ok, <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.Data.SystEnumItems.html#t:t/0">MscmpSystEnums.Data.SystEnumItems.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Creates a new Instance Type record via the <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.html"><code class="inline">MscmpSystEnums</code></a> service.</p><h2 id="create_instance_type/1-parameters" class="section-heading">
+  <a href="#create_instance_type/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">instance_type_params</code> - the parameters to use when creating the new
+Instance Type.  The attributes <code class="inline">internal_name</code>, <code class="inline">display_name</code>,
+<code class="inline">external_name</code>, <code class="inline">user_description</code>, and <code class="inline">user_options</code> fields are required
+for Instance Type creation.</li></ul>
+  </section>
+</section>
+<section class="detail" id="create_instance_type_application/2">
+
+  <div class="detail-header">
+    <a href="#create_instance_type_application/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">create_instance_type_application(instance_type_id, application_id)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> create_instance_type_application(
+  <a href="MscmpSystInstance.Types.html#t:instance_type_id/0">MscmpSystInstance.Types.instance_type_id</a>(),
+  <a href="MscmpSystInstance.Types.html#t:application_id/0">MscmpSystInstance.Types.application_id</a>()
+) ::
+  {:ok, <a href="MscmpSystInstance.Data.SystInstanceTypeApplications.html#t:t/0">MscmpSystInstance.Data.SystInstanceTypeApplications.t</a>()}
+  | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Creates an Instance Type/Application association.</p><p>Associating an Instance Type with an Application expresses that the Instance
+Type can support Instances of the given application.</p><h2 id="create_instance_type_application/2-parameters" class="section-heading">
+  <a href="#create_instance_type_application/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">instance_type_id</code> - the ID value of the Instance Type which will support
+Application Instances.</p></li><li><p><code class="inline">application_id</code> - the ID value which identifies the Application to be
+supported.</p></li></ul>
+  </section>
+</section>
+<section class="detail" id="delete_instance_type/1">
+
+  <div class="detail-header">
+    <a href="#delete_instance_type/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">delete_instance_type(instance_type_name)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> delete_instance_type(<a href="MscmpSystInstance.Types.html#t:instance_type_name/0">MscmpSystInstance.Types.instance_type_name</a>()) ::
+  :ok | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Deletes an Instance Type from the <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.html"><code class="inline">MscmpSystEnums</code></a> service.</p><p>Note that an attempt to delete an in-use Instance Type will result in a
+constraint error.</p><h2 id="delete_instance_type/1-parameters" class="section-heading">
+  <a href="#delete_instance_type/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">instance_type_name</code> - the internal name of an Instance Type to delete
+from the system.</li></ul>
+  </section>
+</section>
+<section class="detail" id="delete_instance_type_application/1">
+
+  <div class="detail-header">
+    <a href="#delete_instance_type_application/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">delete_instance_type_application(instance_type_application)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> delete_instance_type_application(
+  <a href="MscmpSystInstance.Types.html#t:instance_type_application_id/0">MscmpSystInstance.Types.instance_type_application_id</a>()
+  | <a href="MscmpSystInstance.Data.SystInstanceTypeApplications.html#t:t/0">MscmpSystInstance.Data.SystInstanceTypeApplications.t</a>()
+) :: :ok | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Disassociates the Instance Type/Application support relationship.</p><p>Note that this will only prevent the creation of new Instances of the Instance
+Type for the Application.  Existing Instances that were created when the
+relationship was valid will continue to exist.</p><h2 id="delete_instance_type_application/1-parameters" class="section-heading">
+  <a href="#delete_instance_type_application/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">instance_type_application</code> - This value can be either the ID value of the
+Instance Type Application record or a
+<a href="MscmpSystInstance.Data.SystInstanceTypeApplications.html"><code class="inline">MscmpSystInstance.Data.SystInstanceTypeApplications</code></a> struct with at
+least the <code class="inline">id</code> field defined.</li></ul>
+  </section>
+</section>
+<section class="detail" id="update_instance_type/2">
+
+    <span id="update_instance_type/1"></span>
+
+  <div class="detail-header">
+    <a href="#update_instance_type/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">update_instance_type(instance_type_name, instance_type_params \\ %{})</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> update_instance_type(
+  <a href="MscmpSystInstance.Types.html#t:instance_type_name/0">MscmpSystInstance.Types.instance_type_name</a>(),
+  <a href="MscmpSystInstance.Types.html#t:instance_type_params/0">MscmpSystInstance.Types.instance_type_params</a>() | %{}
+) :: {:ok, <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.Data.SystEnumItems.html#t:t/0">MscmpSystEnums.Data.SystEnumItems.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Updates an existing Instance Type record via the <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.html"><code class="inline">MscmpSystEnums</code></a> service.</p><h2 id="update_instance_type/2-parameters" class="section-heading">
+  <a href="#update_instance_type/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">instance_type_name</code> - the internal name of the Instance Type to target
+for updating.</p></li><li><p><code class="inline">instance_type_params</code> - the parameters to use when creating the new
+Instance Type.  All attributes in the parameter map are optional in updating
+contexts.</p></li></ul>
+  </section>
+</section>
+<section class="detail" id="update_instance_type_context/2">
+
+    <span id="update_instance_type_context/1"></span>
+
+  <div class="detail-header">
+    <a href="#update_instance_type_context/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">update_instance_type_context(instance_type_context, instance_type_context_params \\ %{})</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> update_instance_type_context(
+  <a href="MscmpSystInstance.Types.html#t:instance_type_context_id/0">MscmpSystInstance.Types.instance_type_context_id</a>()
+  | <a href="MscmpSystInstance.Data.SystInstanceTypeContexts.html#t:t/0">MscmpSystInstance.Data.SystInstanceTypeContexts.t</a>(),
+  <a href="MscmpSystInstance.Types.html#t:instance_type_context_params/0">MscmpSystInstance.Types.instance_type_context_params</a>() | %{}
+) ::
+  {:ok, <a href="MscmpSystInstance.Data.SystInstanceTypeContexts.html#t:t/0">MscmpSystInstance.Data.SystInstanceTypeContexts.t</a>()}
+  | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Updates Instance Type Context default values which are applied to new Instance
+Contexts.</p><h2 id="update_instance_type_context/2-parameters" class="section-heading">
+  <a href="#update_instance_type_context/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">instance_type_context</code> - this value may either be the record ID of the
+target Instance Type Context record or a copy of the current
+<a href="MscmpSystInstance.Data.SystInstanceTypeContexts.html"><code class="inline">MscmpSystInstance.Data.SystInstanceTypeContexts</code></a> struct representing the
+target record.</p></li><li><p><code class="inline">instance_type_context_params</code> - a map containing those attributes to be
+updated with their new values.</p><ul><li><p><code class="inline">instance_type_id</code> - the ID value of the owning Instance Type record.
+This value is required unless the <code class="inline">instance_type_name</code> attribute is
+provided.</p></li><li><p><code class="inline">instance_type_name</code> - the internal name value of the owning Instance
+Type record.  This value required unless the <code class="inline">instance_type_id</code> value is
+provided instead.</p></li><li><p><code class="inline">application_context_id</code> - the record ID value of the Application
+Context with which this record is associated.  This value is required
+unless the <code class="inline">application_context_name</code> value is provided instead.</p></li><li><p><code class="inline">application_context_name</code> -  the internal name value of the Application
+Context with which this record is associated.  This value is required
+unless the <code class="inline">application_context_id</code> value is provided instead.</p></li><li><p><code class="inline">default_db_pool_size</code> - the default size of the database connection
+pool to use for Instances Contexts created for Instances of this Instance
+Type.  This field defaults to 0 on Instance Type Context creation.</p></li></ul></li></ul>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+  <section id="instances" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#instances">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+Instances
+    </h1>
+    <div class="instances-list">
+<section class="detail" id="create_instance/1">
+
+  <div class="detail-header">
+    <a href="#create_instance/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">create_instance(instance_params)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> create_instance(<a href="MscmpSystInstance.Types.html#t:instance_params/0">MscmpSystInstance.Types.instance_params</a>()) ::
+  {:ok, <a href="MscmpSystInstance.Data.SystInstances.html#t:t/0">MscmpSystInstance.Data.SystInstances.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Creates a new Instance record.</p><p>Creating a new Instance record will also create new Instance Context records
+based on the defaults defined in the Instance Type Context records associated
+with the Instance Type and Application of the new Instance.  This is
+accomplished with database triggers.</p><h2 id="create_instance/1-parameters" class="section-heading">
+  <a href="#create_instance/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">instance_params</code> - A map of attributes to use in creating the new
+Instance record in the system.</p><ul><li><p><code class="inline">internal_name</code> - a pre-generated identifier for Instance record for use
+in programmatic contexts.  This value is required and must be unique in
+the system.</p></li><li><p><code class="inline">display_name</code> - a friendly name which identifies the record for use in
+user interfaces.  This value is required and must be unique in the system.</p></li><li><p><code class="inline">dbserver_name</code> - the name of the database server where the Instance
+Datastore exists.  This value is required.  Note that invalid values here
+may not be detected until such time as the Instance Datastore use is
+attempted.</p></li><li><p><code class="inline">application_id</code> - the record ID of the Application for which this
+Instance is being created.  This value is required unless the
+<code class="inline">application_name</code> attribute has been provided instead.</p></li><li><p><code class="inline">application_name</code> - the internal name of the Application for which this
+Instance is being created.  This value is requires unless the
+<code class="inline">application_id</code> attribute has been provided instead.</p></li><li><p><code class="inline">instance_code</code> - A value used in constructing the Instance Context
+credentials.  This value should be a randomly generated series of between
+8 and 64 bytes.</p></li><li><p><code class="inline">instance_type_id</code> - the record ID of the Instance Type of the new
+Instance record.  This attribute is required unless the
+<code class="inline">instance_type_name</code> attribute is provided instead.</p></li><li><p><code class="inline">instance_type_name</code> - the internal name of the Instance Type of the new
+Instance record.  This attribute is requires unless the <code class="inline">instance_type_id</code>
+attribute is provided instead.</p></li><li><p><code class="inline">instance_state_id</code> - the record ID of the Instance State in which to
+create the new Instance record.  This value may be omitted and allowed to
+default based on the configured default Instance State.  Optionally the
+Instance State may also be identified by the <code class="inline">instance_state_name</code>
+attribute.</p></li><li><p><code class="inline">instance_state_name</code> - the internal name of the Instance State in which
+to create the new Instance record.  This value may be omitted and allowed
+to default based on the configured default Instance State.  Optionally the
+Instance State may also be identified by the <code class="inline">instance_state_id</code>
+attribute.</p></li><li><p><code class="inline">owner_id</code> - the record ID of the Owner of the Instance.  This
+attribute is required unless the <code class="inline">owner_name</code> attribute is provided.</p></li><li><p><code class="inline">owner_name</code> - th internal name of the Owner of the Instance.  This
+attribute is required unless the <code class="inline">owner_id</code> attribute is provided.</p></li><li><p><code class="inline">owning_instance_id</code> - if the Instance is associated with a parent
+instance, such as a sandbox Instance being created for a parent production
+Instance, the parent/child relationship may be expressed by assigning this
+attribute to the record ID of the parent.  This attribute is not required
+and the parent Instance may be identified by the <code class="inline">owning_instance_name</code>
+attribute instead.</p></li><li><p><code class="inline">owning_instance_name</code> - an alternate identification method for
+identifying a parent Instance when creating a child Instance.  This
+attribute is optional and may used in lieu of using the
+<code class="inline">owning_instance_id</code> attribute to establish the parent/child relationship
+of the new Instance.</p></li></ul></li></ul>
+  </section>
+</section>
+<section class="detail" id="get_default_instance_state_ids/0">
+
+  <div class="detail-header">
+    <a href="#get_default_instance_state_ids/0" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_default_instance_state_ids()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_default_instance_state_ids() :: <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()</pre>
+
+      </div>
+
+<p>Returns a Keyword List of the default values for each Instance State's
+functional type.</p><p>Instance updating functions that change the Instance State value of the
+Instance will default to the appropriate Instance State if a specific Instance
+State value is not provided by the caller.</p>
+  </section>
+</section>
+<section class="detail" id="get_instance_by_name/1">
+
+  <div class="detail-header">
+    <a href="#get_instance_by_name/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_instance_by_name(instance_name)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_instance_by_name(<a href="MscmpSystInstance.Types.html#t:instance_name/0">MscmpSystInstance.Types.instance_name</a>()) ::
+  {:ok, <a href="MscmpSystInstance.Data.SystInstances.html#t:t/0">MscmpSystInstance.Data.SystInstances.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Returns the SystInstances record identified by its internal name.</p><h2 id="get_instance_by_name/1-parameters" class="section-heading">
+  <a href="#get_instance_by_name/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">instance_name</code> - the internal name of the Instance record to return.</li></ul><h2 id="get_instance_by_name/1-example" class="section-heading">
+  <a href="#get_instance_by_name/1-example" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">example</p>
+  </a>
+  Example
+</h2>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="5775153491-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="5775153491-2">%</span><span class="nc" data-group-id="5775153491-2">MscmpSystInstance.Data.SystInstances</span><span class="p" data-group-id="5775153491-2">{</span><span class="p" data-group-id="5775153491-2">}</span><span class="p" data-group-id="5775153491-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_by_name</span><span class="p" data-group-id="5775153491-3">(</span><span class="s">&quot;app1_owner1_instance_types_sml&quot;</span><span class="p" data-group-id="5775153491-3">)</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="get_instance_datastore_options/2">
+
+  <div class="detail-header">
+    <a href="#get_instance_datastore_options/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_instance_datastore_options(instance, startup_options)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_instance_datastore_options(
+  <a href="MscmpSystInstance.Types.html#t:instance_id/0">MscmpSystInstance.Types.instance_id</a>()
+  | <a href="MscmpSystInstance.Data.SystInstances.html#t:t/0">MscmpSystInstance.Data.SystInstances.t</a>(),
+  <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()
+) :: <a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.Types.html#t:datastore_options/0">MscmpSystDb.Types.datastore_options</a>()</pre>
+
+      </div>
+
+<p>Retrieves the Datastore Options based on the Instance database record and the
+provided Startup Options.</p><h2 id="get_instance_datastore_options/2-parameters" class="section-heading">
+  <a href="#get_instance_datastore_options/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">instance</code> - the instance parameter is either the record ID value of the
+Instance record desired or the <a href="MscmpSystInstance.Data.SystInstances.html"><code class="inline">MscmpSystInstance.Data.SystInstances</code></a>
+struct for the target Instance.</p></li><li><p><code class="inline">startup_options</code> - a map of values containing the Startup Options
+obtained from the <a href="../../../../documentation/technical/app_server/mscmp_syst_options/MscmpSystOptions.html"><code class="inline">MscmpSystOptions</code></a> component.</p></li></ul>
+  </section>
+</section>
+<section class="detail" id="get_instance_id_by_name/1">
+
+  <div class="detail-header">
+    <a href="#get_instance_id_by_name/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_instance_id_by_name(instance_name)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_instance_id_by_name(<a href="MscmpSystInstance.Types.html#t:instance_name/0">MscmpSystInstance.Types.instance_name</a>()) ::
+  {:ok, <a href="MscmpSystInstance.Types.html#t:instance_id/0">MscmpSystInstance.Types.instance_id</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Returns the ID of the Instance record as identified by its internal name.</p><h2 id="get_instance_id_by_name/1-parameters" class="section-heading">
+  <a href="#get_instance_id_by_name/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">instance_name</code> - the internal name of the Instance record to reference.</li></ul><h2 id="get_instance_id_by_name/1-example" class="section-heading">
+  <a href="#get_instance_id_by_name/1-example" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">example</p>
+  </a>
+  Example
+</h2>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="4659706932-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">instance_id</span><span class="p" data-group-id="4659706932-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_id_by_name</span><span class="p" data-group-id="4659706932-2">(</span><span class="s">&quot;app1_owner1_instance_types_sml&quot;</span><span class="p" data-group-id="4659706932-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_binary</span><span class="p" data-group-id="4659706932-3">(</span><span class="n">instance_id</span><span class="p" data-group-id="4659706932-3">)</span><span class="w">
+</span><span class="no">true</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="initialize_instance/3">
+
+    <span id="initialize_instance/2"></span>
+
+  <div class="detail-header">
+    <a href="#initialize_instance/3" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">initialize_instance(instance_id, startup_options, opts \\ [])</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> initialize_instance(<a href="MscmpSystInstance.Types.html#t:instance_id/0">MscmpSystInstance.Types.instance_id</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) ::
+  {:ok, <a href="MscmpSystInstance.Data.SystInstances.html#t:t/0">MscmpSystInstance.Data.SystInstances.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Initializes an uninitialized Instance.</p><p>When a new Instance is created in the database, the record is giving an
+Instance State with a functional type of <code class="inline">instance_states_uninitialized</code>
+meaning that the Instance record has been created in the database, but the
+Instance's own database and associated database roles have not yet been set
+up.</p><p>Initializing an Instance creates its database and its database roles
+(&quot;Datastore&quot; and &quot;Datastore Contexts&quot;). Once initialized, the Instance record
+is given an Instance State of functional type <code class="inline">instance_states_initialized</code>.</p><p>Initialized Instances may be started and have their Datastores migrated to the
+current version of the Instance's database.</p><h2 id="initialize_instance/3-parameters" class="section-heading">
+  <a href="#initialize_instance/3-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">instance_id</code> - the record ID of the Instance to initialize.</p></li><li><p><code class="inline">startup_options</code> - a map of values containing the Startup Options
+obtained from the <a href="../../../../documentation/technical/app_server/mscmp_syst_options/MscmpSystOptions.html"><code class="inline">MscmpSystOptions</code></a> component.</p></li><li><p><code class="inline">opts</code> - a Keyword List of optional values used during the initialization
+process.  The available options include:</p><ul><li><p><code class="inline">initializing_state_id</code> - the record ID value of the Instance State to
+use to indicate that the record is being initialized.  If this value is
+not provided the configured default Instance State for the functional type
+<code class="inline">instance_states_initializing</code> will be used.</p></li><li><p><code class="inline">initialized_state_id</code> - the record ID value of the Instance State to
+use to indicate that the record has successfully been initialized.  If
+this value is not provided the configured default Instance State for the
+functional type <code class="inline">instance_states_initialized</code> will be used.</p></li><li><p><code class="inline">failed_state_id</code> - the record ID value of the Instance State to
+use to indicate that the record has failed to be initialized.  If this
+value is not provided the default configured Instance State for the
+functional type <code class="inline">instance_states_failure</code> will be used.</p></li><li><p><code class="inline">db_shutdown_timeout</code> - a timeout value used to limit the time allowed
+for a clean shutdown of the DBA and Privileged database connections used
+for initialization of the Datastore.  See the documentation for
+<a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.html#create_datastore/2"><code class="inline">MscmpSystDb.create_datastore/2</code></a> for more information.</p></li></ul></li></ul>
+  </section>
+</section>
+<section class="detail" id="purge_instance/2">
+
+  <div class="detail-header">
+    <a href="#purge_instance/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">purge_instance(instance, startup_options)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> purge_instance(
+  <a href="MscmpSystInstance.Types.html#t:instance_id/0">MscmpSystInstance.Types.instance_id</a>()
+  | <a href="MscmpSystInstance.Data.SystInstances.html#t:t/0">MscmpSystInstance.Data.SystInstances.t</a>(),
+  <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()
+) :: :ok | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Purges an eligible Instance from the system.</p><p>Purging an Instance drops its associated Datastore and its defining
+<a href="MscmpSystInstance.Data.SystInstances.html"><code class="inline">MscmpSystInstance.Data.SystInstances</code></a> records from the database.</p><p>In order for the purge to be successful, the Instance must be in an Instance
+State of functional type <code class="inline">instance_states_purge_eligible</code>.</p><blockquote><h4 class="warning">Warning</h4><p>Naturally, great care must be taken in the lead up to calling this function
+as purging an Instance leads to the irreversible loss of the Instance's data
+(absent externally managed backups of some sort).</p></blockquote><h2 id="purge_instance/2-parameters" class="section-heading">
+  <a href="#purge_instance/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">instance</code> - either the record ID or the
+<a href="MscmpSystInstance.Data.SystInstances.html"><code class="inline">MscmpSystInstance.Data.SystInstances</code></a> struct of the Instance to purge.</p></li><li><p><code class="inline">startup_options</code> - a map of values containing the Startup Options
+obtained from the <a href="../../../../documentation/technical/app_server/mscmp_syst_options/MscmpSystOptions.html"><code class="inline">MscmpSystOptions</code></a> component.</p></li></ul>
+  </section>
+</section>
+<section class="detail" id="set_instance_state/2">
+
+  <div class="detail-header">
+    <a href="#set_instance_state/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">set_instance_state(instance, instance_state_id)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> set_instance_state(
+  <a href="MscmpSystInstance.Data.SystInstances.html#t:t/0">MscmpSystInstance.Data.SystInstances.t</a>(),
+  <a href="MscmpSystInstance.Types.html#t:instance_state_id/0">MscmpSystInstance.Types.instance_state_id</a>()
+) ::
+  {:ok, <a href="MscmpSystInstance.Data.SystInstances.html#t:t/0">MscmpSystInstance.Data.SystInstances.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Sets the Instance State of an Instance.</p><h2 id="set_instance_state/2-parameters" class="section-heading">
+  <a href="#set_instance_state/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">instance</code> - the current <a href="MscmpSystInstance.Data.SystInstances.html"><code class="inline">MscmpSystInstance.Data.SystInstances</code></a> struct
+representing the Instance to be updated.</p></li><li><p><code class="inline">instance_state_id</code> - The record ID of the new Instance State value into
+which to place the Instance record.</p></li></ul>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+  <section id="runtime" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#runtime">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+Runtime
+    </h1>
+    <div class="runtime-list">
+<section class="detail" id="start_all_applications/2">
+
+    <span id="start_all_applications/1"></span>
+
+  <div class="detail-header">
+    <a href="#start_all_applications/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">start_all_applications(startup_options, opts \\ [])</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> start_all_applications(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: :ok | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Starts all Applications and each Application's child Instances.</p><p>This function calls the <a href="#start_application/3"><code class="inline">start_application/3</code></a> function for each Application
+configured in the system.  See the documentation for <a href="#start_application/3"><code class="inline">start_application/3</code></a>
+for more information about this function and the available parameters.</p>
+  </section>
+</section>
+<section class="detail" id="start_application/3">
+
+    <span id="start_application/2"></span>
+
+  <div class="detail-header">
+    <a href="#start_application/3" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">start_application(application, startup_options, opts \\ [])</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> start_application(
+  <a href="MscmpSystInstance.Types.html#t:application_id/0">MscmpSystInstance.Types.application_id</a>()
+  | <a href="MscmpSystInstance.Data.SystApplications.html#t:t/0">MscmpSystInstance.Data.SystApplications.t</a>(),
+  <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(),
+  <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
+) :: :ok | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Starts the requested Application and its child Instances.</p><p>For the requested Application, start a DynamicSupervisor under which to
+supervise all of the services related to that Application including its child
+Instances.</p><p>Once the Application supervisor is started any child Instances which are in a
+start-eligible status are started under the Application supervisor.  The
+Instance startup process starts each Instance asynchronously and concurrently.
+The instance startup process will also upgrade each Instance datastore to the
+current version of the application, if required.  As such, you should be
+prepared for Application startup to be long running.</p><h2 id="start_application/3-parameters" class="section-heading">
+  <a href="#start_application/3-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">application</code> - either the record ID or the
+<a href="MscmpSystInstance.Data.SystApplications.html"><code class="inline">MscmpSystInstance.Data.SystApplications</code></a> struct representing the
+Application to start.</p></li><li><p><code class="inline">startup_options</code> - a map of values containing the Startup Options
+obtained from the <a href="../../../../documentation/technical/app_server/mscmp_syst_options/MscmpSystOptions.html"><code class="inline">MscmpSystOptions</code></a> component.</p></li><li><p><code class="inline">opts</code> - a Keyword List of optional values used during the initialization
+process.  The available options include:</p><ul><li><p><code class="inline">max_concurrency</code> - the maximum number of Instances to start
+concurrently.  This defaults to the greater of 1 or one quarter of the
+value returned by <a href="https://hexdocs.pm/elixir/System.html#schedulers_online/0"><code class="inline">System.schedulers_online/0</code></a> floored.</p></li><li><p>other available options are passed to <a href="#start_instance/3"><code class="inline">start_instance/3</code></a>.  See the
+documentation for <a href="#start_instance/3"><code class="inline">start_instance/3</code></a> for the options it is able to accept.</p></li></ul></li></ul>
+  </section>
+</section>
+<section class="detail" id="start_instance/3">
+
+    <span id="start_instance/2"></span>
+
+  <div class="detail-header">
+    <a href="#start_instance/3" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">start_instance(instance, startup_options, opts \\ [])</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> start_instance(
+  <a href="MscmpSystInstance.Types.html#t:instance_id/0">MscmpSystInstance.Types.instance_id</a>()
+  | <a href="MscmpSystInstance.Data.SystInstances.html#t:t/0">MscmpSystInstance.Data.SystInstances.t</a>(),
+  <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(),
+  <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
+) :: :ok | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Starts an Instance and places it under the appropriate Application's
+supervisor.</p><p>An Instance is essentially a tenant environment running a specific
+Application.  Each environment's runtime characteristics are independent of
+other environments configured to run in the same system.</p><p>To be started the Instance must be in an Instance State of either functional
+type <code class="inline">instance_states_initialized</code> or <code class="inline">instance_states_active</code>.  Trying to
+start an Instance in other Instance States will result in an error.</p><p>Note that we assume that the Application supervisor is already started and is
+ready to start child processes.</p><h2 id="start_instance/3-parameters" class="section-heading">
+  <a href="#start_instance/3-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">instance</code> - either the record ID or the
+<a href="MscmpSystInstance.Data.SystInstances.html"><code class="inline">MscmpSystInstance.Data.SystInstances</code></a> struct of the Instance to start.</p></li><li><p><code class="inline">startup_options</code> - a map of values containing the Startup Options
+obtained from the <a href="../../../../documentation/technical/app_server/mscmp_syst_options/MscmpSystOptions.html"><code class="inline">MscmpSystOptions</code></a> component.</p></li><li><p><code class="inline">opts</code> - a Keyword List of optional values used during the initialization
+process.  The available options include:</p><ul><li><p><code class="inline">migrating_state_id</code> - the record ID of the Instance State to use while
+the starting Instance is being updated to the most current database
+definition of the application.  If not provided the currently configured
+default Instance State for functional type <code class="inline">instance_states_migrating</code>
+will be used.</p></li><li><p><code class="inline">active_state_id</code> - the record ID of the Instance State to use
+indicating that the Instance is ready to accept user workloads.  If not
+provided the currently configured default Instance State for functional
+type <code class="inline">instance_states_active</code> will be used.</p></li><li><p><code class="inline">failure_state_id</code> - the record ID of the Instance State to use
+indicating that the Instance startup process has failed and that the
+Instance is in an inconsistent state.  If not provided the currently
+configured default Instance State for functional type
+<code class="inline">instance_states_failure</code> will be used.</p></li><li><p><code class="inline">migration_bindings</code> - this a Keyword List containing values that will
+be substituted into the migration SQL files used to update a Datastore
+to the current version of the Application.  Usually, there is no need to
+provide this option as the most common migration bindings are
+automatically generated from Instance record data.</p></li></ul></li></ul>
+  </section>
+</section>
+<section class="detail" id="stop_all_applications/1">
+
+    <span id="stop_all_applications/0"></span>
+
+  <div class="detail-header">
+    <a href="#stop_all_applications/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">stop_all_applications(opts \\ [])</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> stop_all_applications(<a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: :ok | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Stops all Applications, Application Supervisors, and their child Instances.</p><p>This function will call <a href="#stop_application/2"><code class="inline">stop_application/2</code></a> for each Application configured
+in the system.  For more information about the available options and behaviors
+of Application shutdown, please see the documentation for
+<a href="#stop_application/2"><code class="inline">stop_application/2</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="stop_application/2">
+
+    <span id="stop_application/1"></span>
+
+  <div class="detail-header">
+    <a href="#stop_application/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">stop_application(application, opts \\ [])</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> stop_application(
+  <a href="MscmpSystInstance.Types.html#t:application_id/0">MscmpSystInstance.Types.application_id</a>()
+  | <a href="MscmpSystInstance.Data.SystApplications.html#t:t/0">MscmpSystInstance.Data.SystApplications.t</a>(),
+  <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
+) :: :ok | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Shuts down the Supervisor process of the requested Application and all of its
+child processes, including Instances.</p><h2 id="stop_application/2-parameters" class="section-heading">
+  <a href="#stop_application/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">application</code> - either the record ID or the
+<a href="MscmpSystInstance.Data.SystApplications.html"><code class="inline">MscmpSystInstance.Data.SystApplications</code></a> struct representing the
+Application to stop.</p></li><li><p><code class="inline">opts</code> - a Keyword List of optional values used during the initialization
+process.  The available options include:</p><ul><li><p><code class="inline">supervisor_shutdown_timeout</code> - a timeout value used to allow processes
+supervised by the Application supervisor to shut down cleanly.  By
+default, this value is set to 60,000ms.</p></li><li><p>Other options available are defined by and passed to the
+<a href="#stop_instance/2"><code class="inline">stop_instance/2</code></a> function for Instance shutdown.  See the
+<a href="#stop_instance/2"><code class="inline">stop_instance/2</code></a> for full information of the available options.</p></li></ul></li></ul>
+  </section>
+</section>
+<section class="detail" id="stop_instance/2">
+
+    <span id="stop_instance/1"></span>
+
+  <div class="detail-header">
+    <a href="#stop_instance/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">stop_instance(instance, opts \\ [])</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> stop_instance(
+  <a href="MscmpSystInstance.Types.html#t:instance_id/0">MscmpSystInstance.Types.instance_id</a>()
+  | <a href="MscmpSystInstance.Data.SystInstances.html#t:t/0">MscmpSystInstance.Data.SystInstances.t</a>(),
+  <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
+) :: :ok | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Stops an Instance.</p><p>Stopping an Instance shuts down its supervisor and any monitored processes.</p><h2 id="stop_instance/2-parameters" class="section-heading">
+  <a href="#stop_instance/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">instance</code> - either the record ID or the
+<a href="MscmpSystInstance.Data.SystInstances.html"><code class="inline">MscmpSystInstance.Data.SystInstances</code></a> struct of the Instance to stop.</p></li><li><p><code class="inline">opts</code> - a Keyword List of optional values used during the initialization
+process.  The available options include:</p><ul><li><p><code class="inline">supervisor_shutdown_timeout</code> - a timeout value used to allow processes
+supervised by the Instance supervisor to shut down cleanly.  By default,
+this value is set to 60,000ms.</p></li><li><p><code class="inline">db_shutdown_timeout</code> - a timeout value used to limit the time allowed
+for a clean shutdown of the database connections used for operating
+Datastore.  See the documentation for
+<a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.html#stop_datastore/2"><code class="inline">MscmpSystDb.stop_datastore/2</code></a> for more information.</p></li></ul></li></ul>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+      <footer class="footer">
+
+        <p>
+          Built using
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.29.0) for the
+
+            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+        </p>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+
+
+  </body>
+</html>

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.29.0">
+    <meta name="project" content="mscmp_syst_authn v0.1.0">
+
+    <title>API Reference — mscmp_syst_authn v0.1.0</title>
+    <link rel="stylesheet" href="dist/html-elixir-2YOS5DIE.css" />
+
+    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
+    <script src="dist/handlebars.templates-X7YVL3G2.js"></script>
+    <script src="dist/sidebar_items-A9BFC0A0.js"></script>
+
+      <script src="docs_config.js"></script>
+
+    <script async src="dist/html-XN2TSG4M.js"></script>
+
+
+  </head>
+  <body data-type="extras" class="page-extra">
+    <script>
+
+      try {
+        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
+
+        if (settings.theme === 'dark' ||
+           ((settings.theme === 'system' || settings.theme == null) &&
+             window.matchMedia('(prefers-color-scheme: dark)').matches)
+           ) {
+          document.body.classList.add('dark')
+        }
+      } catch (error) { }
+    </script>
+
+<div class="main">
+
+<button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<section class="sidebar">
+  <form class="sidebar-search" action="search.html">
+    <button type="submit" class="search-button" aria-label="Submit Search">
+      <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
+    </button>
+    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
+      <i class="ri-close-line ri-lg" aria-hidden="true" title="Cancel search"></i>
+    </button>
+    <label class="search-label">
+      <p class="sr-only">Search</p>
+      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
+    </label>
+  </form>
+
+  <div class="autocomplete">
+    <div class="autocomplete-results">
+    </div>
+  </div>
+
+  <div class="sidebar-header">
+
+    <div class="sidebar-projectDetails">
+      <a href="MscmpSystAuthn.html" class="sidebar-projectName" translate="no">
+mscmp_syst_authn
+      </a>
+      <strong class="sidebar-projectVersion" translate="no">
+        v0.1.0
+      </strong>
+    </div>
+    <ul class="sidebar-listNav">
+      <li><a id="extras-list-link" href="#full-list">Pages</a></li>
+
+        <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+
+
+    </ul>
+  </div>
+
+  <div class="gradient"></div>
+  <ul id="full-list" class="sidebar-fullList"></ul>
+</section>
+
+<section class="content">
+  <output role="status" id="toast"></output>
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+<h1>
+<button class="settings display-settings">
+  <i class="ri-settings-3-line"></i>
+  <span class="sr-only">Settings</span>
+</button>
+
+
+  <span>API Reference <small class="app-vsn">mscmp_syst_authn v0.1.0</small></span>
+</h1>
+
+
+  <section class="details-list">
+    <h2 id="modules" class="section-heading">
+  <a href="#modules" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">modules</p>
+  </a>
+  Modules
+</h2>
+
+    <div class="summary">
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="DevSupport.html" translate="no">DevSupport</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="MscmpSystAuthn.html" translate="no">MscmpSystAuthn</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>API for the management of user authentication.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="MscmpSystAuthn.Data.SystAccessAccountInstanceAssocs.html" translate="no">MscmpSystAuthn.Data.SystAccessAccountInstanceAssocs</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Associates access accounts with the instances for which they are allowed to
+authenticate to.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="MscmpSystAuthn.Data.SystAccessAccounts.html" translate="no">MscmpSystAuthn.Data.SystAccessAccounts</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Contains the known login accounts which are used solely for the purpose of
+authentication of users.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="MscmpSystAuthn.Data.SystCredentials.html" translate="no">MscmpSystAuthn.Data.SystCredentials</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Hosts the credentials by which a user or external system will prove its
+identity.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="MscmpSystAuthn.Data.SystDisallowedHosts.html" translate="no">MscmpSystAuthn.Data.SystDisallowedHosts</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>A simple listing of &quot;banned&quot; IP address which are not allowed to authenticate
+their users to the system.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="MscmpSystAuthn.Data.SystDisallowedPasswords.html" translate="no">MscmpSystAuthn.Data.SystDisallowedPasswords</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Represents a SHA-1 hashed password which is expected to be listed in
+the dictionaries used by attackers to compromised online accounts.  Disallowed
+passwords, as the name suggests, are used to prevent users selecting these
+known compromised passwords when the password rule to disallow known passwords
+is in effect.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="MscmpSystAuthn.Data.SystGlobalNetworkRules.html" translate="no">MscmpSystAuthn.Data.SystGlobalNetworkRules</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Expresses globally applicable rules concerning which hosts, as identified by
+IP address, may or may not attempt to authenticate with the system.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="MscmpSystAuthn.Data.SystGlobalPasswordRules.html" translate="no">MscmpSystAuthn.Data.SystGlobalPasswordRules</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Establishes rules defining the minimum allowed password complexity
+on a global, whole system basis.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="MscmpSystAuthn.Data.SystIdentities.html" translate="no">MscmpSystAuthn.Data.SystIdentities</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>The identities with which access accounts are identified to the system.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="MscmpSystAuthn.Data.SystInstanceNetworkRules.html" translate="no">MscmpSystAuthn.Data.SystInstanceNetworkRules</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Expresses Instance specific rules concerning which hosts, as identified by
+IP address, may or may not attempt to authenticate with the system.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="MscmpSystAuthn.Data.SystOwnerNetworkRules.html" translate="no">MscmpSystAuthn.Data.SystOwnerNetworkRules</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Expresses Owner specific rules concerning which hosts, as identified by
+IP address, may or may not attempt to authenticate with the system.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="MscmpSystAuthn.Data.SystOwnerPasswordRules.html" translate="no">MscmpSystAuthn.Data.SystOwnerPasswordRules</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Establishes Owner specific rules defining the minimum allowed password
+complexity.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="MscmpSystAuthn.Data.SystPasswordHistory.html" translate="no">MscmpSystAuthn.Data.SystPasswordHistory</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>A history of previous user passwords credentials kept for the purpose of
+enforcing the reused password exclusion rule.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="MscmpSystAuthn.Types.html" translate="no">MscmpSystAuthn.Types</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Types used by the Authentication module.</p></div>
+
+</div>
+
+    </div>
+  </section>
+
+
+<div class="bottom-actions">
+  <div class="bottom-actions-item">
+
+  </div>
+  <div class="bottom-actions-item">
+
+  </div>
+</div>
+      <footer class="footer">
+
+        <p>
+          Built using
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.29.0) for the
+
+            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+        </p>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+
+
+  </body>
+</html>

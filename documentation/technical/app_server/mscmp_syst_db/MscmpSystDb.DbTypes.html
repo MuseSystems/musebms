@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.29.0">
+    <meta name="project" content="mscmp_syst_db v0.1.0">
+
+    <title>MscmpSystDb.DbTypes — mscmp_syst_db v0.1.0</title>
+    <link rel="stylesheet" href="dist/html-elixir-2YOS5DIE.css" />
+
+    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
+    <script src="dist/handlebars.templates-X7YVL3G2.js"></script>
+    <script src="dist/sidebar_items-21D72DD1.js"></script>
+
+      <script src="docs_config.js"></script>
+
+    <script async src="dist/html-XN2TSG4M.js"></script>
+
+
+  </head>
+  <body data-type="modules" class="page-protocol">
+    <script>
+
+      try {
+        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
+
+        if (settings.theme === 'dark' ||
+           ((settings.theme === 'system' || settings.theme == null) &&
+             window.matchMedia('(prefers-color-scheme: dark)').matches)
+           ) {
+          document.body.classList.add('dark')
+        }
+      } catch (error) { }
+    </script>
+
+<div class="main">
+
+<button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<section class="sidebar">
+  <form class="sidebar-search" action="search.html">
+    <button type="submit" class="search-button" aria-label="Submit Search">
+      <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
+    </button>
+    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
+      <i class="ri-close-line ri-lg" aria-hidden="true" title="Cancel search"></i>
+    </button>
+    <label class="search-label">
+      <p class="sr-only">Search</p>
+      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
+    </label>
+  </form>
+
+  <div class="autocomplete">
+    <div class="autocomplete-results">
+    </div>
+  </div>
+
+  <div class="sidebar-header">
+
+    <div class="sidebar-projectDetails">
+      <a href="MscmpSystDb.html" class="sidebar-projectName" translate="no">
+mscmp_syst_db
+      </a>
+      <strong class="sidebar-projectVersion" translate="no">
+        v0.1.0
+      </strong>
+    </div>
+    <ul class="sidebar-listNav">
+      <li><a id="extras-list-link" href="#full-list">Pages</a></li>
+
+        <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+
+
+        <li><a id="tasks-list-link" href="#full-list"><span translate="no">Mix</span> Tasks</a></li>
+
+    </ul>
+  </div>
+
+  <div class="gradient"></div>
+  <ul id="full-list" class="sidebar-fullList"></ul>
+</section>
+
+<section class="content">
+  <output role="status" id="toast"></output>
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+<h1>
+<button class="settings display-settings">
+  <i class="ri-settings-3-line"></i>
+  <span class="sr-only">Settings</span>
+</button>
+
+
+  <span translate="no">MscmpSystDb.DbTypes</span> <small>protocol</small>
+  <small class="app-vsn" translate="no">(mscmp_syst_db v0.1.0)</small>
+
+</h1>
+
+
+  <section id="moduledoc">
+<p>Defines the common functions which should be implemented for all custom
+DbTypes implemented in MscmpSystDb.</p>
+  </section>
+
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+      Summary
+    </h1>
+
+  <div class="summary-types summary">
+    <h2>
+      <a href="#types">Types</a>
+    </h2>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:t/0" translate="no">t()</a>
+
+        </div>
+
+      </div>
+
+  </div>
+
+  <div class="summary-functions summary">
+    <h2>
+      <a href="#functions">Functions</a>
+    </h2>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#compare/2" translate="no">compare(left, right)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Compares two values and returns the effective operating describing the
+relationship.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#test_compare/3" translate="no">test_compare(left, right, operator)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Compares two values and tests the resulting effective operator against that
+supplied by the user returning <code class="inline">true</code> or <code class="inline">false</code>.</p></div>
+
+      </div>
+
+  </div>
+
+  </section>
+
+
+  <section id="types" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#types">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+Types
+    </h1>
+    <div class="types-list">
+<section class="detail" id="t:t/0">
+
+  <div class="detail-header">
+    <a href="#t:t/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">t()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> t() :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+
+    </div>
+  </section>
+
+  <section id="functions" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#functions">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+Functions
+    </h1>
+    <div class="functions-list">
+<section class="detail" id="compare/2">
+
+  <div class="detail-header">
+    <a href="#compare/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">compare(left, right)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> compare(<a href="#t:t/0">t</a>(), <a href="#t:t/0">t</a>()) :: <a href="MscmpSystDb.Types.html#t:db_type_comparison_operators/0">MscmpSystDb.Types.db_type_comparison_operators</a>()</pre>
+
+      </div>
+
+<p>Compares two values and returns the effective operating describing the
+relationship.</p><h1>Parameters</h1><ul><li><p><code class="inline">left</code> - a range type or base type for use in the comparison which would
+be the left side when used with an infix operator such as <code class="inline">&gt;</code>.</p></li><li><p><code class="inline">right</code> - a range type or base type for use in the comparison which would
+be the right side when used with an infix operator such as <code class="inline">&gt;</code>.</p></li></ul><h1>Examples</h1><p>Comparing two ranges where the left and right overlap, but the left side is
+less than the right (returns &quot;Less Than Overlapping&quot;).</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">left_range</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="8097075983-1">%</span><span class="nc" data-group-id="8097075983-1">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="8097075983-1">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="8097075983-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">right_range</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="8097075983-2">%</span><span class="nc" data-group-id="8097075983-2">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="8097075983-2">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="8097075983-2">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystDb.DbTypes</span><span class="o">.</span><span class="n">compare</span><span class="p" data-group-id="8097075983-3">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="n">right_range</span><span class="p" data-group-id="8097075983-3">)</span><span class="w">
+</span><span class="ss">:lto</span></code></pre><p>Comparing a range and a base type value where the range contains the base
+type value (returns &quot;Left Contains Right&quot;).</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">left_range</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="4584930666-1">%</span><span class="nc" data-group-id="4584930666-1">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="4584930666-1">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="4584930666-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystDb.DbTypes</span><span class="o">.</span><span class="n">compare</span><span class="p" data-group-id="4584930666-2">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="p" data-group-id="4584930666-2">)</span><span class="w">
+</span><span class="ss">:lcr</span></code></pre><p>Comparing interval base types where the left is less than the right (returns
+&quot;Less Than&quot;)</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">left_interval</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="8456962760-1">%</span><span class="nc" data-group-id="8456962760-1">MscmpSystDb.DbTypes.Interval</span><span class="p" data-group-id="8456962760-1">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">days</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="8456962760-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">right_interval</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="8456962760-2">%</span><span class="nc" data-group-id="8456962760-2">MscmpSystDb.DbTypes.Interval</span><span class="p" data-group-id="8456962760-2">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">months</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="8456962760-2">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystDb.DbTypes</span><span class="o">.</span><span class="n">compare</span><span class="p" data-group-id="8456962760-3">(</span><span class="n">left_interval</span><span class="p">,</span><span class="w"> </span><span class="n">right_interval</span><span class="p" data-group-id="8456962760-3">)</span><span class="w">
+</span><span class="ss">:lt</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="test_compare/3">
+
+  <div class="detail-header">
+    <a href="#test_compare/3" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">test_compare(left, right, operator)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> test_compare(<a href="#t:t/0">t</a>(), <a href="#t:t/0">t</a>(), <a href="MscmpSystDb.Types.html#t:db_type_comparison_operators/0">MscmpSystDb.Types.db_type_comparison_operators</a>()) ::
+  <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
+
+      </div>
+
+<p>Compares two values and tests the resulting effective operator against that
+supplied by the user returning <code class="inline">true</code> or <code class="inline">false</code>.</p><h1>Parameters</h1><ul><li><p><code class="inline">left</code> - a range type or base type for use in the comparison which would
+be the left side when used with an infix operator such as <code class="inline">&gt;</code>.</p></li><li><p><code class="inline">right</code> - a range type or base type for use in the comparison which would
+be the right side when used with an infix operator such as <code class="inline">&gt;</code>.</p></li><li><p><code class="inline">operator</code> - the desired operator to test.</p></li></ul><h1>Examples</h1><p>Comparing two ranges where the left and right overlap, but the left side is
+less than the right.  In this case we match the desired &quot;Less Than
+Overlapping&quot; operator resulting in a return value of <code class="inline">true</code>.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">left_range</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="8287838332-1">%</span><span class="nc" data-group-id="8287838332-1">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="8287838332-1">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="8287838332-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">right_range</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="8287838332-2">%</span><span class="nc" data-group-id="8287838332-2">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="8287838332-2">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="8287838332-2">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystDb.DbTypes</span><span class="o">.</span><span class="n">test_compare</span><span class="p" data-group-id="8287838332-3">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="n">right_range</span><span class="p">,</span><span class="w"> </span><span class="ss">:lto</span><span class="p" data-group-id="8287838332-3">)</span><span class="w">
+</span><span class="no">true</span></code></pre><p>Comparing a range and a base type value where the range contains the base
+type value, but the desired operator is &quot;Greater Than&quot; which does not match
+resulting in a return value of <code class="inline">false</code>.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">left_range</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="4193506304-1">%</span><span class="nc" data-group-id="4193506304-1">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="4193506304-1">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="4193506304-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystDb.DbTypes</span><span class="o">.</span><span class="n">test_compare</span><span class="p" data-group-id="4193506304-2">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="ss">:gt</span><span class="p" data-group-id="4193506304-2">)</span><span class="w">
+</span><span class="no">false</span></code></pre><p>Comparing interval base types where the intervals are equal and testing for
+equality resulting a <code class="inline">true</code> result.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">left_interval</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="6661702038-1">%</span><span class="nc" data-group-id="6661702038-1">MscmpSystDb.DbTypes.Interval</span><span class="p" data-group-id="6661702038-1">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">secs</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="6661702038-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">right_interval</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="6661702038-2">%</span><span class="nc" data-group-id="6661702038-2">MscmpSystDb.DbTypes.Interval</span><span class="p" data-group-id="6661702038-2">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">secs</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="6661702038-2">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystDb.DbTypes</span><span class="o">.</span><span class="n">test_compare</span><span class="p" data-group-id="6661702038-3">(</span><span class="n">left_interval</span><span class="p">,</span><span class="w"> </span><span class="n">right_interval</span><span class="p">,</span><span class="w"> </span><span class="ss">:eq</span><span class="p" data-group-id="6661702038-3">)</span><span class="w">
+</span><span class="no">true</span></code></pre>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+      <footer class="footer">
+
+        <p>
+          Built using
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.29.0) for the
+
+            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+        </p>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+
+
+  </body>
+</html>

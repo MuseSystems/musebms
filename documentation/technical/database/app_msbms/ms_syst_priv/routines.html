@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>msbms_dev Database</title>
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
+        <!-- Bootstrap 3.3.5 -->
+        <link rel="stylesheet" href="bower/admin-lte/bootstrap/css/bootstrap.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="bower/font-awesome/css/font-awesome.min.css">
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="bower/ionicons/css/ionicons.min.css">
+        <!-- DataTables -->
+        <link rel="stylesheet" href="bower/datatables.net-bs/css/dataTables.bootstrap.min.css">
+        <link rel="stylesheet" href="bower/datatables.net-buttons-bs/css/buttons.bootstrap.min.css">
+        <!-- Code Mirror -->
+        <link rel="stylesheet" href="bower/codemirror/codemirror.css">
+        <!-- Fonts -->
+        <link href='fonts/indieflower/indie-flower.css' rel='stylesheet' type='text/css'>
+        <link href='fonts/source-sans-pro/source-sans-pro.css' rel='stylesheet' type='text/css'>
+
+        <!-- Theme style -->
+        <link rel="stylesheet" href="bower/admin-lte/dist/css/AdminLTE.min.css">
+        <!-- Salvattore -->
+        <link rel="stylesheet" href="bower/salvattore/salvattore.css">
+        <!-- AdminLTE Skins. Choose a skin from the css/skins
+           folder instead of downloading all of them to reduce the load. -->
+        <link rel="stylesheet" href="bower/admin-lte/dist/css/skins/_all-skins.min.css">
+        <!-- SchemaSpy -->
+        <link rel="stylesheet" href="schemaSpy.css">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="bower/html5shiv/html5shiv.min.js"></script>
+        <script src="bower/respond/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+    <body class="hold-transition skin-blue layout-top-nav">
+        <div class="wrapper">
+            <header class="main-header">
+                <nav class="navbar navbar-static-top">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <a href="../index.html" class="navbar-brand"><b>msbms_dev</b> Database</a>
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
+                        </div>
+
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+                            <ul class="nav navbar-nav">
+                                <li><a href="index.html">Tables <span class="sr-only">(current)</span></a></li>
+                                <li><a href="columns.html" title="All of the columns in the schema">Columns</a></li>
+                                <li><a href="constraints.html" title="Useful for diagnosing error messages that just give constraint name or number">Constraints</a></li>
+                                <li><a href="relationships.html" title="Diagram of table relationships">Relationships</a></li>
+                                <li><a href="orphans.html" title="View of tables with neither parents nor children">Orphan&nbsp;Tables</a></li>
+                                <li><a href="anomalies.html" title="Things that might not be quite right">Anomalies</a></li>
+                                <li><a href="routines.html" title="Procedures and functions">Routines</a></li>
+                            </ul>
+                        </div>
+                        <!-- /.navbar-collapse -->
+                        <!-- Navbar Right Menu -->
+                    </div>
+                    <!-- /.container-fluid -->
+                </nav>
+            </header>
+            <!-- Main content -->
+            <!-- Full Width Column -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <h1>Routines</h1>
+                </section>
+                <!-- Main content -->
+                <section class="content">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <i class="fa fa-file-code-o" aria-hidden="true"></i>
+                            <h3 class="box-title">Routines</h3>
+                        </div>
+                        <div class="box-body">
+                            <table id="routine_table" class="table table-bordered table-striped dataTable" role="grid">
+                                <thead align='left'>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Language</th>
+                                        <th>Deterministic</th>
+                                        <th>Return Type</th>
+                                        <th>Security Restriction</th>
+                                        <th title='Comments' class="toggle"><span>Comments</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><a href="routines/encode_base36.html">encode_base36</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>SQL</td>
+                                        <td>true</td>
+                                        <td>text</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Encodes a big integer value into Base36 representation.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/nonstandard_decode.html">nonstandard_decode</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>true</td>
+                                        <td>bigint</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Performs a decode operation, similar to the standard decode function, but for<br />
+non-standard decoding schemes, such as Base32 or Base36.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/encode_base32.html">encode_base32</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>SQL</td>
+                                        <td>true</td>
+                                        <td>text</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Encodes a big integer value into Base32 representation.  The representation here<br />
+is that designed by Douglas Crockford (<a href="https://www.crockford.com/base32.html">https://www.crockford.com/base32.html</a>).</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/initialize_enum.html">initialize_enum</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>void</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Based on a specially formatted JSON object passed as a parameter, this function<br />
+will create a new enumeration along with its optional functional types and<br />
+starting value records.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/get_random_string.html">get_random_string</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>SQL</td>
+                                        <td>false</td>
+                                        <td>text</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Returns a random text string, by default consisting of alpha-numeric symbols, of<br />
+the requested length. Arbitrary characters may be provided my the caller.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/get_exception_details.html">get_exception_details</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>SQL</td>
+                                        <td>false</td>
+                                        <td>text</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Returns exception details based on the passed parameters represented as a pretty-printed JSON<br />
+object.  The returned value is intended to standardize the details related to RAISEd exceptions and<br />
+be suitable for use in setting the RAISE DETAILS variable.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_a_iu_feature_map_level_assignable_check.html">trig_a_iu_feature_map_level_assignable_check</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Determines if a syst_feature_map record is assigned to an assignable<br />
+syst_feature_map_levels record.  If the level record is functional type<br />
+nonassignable, an exception is raised.  Note that this function expects to be<br />
+executed by a constraint trigger and that the table associated with the trigger<br />
+should have a column feature_map_id referenced to syst_feature_map.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_a_iu_complex_format_value_check.html">trig_a_iu_complex_format_value_check</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>A constraint trigger function to provide foreign key like validation of columns<br />
+which reference syst_complex_format_values.  This relationship requires the<br />
+additional check so that only values from the desired format are used in<br />
+assigning to records.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/nonstandard_encode.html">nonstandard_encode</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>true</td>
+                                        <td>text</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Performs an encode operation, similar to the standard encode function, but for<br />
+non-standard encoding schemes, such as Base32 or Base36.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/set_next_sequence_values.html">set_next_sequence_values</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>void</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Set the value of a numbering sequence.  Using this function ensures that the<br />
+targeted new value is within the acceptable ranges of the sequence.  Note that<br />
+this function is only needed when setting the value to an entirely new value and<br />
+it is not needed after a value has been retrieved from the numbering sequence.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/decode_base36.html">decode_base36</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>true</td>
+                                        <td>bigint</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Decodes integers represented in Base36 notation.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_b_iu_set_diagnostic_columns.html">trig_b_iu_set_diagnostic_columns</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Automatically maintains the common table diagnostic columns whenever data is<br />
+inserted or updated.  For UPDATE transactions, the trigger will determine if<br />
+there are &lsquo;real data changes&rsquo;, meaning any fields other than the common<br />
+diagnostic columns being changed by the transaction.  If not, only the<br />
+diag_update_count column will be updated.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/decode_base32.html">decode_base32</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>true</td>
+                                        <td>bigint</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Decodes integers represented in Base32.  The representation here<br />
+is that designed by Douglas Crockford (<a href="https://www.crockford.com/base32.html">https://www.crockford.com/base32.html</a>).</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_a_iu_enum_item_check.html">trig_a_iu_enum_item_check</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>A constraint trigger function to provide foreign key like validation of columns<br />
+which reference syst_enum_items.  This relationship requires the additional<br />
+check that only values from the desired enumeration are used in assigning to<br />
+records.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/get_next_sequence_value.html">get_next_sequence_value</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>bigint</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Returns the next value for the requested numbering sequence.</p>
+<p>If the sequence has exhausted all values in the allowed range of values, this<br />
+function will</p></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+                <script>
+                    var config = {
+                        pagination: true
+                    }
+                </script>
+            </div>
+            <!-- /.content-wrapper -->
+            <footer class="main-footer">
+                <div>
+                    <div class="pull-right hidden-xs">
+                        <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
+                        <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
+                    </div>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.1.0</a></strong>
+                </div>
+                <!-- /.container -->
+            </footer>
+        </div>
+        <!-- ./wrapper -->
+
+        <!-- jQuery 2.2.3 -->
+        <script src="bower/admin-lte/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script src="bower/admin-lte/plugins/jQueryUI/jquery-ui.min.js"></script>
+        <!-- Bootstrap 3.3.5 -->
+        <script src="bower/admin-lte/bootstrap/js/bootstrap.min.js"></script>
+        <!-- DataTables -->
+        <script src="bower/datatables.net/jquery.dataTables.min.js"></script>
+        <script src="bower/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+        <script src="bower/datatables.net-buttons/dataTables.buttons.min.js"></script>
+        <script src="bower/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+        <script src="bower/datatables.net-buttons/buttons.html5.min.js"></script>
+        <script src="bower/datatables.net-buttons/buttons.print.min.js"></script>
+        <script src="bower/datatables.net-buttons/buttons.colVis.min.js"></script>
+        <!-- SheetJS -->
+        <script src="bower/js-xlsx/xlsx.full.min.js"></script>
+        <!-- pdfmake -->
+        <script src="bower/pdfmake/pdfmake.min.js"></script>
+        <script src="bower/pdfmake/vfs_fonts.js"></script>
+        <!-- SlimScroll -->
+        <script src="bower/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+        <!-- FastClick -->
+        <script src="bower/admin-lte/plugins/fastclick/fastclick.js"></script>
+        <!-- Salvattore -->
+        <script src="bower/salvattore/salvattore.min.js"></script>
+        <!-- AnchorJS -->
+        <script src="bower/anchor-js/anchor.min.js"></script>
+        <!-- CodeMirror -->
+        <script src="bower/codemirror/codemirror.js"></script>
+        <script src="bower/codemirror/sql.js"></script>
+        <!-- AdminLTE App -->
+        <script src="bower/admin-lte/dist/js/app.min.js"></script>
+        <script src="routines.js"></script>
+        <script src="schemaSpy.js"></script>
+    </body>
+</html>

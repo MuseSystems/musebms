@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>syst_enum_items - msbms_dev Database</title>
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
+        <!-- Bootstrap 3.3.5 -->
+        <link rel="stylesheet" href="../bower/admin-lte/bootstrap/css/bootstrap.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="../bower/font-awesome/css/font-awesome.min.css">
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="../bower/ionicons/css/ionicons.min.css">
+        <!-- DataTables -->
+        <link rel="stylesheet" href="../bower/datatables.net-bs/css/dataTables.bootstrap.min.css">
+        <link rel="stylesheet" href="../bower/datatables.net-buttons-bs/css/buttons.bootstrap.min.css">
+        <!-- Code Mirror -->
+        <link rel="stylesheet" href="../bower/codemirror/codemirror.css">
+        <!-- Fonts -->
+        <link href='../fonts/indieflower/indie-flower.css' rel='stylesheet' type='text/css'>
+        <link href='../fonts/source-sans-pro/source-sans-pro.css' rel='stylesheet' type='text/css'>
+
+        <!-- Theme style -->
+        <link rel="stylesheet" href="../bower/admin-lte/dist/css/AdminLTE.min.css">
+        <!-- Salvattore -->
+        <link rel="stylesheet" href="../bower/salvattore/salvattore.css">
+        <!-- AdminLTE Skins. Choose a skin from the css/skins
+           folder instead of downloading all of them to reduce the load. -->
+        <link rel="stylesheet" href="../bower/admin-lte/dist/css/skins/_all-skins.min.css">
+        <!-- SchemaSpy -->
+        <link rel="stylesheet" href="../schemaSpy.css">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="../bower/html5shiv/html5shiv.min.js"></script>
+        <script src="../bower/respond/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+    <body class="hold-transition skin-blue layout-top-nav">
+        <div class="wrapper">
+            <header class="main-header">
+                <nav class="navbar navbar-static-top">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <a href="../../index.html" class="navbar-brand"><b>msbms_dev</b> Database</a>
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
+                        </div>
+
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+                            <ul class="nav navbar-nav">
+                                <li><a href="../index.html">Tables <span class="sr-only">(current)</span></a></li>
+                                <li><a href="../columns.html" title="All of the columns in the schema">Columns</a></li>
+                                <li><a href="../constraints.html" title="Useful for diagnosing error messages that just give constraint name or number">Constraints</a></li>
+                                <li><a href="../relationships.html" title="Diagram of table relationships">Relationships</a></li>
+                                <li><a href="../orphans.html" title="View of tables with neither parents nor children">Orphan&nbsp;Tables</a></li>
+                                <li><a href="../anomalies.html" title="Things that might not be quite right">Anomalies</a></li>
+                                <li><a href="../routines.html" title="Procedures and functions">Routines</a></li>
+                            </ul>
+                        </div>
+                        <!-- /.navbar-collapse -->
+                        <!-- Navbar Right Menu -->
+                    </div>
+                    <!-- /.container-fluid -->
+                </nav>
+            </header>
+            <!-- Main content -->
+            <!-- Full Width Column -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <h1>syst_enum_items</h1><p><span id="recordNumber">0</span> rows</p><br />
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <i class="fa fa-file-text-o"></i>
+                            <h3 id="Description" class="box-title">Description</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div><!-- /.box-header -->
+                        <div class="box-body clearfix">
+                            <p>The list of values provided by an enumeration as well as related behavioral and<br />
+informational metadata.</p>
+<p>This API View allows the application to read and maintain the data according to<br />
+well defined application business rules.  Using this API view for updates to<br />
+data is the preferred method of data maintenance in the course of normal usage.</p>
+<p>Only user maintainable values may be maintained via this API.  System created or<br />
+maintained data is not maintainable via this view.  Attempts at invalid data<br />
+maintenance via this API may result in the invalid changes being ignored or may<br />
+raise an exception.</p>
+                        </div><!-- /.box-body -->
+                    </div>
+                </section>
+                <!-- Main content -->
+                <section class="content">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                            <h3 id="Columns" class="box-title">Columns</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <table id="standard_table" class="table table-bordered table-striped dataTable" role="grid">
+                                <thead align='left'>
+                                <tr>
+                                    <th>Column</th>
+                                    <th>Type</th>
+                                    <th>Size</th>
+                                    <th title='Are nulls allowed?'>Nulls</th>
+                                    <th title='Is column automatically updated?'>Auto</th>
+                                    <th title='Default value'>Default</th>
+                                    <th title='Columns in tables that reference this column'>Children</th>
+                                    <th title='Columns in tables that are referenced by this column'>Parents</th>
+                                    <th title='Comments' class="toggle"><span>Comments</span></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td><span id="id">id</span></td>
+                                    <td>uuid</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>The record&rsquo;s primary key.  The definitive identifier of the record in the<br />
+system.</p>
+<p>Note that this column may not be updated via this API View.</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="internal_name">internal_name</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>A candidate key useful for programmatic references to individual records.</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="display_name">display_name</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>A friendly name and candidate key for the record, suitable for use in user<br />
+interactions</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="external_name">external_name</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>A non-unique/non-key value used to display to users and external parties where<br />
+uniqueness is less of a concern than specific end user presentation.</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="enum_id">enum_id</span></td>
+                                    <td>uuid</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>The enumeration record with which the value is associated.</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="functional_type_id">functional_type_id</span></td>
+                                    <td>uuid</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>If the enumeration requires a functional type, this column references the<br />
+functional type associated with the enumeration value record.  Note that not all<br />
+enumerations require functional types.  If syst_enum_functional_types records<br />
+exist for an enumeration, then this column will be required for any values of<br />
+that enumeration; if there are no functional types defined for an enumeration,<br />
+the this column must remain NULL.</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="enum_default">enum_default</span></td>
+                                    <td>bool</td>
+                                    <td>1</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>If true, indicates that this value is the default selection from all values<br />
+defined for the enumerations.  If false then the value record has no special<br />
+significance relative to defaulting.</p>
+<p>Note that if a record is inserted or updated in this table with enum_default set<br />
+true, and another record already exists for the enumeration with its<br />
+enum_default set true, the newly inserted/updated record will take precedence<br />
+and the value record previously set to be default will have its enum_default<br />
+setting set to false.</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="functional_type_default">functional_type_default</span></td>
+                                    <td>bool</td>
+                                    <td>1</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>If true, the value record is the default selection for any of a specific<br />
+fucntional type.  This is helpful in situations where a progression of state is<br />
+automatically processed by the system and the state is represented by an<br />
+enumeration.  In cases where there are no functional types, this value should<br />
+simply remain false.</p>
+<p>Note that if a record is inserted or updated in this table with its<br />
+functional_type_default set true, and another record already exists for the<br />
+enumeration/functional type combination with its functional_type_default set<br />
+true, the newly inserted/updated record will take precedence and the value<br />
+record previously set to be default will have its functional_type_default<br />
+setting set to false.</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="syst_defined">syst_defined</span></td>
+                                    <td>bool</td>
+                                    <td>1</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>If true, indicates that the value was created by the system or system<br />
+installation process.  A false value indicates that the record was user created.</p>
+<p>Note that this column may not be updated via this API View.</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="user_maintainable">user_maintainable</span></td>
+                                    <td>bool</td>
+                                    <td>1</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>If true, the user may maintain the value including setting user_options or<br />
+even setting the record inactive/deleting it.  If false, the value record is<br />
+required by the system for correct operation.  The user_description and<br />
+user_options columns are always available for user maintenance regardless of<br />
+this setting.</p>
+<p>Note that this column may not be updated via this API View.</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="syst_description">syst_description</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>A system default description describing the value and its use cases within the<br />
+enumeration.</p>
+<p>Note that this column may not be updated via this API View.</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="user_description">user_description</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>A custom user defined description which overrides the syst_description value<br />
+where it would otherwise be used.  If this column is set NULL the<br />
+syst_description value will be used.</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="sort_order">sort_order</span></td>
+                                    <td>int4</td>
+                                    <td>10</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Indicates the sort ordering of the particular value record with the lowest value<br />
+sorting first.  When a value record for an enumeration is inserted or updated<br />
+and this column is being set to a value which equals another enumeration value<br />
+record for the same enumeration, the system assumes that the new record is<br />
+being set to precede the existing record and it will be set to sort after the<br />
+newly inserted/updated enumeration value.</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="syst_options">syst_options</span></td>
+                                    <td>jsonb</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Extended options and metadata which describe the behavior and meaning of the<br />
+specific value within the enumeration.  The owning<br />
+syst_enums record&rsquo;s default_syst_options column will indicate what syst_options<br />
+are required or available and establishes default values for them.</p>
+<p>Note that this column may not be updated via this API View.</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="user_options">user_options</span></td>
+                                    <td>jsonb</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Extended user defined options, similar to syst_options, but for the purpose of<br />
+driving custom functionality.</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="diag_timestamp_created">diag_timestamp_created</span></td>
+                                    <td>timestamptz</td>
+                                    <td>35,6</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>The database server date/time when the transaction which created the record<br />
+started.</p>
+<p>Note that this column may not be updated via this API View.</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="diag_role_created">diag_role_created</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>The database role which created the record.</p>
+<p>Note that this column may not be updated via this API View.</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="diag_timestamp_modified">diag_timestamp_modified</span></td>
+                                    <td>timestamptz</td>
+                                    <td>35,6</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>The database server date/time when the transaction which modified the record<br />
+started.  This field will be the same as diag_timestamp_created for inserted<br />
+records.</p>
+<p>Note that this column may not be updated via this API View.</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="diag_wallclock_modified">diag_wallclock_modified</span></td>
+                                    <td>timestamptz</td>
+                                    <td>35,6</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>The database server date/time at the moment the record was actually modified.<br />
+For long running transactions this time may be significantly later than the<br />
+value of diag_timestamp_modified.</p>
+<p>Note that this column may not be updated via this API View.</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="diag_role_modified">diag_role_modified</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>The database role which modified the record.</p>
+<p>Note that this column may not be updated via this API View.</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="diag_row_version">diag_row_version</span></td>
+                                    <td>int8</td>
+                                    <td>19</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>The current version of the row.  The value here indicates how many actual<br />
+data changes have been made to the row.  If an update of the row leaves all data<br />
+fields the same, disregarding the updates to the diag_* columns, the row version<br />
+is not updated, nor are any updates made to the other diag_* columns other than<br />
+diag_update_count.</p>
+<p>Note that this column may not be updated via this API View.</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="diag_update_count">diag_update_count</span></td>
+                                    <td>int8</td>
+                                    <td>19</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Records the number of times the record has been updated regardless as to if<br />
+the update actually changed any data.  In this way needless or redundant record<br />
+updates can be found.  This row starts at 0 and therefore may be the same as the<br />
+diag_row_version - 1.</p>
+<p>Note that this column may not be updated via this API View.</p></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <i class="fa fa-file-code-o"></i>
+                            <h3 id="ViewDefinition" class="box-title">View Definition</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <textarea id="sql-script-codemirror" name="sql-script-codemirror" rows="" style="display: none;">SELECT syst_enum_items.id,&#10;    syst_enum_items.internal_name,&#10;    syst_enum_items.display_name,&#10;    syst_enum_items.external_name,&#10;    syst_enum_items.enum_id,&#10;    syst_enum_items.functional_type_id,&#10;    syst_enum_items.enum_default,&#10;    syst_enum_items.functional_type_default,&#10;    syst_enum_items.syst_defined,&#10;    syst_enum_items.user_maintainable,&#10;    syst_enum_items.syst_description,&#10;    syst_enum_items.user_description,&#10;    syst_enum_items.sort_order,&#10;    syst_enum_items.syst_options,&#10;    syst_enum_items.user_options,&#10;    syst_enum_items.diag_timestamp_created,&#10;    syst_enum_items.diag_role_created,&#10;    syst_enum_items.diag_timestamp_modified,&#10;    syst_enum_items.diag_wallclock_modified,&#10;    syst_enum_items.diag_role_modified,&#10;    syst_enum_items.diag_row_version,&#10;    syst_enum_items.diag_update_count&#10;   FROM ms_syst_data.syst_enum_items;</textarea>
+                            <div style="padding-top: 5px;"><hr></div>
+                            <div class="box box-solid">
+                                <div class="box-header with-border">
+                                    <i class="fa fa-puzzle-piece"></i>
+                                    <h3 class="box-title">Possibly Referenced Tables/Views</h3>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="box-body">
+                                    <ul class="list-unstyled">
+                                        <li><a href="syst_enum_items.html">syst_enum_items</a></li>
+                                    </ul>
+                                </div><!-- /.box-body -->
+                            </div>
+                        </div><!-- /.box-body -->
+                    </div>
+                </section>
+                <script>
+                    var config = {
+                        pagination: true
+                    }
+                </script>
+            </div>
+            <!-- /.content-wrapper -->
+            <footer class="main-footer">
+                <div>
+                    <div class="pull-right hidden-xs">
+                        <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
+                        <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
+                    </div>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.1.0</a></strong>
+                </div>
+                <!-- /.container -->
+            </footer>
+        </div>
+        <!-- ./wrapper -->
+
+        <!-- jQuery 2.2.3 -->
+        <script src="../bower/admin-lte/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script src="../bower/admin-lte/plugins/jQueryUI/jquery-ui.min.js"></script>
+        <!-- Bootstrap 3.3.5 -->
+        <script src="../bower/admin-lte/bootstrap/js/bootstrap.min.js"></script>
+        <!-- DataTables -->
+        <script src="../bower/datatables.net/jquery.dataTables.min.js"></script>
+        <script src="../bower/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+        <script src="../bower/datatables.net-buttons/dataTables.buttons.min.js"></script>
+        <script src="../bower/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+        <script src="../bower/datatables.net-buttons/buttons.html5.min.js"></script>
+        <script src="../bower/datatables.net-buttons/buttons.print.min.js"></script>
+        <script src="../bower/datatables.net-buttons/buttons.colVis.min.js"></script>
+        <!-- SheetJS -->
+        <script src="../bower/js-xlsx/xlsx.full.min.js"></script>
+        <!-- pdfmake -->
+        <script src="../bower/pdfmake/pdfmake.min.js"></script>
+        <script src="../bower/pdfmake/vfs_fonts.js"></script>
+        <!-- SlimScroll -->
+        <script src="../bower/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+        <!-- FastClick -->
+        <script src="../bower/admin-lte/plugins/fastclick/fastclick.js"></script>
+        <!-- Salvattore -->
+        <script src="../bower/salvattore/salvattore.min.js"></script>
+        <!-- AnchorJS -->
+        <script src="../bower/anchor-js/anchor.min.js"></script>
+        <!-- CodeMirror -->
+        <script src="../bower/codemirror/codemirror.js"></script>
+        <script src="../bower/codemirror/sql.js"></script>
+        <!-- AdminLTE App -->
+        <script src="../bower/admin-lte/dist/js/app.min.js"></script>
+        <script src="table.js"></script>
+        <script src="../schemaSpy.js"></script>
+    </body>
+</html>

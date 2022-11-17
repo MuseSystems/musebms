@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.29.0">
+    <meta name="project" content="mscmp_syst_options v0.1.0">
+
+    <title>MscmpSystOptions — mscmp_syst_options v0.1.0</title>
+    <link rel="stylesheet" href="dist/html-elixir-2YOS5DIE.css" />
+
+    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
+    <script src="dist/handlebars.templates-X7YVL3G2.js"></script>
+    <script src="dist/sidebar_items-E074154E.js"></script>
+
+      <script src="docs_config.js"></script>
+
+    <script async src="dist/html-XN2TSG4M.js"></script>
+
+
+  </head>
+  <body data-type="modules" class="page-module">
+    <script>
+
+      try {
+        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
+
+        if (settings.theme === 'dark' ||
+           ((settings.theme === 'system' || settings.theme == null) &&
+             window.matchMedia('(prefers-color-scheme: dark)').matches)
+           ) {
+          document.body.classList.add('dark')
+        }
+      } catch (error) { }
+    </script>
+
+<div class="main">
+
+<button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<section class="sidebar">
+  <form class="sidebar-search" action="search.html">
+    <button type="submit" class="search-button" aria-label="Submit Search">
+      <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
+    </button>
+    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
+      <i class="ri-close-line ri-lg" aria-hidden="true" title="Cancel search"></i>
+    </button>
+    <label class="search-label">
+      <p class="sr-only">Search</p>
+      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
+    </label>
+  </form>
+
+  <div class="autocomplete">
+    <div class="autocomplete-results">
+    </div>
+  </div>
+
+  <div class="sidebar-header">
+
+    <div class="sidebar-projectDetails">
+      <a href="MscmpSystOptions.html" class="sidebar-projectName" translate="no">
+mscmp_syst_options
+      </a>
+      <strong class="sidebar-projectVersion" translate="no">
+        v0.1.0
+      </strong>
+    </div>
+    <ul class="sidebar-listNav">
+      <li><a id="extras-list-link" href="#full-list">Pages</a></li>
+
+        <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+
+
+    </ul>
+  </div>
+
+  <div class="gradient"></div>
+  <ul id="full-list" class="sidebar-fullList"></ul>
+</section>
+
+<section class="content">
+  <output role="status" id="toast"></output>
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+<h1>
+<button class="settings display-settings">
+  <i class="ri-settings-3-line"></i>
+  <span class="sr-only">Settings</span>
+</button>
+
+
+  <span translate="no">MscmpSystOptions</span> 
+  <small class="app-vsn" translate="no">(mscmp_syst_options v0.1.0)</small>
+
+</h1>
+
+
+  <section id="moduledoc">
+<p>API for retrieving and working with option files stored in the application server file system.</p>
+  </section>
+
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+      Summary
+    </h1>
+
+  <div class="summary-file-handling summary">
+    <h2>
+      <a href="#file-handling">File Handling</a>
+    </h2>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#get_options/1" translate="no">get_options(options_file_path)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Parses and returns the contents of a TOML file at <code class="inline">options_file_path</code> via a
+result tuple.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#get_options!/1" translate="no">get_options!(options_file_path)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Parses and returns the contents of a TOML file at <code class="inline">options_file_path</code> or
+raises.</p></div>
+
+      </div>
+
+  </div>
+
+  <div class="summary-parsing summary">
+    <h2>
+      <a href="#parsing">Parsing</a>
+    </h2>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#get_dbserver_by_name/2" translate="no">get_dbserver_by_name(options, dbserver_name)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Returns the database server definition which corresponds to the provided name.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#get_global_dbserver/1" translate="no">get_global_dbserver(options)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Returns the <a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.Types.html#t:db_server/0"><code class="inline">MscmpSystDb.Types.db_server/0</code></a> data for the database
+server designated as hosting the global database.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#get_global_dbserver_name/1" translate="no">get_global_dbserver_name(options)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Returns the name of the database server which hosts the global database.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#get_global_pepper_value/1" translate="no">get_global_pepper_value(options)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Returns the configured global server &quot;pepper&quot; value for use in some automatic
+account creation scenarios.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#list_available_server_pools/1" translate="no">list_available_server_pools(options)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Returns the list of available server pools configured in the options file.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#list_dbservers/2" translate="no">list_dbservers(options, filters \\ [])</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Extracts the list of configured dbservers in the options file, optionally
+filtered by the server's supported instance classes.</p></div>
+
+      </div>
+
+  </div>
+
+  </section>
+
+
+  <section id="file-handling" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#file-handling">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+File Handling
+    </h1>
+    <div class="file-handling-list">
+<section class="detail" id="get_options/1">
+
+  <div class="detail-header">
+    <a href="#get_options/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_options(options_file_path)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_options(<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()) :: {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Parses and returns the contents of a TOML file at <code class="inline">options_file_path</code> via a
+result tuple.</p><p>If successful a tuple with a first value of <code class="inline">:ok</code> and second value containing
+a map of the options is returned.  When errors are found, a tuple with a first
+value of <code class="inline">:error</code> and second value of the relevant <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html"><code class="inline">MscmpSystError</code></a> exception
+is returned.</p><h2 id="get_options/1-parameters" class="section-heading">
+  <a href="#get_options/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">options_file_path</code> - describes where to find the options file in the file
+system.</li></ul><h2 id="get_options/1-examples" class="section-heading">
+  <a href="#get_options/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
+  Examples
+</h2>
+<p>Typical call and return:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_options</span><span class="p" data-group-id="0768246135-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="0768246135-1">)</span><span class="w">
+</span><span class="p" data-group-id="0768246135-2">{</span><span class="w">
+  </span><span class="ss">:ok</span><span class="p">,</span><span class="w">
+  </span><span class="p" data-group-id="0768246135-3">%{</span><span class="w">
+    </span><span class="ss">dbserver</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="0768246135-4">[</span><span class="w">
+      </span><span class="p" data-group-id="0768246135-5">%{</span><span class="w">
+        </span><span class="ss">db_host</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span><span class="w">
+        </span><span class="ss">db_max_instances</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="ss">db_port</span><span class="p">:</span><span class="w"> </span><span class="mi">5432</span><span class="p">,</span><span class="w">
+        </span><span class="ss">db_show_sensitive</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+        </span><span class="ss">dbadmin_password</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;default.msbms.privileged.password&quot;</span><span class="p">,</span><span class="w">
+        </span><span class="ss">dbadmin_pool_size</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="ss">server_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;global_db&quot;</span><span class="p">,</span><span class="w">
+        </span><span class="ss">server_salt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sklMRkLXzMQgzqpMpJZPk31Js88su39U/mooAXALhj0=&quot;</span><span class="p">,</span><span class="w">
+        </span><span class="ss">start_server_instances</span><span class="p">:</span><span class="w"> </span><span class="no">false</span><span class="p">,</span><span class="w">
+        </span><span class="ss">server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="0768246135-6">[</span><span class="p" data-group-id="0768246135-6">]</span><span class="w">
+      </span><span class="p" data-group-id="0768246135-5">}</span><span class="p">,</span><span class="w">
+      </span><span class="p" data-group-id="0768246135-7">%{</span><span class="w">
+        </span><span class="ss">db_host</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span><span class="w">
+        </span><span class="ss">db_max_instances</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w">
+        </span><span class="ss">db_port</span><span class="p">:</span><span class="w"> </span><span class="mi">5432</span><span class="p">,</span><span class="w">
+        </span><span class="ss">db_show_sensitive</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+        </span><span class="ss">dbadmin_password</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;default.msbms.privileged.password&quot;</span><span class="p">,</span><span class="w">
+        </span><span class="ss">dbadmin_pool_size</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="ss">server_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;instance_db&quot;</span><span class="p">,</span><span class="w">
+        </span><span class="ss">server_salt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;w1OfRx630x7svid8Tk3L9rLL1eEGSm0fq8XcLdveuSs=&quot;</span><span class="p">,</span><span class="w">
+        </span><span class="ss">start_server_instances</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+        </span><span class="ss">server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="0768246135-8">[</span><span class="s">&quot;primary&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;linked&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;demo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;reserved&quot;</span><span class="p" data-group-id="0768246135-8">]</span><span class="w">
+      </span><span class="p" data-group-id="0768246135-7">}</span><span class="w">
+    </span><span class="p" data-group-id="0768246135-4">]</span><span class="p">,</span><span class="w">
+    </span><span class="ss">available_server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="0768246135-9">[</span><span class="s">&quot;primary&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;linked&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;demo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;reserved&quot;</span><span class="p" data-group-id="0768246135-9">]</span><span class="p">,</span><span class="w">
+    </span><span class="ss">global_dbserver_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;global_db&quot;</span><span class="p">,</span><span class="w">
+    </span><span class="ss">global_pepper_value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;jTtEdXRExP5YXHeARQ1W66lP6wDc9GyOvhFPvwnHhtc=&quot;</span><span class="w">
+  </span><span class="p" data-group-id="0768246135-3">}</span><span class="w">
+</span><span class="p" data-group-id="0768246135-2">}</span></code></pre><p>Called with bad parameters:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="2672217921-1">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="2672217921-2">%</span><span class="nc" data-group-id="2672217921-2">MscmpSystError</span><span class="p" data-group-id="2672217921-2">{</span><span class="p" data-group-id="2672217921-2">}</span><span class="p" data-group-id="2672217921-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_options</span><span class="p" data-group-id="2672217921-3">(</span><span class="s">&quot;./bad_file_name.toml&quot;</span><span class="p" data-group-id="2672217921-3">)</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="get_options!/1">
+
+  <div class="detail-header">
+    <a href="#get_options!/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_options!(options_file_path)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_options!(<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()</pre>
+
+      </div>
+
+<p>Parses and returns the contents of a TOML file at <code class="inline">options_file_path</code> or
+raises.</p><p>The returned options will be in a map equivalent to the TOML file's structure.</p><h2 id="get_options!/1-examples" class="section-heading">
+  <a href="#get_options!/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
+  Examples
+</h2>
+<p>Typical call and return:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="2879391880-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="2879391880-1">)</span><span class="w">
+</span><span class="p" data-group-id="2879391880-2">%{</span><span class="w">
+  </span><span class="ss">dbserver</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2879391880-3">[</span><span class="w">
+    </span><span class="p" data-group-id="2879391880-4">%{</span><span class="w">
+      </span><span class="ss">db_host</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span><span class="w">
+      </span><span class="ss">db_max_instances</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="ss">db_port</span><span class="p">:</span><span class="w"> </span><span class="mi">5432</span><span class="p">,</span><span class="w">
+      </span><span class="ss">db_show_sensitive</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+      </span><span class="ss">dbadmin_password</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;default.msbms.privileged.password&quot;</span><span class="p">,</span><span class="w">
+      </span><span class="ss">dbadmin_pool_size</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="ss">server_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;global_db&quot;</span><span class="p">,</span><span class="w">
+      </span><span class="ss">server_salt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sklMRkLXzMQgzqpMpJZPk31Js88su39U/mooAXALhj0=&quot;</span><span class="p">,</span><span class="w">
+      </span><span class="ss">start_server_instances</span><span class="p">:</span><span class="w"> </span><span class="no">false</span><span class="p">,</span><span class="w">
+      </span><span class="ss">server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2879391880-5">[</span><span class="p" data-group-id="2879391880-5">]</span><span class="w">
+    </span><span class="p" data-group-id="2879391880-4">}</span><span class="p">,</span><span class="w">
+    </span><span class="p" data-group-id="2879391880-6">%{</span><span class="w">
+      </span><span class="ss">db_host</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span><span class="w">
+      </span><span class="ss">db_max_instances</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w">
+      </span><span class="ss">db_port</span><span class="p">:</span><span class="w"> </span><span class="mi">5432</span><span class="p">,</span><span class="w">
+      </span><span class="ss">db_show_sensitive</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+      </span><span class="ss">dbadmin_password</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;default.msbms.privileged.password&quot;</span><span class="p">,</span><span class="w">
+      </span><span class="ss">dbadmin_pool_size</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="ss">server_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;instance_db&quot;</span><span class="p">,</span><span class="w">
+      </span><span class="ss">server_salt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;w1OfRx630x7svid8Tk3L9rLL1eEGSm0fq8XcLdveuSs=&quot;</span><span class="p">,</span><span class="w">
+      </span><span class="ss">start_server_instances</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+      </span><span class="ss">server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2879391880-7">[</span><span class="s">&quot;primary&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;linked&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;demo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;reserved&quot;</span><span class="p" data-group-id="2879391880-7">]</span><span class="w">
+    </span><span class="p" data-group-id="2879391880-6">}</span><span class="w">
+  </span><span class="p" data-group-id="2879391880-3">]</span><span class="p">,</span><span class="w">
+  </span><span class="ss">available_server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2879391880-8">[</span><span class="s">&quot;primary&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;linked&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;demo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;reserved&quot;</span><span class="p" data-group-id="2879391880-8">]</span><span class="p">,</span><span class="w">
+  </span><span class="ss">global_dbserver_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;global_db&quot;</span><span class="p">,</span><span class="w">
+  </span><span class="ss">global_pepper_value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;jTtEdXRExP5YXHeARQ1W66lP6wDc9GyOvhFPvwnHhtc=&quot;</span><span class="w">
+</span><span class="p" data-group-id="2879391880-2">}</span></code></pre><p>Called with bad parameters:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="7217617213-1">(</span><span class="s">&quot;./bad_file_name.toml&quot;</span><span class="p" data-group-id="7217617213-1">)</span><span class="w">
+</span><span class="gt">** (MscmpSystError) Problem reading options file &#39;./bad_file_name.toml&#39;.</span></code></pre>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+  <section id="parsing" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#parsing">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+Parsing
+    </h1>
+    <div class="parsing-list">
+<section class="detail" id="get_dbserver_by_name/2">
+
+  <div class="detail-header">
+    <a href="#get_dbserver_by_name/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_dbserver_by_name(options, dbserver_name)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_dbserver_by_name(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(), <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()) :: <a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.Types.html#t:db_server/0">MscmpSystDb.Types.db_server</a>()</pre>
+
+      </div>
+
+<p>Returns the database server definition which corresponds to the provided name.</p><h2 id="get_dbserver_by_name/2-parameters" class="section-heading">
+  <a href="#get_dbserver_by_name/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">options</code> - the options file data as read by <a href="#get_options/1"><code class="inline">get_options/1</code></a>.</p></li><li><p><code class="inline">dbserver_name</code> - the name of the database server to look up.</p></li></ul><h2 id="get_dbserver_by_name/2-examples" class="section-heading">
+  <a href="#get_dbserver_by_name/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
+  Examples
+</h2>
+<p>Typical call for database server:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="7018963324-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="7018963324-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_dbserver_by_name</span><span class="p" data-group-id="7018963324-2">(</span><span class="n">config_options</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;instance_db&quot;</span><span class="p" data-group-id="7018963324-2">)</span><span class="w">
+</span><span class="p" data-group-id="7018963324-3">%{</span><span class="w">
+  </span><span class="ss">db_host</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span><span class="w">
+  </span><span class="ss">db_max_instances</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w">
+  </span><span class="ss">db_port</span><span class="p">:</span><span class="w"> </span><span class="mi">5432</span><span class="p">,</span><span class="w">
+  </span><span class="ss">db_show_sensitive</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">dbadmin_password</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;default.msbms.privileged.password&quot;</span><span class="p">,</span><span class="w">
+  </span><span class="ss">dbadmin_pool_size</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="ss">server_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;instance_db&quot;</span><span class="p">,</span><span class="w">
+  </span><span class="ss">server_salt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;w1OfRx630x7svid8Tk3L9rLL1eEGSm0fq8XcLdveuSs=&quot;</span><span class="p">,</span><span class="w">
+  </span><span class="ss">start_server_instances</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+  </span><span class="ss">server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="7018963324-4">[</span><span class="s">&quot;primary&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;linked&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;demo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;reserved&quot;</span><span class="p" data-group-id="7018963324-4">]</span><span class="w">
+</span><span class="p" data-group-id="7018963324-3">}</span></code></pre><p>Result in case of bad server name:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="6520281998-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="6520281998-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_dbserver_by_name</span><span class="p" data-group-id="6520281998-2">(</span><span class="n">config_options</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;non_existent_db&quot;</span><span class="p" data-group-id="6520281998-2">)</span><span class="w">
+</span><span class="no">nil</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="get_global_dbserver/1">
+
+  <div class="detail-header">
+    <a href="#get_global_dbserver/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_global_dbserver(options)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_global_dbserver(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) :: <a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.Types.html#t:db_server/0">MscmpSystDb.Types.db_server</a>()</pre>
+
+      </div>
+
+<p>Returns the <a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.Types.html#t:db_server/0"><code class="inline">MscmpSystDb.Types.db_server/0</code></a> data for the database
+server designated as hosting the global database.</p><h2 id="get_global_dbserver/1-parameters" class="section-heading">
+  <a href="#get_global_dbserver/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">options</code> - the options file data as read by <a href="#get_options/1"><code class="inline">get_options/1</code></a>.</li></ul><h2 id="get_global_dbserver/1-examples" class="section-heading">
+  <a href="#get_global_dbserver/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
+  Examples
+</h2>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="6200702010-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="6200702010-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="6200702010-2">%{</span><span class="ss">server_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;global_db&quot;</span><span class="p" data-group-id="6200702010-2">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_global_dbserver</span><span class="p" data-group-id="6200702010-3">(</span><span class="n">config_options</span><span class="p" data-group-id="6200702010-3">)</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="get_global_dbserver_name/1">
+
+  <div class="detail-header">
+    <a href="#get_global_dbserver_name/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_global_dbserver_name(options)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_global_dbserver_name(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+
+      </div>
+
+<p>Returns the name of the database server which hosts the global database.</p><h2 id="get_global_dbserver_name/1-parameters" class="section-heading">
+  <a href="#get_global_dbserver_name/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">options</code> - the options file data as read by <a href="#get_options/1"><code class="inline">get_options/1</code></a>.</li></ul><h2 id="get_global_dbserver_name/1-examples" class="section-heading">
+  <a href="#get_global_dbserver_name/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
+  Examples
+</h2>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="3382898254-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="3382898254-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_global_dbserver_name</span><span class="p" data-group-id="3382898254-2">(</span><span class="n">config_options</span><span class="p" data-group-id="3382898254-2">)</span><span class="w">
+</span><span class="s">&quot;global_db&quot;</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="get_global_pepper_value/1">
+
+  <div class="detail-header">
+    <a href="#get_global_pepper_value/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_global_pepper_value(options)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_global_pepper_value(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">binary</a>()</pre>
+
+      </div>
+
+<p>Returns the configured global server &quot;pepper&quot; value for use in some automatic
+account creation scenarios.</p><blockquote><h4 class="warning">Note</h4><p>While this is the way the system is built today, the suspicion is that the
+approach we're currently taking with automatic account creation is better
+than no effort for security, but probably not by much.  In other words, this
+is not an example for how to build a robust security system, but should do
+until there's actual public deployment of the application.</p></blockquote><h2 id="get_global_pepper_value/1-parameters" class="section-heading">
+  <a href="#get_global_pepper_value/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">options</code> - the options file data as read by <a href="#get_options/1"><code class="inline">get_options/1</code></a>.</li></ul><h2 id="get_global_pepper_value/1-examples" class="section-heading">
+  <a href="#get_global_pepper_value/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
+  Examples
+</h2>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="2629376909-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="2629376909-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_global_pepper_value</span><span class="p" data-group-id="2629376909-2">(</span><span class="n">config_options</span><span class="p" data-group-id="2629376909-2">)</span><span class="w">
+</span><span class="s">&quot;jTtEdXRExP5YXHeARQ1W66lP6wDc9GyOvhFPvwnHhtc=&quot;</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="list_available_server_pools/1">
+
+  <div class="detail-header">
+    <a href="#list_available_server_pools/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">list_available_server_pools(options)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> list_available_server_pools(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) :: [<a href="MscmpSystOptions.Types.html#t:server_pool/0">MscmpSystOptions.Types.server_pool</a>()]</pre>
+
+      </div>
+
+<p>Returns the list of available server pools configured in the options file.</p><h2 id="list_available_server_pools/1-parameters" class="section-heading">
+  <a href="#list_available_server_pools/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">options</code> - the options file data as read by <a href="#get_options/1"><code class="inline">get_options/1</code></a>.</li></ul><h2 id="list_available_server_pools/1-examples" class="section-heading">
+  <a href="#list_available_server_pools/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
+  Examples
+</h2>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="8385879468-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="8385879468-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">list_available_server_pools</span><span class="p" data-group-id="8385879468-2">(</span><span class="n">config_options</span><span class="p" data-group-id="8385879468-2">)</span><span class="w">
+</span><span class="p" data-group-id="8385879468-3">[</span><span class="s">&quot;primary&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;linked&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;demo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;reserved&quot;</span><span class="p" data-group-id="8385879468-3">]</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="list_dbservers/2">
+
+    <span id="list_dbservers/1"></span>
+
+  <div class="detail-header">
+    <a href="#list_dbservers/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">list_dbservers(options, filters \\ [])</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> list_dbservers(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(), [<a href="MscmpSystOptions.Types.html#t:server_pool/0">MscmpSystOptions.Types.server_pool</a>()]) :: [
+  <a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.Types.html#t:db_server/0">MscmpSystDb.Types.db_server</a>()
+]</pre>
+
+      </div>
+
+<p>Extracts the list of configured dbservers in the options file, optionally
+filtered by the server's supported instance classes.</p><h2 id="list_dbservers/2-parameters" class="section-heading">
+  <a href="#list_dbservers/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">options</code> - the options file data as read by <a href="#get_options/1"><code class="inline">get_options/1</code></a>.</p></li><li><p><code class="inline">filters</code> - a list one or more instance class values with with to filter
+the database servers list.  The valid instance classes are: &quot;primary&quot;,
+&quot;linked&quot;, &quot;demo&quot;, and &quot;reserved&quot;.  An empty list of filter values returns
+all database servers, including those that have no supported instance
+classes (this is common for global database host servers).  The <code class="inline">filters</code>
+values defaults to the empty list if not explicitly provided.</p></li></ul><h2 id="list_dbservers/2-examples" class="section-heading">
+  <a href="#list_dbservers/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
+  Examples
+</h2>
+<p>Calling without filters:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="1887702040-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="1887702040-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="1887702040-2">[</span><span class="bp">_</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="bp">_</span><span class="p" data-group-id="1887702040-2">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">list_dbservers</span><span class="p" data-group-id="1887702040-3">(</span><span class="n">config_options</span><span class="p" data-group-id="1887702040-3">)</span><span class="w">
+</span><span class="p" data-group-id="1887702040-4">[</span><span class="w">
+  </span><span class="p" data-group-id="1887702040-5">%{</span><span class="w">
+    </span><span class="ss">db_host</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span><span class="w">
+    </span><span class="ss">db_max_instances</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="ss">db_port</span><span class="p">:</span><span class="w"> </span><span class="mi">5432</span><span class="p">,</span><span class="w">
+    </span><span class="ss">db_show_sensitive</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+    </span><span class="ss">dbadmin_password</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;default.msbms.privileged.password&quot;</span><span class="p">,</span><span class="w">
+    </span><span class="ss">dbadmin_pool_size</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="ss">server_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;global_db&quot;</span><span class="p">,</span><span class="w">
+    </span><span class="ss">server_salt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sklMRkLXzMQgzqpMpJZPk31Js88su39U/mooAXALhj0=&quot;</span><span class="p">,</span><span class="w">
+    </span><span class="ss">start_server_instances</span><span class="p">:</span><span class="w"> </span><span class="no">false</span><span class="p">,</span><span class="w">
+    </span><span class="ss">server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1887702040-6">[</span><span class="p" data-group-id="1887702040-6">]</span><span class="w">
+  </span><span class="p" data-group-id="1887702040-5">}</span><span class="p">,</span><span class="w">
+  </span><span class="p" data-group-id="1887702040-7">%{</span><span class="w">
+    </span><span class="ss">db_host</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span><span class="w">
+    </span><span class="ss">db_max_instances</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w">
+    </span><span class="ss">db_port</span><span class="p">:</span><span class="w"> </span><span class="mi">5432</span><span class="p">,</span><span class="w">
+    </span><span class="ss">db_show_sensitive</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+    </span><span class="ss">dbadmin_password</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;default.msbms.privileged.password&quot;</span><span class="p">,</span><span class="w">
+    </span><span class="ss">dbadmin_pool_size</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="ss">server_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;instance_db&quot;</span><span class="p">,</span><span class="w">
+    </span><span class="ss">server_salt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;w1OfRx630x7svid8Tk3L9rLL1eEGSm0fq8XcLdveuSs=&quot;</span><span class="p">,</span><span class="w">
+    </span><span class="ss">start_server_instances</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+    </span><span class="ss">server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1887702040-8">[</span><span class="s">&quot;primary&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;linked&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;demo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;reserved&quot;</span><span class="p" data-group-id="1887702040-8">]</span><span class="w">
+  </span><span class="p" data-group-id="1887702040-7">}</span><span class="w">
+</span><span class="p" data-group-id="1887702040-4">]</span></code></pre><p>Calling with filters:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="4347251595-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="4347251595-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="4347251595-2">[</span><span class="bp">_</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="bp">_</span><span class="p" data-group-id="4347251595-2">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">list_dbservers</span><span class="p" data-group-id="4347251595-3">(</span><span class="n">config_options</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="4347251595-4">[</span><span class="s">&quot;primary&quot;</span><span class="p" data-group-id="4347251595-4">]</span><span class="p" data-group-id="4347251595-3">)</span><span class="w">
+</span><span class="p" data-group-id="4347251595-5">[</span><span class="w">
+  </span><span class="p" data-group-id="4347251595-6">%{</span><span class="w">
+    </span><span class="ss">db_host</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span><span class="w">
+    </span><span class="ss">db_max_instances</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w">
+    </span><span class="ss">db_port</span><span class="p">:</span><span class="w"> </span><span class="mi">5432</span><span class="p">,</span><span class="w">
+    </span><span class="ss">db_show_sensitive</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+    </span><span class="ss">dbadmin_password</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;default.msbms.privileged.password&quot;</span><span class="p">,</span><span class="w">
+    </span><span class="ss">dbadmin_pool_size</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="ss">server_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;instance_db&quot;</span><span class="p">,</span><span class="w">
+    </span><span class="ss">server_salt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;w1OfRx630x7svid8Tk3L9rLL1eEGSm0fq8XcLdveuSs=&quot;</span><span class="p">,</span><span class="w">
+    </span><span class="ss">start_server_instances</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
+    </span><span class="ss">server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4347251595-7">[</span><span class="s">&quot;primary&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;linked&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;demo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;reserved&quot;</span><span class="p" data-group-id="4347251595-7">]</span><span class="w">
+  </span><span class="p" data-group-id="4347251595-6">}</span><span class="w">
+</span><span class="p" data-group-id="4347251595-5">]</span></code></pre>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+      <footer class="footer">
+
+        <p>
+          Built using
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.29.0) for the
+
+            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+        </p>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+
+
+  </body>
+</html>
