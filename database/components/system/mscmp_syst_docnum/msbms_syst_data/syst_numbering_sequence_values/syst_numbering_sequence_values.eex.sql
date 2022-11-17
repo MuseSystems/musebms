@@ -1,5 +1,5 @@
 -- File:        syst_numbering_sequence_values.eex.sql
--- Location:    musebms/database/components/system/msbms_syst_numberings/msbms_syst_data/syst_numbering_sequence_values/syst_numbering_sequence_values.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_docnum/msbms_syst_data/syst_numbering_sequence_values/syst_numbering_sequence_values.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
