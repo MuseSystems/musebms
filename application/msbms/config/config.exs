@@ -12,7 +12,7 @@
 
 import Config
 
-config :msbms_syst_datastore,
-  ecto_repos: [MsbmsSystDatastore.Runtime.Datastore]
+config :mscmp_syst_db,
+  ecto_repos: [MscmpSystDb.Runtime.Datastore]
 
 import_config "#{Mix.env()}.exs"

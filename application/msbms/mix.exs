@@ -24,9 +24,9 @@ defmodule Msbms.MixProject do
     {:gradient, github: "esl/gradient", only: [:dev], runtime: false},
 
     # Muse Systems Business Management System Components
-    {:msbms_syst_error, path: "../../components/system/msbms_syst_error"},
-    {:msbms_syst_options, path: "../../components/system/msbms_syst_options"},
-    {:msbms_syst_datastore, path: "../../components/system/msbms_syst_datastore"}
+    {:mscmp_syst_error, path: "../../components/system/mscmp_syst_error"},
+    {:mscmp_syst_options, path: "../../components/system/mscmp_syst_options"},
+    {:mscmp_syst_db, path: "../../components/system/mscmp_syst_db"}
   ]
 
   @dialyzer_opts [

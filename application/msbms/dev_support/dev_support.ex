@@ -15,22 +15,22 @@ defmodule DevSupport do
 
   @migration_test_source_root_dir "../../database"
 
-  # Global Datastore Configuration
+  # MSMCP Datastore Configuration
 
-  @migrations_global "app_msbms_global"
+  @migrations_msmcp "app_msmcp"
 
-  @datastore_context_global_app :dev_app_global
-  @datastore_context_global_api :dev_api_global
+  @datastore_context_msmcp_app :dev_app_msmcp
+  @datastore_context_msmcp_api :dev_api_msmcp
 
-  @global_datastore_options %{
-    database_name: "msbms_dev_global",
-    datastore_code: "msbms.dev.global",
-    datastore_name: :msbms_dev_global,
+  @msmcp_datastore_options %{
+    database_name: "msmcp_dev",
+    datastore_code: "msmcp.dev",
+    datastore_name: :msmcp_dev,
     contexts: [
       %{
         context_name: nil,
-        description: "MSBMS Global/Development Owner",
-        database_role: "msbms_dev_global_owner",
+        description: "MSMCP/Development Owner",
+        database_role: "msmcp_dev_owner",
         database_password: nil,
         starting_pool_size: 0,
         start_context: false,
@@ -38,19 +38,19 @@ defmodule DevSupport do
         database_owner_context: true
       },
       %{
-        context_name: @datastore_context_global_app,
-        description: "MSBMS Global/Development App User",
-        database_role: "msbms_dev_global_app_user",
-        database_password: "msbms.dev.global.code.app.user",
+        context_name: @datastore_context_msmcp_app,
+        description: "MSMCP/Development App User",
+        database_role: "msmcp_dev_app_user",
+        database_password: "msmcp.dev.code.app.user",
         starting_pool_size: 10,
         start_context: true,
         login_context: true
       },
       %{
-        context_name: @datastore_context_global_api,
-        description: "MSBMS Global/Development API User",
-        database_role: "msbms_dev_global_api_user",
-        database_password: "msbms.dev.global.code.api.user",
+        context_name: @datastore_context_msmcp_api,
+        description: "MSMCP/Development API User",
+        database_role: "msmcp_dev_api_user",
+        database_password: "msmcp.dev.code.api.user",
         starting_pool_size: 10,
         start_context: true,
         login_context: true
@@ -70,22 +70,22 @@ defmodule DevSupport do
     }
   }
 
-  # Instance Datastore Configuration
+  # MSBMS Datastore Configuration
 
-  @migrations_instance "app_msbms_instance"
+  @migrations_instance "app_msbms"
 
-  @datastore_context_instance_app :dev_app_instance
-  @datastore_context_instance_api :dev_api_instance
+  @datastore_context_msbms_app :dev_app_msbms
+  @datastore_context_msbms_api :dev_api_msbms
 
-  @instance_datastore_options %{
-    database_name: "msbms_dev_instance",
-    datastore_code: "msbms.dev.instance",
-    datastore_name: :msbms_dev_instance,
+  @msbms_datastore_options %{
+    database_name: "msbms_dev",
+    datastore_code: "msbms.dev",
+    datastore_name: :msbms_dev,
     contexts: [
       %{
         context_name: nil,
-        description: "MSBMS Instance/Development Owner",
-        database_role: "msbms_dev_instance_owner",
+        description: "MSBMS/Development Owner",
+        database_role: "msbms_dev_owner",
         database_password: nil,
         starting_pool_size: 0,
         start_context: false,
@@ -93,19 +93,19 @@ defmodule DevSupport do
         database_owner_context: true
       },
       %{
-        context_name: @datastore_context_instance_app,
-        description: "MSBMS Instance/Development App User",
-        database_role: "msbms_dev_instance_app_user",
-        database_password: "msbms.dev.instance.code.app.user",
+        context_name: @datastore_context_msbms_app,
+        description: "MSBMS/Development App User",
+        database_role: "msbms_dev_app_user",
+        database_password: "msbms.dev.code.app.user",
         starting_pool_size: 10,
         start_context: true,
         login_context: true
       },
       %{
-        context_name: @datastore_context_instance_api,
-        description: "MSBMS Instance/Development API User",
-        database_role: "msbms_dev_instance_api_user",
-        database_password: "msbms.dev.instance.code.api.user",
+        context_name: @datastore_context_msbms_api,
+        description: "MSBMS/Development API User",
+        database_role: "msbms_dev_api_user",
+        database_password: "msbms.dev.code.api.user",
         starting_pool_size: 10,
         start_context: true,
         login_context: true
@@ -126,38 +126,38 @@ defmodule DevSupport do
   }
 
   def start_dev_environment() do
-    _ = setup_global_database()
-    _ = setup_instance_database()
+    _ = setup_msmcp_database()
+    _ = setup_msbms_database()
     :ok
   end
 
   def stop_dev_environment() do
-    _ = cleanup_global_database()
-    _ = cleanup_instance_database()
+    _ = cleanup_msmcp_database()
+    _ = cleanup_msbms_database()
     File.rm_rf!(Path.join(["priv/database"]))
     :ok
   end
 
-  defp setup_global_database() do
-    :ok = build_migrations(@migrations_global)
+  defp setup_msmcp_database() do
+    :ok = build_migrations(@migrations_msmcp)
 
     context_bindings = [
-      msbms_appusr: "msbms_dev_global_app_user",
-      msbms_apiusr: "msbms_dev_global_api_user"
+      msbms_appusr: "msmcp_dev_app_user",
+      msbms_apiusr: "msmcp_dev_api_user"
     ]
 
-    setup_database(@migrations_global, @global_datastore_options, context_bindings)
+    setup_database(@migrations_msmcp, @msmcp_datastore_options, context_bindings)
   end
 
-  defp setup_instance_database() do
+  defp setup_msbms_database() do
     :ok = build_migrations(@migrations_instance)
 
     context_bindings = [
-      msbms_appusr: "msbms_dev_instance_app_user",
-      msbms_apiusr: "msbms_dev_instance_api_user"
+      msbms_appusr: "msbms_dev_app_user",
+      msbms_apiusr: "msbms_dev_api_user"
     ]
 
-    setup_database(@migrations_instance, @instance_datastore_options, context_bindings)
+    setup_database(@migrations_instance, @msbms_datastore_options, context_bindings)
   end
 
   defp setup_database(datastore_type, datastore_options, context_bindings) do
@@ -174,8 +174,8 @@ defmodule DevSupport do
     {:ok, _, _} = MsbmsSystDatastore.start_datastore(datastore_options)
   end
 
-  defp cleanup_global_database, do: cleanup_database(@global_datastore_options)
-  defp cleanup_instance_database, do: cleanup_database(@instance_datastore_options)
+  defp cleanup_msmcp_database, do: cleanup_database(@msmcp_datastore_options)
+  defp cleanup_msbms_database, do: cleanup_database(@msbms_datastore_options)
 
   defp cleanup_database(datastore_options) do
     :ok = MsbmsSystDatastore.stop_datastore(datastore_options)
