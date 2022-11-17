@@ -27,19 +27,19 @@ jobs:
 
         - name: Build Mix Dependencies
           run: mix deps.get
-          working-directory: ./components/system/msbms_syst_error
+          working-directory: ./components/system/mscmp_syst_error
 
         - name: Run Tests
           run: mix test
-          working-directory: ./components/system/msbms_syst_error
+          working-directory: ./components/system/mscmp_syst_error
 
         - name: Run Credo
           run: mix credo
-          working-directory: ./components/system/msbms_syst_error
+          working-directory: ./components/system/mscmp_syst_error
 
         # - name: Run Dialyzer
         #   run: mix dialyzer
-        #   working-directory: ./components/system/msbms_syst_error
+        #   working-directory: ./components/system/mscmp_syst_error
 
   msbms-syst-options:
     runs-on: ubuntu-latest
@@ -61,19 +61,19 @@ jobs:
 
         - name: Build Mix Dependencies
           run: mix deps.get
-          working-directory: ./components/system/msbms_syst_options
+          working-directory: ./components/system/mscmp_syst_options
 
         - name: Run Tests
           run: mix test
-          working-directory: ./components/system/msbms_syst_options
+          working-directory: ./components/system/mscmp_syst_options
 
         - name: Run Credo
           run: mix credo
-          working-directory: ./components/system/msbms_syst_options
+          working-directory: ./components/system/mscmp_syst_options
 
         # - name: Run Dialyzer
         #   run: mix dialyzer
-        #   working-directory: ./components/system/msbms_syst_options
+        #   working-directory: ./components/system/mscmp_syst_options
 
   msbms-syst-rate-limiter:
     runs-on: ubuntu-latest
@@ -95,19 +95,19 @@ jobs:
 
         - name: Build Mix Dependencies
           run: mix deps.get
-          working-directory: ./components/system/msbms_syst_rate_limiter
+          working-directory: ./components/system/mscmp_syst_limiter
 
         - name: Run Unit Tests
           run: mix test
-          working-directory: ./components/system/msbms_syst_rate_limiter
+          working-directory: ./components/system/mscmp_syst_limiter
 
         - name: Run Integration Tests
           run: mix test --only integration
-          working-directory: ./components/system/msbms_syst_rate_limiter
+          working-directory: ./components/system/mscmp_syst_limiter
 
         - name: Run Credo
           run: mix credo
-          working-directory: ./components/system/msbms_syst_rate_limiter
+          working-directory: ./components/system/mscmp_syst_limiter
 
   msbms-syst-datastore:
     runs-on: ubuntu-latest
@@ -143,23 +143,23 @@ jobs:
 
         - name: Initialize Database
           run: psql -f database/utility/bootstrap_database.psql postgresql://muse_syst_dba:muse.syst.dba.testing.password@localhost:5432/postgres
-          working-directory: ./components/system/msbms_syst_datastore
+          working-directory: ./components/system/mscmp_syst_db
 
         - name: Build Mix Dependencies
           run: mix deps.get
-          working-directory: ./components/system/msbms_syst_datastore
+          working-directory: ./components/system/mscmp_syst_db
 
         - name: Run Tests
           run: mix test
-          working-directory: ./components/system/msbms_syst_datastore
+          working-directory: ./components/system/mscmp_syst_db
 
         - name: Run Credo
           run: mix credo
-          working-directory: ./components/system/msbms_syst_datastore
+          working-directory: ./components/system/mscmp_syst_db
 
         # - name: Run Dialyzer
         #   run: mix dialyzer
-        #   working-directory: ./components/system/msbms_syst_datastore
+        #   working-directory: ./components/system/mscmp_syst_db
 
   msbms-syst-settings:
     runs-on: ubuntu-latest
@@ -195,23 +195,23 @@ jobs:
 
         - name: Initialize Database
           run: psql -f database_utils/bootstrap_database.psql postgresql://muse_syst_dba:muse.syst.dba.testing.password@localhost:5432/postgres
-          working-directory: ./components/system/msbms_syst_settings
+          working-directory: ./components/system/mscmp_syst_settings
 
         - name: Build Mix Dependencies
           run: mix deps.get
-          working-directory: ./components/system/msbms_syst_settings
+          working-directory: ./components/system/mscmp_syst_settings
 
         - name: Run Tests
           run: mix test
-          working-directory: ./components/system/msbms_syst_settings
+          working-directory: ./components/system/mscmp_syst_settings
 
         - name: Run Credo
           run: mix credo
-          working-directory: ./components/system/msbms_syst_settings
+          working-directory: ./components/system/mscmp_syst_settings
 
         # - name: Run Dialyzer
         #   run: mix dialyzer
-        #   working-directory: ./components/system/msbms_syst_settings
+        #   working-directory: ./components/system/mscmp_syst_settings
 
   msbms-syst-enums:
     runs-on: ubuntu-latest
@@ -247,23 +247,23 @@ jobs:
 
         - name: Initialize Database
           run: psql -f database_utils/bootstrap_database.psql postgresql://muse_syst_dba:muse.syst.dba.testing.password@localhost:5432/postgres
-          working-directory: ./components/system/msbms_syst_enums
+          working-directory: ./components/system/mscmp_syst_enums
 
         - name: Build Mix Dependencies
           run: mix deps.get
-          working-directory: ./components/system/msbms_syst_enums
+          working-directory: ./components/system/mscmp_syst_enums
 
         - name: Run Tests
           run: mix test
-          working-directory: ./components/system/msbms_syst_enums
+          working-directory: ./components/system/mscmp_syst_enums
 
         - name: Run Credo
           run: mix credo
-          working-directory: ./components/system/msbms_syst_enums
+          working-directory: ./components/system/mscmp_syst_enums
 
         # - name: Run Dialyzer
         #   run: mix dialyzer
-        #   working-directory: ./components/system/msbms_syst_enums
+        #   working-directory: ./components/system/mscmp_syst_enums
 
   msbms-syst-instance-mgr:
     runs-on: ubuntu-latest
@@ -299,27 +299,27 @@ jobs:
 
         - name: Initialize Database
           run: psql -f database_utils/bootstrap_database.psql postgresql://muse_syst_dba:muse.syst.dba.testing.password@localhost:5432/postgres
-          working-directory: ./components/system/msbms_syst_instance_mgr
+          working-directory: ./components/system/mscmp_syst_instance
 
         - name: Build Mix Dependencies
           run: mix deps.get
-          working-directory: ./components/system/msbms_syst_instance_mgr
+          working-directory: ./components/system/mscmp_syst_instance
 
         - name: Run Unit Tests
           run: mix test
-          working-directory: ./components/system/msbms_syst_instance_mgr
+          working-directory: ./components/system/mscmp_syst_instance
 
         - name: Run Integration Tests
           run: mix test --only integration
-          working-directory: ./components/system/msbms_syst_instance_mgr
+          working-directory: ./components/system/mscmp_syst_instance
 
         - name: Run Credo
           run: mix credo
-          working-directory: ./components/system/msbms_syst_instance_mgr
+          working-directory: ./components/system/mscmp_syst_instance
 
         # - name: Run Dialyzer
         #   run: mix dialyzer
-        #   working-directory: ./components/system/msbms_syst_instance_mgr
+        #   working-directory: ./components/system/mscmp_syst_instance
 
   msbms-syst-authentication:
     runs-on: ubuntu-latest
@@ -355,27 +355,27 @@ jobs:
 
         - name: Initialize Database
           run: psql -f database_utils/bootstrap_database.psql postgresql://muse_syst_dba:muse.syst.dba.testing.password@localhost:5432/postgres
-          working-directory: ./components/system/msbms_syst_authentication
+          working-directory: ./components/system/mscmp_syst_authn
 
         - name: Build Mix Dependencies
           run: mix deps.get
-          working-directory: ./components/system/msbms_syst_authentication
+          working-directory: ./components/system/mscmp_syst_authn
 
         - name: Run Unit Tests
           run: mix test
-          working-directory: ./components/system/msbms_syst_authentication
+          working-directory: ./components/system/mscmp_syst_authn
 
         - name: Run Integration Tests
           run: mix test --only integration
-          working-directory: ./components/system/msbms_syst_authentication
+          working-directory: ./components/system/mscmp_syst_authn
 
         - name: Run Credo
           run: mix credo
-          working-directory: ./components/system/msbms_syst_authentication
+          working-directory: ./components/system/mscmp_syst_authn
 
         # - name: Run Dialyzer
         #   run: mix dialyzer
-        #   working-directory: ./components/system/msbms_syst_authentication
+        #   working-directory: ./components/system/mscmp_syst_authn
 
   msbms-application:
     runs-on: ubuntu-latest
