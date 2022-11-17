@@ -1,5 +1,5 @@
-# Source File: subplans.msbms_syst_formats.toml
-# Location:    musebms/database/components/system/msbms_syst_formats/subplans.msbms_syst_formats.toml
+# Source File: subplans.mscmp_syst_formats.toml
+# Location:    musebms/database/components/system/mscmp_syst_formats/subplans.mscmp_syst_formats.toml
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -17,7 +17,7 @@ update               = 0
 sponsor              = 820
 sponsor_modification = 0
 load_files = [
-    "components/system/msbms_syst_formats/msbms_syst_data/syst_complex_formats/syst_complex_formats.eex.sql",
-    "components/system/msbms_syst_formats/msbms_syst_data/syst_complex_format_values/syst_complex_format_values.eex.sql",
-    "components/system/msbms_syst_formats/msbms_syst_priv/trigger_functions/trig_a_iu_complex_format_value_check.eex.sql",
+    "components/system/mscmp_syst_formats/msbms_syst_data/syst_complex_formats/syst_complex_formats.eex.sql",
+    "components/system/mscmp_syst_formats/msbms_syst_data/syst_complex_format_values/syst_complex_format_values.eex.sql",
+    "components/system/mscmp_syst_formats/msbms_syst_priv/trigger_functions/trig_a_iu_complex_format_value_check.eex.sql",
 ]
