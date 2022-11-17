@@ -9,8 +9,8 @@
 
 DROP DATABASE IF EXISTS mscmp_syst_enums;
 
-DROP ROLE IF EXISTS muse_syst_access;
-DROP ROLE IF EXISTS muse_syst_dba;
+DROP ROLE IF EXISTS ms_syst_access;
+DROP ROLE IF EXISTS ms_syst_dba;
 
 DROP ROLE IF EXISTS mscmp_syst_enums_owner;
 DROP ROLE IF EXISTS mscmp_syst_enums_app_user;

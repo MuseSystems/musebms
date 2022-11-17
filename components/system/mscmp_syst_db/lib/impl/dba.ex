@@ -33,7 +33,7 @@ defmodule MscmpSystDb.Impl.Dba do
   #
   ######
 
-  @dba_role_name "muse_syst_dba"
+  @dba_role_name "ms_syst_dba"
   @dba_database_name "postgres"
   @dba_application_name "MSBMS System DBA Access"
 
@@ -414,7 +414,7 @@ defmodule MscmpSystDb.Impl.Dba do
     $ROLESCRIPT$
       BEGIN
         CREATE ROLE #{role_name}
-          WITH NOINHERIT LOGIN IN ROLE muse_syst_access PASSWORD '#{password}';
+          WITH NOINHERIT LOGIN IN ROLE ms_syst_access PASSWORD '#{password}';
 
         COMMENT ON ROLE #{role_name} IS $DOC$#{role_comment}$DOC$;
       END;
