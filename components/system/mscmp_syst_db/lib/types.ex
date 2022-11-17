@@ -51,12 +51,12 @@ defmodule MscmpSystDb.Types do
     specific to a given database server.  This value must be at least 32 bytes
     long and should be a random string.
 
-  * `:dbadmin_password` - The muse_syst_dba role password for privileged
+  * `:dbadmin_password` - The ms_syst_dba role password for privileged
     operations such as creating a new database/Datastore or new database roles
     on the database server instance.
 
   * `:dbadmin_pool_size` - The pool size to use for creating connections for
-    privileged operations using the muse_syst_dba role.
+    privileged operations using the ms_syst_dba role.
 
   """
 
