@@ -14,92 +14,92 @@ mkdir -p documentation/project
 ################################################################################
 
 #
-# MsbmsSystUtils
+# MscmpSystUtils
 #
 
-rm -Rf documentation/technical/app_server/msbms_syst_utils
-mkdir -p documentation/technical/app_server/msbms_syst_utils
-cd components/system/msbms_syst_utils
+rm -Rf documentation/technical/app_server/mscmp_syst_utils
+mkdir -p documentation/technical/app_server/mscmp_syst_utils
+cd components/system/mscmp_syst_utils
 mix docs
 cd ../../../
 
 #
-# MsbmsSystError
+# MscmpSystError
 #
 
-rm -Rf documentation/technical/app_server/msbms_syst_error
-mkdir -p documentation/technical/app_server/msbms_syst_error
-cd components/system/msbms_syst_error
+rm -Rf documentation/technical/app_server/mscmp_syst_error
+mkdir -p documentation/technical/app_server/mscmp_syst_error
+cd components/system/mscmp_syst_error
 mix docs
 cd ../../../
 
 #
-# MsbmsSystDatastore
+# MscmpSystDb
 #
 
-rm -Rf documentation/technical/app_server/msbms_syst_datastore
-mkdir -p documentation/technical/app_server/msbms_syst_datastore
-cd components/system/msbms_syst_datastore
+rm -Rf documentation/technical/app_server/mscmp_syst_db
+mkdir -p documentation/technical/app_server/mscmp_syst_db
+cd components/system/mscmp_syst_db
 mix docs
 cd ../../../
 
 #
-# MsbmsSystOptions
+# MscmpSystOptions
 #
 
-rm -Rf documentation/technical/app_server/msbms_syst_options
-mkdir -p documentation/technical/app_server/msbms_syst_options
-cd components/system/msbms_syst_options
+rm -Rf documentation/technical/app_server/mscmp_syst_options
+mkdir -p documentation/technical/app_server/mscmp_syst_options
+cd components/system/mscmp_syst_options
 mix docs
 cd ../../../
 
 #
-# MsbmsSystSettings
+# MscmpSystSettings
 #
 
-rm -Rf documentation/technical/app_server/msbms_syst_settings
-mkdir -p documentation/technical/app_server/msbms_syst_settings
-cd components/system/msbms_syst_settings
+rm -Rf documentation/technical/app_server/mscmp_syst_settings
+mkdir -p documentation/technical/app_server/mscmp_syst_settings
+cd components/system/mscmp_syst_settings
 mix docs
 cd ../../../
 
 #
-# MsbmsSystEnums
+# MscmpSystEnums
 #
 
-rm -Rf documentation/technical/app_server/msbms_syst_enums
-mkdir -p documentation/technical/app_server/msbms_syst_enums
-cd components/system/msbms_syst_enums
+rm -Rf documentation/technical/app_server/mscmp_syst_enums
+mkdir -p documentation/technical/app_server/mscmp_syst_enums
+cd components/system/mscmp_syst_enums
 mix docs
 cd ../../../
 
 #
-# MsbmsSystInstanceMgr
+# MscmpSystInstance
 #
 
-rm -Rf documentation/technical/app_server/msbms_syst_instance_mgr
-mkdir -p documentation/technical/app_server/msbms_syst_instance_mgr
-cd components/system/msbms_syst_instance_mgr
+rm -Rf documentation/technical/app_server/mscmp_syst_instance
+mkdir -p documentation/technical/app_server/mscmp_syst_instance
+cd components/system/mscmp_syst_instance
 mix docs
 cd ../../../
 
 #
-# MsbmsSystRateLimiter
+# MscmpSystLimiter
 #
 
-rm -Rf documentation/technical/app_server/msbms_syst_rate_limiter
-mkdir -p documentation/technical/app_server/msbms_syst_rate_limiter
-cd components/system/msbms_syst_rate_limiter
+rm -Rf documentation/technical/app_server/mscmp_syst_limiter
+mkdir -p documentation/technical/app_server/mscmp_syst_limiter
+cd components/system/mscmp_syst_limiter
 mix docs
 cd ../../../
 
 #
-# MsbmsSystAuthentication
+# MscmpSystAuthn
 #
 
-rm -Rf documentation/technical/app_server/msbms_syst_authentication
-mkdir -p documentation/technical/app_server/msbms_syst_authentication
-cd components/system/msbms_syst_authentication
+rm -Rf documentation/technical/app_server/mscmp_syst_authn
+mkdir -p documentation/technical/app_server/mscmp_syst_authn
+cd components/system/mscmp_syst_authn
 mix docs
 cd ../../../
 
@@ -115,7 +115,7 @@ cd ../../../
 
 # rm -Rf documentation/technical/database/global
 # mkdir -p documentation/technical/database/global
-# java -jar tools/build_tools/schemaspy/schemaspy-6.1.0.jar -t pgsql11 -dp tools/build_tools/schemaspy/postgresql-42.5.0.jar -db msbms_dev_global -host 127.0.0.1 -port 5432 -schemas msbms_syst,msbms_syst_data,msbms_syst_datastore,msbms_syst_priv  -u documentation -p 'documentation' -o documentation/technical/database/global
+# java -jar tools/build_tools/schemaspy/schemaspy-6.1.0.jar -t pgsql11 -dp tools/build_tools/schemaspy/postgresql-42.5.0.jar -db msmcp_dev -host 127.0.0.1 -port 5432 -schemas msbms_syst,msbms_syst_data,msbms_syst_db,msbms_syst_priv  -u documentation -p 'documentation' -o documentation/technical/database/app_msmcp
 
 #
 # Instance Database
@@ -123,4 +123,4 @@ cd ../../../
 
 # rm -Rf documentation/technical/database/instance
 # mkdir -p documentation/technical/database/instance
-# java -jar tools/build_tools/schemaspy/schemaspy-6.1.0.jar -t pgsql11 -dp tools/build_tools/schemaspy/postgresql-42.5.0.jar -db msbms_dev_instance -host 127.0.0.1 -port 5432 -schemas msbms_appl,msbms_appl_data,msbms_appl_priv,msbms_syst,msbms_syst_data,msbms_syst_datastore,msbms_syst_priv,msbms_user,msbms_user_data,msbms_user_priv -u documentation -p 'documentation' -o documentation/technical/database/instance
+# java -jar tools/build_tools/schemaspy/schemaspy-6.1.0.jar -t pgsql11 -dp tools/build_tools/schemaspy/postgresql-42.5.0.jar -db msbms_dev -host 127.0.0.1 -port 5432 -schemas msbms_appl,msbms_appl_data,msbms_appl_priv,msbms_syst,msbms_syst_data,msbms_syst_db,msbms_syst_priv,msbms_user,msbms_user_data,msbms_user_priv -u documentation -p 'documentation' -o documentation/technical/database/app_msbms
