@@ -63,10 +63,10 @@ defmodule MscmpSystInstance.MixProject do
           mscmp_syst_options: "../../../../documentation/technical/app_server/mscmp_syst_options"
         ],
         groups_for_functions: [
-          "API - Runtime": &(&1[:section] == :service_management),
-          "API - Instances": &(&1[:section] == :instance_data),
-          "API - Instance Types": &(&1[:section] == :instance_type_data),
-          "API - Owners": &(&1[:section] == :owner_data)
+          Owners: &(&1[:section] == :owner_data),
+          "Instance Types": &(&1[:section] == :instance_type_data),
+          Instances: &(&1[:section] == :instance_data),
+          Runtime: &(&1[:section] == :service_management)
         ],
         groups_for_modules: [
           API: [MscmpSystInstance],

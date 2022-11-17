@@ -58,8 +58,8 @@ defmodule MscmpSystLimiter.MixProject do
           mscmp_syst_utils: "../../../../documentation/technical/app_server/mscmp_syst_utils"
         ],
         groups_for_functions: [
-          "API - Rate Limiter": &(&1[:section] == :rate_limiter_data),
-          "API - Runtime": &(&1[:section] == :service_management)
+          "Rate Limiter": &(&1[:section] == :rate_limiter_data),
+          Runtime: &(&1[:section] == :service_management)
         ],
         groups_for_modules: [
           API: [MscmpSystLimiter],

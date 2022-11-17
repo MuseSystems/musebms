@@ -48,8 +48,8 @@ defmodule MscmpSystUtils.MixProject do
         main: "MscmpSystUtils",
         output: "../../../documentation/technical/app_server/mscmp_syst_utils",
         groups_for_functions: [
-          "API - Function Opts": &(&1[:section] == :options_management),
-          "API - String Utilities": &(&1[:section] == :string_utilities)
+          "Function Opts": &(&1[:section] == :options_management),
+          "String Utilities": &(&1[:section] == :string_utilities)
         ],
         groups_for_modules: [
           API: [MscmpSystUtils]
