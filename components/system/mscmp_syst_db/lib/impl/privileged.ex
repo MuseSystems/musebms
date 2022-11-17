@@ -39,7 +39,7 @@ defmodule MscmpSystDb.Impl.Privileged do
   ######
 
   @default_db_shutdown_timeout 60_000
-  @priv_connection_role "msbms_syst_dba"
+  @priv_connection_role "muse_syst_dba"
   @priv_application_name "MSBMS Datastore Privileged Access"
 
   @spec get_datastore_version(Types.datastore_options(), Keyword.t()) ::

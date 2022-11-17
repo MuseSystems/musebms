@@ -52,7 +52,7 @@ defmodule DevSupport do
       db_max_instances: 1,
       server_pools: [],
       server_salt: "msbms.dev.code.test.salt",
-      dbadmin_password: "msbms.syst.dba.testing.password",
+      dbadmin_password: "muse.syst.dba.testing.password",
       dbadmin_pool_size: 1
     }
   }

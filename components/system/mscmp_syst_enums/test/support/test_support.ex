@@ -59,7 +59,7 @@ defmodule TestSupport do
       db_show_sensitive: true,
       db_max_instances: 1,
       server_salt: "mscmp_syst_enums.testing.code.test.salt",
-      dbadmin_password: "msbms.syst.dba.testing.password",
+      dbadmin_password: "muse.syst.dba.testing.password",
       dbadmin_pool_size: 1
     }
   }
