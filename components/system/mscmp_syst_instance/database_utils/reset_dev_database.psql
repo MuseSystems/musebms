@@ -9,8 +9,8 @@
 
 DROP DATABASE IF EXISTS mscmp_syst_instance;
 
-DROP ROLE IF EXISTS msbms_access;
-DROP ROLE IF EXISTS msbms_syst_dba;
+DROP ROLE IF EXISTS muse_syst_access;
+DROP ROLE IF EXISTS muse_syst_dba;
 
 DROP ROLE IF EXISTS mscmp_syst_instance_owner;
 DROP ROLE IF EXISTS mscmp_syst_instance_app_user;

@@ -35,7 +35,7 @@ DROP ROLE IF EXISTS msbms_dev_owner;
 
 -- General clean-up
 
-DROP ROLE IF EXISTS msbms_access;
-DROP ROLE IF EXISTS msbms_syst_dba;
+DROP ROLE IF EXISTS muse_syst_access;
+DROP ROLE IF EXISTS muse_syst_dba;
 
 \ir bootstrap_database.psql

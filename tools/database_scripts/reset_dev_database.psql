@@ -6,7 +6,7 @@
 \set ON_ERROR_STOP true
 \c postgres
 
-DROP DATABASE IF EXISTS msbms_global;
+DROP DATABASE IF EXISTS msmcp;
 
-DROP ROLE IF EXISTS msbms_access;
-DROP ROLE IF EXISTS msbms_syst_dba;
+DROP ROLE IF EXISTS muse_syst_access;
+DROP ROLE IF EXISTS muse_syst_dba;
