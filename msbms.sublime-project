@@ -69,9 +69,9 @@
     "build_systems":
     [
         {
-            "name": "Test MsbmsSystError",
+            "name": "Test MscmpSystError",
             "shell_cmd": "mix test && mix credo --strict",
-            "working_dir": "${project_path}/components/system/msbms_syst_error",
+            "working_dir": "${project_path}/components/system/mscmp_syst_error",
             "selector": "source.elixir",
             "keyfiles":
             [
@@ -79,9 +79,9 @@
             ],
         },
         {
-            "name": "Test MsbmsSystUtils",
+            "name": "Test MscmpSystUtils",
             "shell_cmd": "mix test && mix credo --strict",
-            "working_dir": "${project_path}/components/system/msbms_syst_utils",
+            "working_dir": "${project_path}/components/system/mscmp_syst_utils",
             "selector": "source.elixir",
             "keyfiles":
             [
@@ -89,9 +89,9 @@
             ],
         },
         {
-            "name": "Test MsbmsSystDatastore",
+            "name": "Test MscmpSystDb",
             "shell_cmd": "mix test && mix credo --strict",
-            "working_dir": "${project_path}/components/system/msbms_syst_datastore",
+            "working_dir": "${project_path}/components/system/mscmp_syst_db",
             "selector": "source.elixir",
             "keyfiles":
             [
@@ -99,9 +99,9 @@
             ],
         },
         {
-            "name": "Test MsbmsSystOptions",
+            "name": "Test MscmpSystOptions",
             "shell_cmd": "mix test && mix credo --strict",
-            "working_dir": "${project_path}/components/system/msbms_syst_options",
+            "working_dir": "${project_path}/components/system/mscmp_syst_options",
             "selector": "source.elixir",
             "keyfiles":
             [
@@ -109,9 +109,9 @@
             ],
         },
         {
-            "name": "Test MsbmsSystSettings",
+            "name": "Test MscmpSystSettings",
             "shell_cmd": "mix test && mix credo --strict",
-            "working_dir": "${project_path}/components/system/msbms_syst_settings",
+            "working_dir": "${project_path}/components/system/mscmp_syst_settings",
             "selector": "source.elixir",
             "keyfiles":
             [
@@ -119,9 +119,9 @@
             ],
         },
         {
-            "name": "Test MsbmsSystEnums",
+            "name": "Test MscmpSystEnums",
             "shell_cmd": "mix test && mix credo --strict",
-            "working_dir": "${project_path}/components/system/msbms_syst_enums",
+            "working_dir": "${project_path}/components/system/mscmp_syst_enums",
             "selector": "source.elixir",
             "keyfiles":
             [
@@ -129,9 +129,9 @@
             ],
         },
         {
-            "name": "Test MsbmsSystRateLimiter",
+            "name": "Test MscmpSystLimiter",
             "shell_cmd": "mix test && mix credo --strict",
-            "working_dir": "${project_path}/components/system/msbms_syst_rate_limiter",
+            "working_dir": "${project_path}/components/system/mscmp_syst_limiter",
             "selector": "source.elixir",
             "keyfiles":
             [
@@ -139,9 +139,9 @@
             ],
         },
         {
-            "name": "Test MsbmsSystInstanceMgr",
+            "name": "Test MscmpSystInstance",
             "shell_cmd": "mix test && mix credo --strict",
-            "working_dir": "${project_path}/components/system/msbms_syst_instance_mgr",
+            "working_dir": "${project_path}/components/system/mscmp_syst_instance",
             "selector": "source.elixir",
             "keyfiles":
             [
@@ -149,9 +149,9 @@
             ],
         },
         {
-            "name": "Test MsbmsSystAuthentication",
+            "name": "Test MscmpSystAuthn",
             "shell_cmd": "mix test && mix credo --strict",
-            "working_dir": "${project_path}/components/system/msbms_syst_authentication",
+            "working_dir": "${project_path}/components/system/mscmp_syst_authn",
             "selector": "source.elixir",
             "keyfiles":
             [
