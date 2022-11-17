@@ -27,7 +27,7 @@ defmodule MscmpSystDb.Impl.Migrations do
 
   @default_source_root_dir "database"
 
-  @default_migrations_schema "mscmp_syst_db"
+  @default_migrations_schema "ms_syst_db"
   @default_migrations_table "migrations"
   @default_migrations_root_dir "priv/database"
 
