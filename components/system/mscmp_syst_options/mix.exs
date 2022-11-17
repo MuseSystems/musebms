@@ -50,8 +50,8 @@ defmodule MscmpSystOptions.MixProject do
           mscmp_syst_error: "../../../../documentation/technical/app_server/mscmp_syst_error"
         ],
         groups_for_functions: [
-          "API - File Handling": &(&1[:section] == :file_handling),
-          "API - Parsing": &(&1[:section] == :options_parsing)
+          "File Handling": &(&1[:section] == :file_handling),
+          Parsing: &(&1[:section] == :options_parsing)
         ],
         groups_for_modules: [
           API: [MscmpSystOptions],

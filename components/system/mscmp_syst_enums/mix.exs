@@ -59,10 +59,10 @@ defmodule MscmpSystEnums.MixProject do
         output: "../../../documentation/technical/app_server/mscmp_syst_enums",
         nest_modules_by_prefix: [MscmpSystEnums.DbTypes],
         groups_for_functions: [
-          "API - Enumerations": &(&1[:section] == :enum_data),
-          "API - Enumeration Functional Types": &(&1[:section] == :enum_functional_type_data),
-          "API - Enumeration items": &(&1[:section] == :enum_item_data),
-          "API - Runtime": &(&1[:section] == :service_management)
+          Enumerations: &(&1[:section] == :enum_data),
+          "Enumeration Functional Types": &(&1[:section] == :enum_functional_type_data),
+          "Enumeration items": &(&1[:section] == :enum_item_data),
+          Runtime: &(&1[:section] == :service_management)
         ],
         groups_for_modules: [
           API: [MscmpSystEnums],

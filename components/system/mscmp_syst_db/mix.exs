@@ -62,10 +62,10 @@ defmodule MscmpSystDb.MixProject do
         ],
         nest_modules_by_prefix: [MscmpSystDb.DbTypes],
         groups_for_functions: [
-          "API - Query": &(&1[:section] == :query),
-          "API - Runtime": &(&1[:section] == :service_management),
-          "API - Datastore Migrations": &(&1[:section] == :datastore_migrations),
-          "API - Datastore Management": &(&1[:section] == :datastore_management)
+          Query: &(&1[:section] == :query),
+          "Datastore Management": &(&1[:section] == :datastore_management),
+          "Datastore Migrations": &(&1[:section] == :datastore_migrations),
+          Runtime: &(&1[:section] == :service_management)
         ],
         groups_for_modules: [
           API: [MscmpSystDb],

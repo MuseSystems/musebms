@@ -73,15 +73,15 @@ defmodule MscmpSystAuthn.MixProject do
             "../../../../documentation/technical/app_server/mscmp_syst_instance"
         ],
         groups_for_functions: [
-          "API - Authenticator Management": &(&1[:section] == :authenticator_management),
-          "API - Authentication": &(&1[:section] == :authentication),
-          "API - Account Codes": &(&1[:section] == :account_code),
-          "API - Access Accounts": &(&1[:section] == :access_account_data),
-          "API - Access Account Instance Assocs":
+          "Authenticator Management": &(&1[:section] == :authenticator_management),
+          Authentication: &(&1[:section] == :authentication),
+          "Account Codes": &(&1[:section] == :account_code),
+          "Access Accounts": &(&1[:section] == :access_account_data),
+          "Access Account Instance Assocs":
             &(&1[:section] == :access_account_instance_assoc_data),
-          "API - Password Rules": &(&1[:section] == :password_rule_data),
-          "API - Network Rules": &(&1[:section] == :network_rule_data),
-          "API - Runtime": &(&1[:section] == :service_management)
+          "Password Rules": &(&1[:section] == :password_rule_data),
+          "Network Rules": &(&1[:section] == :network_rule_data),
+          Runtime: &(&1[:section] == :service_management)
         ],
         groups_for_modules: [
           API: [MscmpSystAuthn],

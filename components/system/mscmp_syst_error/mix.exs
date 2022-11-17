@@ -43,7 +43,7 @@ defmodule MscmpSystError.MixProject do
         main: "MscmpSystError",
         output: "../../../documentation/technical/app_server/mscmp_syst_error",
         groups_for_functions: [
-          "API - Error Parsing": &(&1[:section] == :error_parsing)
+          "Error Parsing": &(&1[:section] == :error_parsing)
         ],
         groups_for_modules: [
           API: [MscmpSystError],

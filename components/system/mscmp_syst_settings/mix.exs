@@ -59,8 +59,8 @@ defmodule MscmpSystSettings.MixProject do
         ],
         nest_modules_by_prefix: [MscmpSystSettings.DbTypes],
         groups_for_functions: [
-          "API - Settings": &(&1[:section] == :settings_data),
-          "API - Runtime": &(&1[:section] == :service_management)
+          Settings: &(&1[:section] == :settings_data),
+          Runtime: &(&1[:section] == :service_management)
         ],
         groups_for_modules: [
           API: [MscmpSystSettings],
