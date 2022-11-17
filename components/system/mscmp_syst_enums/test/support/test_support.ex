@@ -32,7 +32,7 @@ defmodule TestSupport do
     contexts: [
       %{
         context_name: nil,
-        description: "MsBmsSystEnums Testing Owner",
+        description: "MscmpSystEnums Testing Owner",
         database_role: "mscmp_syst_enums_owner",
         database_password: nil,
         starting_pool_size: 0,
@@ -42,7 +42,7 @@ defmodule TestSupport do
       },
       %{
         context_name: :enums_app_context,
-        description: "MsBmsSystEnums Testing App User",
+        description: "MscmpSystEnums Testing App User",
         database_role: "mscmp_syst_enums_app_user",
         database_password: "mscmp_syst_enums.testing.code.app.user",
         starting_pool_size: 20,
@@ -82,8 +82,8 @@ defmodule TestSupport do
       MscmpSystDb.upgrade_datastore(
         datastore_options,
         @migration_test_datastore_type,
-        msbms_owner: database_owner.database_role,
-        msbms_appusr: "mscmp_syst_enums_app_user"
+        ms_owner: database_owner.database_role,
+        ms_appusr: "mscmp_syst_enums_app_user"
       )
 
     {:ok, _, _} = MscmpSystDb.start_datastore(datastore_options)

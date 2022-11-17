@@ -25,7 +25,7 @@ defmodule TestSupport do
 
   alias Mix.Tasks.Builddb
 
-  @datastore_context_name :instmgr_app_context
+  @datastore_context_name :authn_app_context
 
   @datastore_options %{
     database_name: "mscmp_syst_authn",
@@ -34,7 +34,7 @@ defmodule TestSupport do
     contexts: [
       %{
         context_name: nil,
-        description: "MsBmsSystAuthentication Testing Owner",
+        description: "MscmpSystAuthn Testing Owner",
         database_role: "mscmp_syst_authn_owner",
         database_password: nil,
         starting_pool_size: 0,
@@ -44,7 +44,7 @@ defmodule TestSupport do
       },
       %{
         context_name: @datastore_context_name,
-        description: "MsBmsSystAuthentication Testing App User",
+        description: "MscmpSystAuthn Testing App User",
         database_role: "mscmp_syst_authn_app_user",
         database_password: "mscmp_syst_authn.testing.code.app.user",
         starting_pool_size: 20,
@@ -88,8 +88,8 @@ defmodule TestSupport do
       MscmpSystDb.upgrade_datastore(
         datastore_options,
         datastore_type,
-        msbms_owner: database_owner.database_role,
-        msbms_appusr: "mscmp_syst_authn_app_user"
+        ms_owner: database_owner.database_role,
+        ms_appusr: "mscmp_syst_authn_app_user"
       )
 
     {:ok, _, _} = MscmpSystDb.start_datastore(datastore_options)

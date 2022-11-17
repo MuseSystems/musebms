@@ -1,6 +1,6 @@
 # Muse Systems Business Management System Startup Options
 #
-# For deployment, simply copy this file to: msbms_startup_options.toml and
+# For deployment, simply copy this file to: ms_startup_options.toml and
 # replace the values with those that are appropriate for your deployment.
 #
 # Please note that this file is security sensitive an it should be protected

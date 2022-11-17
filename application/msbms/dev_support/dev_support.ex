@@ -74,10 +74,10 @@ defmodule DevSupport do
 
   @migrations_instance "app_msbms"
 
-  @datastore_context_msbms_app :dev_app_msbms
-  @datastore_context_msbms_api :dev_api_msbms
+  @datastore_context_ms_app :dev_app_msbms
+  @datastore_context_ms_api :dev_api_msbms
 
-  @msbms_datastore_options %{
+  @ms_datastore_options %{
     database_name: "msbms_dev",
     datastore_code: "msbms.dev",
     datastore_name: :msbms_dev,
@@ -93,7 +93,7 @@ defmodule DevSupport do
         database_owner_context: true
       },
       %{
-        context_name: @datastore_context_msbms_app,
+        context_name: @datastore_context_ms_app,
         description: "MSBMS/Development App User",
         database_role: "msbms_dev_app_user",
         database_password: "msbms.dev.code.app.user",
@@ -102,7 +102,7 @@ defmodule DevSupport do
         login_context: true
       },
       %{
-        context_name: @datastore_context_msbms_api,
+        context_name: @datastore_context_ms_api,
         description: "MSBMS/Development API User",
         database_role: "msbms_dev_api_user",
         database_password: "msbms.dev.code.api.user",
@@ -127,13 +127,13 @@ defmodule DevSupport do
 
   def start_dev_environment() do
     _ = setup_msmcp_database()
-    _ = setup_msbms_database()
+    _ = setup_ms_database()
     :ok
   end
 
   def stop_dev_environment() do
     _ = cleanup_msmcp_database()
-    _ = cleanup_msbms_database()
+    _ = cleanup_ms_database()
     File.rm_rf!(Path.join(["priv/database"]))
     :ok
   end
@@ -142,44 +142,43 @@ defmodule DevSupport do
     :ok = build_migrations(@migrations_msmcp)
 
     context_bindings = [
-      msbms_appusr: "msmcp_dev_app_user",
-      msbms_apiusr: "msmcp_dev_api_user"
+      ms_appusr: "msmcp_dev_app_user",
+      ms_apiusr: "msmcp_dev_api_user"
     ]
 
     setup_database(@migrations_msmcp, @msmcp_datastore_options, context_bindings)
   end
 
-  defp setup_msbms_database() do
+  defp setup_ms_database() do
     :ok = build_migrations(@migrations_instance)
 
     context_bindings = [
-      msbms_appusr: "msbms_dev_app_user",
-      msbms_apiusr: "msbms_dev_api_user"
+      ms_appusr: "msbms_dev_app_user",
+      ms_apiusr: "msbms_dev_api_user"
     ]
 
-    setup_database(@migrations_instance, @msbms_datastore_options, context_bindings)
+    setup_database(@migrations_instance, @ms_datastore_options, context_bindings)
   end
 
   defp setup_database(datastore_type, datastore_options, context_bindings) do
     database_owner = Enum.find(datastore_options.contexts, &(&1[:database_owner_context] == true))
 
-    {:ok, :ready, _} = MsbmsSystDatastore.create_datastore(datastore_options)
+    {:ok, :ready, _} = MscmpSystDb.create_datastore(datastore_options)
 
-    migration_bindings =
-      Keyword.merge(context_bindings, msbms_owner: database_owner.database_role)
+    migration_bindings = Keyword.merge(context_bindings, ms_owner: database_owner.database_role)
 
     {:ok, _} =
-      MsbmsSystDatastore.upgrade_datastore(datastore_options, datastore_type, migration_bindings)
+      MscmpSystDb.upgrade_datastore(datastore_options, datastore_type, migration_bindings)
 
-    {:ok, _, _} = MsbmsSystDatastore.start_datastore(datastore_options)
+    {:ok, _, _} = MscmpSystDb.start_datastore(datastore_options)
   end
 
   defp cleanup_msmcp_database, do: cleanup_database(@msmcp_datastore_options)
-  defp cleanup_msbms_database, do: cleanup_database(@msbms_datastore_options)
+  defp cleanup_ms_database, do: cleanup_database(@ms_datastore_options)
 
   defp cleanup_database(datastore_options) do
-    :ok = MsbmsSystDatastore.stop_datastore(datastore_options)
-    :ok = MsbmsSystDatastore.drop_datastore(datastore_options)
+    :ok = MscmpSystDb.stop_datastore(datastore_options)
+    :ok = MscmpSystDb.drop_datastore(datastore_options)
   end
 
   defp build_migrations(ds_type) do

@@ -29,7 +29,7 @@ defmodule MscmpSystAuthn.Data.SystDisallowedPasswords do
             password_hash: binary() | nil
           }
 
-  @schema_prefix "msbms_syst"
+  @schema_prefix "ms_syst"
   @primary_key {:password_hash, :binary, autogenerate: false}
 
   schema "syst_disallowed_passwords" do

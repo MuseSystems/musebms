@@ -1,25 +1,25 @@
 -- Note that this script currently exists to support CI testing
 -- A more robust script should be produced to walk users though
--- the initial setup of the mbms_global database and msbms_sys_login
+-- the initial setup of the mbms_global database and ms_sys_login
 -- user.
 --
 -- Do not use this script to setup a production environment.
 \set ON_ERROR_STOP true
 \c postgres
 
-DROP DATABASE IF EXISTS msbms_test_type_one;
-DROP DATABASE IF EXISTS msbms_test_type_four;
+DROP DATABASE IF EXISTS ms_test_type_one;
+DROP DATABASE IF EXISTS ms_test_type_four;
 
 DROP ROLE IF EXISTS ms_syst_access;
 DROP ROLE IF EXISTS ms_syst_dba;
 
-DROP ROLE IF EXISTS msbms_type_one_role_01;
-DROP ROLE IF EXISTS msbms_type_one_role_02;
-DROP ROLE IF EXISTS msbms_type_one_role_03;
-DROP ROLE IF EXISTS msbms_type_one_role_04;
-DROP ROLE IF EXISTS msbms_test_type_one_owner;
+DROP ROLE IF EXISTS ms_type_one_role_01;
+DROP ROLE IF EXISTS ms_type_one_role_02;
+DROP ROLE IF EXISTS ms_type_one_role_03;
+DROP ROLE IF EXISTS ms_type_one_role_04;
+DROP ROLE IF EXISTS ms_test_type_one_owner;
 
-DROP ROLE IF EXISTS msbms_type_four_role_01;
-DROP ROLE IF EXISTS msbms_test_type_four_owner;
+DROP ROLE IF EXISTS ms_type_four_role_01;
+DROP ROLE IF EXISTS ms_test_type_four_owner;
 
 \ir bootstrap_database.psql

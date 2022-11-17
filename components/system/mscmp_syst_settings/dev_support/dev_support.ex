@@ -19,14 +19,14 @@ defmodule DevSupport do
   @datastore_context_name :dev_app_database
 
   @datastore_options %{
-    database_name: "msbms_dev_database",
+    database_name: "ms_dev_database",
     datastore_code: "msbms.dev.code",
-    datastore_name: :msbms_dev_database,
+    datastore_name: :ms_dev_database,
     contexts: [
       %{
         context_name: nil,
-        description: "MSBMS Development Owner",
-        database_role: "msbms_dev_owner",
+        description: "Muse Systems Development Owner",
+        database_role: "ms_dev_owner",
         database_password: nil,
         starting_pool_size: 0,
         start_context: false,
@@ -35,8 +35,8 @@ defmodule DevSupport do
       },
       %{
         context_name: @datastore_context_name,
-        description: "MSBMS Development App User",
-        database_role: "msbms_dev_app_user",
+        description: "Muse Systems Development App User",
+        database_role: "ms_dev_app_user",
         database_password: "msbms.dev.code.app.user",
         starting_pool_size: 20,
         start_context: true,
@@ -81,8 +81,8 @@ defmodule DevSupport do
       MscmpSystDb.upgrade_datastore(
         datastore_options,
         datastore_type,
-        msbms_owner: database_owner.database_role,
-        msbms_appusr: "msbms_dev_app_user"
+        ms_owner: database_owner.database_role,
+        ms_appusr: "ms_dev_app_user"
       )
 
     {:ok, _, _} = MscmpSystDb.start_datastore(datastore_options)

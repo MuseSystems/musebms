@@ -14,7 +14,7 @@
 --  Primary Initialization -- Enumerations
 --------------------------------------------------------------------------------
 
-INSERT INTO msbms_syst_data.syst_enums
+INSERT INTO ms_syst_data.syst_enums
     ( internal_name
     , display_name
     , syst_description
@@ -56,14 +56,14 @@ VALUES
 
 -- Enum Functional Types
 
-INSERT INTO msbms_syst_data.syst_enum_functional_types
+INSERT INTO ms_syst_data.syst_enum_functional_types
     ( internal_name, display_name, external_name, enum_id, syst_description )
 VALUES
     ( 'enum_one_active'
     , 'Enum One/Active'
     , 'Active'
     , ( SELECT id
-        FROM msbms_syst_data.syst_enums
+        FROM ms_syst_data.syst_enums
         WHERE internal_name = 'test_syst_enum_one' )
     , 'Testing Enum One Functional Type Active' )
      ,
@@ -71,7 +71,7 @@ VALUES
     , 'Enum One/Inactive'
     , 'Inactive'
     , ( SELECT id
-        FROM msbms_syst_data.syst_enums
+        FROM ms_syst_data.syst_enums
         WHERE internal_name = 'test_syst_enum_one' )
     , 'Testing Enum One Functional Type Inactive' )
      ,
@@ -79,7 +79,7 @@ VALUES
     , 'Enum Three/Active'
     , 'Active'
     , ( SELECT id
-        FROM msbms_syst_data.syst_enums
+        FROM ms_syst_data.syst_enums
         WHERE internal_name = 'test_syst_enum_three' )
     , 'Testing Enum Three Functional Type Active' )
      ,
@@ -87,7 +87,7 @@ VALUES
     , 'Enum Three/Inactive'
     , 'Inactive'
     , ( SELECT id
-        FROM msbms_syst_data.syst_enums
+        FROM ms_syst_data.syst_enums
         WHERE internal_name = 'test_syst_enum_three' )
     , 'Testing Enum Three Functional Type Inactive' )
      ,
@@ -95,7 +95,7 @@ VALUES
     , 'Example/Functional Type 1'
     , 'Example Type 1'
     , ( SELECT id
-        FROM msbms_syst_data.syst_enums
+        FROM ms_syst_data.syst_enums
         WHERE internal_name = 'example_enumeration' )
     , 'Example Functional Type One' )
      ,
@@ -103,13 +103,13 @@ VALUES
     , 'Example/Functional Type 2'
     , 'Example Type 2'
     , ( SELECT id
-        FROM msbms_syst_data.syst_enums
+        FROM ms_syst_data.syst_enums
         WHERE internal_name = 'example_enumeration' )
     , 'Example Functional Type Two' );
 
 --  Enum Values: Enum One
 
-INSERT INTO msbms_syst_data.syst_enum_items
+INSERT INTO ms_syst_data.syst_enum_items
     ( internal_name
     , display_name
     , external_name
@@ -127,10 +127,10 @@ VALUES
     , 'Enum One/Cancelled'
     , 'Cancelled'
     , ( SELECT id
-        FROM msbms_syst_data.syst_enums
+        FROM ms_syst_data.syst_enums
         WHERE internal_name = 'test_syst_enum_one' )
     , ( SELECT id
-        FROM msbms_syst_data.syst_enum_functional_types
+        FROM ms_syst_data.syst_enum_functional_types
         WHERE internal_name = 'enum_one_inactive' )
     , FALSE
     , FALSE
@@ -140,7 +140,7 @@ VALUES
     , 1
     , jsonb_build_object( 'cancel1', 1, 'cancel2', 'b', 'cancel3', TRUE ) );
 
-INSERT INTO msbms_syst_data.syst_enum_items
+INSERT INTO ms_syst_data.syst_enum_items
     ( internal_name
     , display_name
     , external_name
@@ -157,10 +157,10 @@ VALUES
     , 'Enum One/Closed'
     , 'Closed'
     , ( SELECT id
-        FROM msbms_syst_data.syst_enums
+        FROM ms_syst_data.syst_enums
         WHERE internal_name = 'test_syst_enum_one' )
     , ( SELECT id
-        FROM msbms_syst_data.syst_enum_functional_types
+        FROM ms_syst_data.syst_enum_functional_types
         WHERE internal_name = 'enum_one_inactive' )
     , FALSE
     , TRUE
@@ -169,7 +169,7 @@ VALUES
     , 'Enum One/Closed System Description'
     , jsonb_build_object( 'closed1', 1, 'closed2', 'b', 'closed3', TRUE ) );
 
-INSERT INTO msbms_syst_data.syst_enum_items
+INSERT INTO ms_syst_data.syst_enum_items
     ( internal_name
     , display_name
     , external_name
@@ -187,10 +187,10 @@ VALUES
     , 'Enum One/Active'
     , 'Active'
     , ( SELECT id
-        FROM msbms_syst_data.syst_enums
+        FROM ms_syst_data.syst_enums
         WHERE internal_name = 'test_syst_enum_one' )
     , ( SELECT id
-        FROM msbms_syst_data.syst_enum_functional_types
+        FROM ms_syst_data.syst_enum_functional_types
         WHERE internal_name = 'enum_one_active' )
     , TRUE
     , TRUE
@@ -202,7 +202,7 @@ VALUES
 
 --  Enum Values: Enum Two
 
-INSERT INTO msbms_syst_data.syst_enum_items
+INSERT INTO ms_syst_data.syst_enum_items
     ( internal_name
     , display_name
     , external_name
@@ -217,7 +217,7 @@ VALUES
     , 'Enum Two/Cancelled'
     , 'Cancelled'
     , ( SELECT id
-        FROM msbms_syst_data.syst_enums
+        FROM ms_syst_data.syst_enums
         WHERE internal_name = 'test_syst_enum_two' )
     , FALSE
     , TRUE
@@ -225,7 +225,7 @@ VALUES
     , 'Enum Two/Cancelled System Description'
     , 1 );
 
-INSERT INTO msbms_syst_data.syst_enum_items
+INSERT INTO ms_syst_data.syst_enum_items
     ( internal_name
     , display_name
     , external_name
@@ -239,14 +239,14 @@ VALUES
     , 'Enum Two/Closed'
     , 'Closed'
     , ( SELECT id
-        FROM msbms_syst_data.syst_enums
+        FROM ms_syst_data.syst_enums
         WHERE internal_name = 'test_syst_enum_two' )
     , FALSE
     , TRUE
     , FALSE
     , 'Enum Two/Closed System Description' );
 
-INSERT INTO msbms_syst_data.syst_enum_items
+INSERT INTO ms_syst_data.syst_enum_items
     ( internal_name
     , display_name
     , external_name
@@ -261,7 +261,7 @@ VALUES
     , 'Enum Two/Active'
     , 'Active'
     , ( SELECT id
-        FROM msbms_syst_data.syst_enums
+        FROM ms_syst_data.syst_enums
         WHERE internal_name = 'test_syst_enum_two' )
     , TRUE
     , TRUE
@@ -271,7 +271,7 @@ VALUES
 
 --  Enum Values: Enum Three
 
-INSERT INTO msbms_syst_data.syst_enum_items
+INSERT INTO ms_syst_data.syst_enum_items
     ( internal_name
     , display_name
     , external_name
@@ -287,10 +287,10 @@ VALUES
     , 'Enum Three/Closed'
     , 'Closed'
     , ( SELECT id
-        FROM msbms_syst_data.syst_enums
+        FROM ms_syst_data.syst_enums
         WHERE internal_name = 'test_syst_enum_three' )
     , ( SELECT id
-        FROM msbms_syst_data.syst_enum_functional_types
+        FROM ms_syst_data.syst_enum_functional_types
         WHERE internal_name = 'enum_three_inactive' )
     , FALSE
     , TRUE
@@ -298,7 +298,7 @@ VALUES
     , TRUE
     , 'Enum Three/Closed System Description' );
 
-INSERT INTO msbms_syst_data.syst_enum_items
+INSERT INTO ms_syst_data.syst_enum_items
     ( internal_name
     , display_name
     , external_name
@@ -315,10 +315,10 @@ VALUES
     , 'Enum Three/Active'
     , 'Active'
     , ( SELECT id
-        FROM msbms_syst_data.syst_enums
+        FROM ms_syst_data.syst_enums
         WHERE internal_name = 'test_syst_enum_three' )
     , ( SELECT id
-        FROM msbms_syst_data.syst_enum_functional_types
+        FROM ms_syst_data.syst_enum_functional_types
         WHERE internal_name = 'enum_three_active' )
     , TRUE
     , TRUE
@@ -329,7 +329,7 @@ VALUES
 
 --  Enum Values: Example Enumeration
 
-INSERT INTO msbms_syst_data.syst_enum_items
+INSERT INTO ms_syst_data.syst_enum_items
     ( internal_name
     , display_name
     , external_name
@@ -345,10 +345,10 @@ VALUES
     , 'Example / Two'
     , 'Example Two'
     , ( SELECT id
-        FROM msbms_syst_data.syst_enums
+        FROM ms_syst_data.syst_enums
         WHERE internal_name = 'example_enumeration' )
     , ( SELECT id
-        FROM msbms_syst_data.syst_enum_functional_types
+        FROM ms_syst_data.syst_enum_functional_types
         WHERE internal_name = 'example_enum_func_type_1' )
     , TRUE
     , TRUE
@@ -356,7 +356,7 @@ VALUES
     , 'Example list item two, should sort into second place.'
     , 1 );
 
-INSERT INTO msbms_syst_data.syst_enum_items
+INSERT INTO ms_syst_data.syst_enum_items
     ( internal_name
     , display_name
     , external_name
@@ -371,17 +371,17 @@ VALUES
     , 'Example / Three'
     , 'Example Three'
     , ( SELECT id
-        FROM msbms_syst_data.syst_enums
+        FROM ms_syst_data.syst_enums
         WHERE internal_name = 'example_enumeration' )
     , ( SELECT id
-        FROM msbms_syst_data.syst_enum_functional_types
+        FROM ms_syst_data.syst_enum_functional_types
         WHERE internal_name = 'example_enum_func_type_2' )
     , FALSE
     , TRUE
     , FALSE
     , 'Example list item three, should sort into third place.' );
 
-INSERT INTO msbms_syst_data.syst_enum_items
+INSERT INTO ms_syst_data.syst_enum_items
     ( internal_name
     , display_name
     , external_name
@@ -398,10 +398,10 @@ VALUES
     , 'Example / One'
     , 'Example One'
     , ( SELECT id
-        FROM msbms_syst_data.syst_enums
+        FROM ms_syst_data.syst_enums
         WHERE internal_name = 'example_enumeration' )
     , ( SELECT id
-        FROM msbms_syst_data.syst_enum_functional_types
+        FROM ms_syst_data.syst_enum_functional_types
         WHERE internal_name = 'example_enum_func_type_1' )
     , FALSE
     , TRUE

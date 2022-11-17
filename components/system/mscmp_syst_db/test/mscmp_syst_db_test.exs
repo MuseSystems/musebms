@@ -4,14 +4,14 @@ defmodule MscmpSystDbTest do
   alias Mix.Tasks.Builddb
 
   @datastore_options_type_one %{
-    database_name: "msbms_test_type_one",
+    database_name: "ms_test_type_one",
     datastore_code: "datastore_code_test_type_one",
-    datastore_name: :msbms_type_one_datastore,
+    datastore_name: :ms_type_one_datastore,
     contexts: [
       %{
         context_name: nil,
         description: "Type One Owner",
-        database_role: "msbms_test_type_one_owner",
+        database_role: "ms_test_type_one_owner",
         database_password: nil,
         starting_pool_size: 0,
         start_context: false,
@@ -19,18 +19,18 @@ defmodule MscmpSystDbTest do
         database_owner_context: true
       },
       %{
-        context_name: :msbms_type_one_role_01,
+        context_name: :ms_type_one_role_01,
         description: "Type One Role 01 ",
-        database_role: "msbms_type_one_role_01",
+        database_role: "ms_type_one_role_01",
         database_password: 'type_one_role_01',
         starting_pool_size: 3,
         start_context: true,
         login_context: true
       },
       %{
-        context_name: :msbms_type_one_role_02,
+        context_name: :ms_type_one_role_02,
         description: "Type One Role 02 ",
-        database_role: "msbms_type_one_role_02",
+        database_role: "ms_type_one_role_02",
         database_password: 'type_one_role_02',
         starting_pool_size: 3,
         start_context: true,
@@ -54,18 +54,18 @@ defmodule MscmpSystDbTest do
 
   @context_type_one_group_two [
     %{
-      context_name: :msbms_type_one_role_03,
+      context_name: :ms_type_one_role_03,
       description: "Type One Role 03 ",
-      database_role: "msbms_type_one_role_03",
+      database_role: "ms_type_one_role_03",
       database_password: 'type_one_role_03',
       starting_pool_size: 3,
       start_context: true,
       login_context: true
     },
     %{
-      context_name: :msbms_type_one_role_04,
+      context_name: :ms_type_one_role_04,
       description: "Type One Role 04 ",
-      database_role: "msbms_type_one_role_04",
+      database_role: "ms_type_one_role_04",
       database_password: 'type_one_role_04',
       starting_pool_size: 3,
       start_context: true,
@@ -80,14 +80,14 @@ defmodule MscmpSystDbTest do
   @migration_test_opts [migrations_root_dir: @migration_test_migrations_root_dir]
 
   @migration_test_datastore_options %{
-    database_name: "msbms_test_type_four",
+    database_name: "ms_test_type_four",
     datastore_code: "datastore_code_test_type_four",
-    datastore_name: :msbms_type_four_datastore,
+    datastore_name: :ms_type_four_datastore,
     contexts: [
       %{
         context_name: nil,
         description: "Type Four Owner",
-        database_role: "msbms_test_type_four_owner",
+        database_role: "ms_test_type_four_owner",
         database_password: nil,
         starting_pool_size: 0,
         start_context: false,
@@ -95,9 +95,9 @@ defmodule MscmpSystDbTest do
         database_owner_context: true
       },
       %{
-        context_name: :msbms_type_four_role_01,
+        context_name: :ms_type_four_role_01,
         description: "Type Four Role 01 ",
-        database_role: "msbms_type_four_role_01",
+        database_role: "ms_type_four_role_01",
         database_password: 'type_four_role_01',
         starting_pool_size: 3,
         start_context: true,
@@ -223,11 +223,11 @@ defmodule MscmpSystDbTest do
              MscmpSystDb.upgrade_datastore(
                datastore_options,
                @migration_test_datastore_type,
-               [msbms_owner: database_owner.database_role],
+               [ms_owner: database_owner.database_role],
                @migration_test_opts
              )
 
-    MscmpSystDb.set_datastore_context(:msbms_type_four_role_01)
+    MscmpSystDb.set_datastore_context(:ms_type_four_role_01)
 
     assert 3 = length(first_stage_migrations_applied)
 
@@ -235,11 +235,11 @@ defmodule MscmpSystDbTest do
 
     assert {:ok, 2} =
              MscmpSystDb.query_for_value(
-               "SELECT count(id) AS rec_count FROM msbms_test.test_type_four;"
+               "SELECT count(id) AS rec_count FROM ms_test.test_type_four;"
              )
 
     assert {:ok, %{num_rows: 2}} =
-             MscmpSystDb.query_for_many("SELECT * FROM msbms_test.test_type_four;")
+             MscmpSystDb.query_for_many("SELECT * FROM ms_test.test_type_four;")
 
     :ok = setup_second_stage_migration_test()
 
@@ -247,21 +247,21 @@ defmodule MscmpSystDbTest do
              MscmpSystDb.upgrade_datastore(
                datastore_options,
                @migration_test_datastore_type,
-               [msbms_owner: database_owner.database_role],
+               [ms_owner: database_owner.database_role],
                @migration_test_opts
              )
 
     assert 8 = length(second_stage_migrations_applied)
 
-    MscmpSystDb.set_datastore_context(:msbms_type_four_role_01)
+    MscmpSystDb.set_datastore_context(:ms_type_four_role_01)
 
     assert {:ok, 10} =
              MscmpSystDb.query_for_value(
-               "SELECT count(id) AS rec_count FROM msbms_test.test_type_four;"
+               "SELECT count(id) AS rec_count FROM ms_test.test_type_four;"
              )
 
     assert {:ok, %{num_rows: 10}} =
-             MscmpSystDb.query_for_many("SELECT * FROM msbms_test.test_type_four;")
+             MscmpSystDb.query_for_many("SELECT * FROM ms_test.test_type_four;")
 
     assert :ok = MscmpSystDb.stop_datastore(datastore_options)
 

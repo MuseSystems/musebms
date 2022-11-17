@@ -48,7 +48,7 @@ defmodule MscmpSystAuthn.Data.SystIdentities do
             diag_update_count: integer() | nil
           }
 
-  @schema_prefix "msbms_syst"
+  @schema_prefix "ms_syst"
 
   schema "syst_identities" do
     field(:account_identifier, :string)

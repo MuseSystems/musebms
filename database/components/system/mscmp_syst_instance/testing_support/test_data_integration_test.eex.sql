@@ -18,7 +18,7 @@ BEGIN
     --  Applications
     --
 
-    INSERT INTO msbms_syst_data.syst_applications
+    INSERT INTO ms_syst_data.syst_applications
         ( internal_name, display_name, syst_description )
     VALUES
         ( 'app2', 'App 2', 'App Two Description' )
@@ -29,7 +29,7 @@ BEGIN
     -- Application Contexts
     --
 
-    INSERT INTO msbms_syst_data.syst_application_contexts
+    INSERT INTO ms_syst_data.syst_application_contexts
         ( internal_name
         , display_name
         , application_id
@@ -41,7 +41,7 @@ BEGIN
         ( 'app1_owner'
         , 'App 1 Owner'
         , ( SELECT id
-            FROM msbms_syst_data.syst_applications
+            FROM ms_syst_data.syst_applications
             WHERE internal_name = 'app1' )
         , 'App 1 Owner'
         , FALSE
@@ -52,7 +52,7 @@ BEGIN
         ( 'app1_appusr'
         , 'App 1 AppUsr'
         , ( SELECT id
-            FROM msbms_syst_data.syst_applications
+            FROM ms_syst_data.syst_applications
             WHERE internal_name = 'app1' )
         , 'App 1 AppUsr'
         , TRUE
@@ -63,7 +63,7 @@ BEGIN
         ( 'app1_apiusr'
         , 'App 1 ApiUsr'
         , ( SELECT id
-            FROM msbms_syst_data.syst_applications
+            FROM ms_syst_data.syst_applications
             WHERE internal_name = 'app1' )
         , 'App 1 API user Context'
         , TRUE
@@ -74,7 +74,7 @@ BEGIN
         ( 'app2_owner'
         , 'App 2 Owner'
         , ( SELECT id
-            FROM msbms_syst_data.syst_applications
+            FROM ms_syst_data.syst_applications
             WHERE internal_name = 'app2' )
         , 'App 2 Owner'
         , FALSE
@@ -85,7 +85,7 @@ BEGIN
         ( 'app2_appusr'
         , 'App 2 AppUsr'
         , ( SELECT id
-            FROM msbms_syst_data.syst_applications
+            FROM ms_syst_data.syst_applications
             WHERE internal_name = 'app2' )
         , 'App 2 App'
         , TRUE
@@ -96,7 +96,7 @@ BEGIN
         ( 'app2_apiusr'
         , 'App 2 ApiUsr'
         , ( SELECT id
-            FROM msbms_syst_data.syst_applications
+            FROM ms_syst_data.syst_applications
             WHERE internal_name = 'app2' )
         , 'App 2 API'
         , TRUE

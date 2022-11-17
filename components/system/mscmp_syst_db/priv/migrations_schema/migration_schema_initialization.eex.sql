@@ -17,7 +17,7 @@ $INIT_DATASTORE$
         CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
         CREATE SCHEMA IF NOT EXISTS <%= migrations_schema %>
-        AUTHORIZATION <%= msbms_owner %>;
+        AUTHORIZATION <%= ms_owner %>;
 
         COMMENT ON SCHEMA <%= migrations_schema %> IS
         $DOC$Datastore and migrations management schema.$DOC$;
@@ -74,7 +74,7 @@ $INIT_DATASTORE$
                                                             ,p_errcode        text
                                                             ,p_param_data     jsonb
                                                             ,p_context_data   jsonb)
-            OWNER TO <%= msbms_owner %>;
+            OWNER TO <%= ms_owner %>;
 
         REVOKE EXECUTE ON FUNCTION
             <%= migrations_schema %>.get_exception_details(p_proc_schema    text
@@ -92,7 +92,7 @@ $INIT_DATASTORE$
                                                 ,p_errcode        text
                                                 ,p_param_data     jsonb
                                                 ,p_context_data   jsonb)
-            TO <%= msbms_owner %>;
+            TO <%= ms_owner %>;
 
 
         COMMENT ON FUNCTION
@@ -241,10 +241,10 @@ $INIT_DATASTORE$
             VOLATILE;
 
         ALTER FUNCTION <%= migrations_schema %>.trig_b_iu_set_diagnostic_columns()
-            OWNER TO <%= msbms_owner %>;
+            OWNER TO <%= ms_owner %>;
 
         REVOKE EXECUTE ON FUNCTION <%= migrations_schema %>.trig_b_iu_set_diagnostic_columns() FROM public;
-        GRANT EXECUTE ON FUNCTION <%= migrations_schema %>.trig_b_iu_set_diagnostic_columns() TO <%= msbms_owner %>;
+        GRANT EXECUTE ON FUNCTION <%= migrations_schema %>.trig_b_iu_set_diagnostic_columns() TO <%= ms_owner %>;
 
 
         COMMENT ON FUNCTION <%= migrations_schema %>.trig_b_iu_set_diagnostic_columns() IS
@@ -312,10 +312,10 @@ $INIT_DATASTORE$
                 NOT NULL DEFAULT 0
         );
 
-        ALTER TABLE <%= migrations_schema %>.<%= migrations_table %> OWNER TO <%= msbms_owner %>;
+        ALTER TABLE <%= migrations_schema %>.<%= migrations_table %> OWNER TO <%= ms_owner %>;
 
         REVOKE ALL ON TABLE <%= migrations_schema %>.<%= migrations_table %> FROM public;
-        GRANT ALL ON TABLE <%= migrations_schema %>.<%= migrations_table %> TO <%= msbms_owner %>;
+        GRANT ALL ON TABLE <%= migrations_schema %>.<%= migrations_table %> TO <%= ms_owner %>;
 
         CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
             BEFORE INSERT OR UPDATE ON <%= migrations_schema %>.<%= migrations_table %>

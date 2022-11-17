@@ -47,7 +47,7 @@ defmodule MscmpSystAuthn.Data.SystOwnerNetworkRules do
             diag_update_count: integer() | nil
           }
 
-  @schema_prefix "msbms_syst"
+  @schema_prefix "ms_syst"
 
   schema "syst_owner_network_rules" do
     field(:ordering, :integer)

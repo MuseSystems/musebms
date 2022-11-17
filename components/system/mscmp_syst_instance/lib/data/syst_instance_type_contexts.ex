@@ -48,7 +48,7 @@ defmodule MscmpSystInstance.Data.SystInstanceTypeContexts do
             diag_update_count: integer() | nil
           }
 
-  @schema_prefix "msbms_syst"
+  @schema_prefix "ms_syst"
 
   schema "syst_instance_type_contexts" do
     field(:default_db_pool_size, :integer)

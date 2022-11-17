@@ -15,7 +15,7 @@ $INIT_ENUM$
 BEGIN
 
 PERFORM
-    msbms_syst_priv.initialize_enum(
+    ms_syst_priv.initialize_enum(
         p_enum_def => $INIT_ENUM_PERSON_TYPES$
         {
           "internal_name": "person_types",

@@ -4,7 +4,7 @@ defmodule MsbmsMigrationsTest do
   alias Mix.Tasks.Builddb
 
   @datastore_options %{
-    database_name: "test_msbms_build",
+    database_name: "test_ms_build",
     database_owner: "msbms_build_owner",
     datastore_code: "msbms.testing.code",
     datastore_name: :instance,
@@ -58,8 +58,6 @@ defmodule MsbmsMigrationsTest do
   @migration_test_destination_dir "priv/database_build_testing"
   @migration_test_datastore_type "app_msbms"
 
-  @datastore_context_name :msbms_build_app_context
-
   #  This testing presumes that the database schema is tested separately and is
   #  correct here.
 
@@ -80,9 +78,9 @@ defmodule MsbmsMigrationsTest do
         datastore_options,
         @migration_test_datastore_type,
         [
-          msbms_owner: datastore_options.database_owner,
-          msbms_appusr: "msbms_build_app_user",
-          msbms_apiusr: "msbms_build_api_user"
+          ms_owner: datastore_options.database_owner,
+          ms_appusr: "msbms_build_app_user",
+          ms_apiusr: "msbms_build_api_user"
         ],
         migrations_root_dir: @migration_test_destination_dir
       )

@@ -51,7 +51,7 @@ defmodule MscmpSystAuthn.Data.SystOwnerPasswordRules do
             diag_update_count: integer() | nil
           }
 
-  @schema_prefix "msbms_syst"
+  @schema_prefix "ms_syst"
 
   schema "syst_owner_password_rules" do
     field(:password_length, DbTypes.IntegerRange)

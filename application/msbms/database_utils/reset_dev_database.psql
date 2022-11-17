@@ -1,6 +1,6 @@
 -- Note that this script currently exists to support CI testing
 -- A more robust script should be produced to walk users though
--- the initial setup of the MSBMS database and msbms_sys_login
+-- the initial setup of the MSBMS database and ms_sys_login
 -- user.
 --
 -- Do not use this script to setup a production environment.
@@ -16,9 +16,9 @@ DROP ROLE IF EXISTS msmcp_build_api_user;
 DROP ROLE IF EXISTS msmcp_build_app_user;
 DROP ROLE IF EXISTS msmcp_build_owner;
 
-DROP ROLE IF EXISTS msbms_build_api_user;
-DROP ROLE IF EXISTS msbms_build_app_user;
-DROP ROLE IF EXISTS msbms_build_owner;
+DROP ROLE IF EXISTS ms_build_api_user;
+DROP ROLE IF EXISTS ms_build_app_user;
+DROP ROLE IF EXISTS ms_build_owner;
 
 -- Clean-up dev-support database objects
 

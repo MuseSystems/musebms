@@ -2807,7 +2807,7 @@ $AUTHENTICATION_TESTING_INIT$
         -- Disallowed Passwords
         ----------------------------------------------------
 
-        INSERT INTO msbms_syst_data.syst_disallowed_passwords
+        INSERT INTO ms_syst_data.syst_disallowed_passwords
             ( password_hash )
         SELECT
             digest( password, 'sha1' )
@@ -2817,7 +2817,7 @@ $AUTHENTICATION_TESTING_INIT$
         -- Disallowed Hosts
         ----------------------------------------------------
 
-        INSERT INTO msbms_syst_data.syst_disallowed_hosts
+        INSERT INTO ms_syst_data.syst_disallowed_hosts
             ( host_address )
         SELECT
             ip_addr::inet
@@ -2827,7 +2827,7 @@ $AUTHENTICATION_TESTING_INIT$
         -- Owner Password Rules
         ----------------------------------------------------
 
-        INSERT INTO msbms_syst_data.syst_owner_password_rules
+        INSERT INTO ms_syst_data.syst_owner_password_rules
             ( owner_id
             , password_length
             , max_age
@@ -2854,13 +2854,13 @@ $AUTHENTICATION_TESTING_INIT$
           , ( opr ->> 'require_mfa' )::boolean
           , array( SELECT jsonb_array_elements_text( opr -> 'allowed_mfa_types' ) )
         FROM jsonb_array_elements( var_data -> 'owner_password_rules' ) opr
-            JOIN msbms_syst_data.syst_owners o ON o.internal_name = opr ->> 'owner_name';
+            JOIN ms_syst_data.syst_owners o ON o.internal_name = opr ->> 'owner_name';
 
         ----------------------------------------------------
         -- Network Rules
         ----------------------------------------------------
 
-        INSERT INTO msbms_syst_data.syst_global_network_rules
+        INSERT INTO ms_syst_data.syst_global_network_rules
             (
               ordering
             , functional_type
@@ -2876,7 +2876,7 @@ $AUTHENTICATION_TESTING_INIT$
             , (gnr ->> 'ip_host_range_upper')::inet
         FROM jsonb_array_elements( var_data -> 'global_network_rules' ) gnr;
 
-        INSERT INTO msbms_syst_data.syst_owner_network_rules
+        INSERT INTO ms_syst_data.syst_owner_network_rules
             (
               owner_id
             , ordering
@@ -2893,9 +2893,9 @@ $AUTHENTICATION_TESTING_INIT$
             , (onr ->> 'ip_host_range_lower')::inet
             , (onr ->> 'ip_host_range_upper')::inet
         FROM jsonb_array_elements( var_data -> 'owner_network_rules' ) onr
-            JOIN msbms_syst_data.syst_owners o ON o.internal_name = onr ->> 'owner_name';
+            JOIN ms_syst_data.syst_owners o ON o.internal_name = onr ->> 'owner_name';
 
-        INSERT INTO msbms_syst_data.syst_owner_network_rules
+        INSERT INTO ms_syst_data.syst_owner_network_rules
             ( owner_id
             , ordering
             , functional_type
@@ -2910,10 +2910,10 @@ $AUTHENTICATION_TESTING_INIT$
           , ( onr ->> 'ip_host_range_lower' )::inet
           , ( onr ->> 'ip_host_range_upper' )::inet
         FROM  jsonb_path_query( var_data, '$.owner_network_rules[*] ? (@.owner_name == null)' ) onr
-            CROSS JOIN msbms_syst_data.syst_owners o
-        WHERE o.id NOT IN (SELECT owner_id FROM msbms_syst_data.syst_owner_network_rules);
+            CROSS JOIN ms_syst_data.syst_owners o
+        WHERE o.id NOT IN (SELECT owner_id FROM ms_syst_data.syst_owner_network_rules);
 
-        INSERT INTO msbms_syst_data.syst_instance_network_rules
+        INSERT INTO ms_syst_data.syst_instance_network_rules
             ( instance_id
             , ordering
             , functional_type
@@ -2928,9 +2928,9 @@ $AUTHENTICATION_TESTING_INIT$
           , ( inr ->> 'ip_host_range_lower' )::inet
           , ( inr ->> 'ip_host_range_upper' )::inet
         FROM jsonb_array_elements( var_data -> 'instance_network_rules' ) inr
-            JOIN msbms_syst_data.syst_instances i ON i.internal_name = inr ->> 'instance_name';
+            JOIN ms_syst_data.syst_instances i ON i.internal_name = inr ->> 'instance_name';
 
-        INSERT INTO msbms_syst_data.syst_instance_network_rules
+        INSERT INTO ms_syst_data.syst_instance_network_rules
             ( instance_id
             , ordering
             , functional_type
@@ -2945,8 +2945,8 @@ $AUTHENTICATION_TESTING_INIT$
           , ( inr ->> 'ip_host_range_lower' )::inet
           , ( inr ->> 'ip_host_range_upper' )::inet
         FROM  jsonb_path_query( var_data, '$.instance_network_rules[*] ? (@.instance_name == null)' ) inr
-            CROSS JOIN msbms_syst_data.syst_instances i
-        WHERE i.id NOT IN (SELECT instance_id FROM msbms_syst_data.syst_instance_network_rules);
+            CROSS JOIN ms_syst_data.syst_instances i
+        WHERE i.id NOT IN (SELECT instance_id FROM ms_syst_data.syst_instance_network_rules);
 
         ----------------------------------------------------
         -- Access Account Processing
@@ -2979,9 +2979,9 @@ $AUTHENTICATION_TESTING_INIT$
                   , aa -> 'credentials'                       AS credentials
                   , aa -> 'password_history'                  AS password_history
                 FROM jsonb_array_elements( var_data -> 'access_accounts' ) aa
-                    JOIN msbms_syst_data.syst_enum_items ei
+                    JOIN ms_syst_data.syst_enum_items ei
                         ON ei.internal_name = aa ->> 'access_account_state_name'
-                    LEFT JOIN msbms_syst_data.syst_owners o
+                    LEFT JOIN ms_syst_data.syst_owners o
                         ON o.internal_name = aa ->> 'owning_owner_name'
             LOOP
 
@@ -2989,7 +2989,7 @@ $AUTHENTICATION_TESTING_INIT$
                 -- Access Accounts
                 ----------------------------------------------------
 
-                INSERT INTO msbms_syst_data.syst_access_accounts
+                INSERT INTO ms_syst_data.syst_access_accounts
                     ( internal_name
                     , external_name
                     , owning_owner_id
@@ -3007,7 +3007,7 @@ $AUTHENTICATION_TESTING_INIT$
                 -- Access Account Instance Access
                 ----------------------------------------------------
 
-                INSERT INTO msbms_syst_data.syst_access_account_instance_assocs
+                INSERT INTO ms_syst_data.syst_access_account_instance_assocs
                     ( access_account_id
                     , instance_id
                     , access_granted
@@ -3022,12 +3022,12 @@ $AUTHENTICATION_TESTING_INIT$
                     , now() + make_interval( days => ( ia ->> 'invitation_expires_days' )::integer )
                     , now() + make_interval( days => ( ia ->> 'invitation_declined_days' )::integer )
                 FROM jsonb_array_elements( var_account_data.instance_access ) ia
-                    JOIN msbms_syst_data.syst_access_accounts aa
+                    JOIN ms_syst_data.syst_access_accounts aa
                         ON aa.internal_name = var_account_data.access_account_name
-                    JOIN msbms_syst_data.syst_instances i
+                    JOIN ms_syst_data.syst_instances i
                         ON i.internal_name = ia ->> 'instance_name';
 
-                INSERT INTO msbms_syst_data.syst_access_account_instance_assocs
+                INSERT INTO ms_syst_data.syst_access_account_instance_assocs
                     ( access_account_id
                     , instance_id
                     , access_granted
@@ -3042,11 +3042,11 @@ $AUTHENTICATION_TESTING_INIT$
                     , now() + make_interval( days => ( ia ->> 'invitation_expires_days' )::integer )
                     , now() + make_interval( days => ( ia ->> 'invitation_declined_days' )::integer )
                 FROM jsonb_array_elements( var_account_data.instance_access ) ia
-                    JOIN msbms_syst_data.syst_access_accounts aa
+                    JOIN ms_syst_data.syst_access_accounts aa
                         ON aa.internal_name = var_account_data.access_account_name
-                    CROSS JOIN msbms_syst_data.syst_instances i
+                    CROSS JOIN ms_syst_data.syst_instances i
                 WHERE i.id NOT IN (SELECT instance_id
-                                   FROM msbms_syst_data.syst_access_account_instance_assocs
+                                   FROM ms_syst_data.syst_access_account_instance_assocs
                                    WHERE access_account_id = var_access_account_id)
                   AND ( i.owner_id = aa.owning_owner_id or
                         coalesce( ( ia ->> 'no_owner_restriction' )::boolean, FALSE ) );
@@ -3061,7 +3061,7 @@ $AUTHENTICATION_TESTING_INIT$
                         i ->> 'identity_type_name'                                       AS identity_type_name
                       , ei.id                                                            AS identity_type_id
                       , coalesce( i ->> 'account_identifier',
-                                  msbms_syst_priv.get_random_string(
+                                  ms_syst_priv.get_random_string(
                                       ( i ->> 'account_identifier_length' )::integer ) ) AS account_identifier
                       , now( ) +
                         make_interval(
@@ -3075,7 +3075,7 @@ $AUTHENTICATION_TESTING_INIT$
                       , i -> 'validation'                                                AS validation
                       , i -> 'credential'                                                AS credential
                     FROM jsonb_array_elements( var_account_data.identities ) i
-                        JOIN msbms_syst_data.syst_enum_items ei
+                        JOIN ms_syst_data.syst_enum_items ei
                              ON ei.internal_name = i ->> 'identity_type_name'
                 LOOP
 
@@ -3083,7 +3083,7 @@ $AUTHENTICATION_TESTING_INIT$
                     -- Identities
                     ----------------------------------------------------
 
-                    INSERT INTO msbms_syst_data.syst_identities
+                    INSERT INTO ms_syst_data.syst_identities
                         ( access_account_id
                         , identity_type_id
                         , account_identifier
@@ -3103,7 +3103,7 @@ $AUTHENTICATION_TESTING_INIT$
                     -- Identity Linked Credential
                     ----------------------------------------------------
 
-                    INSERT INTO msbms_syst_data.syst_credentials
+                    INSERT INTO ms_syst_data.syst_credentials
                         ( access_account_id
                         , credential_type_id
                         , credential_for_identity_id
@@ -3113,7 +3113,7 @@ $AUTHENTICATION_TESTING_INIT$
                     SELECT
                           var_access_account_id
                         , (SELECT id
-                           FROM msbms_syst_data.syst_enum_items
+                           FROM ms_syst_data.syst_enum_items
                            WHERE internal_name = var_identity_data.credential ->> 'credential_type_name' )
                         , var_primary_identity_id
                         , var_identity_data.credential ->> 'credential_data'
@@ -3133,7 +3133,7 @@ $AUTHENTICATION_TESTING_INIT$
                     -- Identity Linked Validation Identity/Credential
                     ----------------------------------------------------
 
-                    INSERT INTO msbms_syst_data.syst_identities
+                    INSERT INTO ms_syst_data.syst_identities
                         ( access_account_id
                         , identity_type_id
                         , account_identifier
@@ -3144,11 +3144,11 @@ $AUTHENTICATION_TESTING_INIT$
                           var_access_account_id
                         , ( SELECT
                                 id
-                            FROM msbms_syst_data.syst_enum_items
+                            FROM ms_syst_data.syst_enum_items
                             WHERE internal_name = 'identity_types_sysdef_validation' )
                         , coalesce( var_identity_data.validation #>>
                                         '{identity, account_identifier}',
-                                    msbms_syst_priv.get_random_string(
+                                    ms_syst_priv.get_random_string(
                                         ( var_identity_data.validation #>>
                                           '{identity, account_identifier_length}' )::integer ) )
                         , var_primary_identity_id
@@ -3160,7 +3160,7 @@ $AUTHENTICATION_TESTING_INIT$
                     WHERE jsonb_typeof(var_identity_data.validation -> 'identity') = 'object'
                     RETURNING id INTO var_validation_identity_id;
 
-                    INSERT INTO msbms_syst_data.syst_credentials
+                    INSERT INTO ms_syst_data.syst_credentials
                         ( access_account_id
                         , credential_type_id
                         , credential_for_identity_id
@@ -3171,7 +3171,7 @@ $AUTHENTICATION_TESTING_INIT$
                           var_access_account_id
                         , ( SELECT
                                 id
-                            FROM msbms_syst_data.syst_enum_items
+                            FROM ms_syst_data.syst_enum_items
                             WHERE internal_name = 'credential_types_sysdef_token_validation' )
                         , var_validation_identity_id
                         , var_identity_data.validation #>> '{credential, credential_data}'
@@ -3196,7 +3196,7 @@ $AUTHENTICATION_TESTING_INIT$
                 -- Non-linked Credentials
                 ----------------------------------------------------
 
-                INSERT INTO msbms_syst_data.syst_credentials
+                INSERT INTO ms_syst_data.syst_credentials
                     ( access_account_id
                     , credential_type_id
                     , credential_data
@@ -3213,14 +3213,14 @@ $AUTHENTICATION_TESTING_INIT$
                     , now( ) +
                       make_interval( days => coalesce( ( c ->> 'last_updated_days' )::integer, 0 ) )
                 FROM jsonb_array_elements( var_account_data.credentials ) c
-                    JOIN msbms_syst_data.syst_enum_items ei
+                    JOIN ms_syst_data.syst_enum_items ei
                          ON ei.internal_name = c ->> 'credential_type_name';
 
                 ----------------------------------------------------
                 -- Password History
                 ----------------------------------------------------
 
-                INSERT INTO msbms_syst_data.syst_password_history
+                INSERT INTO ms_syst_data.syst_password_history
                     (access_account_id, credential_data )
                 SELECT
                       var_access_account_id

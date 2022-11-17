@@ -45,7 +45,7 @@ defmodule MscmpSystAuthn.Data.SystGlobalNetworkRules do
             diag_update_count: integer() | nil
           }
 
-  @schema_prefix "msbms_syst"
+  @schema_prefix "ms_syst"
 
   schema "syst_global_network_rules" do
     field(:ordering, :integer)

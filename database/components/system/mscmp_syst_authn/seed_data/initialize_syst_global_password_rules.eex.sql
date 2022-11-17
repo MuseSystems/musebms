@@ -18,7 +18,7 @@
 -- are expected to be compatible with the "Authenticator Assurance Level 1"
 -- standard it defines. (https://pages.nist.gov/800-63-3/sp800-63b.html)
 
-INSERT INTO msbms_syst_data.syst_global_password_rules
+INSERT INTO ms_syst_data.syst_global_password_rules
     ( password_length
     , max_age
     , require_upper_case

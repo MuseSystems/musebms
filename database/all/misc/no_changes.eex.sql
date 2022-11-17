@@ -12,4 +12,4 @@
 
 RAISE NOTICE
     USING MESSAGE = format( '*** No changes for migration version %1$s.',
-                            '<%= msbms_migration_version %>');
+                            '<%= ms_migration_version %>');

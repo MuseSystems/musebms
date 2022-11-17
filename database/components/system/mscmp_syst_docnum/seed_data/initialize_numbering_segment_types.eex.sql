@@ -10,7 +10,7 @@
 --
 -- muse.information@musesystems.com  :: https://muse.systems
 
-INSERT INTO msbms_syst_data.syst_numbering_segment_types
+INSERT INTO ms_syst_data.syst_numbering_segment_types
     ( internal_name, display_name, syst_description )
 VALUES
     ( 'enumeration'

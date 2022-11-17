@@ -35,7 +35,7 @@ defmodule MscmpSystDb.Impl.Dba do
 
   @dba_role_name "ms_syst_dba"
   @dba_database_name "postgres"
-  @dba_application_name "MSBMS System DBA Access"
+  @dba_application_name "MscmpSystDb System DBA Access"
 
   @default_db_shutdown_timeout 60_000
 

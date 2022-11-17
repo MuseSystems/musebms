@@ -70,8 +70,6 @@ defmodule MsmcpMigrationsTest do
   @migration_test_destination_dir "priv/database_build_testing"
   @migration_test_datastore_type "app_msmcp"
 
-  @datastore_context_name :msmcp_build_app_context
-
   #  This testing presumes that the database schema is tested separately and is
   #  correct here.
 
@@ -92,9 +90,9 @@ defmodule MsmcpMigrationsTest do
         datastore_options,
         @migration_test_datastore_type,
         [
-          msbms_owner: datastore_options.database_owner,
-          msbms_appusr: "msmcp_build_app_user",
-          msbms_apiusr: "msmcp_build_api_user"
+          ms_owner: datastore_options.database_owner,
+          ms_appusr: "msmcp_build_app_user",
+          ms_apiusr: "msmcp_build_api_user"
         ],
         migrations_root_dir: @migration_test_destination_dir
       )

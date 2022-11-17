@@ -206,7 +206,7 @@ defmodule MscmpSystAuthn do
   are performed in the context of authenticating for access to a specific
   Application Instance.  Owners of that Instance must authorize an Access
   Account to authenticate to their Instance prior to the authentication process
-  succeeding (see `MsbmsSystInstancemgr` for more on Owners and Instances).
+  succeeding (see `MscmpSystInstance` for more on Owners and Instances).
 
   Owned Access Accounts are typically granted access to all or specific
   Instances of the Owner which owns the Access Account.  Unowned Access Accounts
@@ -401,7 +401,7 @@ defmodule MscmpSystAuthn do
   ## Parameters
 
     * `access_account` - either the record ID value of the Access Account to
-    update or is the complete `MsbmsSystAccessAccount.Data.SystAccessAccounts`
+    update or is the complete `MscmpSystAuthn.Data.SystAccessAccounts`
     struct representing the before-update state of the Access Account record.
 
     * `access_account_params` - a map containing those attributes to be changed
@@ -436,7 +436,7 @@ defmodule MscmpSystAuthn do
   ## Parameters
 
     * `access_account` - is either the record ID of the Access Account to purge
-    or the populated `MsbmsSystAccessAccount.Data.SystAccessAccounts` struct
+    or the populated `MscmpSystAuthn.Data.SystAccessAccounts` struct
     representing the record to purge.
 
   ## Example

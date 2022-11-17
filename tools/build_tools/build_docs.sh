@@ -115,7 +115,7 @@ cd ../../../
 
 # rm -Rf documentation/technical/database/global
 # mkdir -p documentation/technical/database/global
-# java -jar tools/build_tools/schemaspy/schemaspy-6.1.0.jar -t pgsql11 -dp tools/build_tools/schemaspy/postgresql-42.5.0.jar -db msmcp_dev -host 127.0.0.1 -port 5432 -schemas msbms_syst,msbms_syst_data,msbms_syst_db,msbms_syst_priv  -u documentation -p 'documentation' -o documentation/technical/database/app_msmcp
+# java -jar tools/build_tools/schemaspy/schemaspy-6.1.0.jar -t pgsql11 -dp tools/build_tools/schemaspy/postgresql-42.5.0.jar -db msmcp_dev -host 127.0.0.1 -port 5432 -schemas ms_syst,ms_syst_data,ms_syst_db,ms_syst_priv  -u documentation -p 'documentation' -o documentation/technical/database/app_msmcp
 
 #
 # Instance Database
@@ -123,4 +123,4 @@ cd ../../../
 
 # rm -Rf documentation/technical/database/instance
 # mkdir -p documentation/technical/database/instance
-# java -jar tools/build_tools/schemaspy/schemaspy-6.1.0.jar -t pgsql11 -dp tools/build_tools/schemaspy/postgresql-42.5.0.jar -db msbms_dev -host 127.0.0.1 -port 5432 -schemas msbms_appl,msbms_appl_data,msbms_appl_priv,msbms_syst,msbms_syst_data,msbms_syst_db,msbms_syst_priv,msbms_user,msbms_user_data,msbms_user_priv -u documentation -p 'documentation' -o documentation/technical/database/app_msbms
+# java -jar tools/build_tools/schemaspy/schemaspy-6.1.0.jar -t pgsql11 -dp tools/build_tools/schemaspy/postgresql-42.5.0.jar -db ms_dev -host 127.0.0.1 -port 5432 -schemas ms_appl,ms_appl_data,ms_appl_priv,ms_syst,ms_syst_data,ms_syst_db,ms_syst_priv,ms_user,ms_user_data,ms_user_priv -u documentation -p 'documentation' -o documentation/technical/database/app_msbms
