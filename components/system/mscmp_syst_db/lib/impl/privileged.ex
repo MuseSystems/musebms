@@ -40,7 +40,7 @@ defmodule MscmpSystDb.Impl.Privileged do
 
   @default_db_shutdown_timeout 60_000
   @priv_connection_role "ms_syst_dba"
-  @priv_application_name "MSBMS Datastore Privileged Access"
+  @priv_application_name "MscmpSystDb Datastore Privileged Access"
 
   @spec get_datastore_version(Types.datastore_options(), Keyword.t()) ::
           {:ok, String.t()} | {:error, MscmpSystError.t()}

@@ -54,7 +54,7 @@ defmodule MscmpSystEnums.Data.SystEnumFunctionalTypes do
             diag_update_count: integer() | nil
           }
 
-  @schema_prefix "msbms_syst"
+  @schema_prefix "ms_syst"
 
   schema "syst_enum_functional_types" do
     field(:internal_name, :string)

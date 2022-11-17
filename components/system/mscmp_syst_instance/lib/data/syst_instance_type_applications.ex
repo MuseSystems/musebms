@@ -45,7 +45,7 @@ defmodule MscmpSystInstance.Data.SystInstanceTypeApplications do
             diag_update_count: integer() | nil
           }
 
-  @schema_prefix "msbms_syst"
+  @schema_prefix "ms_syst"
 
   schema "syst_instance_type_applications" do
     field(:diag_timestamp_created, :utc_datetime)

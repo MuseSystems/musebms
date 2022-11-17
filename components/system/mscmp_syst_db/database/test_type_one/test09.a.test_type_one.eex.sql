@@ -11,4 +11,4 @@
 --
 -- muse.information@musesystems.com  :: https://muse.systems
 
-INSERT INTO msbms_test.test_type_one (test_value) VALUES ('test09.a');
+INSERT INTO ms_test.test_type_one (test_value) VALUES ('test09.a');

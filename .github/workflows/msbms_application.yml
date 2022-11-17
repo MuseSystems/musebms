@@ -7,9 +7,9 @@ on:
     branches: [ next_version, versions ]
 
 jobs:
-  msbms-syst-error:
+  mscmp-syst-error:
     runs-on: ubuntu-latest
-    name: MsbmsSystError (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
+    name: MscmpSystError (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
     strategy:
       matrix:
         otp: ['25.1.2']
@@ -41,9 +41,9 @@ jobs:
         #   run: mix dialyzer
         #   working-directory: ./components/system/mscmp_syst_error
 
-  msbms-syst-options:
+  mscmp-syst-options:
     runs-on: ubuntu-latest
-    name: MsbmsSystOptions (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
+    name: MscmpSystOptions (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
     strategy:
       matrix:
         otp: ['25.1.2']
@@ -75,9 +75,9 @@ jobs:
         #   run: mix dialyzer
         #   working-directory: ./components/system/mscmp_syst_options
 
-  msbms-syst-rate-limiter:
+  mscmp-syst-limiter:
     runs-on: ubuntu-latest
-    name: MsbmsSystRateLimiter (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
+    name: MscmpSystLimiter (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
     strategy:
       matrix:
         otp: ['25.1.2']
@@ -109,9 +109,9 @@ jobs:
           run: mix credo
           working-directory: ./components/system/mscmp_syst_limiter
 
-  msbms-syst-datastore:
+  mscmp-syst_db:
     runs-on: ubuntu-latest
-    name: MsbmsSystDatastore (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
+    name: MscmpSystDb (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
     strategy:
       matrix:
         otp: ['25.1.2']
@@ -161,9 +161,9 @@ jobs:
         #   run: mix dialyzer
         #   working-directory: ./components/system/mscmp_syst_db
 
-  msbms-syst-settings:
+  mscmp-syst-settings:
     runs-on: ubuntu-latest
-    name: MsbmsSystSettings (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
+    name: MscmpSystSettings (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
     strategy:
       matrix:
         otp: ['25.1.2']
@@ -213,9 +213,9 @@ jobs:
         #   run: mix dialyzer
         #   working-directory: ./components/system/mscmp_syst_settings
 
-  msbms-syst-enums:
+  mscmp-syst-enums:
     runs-on: ubuntu-latest
-    name: MsbmsSystEnums (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
+    name: MscmpSystEnums (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
     strategy:
       matrix:
         otp: ['25.1.2']
@@ -265,9 +265,9 @@ jobs:
         #   run: mix dialyzer
         #   working-directory: ./components/system/mscmp_syst_enums
 
-  msbms-syst-instance-mgr:
+  mscmp-syst-instance:
     runs-on: ubuntu-latest
-    name: MsbmsSystInstanceMgr (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
+    name: MscmpSystInstance (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
     strategy:
       matrix:
         otp: ['25.1.2']
@@ -321,9 +321,9 @@ jobs:
         #   run: mix dialyzer
         #   working-directory: ./components/system/mscmp_syst_instance
 
-  msbms-syst-authentication:
+  mscmp-syst-authn:
     runs-on: ubuntu-latest
-    name: MsbmsSystAuthentication (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
+    name: MscmpSystAuthn (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
     strategy:
       matrix:
         otp: ['25.1.2']

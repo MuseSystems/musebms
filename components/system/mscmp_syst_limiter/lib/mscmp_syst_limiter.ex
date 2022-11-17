@@ -44,7 +44,7 @@ defmodule MscmpSystLimiter do
 
   ## Concepts
 
-  MsbmSystRateLimiter implements a ["Token Bucket"](https://en.wikipedia.org/wiki/Token_bucket)
+  MscmpSystLimiter implements a ["Token Bucket"](https://en.wikipedia.org/wiki/Token_bucket)
   rate limiting algorithm.  In a Token Bucket rate limit, for each user and
   request type a "bucket", called a "Counter" herein, with a finite
   number of tokens is created.  As requests are made the Counter is checked to
@@ -89,7 +89,7 @@ defmodule MscmpSystLimiter do
 
   2. __Setup Mnesia__ - MscmpSystLimiter keeps its counters in the Mnesia
   database allowing for distribution of the rate limit counters across nodes.
-  MsbmsSystRaleLimiter expects the client application to have setup and called
+  MscmpSystLimiter expects the client application to have setup and called
   `:mnesia.create_schema/1` prior to trying to use the provided services.
 
   3. __Initialize the Counter Table__ - Once the Mnesia is configured and

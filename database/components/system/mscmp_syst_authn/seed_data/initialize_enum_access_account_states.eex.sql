@@ -15,7 +15,7 @@ $INIT_ENUM$
 BEGIN
 
 PERFORM
-    msbms_syst_priv.initialize_enum(
+    ms_syst_priv.initialize_enum(
         p_enum_def => $INIT_ENUM_ACCESS_ACCOUNT_STATES$
         {
           "internal_name": "access_account_states",

@@ -14,7 +14,7 @@ DO
 $INIT_ENUM$
 BEGIN
 
-    PERFORM msbms_syst_priv.initialize_enum(
+    PERFORM ms_syst_priv.initialize_enum(
         p_enum_def =>
             $INIT_ENUM_INSTANCE_TYPES$
             {

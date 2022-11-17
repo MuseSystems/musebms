@@ -48,7 +48,7 @@ defmodule MscmpSystAuthn.Data.SystInstanceNetworkRules do
             diag_update_count: integer() | nil
           }
 
-  @schema_prefix "msbms_syst"
+  @schema_prefix "ms_syst"
 
   schema "syst_instance_network_rules" do
     field(:ordering, :integer)

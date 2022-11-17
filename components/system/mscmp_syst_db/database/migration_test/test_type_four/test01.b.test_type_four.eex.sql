@@ -10,28 +10,28 @@
 -- See the NOTICE file in the project root for copyright ownership information.
 --
 -- muse.information@musesystems.com  :: https://muse.systems
-CREATE TABLE msbms_test.test_type_four
+CREATE TABLE ms_test.test_type_four
 (
      id                      uuid        DEFAULT uuid_generate_v1( ) NOT NULL
         CONSTRAINT test_type_four_pk PRIMARY KEY
     ,test_value              text                                    NOT NULL
 );
 
-ALTER TABLE msbms_test.test_type_four OWNER TO <%= msbms_owner %>;
+ALTER TABLE ms_test.test_type_four OWNER TO <%= ms_owner %>;
 
-REVOKE ALL ON TABLE msbms_test.test_type_four FROM public;
-GRANT ALL ON TABLE msbms_test.test_type_four TO <%= msbms_owner %>;
-GRANT ALL ON TABLE msbms_test.test_type_four TO msbms_type_four_role_01;
+REVOKE ALL ON TABLE ms_test.test_type_four FROM public;
+GRANT ALL ON TABLE ms_test.test_type_four TO <%= ms_owner %>;
+GRANT ALL ON TABLE ms_test.test_type_four TO ms_type_four_role_01;
 
 COMMENT ON
-    TABLE msbms_test.test_type_four IS
+    TABLE ms_test.test_type_four IS
 $DOC$A test table created by test01.b.test_type_four.eex.sql$DOC$;
 
 COMMENT ON
-    COLUMN msbms_test.test_type_four.id IS
+    COLUMN ms_test.test_type_four.id IS
 $DOC$The record's primary key.  The definitive identifier of the record in the
 system.$DOC$;
 
 COMMENT ON
-    COLUMN  msbms_test.test_type_four.test_value IS
+    COLUMN  ms_test.test_type_four.test_value IS
 $DOC$A test value to be tested.$DOC$;

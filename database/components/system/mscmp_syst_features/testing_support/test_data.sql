@@ -14,7 +14,7 @@
 --  Preliminary Initialization -- Feature Mapping
 --------------------------------------------------------------------------------
 
-INSERT INTO msbms_syst_data.syst_feature_map_levels
+INSERT INTO ms_syst_data.syst_feature_map_levels
     ( internal_name
     , display_name
     , functional_type
@@ -36,7 +36,7 @@ VALUES
     , TRUE
     , FALSE );
 
-INSERT INTO msbms_syst_data.syst_feature_map
+INSERT INTO ms_syst_data.syst_feature_map
     ( internal_name
     , display_name
     , external_name
@@ -53,7 +53,7 @@ VALUES
     , 'Test Module'
     , ( SELECT
             id
-        FROM msbms_syst_data.syst_feature_map_levels
+        FROM ms_syst_data.syst_feature_map_levels
         WHERE internal_name = 'syst_settings_test_module' )
     , NULL
     , TRUE
@@ -62,7 +62,7 @@ VALUES
     , 'Testing at the Module level.'
     , 1 );
 
-INSERT INTO msbms_syst_data.syst_feature_map
+INSERT INTO ms_syst_data.syst_feature_map
     ( internal_name
     , display_name
     , external_name
@@ -79,9 +79,9 @@ VALUES
     , 'Test Settings'
     , ( SELECT
             id
-        FROM msbms_syst_data.syst_feature_map_levels
+        FROM ms_syst_data.syst_feature_map_levels
         WHERE internal_name = 'syst_settings_test_kind' )
-    , ( SELECT id FROM msbms_syst_data.syst_feature_map WHERE internal_name = 'test_module' )
+    , ( SELECT id FROM ms_syst_data.syst_feature_map WHERE internal_name = 'test_module' )
     , TRUE
     , FALSE
     , TRUE
@@ -92,17 +92,17 @@ VALUES
 --  Finalization -- Settings / Feature Map Assignments
 --------------------------------------------------------------------------------
 
-INSERT INTO msbms_syst_data.syst_feature_setting_assigns
+INSERT INTO ms_syst_data.syst_feature_setting_assigns
     ( feature_map_id, setting_id )
 VALUES
-    ( ( SELECT id FROM msbms_syst_data.syst_feature_map WHERE internal_name = 'test_settings' )
-    , ( SELECT id FROM msbms_syst_data.syst_settings WHERE internal_name = 'test_setting_one' ) )
+    ( ( SELECT id FROM ms_syst_data.syst_feature_map WHERE internal_name = 'test_settings' )
+    , ( SELECT id FROM ms_syst_data.syst_settings WHERE internal_name = 'test_setting_one' ) )
      ,
-    ( ( SELECT id FROM msbms_syst_data.syst_feature_map WHERE internal_name = 'test_settings' )
-    , ( SELECT id FROM msbms_syst_data.syst_settings WHERE internal_name = 'test_setting_two' ) )
+    ( ( SELECT id FROM ms_syst_data.syst_feature_map WHERE internal_name = 'test_settings' )
+    , ( SELECT id FROM ms_syst_data.syst_settings WHERE internal_name = 'test_setting_two' ) )
      ,
-    ( ( SELECT id FROM msbms_syst_data.syst_feature_map WHERE internal_name = 'test_settings' )
-    , ( SELECT id FROM msbms_syst_data.syst_settings WHERE internal_name = 'test_setting_three' ) );
+    ( ( SELECT id FROM ms_syst_data.syst_feature_map WHERE internal_name = 'test_settings' )
+    , ( SELECT id FROM ms_syst_data.syst_settings WHERE internal_name = 'test_setting_three' ) );
 
 --------------------------------------------------------------------------------
 --  Grant all privileges to test user

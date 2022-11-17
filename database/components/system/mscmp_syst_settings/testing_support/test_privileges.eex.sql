@@ -10,12 +10,12 @@
 --
 -- muse.information@musesystems.com  :: https://muse.systems
 
-GRANT USAGE ON SCHEMA msbms_syst TO <%= msbms_appusr %>;
+GRANT USAGE ON SCHEMA ms_syst TO <%= ms_appusr %>;
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE msbms_syst.syst_settings TO <%= msbms_appusr %>;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE ms_syst.syst_settings TO <%= ms_appusr %>;
 
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_i_syst_settings() TO <%= msbms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_settings() TO <%= ms_appusr %>;
 
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_u_syst_settings() TO <%= msbms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_settings() TO <%= ms_appusr %>;
 
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_d_syst_settings() TO <%= msbms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_settings() TO <%= ms_appusr %>;

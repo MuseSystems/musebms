@@ -15,7 +15,7 @@ $INIT_ENUM$
 BEGIN
 
 PERFORM
-    msbms_syst_priv.initialize_enum(
+    ms_syst_priv.initialize_enum(
         p_enum_def => $INIT_ENUM_FISCAL_YEAR_STATES$
         {
           "internal_name": "fiscal_year_states",

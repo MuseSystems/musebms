@@ -34,7 +34,7 @@ defmodule MscmpSystAuthn.Data.SystDisallowedHosts do
             host_address: DbTypes.Inet.t() | nil
           }
 
-  @schema_prefix "msbms_syst"
+  @schema_prefix "ms_syst"
 
   schema "syst_disallowed_hosts" do
     field(:host_address, DbTypes.Inet)

@@ -220,7 +220,7 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
 
     from(
       nr in fragment(
-        "msbms_syst.get_applied_network_rule(?, ?, ?)",
+        "ms_syst.get_applied_network_rule(?, ?, ?)",
         ^target_host,
         ^target_instance_id,
         ^target_owner_id

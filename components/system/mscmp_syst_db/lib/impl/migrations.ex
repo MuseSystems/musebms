@@ -319,7 +319,7 @@ defmodule MscmpSystDb.Impl.Migrations do
       )
 
     bindings = [
-      msbms_owner: datastore_owner,
+      ms_owner: datastore_owner,
       migrations_schema: opts[:migrations_schema],
       migrations_table: opts[:migrations_table]
     ]

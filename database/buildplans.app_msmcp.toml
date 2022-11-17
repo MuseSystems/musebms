@@ -38,7 +38,7 @@ load_files = [
     "application/msmcp/components/mscmp_syst_enums/privileges.eex.sql",
 
     #
-    #  MsbmsSystFeatures
+    #  MscmpSystFeatures
     #
 
     {type = "plan", file = "components/system/mscmp_syst_features/subplans.mscmp_syst_features.toml"},

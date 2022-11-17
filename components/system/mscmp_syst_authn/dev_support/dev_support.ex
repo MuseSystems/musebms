@@ -19,14 +19,14 @@ defmodule DevSupport do
   @datastore_context_name :dev_app_database
 
   @datastore_options %{
-    database_name: "msbms_dev_database",
-    datastore_code: "msbms.dev.code",
-    datastore_name: :msbms_dev_database,
+    database_name: "ms_dev_database",
+    datastore_code: "ms.dev.code",
+    datastore_name: :ms_dev_database,
     contexts: [
       %{
         context_name: nil,
-        description: "MSBMS Development Owner",
-        database_role: "msbms_dev_owner",
+        description: "Muse Systems Development Owner",
+        database_role: "ms_dev_owner",
         database_password: nil,
         starting_pool_size: 0,
         start_context: false,
@@ -35,9 +35,9 @@ defmodule DevSupport do
       },
       %{
         context_name: @datastore_context_name,
-        description: "MSBMS Development App User",
-        database_role: "msbms_dev_app_user",
-        database_password: "msbms.dev.code.app.user",
+        description: "Muse Systems Development App User",
+        database_role: "ms_dev_app_user",
+        database_password: "ms.dev.code.app.user",
         starting_pool_size: 20,
         start_context: true,
         login_context: true
@@ -51,7 +51,7 @@ defmodule DevSupport do
       db_show_sensitive: true,
       db_max_instances: 1,
       server_pools: [],
-      server_salt: "msbms.dev.code.test.salt",
+      server_salt: "ms.dev.code.test.salt",
       dbadmin_password: "muse.syst.dba.testing.password",
       dbadmin_pool_size: 1
     }
@@ -64,25 +64,25 @@ defmodule DevSupport do
     _ = MscmpSystDb.set_datastore_context(get_datastore_context_id())
 
     enum_service_spec = %{
-      id: MsbmsDevEnumService,
+      id: MscmpDevEnumService,
       start: {
         MscmpSystEnums,
         :start_link,
-        [{:msbms_dev_enum_service, get_datastore_context_id()}]
+        [{:ms_dev_enum_service, get_datastore_context_id()}]
       }
     }
 
     children = [
-      {DynamicSupervisor, strategy: :one_for_one, name: Msbms.DevSupervisor}
+      {DynamicSupervisor, strategy: :one_for_one, name: Mscmp.DevSupervisor}
     ]
 
     _ = Supervisor.start_link(children, strategy: :one_for_one)
     Logger.configure(level: :info)
 
-    _ = DynamicSupervisor.start_child(Msbms.DevSupervisor, enum_service_spec)
+    _ = DynamicSupervisor.start_child(Mscmp.DevSupervisor, enum_service_spec)
 
     _ = MscmpSystDb.set_datastore_context(get_datastore_context_id())
-    _ = MscmpSystEnums.put_enums_service(:msbms_dev_enum_service)
+    _ = MscmpSystEnums.put_enums_service(:ms_dev_enum_service)
   end
 
   def stop_dev_environment(db_kind \\ :unit_testing) do
@@ -106,8 +106,8 @@ defmodule DevSupport do
       MscmpSystDb.upgrade_datastore(
         datastore_options,
         datastore_type,
-        msbms_owner: database_owner.database_role,
-        msbms_appusr: "msbms_dev_app_user"
+        ms_owner: database_owner.database_role,
+        ms_appusr: "ms_dev_app_user"
       )
 
     {:ok, _, _} = MscmpSystDb.start_datastore(datastore_options)

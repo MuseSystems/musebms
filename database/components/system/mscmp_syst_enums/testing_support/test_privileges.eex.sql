@@ -10,34 +10,34 @@
 --
 -- muse.information@musesystems.com  :: https://muse.systems
 
-GRANT USAGE ON SCHEMA msbms_syst TO <%= msbms_appusr %>;
+GRANT USAGE ON SCHEMA ms_syst TO <%= ms_appusr %>;
 
 -- syst_enums
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE msbms_syst.syst_enums TO <%= msbms_appusr %>;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE ms_syst.syst_enums TO <%= ms_appusr %>;
 
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_i_syst_enums() TO <%= msbms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_enums() TO <%= ms_appusr %>;
 
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_u_syst_enums() TO <%= msbms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_enums() TO <%= ms_appusr %>;
 
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_d_syst_enums() TO <%= msbms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_enums() TO <%= ms_appusr %>;
 
 -- syst_enum_functional_types
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE msbms_syst.syst_enum_functional_types TO <%= msbms_appusr %>;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE ms_syst.syst_enum_functional_types TO <%= ms_appusr %>;
 
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_i_syst_enum_functional_types() TO <%= msbms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_enum_functional_types() TO <%= ms_appusr %>;
 
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_u_syst_enum_functional_types() TO <%= msbms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_enum_functional_types() TO <%= ms_appusr %>;
 
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_d_syst_enum_functional_types() TO <%= msbms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_enum_functional_types() TO <%= ms_appusr %>;
 
 -- syst_enum_items
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE msbms_syst.syst_enum_items TO <%= msbms_appusr %>;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE ms_syst.syst_enum_items TO <%= ms_appusr %>;
 
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_i_syst_enum_items() TO <%= msbms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_enum_items() TO <%= ms_appusr %>;
 
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_u_syst_enum_items() TO <%= msbms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_enum_items() TO <%= ms_appusr %>;
 
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_d_syst_enum_items() TO <%= msbms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_enum_items() TO <%= ms_appusr %>;

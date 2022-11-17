@@ -14,7 +14,7 @@
 --  Primary Initialization -- Settings
 --------------------------------------------------------------------------------
 
-INSERT INTO msbms_syst_data.syst_settings
+INSERT INTO ms_syst_data.syst_settings
     ( internal_name
     , display_name
     , syst_defined
@@ -210,6 +210,6 @@ VALUES
     , '47241948-b2c9-11ec-b8c4-00155d708817'::uuid
     , convert_to( 'Delete Example Setting Bytea', 'UTF8' ) );
 
-GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA msbms_syst      TO <%= msbms_appusr %>;
-GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA msbms_syst_priv TO <%= msbms_appusr %>;
-GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA msbms_syst_data TO <%= msbms_appusr %>;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA ms_syst      TO <%= ms_appusr %>;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA ms_syst_priv TO <%= ms_appusr %>;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA ms_syst_data TO <%= ms_appusr %>;

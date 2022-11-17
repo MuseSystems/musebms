@@ -10,7 +10,7 @@
 --
 -- muse.information@musesystems.com  :: https://muse.systems
 
-INSERT INTO msbms_syst_data.syst_feature_map_levels
+INSERT INTO ms_syst_data.syst_feature_map_levels
     ( internal_name
     , display_name
     , functional_type
@@ -38,7 +38,7 @@ VALUES
 
 -- Module Definition
 
-INSERT INTO msbms_syst_data.syst_feature_map
+INSERT INTO ms_syst_data.syst_feature_map
     ( internal_name
     , display_name
     , external_name
@@ -54,7 +54,7 @@ VALUES
     , 'Global Settings'
     , 'Global Settings'
     , ( SELECT id
-        FROM msbms_syst_data.syst_feature_map_levels
+        FROM ms_syst_data.syst_feature_map_levels
         WHERE internal_name = 'global_module' )
     , NULL
     , TRUE
@@ -65,7 +65,7 @@ VALUES
 
 -- Kinds Definition
 
-INSERT INTO msbms_syst_data.syst_feature_map
+INSERT INTO ms_syst_data.syst_feature_map
     ( internal_name
     , display_name
     , external_name
@@ -81,9 +81,9 @@ VALUES
     , 'Global Settings/Settings'
     , 'Settings'
     , ( SELECT id
-        FROM msbms_syst_data.syst_feature_map_levels
+        FROM ms_syst_data.syst_feature_map_levels
         WHERE internal_name = 'global_kind' )
-    , ( SELECT id FROM msbms_syst_data.syst_feature_map WHERE internal_name = 'global_settings' )
+    , ( SELECT id FROM ms_syst_data.syst_feature_map WHERE internal_name = 'global_settings' )
     , TRUE
     , FALSE
     , TRUE
@@ -96,7 +96,7 @@ VALUES
 
 -- Module Definition
 
-INSERT INTO msbms_syst_data.syst_feature_map
+INSERT INTO ms_syst_data.syst_feature_map
     ( internal_name
     , display_name
     , external_name
@@ -112,7 +112,7 @@ VALUES
     , 'Global Authentication'
     , 'Global Authentication'
     , ( SELECT id
-        FROM msbms_syst_data.syst_feature_map_levels
+        FROM ms_syst_data.syst_feature_map_levels
         WHERE internal_name = 'global_module' )
     , NULL
     , TRUE
@@ -123,7 +123,7 @@ VALUES
 
 -- Kinds Definition
 
-INSERT INTO msbms_syst_data.syst_feature_map
+INSERT INTO ms_syst_data.syst_feature_map
     ( internal_name
     , display_name
     , external_name
@@ -139,10 +139,10 @@ VALUES
     , 'Global Authentication/Settings'
     , 'Settings'
     , ( SELECT id
-        FROM msbms_syst_data.syst_feature_map_levels
+        FROM ms_syst_data.syst_feature_map_levels
         WHERE internal_name = 'global_kind' )
     , ( SELECT id
-        FROM msbms_syst_data.syst_feature_map
+        FROM ms_syst_data.syst_feature_map
         WHERE internal_name = 'global_authentication' )
     , TRUE
     , FALSE
@@ -153,9 +153,9 @@ VALUES
     ( 'global_authentication_enumerations'
     , 'Global Authentication/Enumerations'
     , 'Enumerations'
-    , ( SELECT id FROM msbms_syst_data.syst_feature_map_levels WHERE internal_name = 'global_kind' )
+    , ( SELECT id FROM ms_syst_data.syst_feature_map_levels WHERE internal_name = 'global_kind' )
     , ( SELECT id
-        FROM msbms_syst_data.syst_feature_map
+        FROM ms_syst_data.syst_feature_map
         WHERE internal_name = 'global_authentication' )
     , TRUE
     , FALSE
@@ -169,7 +169,7 @@ VALUES
 
 -- Module Definition
 
-INSERT INTO msbms_syst_data.syst_feature_map
+INSERT INTO ms_syst_data.syst_feature_map
     ( internal_name
     , display_name
     , external_name
@@ -185,7 +185,7 @@ VALUES
     , 'Global Instance Management'
     , 'Global Instance Management'
     , ( SELECT id
-        FROM msbms_syst_data.syst_feature_map_levels
+        FROM ms_syst_data.syst_feature_map_levels
         WHERE internal_name = 'global_module' )
     , NULL
     , TRUE
@@ -196,7 +196,7 @@ VALUES
 
 -- Kinds Definition
 
-INSERT INTO msbms_syst_data.syst_feature_map
+INSERT INTO ms_syst_data.syst_feature_map
     ( internal_name
     , display_name
     , external_name
@@ -211,9 +211,9 @@ VALUES
     ( 'global_instance_management_settings'
     , 'Global Instance Management/Settings'
     , 'Settings'
-    , ( SELECT id FROM msbms_syst_data.syst_feature_map_levels WHERE internal_name = 'global_kind' )
+    , ( SELECT id FROM ms_syst_data.syst_feature_map_levels WHERE internal_name = 'global_kind' )
     , ( SELECT id
-        FROM msbms_syst_data.syst_feature_map
+        FROM ms_syst_data.syst_feature_map
         WHERE internal_name = 'global_instance_management' )
     , TRUE
     , FALSE
@@ -224,9 +224,9 @@ VALUES
     ( 'global_instance_management_enumerations'
     , 'Global Instance Management/Enumerations'
     , 'Enumerations'
-    , ( SELECT id FROM msbms_syst_data.syst_feature_map_levels WHERE internal_name = 'global_kind' )
+    , ( SELECT id FROM ms_syst_data.syst_feature_map_levels WHERE internal_name = 'global_kind' )
     , ( SELECT id
-        FROM msbms_syst_data.syst_feature_map
+        FROM ms_syst_data.syst_feature_map
         WHERE internal_name = 'global_authentication' )
     , TRUE
     , FALSE

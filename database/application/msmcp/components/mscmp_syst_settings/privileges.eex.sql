@@ -1,5 +1,5 @@
 -- File:        privileges.eex.sql
--- Location:    musebms/database/application/msmcp/components/msbms_syst_settings/privileges.eex.sql
+-- Location:    musebms/database/application/msmcp/components/ms_syst_settings/privileges.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,14 +10,14 @@
 --
 -- muse.information@musesystems.com  :: https://muse.systems
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE msbms_syst.syst_settings TO <%= msbms_appusr %>;
-GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE msbms_syst.syst_settings TO <%= msbms_apiusr %>;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE ms_syst.syst_settings TO <%= ms_appusr %>;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE ms_syst.syst_settings TO <%= ms_apiusr %>;
 
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_i_syst_settings() TO <%= msbms_appusr %>;
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_i_syst_settings() TO <%= msbms_apiusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_settings() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_settings() TO <%= ms_apiusr %>;
 
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_u_syst_settings() TO <%= msbms_appusr %>;
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_u_syst_settings() TO <%= msbms_apiusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_settings() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_settings() TO <%= ms_apiusr %>;
 
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_d_syst_settings() TO <%= msbms_appusr %>;
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_d_syst_settings() TO <%= msbms_apiusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_settings() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_settings() TO <%= ms_apiusr %>;

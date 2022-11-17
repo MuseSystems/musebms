@@ -10,7 +10,7 @@
 --
 -- muse.information@musesystems.com  :: https://muse.systems
 
-INSERT INTO msbms_syst_data.syst_feature_map_levels
+INSERT INTO ms_syst_data.syst_feature_map_levels
     ( internal_name
     , display_name
     , functional_type
@@ -60,11 +60,11 @@ $INITIALIZE_FEATURE_MAPPING$
         var_root_internal_name text  := 'instance';
         var_root_display_name  text  := 'Instance';
         var_curr_module        jsonb;
-        var_new_module         msbms_syst_data.syst_feature_map;
+        var_new_module         ms_syst_data.syst_feature_map;
         var_curr_type          jsonb;
-        var_new_type           msbms_syst_data.syst_feature_map;
+        var_new_type           ms_syst_data.syst_feature_map;
         var_curr_feature       jsonb;
-        var_new_feature        msbms_syst_data.syst_feature_map;
+        var_new_feature        ms_syst_data.syst_feature_map;
         var_curr_kind          jsonb;
 
         var_feature_mappings   jsonb := $FEATURE_MAP$
@@ -305,7 +305,7 @@ $INITIALIZE_FEATURE_MAPPING$
             SELECT jsonb_array_elements( var_feature_mappings -> 'modules' )
         LOOP
 
-                INSERT INTO msbms_syst_data.syst_feature_map
+                INSERT INTO ms_syst_data.syst_feature_map
                     ( internal_name
                     , display_name
                     , external_name
@@ -322,7 +322,7 @@ $INITIALIZE_FEATURE_MAPPING$
                     , var_root_display_name || ' / ' || ( var_curr_module ->> 'module_display_name' )
                     , var_curr_module ->> 'module_name'
                     , ( SELECT id
-                        FROM msbms_syst_data.syst_feature_map_levels
+                        FROM ms_syst_data.syst_feature_map_levels
                         WHERE internal_name = (var_curr_module ->> 'module_map_level') )
                     , NULL
                     , TRUE
@@ -331,8 +331,8 @@ $INITIALIZE_FEATURE_MAPPING$
                     , var_curr_module ->> 'module_description'
                     , coalesce(
                         ( SELECT max( sort_order ) + 1
-                          FROM msbms_syst_data.syst_feature_map fm
-                              JOIN msbms_syst_data.syst_feature_map_levels fml
+                          FROM ms_syst_data.syst_feature_map fm
+                              JOIN ms_syst_data.syst_feature_map_levels fml
                                   ON fml.id = fm.feature_map_level_id
                           WHERE fml.internal_name = (var_curr_module ->> 'module_map_level') )
                         , 1 ) )
@@ -343,7 +343,7 @@ $INITIALIZE_FEATURE_MAPPING$
                     SELECT jsonb_array_elements( var_feature_mappings -> 'information_types' )
                 LOOP
 
-                    INSERT INTO msbms_syst_data.syst_feature_map
+                    INSERT INTO ms_syst_data.syst_feature_map
                         ( internal_name
                         , display_name
                         , external_name
@@ -360,7 +360,7 @@ $INITIALIZE_FEATURE_MAPPING$
                         , var_new_module.display_name || ' / ' || ( var_curr_type ->> 'type_display_name' )
                         , var_curr_type ->> 'type_name'
                         , ( SELECT id
-                            FROM msbms_syst_data.syst_feature_map_levels
+                            FROM ms_syst_data.syst_feature_map_levels
                             WHERE internal_name = (var_curr_type ->> 'type_map_level') )
                         , var_new_module.id
                         , TRUE
@@ -369,8 +369,8 @@ $INITIALIZE_FEATURE_MAPPING$
                         , var_curr_type ->> 'type_description'
                         , coalesce(
                             ( SELECT max( sort_order ) + 1
-                              FROM msbms_syst_data.syst_feature_map fm
-                                  JOIN msbms_syst_data.syst_feature_map_levels fml
+                              FROM ms_syst_data.syst_feature_map fm
+                                  JOIN ms_syst_data.syst_feature_map_levels fml
                                       ON fml.id = fm.feature_map_level_id
                               WHERE fm.parent_feature_map_id = var_new_module.id)
                             , 1 ) )
@@ -386,7 +386,7 @@ $INITIALIZE_FEATURE_MAPPING$
                                 (var_curr_type ->> 'type_internal_name')
                         THEN
 
-                            INSERT INTO msbms_syst_data.syst_feature_map
+                            INSERT INTO ms_syst_data.syst_feature_map
                                 ( internal_name
                                 , display_name
                                 , external_name
@@ -405,7 +405,7 @@ $INITIALIZE_FEATURE_MAPPING$
                                     ( var_curr_feature ->> 'feature_display_name' )
                                 , var_curr_feature ->> 'feature_name'
                                 , ( SELECT id
-                                    FROM msbms_syst_data.syst_feature_map_levels
+                                    FROM ms_syst_data.syst_feature_map_levels
                                     WHERE internal_name = (var_curr_feature ->> 'feature_map_level') )
                                 , var_new_type.id
                                 , TRUE
@@ -414,8 +414,8 @@ $INITIALIZE_FEATURE_MAPPING$
                                 , var_curr_feature ->> 'feature_description'
                                 , coalesce(
                                     ( SELECT max( sort_order ) + 1
-                                      FROM msbms_syst_data.syst_feature_map fm
-                                          JOIN msbms_syst_data.syst_feature_map_levels fml
+                                      FROM ms_syst_data.syst_feature_map fm
+                                          JOIN ms_syst_data.syst_feature_map_levels fml
                                               ON fml.id = fm.feature_map_level_id
                                       WHERE fm.parent_feature_map_id = var_new_type.id)
                                     , 1 ) )
@@ -426,7 +426,7 @@ $INITIALIZE_FEATURE_MAPPING$
                                 SELECT jsonb_array_elements( var_feature_mappings -> 'kinds' )
                             LOOP
 
-                                INSERT INTO msbms_syst_data.syst_feature_map
+                                INSERT INTO ms_syst_data.syst_feature_map
                                 ( internal_name
                                 , display_name
                                 , external_name
@@ -445,7 +445,7 @@ $INITIALIZE_FEATURE_MAPPING$
                                     ( var_curr_kind ->> 'kind_display_name' )
                                 , var_curr_kind ->> 'kind_name'
                                 , ( SELECT id
-                                    FROM msbms_syst_data.syst_feature_map_levels
+                                    FROM ms_syst_data.syst_feature_map_levels
                                     WHERE internal_name = (var_curr_kind ->> 'kind_map_level') )
                                 , var_new_feature.id
                                 , TRUE
@@ -454,8 +454,8 @@ $INITIALIZE_FEATURE_MAPPING$
                                 , var_curr_kind ->> 'kind_description'
                                 , coalesce(
                                     ( SELECT max( sort_order ) + 1
-                                      FROM msbms_syst_data.syst_feature_map fm
-                                          JOIN msbms_syst_data.syst_feature_map_levels fml
+                                      FROM ms_syst_data.syst_feature_map fm
+                                          JOIN ms_syst_data.syst_feature_map_levels fml
                                               ON fml.id = fm.feature_map_level_id
                                       WHERE fm.parent_feature_map_id = var_new_feature.id)
                                     , 1 ) );

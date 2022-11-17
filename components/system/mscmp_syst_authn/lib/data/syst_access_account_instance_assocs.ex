@@ -47,7 +47,7 @@ defmodule MscmpSystAuthn.Data.SystAccessAccountInstanceAssocs do
             diag_update_count: integer() | nil
           }
 
-  @schema_prefix "msbms_syst"
+  @schema_prefix "ms_syst"
 
   schema "syst_access_account_instance_assocs" do
     field(:access_granted, :utc_datetime)
