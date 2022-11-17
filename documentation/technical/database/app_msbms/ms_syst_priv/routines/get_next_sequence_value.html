@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>msbms_dev Database</title>
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
+        <!-- Bootstrap 3.3.5 -->
+        <link rel="stylesheet" href="../bower/admin-lte/bootstrap/css/bootstrap.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="../bower/font-awesome/css/font-awesome.min.css">
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="../bower/ionicons/css/ionicons.min.css">
+        <!-- DataTables -->
+        <link rel="stylesheet" href="../bower/datatables.net-bs/css/dataTables.bootstrap.min.css">
+        <link rel="stylesheet" href="../bower/datatables.net-buttons-bs/css/buttons.bootstrap.min.css">
+        <!-- Code Mirror -->
+        <link rel="stylesheet" href="../bower/codemirror/codemirror.css">
+        <!-- Fonts -->
+        <link href='../fonts/indieflower/indie-flower.css' rel='stylesheet' type='text/css'>
+        <link href='../fonts/source-sans-pro/source-sans-pro.css' rel='stylesheet' type='text/css'>
+
+        <!-- Theme style -->
+        <link rel="stylesheet" href="../bower/admin-lte/dist/css/AdminLTE.min.css">
+        <!-- Salvattore -->
+        <link rel="stylesheet" href="../bower/salvattore/salvattore.css">
+        <!-- AdminLTE Skins. Choose a skin from the css/skins
+           folder instead of downloading all of them to reduce the load. -->
+        <link rel="stylesheet" href="../bower/admin-lte/dist/css/skins/_all-skins.min.css">
+        <!-- SchemaSpy -->
+        <link rel="stylesheet" href="../schemaSpy.css">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="../bower/html5shiv/html5shiv.min.js"></script>
+        <script src="../bower/respond/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+    <body class="hold-transition skin-blue layout-top-nav">
+        <div class="wrapper">
+            <header class="main-header">
+                <nav class="navbar navbar-static-top">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <a href="../../index.html" class="navbar-brand"><b>msbms_dev</b> Database</a>
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
+                        </div>
+
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+                            <ul class="nav navbar-nav">
+                                <li><a href="../index.html">Tables <span class="sr-only">(current)</span></a></li>
+                                <li><a href="../columns.html" title="All of the columns in the schema">Columns</a></li>
+                                <li><a href="../constraints.html" title="Useful for diagnosing error messages that just give constraint name or number">Constraints</a></li>
+                                <li><a href="../relationships.html" title="Diagram of table relationships">Relationships</a></li>
+                                <li><a href="../orphans.html" title="View of tables with neither parents nor children">Orphan&nbsp;Tables</a></li>
+                                <li><a href="../anomalies.html" title="Things that might not be quite right">Anomalies</a></li>
+                                <li><a href="../routines.html" title="Procedures and functions">Routines</a></li>
+                            </ul>
+                        </div>
+                        <!-- /.navbar-collapse -->
+                        <!-- Navbar Right Menu -->
+                    </div>
+                    <!-- /.container-fluid -->
+                </nav>
+            </header>
+            <!-- Main content -->
+            <!-- Full Width Column -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <h1>get_next_sequence_value</h1><br />
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <i class="fa fa-file-text-o"></i>
+                            <h3 id="Description" class="box-title">Description</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body clearfix">
+                            <p><p>Returns the next value for the requested numbering sequence.</p>
+<p>If the sequence has exhausted all values in the allowed range of values, this<br />
+function will</p></p>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                </section>
+                <!-- Main content -->
+                <section class="content">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                            <h3 id="Columns" class="box-title">Parameters</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <table id="standard_table" class="table table-bordered table-striped dataTable" role="grid">
+                                <thead align='left'>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Type</th>
+                                    <th>Mode</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>p_numbering_sequence_id</td>
+                                    <td>uuid</td>
+                                    <td>IN</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <i class="fa fa-file-code-o"></i>
+                            <h3 id="RoutineDefinition" class="box-title">Definition</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <textarea id="sql-script-codemirror" name="sql-script-codemirror" rows="" style="display: none;">&#10;&#10;-- File:        get_next_sequence_value.eex.sql&#10;-- Location:    musebms/database/components/system/mscmp_syst_docnum/ms_syst_priv/functions/get_next_sequence_value.eex.sql&#10;-- Project:     Muse Systems Business Management System&#10;--&#10;-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems&#10;-- This file may include content copyrighted and licensed from third parties.&#10;--&#10;-- See the LICENSE file in the project root for license terms and conditions.&#10;-- See the NOTICE file in the project root for copyright ownership information.&#10;--&#10;-- muse.information@musesystems.com  :: https://muse.systems&#10;&#10;DECLARE&#10;    var_context_data   record;&#10;    var_new_next_value bigint;&#10;    var_return_value   bigint;&#10;&#10;BEGIN&#10;&#10;    SELECT INTO var_context_data&#10;         sns.id&#10;        ,sns.allowed_value_range&#10;        ,sns.cycle_policy&#10;        ,sns.value_increment&#10;        ,snsv.next_value&#10;    FROM ms_syst_data.syst_numbering_sequences  sns&#10;        JOIN ms_syst_data.syst_numbering_sequence_values snsv&#10;            ON snsv.id = sns.id&#10;    WHERE sns.id = p_numbering_sequence_id&#10;    FOR NO KEY UPDATE OF ms_syst_data.syst_numbering_sequence_values;&#10;&#10;    var_return_value   := var_context_data.next_value;&#10;&#10;    -- It&#39;s possible that next_value + value_increment can exceed both the bounds of the&#10;    -- allowed_value_range and even the data type of next_value.  So we need to test for that and&#10;    -- be sure that we don&#39;t create some sort of error condition because we broke the type bounds on&#10;    -- update.&#10;    IF NOT var_context_data.allowed_value_range @&gt; var_context_data.next_value THEN&#10;&#10;        CASE var_context_data.cycle_policy&#10;            WHEN &#39;cycle&#39; THEN&#10;&#10;                var_return_value :=&#10;                    CASE sign(var_context_data.value_increment)&#10;                        WHEN 1 THEN lower(var_context_data.allowed_value_range)&#10;                        WHEN -1 THEN upper(var_context_data.allowed_value_range)&#10;                    END;&#10;&#10;                var_new_next_value := var_return_value + var_context_data.value_increment;&#10;&#10;            WHEN &#39;error&#39; THEN&#10;&#10;                RAISE EXCEPTION&#10;                    USING&#10;                        MESSAGE = &#39;The requested numbering sequence has exhausted its available &#39; ||&#10;                                  &#39;values and is not allowed to automatically cycle back to its &#39; ||&#10;                                  &#39;starting value.&#39;,&#10;                        DETAIL  = ms_syst_priv.get_exception_details(&#10;                                     p_proc_schema    =&gt; &#39;ms_syst_priv&#39;&#10;                                    ,p_proc_name      =&gt; &#39;get_next_sequence_value&#39;&#10;                                    ,p_exception_name =&gt; &#39;numbering_sequence_out_of_range&#39;&#10;                                    ,p_errcode        =&gt; &#39;PM006&#39;&#10;                                    ,p_param_data     =&gt;&#10;                                        jsonb_build_object(&#10;                                             &#39;p_numbering_sequence_id&#39;&#10;                                            ,p_numbering_sequence_id)::jsonb&#10;                                    ,p_context_data   =&gt;&#10;                                        jsonb_build_object(&#10;                                             &#39;var_context_data&#39;,  to_jsonb(var_context_data))),&#10;                        ERRCODE = &#39;PM006&#39;,&#10;                        SCHEMA  = &#39;ms_syst_data&#39;,&#10;                        TABLE   = &#39;syst_numbering_sequence_values&#39;;&#10;&#10;        END CASE;&#10;&#10;    ELSIF&#10;        sign(var_context_data.value_increment) = 1 AND&#10;        var_context_data.value_increment &gt; upper(var_context_data.allowed_value_range) -&#10;                                           var_context_data.next_value&#10;    THEN&#10;&#10;        var_new_next_value := upper(var_context_data.allowed_value_range) + 1;&#10;&#10;    ELSIF&#10;        sign(var_context_data.value_increment) = -1 AND&#10;        abs(var_context_data.value_increment) &gt; var_context_data.next_value -&#10;                                                lower(var_context_data.allowed_value_range)&#10;    THEN&#10;&#10;        var_new_next_value := lower(var_context_data.allowed_value_range) - 1;&#10;&#10;    ELSE&#10;&#10;        var_new_next_value := var_context_data.next_value + var_context_data.value_increment;&#10;&#10;    END IF;&#10;&#10;    UPDATE ms_syst_data.syst_numbering_sequence_values SET&#10;        next_value = var_new_next_value&#10;    WHERE id = var_context_data.id;&#10;&#10;    RETURN var_return_value;&#10;&#10;END;&#10;</textarea>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <!-- /.content-wrapper -->
+            <footer class="main-footer">
+                <div>
+                    <div class="pull-right hidden-xs">
+                        <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
+                        <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
+                    </div>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.1.0</a></strong>
+                </div>
+                <!-- /.container -->
+            </footer>
+        </div>
+        <!-- ./wrapper -->
+
+        <!-- jQuery 2.2.3 -->
+        <script src="../bower/admin-lte/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script src="../bower/admin-lte/plugins/jQueryUI/jquery-ui.min.js"></script>
+        <!-- Bootstrap 3.3.5 -->
+        <script src="../bower/admin-lte/bootstrap/js/bootstrap.min.js"></script>
+        <!-- DataTables -->
+        <script src="../bower/datatables.net/jquery.dataTables.min.js"></script>
+        <script src="../bower/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+        <script src="../bower/datatables.net-buttons/dataTables.buttons.min.js"></script>
+        <script src="../bower/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+        <script src="../bower/datatables.net-buttons/buttons.html5.min.js"></script>
+        <script src="../bower/datatables.net-buttons/buttons.print.min.js"></script>
+        <script src="../bower/datatables.net-buttons/buttons.colVis.min.js"></script>
+        <!-- SheetJS -->
+        <script src="../bower/js-xlsx/xlsx.full.min.js"></script>
+        <!-- pdfmake -->
+        <script src="../bower/pdfmake/pdfmake.min.js"></script>
+        <script src="../bower/pdfmake/vfs_fonts.js"></script>
+        <!-- SlimScroll -->
+        <script src="../bower/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+        <!-- FastClick -->
+        <script src="../bower/admin-lte/plugins/fastclick/fastclick.js"></script>
+        <!-- Salvattore -->
+        <script src="../bower/salvattore/salvattore.min.js"></script>
+        <!-- AnchorJS -->
+        <script src="../bower/anchor-js/anchor.min.js"></script>
+        <!-- CodeMirror -->
+        <script src="../bower/codemirror/codemirror.js"></script>
+        <script src="../bower/codemirror/sql.js"></script>
+        <!-- AdminLTE App -->
+        <script src="../bower/admin-lte/dist/js/app.min.js"></script>
+        <script src="routine.js"></script>
+        <script src="../schemaSpy.js"></script>
+    </body>
+</html>

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.29.0">
+    <meta name="project" content="mscmp_syst_settings v0.1.0">
+
+    <title>MscmpSystSettings.Types — mscmp_syst_settings v0.1.0</title>
+    <link rel="stylesheet" href="dist/html-elixir-2YOS5DIE.css" />
+
+    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
+    <script src="dist/handlebars.templates-X7YVL3G2.js"></script>
+    <script src="dist/sidebar_items-7EAC1858.js"></script>
+
+      <script src="docs_config.js"></script>
+
+    <script async src="dist/html-XN2TSG4M.js"></script>
+
+
+  </head>
+  <body data-type="modules" class="page-module">
+    <script>
+
+      try {
+        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
+
+        if (settings.theme === 'dark' ||
+           ((settings.theme === 'system' || settings.theme == null) &&
+             window.matchMedia('(prefers-color-scheme: dark)').matches)
+           ) {
+          document.body.classList.add('dark')
+        }
+      } catch (error) { }
+    </script>
+
+<div class="main">
+
+<button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<section class="sidebar">
+  <form class="sidebar-search" action="search.html">
+    <button type="submit" class="search-button" aria-label="Submit Search">
+      <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
+    </button>
+    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
+      <i class="ri-close-line ri-lg" aria-hidden="true" title="Cancel search"></i>
+    </button>
+    <label class="search-label">
+      <p class="sr-only">Search</p>
+      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
+    </label>
+  </form>
+
+  <div class="autocomplete">
+    <div class="autocomplete-results">
+    </div>
+  </div>
+
+  <div class="sidebar-header">
+
+    <div class="sidebar-projectDetails">
+      <a href="MscmpSystSettings.html" class="sidebar-projectName" translate="no">
+mscmp_syst_settings
+      </a>
+      <strong class="sidebar-projectVersion" translate="no">
+        v0.1.0
+      </strong>
+    </div>
+    <ul class="sidebar-listNav">
+      <li><a id="extras-list-link" href="#full-list">Pages</a></li>
+
+        <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+
+
+    </ul>
+  </div>
+
+  <div class="gradient"></div>
+  <ul id="full-list" class="sidebar-fullList"></ul>
+</section>
+
+<section class="content">
+  <output role="status" id="toast"></output>
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+<h1>
+<button class="settings display-settings">
+  <i class="ri-settings-3-line"></i>
+  <span class="sr-only">Settings</span>
+</button>
+
+
+  <span translate="no">MscmpSystSettings.Types</span> 
+  <small class="app-vsn" translate="no">(mscmp_syst_settings v0.1.0)</small>
+
+</h1>
+
+
+  <section id="moduledoc">
+<p>Types used by Settings service module.</p>
+  </section>
+
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+      Summary
+    </h1>
+
+  <div class="summary-types summary">
+    <h2>
+      <a href="#types">Types</a>
+    </h2>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:service_name/0" translate="no">service_name()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>The valid forms of service name acceptable to identify the Settings service.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:setting_name/0" translate="no">setting_name()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Identification of each unique Setting managed by the Settings Service instance.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:setting_params/0" translate="no">setting_params()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>A map definition describing what specific key/value pairs are available for
+passing as SystSettings changeset parameters.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:setting_service_params/0" translate="no">setting_service_params()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>The expected form of the parameters used to start the Settings service.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:setting_types/0" translate="no">setting_types()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Data types of values accepted by any individual setting record.  Note that any
+one setting record may set values for one or more of these types concurrently.</p></div>
+
+      </div>
+
+  </div>
+
+  </section>
+
+
+  <section id="types" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#types">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+Types
+    </h1>
+    <div class="types-list">
+<section class="detail" id="t:service_name/0">
+
+  <div class="detail-header">
+    <a href="#t:service_name/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">service_name()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> service_name() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>() | {:via, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">module</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>() | {<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()}}</pre>
+
+      </div>
+
+<p>The valid forms of service name acceptable to identify the Settings service.</p><p>Currently we expect the service name to be an atom, though we expect that any
+of a simple local name, the :global registry, or the Registry module to be
+used for service registration.  Any registry compatible with those options
+should also work.</p>
+  </section>
+</section>
+<section class="detail" id="t:setting_name/0">
+
+  <div class="detail-header">
+    <a href="#t:setting_name/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">setting_name()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> setting_name() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+
+      </div>
+
+<p>Identification of each unique Setting managed by the Settings Service instance.</p>
+  </section>
+</section>
+<section class="detail" id="t:setting_params/0">
+
+  <div class="detail-header">
+    <a href="#t:setting_params/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">setting_params()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> setting_params() :: %{
+  optional(:internal_name) =&gt; <a href="#t:setting_name/0">setting_name</a>(),
+  optional(:display_name) =&gt; <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  optional(:user_description) =&gt; <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  optional(:setting_flag) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  optional(:setting_integer) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
+  optional(:setting_integer_range) =&gt; <a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.IntegerRange.html#t:t/0">MscmpSystDb.DbTypes.IntegerRange.t</a>(),
+  optional(:setting_decimal) =&gt; <a href="https://hexdocs.pm/decimal/2.0.0/Decimal.html#t:t/0">Decimal.t</a>(),
+  optional(:setting_decimal_range) =&gt; <a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.DecimalRange.html#t:t/0">MscmpSystDb.DbTypes.DecimalRange.t</a>(),
+  optional(:setting_interval) =&gt; <a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.Interval.html#t:t/0">MscmpSystDb.DbTypes.Interval.t</a>(),
+  optional(:setting_date) =&gt; <a href="https://hexdocs.pm/elixir/Date.html#t:t/0">Date.t</a>(),
+  optional(:setting_date_range) =&gt; <a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.DateRange.html#t:t/0">MscmpSystDb.DbTypes.DateRange.t</a>(),
+  optional(:setting_time) =&gt; <a href="https://hexdocs.pm/elixir/Time.html#t:t/0">Time.t</a>(),
+  optional(:setting_timestamp) =&gt; <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0">DateTime.t</a>(),
+  optional(:setting_timestamp_range) =&gt; <a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.DateTimeRange.html#t:t/0">MscmpSystDb.DbTypes.DateTimeRange.t</a>(),
+  optional(:setting_json) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(),
+  optional(:setting_text) =&gt; <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  optional(:setting_uuid) =&gt; <a href="https://hexdocs.pm/ecto/3.9.1/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>(),
+  optional(:setting_blob) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">binary</a>()
+}</pre>
+
+      </div>
+
+<p>A map definition describing what specific key/value pairs are available for
+passing as SystSettings changeset parameters.</p>
+  </section>
+</section>
+<section class="detail" id="t:setting_service_params/0">
+
+  <div class="detail-header">
+    <a href="#t:setting_service_params/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">setting_service_params()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> setting_service_params() :: {<a href="#t:service_name/0">service_name</a>(), <a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.Types.html#t:context_name/0">MscmpSystDb.Types.context_name</a>()}</pre>
+
+      </div>
+
+<p>The expected form of the parameters used to start the Settings service.</p>
+  </section>
+</section>
+<section class="detail" id="t:setting_types/0">
+
+  <div class="detail-header">
+    <a href="#t:setting_types/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">setting_types()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> setting_types() ::
+  :setting_flag
+  | :setting_integer
+  | :setting_integer_range
+  | :setting_decimal
+  | :setting_decimal_range
+  | :setting_interval
+  | :setting_date
+  | :setting_date_range
+  | :setting_time
+  | :setting_timestamp
+  | :setting_timestamp_range
+  | :setting_json
+  | :setting_text
+  | :setting_uuid
+  | :setting_blob</pre>
+
+      </div>
+
+<p>Data types of values accepted by any individual setting record.  Note that any
+one setting record may set values for one or more of these types concurrently.</p>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+      <footer class="footer">
+
+        <p>
+          Built using
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.29.0) for the
+
+            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+        </p>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+
+
+  </body>
+</html>

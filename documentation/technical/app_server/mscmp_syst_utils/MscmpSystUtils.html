@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.29.0">
+    <meta name="project" content="mscmp_syst_utils v0.1.0">
+
+    <title>MscmpSystUtils — mscmp_syst_utils v0.1.0</title>
+    <link rel="stylesheet" href="dist/html-elixir-2YOS5DIE.css" />
+
+    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
+    <script src="dist/handlebars.templates-X7YVL3G2.js"></script>
+    <script src="dist/sidebar_items-AC03250A.js"></script>
+
+      <script src="docs_config.js"></script>
+
+    <script async src="dist/html-XN2TSG4M.js"></script>
+
+
+  </head>
+  <body data-type="modules" class="page-module">
+    <script>
+
+      try {
+        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
+
+        if (settings.theme === 'dark' ||
+           ((settings.theme === 'system' || settings.theme == null) &&
+             window.matchMedia('(prefers-color-scheme: dark)').matches)
+           ) {
+          document.body.classList.add('dark')
+        }
+      } catch (error) { }
+    </script>
+
+<div class="main">
+
+<button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<section class="sidebar">
+  <form class="sidebar-search" action="search.html">
+    <button type="submit" class="search-button" aria-label="Submit Search">
+      <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
+    </button>
+    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
+      <i class="ri-close-line ri-lg" aria-hidden="true" title="Cancel search"></i>
+    </button>
+    <label class="search-label">
+      <p class="sr-only">Search</p>
+      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
+    </label>
+  </form>
+
+  <div class="autocomplete">
+    <div class="autocomplete-results">
+    </div>
+  </div>
+
+  <div class="sidebar-header">
+
+    <div class="sidebar-projectDetails">
+      <a href="MscmpSystUtils.html" class="sidebar-projectName" translate="no">
+mscmp_syst_utils
+      </a>
+      <strong class="sidebar-projectVersion" translate="no">
+        v0.1.0
+      </strong>
+    </div>
+    <ul class="sidebar-listNav">
+      <li><a id="extras-list-link" href="#full-list">Pages</a></li>
+
+        <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+
+
+    </ul>
+  </div>
+
+  <div class="gradient"></div>
+  <ul id="full-list" class="sidebar-fullList"></ul>
+</section>
+
+<section class="content">
+  <output role="status" id="toast"></output>
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+<h1>
+<button class="settings display-settings">
+  <i class="ri-settings-3-line"></i>
+  <span class="sr-only">Settings</span>
+</button>
+
+
+  <span translate="no">MscmpSystUtils</span> 
+  <small class="app-vsn" translate="no">(mscmp_syst_utils v0.1.0)</small>
+
+</h1>
+
+
+  <section id="moduledoc">
+<p>Common utility functions generally useful across components.</p>
+  </section>
+
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+      Summary
+    </h1>
+
+  <div class="summary-function-opts summary">
+    <h2>
+      <a href="#function-opts">Function Opts</a>
+    </h2>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#resolve_options/2" translate="no">resolve_options(opts_given, opts_default)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Resolves function options provided as a Keyword List to either the value
+provided or a default from a Keyword List of default values.</p></div>
+
+      </div>
+
+  </div>
+
+  <div class="summary-string-utilities summary">
+    <h2>
+      <a href="#string-utilities">String Utilities</a>
+    </h2>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#get_random_string/2" translate="no">get_random_string(string_length, tokens \\ :alphanum)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Generates a random string drawn from a specified list of characters.</p></div>
+
+      </div>
+
+  </div>
+
+  </section>
+
+
+  <section id="function-opts" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#function-opts">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+Function Opts
+    </h1>
+    <div class="function-opts-list">
+<section class="detail" id="resolve_options/2">
+
+  <div class="detail-header">
+    <a href="#resolve_options/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">resolve_options(opts_given, opts_default)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> resolve_options(<a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()</pre>
+
+      </div>
+
+<p>Resolves function options provided as a Keyword List to either the value
+provided or a default from a Keyword List of default values.</p><p>In many cases, we want to have optional functional parameters.  This small
+function will merge the user given options with a preset defined list of
+option defaults, always preferring the user given options.</p><p>Note that for keys in the <code class="inline">opts_given</code> argument that have <code class="inline">nil</code> values, the
+default value of the argument is used instead; the default value may itself
+may be <code class="inline">nil</code>, but one should be aware that <code class="inline">nil</code> is not always respected as a
+given value.</p><p>The result is a Keyword List of the merged lists.</p><h2 id="resolve_options/2-parameters" class="section-heading">
+  <a href="#resolve_options/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">opts_given</code> - a Keyword List of options provided by the caller.  This
+list may include all options, any subset of options, be an empty list, or be
+nil.</p></li><li><p><code class="inline">opts_default</code> - a Keyword List of options with their default values. This
+list defines the expected optional values and their default value should the
+user not provide a value.</p></li></ul><h2 id="resolve_options/2-examples" class="section-heading">
+  <a href="#resolve_options/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
+  Examples
+</h2>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">given_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="7304622498-1">[</span><span class="ss">test_value_one</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="7304622498-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">default_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="7304622498-2">[</span><span class="ss">test_value_one</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="ss">test_value_two</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="7304622498-2">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystUtils</span><span class="o">.</span><span class="n">resolve_options</span><span class="p" data-group-id="7304622498-3">(</span><span class="n">given_options</span><span class="p">,</span><span class="w"> </span><span class="n">default_options</span><span class="p" data-group-id="7304622498-3">)</span><span class="w">
+</span><span class="p" data-group-id="7304622498-4">[</span><span class="ss">test_value_one</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="ss">test_value_two</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="7304622498-4">]</span></code></pre>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+  <section id="string-utilities" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#string-utilities">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+String Utilities
+    </h1>
+    <div class="string-utilities-list">
+<section class="detail" id="get_random_string/2">
+
+    <span id="get_random_string/1"></span>
+
+  <div class="detail-header">
+    <a href="#get_random_string/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_random_string(string_length, tokens \\ :alphanum)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_random_string(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pos_integer</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">charlist</a>() | <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()) :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+
+      </div>
+
+<p>Generates a random string drawn from a specified list of characters.</p><h2 id="get_random_string/2-parameters" class="section-heading">
+  <a href="#get_random_string/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">string_length</code> - the number of characters in the returned string.</p></li><li><p><code class="inline">tokens</code> - this optional parameter may either be a <code class="inline">charlist()</code> including
+the desired characters from which to randomly select characters for the
+string or the parameter may be an atom which designates a predefined
+character list.  The available predefined character lists are:</p><ul><li><p><code class="inline">:alphanum</code> - will return values from the set
+<code class="inline">0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ</code>.  This is the default value.</p></li><li><p><code class="inline">:mixed_alphanum</code> - will return values from the set
+<code class="inline">0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz</code></p></li><li><p><code class="inline">b32e</code> - will return values from the set
+<code class="inline">0123456789ABCDEFGHIJKLMNOPQRSTUV</code>.  This equates to the character set
+used by Elixir's <code class="inline">Integer.to_string(x, 32)</code>.</p></li><li><p><code class="inline">b32c</code> - will return values from the set
+<code class="inline">0123456789ABCDEFGHJKMNPQRSTVWXYZ</code>.  This is the Base32 character set
+compatible with Douglas Crockford's Base 32 (<a href="https://www.crockford.com/base32.html">https://www.crockford.com/base32.html</a>).</p></li></ul></li></ul>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+      <footer class="footer">
+
+        <p>
+          Built using
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.29.0) for the
+
+            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+        </p>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+
+
+  </body>
+</html>

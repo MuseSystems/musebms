@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.29.0">
+    <meta name="project" content="mscmp_syst_instance v0.1.0">
+
+    <title>MscmpSystInstance.Types — mscmp_syst_instance v0.1.0</title>
+    <link rel="stylesheet" href="dist/html-elixir-2YOS5DIE.css" />
+
+    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
+    <script src="dist/handlebars.templates-X7YVL3G2.js"></script>
+    <script src="dist/sidebar_items-0819640F.js"></script>
+
+      <script src="docs_config.js"></script>
+
+    <script async src="dist/html-XN2TSG4M.js"></script>
+
+
+  </head>
+  <body data-type="modules" class="page-module">
+    <script>
+
+      try {
+        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
+
+        if (settings.theme === 'dark' ||
+           ((settings.theme === 'system' || settings.theme == null) &&
+             window.matchMedia('(prefers-color-scheme: dark)').matches)
+           ) {
+          document.body.classList.add('dark')
+        }
+      } catch (error) { }
+    </script>
+
+<div class="main">
+
+<button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<section class="sidebar">
+  <form class="sidebar-search" action="search.html">
+    <button type="submit" class="search-button" aria-label="Submit Search">
+      <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
+    </button>
+    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
+      <i class="ri-close-line ri-lg" aria-hidden="true" title="Cancel search"></i>
+    </button>
+    <label class="search-label">
+      <p class="sr-only">Search</p>
+      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
+    </label>
+  </form>
+
+  <div class="autocomplete">
+    <div class="autocomplete-results">
+    </div>
+  </div>
+
+  <div class="sidebar-header">
+
+    <div class="sidebar-projectDetails">
+      <a href="MscmpSystInstance.html" class="sidebar-projectName" translate="no">
+mscmp_syst_instance
+      </a>
+      <strong class="sidebar-projectVersion" translate="no">
+        v0.1.0
+      </strong>
+    </div>
+    <ul class="sidebar-listNav">
+      <li><a id="extras-list-link" href="#full-list">Pages</a></li>
+
+        <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+
+
+    </ul>
+  </div>
+
+  <div class="gradient"></div>
+  <ul id="full-list" class="sidebar-fullList"></ul>
+</section>
+
+<section class="content">
+  <output role="status" id="toast"></output>
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+<h1>
+<button class="settings display-settings">
+  <i class="ri-settings-3-line"></i>
+  <span class="sr-only">Settings</span>
+</button>
+
+
+  <span translate="no">MscmpSystInstance.Types</span> 
+  <small class="app-vsn" translate="no">(mscmp_syst_instance v0.1.0)</small>
+
+</h1>
+
+
+  <section id="moduledoc">
+<p>Types used by the Instance Manager module.</p>
+  </section>
+
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+      Summary
+    </h1>
+
+  <div class="summary-types summary">
+    <h2>
+      <a href="#types">Types</a>
+    </h2>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:application_context_id/0" translate="no">application_context_id()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Defines the data type of the Application Context ID.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:application_context_name/0" translate="no">application_context_name()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>The data type describing unique naming for known application contexts in programmatic contexts.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:application_id/0" translate="no">application_id()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>The data type of the Application ID value.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:application_name/0" translate="no">application_name()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>The data type describing unique naming for known system applications in programmatic contexts.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:instance_context_id/0" translate="no">instance_context_id()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>The data type describing the record ID value of the Instance Context record.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:instance_context_name/0" translate="no">instance_context_name()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Defines the data type representing Instance Context names.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:instance_context_params/0" translate="no">instance_context_params()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Attributes accepted for the creation or change of Instance Context records.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:instance_id/0" translate="no">instance_id()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Defines the type of the Instance record ID value.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:instance_name/0" translate="no">instance_name()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Type for identifying individual known system instances.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:instance_params/0" translate="no">instance_params()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>A map definition which allows for the maintenance of system instance records.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:instance_state_functional_types/0" translate="no">instance_state_functional_types()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Establishes the available instance state functional types understood by the
+module.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:instance_state_id/0" translate="no">instance_state_id()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>The type of the Instance State ID value.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:instance_state_name/0" translate="no">instance_state_name()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Type for identifying Instance States by name.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:instance_state_params/0" translate="no">instance_state_params()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>The required data for maintaining Instance States.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:instance_type_application_id/0" translate="no">instance_type_application_id()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>The data type of the Instance Type Application record ID.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:instance_type_application_params/0" translate="no">instance_type_application_params()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Defines the creation parameters for Instance Type Application records.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:instance_type_context_id/0" translate="no">instance_type_context_id()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Defines the data type of the Instance Type Context ID.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:instance_type_context_params/0" translate="no">instance_type_context_params()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>The required data for maintaining Instance Type Contexts.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:instance_type_default_options/0" translate="no">instance_type_default_options()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Expected data structure for Instance Type user_options data.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:instance_type_id/0" translate="no">instance_type_id()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Type of the Instance Type ID value.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:instance_type_name/0" translate="no">instance_type_name()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Type for identifying instance type names.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:instance_type_params/0" translate="no">instance_type_params()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>The required data for maintaining Instance Types.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:owner_id/0" translate="no">owner_id()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Type for Owner record ID values.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:owner_name/0" translate="no">owner_name()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Type for programmatic the unique identification of system owner records.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:owner_params/0" translate="no">owner_params()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Defines a map which may be used to maintain system owner records.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:owner_state_functional_types/0" translate="no">owner_state_functional_types()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Defines the available owner state functional types which the module recognizes.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:owner_state_params/0" translate="no">owner_state_params()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>The required data for maintaining Owner States.</p></div>
+
+      </div>
+
+  </div>
+
+  </section>
+
+
+  <section id="types" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#types">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+Types
+    </h1>
+    <div class="types-list">
+<section class="detail" id="t:application_context_id/0">
+
+  <div class="detail-header">
+    <a href="#t:application_context_id/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">application_context_id()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> application_context_id() :: <a href="https://hexdocs.pm/ecto/3.9.1/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()</pre>
+
+      </div>
+
+<p>Defines the data type of the Application Context ID.</p>
+  </section>
+</section>
+<section class="detail" id="t:application_context_name/0">
+
+  <div class="detail-header">
+    <a href="#t:application_context_name/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">application_context_name()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> application_context_name() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+
+      </div>
+
+<p>The data type describing unique naming for known application contexts in programmatic contexts.</p>
+  </section>
+</section>
+<section class="detail" id="t:application_id/0">
+
+  <div class="detail-header">
+    <a href="#t:application_id/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">application_id()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> application_id() :: <a href="https://hexdocs.pm/ecto/3.9.1/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()</pre>
+
+      </div>
+
+<p>The data type of the Application ID value.</p>
+  </section>
+</section>
+<section class="detail" id="t:application_name/0">
+
+  <div class="detail-header">
+    <a href="#t:application_name/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">application_name()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> application_name() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+
+      </div>
+
+<p>The data type describing unique naming for known system applications in programmatic contexts.</p>
+  </section>
+</section>
+<section class="detail" id="t:instance_context_id/0">
+
+  <div class="detail-header">
+    <a href="#t:instance_context_id/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">instance_context_id()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> instance_context_id() :: <a href="https://hexdocs.pm/ecto/3.9.1/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()</pre>
+
+      </div>
+
+<p>The data type describing the record ID value of the Instance Context record.</p>
+  </section>
+</section>
+<section class="detail" id="t:instance_context_name/0">
+
+  <div class="detail-header">
+    <a href="#t:instance_context_name/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">instance_context_name()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> instance_context_name() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+
+      </div>
+
+<p>Defines the data type representing Instance Context names.</p>
+  </section>
+</section>
+<section class="detail" id="t:instance_context_params/0">
+
+  <div class="detail-header">
+    <a href="#t:instance_context_params/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">instance_context_params()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> instance_context_params() :: %{
+  optional(:start_context) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  optional(:db_pool_size) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>(),
+  optional(:context_code) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">binary</a>()
+}</pre>
+
+      </div>
+
+<p>Attributes accepted for the creation or change of Instance Context records.</p><p>Each Instance should have Instance Context records matched to its parent
+Application's Contexts, setting value specific for the Instance.</p>
+  </section>
+</section>
+<section class="detail" id="t:instance_id/0">
+
+  <div class="detail-header">
+    <a href="#t:instance_id/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">instance_id()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> instance_id() :: <a href="https://hexdocs.pm/ecto/3.9.1/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()</pre>
+
+      </div>
+
+<p>Defines the type of the Instance record ID value.</p>
+  </section>
+</section>
+<section class="detail" id="t:instance_name/0">
+
+  <div class="detail-header">
+    <a href="#t:instance_name/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">instance_name()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> instance_name() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+
+      </div>
+
+<p>Type for identifying individual known system instances.</p>
+  </section>
+</section>
+<section class="detail" id="t:instance_params/0">
+
+  <div class="detail-header">
+    <a href="#t:instance_params/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">instance_params()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> instance_params() :: %{
+  optional(:internal_name) =&gt; <a href="#t:instance_name/0">instance_name</a>(),
+  optional(:display_name) =&gt; <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  optional(:dbserver_name) =&gt; <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  optional(:application_id) =&gt; <a href="https://hexdocs.pm/ecto/3.9.1/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>(),
+  optional(:application_name) =&gt; <a href="#t:application_name/0">application_name</a>(),
+  optional(:instance_code) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">binary</a>(),
+  optional(:instance_type_id) =&gt; <a href="https://hexdocs.pm/ecto/3.9.1/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>(),
+  optional(:instance_type_name) =&gt; <a href="#t:instance_type_name/0">instance_type_name</a>(),
+  optional(:instance_state_id) =&gt; <a href="https://hexdocs.pm/ecto/3.9.1/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>(),
+  optional(:instance_state_name) =&gt; <a href="#t:instance_state_name/0">instance_state_name</a>(),
+  optional(:owner_id) =&gt; <a href="https://hexdocs.pm/ecto/3.9.1/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>(),
+  optional(:owner_name) =&gt; <a href="#t:owner_name/0">owner_name</a>(),
+  optional(:owning_instance_id) =&gt; <a href="https://hexdocs.pm/ecto/3.9.1/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>(),
+  optional(:owning_instance_name) =&gt; <a href="#t:instance_name/0">instance_name</a>()
+}</pre>
+
+      </div>
+
+<p>A map definition which allows for the maintenance of system instance records.</p>
+  </section>
+</section>
+<section class="detail" id="t:instance_state_functional_types/0">
+
+  <div class="detail-header">
+    <a href="#t:instance_state_functional_types/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">instance_state_functional_types()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> instance_state_functional_types() ::
+  :instance_states_uninitialized
+  | :instance_states_initializing
+  | :instance_states_active
+  | :instance_states_suspended
+  | :instance_states_inactive
+  | :instance_states_purge_eligible</pre>
+
+      </div>
+
+<p>Establishes the available instance state functional types understood by the
+module.</p><ul><li><p><code class="inline">:instance_states_uninitialized</code> - The instance definition record has been
+created, but the corresponding instance has not been created on the
+database server and is awaiting processing.</p></li><li><p><code class="inline">:instance_states_initializing</code> - The process of creating the instance has
+been started.</p></li><li><p><code class="inline">:instance_states_active</code> - The instance is created and usable by users.</p></li><li><p><code class="inline">:instance_states_suspended</code> - The instance is not available for regular
+use, though some limited functionality may be available.  The instance is
+likely visible to users for this reason.</p></li><li><p><code class="inline">:instance_states_inactive</code> - The instance is not available for any use
+and would not typically be visible tp users for any purpose.</p></li><li><p><code class="inline">:instance_states_purge_eligible</code> - The instance is not available for any
+use, not visible to users and subject to be completely deleted from the
+system at any point in time.</p></li></ul>
+  </section>
+</section>
+<section class="detail" id="t:instance_state_id/0">
+
+  <div class="detail-header">
+    <a href="#t:instance_state_id/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">instance_state_id()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> instance_state_id() :: <a href="https://hexdocs.pm/ecto/3.9.1/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()</pre>
+
+      </div>
+
+<p>The type of the Instance State ID value.</p>
+  </section>
+</section>
+<section class="detail" id="t:instance_state_name/0">
+
+  <div class="detail-header">
+    <a href="#t:instance_state_name/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">instance_state_name()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> instance_state_name() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+
+      </div>
+
+<p>Type for identifying Instance States by name.</p>
+  </section>
+</section>
+<section class="detail" id="t:instance_state_params/0">
+
+  <div class="detail-header">
+    <a href="#t:instance_state_params/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">instance_state_params()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> instance_state_params() :: %{
+  optional(:internal_name) =&gt; <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.Types.html#t:enum_item_name/0">MscmpSystEnums.Types.enum_item_name</a>(),
+  optional(:display_name) =&gt; <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  optional(:external_name) =&gt; <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  optional(:user_description) =&gt; <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  optional(:enum_default) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  optional(:functional_type_name) =&gt;
+    <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.Types.html#t:enum_functional_type_name/0">MscmpSystEnums.Types.enum_functional_type_name</a>()
+}</pre>
+
+      </div>
+
+<p>The required data for maintaining Instance States.</p><p>Note that when creating new instance states, the <code class="inline">internal_name</code>,
+<code class="inline">display_name</code>, <code class="inline">external_name</code>, <code class="inline">user_description</code>, and
+<code class="inline">functional_type_name</code> fields are required.  On updates of an existing
+instance state, those fields are optional.</p>
+  </section>
+</section>
+<section class="detail" id="t:instance_type_application_id/0">
+
+  <div class="detail-header">
+    <a href="#t:instance_type_application_id/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">instance_type_application_id()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> instance_type_application_id() :: <a href="https://hexdocs.pm/ecto/3.9.1/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()</pre>
+
+      </div>
+
+<p>The data type of the Instance Type Application record ID.</p>
+  </section>
+</section>
+<section class="detail" id="t:instance_type_application_params/0">
+
+  <div class="detail-header">
+    <a href="#t:instance_type_application_params/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">instance_type_application_params()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> instance_type_application_params() :: %{
+  instance_type_id: <a href="#t:instance_type_id/0">instance_type_id</a>(),
+  application_id: <a href="#t:application_id/0">application_id</a>()
+}</pre>
+
+      </div>
+
+<p>Defines the creation parameters for Instance Type Application records.</p><ul><li><p><code class="inline">instance_type_id</code> - the record ID of the parent Instance Type record.
+This field is required.</p></li><li><p><code class="inline">application_id</code> - the record ID of the Application record being
+associated with the parent Instance Type.</p></li></ul>
+  </section>
+</section>
+<section class="detail" id="t:instance_type_context_id/0">
+
+  <div class="detail-header">
+    <a href="#t:instance_type_context_id/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">instance_type_context_id()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> instance_type_context_id() :: <a href="https://hexdocs.pm/ecto/3.9.1/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()</pre>
+
+      </div>
+
+<p>Defines the data type of the Instance Type Context ID.</p>
+  </section>
+</section>
+<section class="detail" id="t:instance_type_context_params/0">
+
+  <div class="detail-header">
+    <a href="#t:instance_type_context_params/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">instance_type_context_params()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> instance_type_context_params() :: %{
+  optional(:instance_type_id) =&gt; <a href="https://hexdocs.pm/ecto/3.9.1/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>(),
+  optional(:instance_type_name) =&gt; <a href="#t:instance_type_name/0">instance_type_name</a>(),
+  optional(:application_context_id) =&gt; <a href="https://hexdocs.pm/ecto/3.9.1/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>(),
+  optional(:application_context_name) =&gt; <a href="#t:application_context_name/0">application_context_name</a>(),
+  optional(:default_db_pool_size) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>()
+}</pre>
+
+      </div>
+
+<p>The required data for maintaining Instance Type Contexts.</p>
+  </section>
+</section>
+<section class="detail" id="t:instance_type_default_options/0">
+
+  <div class="detail-header">
+    <a href="#t:instance_type_default_options/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">instance_type_default_options()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> instance_type_default_options() :: %{allowed_server_pools: [<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()]}</pre>
+
+      </div>
+
+<p>Expected data structure for Instance Type user_options data.</p><p>Instance Type user options currently define which server pools are allowed to
+host Instances of the Instance Type.</p>
+  </section>
+</section>
+<section class="detail" id="t:instance_type_id/0">
+
+  <div class="detail-header">
+    <a href="#t:instance_type_id/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">instance_type_id()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> instance_type_id() :: <a href="https://hexdocs.pm/ecto/3.9.1/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()</pre>
+
+      </div>
+
+<p>Type of the Instance Type ID value.</p>
+  </section>
+</section>
+<section class="detail" id="t:instance_type_name/0">
+
+  <div class="detail-header">
+    <a href="#t:instance_type_name/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">instance_type_name()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> instance_type_name() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+
+      </div>
+
+<p>Type for identifying instance type names.</p>
+  </section>
+</section>
+<section class="detail" id="t:instance_type_params/0">
+
+  <div class="detail-header">
+    <a href="#t:instance_type_params/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">instance_type_params()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> instance_type_params() :: %{
+  optional(:internal_name) =&gt; <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.Types.html#t:enum_item_name/0">MscmpSystEnums.Types.enum_item_name</a>(),
+  optional(:display_name) =&gt; <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  optional(:external_name) =&gt; <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  optional(:user_description) =&gt; <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  optional(:user_options) =&gt; <a href="#t:instance_type_default_options/0">instance_type_default_options</a>(),
+  optional(:enum_default) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()
+}</pre>
+
+      </div>
+
+<p>The required data for maintaining Instance Types.</p><p>Note that when creating new instance types, the <code class="inline">internal_name</code>,
+<code class="inline">display_name</code>, <code class="inline">external_name</code>, <code class="inline">user_description</code>, and <code class="inline">user_options</code> fields
+are required.  On updates of an existing instance type, those fields are
+optional.</p>
+  </section>
+</section>
+<section class="detail" id="t:owner_id/0">
+
+  <div class="detail-header">
+    <a href="#t:owner_id/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">owner_id()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> owner_id() :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">binary</a>()</pre>
+
+      </div>
+
+<p>Type for Owner record ID values.</p>
+  </section>
+</section>
+<section class="detail" id="t:owner_name/0">
+
+  <div class="detail-header">
+    <a href="#t:owner_name/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">owner_name()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> owner_name() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+
+      </div>
+
+<p>Type for programmatic the unique identification of system owner records.</p>
+  </section>
+</section>
+<section class="detail" id="t:owner_params/0">
+
+  <div class="detail-header">
+    <a href="#t:owner_params/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">owner_params()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> owner_params() :: %{
+  optional(:internal_name) =&gt; <a href="#t:owner_name/0">owner_name</a>(),
+  optional(:display_name) =&gt; <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  optional(:owner_state_id) =&gt; <a href="https://hexdocs.pm/ecto/3.9.1/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()
+}</pre>
+
+      </div>
+
+<p>Defines a map which may be used to maintain system owner records.</p>
+  </section>
+</section>
+<section class="detail" id="t:owner_state_functional_types/0">
+
+  <div class="detail-header">
+    <a href="#t:owner_state_functional_types/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">owner_state_functional_types()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> owner_state_functional_types() ::
+  :owner_states_active
+  | :owner_states_suspended
+  | :owner_states_inactive
+  | :owner_states_purge_eligible</pre>
+
+      </div>
+
+<p>Defines the available owner state functional types which the module recognizes.</p><ul><li><p><code class="inline">:owner_states_active</code> - The owner is active and available for normal use.</p></li><li><p><code class="inline">:owner_states_suspended</code> - The owner is not available for regular use,
+though some limited functionality may be available.  The owner is likely
+visible to users for this reason.</p></li><li><p><code class="inline">:owner_states_inactive</code> - The owner is not available for any use and
+would not typically be visible tp users for any purpose.</p></li><li><p><code class="inline">:owner_states_purge_eligible</code> - The owner is not available for any use,
+not visible to users and subject to be completely deleted from the system
+at any point in time.</p></li></ul>
+  </section>
+</section>
+<section class="detail" id="t:owner_state_params/0">
+
+  <div class="detail-header">
+    <a href="#t:owner_state_params/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">owner_state_params()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> owner_state_params() :: %{
+  optional(:internal_name) =&gt; <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.Types.html#t:enum_item_name/0">MscmpSystEnums.Types.enum_item_name</a>(),
+  optional(:display_name) =&gt; <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  optional(:external_name) =&gt; <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  optional(:user_description) =&gt; <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  optional(:enum_default) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  optional(:functional_type_name) =&gt;
+    <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.Types.html#t:enum_functional_type_name/0">MscmpSystEnums.Types.enum_functional_type_name</a>()
+}</pre>
+
+      </div>
+
+<p>The required data for maintaining Owner States.</p><p>Note that when creating new owner states, the <code class="inline">internal_name</code>, <code class="inline">display_name</code>,
+<code class="inline">external_name</code>, <code class="inline">user_description</code>, and <code class="inline">functional_type_name</code> fields are
+required.  On updates of an existing instance state, those fields are
+optional.</p>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+      <footer class="footer">
+
+        <p>
+          Built using
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.29.0) for the
+
+            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+        </p>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+
+
+  </body>
+</html>

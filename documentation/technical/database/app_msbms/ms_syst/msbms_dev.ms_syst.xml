@@ -1,0 +1,1015 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<database name="msbms_dev" schema="ms_syst" type="PostgreSQL - 15.1 (Ubuntu 15.1-1.pgdg22.04+1)">
+   <tables>
+      <table name="syst_enum_functional_types" numRows="0" remarks="For those enumerations requiring functional type designation, this table defines&#10;the available types and persists related metadata.  Note that not all&#10;enumerations require functional types.&#10;&#10;This API View allows the application to read and maintain the data according to&#10;well defined application business rules.  Using this API view for updates to&#10;data is the preferred method of data maintenance in the course of normal usage.&#10;&#10;Only user maintainable values may be maintained via this API.  System created or&#10;maintained data is not maintainable via this view.  Attempts at invalid data&#10;maintenance via this API may result in the invalid changes being ignored or may&#10;raise an exception." schema="ms_syst" type="VIEW" viewSql=" SELECT seft.id,&#10;    seft.internal_name,&#10;    seft.display_name,&#10;    seft.external_name,&#10;    se.syst_defined,&#10;    seft.enum_id,&#10;    seft.syst_description,&#10;    seft.user_description,&#10;    seft.diag_timestamp_created,&#10;    seft.diag_role_created,&#10;    seft.diag_timestamp_modified,&#10;    seft.diag_wallclock_modified,&#10;    seft.diag_role_modified,&#10;    seft.diag_row_version,&#10;    seft.diag_update_count&#10;   FROM (ms_syst_data.syst_enum_functional_types seft&#10;     JOIN ms_syst_data.syst_enums se ON ((se.id = seft.enum_id)));">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="true" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;Note that this column may not be updated via this API View." size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="true" remarks="A candidate key useful for programmatic references to individual records." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="display_name" nullable="true" remarks="A friendly name and candidate key for the record, suitable for use in user&#10;interactions" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="external_name" nullable="true" remarks="A non-unique/non-key value used to display to users and external parties where&#10;uniqueness is less of a concern than specific end user presentation." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="syst_defined" nullable="true" remarks="If true, this value indicates that the functional type is considered to be&#10;system defined and a part of the application.  This column is not part of the&#10;functional type underlying data and is a reflect of the functional type's parent&#10;enumeration since the parent determines if the functional type is considered&#10;system defined.  If false, the assumption is that the functional type is user&#10;defined and supports custom user functionality.&#10;&#10;See the documentation for ms_syst.syst_enums.syst_defined for a more complete&#10;complete description.&#10;&#10;Note that this column may not be updated via this API View." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="enum_id" nullable="true" remarks="A reference to the owning enumeration of the functional type." size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="syst_description" nullable="true" remarks="A default description of the specific functional type and its use cases within&#10;the enumeration which is identitied as the parent.&#10;&#10;Note that this column may not be updated via this API View." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="user_description" nullable="true" remarks="A custom, user suppplied description of the functional type which will be&#10;preferred over the syst_description field if set to a not null value." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="8" name="diag_timestamp_created" nullable="true" remarks="The database server date/time when the transaction which created the record&#10;started.&#10;&#10;Note that this column may not be updated via this API View." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="diag_role_created" nullable="true" remarks="The database role which created the record.&#10;&#10;Note that this column may not be updated via this API View." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="10" name="diag_timestamp_modified" nullable="true" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records.&#10;&#10;Note that this column may not be updated via this API View." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="11" name="diag_wallclock_modified" nullable="true" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified.&#10;&#10;Note that this column may not be updated via this API View." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="diag_role_modified" nullable="true" remarks="The database role which modified the record.&#10;&#10;Note that this column may not be updated via this API View." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="13" name="diag_row_version" nullable="true" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count.&#10;&#10;Note that this column may not be updated via this API View." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="14" name="diag_update_count" nullable="true" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1.&#10;&#10;Note that this column may not be updated via this API View." size="19" type="int8" typeCode="-5"/>
+      </table>
+      <table name="syst_enum_items" numRows="0" remarks="The list of values provided by an enumeration as well as related behavioral and&#10;informational metadata.&#10;&#10;This API View allows the application to read and maintain the data according to&#10;well defined application business rules.  Using this API view for updates to&#10;data is the preferred method of data maintenance in the course of normal usage.&#10;&#10;Only user maintainable values may be maintained via this API.  System created or&#10;maintained data is not maintainable via this view.  Attempts at invalid data&#10;maintenance via this API may result in the invalid changes being ignored or may&#10;raise an exception." schema="ms_syst" type="VIEW" viewSql=" SELECT syst_enum_items.id,&#10;    syst_enum_items.internal_name,&#10;    syst_enum_items.display_name,&#10;    syst_enum_items.external_name,&#10;    syst_enum_items.enum_id,&#10;    syst_enum_items.functional_type_id,&#10;    syst_enum_items.enum_default,&#10;    syst_enum_items.functional_type_default,&#10;    syst_enum_items.syst_defined,&#10;    syst_enum_items.user_maintainable,&#10;    syst_enum_items.syst_description,&#10;    syst_enum_items.user_description,&#10;    syst_enum_items.sort_order,&#10;    syst_enum_items.syst_options,&#10;    syst_enum_items.user_options,&#10;    syst_enum_items.diag_timestamp_created,&#10;    syst_enum_items.diag_role_created,&#10;    syst_enum_items.diag_timestamp_modified,&#10;    syst_enum_items.diag_wallclock_modified,&#10;    syst_enum_items.diag_role_modified,&#10;    syst_enum_items.diag_row_version,&#10;    syst_enum_items.diag_update_count&#10;   FROM ms_syst_data.syst_enum_items;">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="true" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;Note that this column may not be updated via this API View." size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="true" remarks="A candidate key useful for programmatic references to individual records." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="display_name" nullable="true" remarks="A friendly name and candidate key for the record, suitable for use in user&#10;interactions" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="external_name" nullable="true" remarks="A non-unique/non-key value used to display to users and external parties where&#10;uniqueness is less of a concern than specific end user presentation." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="enum_id" nullable="true" remarks="The enumeration record with which the value is associated." size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="functional_type_id" nullable="true" remarks="If the enumeration requires a functional type, this column references the&#10;functional type associated with the enumeration value record.  Note that not all&#10;enumerations require functional types.  If syst_enum_functional_types records&#10;exist for an enumeration, then this column will be required for any values of&#10;that enumeration; if there are no functional types defined for an enumeration,&#10;the this column must remain NULL." size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="enum_default" nullable="true" remarks="If true, indicates that this value is the default selection from all values&#10;defined for the enumerations.  If false then the value record has no special&#10;significance relative to defaulting.&#10;&#10;Note that if a record is inserted or updated in this table with enum_default set&#10;true, and another record already exists for the enumeration with its&#10;enum_default set true, the newly inserted/updated record will take precedence&#10;and the value record previously set to be default will have its enum_default&#10;setting set to false." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="functional_type_default" nullable="true" remarks="If true, the value record is the default selection for any of a specific&#10;fucntional type.  This is helpful in situations where a progression of state is&#10;automatically processed by the system and the state is represented by an&#10;enumeration.  In cases where there are no functional types, this value should&#10;simply remain false.&#10;&#10;Note that if a record is inserted or updated in this table with its&#10;functional_type_default set true, and another record already exists for the&#10;enumeration/functional type combination with its functional_type_default set&#10;true, the newly inserted/updated record will take precedence and the value&#10;record previously set to be default will have its functional_type_default&#10;setting set to false." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="syst_defined" nullable="true" remarks="If true, indicates that the value was created by the system or system&#10;installation process.  A false value indicates that the record was user created.&#10;&#10;Note that this column may not be updated via this API View." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="user_maintainable" nullable="true" remarks="If true, the user may maintain the value including setting user_options or&#10;even setting the record inactive/deleting it.  If false, the value record is&#10;required by the system for correct operation.  The user_description and&#10;user_options columns are always available for user maintenance regardless of&#10;this setting.&#10;&#10;Note that this column may not be updated via this API View." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="syst_description" nullable="true" remarks="A system default description describing the value and its use cases within the&#10;enumeration.&#10;&#10;Note that this column may not be updated via this API View." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="user_description" nullable="true" remarks="A custom user defined description which overrides the syst_description value&#10;where it would otherwise be used.  If this column is set NULL the&#10;syst_description value will be used." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="sort_order" nullable="true" remarks="Indicates the sort ordering of the particular value record with the lowest value&#10;sorting first.  When a value record for an enumeration is inserted or updated&#10;and this column is being set to a value which equals another enumeration value&#10;record for the same enumeration, the system assumes that the new record is&#10;being set to precede the existing record and it will be set to sort after the&#10;newly inserted/updated enumeration value." size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="13" name="syst_options" nullable="true" remarks="Extended options and metadata which describe the behavior and meaning of the&#10;specific value within the enumeration.  The owning&#10;syst_enums record's default_syst_options column will indicate what syst_options&#10;are required or available and establishes default values for them.&#10;&#10;Note that this column may not be updated via this API View." size="2147483647" type="jsonb" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="14" name="user_options" nullable="true" remarks="Extended user defined options, similar to syst_options, but for the purpose of&#10;driving custom functionality." size="2147483647" type="jsonb" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="15" name="diag_timestamp_created" nullable="true" remarks="The database server date/time when the transaction which created the record&#10;started.&#10;&#10;Note that this column may not be updated via this API View." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="16" name="diag_role_created" nullable="true" remarks="The database role which created the record.&#10;&#10;Note that this column may not be updated via this API View." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="17" name="diag_timestamp_modified" nullable="true" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records.&#10;&#10;Note that this column may not be updated via this API View." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="18" name="diag_wallclock_modified" nullable="true" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified.&#10;&#10;Note that this column may not be updated via this API View." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="19" name="diag_role_modified" nullable="true" remarks="The database role which modified the record.&#10;&#10;Note that this column may not be updated via this API View." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="20" name="diag_row_version" nullable="true" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count.&#10;&#10;Note that this column may not be updated via this API View." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="21" name="diag_update_count" nullable="true" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1.&#10;&#10;Note that this column may not be updated via this API View." size="19" type="int8" typeCode="-5"/>
+      </table>
+      <table name="syst_enums" numRows="0" remarks="Enumerates the enumerations known to the system along with additional metadata&#10;useful in applying them appropriately.&#10;&#10;This API View allows the application to read and maintain the data according to&#10;well defined application business rules.  Using this API view for updates to&#10;data is the preferred method of data maintenance in the course of normal usage.&#10;&#10;Only user maintainable values may be maintained via this API.  System created or&#10;maintained data is not maintainable via this view.  Attempts at invalid data&#10;maintenance via this API may result in the invalid changes being ignored or may&#10;raise an exception." schema="ms_syst" type="VIEW" viewSql=" SELECT syst_enums.id,&#10;    syst_enums.internal_name,&#10;    syst_enums.display_name,&#10;    syst_enums.syst_description,&#10;    syst_enums.user_description,&#10;    syst_enums.syst_defined,&#10;    syst_enums.user_maintainable,&#10;    syst_enums.default_syst_options,&#10;    syst_enums.default_user_options,&#10;    syst_enums.diag_timestamp_created,&#10;    syst_enums.diag_role_created,&#10;    syst_enums.diag_timestamp_modified,&#10;    syst_enums.diag_wallclock_modified,&#10;    syst_enums.diag_role_modified,&#10;    syst_enums.diag_row_version,&#10;    syst_enums.diag_update_count&#10;   FROM ms_syst_data.syst_enums;">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="true" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;Note that this column may not be updated via this API View." size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="true" remarks="A candidate key useful for programmatic references to individual records." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="display_name" nullable="true" remarks="A friendly name and candidate key for the record, suitable for use in user&#10;interactions" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="syst_description" nullable="true" remarks="A default description of the enumeration which might include details such as how&#10;the enumeration is used and what kind of functionality might be impacted by&#10;choosing specific enumeration values.&#10;&#10;Note that this column may not be updated via this API View." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="user_description" nullable="true" remarks="A user defined description of the enumeration to support custom user&#10;documentation of the purpose and function of the enumeration." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="syst_defined" nullable="true" remarks="If true, this value indicates that the enumeration is considered part of the&#10;application.  Often times, system enumerations are manageable by users, but the&#10;existence of the enumeration in the system is assumed to exist by the&#10;application.  If false, the assumption is that the enumeration was created by&#10;users and supports custom user functionality.&#10;&#10;Note that this column may not be updated via this API View." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="user_maintainable" nullable="true" remarks="When true, this column indicates that the enumeration is user maintainable;&#10;this might include the ability to add, edit, or remove enumeration values.  When&#10;false, the enumeration is strictly system managed for any functional purpose.&#10;Note that the value of this column doesn't effect the ability to set a&#10;user_description value; the ability to set custom descriptions is always&#10;available for any properly authorized user." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="default_syst_options" nullable="true" remarks="Establishes the expected extended system options along with default values if&#10;applicable.  Note that this setting is used to both validate&#10;and set defaults in the syst_enum_items.syst_options column.&#10;&#10;Note that this column may not be updated via this API View." size="2147483647" type="jsonb" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="default_user_options" nullable="true" remarks="Allows a user to set the definition of syst_enum_items.user_options values and&#10;provide defaults for those values if appropriate." size="2147483647" type="jsonb" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="9" name="diag_timestamp_created" nullable="true" remarks="The database server date/time when the transaction which created the record&#10;started.&#10;&#10;Note that this column may not be updated via this API View." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="diag_role_created" nullable="true" remarks="The database role which created the record.&#10;&#10;Note that this column may not be updated via this API View." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="11" name="diag_timestamp_modified" nullable="true" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records.&#10;&#10;Note that this column may not be updated via this API View." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="12" name="diag_wallclock_modified" nullable="true" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified.&#10;&#10;Note that this column may not be updated via this API View." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="13" name="diag_role_modified" nullable="true" remarks="The database role which modified the record.&#10;&#10;Note that this column may not be updated via this API View." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="14" name="diag_row_version" nullable="true" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count.&#10;&#10;Note that this column may not be updated via this API View." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="15" name="diag_update_count" nullable="true" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1.&#10;&#10;Note that this column may not be updated via this API View." size="19" type="int8" typeCode="-5"/>
+      </table>
+      <table name="syst_feature_setting_assigns" numRows="0" remarks="A join table which allows application settings to be associated with various&#10;application features.  This is a many-to-many relationship.  The expectation is&#10;that this association will be used in organizing certain configuration or&#10;permissioning displays into a tree-like structure.&#10;&#10;This API View allows the application to read and maintain the data according to&#10;well defined application business rules.  Using this API view for updates to&#10;data is the preferred method of data maintenance in the course of normal usage." schema="ms_syst" type="VIEW" viewSql=" SELECT syst_feature_setting_assigns.id,&#10;    syst_feature_setting_assigns.feature_map_id,&#10;    syst_feature_setting_assigns.setting_id,&#10;    syst_feature_setting_assigns.diag_timestamp_created,&#10;    syst_feature_setting_assigns.diag_role_created,&#10;    syst_feature_setting_assigns.diag_timestamp_modified,&#10;    syst_feature_setting_assigns.diag_wallclock_modified,&#10;    syst_feature_setting_assigns.diag_role_modified,&#10;    syst_feature_setting_assigns.diag_row_version,&#10;    syst_feature_setting_assigns.diag_update_count&#10;   FROM ms_syst_data.syst_feature_setting_assigns;">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="true" remarks="" size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="feature_map_id" nullable="true" remarks="" size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="setting_id" nullable="true" remarks="" size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="3" name="diag_timestamp_created" nullable="true" remarks="" size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="diag_role_created" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="5" name="diag_timestamp_modified" nullable="true" remarks="" size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="6" name="diag_wallclock_modified" nullable="true" remarks="" size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="diag_role_modified" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="diag_row_version" nullable="true" remarks="" size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="diag_update_count" nullable="true" remarks="" size="19" type="int8" typeCode="-5"/>
+      </table>
+      <table name="syst_settings" numRows="0" remarks="Configuration data which establishes application behaviors, defaults, and&#10;provides a reference center to interested application functionality.&#10;&#10;This API View allows the application to read and maintain the data according to&#10;well defined application business rules.  Using this API view for updates to&#10;data is the preferred method of data maintenance in the course of normal usage.&#10;&#10;Only user maintainable values may be maintained via this API.  System created or&#10;maintained data is not maintainable via this view.  Attempts at invalid data&#10;maintenance via this API may result in the invalid changes being ignored or may&#10;raise an exception." schema="ms_syst" type="VIEW" viewSql=" SELECT syst_settings.id,&#10;    syst_settings.internal_name,&#10;    syst_settings.display_name,&#10;    syst_settings.syst_defined,&#10;    syst_settings.syst_description,&#10;    syst_settings.user_description,&#10;    syst_settings.setting_flag,&#10;    syst_settings.setting_integer,&#10;    syst_settings.setting_integer_range,&#10;    syst_settings.setting_decimal,&#10;    syst_settings.setting_decimal_range,&#10;    syst_settings.setting_interval,&#10;    syst_settings.setting_date,&#10;    syst_settings.setting_date_range,&#10;    syst_settings.setting_time,&#10;    syst_settings.setting_timestamp,&#10;    syst_settings.setting_timestamp_range,&#10;    syst_settings.setting_json,&#10;    syst_settings.setting_text,&#10;    syst_settings.setting_uuid,&#10;    syst_settings.setting_blob,&#10;    syst_settings.diag_timestamp_created,&#10;    syst_settings.diag_role_created,&#10;    syst_settings.diag_timestamp_modified,&#10;    syst_settings.diag_wallclock_modified,&#10;    syst_settings.diag_role_modified,&#10;    syst_settings.diag_row_version,&#10;    syst_settings.diag_update_count&#10;   FROM ms_syst_data.syst_settings;">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="true" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;Note that this column may not be updated via this API View." size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="true" remarks="A candidate key useful for programmatic references to individual records." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="display_name" nullable="true" remarks="A friendly name and candidate key for the record suitable for use in user&#10;interfaces." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="syst_defined" nullable="true" remarks="When true, indicates that the setting was created as part of the system and is&#10;expected to exist.  If false, the setting is user created and maintained.&#10;&#10;Note that this column may not be updated via this API View." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="syst_description" nullable="true" remarks="A text describing the meaning and use of the specific record.&#10;&#10;Note that this column may not be updated via this API View." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="user_description" nullable="true" remarks="A user customizable override of the system description text.  When the value in&#10;this column is not NULL, this text will be displayed to users in preference to&#10;the description found in syst_description." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="setting_flag" nullable="true" remarks="A boolean configuration point." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="setting_integer" nullable="true" remarks="An integer configuration point" size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="setting_integer_range" nullable="true" remarks="An integer range configuration point." size="2147483647" type="int8range" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="setting_decimal" nullable="true" remarks="An decimal configuration point (not floating point)." size="0" type="numeric" typeCode="2"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="setting_decimal_range" nullable="true" remarks="A decimal range configuration point." size="2147483647" type="numrange" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="11" name="setting_interval" nullable="true" remarks="An interval configuration point." size="49" type="interval" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="setting_date" nullable="true" remarks="A date configuation point." size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="13" name="setting_date_range" nullable="true" remarks="A date range configuration point." size="2147483647" type="daterange" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="14" name="setting_time" nullable="true" remarks="A time configuration point (without time zone)." size="15" type="time" typeCode="92"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="15" name="setting_timestamp" nullable="true" remarks="A full datetime configuration point including time zone." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="16" name="setting_timestamp_range" nullable="true" remarks="A range of timestamps with time zone configuration points." size="2147483647" type="tstzrange" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="17" name="setting_json" nullable="true" remarks="A JSON configuration point.  Note that duplicate keys at the same level are not&#10;allowed." size="2147483647" type="jsonb" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="18" name="setting_text" nullable="true" remarks="A text configuration point." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="19" name="setting_uuid" nullable="true" remarks="A UUID configuration point." size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="20" name="setting_blob" nullable="true" remarks="A binary configuration point." size="2147483647" type="bytea" typeCode="-2"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="21" name="diag_timestamp_created" nullable="true" remarks="The database server date/time when the transaction which created the record&#10;started.&#10;&#10;Note that this column may not be updated via this API View." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="22" name="diag_role_created" nullable="true" remarks="The database role which created the record.&#10;&#10;Note that this column may not be updated via this API View." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="23" name="diag_timestamp_modified" nullable="true" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records.&#10;&#10;Note that this column may not be updated via this API View." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="24" name="diag_wallclock_modified" nullable="true" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified.&#10;&#10;Note that this column may not be updated via this API View." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="25" name="diag_role_modified" nullable="true" remarks="The database role which modified the record.&#10;&#10;Note that this column may not be updated via this API View." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="26" name="diag_row_version" nullable="true" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count.&#10;&#10;Note that this column may not be updated via this API View." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="27" name="diag_update_count" nullable="true" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1.&#10;&#10;Note that this column may not be updated via this API View." size="19" type="int8" typeCode="-5"/>
+      </table>
+   </tables>
+   <routines>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_d_syst_enum_functional_types" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[An INSTEAD OF trigger function which applies business rules when using the
+syst_enum_functional_types API View for DELETE operations.]]></comment>
+         <definition language="PLPGSQL"><![CDATA[
+
+-- File:        trig_i_d_syst_enum_functional_types.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_enums/ms_syst/api_views/syst_enum_functional_types/trig_i_d_syst_enum_functional_types.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com  :: https://muse.systems
+
+BEGIN
+
+    IF old.syst_defined THEN
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'You cannot delete a system defined enumeration ' ||
+                          'functional type using the API Views.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst'
+                            ,p_proc_name      => 'trig_i_d_syst_enum_functional_types'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(old)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+    END IF;
+
+    DELETE
+    FROM ms_syst_data.syst_enum_functional_types
+    WHERE id = old.id
+    RETURNING INTO old
+          id
+        , internal_name
+        , display_name
+        , external_name
+        , old.syst_defined
+        , enum_id
+        , syst_description
+        , user_description
+        , diag_timestamp_created
+        , diag_role_created
+        , diag_timestamp_modified
+        , diag_wallclock_modified
+        , diag_role_modified
+        , diag_row_version
+        , diag_update_count ;
+
+    RETURN old;
+
+END;
+]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_d_syst_enum_items" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[An INSTEAD OF trigger function which applies business rules when using the
+syst_enum_items API View for DELETE operations.]]></comment>
+         <definition language="PLPGSQL"><![CDATA[
+
+-- File:        trig_i_d_syst_enum_items.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_enums/ms_syst/api_views/syst_enum_items/trig_i_d_syst_enum_items.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com  :: https://muse.systems
+
+BEGIN
+
+    IF old.syst_defined THEN
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'You cannot delete a system defined enumeration using the API Views.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst'
+                            ,p_proc_name      => 'trig_i_d_syst_enum_itemss'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(old)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+    END IF;
+
+    DELETE FROM ms_syst_data.syst_enum_items WHERE id = old.id RETURNING * INTO old;
+
+    RETURN old;
+
+END;
+]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_d_syst_enums" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[An INSTEAD OF trigger function which applies business rules when using the
+syst_enums API View for DELETE operations.]]></comment>
+         <definition language="PLPGSQL"><![CDATA[
+
+-- File:        trig_i_d_syst_enums.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_enums/ms_syst/api_views/syst_enums/trig_i_d_syst_enums.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com  :: https://muse.systems
+
+BEGIN
+
+    IF old.syst_defined THEN
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'You cannot delete a system defined enumeration using the API Views.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst'
+                            ,p_proc_name      => 'trig_i_d_syst_enums'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(old)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+    END IF;
+
+    DELETE FROM ms_syst_data.syst_enums WHERE id = old.id RETURNING * INTO old;
+
+    RETURN old;
+
+END;
+]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_d_syst_feature_setting_assigns" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[An INSTEAD OF trigger function which applies business rules when using the
+syst_settings API View for DELETE operations.]]></comment>
+         <definition language="PLPGSQL"><![CDATA[
+
+-- File:        trig_i_d_syst_feature_setting_assigns.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_features/ms_syst/api_views/syst_feature_setting_assigns/trig_i_d_syst_feature_setting_assigns.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com  :: https://muse.systems
+
+BEGIN
+
+    IF
+        (
+            SELECT syst_defined
+            FROM   ms_syst_data.syst_settings
+            WHERE  id = old.setting_id
+        )
+    THEN
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'You cannot delete a system defined setting/feature assignment ' ||
+                          'using the API Views.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst'
+                            ,p_proc_name      => 'trig_i_d_syst_feature_setting_assigns'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(old)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+    END IF;
+
+    DELETE FROM ms_syst_data.syst_feature_setting_assigns WHERE id = old.id;
+
+    RETURN null;
+
+END;
+]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_d_syst_settings" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[An INSTEAD OF trigger function which applies business rules when using the
+syst_settings API View for DELETE operations.]]></comment>
+         <definition language="PLPGSQL"><![CDATA[
+
+-- File:        trig_i_d_syst_settings.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_settings/ms_syst/api_views/syst_settings/trig_i_d_syst_settings.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com  :: https://muse.systems
+
+BEGIN
+
+    IF old.syst_defined THEN
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'You cannot delete a system defined setting using the API Views.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst'
+                            ,p_proc_name      => 'trig_i_d_syst_settings'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(old)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+    END IF;
+
+    DELETE FROM ms_syst_data.syst_settings WHERE id = old.id RETURNING * INTO old;
+
+    RETURN old;
+
+END;
+]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_i_syst_enum_functional_types" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[An INSTEAD OF trigger function which applies business rules when using the
+syst_enum_functional_types API View for INSERT operations.
+
+Note that the parent ms_syst_data.syst_enums.syst_defined determines whether
+or not child ms_syst_data.syst_enum_functional_types records are considered
+system defined.]]></comment>
+         <definition language="PLPGSQL"><![CDATA[
+
+-- File:        trig_i_i_syst_enum_functional_types.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_enums/ms_syst/api_views/syst_enum_functional_types/trig_i_i_syst_enum_functional_types.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com  :: https://muse.systems
+
+DECLARE
+    var_syst_defined boolean;
+BEGIN
+    SELECT syst_defined INTO var_syst_defined
+    FROM ms_syst_data.syst_enums
+    WHERE id = new.enum_id;
+
+    IF var_syst_defined THEN
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'The functional type creation for the requested ' ||
+                          'enumeration is invalid.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst'
+                            ,p_proc_name      => 'trig_i_i_syst_enum_functional_types'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(new)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+    END IF;
+
+    INSERT INTO ms_syst_data.syst_enum_functional_types
+        (  internal_name
+         , display_name
+         , external_name
+         , enum_id
+         , syst_description
+         , user_description)
+    VALUES
+        (  new.internal_name
+         , new.display_name
+         , new.external_name
+         , new.enum_id
+         , '(System Description Not Available)'
+         , new.user_description)
+    RETURNING INTO new
+          id
+        , internal_name
+        , display_name
+        , external_name
+        , var_syst_defined
+        , enum_id
+        , syst_description
+        , user_description
+        , diag_timestamp_created
+        , diag_role_created
+        , diag_timestamp_modified
+        , diag_wallclock_modified
+        , diag_role_modified
+        , diag_row_version
+        , diag_update_count ;
+
+    RETURN new;
+
+END;
+]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_i_syst_enum_items" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[An INSTEAD OF trigger function which applies business rules when using the
+syst_enum_items API View for INSERT operations.]]></comment>
+         <definition language="PLPGSQL"><![CDATA[
+
+-- File:        trig_i_i_syst_enum_items.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_enums/ms_syst/api_views/syst_enum_items/trig_i_i_syst_enum_items.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com  :: https://muse.systems
+
+BEGIN
+
+    IF
+        exists( SELECT TRUE
+                FROM ms_syst_data.syst_enums
+                WHERE id = new.enum_id AND syst_defined AND NOT user_maintainable)
+    THEN
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'You may not add new enumeration items for system defined ' ||
+                          'enumerations that are not marked user maintainable.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst'
+                            ,p_proc_name      => 'trig_i_i_syst_enum_items'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(new)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+    END IF;
+
+    INSERT INTO ms_syst_data.syst_enum_items
+        ( internal_name
+        , display_name
+        , external_name
+        , enum_id
+        , functional_type_id
+        , enum_default
+        , functional_type_default
+        , syst_defined
+        , user_maintainable
+        , syst_description
+        , user_description
+        , sort_order
+        , user_options )
+    VALUES
+        ( new.internal_name
+        , new.display_name
+        , new.external_name
+        , new.enum_id
+        , new.functional_type_id
+        , new.enum_default
+        , new.functional_type_default
+        , FALSE
+        , TRUE
+        , '(System Description Not Available)'
+        , new.user_description
+        , new.sort_order
+        , new.user_options )
+    RETURNING * INTO new;
+
+    RETURN new;
+
+END;
+]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_i_syst_enums" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[An INSTEAD OF trigger function which applies business rules when using the
+syst_enums API View for INSERT operations.]]></comment>
+         <definition language="PLPGSQL"><![CDATA[
+
+-- File:        trig_i_i_syst_enums.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_enums/ms_syst/api_views/syst_enums/trig_i_i_syst_enums.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com  :: https://muse.systems
+
+BEGIN
+
+    INSERT INTO ms_syst_data.syst_enums
+        ( internal_name
+        , display_name
+        , syst_description
+        , user_description
+        , syst_defined
+        , user_maintainable
+        , default_user_options )
+    VALUES
+        ( new.internal_name
+        , new.display_name
+        , '(System Description Not Available)'
+        , new.user_description
+        , FALSE
+        , TRUE
+        , new.default_user_options )
+    RETURNING * INTO new;
+
+    RETURN new;
+
+END;
+]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_i_syst_feature_setting_assigns" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[An INSTEAD OF trigger function which applies business rules when using the
+syst_settings API View for INSERT operations.]]></comment>
+         <definition language="PLPGSQL"><![CDATA[
+
+-- File:        trig_i_i_syst_feature_setting_assigns.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_features/ms_syst/api_views/syst_feature_setting_assigns/trig_i_i_syst_feature_setting_assigns.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com  :: https://muse.systems
+
+BEGIN
+
+    IF
+        (
+            SELECT syst_defined
+            FROM   ms_syst_data.syst_settings
+            WHERE  id = new.setting_id
+        )
+    THEN
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'You cannot create a new feature/setting mapping for system defined ' ||
+                          'settings using this API view.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst'
+                            ,p_proc_name      => 'trig_i_i_syst_feature_setting_assigns'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(new)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+    END IF;
+
+    INSERT INTO ms_syst_data.syst_feature_setting_assigns
+        ( feature_map_id, setting_id )
+    VALUES
+        ( new.feature_map_id, new.setting_id );
+
+    RETURN new;
+
+END;
+]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_i_syst_settings" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[An INSTEAD OF trigger function which applies business rules when using the
+syst_settings API View for INSERT operations.]]></comment>
+         <definition language="PLPGSQL"><![CDATA[
+
+-- File:        trig_i_i_syst_settings.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_settings/ms_syst/api_views/syst_settings/trig_i_i_syst_settings.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com  :: https://muse.systems
+
+BEGIN
+
+    INSERT INTO ms_syst_data.syst_settings
+        ( internal_name
+        , display_name
+        , syst_defined
+        , syst_description
+        , user_description
+        , setting_flag
+        , setting_integer
+        , setting_integer_range
+        , setting_decimal
+        , setting_decimal_range
+        , setting_interval
+        , setting_date
+        , setting_date_range
+        , setting_time
+        , setting_timestamp
+        , setting_timestamp_range
+        , setting_json
+        , setting_text
+        , setting_uuid
+        , setting_blob )
+    VALUES
+        ( new.internal_name
+        , new.display_name
+        , FALSE
+        , '(System Description Not Available)'
+        , new.user_description
+        , new.setting_flag
+        , new.setting_integer
+        , new.setting_integer_range
+        , new.setting_decimal
+        , new.setting_decimal_range
+        , new.setting_interval
+        , new.setting_date
+        , new.setting_date_range
+        , new.setting_time
+        , new.setting_timestamp
+        , new.setting_timestamp_range
+        , new.setting_json
+        , new.setting_text
+        , new.setting_uuid
+        , new.setting_blob )
+    RETURNING * INTO new;
+
+    RETURN new;
+
+END;
+]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_u_syst_enum_functional_types" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[An INSTEAD OF trigger function which applies business rules when using the
+syst_enum_functional_types API View for UPDATE operations.
+
+Note that the parent ms_syst_data.syst_enums.syst_defined determines whether
+or not child ms_syst_data.syst_enum_functional_types records are considered
+system defined.]]></comment>
+         <definition language="PLPGSQL"><![CDATA[
+
+-- File:        trig_i_u_syst_enum_functional_types.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_enums/ms_syst/api_views/syst_enum_functional_types/trig_i_u_syst_enum_functional_types.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com  :: https://muse.systems
+
+BEGIN
+    IF
+        (old.syst_defined AND old.internal_name != new.internal_name) OR
+        old.enum_id != new.enum_id
+    THEN
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'The requested data update included changes to fields disallowed ' ||
+                          'by the business rules of the API View.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst'
+                            ,p_proc_name      => 'trig_i_u_syst_enum_functional_types'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(new)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+    END IF;
+
+    UPDATE ms_syst_data.syst_enum_functional_types
+    SET
+        internal_name    = new.internal_name
+      , display_name     = new.display_name
+      , external_name    = new.external_name
+      , user_description = new.user_description
+    WHERE id = new.id
+    RETURNING INTO new
+          id
+        , internal_name
+        , display_name
+        , external_name
+        , old.syst_defined
+        , enum_id
+        , syst_description
+        , user_description
+        , diag_timestamp_created
+        , diag_role_created
+        , diag_timestamp_modified
+        , diag_wallclock_modified
+        , diag_role_modified
+        , diag_row_version
+        , diag_update_count ;
+
+    RAISE WARNING '======>>>>>>> New Func. Type: %', to_jsonb(new);
+
+    RETURN new;
+
+END;
+]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_u_syst_enum_items" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[An INSTEAD OF trigger function which applies business rules when using the
+syst_enum_items API View for UPDATE operations.]]></comment>
+         <definition language="PLPGSQL"><![CDATA[
+
+-- File:        trig_i_u_syst_enum_items.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_enums/ms_syst/api_views/syst_enum_items/trig_i_u_syst_enum_items.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com  :: https://muse.systems
+
+BEGIN
+
+    IF
+        old.syst_defined AND
+        (new.internal_name != old.internal_name OR
+         new.functional_type_id != old.functional_type_id)
+    THEN
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'The requested data update included changes to fields disallowed ' ||
+                          'by the business rules of the API View.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst'
+                            ,p_proc_name      => 'trig_i_u_syst_enum_items'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(new)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+    END IF;
+
+    UPDATE ms_syst_data.syst_enum_items
+    SET
+        internal_name           = new.internal_name
+      , display_name            = new.display_name
+      , external_name           = new.external_name
+      , functional_type_id      = new.functional_type_id
+      , enum_default            = new.enum_default
+      , functional_type_default = new.functional_type_default
+      , user_description        = new.user_description
+      , sort_order              = new.sort_order
+      , user_options            = new.user_options
+    WHERE id = new.id
+    RETURNING * INTO new;
+
+    RETURN new;
+
+END;
+]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_u_syst_enums" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[An INSTEAD OF trigger function which applies business rules when using the
+syst_enums API View for UPDATE operations.]]></comment>
+         <definition language="PLPGSQL"><![CDATA[
+
+-- File:        trig_i_u_syst_enums.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_enums/ms_syst/api_views/syst_enums/trig_i_u_syst_enums.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com  :: https://muse.systems
+
+BEGIN
+
+    IF old.syst_defined AND new.internal_name != old.internal_name THEN
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'The requested data update included changes to fields disallowed ' ||
+                          'by the business rules of the API View.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst'
+                            ,p_proc_name      => 'trig_i_u_syst_enums'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(new)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+    END IF;
+
+    UPDATE ms_syst_data.syst_enums SET
+          internal_name        = new.internal_name
+        , display_name         = new.display_name
+        , user_description     = new.user_description
+        , default_user_options = new.default_user_options
+    WHERE id = new.id
+    RETURNING * INTO new;
+
+    RETURN new;
+
+END;
+]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_u_syst_feature_setting_assigns" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[An INSTEAD OF trigger function which applies business rules when using the
+syst_settings API View for UPDATE operations.
+
+Note that for syst_feature_setting_assigns records that updating is not a
+supported operation.  Any change in the feature or the setting is a sufficiently
+large change to justify just using a full delete/insert.]]></comment>
+         <definition language="PLPGSQL"><![CDATA[
+
+-- File:        trig_i_u_syst_feature_setting_assigns.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_features/ms_syst/api_views/syst_feature_setting_assigns/trig_i_u_syst_feature_setting_assigns.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com  :: https://muse.systems
+
+DECLARE
+    var_setting_system_defined boolean;
+
+BEGIN
+
+    RAISE EXCEPTION
+        USING
+            MESSAGE = 'You cannot update a system defined setting/feature assignment ' ||
+                      'using the API Views.',
+            DETAIL = ms_syst_priv.get_exception_details(
+                         p_proc_schema    => 'ms_syst'
+                        ,p_proc_name      => 'trig_i_u_syst_feature_setting_assigns'
+                        ,p_exception_name => 'invalid_api_view_call'
+                        ,p_errcode        => 'PM008'
+                        ,p_param_data     => to_jsonb(old)
+                        ,p_context_data   =>
+                            jsonb_build_object(
+                                 'tg_op',         tg_op
+                                ,'tg_when',       tg_when
+                                ,'tg_schema',     tg_table_schema
+                                ,'tg_table_name', tg_table_name)),
+            ERRCODE = 'PM008',
+            SCHEMA = tg_table_schema,
+            TABLE = tg_table_name;
+
+END;
+]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_u_syst_settings" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[An INSTEAD OF trigger function which applies business rules when using the
+syst_settings API View for UPDATE operations.]]></comment>
+         <definition language="PLPGSQL"><![CDATA[
+
+-- File:        trig_i_u_syst_settings.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_settings/ms_syst/api_views/syst_settings/trig_i_u_syst_settings.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com  :: https://muse.systems
+
+BEGIN
+
+    IF old.syst_defined AND new.internal_name != old.internal_name THEN
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'The requested data update included changes to fields disallowed ' ||
+                          'by the business rules of the API View.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst'
+                            ,p_proc_name      => 'trig_i_u_syst_settings'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(new)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+    END IF;
+
+    UPDATE ms_syst_data.syst_settings SET
+          internal_name           = new.internal_name
+        , display_name            = new.display_name
+        , user_description        = new.user_description
+        , setting_flag            = new.setting_flag
+        , setting_integer         = new.setting_integer
+        , setting_integer_range   = new.setting_integer_range
+        , setting_decimal         = new.setting_decimal
+        , setting_decimal_range   = new.setting_decimal_range
+        , setting_interval        = new.setting_interval
+        , setting_date            = new.setting_date
+        , setting_date_range      = new.setting_date_range
+        , setting_time            = new.setting_time
+        , setting_timestamp       = new.setting_timestamp
+        , setting_timestamp_range = new.setting_timestamp_range
+        , setting_json            = new.setting_json
+        , setting_text            = new.setting_text
+        , setting_uuid            = new.setting_uuid
+        , setting_blob            = new.setting_blob
+    WHERE id = new.id
+    RETURNING * INTO new;
+
+    RETURN new;
+
+END;
+]]></definition>
+      </routine>
+   </routines>
+</database>

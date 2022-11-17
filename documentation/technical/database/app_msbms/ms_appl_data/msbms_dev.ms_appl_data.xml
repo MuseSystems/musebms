@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<database name="msbms_dev" schema="ms_appl_data" type="PostgreSQL - 15.1 (Ubuntu 15.1-1.pgdg22.04+1)">
+   <tables>
+      <table name="mstr_contacts" numRows="0" remarks="Represents a single method of contact for a person, entity, place, or other&#10;contextually relevant association.&#10;&#10;Note that there is a weakness in this part of the schema design in that contact&#10;information doesn't make sense outside of assignment to a person, facility, or&#10;entity, but such assignment is indirect through role assignments.  This means it&#10;is conceivable that records in this table could become orphaned.  At this stage,&#10;however, it doesn't seem worth it to denormalize the data to record the direct&#10;association." schema="ms_appl_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v1()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system." size="2147483647" type="uuid" typeCode="1111">
+            <child column="contact_id" foreignKey="mstr_person_contact_roles_contact_fk" implied="false" onDeleteCascade="true" schema="ms_appl_data" table="mstr_person_contact_roles"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="false" remarks="A candidate key useful for programmatic references to individual records." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="display_name" nullable="false" remarks="A friendly name and candidate key for the record, suitable for use in user&#10;interactions" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="owning_entity_id" nullable="false" remarks="Indicates the entity which is the owner or &quot;controlling&quot;.   There are a couple&#10;of ways this can be used.  The first case is illustrated by the example of a&#10;managed entity and an staffing entity that is an individual.  The owning entity&#10;in this case will be the managed entity for contacts such as the details of the&#10;person's office address, phone, and email addresses that is used in carrying out&#10;their duties as staff.  The second case is where the entity is in a selling,&#10;purchasing, or banking relationship with the managed entity.  In this case the&#10;owning entity is the entity with which the managed entity has a relationship&#10;since a customer, vendor, or bank determines their own contact details." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="mstr_contacts_owning_entity_fk" implied="false" onDeleteCascade="true" schema="ms_appl_data" table="mstr_entities"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="external_name" nullable="false" remarks="A non-unique/non-key value used to display to users and external parties where&#10;uniqueness is less of a concern than specific end user presentation." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="contact_type_id" nullable="false" remarks="Indicates the type of the contact record.  Contact records store inforamtion of&#10;varying types such as phone numbers, physical addresses, email addresses, etc.&#10;The value in this column establishes which kind of contact data is being stored&#10;and indicates the data processing rules to apply." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="mstr_contacts_contact_types_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_enum_items"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="contact_state_id" nullable="false" remarks="Establishes the current life-cycle state of the contact record, such as&#10;whether the record is active or not." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="mstr_contacts_contact_states_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_enum_items"/>
+         </column>
+         <column autoUpdated="false" defaultValue="'{}'::jsonb" digits="0" id="7" name="contact_data" nullable="false" remarks="Contains the actual contact data being stored by the record as well as&#10;associated metadata such as specialized data fields, mapping of the specialized&#10;fields to standard representation for data maintenance, display, printing, and&#10;integration." size="2147483647" type="jsonb" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="contact_notes" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="9" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="diag_role_created" nullable="false" remarks="The database role which created the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="11" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="12" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="13" name="diag_role_modified" nullable="false" remarks="The database role which modified the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="14" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="15" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="mstr_contacts_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="mstr_contacts_display_name_udx" unique="true">
+            <column ascending="true" name="display_name"/>
+         </index>
+         <index name="mstr_contacts_internal_name_udx" unique="true">
+            <column ascending="true" name="internal_name"/>
+         </index>
+      </table>
+      <table name="mstr_countries" numRows="0" remarks="A listing of countries including currency symbology, official names, and other&#10;information concering the country from standards bodies and international&#10;organizations.&#10;&#10;The table structure as it now stands is based on the data available at:&#10;https://datahub.io/core/country-codes" schema="ms_appl_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v1()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system." size="2147483647" type="uuid" typeCode="1111">
+            <child column="country_id" foreignKey="mstr_country_address_format_assocs_countries_fk" implied="false" onDeleteCascade="true" schema="ms_appl_data" table="mstr_country_address_format_assocs"/>
+            <child column="country_id" foreignKey="mstr_country_name_format_assocs_countries_fk" implied="false" onDeleteCascade="false" schema="ms_appl_data" table="mstr_country_name_format_assocs"/>
+            <child column="country_id" foreignKey="mstr_country_phone_format_assocs_countries_fk" implied="false" onDeleteCascade="false" schema="ms_appl_data" table="mstr_country_phone_format_assocs"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="false" remarks="A candidate key useful for programmatic references to individual records." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="display_name" nullable="true" remarks="A friendly name and candidate key for the record, suitable for use in user&#10;interfaces." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="external_name" nullable="false" remarks="A friendly name for externally facing uses such as in postal addressing which&#10;maynot follow accepted international conventions for naming.  Note that this is&#10;not a key value and has no UNIQUE enforcement." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="official_name_ar" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="official_name_cn" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="official_name_en" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="official_name_es" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="official_name_fr" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="official_name_ru" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="iso3166_1_alpha_2" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="iso3166_1_alpha_3" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="iso3166_1_numeric" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="13" name="iso4217_currency_alphabetic_code" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="14" name="iso4217_currency_country_name" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="15" name="iso4217_currency_minor_unit" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="16" name="iso4217_currency_name" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="17" name="iso4217_currency_numeric_code" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="18" name="cldr_display_name" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="19" name="capital" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="20" name="continent" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="21" name="ds" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="22" name="dial" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="23" name="edgar" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="24" name="fips" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="25" name="gaul" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="26" name="geoname_id" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="27" name="global_code" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="28" name="global_name" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="29" name="ioc" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="30" name="itu" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="31" name="intermediate_region_code" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="32" name="intermediate_region_name" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="33" name="languages" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="34" name="marc" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="35" name="region_code" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="36" name="region_name" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="37" name="sub_region_code" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="38" name="sub_region_name" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="39" name="tld" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="40" name="wmo" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="41" name="is_independent" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="42" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="43" name="diag_role_created" nullable="false" remarks="The database role which created the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="44" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="45" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="46" name="diag_role_modified" nullable="false" remarks="The database role which modified the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="47" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="48" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="mstr_countries_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="mstr_countries_display_name_udx" unique="true">
+            <column ascending="true" name="display_name"/>
+         </index>
+         <index name="mstr_countries_internal_name_udx" unique="true">
+            <column ascending="true" name="internal_name"/>
+         </index>
+      </table>
+      <table name="mstr_country_address_format_assocs" numRows="0" remarks="Establishes relationships between address format records and country records and&#10;allows recognizing an address format as the default format for the country." schema="ms_appl_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v1()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system." size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="country_id" nullable="false" remarks="Identifies the country with with the address format is being associated." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="mstr_country_address_format_assocs_countries_fk" implied="false" onDeleteCascade="true" schema="ms_appl_data" table="mstr_countries"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="address_format_id" nullable="false" remarks="Identifies the address format which is to be associated with the country." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="mstr_country_address_format_assocs_address_formats_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_complex_format_values"/>
+         </column>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="3" name="is_default_for_country" nullable="false" remarks="If true, this format should be used as the default format for the country. There&#10;should only ever be one default for any one country_id." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="4" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="diag_role_created" nullable="false" remarks="The database role which created the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="6" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="7" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="diag_role_modified" nullable="false" remarks="The database role which modified the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="9" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="10" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="mstr_country_address_format_assocs_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="mstr_country_name_format_assocs" numRows="0" remarks="Establishes relationships between name format records and country records and&#10;allows recognizing a name format as the default format for the country." schema="ms_appl_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v1()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system." size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="country_id" nullable="false" remarks="Identifies the country with with the name format is being associated." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="mstr_country_name_format_assocs_countries_fk" implied="false" onDeleteCascade="false" schema="ms_appl_data" table="mstr_countries"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="name_format_id" nullable="false" remarks="Identifies the name format which is to be associated with the country." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="mstr_country_name_format_assocs_name_formats_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_complex_format_values"/>
+         </column>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="3" name="is_default_for_country" nullable="false" remarks="If true, this format should be used as the default format for the country. There&#10;should only ever be one default for any one country_id." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="4" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="diag_role_created" nullable="false" remarks="The database role which created the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="6" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="7" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="diag_role_modified" nullable="false" remarks="The database role which modified the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="9" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="10" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="mstr_country_name_format_assocs_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="mstr_country_phone_format_assocs" numRows="0" remarks="Establishes relationships between phone format records and country records and&#10;allows recognizing an phone format as the default format for the country." schema="ms_appl_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v1()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system." size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="country_id" nullable="false" remarks="Identifies the country with with the phone format is being associated." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="mstr_country_phone_format_assocs_countries_fk" implied="false" onDeleteCascade="false" schema="ms_appl_data" table="mstr_countries"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="phone_format_id" nullable="false" remarks="Identifies the phone format which is to be associated with the country." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="mstr_country_phone_format_assocs_phone_formats_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_complex_format_values"/>
+         </column>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="3" name="is_default_for_country" nullable="false" remarks="If true, this format should be used as the default format for the country. There&#10;should only ever be one default for any one country_id." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="4" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="diag_role_created" nullable="false" remarks="The database role which created the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="6" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="7" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="diag_role_modified" nullable="false" remarks="The database role which modified the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="9" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="10" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="mstr_country_phone_format_assocs_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="mstr_entities" numRows="0" remarks="Master list of legal entities with whom the business interacts.  All legal&#10;entities are represented by this table, including the business using this&#10;application itself.  The information stored in this record represents general&#10;information about the entity that is broadly applicable in all contexts which&#10;might use the entity." schema="ms_appl_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v1()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system." size="2147483647" type="uuid" typeCode="1111">
+            <child column="owning_entity_id" foreignKey="mstr_contacts_owning_entity_fk" implied="false" onDeleteCascade="true" schema="ms_appl_data" table="mstr_contacts"/>
+            <child column="owning_entity_id" foreignKey="mstr_entities_entities_fk" implied="false" onDeleteCascade="false" schema="ms_appl_data" table="mstr_entities"/>
+            <child column="entity_id" foreignKey="mstr_entity_banking_entities_entity_fk" implied="false" onDeleteCascade="true" schema="ms_appl_data" table="mstr_entity_banking_entities"/>
+            <child column="owning_entity_id" foreignKey="mstr_entity_banking_entities_owning_entity_fk" implied="false" onDeleteCascade="true" schema="ms_appl_data" table="mstr_entity_banking_entities"/>
+            <child column="owning_entity_id" foreignKey="mstr_entity_fulfillment_places_entity_fk" implied="false" onDeleteCascade="true" schema="ms_appl_data" table="mstr_entity_fulfillment_places"/>
+            <child column="owning_entity_id" foreignKey="mstr_entity_inventory_places_owning_entity_fk" implied="false" onDeleteCascade="true" schema="ms_appl_data" table="mstr_entity_inventory_places"/>
+            <child column="entity_id" foreignKey="mstr_entity_person_roles_entity_fk" implied="false" onDeleteCascade="true" schema="ms_appl_data" table="mstr_entity_person_roles"/>
+            <child column="entity_id" foreignKey="mstr_entity_purchasing_entities_entity_fk" implied="false" onDeleteCascade="true" schema="ms_appl_data" table="mstr_entity_purchasing_entities"/>
+            <child column="owning_entity_id" foreignKey="mstr_entity_purchasing_entities_owning_entity_fk" implied="false" onDeleteCascade="true" schema="ms_appl_data" table="mstr_entity_purchasing_entities"/>
+            <child column="entity_id" foreignKey="mstr_entity_selling_entities_entity_fk" implied="false" onDeleteCascade="true" schema="ms_appl_data" table="mstr_entity_selling_entities"/>
+            <child column="owning_entity_id" foreignKey="mstr_entity_selling_entities_owning_entity_fk" implied="false" onDeleteCascade="true" schema="ms_appl_data" table="mstr_entity_selling_entities"/>
+            <child column="entity_id" foreignKey="mstr_entity_staffing_entities_entity_fk" implied="false" onDeleteCascade="true" schema="ms_appl_data" table="mstr_entity_staffing_entities"/>
+            <child column="owning_entity_id" foreignKey="mstr_entity_staffing_entities_owning_entity_fk" implied="false" onDeleteCascade="true" schema="ms_appl_data" table="mstr_entity_staffing_entities"/>
+            <child column="owning_entity_id" foreignKey="mstr_entity_workplace_places_owning_entity_fk" implied="false" onDeleteCascade="true" schema="ms_appl_data" table="mstr_entity_workplace_places"/>
+            <child column="owning_entity_id" foreignKey="mstr_persons_entities_fk" implied="false" onDeleteCascade="false" schema="ms_appl_data" table="mstr_persons"/>
+            <child column="owning_entity_id" foreignKey="mstr_places_entities_fk" implied="false" onDeleteCascade="false" schema="ms_appl_data" table="mstr_places"/>
+            <child column="owning_entity_id" foreignKey="syst_person_logins_owning_entity_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_person_logins"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="owning_entity_id" nullable="false" remarks="Indicates which managing entity is the owning entity for purposes of default&#10;visibility and usage limitations.  This limitation primarily is evident in&#10;searches and lists.  Explicit assignment of rights to entities, persons,&#10;facilities, etc. that are not the owning entity is still possible and those&#10;rights will prevail over the default access rules for non-owning entities.&#10;&#10;There is a special case of owning entity where an entity is self owning.  There&#10;may only be a single entity that is self owning and that, by definition,&#10;establishes that entity as the 'global entity'.  The global entity has global&#10;administrative rights as well as allows access to those persons, facilities, and&#10;entities that it owns effectively making them global to all other managed&#10;entities.  The global entity may be an actual business entity which essentially&#10;owns the MSBMS instance or it may a purely administrative construct for managing&#10;the system." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="mstr_entities_entities_fk" implied="false" onDeleteCascade="false" schema="ms_appl_data" table="mstr_entities"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="internal_name" nullable="false" remarks="A candidate key useful for programmatic references to individual records." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="display_name" nullable="false" remarks="A friendly name and candidate key for the record, suitable for use in user&#10;interfaces." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="external_name" nullable="false" remarks="A friendly name for externally facing uses such as in communications with the&#10;entity.  Note that this is not a key value and has no UNIQUE enforcement." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="entity_type_id" nullable="false" remarks="Defines the kind of entity that is being represented by the record and by&#10;extension the kinds of uses in which the entity may be used.  Application&#10;functionality is determined in part by the configuration of the selected type." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="mstr_entities_entity_types_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_enum_items"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="entity_state_id" nullable="false" remarks="Establishes current state of the entity in the established lifecycle of&#10;entity records.  Certain application features and behaviors will depend on&#10;the configuration of the state value selected for a entity record." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="mstr_entities_entity_states_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_enum_items"/>
+         </column>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="7" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="diag_role_created" nullable="false" remarks="The database role which created the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="9" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="10" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="diag_role_modified" nullable="false" remarks="The database role which modified the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="12" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="13" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="mstr_entities_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="mstr_entities_display_name_udx" unique="true">
+            <column ascending="true" name="display_name"/>
+         </index>
+         <index name="mstr_entities_internal_name_udx" unique="true">
+            <column ascending="true" name="internal_name"/>
+         </index>
+      </table>
+      <table name="mstr_entity_banking_entities" numRows="0" remarks="Establishes an financial service provider relationship between an owning entity&#10;and a banking related entity.  This record, or its children, will define the&#10;banking behavior when the transaction entity is the owning entity." schema="ms_appl_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v1()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system." size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="entity_id" nullable="false" remarks="Identifies for which entity customer details are being defined.  The terms&#10;in this record define the customer behavior for the entity defined by this&#10;field." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="mstr_entity_banking_entities_entity_fk" implied="false" onDeleteCascade="true" schema="ms_appl_data" table="mstr_entities"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="owning_entity_id" nullable="false" remarks="Identifies the entity that will use the customer terms when processing&#10;selling and receivables transactions with the entity identified in the&#10;entity_id field." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="mstr_entity_banking_entities_owning_entity_fk" implied="false" onDeleteCascade="true" schema="ms_appl_data" table="mstr_entities"/>
+         </column>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="3" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="diag_role_created" nullable="false" remarks="The database role which created the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="5" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="6" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="diag_role_modified" nullable="false" remarks="The database role which modified the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="8" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="9" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="mstr_entity_banking_entities_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="mstr_entity_banking_entities_udx" unique="true">
+            <column ascending="true" name="entity_id"/>
+            <column ascending="true" name="owning_entity_id"/>
+         </index>
+      </table>
+      <table name="mstr_entity_fulfillment_places" numRows="0" remarks="Establishes a relationship between an entity and a place allowing the entity to&#10;receive order fulfillment at the identified place; this is &quot;ship-to&quot;&#10;relationship.  Note these places are used as the shipping places in external&#10;fulfillment transactions.  For internal fulfillment transactions, the entity/&#10;inventory/place relationship determines whether or not the place may receive&#10;units." schema="ms_appl_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v1()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system." size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="place_id" nullable="false" remarks="Establishes that a place may be the destination of external fulfillment&#10;transactions for the entity." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="mstr_entity_fulfillment_places_place_fk" implied="false" onDeleteCascade="true" schema="ms_appl_data" table="mstr_places"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="owning_entity_id" nullable="false" remarks="Identifies the owning entity which may receive external fulfillment transaction&#10;inventory units at the place also identified in this record." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="mstr_entity_fulfillment_places_entity_fk" implied="false" onDeleteCascade="true" schema="ms_appl_data" table="mstr_entities"/>
+         </column>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="3" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="diag_role_created" nullable="false" remarks="The database role which created the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="5" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="6" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="diag_role_modified" nullable="false" remarks="The database role which modified the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="8" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="9" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="mstr_entity_fulfillment_places_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="mstr_entity_inventory_places" numRows="0" remarks="Establishes one or more inventory relationships between a managed entity and a&#10;place." schema="ms_appl_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v1()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system." size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="place_id" nullable="false" remarks="Identifies the place that will have an inventory relationship with the owning&#10;entity." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="mstr_entity_inventory_places_place_fk" implied="false" onDeleteCascade="true" schema="ms_appl_data" table="mstr_places"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="owning_entity_id" nullable="false" remarks="Establishes the entity which has an inventory relationship to the identified&#10;place." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="mstr_entity_inventory_places_owning_entity_fk" implied="false" onDeleteCascade="true" schema="ms_appl_data" table="mstr_entities"/>
+         </column>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="3" name="receives_external_inventory" nullable="false" remarks="If true, this inventory may receive inventory shipments from third parties such&#10;as might originate from purchase order transactions.  If false, this inventory&#10;may not receive inventory from external third parties." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="4" name="fulfills_external_inventory" nullable="false" remarks="If true, inventory units may be fulfilled from this place, for this entity. If&#10;false, this inventory may not participate as a source of fulfillment to third&#10;parties." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="5" name="receives_internal_inventory" nullable="false" remarks="If true, inventory units may be received into this inventory from other&#10;inventories managed by the system.  If false, other managed inventories will not&#10;be valid sources to replenish stocks in this inventory.  Transferred inventory&#10;would be an example of a transaction requiring the inventory to allow the&#10;processing of internal receipts." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="6" name="fulfills_internal_inventory" nullable="false" remarks="If true, inventory units may be fulfilled from this managed inventory to another&#10;inventory managed by the system. If false, the inventory may not serve as the&#10;source of inventory units to other managed inventories.  Transferring inventory&#10;out is an example of a transaction requiring this internal fulfillment ability." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="7" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="diag_role_created" nullable="false" remarks="The database role which created the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="9" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="10" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="diag_role_modified" nullable="false" remarks="The database role which modified the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="12" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="13" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="mstr_entity_inventory_places_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="mstr_entity_person_roles" numRows="0" remarks="Establishes the relationship between individual persons and and entity.  Note&#10;that for now a simple table with the entity, person, and the role assigned is&#10;sufficient for expressing the relationship, though in future it may be&#10;appropriate to have specific relationship tables like entity/entity relationships&#10;should the relationships not be containable in a single attribute describing the&#10;role." schema="ms_appl_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v1()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system." size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="person_id" nullable="false" remarks="The person that is being assigned a role with the entity." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="mstr_entity_person_roles_person_fk" implied="false" onDeleteCascade="true" schema="ms_appl_data" table="mstr_persons"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="entity_id" nullable="false" remarks="The entity with which the identified person has a role.  In many regards,&#10;this field identifies the owner of the record." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="mstr_entity_person_roles_entity_fk" implied="false" onDeleteCascade="true" schema="ms_appl_data" table="mstr_entities"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="entity_person_role_id" nullable="false" remarks="Identifies the role being assigned to the person for the identified entity." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="mstr_entity_person_roles_enum_entity_person_role_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_enum_items"/>
+         </column>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="4" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="diag_role_created" nullable="false" remarks="The database role which created the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="6" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="7" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="diag_role_modified" nullable="false" remarks="The database role which modified the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="9" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="10" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="mstr_entity_person_roles_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="mstr_entity_person_roles_person_entity_role_udx" unique="true">
+            <column ascending="true" name="person_id"/>
+            <column ascending="true" name="entity_id"/>
+            <column ascending="true" name="entity_person_role_id"/>
+         </index>
+      </table>
+      <table name="mstr_entity_purchasing_entities" numRows="0" remarks="Establishes a vendor relationship between an owning entity and its vendor&#10;entity.  This record, or its children, will define purchasing and payables&#10;behavior when the transaction entity is the owning entity." schema="ms_appl_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v1()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system." size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="entity_id" nullable="false" remarks="Identifies for which entity vendor details are being defined.  The terms&#10;in this record define the customer behavior for the entity defined by this&#10;field." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="mstr_entity_purchasing_entities_entity_fk" implied="false" onDeleteCascade="true" schema="ms_appl_data" table="mstr_entities"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="owning_entity_id" nullable="false" remarks="Identifies the entity that will use the purchasing terms when processing&#10;purchasing and payables transactions with the entity identified in the&#10;entity_id field." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="mstr_entity_purchasing_entities_owning_entity_fk" implied="false" onDeleteCascade="true" schema="ms_appl_data" table="mstr_entities"/>
+         </column>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="3" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="diag_role_created" nullable="false" remarks="The database role which created the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="5" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="6" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="diag_role_modified" nullable="false" remarks="The database role which modified the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="8" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="9" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="mstr_entity_purchasing_entities_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="mstr_entity_purchasing_entities_udx" unique="true">
+            <column ascending="true" name="entity_id"/>
+            <column ascending="true" name="owning_entity_id"/>
+         </index>
+      </table>
+      <table name="mstr_entity_selling_entities" numRows="0" remarks="Establishes a customer relationship between an owning entity and its customer&#10;entity.  This record, or its children, will define sales and receivables&#10;behavior when the transaction entity is the owning entity." schema="ms_appl_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v1()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system." size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="entity_id" nullable="false" remarks="Identifies for which entity customer details are being defined.  The terms&#10;in this record define the customer behavior for the entity defined by this&#10;field." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="mstr_entity_selling_entities_entity_fk" implied="false" onDeleteCascade="true" schema="ms_appl_data" table="mstr_entities"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="owning_entity_id" nullable="false" remarks="Identifies the entity that will use the customer terms when processing&#10;selling and receivables transactions with the entity identified in the&#10;entity_id field." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="mstr_entity_selling_entities_owning_entity_fk" implied="false" onDeleteCascade="true" schema="ms_appl_data" table="mstr_entities"/>
+         </column>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="3" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="diag_role_created" nullable="false" remarks="The database role which created the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="5" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="6" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="diag_role_modified" nullable="false" remarks="The database role which modified the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="8" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="9" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="mstr_entity_selling_entities_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="mstr_entity_selling_entities_udx" unique="true">
+            <column ascending="true" name="entity_id"/>
+            <column ascending="true" name="owning_entity_id"/>
+         </index>
+      </table>
+      <table name="mstr_entity_staffing_entities" numRows="0" remarks="Establishes an employee or contractor relationship between an owning entity and&#10;its employee entity.  This record, or its children, will define the employee&#10;behavior when the transaction entity is the owning entity." schema="ms_appl_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v1()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system." size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="entity_id" nullable="false" remarks="Identifies for which entity customer details are being defined.  The terms&#10;in this record define the customer behavior for the entity defined by this&#10;field." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="mstr_entity_staffing_entities_entity_fk" implied="false" onDeleteCascade="true" schema="ms_appl_data" table="mstr_entities"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="owning_entity_id" nullable="false" remarks="Identifies the entity that will use the customer terms when processing&#10;selling and receivables transactions with the entity identified in the&#10;entity_id field." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="mstr_entity_staffing_entities_owning_entity_fk" implied="false" onDeleteCascade="true" schema="ms_appl_data" table="mstr_entities"/>
+         </column>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="3" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="diag_role_created" nullable="false" remarks="The database role which created the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="5" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="6" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="diag_role_modified" nullable="false" remarks="The database role which modified the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="8" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="9" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="mstr_entity_staffing_entities_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="mstr_entity_staffing_entities_udx" unique="true">
+            <column ascending="true" name="entity_id"/>
+            <column ascending="true" name="owning_entity_id"/>
+         </index>
+      </table>
+      <table name="mstr_entity_workplace_places" numRows="0" remarks="Identifies a specific place as being a valid option for person addressing, such&#10;as mailing, etc." schema="ms_appl_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v1()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system." size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="place_id" nullable="false" remarks="Identifies the place which has a workplace relationship with the owning entity." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="mstr_entity_workplace_places_place_fk" implied="false" onDeleteCascade="true" schema="ms_appl_data" table="mstr_places"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="owning_entity_id" nullable="false" remarks="Establishes the entity which uses the place as a workplace." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="mstr_entity_workplace_places_owning_entity_fk" implied="false" onDeleteCascade="true" schema="ms_appl_data" table="mstr_entities"/>
+         </column>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="3" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="diag_role_created" nullable="false" remarks="The database role which created the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="5" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="6" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="diag_role_modified" nullable="false" remarks="The database role which modified the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="8" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="9" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="mstr_entity_workplace_places_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="mstr_person_contact_roles" numRows="0" remarks="Associates individual persons with their contact data and includes an indication" schema="ms_appl_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v1()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system." size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="person_id" nullable="false" remarks="Identifies the person which has the relationship to the contact information." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="mstr_person_contact_roles_person_fk" implied="false" onDeleteCascade="true" schema="ms_appl_data" table="mstr_persons"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="person_contact_role_id" nullable="false" remarks="Indicates a specific use or purpose for the identified contact information." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="mstr_person_contact_roles_enum_person_contact_role_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_enum_items"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="place_id" nullable="true" remarks="This is an optional value indicating whether the given contact information is&#10;associated with a place.  If so, the place will appear here.  This value will be&#10;null if not." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="mstr_person_contact_roles_place_fk" implied="false" onDeleteCascade="false" schema="ms_appl_data" table="mstr_places"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="contact_id" nullable="false" remarks="A reference to the contact information which serves the given role for the given&#10;person." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="mstr_person_contact_roles_contact_fk" implied="false" onDeleteCascade="true" schema="ms_appl_data" table="mstr_contacts"/>
+         </column>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="5" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="diag_role_created" nullable="false" remarks="The database role which created the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="7" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="8" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="diag_role_modified" nullable="false" remarks="The database role which modified the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="10" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="11" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="mstr_person_contact_roles_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="mstr_persons" numRows="0" remarks="Represents real people in the world.  Ideally, there is one record in this table&#10;for each person the various entities interact with." schema="ms_appl_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v1()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system." size="2147483647" type="uuid" typeCode="1111">
+            <child column="person_id" foreignKey="mstr_entity_person_roles_person_fk" implied="false" onDeleteCascade="true" schema="ms_appl_data" table="mstr_entity_person_roles"/>
+            <child column="person_id" foreignKey="mstr_person_contact_roles_person_fk" implied="false" onDeleteCascade="true" schema="ms_appl_data" table="mstr_person_contact_roles"/>
+            <child column="person_id" foreignKey="syst_person_logins_person_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_person_logins"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="owning_entity_id" nullable="false" remarks="Indicates which managing entity owns the person record for the purposes of&#10;default visibility and access.  Any person record owned by the global entity is&#10;by default visible and usable by any managed entity." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="mstr_persons_entities_fk" implied="false" onDeleteCascade="false" schema="ms_appl_data" table="mstr_entities"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="internal_name" nullable="false" remarks="A candidate key useful for programmatic references to individual records." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="display_name" nullable="true" remarks="A friendly name and candidate key for the record, suitable for use in user&#10;interfaces." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="external_name" nullable="false" remarks="A friendly name for externally facing uses such as in communications with the&#10;person.  Note that this is not a key value and has no UNIQUE enforcement." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="'{}'::jsonb" digits="0" id="5" name="formatted_name" nullable="false" remarks="Contains a jsonb object describing the naming fields, field layout, and the&#10;actual values of the user's name.  Note that the format will normally have&#10;originated from the ms_appl_data.syst_name_formats table, but reflects the&#10;name formatting configuration at the time of capture." size="2147483647" type="jsonb" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="person_type_id" nullable="false" remarks="" size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="mstr_persons_person_types_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_enum_items"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="person_state_id" nullable="true" remarks="" size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="mstr_persons_person_states_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_enum_items"/>
+         </column>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="8" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="diag_role_created" nullable="false" remarks="The database role which created the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="10" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="11" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="diag_role_modified" nullable="false" remarks="The database role which modified the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="13" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="14" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="mstr_persons_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="mstr_persons_display_name_udx" unique="true">
+            <column ascending="true" name="display_name"/>
+         </index>
+         <index name="mstr_persons_internal_name_udx" unique="true">
+            <column ascending="true" name="internal_name"/>
+         </index>
+      </table>
+      <table name="mstr_places" numRows="0" remarks="places are system representations of real world buildings, such as office&#10;buildings, warehouses, factories, or sales centers.  Note that a place may be&#10;associated with multiple addresses which can be assigned roles for different&#10;purposes." schema="ms_appl_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v1()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system." size="2147483647" type="uuid" typeCode="1111">
+            <child column="place_id" foreignKey="mstr_entity_fulfillment_places_place_fk" implied="false" onDeleteCascade="true" schema="ms_appl_data" table="mstr_entity_fulfillment_places"/>
+            <child column="place_id" foreignKey="mstr_entity_inventory_places_place_fk" implied="false" onDeleteCascade="true" schema="ms_appl_data" table="mstr_entity_inventory_places"/>
+            <child column="place_id" foreignKey="mstr_entity_workplace_places_place_fk" implied="false" onDeleteCascade="true" schema="ms_appl_data" table="mstr_entity_workplace_places"/>
+            <child column="place_id" foreignKey="mstr_person_contact_roles_place_fk" implied="false" onDeleteCascade="false" schema="ms_appl_data" table="mstr_person_contact_roles"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="owning_entity_id" nullable="false" remarks="Indicates which managing entity owns the place record for the purposes of&#10;default visibility and access.  Any place record owned by the global entity is&#10;by default visible and usable by any managed entity." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="mstr_places_entities_fk" implied="false" onDeleteCascade="false" schema="ms_appl_data" table="mstr_entities"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="internal_name" nullable="false" remarks="A candidate key useful for programmatic references to individual records." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="display_name" nullable="true" remarks="A friendly name and candidate key for the record, suitable for use in user&#10;interfaces." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="external_name" nullable="false" remarks="A friendly name for externally facing uses such as in communications with the&#10;place.  Note that this is not a key value and has no UNIQUE enforcement." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="place_type_id" nullable="false" remarks="" size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="mstr_places_place_types_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_enum_items"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="place_state_id" nullable="true" remarks="" size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="mstr_places_place_states_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_enum_items"/>
+         </column>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="7" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="diag_role_created" nullable="false" remarks="The database role which created the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="9" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="10" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="diag_role_modified" nullable="false" remarks="The database role which modified the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="12" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="13" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="mstr_places_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="mstr_places_display_name_udx" unique="true">
+            <column ascending="true" name="display_name"/>
+         </index>
+         <index name="mstr_places_internal_name_udx" unique="true">
+            <column ascending="true" name="internal_name"/>
+         </index>
+      </table>
+   </tables>
+</database>
