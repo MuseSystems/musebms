@@ -8,12 +8,12 @@ $SYS_SETTINGS_OPTION$
                       AND table_name = 'syst_settings')
         THEN
 
-CREATE OR REPLACE FUNCTION msbms_syst.trig_i_d_syst_feature_setting_assigns()
+CREATE OR REPLACE FUNCTION msbms_syst.trig_i_i_syst_feature_setting_assigns()
 RETURNS trigger AS
 $BODY$
 
--- File:        trig_i_d_syst_feature_setting_assigns.eex.sql
--- Location:    musebms/database/components/system/msbms_syst_features/msbms_syst/api_views/syst_feature_setting_assigns/trig_i_d_syst_feature_setting_assigns.eex.sql
+-- File:        trig_i_i_syst_feature_setting_assigns.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_features/msbms_syst/api_views/syst_feature_setting_assigns/trig_i_i_syst_feature_setting_assigns.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -30,19 +30,19 @@ BEGIN
         (
             SELECT syst_defined
             FROM   msbms_syst_data.syst_settings
-            WHERE  id = old.setting_id
+            WHERE  id = new.setting_id
         )
     THEN
         RAISE EXCEPTION
             USING
-                MESSAGE = 'You cannot delete a system defined setting/feature assignment ' ||
-                          'using the API Views.',
+                MESSAGE = 'You cannot create a new feature/setting mapping for system defined ' ||
+                          'settings using this API view.',
                 DETAIL = msbms_syst_priv.get_exception_details(
                              p_proc_schema    => 'msbms_syst'
-                            ,p_proc_name      => 'trig_i_d_syst_feature_setting_assigns'
+                            ,p_proc_name      => 'trig_i_i_syst_feature_setting_assigns'
                             ,p_exception_name => 'invalid_api_view_call'
                             ,p_errcode        => 'PM008'
-                            ,p_param_data     => to_jsonb(old)
+                            ,p_param_data     => to_jsonb(new)
                             ,p_context_data   =>
                                 jsonb_build_object(
                                      'tg_op',         tg_op
@@ -54,9 +54,12 @@ BEGIN
                 TABLE = tg_table_name;
     END IF;
 
-    DELETE FROM msbms_syst_data.syst_feature_setting_assigns WHERE id = old.id;
+    INSERT INTO msbms_syst_data.syst_feature_setting_assigns
+        ( feature_map_id, setting_id )
+    VALUES
+        ( new.feature_map_id, new.setting_id );
 
-    RETURN null;
+    RETURN new;
 
 END;
 $BODY$
@@ -65,18 +68,16 @@ $BODY$
     SECURITY DEFINER
     SET search_path TO msbms_syst, pg_temp;
 
-ALTER FUNCTION msbms_syst.trig_i_d_syst_feature_setting_assigns()
-    OWNER TO <%= msbms_owner %>;
+ALTER FUNCTION msbms_syst.trig_i_i_syst_feature_setting_assigns() OWNER TO <%= msbms_owner %>;
 
-REVOKE EXECUTE ON FUNCTION msbms_syst.trig_i_d_syst_feature_setting_assigns() FROM public;
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_d_syst_feature_setting_assigns() TO <%= msbms_appusr %>;
-GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_d_syst_feature_setting_assigns() TO <%= msbms_apiusr %>;
-
+REVOKE EXECUTE ON FUNCTION msbms_syst.trig_i_i_syst_feature_setting_assigns() FROM PUBLIC;
+GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_i_syst_feature_setting_assigns() TO <%= msbms_appusr %>;
+GRANT EXECUTE ON FUNCTION msbms_syst.trig_i_i_syst_feature_setting_assigns() TO <%= msbms_apiusr %>;
 
 COMMENT ON
-    FUNCTION msbms_syst.trig_i_d_syst_feature_setting_assigns() IS
+    FUNCTION msbms_syst.trig_i_i_syst_feature_setting_assigns() IS
 $DOC$An INSTEAD OF trigger function which applies business rules when using the
-syst_settings API View for DELETE operations.$DOC$;
+syst_settings API View for INSERT operations.$DOC$;
 
         END IF;
     END;

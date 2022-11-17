@@ -1,5 +1,5 @@
 -- File:        syst_feature_map_levels.eex.sql
--- Location:    musebms/database/components/system/msbms_syst_features/msbms_syst_data/syst_feature_map_levels/syst_feature_map_levels.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_features/msbms_syst_data/syst_feature_map_levels/syst_feature_map_levels.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

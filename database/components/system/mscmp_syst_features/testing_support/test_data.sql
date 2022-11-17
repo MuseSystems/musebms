@@ -1,5 +1,5 @@
 -- File:        test_data.sql
--- Location:    musebms/database/components/system/msbms_syst_features/testing_support/test_data.sql
+-- Location:    musebms/database/components/system/mscmp_syst_features/testing_support/test_data.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

@@ -1,5 +1,5 @@
 -- File:        syst_feature_setting_assigns.eex.sql
--- Location:    musebms/database/components/system/msbms_syst_features/msbms_syst/api_views/syst_feature_setting_assigns/syst_feature_setting_assigns.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_features/msbms_syst/api_views/syst_feature_setting_assigns/syst_feature_setting_assigns.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
