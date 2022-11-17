@@ -1,5 +1,5 @@
 -- File:        syst_complex_format_values.eex.sql
--- Location:    musebms/database/components/system/msbms_syst_formats/msbms_syst_data/syst_complex_format_values/syst_complex_format_values.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_formats/msbms_syst_data/syst_complex_format_values/syst_complex_format_values.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
