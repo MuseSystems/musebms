@@ -32,6 +32,9 @@
             "path": "components/system/mscmp_syst_authn",
         },
         {
+            "path": "subsystems/mssub_mcp",
+        },
+        {
             "path": "application/msbms",
         },
         {
@@ -62,7 +65,7 @@
         {
 			"lsp-elixir":
 			{
-				"enabled": false
+				"enabled": true
 			}
 		},
     },
