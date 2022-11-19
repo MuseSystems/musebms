@@ -111,7 +111,7 @@ defmodule MscmpSystInstance.Impl.Instance do
           " / " <> instance_context.application_context.display_name,
       database_role: instance_context.internal_name,
       database_password:
-        get_instance_context_password([
+        get_context_password([
           instance_context.context_code,
           @password_magic,
           instance_dbserver.server_salt,
@@ -126,7 +126,7 @@ defmodule MscmpSystInstance.Impl.Instance do
     }
   end
 
-  defp get_instance_context_password(password_list) do
+  defp get_context_password(password_list) do
     Enum.reduce(password_list, "", &(&2 <> &1))
     |> then(&:crypto.hash(:blake2b, &1))
     |> Base.encode64(padding: false)
