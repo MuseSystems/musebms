@@ -25,7 +25,8 @@ defmodule MssubMcp.MixProject do
 
     # Muse Systems Business Management System Components
     {:mscmp_syst_utils, path: "../../components/system/mscmp_syst_utils"},
-    {:mscmp_syst_error, path: "../../components/system/mscmp_syst_error"}
+    {:mscmp_syst_error, path: "../../components/system/mscmp_syst_error"},
+    {:mscmp_syst_options, path: "../../components/system/mscmp_syst_options"}
   ]
 
   @dialyzer_opts [
