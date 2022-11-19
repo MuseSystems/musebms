@@ -30,6 +30,12 @@ defmodule MscmpSystOptions.Impl.OptionsParser do
     Enum.find(options[:dbserver], nil, &(&1.server_name == options[:global_dbserver_name]))
   end
 
+  @spec get_global_db_password(map()) :: String.t()
+  def get_global_db_password(%{} = options), do: options.global_db_password
+
+  @spec get_global_db_pool_size(map()) :: non_neg_integer()
+  def get_global_db_pool_size(%{} = options), do: options.global_db_pool_size
+
   @spec get_global_pepper_value(map()) :: binary()
   def get_global_pepper_value(options) when is_map(options), do: options.global_pepper_value
 

@@ -58,6 +58,8 @@ defmodule MscmpSystOptions do
           ],
           available_server_pools: ["primary", "linked", "demo", "reserved"],
           global_dbserver_name: "global_db",
+          global_db_password: "(eXI0BU&elq1(mvw",
+          global_db_pool_size: 10,
           global_pepper_value: "jTtEdXRExP5YXHeARQ1W66lP6wDc9GyOvhFPvwnHhtc="
         }
       }
@@ -111,6 +113,8 @@ defmodule MscmpSystOptions do
         ],
         available_server_pools: ["primary", "linked", "demo", "reserved"],
         global_dbserver_name: "global_db",
+        global_db_password: "(eXI0BU&elq1(mvw",
+        global_db_pool_size: 10,
         global_pepper_value: "jTtEdXRExP5YXHeARQ1W66lP6wDc9GyOvhFPvwnHhtc="
       }
 
@@ -155,6 +159,49 @@ defmodule MscmpSystOptions do
   """
   @spec get_global_dbserver(map()) :: MscmpSystDb.Types.db_server()
   defdelegate get_global_dbserver(options), to: OptionsParser
+
+  @doc section: :options_parsing
+  @doc """
+  Returns a password fragment which is used to establish connections to the
+  global database.
+
+  > #### Note {: .warning}
+  >
+  > While this value doesn't represent the complete password used to connect
+  > global database roles to the database server, it nonetheless should be
+  > treated with care inside of the application as should the underlying options
+  > file which persists this value.
+
+  ## Parameters
+
+    * `options` - the options file data as read by `get_options/1`.
+
+  ## Examples
+
+      iex> config_options = MscmpSystOptions.get_options!("./testing_options.toml")
+      iex> MscmpSystOptions.get_global_db_password(config_options)
+      "(eXI0BU&elq1(mvw"
+  """
+  @spec get_global_db_password(map()) :: String.t()
+  defdelegate get_global_db_password(options), to: OptionsParser
+
+  @doc section: :options_parsing
+  @doc """
+  Returns the number of connections to the global database that should be
+  established on application startup.
+
+  ## Parameters
+
+    * `options` - the options file data as read by `get_options/1`.
+
+  ## Examples
+
+      iex> config_options = MscmpSystOptions.get_options!("./testing_options.toml")
+      iex> MscmpSystOptions.get_global_db_pool_size(config_options)
+      10
+  """
+  @spec get_global_db_pool_size(map()) :: non_neg_integer()
+  defdelegate get_global_db_pool_size(options), to: OptionsParser
 
   @doc section: :options_parsing
   @doc """

@@ -25,6 +25,14 @@ defmodule OptionsParserTest do
     assert %{server_name: "global_db"} = MscmpSystOptions.get_global_dbserver(options)
   end
 
+  test "Can Retrieve Global Database Password", %{options: options} do
+    assert "(eXI0BU&elq1(mvw" = MscmpSystOptions.get_global_db_password(options)
+  end
+
+  test "Can Retrieve Global Database Pool Size", %{options: options} do
+    assert 10 = MscmpSystOptions.get_global_db_pool_size(options)
+  end
+
   test "Can Retrieve Global DbServer Pepper", %{options: options} do
     assert "jTtEdXRExP5YXHeARQ1W66lP6wDc9GyOvhFPvwnHhtc=" =
              MscmpSystOptions.get_global_pepper_value(options)
