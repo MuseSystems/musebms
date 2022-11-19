@@ -11,6 +11,14 @@
 # not bootstrapped, the system will try to bootstrap it.
 global_dbserver_name = "global_db"
 
+# A password used by the global Datastore Context database roles to connect to
+# the database.  This value should be at least 16 bytes of data.
+global_db_password = ""
+
+# The number of database connections to establish for accessing the global
+# database.
+global_db_pool_size = 10
+
 # Used for peppering access account credentials when appropriate.  This value
 # should be changed for each installation of the application and also kept in
 # a secure place.  If this value is ever lost, existing access accounts will in
