@@ -1,21 +1,18 @@
 # Msbms
 
-**TODO: Add description**
+To start your Phoenix server:
 
-## Installation
+  * Install dependencies with `mix deps.get`
+  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `msbms` to your list of dependencies in `mix.exs`:
+Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-```elixir
-def deps do
-  [
-    {:msbms, "~> 0.1.0"}
-  ]
-end
-```
+Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/msbms>.
+## Learn more
 
+  * Official website: https://www.phoenixframework.org/
+  * Guides: https://hexdocs.pm/phoenix/overview.html
+  * Docs: https://hexdocs.pm/phoenix
+  * Forum: https://elixirforum.com/c/phoenix-forum
+  * Source: https://github.com/phoenixframework/phoenix
