@@ -19,7 +19,7 @@ defmodule Msbms.MixProject do
   def application do
     [
       mod: {Msbms.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :crypto, :mnesia]
     ]
   end
 
@@ -47,7 +47,8 @@ defmodule Msbms.MixProject do
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
-      {:plug_cowboy, "~> 2.5"}
+      {:plug_cowboy, "~> 2.5"},
+      {:mssub_mcp, path: "../../subsystems/mssub_mcp"}
     ]
   end
 
