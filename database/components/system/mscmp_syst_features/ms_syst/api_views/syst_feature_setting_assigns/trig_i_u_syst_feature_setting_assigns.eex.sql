@@ -60,9 +60,6 @@ ALTER FUNCTION ms_syst.trig_i_u_syst_feature_setting_assigns()
     OWNER TO <%= ms_owner %>;
 
 REVOKE EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_feature_setting_assigns() FROM public;
-GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_feature_setting_assigns() TO <%= ms_appusr %>;
-GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_feature_setting_assigns() TO <%= ms_apiusr %>;
-
 
 COMMENT ON
     FUNCTION ms_syst.trig_i_u_syst_feature_setting_assigns() IS
