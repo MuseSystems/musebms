@@ -38,9 +38,6 @@ ALTER VIEW ms_syst.syst_feature_setting_assigns OWNER TO <%= ms_owner %>;
 
 REVOKE ALL ON TABLE ms_syst.syst_feature_setting_assigns FROM PUBLIC;
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE ms_syst.syst_feature_setting_assigns TO <%= ms_appusr %>;
-GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE ms_syst.syst_feature_setting_assigns TO <%= ms_apiusr %>;
-
 CREATE TRIGGER a50_trig_i_i_syst_feature_setting_assigns
     INSTEAD OF INSERT ON ms_syst.syst_feature_setting_assigns
     FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_i_syst_feature_setting_assigns();
