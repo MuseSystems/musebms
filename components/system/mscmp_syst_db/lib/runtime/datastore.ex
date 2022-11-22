@@ -62,7 +62,7 @@ defmodule MscmpSystDb.Runtime.Datastore do
       {:error,
        %MscmpSystError{
          code: :undefined_error,
-         message: "The datastore failed to start.",
+         message: "The Datastore failed to start.",
          cause: error
        }}
   end
