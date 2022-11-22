@@ -13,13 +13,15 @@
 defmodule MscmpSystInstance.Runtime.Application do
   import Ecto.Query
 
+  use Application
+
   alias MscmpSystInstance.Data
   alias MscmpSystInstance.Impl
   alias MscmpSystInstance.Types
 
   require Logger
 
-  @inst_mgr_name MscmpSystInstance.Supervisor
+  @inst_mgr_name MscmpSystInstance.InstanceSupervisor
   @task_mgr_name MscmpSystInstance.TaskSupervisor
   @registry MscmpSystInstance.Registry
 
@@ -33,6 +35,7 @@ defmodule MscmpSystInstance.Runtime.Application do
   #       it could be started under an application defined supervision tree.
   #       The to-do here is to reconsider that possibility.
 
+  @impl true
   @spec start(Application.start_type(), term()) ::
           {:ok, pid()} | {:ok, pid(), Application.state()} | {:error, term()}
   def start(_type, _args) do
