@@ -13,3 +13,6 @@
 import Config
 
 config :logger, level: :debug
+
+config :mssub_mcp,
+  startup_options_file: "../../application/msbms/ms_startup_options.toml"

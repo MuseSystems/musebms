@@ -1,20 +1,19 @@
 defmodule MssubMcp.Application do
-  # See https://hexdocs.pm/elixir/Application.html
-  # for more information on OTP Applications
-  @moduledoc false
-
   use Application
 
+  @supervisor_name MssubMcp.Supervisor
+  @datastore_supervisor_name MssubMcp.DatastoreSupervisor
+
   @impl true
-  def start(_type, _args) do
-    children = [
-      # Starts a worker by calling: MssubMcp.Worker.start_link(arg)
-      # {MssubMcp.Worker, arg}
+  @spec start(Application.start_type(), term()) ::
+          {:ok, pid()} | {:ok, pid(), Application.state()} | {:error, term()}
+  def start(_type, args) do
+    opts = MscmpSystUtils.resolve_options(args[:opts], datastore_name: @datastore_supervisor_name)
+
+    mcp_service_childredn = [
+      MssubMcp.Runtime.Datastore.child_spec(opts)
     ]
 
-    # See https://hexdocs.pm/elixir/Supervisor.html
-    # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: MssubMcp.Supervisor]
-    Supervisor.start_link(children, opts)
+    Supervisor.start_link(mcp_service_childredn, strategy: :one_for_one, name: @supervisor_name)
   end
 end
