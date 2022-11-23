@@ -14,7 +14,7 @@ defmodule DoctestsTest do
   use InstanceMgrTestCase, async: true
 
   setup_all do
-    _ = MscmpSystDb.set_datastore_context(TestSupport.get_testing_datastore_context_id())
+    _ = MscmpSystDb.put_datastore_context(TestSupport.get_testing_datastore_context_id())
     MscmpSystEnums.put_enums_service(:instance_mgr)
 
     :ok

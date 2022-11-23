@@ -227,7 +227,7 @@ defmodule MscmpSystDbTest do
                @migration_test_opts
              )
 
-    MscmpSystDb.set_datastore_context(:ms_type_four_role_01)
+    MscmpSystDb.put_datastore_context(:ms_type_four_role_01)
 
     assert 3 = length(first_stage_migrations_applied)
 
@@ -253,7 +253,7 @@ defmodule MscmpSystDbTest do
 
     assert 8 = length(second_stage_migrations_applied)
 
-    MscmpSystDb.set_datastore_context(:ms_type_four_role_01)
+    MscmpSystDb.put_datastore_context(:ms_type_four_role_01)
 
     assert {:ok, 10} =
              MscmpSystDb.query_for_value(

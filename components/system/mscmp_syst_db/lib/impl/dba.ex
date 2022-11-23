@@ -51,7 +51,7 @@ defmodule MscmpSystDb.Impl.Dba do
 
     {:ok, dba_pid} = start_dba_connection(datastore_options)
 
-    _ = Datastore.set_datastore_context(dba_pid)
+    _ = Datastore.put_datastore_context(dba_pid)
 
     database_state = get_database_state(datastore_options)
     context_states = get_context_states(datastore_options.contexts)
@@ -85,7 +85,7 @@ defmodule MscmpSystDb.Impl.Dba do
 
     {:ok, dba_pid} = start_dba_connection(datastore_options)
 
-    _ = Datastore.set_datastore_context(dba_pid)
+    _ = Datastore.put_datastore_context(dba_pid)
 
     _interim_states = create_contexts(datastore_options.contexts)
 
@@ -98,7 +98,7 @@ defmodule MscmpSystDb.Impl.Dba do
 
     :ok = Privileged.initialize_datastore(datastore_options, opts)
 
-    _ = Datastore.set_datastore_context(starting_datastore_context)
+    _ = Datastore.put_datastore_context(starting_datastore_context)
 
     {:ok, :ready, context_states}
   rescue
@@ -124,7 +124,7 @@ defmodule MscmpSystDb.Impl.Dba do
 
     {:ok, dba_pid} = start_dba_connection(datastore_options)
 
-    _ = Datastore.set_datastore_context(dba_pid)
+    _ = Datastore.put_datastore_context(dba_pid)
 
     :ok = revoke_db_connect_privs(datastore_options.contexts, datastore_options.database_name)
 
@@ -158,13 +158,13 @@ defmodule MscmpSystDb.Impl.Dba do
 
     {:ok, dba_pid} = start_dba_connection(datastore_options)
 
-    _ = Datastore.set_datastore_context(dba_pid)
+    _ = Datastore.put_datastore_context(dba_pid)
 
     state_result = get_context_states(datastore_options.contexts)
 
     stop_dba_connection(opts[:db_shutdown_timeout])
 
-    _ = Datastore.set_datastore_context(starting_datastore_context)
+    _ = Datastore.put_datastore_context(starting_datastore_context)
 
     {:ok, state_result}
   catch
@@ -189,7 +189,7 @@ defmodule MscmpSystDb.Impl.Dba do
     opts = MscmpSystUtils.resolve_options(opts, db_shutdown_timeout: @default_db_shutdown_timeout)
 
     {:ok, dba_pid} = start_dba_connection(datastore_options)
-    _ = Datastore.set_datastore_context(dba_pid)
+    _ = Datastore.put_datastore_context(dba_pid)
 
     _interim_states = create_contexts(new_contexts)
 
@@ -221,7 +221,7 @@ defmodule MscmpSystDb.Impl.Dba do
 
     {:ok, dba_pid} = start_dba_connection(datastore_options)
 
-    _ = Datastore.set_datastore_context(dba_pid)
+    _ = Datastore.put_datastore_context(dba_pid)
 
     :ok = revoke_db_connect_privs(delete_contexts, datastore_options.database_name)
 
@@ -276,7 +276,7 @@ defmodule MscmpSystDb.Impl.Dba do
 
     case Datastore.start_datastore_context(dba_options, dba_context) do
       {:ok, dba_pid} ->
-        _ = Datastore.set_datastore_context(dba_pid)
+        _ = Datastore.put_datastore_context(dba_pid)
         Datastore.query_for_none!("SET application_name = '#{dba_context.description}';")
 
         {:ok, dba_pid}

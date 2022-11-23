@@ -74,7 +74,7 @@ defmodule MscmpSystSettings.Runtime.Server do
 
     _ = :ets.new(ets_table_name, [:set, :protected, :named_table])
 
-    _ = MscmpSystDb.set_datastore_context(datastore_context_name)
+    _ = MscmpSystDb.put_datastore_context(datastore_context_name)
 
     Settings.refresh_from_database()
 

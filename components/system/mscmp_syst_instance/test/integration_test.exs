@@ -266,7 +266,7 @@ defmodule IntegrationTest do
     |> Enum.each(fn context ->
       starting_datastore_context = MscmpSystDb.current_datastore_context()
 
-      MscmpSystDb.set_datastore_context(String.to_atom(context.internal_name))
+      MscmpSystDb.put_datastore_context(String.to_atom(context.internal_name))
 
       assert MscmpSystDb.query_for_value!("""
              SELECT true
@@ -275,7 +275,7 @@ defmodule IntegrationTest do
               LIMIT 1;
              """)
 
-      MscmpSystDb.set_datastore_context(starting_datastore_context)
+      MscmpSystDb.put_datastore_context(starting_datastore_context)
     end)
   end
 

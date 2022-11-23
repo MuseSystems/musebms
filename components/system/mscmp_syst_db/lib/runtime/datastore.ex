@@ -435,9 +435,9 @@ defmodule MscmpSystDb.Runtime.Datastore do
   # Ecto.Repo Query API Wrappers
   # -----------------------------------------------------------------------------
 
-  @spec set_datastore_context(pid() | Ecto.Repo.t() | Ecto.Adapter.adapter_meta()) ::
+  @spec put_datastore_context(pid() | Ecto.Repo.t() | Ecto.Adapter.adapter_meta()) ::
           atom() | pid()
-  def set_datastore_context(context), do: put_dynamic_repo(context)
+  def put_datastore_context(context), do: put_dynamic_repo(context)
 
   @spec current_datastore_context :: atom() | pid()
   def current_datastore_context, do: get_dynamic_repo()

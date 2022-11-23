@@ -55,7 +55,7 @@ defmodule MscmpSystDb.Impl.Privileged do
 
     stop_priv_connection(opts[:db_shutdown_timeout])
 
-    _ = Datastore.set_datastore_context(starting_datastore_context)
+    _ = Datastore.put_datastore_context(starting_datastore_context)
 
     datastore_version
   rescue
@@ -116,7 +116,7 @@ defmodule MscmpSystDb.Impl.Privileged do
 
     stop_priv_connection(opts[:db_shutdown_timeout])
 
-    _ = Datastore.set_datastore_context(starting_datastore_context)
+    _ = Datastore.put_datastore_context(starting_datastore_context)
 
     apply_migrations_result
   rescue
@@ -172,7 +172,7 @@ defmodule MscmpSystDb.Impl.Privileged do
 
     case Datastore.start_datastore_context(priv_options, priv_context) do
       {:ok, priv_pid} ->
-        _ = Datastore.set_datastore_context(priv_pid)
+        _ = Datastore.put_datastore_context(priv_pid)
 
         Datastore.query_for_none!("SET ROLE #{database_owner.database_role};")
 
