@@ -14,4 +14,6 @@ import Config
 
 config :mssub_mcp, startup_options_path: "ms_startup_options.toml"
 
+config :mnesia, dir: ".mnesia"
+
 import_config "#{Mix.env()}.exs"
