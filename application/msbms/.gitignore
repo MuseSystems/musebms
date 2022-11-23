@@ -38,3 +38,5 @@ msbms-*.tar
 npm-debug.log
 /assets/node_modules/
 
+# Ignore our working Mnesia directory.
+/.mnesia/

@@ -27,3 +27,6 @@ mssub_mcp-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+
+# Ignore our working Mnesia directory.
+/.mnesia/

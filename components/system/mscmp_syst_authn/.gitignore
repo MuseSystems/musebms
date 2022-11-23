@@ -27,3 +27,6 @@ mscmp_syst_athn-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+
+# Ignore our working Mnesia directory.
+/.mnesia/
