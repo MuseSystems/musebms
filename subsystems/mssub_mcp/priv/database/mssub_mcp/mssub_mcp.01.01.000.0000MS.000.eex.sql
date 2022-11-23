@@ -1,5 +1,5 @@
 -- Migration: priv/database/mssub_mcp/mssub_mcp.01.01.000.0000MS.000.eex.sql
--- Built on:  2022-11-22 21:45:33.589873Z
+-- Built on:  2022-11-23 02:37:59.975490Z
 
 DO
 $MIGRATION$
@@ -15652,5 +15652,13 @@ GRANT SELECT, INSERT, DELETE ON TABLE ms_syst.syst_password_history TO <%= ms_ap
 GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_password_history TO <%= ms_appusr %>;
 GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_password_history TO <%= ms_appusr %>;
 GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_password_history TO <%= ms_appusr %>;
+
+-- Functions
+
+GRANT EXECUTE
+  ON FUNCTION ms_syst.get_applied_network_rule( p_host_addr         inet
+                                              , p_instance_id       uuid
+                                              , p_instance_owner_id uuid )
+  TO <%= ms_appusr %>;
 END;
 $MIGRATION$;
