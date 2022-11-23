@@ -24,7 +24,7 @@ test_kind =
 
 TestSupport.setup_testing_database(test_kind)
 
-MscmpSystDb.set_datastore_context(TestSupport.get_testing_datastore_context_id())
+MscmpSystDb.put_datastore_context(TestSupport.get_testing_datastore_context_id())
 
 children = [
   {DynamicSupervisor, strategy: :one_for_one, name: MscmpSystInstance.TestingSupervisor}

@@ -248,9 +248,9 @@ defmodule MscmpSystDb do
   # reasonably familiar to other developers.
 
   @doc section: :service_management
-  @spec set_datastore_context(pid() | Ecto.Repo.t() | Ecto.Adapter.adapter_meta()) ::
+  @spec put_datastore_context(pid() | Ecto.Repo.t() | Ecto.Adapter.adapter_meta()) ::
           atom() | pid()
-  defdelegate set_datastore_context(context), to: Datastore
+  defdelegate put_datastore_context(context), to: Datastore
 
   @doc section: :service_management
   @spec current_datastore_context :: atom() | pid()

@@ -61,7 +61,7 @@ defmodule DevSupport do
     _ = setup_database(db_kind)
     _ = setup_mnesia_database(db_kind)
 
-    _ = MscmpSystDb.set_datastore_context(get_datastore_context_id())
+    _ = MscmpSystDb.put_datastore_context(get_datastore_context_id())
 
     enum_service_spec = %{
       id: MscmpDevEnumService,
@@ -81,7 +81,7 @@ defmodule DevSupport do
 
     _ = DynamicSupervisor.start_child(Mscmp.DevSupervisor, enum_service_spec)
 
-    _ = MscmpSystDb.set_datastore_context(get_datastore_context_id())
+    _ = MscmpSystDb.put_datastore_context(get_datastore_context_id())
     _ = MscmpSystEnums.put_enums_service(:ms_dev_enum_service)
   end
 

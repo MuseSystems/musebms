@@ -98,7 +98,7 @@ defmodule MscmpSystInstance.Runtime.Application do
         @task_mgr_name,
         &1,
         fn instance ->
-          _ = MscmpSystDb.set_datastore_context(current_datastore_context)
+          _ = MscmpSystDb.put_datastore_context(current_datastore_context)
           _ = MscmpSystEnums.put_enums_service(current_enums_service)
           start_instance(instance, startup_options, opts)
         end,

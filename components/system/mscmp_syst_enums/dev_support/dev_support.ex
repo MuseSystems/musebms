@@ -60,7 +60,7 @@ defmodule DevSupport do
   def start_dev_environment(db_kind \\ :unit_testing) do
     _ = setup_database(db_kind)
 
-    _ = MscmpSystDb.set_datastore_context(get_datastore_context_id())
+    _ = MscmpSystDb.put_datastore_context(get_datastore_context_id())
 
     enum_service_spec = %{
       id: MscmpDevEnumService,

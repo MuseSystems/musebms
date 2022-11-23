@@ -15,7 +15,7 @@
 
 TestSupport.setup_testing_database()
 
-MscmpSystDb.set_datastore_context(TestSupport.get_testing_datastore_context_id())
+MscmpSystDb.put_datastore_context(TestSupport.get_testing_datastore_context_id())
 
 enum_service_spec = %{
   id: MscmpSystEnumsTestingService,
