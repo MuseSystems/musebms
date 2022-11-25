@@ -57,13 +57,14 @@ defmodule MscmpSystSettings.MixProject do
           mscmp_syst_error: "../../../../documentation/technical/app_server/mscmp_syst_error",
           mscmp_syst_utils: "../../../../documentation/technical/app_server/mscmp_syst_utils"
         ],
-        nest_modules_by_prefix: [MscmpSystSettings.DbTypes],
         groups_for_functions: [
           Settings: &(&1[:section] == :settings_data),
           Runtime: &(&1[:section] == :service_management)
         ],
+        nest_modules_by_prefix: [Msdata],
         groups_for_modules: [
           API: [MscmpSystSettings],
+          Data: [Msdata.SystSettings],
           "Supporting Types": [MscmpSystSettings.Types]
         ]
       ]

@@ -57,13 +57,13 @@ defmodule MscmpSystEnums.MixProject do
         name: "MscmpSystEnums",
         main: "MscmpSystEnums",
         output: "../../../documentation/technical/app_server/mscmp_syst_enums",
-        nest_modules_by_prefix: [MscmpSystEnums.DbTypes],
         groups_for_functions: [
           Enumerations: &(&1[:section] == :enum_data),
           "Enumeration Functional Types": &(&1[:section] == :enum_functional_type_data),
           "Enumeration items": &(&1[:section] == :enum_item_data),
           Runtime: &(&1[:section] == :service_management)
         ],
+        nest_modules_by_prefix: [Msdata],
         groups_for_modules: [
           API: [MscmpSystEnums],
           Data: [

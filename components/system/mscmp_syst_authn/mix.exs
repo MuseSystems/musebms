@@ -59,7 +59,6 @@ defmodule MscmpSystAuthn.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       docs: [
         name: "MscmpSystAuthn",
-        nest_modules_by_prefix: [MscmpSystAuthn.Data],
         main: "MscmpSystAuthn",
         output: "../../../documentation/technical/app_server/mscmp_syst_authn",
         deps: [
@@ -83,6 +82,7 @@ defmodule MscmpSystAuthn.MixProject do
           "Network Rules": &(&1[:section] == :network_rule_data),
           Runtime: &(&1[:section] == :service_management)
         ],
+        nest_modules_by_prefix: [Msdata],
         groups_for_modules: [
           API: [MscmpSystAuthn],
           Data: [

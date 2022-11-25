@@ -52,7 +52,6 @@ defmodule MscmpSystInstance.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       docs: [
         name: "MscmpSystInstance",
-        nest_modules_by_prefix: [MscmpSystInstance.Data],
         main: "MscmpSystInstance",
         output: "../../../documentation/technical/app_server/mscmp_syst_instance",
         deps: [
@@ -68,6 +67,7 @@ defmodule MscmpSystInstance.MixProject do
           Instances: &(&1[:section] == :instance_data),
           Runtime: &(&1[:section] == :service_management)
         ],
+        nest_modules_by_prefix: [Msdata],
         groups_for_modules: [
           API: [MscmpSystInstance],
           Data: [

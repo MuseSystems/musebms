@@ -12,7 +12,7 @@
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
     <script src="dist/handlebars.templates-X7YVL3G2.js"></script>
-    <script src="dist/sidebar_items-A9BFC0A0.js"></script>
+    <script src="dist/sidebar_items-14D13BA3.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -949,7 +949,7 @@ to the authentication process.</p>
   optional(:plaintext_credential) =&gt; <a href="#t:credential/0">credential</a>(),
   optional(:owning_owner_id) =&gt; <a href="../../../../documentation/technical/app_server/mscmp_syst_instance/MscmpSystInstance.Types.html#t:owner_id/0">MscmpSystInstance.Types.owner_id</a>() | nil,
   optional(:identity_id) =&gt; <a href="#t:identity_id/0">identity_id</a>(),
-  optional(:identity) =&gt; <a href="MscmpSystAuthn.Data.SystIdentities.html#t:t/0">MscmpSystAuthn.Data.SystIdentities.t</a>(),
+  optional(:identity) =&gt; <a href="Msdata.SystIdentities.html#t:t/0">Msdata.SystIdentities.t</a>(),
   optional(:reset_reason) =&gt; <a href="#t:credential_reset_reason/0">credential_reset_reason</a>()
 }</pre>
 
@@ -1314,7 +1314,7 @@ being required and describe the reason for such a requirement.  This is
 information useful to users that must take action.</p><p>Note that currently the only Credential type that may require Credential reset
 is the Password Credential Type.</p><ul><li><p><code class="inline">reset_forced</code> - the reset is required because it has been
 administratively forced.  See the <code class="inline">force_reset</code> field of
-<a href="MscmpSystAuthn.Data.SystCredentials.html"><code class="inline">MscmpSystAuthn.Data.SystCredentials</code></a> for more.</p></li><li><p><code class="inline">reset_age</code> - the Password Credential has exceeded the applicable Max Age
+<a href="Msdata.SystCredentials.html"><code class="inline">Msdata.SystCredentials</code></a> for more.</p></li><li><p><code class="inline">reset_age</code> - the Password Credential has exceeded the applicable Max Age
 Password Rule and must be updated.</p></li><li><p><code class="inline">reset_disallowed</code> - the password used in the Credential has been found to
 be included in the Disallowed Passwords list and may no longer be used for
 authentication.</p></li></ul>
@@ -1802,12 +1802,12 @@ applicability which can range from being globally applicable to applying only
 to a single Instance.  The known Precedence Classes in order of application
 are:</p><ul><li><p><code class="inline">:disallowed</code> - disallowed hosts are individual host IP addresses which
 are denied access on a global basis, effectively banning their use with the
-system.  Defined by <a href="MscmpSystAuthn.Data.SystDisallowedHosts.html"><code class="inline">MscmpSystAuthn.Data.SystDisallowedHosts</code></a>.</p></li><li><p><code class="inline">:global</code> - Network Rules which are defined to apply global without regard
+system.  Defined by <a href="Msdata.SystDisallowedHosts.html"><code class="inline">Msdata.SystDisallowedHosts</code></a>.</p></li><li><p><code class="inline">:global</code> - Network Rules which are defined to apply global without regard
 to Owner or Instance.  Such rules may explicitly whitelist or blacklist
-hosts.  Defined by <a href="MscmpSystAuthn.Data.SystGlobalNetworkRules.html"><code class="inline">MscmpSystAuthn.Data.SystGlobalNetworkRules</code></a>.</p></li><li><p><code class="inline">:instance</code> - Network Rules which apply to only a specific Application
-Instance.  Defined by <a href="MscmpSystAuthn.Data.SystInstanceNetworkRules.html"><code class="inline">MscmpSystAuthn.Data.SystInstanceNetworkRules</code></a>.</p></li><li><p><code class="inline">:instance_owner</code> - Network Rules which apply to all Application Instances
+hosts.  Defined by <a href="Msdata.SystGlobalNetworkRules.html"><code class="inline">Msdata.SystGlobalNetworkRules</code></a>.</p></li><li><p><code class="inline">:instance</code> - Network Rules which apply to only a specific Application
+Instance.  Defined by <a href="Msdata.SystInstanceNetworkRules.html"><code class="inline">Msdata.SystInstanceNetworkRules</code></a>.</p></li><li><p><code class="inline">:instance_owner</code> - Network Rules which apply to all Application Instances
 belonging to a specific Owner.  Defined by
-<a href="MscmpSystAuthn.Data.SystOwnerNetworkRules.html"><code class="inline">MscmpSystAuthn.Data.SystOwnerNetworkRules</code></a>.</p></li><li><p><code class="inline">:implied</code> - when no explicitly defined applicable Disallowed Host or
+<a href="Msdata.SystOwnerNetworkRules.html"><code class="inline">Msdata.SystOwnerNetworkRules</code></a>.</p></li><li><p><code class="inline">:implied</code> - when no explicitly defined applicable Disallowed Host or
 Network Rule records can be found, the system will use an implicit globally
 applied rule to Apply to the authentication attempt.  The <code class="inline">:implied</code> rule
 allows any host to attempt authentication.</p></li></ul>
@@ -2036,8 +2036,8 @@ must be selected.</p></li></ul>
 
 <p>Defines a generic Password Rule record allowing Password Rules originating
 from different database sources a common representation.</p><p>Password Rules are defined in two different database tables,
-<a href="MscmpSystAuthn.Data.SystGlobalPasswordRules.html"><code class="inline">MscmpSystAuthn.Data.SystGlobalPasswordRules</code></a> and
-<a href="MscmpSystAuthn.Data.SystOwnerPasswordRules.html"><code class="inline">MscmpSystAuthn.Data.SystOwnerPasswordRules</code></a>.  This type defines a
+<a href="Msdata.SystGlobalPasswordRules.html"><code class="inline">Msdata.SystGlobalPasswordRules</code></a> and
+<a href="Msdata.SystOwnerPasswordRules.html"><code class="inline">Msdata.SystOwnerPasswordRules</code></a>.  This type defines a
 common representation of Password Rule data for those parts of the system that
 apply Password Rules after the applicable Password Rules have been resolved.</p><h2 id="t:password_rules/0-attributes" class="section-heading">
   <a href="#t:password_rules/0-attributes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>

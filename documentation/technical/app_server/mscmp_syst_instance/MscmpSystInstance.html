@@ -12,7 +12,7 @@
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
     <script src="dist/handlebars.templates-X7YVL3G2.js"></script>
-    <script src="dist/sidebar_items-0819640F.js"></script>
+    <script src="dist/sidebar_items-FF0B71FC.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -139,7 +139,7 @@ classes that are available for creating new Instances.  These defaults include
 such starting values as the number of database connections to use for each
 Application Context and which server pools may host the Instance.</p><p>After Instance creation, the Instance Type serves no further role for the
 Instance.</p><p>Note that Instance Type records are a special case of the
-<a href="../../../../documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.Data.SystEnumItems.html"><code class="inline">MscmpSystEnums.Data.SystEnumItems</code></a> record.  The Enum Name for Instance Type
+<a href="../../../../documentation/technical/app_server/mscmp_syst_enums/Msdata.SystEnumItems.html"><code class="inline">Msdata.SystEnumItems</code></a> record.  The Enum Name for Instance Type
 is, unsurprisingly, <code class="inline">instance_types</code>.</p><h4>Instance Type Applications</h4><p>Establishes that a given Instance Type will support a particular Application.</p><h4>Instance Type Contexts</h4><p>Defines defaults used in creating Instance Context records at Instance
 creation time.</p><p>When an association is made between an Instance Type and an Application via
 a Instance Type Application association, a new Instance Type Context record is
@@ -493,7 +493,7 @@ Owners
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> create_owner(<a href="MscmpSystInstance.Types.html#t:owner_params/0">MscmpSystInstance.Types.owner_params</a>()) ::
-  {:ok, <a href="MscmpSystInstance.Data.SystOwners.html#t:t/0">MscmpSystInstance.Data.SystOwners.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+  {:ok, <a href="Msdata.SystOwners.html#t:t/0">Msdata.SystOwners.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
 
       </div>
 
@@ -531,7 +531,7 @@ enumeration.</p></li></ul></li></ul>
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> get_owner_by_name(<a href="MscmpSystInstance.Types.html#t:owner_name/0">MscmpSystInstance.Types.owner_name</a>()) ::
-  {:ok, <a href="MscmpSystInstance.Data.SystOwners.html#t:t/0">MscmpSystInstance.Data.SystOwners.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+  {:ok, <a href="Msdata.SystOwners.html#t:t/0">Msdata.SystOwners.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
 
       </div>
 
@@ -542,7 +542,7 @@ State and the Owner State Functional Type.</p><h2 id="get_owner_by_name/1-exampl
   </a>
   Examples
 </h2>
-<p>  iex&gt; {:ok, %MscmpSystInstance.Data.SystOwners{internal_name: &quot;owner1&quot;}} =
+<p>  iex&gt; {:ok, %Msdata.SystOwners{internal_name: &quot;owner1&quot;}} =
   ...&gt;   MscmpSystInstance.get_owner_by_name(&quot;owner1&quot;)</p>
   </section>
 </section>
@@ -594,10 +594,7 @@ State and the Owner State Functional Type.</p><h2 id="get_owner_by_name/1-exampl
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> purge_owner(
-  <a href="MscmpSystInstance.Types.html#t:owner_id/0">MscmpSystInstance.Types.owner_id</a>()
-  | <a href="MscmpSystInstance.Data.SystOwners.html#t:t/0">MscmpSystInstance.Data.SystOwners.t</a>()
-) ::
+          <pre translate="no"><span class="attribute">@spec</span> purge_owner(<a href="MscmpSystInstance.Types.html#t:owner_id/0">MscmpSystInstance.Types.owner_id</a>() | <a href="Msdata.SystOwners.html#t:t/0">Msdata.SystOwners.t</a>()) ::
   :ok | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
 
       </div>
@@ -610,7 +607,7 @@ State and the Owner State Functional Type.</p><h2 id="get_owner_by_name/1-exampl
   Parameters
 </h2>
 <ul><li><code class="inline">owner</code> - either the record ID of an Owner record to delete or the
-<a href="MscmpSystInstance.Data.SystOwners.html"><code class="inline">MscmpSystInstance.Data.SystOwners</code></a> struct representing the Owner to
+<a href="Msdata.SystOwners.html"><code class="inline">Msdata.SystOwners</code></a> struct representing the Owner to
 purge.</li></ul>
   </section>
 </section>
@@ -631,9 +628,9 @@ purge.</li></ul>
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> update_owner(
-  <a href="MscmpSystInstance.Types.html#t:owner_id/0">MscmpSystInstance.Types.owner_id</a>() | <a href="MscmpSystInstance.Data.SystOwners.html#t:t/0">MscmpSystInstance.Data.SystOwners.t</a>(),
+  <a href="MscmpSystInstance.Types.html#t:owner_id/0">MscmpSystInstance.Types.owner_id</a>() | <a href="Msdata.SystOwners.html#t:t/0">Msdata.SystOwners.t</a>(),
   <a href="MscmpSystInstance.Types.html#t:owner_params/0">MscmpSystInstance.Types.owner_params</a>()
-) :: {:ok, <a href="MscmpSystInstance.Data.SystOwners.html#t:t/0">MscmpSystInstance.Data.SystOwners.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+) :: {:ok, <a href="Msdata.SystOwners.html#t:t/0">Msdata.SystOwners.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
 
       </div>
 
@@ -644,7 +641,7 @@ purge.</li></ul>
   Parameters
 </h2>
 <ul><li><p><code class="inline">owner</code> - This value must either by the record ID of an existing Owner
-record or the <a href="MscmpSystInstance.Data.SystOwners.html"><code class="inline">MscmpSystInstance.Data.SystOwners</code></a> struct representing an
+record or the <a href="Msdata.SystOwners.html"><code class="inline">Msdata.SystOwners</code></a> struct representing an
 existing owner.</p></li><li><p><code class="inline">update_params</code> - a map of Owner record attributes to be updated.  For
 update operations only those attributes to be updates must be provided.</p><ul><li><p><code class="inline">internal_name</code> - a predetermined unique identifier for the Owner
 record for use in programmatic contexts.  This attribute must be unique in
@@ -685,7 +682,7 @@ Instance Types
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> create_instance_type(<a href="MscmpSystInstance.Types.html#t:instance_type_params/0">MscmpSystInstance.Types.instance_type_params</a>()) ::
-  {:ok, <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.Data.SystEnumItems.html#t:t/0">MscmpSystEnums.Data.SystEnumItems.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+  {:ok, <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/Msdata.SystEnumItems.html#t:t/0">Msdata.SystEnumItems.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
 
       </div>
 
@@ -721,8 +718,7 @@ for Instance Type creation.</li></ul>
   <a href="MscmpSystInstance.Types.html#t:instance_type_id/0">MscmpSystInstance.Types.instance_type_id</a>(),
   <a href="MscmpSystInstance.Types.html#t:application_id/0">MscmpSystInstance.Types.application_id</a>()
 ) ::
-  {:ok, <a href="MscmpSystInstance.Data.SystInstanceTypeApplications.html#t:t/0">MscmpSystInstance.Data.SystInstanceTypeApplications.t</a>()}
-  | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+  {:ok, <a href="Msdata.SystInstanceTypeApplications.html#t:t/0">Msdata.SystInstanceTypeApplications.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
 
       </div>
 
@@ -788,7 +784,7 @@ from the system.</li></ul>
 
           <pre translate="no"><span class="attribute">@spec</span> delete_instance_type_application(
   <a href="MscmpSystInstance.Types.html#t:instance_type_application_id/0">MscmpSystInstance.Types.instance_type_application_id</a>()
-  | <a href="MscmpSystInstance.Data.SystInstanceTypeApplications.html#t:t/0">MscmpSystInstance.Data.SystInstanceTypeApplications.t</a>()
+  | <a href="Msdata.SystInstanceTypeApplications.html#t:t/0">Msdata.SystInstanceTypeApplications.t</a>()
 ) :: :ok | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
 
       </div>
@@ -803,7 +799,7 @@ relationship was valid will continue to exist.</p><h2 id="delete_instance_type_a
 </h2>
 <ul><li><code class="inline">instance_type_application</code> - This value can be either the ID value of the
 Instance Type Application record or a
-<a href="MscmpSystInstance.Data.SystInstanceTypeApplications.html"><code class="inline">MscmpSystInstance.Data.SystInstanceTypeApplications</code></a> struct with at
+<a href="Msdata.SystInstanceTypeApplications.html"><code class="inline">Msdata.SystInstanceTypeApplications</code></a> struct with at
 least the <code class="inline">id</code> field defined.</li></ul>
   </section>
 </section>
@@ -828,7 +824,7 @@ least the <code class="inline">id</code> field defined.</li></ul>
           <pre translate="no"><span class="attribute">@spec</span> update_instance_type(
   <a href="MscmpSystInstance.Types.html#t:instance_type_name/0">MscmpSystInstance.Types.instance_type_name</a>(),
   <a href="MscmpSystInstance.Types.html#t:instance_type_params/0">MscmpSystInstance.Types.instance_type_params</a>() | %{}
-) :: {:ok, <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.Data.SystEnumItems.html#t:t/0">MscmpSystEnums.Data.SystEnumItems.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+) :: {:ok, <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/Msdata.SystEnumItems.html#t:t/0">Msdata.SystEnumItems.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
 
       </div>
 
@@ -864,11 +860,9 @@ contexts.</p></li></ul>
 
           <pre translate="no"><span class="attribute">@spec</span> update_instance_type_context(
   <a href="MscmpSystInstance.Types.html#t:instance_type_context_id/0">MscmpSystInstance.Types.instance_type_context_id</a>()
-  | <a href="MscmpSystInstance.Data.SystInstanceTypeContexts.html#t:t/0">MscmpSystInstance.Data.SystInstanceTypeContexts.t</a>(),
+  | <a href="Msdata.SystInstanceTypeContexts.html#t:t/0">Msdata.SystInstanceTypeContexts.t</a>(),
   <a href="MscmpSystInstance.Types.html#t:instance_type_context_params/0">MscmpSystInstance.Types.instance_type_context_params</a>() | %{}
-) ::
-  {:ok, <a href="MscmpSystInstance.Data.SystInstanceTypeContexts.html#t:t/0">MscmpSystInstance.Data.SystInstanceTypeContexts.t</a>()}
-  | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+) :: {:ok, <a href="Msdata.SystInstanceTypeContexts.html#t:t/0">Msdata.SystInstanceTypeContexts.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
 
       </div>
 
@@ -881,7 +875,7 @@ Contexts.</p><h2 id="update_instance_type_context/2-parameters" class="section-h
 </h2>
 <ul><li><p><code class="inline">instance_type_context</code> - this value may either be the record ID of the
 target Instance Type Context record or a copy of the current
-<a href="MscmpSystInstance.Data.SystInstanceTypeContexts.html"><code class="inline">MscmpSystInstance.Data.SystInstanceTypeContexts</code></a> struct representing the
+<a href="Msdata.SystInstanceTypeContexts.html"><code class="inline">Msdata.SystInstanceTypeContexts</code></a> struct representing the
 target record.</p></li><li><p><code class="inline">instance_type_context_params</code> - a map containing those attributes to be
 updated with their new values.</p><ul><li><p><code class="inline">instance_type_id</code> - the ID value of the owning Instance Type record.
 This value is required unless the <code class="inline">instance_type_name</code> attribute is
@@ -926,7 +920,7 @@ Instances
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> create_instance(<a href="MscmpSystInstance.Types.html#t:instance_params/0">MscmpSystInstance.Types.instance_params</a>()) ::
-  {:ok, <a href="MscmpSystInstance.Data.SystInstances.html#t:t/0">MscmpSystInstance.Data.SystInstances.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+  {:ok, <a href="Msdata.SystInstances.html#t:t/0">Msdata.SystInstances.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
 
       </div>
 
@@ -1021,7 +1015,7 @@ State value is not provided by the caller.</p>
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> get_instance_by_name(<a href="MscmpSystInstance.Types.html#t:instance_name/0">MscmpSystInstance.Types.instance_name</a>()) ::
-  {:ok, <a href="MscmpSystInstance.Data.SystInstances.html#t:t/0">MscmpSystInstance.Data.SystInstances.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+  {:ok, <a href="Msdata.SystInstances.html#t:t/0">Msdata.SystInstances.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
 
       </div>
 
@@ -1037,8 +1031,8 @@ State value is not provided by the caller.</p>
   </a>
   Example
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="5775153491-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="5775153491-2">%</span><span class="nc" data-group-id="5775153491-2">MscmpSystInstance.Data.SystInstances</span><span class="p" data-group-id="5775153491-2">{</span><span class="p" data-group-id="5775153491-2">}</span><span class="p" data-group-id="5775153491-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_by_name</span><span class="p" data-group-id="5775153491-3">(</span><span class="s">&quot;app1_owner1_instance_types_sml&quot;</span><span class="p" data-group-id="5775153491-3">)</span></code></pre>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="8376374583-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8376374583-2">%</span><span class="nc" data-group-id="8376374583-2">Msdata.SystInstances</span><span class="p" data-group-id="8376374583-2">{</span><span class="p" data-group-id="8376374583-2">}</span><span class="p" data-group-id="8376374583-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_by_name</span><span class="p" data-group-id="8376374583-3">(</span><span class="s">&quot;app1_owner1_instance_types_sml&quot;</span><span class="p" data-group-id="8376374583-3">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_instance_datastore_options/2">
@@ -1058,8 +1052,7 @@ State value is not provided by the caller.</p>
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> get_instance_datastore_options(
-  <a href="MscmpSystInstance.Types.html#t:instance_id/0">MscmpSystInstance.Types.instance_id</a>()
-  | <a href="MscmpSystInstance.Data.SystInstances.html#t:t/0">MscmpSystInstance.Data.SystInstances.t</a>(),
+  <a href="MscmpSystInstance.Types.html#t:instance_id/0">MscmpSystInstance.Types.instance_id</a>() | <a href="Msdata.SystInstances.html#t:t/0">Msdata.SystInstances.t</a>(),
   <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()
 ) :: <a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.Types.html#t:datastore_options/0">MscmpSystDb.Types.datastore_options</a>()</pre>
 
@@ -1073,7 +1066,7 @@ provided Startup Options.</p><h2 id="get_instance_datastore_options/2-parameters
   Parameters
 </h2>
 <ul><li><p><code class="inline">instance</code> - the instance parameter is either the record ID value of the
-Instance record desired or the <a href="MscmpSystInstance.Data.SystInstances.html"><code class="inline">MscmpSystInstance.Data.SystInstances</code></a>
+Instance record desired or the <a href="Msdata.SystInstances.html"><code class="inline">Msdata.SystInstances</code></a>
 struct for the target Instance.</p></li><li><p><code class="inline">startup_options</code> - a map of values containing the Startup Options
 obtained from the <a href="../../../../documentation/technical/app_server/mscmp_syst_options/MscmpSystOptions.html"><code class="inline">MscmpSystOptions</code></a> component.</p></li></ul>
   </section>
@@ -1111,9 +1104,9 @@ obtained from the <a href="../../../../documentation/technical/app_server/mscmp_
   </a>
   Example
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="4659706932-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">instance_id</span><span class="p" data-group-id="4659706932-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_id_by_name</span><span class="p" data-group-id="4659706932-2">(</span><span class="s">&quot;app1_owner1_instance_types_sml&quot;</span><span class="p" data-group-id="4659706932-2">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="n">is_binary</span><span class="p" data-group-id="4659706932-3">(</span><span class="n">instance_id</span><span class="p" data-group-id="4659706932-3">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="6435665949-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">instance_id</span><span class="p" data-group-id="6435665949-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_id_by_name</span><span class="p" data-group-id="6435665949-2">(</span><span class="s">&quot;app1_owner1_instance_types_sml&quot;</span><span class="p" data-group-id="6435665949-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_binary</span><span class="p" data-group-id="6435665949-3">(</span><span class="n">instance_id</span><span class="p" data-group-id="6435665949-3">)</span><span class="w">
 </span><span class="no">true</span></code></pre>
   </section>
 </section>
@@ -1136,7 +1129,7 @@ obtained from the <a href="../../../../documentation/technical/app_server/mscmp_
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> initialize_instance(<a href="MscmpSystInstance.Types.html#t:instance_id/0">MscmpSystInstance.Types.instance_id</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) ::
-  {:ok, <a href="MscmpSystInstance.Data.SystInstances.html#t:t/0">MscmpSystInstance.Data.SystInstances.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+  {:ok, <a href="Msdata.SystInstances.html#t:t/0">Msdata.SystInstances.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
 
       </div>
 
@@ -1187,15 +1180,15 @@ for initialization of the Datastore.  See the documentation for
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> purge_instance(
-  <a href="MscmpSystInstance.Types.html#t:instance_id/0">MscmpSystInstance.Types.instance_id</a>()
-  | <a href="MscmpSystInstance.Data.SystInstances.html#t:t/0">MscmpSystInstance.Data.SystInstances.t</a>(),
+  <a href="MscmpSystInstance.Types.html#t:instance_id/0">MscmpSystInstance.Types.instance_id</a>() | <a href="Msdata.SystInstances.html#t:t/0">Msdata.SystInstances.t</a>(),
   <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()
-) :: :ok | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+) ::
+  :ok | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
 
       </div>
 
 <p>Purges an eligible Instance from the system.</p><p>Purging an Instance drops its associated Datastore and its defining
-<a href="MscmpSystInstance.Data.SystInstances.html"><code class="inline">MscmpSystInstance.Data.SystInstances</code></a> records from the database.</p><p>In order for the purge to be successful, the Instance must be in an Instance
+<a href="Msdata.SystInstances.html"><code class="inline">Msdata.SystInstances</code></a> records from the database.</p><p>In order for the purge to be successful, the Instance must be in an Instance
 State of functional type <code class="inline">instance_states_purge_eligible</code>.</p><blockquote><h4 class="warning">Warning</h4><p>Naturally, great care must be taken in the lead up to calling this function
 as purging an Instance leads to the irreversible loss of the Instance's data
 (absent externally managed backups of some sort).</p></blockquote><h2 id="purge_instance/2-parameters" class="section-heading">
@@ -1205,7 +1198,7 @@ as purging an Instance leads to the irreversible loss of the Instance's data
   Parameters
 </h2>
 <ul><li><p><code class="inline">instance</code> - either the record ID or the
-<a href="MscmpSystInstance.Data.SystInstances.html"><code class="inline">MscmpSystInstance.Data.SystInstances</code></a> struct of the Instance to purge.</p></li><li><p><code class="inline">startup_options</code> - a map of values containing the Startup Options
+<a href="Msdata.SystInstances.html"><code class="inline">Msdata.SystInstances</code></a> struct of the Instance to purge.</p></li><li><p><code class="inline">startup_options</code> - a map of values containing the Startup Options
 obtained from the <a href="../../../../documentation/technical/app_server/mscmp_syst_options/MscmpSystOptions.html"><code class="inline">MscmpSystOptions</code></a> component.</p></li></ul>
   </section>
 </section>
@@ -1226,10 +1219,10 @@ obtained from the <a href="../../../../documentation/technical/app_server/mscmp_
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> set_instance_state(
-  <a href="MscmpSystInstance.Data.SystInstances.html#t:t/0">MscmpSystInstance.Data.SystInstances.t</a>(),
+  <a href="Msdata.SystInstances.html#t:t/0">Msdata.SystInstances.t</a>(),
   <a href="MscmpSystInstance.Types.html#t:instance_state_id/0">MscmpSystInstance.Types.instance_state_id</a>()
 ) ::
-  {:ok, <a href="MscmpSystInstance.Data.SystInstances.html#t:t/0">MscmpSystInstance.Data.SystInstances.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+  {:ok, <a href="Msdata.SystInstances.html#t:t/0">Msdata.SystInstances.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
 
       </div>
 
@@ -1239,7 +1232,7 @@ obtained from the <a href="../../../../documentation/technical/app_server/mscmp_
   </a>
   Parameters
 </h2>
-<ul><li><p><code class="inline">instance</code> - the current <a href="MscmpSystInstance.Data.SystInstances.html"><code class="inline">MscmpSystInstance.Data.SystInstances</code></a> struct
+<ul><li><p><code class="inline">instance</code> - the current <a href="Msdata.SystInstances.html"><code class="inline">Msdata.SystInstances</code></a> struct
 representing the Instance to be updated.</p></li><li><p><code class="inline">instance_state_id</code> - The record ID of the new Instance State value into
 which to place the Instance record.</p></li></ul>
   </section>
@@ -1303,8 +1296,7 @@ for more information about this function and the available parameters.</p>
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> start_application(
-  <a href="MscmpSystInstance.Types.html#t:application_id/0">MscmpSystInstance.Types.application_id</a>()
-  | <a href="MscmpSystInstance.Data.SystApplications.html#t:t/0">MscmpSystInstance.Data.SystApplications.t</a>(),
+  <a href="MscmpSystInstance.Types.html#t:application_id/0">MscmpSystInstance.Types.application_id</a>() | <a href="Msdata.SystApplications.html#t:t/0">Msdata.SystApplications.t</a>(),
   <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(),
   <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
 ) :: :ok | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
@@ -1325,7 +1317,7 @@ prepared for Application startup to be long running.</p><h2 id="start_applicatio
   Parameters
 </h2>
 <ul><li><p><code class="inline">application</code> - either the record ID or the
-<a href="MscmpSystInstance.Data.SystApplications.html"><code class="inline">MscmpSystInstance.Data.SystApplications</code></a> struct representing the
+<a href="Msdata.SystApplications.html"><code class="inline">Msdata.SystApplications</code></a> struct representing the
 Application to start.</p></li><li><p><code class="inline">startup_options</code> - a map of values containing the Startup Options
 obtained from the <a href="../../../../documentation/technical/app_server/mscmp_syst_options/MscmpSystOptions.html"><code class="inline">MscmpSystOptions</code></a> component.</p></li><li><p><code class="inline">opts</code> - a Keyword List of optional values used during the initialization
 process.  The available options include:</p><ul><li><p><code class="inline">max_concurrency</code> - the maximum number of Instances to start
@@ -1353,8 +1345,7 @@ documentation for <a href="#start_instance/3"><code class="inline">start_instanc
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> start_instance(
-  <a href="MscmpSystInstance.Types.html#t:instance_id/0">MscmpSystInstance.Types.instance_id</a>()
-  | <a href="MscmpSystInstance.Data.SystInstances.html#t:t/0">MscmpSystInstance.Data.SystInstances.t</a>(),
+  <a href="MscmpSystInstance.Types.html#t:instance_id/0">MscmpSystInstance.Types.instance_id</a>() | <a href="Msdata.SystInstances.html#t:t/0">Msdata.SystInstances.t</a>(),
   <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(),
   <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
 ) :: :ok | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
@@ -1374,7 +1365,7 @@ ready to start child processes.</p><h2 id="start_instance/3-parameters" class="s
   Parameters
 </h2>
 <ul><li><p><code class="inline">instance</code> - either the record ID or the
-<a href="MscmpSystInstance.Data.SystInstances.html"><code class="inline">MscmpSystInstance.Data.SystInstances</code></a> struct of the Instance to start.</p></li><li><p><code class="inline">startup_options</code> - a map of values containing the Startup Options
+<a href="Msdata.SystInstances.html"><code class="inline">Msdata.SystInstances</code></a> struct of the Instance to start.</p></li><li><p><code class="inline">startup_options</code> - a map of values containing the Startup Options
 obtained from the <a href="../../../../documentation/technical/app_server/mscmp_syst_options/MscmpSystOptions.html"><code class="inline">MscmpSystOptions</code></a> component.</p></li><li><p><code class="inline">opts</code> - a Keyword List of optional values used during the initialization
 process.  The available options include:</p><ul><li><p><code class="inline">migrating_state_id</code> - the record ID of the Instance State to use while
 the starting Instance is being updated to the most current database
@@ -1441,8 +1432,7 @@ of Application shutdown, please see the documentation for
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> stop_application(
-  <a href="MscmpSystInstance.Types.html#t:application_id/0">MscmpSystInstance.Types.application_id</a>()
-  | <a href="MscmpSystInstance.Data.SystApplications.html#t:t/0">MscmpSystInstance.Data.SystApplications.t</a>(),
+  <a href="MscmpSystInstance.Types.html#t:application_id/0">MscmpSystInstance.Types.application_id</a>() | <a href="Msdata.SystApplications.html#t:t/0">Msdata.SystApplications.t</a>(),
   <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
 ) :: :ok | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
 
@@ -1456,7 +1446,7 @@ child processes, including Instances.</p><h2 id="stop_application/2-parameters" 
   Parameters
 </h2>
 <ul><li><p><code class="inline">application</code> - either the record ID or the
-<a href="MscmpSystInstance.Data.SystApplications.html"><code class="inline">MscmpSystInstance.Data.SystApplications</code></a> struct representing the
+<a href="Msdata.SystApplications.html"><code class="inline">Msdata.SystApplications</code></a> struct representing the
 Application to stop.</p></li><li><p><code class="inline">opts</code> - a Keyword List of optional values used during the initialization
 process.  The available options include:</p><ul><li><p><code class="inline">supervisor_shutdown_timeout</code> - a timeout value used to allow processes
 supervised by the Application supervisor to shut down cleanly.  By
@@ -1484,10 +1474,10 @@ default, this value is set to 60,000ms.</p></li><li><p>Other options available a
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> stop_instance(
-  <a href="MscmpSystInstance.Types.html#t:instance_id/0">MscmpSystInstance.Types.instance_id</a>()
-  | <a href="MscmpSystInstance.Data.SystInstances.html#t:t/0">MscmpSystInstance.Data.SystInstances.t</a>(),
+  <a href="MscmpSystInstance.Types.html#t:instance_id/0">MscmpSystInstance.Types.instance_id</a>() | <a href="Msdata.SystInstances.html#t:t/0">Msdata.SystInstances.t</a>(),
   <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
-) :: :ok | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+) ::
+  :ok | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
 
       </div>
 
@@ -1498,7 +1488,7 @@ default, this value is set to 60,000ms.</p></li><li><p>Other options available a
   Parameters
 </h2>
 <ul><li><p><code class="inline">instance</code> - either the record ID or the
-<a href="MscmpSystInstance.Data.SystInstances.html"><code class="inline">MscmpSystInstance.Data.SystInstances</code></a> struct of the Instance to stop.</p></li><li><p><code class="inline">opts</code> - a Keyword List of optional values used during the initialization
+<a href="Msdata.SystInstances.html"><code class="inline">Msdata.SystInstances</code></a> struct of the Instance to stop.</p></li><li><p><code class="inline">opts</code> - a Keyword List of optional values used during the initialization
 process.  The available options include:</p><ul><li><p><code class="inline">supervisor_shutdown_timeout</code> - a timeout value used to allow processes
 supervised by the Instance supervisor to shut down cleanly.  By default,
 this value is set to 60,000ms.</p></li><li><p><code class="inline">db_shutdown_timeout</code> - a timeout value used to limit the time allowed

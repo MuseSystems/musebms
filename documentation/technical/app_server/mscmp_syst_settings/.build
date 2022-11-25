@@ -1,8 +1,8 @@
 404.html
 DevSupport.html
-MscmpSystSettings.Data.SystSettings.html
 MscmpSystSettings.Types.html
 MscmpSystSettings.html
+Msdata.SystSettings.html
 api-reference.html
 dist/handlebars.runtime-NWIB6V2M.js
 dist/handlebars.templates-X7YVL3G2.js
@@ -29,7 +29,7 @@ dist/merriweather-latin-ext-300-normal-K6L27CZ5.woff2
 dist/merriweather-vietnamese-300-italic-EHHNZPUO.woff2
 dist/merriweather-vietnamese-300-normal-U376L4Z4.woff2
 dist/remixicon-E5UFLALU.woff2
-dist/search_items-ED9969D9.js
-dist/sidebar_items-7EAC1858.js
+dist/search_items-001B9553.js
+dist/sidebar_items-F0234EC9.js
 index.html
 search.html
