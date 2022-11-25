@@ -13,7 +13,6 @@
 defmodule MscmpSystAuthn.Impl.AccessAccount do
   import Ecto.Query
 
-  alias MscmpSystAuthn.Data
   alias MscmpSystAuthn.Types
 
   require Logger
@@ -21,10 +20,10 @@ defmodule MscmpSystAuthn.Impl.AccessAccount do
   @moduledoc false
 
   @spec create_access_account(Types.access_account_params()) ::
-          {:ok, Data.SystAccessAccounts.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystAccessAccounts.t()} | {:error, MscmpSystError.t()}
   def create_access_account(access_account_params) do
     access_account_params
-    |> Data.SystAccessAccounts.insert_changeset()
+    |> Msdata.SystAccessAccounts.insert_changeset()
     |> MscmpSystDb.insert!(returning: true)
     |> then(&{:ok, &1})
   rescue
@@ -42,13 +41,13 @@ defmodule MscmpSystAuthn.Impl.AccessAccount do
   end
 
   @spec update_access_account(
-          Types.access_account_id() | Data.SystAccessAccounts.t(),
+          Types.access_account_id() | Msdata.SystAccessAccounts.t(),
           Types.access_account_params()
         ) ::
-          {:ok, Data.SystAccessAccounts.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystAccessAccounts.t()} | {:error, MscmpSystError.t()}
   def update_access_account(access_account_id, access_account_params)
       when is_binary(access_account_id) do
-    MscmpSystDb.get!(Data.SystAccessAccounts, access_account_id)
+    MscmpSystDb.get!(Msdata.SystAccessAccounts, access_account_id)
     |> update_access_account(access_account_params)
   rescue
     error ->
@@ -64,9 +63,9 @@ defmodule MscmpSystAuthn.Impl.AccessAccount do
       }
   end
 
-  def update_access_account(%Data.SystAccessAccounts{} = access_account, access_account_params) do
+  def update_access_account(%Msdata.SystAccessAccounts{} = access_account, access_account_params) do
     access_account
-    |> Data.SystAccessAccounts.update_changeset(access_account_params)
+    |> Msdata.SystAccessAccounts.update_changeset(access_account_params)
     |> MscmpSystDb.update!(returning: true)
     |> then(&{:ok, &1})
   rescue
@@ -86,7 +85,7 @@ defmodule MscmpSystAuthn.Impl.AccessAccount do
   @spec get_access_account_id_by_name(Types.access_account_name()) ::
           {:ok, Types.access_account_id()} | {:error, MscmpSystError.t()}
   def get_access_account_id_by_name(access_account_name) when is_binary(access_account_name) do
-    from(aa in Data.SystAccessAccounts,
+    from(aa in Msdata.SystAccessAccounts,
       select: aa.id,
       where: aa.internal_name == ^access_account_name
     )
@@ -107,10 +106,10 @@ defmodule MscmpSystAuthn.Impl.AccessAccount do
   end
 
   @spec get_access_account_by_name(Types.access_account_name()) ::
-          Data.SystAccessAccounts.t() | {:error, MscmpSystError.t()}
+          Msdata.SystAccessAccounts.t() | {:error, MscmpSystError.t()}
   def get_access_account_by_name(access_account_name) do
     from(
-      aa in Data.SystAccessAccounts,
+      aa in Msdata.SystAccessAccounts,
       join: aas in assoc(aa, :access_account_state),
       join: aasft in assoc(aas, :functional_type),
       where: aa.internal_name == ^access_account_name,
@@ -132,11 +131,11 @@ defmodule MscmpSystAuthn.Impl.AccessAccount do
       }
   end
 
-  @spec purge_access_account(Types.access_account_id() | Data.SystAccessAccounts.t()) ::
+  @spec purge_access_account(Types.access_account_id() | Msdata.SystAccessAccounts.t()) ::
           :ok | {:error, MscmpSystError.t()}
   def purge_access_account(access_account_id) when is_binary(access_account_id) do
     from(
-      aa in Data.SystAccessAccounts,
+      aa in Msdata.SystAccessAccounts,
       join: aas in assoc(aa, :access_account_state),
       join: aasft in assoc(aas, :functional_type),
       where: aa.id == ^access_account_id,
@@ -147,9 +146,9 @@ defmodule MscmpSystAuthn.Impl.AccessAccount do
   end
 
   def purge_access_account(
-        %Data.SystAccessAccounts{
-          access_account_state: %MscmpSystEnums.Data.SystEnumItems{
-            functional_type: %MscmpSystEnums.Data.SystEnumFunctionalTypes{
+        %Msdata.SystAccessAccounts{
+          access_account_state: %Msdata.SystEnumItems{
+            functional_type: %Msdata.SystEnumFunctionalTypes{
               internal_name: functional_type
             }
           }
@@ -180,6 +179,6 @@ defmodule MscmpSystAuthn.Impl.AccessAccount do
       }
   end
 
-  def purge_access_account(%Data.SystAccessAccounts{id: access_account_id}),
+  def purge_access_account(%Msdata.SystAccessAccounts{id: access_account_id}),
     do: purge_access_account(access_account_id)
 end

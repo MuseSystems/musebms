@@ -11,7 +11,6 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
-  alias MscmpSystAuthn.Data
   alias MscmpSystAuthn.Impl
   alias MscmpSystAuthn.Types
   alias MscmpSystDb.DbTypes
@@ -541,7 +540,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
           Types.account_identifier(),
           MscmpSystInstance.Types.owner_id() | nil
         ) ::
-          {:ok, Data.SystIdentities.t() | :not_found} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystIdentities.t() | :not_found} | {:error, MscmpSystError.t()}
   def identify_access_account_by_code(account_code, owner_id) when is_binary(account_code) do
     account_code
     |> Impl.Identity.AccountCode.identify_access_account(owner_id)
@@ -558,7 +557,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
        }}
   end
 
-  defp process_identify_account_code_result(%Data.SystIdentities{} = identity),
+  defp process_identify_account_code_result(%Msdata.SystIdentities{} = identity),
     do: {:ok, identity}
 
   defp process_identify_account_code_result(nil), do: {:ok, :not_found}
@@ -584,7 +583,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     })
   end
 
-  defp process_identity(auth_state, %Data.SystIdentities{} = identity, validated) do
+  defp process_identity(auth_state, %Msdata.SystIdentities{} = identity, validated) do
     identity_expired =
       if identity.identity_expires == nil,
         do: false,

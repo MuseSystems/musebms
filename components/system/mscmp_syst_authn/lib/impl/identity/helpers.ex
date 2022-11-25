@@ -13,8 +13,6 @@
 defmodule MscmpSystAuthn.Impl.Identity.Helpers do
   import Ecto.Query
 
-  alias MscmpSystAuthn.Data
-
   require Logger
 
   @moduledoc false
@@ -31,20 +29,20 @@ defmodule MscmpSystAuthn.Impl.Identity.Helpers do
   defp maybe_add_validated_date(create_params, false), do: create_params
 
   def delete_identity(identity_id) when is_binary(identity_id) do
-    from(i in Data.SystIdentities, where: i.id == ^identity_id)
+    from(i in Msdata.SystIdentities, where: i.id == ^identity_id)
     |> MscmpSystDb.one!()
     |> delete_identity()
   end
 
   def create_record(insert_params) do
     insert_params
-    |> Data.SystIdentities.insert_changeset()
+    |> Msdata.SystIdentities.insert_changeset()
     |> MscmpSystDb.insert!(returning: true)
   end
 
   def update_record(identity, update_params) do
     identity
-    |> Data.SystIdentities.update_changeset(update_params)
+    |> Msdata.SystIdentities.update_changeset(update_params)
     |> MscmpSystDb.update!(returning: true)
   end
 
@@ -60,7 +58,7 @@ defmodule MscmpSystAuthn.Impl.Identity.Helpers do
         allow_unvalidated \\ :require_validation
       ) do
     from(
-      i in Data.SystIdentities,
+      i in Msdata.SystIdentities,
       as: :identity,
       join: it in assoc(i, :identity_type),
       as: :identity_type,

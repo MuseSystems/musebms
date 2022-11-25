@@ -15,7 +15,6 @@ defmodule IdentityAccountCodeTest do
 
   import Ecto.Query
 
-  alias MscmpSystAuthn.Data
   alias MscmpSystAuthn.Impl
 
   @moduletag :capture_log
@@ -28,7 +27,7 @@ defmodule IdentityAccountCodeTest do
     assert {:ok, default_identity} =
              Impl.Identity.AccountCode.create_identity(access_account_id, nil, [])
 
-    assert %Data.SystIdentities{validated: val_date, account_identifier: identifier} =
+    assert %Msdata.SystIdentities{validated: val_date, account_identifier: identifier} =
              default_identity
 
     assert val_date != nil
@@ -41,7 +40,7 @@ defmodule IdentityAccountCodeTest do
     assert {:ok, specific_token_identity} =
              Impl.Identity.AccountCode.create_identity(access_account_id, "This Is A Test", [])
 
-    assert %Data.SystIdentities{} = specific_token_identity
+    assert %Msdata.SystIdentities{} = specific_token_identity
 
     assert specific_token_identity.account_identifier == "This Is A Test"
 
@@ -54,7 +53,7 @@ defmodule IdentityAccountCodeTest do
                identity_token_length: 40
              )
 
-    assert %Data.SystIdentities{validated: val_date, account_identifier: identifier} =
+    assert %Msdata.SystIdentities{validated: val_date, account_identifier: identifier} =
              token_length_identity
 
     assert val_date != nil
@@ -70,7 +69,7 @@ defmodule IdentityAccountCodeTest do
                identity_tokens: 'ABC'
              )
 
-    assert %Data.SystIdentities{validated: val_date, account_identifier: identifier} =
+    assert %Msdata.SystIdentities{validated: val_date, account_identifier: identifier} =
              tokens_identity
 
     assert val_date != nil
@@ -83,7 +82,7 @@ defmodule IdentityAccountCodeTest do
   test "Can identify Owned Access Account" do
     target =
       from(
-        aa in Data.SystAccessAccounts,
+        aa in Msdata.SystAccessAccounts,
         join: i in assoc(aa, :identities),
         join: ei in assoc(i, :identity_type),
         select: %{account_identifier: i.account_identifier, owning_owner_id: aa.owning_owner_id},
@@ -93,7 +92,7 @@ defmodule IdentityAccountCodeTest do
       )
       |> MscmpSystDb.one!()
 
-    assert %Data.SystIdentities{} =
+    assert %Msdata.SystIdentities{} =
              Impl.Identity.AccountCode.identify_access_account(
                target.account_identifier,
                target.owning_owner_id
@@ -106,7 +105,7 @@ defmodule IdentityAccountCodeTest do
   test "Can identify Unowned Access Account" do
     good_target =
       from(
-        aa in Data.SystAccessAccounts,
+        aa in Msdata.SystAccessAccounts,
         join: i in assoc(aa, :identities),
         join: ei in assoc(i, :identity_type),
         select: %{account_identifier: i.account_identifier},
@@ -116,7 +115,7 @@ defmodule IdentityAccountCodeTest do
       )
       |> MscmpSystDb.one!()
 
-    assert %Data.SystIdentities{} =
+    assert %Msdata.SystIdentities{} =
              Impl.Identity.AccountCode.identify_access_account(
                good_target.account_identifier,
                nil
@@ -124,7 +123,7 @@ defmodule IdentityAccountCodeTest do
 
     bad_target =
       from(
-        aa in Data.SystAccessAccounts,
+        aa in Msdata.SystAccessAccounts,
         join: i in assoc(aa, :identities),
         join: ei in assoc(i, :identity_type),
         select: %{account_identifier: i.account_identifier},
@@ -141,7 +140,7 @@ defmodule IdentityAccountCodeTest do
   test "Can reset Account Code for Access Account" do
     target =
       from(
-        aa in Data.SystAccessAccounts,
+        aa in Msdata.SystAccessAccounts,
         join: i in assoc(aa, :identities),
         join: ei in assoc(i, :identity_type),
         select: i,
@@ -152,7 +151,7 @@ defmodule IdentityAccountCodeTest do
       |> MscmpSystDb.one!()
 
     # Default Options
-    assert {:ok, %Data.SystIdentities{} = default_identity} =
+    assert {:ok, %Msdata.SystIdentities{} = default_identity} =
              Impl.Identity.AccountCode.reset_identity_for_access_account_id(
                target.access_account_id,
                []
@@ -162,7 +161,7 @@ defmodule IdentityAccountCodeTest do
     assert target.account_identifier != default_identity.account_identifier
 
     # identity_token_length
-    assert {:ok, %Data.SystIdentities{} = token_length_identity} =
+    assert {:ok, %Msdata.SystIdentities{} = token_length_identity} =
              Impl.Identity.AccountCode.reset_identity_for_access_account_id(
                target.access_account_id,
                identity_token_length: 40
@@ -172,7 +171,7 @@ defmodule IdentityAccountCodeTest do
     assert default_identity.account_identifier != token_length_identity.account_identifier
 
     # identity_tokens
-    assert {:ok, %Data.SystIdentities{} = tokens_identity} =
+    assert {:ok, %Msdata.SystIdentities{} = tokens_identity} =
              Impl.Identity.AccountCode.reset_identity_for_access_account_id(
                target.access_account_id,
                identity_tokens: 'ABC'
@@ -187,7 +186,7 @@ defmodule IdentityAccountCodeTest do
     {:ok, found_access_account_id} =
       Impl.AccessAccount.get_access_account_id_by_name("owned_all_access")
 
-    assert {:ok, %Data.SystIdentities{}} =
+    assert {:ok, %Msdata.SystIdentities{}} =
              Impl.Identity.AccountCode.get_account_code_by_access_account_id(
                found_access_account_id
              )

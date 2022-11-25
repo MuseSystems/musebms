@@ -13,7 +13,6 @@
 defmodule MscmpSystAuthn.Impl.NetworkRules do
   import Ecto.Query
 
-  alias MscmpSystAuthn.Data
   alias MscmpSystAuthn.Types
   alias MscmpSystDb.DbTypes
 
@@ -35,7 +34,7 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
   def host_disallowed?(host_addr) when is_tuple(host_addr) do
     target_host = %DbTypes.Inet{address: host_addr}
 
-    from(dh in Data.SystDisallowedHosts, where: dh.host_address == ^target_host)
+    from(dh in Msdata.SystDisallowedHosts, where: dh.host_address == ^target_host)
     |> MscmpSystDb.exists?()
   rescue
     error ->
@@ -48,11 +47,11 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
   end
 
   @spec create_disallowed_host(Types.host_address()) ::
-          {:ok, Data.SystDisallowedHosts.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystDisallowedHosts.t()} | {:error, MscmpSystError.t()}
   def create_disallowed_host(host_addr) when is_tuple(host_addr) do
     target_host = %DbTypes.Inet{address: host_addr}
 
-    Data.SystDisallowedHosts.insert_changeset(target_host)
+    Msdata.SystDisallowedHosts.insert_changeset(target_host)
     |> MscmpSystDb.insert!(returning: true)
     |> then(&{:ok, if(&1.id == nil, do: nil, else: &1)})
   rescue
@@ -79,7 +78,7 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
   def delete_disallowed_host_addr!(host_addr) when not is_nil(host_addr) do
     target_host = %DbTypes.Inet{address: host_addr}
 
-    from(dh in Data.SystDisallowedHosts, where: dh.host_address == ^target_host)
+    from(dh in Msdata.SystDisallowedHosts, where: dh.host_address == ^target_host)
     |> process_disallowed_host_delete()
   rescue
     error ->
@@ -91,7 +90,7 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
         cause: error
   end
 
-  @spec delete_disallowed_host(Types.disallowed_host_id() | Data.SystDisallowedHosts.t()) ::
+  @spec delete_disallowed_host(Types.disallowed_host_id() | Msdata.SystDisallowedHosts.t()) ::
           {:ok, :deleted | :not_found} | {:error, MscmpSystError.t() | Exception.t()}
   def delete_disallowed_host(disallowed_host) do
     {:ok, delete_disallowed_host!(disallowed_host)}
@@ -99,10 +98,10 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
     error -> {:error, error}
   end
 
-  @spec delete_disallowed_host!(Types.disallowed_host_id() | Data.SystDisallowedHosts.t()) ::
+  @spec delete_disallowed_host!(Types.disallowed_host_id() | Msdata.SystDisallowedHosts.t()) ::
           :deleted | :not_found
-  def delete_disallowed_host!(%Data.SystDisallowedHosts{} = disallowed_host) do
-    from(dh in Data.SystDisallowedHosts, where: dh.id == ^disallowed_host.id)
+  def delete_disallowed_host!(%Msdata.SystDisallowedHosts{} = disallowed_host) do
+    from(dh in Msdata.SystDisallowedHosts, where: dh.id == ^disallowed_host.id)
     |> process_disallowed_host_delete()
   rescue
     error ->
@@ -115,7 +114,7 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
   end
 
   def delete_disallowed_host!(disallowed_host_id) when is_binary(disallowed_host_id) do
-    from(dh in Data.SystDisallowedHosts, where: dh.id == ^disallowed_host_id)
+    from(dh in Msdata.SystDisallowedHosts, where: dh.id == ^disallowed_host_id)
     |> process_disallowed_host_delete()
   rescue
     error ->
@@ -146,7 +145,7 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
   end
 
   @spec get_disallowed_host_record_by_id(Types.disallowed_host_id()) ::
-          {:ok, Data.SystDisallowedHosts.t()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, Msdata.SystDisallowedHosts.t()} | {:error, MscmpSystError.t() | Exception.t()}
   def get_disallowed_host_record_by_id(disallowed_host_id) when is_binary(disallowed_host_id) do
     {:ok, get_disallowed_host_record_by_id!(disallowed_host_id)}
   rescue
@@ -154,9 +153,9 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
   end
 
   @spec get_disallowed_host_record_by_id!(Types.disallowed_host_id()) ::
-          Data.SystDisallowedHosts.t()
+          Msdata.SystDisallowedHosts.t()
   def get_disallowed_host_record_by_id!(disallowed_host_id) when is_binary(disallowed_host_id) do
-    from(dh in Data.SystDisallowedHosts, where: dh.id == ^disallowed_host_id)
+    from(dh in Msdata.SystDisallowedHosts, where: dh.id == ^disallowed_host_id)
     |> MscmpSystDb.one!()
   rescue
     error ->
@@ -169,7 +168,8 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
   end
 
   @spec get_disallowed_host_record_by_host(Types.host_address()) ::
-          {:ok, Data.SystDisallowedHosts.t() | nil} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, Msdata.SystDisallowedHosts.t() | nil}
+          | {:error, MscmpSystError.t() | Exception.t()}
   def get_disallowed_host_record_by_host(host_addr) when is_tuple(host_addr) do
     {:ok, get_disallowed_host_record_by_host!(host_addr)}
   rescue
@@ -177,11 +177,11 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
   end
 
   @spec get_disallowed_host_record_by_host!(Types.host_address()) ::
-          Data.SystDisallowedHosts.t() | nil
+          Msdata.SystDisallowedHosts.t() | nil
   def get_disallowed_host_record_by_host!(host_addr) when is_tuple(host_addr) do
     target_host = %DbTypes.Inet{address: host_addr}
 
-    from(dh in Data.SystDisallowedHosts, where: dh.host_address == ^target_host)
+    from(dh in Msdata.SystDisallowedHosts, where: dh.host_address == ^target_host)
     |> MscmpSystDb.one()
   rescue
     error ->
@@ -251,11 +251,11 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
   end
 
   @spec create_global_network_rule(Types.global_network_rule_params()) ::
-          {:ok, Data.SystGlobalNetworkRules.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystGlobalNetworkRules.t()} | {:error, MscmpSystError.t()}
   def create_global_network_rule(insert_params) do
     insert_params
     |> maybe_convert_params_net_addresses()
-    |> Data.SystGlobalNetworkRules.insert_changeset()
+    |> Msdata.SystGlobalNetworkRules.insert_changeset()
     |> MscmpSystDb.insert!(returning: true)
     |> then(&{:ok, &1})
   rescue
@@ -274,12 +274,12 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
           MscmpSystInstance.Types.owner_id(),
           Types.owner_network_rule_params()
         ) ::
-          {:ok, Data.SystOwnerNetworkRules.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystOwnerNetworkRules.t()} | {:error, MscmpSystError.t()}
   def create_owner_network_rule(owner_id, insert_params) when is_binary(owner_id) do
     insert_params
     |> maybe_convert_params_net_addresses()
     |> Map.put(:owner_id, owner_id)
-    |> Data.SystOwnerNetworkRules.insert_changeset()
+    |> Msdata.SystOwnerNetworkRules.insert_changeset()
     |> MscmpSystDb.insert!(returning: true)
     |> then(&{:ok, &1})
   rescue
@@ -298,12 +298,12 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
           MscmpSystInstance.Types.instance_id(),
           Types.instance_network_rule_params()
         ) ::
-          {:ok, Data.SystInstanceNetworkRules.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystInstanceNetworkRules.t()} | {:error, MscmpSystError.t()}
   def create_instance_network_rule(instance_id, insert_params) when is_binary(instance_id) do
     insert_params
     |> maybe_convert_params_net_addresses()
     |> Map.put(:instance_id, instance_id)
-    |> Data.SystInstanceNetworkRules.insert_changeset()
+    |> Msdata.SystInstanceNetworkRules.insert_changeset()
     |> MscmpSystDb.insert!(returning: true)
     |> then(&{:ok, &1})
   rescue
@@ -319,9 +319,10 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
   end
 
   @spec update_global_network_rule(
-          Ecto.UUID.t() | Data.SystGlobalNetworkRules.t(),
+          Ecto.UUID.t() | Msdata.SystGlobalNetworkRules.t(),
           Types.global_network_rule_params()
-        ) :: {:ok, Data.SystGlobalNetworkRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
+        ) ::
+          {:ok, Msdata.SystGlobalNetworkRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
   def update_global_network_rule(global_network_rule, update_params) do
     {:ok, update_global_network_rule!(global_network_rule, update_params)}
   rescue
@@ -329,9 +330,9 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
   end
 
   @spec update_global_network_rule!(
-          Ecto.UUID.t() | Data.SystGlobalNetworkRules.t(),
+          Ecto.UUID.t() | Msdata.SystGlobalNetworkRules.t(),
           Types.global_network_rule_params()
-        ) :: Data.SystGlobalNetworkRules.t()
+        ) :: Msdata.SystGlobalNetworkRules.t()
   def update_global_network_rule!(global_network_rule_id, update_params)
       when is_binary(global_network_rule_id) do
     global_network_rule_id
@@ -348,13 +349,13 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
   end
 
   def update_global_network_rule!(
-        %Data.SystGlobalNetworkRules{} = global_network_rule,
+        %Msdata.SystGlobalNetworkRules{} = global_network_rule,
         update_params
       ) do
     resolved_params = maybe_convert_params_net_addresses(update_params)
 
     global_network_rule
-    |> Data.SystGlobalNetworkRules.update_changeset(resolved_params)
+    |> Msdata.SystGlobalNetworkRules.update_changeset(resolved_params)
     |> MscmpSystDb.update!(returning: true)
   rescue
     error ->
@@ -367,9 +368,10 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
   end
 
   @spec update_owner_network_rule(
-          Ecto.UUID.t() | Data.SystOwnerNetworkRules.t(),
+          Ecto.UUID.t() | Msdata.SystOwnerNetworkRules.t(),
           Types.owner_network_rule_params()
-        ) :: {:ok, Data.SystOwnerNetworkRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
+        ) ::
+          {:ok, Msdata.SystOwnerNetworkRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
   def update_owner_network_rule(owner_network_rule, update_params) do
     {:ok, update_owner_network_rule!(owner_network_rule, update_params)}
   rescue
@@ -377,9 +379,9 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
   end
 
   @spec update_owner_network_rule!(
-          Ecto.UUID.t() | Data.SystOwnerNetworkRules.t(),
+          Ecto.UUID.t() | Msdata.SystOwnerNetworkRules.t(),
           Types.owner_network_rule_params()
-        ) :: Data.SystOwnerNetworkRules.t()
+        ) :: Msdata.SystOwnerNetworkRules.t()
   def update_owner_network_rule!(owner_network_rule_id, update_params)
       when is_binary(owner_network_rule_id) do
     owner_network_rule_id
@@ -396,13 +398,13 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
   end
 
   def update_owner_network_rule!(
-        %Data.SystOwnerNetworkRules{} = owner_network_rule,
+        %Msdata.SystOwnerNetworkRules{} = owner_network_rule,
         update_params
       ) do
     resolved_params = maybe_convert_params_net_addresses(update_params)
 
     owner_network_rule
-    |> Data.SystOwnerNetworkRules.update_changeset(resolved_params)
+    |> Msdata.SystOwnerNetworkRules.update_changeset(resolved_params)
     |> MscmpSystDb.update!(returning: true)
   rescue
     error ->
@@ -415,10 +417,11 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
   end
 
   @spec update_instance_network_rule(
-          Ecto.UUID.t() | Data.SystInstanceNetworkRules.t(),
+          Ecto.UUID.t() | Msdata.SystInstanceNetworkRules.t(),
           Types.instance_network_rule_params()
         ) ::
-          {:ok, Data.SystInstanceNetworkRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, Msdata.SystInstanceNetworkRules.t()}
+          | {:error, MscmpSystError.t() | Exception.t()}
   def update_instance_network_rule(instance_network_rule, update_params) do
     {:ok, update_instance_network_rule!(instance_network_rule, update_params)}
   rescue
@@ -426,9 +429,9 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
   end
 
   @spec update_instance_network_rule!(
-          Ecto.UUID.t() | Data.SystInstanceNetworkRules.t(),
+          Ecto.UUID.t() | Msdata.SystInstanceNetworkRules.t(),
           Types.instance_network_rule_params()
-        ) :: Data.SystInstanceNetworkRules.t()
+        ) :: Msdata.SystInstanceNetworkRules.t()
   def update_instance_network_rule!(instance_network_rule_id, update_params)
       when is_binary(instance_network_rule_id) do
     instance_network_rule_id
@@ -445,13 +448,13 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
   end
 
   def update_instance_network_rule!(
-        %Data.SystInstanceNetworkRules{} = instance_network_rule,
+        %Msdata.SystInstanceNetworkRules{} = instance_network_rule,
         update_params
       ) do
     resolved_params = maybe_convert_params_net_addresses(update_params)
 
     instance_network_rule
-    |> Data.SystInstanceNetworkRules.update_changeset(resolved_params)
+    |> Msdata.SystInstanceNetworkRules.update_changeset(resolved_params)
     |> MscmpSystDb.update!(returning: true)
   rescue
     error ->
@@ -464,7 +467,7 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
   end
 
   @spec get_global_network_rule(Ecto.UUID.t()) ::
-          {:ok, Data.SystGlobalNetworkRules.t()}
+          {:ok, Msdata.SystGlobalNetworkRules.t()}
           | {:ok, :not_found}
           | {:error, MscmpSystError.t() | Exception.t()}
   def get_global_network_rule(global_network_rule_id) do
@@ -473,10 +476,10 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
     error -> {:error, error}
   end
 
-  @spec get_global_network_rule!(Ecto.UUID.t()) :: Data.SystGlobalNetworkRules.t() | :not_found
+  @spec get_global_network_rule!(Ecto.UUID.t()) :: Msdata.SystGlobalNetworkRules.t() | :not_found
   def get_global_network_rule!(global_network_rule_id) do
     db_result =
-      from(gnr in Data.SystGlobalNetworkRules, where: gnr.id == ^global_network_rule_id)
+      from(gnr in Msdata.SystGlobalNetworkRules, where: gnr.id == ^global_network_rule_id)
       |> MscmpSystDb.one()
 
     if db_result == nil, do: :not_found, else: db_result
@@ -491,7 +494,7 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
   end
 
   @spec get_owner_network_rule(Ecto.UUID.t()) ::
-          {:ok, Data.SystOwnerNetworkRules.t()}
+          {:ok, Msdata.SystOwnerNetworkRules.t()}
           | {:ok, :not_found}
           | {:error, MscmpSystError.t() | Exception.t()}
   def get_owner_network_rule(owner_network_rule_id) do
@@ -500,10 +503,10 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
     error -> {:error, error}
   end
 
-  @spec get_owner_network_rule!(Ecto.UUID.t()) :: Data.SystOwnerNetworkRules.t() | :not_found
+  @spec get_owner_network_rule!(Ecto.UUID.t()) :: Msdata.SystOwnerNetworkRules.t() | :not_found
   def get_owner_network_rule!(owner_network_rule_id) do
     db_result =
-      from(onr in Data.SystOwnerNetworkRules, where: onr.id == ^owner_network_rule_id)
+      from(onr in Msdata.SystOwnerNetworkRules, where: onr.id == ^owner_network_rule_id)
       |> MscmpSystDb.one()
 
     if db_result == nil, do: :not_found, else: db_result
@@ -518,7 +521,7 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
   end
 
   @spec get_instance_network_rule(Ecto.UUID.t()) ::
-          {:ok, Data.SystInstanceNetworkRules.t()}
+          {:ok, Msdata.SystInstanceNetworkRules.t()}
           | {:ok, :not_found}
           | {:error, MscmpSystError.t() | Exception.t()}
   def get_instance_network_rule(instance_network_rule_id) do
@@ -528,10 +531,10 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
   end
 
   @spec get_instance_network_rule!(Ecto.UUID.t()) ::
-          Data.SystInstanceNetworkRules.t() | :not_found
+          Msdata.SystInstanceNetworkRules.t() | :not_found
   def get_instance_network_rule!(instance_network_rule_id) do
     db_result =
-      from(inr in Data.SystInstanceNetworkRules, where: inr.id == ^instance_network_rule_id)
+      from(inr in Msdata.SystInstanceNetworkRules, where: inr.id == ^instance_network_rule_id)
       |> MscmpSystDb.one()
 
     if db_result == nil, do: :not_found, else: db_result
@@ -556,7 +559,7 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
   @spec delete_global_network_rule!(Ecto.UUID.t()) :: :ok
   def delete_global_network_rule!(global_network_rule_id)
       when is_binary(global_network_rule_id) do
-    from(gnr in Data.SystGlobalNetworkRules, where: gnr.id == ^global_network_rule_id)
+    from(gnr in Msdata.SystGlobalNetworkRules, where: gnr.id == ^global_network_rule_id)
     |> MscmpSystDb.delete_all()
 
     :ok
@@ -580,7 +583,7 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
 
   @spec delete_owner_network_rule!(Ecto.UUID.t()) :: :ok
   def delete_owner_network_rule!(owner_network_rule_id) when is_binary(owner_network_rule_id) do
-    from(gnr in Data.SystOwnerNetworkRules, where: gnr.id == ^owner_network_rule_id)
+    from(gnr in Msdata.SystOwnerNetworkRules, where: gnr.id == ^owner_network_rule_id)
     |> MscmpSystDb.delete_all()
 
     :ok
@@ -605,7 +608,7 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
   @spec delete_instance_network_rule!(Ecto.UUID.t()) :: :ok
   def delete_instance_network_rule!(instance_network_rule_id)
       when is_binary(instance_network_rule_id) do
-    from(gnr in Data.SystInstanceNetworkRules, where: gnr.id == ^instance_network_rule_id)
+    from(gnr in Msdata.SystInstanceNetworkRules, where: gnr.id == ^instance_network_rule_id)
     |> MscmpSystDb.delete_all()
 
     :ok

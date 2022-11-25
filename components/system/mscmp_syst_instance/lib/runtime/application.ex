@@ -15,7 +15,6 @@ defmodule MscmpSystInstance.Runtime.Application do
 
   use Application
 
-  alias MscmpSystInstance.Data
   alias MscmpSystInstance.Impl
   alias MscmpSystInstance.Types
 
@@ -49,13 +48,16 @@ defmodule MscmpSystInstance.Runtime.Application do
   end
 
   @spec start_application(
-          Types.application_id() | Data.SystApplications.t(),
+          Types.application_id() | Msdata.SystApplications.t(),
           startup_options :: map(),
           Keyword.t()
         ) ::
           :ok | {:error, MscmpSystError.t()}
   def start_application(application_id, startup_options, opts) when is_binary(application_id) do
-    from(a in Data.SystApplications, where: a.id == ^application_id, select: [:id, :internal_name])
+    from(a in Msdata.SystApplications,
+      where: a.id == ^application_id,
+      select: [:id, :internal_name]
+    )
     |> MscmpSystDb.one!()
     |> start_application(startup_options, opts)
   rescue
@@ -73,7 +75,7 @@ defmodule MscmpSystInstance.Runtime.Application do
   end
 
   def start_application(
-        %Data.SystApplications{id: application_id} = application,
+        %Msdata.SystApplications{id: application_id} = application,
         startup_options,
         opts
       ) do
@@ -87,7 +89,7 @@ defmodule MscmpSystInstance.Runtime.Application do
     current_enums_service = MscmpSystEnums.get_enums_service()
 
     from(
-      i in Data.SystInstances,
+      i in Msdata.SystInstances,
       join: a in assoc(i, :application),
       where: a.id == ^application_id,
       preload: [application: a, instance_contexts: [:application_context]]
@@ -154,7 +156,7 @@ defmodule MscmpSystInstance.Runtime.Application do
   @spec start_all_applications(startup_options :: map(), Keyword.t()) ::
           :ok | {:error, MscmpSystError.t()}
   def start_all_applications(startup_options, opts) do
-    from(a in Data.SystApplications, select: [:id, :internal_name])
+    from(a in Msdata.SystApplications, select: [:id, :internal_name])
     |> MscmpSystDb.all()
     |> Enum.each(&start_application(&1, startup_options, opts))
   rescue
@@ -172,13 +174,13 @@ defmodule MscmpSystInstance.Runtime.Application do
   end
 
   @spec start_instance(
-          Types.instance_id() | Data.SystInstances.t(),
+          Types.instance_id() | Msdata.SystInstances.t(),
           startup_options :: map(),
           Keyword.t()
         ) :: :ok | {:error, MscmpSystError.t()}
   def start_instance(instance_id, startup_options, opts) when is_binary(instance_id) do
     from(
-      i in Data.SystInstances,
+      i in Msdata.SystInstances,
       join: a in assoc(i, :application),
       where: i.id == ^instance_id,
       preload: [application: a, instance_contexts: [:application_context]]
@@ -202,7 +204,7 @@ defmodule MscmpSystInstance.Runtime.Application do
   # TODO: This is too "happy path" centric.  There are failure modes that can be
   #       handled resiliently and probably should be.  Defer for now.
   def start_instance(
-        %Data.SystInstances{application: %Data.SystApplications{}, instance_contexts: [_ | _]} =
+        %Msdata.SystInstances{application: %Msdata.SystApplications{}, instance_contexts: [_ | _]} =
           instance,
         startup_options,
         opts
@@ -270,7 +272,7 @@ defmodule MscmpSystInstance.Runtime.Application do
       }
   end
 
-  def start_instance(%Data.SystInstances{id: instance_id}, startup_options, opts),
+  def start_instance(%Msdata.SystInstances{id: instance_id}, startup_options, opts),
     do: start_instance(instance_id, startup_options, opts)
 
   defp get_datastore_supervisor_name(instance) do
@@ -291,17 +293,17 @@ defmodule MscmpSystInstance.Runtime.Application do
     DynamicSupervisor.start_child(application_supervisor, instance_spec)
   end
 
-  defp valid_startup_instance_state?(%Data.SystInstances{} = instance) do
+  defp valid_startup_instance_state?(%Msdata.SystInstances{} = instance) do
     MscmpSystEnums.get_functional_type_by_enum_item_id(
       "instance_states",
       instance.instance_state_id
     ) in ["instance_states_initialized", "instance_states_active"]
   end
 
-  @spec stop_instance(Types.instance_id() | Data.SystInstances.t(), Keyword.t()) ::
+  @spec stop_instance(Types.instance_id() | Msdata.SystInstances.t(), Keyword.t()) ::
           :ok | {:error, MscmpSystError.t()}
   def stop_instance(instance_id, opts) when is_binary(instance_id) do
-    from(i in Data.SystInstances, where: i.id == ^instance_id, preload: [:instance_contexts])
+    from(i in Msdata.SystInstances, where: i.id == ^instance_id, preload: [:instance_contexts])
     |> MscmpSystDb.one!()
     |> stop_instance(opts)
   rescue
@@ -323,7 +325,7 @@ defmodule MscmpSystInstance.Runtime.Application do
   #       Datastore Contexts anyway since they're supervised processed.  Check
   #       out how necessary this is and if we should do something about it.
   def stop_instance(
-        %Data.SystInstances{
+        %Msdata.SystInstances{
           internal_name: instance_name,
           instance_contexts: [_ | _] = instance_contexts
         },
@@ -351,7 +353,7 @@ defmodule MscmpSystInstance.Runtime.Application do
       }
   end
 
-  def stop_instance(%Data.SystInstances{id: instance_id}, opts),
+  def stop_instance(%Msdata.SystInstances{id: instance_id}, opts),
     do: stop_instance(instance_id, opts)
 
   defp stop_instance_supervisor(instance_name, opts) do
@@ -367,10 +369,13 @@ defmodule MscmpSystInstance.Runtime.Application do
 
   defp maybe_stop_instance_supervisor(_, _opts), do: nil
 
-  @spec stop_application(Types.application_id() | Data.SystApplications.t(), Keyword.t()) ::
+  @spec stop_application(Types.application_id() | Msdata.SystApplications.t(), Keyword.t()) ::
           :ok | {:error, MscmpSystError.t()}
   def stop_application(application_id, opts) when is_binary(application_id) do
-    from(a in Data.SystApplications, where: a.id == ^application_id, select: [:id, :internal_name])
+    from(a in Msdata.SystApplications,
+      where: a.id == ^application_id,
+      select: [:id, :internal_name]
+    )
     |> MscmpSystDb.one!()
     |> stop_application(opts)
   rescue
@@ -388,10 +393,10 @@ defmodule MscmpSystInstance.Runtime.Application do
   end
 
   def stop_application(
-        %Data.SystApplications{id: application_id, internal_name: application_name},
+        %Msdata.SystApplications{id: application_id, internal_name: application_name},
         opts
       ) do
-    from(i in Data.SystInstances,
+    from(i in Msdata.SystInstances,
       join: a in assoc(i, :application),
       where: a.id == ^application_id,
       preload: [:instance_contexts]
@@ -430,7 +435,7 @@ defmodule MscmpSystInstance.Runtime.Application do
   #       better handled nonetheless.
   @spec stop_all_applications(Keyword.t()) :: :ok | {:error, MscmpSystError.t()}
   def stop_all_applications(opts) do
-    from(a in Data.SystApplications, select: [:id, :internal_name])
+    from(a in Msdata.SystApplications, select: [:id, :internal_name])
     |> MscmpSystDb.all()
     |> Enum.each(&stop_application(&1, opts))
   rescue

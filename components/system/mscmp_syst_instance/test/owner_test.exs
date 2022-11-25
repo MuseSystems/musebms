@@ -15,8 +15,6 @@ defmodule OwnerTest do
 
   import Ecto.Query
 
-  alias MscmpSystInstance.Data
-
   test "Can Create Owner" do
     new_owner_state = MscmpSystEnums.get_default_enum_item("owner_states")
 
@@ -130,14 +128,14 @@ defmodule OwnerTest do
 
   test "Can Retrieve Owner by Name" do
     owner_record =
-      from(o in Data.SystOwners, limit: 1)
+      from(o in Msdata.SystOwners, limit: 1)
       |> MscmpSystDb.one!()
 
     assert {:ok, test_owner} = MscmpSystInstance.get_owner_by_name(owner_record.internal_name)
 
-    assert %Data.SystOwners{
-             owner_state: %MscmpSystEnums.Data.SystEnumItems{
-               functional_type: %MscmpSystEnums.Data.SystEnumFunctionalTypes{}
+    assert %Msdata.SystOwners{
+             owner_state: %Msdata.SystEnumItems{
+               functional_type: %Msdata.SystEnumFunctionalTypes{}
              }
            } = test_owner
 
@@ -146,7 +144,7 @@ defmodule OwnerTest do
 
   test "Can Retrieve Owner ID by Name" do
     owner_record =
-      from(o in Data.SystOwners, limit: 1)
+      from(o in Msdata.SystOwners, limit: 1)
       |> MscmpSystDb.one!()
 
     assert {:ok, test_owner_id} =
@@ -171,7 +169,7 @@ defmodule OwnerTest do
 
     assert :ok =
              from(
-               o in Data.SystOwners,
+               o in Msdata.SystOwners,
                join: os in assoc(o, :owner_state),
                join: osft in assoc(os, :functional_type),
                where: o.id == ^new_owner.id,

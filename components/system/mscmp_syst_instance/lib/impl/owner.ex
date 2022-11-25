@@ -13,7 +13,6 @@
 defmodule MscmpSystInstance.Impl.Owner do
   import Ecto.Query
 
-  alias MscmpSystInstance.Data
   alias MscmpSystInstance.Types
 
   require Logger
@@ -21,10 +20,10 @@ defmodule MscmpSystInstance.Impl.Owner do
   @moduledoc false
 
   @spec create_owner(Types.owner_params()) ::
-          {:ok, Data.SystOwners.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystOwners.t()} | {:error, MscmpSystError.t()}
   def create_owner(owner_params) do
     owner_params
-    |> Data.SystOwners.insert_changeset()
+    |> Msdata.SystOwners.insert_changeset()
     |> MscmpSystDb.insert!(returning: true)
     |> then(&{:ok, &1})
   rescue
@@ -41,10 +40,10 @@ defmodule MscmpSystInstance.Impl.Owner do
       }
   end
 
-  @spec update_owner(Types.owner_id() | Data.SystOwners.t(), Types.owner_params()) ::
-          {:ok, Data.SystOwners.t()} | {:error, MscmpSystError.t()}
+  @spec update_owner(Types.owner_id() | Msdata.SystOwners.t(), Types.owner_params()) ::
+          {:ok, Msdata.SystOwners.t()} | {:error, MscmpSystError.t()}
   def update_owner(owner_id, owner_params) when is_binary(owner_id) do
-    MscmpSystDb.get!(Data.SystOwners, owner_id)
+    MscmpSystDb.get!(Msdata.SystOwners, owner_id)
     |> update_owner(owner_params)
   rescue
     error ->
@@ -60,9 +59,9 @@ defmodule MscmpSystInstance.Impl.Owner do
       }
   end
 
-  def update_owner(%Data.SystOwners{} = owner, owner_params) do
+  def update_owner(%Msdata.SystOwners{} = owner, owner_params) do
     owner
-    |> Data.SystOwners.update_changeset(owner_params)
+    |> Msdata.SystOwners.update_changeset(owner_params)
     |> MscmpSystDb.update!(returning: true)
     |> then(&{:ok, &1})
   rescue
@@ -80,10 +79,10 @@ defmodule MscmpSystInstance.Impl.Owner do
   end
 
   @spec get_owner_by_name(Types.owner_name()) ::
-          {:ok, Data.SystOwners.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystOwners.t()} | {:error, MscmpSystError.t()}
   def get_owner_by_name(owner_name) when is_binary(owner_name) do
     from(
-      o in Data.SystOwners,
+      o in Msdata.SystOwners,
       join: os in assoc(o, :owner_state),
       join: osft in assoc(os, :functional_type),
       where: o.internal_name == ^owner_name,
@@ -108,7 +107,7 @@ defmodule MscmpSystInstance.Impl.Owner do
   @spec get_owner_id_by_name(Types.owner_name()) ::
           {:ok, Types.owner_id()} | {:error, MscmpSystError.t()}
   def get_owner_id_by_name(owner_name) when is_binary(owner_name) do
-    from(o in Data.SystOwners, select: o.id, where: o.internal_name == ^owner_name)
+    from(o in Msdata.SystOwners, select: o.id, where: o.internal_name == ^owner_name)
     |> MscmpSystDb.one!()
     |> then(&{:ok, &1})
   rescue
@@ -125,10 +124,11 @@ defmodule MscmpSystInstance.Impl.Owner do
       }
   end
 
-  @spec purge_owner(Types.owner_id() | Data.SystOwners.t()) :: :ok | {:error, MscmpSystError.t()}
+  @spec purge_owner(Types.owner_id() | Msdata.SystOwners.t()) ::
+          :ok | {:error, MscmpSystError.t()}
   def purge_owner(owner_id) when is_binary(owner_id) do
     from(
-      o in Data.SystOwners,
+      o in Msdata.SystOwners,
       join: os in assoc(o, :owner_state),
       join: osft in assoc(os, :functional_type),
       where: o.id == ^owner_id,
@@ -151,9 +151,9 @@ defmodule MscmpSystInstance.Impl.Owner do
   end
 
   def purge_owner(
-        %Data.SystOwners{
-          owner_state: %MscmpSystEnums.Data.SystEnumItems{
-            functional_type: %MscmpSystEnums.Data.SystEnumFunctionalTypes{
+        %Msdata.SystOwners{
+          owner_state: %Msdata.SystEnumItems{
+            functional_type: %Msdata.SystEnumFunctionalTypes{
               internal_name: functional_type
             }
           }
@@ -184,5 +184,5 @@ defmodule MscmpSystInstance.Impl.Owner do
       }
   end
 
-  def purge_owner(%Data.SystOwners{id: owner_id}), do: purge_owner(owner_id)
+  def purge_owner(%Msdata.SystOwners{id: owner_id}), do: purge_owner(owner_id)
 end

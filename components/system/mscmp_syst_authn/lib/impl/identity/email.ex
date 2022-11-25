@@ -11,7 +11,6 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystAuthn.Impl.Identity.Email do
-  alias MscmpSystAuthn.Data
   alias MscmpSystAuthn.Impl.Identity.Helpers
   alias MscmpSystAuthn.Types
 
@@ -24,7 +23,7 @@ defmodule MscmpSystAuthn.Impl.Identity.Email do
   @default_create_validated false
 
   @spec create_identity(Types.access_account_id(), Types.account_identifier(), Keyword.t()) ::
-          {:ok, Data.SystIdentities.t()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, Msdata.SystIdentities.t()} | {:error, MscmpSystError.t() | Exception.t()}
   def create_identity(access_account_id, email_address, opts \\ [])
       when is_binary(access_account_id) and is_binary(email_address) do
     opts = MscmpSystUtils.resolve_options(opts, create_validated: @default_create_validated)
@@ -58,7 +57,7 @@ defmodule MscmpSystAuthn.Impl.Identity.Email do
   @spec identify_access_account(
           Types.account_identifier(),
           MscmpSystInstance.Types.owner_id() | nil
-        ) :: Data.SystIdentities.t() | nil
+        ) :: Msdata.SystIdentities.t() | nil
   def identify_access_account(email_address, owner_id) when is_binary(email_address) do
     email_address
     |> verify_email_address()

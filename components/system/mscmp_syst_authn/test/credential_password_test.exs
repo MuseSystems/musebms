@@ -15,7 +15,6 @@ defmodule CredentialPasswordTest do
 
   import Ecto.Query
 
-  alias MscmpSystAuthn.Data
   alias MscmpSystAuthn.Impl
 
   @moduletag :capture_log
@@ -227,7 +226,7 @@ defmodule CredentialPasswordTest do
              )
 
     cred =
-      from(c in Data.SystCredentials,
+      from(c in Msdata.SystCredentials,
         join: ei in assoc(c, :credential_type),
         where:
           c.access_account_id == ^access_account_id and
@@ -306,10 +305,10 @@ defmodule CredentialPasswordTest do
     {:ok, access_account_id} =
       Impl.AccessAccount.get_access_account_id_by_name("owned_all_access")
 
-    assert {:ok, %Data.SystCredentials{}} =
+    assert {:ok, %Msdata.SystCredentials{}} =
              Impl.Credential.Password.get_credential_record(access_account_id)
 
-    assert %Data.SystCredentials{} =
+    assert %Msdata.SystCredentials{} =
              Impl.Credential.Password.get_credential_record!(access_account_id)
   end
 
@@ -330,7 +329,7 @@ defmodule CredentialPasswordTest do
       Impl.AccessAccount.get_access_account_id_by_name("credential_password_delete2_test_acct")
 
     cred =
-      from(c in Data.SystCredentials,
+      from(c in Msdata.SystCredentials,
         join: ei in assoc(c, :credential_type),
         where:
           c.access_account_id == ^access_account_id and
@@ -344,7 +343,7 @@ defmodule CredentialPasswordTest do
       Impl.AccessAccount.get_access_account_id_by_name("credential_password_delete4_test_acct")
 
     cred =
-      from(c in Data.SystCredentials,
+      from(c in Msdata.SystCredentials,
         join: ei in assoc(c, :credential_type),
         where:
           c.access_account_id == ^access_account_id and

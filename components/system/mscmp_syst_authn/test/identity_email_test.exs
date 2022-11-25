@@ -15,7 +15,6 @@ defmodule IdentityEmailTest do
 
   import Ecto.Query
 
-  alias MscmpSystAuthn.Data
   alias MscmpSystAuthn.Impl
 
   @moduletag :capture_log
@@ -46,7 +45,8 @@ defmodule IdentityEmailTest do
                "identity_email_create_test_accnt@musesystems.com"
              )
 
-    assert %Data.SystIdentities{validated: nil, account_identifier: identifier} = default_identity
+    assert %Msdata.SystIdentities{validated: nil, account_identifier: identifier} =
+             default_identity
 
     assert "identity_email_create_test_accnt@musesystems.com" = identifier
 
@@ -61,7 +61,7 @@ defmodule IdentityEmailTest do
                create_validated: true
              )
 
-    assert %Data.SystIdentities{validated: val_date, account_identifier: identifier} =
+    assert %Msdata.SystIdentities{validated: val_date, account_identifier: identifier} =
              default_identity
 
     assert DateTime.compare(val_date, DateTime.utc_now()) in [:eq, :lt]
@@ -86,7 +86,8 @@ defmodule IdentityEmailTest do
                "Identity_Email_Create_Test_Accnt@MuseSystems.Com"
              )
 
-    assert %Data.SystIdentities{validated: nil, account_identifier: identifier} = default_identity
+    assert %Msdata.SystIdentities{validated: nil, account_identifier: identifier} =
+             default_identity
 
     assert "Identity_Email_Create_Test_Accnt@musesystems.com" = identifier
   end
@@ -94,7 +95,7 @@ defmodule IdentityEmailTest do
   test "Can identify Owned Access Account" do
     target =
       from(
-        aa in Data.SystAccessAccounts,
+        aa in Msdata.SystAccessAccounts,
         join: i in assoc(aa, :identities),
         join: ei in assoc(i, :identity_type),
         select: %{account_identifier: i.account_identifier, owning_owner_id: aa.owning_owner_id},
@@ -104,7 +105,7 @@ defmodule IdentityEmailTest do
       )
       |> MscmpSystDb.one!()
 
-    assert %Data.SystIdentities{} =
+    assert %Msdata.SystIdentities{} =
              Impl.Identity.Email.identify_access_account(
                target.account_identifier,
                target.owning_owner_id
@@ -116,7 +117,7 @@ defmodule IdentityEmailTest do
   test "Can identify Unowned Access Account" do
     good_target =
       from(
-        aa in Data.SystAccessAccounts,
+        aa in Msdata.SystAccessAccounts,
         join: i in assoc(aa, :identities),
         join: ei in assoc(i, :identity_type),
         select: %{account_identifier: i.account_identifier},
@@ -126,7 +127,7 @@ defmodule IdentityEmailTest do
       )
       |> MscmpSystDb.one!()
 
-    assert %Data.SystIdentities{} =
+    assert %Msdata.SystIdentities{} =
              Impl.Identity.Email.identify_access_account(
                good_target.account_identifier,
                nil
@@ -134,7 +135,7 @@ defmodule IdentityEmailTest do
 
     bad_target =
       from(
-        aa in Data.SystAccessAccounts,
+        aa in Msdata.SystAccessAccounts,
         join: i in assoc(aa, :identities),
         join: ei in assoc(i, :identity_type),
         select: %{account_identifier: i.account_identifier},
@@ -148,7 +149,7 @@ defmodule IdentityEmailTest do
   end
 
   test "Can identify Access Account with mixed case email" do
-    assert %Data.SystIdentities{} =
+    assert %Msdata.SystIdentities{} =
              Impl.Identity.Email.identify_access_account(
                "unowned_all_access@MuseSystems.COM",
                nil

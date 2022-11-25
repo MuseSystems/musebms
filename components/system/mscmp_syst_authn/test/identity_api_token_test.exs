@@ -15,7 +15,6 @@ defmodule IdentityApiTokenTest do
 
   import Ecto.Query
 
-  alias MscmpSystAuthn.Data
   alias MscmpSystAuthn.Impl
 
   @moduletag :capture_log
@@ -28,7 +27,7 @@ defmodule IdentityApiTokenTest do
     assert {:ok, default_identity} =
              Impl.Identity.ApiToken.create_identity(access_account_id, nil)
 
-    assert %Data.SystIdentities{validated: val_date, account_identifier: identifier} =
+    assert %Msdata.SystIdentities{validated: val_date, account_identifier: identifier} =
              default_identity
 
     assert DateTime.compare(val_date, DateTime.utc_now()) in [:eq, :lt]
@@ -41,7 +40,7 @@ defmodule IdentityApiTokenTest do
     assert {:ok, specific_token_identity} =
              Impl.Identity.ApiToken.create_identity(access_account_id, "This Is A Test")
 
-    assert %Data.SystIdentities{account_identifier: identifier} = specific_token_identity
+    assert %Msdata.SystIdentities{account_identifier: identifier} = specific_token_identity
 
     assert identifier == "This Is A Test"
 
@@ -54,7 +53,7 @@ defmodule IdentityApiTokenTest do
                create_validated: false
              )
 
-    assert %Data.SystIdentities{validated: val_date, account_identifier: identifier} =
+    assert %Msdata.SystIdentities{validated: val_date, account_identifier: identifier} =
              not_validated_identity
 
     assert val_date == nil
@@ -70,7 +69,7 @@ defmodule IdentityApiTokenTest do
                identity_token_length: 40
              )
 
-    assert %Data.SystIdentities{validated: val_date, account_identifier: identifier} =
+    assert %Msdata.SystIdentities{validated: val_date, account_identifier: identifier} =
              token_length_identity
 
     assert DateTime.compare(val_date, DateTime.utc_now()) in [:eq, :lt]
@@ -84,7 +83,7 @@ defmodule IdentityApiTokenTest do
     assert {:ok, tokens_identity} =
              Impl.Identity.ApiToken.create_identity(access_account_id, nil, identity_tokens: 'ABC')
 
-    assert %Data.SystIdentities{validated: val_date, account_identifier: identifier} =
+    assert %Msdata.SystIdentities{validated: val_date, account_identifier: identifier} =
              tokens_identity
 
     assert DateTime.compare(val_date, DateTime.utc_now()) in [:eq, :lt]
@@ -99,7 +98,7 @@ defmodule IdentityApiTokenTest do
                external_name: "API Token Test"
              )
 
-    assert %Data.SystIdentities{validated: val_date, external_name: external_name} =
+    assert %Msdata.SystIdentities{validated: val_date, external_name: external_name} =
              ext_name_identity
 
     assert DateTime.compare(val_date, DateTime.utc_now()) in [:eq, :lt]
@@ -112,7 +111,7 @@ defmodule IdentityApiTokenTest do
   test "Can identify Owned Access Account" do
     target =
       from(
-        aa in Data.SystAccessAccounts,
+        aa in Msdata.SystAccessAccounts,
         join: i in assoc(aa, :identities),
         join: ei in assoc(i, :identity_type),
         select: %{account_identifier: i.account_identifier, owning_owner_id: aa.owning_owner_id},
@@ -122,7 +121,7 @@ defmodule IdentityApiTokenTest do
       )
       |> MscmpSystDb.one!()
 
-    assert %Data.SystIdentities{} =
+    assert %Msdata.SystIdentities{} =
              Impl.Identity.ApiToken.identify_access_account(
                target.account_identifier,
                target.owning_owner_id
@@ -134,7 +133,7 @@ defmodule IdentityApiTokenTest do
   test "Can identify Unowned Access Account" do
     good_target =
       from(
-        aa in Data.SystAccessAccounts,
+        aa in Msdata.SystAccessAccounts,
         join: i in assoc(aa, :identities),
         join: ei in assoc(i, :identity_type),
         select: %{account_identifier: i.account_identifier},
@@ -144,7 +143,7 @@ defmodule IdentityApiTokenTest do
       )
       |> MscmpSystDb.one!()
 
-    assert %Data.SystIdentities{} =
+    assert %Msdata.SystIdentities{} =
              Impl.Identity.ApiToken.identify_access_account(
                good_target.account_identifier,
                nil
@@ -152,7 +151,7 @@ defmodule IdentityApiTokenTest do
 
     bad_target =
       from(
-        aa in Data.SystAccessAccounts,
+        aa in Msdata.SystAccessAccounts,
         join: i in assoc(aa, :identities),
         join: ei in assoc(i, :identity_type),
         select: %{account_identifier: i.account_identifier},
@@ -171,7 +170,7 @@ defmodule IdentityApiTokenTest do
 
     target =
       from(
-        aa in Data.SystAccessAccounts,
+        aa in Msdata.SystAccessAccounts,
         join: i in assoc(aa, :identities),
         join: ei in assoc(i, :identity_type),
         select: %{identity_id: i.id},
@@ -181,7 +180,7 @@ defmodule IdentityApiTokenTest do
       )
       |> MscmpSystDb.one!()
 
-    assert %Data.SystIdentities{external_name: ^test_name} =
+    assert %Msdata.SystIdentities{external_name: ^test_name} =
              Impl.Identity.ApiToken.update_identity_external_name(target.identity_id, test_name)
   end
 
@@ -190,7 +189,7 @@ defmodule IdentityApiTokenTest do
 
     target =
       from(
-        aa in Data.SystAccessAccounts,
+        aa in Msdata.SystAccessAccounts,
         join: i in assoc(aa, :identities),
         join: ei in assoc(i, :identity_type),
         select: i,
@@ -200,7 +199,7 @@ defmodule IdentityApiTokenTest do
       )
       |> MscmpSystDb.one!()
 
-    assert %Data.SystIdentities{external_name: ^test_name} =
+    assert %Msdata.SystIdentities{external_name: ^test_name} =
              Impl.Identity.ApiToken.update_identity_external_name(target, test_name)
   end
 end

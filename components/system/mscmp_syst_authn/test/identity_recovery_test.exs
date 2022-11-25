@@ -15,7 +15,6 @@ defmodule IdentityRecoveryTest do
 
   import Ecto.Query
 
-  alias MscmpSystAuthn.Data
   alias MscmpSystAuthn.Impl
 
   alias MscmpSystDb.DbTypes
@@ -165,7 +164,7 @@ defmodule IdentityRecoveryTest do
   test "Can identify Owned Access Account" do
     recovery_identity =
       from(
-        i in Data.SystIdentities,
+        i in Msdata.SystIdentities,
         join: ei in assoc(i, :identity_type),
         join: aa in assoc(i, :access_account),
         where:
@@ -177,7 +176,7 @@ defmodule IdentityRecoveryTest do
 
     recovery_identity_id = recovery_identity.id
 
-    assert %Data.SystIdentities{id: ^recovery_identity_id} =
+    assert %Msdata.SystIdentities{id: ^recovery_identity_id} =
              Impl.Identity.Recovery.identify_access_account(
                recovery_identity.account_identifier,
                recovery_identity.access_account.owning_owner_id
@@ -192,7 +191,7 @@ defmodule IdentityRecoveryTest do
   test "Can identify Unowned Access Account" do
     recovery_identity =
       from(
-        i in Data.SystIdentities,
+        i in Msdata.SystIdentities,
         join: ei in assoc(i, :identity_type),
         join: aa in assoc(i, :access_account),
         where:
@@ -204,7 +203,7 @@ defmodule IdentityRecoveryTest do
 
     recovery_identity_id = recovery_identity.id
 
-    assert %Data.SystIdentities{id: ^recovery_identity_id} =
+    assert %Msdata.SystIdentities{id: ^recovery_identity_id} =
              Impl.Identity.Recovery.identify_access_account(
                recovery_identity.account_identifier,
                nil
@@ -219,7 +218,7 @@ defmodule IdentityRecoveryTest do
 
     target_identity =
       from(
-        aa in Data.SystAccessAccounts,
+        aa in Msdata.SystAccessAccounts,
         join: i in assoc(aa, :identities),
         join: ei in assoc(i, :identity_type),
         select: i,
@@ -233,7 +232,7 @@ defmodule IdentityRecoveryTest do
 
     no_identity =
       from(
-        aa in Data.SystAccessAccounts,
+        aa in Msdata.SystAccessAccounts,
         join: i in assoc(aa, :identities),
         join: ei in assoc(i, :identity_type),
         select: i,
@@ -249,7 +248,7 @@ defmodule IdentityRecoveryTest do
   test "Can revoke Recovery Identity" do
     target_identity =
       from(
-        aa in Data.SystAccessAccounts,
+        aa in Msdata.SystAccessAccounts,
         join: i in assoc(aa, :identities),
         join: ei in assoc(i, :identity_type),
         select: i,
@@ -263,7 +262,7 @@ defmodule IdentityRecoveryTest do
 
     no_identity =
       from(
-        aa in Data.SystAccessAccounts,
+        aa in Msdata.SystAccessAccounts,
         join: i in assoc(aa, :identities),
         join: ei in assoc(i, :identity_type),
         select: i,

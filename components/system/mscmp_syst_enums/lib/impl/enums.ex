@@ -13,7 +13,6 @@
 defmodule MscmpSystEnums.Impl.Enums do
   import Ecto.Query
 
-  alias MscmpSystEnums.Data
   alias MscmpSystEnums.Runtime.ProcessUtils
   alias MscmpSystEnums.Types
 
@@ -39,9 +38,7 @@ defmodule MscmpSystEnums.Impl.Enums do
 
     :ets.delete_all_objects(ets_table_name)
 
-    from(e in Data.SystEnums,
-      preload: [enum_items: [:functional_type], functional_types: []]
-    )
+    from(e in Msdata.SystEnums, preload: [enum_items: [:functional_type], functional_types: []])
     |> MscmpSystDb.all()
     |> Enum.each(&:ets.insert(ets_table_name, {&1.internal_name, &1}))
   end
@@ -59,7 +56,7 @@ defmodule MscmpSystEnums.Impl.Enums do
   def refresh_enum_from_database(enum_name) do
     ets_table_name = get_ets_table_from_service_name(ProcessUtils.get_enums_service())
 
-    from(e in Data.SystEnums,
+    from(e in Msdata.SystEnums,
       preload: [enum_items: [:functional_type], functional_types: []],
       where: e.internal_name == ^enum_name
     )
@@ -81,14 +78,14 @@ defmodule MscmpSystEnums.Impl.Enums do
       }
   end
 
-  @spec get_enum_values(Types.enum_name()) :: Data.SystEnums.t()
+  @spec get_enum_values(Types.enum_name()) :: Msdata.SystEnums.t()
   def get_enum_values(enum_name) do
     ProcessUtils.get_enums_service()
     |> get_ets_table_from_service_name()
     |> :ets.lookup_element(enum_name, 2)
   end
 
-  @spec list_all_enums() :: list(Data.SystEnums.t())
+  @spec list_all_enums() :: list(Msdata.SystEnums.t())
   def list_all_enums do
     # Select query :ets.fun2ms(fn {_, enum_values} -> enum_values end)
     ProcessUtils.get_enums_service()
@@ -112,7 +109,7 @@ defmodule MscmpSystEnums.Impl.Enums do
     |> hd()
   end
 
-  @spec list_enum_items(Types.enum_name()) :: list(Data.SystEnumItems.t())
+  @spec list_enum_items(Types.enum_name()) :: list(Msdata.SystEnumItems.t())
   def list_enum_items(enum_name) do
     ProcessUtils.get_enums_service()
     |> get_ets_table_from_service_name()
@@ -120,12 +117,12 @@ defmodule MscmpSystEnums.Impl.Enums do
     |> hd()
   end
 
-  @spec list_sorted_enum_items(Types.enum_name()) :: list(Data.SystEnumItems.t())
+  @spec list_sorted_enum_items(Types.enum_name()) :: list(Msdata.SystEnumItems.t())
   def list_sorted_enum_items(enum_name) do
     Enum.sort(list_enum_items(enum_name), &(&1.sort_order < &2.sort_order))
   end
 
-  @spec list_enum_functional_types(Types.enum_name()) :: list(Data.SystEnumFunctionalTypes.t())
+  @spec list_enum_functional_types(Types.enum_name()) :: list(Msdata.SystEnumFunctionalTypes.t())
   def list_enum_functional_types(enum_name) do
     ProcessUtils.get_enums_service()
     |> get_ets_table_from_service_name()
@@ -133,19 +130,20 @@ defmodule MscmpSystEnums.Impl.Enums do
     |> hd()
   end
 
-  @spec get_enum_item_by_name(Types.enum_name(), Types.enum_item_name()) :: Data.SystEnumItems.t()
+  @spec get_enum_item_by_name(Types.enum_name(), Types.enum_item_name()) ::
+          Msdata.SystEnumItems.t()
   def get_enum_item_by_name(enum_name, enum_item_name) do
     list_enum_items(enum_name)
     |> Enum.find(&(&1.internal_name == enum_item_name))
   end
 
-  @spec get_enum_item_by_id(Types.enum_name(), Types.enum_item_id()) :: Data.SystEnumItems.t()
+  @spec get_enum_item_by_id(Types.enum_name(), Types.enum_item_id()) :: Msdata.SystEnumItems.t()
   def get_enum_item_by_id(enum_name, enum_item_id) do
     list_enum_items(enum_name)
     |> Enum.find(&(&1.id == enum_item_id))
   end
 
-  @spec get_default_enum_item(Types.enum_name(), Keyword.t() | []) :: Data.SystEnumItems.t()
+  @spec get_default_enum_item(Types.enum_name(), Keyword.t() | []) :: Msdata.SystEnumItems.t()
   def get_default_enum_item(enum_name, opts) do
     ProcessUtils.get_enums_service()
     |> get_ets_table_from_service_name()
@@ -170,7 +168,7 @@ defmodule MscmpSystEnums.Impl.Enums do
   def create_enum(enum_params) do
     {:ok, _} =
       Ecto.Multi.new()
-      |> Ecto.Multi.insert(:enum, Data.SystEnums.changeset(%Data.SystEnums{}, enum_params),
+      |> Ecto.Multi.insert(:enum, Msdata.SystEnums.changeset(%Msdata.SystEnums{}, enum_params),
         returning: [:id]
       )
       |> Ecto.Multi.merge(fn %{enum: enum} ->
@@ -203,8 +201,8 @@ defmodule MscmpSystEnums.Impl.Enums do
       Ecto.Multi.insert(
         multi,
         {:functional_type, functional_type.internal_name},
-        Data.SystEnumFunctionalTypes.changeset(
-          %Data.SystEnumFunctionalTypes{},
+        Msdata.SystEnumFunctionalTypes.changeset(
+          %Msdata.SystEnumFunctionalTypes{},
           Map.put(functional_type, :enum_id, enum_id)
         ),
         returning: [:id]
@@ -229,7 +227,7 @@ defmodule MscmpSystEnums.Impl.Enums do
       Ecto.Multi.insert(
         multi,
         {:enum_item, enum_item.internal_name},
-        Data.SystEnumItems.changeset(%Data.SystEnumItems{}, resolved_enum_item),
+        Msdata.SystEnumItems.changeset(%Msdata.SystEnumItems{}, resolved_enum_item),
         returning: [:id]
       )
     end)
@@ -240,12 +238,12 @@ defmodule MscmpSystEnums.Impl.Enums do
   @spec create_enum_functional_type(Types.enum_name(), Types.enum_functional_type_params()) ::
           :ok | {:error, MscmpSystError.t()}
   def create_enum_functional_type(enum_name, functional_type_params) do
-    %Data.SystEnums{id: enum_id} = get_enum_values(enum_name)
+    %Msdata.SystEnums{id: enum_id} = get_enum_values(enum_name)
 
     resolved_functional_type = Map.put(functional_type_params, :enum_id, enum_id)
 
-    %Data.SystEnumFunctionalTypes{}
-    |> Data.SystEnumFunctionalTypes.changeset(resolved_functional_type)
+    %Msdata.SystEnumFunctionalTypes{}
+    |> Msdata.SystEnumFunctionalTypes.changeset(resolved_functional_type)
     |> MscmpSystDb.insert!()
 
     refresh_enum_from_database(enum_name)
@@ -266,7 +264,8 @@ defmodule MscmpSystEnums.Impl.Enums do
   @spec create_enum_item(Types.enum_name(), Types.enum_item_params()) ::
           :ok | {:error, MscmpSystError.t()}
   def create_enum_item(enum_name, enum_item_params) do
-    %Data.SystEnums{id: enum_id, functional_types: functional_types} = get_enum_values(enum_name)
+    %Msdata.SystEnums{id: enum_id, functional_types: functional_types} =
+      get_enum_values(enum_name)
 
     functional_type_id =
       maybe_get_functional_type_id(
@@ -277,8 +276,8 @@ defmodule MscmpSystEnums.Impl.Enums do
     resolved_enum_item_params =
       Map.merge(enum_item_params, %{enum_id: enum_id, functional_type_id: functional_type_id})
 
-    %Data.SystEnumItems{}
-    |> Data.SystEnumItems.changeset(resolved_enum_item_params)
+    %Msdata.SystEnumItems{}
+    |> Msdata.SystEnumItems.changeset(resolved_enum_item_params)
     |> MscmpSystDb.insert!()
 
     refresh_enum_from_database(enum_name)
@@ -350,7 +349,7 @@ defmodule MscmpSystEnums.Impl.Enums do
     resolved_internal_name = Map.get(enum_params, :internal_name, enum_name)
 
     :ets.lookup_element(ets_table_name, enum_name, 2)
-    |> Data.SystEnums.changeset(enum_params)
+    |> Msdata.SystEnums.changeset(enum_params)
     |> MscmpSystDb.update!()
 
     if enum_name != resolved_internal_name, do: :ets.delete(ets_table_name, enum_name)
@@ -386,7 +385,7 @@ defmodule MscmpSystEnums.Impl.Enums do
     %{functional_types: functional_types} = :ets.lookup_element(ets_table_name, enum_name, 2)
 
     Enum.find(functional_types, &(&1.internal_name == functional_type_name))
-    |> Data.SystEnumFunctionalTypes.changeset(functional_type_params)
+    |> Msdata.SystEnumFunctionalTypes.changeset(functional_type_params)
     |> MscmpSystDb.update!()
 
     refresh_enum_from_database(enum_name)
@@ -412,7 +411,7 @@ defmodule MscmpSystEnums.Impl.Enums do
     %{enum_items: enum_items} = :ets.lookup_element(ets_table_name, enum_name, 2)
 
     Enum.find(enum_items, &(&1.internal_name == enum_item_name))
-    |> Data.SystEnumItems.changeset(enum_item_params)
+    |> Msdata.SystEnumItems.changeset(enum_item_params)
     |> MscmpSystDb.update!()
 
     refresh_enum_from_database(enum_name)
@@ -434,7 +433,7 @@ defmodule MscmpSystEnums.Impl.Enums do
   def delete_enum(enum_name) do
     ets_table_name = get_ets_table_from_service_name(ProcessUtils.get_enums_service())
 
-    delete_qry = from(e in Data.SystEnums, where: e.internal_name == ^enum_name)
+    delete_qry = from(e in Msdata.SystEnums, where: e.internal_name == ^enum_name)
 
     {1, _rows} = MscmpSystDb.delete_all(delete_qry)
 
@@ -459,9 +458,7 @@ defmodule MscmpSystEnums.Impl.Enums do
           :ok | {:error, MscmpSystError.t()}
   def delete_enum_functional_type(enum_name, functional_type_name) do
     delete_qry =
-      from(f in Data.SystEnumFunctionalTypes,
-        where: f.internal_name == ^functional_type_name
-      )
+      from(f in Msdata.SystEnumFunctionalTypes, where: f.internal_name == ^functional_type_name)
 
     {1, _rows} = MscmpSystDb.delete_all(delete_qry)
 
@@ -483,7 +480,7 @@ defmodule MscmpSystEnums.Impl.Enums do
   @spec delete_enum_item(Types.enum_name(), Types.enum_item_name()) ::
           :ok | {:error, MscmpSystError.t()}
   def delete_enum_item(enum_name, enum_item_name) do
-    delete_qry = from(f in Data.SystEnumItems, where: f.internal_name == ^enum_item_name)
+    delete_qry = from(f in Msdata.SystEnumItems, where: f.internal_name == ^enum_item_name)
 
     {1, _rows} = MscmpSystDb.delete_all(delete_qry)
 

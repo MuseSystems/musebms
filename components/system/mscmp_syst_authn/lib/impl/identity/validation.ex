@@ -13,7 +13,6 @@
 defmodule MscmpSystAuthn.Impl.Identity.Validation do
   import Ecto.Query
 
-  alias MscmpSystAuthn.Data
   alias MscmpSystAuthn.Impl.Identity.Helpers
   alias MscmpSystAuthn.Types
 
@@ -31,10 +30,10 @@ defmodule MscmpSystAuthn.Impl.Identity.Validation do
 
   @moduledoc false
 
-  @spec request_identity_validation(Types.identity_id() | Data.SystIdentities.t(), Keyword.t()) ::
-          {:ok, Data.SystIdentities.t()} | {:error, MscmpSystError.t() | Exception.t()}
+  @spec request_identity_validation(Types.identity_id() | Msdata.SystIdentities.t(), Keyword.t()) ::
+          {:ok, Msdata.SystIdentities.t()} | {:error, MscmpSystError.t() | Exception.t()}
   def request_identity_validation(target_identity_id, opts) when is_binary(target_identity_id) do
-    from(i in Data.SystIdentities, where: i.id == ^target_identity_id)
+    from(i in Msdata.SystIdentities, where: i.id == ^target_identity_id)
     |> MscmpSystDb.one!()
     |> request_identity_validation(opts)
   rescue
@@ -51,7 +50,7 @@ defmodule MscmpSystAuthn.Impl.Identity.Validation do
       }
   end
 
-  def request_identity_validation(%Data.SystIdentities{} = target_identity, opts) do
+  def request_identity_validation(%Msdata.SystIdentities{} = target_identity, opts) do
     opts =
       MscmpSystUtils.resolve_options(opts,
         expiration_hours: @default_expiration_hours,
@@ -112,21 +111,21 @@ defmodule MscmpSystAuthn.Impl.Identity.Validation do
   @spec identify_access_account(
           Types.account_identifier(),
           MscmpSystInstance.Types.owner_id() | nil
-        ) :: Data.SystIdentities.t() | nil
+        ) :: Msdata.SystIdentities.t() | nil
   def identify_access_account(validation_token, owner_id) when is_binary(validation_token) do
     validation_token
     |> Helpers.get_identification_query("identity_types_sysdef_validation", owner_id)
     |> MscmpSystDb.one()
   end
 
-  @spec confirm_identity_validation(Data.SystIdentities.t()) ::
-          {:ok, Data.SystIdentities.t()} | {:error, MscmpSystError.t()}
+  @spec confirm_identity_validation(Msdata.SystIdentities.t()) ::
+          {:ok, Msdata.SystIdentities.t()} | {:error, MscmpSystError.t()}
   def confirm_identity_validation(validation_identity) do
     MscmpSystDb.transaction(fn ->
       date_now = DateTime.now!("Etc/UTC")
 
       validated_identity =
-        from(i in Data.SystIdentities, where: i.id == ^validation_identity.validates_identity_id)
+        from(i in Msdata.SystIdentities, where: i.id == ^validation_identity.validates_identity_id)
         |> MscmpSystDb.one!()
         |> verify_not_expired()
         |> verify_not_validated()
@@ -150,12 +149,12 @@ defmodule MscmpSystAuthn.Impl.Identity.Validation do
       }
   end
 
-  @spec revoke_identity_validation(Data.SystIdentities.t()) ::
-          {:ok, Data.SystIdentities.t()} | {:error, MscmpSystError.t()}
+  @spec revoke_identity_validation(Msdata.SystIdentities.t()) ::
+          {:ok, Msdata.SystIdentities.t()} | {:error, MscmpSystError.t()}
   def revoke_identity_validation(validation_identity) do
     MscmpSystDb.transaction(fn ->
       revoked_identity =
-        from(i in Data.SystIdentities, where: i.id == ^validation_identity.validates_identity_id)
+        from(i in Msdata.SystIdentities, where: i.id == ^validation_identity.validates_identity_id)
         |> MscmpSystDb.one!()
         |> verify_not_validated()
         |> Helpers.update_record(%{validation_requested: nil})
@@ -179,7 +178,7 @@ defmodule MscmpSystAuthn.Impl.Identity.Validation do
   end
 
   defp verify_not_expired(
-         %Data.SystIdentities{identity_expires: identity_expires} = target_identity
+         %Msdata.SystIdentities{identity_expires: identity_expires} = target_identity
        )
        when not is_nil(identity_expires) do
     case DateTime.diff(identity_expires, DateTime.now!("Etc/UTC")) < 0 do
@@ -199,7 +198,7 @@ defmodule MscmpSystAuthn.Impl.Identity.Validation do
 
   defp verify_not_expired(target_identity), do: target_identity
 
-  defp verify_not_validated(%Data.SystIdentities{validated: validated} = target_identity)
+  defp verify_not_validated(%Msdata.SystIdentities{validated: validated} = target_identity)
        when not is_nil(validated) do
     # Getting here really shouldn't be possible, but just in case...
 
@@ -212,9 +211,9 @@ defmodule MscmpSystAuthn.Impl.Identity.Validation do
   defp verify_not_validated(target_identity), do: target_identity
 
   @spec get_validation_identity_for_identity_id(Types.identity_id()) ::
-          {:ok, Data.SystIdentities.t() | nil} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystIdentities.t() | nil} | {:error, MscmpSystError.t()}
   def get_validation_identity_for_identity_id(target_identity_id) do
-    from(i in Data.SystIdentities, where: i.validates_identity_id == ^target_identity_id)
+    from(i in Msdata.SystIdentities, where: i.validates_identity_id == ^target_identity_id)
     |> MscmpSystDb.one()
     |> then(&{:ok, &1})
   rescue

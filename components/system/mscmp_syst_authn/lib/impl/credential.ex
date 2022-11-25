@@ -11,7 +11,6 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystAuthn.Impl.Credential do
-  alias MscmpSystAuthn.Data
   alias MscmpSystAuthn.Types
 
   @moduledoc false
@@ -43,13 +42,14 @@ defmodule MscmpSystAuthn.Impl.Credential do
               | {:error, MscmpSystError.t() | Exception.t()}
 
   @callback get_credential_record!(Types.access_account_id(), Types.identity_id() | nil) ::
-              Data.SystCredentials.t() | nil
+              Msdata.SystCredentials.t() | nil
 
   @callback get_credential_record(Types.access_account_id(), Types.identity_id() | nil) ::
-              {:ok, Data.SystCredentials.t() | nil} | {:error, MscmpSystError.t() | Exception.t()}
+              {:ok, Msdata.SystCredentials.t() | nil}
+              | {:error, MscmpSystError.t() | Exception.t()}
 
-  @callback delete_credential(Types.credential_id() | Data.SystCredentials.t()) ::
+  @callback delete_credential(Types.credential_id() | Msdata.SystCredentials.t()) ::
               :ok | {:error, MscmpSystError.t() | Exception.t()}
 
-  @callback delete_credential!(Types.credential_id() | Data.SystCredentials.t()) :: :ok
+  @callback delete_credential!(Types.credential_id() | Msdata.SystCredentials.t()) :: :ok
 end

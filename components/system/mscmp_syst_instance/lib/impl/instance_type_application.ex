@@ -11,7 +11,6 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystInstance.Impl.InstanceTypeApplication do
-  alias MscmpSystInstance.Data
   alias MscmpSystInstance.Types
 
   require Logger
@@ -19,11 +18,11 @@ defmodule MscmpSystInstance.Impl.InstanceTypeApplication do
   @moduledoc false
 
   @spec create_instance_type_application(Types.instance_type_id(), Types.application_id()) ::
-          {:ok, Data.SystInstanceTypeApplications.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystInstanceTypeApplications.t()} | {:error, MscmpSystError.t()}
   def create_instance_type_application(instance_type_id, application_id)
       when is_binary(instance_type_id) and is_binary(application_id) do
     %{instance_type_id: instance_type_id, application_id: application_id}
-    |> Data.SystInstanceTypeApplications.insert_changeset()
+    |> Msdata.SystInstanceTypeApplications.insert_changeset()
     |> MscmpSystDb.insert!(returning: true)
     |> then(&{:ok, &1})
   rescue
@@ -42,11 +41,11 @@ defmodule MscmpSystInstance.Impl.InstanceTypeApplication do
 
   @spec delete_instance_type_application(
           Types.instance_type_application_id()
-          | Data.SystInstanceTypeApplications.t()
+          | Msdata.SystInstanceTypeApplications.t()
         ) :: :ok | {:error, MscmpSystError.t()}
   def delete_instance_type_application(instance_type_application_id)
       when is_binary(instance_type_application_id) do
-    MscmpSystDb.get!(Data.SystInstanceTypeApplications, instance_type_application_id)
+    MscmpSystDb.get!(Msdata.SystInstanceTypeApplications, instance_type_application_id)
     |> delete_instance_type_application()
   rescue
     error ->
@@ -63,7 +62,7 @@ defmodule MscmpSystInstance.Impl.InstanceTypeApplication do
   end
 
   def delete_instance_type_application(
-        %Data.SystInstanceTypeApplications{} = instance_type_application
+        %Msdata.SystInstanceTypeApplications{} = instance_type_application
       ) do
     MscmpSystDb.delete!(instance_type_application)
     :ok

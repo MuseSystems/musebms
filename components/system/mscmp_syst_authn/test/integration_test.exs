@@ -16,7 +16,6 @@ defmodule IntegrationTest do
   import Ecto.Query
   import IP, only: [sigil_i: 2]
 
-  alias MscmpSystAuthn.Data
   alias MscmpSystDb.DbTypes
 
   @moduletag :integration
@@ -129,7 +128,7 @@ defmodule IntegrationTest do
     assert {:ok, pwd_rules} =
              MscmpSystAuthn.create_owner_password_rules(owner_id, pwd_rule_params)
 
-    assert %Data.SystOwnerPasswordRules{} = pwd_rules
+    assert %Msdata.SystOwnerPasswordRules{} = pwd_rules
     assert :eq = DbTypes.compare(pwd_rule_params.password_length, pwd_rules.password_length)
     assert :eq = DbTypes.compare(pwd_rule_params.max_age, pwd_rules.max_age)
     assert 2 = pwd_rules.require_upper_case
@@ -143,14 +142,14 @@ defmodule IntegrationTest do
   end
 
   test "Step 1.04: Manage Disallowed Host" do
-    assert {:ok, %Data.SystDisallowedHosts{}} =
+    assert {:ok, %Msdata.SystDisallowedHosts{}} =
              MscmpSystAuthn.create_disallowed_host(~i"10.10.10.2")
 
     assert {:ok, :deleted} = MscmpSystAuthn.delete_disallowed_host_addr(~i"10.10.10.2")
 
     assert {:ok, :not_found} = MscmpSystAuthn.delete_disallowed_host_addr(~i"10.10.10.2")
 
-    assert {:ok, %Data.SystDisallowedHosts{id: delete_id}} =
+    assert {:ok, %Msdata.SystDisallowedHosts{id: delete_id}} =
              MscmpSystAuthn.create_disallowed_host(~i"10.10.10.3")
 
     assert {:ok, :deleted} = MscmpSystAuthn.delete_disallowed_host(delete_id)
@@ -159,7 +158,7 @@ defmodule IntegrationTest do
 
     # Disallowed Host for later tests
 
-    assert {:ok, %Data.SystDisallowedHosts{}} =
+    assert {:ok, %Msdata.SystDisallowedHosts{}} =
              MscmpSystAuthn.create_disallowed_host(~i"10.10.10.1")
 
     assert {:ok, true} = MscmpSystAuthn.host_disallowed(~i"10.10.10.1")
@@ -285,7 +284,7 @@ defmodule IntegrationTest do
   test "Step 2.01: Add Unowned Access Accounts" do
     state = MscmpSystEnums.get_default_enum_item("access_account_states")
 
-    assert {:ok, %MscmpSystAuthn.Data.SystAccessAccounts{}} =
+    assert {:ok, %Msdata.SystAccessAccounts{}} =
              MscmpSystAuthn.create_access_account(%{
                internal_name: "unowned_access_account",
                external_name: "Unowned Access Account",
@@ -348,8 +347,8 @@ defmodule IntegrationTest do
 
   test "Step 2.05: Violate Rate Limit for Unowned Access Account Validation Identity" do
     validator_identity =
-      from(vi in Data.SystIdentities,
-        join: emi in Data.SystIdentities,
+      from(vi in Msdata.SystIdentities,
+        join: emi in Msdata.SystIdentities,
         on: emi.id == vi.validates_identity_id,
         join: ei in assoc(emi, :identity_type),
         join: aa in assoc(emi, :access_account),
@@ -371,7 +370,7 @@ defmodule IntegrationTest do
 
   test "Step 2.06: Revoke Validation Identity for Unowned Access Account Email" do
     email_identity_id =
-      from(i in Data.SystIdentities,
+      from(i in Msdata.SystIdentities,
         join: ei in assoc(i, :identity_type),
         join: aa in assoc(i, :access_account),
         where:
@@ -404,7 +403,7 @@ defmodule IntegrationTest do
 
   test "Step 2.08: Create New Email Validator for Unowned Access Account" do
     email_identity =
-      from(i in Data.SystIdentities,
+      from(i in Msdata.SystIdentities,
         join: ei in assoc(i, :identity_type),
         join: aa in assoc(i, :access_account),
         where:
@@ -426,8 +425,8 @@ defmodule IntegrationTest do
 
   test "Step 2.09: Validator confirmation for Unowned Access Account" do
     validator_identity =
-      from(vi in Data.SystIdentities,
-        join: emi in Data.SystIdentities,
+      from(vi in Msdata.SystIdentities,
+        join: emi in Msdata.SystIdentities,
         on: emi.id == vi.validates_identity_id,
         join: ei in assoc(emi, :identity_type),
         join: aa in assoc(emi, :access_account),
@@ -470,7 +469,7 @@ defmodule IntegrationTest do
     assert %{status: :authenticated} = auth_state
     assert %{applied_network_rule: %{precedence: :global}} = auth_state
 
-    assert from(i in Data.SystIdentities,
+    assert from(i in Msdata.SystIdentities,
              join: ei in assoc(i, :identity_type),
              join: aa in assoc(i, :access_account),
              where:
@@ -480,8 +479,8 @@ defmodule IntegrationTest do
            )
            |> MscmpSystDb.exists?()
 
-    refute from(vi in Data.SystIdentities,
-             join: emi in Data.SystIdentities,
+    refute from(vi in Msdata.SystIdentities,
+             join: emi in Msdata.SystIdentities,
              on: emi.id == vi.validates_identity_id,
              join: ei in assoc(emi, :identity_type),
              join: aa in assoc(emi, :access_account),
@@ -501,7 +500,7 @@ defmodule IntegrationTest do
     {:ok, owner1_instance_id} =
       MscmpSystInstance.get_instance_id_by_name("app1_owner1_instance_types_std")
 
-    assert {:ok, %Data.SystAccessAccountInstanceAssocs{} = invited_aaia_owner1} =
+    assert {:ok, %Msdata.SystAccessAccountInstanceAssocs{} = invited_aaia_owner1} =
              MscmpSystAuthn.invite_to_instance(access_account_id, owner1_instance_id)
 
     assert nil == invited_aaia_owner1.access_granted
@@ -511,7 +510,7 @@ defmodule IntegrationTest do
     {:ok, owner2_instance_id} =
       MscmpSystInstance.get_instance_id_by_name("app1_owner2_instance_types_std")
 
-    assert {:ok, %Data.SystAccessAccountInstanceAssocs{} = invited_aaia_owner2} =
+    assert {:ok, %Msdata.SystAccessAccountInstanceAssocs{} = invited_aaia_owner2} =
              MscmpSystAuthn.invite_to_instance(access_account_id, owner2_instance_id,
                expiration_days: 10
              )
@@ -528,7 +527,7 @@ defmodule IntegrationTest do
     {:ok, owner3_instance_id} =
       MscmpSystInstance.get_instance_id_by_name("app1_owner3_instance_types_std")
 
-    assert {:ok, %Data.SystAccessAccountInstanceAssocs{} = invited_aaia_owner3} =
+    assert {:ok, %Msdata.SystAccessAccountInstanceAssocs{} = invited_aaia_owner3} =
              MscmpSystAuthn.invite_to_instance(access_account_id, owner3_instance_id,
                create_accepted: true
              )
@@ -546,7 +545,7 @@ defmodule IntegrationTest do
     assert {:ok, aaia_record} =
              MscmpSystAuthn.accept_instance_invite(access_account_id, instance_id)
 
-    assert %Data.SystAccessAccountInstanceAssocs{} = aaia_record
+    assert %Msdata.SystAccessAccountInstanceAssocs{} = aaia_record
   end
 
   test "Step 2.12: Decline Instance Invite to Unowned Access Account" do
@@ -559,7 +558,7 @@ defmodule IntegrationTest do
     assert {:ok, aaia_record} =
              MscmpSystAuthn.decline_instance_invite(access_account_id, instance_id)
 
-    assert %Data.SystAccessAccountInstanceAssocs{} = aaia_record
+    assert %Msdata.SystAccessAccountInstanceAssocs{} = aaia_record
   end
 
   test "Step 2.13: Authenticate Unowned Access Account using Email/Password" do
@@ -803,7 +802,7 @@ defmodule IntegrationTest do
   test "Step 2.25: Identify Unowned Access Account by Account Code" do
     assert {:ok, :not_found} = MscmpSystAuthn.identify_access_account_by_code("A Bad Code", nil)
 
-    assert {:ok, %Data.SystIdentities{}} =
+    assert {:ok, %Msdata.SystIdentities{}} =
              MscmpSystAuthn.identify_access_account_by_code(
                "Unowned Access Account Code",
                nil
@@ -811,7 +810,7 @@ defmodule IntegrationTest do
   end
 
   test "Step 2.26: Reset Unowned Access Account Code" do
-    {:ok, %Data.SystIdentities{} = identity} =
+    {:ok, %Msdata.SystIdentities{} = identity} =
       MscmpSystAuthn.identify_access_account_by_code(
         "Unowned Access Account Code",
         nil
@@ -831,7 +830,7 @@ defmodule IntegrationTest do
     assert {:ok, :not_found} =
              MscmpSystAuthn.get_account_code_by_access_account_id(Ecto.UUID.generate())
 
-    assert {:ok, %Data.SystIdentities{}} =
+    assert {:ok, %Msdata.SystIdentities{}} =
              MscmpSystAuthn.get_account_code_by_access_account_id(access_account_id)
   end
 
@@ -923,7 +922,7 @@ defmodule IntegrationTest do
       MscmpSystAuthn.get_access_account_id_by_name("unowned_access_account")
 
     target_identity =
-      from(i in Data.SystIdentities,
+      from(i in Msdata.SystIdentities,
         join: ei in assoc(i, :identity_type),
         where:
           ei.internal_name == "identity_types_sysdef_api" and
@@ -947,7 +946,7 @@ defmodule IntegrationTest do
       MscmpSystAuthn.get_access_account_id_by_name("unowned_access_account")
 
     target_identity =
-      from(i in Data.SystIdentities,
+      from(i in Msdata.SystIdentities,
         join: ei in assoc(i, :identity_type),
         where:
           ei.internal_name == "identity_types_sysdef_api" and
@@ -979,7 +978,7 @@ defmodule IntegrationTest do
 
     state = MscmpSystEnums.get_default_enum_item("access_account_states")
 
-    assert {:ok, %MscmpSystAuthn.Data.SystAccessAccounts{} = access_account1} =
+    assert {:ok, %Msdata.SystAccessAccounts{} = access_account1} =
              MscmpSystAuthn.create_access_account(%{
                owning_owner_name: "owner1",
                internal_name: "owner1_access_account",
@@ -992,7 +991,7 @@ defmodule IntegrationTest do
 
     {:ok, owner2_id} = MscmpSystInstance.get_owner_id_by_name("owner2")
 
-    assert {:ok, %MscmpSystAuthn.Data.SystAccessAccounts{}} =
+    assert {:ok, %Msdata.SystAccessAccounts{}} =
              MscmpSystAuthn.create_access_account(%{
                owning_owner_id: owner2_id,
                internal_name: "owner2_access_account",
@@ -1006,7 +1005,7 @@ defmodule IntegrationTest do
 
     {:ok, owner3_id} = MscmpSystInstance.get_owner_id_by_name("owner3")
 
-    assert {:ok, %MscmpSystAuthn.Data.SystAccessAccounts{}} =
+    assert {:ok, %Msdata.SystAccessAccounts{}} =
              MscmpSystAuthn.create_access_account(%{
                owning_owner_id: owner3_id,
                internal_name: "owner3_access_account",
@@ -1129,7 +1128,7 @@ defmodule IntegrationTest do
     {:ok, owner1_instance_id} =
       MscmpSystInstance.get_instance_id_by_name("app1_owner1_instance_types_std")
 
-    assert {:ok, %Data.SystAccessAccountInstanceAssocs{} = invited_aaia_owner1} =
+    assert {:ok, %Msdata.SystAccessAccountInstanceAssocs{} = invited_aaia_owner1} =
              MscmpSystAuthn.invite_to_instance(owner1_account_id, owner1_instance_id,
                create_accepted: true
              )
@@ -1144,7 +1143,7 @@ defmodule IntegrationTest do
     {:ok, owner2_instance_id} =
       MscmpSystInstance.get_instance_id_by_name("app1_owner2_instance_types_std")
 
-    assert {:ok, %Data.SystAccessAccountInstanceAssocs{} = invited_aaia_owner2} =
+    assert {:ok, %Msdata.SystAccessAccountInstanceAssocs{} = invited_aaia_owner2} =
              MscmpSystAuthn.invite_to_instance(owner2_account_id, owner2_instance_id,
                expiration_days: 10
              )
@@ -1167,7 +1166,7 @@ defmodule IntegrationTest do
     assert {:ok, aaia_record} =
              MscmpSystAuthn.accept_instance_invite(access_account_id, instance_id)
 
-    assert %Data.SystAccessAccountInstanceAssocs{} = aaia_record
+    assert %Msdata.SystAccessAccountInstanceAssocs{} = aaia_record
   end
 
   test "Step 3.06: Authenticate Owned Access Account using Email/Password" do
@@ -1234,7 +1233,7 @@ defmodule IntegrationTest do
                nil
              )
 
-    assert {:ok, %Data.SystIdentities{}} =
+    assert {:ok, %Msdata.SystIdentities{}} =
              MscmpSystAuthn.identify_access_account_by_code(
                "Owner1 Access Account Code",
                owner1_id

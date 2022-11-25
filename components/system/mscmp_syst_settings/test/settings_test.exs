@@ -81,7 +81,7 @@ defmodule SettingsTest do
 
     assert :ok = MscmpSystSettings.create_setting(success_setting)
 
-    assert %MscmpSystSettings.Data.SystSettings{internal_name: "test_success_setting"} =
+    assert %Msdata.SystSettings{internal_name: "test_success_setting"} =
              :ets.lookup_element(:settings_instance, "test_success_setting", 2)
 
     assert {:error, %MscmpSystError{}} = MscmpSystSettings.create_setting(success_setting)
@@ -118,7 +118,7 @@ defmodule SettingsTest do
 
     short_change = %{display_name: "Short"}
 
-    assert %MscmpSystSettings.Data.SystSettings{display_name: "Test Setting One"} =
+    assert %Msdata.SystSettings{display_name: "Test Setting One"} =
              MscmpSystSettings.get_setting_values("test_setting_one")
 
     assert :ok =
@@ -127,7 +127,7 @@ defmodule SettingsTest do
                good_change
              )
 
-    assert %MscmpSystSettings.Data.SystSettings{display_name: "Updated Test Setting One"} =
+    assert %Msdata.SystSettings{display_name: "Updated Test Setting One"} =
              MscmpSystSettings.get_setting_values("test_setting_one")
 
     assert {:error, %MscmpSystError{}} =
@@ -168,9 +168,8 @@ defmodule SettingsTest do
 
     short_change = %{user_description: "Short"}
 
-    assert %MscmpSystSettings.Data.SystSettings{
-             user_description: "Test Setting One User Description"
-           } = MscmpSystSettings.get_setting_values("test_setting_one")
+    assert %Msdata.SystSettings{user_description: "Test Setting One User Description"} =
+             MscmpSystSettings.get_setting_values("test_setting_one")
 
     assert :ok =
              MscmpSystSettings.set_setting_values(
@@ -178,9 +177,8 @@ defmodule SettingsTest do
                good_change
              )
 
-    assert %MscmpSystSettings.Data.SystSettings{
-             user_description: "Updated test one setting description."
-           } = MscmpSystSettings.get_setting_values("test_setting_one")
+    assert %Msdata.SystSettings{user_description: "Updated test one setting description."} =
+             MscmpSystSettings.get_setting_values("test_setting_one")
 
     assert :ok =
              MscmpSystSettings.set_setting_values(
@@ -188,9 +186,8 @@ defmodule SettingsTest do
                nil_change
              )
 
-    assert %MscmpSystSettings.Data.SystSettings{
-             user_description: nil
-           } = MscmpSystSettings.get_setting_values("test_setting_one")
+    assert %Msdata.SystSettings{user_description: nil} =
+             MscmpSystSettings.get_setting_values("test_setting_one")
 
     assert {:error, %MscmpSystError{}} =
              MscmpSystSettings.set_setting_values(
@@ -210,7 +207,7 @@ defmodule SettingsTest do
     false_change = %{setting_flag: false}
     nil_change = %{setting_flag: nil}
 
-    assert %MscmpSystSettings.Data.SystSettings{setting_flag: true} =
+    assert %Msdata.SystSettings{setting_flag: true} =
              MscmpSystSettings.get_setting_values("test_setting_one")
 
     assert true =
@@ -263,7 +260,7 @@ defmodule SettingsTest do
     second_change = %{setting_integer: 2222}
     nil_change = %{setting_integer: nil}
 
-    assert %MscmpSystSettings.Data.SystSettings{setting_integer: 111} =
+    assert %Msdata.SystSettings{setting_integer: 111} =
              MscmpSystSettings.get_setting_values("test_setting_one")
 
     assert 111 =
@@ -334,7 +331,7 @@ defmodule SettingsTest do
 
     nil_change = %{setting_integer_range: nil}
 
-    assert %MscmpSystSettings.Data.SystSettings{
+    assert %Msdata.SystSettings{
              setting_integer_range: %MscmpSystDb.DbTypes.IntegerRange{
                lower: 1,
                upper: 11,
@@ -408,7 +405,7 @@ defmodule SettingsTest do
     second_change = %{setting_decimal: Decimal.new("2222.22")}
     nil_change = %{setting_decimal: nil}
 
-    assert %MscmpSystSettings.Data.SystSettings{setting_decimal: start_value} =
+    assert %Msdata.SystSettings{setting_decimal: start_value} =
              MscmpSystSettings.get_setting_values("test_setting_one")
 
     assert Decimal.eq?(Decimal.new("111.111"), start_value)
@@ -494,7 +491,7 @@ defmodule SettingsTest do
       upper_inclusive: false
     }
 
-    assert %MscmpSystSettings.Data.SystSettings{setting_decimal_range: ^starting_value} =
+    assert %Msdata.SystSettings{setting_decimal_range: ^starting_value} =
              MscmpSystSettings.get_setting_values("test_setting_one")
 
     assert ^starting_value =
@@ -567,7 +564,7 @@ defmodule SettingsTest do
 
     nil_change = %{setting_interval: nil}
 
-    assert %MscmpSystSettings.Data.SystSettings{
+    assert %Msdata.SystSettings{
              setting_interval: %MscmpSystDb.DbTypes.Interval{
                months: 1,
                days: 0,
@@ -635,7 +632,7 @@ defmodule SettingsTest do
     second_change = %{setting_date: ~D[2022-04-13]}
     nil_change = %{setting_date: nil}
 
-    assert %MscmpSystSettings.Data.SystSettings{setting_date: ~D[2022-01-01]} =
+    assert %Msdata.SystSettings{setting_date: ~D[2022-01-01]} =
              MscmpSystSettings.get_setting_values("test_setting_one")
 
     assert ~D[2022-01-01] =
@@ -704,7 +701,7 @@ defmodule SettingsTest do
 
     nil_change = %{setting_date_range: nil}
 
-    assert %MscmpSystSettings.Data.SystSettings{
+    assert %Msdata.SystSettings{
              setting_date_range: %MscmpSystDb.DbTypes.DateRange{
                lower: ~D[2022-01-01],
                upper: ~D[2023-01-01],
@@ -782,7 +779,7 @@ defmodule SettingsTest do
     second_change = %{setting_time: ~T[14:00:00]}
     nil_change = %{setting_time: nil}
 
-    assert %MscmpSystSettings.Data.SystSettings{setting_time: ~T[01:00:00]} =
+    assert %Msdata.SystSettings{setting_time: ~T[01:00:00]} =
              MscmpSystSettings.get_setting_values("test_setting_one")
 
     assert ~T[01:00:00] =
@@ -835,7 +832,7 @@ defmodule SettingsTest do
     second_change = %{setting_timestamp: ~U[2022-04-13 14:00:00Z]}
     nil_change = %{setting_timestamp: nil}
 
-    assert %MscmpSystSettings.Data.SystSettings{setting_timestamp: ~U[2022-01-01 01:00:00Z]} =
+    assert %Msdata.SystSettings{setting_timestamp: ~U[2022-01-01 01:00:00Z]} =
              MscmpSystSettings.get_setting_values("test_setting_one")
 
     assert ~U[2022-01-01 01:00:00Z] =
@@ -904,7 +901,7 @@ defmodule SettingsTest do
 
     nil_change = %{setting_timestamp_range: nil}
 
-    assert %MscmpSystSettings.Data.SystSettings{
+    assert %Msdata.SystSettings{
              setting_timestamp_range: %MscmpSystDb.DbTypes.DateTimeRange{
                lower: ~U[2022-01-01 01:00:00.000000Z],
                upper: :inf,
@@ -972,11 +969,9 @@ defmodule SettingsTest do
     second_change = %{setting_json: %{"Second Test Set" => %{"and_again" => 123}}}
     nil_change = %{setting_json: nil}
 
-    assert %MscmpSystSettings.Data.SystSettings{
+    assert %Msdata.SystSettings{
              setting_json: %{
-               "test_settings_one" => %{
-                 "nested_test" => "nested_test_value"
-               },
+               "test_settings_one" => %{"nested_test" => "nested_test_value"},
                "test_settings_one_number" => 1111,
                "test_settings_one_boolean" => true
              }
@@ -1038,7 +1033,7 @@ defmodule SettingsTest do
     second_change = %{setting_text: "Second Change Test"}
     nil_change = %{setting_text: nil}
 
-    assert %MscmpSystSettings.Data.SystSettings{setting_text: "Test Setting One Text"} =
+    assert %Msdata.SystSettings{setting_text: "Test Setting One Text"} =
              MscmpSystSettings.get_setting_values("test_setting_one")
 
     assert "Test Setting One Text" =
@@ -1091,9 +1086,8 @@ defmodule SettingsTest do
     second_change = %{setting_uuid: "5945ef31-5819-4780-9080-e7b4fe35fe4b"}
     nil_change = %{setting_uuid: nil}
 
-    assert %MscmpSystSettings.Data.SystSettings{
-             setting_uuid: "bbd4d590-b2c7-11ec-a45c-00155d708817"
-           } = MscmpSystSettings.get_setting_values("test_setting_one")
+    assert %Msdata.SystSettings{setting_uuid: "bbd4d590-b2c7-11ec-a45c-00155d708817"} =
+             MscmpSystSettings.get_setting_values("test_setting_one")
 
     assert "bbd4d590-b2c7-11ec-a45c-00155d708817" =
              MscmpSystSettings.get_setting_value(
@@ -1145,9 +1139,8 @@ defmodule SettingsTest do
     second_change = %{setting_blob: "Second Test Blob Value"}
     nil_change = %{setting_blob: nil}
 
-    assert %MscmpSystSettings.Data.SystSettings{
-             setting_blob: "Test Setting One Bytea"
-           } = MscmpSystSettings.get_setting_values("test_setting_one")
+    assert %Msdata.SystSettings{setting_blob: "Test Setting One Bytea"} =
+             MscmpSystSettings.get_setting_values("test_setting_one")
 
     assert "Test Setting One Bytea" =
              MscmpSystSettings.get_setting_value(

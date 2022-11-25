@@ -16,7 +16,6 @@ defmodule NetworkRulesTest do
   import Ecto.Query
   import IP, only: [sigil_i: 2]
 
-  alias MscmpSystAuthn.Data
   alias MscmpSystAuthn.Impl
   alias MscmpSystDb.DbTypes
 
@@ -79,7 +78,7 @@ defmodule NetworkRulesTest do
   test "Can get Disallowed Host record by Host Address" do
     {:ok, true} = Impl.NetworkRules.host_disallowed(~i"10.123.123.3")
 
-    assert {:ok, %Data.SystDisallowedHosts{}} =
+    assert {:ok, %Msdata.SystDisallowedHosts{}} =
              Impl.NetworkRules.get_disallowed_host_record_by_host(~i"10.123.123.3")
   end
 
@@ -127,7 +126,7 @@ defmodule NetworkRulesTest do
 
   test "Can create Global Network Rule" do
     new_ordering =
-      from(gnr in Data.SystGlobalNetworkRules, select: max(gnr.ordering) |> coalesce(0))
+      from(gnr in Msdata.SystGlobalNetworkRules, select: max(gnr.ordering) |> coalesce(0))
       |> MscmpSystDb.one()
       |> then(fn current_ordering -> (current_ordering || 0) + 1 end)
 
@@ -150,7 +149,7 @@ defmodule NetworkRulesTest do
     {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner6")
 
     new_ordering =
-      from(onr in Data.SystOwnerNetworkRules,
+      from(onr in Msdata.SystOwnerNetworkRules,
         select: max(onr.ordering) |> coalesce(0),
         where: onr.owner_id == ^owner_id
       )
@@ -179,7 +178,7 @@ defmodule NetworkRulesTest do
       MscmpSystInstance.get_instance_id_by_name("app1_owner6_instance_types_std")
 
     new_ordering =
-      from(inr in Data.SystInstanceNetworkRules,
+      from(inr in Msdata.SystInstanceNetworkRules,
         select: max(inr.ordering) |> coalesce(0),
         where: inr.instance_id == ^instance_id
       )
@@ -209,7 +208,7 @@ defmodule NetworkRulesTest do
 
   test "Can update Global Network Rule / Success Tuple" do
     global_rule =
-      from(gnr in Data.SystGlobalNetworkRules, where: gnr.ordering == 5)
+      from(gnr in Msdata.SystGlobalNetworkRules, where: gnr.ordering == 5)
       |> MscmpSystDb.one!()
 
     update_params = %{
@@ -230,7 +229,7 @@ defmodule NetworkRulesTest do
 
   test "Can update Global Network Rule / Raise on Error" do
     global_rule =
-      from(gnr in Data.SystGlobalNetworkRules, where: gnr.ordering == 6)
+      from(gnr in Msdata.SystGlobalNetworkRules, where: gnr.ordering == 6)
       |> MscmpSystDb.one!()
 
     update_params = %{
@@ -253,7 +252,7 @@ defmodule NetworkRulesTest do
     {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner5")
 
     owner_rule =
-      from(onr in Data.SystOwnerNetworkRules,
+      from(onr in Msdata.SystOwnerNetworkRules,
         where: onr.owner_id == ^owner_id and onr.ordering == 1
       )
       |> MscmpSystDb.one!()
@@ -278,7 +277,7 @@ defmodule NetworkRulesTest do
     {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner5")
 
     owner_rule =
-      from(onr in Data.SystOwnerNetworkRules,
+      from(onr in Msdata.SystOwnerNetworkRules,
         where: onr.owner_id == ^owner_id and onr.ordering == 2
       )
       |> MscmpSystDb.one!()
@@ -308,7 +307,7 @@ defmodule NetworkRulesTest do
       MscmpSystInstance.get_instance_id_by_name("app1_owner7_instance_types_std")
 
     instance_rule =
-      from(inr in Data.SystInstanceNetworkRules,
+      from(inr in Msdata.SystInstanceNetworkRules,
         where: inr.instance_id == ^instance_id and inr.ordering == 1
       )
       |> MscmpSystDb.one!()
@@ -334,7 +333,7 @@ defmodule NetworkRulesTest do
       MscmpSystInstance.get_instance_id_by_name("app1_owner7_instance_types_std")
 
     instance_rule =
-      from(inr in Data.SystInstanceNetworkRules,
+      from(inr in Msdata.SystInstanceNetworkRules,
         where: inr.instance_id == ^instance_id and inr.ordering == 2
       )
       |> MscmpSystDb.one!()
@@ -357,7 +356,7 @@ defmodule NetworkRulesTest do
 
   test "Can get Global Network Rule / Success Tuple" do
     global_rule =
-      from(gnr in Data.SystGlobalNetworkRules, where: gnr.ordering == 2)
+      from(gnr in Msdata.SystGlobalNetworkRules, where: gnr.ordering == 2)
       |> MscmpSystDb.one!()
 
     assert {:ok, test_rule} = Impl.NetworkRules.get_global_network_rule(global_rule.id)
@@ -371,7 +370,7 @@ defmodule NetworkRulesTest do
 
   test "Can get Global Network Rule / Raise on Error" do
     global_rule =
-      from(gnr in Data.SystGlobalNetworkRules, where: gnr.ordering == 2)
+      from(gnr in Msdata.SystGlobalNetworkRules, where: gnr.ordering == 2)
       |> MscmpSystDb.one!()
 
     assert test_rule = Impl.NetworkRules.get_global_network_rule!(global_rule.id)
@@ -387,7 +386,7 @@ defmodule NetworkRulesTest do
     {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner1")
 
     owner_rule =
-      from(onr in Data.SystOwnerNetworkRules,
+      from(onr in Msdata.SystOwnerNetworkRules,
         where: onr.owner_id == ^owner_id and onr.ordering == 2
       )
       |> MscmpSystDb.one!()
@@ -406,7 +405,7 @@ defmodule NetworkRulesTest do
     {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner1")
 
     owner_rule =
-      from(onr in Data.SystOwnerNetworkRules,
+      from(onr in Msdata.SystOwnerNetworkRules,
         where: onr.owner_id == ^owner_id and onr.ordering == 3
       )
       |> MscmpSystDb.one!()
@@ -426,7 +425,7 @@ defmodule NetworkRulesTest do
       MscmpSystInstance.get_instance_id_by_name("app1_owner1_instance_types_std")
 
     instance_rule =
-      from(inr in Data.SystInstanceNetworkRules,
+      from(inr in Msdata.SystInstanceNetworkRules,
         where: inr.instance_id == ^instance_id and inr.ordering == 3
       )
       |> MscmpSystDb.one!()
@@ -446,7 +445,7 @@ defmodule NetworkRulesTest do
       MscmpSystInstance.get_instance_id_by_name("app1_owner1_instance_types_std")
 
     instance_rule =
-      from(inr in Data.SystInstanceNetworkRules,
+      from(inr in Msdata.SystInstanceNetworkRules,
         where: inr.instance_id == ^instance_id and inr.ordering == 4
       )
       |> MscmpSystDb.one!()
@@ -463,13 +462,13 @@ defmodule NetworkRulesTest do
 
   test "Can delete Global Network Rule / Success Tuple" do
     global_rule_id =
-      from(gnr in Data.SystGlobalNetworkRules, where: gnr.ordering == 7, select: gnr.id)
+      from(gnr in Msdata.SystGlobalNetworkRules, where: gnr.ordering == 7, select: gnr.id)
       |> MscmpSystDb.one!()
 
     assert :ok = Impl.NetworkRules.delete_global_network_rule(global_rule_id)
 
     assert false ==
-             from(gnr in Data.SystGlobalNetworkRules,
+             from(gnr in Msdata.SystGlobalNetworkRules,
                where: gnr.id == ^global_rule_id,
                select: gnr.id
              )
@@ -478,13 +477,13 @@ defmodule NetworkRulesTest do
 
   test "Can delete Global Network Rule / Raise on Error" do
     global_rule_id =
-      from(gnr in Data.SystGlobalNetworkRules, where: gnr.ordering == 8, select: gnr.id)
+      from(gnr in Msdata.SystGlobalNetworkRules, where: gnr.ordering == 8, select: gnr.id)
       |> MscmpSystDb.one!()
 
     assert :ok = Impl.NetworkRules.delete_global_network_rule!(global_rule_id)
 
     assert false ==
-             from(gnr in Data.SystGlobalNetworkRules,
+             from(gnr in Msdata.SystGlobalNetworkRules,
                where: gnr.id == ^global_rule_id,
                select: gnr.id
              )
@@ -495,7 +494,7 @@ defmodule NetworkRulesTest do
     {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner6")
 
     owner_rule_id =
-      from(onr in Data.SystOwnerNetworkRules,
+      from(onr in Msdata.SystOwnerNetworkRules,
         where: onr.owner_id == ^owner_id and onr.ordering == 1,
         select: onr.id
       )
@@ -504,7 +503,7 @@ defmodule NetworkRulesTest do
     assert :ok = Impl.NetworkRules.delete_owner_network_rule(owner_rule_id)
 
     assert false ==
-             from(onr in Data.SystOwnerNetworkRules,
+             from(onr in Msdata.SystOwnerNetworkRules,
                where: onr.id == ^owner_rule_id,
                select: onr.id
              )
@@ -515,7 +514,7 @@ defmodule NetworkRulesTest do
     {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner6")
 
     owner_rule_id =
-      from(onr in Data.SystOwnerNetworkRules,
+      from(onr in Msdata.SystOwnerNetworkRules,
         where: onr.owner_id == ^owner_id and onr.ordering == 2,
         select: onr.id
       )
@@ -524,7 +523,7 @@ defmodule NetworkRulesTest do
     assert :ok = Impl.NetworkRules.delete_owner_network_rule!(owner_rule_id)
 
     assert false ==
-             from(onr in Data.SystOwnerNetworkRules,
+             from(onr in Msdata.SystOwnerNetworkRules,
                where: onr.id == ^owner_rule_id,
                select: onr.id
              )
@@ -536,7 +535,7 @@ defmodule NetworkRulesTest do
       MscmpSystInstance.get_instance_id_by_name("app1_owner8_instance_types_std")
 
     instance_rule_id =
-      from(inr in Data.SystInstanceNetworkRules,
+      from(inr in Msdata.SystInstanceNetworkRules,
         where: inr.instance_id == ^instance_id and inr.ordering == 1,
         select: inr.id
       )
@@ -545,7 +544,7 @@ defmodule NetworkRulesTest do
     assert :ok = Impl.NetworkRules.delete_instance_network_rule(instance_rule_id)
 
     assert false ==
-             from(inr in Data.SystInstanceNetworkRules,
+             from(inr in Msdata.SystInstanceNetworkRules,
                where: inr.id == ^instance_rule_id,
                select: inr.id
              )
@@ -557,7 +556,7 @@ defmodule NetworkRulesTest do
       MscmpSystInstance.get_instance_id_by_name("app1_owner8_instance_types_std")
 
     instance_rule_id =
-      from(inr in Data.SystInstanceNetworkRules,
+      from(inr in Msdata.SystInstanceNetworkRules,
         where: inr.instance_id == ^instance_id and inr.ordering == 2,
         select: inr.id
       )
@@ -566,7 +565,7 @@ defmodule NetworkRulesTest do
     assert :ok = Impl.NetworkRules.delete_instance_network_rule!(instance_rule_id)
 
     assert false ==
-             from(inr in Data.SystInstanceNetworkRules,
+             from(inr in Msdata.SystInstanceNetworkRules,
                where: inr.id == ^instance_rule_id,
                select: inr.id
              )

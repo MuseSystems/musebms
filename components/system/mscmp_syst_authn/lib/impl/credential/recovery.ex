@@ -11,7 +11,6 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystAuthn.Impl.Credential.Recovery do
-  alias MscmpSystAuthn.Data
   alias MscmpSystAuthn.Impl.Credential.GenericToken
   alias MscmpSystAuthn.Types
 
@@ -67,7 +66,7 @@ defmodule MscmpSystAuthn.Impl.Credential.Recovery do
   end
 
   @spec get_credential_record(Types.access_account_id(), Types.identity_id() | nil) ::
-          {:ok, Data.SystCredentials.t() | nil} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, Msdata.SystCredentials.t() | nil} | {:error, MscmpSystError.t() | Exception.t()}
   def get_credential_record(access_account_id, identity_id) do
     {:ok, get_credential_record!(access_account_id, identity_id)}
   rescue
@@ -75,11 +74,11 @@ defmodule MscmpSystAuthn.Impl.Credential.Recovery do
   end
 
   @spec get_credential_record!(Types.access_account_id(), Types.identity_id() | nil) ::
-          Data.SystCredentials.t() | nil
+          Msdata.SystCredentials.t() | nil
   def get_credential_record!(access_account_id, identity_id),
     do: GenericToken.get_credential_record(@token_type, access_account_id, identity_id)
 
-  @spec delete_credential(Types.credential_id() | Data.SystCredentials.t()) ::
+  @spec delete_credential(Types.credential_id() | Msdata.SystCredentials.t()) ::
           :ok | {:error, MscmpSystError.t() | Exception.t()}
   def delete_credential(credential) do
     delete_credential!(credential)
@@ -87,6 +86,6 @@ defmodule MscmpSystAuthn.Impl.Credential.Recovery do
     error -> {:error, error}
   end
 
-  @spec delete_credential!(Types.credential_id() | Data.SystCredentials.t()) :: :ok
+  @spec delete_credential!(Types.credential_id() | Msdata.SystCredentials.t()) :: :ok
   def delete_credential!(credential), do: GenericToken.delete_credential(@token_type, credential)
 end

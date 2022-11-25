@@ -13,7 +13,6 @@
 defmodule IdentityTest do
   use AuthenticationTestCase, async: true
 
-  alias MscmpSystAuthn.Data
   alias MscmpSystAuthn.Impl
 
   @moduletag :capture_log
@@ -21,7 +20,7 @@ defmodule IdentityTest do
   test "Can set Identity expiration" do
     {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner2")
 
-    %Data.SystIdentities{} =
+    %Msdata.SystIdentities{} =
       unexpired_identity =
       Impl.Identity.Email.identify_access_account(
         "identity_set_expired_test_accnt@musesystems.com",
@@ -39,7 +38,7 @@ defmodule IdentityTest do
   test "Can clear Identity expiration" do
     {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner2")
 
-    %Data.SystIdentities{} =
+    %Msdata.SystIdentities{} =
       expired_identity =
       Impl.Identity.Email.identify_access_account(
         "identity_clear_expired_test_accnt@musesystems.com",
@@ -56,7 +55,7 @@ defmodule IdentityTest do
   test "Can test if Identity is expired" do
     {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner2")
 
-    %Data.SystIdentities{} =
+    %Msdata.SystIdentities{} =
       expired_identity =
       Impl.Identity.Email.identify_access_account(
         "identity_expired_test_accnt@musesystems.com",
@@ -65,7 +64,7 @@ defmodule IdentityTest do
 
     assert {:ok, true} = Impl.Identity.identity_expired?(expired_identity)
 
-    %Data.SystIdentities{} =
+    %Msdata.SystIdentities{} =
       not_expired_identity =
       Impl.Identity.Email.identify_access_account(
         "identity_not_expired_test_accnt@musesystems.com",
@@ -78,7 +77,7 @@ defmodule IdentityTest do
   test "Can test if Identity is validated" do
     {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner2")
 
-    %Data.SystIdentities{} =
+    %Msdata.SystIdentities{} =
       validated_identity =
       Impl.Identity.Email.identify_access_account(
         "identity_validated_test_accnt@musesystems.com",
@@ -99,7 +98,7 @@ defmodule IdentityTest do
   test "Can delete Identity" do
     {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner2")
 
-    %Data.SystIdentities{} =
+    %Msdata.SystIdentities{} =
       delete_identity =
       Impl.Identity.Email.identify_access_account(
         "identity_delete_test_accnt@musesystems.com",

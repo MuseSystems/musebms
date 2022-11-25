@@ -13,7 +13,6 @@
 defmodule MscmpSystAuthn.Impl.AccessAccountInstanceAssoc do
   import Ecto.Query
 
-  alias MscmpSystAuthn.Data
   alias MscmpSystAuthn.Types
 
   require Logger
@@ -24,7 +23,7 @@ defmodule MscmpSystAuthn.Impl.AccessAccountInstanceAssoc do
           Types.access_account_id(),
           MscmpSystInstance.Types.instance_id(),
           Keyword.t()
-        ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
+        ) :: {:ok, Msdata.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
   def invite_to_instance(access_account_id, instance_id, opts)
       when is_binary(access_account_id) and is_binary(instance_id) do
     opts = MscmpSystUtils.resolve_options(opts, create_accepted: false, expiration_days: 30)
@@ -66,7 +65,7 @@ defmodule MscmpSystAuthn.Impl.AccessAccountInstanceAssoc do
   defp invite_or_reinvite(nil = _target_record, invite_params), do: create_record(invite_params)
 
   defp invite_or_reinvite(
-         %Data.SystAccessAccountInstanceAssocs{} = target_record,
+         %Msdata.SystAccessAccountInstanceAssocs{} = target_record,
          invite_params
        ) do
     target_record
@@ -77,7 +76,7 @@ defmodule MscmpSystAuthn.Impl.AccessAccountInstanceAssoc do
   @spec accept_instance_invite(
           Types.access_account_id(),
           MscmpSystInstance.Types.instance_id()
-        ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
+        ) :: {:ok, Msdata.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
   def accept_instance_invite(access_account_id, instance_id)
       when is_binary(access_account_id) and is_binary(instance_id) do
     get_access_account_instance_assoc(access_account_id, instance_id)
@@ -98,9 +97,9 @@ defmodule MscmpSystAuthn.Impl.AccessAccountInstanceAssoc do
 
   @spec accept_instance_invite(
           Types.access_account_instance_assoc_id()
-          | Data.SystAccessAccountInstanceAssocs.t()
+          | Msdata.SystAccessAccountInstanceAssocs.t()
         ) ::
-          {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
   def accept_instance_invite(access_account_instance_assoc_id)
       when is_binary(access_account_instance_assoc_id) do
     access_account_instance_assoc_id
@@ -121,7 +120,7 @@ defmodule MscmpSystAuthn.Impl.AccessAccountInstanceAssoc do
   end
 
   def accept_instance_invite(
-        %Data.SystAccessAccountInstanceAssocs{} = access_account_instance_assoc
+        %Msdata.SystAccessAccountInstanceAssocs{} = access_account_instance_assoc
       ) do
     access_account_instance_assoc
     |> verify_not_accepted()
@@ -147,7 +146,7 @@ defmodule MscmpSystAuthn.Impl.AccessAccountInstanceAssoc do
           MscmpSystInstance.Types.instance_id()
         ) :: boolean()
   def instance_access_granted?(access_account_id, instance_id) do
-    from(aaia in Data.SystAccessAccountInstanceAssocs,
+    from(aaia in Msdata.SystAccessAccountInstanceAssocs,
       where:
         aaia.access_account_id == ^access_account_id and aaia.instance_id == ^instance_id and
           not is_nil(aaia.access_granted)
@@ -158,7 +157,7 @@ defmodule MscmpSystAuthn.Impl.AccessAccountInstanceAssoc do
   @spec decline_instance_invite(
           Types.access_account_id(),
           MscmpSystInstance.Types.instance_id()
-        ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
+        ) :: {:ok, Msdata.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
   def decline_instance_invite(access_account_id, instance_id)
       when is_binary(access_account_id) and is_binary(instance_id) do
     get_access_account_instance_assoc(access_account_id, instance_id)
@@ -179,9 +178,9 @@ defmodule MscmpSystAuthn.Impl.AccessAccountInstanceAssoc do
 
   @spec decline_instance_invite(
           Types.access_account_instance_assoc_id()
-          | Data.SystAccessAccountInstanceAssocs.t()
+          | Msdata.SystAccessAccountInstanceAssocs.t()
         ) ::
-          {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
   def decline_instance_invite(access_account_instance_assoc_id)
       when is_binary(access_account_instance_assoc_id) do
     access_account_instance_assoc_id
@@ -202,7 +201,7 @@ defmodule MscmpSystAuthn.Impl.AccessAccountInstanceAssoc do
   end
 
   def decline_instance_invite(
-        %Data.SystAccessAccountInstanceAssocs{} = access_account_instance_assoc
+        %Msdata.SystAccessAccountInstanceAssocs{} = access_account_instance_assoc
       ) do
     access_account_instance_assoc
     |> verify_not_accepted()
@@ -247,7 +246,7 @@ defmodule MscmpSystAuthn.Impl.AccessAccountInstanceAssoc do
 
   @spec revoke_instance_access(
           Types.access_account_instance_assoc_id()
-          | Data.SystAccessAccountInstanceAssocs.t()
+          | Msdata.SystAccessAccountInstanceAssocs.t()
         ) ::
           :ok | {:error, MscmpSystError.t()}
   def revoke_instance_access(access_account_instance_assoc_id)
@@ -270,7 +269,7 @@ defmodule MscmpSystAuthn.Impl.AccessAccountInstanceAssoc do
   end
 
   def revoke_instance_access(
-        %Data.SystAccessAccountInstanceAssocs{} = access_account_instance_assoc
+        %Msdata.SystAccessAccountInstanceAssocs{} = access_account_instance_assoc
       ) do
     delete_record(access_account_instance_assoc)
   rescue
@@ -288,18 +287,18 @@ defmodule MscmpSystAuthn.Impl.AccessAccountInstanceAssoc do
   end
 
   defp get_access_account_instance_assoc(access_account_id, instance_id) do
-    from(aaia in Data.SystAccessAccountInstanceAssocs,
+    from(aaia in Msdata.SystAccessAccountInstanceAssocs,
       where: aaia.access_account_id == ^access_account_id and aaia.instance_id == ^instance_id
     )
     |> MscmpSystDb.one()
   end
 
   defp get_access_account_instance_assoc(record_id) when is_binary(record_id) do
-    MscmpSystDb.get!(Data.SystAccessAccountInstanceAssocs, record_id)
+    MscmpSystDb.get!(Msdata.SystAccessAccountInstanceAssocs, record_id)
   end
 
   defp verify_not_accepted(
-         %Data.SystAccessAccountInstanceAssocs{access_granted: access_granted} = record
+         %Msdata.SystAccessAccountInstanceAssocs{access_granted: access_granted} = record
        )
        when not is_nil(access_granted) do
     raise MscmpSystError,
@@ -314,7 +313,7 @@ defmodule MscmpSystAuthn.Impl.AccessAccountInstanceAssoc do
   defp verify_not_accepted(record), do: record
 
   defp verify_not_expired(
-         %Data.SystAccessAccountInstanceAssocs{invitation_expires: invitation_expires} = record
+         %Msdata.SystAccessAccountInstanceAssocs{invitation_expires: invitation_expires} = record
        )
        when not is_nil(invitation_expires) do
     case DateTime.diff(invitation_expires, DateTime.now!("Etc/UTC")) < 0 do
@@ -335,7 +334,8 @@ defmodule MscmpSystAuthn.Impl.AccessAccountInstanceAssoc do
   defp verify_not_expired(record), do: record
 
   defp verify_not_declined(
-         %Data.SystAccessAccountInstanceAssocs{invitation_declined: invitation_declined} = record
+         %Msdata.SystAccessAccountInstanceAssocs{invitation_declined: invitation_declined} =
+           record
        )
        when not is_nil(invitation_declined) do
     raise MscmpSystError,
@@ -351,14 +351,14 @@ defmodule MscmpSystAuthn.Impl.AccessAccountInstanceAssoc do
 
   defp create_record(insert_params) do
     insert_params
-    |> Data.SystAccessAccountInstanceAssocs.insert_changeset()
+    |> Msdata.SystAccessAccountInstanceAssocs.insert_changeset()
     |> MscmpSystDb.insert!(returning: true)
     |> then(&{:ok, &1})
   end
 
   defp update_record(target_record, update_params) do
     target_record
-    |> Data.SystAccessAccountInstanceAssocs.update_changeset(update_params)
+    |> Msdata.SystAccessAccountInstanceAssocs.update_changeset(update_params)
     |> MscmpSystDb.update!(returning: true)
     |> then(&{:ok, &1})
   end

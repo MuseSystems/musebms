@@ -1,5 +1,4 @@
 defmodule MscmpSystEnums do
-  alias MscmpSystEnums.Data
   alias MscmpSystEnums.Impl
   alias MscmpSystEnums.Runtime
   alias MscmpSystEnums.Types
@@ -81,7 +80,7 @@ defmodule MscmpSystEnums do
     * `enum_name` - indicates the name of the enumeration for which to retrieve values.
 
   The successful return of this function is an instance of the
-  `MscmpSystEnums.Data.SystEnums` struct containing the values requested,
+  `Msdata.SystEnums` struct containing the values requested,
   including the `enum_items` association populated as well as each item's
   `functional_type` association populated.
 
@@ -89,7 +88,7 @@ defmodule MscmpSystEnums do
 
       iex> MscmpSystEnums.get_enum_values("example_enumeration")
   """
-  @spec get_enum_values(Types.enum_name()) :: Data.SystEnums.t()
+  @spec get_enum_values(Types.enum_name()) :: Msdata.SystEnums.t()
   defdelegate get_enum_values(enum_name), to: Impl.Enums
 
   @doc section: :enum_data
@@ -104,7 +103,7 @@ defmodule MscmpSystEnums do
 
     iex> MscmpSystEnums.list_all_enums()
   """
-  @spec list_all_enums() :: list(Data.SystEnums.t())
+  @spec list_all_enums() :: list(Msdata.SystEnums.t())
   defdelegate list_all_enums(), to: Impl.Enums
 
   @doc section: :enum_data
@@ -150,7 +149,7 @@ defmodule MscmpSystEnums do
     * `enum_name`- the name of the enumeration for which to retrieve the list of
       enumeration items.
   """
-  @spec list_enum_items(Types.enum_name()) :: list(Data.SystEnumItems.t())
+  @spec list_enum_items(Types.enum_name()) :: list(Msdata.SystEnumItems.t())
   defdelegate list_enum_items(enum_name), to: Impl.Enums
 
   @doc section: :enum_item_data
@@ -161,7 +160,7 @@ defmodule MscmpSystEnums do
   In all other regards this function works the same
   `MscmpSystEnums.list_enum_items/1`.
   """
-  @spec list_sorted_enum_items(Types.enum_name()) :: list(Data.SystEnumItems.t())
+  @spec list_sorted_enum_items(Types.enum_name()) :: list(Msdata.SystEnumItems.t())
   defdelegate list_sorted_enum_items(enum_name), to: Impl.Enums
 
   @doc section: :enum_functional_type_data
@@ -174,7 +173,7 @@ defmodule MscmpSystEnums do
     * `enum_name` - the name of the enumeration for which to retrieve the list
       of enumeration functional types.
   """
-  @spec list_enum_functional_types(Types.enum_name()) :: list(Data.SystEnumFunctionalTypes.t())
+  @spec list_enum_functional_types(Types.enum_name()) :: list(Msdata.SystEnumFunctionalTypes.t())
   defdelegate list_enum_functional_types(enum_name), to: Impl.Enums
 
   @doc section: :enum_item_data
@@ -191,7 +190,7 @@ defmodule MscmpSystEnums do
 
   ## Examples
 
-      iex> %MscmpSystEnums.Data.SystEnumItems{
+      iex> %Msdata.SystEnumItems{
       ...>   internal_name: "example_enum_item_one"
       ...> } =
       ...>   MscmpSystEnums.get_enum_item_by_name(
@@ -199,7 +198,8 @@ defmodule MscmpSystEnums do
       ...>     "example_enum_item_one"
       ...>   )
   """
-  @spec get_enum_item_by_name(Types.enum_name(), Types.enum_item_name()) :: Data.SystEnumItems.t()
+  @spec get_enum_item_by_name(Types.enum_name(), Types.enum_item_name()) ::
+          Msdata.SystEnumItems.t()
   defdelegate get_enum_item_by_name(enum_name, enum_item_name), to: Impl.Enums
 
   @doc section: :enum_item_data
@@ -218,7 +218,7 @@ defmodule MscmpSystEnums do
     * `enum_item_id` - the id value of the Enumeration Item record to return.
 
   """
-  @spec get_enum_item_by_id(Types.enum_name(), Ecto.UUID.t()) :: Data.SystEnumItems.t()
+  @spec get_enum_item_by_id(Types.enum_name(), Ecto.UUID.t()) :: Msdata.SystEnumItems.t()
   defdelegate get_enum_item_by_id(enum_name, enum_item_id), to: Impl.Enums
 
   @doc section: :enum_functional_type_data
@@ -268,12 +268,12 @@ defmodule MscmpSystEnums do
         than the entire enumeration.
 
   ## Examples
-      iex> %MscmpSystEnums.Data.SystEnumItems{
+      iex> %Msdata.SystEnumItems{
       ...>   internal_name: "example_enum_item_two"
       ...> } =
       ...>   MscmpSystEnums.get_default_enum_item("example_enumeration")
 
-      iex> %MscmpSystEnums.Data.SystEnumItems{
+      iex> %Msdata.SystEnumItems{
       ...>   internal_name: "example_enum_item_one"
       ...> } =
       ...>   MscmpSystEnums.get_default_enum_item(
@@ -281,7 +281,7 @@ defmodule MscmpSystEnums do
       ...>     [functional_type_name: "example_enum_func_type_1"]
       ...>   )
   """
-  @spec get_default_enum_item(Types.enum_name(), Keyword.t() | []) :: Data.SystEnumItems.t()
+  @spec get_default_enum_item(Types.enum_name(), Keyword.t() | []) :: Msdata.SystEnumItems.t()
   defdelegate get_default_enum_item(enum_name, opts \\ []), to: Impl.Enums
 
   @doc section: :enum_data
@@ -401,7 +401,7 @@ defmodule MscmpSystEnums do
 
     * `default_user_options`
 
-  Other fields of the `MscmpSystEnums.Data.SystEnums` data type may not be
+  Other fields of the `Msdata.SystEnums` data type may not be
   modified via this module.  Also note that only the enumeration value itself
   can be modified.  Changes to functional type or enumeration item records must
   be addressed individually.
@@ -438,7 +438,7 @@ defmodule MscmpSystEnums do
 
     * `user_description`
 
-  Other fields of the MscmpSystEnums.Data.SystEnumFunctionalTypes data type may
+  Other fields of the Msdata.SystEnumFunctionalTypes data type may
   not be modified via this module.
 
   ## Parameters
@@ -493,7 +493,7 @@ defmodule MscmpSystEnums do
 
     * `user_options`
 
-  Other fields of the MscmpSystEnums.Data.SystEnumItems data type may not be
+  Other fields of the Msdata.SystEnumItems data type may not be
   modified via this module.
 
   ## Parameters

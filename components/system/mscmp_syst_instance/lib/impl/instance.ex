@@ -13,7 +13,6 @@
 defmodule MscmpSystInstance.Impl.Instance do
   import Ecto.Query
 
-  alias MscmpSystInstance.Data
   alias MscmpSystInstance.Types
 
   require Logger
@@ -27,10 +26,10 @@ defmodule MscmpSystInstance.Impl.Instance do
   @moduledoc false
 
   @spec create_instance(Types.instance_params()) ::
-          {:ok, Data.SystInstances.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystInstances.t()} | {:error, MscmpSystError.t()}
   def create_instance(instance_params) do
     instance_params
-    |> Data.SystInstances.insert_changeset()
+    |> Msdata.SystInstances.insert_changeset()
     |> MscmpSystDb.insert!(returning: true)
     |> then(&{:ok, &1})
   rescue
@@ -49,12 +48,12 @@ defmodule MscmpSystInstance.Impl.Instance do
   # the provided Startup Options.
 
   @spec get_instance_datastore_options(
-          Types.instance_id() | Data.SystInstances.t(),
+          Types.instance_id() | Msdata.SystInstances.t(),
           startup_options :: map()
         ) ::
           MscmpSystDb.Types.datastore_options()
   def get_instance_datastore_options(instance_id, startup_options) when is_binary(instance_id) do
-    from(i in Data.SystInstances,
+    from(i in Msdata.SystInstances,
       as: :instances,
       join: a in assoc(i, :application),
       as: :applications,
@@ -70,7 +69,7 @@ defmodule MscmpSystInstance.Impl.Instance do
   end
 
   def get_instance_datastore_options(
-        %Data.SystInstances{application: %Data.SystApplications{}, instance_contexts: [_ | _]} =
+        %Msdata.SystInstances{application: %Msdata.SystApplications{}, instance_contexts: [_ | _]} =
           instance,
         startup_options
       ) do
@@ -94,7 +93,7 @@ defmodule MscmpSystInstance.Impl.Instance do
     }
   end
 
-  def get_instance_datastore_options(%Data.SystInstances{id: instance_id}, startup_options) do
+  def get_instance_datastore_options(%Msdata.SystInstances{id: instance_id}, startup_options) do
     get_instance_datastore_options(instance_id, startup_options)
   end
 
@@ -133,12 +132,12 @@ defmodule MscmpSystInstance.Impl.Instance do
   end
 
   @spec initialize_instance(Types.instance_id(), startup_options :: map(), opts :: Keyword.t()) ::
-          {:ok, Data.SystInstances.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystInstances.t()} | {:error, MscmpSystError.t()}
   def initialize_instance(instance_id, startup_options, opts) do
     opts = MscmpSystUtils.resolve_options(opts, get_default_instance_state_ids())
 
     {:ok, initializing_instance} =
-      from(i in Data.SystInstances, where: i.id == ^instance_id)
+      from(i in Msdata.SystInstances, where: i.id == ^instance_id)
       |> MscmpSystDb.one!()
       |> verify_initialization_eligibility()
       |> set_instance_state(opts[:initializing_state_id])
@@ -163,7 +162,7 @@ defmodule MscmpSystInstance.Impl.Instance do
   end
 
   defp verify_initialization_eligibility(
-         %Data.SystInstances{instance_state_id: instance_state_id} = instance
+         %Msdata.SystInstances{instance_state_id: instance_state_id} = instance
        ) do
     functional_type_name =
       MscmpSystEnums.get_functional_type_by_enum_item_id("instance_states", instance_state_id)
@@ -185,11 +184,11 @@ defmodule MscmpSystInstance.Impl.Instance do
   #       more formal state machine definition since there are allowed and
   #       disallowed state transitions.  Battle for a different day.
 
-  @spec set_instance_state(Data.SystInstances.t(), Types.instance_state_id()) ::
-          {:ok, Data.SystInstances.t()} | {:error, MscmpSystError.t()}
+  @spec set_instance_state(Msdata.SystInstances.t(), Types.instance_state_id()) ::
+          {:ok, Msdata.SystInstances.t()} | {:error, MscmpSystError.t()}
   def set_instance_state(instance, instance_state_id) do
     instance
-    |> Data.SystInstances.update_changeset(%{instance_state_id: instance_state_id})
+    |> Msdata.SystInstances.update_changeset(%{instance_state_id: instance_state_id})
     |> MscmpSystDb.update!(returning: true)
     |> then(&{:ok, &1})
   rescue
@@ -272,7 +271,7 @@ defmodule MscmpSystInstance.Impl.Instance do
   @spec get_standard_migration_bindings(Types.instance_id()) :: Keyword.t()
   def get_standard_migration_bindings(instance_id) do
     from(
-      i in Data.SystInstances,
+      i in Msdata.SystInstances,
       join: ic in assoc(i, :instance_contexts),
       join: ac in assoc(ic, :application_context),
       where: i.id == ^instance_id,
@@ -288,10 +287,10 @@ defmodule MscmpSystInstance.Impl.Instance do
   # Populated in this case means that statusing information is populated.
 
   @spec get_instance_by_name(Types.instance_name()) ::
-          {:ok, Data.SystInstances.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystInstances.t()} | {:error, MscmpSystError.t()}
   def get_instance_by_name(instance_name) when is_binary(instance_name) do
     from(
-      i in Data.SystInstances,
+      i in Msdata.SystInstances,
       join: is in assoc(i, :instance_state),
       join: isft in assoc(is, :functional_type),
       where: i.internal_name == ^instance_name,
@@ -318,7 +317,7 @@ defmodule MscmpSystInstance.Impl.Instance do
   @spec get_instance_id_by_name(Types.instance_name()) ::
           {:ok, Types.instance_id()} | {:error, MscmpSystError.t()}
   def get_instance_id_by_name(instance_name) do
-    from(i in Data.SystInstances, select: i.id, where: i.internal_name == ^instance_name)
+    from(i in Msdata.SystInstances, select: i.id, where: i.internal_name == ^instance_name)
     |> MscmpSystDb.one!()
     |> then(&{:ok, &1})
   rescue
@@ -335,11 +334,11 @@ defmodule MscmpSystInstance.Impl.Instance do
       }
   end
 
-  @spec purge_instance(Types.instance_id() | Data.SystInstances.t(), startup_options :: map()) ::
+  @spec purge_instance(Types.instance_id() | Msdata.SystInstances.t(), startup_options :: map()) ::
           :ok | {:error, MscmpSystError.t()}
   def purge_instance(instance_id, startup_options) when is_binary(instance_id) do
     from(
-      i in Data.SystInstances,
+      i in Msdata.SystInstances,
       join: is in assoc(i, :instance_state),
       join: isft in assoc(is, :functional_type),
       where: i.id == ^instance_id,
@@ -362,9 +361,9 @@ defmodule MscmpSystInstance.Impl.Instance do
   end
 
   def purge_instance(
-        %Data.SystInstances{
-          instance_state: %MscmpSystEnums.Data.SystEnumItems{
-            functional_type: %MscmpSystEnums.Data.SystEnumFunctionalTypes{
+        %Msdata.SystInstances{
+          instance_state: %Msdata.SystEnumItems{
+            functional_type: %Msdata.SystEnumFunctionalTypes{
               internal_name: functional_type
             }
           }
@@ -386,7 +385,7 @@ defmodule MscmpSystInstance.Impl.Instance do
       }
   end
 
-  def purge_instance(%Data.SystInstances{id: instance_id}, startup_options),
+  def purge_instance(%Msdata.SystInstances{id: instance_id}, startup_options),
     do: purge_instance(instance_id, startup_options)
 
   defp maybe_perform_instance_purge("instance_states_purge_eligible", instance, startup_options) do

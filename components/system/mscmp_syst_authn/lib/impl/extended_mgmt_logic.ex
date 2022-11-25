@@ -11,7 +11,6 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystAuthn.Impl.ExtendedMgmtLogic do
-  alias MscmpSystAuthn.Data
   alias MscmpSystAuthn.Impl
   alias MscmpSystAuthn.Types
 
@@ -85,7 +84,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedMgmtLogic do
   #
   # ============================================================================
 
-  @spec request_identity_validation(Types.identity_id() | Data.SystIdentities.t(), Keyword.t()) ::
+  @spec request_identity_validation(Types.identity_id() | Msdata.SystIdentities.t(), Keyword.t()) ::
           {:ok, Types.authenticator_result()} | {:error, MscmpSystError.t() | Exception.t()}
   def request_identity_validation(target_identity_id, opts) when is_binary(target_identity_id) do
     target_identity_id
@@ -103,7 +102,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedMgmtLogic do
        }}
   end
 
-  def request_identity_validation(%Data.SystIdentities{} = target_identity, opts) do
+  def request_identity_validation(%Msdata.SystIdentities{} = target_identity, opts) do
     case create_validator(target_identity, opts) do
       {:ok, validator} ->
         validator
@@ -167,9 +166,9 @@ defmodule MscmpSystAuthn.Impl.ExtendedMgmtLogic do
   @spec revoke_validator_for_identity_id(Types.identity_id()) ::
           {:ok, :deleted | :not_found} | {:error, MscmpSystError.t() | Exception.t()}
   def revoke_validator_for_identity_id(target_identity_id) do
-    with {:ok, %Data.SystIdentities{} = validation_identity} <-
+    with {:ok, %Msdata.SystIdentities{} = validation_identity} <-
            Impl.Identity.Validation.get_validation_identity_for_identity_id(target_identity_id),
-         {:ok, %Data.SystIdentities{}} <-
+         {:ok, %Msdata.SystIdentities{}} <-
            Impl.Identity.Validation.revoke_identity_validation(validation_identity) do
       {:ok, :deleted}
     else
@@ -246,7 +245,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedMgmtLogic do
   @spec revoke_password_recovery(Types.access_account_id()) ::
           {:ok, :deleted | :not_found} | {:error, MscmpSystError.t() | Exception.t()}
   def revoke_password_recovery(access_account_id) when is_binary(access_account_id) do
-    with {:ok, %Data.SystIdentities{} = recovery_identity} <-
+    with {:ok, %Msdata.SystIdentities{} = recovery_identity} <-
            Impl.Identity.Recovery.get_recovery_identity_for_access_account_id(access_account_id),
          :ok <- Impl.Identity.Recovery.revoke_credential_recovery(recovery_identity) do
       {:ok, :deleted}
@@ -328,10 +327,10 @@ defmodule MscmpSystAuthn.Impl.ExtendedMgmtLogic do
   end
 
   @spec update_api_token_external_name(
-          Types.identity_id() | Data.SystIdentities.t(),
+          Types.identity_id() | Msdata.SystIdentities.t(),
           String.t() | nil
         ) ::
-          {:ok, Data.SystIdentities.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystIdentities.t()} | {:error, MscmpSystError.t()}
   def update_api_token_external_name(identity, external_name) do
     {:ok, Impl.Identity.ApiToken.update_identity_external_name(identity, external_name)}
   rescue
@@ -346,7 +345,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedMgmtLogic do
        }}
   end
 
-  @spec revoke_api_token(Types.identity_id() | Data.SystIdentities.t()) ::
+  @spec revoke_api_token(Types.identity_id() | Msdata.SystIdentities.t()) ::
           {:ok, :deleted | :not_found} | {:error, MscmpSystError.t()}
   def revoke_api_token(identity) do
     identity
@@ -388,7 +387,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedMgmtLogic do
        }}
   end
 
-  defp process_account_code_create_result({:ok, %Data.SystIdentities{} = identity}) do
+  defp process_account_code_create_result({:ok, %Msdata.SystIdentities{} = identity}) do
     {:ok,
      %{
        access_account_id: identity.access_account_id,
@@ -408,7 +407,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedMgmtLogic do
   @spec revoke_account_code(Types.access_account_id()) ::
           {:ok, :deleted | :not_found} | {:error, MscmpSystError.t()}
   def revoke_account_code(access_account_id) when is_binary(access_account_id) do
-    with {:ok, %Data.SystIdentities{} = identity} <-
+    with {:ok, %Msdata.SystIdentities{} = identity} <-
            Impl.Identity.AccountCode.get_account_code_by_access_account_id(access_account_id) do
       {:ok, Impl.Identity.delete_identity(identity, "identity_types_sysdef_account")}
     end

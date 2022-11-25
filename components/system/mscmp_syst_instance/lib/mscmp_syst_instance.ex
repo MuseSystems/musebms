@@ -1,5 +1,4 @@
 defmodule MscmpSystInstance do
-  alias MscmpSystInstance.Data
   alias MscmpSystInstance.Impl
   alias MscmpSystInstance.Runtime
   alias MscmpSystInstance.Types
@@ -72,7 +71,7 @@ defmodule MscmpSystInstance do
   Instance.
 
   Note that Instance Type records are a special case of the
-  `MscmpSystEnums.Data.SystEnumItems` record.  The Enum Name for Instance Type
+  `Msdata.SystEnumItems` record.  The Enum Name for Instance Type
   is, unsurprisingly, `instance_types`.
 
   #### Instance Type Applications
@@ -143,7 +142,7 @@ defmodule MscmpSystInstance do
     for Instance Type creation.
   """
   @spec create_instance_type(Types.instance_type_params()) ::
-          {:ok, MscmpSystEnums.Data.SystEnumItems.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystEnumItems.t()} | {:error, MscmpSystError.t()}
   defdelegate create_instance_type(instance_type_params), to: Impl.InstanceType
 
   @doc section: :instance_type_data
@@ -160,7 +159,7 @@ defmodule MscmpSystInstance do
     contexts.
   """
   @spec update_instance_type(Types.instance_type_name(), Types.instance_type_params() | %{}) ::
-          {:ok, MscmpSystEnums.Data.SystEnumItems.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystEnumItems.t()} | {:error, MscmpSystError.t()}
   defdelegate update_instance_type(instance_type_name, instance_type_params \\ %{}),
     to: Impl.InstanceType
 
@@ -202,7 +201,7 @@ defmodule MscmpSystInstance do
   @spec create_instance_type_application(
           Types.instance_type_id(),
           Types.application_id()
-        ) :: {:ok, Data.SystInstanceTypeApplications.t()} | {:error, MscmpSystError.t()}
+        ) :: {:ok, Msdata.SystInstanceTypeApplications.t()} | {:error, MscmpSystError.t()}
   defdelegate create_instance_type_application(instance_type_id, application_id),
     to: Impl.InstanceTypeApplication
 
@@ -218,12 +217,12 @@ defmodule MscmpSystInstance do
 
     * `instance_type_application` - This value can be either the ID value of the
     Instance Type Application record or a
-    `MscmpSystInstance.Data.SystInstanceTypeApplications` struct with at
+    `Msdata.SystInstanceTypeApplications` struct with at
     least the `id` field defined.
   """
   @spec delete_instance_type_application(
           Types.instance_type_application_id()
-          | Data.SystInstanceTypeApplications.t()
+          | Msdata.SystInstanceTypeApplications.t()
         ) ::
           :ok | {:error, MscmpSystError.t()}
   defdelegate delete_instance_type_application(instance_type_application),
@@ -242,7 +241,7 @@ defmodule MscmpSystInstance do
 
     * `instance_type_context` - this value may either be the record ID of the
     target Instance Type Context record or a copy of the current
-    `MscmpSystInstance.Data.SystInstanceTypeContexts` struct representing the
+    `Msdata.SystInstanceTypeContexts` struct representing the
     target record.
 
     * `instance_type_context_params` - a map containing those attributes to be
@@ -270,9 +269,9 @@ defmodule MscmpSystInstance do
   """
   @spec update_instance_type_context(
           Types.instance_type_context_id()
-          | Data.SystInstanceTypeContexts.t(),
+          | Msdata.SystInstanceTypeContexts.t(),
           Types.instance_type_context_params() | %{}
-        ) :: {:ok, Data.SystInstanceTypeContexts.t()} | {:error, MscmpSystError.t()}
+        ) :: {:ok, Msdata.SystInstanceTypeContexts.t()} | {:error, MscmpSystError.t()}
   defdelegate update_instance_type_context(
                 instance_type_context,
                 instance_type_context_params \\ %{}
@@ -307,7 +306,7 @@ defmodule MscmpSystInstance do
 
   """
   @spec create_owner(Types.owner_params()) ::
-          {:ok, Data.SystOwners.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystOwners.t()} | {:error, MscmpSystError.t()}
   defdelegate create_owner(owner_params), to: Impl.Owner
 
   @doc section: :owner_data
@@ -317,7 +316,7 @@ defmodule MscmpSystInstance do
   ## Parameters
 
     * `owner` - This value must either by the record ID of an existing Owner
-    record or the `MscmpSystInstance.Data.SystOwners` struct representing an
+    record or the `Msdata.SystOwners` struct representing an
     existing owner.
 
     * `update_params` - a map of Owner record attributes to be updated.  For
@@ -335,8 +334,8 @@ defmodule MscmpSystInstance do
       Owner record.  Note that if this attribute is provided, but is set nil,
       an error will result.
   """
-  @spec update_owner(Types.owner_id() | Data.SystOwners.t(), Types.owner_params()) ::
-          {:ok, Data.SystOwners.t()} | {:error, MscmpSystError.t()}
+  @spec update_owner(Types.owner_id() | Msdata.SystOwners.t(), Types.owner_params()) ::
+          {:ok, Msdata.SystOwners.t()} | {:error, MscmpSystError.t()}
   defdelegate update_owner(owner, update_params), to: Impl.Owner
 
   @doc section: :owner_data
@@ -348,11 +347,11 @@ defmodule MscmpSystInstance do
 
   ## Examples
 
-    iex> {:ok, %MscmpSystInstance.Data.SystOwners{internal_name: "owner1"}} =
+    iex> {:ok, %Msdata.SystOwners{internal_name: "owner1"}} =
     ...>   MscmpSystInstance.get_owner_by_name("owner1")
   """
   @spec get_owner_by_name(Types.owner_name()) ::
-          {:ok, Data.SystOwners.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystOwners.t()} | {:error, MscmpSystError.t()}
   defdelegate get_owner_by_name(owner_name), to: Impl.Owner
 
   @doc section: :owner_data
@@ -379,10 +378,11 @@ defmodule MscmpSystInstance do
   ## Parameters
 
     * `owner` - either the record ID of an Owner record to delete or the
-    `MscmpSystInstance.Data.SystOwners` struct representing the Owner to
+    `Msdata.SystOwners` struct representing the Owner to
     purge.
   """
-  @spec purge_owner(Types.owner_id() | Data.SystOwners.t()) :: :ok | {:error, MscmpSystError.t()}
+  @spec purge_owner(Types.owner_id() | Msdata.SystOwners.t()) ::
+          :ok | {:error, MscmpSystError.t()}
   defdelegate purge_owner(owner), to: Impl.Owner
 
   #
@@ -468,7 +468,7 @@ defmodule MscmpSystInstance do
 
   """
   @spec create_instance(Types.instance_params()) ::
-          {:ok, Data.SystInstances.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystInstances.t()} | {:error, MscmpSystError.t()}
   defdelegate create_instance(instance_params), to: Impl.Instance
 
   @doc section: :instance_data
@@ -479,13 +479,13 @@ defmodule MscmpSystInstance do
   ## Parameters
 
     * `instance` - the instance parameter is either the record ID value of the
-    Instance record desired or the `MscmpSystInstance.Data.SystInstances`
+    Instance record desired or the `Msdata.SystInstances`
     struct for the target Instance.
 
     * `startup_options` - a map of values containing the Startup Options
     obtained from the `MscmpSystOptions` component.
   """
-  @spec get_instance_datastore_options(Types.instance_id() | Data.SystInstances.t(), map()) ::
+  @spec get_instance_datastore_options(Types.instance_id() | Msdata.SystInstances.t(), map()) ::
           MscmpSystDb.Types.datastore_options()
   defdelegate get_instance_datastore_options(instance, startup_options), to: Impl.Instance
 
@@ -537,7 +537,7 @@ defmodule MscmpSystInstance do
       `MscmpSystDb.create_datastore/2` for more information.
   """
   @spec initialize_instance(Types.instance_id(), map(), Keyword.t()) ::
-          {:ok, Data.SystInstances.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystInstances.t()} | {:error, MscmpSystError.t()}
   defdelegate initialize_instance(instance_id, startup_options, opts \\ []), to: Impl.Instance
 
   @doc section: :instance_data
@@ -546,14 +546,14 @@ defmodule MscmpSystInstance do
 
   ## Parameters
 
-    * `instance` - the current `MscmpSystInstance.Data.SystInstances` struct
+    * `instance` - the current `Msdata.SystInstances` struct
     representing the Instance to be updated.
 
     * `instance_state_id` - The record ID of the new Instance State value into
     which to place the Instance record.
   """
-  @spec set_instance_state(Data.SystInstances.t(), Types.instance_state_id()) ::
-          {:ok, Data.SystInstances.t()} | {:error, MscmpSystError.t()}
+  @spec set_instance_state(Msdata.SystInstances.t(), Types.instance_state_id()) ::
+          {:ok, Msdata.SystInstances.t()} | {:error, MscmpSystError.t()}
   defdelegate set_instance_state(instance, instance_state_id), to: Impl.Instance
 
   @doc section: :instance_data
@@ -578,11 +578,11 @@ defmodule MscmpSystInstance do
 
   ## Example
 
-      iex> {:ok, %MscmpSystInstance.Data.SystInstances{}} =
+      iex> {:ok, %Msdata.SystInstances{}} =
       ...>   MscmpSystInstance.get_instance_by_name("app1_owner1_instance_types_sml")
   """
   @spec get_instance_by_name(Types.instance_name()) ::
-          {:ok, Data.SystInstances.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystInstances.t()} | {:error, MscmpSystError.t()}
   defdelegate get_instance_by_name(instance_name), to: Impl.Instance
 
   @doc section: :instance_data
@@ -609,7 +609,7 @@ defmodule MscmpSystInstance do
   Purges an eligible Instance from the system.
 
   Purging an Instance drops its associated Datastore and its defining
-  `MscmpSystInstance.Data.SystInstances` records from the database.
+  `Msdata.SystInstances` records from the database.
 
   In order for the purge to be successful, the Instance must be in an Instance
   State of functional type `instance_states_purge_eligible`.
@@ -622,12 +622,12 @@ defmodule MscmpSystInstance do
   ## Parameters
 
     * `instance` - either the record ID or the
-    `MscmpSystInstance.Data.SystInstances` struct of the Instance to purge.
+    `Msdata.SystInstances` struct of the Instance to purge.
 
     * `startup_options` - a map of values containing the Startup Options
     obtained from the `MscmpSystOptions` component.
   """
-  @spec purge_instance(Types.instance_id() | Data.SystInstances.t(), map()) ::
+  @spec purge_instance(Types.instance_id() | Msdata.SystInstances.t(), map()) ::
           :ok | {:error, MscmpSystError.t()}
   defdelegate purge_instance(instance, startup_options), to: Impl.Instance
 
@@ -664,7 +664,7 @@ defmodule MscmpSystInstance do
   ## Parameters
 
     * `application` - either the record ID or the
-    `MscmpSystInstance.Data.SystApplications` struct representing the
+    `Msdata.SystApplications` struct representing the
     Application to start.
 
     * `startup_options` - a map of values containing the Startup Options
@@ -680,7 +680,11 @@ defmodule MscmpSystInstance do
       * other available options are passed to `start_instance/3`.  See the
       documentation for `start_instance/3` for the options it is able to accept.
   """
-  @spec start_application(Types.application_id() | Data.SystApplications.t(), map(), Keyword.t()) ::
+  @spec start_application(
+          Types.application_id() | Msdata.SystApplications.t(),
+          map(),
+          Keyword.t()
+        ) ::
           :ok | {:error, MscmpSystError.t()}
   defdelegate start_application(application, startup_options, opts \\ []), to: Runtime.Application
 
@@ -704,7 +708,7 @@ defmodule MscmpSystInstance do
   ## Parameters
 
     * `application` - either the record ID or the
-    `MscmpSystInstance.Data.SystApplications` struct representing the
+    `Msdata.SystApplications` struct representing the
     Application to stop.
 
     * `opts` - a Keyword List of optional values used during the initialization
@@ -718,7 +722,7 @@ defmodule MscmpSystInstance do
       `stop_instance/2` function for Instance shutdown.  See the
       `stop_instance/2` for full information of the available options.
   """
-  @spec stop_application(Types.application_id() | Data.SystApplications.t(), Keyword.t()) ::
+  @spec stop_application(Types.application_id() | Msdata.SystApplications.t(), Keyword.t()) ::
           :ok | {:error, MscmpSystError.t()}
   defdelegate stop_application(application, opts \\ []), to: Runtime.Application
 
@@ -741,7 +745,7 @@ defmodule MscmpSystInstance do
   ## Parameters
 
     * `instance` - either the record ID or the
-    `MscmpSystInstance.Data.SystInstances` struct of the Instance to start.
+    `Msdata.SystInstances` struct of the Instance to start.
 
     * `startup_options` - a map of values containing the Startup Options
     obtained from the `MscmpSystOptions` component.
@@ -772,7 +776,7 @@ defmodule MscmpSystInstance do
       provide this option as the most common migration bindings are
       automatically generated from Instance record data.
   """
-  @spec start_instance(Types.instance_id() | Data.SystInstances.t(), map(), Keyword.t()) ::
+  @spec start_instance(Types.instance_id() | Msdata.SystInstances.t(), map(), Keyword.t()) ::
           :ok | {:error, MscmpSystError.t()}
   defdelegate start_instance(instance, startup_options, opts \\ []), to: Runtime.Application
 
@@ -785,7 +789,7 @@ defmodule MscmpSystInstance do
   ## Parameters
 
     * `instance` - either the record ID or the
-    `MscmpSystInstance.Data.SystInstances` struct of the Instance to stop.
+    `Msdata.SystInstances` struct of the Instance to stop.
 
     * `opts` - a Keyword List of optional values used during the initialization
     process.  The available options include:
@@ -799,7 +803,7 @@ defmodule MscmpSystInstance do
       Datastore.  See the documentation for
       `MscmpSystDb.stop_datastore/2` for more information.
   """
-  @spec stop_instance(Types.instance_id() | Data.SystInstances.t(), Keyword.t()) ::
+  @spec stop_instance(Types.instance_id() | Msdata.SystInstances.t(), Keyword.t()) ::
           :ok | {:error, MscmpSystError.t()}
   defdelegate stop_instance(instance, opts \\ []), to: Runtime.Application
 end

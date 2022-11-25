@@ -71,13 +71,13 @@ defmodule MscmpSystInstance.MixProject do
         groups_for_modules: [
           API: [MscmpSystInstance],
           Data: [
-            MscmpSystInstance.Data.SystApplicationContexts,
-            MscmpSystInstance.Data.SystApplications,
-            MscmpSystInstance.Data.SystInstanceContexts,
-            MscmpSystInstance.Data.SystInstanceTypeApplications,
-            MscmpSystInstance.Data.SystInstanceTypeContexts,
-            MscmpSystInstance.Data.SystInstances,
-            MscmpSystInstance.Data.SystOwners
+            Msdata.SystApplicationContexts,
+            Msdata.SystApplications,
+            Msdata.SystInstanceContexts,
+            Msdata.SystInstanceTypeApplications,
+            Msdata.SystInstanceTypeContexts,
+            Msdata.SystInstances,
+            Msdata.SystOwners
           ],
           "Supporting Types": [MscmpSystInstance.Types]
         ]

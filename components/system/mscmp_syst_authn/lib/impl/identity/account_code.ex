@@ -13,7 +13,6 @@
 defmodule MscmpSystAuthn.Impl.Identity.AccountCode do
   import Ecto.Query
 
-  alias MscmpSystAuthn.Data
   alias MscmpSystAuthn.Impl
   alias MscmpSystAuthn.Types
 
@@ -28,7 +27,7 @@ defmodule MscmpSystAuthn.Impl.Identity.AccountCode do
   @default_create_validated true
 
   @spec create_identity(Types.access_account_id(), Types.account_identifier() | nil, Keyword.t()) ::
-          {:ok, Data.SystIdentities.t()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, Msdata.SystIdentities.t()} | {:error, MscmpSystError.t() | Exception.t()}
   def create_identity(access_account_id, account_code, opts)
       when is_binary(access_account_id) do
     opts =
@@ -64,7 +63,7 @@ defmodule MscmpSystAuthn.Impl.Identity.AccountCode do
   @spec identify_access_account(
           Types.account_identifier(),
           MscmpSystInstance.Types.owner_id() | nil
-        ) :: Data.SystIdentities.t() | nil
+        ) :: Msdata.SystIdentities.t() | nil
   def identify_access_account(account_code, owner_id) when is_binary(account_code) do
     account_code
     |> Impl.Identity.Helpers.get_identification_query("identity_types_sysdef_account", owner_id)
@@ -72,10 +71,10 @@ defmodule MscmpSystAuthn.Impl.Identity.AccountCode do
   end
 
   @spec reset_identity_for_access_account_id(Types.access_account_id(), Keyword.t()) ::
-          {:ok, Data.SystIdentities.t()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, Msdata.SystIdentities.t()} | {:error, MscmpSystError.t() | Exception.t()}
   def reset_identity_for_access_account_id(access_account_id, opts) do
     reset_func = fn ->
-      from(i in Data.SystIdentities,
+      from(i in Msdata.SystIdentities,
         join: ei in assoc(i, :identity_type),
         where:
           i.access_account_id == ^access_account_id and
@@ -128,10 +127,10 @@ defmodule MscmpSystAuthn.Impl.Identity.AccountCode do
   end
 
   @spec get_account_code_by_access_account_id(Types.access_account_id()) ::
-          {:ok, Data.SystIdentities.t() | :not_found} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystIdentities.t() | :not_found} | {:error, MscmpSystError.t()}
   def get_account_code_by_access_account_id(access_account_id)
       when is_binary(access_account_id) do
-    from(i in Data.SystIdentities,
+    from(i in Msdata.SystIdentities,
       join: ei in assoc(i, :identity_type),
       where:
         i.access_account_id == ^access_account_id and
@@ -151,7 +150,7 @@ defmodule MscmpSystAuthn.Impl.Identity.AccountCode do
        }}
   end
 
-  defp process_account_code_lookup_result(%Data.SystIdentities{} = identity),
+  defp process_account_code_lookup_result(%Msdata.SystIdentities{} = identity),
     do: {:ok, identity}
 
   defp process_account_code_lookup_result(nil), do: {:ok, :not_found}

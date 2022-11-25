@@ -15,7 +15,6 @@ defmodule PasswordRulesTest do
 
   import Ecto.Query
 
-  alias MscmpSystAuthn.Data
   alias MscmpSystAuthn.Impl
 
   alias MscmpSystDb.DbTypes
@@ -61,13 +60,13 @@ defmodule PasswordRulesTest do
   test "Can retrieve Global Password Rules" do
     {:ok, first_pwd_rules} = Impl.PasswordRules.get_global_password_rules()
 
-    assert %Data.SystGlobalPasswordRules{id: first_rule_id} = first_pwd_rules
+    assert %Msdata.SystGlobalPasswordRules{id: first_rule_id} = first_pwd_rules
 
     assert is_binary(first_rule_id)
 
     second_pwd_rules = Impl.PasswordRules.get_global_password_rules!()
 
-    assert %Data.SystGlobalPasswordRules{id: second_rule_id} = second_pwd_rules
+    assert %Msdata.SystGlobalPasswordRules{id: second_rule_id} = second_pwd_rules
 
     assert is_binary(second_rule_id)
   end
@@ -248,7 +247,7 @@ defmodule PasswordRulesTest do
              MapSet.new(new_pwd_rules.allowed_mfa_types)
            )
 
-    from(opwr in Data.SystOwnerPasswordRules, where: opwr.owner_id == ^owner_id)
+    from(opwr in Msdata.SystOwnerPasswordRules, where: opwr.owner_id == ^owner_id)
     |> MscmpSystDb.delete_all()
   end
 
@@ -293,14 +292,14 @@ defmodule PasswordRulesTest do
              MapSet.new(new_pwd_rules.allowed_mfa_types)
            )
 
-    from(opwr in Data.SystOwnerPasswordRules, where: opwr.owner_id == ^owner_id)
+    from(opwr in Msdata.SystOwnerPasswordRules, where: opwr.owner_id == ^owner_id)
     |> MscmpSystDb.delete_all()
   end
 
   test "Can retrieve Owner Password Rules" do
     {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner1")
 
-    assert {:ok, %Data.SystOwnerPasswordRules{id: rule_id, owner_id: rule_owner_id}} =
+    assert {:ok, %Msdata.SystOwnerPasswordRules{id: rule_id, owner_id: rule_owner_id}} =
              Impl.PasswordRules.get_owner_password_rules(owner_id)
 
     assert owner_id == rule_owner_id
