@@ -15,7 +15,6 @@ defmodule CredentialApiTokenTest do
 
   import Ecto.Query
 
-  alias MscmpSystAuthn.Data
   alias MscmpSystAuthn.Impl
 
   @moduletag :capture_log
@@ -132,7 +131,7 @@ defmodule CredentialApiTokenTest do
   test "Can get an API Token Credential record / Success Tuple" do
     test_account = get_account_data("unowned_all_access")
 
-    assert {:ok, %Data.SystCredentials{}} =
+    assert {:ok, %Msdata.SystCredentials{}} =
              Impl.Credential.ApiToken.get_credential_record(
                test_account.access_account_id,
                test_account.identity_id
@@ -142,7 +141,7 @@ defmodule CredentialApiTokenTest do
   test "Can get an API Token Credential record / Raise on Error" do
     test_account = get_account_data("unowned_all_access")
 
-    assert %Data.SystCredentials{} =
+    assert %Msdata.SystCredentials{} =
              Impl.Credential.ApiToken.get_credential_record!(
                test_account.access_account_id,
                test_account.identity_id
@@ -198,7 +197,7 @@ defmodule CredentialApiTokenTest do
   end
 
   defp get_account_data(access_account_name) do
-    from(aa in Data.SystAccessAccounts,
+    from(aa in Msdata.SystAccessAccounts,
       join: i in assoc(aa, :identities),
       join: ei in assoc(i, :identity_type),
       select: %{access_account_id: aa.id, identity_id: i.id},

@@ -13,7 +13,6 @@
 defmodule MscmpSystAuthn.Impl.Identity.ApiToken do
   import Ecto.Query
 
-  alias MscmpSystAuthn.Data
   alias MscmpSystAuthn.Impl.Identity.Helpers
   alias MscmpSystAuthn.Types
 
@@ -29,7 +28,7 @@ defmodule MscmpSystAuthn.Impl.Identity.ApiToken do
   @default_external_name nil
 
   @spec create_identity(Types.access_account_id(), Types.account_identifier() | nil, Keyword.t()) ::
-          {:ok, Data.SystIdentities.t()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, Msdata.SystIdentities.t()} | {:error, MscmpSystError.t() | Exception.t()}
   def create_identity(access_account_id, api_token, opts \\ [])
       when is_binary(access_account_id) do
     opts =
@@ -69,7 +68,7 @@ defmodule MscmpSystAuthn.Impl.Identity.ApiToken do
   @spec identify_access_account(
           Types.account_identifier(),
           MscmpSystInstance.Types.owner_id() | nil
-        ) :: Data.SystIdentities.t() | nil
+        ) :: Msdata.SystIdentities.t() | nil
   def identify_access_account(api_token, owner_id) when is_binary(api_token) do
     api_token
     |> Helpers.get_identification_query("identity_types_sysdef_api", owner_id)
@@ -77,11 +76,11 @@ defmodule MscmpSystAuthn.Impl.Identity.ApiToken do
   end
 
   @spec update_identity_external_name(
-          Types.identity_id() | Data.SystIdentities.t(),
+          Types.identity_id() | Msdata.SystIdentities.t(),
           String.t() | nil
-        ) :: Data.SystIdentities.t()
+        ) :: Msdata.SystIdentities.t()
   def update_identity_external_name(identity_id, external_name) when is_binary(identity_id) do
-    from(i in Data.SystIdentities,
+    from(i in Msdata.SystIdentities,
       join: ei in assoc(i, :identity_type),
       where: ei.internal_name == "identity_types_sysdef_api" and i.id == ^identity_id
     )
@@ -89,7 +88,7 @@ defmodule MscmpSystAuthn.Impl.Identity.ApiToken do
     |> update_identity_external_name(external_name)
   end
 
-  def update_identity_external_name(%Data.SystIdentities{} = identity, external_name) do
+  def update_identity_external_name(%Msdata.SystIdentities{} = identity, external_name) do
     update_params = %{
       external_name: external_name
     }

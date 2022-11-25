@@ -15,7 +15,6 @@ defmodule IdentityValidationTest do
 
   import Ecto.Query
 
-  alias MscmpSystAuthn.Data
   alias MscmpSystAuthn.Impl
 
   alias MscmpSystDb.DbTypes
@@ -25,7 +24,7 @@ defmodule IdentityValidationTest do
   test "Request Identity Validation by target Identity ID" do
     target_identity =
       from(
-        aa in Data.SystAccessAccounts,
+        aa in Msdata.SystAccessAccounts,
         join: i in assoc(aa, :identities),
         join: ei in assoc(i, :identity_type),
         select: i,
@@ -63,7 +62,7 @@ defmodule IdentityValidationTest do
 
     updated_target_identity =
       from(
-        aa in Data.SystAccessAccounts,
+        aa in Msdata.SystAccessAccounts,
         join: i in assoc(aa, :identities),
         join: ei in assoc(i, :identity_type),
         select: i,
@@ -115,7 +114,7 @@ defmodule IdentityValidationTest do
 
     updated_target_identity =
       from(
-        aa in Data.SystAccessAccounts,
+        aa in Msdata.SystAccessAccounts,
         join: i in assoc(aa, :identities),
         join: ei in assoc(i, :identity_type),
         select: i,
@@ -167,7 +166,7 @@ defmodule IdentityValidationTest do
 
     updated_target_identity =
       from(
-        aa in Data.SystAccessAccounts,
+        aa in Msdata.SystAccessAccounts,
         join: i in assoc(aa, :identities),
         join: ei in assoc(i, :identity_type),
         select: i,
@@ -217,7 +216,7 @@ defmodule IdentityValidationTest do
 
     updated_target_identity =
       from(
-        aa in Data.SystAccessAccounts,
+        aa in Msdata.SystAccessAccounts,
         join: i in assoc(aa, :identities),
         join: ei in assoc(i, :identity_type),
         select: i,
@@ -248,7 +247,7 @@ defmodule IdentityValidationTest do
   test "Request Identity Validation by target Identity" do
     target_identity =
       from(
-        aa in Data.SystAccessAccounts,
+        aa in Msdata.SystAccessAccounts,
         join: i in assoc(aa, :identities),
         join: ei in assoc(i, :identity_type),
         select: i,
@@ -286,7 +285,7 @@ defmodule IdentityValidationTest do
 
     updated_target_identity =
       from(
-        aa in Data.SystAccessAccounts,
+        aa in Msdata.SystAccessAccounts,
         join: i in assoc(aa, :identities),
         join: ei in assoc(i, :identity_type),
         select: i,
@@ -336,7 +335,7 @@ defmodule IdentityValidationTest do
 
     updated_target_identity =
       from(
-        aa in Data.SystAccessAccounts,
+        aa in Msdata.SystAccessAccounts,
         join: i in assoc(aa, :identities),
         join: ei in assoc(i, :identity_type),
         select: i,
@@ -386,7 +385,7 @@ defmodule IdentityValidationTest do
 
     updated_target_identity =
       from(
-        aa in Data.SystAccessAccounts,
+        aa in Msdata.SystAccessAccounts,
         join: i in assoc(aa, :identities),
         join: ei in assoc(i, :identity_type),
         select: i,
@@ -436,7 +435,7 @@ defmodule IdentityValidationTest do
 
     updated_target_identity =
       from(
-        aa in Data.SystAccessAccounts,
+        aa in Msdata.SystAccessAccounts,
         join: i in assoc(aa, :identities),
         join: ei in assoc(i, :identity_type),
         select: i,
@@ -467,7 +466,7 @@ defmodule IdentityValidationTest do
   test "Identify Owned Access Account" do
     validation_identity =
       from(
-        i in Data.SystIdentities,
+        i in Msdata.SystIdentities,
         join: ei in assoc(i, :identity_type),
         join: aa in assoc(i, :access_account),
         where:
@@ -479,7 +478,7 @@ defmodule IdentityValidationTest do
 
     validation_identity_id = validation_identity.id
 
-    assert %Data.SystIdentities{id: ^validation_identity_id} =
+    assert %Msdata.SystIdentities{id: ^validation_identity_id} =
              Impl.Identity.Validation.identify_access_account(
                validation_identity.account_identifier,
                validation_identity.access_account.owning_owner_id
@@ -494,7 +493,7 @@ defmodule IdentityValidationTest do
   test "Identify Unowned Access Account" do
     validation_identity =
       from(
-        i in Data.SystIdentities,
+        i in Msdata.SystIdentities,
         join: ei in assoc(i, :identity_type),
         join: aa in assoc(i, :access_account),
         where:
@@ -506,7 +505,7 @@ defmodule IdentityValidationTest do
 
     validation_identity_id = validation_identity.id
 
-    assert %Data.SystIdentities{id: ^validation_identity_id} =
+    assert %Msdata.SystIdentities{id: ^validation_identity_id} =
              Impl.Identity.Validation.identify_access_account(
                validation_identity.account_identifier,
                nil
@@ -523,7 +522,7 @@ defmodule IdentityValidationTest do
 
     target_identity =
       from(
-        aa in Data.SystAccessAccounts,
+        aa in Msdata.SystAccessAccounts,
         join: i in assoc(aa, :identities),
         join: ei in assoc(i, :identity_type),
         select: i,
@@ -540,7 +539,7 @@ defmodule IdentityValidationTest do
 
     no_identity =
       from(
-        aa in Data.SystAccessAccounts,
+        aa in Msdata.SystAccessAccounts,
         join: i in assoc(aa, :identities),
         join: ei in assoc(i, :identity_type),
         select: i,
@@ -556,7 +555,7 @@ defmodule IdentityValidationTest do
   test "Can Revoke Validation for Identity" do
     target_identity =
       from(
-        aa in Data.SystAccessAccounts,
+        aa in Msdata.SystAccessAccounts,
         join: i in assoc(aa, :identities),
         join: ei in assoc(i, :identity_type),
         select: i,
@@ -574,7 +573,7 @@ defmodule IdentityValidationTest do
 
     no_identity =
       from(
-        aa in Data.SystAccessAccounts,
+        aa in Msdata.SystAccessAccounts,
         join: i in assoc(aa, :identities),
         join: ei in assoc(i, :identity_type),
         select: i,
@@ -590,7 +589,7 @@ defmodule IdentityValidationTest do
   test "Can get Validation Identity for Identity ID" do
     validation_identity_id =
       from(
-        aa in Data.SystAccessAccounts,
+        aa in Msdata.SystAccessAccounts,
         join: i in assoc(aa, :identities),
         join: ei in assoc(i, :identity_type),
         select: i.id,
@@ -602,7 +601,7 @@ defmodule IdentityValidationTest do
 
     target_identity_id =
       from(
-        aa in Data.SystAccessAccounts,
+        aa in Msdata.SystAccessAccounts,
         join: i in assoc(aa, :identities),
         join: ei in assoc(i, :identity_type),
         select: i.id,
@@ -612,7 +611,7 @@ defmodule IdentityValidationTest do
       )
       |> MscmpSystDb.one!()
 
-    assert {:ok, %Data.SystIdentities{id: ^validation_identity_id}} =
+    assert {:ok, %Msdata.SystIdentities{id: ^validation_identity_id}} =
              Impl.Identity.Validation.get_validation_identity_for_identity_id(target_identity_id)
   end
 end

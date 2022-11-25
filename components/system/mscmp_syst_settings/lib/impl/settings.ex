@@ -11,7 +11,6 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystSettings.Impl.Settings do
-  alias MscmpSystSettings.Data
   alias MscmpSystSettings.Runtime.ProcessUtils
   alias MscmpSystSettings.Types
 
@@ -39,11 +38,11 @@ defmodule MscmpSystSettings.Impl.Settings do
 
     :ets.delete_all_objects(ets_table_name)
 
-    MscmpSystDb.all(Data.SystSettings)
+    MscmpSystDb.all(Msdata.SystSettings)
     |> Enum.each(&:ets.insert(ets_table_name, {&1.internal_name, &1}))
   end
 
-  @spec get_setting_values(Types.setting_name()) :: Data.SystSettings.t()
+  @spec get_setting_values(Types.setting_name()) :: Msdata.SystSettings.t()
   def get_setting_values(setting_name) do
     ProcessUtils.get_settings_service()
     |> get_ets_table_from_service_name()
@@ -73,7 +72,7 @@ defmodule MscmpSystSettings.Impl.Settings do
     |> Map.get(setting_type)
   end
 
-  @spec list_all_settings() :: list(Data.SystSettings)
+  @spec list_all_settings() :: list(Msdata.SystSettings)
   def list_all_settings do
     # Select query :ets.fun2ms(fn {_, setting_values} -> setting_values end)
     ProcessUtils.get_settings_service()
@@ -86,7 +85,7 @@ defmodule MscmpSystSettings.Impl.Settings do
     ets_table_name = get_ets_table_from_service_name(ProcessUtils.get_settings_service())
 
     creation_params
-    |> then(&Data.SystSettings.changeset(%Data.SystSettings{}, &1))
+    |> then(&Msdata.SystSettings.changeset(%Msdata.SystSettings{}, &1))
     |> MscmpSystDb.insert!(returning: true)
     |> then(&:ets.insert(ets_table_name, {&1.internal_name, &1}))
 
@@ -112,7 +111,7 @@ defmodule MscmpSystSettings.Impl.Settings do
     ets_table_name = get_ets_table_from_service_name(ProcessUtils.get_settings_service())
 
     :ets.lookup_element(ets_table_name, setting_name, 2)
-    |> Data.SystSettings.changeset(update_params)
+    |> Msdata.SystSettings.changeset(update_params)
     |> MscmpSystDb.update!(returning: true)
     |> then(&:ets.update_element(ets_table_name, setting_name, {2, &1}))
 
@@ -135,7 +134,7 @@ defmodule MscmpSystSettings.Impl.Settings do
   def delete_setting(setting_name) when is_binary(setting_name) do
     ets_table_name = get_ets_table_from_service_name(ProcessUtils.get_settings_service())
 
-    delete_qry = from(s in Data.SystSettings, where: s.internal_name == ^setting_name)
+    delete_qry = from(s in Msdata.SystSettings, where: s.internal_name == ^setting_name)
 
     {1, _rows} = MscmpSystDb.delete_all(delete_qry)
 

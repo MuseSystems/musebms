@@ -495,12 +495,12 @@ defmodule EnumItemsTest do
   end
 
   test "Get Default Enum Item" do
-    assert %MscmpSystEnums.Data.SystEnumItems{internal_name: "enum_three_active"} =
+    assert %Msdata.SystEnumItems{internal_name: "enum_three_active"} =
              MscmpSystEnums.get_default_enum_item("test_syst_enum_three")
   end
 
   test "Get Default Enum Item for Functional Type" do
-    assert %MscmpSystEnums.Data.SystEnumItems{internal_name: "enum_three_closed"} =
+    assert %Msdata.SystEnumItems{internal_name: "enum_three_closed"} =
              MscmpSystEnums.get_default_enum_item("test_syst_enum_three",
                functional_type_name: "enum_three_inactive"
              )

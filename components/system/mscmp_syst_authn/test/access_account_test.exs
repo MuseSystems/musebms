@@ -13,8 +13,6 @@
 defmodule AccessAccountTest do
   use AuthenticationTestCase, async: true
 
-  alias MscmpSystAuthn.Data
-
   @moduletag :capture_log
 
   test "Can create an unowned Access Account" do
@@ -29,7 +27,7 @@ defmodule AccessAccountTest do
 
     assert {:ok, new_access_account} = MscmpSystAuthn.create_access_account(create_params)
 
-    assert %Data.SystAccessAccounts{
+    assert %Msdata.SystAccessAccounts{
              id: new_id,
              internal_name: "create_unowned_test_account",
              external_name: "Create Unowned Test Access Account"
@@ -55,7 +53,7 @@ defmodule AccessAccountTest do
 
     assert {:ok, new_access_account} = MscmpSystAuthn.create_access_account(create_params)
 
-    assert %Data.SystAccessAccounts{
+    assert %Msdata.SystAccessAccounts{
              id: new_id,
              internal_name: "create_owned_test_account",
              external_name: "Create Owned Test Access Account"
@@ -105,21 +103,21 @@ defmodule AccessAccountTest do
   end
 
   test "Can purge eligible Access Account" do
-    {:ok, %Data.SystAccessAccounts{id: target_account_id}} =
+    {:ok, %Msdata.SystAccessAccounts{id: target_account_id}} =
       MscmpSystAuthn.get_access_account_by_name("purge_test_accnt")
 
     assert :ok =
-             MscmpSystAuthn.purge_access_account(%Data.SystAccessAccounts{
+             MscmpSystAuthn.purge_access_account(%Msdata.SystAccessAccounts{
                id: target_account_id
              })
   end
 
   test "Cannot purge ineligible Access Account" do
-    {:ok, %Data.SystAccessAccounts{id: target_account_id}} =
+    {:ok, %Msdata.SystAccessAccounts{id: target_account_id}} =
       MscmpSystAuthn.get_access_account_by_name("owned_all_access")
 
     assert {:error, _error} =
-             MscmpSystAuthn.purge_access_account(%Data.SystAccessAccounts{
+             MscmpSystAuthn.purge_access_account(%Msdata.SystAccessAccounts{
                id: target_account_id
              })
   end

@@ -15,15 +15,13 @@ defmodule InstanceTypeApplicationTest do
 
   import Ecto.Query
 
-  alias MscmpSystInstance.Data
-
   test "Can Create Instance Type Application" do
     # The test data setup should not set up any instance type application
     # records for the "instance_types_std" instance type.
     instance_type = MscmpSystEnums.get_enum_item_by_name("instance_types", "instance_types_std")
 
     application_id =
-      from(a in Data.SystApplications, where: a.internal_name == "app1", select: a.id)
+      from(a in Msdata.SystApplications, where: a.internal_name == "app1", select: a.id)
       |> MscmpSystDb.one!()
 
     assert {:ok, _} =
@@ -39,7 +37,7 @@ defmodule InstanceTypeApplicationTest do
     instance_type = MscmpSystEnums.get_enum_item_by_name("instance_types", "instance_types_std")
 
     application_id =
-      from(a in Data.SystApplications, where: a.internal_name == "app2", select: a.id)
+      from(a in Msdata.SystApplications, where: a.internal_name == "app2", select: a.id)
       |> MscmpSystDb.one!()
 
     {:ok, instance_type_application} =
@@ -51,7 +49,7 @@ defmodule InstanceTypeApplicationTest do
     {:ok, instance_type_application} =
       MscmpSystInstance.create_instance_type_application(instance_type.id, application_id)
 
-    # Delete by Data.SystInstanceTypeApplications.t()
+    # Delete by Msdata.SystInstanceTypeApplications.t()
     assert :ok = MscmpSystInstance.delete_instance_type_application(instance_type_application)
   end
 end

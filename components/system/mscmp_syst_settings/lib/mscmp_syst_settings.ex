@@ -279,14 +279,13 @@ defmodule MscmpSystSettings do
     * `setting_name` - the name of the setting for which to retrieve values.
 
   The successful return of this function is an instance of the
-  `MscmpSystSettings.Data.SystSettings` struct containing the values requested.
+  `Msdata.SystSettings` struct containing the values requested.
 
   ## Examples
 
       iex> MscmpSystSettings.get_setting_values("get_example_setting")
   """
-  @spec get_setting_values(MscmpSystSettings.Types.setting_name()) ::
-          MscmpSystSettings.Data.SystSettings.t()
+  @spec get_setting_values(MscmpSystSettings.Types.setting_name()) :: Msdata.SystSettings.t()
   defdelegate get_setting_values(setting_name), to: Settings
 
   @doc section: :settings_data
@@ -300,8 +299,7 @@ defmodule MscmpSystSettings do
 
       iex> MscmpSystSettings.list_all_settings()
   """
-  @spec list_all_settings() ::
-          list(MscmpSystSettings.Data.SystSettings)
+  @spec list_all_settings() :: list(Msdata.SystSettings)
   defdelegate list_all_settings(), to: Settings
 
   @doc section: :settings_data

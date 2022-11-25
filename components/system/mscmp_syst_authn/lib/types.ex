@@ -11,7 +11,6 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystAuthn.Types do
-  alias MscmpSystAuthn.Data
   alias MscmpSystDb.DbTypes
 
   #
@@ -300,7 +299,7 @@ defmodule MscmpSystAuthn.Types do
           optional(:plaintext_credential) => credential(),
           optional(:owning_owner_id) => MscmpSystInstance.Types.owner_id() | nil,
           optional(:identity_id) => identity_id(),
-          optional(:identity) => Data.SystIdentities.t(),
+          optional(:identity) => Msdata.SystIdentities.t(),
           optional(:reset_reason) => credential_reset_reason()
         }
 
@@ -527,7 +526,7 @@ defmodule MscmpSystAuthn.Types do
 
     * `reset_forced` - the reset is required because it has been
     administratively forced.  See the `force_reset` field of
-    `MscmpSystAuthn.Data.SystCredentials` for more.
+    `Msdata.SystCredentials` for more.
 
     * `reset_age` - the Password Credential has exceeded the applicable Max Age
     Password Rule and must be updated.
@@ -796,18 +795,18 @@ defmodule MscmpSystAuthn.Types do
 
     * `:disallowed` - disallowed hosts are individual host IP addresses which
     are denied access on a global basis, effectively banning their use with the
-    system.  Defined by `MscmpSystAuthn.Data.SystDisallowedHosts`.
+    system.  Defined by `Msdata.SystDisallowedHosts`.
 
     * `:global` - Network Rules which are defined to apply global without regard
     to Owner or Instance.  Such rules may explicitly whitelist or blacklist
-    hosts.  Defined by `MscmpSystAuthn.Data.SystGlobalNetworkRules`.
+    hosts.  Defined by `Msdata.SystGlobalNetworkRules`.
 
     * `:instance` - Network Rules which apply to only a specific Application
-    Instance.  Defined by `MscmpSystAuthn.Data.SystInstanceNetworkRules`.
+    Instance.  Defined by `Msdata.SystInstanceNetworkRules`.
 
     * `:instance_owner` - Network Rules which apply to all Application Instances
     belonging to a specific Owner.  Defined by
-    `MscmpSystAuthn.Data.SystOwnerNetworkRules`.
+    `Msdata.SystOwnerNetworkRules`.
 
     * `:implied` - when no explicitly defined applicable Disallowed Host or
     Network Rule records can be found, the system will use an implicit globally
@@ -880,8 +879,8 @@ defmodule MscmpSystAuthn.Types do
   from different database sources a common representation.
 
   Password Rules are defined in two different database tables,
-  `MscmpSystAuthn.Data.SystGlobalPasswordRules` and
-  `MscmpSystAuthn.Data.SystOwnerPasswordRules`.  This type defines a
+  `Msdata.SystGlobalPasswordRules` and
+  `Msdata.SystOwnerPasswordRules`.  This type defines a
   common representation of Password Rule data for those parts of the system that
   apply Password Rules after the applicable Password Rules have been resolved.
 

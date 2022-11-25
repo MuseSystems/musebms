@@ -18,7 +18,7 @@ defmodule MscmpSystInstance.Impl.InstanceType do
   @moduledoc false
 
   @spec create_instance_type(Types.instance_type_params()) ::
-          {:ok, MscmpSystEnums.Data.SystEnumItems.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystEnumItems.t()} | {:error, MscmpSystError.t()}
   def create_instance_type(instance_type_params) do
     create_enum_item_result =
       MscmpSystEnums.create_enum_item("instance_types", instance_type_params)
@@ -39,7 +39,7 @@ defmodule MscmpSystInstance.Impl.InstanceType do
   end
 
   @spec update_instance_type(Types.instance_type_name(), Types.instance_type_params()) ::
-          {:ok, MscmpSystEnums.Data.SystEnumItems.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystEnumItems.t()} | {:error, MscmpSystError.t()}
   def update_instance_type(instance_type_name, instance_type_params) do
     update_enum_item_result =
       MscmpSystEnums.set_enum_item_values(

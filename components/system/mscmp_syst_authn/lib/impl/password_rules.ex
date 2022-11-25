@@ -15,7 +15,6 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
 
   use Pathex
 
-  alias MscmpSystAuthn.Data
   alias MscmpSystAuthn.Impl
   alias MscmpSystAuthn.Types
   alias MscmpSystDb.DbTypes
@@ -36,7 +35,7 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
   def create_disallowed_password!(password) when is_binary(password) do
     password
     |> Impl.Hash.weak_hash()
-    |> Data.SystDisallowedPasswords.insert_changeset()
+    |> Msdata.SystDisallowedPasswords.insert_changeset()
     |> MscmpSystDb.insert!()
 
     :ok
@@ -62,7 +61,7 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
   def password_disallowed?(password) when is_binary(password) do
     pwd_hash = Impl.Hash.weak_hash(password)
 
-    from(dp in Data.SystDisallowedPasswords, where: dp.password_hash == ^pwd_hash)
+    from(dp in Msdata.SystDisallowedPasswords, where: dp.password_hash == ^pwd_hash)
     |> MscmpSystDb.exists?()
   rescue
     error ->
@@ -86,7 +85,7 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
   def delete_disallowed_password!(password) when is_binary(password) do
     pwd_hash = Impl.Hash.weak_hash(password)
 
-    from(dp in Data.SystDisallowedPasswords, where: dp.password_hash == ^pwd_hash)
+    from(dp in Msdata.SystDisallowedPasswords, where: dp.password_hash == ^pwd_hash)
     |> MscmpSystDb.delete_all()
     |> case do
       {1, _} ->
@@ -115,7 +114,7 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
           MscmpSystInstance.Types.owner_id(),
           Types.password_rule_params()
         ) ::
-          {:ok, Data.SystOwnerPasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, Msdata.SystOwnerPasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
   def create_owner_password_rules(owner_id, insert_params) when is_binary(owner_id) do
     {:ok, create_owner_password_rules!(owner_id, insert_params)}
   rescue
@@ -126,14 +125,14 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
           MscmpSystInstance.Types.owner_id(),
           Types.password_rule_params()
         ) ::
-          Data.SystOwnerPasswordRules.t()
+          Msdata.SystOwnerPasswordRules.t()
   def create_owner_password_rules!(owner_id, insert_params) when is_binary(owner_id) do
     default_rules = get_global_password_rules!() |> Map.from_struct()
 
     insert_params
     |> Map.put(:owner_id, owner_id)
     |> Map.merge(default_rules, fn _k, v1, v2 -> if v1 != nil, do: v1, else: v2 end)
-    |> Data.SystOwnerPasswordRules.insert_changeset()
+    |> Msdata.SystOwnerPasswordRules.insert_changeset()
     |> MscmpSystDb.insert!(returning: true)
   rescue
     error ->
@@ -146,7 +145,7 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
   end
 
   @spec update_global_password_rules(Types.password_rule_params()) ::
-          {:ok, Data.SystGlobalPasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, Msdata.SystGlobalPasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
   def update_global_password_rules(update_params) do
     {:ok, update_global_password_rules!(update_params)}
   rescue
@@ -154,7 +153,7 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
   end
 
   @spec update_global_password_rules!(Types.password_rule_params()) ::
-          Data.SystGlobalPasswordRules.t()
+          Msdata.SystGlobalPasswordRules.t()
   def update_global_password_rules!(update_params) do
     get_global_password_rules!()
     |> update_global_password_rules!(update_params)
@@ -169,10 +168,10 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
   end
 
   @spec update_global_password_rules(
-          Data.SystGlobalPasswordRules.t(),
+          Msdata.SystGlobalPasswordRules.t(),
           Types.password_rule_params()
         ) ::
-          {:ok, Data.SystGlobalPasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, Msdata.SystGlobalPasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
   def update_global_password_rules(global_password_rules, update_params) do
     {:ok, update_global_password_rules!(global_password_rules, update_params)}
   rescue
@@ -180,13 +179,13 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
   end
 
   @spec update_global_password_rules!(
-          Data.SystGlobalPasswordRules.t(),
+          Msdata.SystGlobalPasswordRules.t(),
           Types.password_rule_params()
         ) ::
-          Data.SystGlobalPasswordRules.t()
+          Msdata.SystGlobalPasswordRules.t()
   def update_global_password_rules!(global_password_rules, update_params) do
     global_password_rules
-    |> Data.SystGlobalPasswordRules.update_changeset(update_params)
+    |> Msdata.SystGlobalPasswordRules.update_changeset(update_params)
     |> MscmpSystDb.update!(returning: true)
   rescue
     error ->
@@ -199,10 +198,10 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
   end
 
   @spec update_owner_password_rules(
-          MscmpSystInstance.Types.owner_id() | Data.SystOwnerPasswordRules.t(),
+          MscmpSystInstance.Types.owner_id() | Msdata.SystOwnerPasswordRules.t(),
           Types.password_rule_params()
         ) ::
-          {:ok, Data.SystOwnerPasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, Msdata.SystOwnerPasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
   def update_owner_password_rules(owner, update_params) do
     {:ok, update_owner_password_rules!(owner, update_params)}
   rescue
@@ -210,12 +209,12 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
   end
 
   @spec update_owner_password_rules!(
-          MscmpSystInstance.Types.owner_id() | Data.SystOwnerPasswordRules.t(),
+          MscmpSystInstance.Types.owner_id() | Msdata.SystOwnerPasswordRules.t(),
           Types.password_rule_params()
         ) ::
-          Data.SystOwnerPasswordRules.t()
+          Msdata.SystOwnerPasswordRules.t()
   def update_owner_password_rules!(owner_id, update_params) when is_binary(owner_id) do
-    from(opwr in Data.SystOwnerPasswordRules, where: opwr.owner_id == ^owner_id)
+    from(opwr in Msdata.SystOwnerPasswordRules, where: opwr.owner_id == ^owner_id)
     |> MscmpSystDb.one!()
     |> update_owner_password_rules!(update_params)
   rescue
@@ -228,9 +227,9 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
         cause: error
   end
 
-  def update_owner_password_rules!(%Data.SystOwnerPasswordRules{} = owner, update_params) do
+  def update_owner_password_rules!(%Msdata.SystOwnerPasswordRules{} = owner, update_params) do
     owner
-    |> Data.SystOwnerPasswordRules.update_changeset(update_params)
+    |> Msdata.SystOwnerPasswordRules.update_changeset(update_params)
     |> MscmpSystDb.update!(returning: true)
   rescue
     error ->
@@ -243,18 +242,18 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
   end
 
   @spec get_global_password_rules() ::
-          {:ok, Data.SystGlobalPasswordRules.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystGlobalPasswordRules.t()} | {:error, MscmpSystError.t()}
   def get_global_password_rules do
     {:ok, get_global_password_rules!()}
   rescue
     error -> {:error, error}
   end
 
-  @spec get_global_password_rules!() :: Data.SystGlobalPasswordRules.t()
+  @spec get_global_password_rules!() :: Msdata.SystGlobalPasswordRules.t()
   def get_global_password_rules! do
     # There should only ever be one SystGlobalPasswordRules record and always
     # one.
-    from(gpwr in Data.SystGlobalPasswordRules)
+    from(gpwr in Msdata.SystGlobalPasswordRules)
     |> MscmpSystDb.one!()
   rescue
     error ->
@@ -267,7 +266,7 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
   end
 
   @spec get_owner_password_rules(MscmpSystInstance.Types.owner_id()) ::
-          {:ok, Data.SystOwnerPasswordRules.t()}
+          {:ok, Msdata.SystOwnerPasswordRules.t()}
           | {:ok, :not_found}
           | {:error, MscmpSystError.t() | Exception.t()}
   def get_owner_password_rules(owner_id) do
@@ -277,12 +276,12 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
   end
 
   @spec get_owner_password_rules!(MscmpSystInstance.Types.owner_id()) ::
-          Data.SystOwnerPasswordRules.t() | :not_found
+          Msdata.SystOwnerPasswordRules.t() | :not_found
   def get_owner_password_rules!(owner_id) do
-    from(opwr in Data.SystOwnerPasswordRules, where: opwr.owner_id == ^owner_id)
+    from(opwr in Msdata.SystOwnerPasswordRules, where: opwr.owner_id == ^owner_id)
     |> MscmpSystDb.one()
     |> case do
-      %Data.SystOwnerPasswordRules{} = result -> result
+      %Msdata.SystOwnerPasswordRules{} = result -> result
       nil -> :not_found
     end
   rescue
@@ -326,8 +325,8 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
 
   defp maybe_get_owner_rule(access_account_id) do
     from(
-      aa in Data.SystAccessAccounts,
-      join: opwr in Data.SystOwnerPasswordRules,
+      aa in Msdata.SystAccessAccounts,
+      join: opwr in Msdata.SystOwnerPasswordRules,
       on: opwr.owner_id == aa.owning_owner_id,
       where: aa.id == ^access_account_id,
       select: opwr
@@ -421,7 +420,7 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
 
   @spec verify_password_rules(
           Types.password_rules(),
-          Data.SystGlobalPasswordRules.t() | Types.password_rules() | nil
+          Msdata.SystGlobalPasswordRules.t() | Types.password_rules() | nil
         ) ::
           {:ok, Keyword.t(Types.password_rule_violations())}
           | {:error, MscmpSystError.t() | Exception.t()}
@@ -434,7 +433,7 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
 
   @spec verify_password_rules!(
           Types.password_rules(),
-          Data.SystGlobalPasswordRules.t() | Types.password_rules() | nil
+          Msdata.SystGlobalPasswordRules.t() | Types.password_rules() | nil
         ) ::
           Keyword.t(Types.password_rule_violations())
   def verify_password_rules!(%{} = test_rules, nil = _standard_rules) do
@@ -612,7 +611,7 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
   @spec delete_owner_password_rules!(MscmpSystInstance.Types.owner_id()) ::
           :deleted | :not_found
   def delete_owner_password_rules!(owner_id) do
-    from(opwr in Data.SystOwnerPasswordRules, where: opwr.owner_id == ^owner_id)
+    from(opwr in Msdata.SystOwnerPasswordRules, where: opwr.owner_id == ^owner_id)
     |> MscmpSystDb.delete_all()
     |> case do
       {1, _} ->

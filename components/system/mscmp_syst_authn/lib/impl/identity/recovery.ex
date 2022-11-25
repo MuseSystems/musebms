@@ -13,7 +13,6 @@
 defmodule MscmpSystAuthn.Impl.Identity.Recovery do
   import Ecto.Query
 
-  alias MscmpSystAuthn.Data
   alias MscmpSystAuthn.Impl.Identity.Helpers
   alias MscmpSystAuthn.Types
 
@@ -37,7 +36,7 @@ defmodule MscmpSystAuthn.Impl.Identity.Recovery do
   @default_create_validated true
 
   @spec request_credential_recovery(Types.access_account_id(), Keyword.t()) ::
-          {:ok, Data.SystIdentities.t()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, Msdata.SystIdentities.t()} | {:error, MscmpSystError.t() | Exception.t()}
   def request_credential_recovery(access_account_id, opts) when is_binary(access_account_id) do
     opts =
       MscmpSystUtils.resolve_options(opts,
@@ -111,7 +110,7 @@ defmodule MscmpSystAuthn.Impl.Identity.Recovery do
   def access_account_credential_recoverable!(access_account_id)
       when is_binary(access_account_id) do
     identity_qry =
-      from(i in Data.SystIdentities,
+      from(i in Msdata.SystIdentities,
         join: ei in assoc(i, :identity_type),
         where:
           i.access_account_id == ^access_account_id and
@@ -120,7 +119,7 @@ defmodule MscmpSystAuthn.Impl.Identity.Recovery do
       )
 
     credential_qry =
-      from(c in Data.SystCredentials,
+      from(c in Msdata.SystCredentials,
         join: ei in assoc(c, :credential_type),
         where:
           c.access_account_id == ^access_account_id and
@@ -128,7 +127,7 @@ defmodule MscmpSystAuthn.Impl.Identity.Recovery do
         select: %{credential_id: c.id, credential_access_account_id: c.access_account_id}
       )
 
-    from(aa in Data.SystAccessAccounts,
+    from(aa in Msdata.SystAccessAccounts,
       left_join: i in subquery(identity_qry),
       on: i.identity_access_account_id == aa.id,
       left_join: c in subquery(credential_qry),
@@ -150,14 +149,14 @@ defmodule MscmpSystAuthn.Impl.Identity.Recovery do
   @spec identify_access_account(
           Types.account_identifier(),
           MscmpSystInstance.Types.owner_id() | nil
-        ) :: Data.SystIdentities.t() | nil
+        ) :: Msdata.SystIdentities.t() | nil
   def identify_access_account(recovery_token, owner_id) when is_binary(recovery_token) do
     recovery_token
     |> Helpers.get_identification_query("identity_types_sysdef_password_recovery", owner_id)
     |> MscmpSystDb.one()
   end
 
-  @spec confirm_credential_recovery(Data.SystIdentities.t()) ::
+  @spec confirm_credential_recovery(Msdata.SystIdentities.t()) ::
           :ok | {:error, MscmpSystError.t()}
   def confirm_credential_recovery(recovery_identity) do
     :ok = Helpers.delete_record(recovery_identity)
@@ -175,7 +174,7 @@ defmodule MscmpSystAuthn.Impl.Identity.Recovery do
       }
   end
 
-  @spec revoke_credential_recovery(Data.SystIdentities.t()) ::
+  @spec revoke_credential_recovery(Msdata.SystIdentities.t()) ::
           :ok | {:error, MscmpSystError.t()}
   def revoke_credential_recovery(recovery_identity) do
     :ok = Helpers.delete_record(recovery_identity)
@@ -194,9 +193,9 @@ defmodule MscmpSystAuthn.Impl.Identity.Recovery do
   end
 
   @spec get_recovery_identity_for_access_account_id(Types.access_account_id()) ::
-          {:ok, Data.SystIdentities.t() | nil} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystIdentities.t() | nil} | {:error, MscmpSystError.t()}
   def get_recovery_identity_for_access_account_id(access_account_id) do
-    from(i in Data.SystIdentities,
+    from(i in Msdata.SystIdentities,
       join: ei in assoc(i, :identity_type),
       where:
         i.access_account_id == ^access_account_id and

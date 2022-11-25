@@ -13,7 +13,6 @@
 defmodule MscmpSystAuthn.Impl.Credential.Password do
   import Ecto.Query
 
-  alias MscmpSystAuthn.Data
   alias MscmpSystAuthn.Impl
   alias MscmpSystAuthn.Types
 
@@ -176,7 +175,7 @@ defmodule MscmpSystAuthn.Impl.Credential.Password do
   end
 
   defp check_recent_pwd(access_account_id, pwd_text) do
-    from(ph in Data.SystPasswordHistory,
+    from(ph in Msdata.SystPasswordHistory,
       where: ph.access_account_id == ^access_account_id,
       select: ph.credential_data
     )
@@ -255,7 +254,7 @@ defmodule MscmpSystAuthn.Impl.Credential.Password do
   # Reject if the credential doesn't exist as not to disclose that setting it is
   # pending.  The principle should be that we only disclose a more detailed
   # result once we have some sort of positive authentication.
-  defp maybe_confirm_credential_exists(%Data.SystCredentials{}), do: :ok
+  defp maybe_confirm_credential_exists(%Msdata.SystCredentials{}), do: :ok
   defp maybe_confirm_credential_exists(_), do: :no_credential
 
   defp maybe_confirm_password_hash(cred, pwd_text) do
@@ -350,7 +349,7 @@ defmodule MscmpSystAuthn.Impl.Credential.Password do
           credential_type_id: credential_type_id,
           credential_data: pwd_hash
         }
-        |> Data.SystCredentials.insert_changeset()
+        |> Msdata.SystCredentials.insert_changeset()
         |> MscmpSystDb.insert!()
       end)
 
@@ -365,7 +364,7 @@ defmodule MscmpSystAuthn.Impl.Credential.Password do
         _ = update_password_history(pwd_rules, pwd_hash)
 
         cred
-        |> Data.SystCredentials.update_changeset(%{credential_data: pwd_hash})
+        |> Msdata.SystCredentials.update_changeset(%{credential_data: pwd_hash})
         |> MscmpSystDb.update!()
       end)
 
@@ -376,12 +375,12 @@ defmodule MscmpSystAuthn.Impl.Credential.Password do
     pwd_retention = pwd_rules.disallow_recently_used
 
     if pwd_retention > 0 do
-      Data.SystPasswordHistory.insert_changeset(pwd_rules.access_account_id, pwd_hash)
+      Msdata.SystPasswordHistory.insert_changeset(pwd_rules.access_account_id, pwd_hash)
       |> MscmpSystDb.insert!()
     end
 
     ordering_qry =
-      from(ph in Data.SystPasswordHistory,
+      from(ph in Msdata.SystPasswordHistory,
         select: %{
           id: ph.id,
           recency: row_number() |> over(order_by: [desc: ph.diag_wallclock_modified])
@@ -390,7 +389,7 @@ defmodule MscmpSystAuthn.Impl.Credential.Password do
       )
 
     delete_qry =
-      from(ph in Data.SystPasswordHistory,
+      from(ph in Msdata.SystPasswordHistory,
         join: oq in subquery(ordering_qry),
         on: oq.id == ph.id,
         where: oq.recency > ^pwd_retention
@@ -400,7 +399,7 @@ defmodule MscmpSystAuthn.Impl.Credential.Password do
   end
 
   @spec get_credential_record(Types.access_account_id(), Types.identity_id() | nil) ::
-          {:ok, Data.SystCredentials.t() | nil} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, Msdata.SystCredentials.t() | nil} | {:error, MscmpSystError.t() | Exception.t()}
   def get_credential_record(access_account_id, _identity_id \\ nil) do
     {:ok, get_credential_record!(access_account_id)}
   rescue
@@ -408,10 +407,10 @@ defmodule MscmpSystAuthn.Impl.Credential.Password do
   end
 
   @spec get_credential_record!(Types.access_account_id(), Types.identity_id() | nil) ::
-          Data.SystCredentials.t() | nil
+          Msdata.SystCredentials.t() | nil
   def get_credential_record!(access_account_id, _identity_id \\ nil) do
     from(
-      c in Data.SystCredentials,
+      c in Msdata.SystCredentials,
       join: ct in assoc(c, :credential_type),
       where:
         ct.internal_name == "credential_types_sysdef_password" and
@@ -429,7 +428,7 @@ defmodule MscmpSystAuthn.Impl.Credential.Password do
         cause: error
   end
 
-  @spec delete_credential(Types.credential_id() | Data.SystCredentials.t()) ::
+  @spec delete_credential(Types.credential_id() | Msdata.SystCredentials.t()) ::
           :ok | {:error, MscmpSystError.t() | Exception.t()}
   def delete_credential(credential) do
     delete_credential!(credential)
@@ -437,9 +436,9 @@ defmodule MscmpSystAuthn.Impl.Credential.Password do
     error -> {:error, error}
   end
 
-  @spec delete_credential!(Types.credential_id() | Data.SystCredentials.t()) :: :ok
+  @spec delete_credential!(Types.credential_id() | Msdata.SystCredentials.t()) :: :ok
   def delete_credential!(access_account_id) when is_binary(access_account_id) do
-    from(c in Data.SystCredentials,
+    from(c in Msdata.SystCredentials,
       join: ei in assoc(c, :credential_type),
       where:
         c.access_account_id == ^access_account_id and
@@ -466,7 +465,7 @@ defmodule MscmpSystAuthn.Impl.Credential.Password do
         cause: error
   end
 
-  def delete_credential!(%Data.SystCredentials{} = credential) do
+  def delete_credential!(%Msdata.SystCredentials{} = credential) do
     MscmpSystDb.delete!(credential)
     :ok
   rescue

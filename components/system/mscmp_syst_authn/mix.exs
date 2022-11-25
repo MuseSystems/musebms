@@ -86,18 +86,18 @@ defmodule MscmpSystAuthn.MixProject do
         groups_for_modules: [
           API: [MscmpSystAuthn],
           Data: [
-            MscmpSystAuthn.Data.SystAccessAccountInstanceAssocs,
-            MscmpSystAuthn.Data.SystAccessAccounts,
-            MscmpSystAuthn.Data.SystCredentials,
-            MscmpSystAuthn.Data.SystDisallowedHosts,
-            MscmpSystAuthn.Data.SystDisallowedPasswords,
-            MscmpSystAuthn.Data.SystGlobalNetworkRules,
-            MscmpSystAuthn.Data.SystGlobalPasswordRules,
-            MscmpSystAuthn.Data.SystIdentities,
-            MscmpSystAuthn.Data.SystInstanceNetworkRules,
-            MscmpSystAuthn.Data.SystOwnerNetworkRules,
-            MscmpSystAuthn.Data.SystOwnerPasswordRules,
-            MscmpSystAuthn.Data.SystPasswordHistory
+            Msdata.SystAccessAccountInstanceAssocs,
+            Msdata.SystAccessAccounts,
+            Msdata.SystCredentials,
+            Msdata.SystDisallowedHosts,
+            Msdata.SystDisallowedPasswords,
+            Msdata.SystGlobalNetworkRules,
+            Msdata.SystGlobalPasswordRules,
+            Msdata.SystIdentities,
+            Msdata.SystInstanceNetworkRules,
+            Msdata.SystOwnerNetworkRules,
+            Msdata.SystOwnerPasswordRules,
+            Msdata.SystPasswordHistory
           ],
           "Supporting Types": [MscmpSystAuthn.Types]
         ]

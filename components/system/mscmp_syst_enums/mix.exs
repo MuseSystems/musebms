@@ -67,9 +67,9 @@ defmodule MscmpSystEnums.MixProject do
         groups_for_modules: [
           API: [MscmpSystEnums],
           Data: [
-            MscmpSystEnums.Data.SystEnums,
-            MscmpSystEnums.Data.SystEnumFunctionalTypes,
-            MscmpSystEnums.Data.SystEnumItems
+            Msdata.SystEnums,
+            Msdata.SystEnumFunctionalTypes,
+            Msdata.SystEnumItems
           ],
           "Supporting Types": [MscmpSystEnums.Types]
         ]

@@ -16,7 +16,7 @@ defmodule EnumsTest do
   @moduletag :capture_log
 
   test "Get Enum Values" do
-    assert %MscmpSystEnums.Data.SystEnums{
+    assert %Msdata.SystEnums{
              internal_name: "test_syst_enum_one",
              enum_items: enum_items
            } = MscmpSystEnums.get_enum_values("test_syst_enum_one")
@@ -343,10 +343,7 @@ defmodule EnumsTest do
 
     :ok = MscmpSystEnums.create_enum(new_enum)
 
-    assert(
-      %MscmpSystEnums.Data.SystEnums{} =
-        MscmpSystEnums.get_enum_values("delete_user_defined_enum")
-    )
+    assert(%Msdata.SystEnums{} = MscmpSystEnums.get_enum_values("delete_user_defined_enum"))
 
     assert :ok = MscmpSystEnums.delete_enum("delete_user_defined_enum")
 
@@ -356,9 +353,7 @@ defmodule EnumsTest do
   test "Delete System Defined Enumeration" do
     assert {:error, _} = MscmpSystEnums.delete_enum("test_syst_enum_three")
 
-    assert(
-      %MscmpSystEnums.Data.SystEnums{} = MscmpSystEnums.get_enum_values("test_syst_enum_three")
-    )
+    assert(%Msdata.SystEnums{} = MscmpSystEnums.get_enum_values("test_syst_enum_three"))
   end
 
   test "Delete User Defined Enum Items / User Defined Enum" do
@@ -421,7 +416,7 @@ defmodule EnumsTest do
   end
 
   test "Can Lookup Enum Item by Name" do
-    assert %MscmpSystEnums.Data.SystEnumItems{internal_name: "enum_two_closed"} =
+    assert %Msdata.SystEnumItems{internal_name: "enum_two_closed"} =
              MscmpSystEnums.get_enum_item_by_name("test_syst_enum_two", "enum_two_closed")
   end
 

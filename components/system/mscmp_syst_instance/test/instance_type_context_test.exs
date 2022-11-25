@@ -15,12 +15,10 @@ defmodule InstanceTypeContextTest do
 
   import Ecto.Query
 
-  alias MscmpSystInstance.Data
-
   test "Can Update Instance Type Context" do
     instance_type_context =
       from(
-        itc in Data.SystInstanceTypeContexts,
+        itc in Msdata.SystInstanceTypeContexts,
         join: ac in assoc(itc, :application_context),
         where: ac.login_context,
         limit: 1

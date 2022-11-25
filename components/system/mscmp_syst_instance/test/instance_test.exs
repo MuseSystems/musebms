@@ -15,24 +15,22 @@ defmodule InstanceTest do
 
   import Ecto.Query
 
-  alias MscmpSystInstance.Data
-
   test "Can Retrieve Instance Record by Internal Name" do
     instance_record =
-      from(i in Data.SystInstances, limit: 1)
+      from(i in Msdata.SystInstances, limit: 1)
       |> MscmpSystDb.one!()
 
     assert {:ok,
-            %Data.SystInstances{
-              instance_state: %MscmpSystEnums.Data.SystEnumItems{
-                functional_type: %MscmpSystEnums.Data.SystEnumFunctionalTypes{}
+            %Msdata.SystInstances{
+              instance_state: %Msdata.SystEnumItems{
+                functional_type: %Msdata.SystEnumFunctionalTypes{}
               }
             }} = MscmpSystInstance.get_instance_by_name(instance_record.internal_name)
   end
 
   test "Can Retreive Instance Record ID by Internal Name" do
     instance_record =
-      from(i in Data.SystInstances, limit: 1)
+      from(i in Msdata.SystInstances, limit: 1)
       |> MscmpSystDb.one!()
 
     assert {:ok, test_instance_id} =

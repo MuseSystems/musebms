@@ -15,8 +15,6 @@ defmodule IntegrationTest do
 
   import Ecto.Query
 
-  alias MscmpSystInstance.Data
-
   @moduletag :integration
 
   @startup_options %{
@@ -73,7 +71,7 @@ defmodule IntegrationTest do
     instance_type = MscmpSystEnums.get_enum_item_by_name("instance_types", "instance_types_sml")
 
     application_id =
-      from(a in Data.SystApplications, where: a.internal_name == "app1", select: a.id)
+      from(a in Msdata.SystApplications, where: a.internal_name == "app1", select: a.id)
       |> MscmpSystDb.one!()
 
     assert {:ok, _} =
@@ -85,7 +83,7 @@ defmodule IntegrationTest do
     instance_type = MscmpSystEnums.get_enum_item_by_name("instance_types", "instance_types_std")
 
     application_id =
-      from(a in Data.SystApplications, where: a.internal_name == "app2", select: a.id)
+      from(a in Msdata.SystApplications, where: a.internal_name == "app2", select: a.id)
       |> MscmpSystDb.one!()
 
     assert {:ok, _} =
@@ -97,7 +95,7 @@ defmodule IntegrationTest do
 
   test "Step 3: Update Instance Type Context Defaults" do
     from(
-      itc in Data.SystInstanceTypeContexts,
+      itc in Msdata.SystInstanceTypeContexts,
       join: ita in assoc(itc, :instance_type_application),
       join: it in assoc(ita, :instance_type),
       join: ac in assoc(itc, :application_context),
@@ -113,7 +111,7 @@ defmodule IntegrationTest do
           _ -> 0
         end
 
-      assert {:ok, %Data.SystInstanceTypeContexts{default_db_pool_size: updated_db_pool_size}} =
+      assert {:ok, %Msdata.SystInstanceTypeContexts{default_db_pool_size: updated_db_pool_size}} =
                MscmpSystInstance.update_instance_type_context(instance_type_context, %{
                  default_db_pool_size: db_pool_size
                })
@@ -223,7 +221,7 @@ defmodule IntegrationTest do
   end
 
   test "Step 6: Initialize Instances" do
-    from(i in Data.SystInstances)
+    from(i in Msdata.SystInstances)
     |> MscmpSystDb.all()
     |> Enum.each(fn test_instance ->
       assert {:ok, initialized_instance} =
@@ -257,7 +255,7 @@ defmodule IntegrationTest do
 
   test "Step 8: Make use of Instances" do
     from(
-      ic in Data.SystInstanceContexts,
+      ic in Msdata.SystInstanceContexts,
       join: a in assoc(ic, :application_context),
       where: a.login_context and a.start_context,
       select: [:internal_name]
@@ -284,7 +282,7 @@ defmodule IntegrationTest do
   end
 
   test "Step 10: Purge Instances" do
-    %MscmpSystEnums.Data.SystEnumItems{id: purge_instance_state_id} =
+    %Msdata.SystEnumItems{id: purge_instance_state_id} =
       MscmpSystEnums.get_default_enum_item(
         "instance_states",
         functional_type_name: "instance_states_purge_eligible"
@@ -292,10 +290,10 @@ defmodule IntegrationTest do
 
     update_params = %{instance_state_id: purge_instance_state_id}
 
-    from(i in Data.SystInstances)
+    from(i in Msdata.SystInstances)
     |> MscmpSystDb.all()
     |> Enum.each(fn test_instance ->
-      Data.SystInstances.update_changeset(test_instance, update_params)
+      Msdata.SystInstances.update_changeset(test_instance, update_params)
       |> MscmpSystDb.update!()
 
       assert :ok = MscmpSystInstance.purge_instance(test_instance.id, @startup_options)

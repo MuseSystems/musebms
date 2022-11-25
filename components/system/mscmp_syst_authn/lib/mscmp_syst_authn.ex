@@ -11,7 +11,6 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystAuthn do
-  alias MscmpSystAuthn.Data
   alias MscmpSystAuthn.Impl
   alias MscmpSystAuthn.Types
 
@@ -332,7 +331,7 @@ defmodule MscmpSystAuthn do
   ## Example
 
       iex> state = MscmpSystEnums.get_default_enum_item("access_account_states")
-      iex> {:ok, %MscmpSystAuthn.Data.SystAccessAccounts{}} =
+      iex> {:ok, %Msdata.SystAccessAccounts{}} =
       ...>   MscmpSystAuthn.create_access_account(
       ...>     %{
       ...>       internal_name: "example_create_accnt",
@@ -344,7 +343,7 @@ defmodule MscmpSystAuthn do
   """
 
   @spec create_access_account(Types.access_account_params()) ::
-          {:ok, Data.SystAccessAccounts.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystAccessAccounts.t()} | {:error, MscmpSystError.t()}
   defdelegate create_access_account(access_account_params), to: Impl.AccessAccount
 
   @doc section: :access_account_data
@@ -385,13 +384,13 @@ defmodule MscmpSystAuthn do
 
       iex> {
       ...>   :ok,
-      ...>   %MscmpSystAuthn.Data.SystAccessAccounts{internal_name: "example_accnt"}
+      ...>   %Msdata.SystAccessAccounts{internal_name: "example_accnt"}
       ...> } =
       ...>   MscmpSystAuthn.get_access_account_by_name("example_accnt")
   """
 
   @spec get_access_account_by_name(Types.access_account_name()) ::
-          Data.SystAccessAccounts.t() | {:error, MscmpSystError.t()}
+          Msdata.SystAccessAccounts.t() | {:error, MscmpSystError.t()}
   defdelegate get_access_account_by_name(access_account_name), to: Impl.AccessAccount
 
   @doc section: :access_account_data
@@ -401,7 +400,7 @@ defmodule MscmpSystAuthn do
   ## Parameters
 
     * `access_account` - either the record ID value of the Access Account to
-    update or is the complete `MscmpSystAuthn.Data.SystAccessAccounts`
+    update or is the complete `Msdata.SystAccessAccounts`
     struct representing the before-update state of the Access Account record.
 
     * `access_account_params` - a map containing those attributes to be changed
@@ -416,16 +415,16 @@ defmodule MscmpSystAuthn do
       ...>     target_access_account,
       ...>     %{external_name: "Updated Example Account Name"}
       ...>   )
-      iex> %MscmpSystAuthn.Data.SystAccessAccounts{
+      iex> %Msdata.SystAccessAccounts{
       ...>   external_name: "Updated Example Account Name"
       ...> } = updated_access_account
   """
 
   @spec update_access_account(
-          Types.access_account_id() | Data.SystAccessAccounts.t(),
+          Types.access_account_id() | Msdata.SystAccessAccounts.t(),
           Types.access_account_params()
         ) ::
-          {:ok, Data.SystAccessAccounts.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystAccessAccounts.t()} | {:error, MscmpSystError.t()}
   defdelegate update_access_account(access_account, access_account_params), to: Impl.AccessAccount
 
   @doc section: :access_account_data
@@ -436,7 +435,7 @@ defmodule MscmpSystAuthn do
   ## Parameters
 
     * `access_account` - is either the record ID of the Access Account to purge
-    or the populated `MscmpSystAuthn.Data.SystAccessAccounts` struct
+    or the populated `Msdata.SystAccessAccounts` struct
     representing the record to purge.
 
   ## Example
@@ -446,7 +445,7 @@ defmodule MscmpSystAuthn do
       iex> MscmpSystAuthn.purge_access_account(target_access_account)
       :ok
   """
-  @spec purge_access_account(Types.access_account_id() | Data.SystAccessAccounts.t()) ::
+  @spec purge_access_account(Types.access_account_id() | Msdata.SystAccessAccounts.t()) ::
           :ok | {:error, MscmpSystError.t()}
   defdelegate purge_access_account(access_account), to: Impl.AccessAccount
 
@@ -501,7 +500,7 @@ defmodule MscmpSystAuthn do
           Types.access_account_id(),
           MscmpSystInstance.Types.instance_id(),
           Keyword.t()
-        ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
+        ) :: {:ok, Msdata.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
   defdelegate invite_to_instance(access_account_id, instance_id, opts \\ []),
     to: Impl.AccessAccountInstanceAssoc
 
@@ -522,13 +521,13 @@ defmodule MscmpSystAuthn do
   ## Parameters
 
     * `access_account_instance_assoc` - this value may be either the populated
-    `MscmpSystAuthn.Data.SystAccessAccountInstanceAssocs` struct to
+    `Msdata.SystAccessAccountInstanceAssocs` struct to
     accept or the record ID of the record to accept.
   """
   @spec accept_instance_invite(
           Types.access_account_instance_assoc_id()
-          | Data.SystAccessAccountInstanceAssocs.t()
-        ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
+          | Msdata.SystAccessAccountInstanceAssocs.t()
+        ) :: {:ok, Msdata.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
   defdelegate accept_instance_invite(access_account_instance_assoc),
     to: Impl.AccessAccountInstanceAssoc
 
@@ -552,7 +551,7 @@ defmodule MscmpSystAuthn do
   @spec accept_instance_invite(
           Types.access_account_id(),
           MscmpSystInstance.Types.instance_id()
-        ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
+        ) :: {:ok, Msdata.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
   defdelegate accept_instance_invite(access_account_id, instance_id),
     to: Impl.AccessAccountInstanceAssoc
 
@@ -574,13 +573,13 @@ defmodule MscmpSystAuthn do
   ## Parameters
 
     * `access_account_instance_assoc` - this value may be either the populated
-    `MscmpSystAuthn.Data.SystAccessAccountInstanceAssocs` struct to
+    `Msdata.SystAccessAccountInstanceAssocs` struct to
     decline or the record ID of the record to decline.
   """
   @spec decline_instance_invite(
           Types.access_account_instance_assoc_id()
-          | Data.SystAccessAccountInstanceAssocs.t()
-        ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
+          | Msdata.SystAccessAccountInstanceAssocs.t()
+        ) :: {:ok, Msdata.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
   defdelegate decline_instance_invite(access_account_instance_assoc),
     to: Impl.AccessAccountInstanceAssoc
 
@@ -604,7 +603,7 @@ defmodule MscmpSystAuthn do
   @spec decline_instance_invite(
           Types.access_account_id(),
           MscmpSystInstance.Types.instance_id()
-        ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
+        ) :: {:ok, Msdata.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
   defdelegate decline_instance_invite(access_account_id, instance_id),
     to: Impl.AccessAccountInstanceAssoc
 
@@ -615,7 +614,7 @@ defmodule MscmpSystAuthn do
 
   Simply put, Access Accounts are both invited and granted access to Instances
   via Access Account Instance Association records (see:
-  `MscmpSystAuthn.Data.SystAccessAccountInstanceAssocs`) and this
+  `Msdata.SystAccessAccountInstanceAssocs`) and this
   function deletes those records.  This has the effect of revoking the
   invitation to access an Instance from the Access Account/Credential Type
   combination.
@@ -626,12 +625,12 @@ defmodule MscmpSystAuthn do
   ## Parameters
 
     * `access_account_instance_assoc` - this value may be either the populated
-    `MscmpSystAuthn.Data.SystAccessAccountInstanceAssocs` struct to
+    `Msdata.SystAccessAccountInstanceAssocs` struct to
     revoke or the record ID of the record to revoke.
   """
   @spec revoke_instance_access(
           Types.access_account_instance_assoc_id()
-          | Data.SystAccessAccountInstanceAssocs.t()
+          | Msdata.SystAccessAccountInstanceAssocs.t()
         ) :: :ok | {:error, MscmpSystError.t()}
   defdelegate revoke_instance_access(access_account_instance_assoc),
     to: Impl.AccessAccountInstanceAssoc
@@ -657,7 +656,7 @@ defmodule MscmpSystAuthn do
   @spec revoke_instance_access(
           Types.access_account_id(),
           MscmpSystInstance.Types.instance_id()
-        ) :: {:ok, Data.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
+        ) :: {:ok, Msdata.SystAccessAccountInstanceAssocs.t()} | {:error, MscmpSystError.t()}
   defdelegate revoke_instance_access(access_account_id, instance_id),
     to: Impl.AccessAccountInstanceAssoc
 
@@ -822,7 +821,7 @@ defmodule MscmpSystAuthn do
           MscmpSystInstance.Types.owner_id(),
           Types.password_rule_params()
         ) ::
-          {:ok, Data.SystOwnerPasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, Msdata.SystOwnerPasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate create_owner_password_rules(owner_id, insert_params), to: Impl.PasswordRules
 
   @doc section: :password_rule_data
@@ -845,7 +844,7 @@ defmodule MscmpSystAuthn do
     regarding the available attributes.
   """
   @spec update_global_password_rules(Types.password_rule_params()) ::
-          {:ok, Data.SystGlobalPasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, Msdata.SystGlobalPasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate update_global_password_rules(update_params), to: Impl.PasswordRules
 
   @doc section: :password_rule_data
@@ -861,7 +860,7 @@ defmodule MscmpSystAuthn do
   ## Parameters
 
     * `global_password_rules` - a fully populated
-    `MscmpSystAuthn.Data.SystGlobalPasswordRules` record representing
+    `Msdata.SystGlobalPasswordRules` record representing
     the state of the Global Password Rules prior to the change.
 
     * `update_params` - a map of the values to use when updating the Global
@@ -870,10 +869,10 @@ defmodule MscmpSystAuthn do
     regarding the available attributes.
   """
   @spec update_global_password_rules(
-          Data.SystGlobalPasswordRules.t(),
+          Msdata.SystGlobalPasswordRules.t(),
           Types.password_rule_params()
         ) ::
-          {:ok, Data.SystGlobalPasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, Msdata.SystGlobalPasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate update_global_password_rules(global_password_rules, update_params),
     to: Impl.PasswordRules
 
@@ -897,10 +896,10 @@ defmodule MscmpSystAuthn do
     regarding the available attributes.
   """
   @spec update_owner_password_rules(
-          MscmpSystInstance.Types.owner_id() | Data.SystOwnerPasswordRules.t(),
+          MscmpSystInstance.Types.owner_id() | Msdata.SystOwnerPasswordRules.t(),
           Types.password_rule_params()
         ) ::
-          {:ok, Data.SystOwnerPasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, Msdata.SystOwnerPasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate update_owner_password_rules(owner, update_params), to: Impl.PasswordRules
 
   @doc section: :password_rule_data
@@ -908,11 +907,11 @@ defmodule MscmpSystAuthn do
   Retrieves the currently active Global Password Rules.
 
   On successful retrieval a success tuple in the form of `{:ok, <record>}` is
-  returned where record is a `MscmpSystAuthn.Data.SystGlobalPasswordRules`
+  returned where record is a `Msdata.SystGlobalPasswordRules`
   struct.  Any exceptions are returned via an error tuple.
   """
   @spec get_global_password_rules() ::
-          {:ok, Data.SystGlobalPasswordRules.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystGlobalPasswordRules.t()} | {:error, MscmpSystError.t()}
   defdelegate get_global_password_rules, to: Impl.PasswordRules
 
   @doc section: :password_rule_data
@@ -922,7 +921,7 @@ defmodule MscmpSystAuthn do
   This function works the same as `get_global_password_rules/0` except that
   any errors cause an exception to be raised.
   """
-  @spec get_global_password_rules!() :: Data.SystGlobalPasswordRules.t()
+  @spec get_global_password_rules!() :: Msdata.SystGlobalPasswordRules.t()
   defdelegate get_global_password_rules!, to: Impl.PasswordRules
 
   @doc section: :password_rule_data
@@ -931,7 +930,7 @@ defmodule MscmpSystAuthn do
 
   On successful retrieval a success tuple in the form of `{:ok, <record>}` is
   returned where `<record>` is a populated
-  `MscmpSystAuthn.Data.SystownerPasswordRules` struct if Password Rules
+  `Msdata.SystownerPasswordRules` struct if Password Rules
   for the requested Owner was found or `nil` otherwise.  Any exceptions are
   returned via an error tuple.
 
@@ -940,7 +939,7 @@ defmodule MscmpSystAuthn do
     * `owner_id` - the Owner record ID for whom to retrieve Password Rules.
   """
   @spec get_owner_password_rules(MscmpSystInstance.Types.owner_id()) ::
-          {:ok, Data.SystOwnerPasswordRules.t()}
+          {:ok, Msdata.SystOwnerPasswordRules.t()}
           | {:ok, :not_found}
           | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate get_owner_password_rules(owner_id), to: Impl.PasswordRules
@@ -958,7 +957,7 @@ defmodule MscmpSystAuthn do
     * `owner_id` - the Owner record ID for whom to retrieve Password Rules.
   """
   @spec get_owner_password_rules!(MscmpSystInstance.Types.owner_id()) ::
-          Data.SystOwnerPasswordRules.t() | :not_found
+          Msdata.SystOwnerPasswordRules.t() | :not_found
   defdelegate get_owner_password_rules!(owner_id), to: Impl.PasswordRules
 
   @doc section: :password_rule_data
@@ -1029,12 +1028,12 @@ defmodule MscmpSystAuthn do
     judged.  This parameter is optional and when nil the Global Password
     Rule is retrieved and used as the default "Standard" Rules.  Otherwise
     either a generic `t:MscmpSystAuthn.Types.password_rules/0` value
-    or a populated `MscmpSystAuthn.Data.SystGlobalPasswordRules` data
+    or a populated `Msdata.SystGlobalPasswordRules` data
     struct may be provided.
   """
   @spec verify_password_rules(
           Types.password_rules(),
-          Data.SystGlobalPasswordRules.t() | Types.password_rules() | nil
+          Msdata.SystGlobalPasswordRules.t() | Types.password_rules() | nil
         ) ::
           {:ok, Keyword.t(Types.password_rule_violations())}
           | {:error, MscmpSystError.t() | Exception.t()}
@@ -1059,12 +1058,12 @@ defmodule MscmpSystAuthn do
     judged.  This parameter is optional and when nil the Global Password
     Rule is retrieved and used as the default "Standard" Rules.  Otherwise
     either a generic `t:MscmpSystAuthn.Types.password_rules/0` value
-    or a populated `MscmpSystAuthn.Data.SystGlobalPasswordRules` data
+    or a populated `Msdata.SystGlobalPasswordRules` data
     struct may be provided.
   """
   @spec verify_password_rules!(
           Types.password_rules(),
-          Data.SystGlobalPasswordRules.t() | Types.password_rules() | nil
+          Msdata.SystGlobalPasswordRules.t() | Types.password_rules() | nil
         ) ::
           Keyword.t(Types.password_rule_violations())
   defdelegate verify_password_rules!(test_rules, standard_rules \\ nil),
@@ -1223,7 +1222,7 @@ defmodule MscmpSystAuthn do
 
       iex> import IP, only: [sigil_i: 2]
       iex> {:ok, false} = MscmpSystAuthn.host_disallowed(~i"10.123.123.20")
-      iex> {:ok, %MscmpSystAuthn.Data.SystDisallowedHosts{}} =
+      iex> {:ok, %Msdata.SystDisallowedHosts{}} =
       ...>   MscmpSystAuthn.create_disallowed_host(~i"10.123.123.20")
 
     Attempting to add a host already on the list.
@@ -1234,7 +1233,7 @@ defmodule MscmpSystAuthn do
       ...>   MscmpSystAuthn.create_disallowed_host(~i"10.123.123.3")
   """
   @spec create_disallowed_host(Types.host_address()) ::
-          {:ok, Data.SystDisallowedHosts.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystDisallowedHosts.t()} | {:error, MscmpSystError.t()}
   defdelegate create_disallowed_host(host_address), to: Impl.NetworkRules
 
   @doc section: :network_rule_data
@@ -1251,7 +1250,7 @@ defmodule MscmpSystAuthn do
     Retrieving a Disallowed Host record by IP address.
 
       iex> import IP, only: [sigil_i: 2]
-      iex> {:ok, %MscmpSystAuthn.Data.SystDisallowedHosts{}} =
+      iex> {:ok, %Msdata.SystDisallowedHosts{}} =
       ...>   MscmpSystAuthn.get_disallowed_host_record_by_host(~i"10.123.123.4")
 
     Attempting to retrieve a record for a host not on the list.
@@ -1261,7 +1260,7 @@ defmodule MscmpSystAuthn do
       {:ok, nil}
   """
   @spec get_disallowed_host_record_by_host(Types.host_address()) ::
-          {:ok, Data.SystDisallowedHosts.t() | nil} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystDisallowedHosts.t() | nil} | {:error, MscmpSystError.t()}
   defdelegate get_disallowed_host_record_by_host(host_addr), to: Impl.NetworkRules
 
   @doc section: :network_rule_data
@@ -1282,7 +1281,7 @@ defmodule MscmpSystAuthn do
     Retrieving a Disallowed Host record by IP address.
 
       iex> import IP, only: [sigil_i: 2]
-      iex> %MscmpSystAuthn.Data.SystDisallowedHosts{} =
+      iex> %Msdata.SystDisallowedHosts{} =
       ...>   MscmpSystAuthn.get_disallowed_host_record_by_host!(~i"10.123.123.4")
 
     Attempting to retrieve a record for a host not on the list.
@@ -1292,7 +1291,7 @@ defmodule MscmpSystAuthn do
       nil
   """
   @spec get_disallowed_host_record_by_host!(Types.host_address()) ::
-          Data.SystDisallowedHosts.t() | nil
+          Msdata.SystDisallowedHosts.t() | nil
   defdelegate get_disallowed_host_record_by_host!(host_addr), to: Impl.NetworkRules
 
   @doc section: :network_rule_data
@@ -1350,13 +1349,13 @@ defmodule MscmpSystAuthn do
     Retrieving a Disallowed Host record by record ID.
 
     ```elixir
-    {:ok, %MscmpSystAuthn.Data.SystDisallowedHosts{}} =
+    {:ok, %Msdata.SystDisallowedHosts{}} =
       MscmpSystAuthn.get_disallowed_host_record_by_id(
         "ad7f2030-5895-11ed-a888-0f8a20e745a9")
     ```
   """
   @spec get_disallowed_host_record_by_id(Types.disallowed_host_id()) ::
-          {:ok, Data.SystDisallowedHosts.t()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, Msdata.SystDisallowedHosts.t()} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate get_disallowed_host_record_by_id(disallowed_host_id), to: Impl.NetworkRules
 
   @doc section: :network_rule_data
@@ -1377,19 +1376,19 @@ defmodule MscmpSystAuthn do
     Retrieving a Disallowed Host record by record ID.
 
     ```elixir
-    %MscmpSystAuthn.Data.SystDisallowedHosts{} =
+    %Msdata.SystDisallowedHosts{} =
       MscmpSystAuthn.get_disallowed_host_record_by_id!(
         "ad7f2030-5895-11ed-a888-0f8a20e745a9")
     ```
   """
   @spec get_disallowed_host_record_by_id!(Types.disallowed_host_id()) ::
-          Data.SystDisallowedHosts.t()
+          Msdata.SystDisallowedHosts.t()
   defdelegate get_disallowed_host_record_by_id!(disallowed_host_id), to: Impl.NetworkRules
 
   @doc section: :network_rule_data
   @doc """
   Deletes a host IP address from the Disallowed Hosts list based on either a
-  `MscmpSystAuthn.Data.SystDisallowedHosts` record or the ID of such a
+  `Msdata.SystDisallowedHosts` record or the ID of such a
   record.
 
   If the record is found and deleted a success tuple in the form `{:ok, :deleted}`
@@ -1403,7 +1402,7 @@ defmodule MscmpSystAuthn do
   ## Parameters
 
     * `disallowed_host` - either the fully populated
-    `MscmpSystAuthn.Data.SystDisallowedHosts` data struct for the
+    `Msdata.SystDisallowedHosts` data struct for the
     record to delete or the ID of the record.  Note that when the data struct
     is provided Ecto optimistic locking is applied to the the delete operation.
 
@@ -1436,7 +1435,7 @@ defmodule MscmpSystAuthn do
       iex> MscmpSystAuthn.delete_disallowed_host(target_host_record)
       {:ok, :not_found}
   """
-  @spec delete_disallowed_host(Types.disallowed_host_id() | Data.SystDisallowedHosts.t()) ::
+  @spec delete_disallowed_host(Types.disallowed_host_id() | Msdata.SystDisallowedHosts.t()) ::
           {:ok, :deleted | :not_found} | {:error, MscmpSystError.t()}
   defdelegate delete_disallowed_host(disallowed_host), to: Impl.NetworkRules
 
@@ -1641,7 +1640,7 @@ defmodule MscmpSystAuthn do
       ...>   functional_type: :allow,
       ...>   ip_host_or_network: ~i"10.100.150.0/24"
       ...> }
-      iex> {:ok, %MscmpSystAuthn.Data.SystGlobalNetworkRules{}} =
+      iex> {:ok, %Msdata.SystGlobalNetworkRules{}} =
       ...>   MscmpSystAuthn.create_global_network_rule(new_global_rule)
 
     Adding a new "Deny" Global Network Rule for an IP Address range.
@@ -1654,11 +1653,11 @@ defmodule MscmpSystAuthn do
       ...>   ip_host_range_lower: ~i"10.100.151.1",
       ...>   ip_host_range_upper: ~i"10.100.152.254"
       ...> }
-      iex> {:ok, %MscmpSystAuthn.Data.SystGlobalNetworkRules{}} =
+      iex> {:ok, %Msdata.SystGlobalNetworkRules{}} =
       ...>   MscmpSystAuthn.create_global_network_rule(new_global_rule)
   """
   @spec create_global_network_rule(Types.global_network_rule_params()) ::
-          {:ok, Data.SystGlobalNetworkRules.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystGlobalNetworkRules.t()} | {:error, MscmpSystError.t()}
   defdelegate create_global_network_rule(insert_params), to: Impl.NetworkRules
 
   @doc section: :network_rule_data
@@ -1696,7 +1695,7 @@ defmodule MscmpSystAuthn do
       ...>   functional_type: :allow,
       ...>   ip_host_or_network: ~i"10.100.160.0/24"
       ...> }
-      iex> {:ok, %MscmpSystAuthn.Data.SystOwnerNetworkRules{}} =
+      iex> {:ok, %Msdata.SystOwnerNetworkRules{}} =
       ...>   MscmpSystAuthn.create_owner_network_rule(owner_id, new_owner_rule)
 
     Adding a new "Deny" Owner Network Rule for an IP Address range.
@@ -1710,14 +1709,14 @@ defmodule MscmpSystAuthn do
       ...>   ip_host_range_lower: ~i"10.100.161.1",
       ...>   ip_host_range_upper: ~i"10.100.162.254"
       ...> }
-      iex> {:ok, %MscmpSystAuthn.Data.SystOwnerNetworkRules{}} =
+      iex> {:ok, %Msdata.SystOwnerNetworkRules{}} =
       ...>   MscmpSystAuthn.create_owner_network_rule(owner_id, new_owner_rule)
   """
   @spec create_owner_network_rule(
           MscmpSystInstance.Types.owner_id(),
           Types.owner_network_rule_params()
         ) ::
-          {:ok, Data.SystOwnerNetworkRules.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystOwnerNetworkRules.t()} | {:error, MscmpSystError.t()}
   defdelegate create_owner_network_rule(owner_id, insert_params), to: Impl.NetworkRules
 
   @doc section: :network_rule_data
@@ -1756,7 +1755,7 @@ defmodule MscmpSystAuthn do
       ...>   functional_type: :allow,
       ...>   ip_host_or_network: ~i"10.100.170.0/24"
       ...> }
-      iex> {:ok, %MscmpSystAuthn.Data.SystInstanceNetworkRules{}} =
+      iex> {:ok, %Msdata.SystInstanceNetworkRules{}} =
       ...>   MscmpSystAuthn.create_instance_network_rule(instance_id, new_instance_rule)
 
     Adding a new "Deny" Instance Network Rule for an IP Address range.
@@ -1771,14 +1770,14 @@ defmodule MscmpSystAuthn do
       ...>   ip_host_range_lower: ~i"10.100.171.1",
       ...>   ip_host_range_upper: ~i"10.100.172.254"
       ...> }
-      iex> {:ok, %MscmpSystAuthn.Data.SystInstanceNetworkRules{}} =
+      iex> {:ok, %Msdata.SystInstanceNetworkRules{}} =
       ...>   MscmpSystAuthn.create_instance_network_rule(instance_id, new_instance_rule)
   """
   @spec create_instance_network_rule(
           MscmpSystInstance.Types.instance_id(),
           Types.instance_network_rule_params()
         ) ::
-          {:ok, Data.SystInstanceNetworkRules.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystInstanceNetworkRules.t()} | {:error, MscmpSystError.t()}
   defdelegate create_instance_network_rule(instance_id, insert_params), to: Impl.NetworkRules
 
   @doc section: :network_rule_data
@@ -1796,7 +1795,7 @@ defmodule MscmpSystAuthn do
   ## Parameters
 
     * `global_network_rule` - this value is either a fully populated
-    `MscmpSystAuthn.Data.SystGlobalNetworkRules` struct of an existing
+    `Msdata.SystGlobalNetworkRules` struct of an existing
     Global Network Rule record or the ID of such a record.  If the data struct
     is provided, Ecto optimistic locking is applied to the update operation.
 
@@ -1808,9 +1807,10 @@ defmodule MscmpSystAuthn do
 
   """
   @spec update_global_network_rule(
-          Ecto.UUID.t() | Data.SystGlobalNetworkRules.t(),
+          Ecto.UUID.t() | Msdata.SystGlobalNetworkRules.t(),
           Types.global_network_rule_params()
-        ) :: {:ok, Data.SystGlobalNetworkRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
+        ) ::
+          {:ok, Msdata.SystGlobalNetworkRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate update_global_network_rule(global_network_rule, update_params),
     to: Impl.NetworkRules
 
@@ -1829,7 +1829,7 @@ defmodule MscmpSystAuthn do
   ## Parameters
 
     * `owner_network_rule` - this value is either a fully populated
-    `MscmpSystAuthn.Data.SystOwnerNetworkRules` struct of an existing
+    `Msdata.SystOwnerNetworkRules` struct of an existing
     Owner Network Rule record or the ID of such a record.  If the data struct
     is provided, Ecto optimistic locking is applied to the update operation.
 
@@ -1840,9 +1840,10 @@ defmodule MscmpSystAuthn do
     available attributes.
   """
   @spec update_owner_network_rule(
-          Ecto.UUID.t() | Data.SystOwnerNetworkRules.t(),
+          Ecto.UUID.t() | Msdata.SystOwnerNetworkRules.t(),
           Types.owner_network_rule_params()
-        ) :: {:ok, Data.SystOwnerNetworkRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
+        ) ::
+          {:ok, Msdata.SystOwnerNetworkRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate update_owner_network_rule(owner_network_rule, update_params), to: Impl.NetworkRules
 
   @doc section: :network_rule_data
@@ -1860,7 +1861,7 @@ defmodule MscmpSystAuthn do
   ## Parameters
 
     * `instance_network_rule` - this value is either a fully populated
-    `MscmpSystAuthn.Data.SystInstanceNetworkRules` struct of an
+    `Msdata.SystInstanceNetworkRules` struct of an
     existing Instance Network Rule record or the ID of such a record.  If the
     data struct  is provided, Ecto optimistic locking is applied to the update
     operation.
@@ -1872,10 +1873,11 @@ defmodule MscmpSystAuthn do
     available attributes.
   """
   @spec update_instance_network_rule(
-          Ecto.UUID.t() | Data.SystInstanceNetworkRules.t(),
+          Ecto.UUID.t() | Msdata.SystInstanceNetworkRules.t(),
           Types.instance_network_rule_params()
         ) ::
-          {:ok, Data.SystInstanceNetworkRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, Msdata.SystInstanceNetworkRules.t()}
+          | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate update_instance_network_rule(instance_network_rule, update_params),
     to: Impl.NetworkRules
 
@@ -1885,7 +1887,7 @@ defmodule MscmpSystAuthn do
 
   For a given Global Network Rule record ID this function will return a result
   tuple in the form of `{:ok, <record>}` where `<record>` is the fully
-  populated `MscmpSystAuthn.Data.SystGlobalNetworkRules`.  If the
+  populated `Msdata.SystGlobalNetworkRules`.  If the
   record does not exist, then `{:ok, :not_found}` is returned.  Otherwise, an
   error tuple in the form of `{:error, <exception>}` is returned.
 
@@ -1895,7 +1897,7 @@ defmodule MscmpSystAuthn do
   record.
   """
   @spec get_global_network_rule(Ecto.UUID.t()) ::
-          {:ok, Data.SystGlobalNetworkRules.t()}
+          {:ok, Msdata.SystGlobalNetworkRules.t()}
           | {:ok, :not_found}
           | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate get_global_network_rule(global_network_rule_id), to: Impl.NetworkRules
@@ -1914,7 +1916,7 @@ defmodule MscmpSystAuthn do
   * `global_network_rule_id` - the record ID of the desired Global Network Rule
   record.
   """
-  @spec get_global_network_rule!(Ecto.UUID.t()) :: Data.SystGlobalNetworkRules.t() | :not_found
+  @spec get_global_network_rule!(Ecto.UUID.t()) :: Msdata.SystGlobalNetworkRules.t() | :not_found
   defdelegate get_global_network_rule!(global_network_rule_id), to: Impl.NetworkRules
 
   @doc section: :network_rule_data
@@ -1923,7 +1925,7 @@ defmodule MscmpSystAuthn do
 
   For a given Owner Network Rule record ID this function will return a result
   tuple in the form of `{:ok, <record>}` where `<record>` is the fully
-  populated `MscmpSystAuthn.Data.SystOwnerNetworkRules`.  If the
+  populated `Msdata.SystOwnerNetworkRules`.  If the
   record does not exist, then `{:ok, :not_found}` is returned.  Otherwise, an
   error tuple in the form of `{:error, <exception>}` is returned.
 
@@ -1933,7 +1935,7 @@ defmodule MscmpSystAuthn do
   record.
   """
   @spec get_owner_network_rule(Ecto.UUID.t()) ::
-          {:ok, Data.SystOwnerNetworkRules.t()}
+          {:ok, Msdata.SystOwnerNetworkRules.t()}
           | {:ok, :not_found}
           | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate get_owner_network_rule(owner_network_rule_id), to: Impl.NetworkRules
@@ -1952,7 +1954,7 @@ defmodule MscmpSystAuthn do
   * `owner_network_rule_id` - the record ID of the desired Owner Network Rule
   record.
   """
-  @spec get_owner_network_rule!(Ecto.UUID.t()) :: Data.SystOwnerNetworkRules.t() | :not_found
+  @spec get_owner_network_rule!(Ecto.UUID.t()) :: Msdata.SystOwnerNetworkRules.t() | :not_found
   defdelegate get_owner_network_rule!(owner_network_rule_id), to: Impl.NetworkRules
 
   @doc section: :network_rule_data
@@ -1961,7 +1963,7 @@ defmodule MscmpSystAuthn do
 
   For a given Instance Network Rule record ID this function will return a result
   tuple in the form of `{:ok, <record>}` where `<record>` is the fully
-  populated `MscmpSystAuthn.Data.SystInstanceNetworkRules`.  If the
+  populated `Msdata.SystInstanceNetworkRules`.  If the
   record does not exist, then `{:ok, :not_found}` is returned.  Otherwise, an
   error tuple in the form of `{:error, <exception>}` is returned.
 
@@ -1971,7 +1973,7 @@ defmodule MscmpSystAuthn do
   Rule record.
   """
   @spec get_instance_network_rule(Ecto.UUID.t()) ::
-          {:ok, Data.SystInstanceNetworkRules.t()}
+          {:ok, Msdata.SystInstanceNetworkRules.t()}
           | {:ok, :not_found}
           | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate get_instance_network_rule(instance_network_rule_id), to: Impl.NetworkRules
@@ -1992,7 +1994,7 @@ defmodule MscmpSystAuthn do
   Rule record.
   """
   @spec get_instance_network_rule!(Ecto.UUID.t()) ::
-          Data.SystInstanceNetworkRules.t() | :not_found
+          Msdata.SystInstanceNetworkRules.t() | :not_found
   defdelegate get_instance_network_rule!(instance_network_rule_id), to: Impl.NetworkRules
 
   @doc section: :network_rule_data
@@ -2116,7 +2118,7 @@ defmodule MscmpSystAuthn do
           Types.account_identifier(),
           MscmpSystInstance.Types.owner_id() | nil
         ) ::
-          {:ok, Data.SystIdentities.t() | :not_found} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystIdentities.t() | :not_found} | {:error, MscmpSystError.t()}
   defdelegate identify_access_account_by_code(account_code, owner_id), to: Impl.ExtendedAuthLogic
 
   @doc section: :account_code
@@ -2133,7 +2135,7 @@ defmodule MscmpSystAuthn do
     the Account Code Identity.
   """
   @spec get_account_code_by_access_account_id(Types.access_account_id()) ::
-          {:ok, Data.SystIdentities.t() | :not_found} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystIdentities.t() | :not_found} | {:error, MscmpSystError.t()}
   defdelegate get_account_code_by_access_account_id(access_account_id),
     to: Impl.Identity.AccountCode
 
@@ -2275,7 +2277,7 @@ defmodule MscmpSystAuthn do
   ## Parameters
 
     * `target_identity` - either the record ID or the
-    `MscmpSystAuthn.Data.SystIdentities` struct of the Identity record
+    `Msdata.SystIdentities` struct of the Identity record
     to validate.  Typically this Identity will be an Email Identity.
 
     * `opts` - a Keyword List of options which can change the behavior to the
@@ -2309,7 +2311,7 @@ defmodule MscmpSystAuthn do
       Credential with the value of this option.  The default is to allow the
       system to automatically generate the credential.
   """
-  @spec request_identity_validation(Types.identity_id() | Data.SystIdentities.t(), Keyword.t()) ::
+  @spec request_identity_validation(Types.identity_id() | Msdata.SystIdentities.t(), Keyword.t()) ::
           {:ok, Types.authenticator_result()} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate request_identity_validation(target_identity, opts \\ []), to: Impl.ExtendedMgmtLogic
 
@@ -2530,23 +2532,23 @@ defmodule MscmpSystAuthn do
   Authenticators for different purposes.
 
   On success this function returns a success tuple where the value element of
-  the tuple is the updated `MscmpSystAuthn.Data.SystIdentities` struct.
+  the tuple is the updated `Msdata.SystIdentities` struct.
   On error, an error tuple is returned.
 
   ## Parameters
 
     * `identity` - either the record ID of the API Token Identity to update or
-    the current-state `MscmpSystAuthn.Data.SystIdentities` struct of
+    the current-state `Msdata.SystIdentities` struct of
     that record.
 
     * `external_name` - the text of the updated External Name value or `nil` to
     remove the text of an existing non-nil value.
   """
   @spec update_api_token_external_name(
-          Types.identity_id() | Data.SystIdentities.t(),
+          Types.identity_id() | Msdata.SystIdentities.t(),
           String.t() | nil
         ) ::
-          {:ok, Data.SystIdentities.t()} | {:error, MscmpSystError.t()}
+          {:ok, Msdata.SystIdentities.t()} | {:error, MscmpSystError.t()}
   defdelegate update_api_token_external_name(identity, external_name), to: Impl.ExtendedMgmtLogic
 
   @doc section: :authenticator_management
@@ -2565,10 +2567,10 @@ defmodule MscmpSystAuthn do
   ## Parameters
 
     * `identity` - either the record ID of the API Token Identity to revoke or
-    the current-state `MscmpSystAuthn.Data.SystIdentities` struct of
+    the current-state `Msdata.SystIdentities` struct of
     that record.
   """
-  @spec revoke_api_token(Types.identity_id() | Data.SystIdentities.t()) ::
+  @spec revoke_api_token(Types.identity_id() | Msdata.SystIdentities.t()) ::
           {:ok, :deleted | :not_found} | {:error, MscmpSystError.t()}
   defdelegate revoke_api_token(identity), to: Impl.ExtendedMgmtLogic
 

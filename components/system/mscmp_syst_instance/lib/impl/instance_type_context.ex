@@ -11,7 +11,6 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystInstance.Impl.InstanceTypeContext do
-  alias MscmpSystInstance.Data
   alias MscmpSystInstance.Types
 
   require Logger
@@ -19,12 +18,12 @@ defmodule MscmpSystInstance.Impl.InstanceTypeContext do
   @moduledoc false
 
   @spec update_instance_type_context(
-          Types.instance_type_context_id() | Data.SystInstanceTypeContexts.t(),
+          Types.instance_type_context_id() | Msdata.SystInstanceTypeContexts.t(),
           Types.instance_type_context_params()
-        ) :: {:ok, Data.SystInstanceTypeContexts.t()} | {:error, MscmpSystError.t()}
+        ) :: {:ok, Msdata.SystInstanceTypeContexts.t()} | {:error, MscmpSystError.t()}
   def update_instance_type_context(instance_type_context_id, instance_type_context_params)
       when is_binary(instance_type_context_id) do
-    MscmpSystDb.get!(Data.SystInstanceTypeContexts, instance_type_context_id)
+    MscmpSystDb.get!(Msdata.SystInstanceTypeContexts, instance_type_context_id)
     |> update_instance_type_context(instance_type_context_params)
   rescue
     error ->
@@ -41,11 +40,11 @@ defmodule MscmpSystInstance.Impl.InstanceTypeContext do
   end
 
   def update_instance_type_context(
-        %Data.SystInstanceTypeContexts{} = instance_type_context,
+        %Msdata.SystInstanceTypeContexts{} = instance_type_context,
         instance_type_context_params
       ) do
     instance_type_context
-    |> Data.SystInstanceTypeContexts.update_changeset(instance_type_context_params)
+    |> Msdata.SystInstanceTypeContexts.update_changeset(instance_type_context_params)
     |> MscmpSystDb.update!(returning: true)
     |> then(&{:ok, &1})
   rescue
