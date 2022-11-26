@@ -131,13 +131,14 @@ defmodule MscmpSystEnums.Impl.Enums do
   end
 
   @spec get_enum_item_by_name(Types.enum_name(), Types.enum_item_name()) ::
-          Msdata.SystEnumItems.t()
+          Msdata.SystEnumItems.t() | nil
   def get_enum_item_by_name(enum_name, enum_item_name) do
     list_enum_items(enum_name)
     |> Enum.find(&(&1.internal_name == enum_item_name))
   end
 
-  @spec get_enum_item_by_id(Types.enum_name(), Types.enum_item_id()) :: Msdata.SystEnumItems.t()
+  @spec get_enum_item_by_id(Types.enum_name(), Types.enum_item_id()) ::
+          Msdata.SystEnumItems.t() | nil
   def get_enum_item_by_id(enum_name, enum_item_id) do
     list_enum_items(enum_name)
     |> Enum.find(&(&1.id == enum_item_id))

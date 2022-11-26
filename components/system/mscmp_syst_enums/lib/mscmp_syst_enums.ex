@@ -199,7 +199,7 @@ defmodule MscmpSystEnums do
       ...>   )
   """
   @spec get_enum_item_by_name(Types.enum_name(), Types.enum_item_name()) ::
-          Msdata.SystEnumItems.t()
+          Msdata.SystEnumItems.t() | nil
   defdelegate get_enum_item_by_name(enum_name, enum_item_name), to: Impl.Enums
 
   @doc section: :enum_item_data
@@ -218,7 +218,7 @@ defmodule MscmpSystEnums do
     * `enum_item_id` - the id value of the Enumeration Item record to return.
 
   """
-  @spec get_enum_item_by_id(Types.enum_name(), Ecto.UUID.t()) :: Msdata.SystEnumItems.t()
+  @spec get_enum_item_by_id(Types.enum_name(), Ecto.UUID.t()) :: Msdata.SystEnumItems.t() | nil
   defdelegate get_enum_item_by_id(enum_name, enum_item_id), to: Impl.Enums
 
   @doc section: :enum_functional_type_data
