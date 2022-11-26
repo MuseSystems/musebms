@@ -28,7 +28,7 @@ defmodule InstanceTest do
             }} = MscmpSystInstance.get_instance_by_name(instance_record.internal_name)
   end
 
-  test "Can Retreive Instance Record ID by Internal Name" do
+  test "Can Retrieve Instance Record ID by Internal Name" do
     instance_record =
       from(i in Msdata.SystInstances, limit: 1)
       |> MscmpSystDb.one!()
