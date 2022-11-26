@@ -123,8 +123,71 @@ defmodule MscmpSystInstance do
   This component requires that an instance of the `MscmpSystEnums` service has
   been configured and started.  Many of the API calls in this component will
   fail if the `MscmpSystEnums` services are not available.
-
   """
+
+  #
+  #  Applications
+  #
+
+  @doc section: :application_data
+  @doc """
+  Returns the Application record ID for the requested Application Internal Name.
+
+  If the function completes successfully, a success tuple in the form is
+  returned indicating the record ID of the Application record (`{:ok, <id>}`).
+  If no Application record is found for the requested name, a success tuple
+  indicating that no record was found is returned (`{:ok, :not_found}`).
+  Otherwise an error tuple is returned indicating the nature of the issue.
+
+  ## Parameters
+
+    * `applicaton_name` - the internal name of the desired Application record.
+
+  ## Examples
+
+    Finding an application returns its ID value.
+
+      iex> {:ok, application_id} = MscmpSystInstance.get_application_id_by_name("app1")
+      iex> is_binary(application_id)
+      true
+
+    Asking for a non-existent application returns a not found value.
+
+      iex>  MscmpSystInstance.get_application_id_by_name("nonexistent_application")
+      {:ok, :not_found}
+  """
+  @spec get_application_id_by_name(Types.application_name()) ::
+          {:ok, Types.application_id() | :not_found} | {:error, MscmpSystErrot.t()}
+  defdelegate get_application_id_by_name(application_name), to: Impl.Application
+
+  @doc section: :application_data
+  @doc """
+  Returns the Application record ID for the requested Application Internal Name;
+  raises on error.
+
+  This function works the same as `get_application_id_by_name/1` except that the
+  returned record ID is not wrapped in a success tuple and not found
+  applications return `nil`.
+
+  ## Parameters
+
+    * `applicaton_name` - the internal name of the desired Application record.
+
+  ## Examples
+
+    Finding an application returns its ID value.
+
+      iex> application_id = MscmpSystInstance.get_application_id_by_name!("app1")
+      iex> is_binary(application_id)
+      true
+
+    Asking for a non-existent application returns `nil`.
+
+      iex>  MscmpSystInstance.get_application_id_by_name!("nonexistent_application")
+      nil
+  """
+  @spec get_application_id_by_name!(Types.application_name()) :: Types.application_id() | nil
+  defdelegate get_application_id_by_name!(application_name), to: Impl.Application
 
   #
   #  Instance Types
