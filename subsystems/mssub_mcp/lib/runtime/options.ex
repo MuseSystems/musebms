@@ -1,5 +1,5 @@
 # Source File: options.ex
-# Location:    musebms/subsystems/mssub_mcp/lib/impl/options.ex
+# Location:    musebms/subsystems/mssub_mcp/lib/runtime/options.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,7 +10,7 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule MssubMcp.Impl.Options do
+defmodule MssubMcp.Runtime.Options do
   require Logger
 
   @moduledoc false
