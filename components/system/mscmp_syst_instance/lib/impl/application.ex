@@ -24,7 +24,7 @@ defmodule MscmpSystInstance.Impl.Application do
   # This module is for working with `Msdata.SystApplications` records.
 
   @spec get_application_id_by_name(Types.application_name()) ::
-          {:ok, Types.application_id() | :not_found} | {:error, MscmpSystErrot.t()}
+          {:ok, Types.application_id() | :not_found} | {:error, MscmpSystError.t()}
   def get_application_id_by_name(application_name) when is_binary(application_name) do
     get_application_id_by_name!(application_name)
     |> case do
