@@ -157,7 +157,7 @@ defmodule MscmpSystInstance do
       {:ok, :not_found}
   """
   @spec get_application_id_by_name(Types.application_name()) ::
-          {:ok, Types.application_id() | :not_found} | {:error, MscmpSystErrot.t()}
+          {:ok, Types.application_id() | :not_found} | {:error, MscmpSystError.t()}
   defdelegate get_application_id_by_name(application_name), to: Impl.Application
 
   @doc section: :application_data
