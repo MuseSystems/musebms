@@ -68,19 +68,21 @@ defmodule IntegrationTest do
   end
 
   test "Step 2: Create Instance Type Applications" do
-    instance_type = MscmpSystEnums.get_enum_item_by_name("instance_types", "instance_types_sml")
+    assert {:ok, inst_type_small} =
+             MscmpSystInstance.get_instance_type_by_name("instance_types_sml")
 
     assert {:ok, app1_id} = MscmpSystInstance.get_application_id_by_name("app1")
 
     assert {:ok, _} =
-             MscmpSystInstance.create_instance_type_application(instance_type.id, app1_id)
+             MscmpSystInstance.create_instance_type_application(inst_type_small.id, app1_id)
 
-    instance_type = MscmpSystEnums.get_enum_item_by_name("instance_types", "instance_types_std")
+    assert {:ok, inst_type_std} =
+             MscmpSystInstance.get_instance_type_by_name("instance_types_std")
 
     assert {:ok, app2_id} = MscmpSystInstance.get_application_id_by_name("app2")
 
     assert {:ok, _} =
-             MscmpSystInstance.create_instance_type_application(instance_type.id, app2_id)
+             MscmpSystInstance.create_instance_type_application(inst_type_std.id, app2_id)
   end
 
   test "Step 3: Update Instance Type Context Defaults" do

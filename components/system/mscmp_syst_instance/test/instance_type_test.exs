@@ -54,6 +54,20 @@ defmodule InstanceTypeTest do
     assert update_params.user_description == instance_type.user_description
   end
 
+  test "Can retrieve Instance Type by Internal Name w/success tuple." do
+    assert {:ok, %Msdata.SystEnumItems{internal_name: "instance_types_big"}} =
+             MscmpSystInstance.get_instance_type_by_name("instance_types_big")
+
+    assert {:ok, :not_found} = MscmpSystInstance.get_instance_type_by_name("nonexistent_type")
+  end
+
+  test "Can retrieve Instance Type by Internal Name w/raise on error." do
+    assert %Msdata.SystEnumItems{internal_name: "instance_types_sml"} =
+             MscmpSystInstance.get_instance_type_by_name!("instance_types_sml")
+
+    assert MscmpSystInstance.get_instance_type_by_name!("nonexistent_type") == nil
+  end
+
   test "Can Update Instance Type Excluding Internal Name" do
     create_params = %{
       internal_name: "instance_type_update",

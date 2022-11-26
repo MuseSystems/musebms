@@ -210,6 +210,64 @@ defmodule MscmpSystInstance do
 
   @doc section: :instance_type_data
   @doc """
+  Returns the Instance Type record for the given Internal Name.
+
+  This function returns a success tuple which can either include the requested
+  record (`{:ok, <record>}`) or `:not_found` if the requested record does not
+  exist (`{:ok, :not_found}`).  Any other outcome is an error condition for
+  which an error tuple is returned.
+
+  ## Parameters
+
+    * `instance_type_name` - the Internal Name of the desire Instance Type
+    record to return.
+
+  ## Examples
+
+  Finding a Instance Type record by Internal Name.
+
+      iex> {:ok, %Msdata.SystEnumItems{}} =
+      ...>   MscmpSystInstance.get_instance_type_by_name("instance_types_big")
+
+  Looking for a non-existent record.
+
+      iex> MscmpSystInstance.get_instance_type_by_name("nonexistent_type")
+      {:ok, :not_found}
+  """
+  @spec get_instance_type_by_name(Types.instance_type_name()) ::
+          {:ok, Msdata.SystEnumItems.t() | :not_found} | {:error, MscmpSystError.t()}
+  defdelegate get_instance_type_by_name(instance_type_name), to: Impl.InstanceType
+
+  @doc section: :instance_type_data
+  @doc """
+  Returns the Instance Type record for the given Internal Name; raises on error.
+
+  This function works the same as `MscmpSystInstance.get_instance_type_by_name/1`
+  except the result is not wrapped in a success tuple, records not found simply
+  return `nil`, and any errors encountered raise an exception.
+
+  ## Parameters
+
+    * `instance_type_name` - the Internal Name of the desire Instance Type
+    record to return.
+
+  ## Examples
+
+  Finding a Instance Type record by Internal Name.
+
+      iex> %Msdata.SystEnumItems{} =
+      ...>   MscmpSystInstance.get_instance_type_by_name!("instance_types_big")
+
+  Looking for a non-existent record.
+
+      iex> MscmpSystInstance.get_instance_type_by_name!("nonexistent_type")
+      nil
+  """
+  @spec get_instance_type_by_name!(Types.instance_type_name()) :: Msdata.SystEnumItems.t() | nil
+  defdelegate get_instance_type_by_name!(instance_type_name), to: Impl.InstanceType
+
+  @doc section: :instance_type_data
+  @doc """
   Updates an existing Instance Type record via the `MscmpSystEnums` service.
 
   ## Parameters
