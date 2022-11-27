@@ -36,30 +36,12 @@ defmodule MscmpSystInstance.Impl.InstanceType do
        }}
   end
 
-  @spec get_instance_type_by_name(Types.instance_type_name()) ::
-          {:ok, Msdata.SystEnumItems.t() | :not_found} | {:error, MscmpSystError.t()}
-  def get_instance_type_by_name(instance_type_name) do
-    instance_type_name
-    |> get_instance_type_by_name!()
-    |> case do
-      %Msdata.SystEnumItems{} = instance_type -> {:ok, instance_type}
-      instance_type when is_nil(instance_type) -> {:ok, :not_found}
-    end
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure retrieving Instance Type by internal name.",
-         cause: error
-       }}
-  end
-
-  @spec get_instance_type_by_name!(Types.instance_type_name()) :: Msdata.SystEnumItems.t() | nil
-  def get_instance_type_by_name!(instance_type_name),
+  @spec get_instance_type_by_name(Types.instance_type_name()) :: Msdata.SystEnumItems.t() | nil
+  def get_instance_type_by_name(instance_type_name),
     do: MscmpSystEnums.get_enum_item_by_name("instance_types", instance_type_name)
+
+  @spec get_instance_type_default() :: Msdata.SystEnumItems.t() | nil
+  def get_instance_type_default(), do: MscmpSystEnums.get_default_enum_item("instance_types")
 
   @spec update_instance_type(Types.instance_type_name(), Types.instance_type_params()) ::
           {:ok, Msdata.SystEnumItems.t()} | {:error, MscmpSystError.t()}
