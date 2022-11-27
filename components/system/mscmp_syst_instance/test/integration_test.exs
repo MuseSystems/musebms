@@ -47,13 +47,6 @@ defmodule IntegrationTest do
         user_options: %{allowed_server_pools: ["primary"]}
       },
       %{
-        internal_name: "instance_types_std",
-        display_name: "Instance Type / Standard",
-        external_name: "Standard Instance",
-        user_description: "A Standard instance type",
-        user_options: %{allowed_server_pools: ["primary"]}
-      },
-      %{
         internal_name: "instance_types_big",
         display_name: "Instance Type / Big",
         external_name: "Big Instance",
@@ -63,23 +56,46 @@ defmodule IntegrationTest do
     ]
 
     Enum.each(instance_type_params, fn params ->
-      assert {:ok, _instance_type} = MscmpSystInstance.create_instance_type(params)
+      test_internal_name = params.internal_name
+
+      assert {:ok, %Msdata.SystEnumItems{internal_name: ^test_internal_name}} =
+               MscmpSystInstance.create_instance_type(params)
     end)
+
+    assert nil ==
+             MscmpSystInstance.get_instance_type_default()
+
+    assert {:ok, %Msdata.SystEnumItems{internal_name: "instance_types_std"}} =
+             MscmpSystInstance.create_instance_type(%{
+               internal_name: "instance_types_std",
+               display_name: "Instance Type / Standard",
+               external_name: "Standard Instance",
+               user_description: "A Standard instance type",
+               enum_default: true,
+               user_options: %{allowed_server_pools: ["primary"]}
+             })
+
+    assert %Msdata.SystEnumItems{internal_name: "instance_types_std"} =
+             MscmpSystInstance.get_instance_type_default()
   end
 
   test "Step 2: Create Instance Type Applications" do
-    assert {:ok, inst_type_small} =
-             MscmpSystInstance.get_instance_type_by_name("instance_types_sml")
+    inst_type_small = MscmpSystInstance.get_instance_type_by_name("instance_types_sml")
+    assert %Msdata.SystEnumItems{internal_name: "instance_types_sml"} = inst_type_small
 
-    assert {:ok, app1_id} = MscmpSystInstance.get_application_id_by_name("app1")
+    app1_id = MscmpSystInstance.get_application_id_by_name("app1")
+
+    assert is_binary(app1_id)
 
     assert {:ok, _} =
              MscmpSystInstance.create_instance_type_application(inst_type_small.id, app1_id)
 
-    assert {:ok, inst_type_std} =
-             MscmpSystInstance.get_instance_type_by_name("instance_types_std")
+    inst_type_std = MscmpSystInstance.get_instance_type_by_name("instance_types_std")
+    assert %Msdata.SystEnumItems{internal_name: "instance_types_std"} = inst_type_std
 
-    assert {:ok, app2_id} = MscmpSystInstance.get_application_id_by_name("app2")
+    app2_id = MscmpSystInstance.get_application_id_by_name("app2")
+
+    assert is_binary(app2_id)
 
     assert {:ok, _} =
              MscmpSystInstance.create_instance_type_application(inst_type_std.id, app2_id)
@@ -113,7 +129,8 @@ defmodule IntegrationTest do
   end
 
   test "Step 4: Create Owners" do
-    owner1_state = MscmpSystEnums.get_default_enum_item("owner_states")
+    assert %Msdata.SystEnumItems{internal_name: "owner_states_sysdef_active"} =
+             owner1_state = MscmpSystInstance.get_owner_state_default()
 
     owner1_params = %{
       internal_name: "owner1",
@@ -127,11 +144,7 @@ defmodule IntegrationTest do
     assert owner1.display_name == owner1_params.display_name
     assert owner1.owner_state_id == owner1_params.owner_state_id
 
-    owner2_state =
-      MscmpSystEnums.get_default_enum_item(
-        "owner_states",
-        functional_type_name: "owner_states_inactive"
-      )
+    assert owner2_state = MscmpSystInstance.get_owner_state_default(:owner_states_inactive)
 
     owner2_params = %{
       internal_name: "owner2",
@@ -147,6 +160,9 @@ defmodule IntegrationTest do
   end
 
   test "Step 5: Create Instances" do
+    assert %Msdata.SystEnumItems{internal_name: "instance_states_sysdef_uninitialized"} =
+             MscmpSystInstance.get_instance_state_default()
+
     new_instance1_params = %{
       internal_name: "app1_owner1",
       display_name: "App 1 / Owner 1",
@@ -275,10 +291,9 @@ defmodule IntegrationTest do
 
   test "Step 10: Purge Instances" do
     %Msdata.SystEnumItems{id: purge_instance_state_id} =
-      MscmpSystEnums.get_default_enum_item(
-        "instance_states",
-        functional_type_name: "instance_states_purge_eligible"
-      )
+      MscmpSystInstance.get_instance_state_default(:instance_states_purge_eligible)
+
+    assert is_binary(purge_instance_state_id)
 
     update_params = %{instance_state_id: purge_instance_state_id}
 

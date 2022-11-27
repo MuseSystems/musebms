@@ -131,43 +131,12 @@ defmodule MscmpSystInstance do
 
   @doc section: :application_data
   @doc """
-  Returns the Application record ID for the requested Application Internal Name.
-
-  If the function completes successfully, a success tuple in the form is
-  returned indicating the record ID of the Application record (`{:ok, <id>}`).
-  If no Application record is found for the requested name, a success tuple
-  indicating that no record was found is returned (`{:ok, :not_found}`).
-  Otherwise an error tuple is returned indicating the nature of the issue.
-
-  ## Parameters
-
-    * `applicaton_name` - the internal name of the desired Application record.
-
-  ## Examples
-
-    Finding an application returns its ID value.
-
-      iex> {:ok, application_id} = MscmpSystInstance.get_application_id_by_name("app1")
-      iex> is_binary(application_id)
-      true
-
-    Asking for a non-existent application returns a not found value.
-
-      iex>  MscmpSystInstance.get_application_id_by_name("nonexistent_application")
-      {:ok, :not_found}
-  """
-  @spec get_application_id_by_name(Types.application_name()) ::
-          {:ok, Types.application_id() | :not_found} | {:error, MscmpSystError.t()}
-  defdelegate get_application_id_by_name(application_name), to: Impl.Application
-
-  @doc section: :application_data
-  @doc """
   Returns the Application record ID for the requested Application Internal Name;
   raises on error.
 
-  This function works the same as `get_application_id_by_name/1` except that the
-  returned record ID is not wrapped in a success tuple and not found
-  applications return `nil`.
+  On successful execution the record ID of the requested Application is
+  returned.  If the requested Application Internal Name is not found `nil` is
+  returned.
 
   ## Parameters
 
@@ -177,17 +146,17 @@ defmodule MscmpSystInstance do
 
     Finding an application returns its ID value.
 
-      iex> application_id = MscmpSystInstance.get_application_id_by_name!("app1")
+      iex> application_id = MscmpSystInstance.get_application_id_by_name("app1")
       iex> is_binary(application_id)
       true
 
     Asking for a non-existent application returns `nil`.
 
-      iex>  MscmpSystInstance.get_application_id_by_name!("nonexistent_application")
+      iex>  MscmpSystInstance.get_application_id_by_name("nonexistent_application")
       nil
   """
-  @spec get_application_id_by_name!(Types.application_name()) :: Types.application_id() | nil
-  defdelegate get_application_id_by_name!(application_name), to: Impl.Application
+  @spec get_application_id_by_name(Types.application_name()) :: Types.application_id() | nil
+  defdelegate get_application_id_by_name(application_name), to: Impl.Application
 
   #
   #  Instance Types
@@ -210,41 +179,10 @@ defmodule MscmpSystInstance do
 
   @doc section: :instance_type_data
   @doc """
-  Returns the Instance Type record for the given Internal Name.
-
-  This function returns a success tuple which can either include the requested
-  record (`{:ok, <record>}`) or `:not_found` if the requested record does not
-  exist (`{:ok, :not_found}`).  Any other outcome is an error condition for
-  which an error tuple is returned.
-
-  ## Parameters
-
-    * `instance_type_name` - the Internal Name of the desire Instance Type
-    record to return.
-
-  ## Examples
-
-  Finding a Instance Type record by Internal Name.
-
-      iex> {:ok, %Msdata.SystEnumItems{}} =
-      ...>   MscmpSystInstance.get_instance_type_by_name("instance_types_big")
-
-  Looking for a non-existent record.
-
-      iex> MscmpSystInstance.get_instance_type_by_name("nonexistent_type")
-      {:ok, :not_found}
-  """
-  @spec get_instance_type_by_name(Types.instance_type_name()) ::
-          {:ok, Msdata.SystEnumItems.t() | :not_found} | {:error, MscmpSystError.t()}
-  defdelegate get_instance_type_by_name(instance_type_name), to: Impl.InstanceType
-
-  @doc section: :instance_type_data
-  @doc """
   Returns the Instance Type record for the given Internal Name; raises on error.
 
-  This function works the same as `MscmpSystInstance.get_instance_type_by_name/1`
-  except the result is not wrapped in a success tuple, records not found simply
-  return `nil`, and any errors encountered raise an exception.
+  On successful execution either the requested Instance Type Enumeration record
+  is returned or `nil` if the record does not exist.
 
   ## Parameters
 
@@ -256,15 +194,29 @@ defmodule MscmpSystInstance do
   Finding a Instance Type record by Internal Name.
 
       iex> %Msdata.SystEnumItems{} =
-      ...>   MscmpSystInstance.get_instance_type_by_name!("instance_types_big")
+      ...>   MscmpSystInstance.get_instance_type_by_name("instance_types_big")
 
   Looking for a non-existent record.
 
-      iex> MscmpSystInstance.get_instance_type_by_name!("nonexistent_type")
+      iex> MscmpSystInstance.get_instance_type_by_name("nonexistent_type")
       nil
   """
-  @spec get_instance_type_by_name!(Types.instance_type_name()) :: Msdata.SystEnumItems.t() | nil
-  defdelegate get_instance_type_by_name!(instance_type_name), to: Impl.InstanceType
+  @spec get_instance_type_by_name(Types.instance_type_name()) :: Msdata.SystEnumItems.t() | nil
+  defdelegate get_instance_type_by_name(instance_type_name), to: Impl.InstanceType
+
+  @doc section: :instance_type_data
+  @doc """
+  Returns the Instance Type record which is configured as the system default
+  Instance Type.
+
+  If no system default has not been defined `nil` is returned.
+
+  ## Examples
+
+      iex> %Msdata.SystEnumItems{} = MscmpSystInstance.get_instance_type_default()
+  """
+  @spec get_instance_type_default() :: Msdata.SystEnumItems.t() | nil
+  defdelegate get_instance_type_default(), to: Impl.InstanceType
 
   @doc section: :instance_type_data
   @doc """
@@ -405,6 +357,64 @@ defmodule MscmpSystInstance do
 
   @doc section: :owner_data
   @doc """
+  Returns the Owner State Enumeration record for the given Internal Name argument.
+
+  If the requested Internal Name does not match an existing Owner State
+  Enumeration record `nil` is returned.
+
+  ## Parameters
+
+    * `owner_state_name` - the internal name of the Owner State to retrieve.
+
+  ## Examples
+
+  Retrieving an Owner State Enumeration record.
+
+      iex> %Msdata.SystEnumItems{internal_name: "owner_states_sysdef_active"} =
+      ...>   MscmpSystInstance.get_owner_state_by_name("owner_states_sysdef_active")
+
+  Trying to retrieve a non-existent Owner State.
+
+      iex> MscmpSystInstance.get_owner_state_by_name("nonexistent_state")
+      nil
+  """
+  @spec get_owner_state_by_name(MscmpSystEnums.Types.enum_item_name()) ::
+          Msdata.SystEnumItems.t() | nil
+  defdelegate get_owner_state_by_name(owner_state_name), to: Impl.Owner
+
+  @doc section: :owner_data
+  @doc """
+  Returns the Owner State Enumeration record which is configured as being
+  default.
+
+  If no Owner State record is configured as default, then `nil` is returned.
+
+  ## Parameters
+
+    * `functional_type` - an optional parameter which, if provided and not
+    `nil`, will return the default Owner State record configured for the
+    requested functional type rather than the system default Owner State.  The
+    default for this parameter is to treat the parameter as not provided
+    (`nil`).
+
+  ## Examples
+
+  Requesting the system default Owner State.
+
+      iex> %Msdata.SystEnumItems{internal_name: "owner_states_sysdef_active"} =
+      ...>   MscmpSystInstance.get_owner_state_default()
+
+  Requesting the default Owner State for a specific functional type.
+
+      iex> %Msdata.SystEnumItems{internal_name: "owner_states_sysdef_inactive"} =
+      ...>   MscmpSystInstance.get_owner_state_default(:owner_states_inactive)
+  """
+  @spec get_owner_state_default(Types.owner_state_functional_types() | nil) ::
+          Msdata.SystEnumItems.t() | nil
+  defdelegate get_owner_state_default(functional_type \\ nil), to: Impl.Owner
+
+  @doc section: :owner_data
+  @doc """
   Creates a new Owner record.
 
   ## Parameters
@@ -509,6 +519,64 @@ defmodule MscmpSystInstance do
   #
   # Instances
   #
+
+  @doc section: :instance_data
+  @doc """
+  Retrieves the Instance State Enumeration record identified by the provided
+  Internal Name.
+
+  If the requested Internal Name does not match an existing Instance State
+  Enumeration record `nil` is returned.
+
+  ## Parameters
+
+    * `instance_state_name` - the internal name of the Instance State to retrieve.
+
+  ## Examples
+
+  Retrieving an Instance State Enumeration record.
+
+      iex> %Msdata.SystEnumItems{internal_name: "instance_states_sysdef_active"} =
+      ...>   MscmpSystInstance.get_instance_state_by_name("instance_states_sysdef_active")
+
+  Trying to retrieve a non-existent Instance State.
+
+      iex> MscmpSystInstance.get_instance_state_by_name("nonexistent_state")
+      nil
+  """
+  @spec get_instance_state_by_name(Types.instance_state_name()) :: Msdata.SystEnumItems.t() | nil
+  defdelegate get_instance_state_by_name(instance_state_name), to: Impl.InstanceState
+
+  @doc section: :instance_data
+  @doc """
+  Returns the Instance State Enumeration record which is configured as being
+  default.
+
+  If no Instance State record is configured as default, then `nil` is returned.
+
+  ## Parameters
+
+    * `functional_type` - an optional parameter which, if provided and not
+    `nil`, will return the default Instance State record configured for the
+    requested functional type rather than the system default Instance State.
+    The default for this parameter is to treat the parameter as not provided
+    (`nil`).
+
+  ## Examples
+
+  Requesting the system default Instance State.
+
+      iex> %Msdata.SystEnumItems{internal_name: "instance_states_sysdef_uninitialized"} =
+      ...>   MscmpSystInstance.get_instance_state_default()
+
+  Requesting the default Instance State for a specific functional type.
+
+      iex> %Msdata.SystEnumItems{internal_name: "instance_states_sysdef_active"} =
+      ...>   MscmpSystInstance.get_instance_state_default(:instance_states_active)
+  """
+  @spec get_instance_state_default(Types.instance_state_functional_types() | nil) ::
+          Msdata.SystEnumItems.t() | nil
+  defdelegate get_instance_state_default(functional_type \\ nil), to: Impl.InstanceState
 
   @doc section: :instance_data
   @doc """

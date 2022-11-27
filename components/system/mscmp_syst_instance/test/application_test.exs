@@ -15,35 +15,19 @@ defmodule ApplicationTest do
 
   import Ecto.Query
 
-  test "Can retrieve Application ID by Internal Name w/success tuple" do
-    target_app_name = "app2"
-
-    application_record =
-      from(a in Msdata.SystApplications, where: a.internal_name == ^target_app_name)
-      |> MscmpSystDb.one!()
-
-    assert {:ok, application_id} = MscmpSystInstance.get_application_id_by_name(target_app_name)
-
-    assert application_record.id == application_id
-  end
-
-  test "Can retrieve Application ID by Internal Name w/raise on error" do
+  test "Can retrieve Application ID by Internal Name" do
     target_app_name = "app1"
 
     application_record =
       from(a in Msdata.SystApplications, where: a.internal_name == ^target_app_name)
       |> MscmpSystDb.one!()
 
-    assert application_id = MscmpSystInstance.get_application_id_by_name!(target_app_name)
+    assert application_id = MscmpSystInstance.get_application_id_by_name(target_app_name)
 
     assert application_record.id == application_id
   end
 
-  test "Can get not found Application ID by Internal Name result w/success tuple" do
-    assert {:ok, :not_found} = MscmpSystInstance.get_application_id_by_name("nonexistent_app")
-  end
-
-  test "Can get nil Application ID by Internal Name w/raise on error" do
-    assert MscmpSystInstance.get_application_id_by_name!("nonexistent_app") == nil
+  test "Can get nil Application ID by nonexistent Internal Name" do
+    assert MscmpSystInstance.get_application_id_by_name("nonexistent_app") == nil
   end
 end

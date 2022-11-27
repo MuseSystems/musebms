@@ -31,6 +31,21 @@ defmodule OwnerTest do
     assert new_owner.owner_state_id == new_owner_params.owner_state_id
   end
 
+  test "Can retrieve Owner State by Internal Name" do
+    assert %Msdata.SystEnumItems{internal_name: "owner_states_sysdef_active"} =
+             MscmpSystInstance.get_owner_state_by_name("owner_states_sysdef_active")
+  end
+
+  test "Can retrieve system default Owner State" do
+    assert %Msdata.SystEnumItems{internal_name: "owner_states_sysdef_active"} =
+             MscmpSystInstance.get_owner_state_default()
+  end
+
+  test "Can retrieve functional type default Owner State" do
+    assert %Msdata.SystEnumItems{internal_name: "owner_states_sysdef_inactive"} =
+             MscmpSystInstance.get_owner_state_default(:owner_states_inactive)
+  end
+
   test "Can Update Owner by ID" do
     new_owner_state = MscmpSystEnums.get_default_enum_item("owner_states")
 

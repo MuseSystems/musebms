@@ -30,14 +30,8 @@ defmodule MscmpSystInstance.Impl.Owner do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure creating Owner.",
-          cause: error
-        }
-      }
+      {:error,
+       %MscmpSystError{code: :undefined_error, message: "Failure creating Owner.", cause: error}}
   end
 
   @spec update_owner(Types.owner_id() | Msdata.SystOwners.t(), Types.owner_params()) ::
@@ -49,14 +43,12 @@ defmodule MscmpSystInstance.Impl.Owner do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure updating Owner by ID.",
-          cause: error
-        }
-      }
+      {:error,
+       %MscmpSystError{
+         code: :undefined_error,
+         message: "Failure updating Owner by ID.",
+         cause: error
+       }}
   end
 
   def update_owner(%Msdata.SystOwners{} = owner, owner_params) do
@@ -68,14 +60,23 @@ defmodule MscmpSystInstance.Impl.Owner do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure updating Owner.",
-          cause: error
-        }
-      }
+      {:error,
+       %MscmpSystError{code: :undefined_error, message: "Failure updating Owner.", cause: error}}
+  end
+
+  @spec get_owner_state_by_name(MscmpSystEnums.Types.enum_item_name()) ::
+          Msdata.SystEnumItems.t() | nil
+  def get_owner_state_by_name(owner_state_name) when is_binary(owner_state_name),
+    do: MscmpSystEnums.get_enum_item_by_name("owner_states", owner_state_name)
+
+  @spec get_owner_state_default(Types.owner_state_functional_types() | nil) ::
+          Msdata.SystEnumItems.t() | nil
+  def get_owner_state_default(nil), do: MscmpSystEnums.get_default_enum_item("owner_states")
+
+  def get_owner_state_default(functional_type) when is_atom(functional_type) do
+    MscmpSystEnums.get_default_enum_item("owner_states",
+      functional_type_name: Atom.to_string(functional_type)
+    )
   end
 
   @spec get_owner_by_name(Types.owner_name()) ::
@@ -94,14 +95,12 @@ defmodule MscmpSystInstance.Impl.Owner do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure retrieving Owner data.",
-          cause: error
-        }
-      }
+      {:error,
+       %MscmpSystError{
+         code: :undefined_error,
+         message: "Failure retrieving Owner data.",
+         cause: error
+       }}
   end
 
   @spec get_owner_id_by_name(Types.owner_name()) ::
@@ -114,14 +113,12 @@ defmodule MscmpSystInstance.Impl.Owner do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure retrieving Owner ID.",
-          cause: error
-        }
-      }
+      {:error,
+       %MscmpSystError{
+         code: :undefined_error,
+         message: "Failure retrieving Owner ID.",
+         cause: error
+       }}
   end
 
   @spec purge_owner(Types.owner_id() | Msdata.SystOwners.t()) ::
@@ -140,14 +137,12 @@ defmodule MscmpSystInstance.Impl.Owner do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure purging Owner by ID.",
-          cause: error
-        }
-      }
+      {:error,
+       %MscmpSystError{
+         code: :undefined_error,
+         message: "Failure purging Owner by ID.",
+         cause: error
+       }}
   end
 
   def purge_owner(
@@ -174,14 +169,8 @@ defmodule MscmpSystInstance.Impl.Owner do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure deleting Owner.",
-          cause: error
-        }
-      }
+      {:error,
+       %MscmpSystError{code: :undefined_error, message: "Failure deleting Owner.", cause: error}}
   end
 
   def purge_owner(%Msdata.SystOwners{id: owner_id}), do: purge_owner(owner_id)
