@@ -54,23 +54,21 @@ defmodule MssubMcp.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       docs: [
         name: "MssubMcp",
-        nest_modules_by_prefix: [MscmpSystAuthn.Data],
         main: "MssubMcp",
-        output: "../../../documentation/technical/app_server/mscmp_syst_authn",
+        output: "../../documentation/technical/app_server/mssub_mcp",
         deps: [
-          mscmp_syst_db: "../../documentation/technical/app_server/mscmp_syst_db",
-          mscmp_syst_error: "../../documentation/technical/app_server/mscmp_syst_error",
-          mscmp_syst_utils: "../../documentation/technical/app_server/mscmp_syst_utils",
-          mscmp_syst_limiter: "../../documentation/technical/app_server/mscmp_syst_limiter",
-          mscmp_syst_enums: "../../documentation/technical/app_server/mscmp_syst_enums",
-          mscmp_syst_options: "../../documentation/technical/app_server/mscmp_syst_options",
-          mscmp_syst_instance: "../../documentation/technical/app_server/mscmp_syst_instance",
-          mscmp_syst_authn: "../../documentation/technical/app_server/mscmp_syst_authn"
+          mscmp_syst_db: "../mscmp_syst_db",
+          mscmp_syst_error: "../mscmp_syst_error",
+          mscmp_syst_utils: "../mscmp_syst_utils",
+          mscmp_syst_limiter: "../mscmp_syst_limiter",
+          mscmp_syst_enums: "../mscmp_syst_enums",
+          mscmp_syst_options: "../mscmp_syst_options",
+          mscmp_syst_instance: "../mscmp_syst_instance",
+          mscmp_syst_authn: "../mscmp_syst_authn"
         ],
-        groups_for_functions: [Runtime: &(&1[:section] == :service_management)],
+        groups_for_functions: [],
         groups_for_modules: [
           API: [MssubMcp],
-          Data: [],
           "Supporting Types": []
         ]
       ]
