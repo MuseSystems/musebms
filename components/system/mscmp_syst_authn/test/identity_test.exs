@@ -17,6 +17,23 @@ defmodule IdentityTest do
 
   @moduletag :capture_log
 
+  test "Can retrieve Identity Type by Internal Name" do
+    assert %Msdata.SystEnumItems{internal_name: "identity_types_sysdef_account"} =
+             Impl.Identity.get_identity_type_by_name("identity_types_sysdef_account")
+
+    assert nil == Impl.Identity.get_identity_type_by_name("nonexistent_type")
+  end
+
+  test "Can retrieve system default Identity Type" do
+    assert %Msdata.SystEnumItems{internal_name: "identity_types_sysdef_email"} =
+             Impl.Identity.get_identity_type_default(nil)
+  end
+
+  test "Can retrieve functional type default Identity Type" do
+    assert %Msdata.SystEnumItems{internal_name: "identity_types_sysdef_api"} =
+             Impl.Identity.get_identity_type_default(:identity_types_api)
+  end
+
   test "Can set Identity expiration" do
     {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner2")
 

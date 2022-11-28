@@ -312,10 +312,195 @@ defmodule MscmpSystAuthn do
   # ==============================================================================================
   # ==============================================================================================
   #
+  # Enumerations Data
+  #
+  # ==============================================================================================
+  # ==============================================================================================
+
+  @doc section: :enumerations_data
+  @doc """
+  Returns the Identity Type record for the given Internal Name; raises on error.
+
+  On successful execution either the requested Identity Type Enumeration record
+  is returned or `nil` if the record does not exist.
+
+  ## Parameters
+
+    * `identity_type_name` - the Internal Name of the desire Identity Type
+    record to return.
+
+  ## Examples
+
+  Finding a Identity Type record by Internal Name.
+
+      iex> %Msdata.SystEnumItems{} =
+      ...>   MscmpSystAuthn.get_identity_type_by_name("identity_types_sysdef_account")
+
+  Looking for a non-existent record.
+
+      iex> MscmpSystAuthn.get_identity_type_by_name("nonexistent_type")
+      nil
+  """
+  @spec get_identity_type_by_name(Types.identity_type_name()) :: MscmpSystEnumItems.t() | nil
+  defdelegate get_identity_type_by_name(identity_type_name), to: Impl.Identity
+
+  @doc section: :enumerations_data
+  @doc """
+  Returns the Identity Type Enumeration record which is configured as being
+  default.
+
+  If no Identity Type record is configured as default, then `nil` is returned.
+
+  ## Parameters
+
+    * `functional_type` - an optional parameter which, if provided and not
+    `nil`, will return the default Identity Type record configured for the
+    requested functional type rather than the system default Identity Type.
+    The default for this parameter is to treat the parameter as not provided
+    (`nil`).
+
+  ## Examples
+
+  Requesting the system default Identity Type.
+
+      iex> %Msdata.SystEnumItems{internal_name: "identity_types_sysdef_email"} =
+      ...>   MscmpSystAuthn.get_identity_type_default()
+
+  Requesting the default Identity Type for a specific functional type.
+
+      iex> %Msdata.SystEnumItems{internal_name: "identity_types_sysdef_api"} =
+      ...>   MscmpSystAuthn.get_identity_type_default(:identity_types_api)
+  """
+  @spec get_identity_type_default(Types.identity_type_functional_types() | nil) ::
+          MscmpSystEnumItems.t() | nil
+  defdelegate get_identity_type_default(functional_type \\ nil), to: Impl.Identity
+
+  @doc section: :enumerations_data
+  @doc """
+  Returns the Credential Type record for the given Internal Name; raises on error.
+
+  On successful execution either the requested Credential Type Enumeration record
+  is returned or `nil` if the record does not exist.
+
+  ## Parameters
+
+    * `credential_type_name` - the Internal Name of the desire Credential Type
+    record to return.
+
+  ## Examples
+
+  Finding a Credential Type record by Internal Name.
+
+      iex> %Msdata.SystEnumItems{} =
+      ...>   MscmpSystAuthn.get_credential_type_by_name("credential_types_sysdef_token_api")
+
+  Looking for a non-existent record.
+
+      iex> MscmpSystAuthn.get_credential_type_by_name("nonexistent_type")
+      nil
+  """
+  @spec get_credential_type_by_name(Types.credential_type_name()) :: MscmpSystEnumItems.t() | nil
+  defdelegate get_credential_type_by_name(credential_type_name), to: Impl.Credential
+
+  @doc section: :enumerations_data
+  @doc """
+  Returns the Credential Type Enumeration record which is configured as being
+  default.
+
+  If no Credential Type record is configured as default, then `nil` is returned.
+
+  ## Parameters
+
+    * `functional_type` - an optional parameter which, if provided and not
+    `nil`, will return the default Credential Type record configured for the
+    requested functional type rather than the system default Credential Type.
+    The default for this parameter is to treat the parameter as not provided
+    (`nil`).
+
+  ## Examples
+
+  Requesting the system default Credential Type.
+
+      iex> %Msdata.SystEnumItems{internal_name: "credential_types_sysdef_password"} =
+      ...>   MscmpSystAuthn.get_credential_type_default()
+
+  Requesting the default Credential Type for a specific functional type.
+
+      iex> %Msdata.SystEnumItems{internal_name: "credential_types_sysdef_mfa_totp"} =
+      ...>   MscmpSystAuthn.get_credential_type_default(:credential_types_mfa_totp)
+  """
+  @spec get_credential_type_default(Types.credential_type_functional_types() | nil) ::
+          MscmpSystEnumItems.t() | nil
+  defdelegate get_credential_type_default(functional_type \\ nil), to: Impl.Credential
+
+  # ==============================================================================================
+  # ==============================================================================================
+  #
   # Access Account Data
   #
   # ==============================================================================================
   # ==============================================================================================
+
+  @doc section: :access_account_data
+  @doc """
+  Returns the Access Account State record for the given Internal Name; raises on
+  error.
+
+  On successful execution either the requested Access Account State Enumeration
+  record is returned or `nil` if the record does not exist.
+
+  ## Parameters
+
+    * `access_account_state_name` - the Internal Name of the desire Access Account
+    State record to return.
+
+  ## Examples
+
+  Finding a Access Account State record by Internal Name.
+
+      iex> %Msdata.SystEnumItems{} =
+      ...>   MscmpSystAuthn.get_access_account_state_by_name("access_account_states_sysdef_active")
+
+  Looking for a non-existent record.
+
+      iex> MscmpSystAuthn.get_access_account_state_by_name("nonexistent_type")
+      nil
+  """
+  @spec get_access_account_state_by_name(Types.access_account_state_name()) ::
+          MscmpSystEnumItems.t() | nil
+  defdelegate get_access_account_state_by_name(access_account_state_name), to: Impl.AccessAccount
+
+  @doc section: :access_account_data
+  @doc """
+  Returns the Access Account State Enumeration record which is configured as
+  being default.
+
+  If no Access Account State record is configured as default, then `nil` is
+  returned.
+
+  ## Parameters
+
+    * `functional_type` - an optional parameter which, if provided and not
+    `nil`, will return the default Access Account State record configured for
+    the requested functional type rather than the system default Access Account
+    State.  The default for this parameter is to treat the parameter as not
+    provided (`nil`).
+
+  ## Examples
+
+  Requesting the system default Access Account State.
+
+      iex> %Msdata.SystEnumItems{internal_name: "access_account_states_sysdef_pending"} =
+      ...>   MscmpSystAuthn.get_access_account_state_default()
+
+  Requesting the default Access Account State for a specific functional type.
+
+      iex> %Msdata.SystEnumItems{internal_name: "access_account_states_sysdef_inactive"} =
+      ...>   MscmpSystAuthn.get_access_account_state_default(:access_account_states_inactive)
+  """
+  @spec get_access_account_state_default(Types.access_account_state_functional_types() | nil) ::
+          MscmpSystEnumItems.t() | nil
+  defdelegate get_access_account_state_default(functional_type \\ nil), to: Impl.AccessAccount
 
   @doc section: :access_account_data
   @doc """

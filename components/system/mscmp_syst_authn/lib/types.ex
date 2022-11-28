@@ -22,6 +22,41 @@ defmodule MscmpSystAuthn.Types do
   """
 
   @typedoc """
+  Access Account State functional types which are assigned to Access Account
+  State records for the purpose of influencing system functionality and
+  behavior.
+
+    * `:access_account_states_pending` - Access Accounts in states of this
+    functional type are not considered active and are limited in use to
+    facilitating full activation.
+
+
+    * `:access_account_states_active` - active states are those which all full
+    use of the associated Access Accounts for all permitted uses of the system.
+
+
+    * `:access_account_states_suspended` - when an Access Account is in a state
+    of functional type suspended only certain basic Access Account maintenance
+    functionality is permitted to the Access Account holder.  Regular usage is
+    naturally denied.
+
+
+    * `:access_account_states_inactive` - inactive states are not allowed to use
+    make regular use of the system and are disabled for most purposes.   Regular
+    account maintenance is also typically not allowed.
+
+
+    * `:access_account_states_purge_eligible` -  Access Accounts in states
+    designated as purge eligible are permitted to be deleted from the system.
+  """
+  @type access_account_state_functional_types() ::
+          :access_account_states_pending
+          | :access_account_states_active
+          | :access_account_states_suspended
+          | :access_account_states_inactive
+          | :access_account_states_purge_eligible
+
+  @typedoc """
   Defines the expected type of Access Account record ID values.
   """
   @type access_account_id() :: Ecto.UUID.t()
@@ -514,6 +549,49 @@ defmodule MscmpSystAuthn.Types do
   @type credential_extended_state() :: :require_mfa | credential_reset_reason()
 
   @typedoc """
+  Established classes of Credential Types which share common system
+  functionality.
+
+    * `:credential_types_password` - used to identify Credential Types which
+    use passwords as their credential.
+
+
+    * `:credential_types_mfa_totp` - associates a Credential Type with Time
+    based One Time Password Multi-Factor Authentication functionality.
+
+
+    * `:credential_types_mfa_totp_recovery_code` - designates a Credential Type
+    as representing an MFA/TOTP recovery code.
+
+
+    * `:credential_types_mfa_known_host` - designates a Credential Type
+    as representing a known MFA/TOTP host allowed to bypass interactive MFA
+    secondary authentication.
+
+
+    * `:credential_types_token_api` - indicates that the Credential Type makes
+    use of API Token credential functionality.
+
+
+    * `:credential_types_token_validation` - indicates that the Credential Type
+    facilitates the validation of certain types of Identity records.
+
+
+    * `:credential_types_token_recovery` - associates Credential Types which
+    facilitate recovery of other Credential Types with the necessary recovery
+    functionality.
+
+  """
+  @type credential_functional_types() ::
+          :credential_types_password
+          | :credential_types_mfa_totp
+          | :credential_types_mfa_totp_recovery_code
+          | :credential_types_mfa_known_host
+          | :credential_types_token_api
+          | :credential_types_token_validation
+          | :credential_types_token_recovery
+
+  @typedoc """
   Provides additional Credential Extended State values when Credential resets
   are required.
 
@@ -709,6 +787,35 @@ defmodule MscmpSystAuthn.Types do
           optional(:identity_expires) => DateTime.t() | nil,
           optional(:external_name) => String.t() | nil
         }
+
+  @typedoc """
+  Identifies the categorizations of Identity Types which the system will treat
+  with different functional responses.
+
+    * `:identity_types_email` - indicates that the Identity Type represents
+    Identities which can be used in email address contexts.
+
+    * `:identity_types_account` - designates Identity Types which are used for
+    simple identification and are not typically used for Access Account
+    identification for authentication purposes.
+
+    * `:identity_types_api` - associates API Token Identity functionality with
+    Identity Types.
+
+    * `:identity_types_validation` - indicates that an Identity Type designates
+    Identities used to validate other Identity Types, such as
+    `:identity_types_email` Identity Types.
+
+    * `:identity_types_password_recovery` - designates Identity Types use in
+    Password Credential recovery.
+
+  """
+  @type identity_type_functional_types() ::
+          :identity_types_email
+          | :identity_types_account
+          | :identity_types_api
+          | :identity_types_validation
+          | :identity_types_password_recovery
 
   @typedoc """
   Defines the available parameters for use in creating or updating Instance

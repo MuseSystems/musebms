@@ -15,6 +15,8 @@ defmodule MscmpSystAuthn.Impl.Credential do
 
   @moduledoc false
 
+  # Setup callbacks for Credential type specific calls
+
   @callback set_credential(
               Types.access_account_id(),
               Types.identity_id() | nil,
@@ -52,4 +54,21 @@ defmodule MscmpSystAuthn.Impl.Credential do
               :ok | {:error, MscmpSystError.t() | Exception.t()}
 
   @callback delete_credential!(Types.credential_id() | Msdata.SystCredentials.t()) :: :ok
+
+  # General Credential functionality
+
+  @spec get_credential_type_by_name(Types.credential_type_name()) :: MscmpSystEnumItems.t() | nil
+  def get_credential_type_by_name(credential_type_name) when is_binary(credential_type_name),
+    do: MscmpSystEnums.get_enum_item_by_name("credential_types", credential_type_name)
+
+  @spec get_credential_type_default(Types.credential_type_functional_types() | nil) ::
+          MscmpSystEnumItems.t() | nil
+  def get_credential_type_default(nil),
+    do: MscmpSystEnums.get_default_enum_item("credential_types")
+
+  def get_credential_type_default(functional_type) when is_atom(functional_type) do
+    MscmpSystEnums.get_default_enum_item("credential_types",
+      functional_type_name: Atom.to_string(functional_type)
+    )
+  end
 end
