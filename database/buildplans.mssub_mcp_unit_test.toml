@@ -1,0 +1,32 @@
+# Source File: mssub_mcp_unit_test.toml
+# Location:    musebms/database/buildplans.mssub_mcp_unit_test.toml
+# Project:     Muse Systems Business Management System
+#
+# Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+# This file may include content copyrighted and licensed from third parties.
+#
+# See the LICENSE file in the project root for license terms and conditions.
+# See the NOTICE file in the project root for copyright ownership information.
+#
+# muse.information@musesystems.com :: https://muse.systems
+
+##
+##  NOTE:  This build plan exists only to facilitate automated testing,
+##         continuous integration, and other similar development & testing
+##         activities.  It is not used to build released software.
+##
+
+# The database should have been migrated at application start so what we're
+# building here is just the data required for testing.  That will, as all other
+# tests, be part of sponsor 821 ("MT").
+
+[[build_plan]]
+release              = 1
+version              = 1
+update               = 0
+sponsor              = 821
+sponsor_modification = 0
+load_files = [
+    "components/system/mscmp_syst_instance/testing_support/test_data_unit_test.eex.sql",
+    "components/system/mscmp_syst_authn/testing_support/test_data_unit_test.eex.sql",
+ ]

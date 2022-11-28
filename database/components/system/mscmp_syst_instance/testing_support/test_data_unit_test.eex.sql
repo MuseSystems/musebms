@@ -176,7 +176,7 @@ BEGIN
         , user_options )
     VALUES
         ( 'instance_types_big'
-        , 'Instance Types / Big'
+        , 'Test Instance Types / Big'
         , 'Big Instance'
         , (SELECT id FROM ms_syst_data.syst_enums WHERE internal_name = 'instance_types')
         , FALSE
@@ -185,7 +185,7 @@ BEGIN
         , '{"allowed_server_pools": ["primary"]}'::jsonb )
          ,
         ( 'instance_types_std'
-        , 'Instance Types / Standard'
+        , 'Test Instance Types / Standard'
         , 'Standard Instance'
         , (SELECT id FROM ms_syst_data.syst_enums WHERE internal_name = 'instance_types')
         , TRUE
@@ -194,7 +194,7 @@ BEGIN
         , '{"allowed_server_pools": ["primary"]}'::jsonb )
          ,
         ( 'instance_types_sml'
-        , 'Instance Types / Small'
+        , 'Test Instance Types / Small'
         , 'Small Instance'
         , (SELECT id FROM ms_syst_data.syst_enums WHERE internal_name = 'instance_types')
         , FALSE
