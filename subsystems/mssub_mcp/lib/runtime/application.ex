@@ -3,6 +3,8 @@ defmodule MssubMcp.Application do
 
   @supervisor_name MssubMcp.Supervisor
   @datastore_supervisor_name MssubMcp.DatastoreSupervisor
+  @default_enums_service_name :mssub_mcp_enums_service
+  @default_settings_service_name :mssub_mcp_settings_service
 
   @impl true
   @spec start(Application.start_type(), term()) ::
@@ -14,22 +16,34 @@ defmodule MssubMcp.Application do
 
     enum_service_spec = %{
       id: MssubMcpEnumsService,
-      start: {MscmpSystEnums, :start_link, [{:mssub_mcp_enums_service, :mssub_mcp_app_access}]}
+      start:
+        {MscmpSystEnums, :start_link,
+         [
+           {Application.get_env(:mssub_mcp, :enums_service_name, @default_enums_service_name),
+            :mssub_mcp_app_access}
+         ]}
     }
 
     settings_service_spec = %{
       id: MssubMcpSettingsService,
       start:
-        {MscmpSystSettings, :start_link, [{:mssub_mcp_settings_service, :mssub_mcp_app_access}]}
+        {MscmpSystSettings, :start_link,
+         [
+           {Application.get_env(
+              :mssub_mcp,
+              :settings_service_name,
+              @default_settings_service_name
+            ), :mssub_mcp_app_access}
+         ]}
     }
 
-    mcp_service_childredn = [
+    mcp_service_children = [
       MssubMcp.Runtime.Datastore.child_spec(opts),
       enum_service_spec,
       settings_service_spec
     ]
 
-    Supervisor.start_link(mcp_service_childredn, strategy: :one_for_one, name: @supervisor_name)
+    Supervisor.start_link(mcp_service_children, strategy: :one_for_one, name: @supervisor_name)
   end
 
   defp setup_rate_limiter() do
