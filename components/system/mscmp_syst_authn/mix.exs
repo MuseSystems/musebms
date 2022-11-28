@@ -80,6 +80,7 @@ defmodule MscmpSystAuthn.MixProject do
             &(&1[:section] == :access_account_instance_assoc_data),
           "Password Rules": &(&1[:section] == :password_rule_data),
           "Network Rules": &(&1[:section] == :network_rule_data),
+          "Enumeration Access": &(&1[:section] == :enumerations_data),
           Runtime: &(&1[:section] == :service_management)
         ],
         nest_modules_by_prefix: [Msdata],

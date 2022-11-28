@@ -1316,6 +1316,65 @@ defmodule IntegrationTest do
 
   # ==============================================================================================
   #
+  # Topic 4: Enumeration Access Functions
+  #
+  # ==============================================================================================
+
+  test "Step 4.01: Can retrieve Identity Type by Internal Name" do
+    assert %Msdata.SystEnumItems{internal_name: "identity_types_sysdef_account"} =
+             MscmpSystAuthn.get_identity_type_by_name("identity_types_sysdef_account")
+
+    assert nil == MscmpSystAuthn.get_identity_type_by_name("nonexistent_type")
+  end
+
+  test "Step 4.02: Can retrieve system default Identity Type" do
+    assert %Msdata.SystEnumItems{internal_name: "identity_types_sysdef_email"} =
+             MscmpSystAuthn.get_identity_type_default()
+  end
+
+  test "Step 4.03: Can retrieve functional type default Identity Type" do
+    assert %Msdata.SystEnumItems{internal_name: "identity_types_sysdef_api"} =
+             MscmpSystAuthn.get_identity_type_default(:identity_types_api)
+  end
+
+  test "Step 4.04: Can retrieve Credential Type by Internal Name" do
+    assert %Msdata.SystEnumItems{internal_name: "credential_types_sysdef_mfa_totp"} =
+             MscmpSystAuthn.get_credential_type_by_name("credential_types_sysdef_mfa_totp")
+
+    assert nil == MscmpSystAuthn.get_credential_type_by_name("nonexistent_type")
+  end
+
+  test "Step 4.05: Can retrieve system default Credential Type" do
+    assert %Msdata.SystEnumItems{internal_name: "credential_types_sysdef_password"} =
+             MscmpSystAuthn.get_credential_type_default()
+  end
+
+  test "Step 4.06: Can retrieve functional type default Credential Type" do
+    assert %Msdata.SystEnumItems{internal_name: "credential_types_sysdef_token_api"} =
+             MscmpSystAuthn.get_credential_type_default(:credential_types_token_api)
+  end
+
+  test "Step 4.07: Can retrieve Access Account State by Internal Name" do
+    assert %Msdata.SystEnumItems{internal_name: "access_account_states_sysdef_active"} =
+             MscmpSystAuthn.get_access_account_state_by_name(
+               "access_account_states_sysdef_active"
+             )
+
+    assert nil == MscmpSystAuthn.get_access_account_state_by_name("nonexistent_type")
+  end
+
+  test "Step 4.08: Can retrieve system default Access Account State" do
+    assert %Msdata.SystEnumItems{internal_name: "access_account_states_sysdef_pending"} =
+             MscmpSystAuthn.get_access_account_state_default(nil)
+  end
+
+  test "Step 4.09: Can retrieve functional type default Access Account State" do
+    assert %Msdata.SystEnumItems{internal_name: "access_account_states_sysdef_inactive"} =
+             MscmpSystAuthn.get_access_account_state_default(:access_account_states_inactive)
+  end
+
+  # ==============================================================================================
+  #
   # Test Support Functions
   #
   # ==============================================================================================

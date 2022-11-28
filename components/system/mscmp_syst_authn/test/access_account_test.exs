@@ -13,6 +13,8 @@
 defmodule AccessAccountTest do
   use AuthenticationTestCase, async: true
 
+  alias MscmpSystAuthn.Impl
+
   @moduletag :capture_log
 
   test "Can create an unowned Access Account" do
@@ -64,6 +66,25 @@ defmodule AccessAccountTest do
     assert access_account_state.id == new_access_account.access_account_state_id
 
     assert owner_id == new_access_account.owning_owner_id
+  end
+
+  test "Can retrieve Access Account State by Internal Name" do
+    assert %Msdata.SystEnumItems{internal_name: "access_account_states_sysdef_active"} =
+             Impl.AccessAccount.get_access_account_state_by_name(
+               "access_account_states_sysdef_active"
+             )
+
+    assert nil == Impl.AccessAccount.get_access_account_state_by_name("nonexistent_type")
+  end
+
+  test "Can retrieve system default Access Account State" do
+    assert %Msdata.SystEnumItems{internal_name: "access_account_states_sysdef_pending"} =
+             Impl.AccessAccount.get_access_account_state_default(nil)
+  end
+
+  test "Can retrieve functional type default Access Account State" do
+    assert %Msdata.SystEnumItems{internal_name: "access_account_states_sysdef_inactive"} =
+             Impl.AccessAccount.get_access_account_state_default(:access_account_states_inactive)
   end
 
   test "Can update an Access Account" do

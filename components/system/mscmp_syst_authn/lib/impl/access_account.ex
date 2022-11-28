@@ -40,6 +40,23 @@ defmodule MscmpSystAuthn.Impl.AccessAccount do
       }
   end
 
+  @spec get_access_account_state_by_name(Types.access_account_state_name()) ::
+          MscmpSystEnumItems.t() | nil
+  def get_access_account_state_by_name(access_account_state_name)
+      when is_binary(access_account_state_name),
+      do: MscmpSystEnums.get_enum_item_by_name("access_account_states", access_account_state_name)
+
+  @spec get_access_account_state_default(Types.access_account_state_functional_types() | nil) ::
+          MscmpSystEnumItems.t() | nil
+  def get_access_account_state_default(nil),
+    do: MscmpSystEnums.get_default_enum_item("access_account_states")
+
+  def get_access_account_state_default(functional_type) when is_atom(functional_type) do
+    MscmpSystEnums.get_default_enum_item("access_account_states",
+      functional_type_name: Atom.to_string(functional_type)
+    )
+  end
+
   @spec update_access_account(
           Types.access_account_id() | Msdata.SystAccessAccounts.t(),
           Types.access_account_params()
