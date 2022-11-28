@@ -11,7 +11,7 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MssubMcp.Runtime.Datastore do
-  alias MssubMcp.Impl
+  alias MssubMcp.Runtime
 
   @moduledoc false
 
@@ -27,7 +27,7 @@ defmodule MssubMcp.Runtime.Datastore do
         name: opts[:datastore_name]
       )
 
-    with %{} = datastore_options <- Impl.Options.get_datastore_options(opts),
+    with %{} = datastore_options <- Runtime.Options.get_datastore_options(opts),
          {:ok, :ready, _} = datastore_state <- process_bootstrap_sequence(datastore_options),
          {:ok, :ready, _} <- process_context_changes(datastore_state, datastore_options, opts),
          {:ok, _} <-
