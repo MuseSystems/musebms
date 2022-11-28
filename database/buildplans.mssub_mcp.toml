@@ -51,6 +51,7 @@ load_files = [
 
     {type = "plan", file = "components/system/mscmp_syst_instance/subplans.mscmp_syst_instance.toml"},
     "subsystems/mssub_mcp/components/mscmp_syst_instance/privileges.eex.sql",
+    "subsystems/mssub_mcp/gen_seed_data/initialize_enum_instance_types.eex.sql",
 
     #
     # MscmpSystAuthn

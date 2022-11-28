@@ -1,5 +1,5 @@
 -- Migration: priv/database/mssub_mcp/mssub_mcp.01.01.000.0000MS.000.eex.sql
--- Built on:  2022-11-23 02:37:59.975490Z
+-- Built on:  2022-11-26 16:25:05.670309Z
 
 DO
 $MIGRATION$
@@ -8691,6 +8691,40 @@ GRANT SELECT, UPDATE ON TABLE ms_syst.syst_instance_contexts TO <%= ms_appusr %>
 GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_instance_contexts() TO <%= ms_appusr %>;
 GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_instance_contexts() TO <%= ms_appusr %>;
 GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_instance_contexts() TO <%= ms_appusr %>;
+-- File:        initialize_enum_instance_types.eex.sql
+-- Location:    musebms/database/subsystems/mssub_mcp/gen_seed_data/initialize_enum_instance_types.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+INSERT INTO ms_syst_data.syst_enum_items
+    ( internal_name
+    , display_name
+    , external_name
+    , enum_id
+    , enum_default
+    , syst_defined
+    , user_maintainable
+    , syst_description
+    , sort_order )
+VALUES
+    ( 'instance_types_sysdef_standard'
+    , 'Instance Types / Standard'
+    , 'Standard'
+    , ( SELECT id
+        FROM ms_syst_data.syst_enums
+        WHERE internal_name = 'instance_types' )
+    , TRUE
+    , TRUE
+    , TRUE
+    , 'A simple type representing the most typical kind of Instance.'
+    , 1 );
 -- File:        initialize_enum_access_account_states.eex.sql
 -- Location:    musebms/database/components/system/mscmp_syst_authn/seed_data/initialize_enum_access_account_states.eex.sql
 -- Project:     Muse Systems Business Management System
