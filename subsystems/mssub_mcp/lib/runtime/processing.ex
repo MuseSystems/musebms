@@ -16,7 +16,7 @@ defmodule MssubMcp.Runtime.Processing do
   @default_enums_service_name :mssub_mcp_enums_service
   @default_settings_service_name :mssub_mcp_settings_service
 
-  @spec process_operation(function()) :: any()
+  @spec process_operation((() -> any())) :: any()
   def process_operation(operation) do
     mcp_enums_service =
       Application.get_env(:mssub_mcp, :enums_service_name, @default_enums_service_name)

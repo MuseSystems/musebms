@@ -37,6 +37,6 @@ defmodule MssubMcp do
       iex> mcp_operation = fn -> MscmpSystInstance.get_owner_by_name("owner1") end
       iex> {:ok, %Msdata.SystOwners{}} = MssubMcp.process_operation(mcp_operation)
   """
-  @spec process_operation(function()) :: any()
+  @spec process_operation((() -> any())) :: any()
   defdelegate process_operation(operation), to: Runtime.Processing
 end
