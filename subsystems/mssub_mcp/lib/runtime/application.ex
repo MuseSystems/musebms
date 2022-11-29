@@ -1,6 +1,19 @@
-defmodule MssubMcp.Application do
+# Source File: application.ex
+# Location:    musebms/subsystems/mssub_mcp/lib/runtime/application.ex
+# Project:     Muse Systems Business Management System
+#
+# Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+# This file may include content copyrighted and licensed from third parties.
+#
+# See the LICENSE file in the project root for license terms and conditions.
+# See the NOTICE file in the project root for copyright ownership information.
+#
+# muse.information@musesystems.com :: https://muse.systems
+
 defmodule MssubMcp.Runtime.Application do
   use Application
+
+  @moduledoc false
 
   @supervisor_name MssubMcp.Supervisor
   @datastore_supervisor_name MssubMcp.DatastoreSupervisor
@@ -47,7 +60,7 @@ defmodule MssubMcp.Runtime.Application do
     Supervisor.start_link(mcp_service_children, strategy: :one_for_one, name: @supervisor_name)
   end
 
-  defp setup_rate_limiter() do
+  defp setup_rate_limiter do
     :mnesia.stop()
     :mnesia.create_schema([node()])
     :mnesia.start()
