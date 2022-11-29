@@ -976,7 +976,7 @@ defmodule IntegrationTest do
   test "Step 3.01: Add Owned Access Accounts" do
     {:ok, owner1_id} = MscmpSystInstance.get_owner_id_by_name("owner1")
 
-    state = MscmpSystEnums.get_default_enum_item("access_account_states")
+    state = MscmpSystAuthn.get_access_account_state_default()
 
     assert {:ok, %Msdata.SystAccessAccounts{} = access_account1} =
              MscmpSystAuthn.create_access_account(%{
