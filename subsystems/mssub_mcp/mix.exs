@@ -82,7 +82,7 @@ defmodule MssubMcp.MixProject do
         :crypto,
         :mnesia
       ],
-      mod: {MssubMcp.Application, []}
+      mod: {MssubMcp.Runtime.Application, []}
     ]
   end
 
