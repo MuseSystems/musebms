@@ -334,11 +334,9 @@ defmodule MscmpSystInstance.Runtime.Application do
     :ok =
       instance_contexts
       |> Enum.map(&%{context_name: String.to_atom(&1.internal_name)})
-      |> MscmpSystDb.stop_datastore(opts[:db_shutdown_timeout])
+      |> MscmpSystDb.stop_datastore(opts[:db_shutdown_timeout] || 60_000)
 
-    :ok = stop_instance_supervisor(instance_name, opts)
-
-    :ok
+    stop_instance_supervisor(instance_name, opts)
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
