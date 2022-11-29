@@ -8,7 +8,7 @@
 
 # The server_name of the dbserver which will host the global database.  If this
 # server is not found or has not been bootstrapped, the system will not start.
-global_dbserver_name = "mssub_mcp"
+global_dbserver_name = "testing_server"
 
 # A password used by the global Datastore Context database roles to connect to
 # the database.  This value should be at least 16 bytes of data.
@@ -36,7 +36,7 @@ global_pepper_value  = "jTtEdXRExP5YXHeARQ1W66lP6wDc9GyOvhFPvwnHhtc="
 [[dbserver]]
 # The identifier of the database server which will also appear in user
 # interfaces.
-server_name                    = "mssub_mcp"
+server_name                    = "testing_server"
 
 # If this database server hosts instance databases and the value here is true,
 # the system will make database connections for any instance databases existing
