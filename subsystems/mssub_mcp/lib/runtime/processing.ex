@@ -30,9 +30,9 @@ defmodule MssubMcp.Runtime.Processing do
 
     result = operation.()
 
-    MscmpSystDb.put_datastore_context(starting_datastore_context)
-    MscmpSystSettings.put_settings_service(starting_settings_service)
-    MscmpSystEnums.put_enums_service(starting_enums_service)
+    _ = MscmpSystDb.put_datastore_context(starting_datastore_context)
+    _ = MscmpSystSettings.put_settings_service(starting_settings_service)
+    _ = MscmpSystEnums.put_enums_service(starting_enums_service)
 
     result
   end
