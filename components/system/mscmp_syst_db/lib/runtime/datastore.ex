@@ -289,13 +289,9 @@ defmodule MscmpSystDb.Runtime.Datastore do
     |> stop_datastore_context(shutdown_timeout)
   end
 
-  # TODO: The timeout value passed via shutdown_timeout seems to bollocks up
-  #       both Erlang 24 and 25, though in slightly different ways.  Set it to
-  #       infinity and everything is fine.  Hmm.  This should be sorted out but
-  #       we'll punt for now.
-  def stop_datastore_context(context, _shutdown_timeout)
+  def stop_datastore_context(context, shutdown_timeout)
       when is_pid(context) or is_atom(context) do
-    Supervisor.stop(context, :normal, :infinity)
+    Supervisor.stop(context, :normal, shutdown_timeout)
   end
 
   @spec query_for_none(iodata(), [term()], Keyword.t()) :: :ok | {:error, MscmpSystError.t()}
