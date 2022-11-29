@@ -24,6 +24,15 @@ defmodule IntegrationTest do
   @startup_options_path "ms_startup_options.toml"
   @migrations_root_dir "../../database/subsystems/mssub_mcp/testing_support"
 
+  # Special Note:
+  #
+  # The purpose of these tests isn't to prove that MscmpSystInstance or
+  # MscmpSystAuthn are working correctly on an individual basis but rather that
+  # they work together when needed and that MssubMcp can make available the
+  # required services upon which these components depend (Enum, Settings, Rate
+  # Limiter, Database).  Given this, the tests below will be duplicative of the
+  # equivalent integration tests in those modules, but not comprehensively so.
+
   # ==============================================================================================
   #
   # Topic 1: Instance Management
