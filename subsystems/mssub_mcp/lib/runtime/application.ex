@@ -1,4 +1,5 @@
 defmodule MssubMcp.Application do
+defmodule MssubMcp.Runtime.Application do
   use Application
 
   @supervisor_name MssubMcp.Supervisor
