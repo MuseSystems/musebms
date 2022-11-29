@@ -24,7 +24,7 @@ $MCP_TESTING_INIT$
         INSERT INTO ms_syst_data.syst_applications
             ( internal_name, display_name, syst_description )
         VALUES
-            ( 'test_application'
+            ( 'test_app'
             , 'Testing Application'
             , 'A hypothetical application used for testing purposes.' )
         RETURNING id INTO var_application_id;
