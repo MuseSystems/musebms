@@ -1119,7 +1119,7 @@ defmodule IntegrationTest do
              )
   end
 
-  test "Step 3.04: Invite Owned Access Account to Instances" do
+  test "Step 3.05: Invite Owned Access Account to Instances" do
     # Basic Invite
 
     {:ok, owner1_account_id} =
@@ -1156,7 +1156,7 @@ defmodule IntegrationTest do
     assert nil == invited_aaia_owner2.access_granted
   end
 
-  test "Step 3.05: Accept Instance Invite to Owned Access Account" do
+  test "Step 3.06: Accept Instance Invite to Owned Access Account" do
     {:ok, access_account_id} =
       MscmpSystAuthn.get_access_account_id_by_name("owner2_access_account")
 
@@ -1169,7 +1169,7 @@ defmodule IntegrationTest do
     assert %Msdata.SystAccessAccountInstanceAssocs{} = aaia_record
   end
 
-  test "Step 3.06: Authenticate Owned Access Account using Email/Password" do
+  test "Step 3.07: Authenticate Owned Access Account using Email/Password" do
     # Instance access invite was explicitly accepted in earlier step.
     {:ok, instance1_id} =
       MscmpSystInstance.get_instance_id_by_name("app1_owner1_instance_types_std")
@@ -1209,7 +1209,7 @@ defmodule IntegrationTest do
     #       status in a test will come later.
   end
 
-  test "Step 3.07: Create Account Code for Owned Access Account" do
+  test "Step 3.08: Create Account Code for Owned Access Account" do
     {:ok, access_account_id} =
       MscmpSystAuthn.get_access_account_id_by_name("owner1_access_account")
 
@@ -1222,7 +1222,7 @@ defmodule IntegrationTest do
     assert authenticator_result.account_identifier == "Owner1 Access Account Code"
   end
 
-  test "Step 3.08: Identify Owned Access Account by Account Code" do
+  test "Step 3.09: Identify Owned Access Account by Account Code" do
     {:ok, owner1_id} = MscmpSystInstance.get_owner_id_by_name("owner1")
 
     assert {:ok, :not_found} = MscmpSystAuthn.identify_access_account_by_code("A Bad Code", nil)
@@ -1240,7 +1240,7 @@ defmodule IntegrationTest do
              )
   end
 
-  test "Step 3.09: Create API Token for Owned Access Account" do
+  test "Step 3.10: Create API Token for Owned Access Account" do
     {:ok, access_account_id} =
       MscmpSystAuthn.get_access_account_id_by_name("owner1_access_account")
 
@@ -1255,7 +1255,7 @@ defmodule IntegrationTest do
     assert authenticator_result.credential == "owner1_api_token_credential"
   end
 
-  test "Step 3.10: Authenticate API Token for Owned Access Account" do
+  test "Step 3.11: Authenticate API Token for Owned Access Account" do
     {:ok, instance_id} =
       MscmpSystInstance.get_instance_id_by_name("app1_owner1_instance_types_std")
 
