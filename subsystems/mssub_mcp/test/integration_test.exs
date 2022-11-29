@@ -247,7 +247,7 @@ defmodule IntegrationTest do
 
   test "Step 1.08: Stop Instances" do
     MssubMcp.process_operation(fn ->
-      MscmpSystInstance.stop_all_applications([])
+      MscmpSystInstance.stop_all_applications()
     end)
 
     assert true
