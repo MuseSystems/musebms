@@ -420,6 +420,14 @@ defmodule MscmpSystInstance.Runtime.Application do
   defp stop_application_supervisor(application_name, opts) do
     opts = MscmpSystUtils.resolve_options(opts, supervisor_shutdown_timeout: 60_000)
 
+    # TODO: Some tests fail if the following sleep is omitted.  We will want to
+    #       resolve this if only to have confidence in why this extra call + 1ms
+    #       actually makes a difference, but for now hack over it.  The failure
+    #       we see from this in our tests wouldn't indicate a critical failure
+    #       and we've more important things to do right now.
+
+    Process.sleep(1)
+
     DynamicSupervisor.stop(
       {:via, Registry, {@registry, {:application_supervisor, application_name}}},
       :normal,
