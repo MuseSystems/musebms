@@ -9,10 +9,24 @@
 
 DROP DATABASE IF EXISTS mssub_mcp;
 
+DROP DATABASE IF EXISTS test_app_test_owner1_inst1;
+DROP DATABASE IF EXISTS test_app_test_owner1_inst2;
+DROP DATABASE IF EXISTS test_app_test_owner2_inst3;
+DROP DATABASE IF EXISTS test_app_test_owner2_inst4;
+
 DROP ROLE IF EXISTS ms_syst_access;
 DROP ROLE IF EXISTS ms_syst_dba;
 
 DROP ROLE IF EXISTS mssub_mcp_owner;
 DROP ROLE IF EXISTS mssub_mcp_app_access;
+
+DROP ROLE IF EXISTS test_app_test_owner1_inst1_test_app_owner;
+DROP ROLE IF EXISTS test_app_test_owner1_inst1_test_app_access;
+DROP ROLE IF EXISTS test_app_test_owner1_inst2_test_app_owner;
+DROP ROLE IF EXISTS test_app_test_owner1_inst2_test_app_access;
+DROP ROLE IF EXISTS test_app_test_owner2_inst3_test_app_owner;
+DROP ROLE IF EXISTS test_app_test_owner2_inst3_test_app_access;
+DROP ROLE IF EXISTS test_app_test_owner2_inst4_test_app_owner;
+DROP ROLE IF EXISTS test_app_test_owner2_inst4_test_app_access;
 
 \ir bootstrap_database.psql
