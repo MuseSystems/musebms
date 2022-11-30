@@ -71,9 +71,9 @@ defmodule MscmpSystDb.DbTypes.Inet do
   @spec from_postgrex_inet(Postgrex.INET.t()) :: t()
   defdelegate from_postgrex_inet(address), to: Impl.Inet
 
-  @spec to_net_address(DbTypes.Inet.t()) :: IP.addr() | IP.Subnet.t()
+  @spec to_net_address(t()) :: IP.addr() | IP.Subnet.t()
   defdelegate to_net_address(address_or_network), to: Impl.Inet
 
-  @spec from_net_address(IP.addr() | IP.Subnet.t()) :: DbTypes.Inet.t()
+  @spec from_net_address(IP.addr() | IP.Subnet.t()) :: t()
   defdelegate from_net_address(address_or_network), to: Impl.Inet
 end
