@@ -15,6 +15,8 @@ defmodule MssubMcp.Runtime.Application do
 
   @moduledoc false
 
+  require Logger
+
   @supervisor_name MssubMcp.Supervisor
   @datastore_supervisor_name MssubMcp.DatastoreSupervisor
   @default_enums_service_name :mssub_mcp_enums_service
@@ -65,19 +67,36 @@ defmodule MssubMcp.Runtime.Application do
           message: "Unable to start MCP Subsystem",
           cause: error
     end
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      reraise MscmpSystError,
+        code: :undefined_error,
+        message: "Failure trying to start MCP Subsystem",
+        cause: error
   end
 
   defp setup_rate_limiter do
     with :stopped <- :mnesia.stop(),
-         :ok <- :mnesia.create_schema([node()]),
+         :ok <- maybe_create_mnesia_schema(),
          :ok <- :mnesia.start() do
       MscmpSystLimiter.init_rate_limiter()
     else
       error ->
+        IO.inspect(error)
+
         raise MscmpSystError,
           code: :undefined_error,
           message: "Unable to setup Mnesia for MscmpSystLimiter.",
           cause: error
+    end
+  end
+
+  defp maybe_create_mnesia_schema do
+    case :mnesia.create_schema([node()]) do
+      {:error, {_node, {:already_exists, _node_again}}} -> :ok
+      :ok -> :ok
     end
   end
 end
