@@ -51,8 +51,8 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
   # Rate Limit is max attempts per time window in milliseconds expressed as:
   # {<attempts>, <milliseconds>}
 
-  @identifier_default_rate_limit {5, 60_000 * 30}
-  @host_ban_default_rate_limit {30, 60_000 * 60 * 2}
+  @default_identifier_rate_limit {5, 60_000 * 30}
+  @default_host_ban_rate_limit {30, 60_000 * 60 * 2}
   @reset_rate_limit_statuses [:authenticated]
 
   @email_password_extended_auth_ops [
@@ -824,13 +824,13 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
 
   defp check_identifier_rate_limit(identifier, opts) do
     opts =
-      MscmpSystUtils.resolve_options(opts, identifier_rate_limit: @identifier_default_rate_limit)
+      MscmpSystUtils.resolve_options(opts, identifier_rate_limit: @default_identifier_rate_limit)
 
     check_rate_limit(:identifier, identifier, opts[:identifier_rate_limit])
   end
 
   defp check_host_ban_rate_limit(host_addr, opts) do
-    opts = MscmpSystUtils.resolve_options(opts, host_ban_rate_limit: @host_ban_default_rate_limit)
+    opts = MscmpSystUtils.resolve_options(opts, host_ban_rate_limit: @default_host_ban_rate_limit)
 
     check_rate_limit(:host_ban, IP.to_string(host_addr), opts[:host_ban_rate_limit])
   end
