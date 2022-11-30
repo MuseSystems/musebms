@@ -37,9 +37,9 @@ jobs:
           run: mix credo
           working-directory: ./components/system/mscmp_syst_error
 
-        # - name: Run Dialyzer
-        #   run: mix dialyzer
-        #   working-directory: ./components/system/mscmp_syst_error
+        - name: Run Dialyzer
+          run: mix dialyzer
+          working-directory: ./components/system/mscmp_syst_error
 
   mscmp-syst-options:
     runs-on: ubuntu-latest
@@ -71,9 +71,9 @@ jobs:
           run: mix credo
           working-directory: ./components/system/mscmp_syst_options
 
-        # - name: Run Dialyzer
-        #   run: mix dialyzer
-        #   working-directory: ./components/system/mscmp_syst_options
+        - name: Run Dialyzer
+          run: mix dialyzer
+          working-directory: ./components/system/mscmp_syst_options
 
   mscmp-syst-limiter:
     runs-on: ubuntu-latest
@@ -107,6 +107,10 @@ jobs:
 
         - name: Run Credo
           run: mix credo
+          working-directory: ./components/system/mscmp_syst_limiter
+
+        - name: Run Dialyzer
+          run: mix dialyzer
           working-directory: ./components/system/mscmp_syst_limiter
 
   mscmp-syst_db:
@@ -157,9 +161,9 @@ jobs:
           run: mix credo
           working-directory: ./components/system/mscmp_syst_db
 
-        # - name: Run Dialyzer
-        #   run: mix dialyzer
-        #   working-directory: ./components/system/mscmp_syst_db
+        - name: Run Dialyzer
+          run: mix dialyzer
+          working-directory: ./components/system/mscmp_syst_db
 
   mscmp-syst-settings:
     runs-on: ubuntu-latest
@@ -209,9 +213,9 @@ jobs:
           run: mix credo
           working-directory: ./components/system/mscmp_syst_settings
 
-        # - name: Run Dialyzer
-        #   run: mix dialyzer
-        #   working-directory: ./components/system/mscmp_syst_settings
+        - name: Run Dialyzer
+          run: mix dialyzer
+          working-directory: ./components/system/mscmp_syst_settings
 
   mscmp-syst-enums:
     runs-on: ubuntu-latest
@@ -261,9 +265,9 @@ jobs:
           run: mix credo
           working-directory: ./components/system/mscmp_syst_enums
 
-        # - name: Run Dialyzer
-        #   run: mix dialyzer
-        #   working-directory: ./components/system/mscmp_syst_enums
+        - name: Run Dialyzer
+          run: mix dialyzer
+          working-directory: ./components/system/mscmp_syst_enums
 
   mscmp-syst-instance:
     runs-on: ubuntu-latest
@@ -317,9 +321,9 @@ jobs:
           run: mix credo
           working-directory: ./components/system/mscmp_syst_instance
 
-        # - name: Run Dialyzer
-        #   run: mix dialyzer
-        #   working-directory: ./components/system/mscmp_syst_instance
+        - name: Run Dialyzer
+          run: mix dialyzer
+          working-directory: ./components/system/mscmp_syst_instance
 
   mscmp-syst-authn:
     runs-on: ubuntu-latest
@@ -373,9 +377,9 @@ jobs:
           run: mix credo
           working-directory: ./components/system/mscmp_syst_authn
 
-        # - name: Run Dialyzer
-        #   run: mix dialyzer
-        #   working-directory: ./components/system/mscmp_syst_authn
+        - name: Run Dialyzer
+          run: mix dialyzer
+          working-directory: ./components/system/mscmp_syst_authn
 
   msbms-application:
     runs-on: ubuntu-latest
