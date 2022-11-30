@@ -278,6 +278,12 @@ defmodule MscmpSystAuthn.Types do
 
     * `status` - the result of the authentication attempt.
 
+    * `deadline` - the date/time by which the authentication attempt must be
+    resolved by before being considered expired.  Since the authentication
+    process may be interrupted and resumed, it requires that we establish some
+    limit by which the process must be completed.  By default this value will be
+    5 minutes after the time the authentication process starts.
+
     * `access_account_id` - the Access Account record ID if the authentication
     attempt has successfully completed the identification operation.
 
@@ -324,6 +330,7 @@ defmodule MscmpSystAuthn.Types do
   """
   @type authentication_state() :: %{
           required(:status) => authentication_status(),
+          required(:deadline) => DateTime.t(),
           required(:access_account_id) => access_account_id() | nil,
           required(:instance_id) => MscmpSystInstance.Types.instance_id() | nil,
           required(:identity_type_id) => identity_type_id(),
@@ -378,6 +385,9 @@ defmodule MscmpSystAuthn.Types do
     again until the Identity's expiration has been reset.  Note that not all
     Identity records expire.
 
+    * `:rejected_deadline_expired` - the authentication process is rejected
+    because it has taken too long to resolve to a final authentication status.
+
     * `:rejected` - the authentication process has rejected the authentication
     attempt for undeclared reasons.  Examples of reasons that can prompt this
     authentication end state are a user providing a wrong password or no
@@ -393,6 +403,7 @@ defmodule MscmpSystAuthn.Types do
           | :rejected_rate_limited
           | :rejected_validation
           | :rejected_identity_expired
+          | :rejected_deadline_expired
           | :rejected
           | :authenticated
 

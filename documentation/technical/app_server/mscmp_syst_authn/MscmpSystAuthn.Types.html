@@ -1012,6 +1012,7 @@ to the authentication process.</p>
 
           <pre translate="no"><span class="attribute">@type</span> authentication_state() :: %{
   :status =&gt; <a href="#t:authentication_status/0">authentication_status</a>(),
+  :deadline =&gt; <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0">DateTime.t</a>(),
   :access_account_id =&gt; <a href="#t:access_account_id/0">access_account_id</a>() | nil,
   :instance_id =&gt; <a href="../../../../documentation/technical/app_server/mscmp_syst_instance/MscmpSystInstance.Types.html#t:instance_id/0">MscmpSystInstance.Types.instance_id</a>() | nil,
   :identity_type_id =&gt; <a href="#t:identity_type_id/0">identity_type_id</a>(),
@@ -1038,7 +1039,11 @@ attempt if the authentication requires intervention to complete successfully.</p
   </a>
   Attributes
 </h2>
-<ul><li><p><code class="inline">status</code> - the result of the authentication attempt.</p></li><li><p><code class="inline">access_account_id</code> - the Access Account record ID if the authentication
+<ul><li><p><code class="inline">status</code> - the result of the authentication attempt.</p></li><li><p><code class="inline">deadline</code> - the date/time by which the authentication attempt must be
+resolved by before being considered expired.  Since the authentication
+process may be interrupted and resumed, it requires that we establish some
+limit by which the process must be completed.  By default this value will be
+5 minutes after the time the authentication process starts.</p></li><li><p><code class="inline">access_account_id</code> - the Access Account record ID if the authentication
 attempt has successfully completed the identification operation.</p></li><li><p><code class="inline">instance_id</code> - the Instance ID that the Access Account holder is
 attempting to authenticate to.  For certain authentication types, this value
 may initially be <code class="inline">nil</code>, but must be non-nil prior to a successful completion
@@ -1084,6 +1089,7 @@ value indicates the reason for the reset.  Available values are defined in
   | :rejected_rate_limited
   | :rejected_validation
   | :rejected_identity_expired
+  | :rejected_deadline_expired
   | :rejected
   | :authenticated</pre>
 
@@ -1110,7 +1116,8 @@ holder.  This is the case with newly created Email Identities, for example.</p><
 authentication attempt because the Identity record used to identity the
 Access Account is beyond its configured expiration date and may not be use
 again until the Identity's expiration has been reset.  Note that not all
-Identity records expire.</p></li><li><p><code class="inline">:rejected</code> - the authentication process has rejected the authentication
+Identity records expire.</p></li><li><p><code class="inline">:rejected_deadline_expired</code> - the authentication process is rejected
+because it has taken too long to resolve to a final authentication status.</p></li><li><p><code class="inline">:rejected</code> - the authentication process has rejected the authentication
 attempt for undeclared reasons.  Examples of reasons that can prompt this
 authentication end state are a user providing a wrong password or no
 Instance to access being identified.</p></li><li><p><code class="inline">:authenticated</code> - the authentication process has finished successfully

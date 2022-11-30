@@ -55,6 +55,8 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
   @default_host_ban_rate_limit {30, 60_000 * 60 * 2}
   @reset_rate_limit_statuses [:authenticated]
 
+  @default_deadline_minutes 5
+
   @email_password_extended_auth_ops [
     :require_mfa,
     :require_mfa_setup,
@@ -104,10 +106,17 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
         ) ::
           {:ok, Types.authentication_state()} | {:error, MscmpSystError.t()}
   def authenticate_email_password(email_addr, pwd_text, host_addr, opts) do
-    opts = MscmpSystUtils.resolve_options(opts, owning_owner_id: nil, instance_id: nil)
+    opts =
+      MscmpSystUtils.resolve_options(opts,
+        owning_owner_id: nil,
+        instance_id: nil,
+        deadline_minutes: @default_deadline_minutes
+      )
+
+    authentication_deadline = DateTime.utc_now() |> DateTime.add(opts[:deadline_minutes], :minute)
 
     %{id: identity_type_id} =
-      MscmpSystEnums.get_enum_item_by_name("identity_types", "identity_types_sysdef_email")
+      Impl.Identity.get_identity_type_by_name("identity_types_sysdef_email")
 
     resolved_email_addr =
       email_addr
@@ -116,6 +125,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
 
     not_started_auth_state = %{
       status: :not_started,
+      deadline: authentication_deadline,
       access_account_id: nil,
       instance_id: opts[:instance_id],
       identity_type_id: identity_type_id,
@@ -146,6 +156,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     preliminary_auth_state =
       auth_state
       |> maybe_start_email_password_authentication()
+      |> confirm_deadline()
       |> maybe_clear_require_instance(opts[:instance_id])
       |> confirm_identifier_rate_limit(opts)
       |> confirm_global_network_rules()
@@ -251,13 +262,19 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
           {:ok, Types.authentication_state()} | {:error, MscmpSystError.t()}
 
   def authenticate_api_token(identifier, token, host_addr, instance_id, opts) do
-    opts = MscmpSystUtils.resolve_options(opts, owning_owner_id: nil)
+    opts =
+      MscmpSystUtils.resolve_options(opts,
+        owning_owner_id: nil,
+        deadline_minutes: @default_deadline_minutes
+      )
 
-    %{id: identity_type_id} =
-      MscmpSystEnums.get_enum_item_by_name("identity_types", "identity_types_sysdef_api")
+    authentication_deadline = DateTime.utc_now() |> DateTime.add(opts[:deadline_minutes], :minute)
+
+    %{id: identity_type_id} = Impl.Identity.get_identity_type_by_name("identity_types_sysdef_api")
 
     pending_auth_state = %{
       status: :pending,
+      deadline: authentication_deadline,
       access_account_id: nil,
       instance_id: instance_id,
       identity_type_id: identity_type_id,
@@ -276,6 +293,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
           {:ok, Types.authentication_state()} | {:error, MscmpSystError.t()}
   def authenticate_api_token(auth_state, opts) do
     auth_state
+    |> confirm_deadline()
     |> confirm_identifier_rate_limit(opts)
     |> confirm_global_network_rules()
     |> confirm_api_token_identity()
@@ -339,13 +357,20 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
           {:ok, Types.authentication_state()} | {:error, MscmpSystError.t()}
 
   def authenticate_validation_token(identifier, token, host_addr, opts) do
-    opts = MscmpSystUtils.resolve_options(opts, owning_owner_id: nil)
+    opts =
+      MscmpSystUtils.resolve_options(opts,
+        owning_owner_id: nil,
+        deadline_minutes: @default_deadline_minutes
+      )
+
+    authentication_deadline = DateTime.utc_now() |> DateTime.add(opts[:deadline_minutes], :minute)
 
     %{id: identity_type_id} =
-      MscmpSystEnums.get_enum_item_by_name("identity_types", "identity_types_sysdef_validation")
+      Impl.Identity.get_identity_type_by_name("identity_types_sysdef_validation")
 
     pending_auth_state = %{
       status: :pending,
+      deadline: authentication_deadline,
       access_account_id: nil,
       instance_id: nil,
       identity_type_id: identity_type_id,
@@ -364,6 +389,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
           {:ok, Types.authentication_state()} | {:error, MscmpSystError.t()}
   def authenticate_validation_token(auth_state, opts) do
     auth_state
+    |> confirm_deadline()
     |> confirm_identifier_rate_limit(opts)
     |> confirm_global_network_rules()
     |> confirm_validation_identity()
@@ -440,16 +466,20 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
         ) ::
           {:ok, Types.authentication_state()} | {:error, MscmpSystError.t()}
   def authenticate_recovery_token(identifier, token, host_addr, opts) do
-    opts = MscmpSystUtils.resolve_options(opts, owning_owner_id: nil)
+    opts =
+      MscmpSystUtils.resolve_options(opts,
+        owning_owner_id: nil,
+        deadline_minutes: @default_deadline_minutes
+      )
+
+    authentication_deadline = DateTime.utc_now() |> DateTime.add(opts[:deadline_minutes], :minute)
 
     %{id: identity_type_id} =
-      MscmpSystEnums.get_enum_item_by_name(
-        "identity_types",
-        "identity_types_sysdef_password_recovery"
-      )
+      Impl.Identity.get_identity_type_by_name("identity_types_sysdef_password_recovery")
 
     pending_auth_state = %{
       status: :pending,
+      deadline: authentication_deadline,
       access_account_id: nil,
       instance_id: nil,
       identity_type_id: identity_type_id,
@@ -468,6 +498,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
           {:ok, Types.authentication_state()} | {:error, MscmpSystError.t()}
   def authenticate_recovery_token(auth_state, opts) do
     auth_state
+    |> confirm_deadline()
     |> confirm_identifier_rate_limit(opts)
     |> confirm_global_network_rules()
     |> confirm_credential_recovery()
@@ -859,9 +890,32 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     do: MscmpSystLimiter.delete_counters(counter_type, target)
 
   defp finalize_authentication(%{status: :pending, pending_operations: []} = auth_state),
-    do: Map.put(auth_state, :status, :authenticated)
+    do: auth_state |> Map.put(:status, :authenticated)
 
   defp finalize_authentication(auth_state), do: auth_state
+
+  # Unlike most other confirm steps where we check to see if the operation is
+  # in the pending_operations, for confirm_deadline we always check for any
+  # pending status authentication state.  This is because the expiration is
+  # an absolute check which shouldn't be bypassed unless the authentication
+  # state has already been resolved to a different state.
+
+  defp confirm_deadline(%{status: :pending} = auth_state) do
+    %{deadline: deadline} = auth_state
+    is_deadline_expired = DateTime.compare(DateTime.utc_now(), deadline) == :gt
+
+    case is_deadline_expired do
+      true ->
+        auth_state
+        |> Map.merge(%{status: :rejected_deadline_expired, pending_operations: []})
+        |> cleanse_auth_state()
+
+      false ->
+        auth_state
+    end
+  end
+
+  defp confirm_deadline(auth_state), do: auth_state
 
   defp cleanse_auth_state(auth_state) do
     # The credential clear should have happened at credential validation time,
