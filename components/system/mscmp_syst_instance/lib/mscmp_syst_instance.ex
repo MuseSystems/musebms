@@ -215,8 +215,8 @@ defmodule MscmpSystInstance do
 
       iex> %Msdata.SystEnumItems{} = MscmpSystInstance.get_instance_type_default()
   """
-  @spec get_instance_type_default() :: Msdata.SystEnumItems.t() | nil
-  defdelegate get_instance_type_default(), to: Impl.InstanceType
+  @spec get_instance_type_default :: Msdata.SystEnumItems.t()
+  defdelegate get_instance_type_default, to: Impl.InstanceType
 
   @doc section: :instance_type_data
   @doc """
@@ -410,7 +410,7 @@ defmodule MscmpSystInstance do
       ...>   MscmpSystInstance.get_owner_state_default(:owner_states_inactive)
   """
   @spec get_owner_state_default(Types.owner_state_functional_types() | nil) ::
-          Msdata.SystEnumItems.t() | nil
+          Msdata.SystEnumItems.t()
   defdelegate get_owner_state_default(functional_type \\ nil), to: Impl.Owner
 
   @doc section: :owner_data
@@ -575,7 +575,7 @@ defmodule MscmpSystInstance do
       ...>   MscmpSystInstance.get_instance_state_default(:instance_states_active)
   """
   @spec get_instance_state_default(Types.instance_state_functional_types() | nil) ::
-          Msdata.SystEnumItems.t() | nil
+          Msdata.SystEnumItems.t()
   defdelegate get_instance_state_default(functional_type \\ nil), to: Impl.InstanceState
 
   @doc section: :instance_data

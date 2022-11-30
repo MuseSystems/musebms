@@ -32,12 +32,12 @@ defmodule MscmpSystAuthn.Impl.Identity do
 
   # General Identity functionality
 
-  @spec get_identity_type_by_name(Types.identity_type_name()) :: MscmpSystEnumItems.t() | nil
+  @spec get_identity_type_by_name(Types.identity_type_name()) :: Msdata.SystEnumItems.t() | nil
   def get_identity_type_by_name(identity_type_name) when is_binary(identity_type_name),
     do: MscmpSystEnums.get_enum_item_by_name("identity_types", identity_type_name)
 
   @spec get_identity_type_default(Types.identity_type_functional_types() | nil) ::
-          MscmpSystEnumItems.t() | nil
+          Msdata.SystEnumItems.t()
   def get_identity_type_default(nil), do: MscmpSystEnums.get_default_enum_item("identity_types")
 
   def get_identity_type_default(functional_type) when is_atom(functional_type) do

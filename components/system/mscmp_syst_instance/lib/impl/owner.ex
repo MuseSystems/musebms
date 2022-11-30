@@ -70,7 +70,7 @@ defmodule MscmpSystInstance.Impl.Owner do
     do: MscmpSystEnums.get_enum_item_by_name("owner_states", owner_state_name)
 
   @spec get_owner_state_default(Types.owner_state_functional_types() | nil) ::
-          Msdata.SystEnumItems.t() | nil
+          Msdata.SystEnumItems.t()
   def get_owner_state_default(nil), do: MscmpSystEnums.get_default_enum_item("owner_states")
 
   def get_owner_state_default(functional_type) when is_atom(functional_type) do

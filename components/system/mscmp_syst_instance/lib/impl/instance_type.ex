@@ -40,8 +40,8 @@ defmodule MscmpSystInstance.Impl.InstanceType do
   def get_instance_type_by_name(instance_type_name),
     do: MscmpSystEnums.get_enum_item_by_name("instance_types", instance_type_name)
 
-  @spec get_instance_type_default() :: Msdata.SystEnumItems.t() | nil
-  def get_instance_type_default(), do: MscmpSystEnums.get_default_enum_item("instance_types")
+  @spec get_instance_type_default :: Msdata.SystEnumItems.t()
+  def get_instance_type_default, do: MscmpSystEnums.get_default_enum_item("instance_types")
 
   @spec update_instance_type(Types.instance_type_name(), Types.instance_type_params()) ::
           {:ok, Msdata.SystEnumItems.t()} | {:error, MscmpSystError.t()}
