@@ -17,6 +17,6 @@ config :mssub_mcp,
   enums_service_name: :mssub_mcp_enums_service,
   settings_service_name: :mssub_mcp_settings_service
 
-config :mnesia, dir: ".mnesia"
+config :mnesia, dir: '.mnesia'
 
 import_config "#{Mix.env()}.exs"
