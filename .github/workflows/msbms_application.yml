@@ -481,11 +481,11 @@ jobs:
           run: mix test
           working-directory: ./application/msbms
 
-        - name: Run Credo
-          run: mix credo
-          working-directory: ./application/msbms
-
-        # - name: Run Dialyzer
-        #   run: mix dialyzer
+        # - name: Run Credo
+        #   run: mix credo
         #   working-directory: ./application/msbms
+
+        - name: Run Dialyzer
+          run: mix dialyzer
+          working-directory: ./application/msbms
 
