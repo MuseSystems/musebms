@@ -341,7 +341,7 @@ defmodule MscmpSystAuthn do
       iex> MscmpSystAuthn.get_identity_type_by_name("nonexistent_type")
       nil
   """
-  @spec get_identity_type_by_name(Types.identity_type_name()) :: MscmpSystEnumItems.t() | nil
+  @spec get_identity_type_by_name(Types.identity_type_name()) :: Msdata.SystEnumItems.t() | nil
   defdelegate get_identity_type_by_name(identity_type_name), to: Impl.Identity
 
   @doc section: :enumerations_data
@@ -372,7 +372,7 @@ defmodule MscmpSystAuthn do
       ...>   MscmpSystAuthn.get_identity_type_default(:identity_types_api)
   """
   @spec get_identity_type_default(Types.identity_type_functional_types() | nil) ::
-          MscmpSystEnumItems.t() | nil
+          Msdata.SystEnumItems.t()
   defdelegate get_identity_type_default(functional_type \\ nil), to: Impl.Identity
 
   @doc section: :enumerations_data
@@ -399,7 +399,8 @@ defmodule MscmpSystAuthn do
       iex> MscmpSystAuthn.get_credential_type_by_name("nonexistent_type")
       nil
   """
-  @spec get_credential_type_by_name(Types.credential_type_name()) :: MscmpSystEnumItems.t() | nil
+  @spec get_credential_type_by_name(Types.credential_type_name()) ::
+          Msdata.SystEnumItems.t() | nil
   defdelegate get_credential_type_by_name(credential_type_name), to: Impl.Credential
 
   @doc section: :enumerations_data
@@ -430,7 +431,7 @@ defmodule MscmpSystAuthn do
       ...>   MscmpSystAuthn.get_credential_type_default(:credential_types_mfa_totp)
   """
   @spec get_credential_type_default(Types.credential_type_functional_types() | nil) ::
-          MscmpSystEnumItems.t() | nil
+          Msdata.SystEnumItems.t()
   defdelegate get_credential_type_default(functional_type \\ nil), to: Impl.Credential
 
   # ==============================================================================================
@@ -467,7 +468,7 @@ defmodule MscmpSystAuthn do
       nil
   """
   @spec get_access_account_state_by_name(Types.access_account_state_name()) ::
-          MscmpSystEnumItems.t() | nil
+          Msdata.SystEnumItems.t() | nil
   defdelegate get_access_account_state_by_name(access_account_state_name), to: Impl.AccessAccount
 
   @doc section: :access_account_data
@@ -499,7 +500,7 @@ defmodule MscmpSystAuthn do
       ...>   MscmpSystAuthn.get_access_account_state_default(:access_account_states_inactive)
   """
   @spec get_access_account_state_default(Types.access_account_state_functional_types() | nil) ::
-          MscmpSystEnumItems.t() | nil
+          Msdata.SystEnumItems.t()
   defdelegate get_access_account_state_default(functional_type \\ nil), to: Impl.AccessAccount
 
   @doc section: :access_account_data

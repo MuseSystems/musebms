@@ -582,7 +582,7 @@ defmodule MscmpSystAuthn.Types do
     functionality.
 
   """
-  @type credential_functional_types() ::
+  @type credential_type_functional_types() ::
           :credential_types_password
           | :credential_types_mfa_totp
           | :credential_types_mfa_totp_recovery_code

@@ -57,12 +57,13 @@ defmodule MscmpSystAuthn.Impl.Credential do
 
   # General Credential functionality
 
-  @spec get_credential_type_by_name(Types.credential_type_name()) :: MscmpSystEnumItems.t() | nil
+  @spec get_credential_type_by_name(Types.credential_type_name()) ::
+          Msdata.SystEnumItems.t() | nil
   def get_credential_type_by_name(credential_type_name) when is_binary(credential_type_name),
     do: MscmpSystEnums.get_enum_item_by_name("credential_types", credential_type_name)
 
   @spec get_credential_type_default(Types.credential_type_functional_types() | nil) ::
-          MscmpSystEnumItems.t() | nil
+          Msdata.SystEnumItems.t()
   def get_credential_type_default(nil),
     do: MscmpSystEnums.get_default_enum_item("credential_types")
 

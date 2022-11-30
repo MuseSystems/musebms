@@ -20,7 +20,7 @@ defmodule MscmpSystInstance.Impl.InstanceState do
     do: MscmpSystEnums.get_enum_item_by_name("instance_states", instance_state_name)
 
   @spec get_instance_state_default(Types.instance_state_functional_types() | nil) ::
-          Msdata.SystEnumItems.t() | nil
+          Msdata.SystEnumItems.t()
   def get_instance_state_default(nil), do: MscmpSystEnums.get_default_enum_item("instance_states")
 
   def get_instance_state_default(functional_type) when is_atom(functional_type) do
