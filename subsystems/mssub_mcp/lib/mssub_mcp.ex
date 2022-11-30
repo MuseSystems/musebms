@@ -13,10 +13,9 @@
 defmodule MssubMcp do
   alias MssubMcp.Runtime
 
-  @moduledoc """
-  API for the Master Control Program Subsystem.
+  @external_resource "README.md"
 
-  """
+  @moduledoc File.read!(Path.join([__DIR__, "..", "README.md"]))
 
   require Logger
 

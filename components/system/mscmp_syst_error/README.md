@@ -1,21 +1,14 @@
-# MscmpSystError
+# MscmpSystError - Exception Handling Component
 
-**TODO: Add description**
+API for working with the MuseBMS error reporting subsystem.
 
-## Installation
+This module defines a nested structure for reporting errors in contexts where a result should be
+represented by an error result.  By capturing lower level errors and reporting them in a
+standard way, various application errors, especially non-fatal errors, can be handled as
+appropriate and logged for later analysis.
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `mscmp_syst_error` to your list of dependencies in `mix.exs`:
+The basic form of a reportable application error is: `{:error, %MscmpSystError{}}` where
+`%MscmpSystError{}` contains basic fields to identify the kind of error, the source of the
+error, and other error related data.
 
-```elixir
-def deps do
-  [
-    {:mscmp_syst_error, "~> 0.1.0"}
-  ]
-end
-```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/mscmp_syst_error>.
-
+Functions in this API are used to work with the returned exception.

@@ -1,21 +1,21 @@
-# MscmpSystSettings
+# MscmpSystSettings - User Configuration Management
 
-**TODO: Add description**
+A user options configuration management service.
 
-## Installation
+The Settings Service provides caching and management functions for user
+configurable options which govern how the application operates.  Multiple
+Settings Service instances may be in operation depending on the needs of the
+application; for example, in the case of multi-tenancy, each tenant will have
+its own instance of the Setting Service running since each tenant's needs of
+the application may unique.
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `mscmp_syst_settings` to your list of dependencies in `mix.exs`:
+On startup, the Settings Service creates an in memory cache and populates the
+cache from the database.  Inquiries for settings are then served from the
+cache rather than the database as needed.  Operations which change the
+Settings data are written to the database and then updated in the cache.
 
-```elixir
-def deps do
-  [
-    {:mscmp_syst_settings, "~> 0.1.0"}
-  ]
-end
-```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/mscmp_syst_settings>.
-
+Settings maintained by this service may be changed by users at any time while
+the application is running.  Therefore, any logic depending on the Settings
+from this service should be written as to be insensitive to such changes.
+Logic should avoid multiple retrievals of the same setting during any one
+transaction.

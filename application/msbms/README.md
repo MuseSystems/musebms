@@ -1,4 +1,4 @@
-# Msbms
+# Msbms - Muse Systems Business Management Systems
 
 To start your Phoenix server:
 

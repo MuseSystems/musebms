@@ -1,12 +1,12 @@
 defmodule MscmpSystDb do
-  @moduledoc """
-  The public API for database interactions.
-  """
-
   alias MscmpSystDb.Impl.Dba
   alias MscmpSystDb.Impl.Privileged
   alias MscmpSystDb.Runtime.Datastore
   alias MscmpSystDb.Types
+
+  @external_resource "README.md"
+
+  @moduledoc File.read!(Path.join([__DIR__, "..", "README.md"]))
 
   @doc section: :datastore_management
   @doc """

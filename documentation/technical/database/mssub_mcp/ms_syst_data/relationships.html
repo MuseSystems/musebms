@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>mssub_mcp Database</title>
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
+        <!-- Bootstrap 3.3.5 -->
+        <link rel="stylesheet" href="bower/admin-lte/bootstrap/css/bootstrap.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="bower/font-awesome/css/font-awesome.min.css">
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="bower/ionicons/css/ionicons.min.css">
+        <!-- DataTables -->
+        <link rel="stylesheet" href="bower/datatables.net-bs/css/dataTables.bootstrap.min.css">
+        <link rel="stylesheet" href="bower/datatables.net-buttons-bs/css/buttons.bootstrap.min.css">
+        <!-- Code Mirror -->
+        <link rel="stylesheet" href="bower/codemirror/codemirror.css">
+        <!-- Fonts -->
+        <link href='fonts/indieflower/indie-flower.css' rel='stylesheet' type='text/css'>
+        <link href='fonts/source-sans-pro/source-sans-pro.css' rel='stylesheet' type='text/css'>
+
+        <!-- Theme style -->
+        <link rel="stylesheet" href="bower/admin-lte/dist/css/AdminLTE.min.css">
+        <!-- Salvattore -->
+        <link rel="stylesheet" href="bower/salvattore/salvattore.css">
+        <!-- AdminLTE Skins. Choose a skin from the css/skins
+           folder instead of downloading all of them to reduce the load. -->
+        <link rel="stylesheet" href="bower/admin-lte/dist/css/skins/_all-skins.min.css">
+        <!-- SchemaSpy -->
+        <link rel="stylesheet" href="schemaSpy.css">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="bower/html5shiv/html5shiv.min.js"></script>
+        <script src="bower/respond/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+    <body class="hold-transition skin-blue layout-top-nav">
+        <div class="wrapper">
+            <header class="main-header">
+                <nav class="navbar navbar-static-top">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <a href="../index.html" class="navbar-brand"><b>mssub_mcp</b> Database</a>
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
+                        </div>
+
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+                            <ul class="nav navbar-nav">
+                                <li><a href="index.html">Tables <span class="sr-only">(current)</span></a></li>
+                                <li><a href="columns.html" title="All of the columns in the schema">Columns</a></li>
+                                <li><a href="constraints.html" title="Useful for diagnosing error messages that just give constraint name or number">Constraints</a></li>
+                                <li><a href="relationships.html" title="Diagram of table relationships">Relationships</a></li>
+                                <li><a href="orphans.html" title="View of tables with neither parents nor children">Orphan&nbsp;Tables</a></li>
+                                <li><a href="anomalies.html" title="Things that might not be quite right">Anomalies</a></li>
+                                <li><a href="routines.html" title="Procedures and functions">Routines</a></li>
+                            </ul>
+                        </div>
+                        <!-- /.navbar-collapse -->
+                        <!-- Navbar Right Menu -->
+                    </div>
+                    <!-- /.container-fluid -->
+                </nav>
+            </header>
+            <!-- Main content -->
+            <!-- Full Width Column -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <h1>All Relationships</h1>
+                </section>
+                <!-- Main content -->
+                <section class="content">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <i class="fa fa-code-fork"></i>
+                            <h3 class="box-title">Diagrams</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="nav-tabs-custom">
+                                <!-- Tabs within a box -->
+                                <h5>By default only columns that are primary keys, foreign keys or indexes are shown.</h5>
+                                <ul class="nav nav-tabs pull-left ui-sortable-handle">
+                                    <li class="active"><a href="#compactDegreeImg-chart" data-toggle="tab" aria-expanded="true">Compact</a></li>
+                                    <li class=""><a href="#largeDegreeImg-chart" data-toggle="tab" aria-expanded="true">Large</a></li>
+                                </ul>
+                                <div class="tab-content no-padding">
+                                    <div class="chart tab-pane active" id="compactDegreeImg-chart" style="position: relative; overflow-x:auto;">
+                                        <map id="compactRelationshipsDiagram" name="compactRelationshipsDiagram">
+<area shape="rect" id="node1" href="tables/syst_access_account_instance_assocs.html" target="_top" title="syst_access_account_instance_assocs" alt="" coords="2085,255,2485,431">
+<area shape="rect" id="node2" href="tables/syst_access_accounts.html" target="_top" title="syst_access_accounts" alt="" coords="1725,8,2005,214">
+<area shape="rect" id="node19" href="tables/syst_instances.html" target="_top" title="syst_instances" alt="" coords="1725,684,2005,1007">
+<area shape="rect" id="node7" href="tables/syst_enum_items.html" target="_top" title="syst_enum_items" alt="" coords="1040,584,1320,819">
+<area shape="rect" id="node22" href="tables/syst_owners.html" target="_top" title="syst_owners" alt="" coords="1364,366,1644,571">
+<area shape="rect" id="node3" href="tables/syst_application_contexts.html" target="_top" title="syst_application_contexts" alt="" coords="1714,1024,2015,1230">
+<area shape="rect" id="node4" href="tables/syst_applications.html" target="_top" title="syst_applications" alt="" coords="1364,1112,1644,1288">
+<area shape="rect" id="node5" href="tables/syst_credentials.html" target="_top" title="syst_credentials" alt="" coords="2529,362,2809,567">
+<area shape="rect" id="node14" href="tables/syst_identities.html" target="_top" title="syst_identities" alt="" coords="2145,520,2425,755">
+<area shape="rect" id="node6" href="tables/syst_enum_functional_types.html" target="_top" title="syst_enum_functional_types" alt="" coords="671,724,989,930">
+<area shape="rect" id="node8" href="tables/syst_enums.html" target="_top" title="syst_enums" alt="" coords="340,799,620,975">
+<area shape="rect" id="node9" href="tables/syst_feature_enum_assigns.html" target="_top" title="syst_feature_enum_assigns" alt="" coords="673,960,987,1136">
+<area shape="rect" id="node10" href="tables/syst_feature_map.html" target="_top" title="syst_feature_map" alt="" coords="340,1016,620,1251">
+<area shape="rect" id="node11" href="tables/syst_feature_map_levels.html" target="_top" title="syst_feature_map_levels" alt="" coords="5,1104,296,1280">
+<area shape="rect" id="node12" href="tables/syst_feature_relation_assigns.html" target="_top" title="syst_feature_relation_assigns" alt="" coords="664,1168,996,1344">
+<area shape="rect" id="node24" href="tables/syst_relations.html" target="_top" title="syst_relations" alt="" coords="340,1268,620,1503">
+<area shape="rect" id="node13" href="tables/syst_feature_setting_assigns.html" target="_top" title="syst_feature_setting_assigns" alt="" coords="667,1406,993,1582">
+<area shape="rect" id="node25" href="tables/syst_settings.html" target="_top" title="syst_settings" alt="" coords="340,1520,620,1696">
+<area shape="rect" id="node15" href="tables/syst_instance_contexts.html" target="_top" title="syst_instance_contexts" alt="" coords="2145,966,2425,1171">
+<area shape="rect" id="node16" href="tables/syst_instance_network_rules.html" target="_top" title="syst_instance_network_rules" alt="" coords="2123,772,2448,948">
+<area shape="rect" id="node17" href="tables/syst_instance_type_applications.html" target="_top" title="syst_instance_type_applications" alt="" coords="1688,1247,2041,1423">
+<area shape="rect" id="node18" href="tables/syst_instance_type_contexts.html" target="_top" title="syst_instance_type_contexts" alt="" coords="2123,1206,2447,1382">
+<area shape="rect" id="node20" href="tables/syst_owner_network_rules.html" target="_top" title="syst_owner_network_rules" alt="" coords="1711,231,2018,407">
+<area shape="rect" id="node21" href="tables/syst_owner_password_rules.html" target="_top" title="syst_owner_password_rules" alt="" coords="1706,424,2023,571">
+<area shape="rect" id="node23" href="tables/syst_password_history.html" target="_top" title="syst_password_history" alt="" coords="2145,84,2425,231">
+</map>
+                                        <a name='diagram'><img id="compactDegreeImg" src="diagrams/summary/relationships.real.compact.png" usemap="#compactRelationshipsDiagram" class="diagram" border="0" align="left"></a>
+                                    </div>
+                                    <div class="chart tab-pane " id="largeDegreeImg-chart" style="position: relative; overflow-x:auto;">
+                                        <map id="largeRelationshipsDiagram" name="largeRelationshipsDiagram">
+<area shape="rect" id="node1" href="tables/syst_access_account_instance_assocs.html" target="_top" title="syst_access_account_instance_assocs" alt="" coords="2085,524,2485,998">
+<area shape="rect" id="node2" href="tables/syst_access_accounts.html" target="_top" title="syst_access_accounts" alt="" coords="1725,12,2005,457">
+<area shape="rect" id="node19" href="tables/syst_instances.html" target="_top" title="syst_instances" alt="" coords="1725,1701,2005,2293">
+<area shape="rect" id="node7" href="tables/syst_enum_items.html" target="_top" title="syst_enum_items" alt="" coords="1040,1601,1320,2310">
+<area shape="rect" id="node22" href="tables/syst_owners.html" target="_top" title="syst_owners" alt="" coords="1364,996,1644,1382">
+<area shape="rect" id="node3" href="tables/syst_application_contexts.html" target="_top" title="syst_application_contexts" alt="" coords="1714,2310,2015,2814">
+<area shape="rect" id="node4" href="tables/syst_applications.html" target="_top" title="syst_applications" alt="" coords="1364,2398,1644,2785">
+<area shape="rect" id="node5" href="tables/syst_credentials.html" target="_top" title="syst_credentials" alt="" coords="2529,1044,2809,1518">
+<area shape="rect" id="node14" href="tables/syst_identities.html" target="_top" title="syst_identities" alt="" coords="2145,1202,2425,1736">
+<area shape="rect" id="node6" href="tables/syst_enum_functional_types.html" target="_top" title="syst_enum_functional_types" alt="" coords="671,1770,989,2245">
+<area shape="rect" id="node8" href="tables/syst_enums.html" target="_top" title="syst_enums" alt="" coords="340,1845,620,2378">
+<area shape="rect" id="node9" href="tables/syst_feature_enum_assigns.html" target="_top" title="syst_feature_enum_assigns" alt="" coords="673,2305,987,2662">
+<area shape="rect" id="node10" href="tables/syst_feature_map.html" target="_top" title="syst_feature_map" alt="" coords="340,2420,620,3041">
+<area shape="rect" id="node11" href="tables/syst_feature_map_levels.html" target="_top" title="syst_feature_map_levels" alt="" coords="5,2537,296,3041">
+<area shape="rect" id="node12" href="tables/syst_feature_relation_assigns.html" target="_top" title="syst_feature_relation_assigns" alt="" coords="664,2753,996,3110">
+<area shape="rect" id="node24" href="tables/syst_relations.html" target="_top" title="syst_relations" alt="" coords="340,3058,620,3474">
+<area shape="rect" id="node13" href="tables/syst_feature_setting_assigns.html" target="_top" title="syst_feature_setting_assigns" alt="" coords="667,3274,993,3632">
+<area shape="rect" id="node25" href="tables/syst_settings.html" target="_top" title="syst_settings" alt="" coords="340,3492,620,4377">
+<area shape="rect" id="node15" href="tables/syst_instance_contexts.html" target="_top" title="syst_instance_contexts" alt="" coords="2145,2245,2425,2720">
+<area shape="rect" id="node16" href="tables/syst_instance_network_rules.html" target="_top" title="syst_instance_network_rules" alt="" coords="2123,1753,2448,2228">
+<area shape="rect" id="node17" href="tables/syst_instance_type_applications.html" target="_top" title="syst_instance_type_applications" alt="" coords="1688,2832,2041,3189">
+<area shape="rect" id="node18" href="tables/syst_instance_type_contexts.html" target="_top" title="syst_instance_type_contexts" alt="" coords="2123,2781,2447,3168">
+<area shape="rect" id="node20" href="tables/syst_owner_network_rules.html" target="_top" title="syst_owner_network_rules" alt="" coords="1711,474,2018,949">
+<area shape="rect" id="node21" href="tables/syst_owner_password_rules.html" target="_top" title="syst_owner_password_rules" alt="" coords="1706,966,2023,1588">
+<area shape="rect" id="node23" href="tables/syst_password_history.html" target="_top" title="syst_password_history" alt="" coords="2145,88,2425,445">
+</map>
+                                        <a name='diagram'><img id="largeDegreeImg" src="diagrams/summary/relationships.real.large.png" usemap="#largeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- /.box-body -->
+                    </div>
+                </section>
+            </div>
+            <!-- /.content-wrapper -->
+            <footer class="main-footer">
+                <div>
+                    <div class="pull-right hidden-xs">
+                        <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
+                        <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
+                    </div>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.1.0</a></strong>
+                </div>
+                <!-- /.container -->
+            </footer>
+        </div>
+        <!-- ./wrapper -->
+
+        <!-- jQuery 2.2.3 -->
+        <script src="bower/admin-lte/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script src="bower/admin-lte/plugins/jQueryUI/jquery-ui.min.js"></script>
+        <!-- Bootstrap 3.3.5 -->
+        <script src="bower/admin-lte/bootstrap/js/bootstrap.min.js"></script>
+        <!-- DataTables -->
+        <script src="bower/datatables.net/jquery.dataTables.min.js"></script>
+        <script src="bower/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+        <script src="bower/datatables.net-buttons/dataTables.buttons.min.js"></script>
+        <script src="bower/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+        <script src="bower/datatables.net-buttons/buttons.html5.min.js"></script>
+        <script src="bower/datatables.net-buttons/buttons.print.min.js"></script>
+        <script src="bower/datatables.net-buttons/buttons.colVis.min.js"></script>
+        <!-- SheetJS -->
+        <script src="bower/js-xlsx/xlsx.full.min.js"></script>
+        <!-- pdfmake -->
+        <script src="bower/pdfmake/pdfmake.min.js"></script>
+        <script src="bower/pdfmake/vfs_fonts.js"></script>
+        <!-- SlimScroll -->
+        <script src="bower/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+        <!-- FastClick -->
+        <script src="bower/admin-lte/plugins/fastclick/fastclick.js"></script>
+        <!-- Salvattore -->
+        <script src="bower/salvattore/salvattore.min.js"></script>
+        <!-- AnchorJS -->
+        <script src="bower/anchor-js/anchor.min.js"></script>
+        <!-- CodeMirror -->
+        <script src="bower/codemirror/codemirror.js"></script>
+        <script src="bower/codemirror/sql.js"></script>
+        <!-- AdminLTE App -->
+        <script src="bower/admin-lte/dist/js/app.min.js"></script>
+        <script src="relationships.js"></script>
+        <script src="schemaSpy.js"></script>
+    </body>
+</html>

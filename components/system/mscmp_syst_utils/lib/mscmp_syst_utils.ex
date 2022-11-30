@@ -13,9 +13,9 @@
 defmodule MscmpSystUtils do
   alias MscmpSystUtils.Impl
 
-  @moduledoc """
-  Common utility functions generally useful across components.
-  """
+  @external_resource "README.md"
+
+  @moduledoc File.read!(Path.join([__DIR__, "..", "README.md"]))
 
   @doc section: :options_management
   @doc """

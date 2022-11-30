@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<database name="mssub_mcp" schema="ms_syst_db" type="PostgreSQL - 15.1 (Ubuntu 15.1-1.pgdg22.04+1)">
+   <tables>
+      <table name="migrations" numRows="1" remarks="Records which database updates have been applied to the system.  Available&#10;        database migrations are stored in a file system directory where individual files&#10;        are named starting with the version number taking a fixed number of numeric&#10;        digits.  In the simple case, the migration process will get a sorted listing of&#10;        available migrations from the migrations file system directory and compare the&#10;        version of the file with the minimum version number not already checked against&#10;        the maximum version applied to the database according to this table.  If the&#10;        file version is greater, the migration is applied to the database, otherwise the&#10;        file is skipped and the version checking process repeats until there are no more&#10;        migration files to evaluate.&#10;&#10;        Finally, during the migration process, the ms_syst_db.migrations&#10;        record is created once the corresponding migration file has been successfully&#10;        applied to the database.  Both the migration file and the&#10;        ms_syst_db.migrations record should be processed in the same&#10;        database transaction." schema="ms_syst_db" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v1()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;        system." size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="release" nullable="false" remarks="The release number to which the migration applies.  The release number is any&#10;        value in the range of 1 to 1295 (01 - ZZ in base36 notation).  Release 00 is a&#10;        special value used by the application and should not be used for any other&#10;        purpose." size="5" type="int2" typeCode="5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="version" nullable="false" remarks="The version of the release to which the migration applies.  Version numbers are&#10;        subordinate to releases.  The version number is any value in the range of 1 to&#10;        1295 (01 - ZZ in base36 notation).  Version 00 is a special value used by the&#10;        application and should not be used for any other purpose." size="5" type="int2" typeCode="5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="update" nullable="false" remarks="The patch, or update, to the release version.  Update numbers are subordinate to&#10;        version numbers.  The update number may be any value in the range of 0 to 46655&#10;        (000 - ZZZ in base36 notation)." size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="sponsor" nullable="false" remarks="Identifies the entity that sponsored the development of the migration. The&#10;        expected value is in the range 0 to 2176782335 (0 - ZZZZZZ in base36 notation),&#10;        though there are additional rules which must be observed:&#10;&#10;            -  Values in the range of 0 - 1295 (000000 - 0000ZZ) are reserved for Muse&#10;            Systems special purposes.&#10;&#10;            -  Value 820 (0000MS) identifies Muse Systems as the sponsor of the general&#10;            availability software release and so will appear on all regularly&#10;            released migrations.&#10;&#10;            -  Values in the range of 1296 - 2176782335 are identifiers that are&#10;            randomly assigned to clients and correspond to specific &quot;instances&quot;&#10;            (application databases).  The primary instance for a client will always&#10;            be the reference point for those clients with more than one instance." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="sponsor_modification" nullable="false" remarks="The specific migration implementing special or custom changes.  Sponsor&#10;        Modification numbers are subordinate to Update numbers.  The sponsor migration&#10;        number may be any value in the range of 0 to 46655 (000 - ZZZ in base36&#10;        notation).  In most cases this value will just be 0 (000)." size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="migration_version" nullable="false" remarks="The full migration version number represented as a series of digits in base 36&#10;        notation.  Each of the individual versioning fields are represented in a dot&#10;        separated notation:  RR.VV.UUU.CCCCCC.MMM&#10;&#10;            RR     = Release Number&#10;            VV     = Version Number of the Release&#10;            UUU    = Update Number of the Version&#10;            CCCCCC = Client identifier for sponsored modifications&#10;            MMM    = Client specific modification sequence&#10;&#10;        This sequence is the same as the file name of each migration as saved in the&#10;        file system.  This field in the database is primarily for convenience of cross-&#10;        referencing applied migrations to the file system." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="7" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;        started." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="diag_role_created" nullable="false" remarks="The database role which created the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="9" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;        started.  This field will be the same as diag_timestamp_created for inserted&#10;        records." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="10" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;        For long running transactions this time may be significantly later than the&#10;        value of diag_timestamp_modified." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="diag_role_modified" nullable="false" remarks="The database role which modified the record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="12" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;        data changes have been made to the row.  If an update of the row leaves all data&#10;        fields the same, disregarding the updates to the diag_* columns, the row version&#10;        is not updated, nor are any updates made to the other diag_* columns other than&#10;        diag_update_count." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="13" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;        the update actually changed any data.  In this way needless or redundant record&#10;        updates can be found.  This row starts at 0 and therefore may be the same as the&#10;        diag_row_version - 1." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="migrations_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="migrations_migration_version_udx" unique="true">
+            <column ascending="true" name="migration_version"/>
+         </index>
+         <checkConstraint constraint="(((release)::integer &lt;@ '[1,1296)'::int4range))" name="migrations_release_range_chk"/>
+         <checkConstraint constraint="((sponsor_modification &lt;@ '[0,46656)'::int4range))" name="migrations_sponsor_modification_range_chk"/>
+         <checkConstraint constraint="((sponsor &lt;@ '[0,2176782336)'::int8range))" name="migrations_sponsor_range_chk"/>
+         <checkConstraint constraint="((update &lt;@ '[0,46656)'::int4range))" name="migrations_update_range_chk"/>
+         <checkConstraint constraint="(((version)::integer &lt;@ '[1,1296)'::int4range))" name="migrations_version_range_chk"/>
+      </table>
+   </tables>
+   <routines>
+      <routine dataAccess="MODIFIES" deterministic="false" name="get_exception_details" returnType="text" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Returns exception details based on the passed parameters represented as a pretty-printed JSON
+        object.  The returned value is intended to standardize the details related to RAISEd exceptions and
+        be suitable for use in setting the RAISE DETAILS variable. ]]></comment>
+         <definition language="SQL"><![CDATA[
+
+        -- File:        migration_schema_initialization.eex.sql
+        -- Location:    msbms/priv/migrations_schema/migration_schema_initialization.eex.sql
+        -- Project:     Muse Systems Business Management System
+        --
+        -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+        -- This file may include content copyrighted and licensed from third parties.
+        --
+        -- See the LICENSE file in the project root for license terms and conditions.
+        -- See the NOTICE file in the project root for copyright ownership information.
+        --
+        -- muse.information@musesystems.com  :: https://muse.systems
+
+
+            SELECT
+                jsonb_pretty(
+                    jsonb_build_object(
+                        'procedure_schema',      p_proc_schema
+                        ,'procedure_name',        p_proc_name
+                        ,'exception_name',        p_exception_name
+                        ,'sqlstate',              p_errcode
+                        ,'parameters',            p_param_data
+                        ,'context',               p_context_data
+                        ,'transaction_timestamp', now()
+                        ,'wallclock_timestamp',   clock_timestamp()));
+
+        ]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_b_iu_set_diagnostic_columns" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Automatically maintains the common table diagnostic columns whenever data is
+        inserted or updated.  For UPDATE transactions, the trigger will determine if
+        there are 'real data changes', meaning any fields other than the common
+        diagnostic columns being changed by the transaction.  If not, only the
+        diag_update_count column will be updated.]]></comment>
+         <definition language="PLPGSQL"><![CDATA[
+
+        -- File:        migration_schema_initialization.eex.sql
+        -- Location:    msbms/priv/migrations_schema/migration_schema_initialization.eex.sql
+        -- Project:     Muse Systems Business Management System
+        --
+        -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+        -- This file may include content copyrighted and licensed from third parties.
+        --
+        -- See the LICENSE file in the project root for license terms and conditions.
+        -- See the NOTICE file in the project root for copyright ownership information.
+        --
+        -- muse.information@musesystems.com  :: https://muse.systems
+
+        BEGIN
+            DECLARE
+                var_jsonb_new        jsonb;
+                var_jsonb_old        jsonb;
+                var_jsonb_final      jsonb;
+
+                bypass_change_fields boolean;
+
+            BEGIN
+                -- If this is an update and no actual data has changed, we don't want to
+                -- pretend that something actually did change.  We set the flag here and
+                -- later we bypass all of the fields indicating a real change.  We still
+                -- update the diag_update_count field, because the database is still
+                -- doing work in that scenario.
+                bypass_change_fields := CASE
+                                            WHEN tg_op = 'UPDATE' THEN
+                                                to_jsonb( new ) = to_jsonb( old )
+                                            ELSE
+                                                FALSE
+                                        END;
+
+                -- Let's turn the new and old records into hstores so we can arbitrarily
+                -- get their columns.  We also need to make the final hstore look a lot
+                -- like NEW.
+                var_jsonb_new := to_jsonb( new );
+                var_jsonb_old := to_jsonb( old );
+
+                var_jsonb_final := var_jsonb_new - ARRAY [ 'diag_timestamp_created'
+                                                        ,'diag_role_created'
+                                                        ,'diag_timestamp_modified'
+                                                        ,'diag_wallclock_modified'
+                                                        ,'diag_role_modified'
+                                                        ,'diag_row_version'
+                                                        ,'diag_update_count'];
+
+                -- Now we can get some work done.
+                CASE tg_op
+                    WHEN 'INSERT' THEN
+                        var_jsonb_final :=
+                            var_jsonb_final ||
+                            jsonb_build_object( 'diag_timestamp_created', now( ) );
+                        var_jsonb_final :=
+                            var_jsonb_final ||
+                            jsonb_build_object( 'diag_role_created', session_user );
+                        var_jsonb_final :=
+                            var_jsonb_final ||
+                            jsonb_build_object( 'diag_timestamp_modified', now( ) );
+                        var_jsonb_final :=
+                            var_jsonb_final ||
+                            jsonb_build_object( 'diag_wallclock_modified',
+                                                clock_timestamp( ) );
+                        var_jsonb_final :=
+                            var_jsonb_final ||
+                            jsonb_build_object( 'diag_role_modified', session_user );
+                        var_jsonb_final :=
+                            var_jsonb_final ||
+                            jsonb_build_object( 'diag_row_version', 1 );
+                        var_jsonb_final :=
+                            var_jsonb_final ||
+                            jsonb_build_object( 'diag_update_count', 0 );
+
+                    WHEN 'UPDATE' THEN
+                        IF NOT bypass_change_fields THEN
+                            var_jsonb_final :=
+                                var_jsonb_final ||
+                                jsonb_build_object( 'diag_timestamp_modified', now( ) );
+                            var_jsonb_final :=
+                                var_jsonb_final ||
+                                jsonb_build_object( 'diag_wallclock_modified',
+                                                    clock_timestamp( ) );
+                            var_jsonb_final :=
+                                var_jsonb_final ||
+                                jsonb_build_object( 'diag_role_modified', session_user );
+                            var_jsonb_final :=
+                                var_jsonb_final ||
+                                jsonb_build_object( 'diag_row_version',
+                                                    ( var_jsonb_old -> 'diag_row_version' )::bigint  + 1 );
+                        END IF;
+
+                        var_jsonb_final :=
+                            var_jsonb_final ||
+                            jsonb_build_object( 'diag_update_count',
+                                                ( var_jsonb_old -> 'diag_update_count' )::bigint  + 1 );
+
+                ELSE
+                    RAISE EXCEPTION
+                        USING
+                            MESSAGE = 'We should never get here.  The diagnostic column maintenance '
+                                    'trigger was fired on something other than the insert/update of a '
+                                    'regular record type.',
+                            DETAIL = ms_syst_db.get_exception_details(
+                                        p_proc_schema    => 'ms_syst_db'
+                                        ,p_proc_name      => 'trig_b_iu_set_diagnostic_columns'
+                                        ,p_exception_name => 'unreachable_code_reached'
+                                        ,p_errcode        => 'PM001'
+                                        ,p_param_data     => NULL::jsonb
+                                        ,p_context_data   =>
+                                            jsonb_build_object(
+                                                'tg_op',         tg_op
+                                                ,'tg_when',       tg_when
+                                                ,'tg_schema',     tg_table_schema
+                                                ,'tg_table_name', tg_table_name)),
+                            ERRCODE = 'PM001',
+                            SCHEMA = tg_table_schema,
+                            TABLE = tg_table_name;
+
+                END CASE;
+
+                -- We've done our jsonb magic, lets actually get a record to return...
+                new := jsonb_populate_record( new, var_jsonb_final );
+
+                RETURN new;
+
+            END;
+        END;
+        ]]></definition>
+      </routine>
+   </routines>
+</database>

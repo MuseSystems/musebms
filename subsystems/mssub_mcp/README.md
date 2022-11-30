@@ -1,21 +1,7 @@
-# MssubMcp
+# MssubMcp - Global Systems Management
 
-**TODO: Add description**
+API for the Master Control Program Subsystem.
 
-## Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `mssub_mcp` to your list of dependencies in `mix.exs`:
-
-```elixir
-def deps do
-  [
-    {:mssub_mcp, "~> 0.1.0"}
-  ]
-end
-```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/mssub_mcp>.
-
+The Master Control Program Subsystem provides global services such as tenant and
+Application Instance management, global user authentication, global system
+configuration services, and a global enumeration service.
