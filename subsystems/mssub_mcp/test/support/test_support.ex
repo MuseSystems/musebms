@@ -29,7 +29,6 @@ defmodule TestSupport do
   @migration_unit_test_ds_type "mssub_mcp_unit_test"
   @migration_integration_test_ds_type "mssub_mcp_integration_test"
 
-  @default_database_name "mssub_mcp"
   @default_owner_name "mssub_mcp_owner"
   @default_app_access_role_name "mssub_mcp_app_access"
 
