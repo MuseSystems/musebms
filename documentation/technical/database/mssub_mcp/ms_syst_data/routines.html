@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>mssub_mcp Database</title>
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
+        <!-- Bootstrap 3.3.5 -->
+        <link rel="stylesheet" href="bower/admin-lte/bootstrap/css/bootstrap.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="bower/font-awesome/css/font-awesome.min.css">
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="bower/ionicons/css/ionicons.min.css">
+        <!-- DataTables -->
+        <link rel="stylesheet" href="bower/datatables.net-bs/css/dataTables.bootstrap.min.css">
+        <link rel="stylesheet" href="bower/datatables.net-buttons-bs/css/buttons.bootstrap.min.css">
+        <!-- Code Mirror -->
+        <link rel="stylesheet" href="bower/codemirror/codemirror.css">
+        <!-- Fonts -->
+        <link href='fonts/indieflower/indie-flower.css' rel='stylesheet' type='text/css'>
+        <link href='fonts/source-sans-pro/source-sans-pro.css' rel='stylesheet' type='text/css'>
+
+        <!-- Theme style -->
+        <link rel="stylesheet" href="bower/admin-lte/dist/css/AdminLTE.min.css">
+        <!-- Salvattore -->
+        <link rel="stylesheet" href="bower/salvattore/salvattore.css">
+        <!-- AdminLTE Skins. Choose a skin from the css/skins
+           folder instead of downloading all of them to reduce the load. -->
+        <link rel="stylesheet" href="bower/admin-lte/dist/css/skins/_all-skins.min.css">
+        <!-- SchemaSpy -->
+        <link rel="stylesheet" href="schemaSpy.css">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="bower/html5shiv/html5shiv.min.js"></script>
+        <script src="bower/respond/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+    <body class="hold-transition skin-blue layout-top-nav">
+        <div class="wrapper">
+            <header class="main-header">
+                <nav class="navbar navbar-static-top">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <a href="../index.html" class="navbar-brand"><b>mssub_mcp</b> Database</a>
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
+                        </div>
+
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+                            <ul class="nav navbar-nav">
+                                <li><a href="index.html">Tables <span class="sr-only">(current)</span></a></li>
+                                <li><a href="columns.html" title="All of the columns in the schema">Columns</a></li>
+                                <li><a href="constraints.html" title="Useful for diagnosing error messages that just give constraint name or number">Constraints</a></li>
+                                <li><a href="relationships.html" title="Diagram of table relationships">Relationships</a></li>
+                                <li><a href="orphans.html" title="View of tables with neither parents nor children">Orphan&nbsp;Tables</a></li>
+                                <li><a href="anomalies.html" title="Things that might not be quite right">Anomalies</a></li>
+                                <li><a href="routines.html" title="Procedures and functions">Routines</a></li>
+                            </ul>
+                        </div>
+                        <!-- /.navbar-collapse -->
+                        <!-- Navbar Right Menu -->
+                    </div>
+                    <!-- /.container-fluid -->
+                </nav>
+            </header>
+            <!-- Main content -->
+            <!-- Full Width Column -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <h1>Routines</h1>
+                </section>
+                <!-- Main content -->
+                <section class="content">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <i class="fa fa-file-code-o" aria-hidden="true"></i>
+                            <h3 class="box-title">Routines</h3>
+                        </div>
+                        <div class="box-body">
+                            <table id="routine_table" class="table table-bordered table-striped dataTable" role="grid">
+                                <thead align='left'>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Language</th>
+                                        <th>Deterministic</th>
+                                        <th>Return Type</th>
+                                        <th>Security Restriction</th>
+                                        <th title='Comments' class="toggle"><span>Comments</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><a href="routines/trig_a_iu_syst_instance_network_rule_ordering.html">trig_a_iu_syst_instance_network_rule_ordering</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Ensures that the ordering of network rules is maintained and that ordering<br />
+values are not duplicated.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_b_i_syst_enum_items_maintain_sort_order.html">trig_b_i_syst_enum_items_maintain_sort_order</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>For INSERTed records with a null sort_order value, this trigger will assign a<br />
+default value assuming the new record should be inserted at the end of the sort.</p>
+<p>If the inserted record was already assigned a sort_order value, the inserted<br />
+value is respected.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_b_iu_syst_enum_items_validate_functional_types.html">trig_b_iu_syst_enum_items_validate_functional_types</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Ensures that if the parent syst_enums record has syst_enum_functional_types<br />
+records defined, a syst_enum_items record will reference one of those<br />
+functional types.  Note that this trigger function is intended to be use by<br />
+constraint triggers.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_b_i_syst_identities_validate_uniqueness.html">trig_b_i_syst_identities_validate_uniqueness</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Provides a check that each ms_syst_data.syst_identities.account_identifier<br />
+value is unique for each owner&rsquo;s access accounts or unique amongst unowned<br />
+access accounts.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_a_i_syst_instance_type_apps_create_inst_type_contexts.html">trig_a_i_syst_instance_type_apps_create_inst_type_contexts</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>When a new association between an Application and an Instance Type is made by<br />
+inserting a record into this table, Instance Type Contexts are automatically<br />
+created by this function based on the Application Context records defined at the<br />
+time of INSERT into this table.  The default default_db_pool_size value is 0.</p>
+<p>After the fact changes to Contexts must be managed manually.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_b_d_syst_applications_delete_contexts.html">trig_b_d_syst_applications_delete_contexts</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Deletes the Application Contexts prior to deleting the Application record<br />
+itself.  This is needed because the trigger preventing datastore context owner<br />
+contexts to be deleted must be disabled prior to the delete.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_a_iu_syst_owner_network_rule_ordering.html">trig_a_iu_syst_owner_network_rule_ordering</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Ensures that the ordering of network rules is maintained and that ordering<br />
+values are not duplicated.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_a_iu_syst_global_network_rule_ordering.html">trig_a_iu_syst_global_network_rule_ordering</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Ensures that the ordering of network rules is maintained and that ordering<br />
+values are not duplicated.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_b_iud_syst_application_contexts_validate_owner_context.html">trig_b_iud_syst_application_contexts_validate_owner_context</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Validates database_owner_context values based on the pre-existing state of the database</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_b_i_syst_enum_functional_type_validate_new_allowed.html">trig_b_i_syst_enum_functional_type_validate_new_allowed</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Checks to see if this is the first functional type being added for the<br />
+enumeration and, if so, that no syst_enum_items records already exist.  Adding a<br />
+first functional type for an enumeration which already has defined enumeration<br />
+items implies that the enumeration items must be assigned a functional type in<br />
+the same operation to keep data consistency.  In practice, this would be<br />
+difficult since there would almost certainly have to be multiple functional<br />
+types available in order to avoid making bogus assignments; it would be much<br />
+more difficult to manage such a process as compared to simply disallowing the<br />
+scenario.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_a_i_syst_instances_create_instance_contexts.html">trig_a_i_syst_instances_create_instance_contexts</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Creates Instance Context records based on existing Application Contexts and Instance Type Contexts.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_a_iu_syst_enum_items_maintain_sort_order.html">trig_a_iu_syst_enum_items_maintain_sort_order</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Automatically maintains the sort order of syst_enum_item records in cases where<br />
+sort ordering collides with existing syst_enum_items records for the same<br />
+enum_id.  On insert or update when the new sort_order value matches that of an<br />
+existing record for the enumeration, the system will sort the match record after<br />
+the new/updated record. This will cascade for all syst_enum_items records<br />
+matching the enum_id until the last one is updated.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_a_d_syst_credentials_delete_identity.html">trig_a_d_syst_credentials_delete_identity</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Deletes the syst_identities record associated with a newly deleted<br />
+syst_credentials record.</p>
+<p>For those credential types that expect a relationship to syst_identities via the<br />
+syst_credentials.credential_for_identity_id column, the specific identifier and<br />
+credential data are closely related and updates to one or the other makes no<br />
+sense.  The correct process for updating such a pair is to delete both of the<br />
+existing identity and credential records and simply generate a new pair.<br />
+Deleting identity records achieves this goal via the constraint on the<br />
+credential_for_identity_id definition (ON DELETE CASCADE), but deleting a<br />
+credential has no automatic deletion feature thus this trigger.</p></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+                <script>
+                    var config = {
+                        pagination: true
+                    }
+                </script>
+            </div>
+            <!-- /.content-wrapper -->
+            <footer class="main-footer">
+                <div>
+                    <div class="pull-right hidden-xs">
+                        <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
+                        <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
+                    </div>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.1.0</a></strong>
+                </div>
+                <!-- /.container -->
+            </footer>
+        </div>
+        <!-- ./wrapper -->
+
+        <!-- jQuery 2.2.3 -->
+        <script src="bower/admin-lte/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script src="bower/admin-lte/plugins/jQueryUI/jquery-ui.min.js"></script>
+        <!-- Bootstrap 3.3.5 -->
+        <script src="bower/admin-lte/bootstrap/js/bootstrap.min.js"></script>
+        <!-- DataTables -->
+        <script src="bower/datatables.net/jquery.dataTables.min.js"></script>
+        <script src="bower/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+        <script src="bower/datatables.net-buttons/dataTables.buttons.min.js"></script>
+        <script src="bower/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+        <script src="bower/datatables.net-buttons/buttons.html5.min.js"></script>
+        <script src="bower/datatables.net-buttons/buttons.print.min.js"></script>
+        <script src="bower/datatables.net-buttons/buttons.colVis.min.js"></script>
+        <!-- SheetJS -->
+        <script src="bower/js-xlsx/xlsx.full.min.js"></script>
+        <!-- pdfmake -->
+        <script src="bower/pdfmake/pdfmake.min.js"></script>
+        <script src="bower/pdfmake/vfs_fonts.js"></script>
+        <!-- SlimScroll -->
+        <script src="bower/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+        <!-- FastClick -->
+        <script src="bower/admin-lte/plugins/fastclick/fastclick.js"></script>
+        <!-- Salvattore -->
+        <script src="bower/salvattore/salvattore.min.js"></script>
+        <!-- AnchorJS -->
+        <script src="bower/anchor-js/anchor.min.js"></script>
+        <!-- CodeMirror -->
+        <script src="bower/codemirror/codemirror.js"></script>
+        <script src="bower/codemirror/sql.js"></script>
+        <!-- AdminLTE App -->
+        <script src="bower/admin-lte/dist/js/app.min.js"></script>
+        <script src="routines.js"></script>
+        <script src="schemaSpy.js"></script>
+    </body>
+</html>

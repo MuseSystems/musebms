@@ -4,15 +4,16 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.29.0">
+    <meta name="generator" content="ExDoc v0.29.1">
     <meta name="project" content="mscmp_syst_db v0.1.0">
 
     <title>MscmpSystDb — mscmp_syst_db v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-2YOS5DIE.css" />
+    <link rel="stylesheet" href="dist/html-elixir-V2ETBPMB.css" />
+
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-X7YVL3G2.js"></script>
-    <script src="dist/sidebar_items-6586705C.js"></script>
+    <script src="dist/handlebars.templates-IV5W3OL2.js"></script>
+    <script src="dist/sidebar_items-A88B08BB.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -51,7 +52,7 @@
     </button>
     <label class="search-label">
       <p class="sr-only">Search</p>
-      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
+      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
     </label>
   </form>
 
@@ -91,7 +92,7 @@ mscmp_syst_db
     <div id="content" class="content-inner">
 
 <h1>
-<button class="settings display-settings">
+<button class="icon-action display-settings">
   <i class="ri-settings-3-line"></i>
   <span class="sr-only">Settings</span>
 </button>
@@ -104,7 +105,7 @@ mscmp_syst_db
 
 
   <section id="moduledoc">
-<p>The public API for database interactions.</p>
+<h1>MscmpSystDb - Database Connectivity &amp; Migrations</h1><p>The public API for database interactions.</p>
   </section>
 
 
@@ -116,555 +117,551 @@ mscmp_syst_db
       </a>
       Summary
     </h1>
+<div class="summary-query summary">
+  <h2>
+    <a href="#query">Query</a>
+  </h2>
 
-  <div class="summary-query summary">
-    <h2>
-      <a href="#query">Query</a>
-    </h2>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#aggregate/4" translate="no">aggregate(queryable, aggregate, field, opts \\ [])</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.aggregate/4</code>.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#aggregate/4" translate="no">aggregate(queryable, aggregate, field, opts \\ [])</a>
 
       </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#all/2" translate="no">all(queryable, opts \\ [])</a>
+        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.aggregate/4</code>.</p></div>
 
-        </div>
+    </div>
 
-          <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.all/2</code>.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#delete/2" translate="no">delete(struct_or_changeset, opts \\ [])</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.delete/2</code>.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#all/2" translate="no">all(queryable, opts \\ [])</a>
 
       </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#delete!/2" translate="no">delete!(struct_or_changeset, opts \\ [])</a>
+        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.all/2</code>.</p></div>
 
-        </div>
+    </div>
 
-          <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.delete!/2</code>.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#delete_all/2" translate="no">delete_all(queryable, opts \\ [])</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.delete_all/2</code>.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#delete/2" translate="no">delete(struct_or_changeset, opts \\ [])</a>
 
       </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#exists?/2" translate="no">exists?(queryable, opts \\ [])</a>
+        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.delete/2</code>.</p></div>
 
-        </div>
+    </div>
 
-          <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.exists?/2</code>.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#get/3" translate="no">get(queryable, id, opts \\ [])</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.get/3</code>.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#delete!/2" translate="no">delete!(struct_or_changeset, opts \\ [])</a>
 
       </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#get!/3" translate="no">get!(queryable, id, opts \\ [])</a>
+        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.delete!/2</code>.</p></div>
 
-        </div>
+    </div>
 
-          <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.get!/3</code>.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#get_by/3" translate="no">get_by(queryable, clauses, opts \\ [])</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.get_by/3</code>.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#delete_all/2" translate="no">delete_all(queryable, opts \\ [])</a>
 
       </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#get_by!/3" translate="no">get_by!(queryable, clauses, opts \\ [])</a>
+        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.delete_all/2</code>.</p></div>
 
-        </div>
+    </div>
 
-          <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.get_by!/3</code>.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#in_transaction?/0" translate="no">in_transaction?()</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.in_transaction?/0</code>.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#exists?/2" translate="no">exists?(queryable, opts \\ [])</a>
 
       </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#insert/2" translate="no">insert(struct_or_changeset, opts \\ [])</a>
+        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.exists?/2</code>.</p></div>
 
-        </div>
+    </div>
 
-          <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.insert/2</code>.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#insert!/2" translate="no">insert!(struct_or_changeset, opts \\ [])</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.insert!/2</code>.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get/3" translate="no">get(queryable, id, opts \\ [])</a>
 
       </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#insert_all/3" translate="no">insert_all(schema_or_source, entries_or_query, opts \\ [])</a>
+        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.get/3</code>.</p></div>
 
-        </div>
+    </div>
 
-          <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.insert_all/3</code>.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#insert_or_update/2" translate="no">insert_or_update(changeset, opts \\ [])</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.insert_or_update/2</code>.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get!/3" translate="no">get!(queryable, id, opts \\ [])</a>
 
       </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#insert_or_update!/2" translate="no">insert_or_update!(changeset, opts \\ [])</a>
+        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.get!/3</code>.</p></div>
 
-        </div>
+    </div>
 
-          <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.insert_or_update!/2</code>.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#load/2" translate="no">load(module_or_map, data)</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.load/2</code>.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_by/3" translate="no">get_by(queryable, clauses, opts \\ [])</a>
 
       </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#one/2" translate="no">one(queryable, opts \\ [])</a>
+        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.get_by/3</code>.</p></div>
 
-        </div>
+    </div>
 
-          <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.one/2</code>.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#one!/2" translate="no">one!(queryable, opts \\ [])</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.one!/2</code>.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_by!/3" translate="no">get_by!(queryable, clauses, opts \\ [])</a>
 
       </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#preload/3" translate="no">preload(structs_or_struct_or_nil, preloads, opts \\ [])</a>
+        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.get_by!/3</code>.</p></div>
 
-        </div>
+    </div>
 
-          <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.preload/3</code>.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#prepare_query/3" translate="no">prepare_query(operation, query, opts \\ [])</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.prepare_query/3</code>.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#in_transaction?/0" translate="no">in_transaction?()</a>
 
       </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#query_for_many/3" translate="no">query_for_many(query, query_params \\ [], opts \\ [])</a>
+        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.in_transaction?/0</code>.</p></div>
 
-        </div>
+    </div>
 
-          <div class="summary-synopsis"><p>Executes a database query and returns all rows.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#query_for_many!/3" translate="no">query_for_many!(query, query_params \\ [], opts \\ [])</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Executes a database query and returns all rows.  Raises on error.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#insert/2" translate="no">insert(struct_or_changeset, opts \\ [])</a>
 
       </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#query_for_none/3" translate="no">query_for_none(query, query_params \\ [], opts \\ [])</a>
+        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.insert/2</code>.</p></div>
 
-        </div>
+    </div>
 
-          <div class="summary-synopsis"><p>Executes a database query but returns no results.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#query_for_none!/3" translate="no">query_for_none!(query, query_params \\ [], opts \\ [])</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Executes a database query but returns no results.  Raises on error.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#insert!/2" translate="no">insert!(struct_or_changeset, opts \\ [])</a>
 
       </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#query_for_one/3" translate="no">query_for_one(query, query_params \\ [], opts \\ [])</a>
+        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.insert!/2</code>.</p></div>
 
-        </div>
+    </div>
 
-          <div class="summary-synopsis"><p>Executes a database query and returns a single row.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#query_for_one!/3" translate="no">query_for_one!(query, query_params \\ [], opts \\ [])</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Executes a database query and returns a single row.  Raises on error.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#insert_all/3" translate="no">insert_all(schema_or_source, entries_or_query, opts \\ [])</a>
 
       </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#query_for_value/3" translate="no">query_for_value(query, query_params \\ [], opts \\ [])</a>
+        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.insert_all/3</code>.</p></div>
 
-        </div>
+    </div>
 
-          <div class="summary-synopsis"><p>Executes a database query returning a single value.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#query_for_value!/3" translate="no">query_for_value!(query, query_params \\ [], opts \\ [])</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Executes a database query returning a single value.  Raises on error.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#insert_or_update/2" translate="no">insert_or_update(changeset, opts \\ [])</a>
 
       </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#record_count/2" translate="no">record_count(queryable, opts)</a>
+        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.insert_or_update/2</code>.</p></div>
 
-        </div>
+    </div>
 
-          <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.record_count/2</code>.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#reload/2" translate="no">reload(struct_or_structs, opts \\ [])</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.reload/2</code>.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#insert_or_update!/2" translate="no">insert_or_update!(changeset, opts \\ [])</a>
 
       </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#reload!/2" translate="no">reload!(struct_or_structs, opts \\ [])</a>
+        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.insert_or_update!/2</code>.</p></div>
 
-        </div>
+    </div>
 
-          <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.reload!/2</code>.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#rollback/1" translate="no">rollback(value)</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.rollback/1</code>.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#load/2" translate="no">load(module_or_map, data)</a>
 
       </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#stream/2" translate="no">stream(queryable, opts \\ [])</a>
+        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.load/2</code>.</p></div>
 
-        </div>
+    </div>
 
-          <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.stream/2</code>.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#transaction/2" translate="no">transaction(job, opts \\ [])</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.ecto_transaction/2</code>.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#one/2" translate="no">one(queryable, opts \\ [])</a>
 
       </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#update/2" translate="no">update(changeset, opts \\ [])</a>
+        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.one/2</code>.</p></div>
 
-        </div>
+    </div>
 
-          <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.update/2</code>.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#update!/2" translate="no">update!(changeset, opts \\ [])</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.update!/2</code>.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#one!/2" translate="no">one!(queryable, opts \\ [])</a>
 
       </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#update_all/3" translate="no">update_all(queryable, updates, opts \\ [])</a>
+        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.one!/2</code>.</p></div>
 
-        </div>
+    </div>
 
-          <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.update_all/3</code>.</p></div>
-
-      </div>
-
-  </div>
-
-  <div class="summary-datastore-management summary">
-    <h2>
-      <a href="#datastore-management">Datastore Management</a>
-    </h2>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#create_datastore/2" translate="no">create_datastore(datastore_options, opts \\ [])</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Creates a new Datastore along with its contexts.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#preload/3" translate="no">preload(structs_or_struct_or_nil, preloads, opts \\ [])</a>
 
       </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#create_datastore_contexts/3" translate="no">create_datastore_contexts(datastore_options, datastore_contexts, opts \\ [])</a>
+        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.preload/3</code>.</p></div>
 
-        </div>
+    </div>
 
-          <div class="summary-synopsis"><p>Creates database roles to back all requested Datastore contexts.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#drop_datastore/2" translate="no">drop_datastore(datastore_options, opts \\ [])</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Drops a Datastore along with its contexts.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#prepare_query/3" translate="no">prepare_query(operation, query, opts \\ [])</a>
 
       </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#drop_datastore_contexts/3" translate="no">drop_datastore_contexts(datastore_options, datastore_contexts, opts \\ [])</a>
+        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.prepare_query/3</code>.</p></div>
 
-        </div>
+    </div>
 
-          <div class="summary-synopsis"><p>Drops the requested Datastore contexts.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#get_datastore_context_states/2" translate="no">get_datastore_context_states(datastore_contexts, opts \\ [])</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Returns the state of the requested contexts.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#query_for_many/3" translate="no">query_for_many(query, query_params \\ [], opts \\ [])</a>
 
       </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#get_datastore_state/2" translate="no">get_datastore_state(datastore_options, opts \\ [])</a>
+        <div class="summary-synopsis"><p>Executes a database query and returns all rows.</p></div>
 
-        </div>
+    </div>
 
-          <div class="summary-synopsis"><p>Returns the state of the database and database roles which back the Datastore
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#query_for_many!/3" translate="no">query_for_many!(query, query_params \\ [], opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Executes a database query and returns all rows.  Raises on error.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#query_for_none/3" translate="no">query_for_none(query, query_params \\ [], opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Executes a database query but returns no results.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#query_for_none!/3" translate="no">query_for_none!(query, query_params \\ [], opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Executes a database query but returns no results.  Raises on error.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#query_for_one/3" translate="no">query_for_one(query, query_params \\ [], opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Executes a database query and returns a single row.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#query_for_one!/3" translate="no">query_for_one!(query, query_params \\ [], opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Executes a database query and returns a single row.  Raises on error.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#query_for_value/3" translate="no">query_for_value(query, query_params \\ [], opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Executes a database query returning a single value.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#query_for_value!/3" translate="no">query_for_value!(query, query_params \\ [], opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Executes a database query returning a single value.  Raises on error.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#record_count/2" translate="no">record_count(queryable, opts)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.record_count/2</code>.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#reload/2" translate="no">reload(struct_or_structs, opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.reload/2</code>.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#reload!/2" translate="no">reload!(struct_or_structs, opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.reload!/2</code>.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#rollback/1" translate="no">rollback(value)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.rollback/1</code>.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#stream/2" translate="no">stream(queryable, opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.stream/2</code>.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#transaction/2" translate="no">transaction(job, opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.ecto_transaction/2</code>.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#update/2" translate="no">update(changeset, opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.update/2</code>.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#update!/2" translate="no">update!(changeset, opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.update!/2</code>.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#update_all/3" translate="no">update_all(queryable, updates, opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.update_all/3</code>.</p></div>
+
+    </div>
+
+</div>
+<div class="summary-datastore-management summary">
+  <h2>
+    <a href="#datastore-management">Datastore Management</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#create_datastore/2" translate="no">create_datastore(datastore_options, opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Creates a new Datastore along with its contexts.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#create_datastore_contexts/3" translate="no">create_datastore_contexts(datastore_options, datastore_contexts, opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Creates database roles to back all requested Datastore contexts.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#drop_datastore/2" translate="no">drop_datastore(datastore_options, opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Drops a Datastore along with its contexts.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#drop_datastore_contexts/3" translate="no">drop_datastore_contexts(datastore_options, datastore_contexts, opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Drops the requested Datastore contexts.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_datastore_context_states/2" translate="no">get_datastore_context_states(datastore_contexts, opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Returns the state of the requested contexts.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_datastore_state/2" translate="no">get_datastore_state(datastore_options, opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Returns the state of the database and database roles which back the Datastore
 and contexts, respectively, of the provided Datastore options definition.</p></div>
 
-      </div>
+    </div>
 
-  </div>
+</div>
+<div class="summary-datastore-migrations summary">
+  <h2>
+    <a href="#datastore-migrations">Datastore Migrations</a>
+  </h2>
 
-  <div class="summary-datastore-migrations summary">
-    <h2>
-      <a href="#datastore-migrations">Datastore Migrations</a>
-    </h2>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#get_datastore_version/2" translate="no">get_datastore_version(datastore_options, opts \\ [])</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Returns the most recently installed database migration version number.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_datastore_version/2" translate="no">get_datastore_version(datastore_options, opts \\ [])</a>
 
       </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#upgrade_datastore/4" translate="no">upgrade_datastore(datastore_options, datastore_type, migration_bindings, opts \\ [])</a>
+        <div class="summary-synopsis"><p>Returns the most recently installed database migration version number.</p></div>
 
-        </div>
+    </div>
 
-          <div class="summary-synopsis"><p>Updates a Datastore to the most current version of the given type of Datastore.</p></div>
-
-      </div>
-
-  </div>
-
-  <div class="summary-runtime summary">
-    <h2>
-      <a href="#runtime">Runtime</a>
-    </h2>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#current_datastore_context/0" translate="no">current_datastore_context()</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.current_datastore_context/0</code>.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#upgrade_datastore/4" translate="no">upgrade_datastore(datastore_options, datastore_type, migration_bindings, opts \\ [])</a>
 
       </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#put_datastore_context/1" translate="no">put_datastore_context(context)</a>
+        <div class="summary-synopsis"><p>Updates a Datastore to the most current version of the given type of Datastore.</p></div>
 
-        </div>
+    </div>
 
-          <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.put_datastore_context/1</code>.</p></div>
+</div>
+<div class="summary-runtime summary">
+  <h2>
+    <a href="#runtime">Runtime</a>
+  </h2>
 
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#start_datastore/2" translate="no">start_datastore(datastore_options, supervisor_name \\ nil)</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Starts database connections for all of login contexts in the Datastore options.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#current_datastore_context/0" translate="no">current_datastore_context()</a>
 
       </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#start_datastore_context/2" translate="no">start_datastore_context(datastore_options, context)</a>
+        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.current_datastore_context/0</code>.</p></div>
 
-        </div>
+    </div>
 
-          <div class="summary-synopsis"><p>Starts a database connection for the specific Datastore context provided.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#stop_datastore/2" translate="no">stop_datastore(datastore_options_or_contexts, db_shutdown_timeout \\ 60000)</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Disconnects the database connections for all of the login Datastore option contexts.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#put_datastore_context/1" translate="no">put_datastore_context(context)</a>
 
       </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#stop_datastore_context/2" translate="no">stop_datastore_context(context, db_shutdown_timeout \\ 60000)</a>
+        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.put_datastore_context/1</code>.</p></div>
 
-        </div>
+    </div>
 
-          <div class="summary-synopsis"><p>Disconnects the database connection for the specific Datastore context provided.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#start_datastore/2" translate="no">start_datastore(datastore_options, supervisor_name \\ nil)</a>
 
       </div>
 
-  </div>
+        <div class="summary-synopsis"><p>Starts database connections for all of login contexts in the Datastore options.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#start_datastore_context/2" translate="no">start_datastore_context(datastore_options, context)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Starts a database connection for the specific Datastore context provided.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#stop_datastore/2" translate="no">stop_datastore(datastore_options_or_contexts, db_shutdown_timeout \\ 60000)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Disconnects the database connections for all of the login Datastore option contexts.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#stop_datastore_context/2" translate="no">stop_datastore_context(context, db_shutdown_timeout \\ 60000)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Disconnects the database connection for the specific Datastore context provided.</p></div>
+
+    </div>
+
+</div>
 
   </section>
 
@@ -715,7 +712,7 @@ Query
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> all(<a href="https://hexdocs.pm/ecto/3.9.1/Ecto.Queryable.html#t:t/0">Ecto.Queryable.t</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: [<a href="https://hexdocs.pm/ecto/3.9.1/Ecto.Schema.html#t:t/0">Ecto.Schema.t</a>()]</pre>
+          <pre translate="no"><span class="attribute">@spec</span> all(<a href="https://hexdocs.pm/ecto/3.9.2/Ecto.Queryable.html#t:t/0">Ecto.Queryable.t</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: [<a href="https://hexdocs.pm/ecto/3.9.2/Ecto.Schema.html#t:t/0">Ecto.Schema.t</a>()]</pre>
 
       </div>
 
@@ -1419,7 +1416,7 @@ Query
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> transaction(
-  (... -&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) | <a href="https://hexdocs.pm/ecto/3.9.1/Ecto.Multi.html#t:t/0">Ecto.Multi.t</a>(),
+  (... -&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) | <a href="https://hexdocs.pm/ecto/3.9.2/Ecto.Multi.html#t:t/0">Ecto.Multi.t</a>(),
   <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">keyword</a>()
 ) :: {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()} | {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
 
@@ -1806,7 +1803,7 @@ Runtime
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> put_datastore_context(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>() | <a href="https://hexdocs.pm/ecto/3.9.1/Ecto.Repo.html#t:t/0">Ecto.Repo.t</a>() | <a href="https://hexdocs.pm/ecto/3.9.1/Ecto.Adapter.html#t:adapter_meta/0">Ecto.Adapter.adapter_meta</a>()) ::
+          <pre translate="no"><span class="attribute">@spec</span> put_datastore_context(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>() | <a href="https://hexdocs.pm/ecto/3.9.2/Ecto.Repo.html#t:t/0">Ecto.Repo.t</a>() | <a href="https://hexdocs.pm/ecto/3.9.2/Ecto.Adapter.html#t:adapter_meta/0">Ecto.Adapter.adapter_meta</a>()) ::
   <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>() | <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()</pre>
 
       </div>
@@ -1935,10 +1932,23 @@ Runtime
   </section>
 
       <footer class="footer">
-
         <p>
+
+          <span class="line">
+            <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+              Search HexDocs
+            </button>
+
+              <a href="mscmp_syst_db.epub" title="ePub version">
+                Download ePub version
+              </a>
+
+          </span>
+        </p>
+
+        <p class="built-using">
           Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.29.0) for the
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.29.1) for the
 
             <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 

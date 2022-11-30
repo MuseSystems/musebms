@@ -4,15 +4,16 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.29.0">
+    <meta name="generator" content="ExDoc v0.29.1">
     <meta name="project" content="mscmp_syst_instance v0.1.0">
 
     <title>MscmpSystInstance — mscmp_syst_instance v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-2YOS5DIE.css" />
+    <link rel="stylesheet" href="dist/html-elixir-V2ETBPMB.css" />
+
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-X7YVL3G2.js"></script>
-    <script src="dist/sidebar_items-FF0B71FC.js"></script>
+    <script src="dist/handlebars.templates-IV5W3OL2.js"></script>
+    <script src="dist/sidebar_items-7E880F5A.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -51,7 +52,7 @@
     </button>
     <label class="search-label">
       <p class="sr-only">Search</p>
-      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
+      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
     </label>
   </form>
 
@@ -89,7 +90,7 @@ mscmp_syst_instance
     <div id="content" class="content-inner">
 
 <h1>
-<button class="settings display-settings">
+<button class="icon-action display-settings">
   <i class="ri-settings-3-line"></i>
   <span class="sr-only">Settings</span>
 </button>
@@ -102,7 +103,7 @@ mscmp_syst_instance
 
 
   <section id="moduledoc">
-<p>API allowing for the management of application Instances.</p><p>&quot;Instances&quot; are instances of running application environments.  Instances are
+<h1>MscmpSystInstance - Application Instance Management</h1><p>API allowing for the management of application Instances.</p><p>&quot;Instances&quot; are instances of running application environments.  Instances are
 established to host the application for different purposes, such as for
 running the application for production, training, and testing purposes; or as
 a means to implement multi-tenancy where each tenant application environment
@@ -180,289 +181,366 @@ fail if the <a href="../../../../documentation/technical/app_server/mscmp_syst_e
       </a>
       Summary
     </h1>
+<div class="summary-owners summary">
+  <h2>
+    <a href="#owners">Owners</a>
+  </h2>
 
-  <div class="summary-owners summary">
-    <h2>
-      <a href="#owners">Owners</a>
-    </h2>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#create_owner/1" translate="no">create_owner(owner_params)</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Creates a new Owner record.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#create_owner/1" translate="no">create_owner(owner_params)</a>
 
       </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#get_owner_by_name/1" translate="no">get_owner_by_name(owner_name)</a>
+        <div class="summary-synopsis"><p>Creates a new Owner record.</p></div>
 
-        </div>
+    </div>
 
-          <div class="summary-synopsis"><p>Retrieves an Owner record by its internal name.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#get_owner_id_by_name/1" translate="no">get_owner_id_by_name(owner_name)</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Retrieves the Owner record ID by Owner internal name.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_owner_by_name/1" translate="no">get_owner_by_name(owner_name)</a>
 
       </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#purge_owner/1" translate="no">purge_owner(owner)</a>
+        <div class="summary-synopsis"><p>Retrieves an Owner record by its internal name.</p></div>
 
-        </div>
+    </div>
 
-          <div class="summary-synopsis"><p>Removes an Owner record from the system.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#update_owner/2" translate="no">update_owner(owner, update_params)</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Updates an Owner record.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_owner_id_by_name/1" translate="no">get_owner_id_by_name(owner_name)</a>
 
       </div>
 
-  </div>
+        <div class="summary-synopsis"><p>Retrieves the Owner record ID by Owner internal name.</p></div>
 
-  <div class="summary-instance-types summary">
-    <h2>
-      <a href="#instance-types">Instance Types</a>
-    </h2>
+    </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#create_instance_type/1" translate="no">create_instance_type(instance_type_params)</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Creates a new Instance Type record via the <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.html"><code class="inline">MscmpSystEnums</code></a> service.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_owner_state_by_name/1" translate="no">get_owner_state_by_name(owner_state_name)</a>
 
       </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#create_instance_type_application/2" translate="no">create_instance_type_application(instance_type_id, application_id)</a>
+        <div class="summary-synopsis"><p>Returns the Owner State Enumeration record for the given Internal Name argument.</p></div>
 
-        </div>
+    </div>
 
-          <div class="summary-synopsis"><p>Creates an Instance Type/Application association.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#delete_instance_type/1" translate="no">delete_instance_type(instance_type_name)</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Deletes an Instance Type from the <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.html"><code class="inline">MscmpSystEnums</code></a> service.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_owner_state_default/1" translate="no">get_owner_state_default(functional_type \\ nil)</a>
 
       </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#delete_instance_type_application/1" translate="no">delete_instance_type_application(instance_type_application)</a>
+        <div class="summary-synopsis"><p>Returns the Owner State Enumeration record which is configured as being
+default.</p></div>
 
-        </div>
+    </div>
 
-          <div class="summary-synopsis"><p>Disassociates the Instance Type/Application support relationship.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#update_instance_type/2" translate="no">update_instance_type(instance_type_name, instance_type_params \\ %{})</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Updates an existing Instance Type record via the <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.html"><code class="inline">MscmpSystEnums</code></a> service.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#purge_owner/1" translate="no">purge_owner(owner)</a>
 
       </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#update_instance_type_context/2" translate="no">update_instance_type_context(instance_type_context, instance_type_context_params \\ %{})</a>
+        <div class="summary-synopsis"><p>Removes an Owner record from the system.</p></div>
 
-        </div>
+    </div>
 
-          <div class="summary-synopsis"><p>Updates Instance Type Context default values which are applied to new Instance
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#update_owner/2" translate="no">update_owner(owner, update_params)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Updates an Owner record.</p></div>
+
+    </div>
+
+</div>
+<div class="summary-instance-types summary">
+  <h2>
+    <a href="#instance-types">Instance Types</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#create_instance_type/1" translate="no">create_instance_type(instance_type_params)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Creates a new Instance Type record via the <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.html"><code class="inline">MscmpSystEnums</code></a> service.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#create_instance_type_application/2" translate="no">create_instance_type_application(instance_type_id, application_id)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Creates an Instance Type/Application association.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#delete_instance_type/1" translate="no">delete_instance_type(instance_type_name)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Deletes an Instance Type from the <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.html"><code class="inline">MscmpSystEnums</code></a> service.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#delete_instance_type_application/1" translate="no">delete_instance_type_application(instance_type_application)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Disassociates the Instance Type/Application support relationship.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_instance_type_by_name/1" translate="no">get_instance_type_by_name(instance_type_name)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Returns the Instance Type record for the given Internal Name; raises on error.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_instance_type_default/0" translate="no">get_instance_type_default()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Returns the Instance Type record which is configured as the system default
+Instance Type.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#update_instance_type/2" translate="no">update_instance_type(instance_type_name, instance_type_params \\ %{})</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Updates an existing Instance Type record via the <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.html"><code class="inline">MscmpSystEnums</code></a> service.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#update_instance_type_context/2" translate="no">update_instance_type_context(instance_type_context, instance_type_context_params \\ %{})</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Updates Instance Type Context default values which are applied to new Instance
 Contexts.</p></div>
 
-      </div>
+    </div>
 
-  </div>
+</div>
+<div class="summary-instances summary">
+  <h2>
+    <a href="#instances">Instances</a>
+  </h2>
 
-  <div class="summary-instances summary">
-    <h2>
-      <a href="#instances">Instances</a>
-    </h2>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#create_instance/1" translate="no">create_instance(instance_params)</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Creates a new Instance record.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#create_instance/1" translate="no">create_instance(instance_params)</a>
 
       </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#get_default_instance_state_ids/0" translate="no">get_default_instance_state_ids()</a>
+        <div class="summary-synopsis"><p>Creates a new Instance record.</p></div>
 
-        </div>
+    </div>
 
-          <div class="summary-synopsis"><p>Returns a Keyword List of the default values for each Instance State's
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_default_instance_state_ids/0" translate="no">get_default_instance_state_ids()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Returns a Keyword List of the default values for each Instance State's
 functional type.</p></div>
 
-      </div>
+    </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#get_instance_by_name/1" translate="no">get_instance_by_name(instance_name)</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Returns the SystInstances record identified by its internal name.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_instance_by_name/1" translate="no">get_instance_by_name(instance_name)</a>
 
       </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#get_instance_datastore_options/2" translate="no">get_instance_datastore_options(instance, startup_options)</a>
+        <div class="summary-synopsis"><p>Returns the SystInstances record identified by its internal name.</p></div>
 
-        </div>
+    </div>
 
-          <div class="summary-synopsis"><p>Retrieves the Datastore Options based on the Instance database record and the
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_instance_datastore_options/2" translate="no">get_instance_datastore_options(instance, startup_options)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Retrieves the Datastore Options based on the Instance database record and the
 provided Startup Options.</p></div>
 
-      </div>
+    </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#get_instance_id_by_name/1" translate="no">get_instance_id_by_name(instance_name)</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Returns the ID of the Instance record as identified by its internal name.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_instance_id_by_name/1" translate="no">get_instance_id_by_name(instance_name)</a>
 
       </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#initialize_instance/3" translate="no">initialize_instance(instance_id, startup_options, opts \\ [])</a>
+        <div class="summary-synopsis"><p>Returns the ID of the Instance record as identified by its internal name.</p></div>
 
-        </div>
+    </div>
 
-          <div class="summary-synopsis"><p>Initializes an uninitialized Instance.</p></div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#purge_instance/2" translate="no">purge_instance(instance, startup_options)</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Purges an eligible Instance from the system.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_instance_state_by_name/1" translate="no">get_instance_state_by_name(instance_state_name)</a>
 
       </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#set_instance_state/2" translate="no">set_instance_state(instance, instance_state_id)</a>
+        <div class="summary-synopsis"><p>Retrieves the Instance State Enumeration record identified by the provided
+Internal Name.</p></div>
 
-        </div>
+    </div>
 
-          <div class="summary-synopsis"><p>Sets the Instance State of an Instance.</p></div>
-
-      </div>
-
-  </div>
-
-  <div class="summary-runtime summary">
-    <h2>
-      <a href="#runtime">Runtime</a>
-    </h2>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#start_all_applications/2" translate="no">start_all_applications(startup_options, opts \\ [])</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Starts all Applications and each Application's child Instances.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_instance_state_default/1" translate="no">get_instance_state_default(functional_type \\ nil)</a>
 
       </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#start_application/3" translate="no">start_application(application, startup_options, opts \\ [])</a>
+        <div class="summary-synopsis"><p>Returns the Instance State Enumeration record which is configured as being
+default.</p></div>
 
-        </div>
+    </div>
 
-          <div class="summary-synopsis"><p>Starts the requested Application and its child Instances.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#initialize_instance/3" translate="no">initialize_instance(instance_id, startup_options, opts \\ [])</a>
 
       </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#start_instance/3" translate="no">start_instance(instance, startup_options, opts \\ [])</a>
+        <div class="summary-synopsis"><p>Initializes an uninitialized Instance.</p></div>
 
-        </div>
+    </div>
 
-          <div class="summary-synopsis"><p>Starts an Instance and places it under the appropriate Application's
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#purge_instance/2" translate="no">purge_instance(instance, startup_options)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Purges an eligible Instance from the system.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#set_instance_state/2" translate="no">set_instance_state(instance, instance_state_id)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Sets the Instance State of an Instance.</p></div>
+
+    </div>
+
+</div>
+<div class="summary-runtime summary">
+  <h2>
+    <a href="#runtime">Runtime</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#start_all_applications/2" translate="no">start_all_applications(startup_options, opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Starts all Applications and each Application's child Instances.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#start_application/3" translate="no">start_application(application, startup_options, opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Starts the requested Application and its child Instances.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#start_instance/3" translate="no">start_instance(instance, startup_options, opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Starts an Instance and places it under the appropriate Application's
 supervisor.</p></div>
 
-      </div>
+    </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#stop_all_applications/1" translate="no">stop_all_applications(opts \\ [])</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Stops all Applications, Application Supervisors, and their child Instances.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#stop_all_applications/1" translate="no">stop_all_applications(opts \\ [])</a>
 
       </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#stop_application/2" translate="no">stop_application(application, opts \\ [])</a>
+        <div class="summary-synopsis"><p>Stops all Applications, Application Supervisors, and their child Instances.</p></div>
 
-        </div>
+    </div>
 
-          <div class="summary-synopsis"><p>Shuts down the Supervisor process of the requested Application and all of its
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#stop_application/2" translate="no">stop_application(application, opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Shuts down the Supervisor process of the requested Application and all of its
 child processes, including Instances.</p></div>
 
-      </div>
+    </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#stop_instance/2" translate="no">stop_instance(instance, opts \\ [])</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Stops an Instance.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#stop_instance/2" translate="no">stop_instance(instance, opts \\ [])</a>
 
       </div>
 
-  </div>
+        <div class="summary-synopsis"><p>Stops an Instance.</p></div>
+
+    </div>
+
+</div>
+<div class="summary-functions summary">
+  <h2>
+    <a href="#functions">Functions</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_application_id_by_name/1" translate="no">get_application_id_by_name(application_name)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Returns the Application record ID for the requested Application Internal Name;
+raises on error.</p></div>
+
+    </div>
+
+</div>
 
   </section>
 
@@ -576,6 +654,93 @@ State and the Owner State Functional Type.</p><h2 id="get_owner_by_name/1-exampl
 <p>  iex&gt; {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name(&quot;owner1&quot;)
   iex&gt; is_binary(owner_id)
   true</p>
+  </section>
+</section>
+<section class="detail" id="get_owner_state_by_name/1">
+
+  <div class="detail-header">
+    <a href="#get_owner_state_by_name/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_owner_state_by_name(owner_state_name)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_owner_state_by_name(<a href="../../../../documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.Types.html#t:enum_item_name/0">MscmpSystEnums.Types.enum_item_name</a>()) ::
+  <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/Msdata.SystEnumItems.html#t:t/0">Msdata.SystEnumItems.t</a>() | nil</pre>
+
+      </div>
+
+<p>Returns the Owner State Enumeration record for the given Internal Name argument.</p><p>If the requested Internal Name does not match an existing Owner State
+Enumeration record <code class="inline">nil</code> is returned.</p><h2 id="get_owner_state_by_name/1-parameters" class="section-heading">
+  <a href="#get_owner_state_by_name/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">owner_state_name</code> - the internal name of the Owner State to retrieve.</li></ul><h2 id="get_owner_state_by_name/1-examples" class="section-heading">
+  <a href="#get_owner_state_by_name/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
+  Examples
+</h2>
+<p>Retrieving an Owner State Enumeration record.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="7883958384-1">%</span><span class="nc" data-group-id="7883958384-1">Msdata.SystEnumItems</span><span class="p" data-group-id="7883958384-1">{</span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;owner_states_sysdef_active&quot;</span><span class="p" data-group-id="7883958384-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_owner_state_by_name</span><span class="p" data-group-id="7883958384-2">(</span><span class="s">&quot;owner_states_sysdef_active&quot;</span><span class="p" data-group-id="7883958384-2">)</span></code></pre><p>Trying to retrieve a non-existent Owner State.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_owner_state_by_name</span><span class="p" data-group-id="4616342990-1">(</span><span class="s">&quot;nonexistent_state&quot;</span><span class="p" data-group-id="4616342990-1">)</span><span class="w">
+</span><span class="no">nil</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="get_owner_state_default/1">
+
+    <span id="get_owner_state_default/0"></span>
+
+  <div class="detail-header">
+    <a href="#get_owner_state_default/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_owner_state_default(functional_type \\ nil)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_owner_state_default(
+  <a href="MscmpSystInstance.Types.html#t:owner_state_functional_types/0">MscmpSystInstance.Types.owner_state_functional_types</a>()
+  | nil
+) ::
+  <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/Msdata.SystEnumItems.html#t:t/0">Msdata.SystEnumItems.t</a>()</pre>
+
+      </div>
+
+<p>Returns the Owner State Enumeration record which is configured as being
+default.</p><p>If no Owner State record is configured as default, then <code class="inline">nil</code> is returned.</p><h2 id="get_owner_state_default/1-parameters" class="section-heading">
+  <a href="#get_owner_state_default/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">functional_type</code> - an optional parameter which, if provided and not
+<code class="inline">nil</code>, will return the default Owner State record configured for the
+requested functional type rather than the system default Owner State.  The
+default for this parameter is to treat the parameter as not provided
+(<code class="inline">nil</code>).</li></ul><h2 id="get_owner_state_default/1-examples" class="section-heading">
+  <a href="#get_owner_state_default/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
+  Examples
+</h2>
+<p>Requesting the system default Owner State.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="4182300708-1">%</span><span class="nc" data-group-id="4182300708-1">Msdata.SystEnumItems</span><span class="p" data-group-id="4182300708-1">{</span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;owner_states_sysdef_active&quot;</span><span class="p" data-group-id="4182300708-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_owner_state_default</span><span class="p" data-group-id="4182300708-2">(</span><span class="p" data-group-id="4182300708-2">)</span></code></pre><p>Requesting the default Owner State for a specific functional type.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="3235222141-1">%</span><span class="nc" data-group-id="3235222141-1">Msdata.SystEnumItems</span><span class="p" data-group-id="3235222141-1">{</span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;owner_states_sysdef_inactive&quot;</span><span class="p" data-group-id="3235222141-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_owner_state_default</span><span class="p" data-group-id="3235222141-2">(</span><span class="ss">:owner_states_inactive</span><span class="p" data-group-id="3235222141-2">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="purge_owner/1">
@@ -801,6 +966,76 @@ relationship was valid will continue to exist.</p><h2 id="delete_instance_type_a
 Instance Type Application record or a
 <a href="Msdata.SystInstanceTypeApplications.html"><code class="inline">Msdata.SystInstanceTypeApplications</code></a> struct with at
 least the <code class="inline">id</code> field defined.</li></ul>
+  </section>
+</section>
+<section class="detail" id="get_instance_type_by_name/1">
+
+  <div class="detail-header">
+    <a href="#get_instance_type_by_name/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_instance_type_by_name(instance_type_name)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_instance_type_by_name(<a href="MscmpSystInstance.Types.html#t:instance_type_name/0">MscmpSystInstance.Types.instance_type_name</a>()) ::
+  <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/Msdata.SystEnumItems.html#t:t/0">Msdata.SystEnumItems.t</a>() | nil</pre>
+
+      </div>
+
+<p>Returns the Instance Type record for the given Internal Name; raises on error.</p><p>On successful execution either the requested Instance Type Enumeration record
+is returned or <code class="inline">nil</code> if the record does not exist.</p><h2 id="get_instance_type_by_name/1-parameters" class="section-heading">
+  <a href="#get_instance_type_by_name/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">instance_type_name</code> - the Internal Name of the desire Instance Type
+record to return.</li></ul><h2 id="get_instance_type_by_name/1-examples" class="section-heading">
+  <a href="#get_instance_type_by_name/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
+  Examples
+</h2>
+<p>Finding a Instance Type record by Internal Name.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="1772142859-1">%</span><span class="nc" data-group-id="1772142859-1">Msdata.SystEnumItems</span><span class="p" data-group-id="1772142859-1">{</span><span class="p" data-group-id="1772142859-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_type_by_name</span><span class="p" data-group-id="1772142859-2">(</span><span class="s">&quot;instance_types_big&quot;</span><span class="p" data-group-id="1772142859-2">)</span></code></pre><p>Looking for a non-existent record.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_type_by_name</span><span class="p" data-group-id="6689887042-1">(</span><span class="s">&quot;nonexistent_type&quot;</span><span class="p" data-group-id="6689887042-1">)</span><span class="w">
+</span><span class="no">nil</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="get_instance_type_default/0">
+
+  <div class="detail-header">
+    <a href="#get_instance_type_default/0" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_instance_type_default()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_instance_type_default() :: <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/Msdata.SystEnumItems.html#t:t/0">Msdata.SystEnumItems.t</a>()</pre>
+
+      </div>
+
+<p>Returns the Instance Type record which is configured as the system default
+Instance Type.</p><p>If no system default has not been defined <code class="inline">nil</code> is returned.</p><h2 id="get_instance_type_default/0-examples" class="section-heading">
+  <a href="#get_instance_type_default/0-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
+  Examples
+</h2>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="8259565570-1">%</span><span class="nc" data-group-id="8259565570-1">Msdata.SystEnumItems</span><span class="p" data-group-id="8259565570-1">{</span><span class="p" data-group-id="8259565570-1">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_type_default</span><span class="p" data-group-id="8259565570-2">(</span><span class="p" data-group-id="8259565570-2">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="update_instance_type/2">
@@ -1031,8 +1266,8 @@ State value is not provided by the caller.</p>
   </a>
   Example
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="8376374583-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8376374583-2">%</span><span class="nc" data-group-id="8376374583-2">Msdata.SystInstances</span><span class="p" data-group-id="8376374583-2">{</span><span class="p" data-group-id="8376374583-2">}</span><span class="p" data-group-id="8376374583-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_by_name</span><span class="p" data-group-id="8376374583-3">(</span><span class="s">&quot;app1_owner1_instance_types_sml&quot;</span><span class="p" data-group-id="8376374583-3">)</span></code></pre>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="7361299545-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7361299545-2">%</span><span class="nc" data-group-id="7361299545-2">Msdata.SystInstances</span><span class="p" data-group-id="7361299545-2">{</span><span class="p" data-group-id="7361299545-2">}</span><span class="p" data-group-id="7361299545-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_by_name</span><span class="p" data-group-id="7361299545-3">(</span><span class="s">&quot;app1_owner1_instance_types_sml&quot;</span><span class="p" data-group-id="7361299545-3">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_instance_datastore_options/2">
@@ -1104,10 +1339,98 @@ obtained from the <a href="../../../../documentation/technical/app_server/mscmp_
   </a>
   Example
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="6435665949-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">instance_id</span><span class="p" data-group-id="6435665949-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_id_by_name</span><span class="p" data-group-id="6435665949-2">(</span><span class="s">&quot;app1_owner1_instance_types_sml&quot;</span><span class="p" data-group-id="6435665949-2">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="n">is_binary</span><span class="p" data-group-id="6435665949-3">(</span><span class="n">instance_id</span><span class="p" data-group-id="6435665949-3">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="7792167193-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">instance_id</span><span class="p" data-group-id="7792167193-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_id_by_name</span><span class="p" data-group-id="7792167193-2">(</span><span class="s">&quot;app1_owner1_instance_types_sml&quot;</span><span class="p" data-group-id="7792167193-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_binary</span><span class="p" data-group-id="7792167193-3">(</span><span class="n">instance_id</span><span class="p" data-group-id="7792167193-3">)</span><span class="w">
 </span><span class="no">true</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="get_instance_state_by_name/1">
+
+  <div class="detail-header">
+    <a href="#get_instance_state_by_name/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_instance_state_by_name(instance_state_name)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_instance_state_by_name(<a href="MscmpSystInstance.Types.html#t:instance_state_name/0">MscmpSystInstance.Types.instance_state_name</a>()) ::
+  <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/Msdata.SystEnumItems.html#t:t/0">Msdata.SystEnumItems.t</a>() | nil</pre>
+
+      </div>
+
+<p>Retrieves the Instance State Enumeration record identified by the provided
+Internal Name.</p><p>If the requested Internal Name does not match an existing Instance State
+Enumeration record <code class="inline">nil</code> is returned.</p><h2 id="get_instance_state_by_name/1-parameters" class="section-heading">
+  <a href="#get_instance_state_by_name/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">instance_state_name</code> - the internal name of the Instance State to retrieve.</li></ul><h2 id="get_instance_state_by_name/1-examples" class="section-heading">
+  <a href="#get_instance_state_by_name/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
+  Examples
+</h2>
+<p>Retrieving an Instance State Enumeration record.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="8215201457-1">%</span><span class="nc" data-group-id="8215201457-1">Msdata.SystEnumItems</span><span class="p" data-group-id="8215201457-1">{</span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;instance_states_sysdef_active&quot;</span><span class="p" data-group-id="8215201457-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_state_by_name</span><span class="p" data-group-id="8215201457-2">(</span><span class="s">&quot;instance_states_sysdef_active&quot;</span><span class="p" data-group-id="8215201457-2">)</span></code></pre><p>Trying to retrieve a non-existent Instance State.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_state_by_name</span><span class="p" data-group-id="6767051566-1">(</span><span class="s">&quot;nonexistent_state&quot;</span><span class="p" data-group-id="6767051566-1">)</span><span class="w">
+</span><span class="no">nil</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="get_instance_state_default/1">
+
+    <span id="get_instance_state_default/0"></span>
+
+  <div class="detail-header">
+    <a href="#get_instance_state_default/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_instance_state_default(functional_type \\ nil)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_instance_state_default(
+  <a href="MscmpSystInstance.Types.html#t:instance_state_functional_types/0">MscmpSystInstance.Types.instance_state_functional_types</a>()
+  | nil
+) ::
+  <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/Msdata.SystEnumItems.html#t:t/0">Msdata.SystEnumItems.t</a>()</pre>
+
+      </div>
+
+<p>Returns the Instance State Enumeration record which is configured as being
+default.</p><p>If no Instance State record is configured as default, then <code class="inline">nil</code> is returned.</p><h2 id="get_instance_state_default/1-parameters" class="section-heading">
+  <a href="#get_instance_state_default/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">functional_type</code> - an optional parameter which, if provided and not
+<code class="inline">nil</code>, will return the default Instance State record configured for the
+requested functional type rather than the system default Instance State.
+The default for this parameter is to treat the parameter as not provided
+(<code class="inline">nil</code>).</li></ul><h2 id="get_instance_state_default/1-examples" class="section-heading">
+  <a href="#get_instance_state_default/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
+  Examples
+</h2>
+<p>Requesting the system default Instance State.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="9107490360-1">%</span><span class="nc" data-group-id="9107490360-1">Msdata.SystEnumItems</span><span class="p" data-group-id="9107490360-1">{</span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;instance_states_sysdef_uninitialized&quot;</span><span class="p" data-group-id="9107490360-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_state_default</span><span class="p" data-group-id="9107490360-2">(</span><span class="p" data-group-id="9107490360-2">)</span></code></pre><p>Requesting the default Instance State for a specific functional type.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="9855464586-1">%</span><span class="nc" data-group-id="9855464586-1">Msdata.SystEnumItems</span><span class="p" data-group-id="9855464586-1">{</span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;instance_states_sysdef_active&quot;</span><span class="p" data-group-id="9855464586-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_state_default</span><span class="p" data-group-id="9855464586-2">(</span><span class="ss">:instance_states_active</span><span class="p" data-group-id="9855464586-2">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="initialize_instance/3">
@@ -1501,11 +1824,79 @@ Datastore.  See the documentation for
     </div>
   </section>
 
-      <footer class="footer">
+  <section id="functions" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#functions">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+Functions
+    </h1>
+    <div class="functions-list">
+<section class="detail" id="get_application_id_by_name/1">
 
+  <div class="detail-header">
+    <a href="#get_application_id_by_name/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_application_id_by_name(application_name)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_application_id_by_name(<a href="MscmpSystInstance.Types.html#t:application_name/0">MscmpSystInstance.Types.application_name</a>()) ::
+  <a href="MscmpSystInstance.Types.html#t:application_id/0">MscmpSystInstance.Types.application_id</a>() | nil</pre>
+
+      </div>
+
+<p>Returns the Application record ID for the requested Application Internal Name;
+raises on error.</p><p>On successful execution the record ID of the requested Application is
+returned.  If the requested Application Internal Name is not found <code class="inline">nil</code> is
+returned.</p><h2 id="get_application_id_by_name/1-parameters" class="section-heading">
+  <a href="#get_application_id_by_name/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">applicaton_name</code> - the internal name of the desired Application record.</li></ul><h2 id="get_application_id_by_name/1-examples" class="section-heading">
+  <a href="#get_application_id_by_name/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
+  Examples
+</h2>
+<p>  Finding an application returns its ID value.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">application_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_application_id_by_name</span><span class="p" data-group-id="1856088419-1">(</span><span class="s">&quot;app1&quot;</span><span class="p" data-group-id="1856088419-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_binary</span><span class="p" data-group-id="1856088419-2">(</span><span class="n">application_id</span><span class="p" data-group-id="1856088419-2">)</span><span class="w">
+</span><span class="no">true</span></code></pre><p>  Asking for a non-existent application returns <code class="inline">nil</code>.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="w"> </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_application_id_by_name</span><span class="p" data-group-id="1540011750-1">(</span><span class="s">&quot;nonexistent_application&quot;</span><span class="p" data-group-id="1540011750-1">)</span><span class="w">
+</span><span class="no">nil</span></code></pre>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+      <footer class="footer">
         <p>
+
+          <span class="line">
+            <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+              Search HexDocs
+            </button>
+
+              <a href="mscmp_syst_instance.epub" title="ePub version">
+                Download ePub version
+              </a>
+
+          </span>
+        </p>
+
+        <p class="built-using">
           Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.29.0) for the
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.29.1) for the
 
             <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 

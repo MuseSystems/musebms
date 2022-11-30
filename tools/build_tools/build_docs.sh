@@ -103,6 +103,16 @@ cd components/system/mscmp_syst_authn
 mix docs
 cd ../../../
 
+#
+# MssubMcp
+#
+
+rm -Rf documentation/technical/app_server/mssub_mcp
+mkdir -p documentation/technical/app_server/mssub_mcp
+cd subsystems/mssub_mcp
+mix docs
+cd ../../
+
 ################################################################################
 #
 #  Database
@@ -113,14 +123,14 @@ cd ../../../
 # Master Control Program Database
 #
 
-# rm -Rf documentation/technical/database/app_msmcp
-# mkdir -p documentation/technical/database/app_msmcp
-# java -jar tools/build_tools/schemaspy/schemaspy-6.1.0.jar -t pgsql11 -dp tools/build_tools/schemaspy/postgresql-42.5.0.jar -db msmcp_dev -host 127.0.0.1 -port 5432 -schemas ms_syst,ms_syst_data,ms_syst_db,ms_syst_priv  -u documentation -p 'documentation' -o documentation/technical/database/app_msmcp
+# rm -Rf documentation/technical/database/mssub_mcp
+# mkdir -p documentation/technical/database/mssub_mcp
+# java -jar tools/build_tools/schemaspy/schemaspy-6.1.0.jar -t pgsql11 -dp tools/build_tools/schemaspy/postgresql-42.5.0.jar -db mssub_mcp -host 127.0.0.1 -port 5432 -schemas ms_syst,ms_syst_data,ms_syst_db,ms_syst_priv  -u documentation -p 'documentation' -o documentation/technical/database/mssub_mcp
 
 #
 # Muse Systems Business Management System Database
 #
 
-# rm -Rf documentation/technical/database/app_msbms
-# mkdir -p documentation/technical/database/app_msbms
-# java -jar tools/build_tools/schemaspy/schemaspy-6.1.0.jar -t pgsql11 -dp tools/build_tools/schemaspy/postgresql-42.5.0.jar -db msbms_dev -host 127.0.0.1 -port 5432 -schemas ms_appl,ms_appl_data,ms_appl_priv,ms_syst,ms_syst_data,ms_syst_db,ms_syst_priv,ms_user,ms_user_data,ms_user_priv -u documentation -p 'documentation' -o documentation/technical/database/app_msbms
+# rm -Rf documentation/technical/database/mssub_bms
+# mkdir -p documentation/technical/database/mssub_bms
+# java -jar tools/build_tools/schemaspy/schemaspy-6.1.0.jar -t pgsql11 -dp tools/build_tools/schemaspy/postgresql-42.5.0.jar -db msbms_dev -host 127.0.0.1 -port 5432 -schemas ms_appl,ms_appl_data,ms_appl_priv,ms_syst,ms_syst_data,ms_syst_db,ms_syst_priv,ms_user,ms_user_data,ms_user_priv -u documentation -p 'documentation' -o documentation/technical/database/mssub_bms

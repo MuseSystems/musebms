@@ -4,15 +4,16 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.29.0">
+    <meta name="generator" content="ExDoc v0.29.1">
     <meta name="project" content="mscmp_syst_limiter v0.1.0">
 
     <title>MscmpSystLimiter — mscmp_syst_limiter v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-2YOS5DIE.css" />
+    <link rel="stylesheet" href="dist/html-elixir-V2ETBPMB.css" />
+
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-X7YVL3G2.js"></script>
-    <script src="dist/sidebar_items-10E893EF.js"></script>
+    <script src="dist/handlebars.templates-IV5W3OL2.js"></script>
+    <script src="dist/sidebar_items-DD5BA7D3.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -51,7 +52,7 @@
     </button>
     <label class="search-label">
       <p class="sr-only">Search</p>
-      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
+      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
     </label>
   </form>
 
@@ -89,7 +90,7 @@ mscmp_syst_limiter
     <div id="content" class="content-inner">
 
 <h1>
-<button class="settings display-settings">
+<button class="icon-action display-settings">
   <i class="ri-settings-3-line"></i>
   <span class="sr-only">Settings</span>
 </button>
@@ -102,7 +103,7 @@ mscmp_syst_limiter
 
 
   <section id="moduledoc">
-<p>API for establishing rate limits for usage of finite system resources.</p><p>Online, multi-user systems can be unintentionally overwhelmed by aggressive
+<h1>MscmpSystLimiter - Token Bucket Rate Limiting</h1><p>API for establishing rate limits for usage of finite system resources.</p><p>Online, multi-user systems can be unintentionally overwhelmed by aggressive
 service calls from external applications and systems or intentionally
 exploited by hostile actors seeking to defeat system protections though such
 actions as brute forcing user credentials or consuming all available computing
@@ -166,12 +167,12 @@ running, the Mnesia table which will hold the counters must be created if it
 doesn't already exist.  There are two ways to do this: 1) add a start phase to
 the client application <code class="inline">mix.exs</code> or call a function which creates the Mnesia
 table if it doesn't exist.</p></li></ol><ul><li><strong>Add a Start Phase</strong> - In the <code class="inline">mix.exs</code> applications specification
-section add a <code class="inline">:post_mnesia_setup</code> start phase.  Example:</li></ul><pre><code class="makeup elixir" translate="no"><span class="w">  </span><span class="kd">def</span><span class="w"> </span><span class="nf">application</span><span class="w"> </span><span class="k" data-group-id="1307179854-1">do</span><span class="w">
-    </span><span class="p" data-group-id="1307179854-2">[</span><span class="w">
-      </span><span class="ss">extra_applications</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1307179854-3">[</span><span class="ss">:logger</span><span class="p">,</span><span class="w"> </span><span class="ss">:mnesia</span><span class="p" data-group-id="1307179854-3">]</span><span class="w">
-      </span><span class="ss">start_phases</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1307179854-4">[</span><span class="p" data-group-id="1307179854-5">{</span><span class="ss">:post_mnesia_setup</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="1307179854-6">[</span><span class="ss">mnesia_table_args</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1307179854-7">[</span><span class="p" data-group-id="1307179854-7">]</span><span class="p" data-group-id="1307179854-6">]</span><span class="p" data-group-id="1307179854-5">}</span><span class="p" data-group-id="1307179854-4">]</span><span class="w">
-    </span><span class="p" data-group-id="1307179854-2">]</span><span class="w">
-  </span><span class="k" data-group-id="1307179854-1">end</span></code></pre><p>  note that an optional <code class="inline">mnesia_table_args</code> value may be set to further
+section add a <code class="inline">:post_mnesia_setup</code> start phase.  Example:</li></ul><pre><code class="makeup elixir" translate="no"><span class="w">  </span><span class="kd">def</span><span class="w"> </span><span class="nf">application</span><span class="w"> </span><span class="k" data-group-id="4162521106-1">do</span><span class="w">
+    </span><span class="p" data-group-id="4162521106-2">[</span><span class="w">
+      </span><span class="ss">extra_applications</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4162521106-3">[</span><span class="ss">:logger</span><span class="p">,</span><span class="w"> </span><span class="ss">:mnesia</span><span class="p" data-group-id="4162521106-3">]</span><span class="w">
+      </span><span class="ss">start_phases</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4162521106-4">[</span><span class="p" data-group-id="4162521106-5">{</span><span class="ss">:post_mnesia_setup</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="4162521106-6">[</span><span class="ss">mnesia_table_args</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4162521106-7">[</span><span class="p" data-group-id="4162521106-7">]</span><span class="p" data-group-id="4162521106-6">]</span><span class="p" data-group-id="4162521106-5">}</span><span class="p" data-group-id="4162521106-4">]</span><span class="w">
+    </span><span class="p" data-group-id="4162521106-2">]</span><span class="w">
+  </span><span class="k" data-group-id="4162521106-1">end</span></code></pre><p>  note that an optional <code class="inline">mnesia_table_args</code> value may be set to further
   configure behavior of the mnesia table. <code class="inline">mnesia_table_args</code> is a
   Keyword List which simply gets passed to <a href="https://www.erlang.org/doc/man/mnesia.html#create_table-2"><code class="inline">:mnesia.create_table/2</code></a> as the
   <code class="inline">Arg</code> parameter.  see <a href="https://www.erlang.org/doc/man/mnesia.html#create_table-2">the Erlang docs</a>
@@ -190,93 +191,91 @@ also be completed by explicitly calling
       </a>
       Summary
     </h1>
+<div class="summary-rate-limiter summary">
+  <h2>
+    <a href="#rate-limiter">Rate Limiter</a>
+  </h2>
 
-  <div class="summary-rate-limiter summary">
-    <h2>
-      <a href="#rate-limiter">Rate Limiter</a>
-    </h2>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#check_rate/4" translate="no">check_rate(counter_type, counter_id, scale_ms, limit)</a>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#check_rate/4" translate="no">check_rate(counter_type, counter_id, scale_ms, limit)</a>
+      </div>
 
-        </div>
-
-          <div class="summary-synopsis"><p>Checks if a Counter is within it's permissible rate and increments the Counter
+        <div class="summary-synopsis"><p>Checks if a Counter is within it's permissible rate and increments the Counter
 if it is within it's permissible rate.</p></div>
 
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#check_rate_with_increment/5" translate="no">check_rate_with_increment(counter_type, counter_id, scale_ms, limit, increment)</a>
+
       </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#check_rate_with_increment/5" translate="no">check_rate_with_increment(counter_type, counter_id, scale_ms, limit, increment)</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Checks the rate same as <a href="#check_rate/4"><code class="inline">MscmpSystLimiter.check_rate/4</code></a>, but allows for a
+        <div class="summary-synopsis"><p>Checks the rate same as <a href="#check_rate/4"><code class="inline">MscmpSystLimiter.check_rate/4</code></a>, but allows for a
 variable increment to be set for the call.</p></div>
 
-      </div>
+    </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#delete_counters/2" translate="no">delete_counters(counter_type, counter_id)</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Deletes a counter from the system.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#delete_counters/2" translate="no">delete_counters(counter_type, counter_id)</a>
 
       </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#get_check_rate_function/3" translate="no">get_check_rate_function(counter_type, scale_ms, limit)</a>
+        <div class="summary-synopsis"><p>Deletes a counter from the system.</p></div>
 
-        </div>
+    </div>
 
-          <div class="summary-synopsis"><p>Returns an anonymous function to simplify calls to check the rate for a
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_check_rate_function/3" translate="no">get_check_rate_function(counter_type, scale_ms, limit)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Returns an anonymous function to simplify calls to check the rate for a
 specific counter type.</p></div>
 
-      </div>
+    </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#get_counter_name/2" translate="no">get_counter_name(counter_type, counter_id)</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Creates a canonical name for each unique counter.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_counter_name/2" translate="no">get_counter_name(counter_type, counter_id)</a>
 
       </div>
 
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#inspect_counter/4" translate="no">inspect_counter(counter_type, counter_id, scale_ms, limit)</a>
+        <div class="summary-synopsis"><p>Creates a canonical name for each unique counter.</p></div>
 
-        </div>
+    </div>
 
-          <div class="summary-synopsis"><p>Retrieves data about a currently used counter without counting towards the limit.</p></div>
-
-      </div>
-
-  </div>
-
-  <div class="summary-runtime summary">
-    <h2>
-      <a href="#runtime">Runtime</a>
-    </h2>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#init_rate_limiter/1" translate="no">init_rate_limiter(opts \\ [])</a>
-
-        </div>
-
-          <div class="summary-synopsis"><p>Initializes the rate limiter table.</p></div>
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#inspect_counter/4" translate="no">inspect_counter(counter_type, counter_id, scale_ms, limit)</a>
 
       </div>
 
-  </div>
+        <div class="summary-synopsis"><p>Retrieves data about a currently used counter without counting towards the limit.</p></div>
+
+    </div>
+
+</div>
+<div class="summary-runtime summary">
+  <h2>
+    <a href="#runtime">Runtime</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#init_rate_limiter/1" translate="no">init_rate_limiter(opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Initializes the rate limiter table.</p></div>
+
+    </div>
+
+</div>
 
   </section>
 
@@ -337,14 +336,14 @@ the example of 3 tries in one minute, the <code class="inline">limit</code> valu
   </a>
   Example
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate</span><span class="p" data-group-id="5932649767-1">(</span><span class="ss">:check_rate_counter</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id1&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">60_000</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="5932649767-1">)</span><span class="w">
-</span><span class="p" data-group-id="5932649767-2">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="5932649767-2">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate</span><span class="p" data-group-id="5932649767-3">(</span><span class="ss">:check_rate_counter</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id1&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">60_000</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="5932649767-3">)</span><span class="w">
-</span><span class="p" data-group-id="5932649767-4">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="5932649767-4">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate</span><span class="p" data-group-id="5932649767-5">(</span><span class="ss">:check_rate_counter</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id1&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">60_000</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="5932649767-5">)</span><span class="w">
-</span><span class="p" data-group-id="5932649767-6">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="5932649767-6">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate</span><span class="p" data-group-id="5932649767-7">(</span><span class="ss">:check_rate_counter</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id1&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">60_000</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="5932649767-7">)</span><span class="w">
-</span><span class="p" data-group-id="5932649767-8">{</span><span class="ss">:deny</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="5932649767-8">}</span></code></pre>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate</span><span class="p" data-group-id="5075006671-1">(</span><span class="ss">:check_rate_counter</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id1&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">60_000</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="5075006671-1">)</span><span class="w">
+</span><span class="p" data-group-id="5075006671-2">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="5075006671-2">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate</span><span class="p" data-group-id="5075006671-3">(</span><span class="ss">:check_rate_counter</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id1&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">60_000</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="5075006671-3">)</span><span class="w">
+</span><span class="p" data-group-id="5075006671-4">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="5075006671-4">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate</span><span class="p" data-group-id="5075006671-5">(</span><span class="ss">:check_rate_counter</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id1&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">60_000</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="5075006671-5">)</span><span class="w">
+</span><span class="p" data-group-id="5075006671-6">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="5075006671-6">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate</span><span class="p" data-group-id="5075006671-7">(</span><span class="ss">:check_rate_counter</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id1&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">60_000</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="5075006671-7">)</span><span class="w">
+</span><span class="p" data-group-id="5075006671-8">{</span><span class="ss">:deny</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="5075006671-8">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="check_rate_with_increment/5">
@@ -395,22 +394,22 @@ the example of 3 tries in one minute, the <code class="inline">limit</code> valu
   </a>
   Example
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate_with_increment</span><span class="p" data-group-id="8369723007-1">(</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate_with_increment</span><span class="p" data-group-id="8538950885-1">(</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:check_with_increment</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="s">&quot;id1&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="mi">60_000</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="mi">10</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="mi">7</span><span class="p" data-group-id="8369723007-1">)</span><span class="w">
-</span><span class="p" data-group-id="8369723007-2">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p" data-group-id="8369723007-2">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate_with_increment</span><span class="p" data-group-id="8369723007-3">(</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="mi">7</span><span class="p" data-group-id="8538950885-1">)</span><span class="w">
+</span><span class="p" data-group-id="8538950885-2">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p" data-group-id="8538950885-2">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate_with_increment</span><span class="p" data-group-id="8538950885-3">(</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:check_with_increment</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="s">&quot;id1&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="mi">60_000</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="mi">10</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="mi">2</span><span class="p" data-group-id="8369723007-3">)</span><span class="w">
-</span><span class="p" data-group-id="8369723007-4">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span><span class="p" data-group-id="8369723007-4">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate</span><span class="p" data-group-id="8369723007-5">(</span><span class="ss">:check_with_increment</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id1&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">60_000</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p" data-group-id="8369723007-5">)</span><span class="w">
-</span><span class="p" data-group-id="8369723007-6">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p" data-group-id="8369723007-6">}</span></code></pre>
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="mi">2</span><span class="p" data-group-id="8538950885-3">)</span><span class="w">
+</span><span class="p" data-group-id="8538950885-4">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span><span class="p" data-group-id="8538950885-4">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate</span><span class="p" data-group-id="8538950885-5">(</span><span class="ss">:check_with_increment</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id1&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">60_000</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p" data-group-id="8538950885-5">)</span><span class="w">
+</span><span class="p" data-group-id="8538950885-6">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p" data-group-id="8538950885-6">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="delete_counters/2">
@@ -452,10 +451,10 @@ deleted.</p></li><li><p><code class="inline">counter_id</code> - the specific Co
   </a>
   Example
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate</span><span class="p" data-group-id="1268747004-1">(</span><span class="ss">:delete_test_counter</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id1&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">60_000</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="1268747004-1">)</span><span class="w">
-</span><span class="p" data-group-id="1268747004-2">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="1268747004-2">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">delete_counters</span><span class="p" data-group-id="1268747004-3">(</span><span class="ss">:delete_test_counter</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id1&quot;</span><span class="p" data-group-id="1268747004-3">)</span><span class="w">
-</span><span class="p" data-group-id="1268747004-4">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="1268747004-4">}</span></code></pre>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate</span><span class="p" data-group-id="6642173876-1">(</span><span class="ss">:delete_test_counter</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id1&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">60_000</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="6642173876-1">)</span><span class="w">
+</span><span class="p" data-group-id="6642173876-2">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="6642173876-2">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">delete_counters</span><span class="p" data-group-id="6642173876-3">(</span><span class="ss">:delete_test_counter</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id1&quot;</span><span class="p" data-group-id="6642173876-3">)</span><span class="w">
+</span><span class="p" data-group-id="6642173876-4">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="6642173876-4">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_check_rate_function/3">
@@ -509,20 +508,20 @@ the example of 3 tries in one minute, the <code class="inline">limit</code> valu
 </h2>
 <p>Note that The returned anonymous function is equivalent to making a call to
 the more verbose <a href="#check_rate/4"><code class="inline">MscmpSystLimiter.check_rate/4</code></a>:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">my_check_rate_function</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">get_check_rate_function</span><span class="p" data-group-id="6981159907-1">(</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">get_check_rate_function</span><span class="p" data-group-id="1138220900-1">(</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">:example_counter_get_func</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="mi">60_000</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="mi">3</span><span class="p" data-group-id="6981159907-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="n">my_check_rate_function</span><span class="o">.</span><span class="p" data-group-id="6981159907-2">(</span><span class="s">&quot;id1&quot;</span><span class="p" data-group-id="6981159907-2">)</span><span class="w">
-</span><span class="p" data-group-id="6981159907-3">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="6981159907-3">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate</span><span class="p" data-group-id="6981159907-4">(</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="mi">3</span><span class="p" data-group-id="1138220900-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">my_check_rate_function</span><span class="o">.</span><span class="p" data-group-id="1138220900-2">(</span><span class="s">&quot;id1&quot;</span><span class="p" data-group-id="1138220900-2">)</span><span class="w">
+</span><span class="p" data-group-id="1138220900-3">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="1138220900-3">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">check_rate</span><span class="p" data-group-id="1138220900-4">(</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:example_counter_get_func</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="s">&quot;id1&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="mi">60_000</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="mi">3</span><span class="p" data-group-id="6981159907-4">)</span><span class="w">
-</span><span class="p" data-group-id="6981159907-5">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="6981159907-5">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="n">my_check_rate_function</span><span class="o">.</span><span class="p" data-group-id="6981159907-6">(</span><span class="s">&quot;id1&quot;</span><span class="p" data-group-id="6981159907-6">)</span><span class="w">
-</span><span class="p" data-group-id="6981159907-7">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="6981159907-7">}</span></code></pre>
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="mi">3</span><span class="p" data-group-id="1138220900-4">)</span><span class="w">
+</span><span class="p" data-group-id="1138220900-5">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="1138220900-5">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">my_check_rate_function</span><span class="o">.</span><span class="p" data-group-id="1138220900-6">(</span><span class="s">&quot;id1&quot;</span><span class="p" data-group-id="1138220900-6">)</span><span class="w">
+</span><span class="p" data-group-id="1138220900-7">{</span><span class="ss">:allow</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="1138220900-7">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_counter_name/2">
@@ -562,7 +561,7 @@ specific counter.</p></li></ul><h2 id="get_counter_name/2-example" class="sectio
   </a>
   Example
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">get_counter_name</span><span class="p" data-group-id="1590233632-1">(</span><span class="ss">:example_counter_name</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;123&quot;</span><span class="p" data-group-id="1590233632-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystLimiter</span><span class="o">.</span><span class="n">get_counter_name</span><span class="p" data-group-id="7641813595-1">(</span><span class="ss">:example_counter_name</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;123&quot;</span><span class="p" data-group-id="7641813595-1">)</span><span class="w">
 </span><span class="s">&quot;example_counter_name_123&quot;</span></code></pre>
   </section>
 </section>
@@ -664,10 +663,23 @@ available Mnesia table options see
   </section>
 
       <footer class="footer">
-
         <p>
+
+          <span class="line">
+            <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+              Search HexDocs
+            </button>
+
+              <a href="mscmp_syst_limiter.epub" title="ePub version">
+                Download ePub version
+              </a>
+
+          </span>
+        </p>
+
+        <p class="built-using">
           Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.29.0) for the
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.29.1) for the
 
             <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 
