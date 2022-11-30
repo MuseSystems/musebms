@@ -1,11 +1,11 @@
 defmodule MscmpSystOptions do
-  @moduledoc """
-  API for retrieving and working with option files stored in the application server file system.
-  """
-
   alias MscmpSystOptions.Impl.OptionsFile
   alias MscmpSystOptions.Impl.OptionsParser
   alias MscmpSystOptions.Types
+
+  @external_resource "README.md"
+
+  @moduledoc File.read!(Path.join([__DIR__, "..", "README.md"]))
 
   @doc section: :file_handling
   @doc """
