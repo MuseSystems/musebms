@@ -84,8 +84,6 @@ defmodule MssubMcp.Runtime.Application do
       MscmpSystLimiter.init_rate_limiter()
     else
       error ->
-        IO.inspect(error)
-
         raise MscmpSystError,
           code: :undefined_error,
           message: "Unable to setup Mnesia for MscmpSystLimiter.",
