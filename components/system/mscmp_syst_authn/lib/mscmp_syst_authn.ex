@@ -2542,6 +2542,13 @@ defmodule MscmpSystAuthn do
       Limit.  The value is set via a tuple in the following form:
       `{<Maximum Attempts>, <Time Window in Seconds>}`.  The default value is 5
       attempts over a time window of 30 minutes.
+
+      * `deadline_minutes` - overrides the default number of minutes that an
+      authentication process can take before being rejected for taking too long.
+      This deadline is needed because an arbitrary time can pass due to user
+      interaction, such as selecting an Instance or providing an MFA credential.
+      The default value is 5 minutes from the time the authentication process is
+      started.
   """
   @spec authenticate_email_password(
           Types.account_identifier(),
@@ -2637,6 +2644,13 @@ defmodule MscmpSystAuthn do
       Limit.  The value is set via a tuple in the following form:
       `{<Maximum Attempts>, <Time Window in Seconds>}`.  The default value is 5
       attempts over a time window of 30 minutes.
+
+      * `deadline_minutes` - overrides the default number of minutes that an
+      authentication process can take before being rejected for taking too long.
+      This deadline is needed because an arbitrary time can pass due to user
+      interaction if the authenticator allows for an interruptable
+      authentication process.  The default deadline allows for 5 minutes to
+      complete the authentication process.
   """
   @spec authenticate_validation_token(
           Types.account_identifier(),
@@ -2709,6 +2723,13 @@ defmodule MscmpSystAuthn do
       Limit.  The value is set via a tuple in the following form:
       `{<Maximum Attempts>, <Time Window in Seconds>}`.  The default value is 5
       attempts over a time window of 30 minutes.
+
+      * `deadline_minutes` - overrides the default number of minutes that an
+      authentication process can take before being rejected for taking too long.
+      This deadline is needed because an arbitrary time can pass due to user
+      interaction if the authenticator allows for an interruptable
+      authentication process.  The default deadline allows for 5 minutes to
+      complete the authentication process.
   """
   @spec authenticate_recovery_token(
           Types.account_identifier(),
@@ -2777,6 +2798,13 @@ defmodule MscmpSystAuthn do
       Limit.  The value is set via a tuple in the following form:
       `{<Maximum Attempts>, <Time Window in Seconds>}`.  The default value is 5
       attempts over a time window of 30 minutes.
+
+      * `deadline_minutes` - overrides the default number of minutes that an
+      authentication process can take before being rejected for taking too long.
+      This deadline is needed because an arbitrary time can pass due to user
+      interaction if the authenticator allows for an interruptable
+      authentication process.  The default deadline allows for 5 minutes to
+      complete the authentication process.
   """
   @spec authenticate_api_token(
           Types.account_identifier(),
