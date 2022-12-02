@@ -60,50 +60,34 @@ load_files = [
     #
     # MSBMS Instance Schema Loading
     #
-    # TODO: The files below will likely end up in components of their own or
-    #       minimally have subplans of their own.  For now, however, we'll leave
-    #       as-is as any more concrete form than what already exists is
-    #       speculative.
 
-     "subsystems/mssub_bms/mod_syst/seed_data/initialize_enum_login_states.eex.sql",
-     "subsystems/mssub_bms/mod_syst/seed_data/initialize_enum_interaction_types.eex.sql",
-     "subsystems/mssub_bms/mod_syst/seed_data/initialize_enum_interface_types.eex.sql",
+    {type = "plan", file = "components/application/mscmp_brm_country/subplans.mscmp_brm_country.toml"},
 
-     "subsystems/mssub_bms/mod_brm/seed_data/initialize_enum_address_states.eex.sql",
-     "subsystems/mssub_bms/mod_brm/seed_data/initialize_enum_contact_states.eex.sql",
-     "subsystems/mssub_bms/mod_brm/seed_data/initialize_enum_contact_types.eex.sql",
-     "subsystems/mssub_bms/mod_brm/seed_data/initialize_enum_entity_person_roles.eex.sql",
-     "subsystems/mssub_bms/mod_brm/seed_data/initialize_enum_entity_place_roles.eex.sql",
-     "subsystems/mssub_bms/mod_brm/seed_data/initialize_enum_entity_states.eex.sql",
-     "subsystems/mssub_bms/mod_brm/seed_data/initialize_enum_entity_types.eex.sql",
-     "subsystems/mssub_bms/mod_brm/seed_data/initialize_enum_person_contact_roles.eex.sql",
-     "subsystems/mssub_bms/mod_brm/seed_data/initialize_enum_person_states.eex.sql",
-     "subsystems/mssub_bms/mod_brm/seed_data/initialize_enum_person_types.eex.sql",
-     "subsystems/mssub_bms/mod_brm/seed_data/initialize_enum_place_address_roles.eex.sql",
-     "subsystems/mssub_bms/mod_brm/seed_data/initialize_enum_place_states.eex.sql",
-     "subsystems/mssub_bms/mod_brm/seed_data/initialize_enum_place_types.eex.sql",
+    {type = "plan", file = "components/application/mscmp_brm_entity/subplans.mscmp_brm_entity.toml"},
 
-     "subsystems/mssub_bms/mod_accounting/seed_data/initialize_enum_fiscal_period_states.eex.sql",
-     "subsystems/mssub_bms/mod_accounting/seed_data/initialize_enum_fiscal_year_states.eex.sql",
-     "subsystems/mssub_bms/mod_accounting/seed_data/initialize_enum_fiscal_year_types.eex.sql",
+    {type = "plan", file = "components/application/mscmp_brm_place/subplans.mscmp_brm_place.toml"},
 
-     "subsystems/mssub_bms/mod_syst/ms_syst_data/syst_interaction_logs/syst_interaction_logs.eex.sql",
-     "subsystems/mssub_bms/mod_brm/ms_appl_data/mstr_countries/mstr_countries.eex.sql",
-     "subsystems/mssub_bms/mod_brm/ms_appl_data/mstr_country_address_format_assocs/mstr_country_address_format_assocs.eex.sql",
-     "subsystems/mssub_bms/mod_brm/ms_appl_data/mstr_country_phone_format_assocs/mstr_country_phone_format_assocs.eex.sql",
-     "subsystems/mssub_bms/mod_brm/ms_appl_data/mstr_country_name_format_assocs/mstr_country_name_format_assocs.eex.sql",
-     "subsystems/mssub_bms/mod_brm/ms_appl_data/mstr_entities/mstr_entities.eex.sql",
-     "subsystems/mssub_bms/mod_brm/ms_appl_data/mstr_places/mstr_places.eex.sql",
-     "subsystems/mssub_bms/mod_brm/ms_appl_data/mstr_persons/mstr_persons.eex.sql",
-     "subsystems/mssub_bms/mod_brm/ms_appl_data/mstr_contacts/mstr_contacts.eex.sql",
-     "subsystems/mssub_bms/mod_brm/ms_appl_data/mstr_entity_selling_entities/mstr_entity_selling_entities.eex.sql",
-     "subsystems/mssub_bms/mod_brm/ms_appl_data/mstr_entity_purchasing_entities/mstr_entity_purchasing_entities.eex.sql",
-     "subsystems/mssub_bms/mod_brm/ms_appl_data/mstr_entity_staffing_entities/mstr_entity_staffing_entities.eex.sql",
-     "subsystems/mssub_bms/mod_brm/ms_appl_data/mstr_entity_banking_entities/mstr_entity_banking_entities.eex.sql",
-     "subsystems/mssub_bms/mod_brm/ms_appl_data/mstr_entity_inventory_places/mstr_entity_inventory_places.eex.sql",
-     "subsystems/mssub_bms/mod_brm/ms_appl_data/mstr_entity_workplace_places/mstr_entity_workplace_places.eex.sql",
-     "subsystems/mssub_bms/mod_brm/ms_appl_data/mstr_entity_fulfillment_places/mstr_entity_fulfillment_places.eex.sql",
-     "subsystems/mssub_bms/mod_brm/ms_appl_data/mstr_entity_person_roles/mstr_entity_person_roles.eex.sql",
-     "subsystems/mssub_bms/mod_syst/ms_syst_data/syst_person_logins/syst_person_logins.eex.sql",
-     "subsystems/mssub_bms/mod_brm/ms_appl_data/mstr_person_contact_roles/mstr_person_contact_roles.eex.sql",
+    {type = "plan", file = "components/application/mscmp_brm_person/subplans.mscmp_brm_person.toml"},
+
+    {type = "plan", file = "components/application/mscmp_brm_contact/subplans.mscmp_brm_contact.toml"},
+
+    {type = "plan", file = "components/application/mscmp_brm_entity_selling/subplans.mscmp_brm_entity_selling.toml"},
+
+    {type = "plan", file = "components/application/mscmp_brm_entity_purch/subplans.mscmp_brm_entity_purch.toml"},
+
+    {type = "plan", file = "components/application/mscmp_brm_entity_staff/subplans.mscmp_brm_entity_staff.toml"},
+
+    {type = "plan", file = "components/application/mscmp_brm_entity_bank/subplans.mscmp_brm_entity_bank.toml"},
+
+    {type = "plan", file = "components/application/mscmp_brm_entity_inventory/subplans.mscmp_brm_entity_inventory.toml"},
+
+    {type = "plan", file = "components/application/mscmp_brm_entity_facility/subplans.mscmp_brm_entity_facility.toml"},
+
+    {type = "plan", file = "components/application/mscmp_brm_entity_person/subplans.mscmp_brm_entity_person.toml"},
+
+    {type = "plan", file = "components/application/mscmp_brm_person_contact/subplans.mscmp_brm_person_contact.toml"},
+
+    {type = "plan", file = "components/application/mscmp_syst_interactions/subplans.mscmp_syst_interactions.toml"},
+
+    {type = "plan", file = "components/application/mscmp_acc_calendar/subplans.mscmp_acc_calendar.toml"},
 ]

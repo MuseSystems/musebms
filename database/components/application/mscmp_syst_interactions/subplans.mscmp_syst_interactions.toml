@@ -1,0 +1,26 @@
+# File:        subplans.mscmp_syst_interactions.toml
+# Location:    musebms/database/components/application/mscmp_syst_interactions/subplans.mscmp_syst_interactions.toml
+# Project:     Muse Systems Business Management System
+#
+# Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+# This file may include content copyrighted and licensed from third parties.
+#
+# See the LICENSE file in the project root for license terms and conditions.
+# See the NOTICE file in the project root for copyright ownership information.
+#
+# muse.information@musesystems.com :: https://muse.systems
+
+[[build_plan]]
+release              = 1
+version              = 1
+update               = 0
+sponsor              = 820
+sponsor_modification = 0
+load_files = [
+    "components/application/mscmp_syst_interactions/seed_data/initialize_enum_interaction_types.eex.sql",
+    "components/application/mscmp_syst_interactions/seed_data/initialize_enum_interface_types.eex.sql",
+    "components/application/mscmp_syst_interactions/seed_data/initialize_enum_login_states.eex.sql",
+
+    "components/application/mscmp_syst_interactions/ms_syst_data/syst_interaction_logs/syst_interaction_logs.eex.sql",
+    "components/application/mscmp_syst_interactions/ms_syst_data/syst_person_logins/syst_person_logins.eex.sql",
+]
