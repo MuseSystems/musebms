@@ -35,6 +35,9 @@
             "path": "subsystems/mssub_mcp",
         },
         {
+            "path": "subsystems/mssub_bms",
+        },
+        {
             "path": "application/msbms",
         },
         {
