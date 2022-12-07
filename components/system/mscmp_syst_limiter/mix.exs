@@ -74,8 +74,7 @@ defmodule MscmpSystLimiter.MixProject do
       extra_applications: [
         :logger,
         :mnesia
-      ],
-      mod: {MscmpSystLimiter.Runtime.Application, []}
+      ]
     ]
   end
 

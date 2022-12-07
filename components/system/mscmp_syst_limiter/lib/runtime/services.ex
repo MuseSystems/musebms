@@ -1,5 +1,5 @@
-# Source File: application.ex
-# Location:    musebms/components/system/mscmp_syst_limiter/lib/runtime/application.ex
+# Source File: services.ex
+# Location:    musebms/components/system/mscmp_syst_limiter/lib/runtime/services.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,60 +10,38 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule MscmpSystLimiter.Runtime.Application do
+defmodule MscmpSystLimiter.Runtime.Services do
   require Logger
 
   @default_backend Hammer.Backend.Mnesia
   @default_expiry_ms 60_000 * 60 * 2
   @default_cleanup_interval_ms 60_000 * 10
   @default_table_name :mscmp_syst_limiter_counters
+  @default_supervisor_name MscmpSystLimiter.Supervisor
 
   @moduledoc false
 
-  # start/2 is called automatically on OTP application start-up.
-  #
-  # TODO: There's a good argument to be made that MscmpSystLimiter shouldn't
-  #       be a startable application at all.  Rather it should be started via
-  #       a start_link call by the consuming application.  This would mean that
-  #       it could be started under an application defined supervision tree.
-  #       The to-do here is to reconsider that possibility.
-
-  @spec start(Application.start_type(), term()) ::
-          {:ok, pid()} | {:ok, pid(), Application.state()} | {:error, term()}
-  def start(_type, args \\ []) do
-    expiry_ms =
-      args[:expiry_ms] ||
-        Application.get_env(:mscmp_syst_limiter, :expiry_ms, @default_expiry_ms)
-
-    cleanup_interval_ms =
-      args[:cleanup_interval_ms] ||
-        Application.get_env(
-          :mscmp_syst_limiter,
-          :cleanup_interval_ms,
-          @default_cleanup_interval_ms
-        )
-
-    table_name =
-      args[:table_name] ||
-        Application.get_env(:mscmp_syst_limiter, :table_name, @default_table_name)
+  @spec start_link(Keyword.t()) :: Supervisor.on_start_child()
+  def start_link(opts) do
+    opts =
+      MscmpSystUtils.resolve_options(opts,
+        supervisor_name: @default_supervisor_name,
+        expiry_ms: @default_expiry_ms,
+        cleanup_interval_ms: @default_cleanup_interval_ms,
+        table_name: @default_table_name
+      )
 
     hammer_config =
       {@default_backend,
-       [expiry_ms: expiry_ms, cleanup_interval_ms: cleanup_interval_ms, table_name: table_name]}
+       [
+         expiry_ms: opts[:expiry_ms],
+         cleanup_interval_ms: opts[:cleanup_interval_ms],
+         table_name: opts[:table_name]
+       ]}
 
     Application.put_env(:hammer, :backend, hammer_config)
 
-    Hammer.Supervisor.start_link(hammer_config, name: MscmpSystLimiter.Supervisor)
-  end
-
-  @spec start_phase(atom(), Application.start_type(), term()) :: :ok | {:error, reason :: term()}
-  def start_phase(:post_mnesia_setup, _type, args \\ []) do
-    mnesia_table_args = args[:mnesia_table_args] || []
-
-    case init_rate_limiter(mnesia_table_args: mnesia_table_args) do
-      {:ok, _details} -> :ok
-      result -> result
-    end
+    Hammer.Supervisor.start_link(hammer_config, name: opts[:supervisor_name])
   end
 
   @spec init_rate_limiter(Keyword.t()) ::

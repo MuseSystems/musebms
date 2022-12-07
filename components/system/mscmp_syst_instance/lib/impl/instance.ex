@@ -13,6 +13,7 @@
 defmodule MscmpSystInstance.Impl.Instance do
   import Ecto.Query
 
+  alias MscmpSystInstance.Impl
   alias MscmpSystInstance.Types
 
   require Logger
@@ -224,38 +225,24 @@ defmodule MscmpSystInstance.Impl.Instance do
 
   @spec get_default_instance_state_ids() :: Keyword.t()
   def get_default_instance_state_ids do
-    initializing_state_id =
-      MscmpSystEnums.get_default_enum_item("instance_states",
-        functional_type_name: "instance_states_initializing"
-      ).id
+    initializing_state =
+      Impl.InstanceState.get_instance_state_default(:instance_states_initializing)
 
-    active_state_id =
-      MscmpSystEnums.get_default_enum_item("instance_states",
-        functional_type_name: "instance_states_active"
-      ).id
+    active_state = Impl.InstanceState.get_instance_state_default(:instance_states_active)
 
-    failed_state_id =
-      MscmpSystEnums.get_default_enum_item("instance_states",
-        functional_type_name: "instance_states_failed"
-      ).id
+    failed_state = Impl.InstanceState.get_instance_state_default(:instance_states_failed)
 
-    initialized_state_id =
-      MscmpSystEnums.get_default_enum_item("instance_states",
-        functional_type_name: "instance_states_initialized"
-      ).id
+    initialized_state =
+      Impl.InstanceState.get_instance_state_default(:instance_states_initialized)
 
-    migrating_state_id =
-      MscmpSystEnums.get_default_enum_item("instance_states",
-        functional_type_name: "instance_states_migrating"
-      ).id
+    migrating_state = Impl.InstanceState.get_instance_state_default(:instance_states_migrating)
 
     [
-      initializing_state_id: initializing_state_id,
-      active_state_id: active_state_id,
-      failed_state_id: failed_state_id,
-      initializing_state_id: initializing_state_id,
-      initialized_state_id: initialized_state_id,
-      migrating_state_id: migrating_state_id
+      initializing_state_id: initializing_state.id,
+      active_state_id: active_state.id,
+      failed_state_id: failed_state.id,
+      initialized_state_id: initialized_state.id,
+      migrating_state_id: migrating_state.id
     ]
   end
 

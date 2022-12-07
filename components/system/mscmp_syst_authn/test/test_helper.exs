@@ -22,6 +22,16 @@ test_kind =
     :unit_testing
   end
 
+children = [
+  {DynamicSupervisor, strategy: :one_for_one, name: MscmpSystAuthn.TestingSupervisor}
+]
+
+Supervisor.start_link(children, strategy: :one_for_one)
+
+limiter_service_spec = %{id: TestingLimiter, start: {MscmpSystLimiter, :start_link, []}}
+
+DynamicSupervisor.start_child(MscmpSystAuthn.TestingSupervisor, limiter_service_spec)
+
 TestSupport.setup_testing_database(test_kind)
 
 MscmpSystDb.put_datastore_context(TestSupport.get_testing_datastore_context_id())
@@ -35,11 +45,6 @@ enum_service_spec = %{
   }
 }
 
-children = [
-  {DynamicSupervisor, strategy: :one_for_one, name: MscmpSystAuthn.TestingSupervisor}
-]
-
-Supervisor.start_link(children, strategy: :one_for_one)
 Logger.configure(level: :info)
 
 ExUnit.start()

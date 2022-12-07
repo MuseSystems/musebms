@@ -19,7 +19,19 @@ test_kind =
     :unit_testing
   end
 
+children = [
+  {DynamicSupervisor, strategy: :one_for_one, name: MscmpSystLimiter.TestingSupervisor}
+]
+
+Supervisor.start_link(children, strategy: :one_for_one)
+
+limiter_service_spec = %{id: TestingLimiter, start: {MscmpSystLimiter, :start_link, []}}
+
+DynamicSupervisor.start_child(MscmpSystLimiter.TestingSupervisor, limiter_service_spec)
+
 TestSupport.setup_testing_database(test_kind)
+
+Logger.configure(level: :info)
 
 ExUnit.start()
 
