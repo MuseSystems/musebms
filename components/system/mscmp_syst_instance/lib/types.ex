@@ -144,7 +144,7 @@ defmodule MscmpSystInstance.Types do
   @typedoc """
   Type for identifying Instance States by name.
   """
-  @type instance_state_name() :: String.t()
+  @type instance_state_name() :: MscmpSystEnums.Types.enum_item_name()
 
   @typedoc """
   The required data for maintaining Instance States.
@@ -214,7 +214,7 @@ defmodule MscmpSystInstance.Types do
   @typedoc """
   Type for identifying instance type names.
   """
-  @type instance_type_name() :: String.t()
+  @type instance_type_name() :: MscmpSystEnums.Types.enum_item_name()
 
   @typedoc """
   The required data for maintaining Instance Types.
@@ -290,4 +290,9 @@ defmodule MscmpSystInstance.Types do
           optional(:enum_default) => boolean(),
           optional(:functional_type_name) => MscmpSystEnums.Types.enum_functional_type_name()
         }
+
+  @typedoc """
+  Type for identifying Owner States by name.
+  """
+  @type owner_state_name() :: MscmpSystEnums.Types.enum_item_name()
 end

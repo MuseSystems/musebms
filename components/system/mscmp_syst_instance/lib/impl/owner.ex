@@ -64,8 +64,7 @@ defmodule MscmpSystInstance.Impl.Owner do
        %MscmpSystError{code: :undefined_error, message: "Failure updating Owner.", cause: error}}
   end
 
-  @spec get_owner_state_by_name(MscmpSystEnums.Types.enum_item_name()) ::
-          Msdata.SystEnumItems.t() | nil
+  @spec get_owner_state_by_name(Types.owner_state_name()) :: Msdata.SystEnumItems.t() | nil
   def get_owner_state_by_name(owner_state_name) when is_binary(owner_state_name),
     do: MscmpSystEnums.get_enum_item_by_name("owner_states", owner_state_name)
 

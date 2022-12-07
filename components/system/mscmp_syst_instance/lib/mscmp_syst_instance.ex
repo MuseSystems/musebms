@@ -260,8 +260,7 @@ defmodule MscmpSystInstance do
       iex> MscmpSystInstance.get_owner_state_by_name("nonexistent_state")
       nil
   """
-  @spec get_owner_state_by_name(MscmpSystEnums.Types.enum_item_name()) ::
-          Msdata.SystEnumItems.t() | nil
+  @spec get_owner_state_by_name(Types.owner_state_name()) :: Msdata.SystEnumItems.t() | nil
   defdelegate get_owner_state_by_name(owner_state_name), to: Impl.Owner
 
   @doc section: :owner_data
