@@ -1,1 +1,0 @@
-sidebarNodes={"extras":[{"group":"","headers":[{"anchor":"modules","id":"Modules"}],"id":"api-reference","title":"API Reference"}],"modules":[{"group":"API","id":"MssubMcp","nodeGroups":[{"key":"functions","name":"Functions","nodes":[{"anchor":"process_operation/1","id":"process_operation/1","title":"process_operation(operation)"}]}],"sections":[],"title":"MssubMcp"}],"tasks":[]}
