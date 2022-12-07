@@ -7,9 +7,11 @@ defmodule MscmpSystInstance do
 
   @moduledoc File.read!(Path.join([__DIR__, "..", "README.md"]))
 
+  # ==============================================================================================
   #
-  #  Applications
+  # Applications
   #
+  # ==============================================================================================
 
   @doc section: :application_data
   @doc """
@@ -40,9 +42,11 @@ defmodule MscmpSystInstance do
   @spec get_application_id_by_name(Types.application_name()) :: Types.application_id() | nil
   defdelegate get_application_id_by_name(application_name), to: Impl.Application
 
+  # ==============================================================================================
   #
-  #  Instance Types
+  # Instance Types
   #
+  # ==============================================================================================
 
   @doc section: :instance_type_data
   @doc """
@@ -233,9 +237,11 @@ defmodule MscmpSystInstance do
               ),
               to: Impl.InstanceTypeContext
 
+  # ==============================================================================================
   #
   # Owners
   #
+  # ==============================================================================================
 
   @doc section: :owner_data
   @doc """
@@ -397,9 +403,11 @@ defmodule MscmpSystInstance do
           :ok | {:error, MscmpSystError.t()}
   defdelegate purge_owner(owner), to: Impl.Owner
 
+  # ==============================================================================================
   #
   # Instances
   #
+  # ==============================================================================================
 
   @doc section: :instance_data
   @doc """
@@ -701,9 +709,11 @@ defmodule MscmpSystInstance do
           :ok | {:error, MscmpSystError.t()}
   defdelegate purge_instance(instance, startup_options), to: Impl.Instance
 
+  # ==============================================================================================
   #
   # Service Management
   #
+  # ==============================================================================================
 
   @doc section: :service_management
   @doc """
