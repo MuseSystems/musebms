@@ -3770,13 +3770,11 @@ defmodule MssubMcp do
   The return value of the call provides the caller references to identifiers for
   each of the three previously set target services represented as a tuple:
 
-      ```
       {
         <previous_datastore_context>,
         <previous_enums_service_name>,
         <previous_settings_service_name>
       }
-      ```
 
   This value is suitable to pass to `stop_mcp_service_context/1` if the MCP
   Subsystem context setting is only intended to be temporary.
@@ -3796,13 +3794,11 @@ defmodule MssubMcp do
   This function unsets the MCP Subsystem service references in one of two ways
   depending on the argument passed to the function.  If a tuple in the form:
 
-      ```
       {
         <new_datastore_context>,
         <new_enums_service_name>,
         <new_settings_service_name>
       }
-      ```
 
   is passed, the references in the tuple will be set as the new service context
   for the process.  This is useful if a previous context existed and only
