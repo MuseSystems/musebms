@@ -13,27 +13,36 @@
 defmodule MssubMcp.Runtime.Processing do
   @moduledoc false
 
-  @default_enums_service_name :mssub_mcp_enums_service
-  @default_settings_service_name :mssub_mcp_settings_service
+  use MssubMcp.Macros
+
+  mcp_constants()
 
   @spec process_operation((() -> any())) :: any()
-  def process_operation(operation) do
-    mcp_enums_service =
-      Application.get_env(:mssub_mcp, :enums_service_name, @default_enums_service_name)
+  mcp_opfn process_operation(operation) do
+    operation.()
+  end
 
-    mcp_settings_service =
-      Application.get_env(:mssub_mcp, :settings_service_name, @default_settings_service_name)
+  @spec start_mcp_service_context() ::
+          {atom() | pid() | nil, MscmpSystEnums.Types.service_name() | nil,
+           MscmpSystSettings.Types.service_name() | nil}
+  def start_mcp_service_context do
+    start_enums_service = MscmpSystEnums.put_enums_service(@mcp_enums_service_name)
+    start_settings_service = MscmpSystSettings.put_settings_service(@mcp_settings_service_name)
+    start_datastore_context = MscmpSystDb.put_datastore_context(@mcp_db_app_access_context)
 
-    starting_enums_service = MscmpSystEnums.put_enums_service(mcp_enums_service)
-    starting_settings_service = MscmpSystSettings.put_settings_service(mcp_settings_service)
-    starting_datastore_context = MscmpSystDb.put_datastore_context(:mssub_mcp_app_access)
+    {start_datastore_context, start_enums_service, start_settings_service}
+  end
 
-    result = operation.()
-
-    _ = MscmpSystDb.put_datastore_context(starting_datastore_context)
-    _ = MscmpSystSettings.put_settings_service(starting_settings_service)
-    _ = MscmpSystEnums.put_enums_service(starting_enums_service)
-
-    result
+  @spec stop_mcp_service_context(
+          {atom() | pid() | nil, MscmpSystEnums.Types.service_name() | nil,
+           MscmpSystSettings.Types.service_name() | nil}
+        ) :: :ok
+  def stop_mcp_service_context(
+        {datastore_context_name, enums_service_name, settings_service_name}
+      ) do
+    _ = MscmpSystDb.put_datastore_context(datastore_context_name)
+    _ = MscmpSystSettings.put_settings_service(settings_service_name)
+    _ = MscmpSystEnums.put_enums_service(enums_service_name)
+    :ok
   end
 end

@@ -1,5 +1,5 @@
-# Source File: test_support.ex
-# Location:    musebms/subsystems/mssub_mcp/test/support/test_support.ex
+# Source File: dev_support.ex
+# Location:    musebms/subsystems/mssub_mcp/dev_support/dev_support.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,19 +10,7 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule TestSupport do
-  @moduledoc false
-
-  #######################
-  #
-  # Testing Support
-  #
-  # This module provides functions used to create, migrate, and clean up the
-  # testing database for the individual tests in the suite that require the
-  # database.
-  #
-  ########################
-
+defmodule DevSupport do
   alias Mix.Tasks.Builddb
 
   use MssubMcp.Macros
@@ -33,8 +21,8 @@ defmodule TestSupport do
 
   mcp_constants()
 
-  def setup_testing_database(test_kind) do
-    :ok = build_migrations(test_kind)
+  def start_dev_environment(db_kind \\ :unit_testing) do
+    :ok = build_migrations(db_kind)
 
     opts = [
       owner_name: @mcp_db_owner_role,
@@ -43,16 +31,14 @@ defmodule TestSupport do
     ]
 
     datastore_options = MssubMcp.Runtime.Options.get_datastore_options(opts)
-    datastore_type = get_datastore_type(test_kind)
-
-    database_owner = Enum.find(datastore_options.contexts, &(&1[:database_owner_context] == true))
+    datastore_type = get_datastore_type(db_kind)
 
     {:ok, _} =
       MscmpSystDb.upgrade_datastore(
         datastore_options,
         datastore_type,
-        ms_owner: database_owner.database_role,
-        ms_appusr: "mssub_mcp_app_access"
+        ms_owner: @mcp_db_owner_role,
+        ms_appusr: @mcp_db_app_access_role
       )
 
     # This is required post upgrade because we're loading enumerations data
@@ -66,11 +52,13 @@ defmodule TestSupport do
     Process.whereis(@mcp_enums_service_name) |> Process.exit(:kill)
   end
 
+  def stop_dev_environment(db_kind \\ :unit_testing), do: cleanup_database(db_kind)
+
   defp get_datastore_type(:unit_testing), do: @migration_unit_test_ds_type
   defp get_datastore_type(:integration_testing), do: @migration_integration_test_ds_type
 
-  def cleanup_testing_database(test_kind) do
-    datastore_type = get_datastore_type(test_kind)
+  def cleanup_database(db_kind) do
+    datastore_type = get_datastore_type(db_kind)
 
     opts = [
       owner_name: @mcp_db_owner_role,
@@ -86,10 +74,10 @@ defmodule TestSupport do
     File.rm_rf!(Path.join(["priv/database", datastore_type]))
   end
 
-  defp build_migrations(test_kind) do
+  defp build_migrations(db_kind) do
     Builddb.run([
       "-t",
-      get_datastore_type(test_kind),
+      get_datastore_type(db_kind),
       "-c",
       "-s",
       @migration_test_source_root_dir

@@ -12,12 +12,11 @@
 
 defmodule MssubMcp.Runtime.Options do
   require Logger
+  use MssubMcp.Macros
 
   @moduledoc false
 
-  @default_database_name "mssub_mcp"
-  @default_owner_name "mssub_mcp_owner"
-  @default_app_access_role_name "mssub_mcp_app_access"
+  mcp_constants()
 
   # The below is used as a salting value for MCP Context password generation.
   # The overall approach, including this value, is almost certainly a bad idea
@@ -33,7 +32,7 @@ defmodule MssubMcp.Runtime.Options do
       )
 
     db_server = MscmpSystOptions.get_global_dbserver(startup_options)
-    database_name = @default_database_name
+    database_name = @mcp_db_name
     datastore_code = MscmpSystOptions.get_global_pepper_value(startup_options)
     contexts = get_datastore_contexts(startup_options, opts)
 
@@ -50,8 +49,8 @@ defmodule MssubMcp.Runtime.Options do
   def get_datastore_contexts(%{} = startup_options, opts) do
     opts =
       MscmpSystUtils.resolve_options(opts,
-        owner_name: @default_owner_name,
-        app_access_role_name: @default_app_access_role_name
+        owner_name: @mcp_db_owner_role,
+        app_access_role_name: @mcp_db_app_access_role
       )
 
     [
@@ -66,7 +65,7 @@ defmodule MssubMcp.Runtime.Options do
         database_owner_context: true
       },
       %{
-        context_name: :mssub_mcp_app_access,
+        context_name: @mcp_db_app_access_context,
         description: "Muse Systems MCP Subsystem Application Access",
         database_role: opts[:app_access_role_name],
         database_password:

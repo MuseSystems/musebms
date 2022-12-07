@@ -15,6 +15,10 @@ defmodule MssubMcp.Runtime.Datastore do
 
   @moduledoc false
 
+  use MssubMcp.Macros
+
+  mcp_constants()
+
   @default_owner_name "mssub_mcp_owner"
   @default_app_access_role_name "mssub_mcp_app_access"
 
