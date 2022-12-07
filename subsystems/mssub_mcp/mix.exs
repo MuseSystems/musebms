@@ -67,7 +67,7 @@ defmodule MssubMcp.MixProject do
           mscmp_syst_authn: "../mscmp_syst_authn"
         ],
         groups_for_functions: [
-          "Instance Services": &(&1[:section] == :instance_management),
+          "Instance Manager Runtime": &(&1[:section] == :instance_management),
           "Instance Applications": &(&1[:section] == :instance_applications),
           "Instance Types": &(&1[:section] == :instance_type_data),
           Owners: &(&1[:section] == :instance_owner_data),
