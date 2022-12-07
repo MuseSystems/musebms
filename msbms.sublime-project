@@ -38,7 +38,7 @@
             "path": "subsystems/mssub_bms",
         },
         {
-            "path": "application/msbms",
+            "path": "application/msapp_platform",
         },
         {
             "path": "documentation",
