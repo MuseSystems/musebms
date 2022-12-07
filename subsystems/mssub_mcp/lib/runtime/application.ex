@@ -28,6 +28,11 @@ defmodule MssubMcp.Runtime.Application do
   def start(_type, args) do
     opts = MscmpSystUtils.resolve_options(args[:opts], datastore_name: @datastore_supervisor_name)
 
+    instance_manager_spec = %{
+      id: MssubMcpInstanceMgr,
+      start: {MscmpSystInstance, :start_link, [[supervisor_name: MssubMcp.InstancesSupervisor]]}
+    }
+
     case setup_rate_limiter() do
       {:ok, _} ->
         enum_service_spec = %{
@@ -55,6 +60,7 @@ defmodule MssubMcp.Runtime.Application do
 
         mcp_service_children = [
           MssubMcp.Runtime.Datastore.child_spec(opts),
+          instance_manager_spec,
           enum_service_spec,
           settings_service_spec
         ]

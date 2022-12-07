@@ -44,39 +44,12 @@ expiry time and the cleanup schedule are configurable.
 Using this component assumes certain setups and configurations are performed
 by the client application:
 
-1. __Configure MscmpSystLimiter__ - The rate limiter allows several
-configuration points to be set to customize the behavior of service.  Add:
-
-  ```elixir
-  config :mscmp_syst_limiter,
-      expiry_ms: 60_000 * 60 * 2,
-      cleanup_interval_ms: 60_000 * 10,
-      table_name: :mscmp_syst_limiter_counters
-  ```
-  with the desired values to `config.exs`.  The values expressed in the
-  example are also the defaults for these values if the configuration is not
-  provided.  The configuration points are.
-
-  * `expiry_ms` - the life time in milliseconds of any single Counter.  This
-  should be longer than the life of the longest bucket that will be created.
-  A shorter value could result in an active counter being deleted prior to
-  becoming inactive.
-
-  * `cleanup_interval_ms` - the time in milliseconds to wait between sweeps
-  of the stale Counter cleaner.  During a sweep any Counter past its expiry
-  time (see `expiry_ms`) will be purged from the system.
-
-  * `table_name` - the name of the backend database table to use for
-  tracking counters.  Typically this value should be allowed to default
-  (`:mscmp_syst_limiter_counters`) unless there's a compelling reason
-  to do otherwise.
-
-2. __Setup Mnesia__ - MscmpSystLimiter keeps its counters in the Mnesia
+1. __Setup Mnesia__ - MscmpSystLimiter keeps its counters in the Mnesia
 database allowing for distribution of the rate limit counters across nodes.
 MscmpSystLimiter expects the client application to have setup and called
 `:mnesia.create_schema/1` prior to trying to use the provided services.
 
-3. __Initialize the Counter Table__ - Once the Mnesia is configured and
+2. __Initialize the Counter Table__ - Once the Mnesia is configured and
 running, the Mnesia table which will hold the counters must be created if it
 doesn't already exist.  There are two ways to do this: 1) add a start phase to
 the client application `mix.exs` or call a function which creates the Mnesia

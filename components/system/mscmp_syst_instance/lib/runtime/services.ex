@@ -1,5 +1,5 @@
-# Source File: application.ex
-# Location:    musebms/components/system/mscmp_syst_instance/lib/runtime/application.ex
+# Source File: services.ex
+# Location:    musebms/components/system/mscmp_syst_instance/lib/runtime/services.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,41 +10,38 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule MscmpSystInstance.Runtime.Application do
+defmodule MscmpSystInstance.Runtime.Services do
   import Ecto.Query
-
-  use Application
 
   alias MscmpSystInstance.Impl
   alias MscmpSystInstance.Types
 
   require Logger
 
-  @inst_mgr_name MscmpSystInstance.InstanceSupervisor
-  @task_mgr_name MscmpSystInstance.TaskSupervisor
-  @registry MscmpSystInstance.Registry
+  @default_supervisor_name MscmpSystInstance.Supervisor
+  @default_registry_name MscmpSystInstance.Registry
+  @default_instance_supervisor_name MscmpSystInstance.InstanceSupervisor
+  @default_task_supervisor_name MscmpSystInstance.TaskSupervisor
 
   @moduledoc false
 
-  # start/2 is called automatically on OTP application start-up.
-  #
-  # TODO: There's a good argument to be made that MscmpSystInstance shouldn't
-  #       be a startable application at all.  Rather it should be started via
-  #       a start_link call by the consuming application.  This would mean that
-  #       it could be started under an application defined supervision tree.
-  #       The to-do here is to reconsider that possibility.
+  @spec start_link(Keyword.t()) :: Supervisor.on_start_child()
+  def start_link(opts) do
+    opts =
+      MscmpSystUtils.resolve_options(opts,
+        supervisor_name: @default_supervisor_name,
+        registry_name: @default_registry_name,
+        instance_supervisor_name: @default_instance_supervisor_name,
+        task_supervisor_name: @default_task_supervisor_name
+      )
 
-  @impl true
-  @spec start(Application.start_type(), term()) ::
-          {:ok, pid()} | {:ok, pid(), Application.state()} | {:error, term()}
-  def start(_type, _args) do
     inst_mgr_spec = [
-      {DynamicSupervisor, strategy: :one_for_one, name: @inst_mgr_name},
-      {Task.Supervisor, name: @task_mgr_name},
-      {Registry, keys: :unique, name: @registry}
+      {DynamicSupervisor, strategy: :one_for_one, name: opts[:instance_supervisor_name]},
+      {Task.Supervisor, name: opts[:task_supervisor_name]},
+      {Registry, keys: :unique, name: opts[:registry_name]}
     ]
 
-    Supervisor.start_link(inst_mgr_spec, strategy: :one_for_one)
+    Supervisor.start_link(inst_mgr_spec, strategy: :one_for_one, name: opts[:supervisor_name])
   end
 
   @spec start_application(
@@ -79,11 +76,17 @@ defmodule MscmpSystInstance.Runtime.Application do
         startup_options,
         opts
       ) do
-    opts = MscmpSystUtils.resolve_options(opts, max_concurrency: default_max_concurrency())
+    opts =
+      MscmpSystUtils.resolve_options(opts,
+        max_concurrency: default_max_concurrency(),
+        task_supervisor_name: @default_task_supervisor_name,
+        instance_supervisor_name: @default_instance_supervisor_name,
+        registry_name: @default_registry_name
+      )
 
-    supervisor_name = get_application_supervisor_name(application)
+    supervisor_name = get_application_supervisor_name(application, opts)
 
-    {:ok, _} = start_application_supervisor(supervisor_name)
+    {:ok, _} = start_application_supervisor(supervisor_name, opts)
 
     current_datastore_context = MscmpSystDb.current_datastore_context()
     current_enums_service = MscmpSystEnums.get_enums_service()
@@ -97,7 +100,7 @@ defmodule MscmpSystInstance.Runtime.Application do
     |> MscmpSystDb.all()
     |> then(
       &Task.Supervisor.async_stream_nolink(
-        @task_mgr_name,
+        opts[:task_supervisor_name],
         &1,
         fn instance ->
           _ = MscmpSystDb.put_datastore_context(current_datastore_context)
@@ -136,11 +139,11 @@ defmodule MscmpSystInstance.Runtime.Application do
       }
   end
 
-  defp start_application_supervisor(application_supervisor_name) do
+  defp start_application_supervisor(application_supervisor_name, opts) do
     application_spec =
       {DynamicSupervisor, strategy: :one_for_one, name: application_supervisor_name}
 
-    {:ok, _} = DynamicSupervisor.start_child(@inst_mgr_name, application_spec)
+    {:ok, _} = DynamicSupervisor.start_child(opts[:instance_supervisor_name], application_spec)
   end
 
   defp default_max_concurrency do
@@ -215,7 +218,11 @@ defmodule MscmpSystInstance.Runtime.Application do
         Impl.Instance.get_standard_migration_bindings(instance.id)
       )
 
-    default_options = Impl.Instance.get_default_instance_state_ids()
+    default_options = [
+      {:instance_supervisor_name, @default_instance_supervisor_name},
+      {:registry_name, @default_registry_name}
+      | Impl.Instance.get_default_instance_state_ids()
+    ]
 
     opts =
       MscmpSystUtils.resolve_options(opts, default_options)
@@ -223,8 +230,8 @@ defmodule MscmpSystInstance.Runtime.Application do
 
     true = valid_startup_instance_state?(instance)
 
-    application_supervisor = get_application_supervisor_name(instance.application)
-    instance_supervisor_name = get_instance_supervisor_name(instance)
+    application_supervisor = get_application_supervisor_name(instance.application, opts)
+    instance_supervisor_name = get_instance_supervisor_name(instance, opts)
 
     {:ok, _} = start_instance_supervisor(application_supervisor, instance_supervisor_name)
 
@@ -245,7 +252,7 @@ defmodule MscmpSystInstance.Runtime.Application do
         opts
       )
 
-    datastore_supervisor_name = get_datastore_supervisor_name(instance)
+    datastore_supervisor_name = get_datastore_supervisor_name(instance, opts)
 
     datastore_child_spec =
       MscmpSystDb.Datastore.child_spec(
@@ -275,16 +282,14 @@ defmodule MscmpSystInstance.Runtime.Application do
   def start_instance(%Msdata.SystInstances{id: instance_id}, startup_options, opts),
     do: start_instance(instance_id, startup_options, opts)
 
-  defp get_datastore_supervisor_name(instance) do
-    {:via, Registry, {@registry, {:datastore_supervisor, instance.internal_name}}}
-  end
+  defp get_datastore_supervisor_name(instance, opts),
+    do: {:via, Registry, {opts[:registry_name], {:datastore_supervisor, instance.internal_name}}}
 
-  defp get_instance_supervisor_name(instance) do
-    {:via, Registry, {@registry, {:instance_supervisor, instance.internal_name}}}
-  end
+  defp get_instance_supervisor_name(instance, opts),
+    do: {:via, Registry, {opts[:registry_name], {:instance_supervisor, instance.internal_name}}}
 
-  defp get_application_supervisor_name(application) do
-    {:via, Registry, {@registry, {:application_supervisor, application.internal_name}}}
+  defp get_application_supervisor_name(application, opts) do
+    {:via, Registry, {opts[:registry_name], {:application_supervisor, application.internal_name}}}
   end
 
   defp start_instance_supervisor(application_supervisor, instance_supervisor_name) do
@@ -331,6 +336,8 @@ defmodule MscmpSystInstance.Runtime.Application do
         },
         opts
       ) do
+    opts = MscmpSystUtils.resolve_options(opts, registry_name: @default_registry_name)
+
     :ok =
       instance_contexts
       |> Enum.map(&%{context_name: String.to_atom(&1.internal_name)})
@@ -357,7 +364,7 @@ defmodule MscmpSystInstance.Runtime.Application do
   defp stop_instance_supervisor(instance_name, opts) do
     opts = MscmpSystUtils.resolve_options(opts, supervisor_shutdown_timeout: 60_000)
 
-    Registry.lookup(@registry, {:instance_supervisor, instance_name})
+    Registry.lookup(opts[:registry_name], {:instance_supervisor, instance_name})
     |> maybe_stop_instance_supervisor(opts)
   end
 
@@ -394,6 +401,8 @@ defmodule MscmpSystInstance.Runtime.Application do
         %Msdata.SystApplications{id: application_id, internal_name: application_name},
         opts
       ) do
+    opts = MscmpSystUtils.resolve_options(opts, registry_name: @default_registry_name)
+
     from(i in Msdata.SystInstances,
       join: a in assoc(i, :application),
       where: a.id == ^application_id,
@@ -429,7 +438,7 @@ defmodule MscmpSystInstance.Runtime.Application do
     Process.sleep(1)
 
     DynamicSupervisor.stop(
-      {:via, Registry, {@registry, {:application_supervisor, application_name}}},
+      {:via, Registry, {opts[:registry_name], {:application_supervisor, application_name}}},
       :normal,
       opts[:supervisor_shutdown_timeout]
     )

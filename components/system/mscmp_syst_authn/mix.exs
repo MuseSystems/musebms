@@ -111,8 +111,7 @@ defmodule MscmpSystAuthn.MixProject do
       extra_applications: [
         :logger,
         :crypto,
-        :mnesia,
-        :mscmp_syst_limiter
+        :mnesia
       ]
     ]
   end

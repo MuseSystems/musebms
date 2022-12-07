@@ -89,8 +89,7 @@ defmodule MscmpSystInstance.MixProject do
     [
       extra_applications: [
         :logger
-      ],
-      mod: {MscmpSystInstance.Runtime.Application, []}
+      ]
     ]
   end
 

@@ -36,7 +36,7 @@ Logger.configure(level: :info)
 ExUnit.start()
 
 enum_service_spec = %{
-  id: MscmpSystInstanceTestingEnumService,
+  id: TestingEnumService,
   start: {
     MscmpSystEnums,
     :start_link,
@@ -44,7 +44,13 @@ enum_service_spec = %{
   }
 }
 
+instance_service_spec = %{
+  id: TestingInstanceServices,
+  start: {MscmpSystInstance, :start_link, []}
+}
+
 DynamicSupervisor.start_child(MscmpSystInstance.TestingSupervisor, enum_service_spec)
+DynamicSupervisor.start_child(MscmpSystInstance.TestingSupervisor, instance_service_spec)
 
 ExUnit.after_suite(fn _suite_result ->
   TestSupport.cleanup_testing_database(test_kind)

@@ -708,6 +708,48 @@ defmodule MscmpSystInstance do
 
   @doc section: :service_management
   @doc """
+  Starts the MscmpSystInstance services and supervisors.
+
+  In an application context, MscmpSystInstances sets up a supervisory tree and
+  a process registry so that Application and Instance supervisors may be found
+  for later use.  At the top level, an Application Supervisor for each known
+  Application is created and below that are Instance Supervisors for each
+  Instance of the Application.  Finally, child services such as processes for
+  Datastores and other processes and supervisors as appropriate and specific to
+  a given Instance are started under each Instance Supervisor.
+
+  This function allows the client application to link the MscmpSystInstance
+  services to where it wishes within its own supervision tree using the normal
+  `Supervisor` and `DynamicSupervisor` calls for starting children.
+
+  ## Parameters:
+
+    * `opts` - A Keyword List of optional settings which override the
+    established default values.  The available options are:
+
+      * `supervisor_name` - the name of the MscmpSystInstance root Supervisor to
+      which other MscmpSystInstance processes and supervisors are bound.  The
+      default value is `MscmpSystInstance.Supervisor`.
+
+      * `registry_name` - the name of the Registry service used to resolve the
+      supervisors dynamically created by MscmpSystInstance. The default value
+      is `MscmpSystInstance.Registry`.
+
+      * `instance_supervisor_name` - the name of the supervisor to which all
+      individual, dynamically created instance supervisors are children.  The
+      default value is `MscmpSystInstance.InstanceSupervisor`.
+
+      * `task_supervisor_name` - on Instance startup, MscmpSystInstance will
+      process Instance Datastore startup and migration application via
+      concurrently `Task` processes.  This option establishes the name of the
+      supervisor under which these `Task` processes are started.  The default
+      value is `MscmpSystInstance.TaskSupervisor`.
+  """
+  @spec start_link(Keyword.t()) :: Supervisor.on_start_child()
+  defdelegate start_link(opts \\ []), to: Runtime.Services
+
+  @doc section: :service_management
+  @doc """
   Starts all Applications and each Application's child Instances.
 
   This function calls the `start_application/3` function for each Application
@@ -715,7 +757,7 @@ defmodule MscmpSystInstance do
   for more information about this function and the available parameters.
   """
   @spec start_all_applications(map(), Keyword.t()) :: :ok | {:error, MscmpSystError.t()}
-  defdelegate start_all_applications(startup_options, opts \\ []), to: Runtime.Application
+  defdelegate start_all_applications(startup_options, opts \\ []), to: Runtime.Services
 
   @doc section: :service_management
   @doc """
@@ -750,6 +792,20 @@ defmodule MscmpSystInstance do
 
       * other available options are passed to `start_instance/3`.  See the
       documentation for `start_instance/3` for the options it is able to accept.
+
+      * `registry_name` - the name of the Registry service used to resolve the
+      supervisors dynamically created by MscmpSystInstance. The default value
+      is `MscmpSystInstance.Registry`.
+
+      * `instance_supervisor_name` - the name of the supervisor to which all
+      individual, dynamically created instance supervisors are children.  The
+      default value is `MscmpSystInstance.InstanceSupervisor`.
+
+      * `task_supervisor_name` - on Instance startup, MscmpSystInstance will
+      process Instance Datastore startup and migration application via
+      concurrently `Task` processes.  This option establishes the name of the
+      supervisor under which these `Task` processes are started.  The default
+      value is `MscmpSystInstance.TaskSupervisor`.
   """
   @spec start_application(
           Types.application_id() | Msdata.SystApplications.t(),
@@ -757,7 +813,7 @@ defmodule MscmpSystInstance do
           Keyword.t()
         ) ::
           :ok | {:error, MscmpSystError.t()}
-  defdelegate start_application(application, startup_options, opts \\ []), to: Runtime.Application
+  defdelegate start_application(application, startup_options, opts \\ []), to: Runtime.Services
 
   @doc section: :service_management
   @doc """
@@ -769,7 +825,7 @@ defmodule MscmpSystInstance do
   `stop_application/2`.
   """
   @spec stop_all_applications(Keyword.t()) :: :ok | {:error, MscmpSystError.t()}
-  defdelegate stop_all_applications(opts \\ []), to: Runtime.Application
+  defdelegate stop_all_applications(opts \\ []), to: Runtime.Services
 
   @doc section: :service_management
   @doc """
@@ -795,7 +851,7 @@ defmodule MscmpSystInstance do
   """
   @spec stop_application(Types.application_id() | Msdata.SystApplications.t(), Keyword.t()) ::
           :ok | {:error, MscmpSystError.t()}
-  defdelegate stop_application(application, opts \\ []), to: Runtime.Application
+  defdelegate stop_application(application, opts \\ []), to: Runtime.Services
 
   @doc section: :service_management
   @doc """
@@ -846,10 +902,18 @@ defmodule MscmpSystInstance do
       to the current version of the Application.  Usually, there is no need to
       provide this option as the most common migration bindings are
       automatically generated from Instance record data.
+
+      * `registry_name` - the name of the Registry service used to resolve the
+      supervisors dynamically created by MscmpSystInstance. The default value
+      is `MscmpSystInstance.Registry`.
+
+      * `instance_supervisor_name` - the name of the supervisor to which all
+      individual, dynamically created instance supervisors are children.  The
+      default value is `MscmpSystInstance.InstanceSupervisor`.
   """
   @spec start_instance(Types.instance_id() | Msdata.SystInstances.t(), map(), Keyword.t()) ::
           :ok | {:error, MscmpSystError.t()}
-  defdelegate start_instance(instance, startup_options, opts \\ []), to: Runtime.Application
+  defdelegate start_instance(instance, startup_options, opts \\ []), to: Runtime.Services
 
   @doc section: :service_management
   @doc """
@@ -873,8 +937,12 @@ defmodule MscmpSystInstance do
       for a clean shutdown of the database connections used for operating
       Datastore.  See the documentation for
       `MscmpSystDb.stop_datastore/2` for more information.
+
+      * `registry_name` - the name of the Registry service used to resolve the
+      supervisors dynamically created by MscmpSystInstance. The default value
+      is `MscmpSystInstance.Registry`.
   """
   @spec stop_instance(Types.instance_id() | Msdata.SystInstances.t(), Keyword.t()) ::
           :ok | {:error, MscmpSystError.t()}
-  defdelegate stop_instance(instance, opts \\ []), to: Runtime.Application
+  defdelegate stop_instance(instance, opts \\ []), to: Runtime.Services
 end

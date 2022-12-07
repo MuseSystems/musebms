@@ -244,6 +244,39 @@ defmodule MscmpSystLimiter do
 
   @doc section: :service_management
   @doc """
+  Starts the rate limiter services.
+
+  This service should be started after the Mnesia has had its schema created and
+  before any call to `init_rate_limiter/1`.
+
+  ## Parameters
+
+    * `opts` - a Keyword List of options which can be used to override default
+    values typically used to initialize the service.  The available options are:
+
+      * `supervisor_name` - the name of the supervisor which will manage the
+      Rate Limiter services.  The default value is `MscmpSystLimiter.Supervisor`.
+
+      * `expiry_ms` - the life time in milliseconds of any single Counter.  This
+      should be longer than the life of the longest bucket that will be created.
+      A shorter value could result in an active counter being deleted prior to
+      becoming inactive.
+
+      * `cleanup_interval_ms` - the time in milliseconds to wait between sweeps
+      of the stale Counter cleaner.  During a sweep any Counter past its expiry
+      time (see `expiry_ms`) will be purged from the system.
+
+      * `table_name` - the name of the backend database table to use for
+      tracking counters.  Typically this value should be allowed to default
+      (`:mscmp_syst_limiter_counters`) unless there's a compelling reason to do
+      otherwise.
+
+  """
+  @spec start_link(Keyword.t()) :: Supervisor.on_start_child()
+  defdelegate start_link(opts \\ []), to: Runtime.Services
+
+  @doc section: :service_management
+  @doc """
   Initializes the rate limiter table.
 
   This function must be called per the instructions of `MscmpSystLimiter`
@@ -260,5 +293,5 @@ defmodule MscmpSystLimiter do
 
   @spec init_rate_limiter(Keyword.t()) ::
           {:ok, detail :: atom()} | {:error, MscmpSystError.t()}
-  defdelegate init_rate_limiter(opts \\ []), to: Runtime.Application
+  defdelegate init_rate_limiter(opts \\ []), to: Runtime.Services
 end
