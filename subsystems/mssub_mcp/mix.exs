@@ -66,7 +66,23 @@ defmodule MssubMcp.MixProject do
           mscmp_syst_instance: "../mscmp_syst_instance",
           mscmp_syst_authn: "../mscmp_syst_authn"
         ],
-        groups_for_functions: [],
+        groups_for_functions: [
+          "Instance Services": &(&1[:section] == :instance_management),
+          "Instance Applications": &(&1[:section] == :instance_applications),
+          "Instance Types": &(&1[:section] == :instance_type_data),
+          Owners: &(&1[:section] == :instance_owner_data),
+          Instances: &(&1[:section] == :instance_data),
+          "Authentication Enums": &(&1[:section] == :authn_enumerations_data),
+          "Access Accounts": &(&1[:section] == :authn_access_account_data),
+          "Access Account/Instance Assocs.":
+            &(&1[:section] == :authn_access_account_instance_assoc_data),
+          "Password Rules": &(&1[:section] == :authn_password_rule_data),
+          "Network Rules": &(&1[:section] == :authn_network_rule_data),
+          "Account Code": &(&1[:section] == :authn_account_code),
+          "Authenticator Management": &(&1[:section] == :authn_authenticator_management),
+          Authentication: &(&1[:section] == :authn_authentication),
+          "MCP Processing": &(&1[:section] == :mcp_processing)
+        ],
         groups_for_modules: [
           API: [MssubMcp],
           "Supporting Types": []

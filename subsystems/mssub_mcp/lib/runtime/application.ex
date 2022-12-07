@@ -14,63 +14,76 @@ defmodule MssubMcp.Runtime.Application do
   use Application
 
   @moduledoc false
-
   require Logger
 
-  @supervisor_name MssubMcp.Supervisor
-  @datastore_supervisor_name MssubMcp.DatastoreSupervisor
-  @default_enums_service_name :mssub_mcp_enums_service
-  @default_settings_service_name :mssub_mcp_settings_service
+  use MssubMcp.Macros
+
+  mcp_constants()
 
   @impl true
   @spec start(Application.start_type(), term()) ::
           {:ok, pid()} | {:ok, pid(), Application.state()} | {:error, term()}
-  def start(_type, args) do
-    opts = MscmpSystUtils.resolve_options(args[:opts], datastore_name: @datastore_supervisor_name)
-
-    instance_manager_spec = %{
-      id: MssubMcpInstanceMgr,
-      start: {MscmpSystInstance, :start_link, [[supervisor_name: MssubMcp.InstancesSupervisor]]}
-    }
-
+  def start(_type, _args) do
     case setup_rate_limiter() do
-      {:ok, _} ->
+      :ok ->
+        instance_manager_spec = %{
+          id: MssubMcpInstanceMgr,
+          start:
+            {MscmpSystInstance, :start_link,
+             [
+               [
+                 supervisor_name: @mcp_instances_config.supervisor_name,
+                 registry_name: @mcp_instances_config.registry_name,
+                 instance_supervisor_name: @mcp_instances_config.instance_supervisor_name,
+                 task_supervisor_name: @mcp_instances_config.task_supervisor_name
+               ]
+             ]}
+        }
+
         enum_service_spec = %{
           id: MssubMcpEnumsService,
           start:
-            {MscmpSystEnums, :start_link,
-             [
-               {Application.get_env(:mssub_mcp, :enums_service_name, @default_enums_service_name),
-                :mssub_mcp_app_access}
-             ]}
+            {MscmpSystEnums, :start_link, [{@mcp_enums_service_name, @mcp_db_app_access_context}]}
         }
 
         settings_service_spec = %{
           id: MssubMcpSettingsService,
           start:
             {MscmpSystSettings, :start_link,
-             [
-               {Application.get_env(
-                  :mssub_mcp,
-                  :settings_service_name,
-                  @default_settings_service_name
-                ), :mssub_mcp_app_access}
-             ]}
+             [{@mcp_settings_service_name, @mcp_db_app_access_context}]}
+        }
+
+        limiter_service_spec = %{
+          id: MssubMcpLimiterService,
+          start:
+            {MscmpSystLimiter, :start_link,
+             [[supervisor_name: @mcp_limiter_config.supervisor_name]]}
         }
 
         mcp_service_children = [
-          MssubMcp.Runtime.Datastore.child_spec(opts),
+          MssubMcp.Runtime.Datastore.child_spec(datastore_name: @mcp_datastore_supervisor_name),
           instance_manager_spec,
           enum_service_spec,
-          settings_service_spec
+          settings_service_spec,
+          limiter_service_spec
         ]
 
-        Supervisor.start_link(mcp_service_children, strategy: :one_for_one, name: @supervisor_name)
+        result =
+          Supervisor.start_link(mcp_service_children,
+            strategy: :one_for_one,
+            name: @mcp_supervisor_name
+          )
+
+        # TODO: This return should probably be checked for errors rather than
+        #       just glossed over like this.
+        _ = MscmpSystLimiter.init_rate_limiter()
+
+        result
 
       error ->
         raise MscmpSystError,
           code: :undefined_error,
-          message: "Unable to start MCP Subsystem",
+          message: "Unable to setup Mnesia for MscmpSystLimiter.",
           cause: error
     end
   rescue
@@ -85,9 +98,8 @@ defmodule MssubMcp.Runtime.Application do
 
   defp setup_rate_limiter do
     with :stopped <- :mnesia.stop(),
-         :ok <- maybe_create_mnesia_schema(),
-         :ok <- :mnesia.start() do
-      MscmpSystLimiter.init_rate_limiter()
+         :ok <- maybe_create_mnesia_schema() do
+      :mnesia.start()
     else
       error ->
         raise MscmpSystError,

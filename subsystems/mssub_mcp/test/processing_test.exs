@@ -11,17 +11,14 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MssubMcpTest do
-  use ExUnit.Case, async: true
+  use MssubMcp.Macros
+  use ExUnit.Case, async: false
 
-  @default_enums_service_name :mssub_mcp_enums_service
-  @default_settings_service_name :mssub_mcp_settings_service
+  mcp_constants()
 
-  test "Can process in the MCP Contexts" do
-    mcp_enums_service =
-      Application.get_env(:mssub_mcp, :enums_service_name, @default_enums_service_name)
-
-    mcp_settings_service =
-      Application.get_env(:mssub_mcp, :settings_service_name, @default_settings_service_name)
+  test "Can process in the MCP Service Context" do
+    mcp_enums_service = @mcp_enums_service_name
+    mcp_settings_service = @mcp_settings_service_name
 
     assert mcp_enums_service != nil
     assert mcp_settings_service != nil
@@ -36,6 +33,27 @@ defmodule MssubMcpTest do
 
     assert {:ok, _owner_id} =
              MssubMcp.process_operation(fn -> MscmpSystInstance.get_owner_id_by_name("owner1") end)
+
+    assert MscmpSystEnums.get_enums_service() == nil
+    assert MscmpSystSettings.get_settings_service() == nil
+  end
+
+  test "Can start and stop MCP Service Context" do
+    mcp_enums_service = @mcp_enums_service_name
+    mcp_settings_service = @mcp_settings_service_name
+
+    assert mcp_enums_service != nil
+    assert mcp_settings_service != nil
+
+    assert MscmpSystEnums.get_enums_service() == nil
+    assert MscmpSystSettings.get_settings_service() == nil
+
+    assert {datastore_context, nil, nil} = MssubMcp.start_mcp_service_context()
+
+    assert MscmpSystEnums.get_enums_service() == @mcp_enums_service_name
+    assert MscmpSystSettings.get_settings_service() == @mcp_settings_service_name
+
+    assert :ok = MssubMcp.stop_mcp_service_context({datastore_context, nil, nil})
 
     assert MscmpSystEnums.get_enums_service() == nil
     assert MscmpSystSettings.get_settings_service() == nil

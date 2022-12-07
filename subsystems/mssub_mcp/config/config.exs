@@ -13,9 +13,7 @@
 import Config
 
 config :mssub_mcp,
-  startup_options_path: "ms_startup_options.toml",
-  enums_service_name: :mssub_mcp_enums_service,
-  settings_service_name: :mssub_mcp_settings_service
+  startup_options_path: "ms_startup_options.toml"
 
 config :mnesia, dir: '.mnesia'
 
