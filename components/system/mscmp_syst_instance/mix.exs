@@ -65,6 +65,7 @@ defmodule MscmpSystInstance.MixProject do
           Owners: &(&1[:section] == :owner_data),
           "Instance Types": &(&1[:section] == :instance_type_data),
           Instances: &(&1[:section] == :instance_data),
+          Applications: &(&1[:section] == :application_data),
           Runtime: &(&1[:section] == :service_management)
         ],
         nest_modules_by_prefix: [Msdata],
