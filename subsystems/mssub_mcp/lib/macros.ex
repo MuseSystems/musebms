@@ -19,7 +19,7 @@ defmodule MssubMcp.Macros do
     end
   end
 
-  defmacro mcp_constants() do
+  defmacro mcp_constants do
     quote do
       @mcp_supervisor_name MssubMcp.Supervisor
       @mcp_datastore_supervisor_name MssubMcp.DatastoreSupervisor
