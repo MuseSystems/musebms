@@ -4097,7 +4097,7 @@ defmodule MssubMcp do
           MscmpSystInstance.Types.instance_id(),
           Keyword.t()
         ) ::
-          {:ok, Types.authentication_state()} | {:error, MscmpSystError.t()}
+          {:ok, AuthnTypes.authentication_state()} | {:error, MscmpSystError.t()}
 
   defdelegate authenticate_api_token(
                 identifier,
