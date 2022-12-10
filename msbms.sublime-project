@@ -11,6 +11,9 @@
             "path": "components/system/mscmp_syst_utils",
         },
         {
+            "path": "components/system/mscmp_syst_app_subsystem",
+        },
+        {
             "path": "components/system/mscmp_syst_limiter",
         },
         {
