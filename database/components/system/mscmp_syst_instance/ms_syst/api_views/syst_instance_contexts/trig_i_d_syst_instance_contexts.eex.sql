@@ -52,4 +52,4 @@ GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_instance_contexts() TO <%= ms_ow
 
 COMMENT ON FUNCTION ms_syst.trig_i_d_syst_instance_contexts() IS
 $DOC$An INSTEAD OF trigger function which applies business rules when using the
-syst_enum_items API View for DELETE operations.$DOC$;
+syst_instance_contexts API View for DELETE operations.$DOC$;

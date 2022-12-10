@@ -13,6 +13,8 @@
 defmodule ApplicationTest do
   use InstanceMgrTestCase, async: true
 
+  alias MscmpSystInstance.Impl
+
   import Ecto.Query
 
   test "Can retrieve Application ID by Internal Name" do
@@ -22,12 +24,61 @@ defmodule ApplicationTest do
       from(a in Msdata.SystApplications, where: a.internal_name == ^target_app_name)
       |> MscmpSystDb.one!()
 
-    assert application_id = MscmpSystInstance.get_application_id_by_name(target_app_name)
+    assert application_id = Impl.Application.get_application_id_by_name(target_app_name)
 
     assert application_record.id == application_id
   end
 
   test "Can get nil Application ID by nonexistent Internal Name" do
-    assert MscmpSystInstance.get_application_id_by_name("nonexistent_app") == nil
+    assert Impl.Application.get_application_id_by_name("nonexistent_app") == nil
+  end
+
+  test "Can create and update Application records" do
+    assert {:ok, %Msdata.SystApplications{display_name: "Test App1"} = new_app} =
+             Impl.Application.create_application(%{
+               internal_name: "tst_app1",
+               display_name: "Test App1",
+               syst_description: "Testing Application 1"
+             })
+
+    assert {:ok,
+            %Msdata.SystApplications{
+              display_name: "Test App One",
+              syst_description: "Testing App One"
+            }} =
+             Impl.Application.update_application(
+               new_app,
+               %{
+                 display_name: "Test App One",
+                 syst_description: "Testing App One"
+               }
+             )
+
+    assert {:ok,
+            %Msdata.SystApplications{
+              display_name: "Test App #1",
+              syst_description: "Testing App #1"
+            }} =
+             Impl.Application.update_application(
+               new_app.id,
+               %{
+                 display_name: "Test App #1",
+                 syst_description: "Testing App #1"
+               }
+             )
+  end
+
+  test "Can get Application record without Contexts preloaded" do
+    assert %Msdata.SystApplications{
+             internal_name: "app1",
+             application_contexts: %Ecto.Association.NotLoaded{}
+           } = Impl.Application.get_application("app1", [])
+  end
+
+  test "Can get Application record with Contexts preloaded" do
+    assert %Msdata.SystApplications{
+             internal_name: "app1",
+             application_contexts: [%Msdata.SystApplicationContexts{} | _]
+           } = Impl.Application.get_application("app1", include_contexts: true)
   end
 end

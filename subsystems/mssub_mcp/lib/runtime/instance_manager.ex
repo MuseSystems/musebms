@@ -98,10 +98,68 @@ defmodule MssubMcp.Runtime.InstanceManager do
   #
   # ==============================================================================================
 
+  @spec create_application(Types.application_params()) ::
+          {:ok, Msdata.SystApplications.t()} | {:error, MscmpSystError.t()}
+  mcp_opfn create_application(application_params) do
+    MscmpSystInstance.create_application(application_params)
+  end
+
+  @spec update_application(
+          Types.application_id() | Msdata.SystApplications.t(),
+          Types.application_params()
+        ) :: {:ok, Msdata.SystApplications.t()} | {:error, MscmpSystError.t()}
+  mcp_opfn update_application(application, application_params) do
+    MscmpSystInstance.update_application(application, application_params)
+  end
+
   @spec get_application_id_by_name(InstanceTypes.application_name()) ::
           InstanceTypes.application_id() | nil
   mcp_opfn get_application_id_by_name(application_name) do
     MscmpSystInstance.get_application_id_by_name(application_name)
+  end
+
+  @spec get_application(Types.application_id() | Types.application_name(), Keyword.t()) ::
+          Msdata.SystApplications.t() | nil
+  mcp_opfn get_application(application, opts) do
+    MscmpSystInstance.get_application(application, opts)
+  end
+
+  # ==============================================================================================
+  #
+  # Application Contexts
+  #
+  # ==============================================================================================
+
+  @spec create_application_context(Types.application_context_params()) ::
+          {:ok, Msdata.SystApplicationContexts.t()} | {:error, MscmpSystError.t()}
+  mcp_opfn create_application_context(application_context_params) do
+    MscmpSystInstance.create_application_context(application_context_params)
+  end
+
+  @spec get_application_context_id_by_name(Types.application_context_name()) ::
+          Types.application_context_id() | nil
+  mcp_opfn get_application_context_id_by_name(application_context_name) do
+    MscmpSystInstance.get_application_context_id_by_name(application_context_name)
+  end
+
+  @spec list_application_contexts(Types.application_id() | nil) ::
+          {:ok, list(Msdata.SystApplicationContexts.t())} | {:error, MscmpSystError.t()}
+  mcp_opfn list_application_contexts(application_id \\ nil) do
+    MscmpSystInstance.list_application_contexts(application_id)
+  end
+
+  @spec update_application_context(
+          Types.application_context_id() | Msdata.SystApplicationContexts.t(),
+          Types.application_context_params()
+        ) :: {:ok, Msdata.SystApplicationContexts.t()} | {:error, MscmpSystError.t()}
+  mcp_opfn update_application_context(application_context, application_context_params) do
+    MscmpSystInstance.update_application_context(application_context, application_context_params)
+  end
+
+  @spec delete_application_context(Types.application_context_id()) ::
+          {:ok, :deleted | :not_found} | {:error, MscmpSystError.t()}
+  mcp_opfn delete_application_context(application_context_id) do
+    MscmpSystInstance.delete_application_context(application_context_id)
   end
 
   # ==============================================================================================

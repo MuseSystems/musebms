@@ -35,11 +35,99 @@ defmodule IntegrationTest do
 
   # ==============================================================================================
   #
-  # Topic 1: Instance Management
+  # Topic 1: Application Management
   #
   # ==============================================================================================
 
-  test "Step 1.01: Create Instance Types" do
+  test "Step 1.01: Create Application" do
+    app1_params = %{
+      internal_name: "test_app",
+      display_name: "Test App Needs Updating",
+      syst_description: "Test App Description Needs Updating"
+    }
+
+    assert {:ok, new1_app} = MssubMcp.create_application(app1_params)
+
+    assert app1_params.internal_name == new1_app.internal_name
+    assert app1_params.display_name == new1_app.display_name
+    assert app1_params.syst_description == new1_app.syst_description
+  end
+
+  test "Step 1.02: Update Application" do
+    app_params = %{
+      display_name: "Test App",
+      syst_description: "Test App Description."
+    }
+
+    assert app_id = MssubMcp.get_application_id_by_name("test_app")
+
+    assert {:ok, upd_app} = MssubMcp.update_application(app_id, app_params)
+
+    assert app_params.display_name == upd_app.display_name
+    assert app_params.syst_description == upd_app.syst_description
+  end
+
+  test "Step 1.03: Create Application Contexts" do
+    assert app1_id = MssubMcp.get_application_id_by_name("test_app")
+
+    context_params_list = [
+      %{
+        internal_name: "test_app_owner",
+        display_name: "Test App Owner",
+        application_id: app1_id,
+        description: "Test App Owner",
+        start_context: false,
+        login_context: false,
+        database_owner_context: true
+      },
+      %{
+        internal_name: "test_app_access",
+        display_name: "Test App Access Needs Updating",
+        application_id: app1_id,
+        description: "Test App Access Needs Updating",
+        start_context: false,
+        login_context: true,
+        database_owner_context: false
+      }
+    ]
+
+    context_params_list
+    |> Enum.each(fn context_params ->
+      assert {:ok, context} = MssubMcp.create_application_context(context_params)
+
+      assert context_params.internal_name == context.internal_name
+      assert context_params.display_name == context.display_name
+      assert context_params.description == context.description
+      assert context_params.start_context == context.start_context
+      assert context_params.login_context == context.login_context
+      assert context_params.database_owner_context == context.database_owner_context
+    end)
+  end
+
+  test "Step 1.04: Update Application Context" do
+    assert app_context_id = MssubMcp.get_application_context_id_by_name("test_app_access")
+
+    update_params = %{
+      display_name: "Test App Access",
+      description: "Test App Access",
+      start_context: true
+    }
+
+    assert {:ok, updated_context} =
+             MssubMcp.update_application_context(app_context_id, update_params)
+
+    assert update_params.display_name == updated_context.display_name
+    assert update_params.description == updated_context.description
+    assert update_params.start_context == updated_context.start_context
+  end
+
+  # ==============================================================================================
+  #
+  # Topic 2: Instance Management
+  #
+  # ==============================================================================================
+
+  test "Step 2.01: Create Instance Types" do
     instance_type_params = [
       %{
         internal_name: "instance_types_small",
@@ -62,7 +150,7 @@ defmodule IntegrationTest do
     end)
   end
 
-  test "Step 1.02: Create Instance Type Applications" do
+  test "Step 2.02: Create Instance Type Applications" do
     instance_type = MssubMcp.get_instance_type_by_name("instance_types_small")
 
     assert %Msdata.SystEnumItems{} = instance_type
@@ -75,7 +163,7 @@ defmodule IntegrationTest do
              MssubMcp.create_instance_type_application(instance_type.id, application_id)
   end
 
-  test "Step 1.03: Create Owners" do
+  test "Step 2.03: Create Owners" do
     owner1_state = MssubMcp.get_owner_state_default()
 
     owner1_params = %{
@@ -105,7 +193,7 @@ defmodule IntegrationTest do
     assert owner2.owner_state_id == owner2_params.owner_state_id
   end
 
-  test "Step 1.04: Create Instances w/MssubMcp.process_operation" do
+  test "Step 2.04: Create Instances w/MssubMcp.process_operation" do
     mcp_ops_func = fn ->
       new_instance1_params = %{
         internal_name: "test_app_test_owner1_inst1",
@@ -117,7 +205,7 @@ defmodule IntegrationTest do
         dbserver_name: "testing_server"
       }
 
-      assert {:ok, new_instance1} = MscmpSystInstance.create_instance(new_instance1_params)
+      assert {:ok, new_instance1} = MssubMcp.create_instance(new_instance1_params)
 
       assert new_instance1.internal_name == new_instance1_params.internal_name
       assert new_instance1.display_name == new_instance1_params.display_name
@@ -133,7 +221,7 @@ defmodule IntegrationTest do
         dbserver_name: "testing_server"
       }
 
-      assert {:ok, new_instance2} = MscmpSystInstance.create_instance(new_instance2_params)
+      assert {:ok, new_instance2} = MssubMcp.create_instance(new_instance2_params)
 
       assert new_instance2.internal_name == new_instance2_params.internal_name
       assert new_instance2.display_name == new_instance2_params.display_name
@@ -145,7 +233,7 @@ defmodule IntegrationTest do
     assert :ok = MssubMcp.process_operation(mcp_ops_func)
   end
 
-  test "Step 1.05: Create Instances w/MssubMcp Wrapper API" do
+  test "Step 2.05: Create Instances w/MssubMcp Wrapper API" do
     new_instance3_params = %{
       internal_name: "test_app_test_owner2_inst3",
       display_name: "Test App / Test Owner 2 / Instance 3",
@@ -179,7 +267,7 @@ defmodule IntegrationTest do
     assert new_instance4.instance_code == new_instance4_params.instance_code
   end
 
-  test "Step 1.06: Initialize Instances" do
+  test "Step 2.06: Initialize Instances" do
     startup_options = MscmpSystOptions.get_options!(@startup_options_path)
 
     mcp_ops_func = fn ->
@@ -187,10 +275,10 @@ defmodule IntegrationTest do
       |> MscmpSystDb.all()
       |> Enum.each(fn test_instance ->
         assert {:ok, initialized_instance} =
-                 MscmpSystInstance.initialize_instance(test_instance.id, startup_options)
+                 MssubMcp.initialize_instance(test_instance.id, startup_options)
 
         datastore_options =
-          MscmpSystInstance.get_instance_datastore_options(
+          MssubMcp.get_instance_datastore_options(
             initialized_instance.id,
             startup_options
           )
@@ -210,7 +298,7 @@ defmodule IntegrationTest do
     assert :ok = MssubMcp.process_operation(mcp_ops_func)
   end
 
-  test "Step 1.07: Start Instances" do
+  test "Step 2.07: Start Instances" do
     startup_options = MscmpSystOptions.get_options!(@startup_options_path)
 
     assert :ok =
@@ -219,7 +307,7 @@ defmodule IntegrationTest do
              )
   end
 
-  test "Step 1.08: Make use of Instances" do
+  test "Step 2.08: Make use of Instances" do
     mcp_ops_func = fn ->
       from(
         ic in Msdata.SystInstanceContexts,
@@ -248,11 +336,11 @@ defmodule IntegrationTest do
 
   # ==============================================================================================
   #
-  # Topic 2: Authentication - Initial System Setup
+  # Topic 3: Authentication - Initial System Setup
   #
   # ==============================================================================================
 
-  test "Step 2.01: Manage Disallowed Passwords" do
+  test "Step 3.01: Manage Disallowed Passwords" do
     assert :ok = MssubMcp.create_disallowed_password("IntegrationDuplicateTest")
 
     assert :ok = MssubMcp.create_disallowed_password("IntegrationDuplicateTest")
@@ -268,7 +356,7 @@ defmodule IntegrationTest do
     assert :ok = MssubMcp.create_disallowed_password("DisallowedPassword#123#")
   end
 
-  test "Step 2.02: Manage Global Network Rules" do
+  test "Step 3.02: Manage Global Network Rules" do
     orig_pwd_rules = MssubMcp.get_global_password_rules!()
 
     new_rule_params = %{
@@ -313,7 +401,7 @@ defmodule IntegrationTest do
     assert new_pwd_rules.allowed_mfa_types == new_rule_params.allowed_mfa_types
   end
 
-  test "Step 2.03: Add Owner Password Rules" do
+  test "Step 3.03: Add Owner Password Rules" do
     # The effective password rule for the access account is a combination of the
     # access account owner defined password rules and the global password rules
     # (global rules where the owner rules are 'weaker').  The effective password
@@ -365,7 +453,7 @@ defmodule IntegrationTest do
     assert ["credential_types_secondary_totp"] = pwd_rules.allowed_mfa_types
   end
 
-  test "Step 2.04: Manage Disallowed Host" do
+  test "Step 3.04: Manage Disallowed Host" do
     assert {:ok, %Msdata.SystDisallowedHosts{}} = MssubMcp.create_disallowed_host(~i"10.10.10.2")
 
     assert {:ok, :deleted} = MssubMcp.delete_disallowed_host_addr(~i"10.10.10.2")
@@ -387,7 +475,7 @@ defmodule IntegrationTest do
     assert false == MssubMcp.host_disallowed?(~i"10.10.10.2")
   end
 
-  test "Step 2.05: Add Owner Network Rules" do
+  test "Step 3.05: Add Owner Network Rules" do
     {:ok, owner_id} = MssubMcp.get_owner_id_by_name("test_owner2")
 
     # The following sequence of rules should result in a file set of Owner
@@ -420,7 +508,7 @@ defmodule IntegrationTest do
              })
   end
 
-  test "Step 2.06: Add Instance Network Rules" do
+  test "Step 3.06: Add Instance Network Rules" do
     {:ok, instance_id} = MssubMcp.get_instance_id_by_name("test_app_test_owner1_inst2")
 
     # The following sequence of rules should result in a file set of Owner
@@ -453,7 +541,7 @@ defmodule IntegrationTest do
              })
   end
 
-  test "Step 2.07: Violate Host Rate Limit" do
+  test "Step 3.07: Violate Host Rate Limit" do
     assert false == MssubMcp.host_disallowed?(~i"10.10.20.123")
     assert :rejected_host_check = violate_host_rate_limit(~i"10.10.20.123", 100)
     assert true == MssubMcp.host_disallowed?(~i"10.10.20.123")
@@ -461,11 +549,11 @@ defmodule IntegrationTest do
 
   # ==============================================================================================
   #
-  # Topic 3: Authentication - Access Account Maintenance & Authentication
+  # Topic 4: Authentication - Access Account Maintenance & Authentication
   #
   # ==============================================================================================
 
-  test "Step 3.01: Add Owned Access Accounts" do
+  test "Step 4.01: Add Owned Access Accounts" do
     {:ok, owner1_id} = MssubMcp.get_owner_id_by_name("test_owner1")
 
     state = MssubMcp.get_access_account_state_default()
@@ -495,7 +583,7 @@ defmodule IntegrationTest do
              })
   end
 
-  test "Step 3.02: Create Email/Password for Owned Access Account" do
+  test "Step 4.02: Create Email/Password for Owned Access Account" do
     # For the Unowned Access Account type, create_validated will default to
     # false as this is the common realistic scenario.  Owned Access Accounts
     # will more likely be created already validated.
@@ -534,7 +622,7 @@ defmodule IntegrationTest do
     assert nil == owner2_result[:validation_credential]
   end
 
-  test "Step 3.03: Violate Rate Limit for Owned Access Account Email Identity" do
+  test "Step 4.03: Violate Rate Limit for Owned Access Account Email Identity" do
     {:ok, owner1_id} = MssubMcp.get_owner_id_by_name("test_owner1")
 
     assert :rejected_rate_limited =
@@ -566,7 +654,7 @@ defmodule IntegrationTest do
              )
   end
 
-  test "Step 3.04: Invite Owned Access Account to Instances" do
+  test "Step 4.04: Invite Owned Access Account to Instances" do
     # Basic Invite
 
     {:ok, owner1_account_id} = MssubMcp.get_access_account_id_by_name("owner1_access_account")
@@ -602,7 +690,7 @@ defmodule IntegrationTest do
     assert nil == invited_aaia_owner2.access_granted
   end
 
-  test "Step 3.05: Accept Instance Invite to Owned Access Account" do
+  test "Step 4.05: Accept Instance Invite to Owned Access Account" do
     {:ok, access_account_id} = MssubMcp.get_access_account_id_by_name("owner2_access_account")
 
     {:ok, instance_id} = MssubMcp.get_instance_id_by_name("test_app_test_owner2_inst3")
@@ -612,7 +700,7 @@ defmodule IntegrationTest do
     assert %Msdata.SystAccessAccountInstanceAssocs{} = aaia_record
   end
 
-  test "Step 3.06: Authenticate Owned Access Account using Email/Password" do
+  test "Step 4.06: Authenticate Owned Access Account using Email/Password" do
     {:ok, instance1_id} = MssubMcp.get_instance_id_by_name("test_app_test_owner1_inst1")
 
     {:ok, owner1_id} = MssubMcp.get_owner_id_by_name("test_owner1")
@@ -647,15 +735,15 @@ defmodule IntegrationTest do
 
   # ==============================================================================================
   #
-  # Topic 4: Instance Purge & Clean-up
+  # Topic 5: Instance Purge & Clean-up
   #
   # ==============================================================================================
 
-  test "Step 4.01: Stop Instances" do
+  test "Step 5.01: Stop Instances" do
     assert :ok = MssubMcp.stop_all_applications()
   end
 
-  test "Step 4.02: Purge Instances" do
+  test "Step 5.02: Purge Instances" do
     startup_options = MscmpSystOptions.get_options!(@startup_options_path)
 
     purge_instance_state = MssubMcp.get_instance_state_default(:instance_states_purge_eligible)
@@ -674,6 +762,19 @@ defmodule IntegrationTest do
     end
 
     :ok = MssubMcp.process_operation(mcp_ops_func)
+  end
+
+  # ==============================================================================================
+  #
+  # Topic 6: Application Context Delete
+  #
+  # ==============================================================================================
+
+  test "Step 6.01: Delete Application Contexts" do
+    assert app_context1_id = MssubMcp.get_application_context_id_by_name("test_app_access")
+
+    assert {:ok, :deleted} = MssubMcp.delete_application_context(app_context1_id)
+    assert {:ok, :not_found} = MssubMcp.delete_application_context(app_context1_id)
   end
 
   # ==============================================================================================

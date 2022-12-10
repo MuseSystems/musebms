@@ -33,9 +33,17 @@ ALTER VIEW ms_syst.syst_application_contexts OWNER TO <%= ms_owner %>;
 
 REVOKE ALL ON TABLE ms_syst.syst_application_contexts FROM PUBLIC;
 
+CREATE TRIGGER a50_trig_i_i_syst_application_contexts
+    INSTEAD OF INSERT ON ms_syst.syst_application_contexts
+    FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_i_syst_application_contexts();
+
 CREATE TRIGGER a50_trig_i_u_syst_application_contexts
     INSTEAD OF UPDATE ON ms_syst.syst_application_contexts
     FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_u_syst_application_contexts();
+
+CREATE TRIGGER a50_trig_i_d_syst_application_contexts
+    INSTEAD OF DELETE ON ms_syst.syst_application_contexts
+    FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_d_syst_application_contexts();
 
 COMMENT ON
     VIEW ms_syst.syst_application_contexts IS

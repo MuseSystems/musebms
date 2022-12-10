@@ -30,6 +30,20 @@ defmodule MscmpSystInstance.Types do
   @type application_context_name() :: String.t()
 
   @typedoc """
+  Attributes used in creating or updating Application Context records.
+  """
+  @type application_context_params() :: %{
+          optional(:internal_name) => application_context_name(),
+          optional(:display_name) => String.t(),
+          optional(:application_id) => application_id(),
+          optional(:application_name) => application_name(),
+          optional(:description) => String.t(),
+          optional(:start_context) => boolean(),
+          optional(:login_context) => boolean(),
+          optional(:database_owner_context) => boolean()
+        }
+
+  @typedoc """
   The data type of the Application ID value.
   """
   @type application_id() :: Ecto.UUID.t()
@@ -38,6 +52,15 @@ defmodule MscmpSystInstance.Types do
   The data type describing unique naming for known system applications in programmatic contexts.
   """
   @type application_name() :: String.t()
+
+  @typedoc """
+  Attributes used in the creation or updating of Application records.
+  """
+  @type application_params() :: %{
+          optional(:internal_name) => application_name(),
+          optional(:display_name) => String.t(),
+          optional(:syst_description) => String.t()
+        }
 
   @typedoc """
   The data type describing the record ID value of the Instance Context record.

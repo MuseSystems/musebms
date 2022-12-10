@@ -14,6 +14,7 @@ defmodule Msdata.SystApplications do
   use MscmpSystDb.Schema
 
   alias MscmpSystInstance.Types
+  alias MscmpSystInstance.Msdata.Validators
 
   @moduledoc """
   Data structure describing the known applications for which instances may be
@@ -57,6 +58,19 @@ defmodule Msdata.SystApplications do
     has_many(:application_contexts, Msdata.SystApplicationContexts, foreign_key: :application_id)
   end
 
-  # Note that there are no changeset functions here because the only way to add
-  # new applications at this point is via the datastore migrations process.
+  @doc """
+  Validates presented Application parameters for inserting a new Application
+  record.
+  """
+  @spec insert_changeset(Types.application_params(), Keyword.t()) :: Ecto.Changeset.t()
+  defdelegate insert_changeset(insert_params, opts \\ []), to: Validators.SystApplications
+
+  @doc """
+  Validates update Application parameters for use in updating an existing
+  Application record.
+  """
+  @spec update_changeset(Msdata.SystApplications.t(), Types.application_params(), Keyword.t()) ::
+          Ecto.Changeset.t()
+  defdelegate update_changeset(application, update_params, opts \\ []),
+    to: Validators.SystApplications
 end
