@@ -13,8 +13,8 @@
 defmodule Msdata.SystApplications do
   use MscmpSystDb.Schema
 
-  alias MscmpSystInstance.Types
   alias MscmpSystInstance.Msdata.Validators
+  alias MscmpSystInstance.Types
 
   @moduledoc """
   Data structure describing the known applications for which instances may be
