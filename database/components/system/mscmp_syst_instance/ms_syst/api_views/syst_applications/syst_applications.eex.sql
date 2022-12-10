@@ -29,12 +29,24 @@ ALTER VIEW ms_syst.syst_applications OWNER TO <%= ms_owner %>;
 
 REVOKE ALL ON TABLE ms_syst.syst_applications FROM PUBLIC;
 
+CREATE TRIGGER a50_trig_i_i_syst_applications
+    INSTEAD OF INSERT ON ms_syst.syst_applications
+    FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_i_syst_applications();
+
+CREATE TRIGGER a50_trig_i_u_syst_applications
+    INSTEAD OF UPDATE ON ms_syst.syst_applications
+    FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_u_syst_applications();
+
+CREATE TRIGGER a50_trig_i_d_syst_applications
+    INSTEAD OF DELETE ON ms_syst.syst_applications
+    FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_d_syst_applications();
+
 COMMENT ON
     VIEW ms_syst.syst_applications IS
-$DOC$Describes the known applications which is managed by the global database and
+$DOC$Describes the known applications which are managed by the global database and
 authentication infrastructure.
 
-This API View allows the application to read the data according to well defined
+This API View allows the application to read and maintain data according to well defined
 application business rules.
 
 Attempts at invalid data maintenance via this API may result in the invalid

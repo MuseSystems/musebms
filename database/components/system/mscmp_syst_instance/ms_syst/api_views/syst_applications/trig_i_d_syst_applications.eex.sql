@@ -1,9 +1,9 @@
-CREATE OR REPLACE FUNCTION ms_syst.trig_i_i_syst_instance_contexts()
+CREATE OR REPLACE FUNCTION ms_syst.trig_i_d_syst_applications()
 RETURNS trigger AS
 $BODY$
 
--- File:        trig_i_i_syst_instance_contexts.eex.sql
--- Location:    musebms/database/components/system/mscmp_syst_instance/ms_syst/api_views/syst_instance_contexts/trig_i_i_syst_instance_contexts.eex.sql
+-- File:        trig_i_d_syst_applications.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_instance/ms_syst/api_views/syst_applications/trig_i_d_syst_applications.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -12,18 +12,16 @@ $BODY$
 -- See the LICENSE file in the project root for license terms and conditions.
 -- See the NOTICE file in the project root for copyright ownership information.
 --
--- muse.information@musesystems.com  :: https://muse.systems
+-- muse.information@musesystems.com :: https://muse.systems
 
 BEGIN
 
     RAISE EXCEPTION
         USING
-            MESSAGE = 'Records in this table are created automatically when ' ||
-                      'its parent records are created.  Direct creation via ' ||
-                      'this API view is not supported.',
+            MESSAGE = 'Records may not be deleted using this API view.',
             DETAIL = ms_syst_priv.get_exception_details(
                          p_proc_schema    => 'ms_syst'
-                        ,p_proc_name      => 'trig_i_i_syst_instance_contexts'
+                        ,p_proc_name      => 'trig_i_d_syst_applications'
                         ,p_exception_name => 'invalid_api_view_call'
                         ,p_errcode        => 'PM008'
                         ,p_param_data     => to_jsonb(new)
@@ -44,12 +42,12 @@ $BODY$
     SECURITY DEFINER
     SET search_path TO ms_syst, pg_temp;
 
-ALTER FUNCTION ms_syst.trig_i_i_syst_instance_contexts()
+ALTER FUNCTION ms_syst.trig_i_d_syst_applications()
     OWNER TO <%= ms_owner %>;
 
-REVOKE EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_instance_contexts() FROM public;
-GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_instance_contexts() TO <%= ms_owner %>;
+REVOKE EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_applications() FROM public;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_applications() TO <%= ms_owner %>;
 
-COMMENT ON FUNCTION ms_syst.trig_i_i_syst_instance_contexts() IS
+COMMENT ON FUNCTION ms_syst.trig_i_d_syst_applications() IS
 $DOC$An INSTEAD OF trigger function which applies business rules when using the
-syst_instance_contexts API View for INSERT operations.$DOC$;
+syst_applications API View for DELETE operations.$DOC$;

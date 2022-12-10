@@ -23,7 +23,11 @@ BEGIN
     VALUES
         ( 'app2', 'App 2', 'App Two Description' )
          ,
-        ( 'app1', 'App 1', 'App One Description' );
+        ( 'app1', 'App 1', 'App One Description' )
+         ,
+        ( 'app3', 'App 3', 'App Three Description' )
+         ,
+        ( 'ex_app2', 'Ex. App 2', 'Example App Two' );
 
     --
     -- Application Contexts
@@ -99,6 +103,61 @@ BEGIN
             FROM ms_syst_data.syst_applications
             WHERE internal_name = 'app2' )
         , 'App 2 API'
+        , TRUE
+        , TRUE
+        , FALSE )
+
+         ,
+        ( 'app3_delctx'
+        , 'App 3 DelCtx'
+        , ( SELECT id
+            FROM ms_syst_data.syst_applications
+            WHERE internal_name = 'app3' )
+        , 'App 3 Delete'
+        , TRUE
+        , TRUE
+        , FALSE )
+
+         ,
+        ( 'app3_uptctx'
+        , 'App 3 UptCtx'
+        , ( SELECT id
+            FROM ms_syst_data.syst_applications
+            WHERE internal_name = 'app3' )
+        , 'App 3 Update'
+        , TRUE
+        , TRUE
+        , FALSE )
+
+         ,
+        ( 'ex_app2_idctx'
+        , 'Example App 2 ID Context'
+        , ( SELECT id
+            FROM ms_syst_data.syst_applications
+            WHERE internal_name = 'ex_app2' )
+        , 'Example App 2 ID'
+        , TRUE
+        , TRUE
+        , FALSE )
+
+         ,
+        ( 'ex_app2_delctx'
+        , 'Example App 2 Delete Context'
+        , ( SELECT id
+            FROM ms_syst_data.syst_applications
+            WHERE internal_name = 'ex_app2' )
+        , 'Example App 2 Delete'
+        , TRUE
+        , TRUE
+        , FALSE )
+
+         ,
+        ( 'ex_app2_updctx'
+        , 'Example App 2 Update Context'
+        , ( SELECT id
+            FROM ms_syst_data.syst_applications
+            WHERE internal_name = 'ex_app2' )
+        , 'Example App 2 Update'
         , TRUE
         , TRUE
         , FALSE );

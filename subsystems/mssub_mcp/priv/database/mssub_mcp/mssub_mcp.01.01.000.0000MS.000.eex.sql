@@ -1,5 +1,5 @@
 -- Migration: priv/database/mssub_mcp/mssub_mcp.01.01.000.0000MS.000.eex.sql
--- Built on:  2022-11-26 16:25:05.670309Z
+-- Built on:  2022-12-10 13:56:05.205316Z
 
 DO
 $MIGRATION$
@@ -6562,6 +6562,173 @@ $DOC$Records the number of times the record has been updated regardless as to if
 the update actually changed any data.  In this way needless or redundant record
 updates can be found.  This row starts at 0 and therefore may be the same as the
 diag_row_version - 1.$DOC$;
+CREATE OR REPLACE FUNCTION ms_syst.trig_i_i_syst_applications()
+RETURNS trigger AS
+$BODY$
+
+-- File:        trig_i_i_syst_applications.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_instance/ms_syst/api_views/syst_applications/trig_i_i_syst_applications.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    INSERT INTO ms_syst_data.syst_applications
+        ( internal_name
+        , display_name
+        , syst_description)
+    VALUES
+        ( new.internal_name
+        , new.display_name
+        , new.syst_description)
+    RETURNING * INTO new;
+
+    RETURN new;
+
+END;
+$BODY$
+    LANGUAGE plpgsql
+    VOLATILE
+    SECURITY DEFINER
+    SET search_path TO ms_syst, pg_temp;
+
+ALTER FUNCTION ms_syst.trig_i_i_syst_applications()
+    OWNER TO <%= ms_owner %>;
+
+REVOKE EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_applications() FROM public;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_applications() TO <%= ms_owner %>;
+
+COMMENT ON FUNCTION ms_syst.trig_i_i_syst_applications() IS
+$DOC$An INSTEAD OF trigger function which applies business rules when using the
+syst_applications API View for INSERT operations.$DOC$;
+CREATE OR REPLACE FUNCTION ms_syst.trig_i_u_syst_applications()
+RETURNS trigger AS
+$BODY$
+
+-- File:        trig_i_u_syst_applications.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_instance/ms_syst/api_views/syst_applications/trig_i_u_syst_applications.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    IF
+        new.internal_name != old.internal_name
+    THEN
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'The requested data update included changes to fields disallowed ' ||
+                          'by the business rules of the API View.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst'
+                            ,p_proc_name      => 'trig_i_u_syst_applications'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     =>
+                                jsonb_build_object('new', to_jsonb(new), 'old', to_jsonb(old))
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+    END IF;
+
+    UPDATE ms_syst_data.syst_applications
+    SET
+          display_name     = new.display_name
+        , syst_description = new.syst_description
+    WHERE id = new.id
+    RETURNING * INTO new;
+
+    RETURN new;
+
+END;
+$BODY$
+    LANGUAGE plpgsql
+    VOLATILE
+    SECURITY DEFINER
+    SET search_path TO ms_syst, pg_temp;
+
+ALTER FUNCTION ms_syst.trig_i_u_syst_applications()
+    OWNER TO <%= ms_owner %>;
+
+REVOKE EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_applications() FROM public;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_applications() TO <%= ms_owner %>;
+
+COMMENT ON FUNCTION ms_syst.trig_i_u_syst_applications() IS
+$DOC$An INSTEAD OF trigger function which applies business rules when using the
+syst_appliations API View for UPDATE operations.$DOC$;
+CREATE OR REPLACE FUNCTION ms_syst.trig_i_d_syst_applications()
+RETURNS trigger AS
+$BODY$
+
+-- File:        trig_i_d_syst_applications.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_instance/ms_syst/api_views/syst_applications/trig_i_d_syst_applications.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    RAISE EXCEPTION
+        USING
+            MESSAGE = 'Records may not be deleted using this API view.',
+            DETAIL = ms_syst_priv.get_exception_details(
+                         p_proc_schema    => 'ms_syst'
+                        ,p_proc_name      => 'trig_i_d_syst_applications'
+                        ,p_exception_name => 'invalid_api_view_call'
+                        ,p_errcode        => 'PM008'
+                        ,p_param_data     => to_jsonb(new)
+                        ,p_context_data   =>
+                            jsonb_build_object(
+                                 'tg_op',         tg_op
+                                ,'tg_when',       tg_when
+                                ,'tg_schema',     tg_table_schema
+                                ,'tg_table_name', tg_table_name)),
+            ERRCODE = 'PM008',
+            SCHEMA = tg_table_schema,
+            TABLE = tg_table_name;
+
+END;
+$BODY$
+    LANGUAGE plpgsql
+    VOLATILE
+    SECURITY DEFINER
+    SET search_path TO ms_syst, pg_temp;
+
+ALTER FUNCTION ms_syst.trig_i_d_syst_applications()
+    OWNER TO <%= ms_owner %>;
+
+REVOKE EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_applications() FROM public;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_applications() TO <%= ms_owner %>;
+
+COMMENT ON FUNCTION ms_syst.trig_i_d_syst_applications() IS
+$DOC$An INSTEAD OF trigger function which applies business rules when using the
+syst_applications API View for DELETE operations.$DOC$;
 -- File:        syst_applications.eex.sql
 -- Location:    musebms/database/components/system/mscmp_syst_instance/ms_syst/api_views/syst_applications/syst_applications.eex.sql
 -- Project:     Muse Systems Business Management System
@@ -6593,16 +6760,82 @@ ALTER VIEW ms_syst.syst_applications OWNER TO <%= ms_owner %>;
 
 REVOKE ALL ON TABLE ms_syst.syst_applications FROM PUBLIC;
 
+CREATE TRIGGER a50_trig_i_i_syst_applications
+    INSTEAD OF INSERT ON ms_syst.syst_applications
+    FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_i_syst_applications();
+
+CREATE TRIGGER a50_trig_i_u_syst_applications
+    INSTEAD OF UPDATE ON ms_syst.syst_applications
+    FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_u_syst_applications();
+
+CREATE TRIGGER a50_trig_i_d_syst_applications
+    INSTEAD OF DELETE ON ms_syst.syst_applications
+    FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_d_syst_applications();
+
 COMMENT ON
     VIEW ms_syst.syst_applications IS
-$DOC$Describes the known applications which is managed by the global database and
+$DOC$Describes the known applications which are managed by the global database and
 authentication infrastructure.
 
-This API View allows the application to read the data according to well defined
+This API View allows the application to read and maintain data according to well defined
 application business rules.
 
 Attempts at invalid data maintenance via this API may result in the invalid
 changes being ignored or may raise an exception.$DOC$;
+CREATE OR REPLACE FUNCTION ms_syst.trig_i_i_syst_application_contexts()
+RETURNS trigger AS
+$BODY$
+
+-- File:        trig_i_i_syst_application_contexts.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_instance/ms_syst/api_views/syst_application_contexts/trig_i_i_syst_application_contexts.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    INSERT INTO ms_syst_data.syst_application_contexts
+        ( internal_name
+        , display_name
+        , application_id
+        , description
+        , start_context
+        , login_context
+        , database_owner_context )
+    VALUES
+        ( new.internal_name
+        , new.display_name
+        , new.application_id
+        , new.description
+        , new.start_context
+        , new.login_context
+        , new.database_owner_context )
+    RETURNING * INTO new;
+
+    RETURN new;
+
+END;
+$BODY$
+    LANGUAGE plpgsql
+    VOLATILE
+    SECURITY DEFINER
+    SET search_path TO ms_syst, pg_temp;
+
+ALTER FUNCTION ms_syst.trig_i_i_syst_application_contexts()
+    OWNER TO <%= ms_owner %>;
+
+REVOKE EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_application_contexts() FROM public;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_application_contexts() TO <%= ms_owner %>;
+
+COMMENT ON FUNCTION ms_syst.trig_i_i_syst_application_contexts() IS
+$DOC$An INSTEAD OF trigger function which applies business rules when using the
+syst_application_contexts API View for INSERT operations.$DOC$;
 CREATE OR REPLACE FUNCTION ms_syst.trig_i_u_syst_application_contexts()
 RETURNS trigger AS
 $BODY$
@@ -6623,9 +6856,7 @@ BEGIN
 
     IF
         new.internal_name          != old.internal_name OR
-        new.display_name           != old.display_name OR
         new.application_id         != old.application_id OR
-        new.description            != old.description OR
         new.login_context          != old.login_context OR
         new.database_owner_context != old.database_owner_context
     THEN
@@ -6651,7 +6882,10 @@ BEGIN
     END IF;
 
     UPDATE ms_syst_data.syst_application_contexts
-    SET start_context = new.start_context
+    SET
+          start_context = new.start_context
+        , display_name  = new.display_name
+        , description   = new.description
     WHERE id = new.id
     RETURNING * INTO new;
 
@@ -6672,7 +6906,45 @@ GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_application_contexts() TO <%= ms
 
 COMMENT ON FUNCTION ms_syst.trig_i_u_syst_application_contexts() IS
 $DOC$An INSTEAD OF trigger function which applies business rules when using the
-syst_enum_items API View for UPDATE operations.$DOC$;
+syst_application_contexts API View for UPDATE operations.$DOC$;
+CREATE OR REPLACE FUNCTION ms_syst.trig_i_d_syst_application_contexts()
+RETURNS trigger AS
+$BODY$
+
+-- File:        trig_i_d_syst_application_contexts.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_instance/ms_syst/api_views/syst_application_contexts/trig_i_d_syst_application_contexts.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    DELETE FROM ms_syst_data.syst_application_contexts WHERE id = old.id RETURNING * INTO old;
+
+    RETURN old;
+
+END;
+$BODY$
+    LANGUAGE plpgsql
+    VOLATILE
+    SECURITY DEFINER
+    SET search_path TO ms_syst, pg_temp;
+
+ALTER FUNCTION ms_syst.trig_i_d_syst_application_contexts()
+    OWNER TO <%= ms_owner %>;
+
+REVOKE EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_application_contexts() FROM public;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_application_contexts() TO <%= ms_owner %>;
+
+COMMENT ON FUNCTION ms_syst.trig_i_d_syst_application_contexts() IS
+$DOC$An INSTEAD OF trigger function which applies business rules when using the
+syst_application_contexts API View for DELETE operations.$DOC$;
 -- File:        syst_application_contexts.eex.sql
 -- Location:    musebms/database/components/system/mscmp_syst_instance/ms_syst/api_views/syst_application_contexts/syst_application_contexts.eex.sql
 -- Project:     Muse Systems Business Management System
@@ -6708,9 +6980,17 @@ ALTER VIEW ms_syst.syst_application_contexts OWNER TO <%= ms_owner %>;
 
 REVOKE ALL ON TABLE ms_syst.syst_application_contexts FROM PUBLIC;
 
+CREATE TRIGGER a50_trig_i_i_syst_application_contexts
+    INSTEAD OF INSERT ON ms_syst.syst_application_contexts
+    FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_i_syst_application_contexts();
+
 CREATE TRIGGER a50_trig_i_u_syst_application_contexts
     INSTEAD OF UPDATE ON ms_syst.syst_application_contexts
     FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_u_syst_application_contexts();
+
+CREATE TRIGGER a50_trig_i_d_syst_application_contexts
+    INSTEAD OF DELETE ON ms_syst.syst_application_contexts
+    FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_d_syst_application_contexts();
 
 COMMENT ON
     VIEW ms_syst.syst_application_contexts IS
@@ -8007,7 +8287,7 @@ GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_instance_contexts() TO <%= ms_ow
 
 COMMENT ON FUNCTION ms_syst.trig_i_i_syst_instance_contexts() IS
 $DOC$An INSTEAD OF trigger function which applies business rules when using the
-syst_enum_items API View for INSERT operations.$DOC$;
+syst_instance_contexts API View for INSERT operations.$DOC$;
 CREATE OR REPLACE FUNCTION ms_syst.trig_i_u_syst_instance_contexts()
 RETURNS trigger AS
 $BODY$
@@ -8078,7 +8358,7 @@ GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_instance_contexts() TO <%= ms_ow
 
 COMMENT ON FUNCTION ms_syst.trig_i_u_syst_instance_contexts() IS
 $DOC$An INSTEAD OF trigger function which applies business rules when using the
-syst_enum_items API View for UPDATE operations.$DOC$;
+syst_instance_contexts API View for UPDATE operations.$DOC$;
 CREATE OR REPLACE FUNCTION ms_syst.trig_i_d_syst_instance_contexts()
 RETURNS trigger AS
 $BODY$
@@ -8133,7 +8413,7 @@ GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_instance_contexts() TO <%= ms_ow
 
 COMMENT ON FUNCTION ms_syst.trig_i_d_syst_instance_contexts() IS
 $DOC$An INSTEAD OF trigger function which applies business rules when using the
-syst_enum_items API View for DELETE operations.$DOC$;
+syst_instance_contexts API View for DELETE operations.$DOC$;
 -- File:        syst_instance_contexts.eex.sql
 -- Location:    musebms/database/components/system/mscmp_syst_instance/ms_syst/api_views/syst_instance_contexts/syst_instance_contexts.eex.sql
 -- Project:     Muse Systems Business Management System
@@ -8650,12 +8930,17 @@ $INIT_ENUM$;
 
 -- syst_applications
 
-GRANT SELECT ON TABLE ms_syst.syst_applications TO <%= ms_appusr %>;
+GRANT SELECT, INSERT, UPDATE ON TABLE ms_syst.syst_applications TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_applications() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_applications() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_applications() TO <%= ms_appusr %>;
 
 -- syst_application_contexts
 
-GRANT SELECT, UPDATE ON TABLE ms_syst.syst_application_contexts TO <%= ms_appusr %>;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE ms_syst.syst_application_contexts TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_application_contexts() TO <%= ms_appusr %>;
 GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_application_contexts() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_application_contexts() TO <%= ms_appusr %>;
 
 -- syst_owners
 

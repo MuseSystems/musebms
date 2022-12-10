@@ -37,5 +37,4 @@ sponsor_modification = 0
 load_files = [
     "components/system/mscmp_syst_enums/testing_support/test_privileges.eex.sql",
     "components/system/mscmp_syst_instance/testing_support/test_privileges.eex.sql",
-    "components/system/mscmp_syst_instance/testing_support/test_data_integration_test.eex.sql",
 ]

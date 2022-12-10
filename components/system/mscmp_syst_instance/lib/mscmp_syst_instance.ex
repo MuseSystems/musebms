@@ -9,9 +9,108 @@ defmodule MscmpSystInstance do
 
   # ==============================================================================================
   #
-  # Applications
+  # Applications & Application Contexts
   #
   # ==============================================================================================
+
+  @doc section: :application_data
+  @doc """
+  Creates a new Application record.
+
+  Application Subsystems need means by which they can make the MscmpSystInstance
+  component aware of their existence and this function provides the means by
+  which to do that.
+
+  >#### Note {: .neutral}
+  >
+  > Note that this function is meant to expose Application record management to
+  > the relevant Application Subsystem programs and is not intended for regular
+  > management activities by end users.
+
+
+  ## Parameters
+
+    * `application_params` - the parameters with which the new Application
+    record should be created.  The following attribute values are available:
+
+      * `internal_name` - a predetermined unique identifier for the Application
+      record for use in programmatic contexts.  This attribute is required and
+      must be unique in the system.
+
+      * `display_name` - a unique, friendly name identifying the Application and
+      for use in user interfaces.  This attribute is required and must be unique
+      in the system.
+
+      * `syst_description` - a user facing description of the Application
+      including any special usage requirements or preconditions.  This
+      attribute is required.
+
+  ## Examples
+
+  Creating a new Application record.
+
+      iex> new_app_params = %{
+      ...>   internal_name: "ex_app1",
+      ...>   display_name: "Example App 1",
+      ...>   syst_description: "An example application"
+      ...> }
+      iex> {:ok, %Msdata.SystApplications{}} =
+      ...>   MscmpSystInstance.create_application(new_app_params)
+
+  """
+  @spec create_application(Types.application_params()) ::
+          {:ok, Msdata.SystApplications.t()} | {:error, MscmpSystError.t()}
+  defdelegate create_application(application_params), to: Impl.Application
+
+  @doc section: :application_data
+  @doc """
+  Updates an existing Application record using the provided parameters as new
+  values.
+
+  Allows an Application Subsystem program to update its representative
+  Application record as required.
+
+  >#### Note {: .neutral}
+  >
+  > Note that this function is meant to expose Application record management to
+  > the relevant Application Subsystem programs and is not intended for regular
+  > management activities by end users.
+
+  ## Parameters
+
+    * `application` - either a fully populated `Msdata.SystApplications` struct
+    representing the current state of the Application record or the ID of the
+    Application record to update.  This argument is required.
+
+    * `application_params` - a map containing the attributes with updated values
+    for the Application record update operation.  The attributes which may be
+    updated are:
+
+      * `display_name` - a unique, friendly name identifying the Application and
+      for use in user interfaces.  This value may not be set `nil` if it is
+      included.
+
+      * `syst_description` - a user facing description of the Application
+      including any special usage requirements or preconditions.  This attribute
+      may not be set `nil` if it is included.
+
+  ## Examples
+
+  Creating a new Application record.
+      iex> target_app_id = MscmpSystInstance.get_application_id_by_name("ex_app2")
+      iex> update_app_params = %{
+      ...>   display_name: "Example App #2",
+      ...>   syst_description: "An updated example application."
+      ...> }
+      iex> {:ok, %Msdata.SystApplications{display_name: "Example App #2"}} =
+      ...>   MscmpSystInstance.update_application(target_app_id, update_app_params)
+
+  """
+  @spec update_application(
+          Types.application_id() | Msdata.SystApplications.t(),
+          Types.application_params()
+        ) :: {:ok, Msdata.SystApplications.t()} | {:error, MscmpSystError.t()}
+  defdelegate update_application(application, application_params), to: Impl.Application
 
   @doc section: :application_data
   @doc """
@@ -21,6 +120,12 @@ defmodule MscmpSystInstance do
   On successful execution the record ID of the requested Application is
   returned.  If the requested Application Internal Name is not found `nil` is
   returned.
+
+  >#### Note {: .neutral}
+  >
+  > Note that this function is meant to expose Application record management to
+  > the relevant Application Subsystem programs and is not intended for regular
+  > management activities by end users.
 
   ## Parameters
 
@@ -41,6 +146,289 @@ defmodule MscmpSystInstance do
   """
   @spec get_application_id_by_name(Types.application_name()) :: Types.application_id() | nil
   defdelegate get_application_id_by_name(application_name), to: Impl.Application
+
+  @doc section: :application_data
+  @doc """
+  Returns a populated `Msdata.SystApplications` struct for the requested record.
+
+  ## Parameters
+
+    * `application` - either the record ID of the desired Application record or
+    its Internal Name.  This parameter is required.
+
+    * `opts` - allows optional parameters to be provided which govern the
+    behavior of this function.  The options are provided via a Keyword List.
+    The available options are:
+
+      * `include_contexts` - a boolean value indicating whether or not to also
+      retrieve the fully populated list of `:application_contexts` associated
+      with the requested Application.  Contexts are returned as a standard
+      association of `Msdata.SystApplicationContexts` structs.  The default
+      value of this option is `false`.
+  """
+  @spec get_application(Types.application_id() | Types.application_name(), Keyword.t()) ::
+          Msdata.SystApplications.t() | nil
+  defdelegate get_application(application, opts \\ []), to: Impl.Application
+
+  @doc section: :application_data
+  @doc """
+  Creates Application Context records for the identified Application.
+
+  Application Contexts describe the Datastore Contexts each Instance is expected
+  to support to allow an Application to access its data.  Application Subsystems
+  use this function to create the any required Application Context records not
+  already registered in the MscmpSystInstance data.  Application Contexts are
+  used in the creation of `Msdata.SystInstanceContexts` records and provide a
+  number of default values for the Instance Context records.
+
+  >#### Note {: .neutral}
+  >
+  > Note that this function is meant to expose Application record management to
+  > the relevant Application Subsystem programs and is not intended for regular
+  > management activities by end users.
+
+  ## Parameters
+
+    * `application_context_params` - a map defining the attributes which will be
+    used to create the new Application Context record.  The attributes are:
+
+      * `internal_name` - a predetermined unique identifier for the Application
+      Context record for use in programmatic contexts.  This attribute is
+      required and must be unique in the system.
+
+      * `display_name` - a unique, friendly name identifying the Application
+      Context and for use in user interfaces.  This attribute is required and
+      must be unique in the system.
+
+      * `application_id` - a reference to the ID value of the parent Application
+      record.  A valid value for this attribute is required unless the
+      `application_name` attribute is set with the Internal Name of an existing
+      Application record.  If both this attribute and the `application_name`
+      attributes are set, the `attribute_name` value will be used to resolve
+      the parent Application.
+
+      * `application_name` - a reference to the Internal Name value of an
+      existing Application record.  This value is used to look-up the
+      `application_id` and so if this attribute is provided with a valid value,
+      the `application_id` attribute may be omitted.  The value of this
+      attribute takes precedence over any value set explicitly in the
+      `application_id` attribute.  If `application_id` is omitted, then this
+      attribute is required.
+
+      * `description` - a description of the Application Context's role in the
+      application and database.  This becomes a comment in the database attached
+      to the database role created for the context.
+
+      * `start_context` - a required boolean value which establishes the default
+      value of derived Instance Context (`Msdata.SystInstanceContexts`)
+      `start_context` settings.  When true, an Instance Context record derived
+      from this Application Context will be, by default, started as active
+      database connections when the parent Instance is started.  False indicates
+      that by default Instance startup will not establish database connections
+      for the context.  This value muse be set `false` for any Application
+      Context defining a Datastore Owner Context or any other Context where the
+      `login_context` is set `false`.
+
+      * `login_context` - a required boolean value which indicates if a derived
+      Instance Context is used to create database connections.  If true, a
+      derived Instance Context record will provide login information to
+      establish a database connection on Instance start so long as its
+      `start_context` value is also `true`.  If this attribute is set `false`
+      the derived Instance Context record will not define a Context capable of
+      logging into the database.
+
+      * `database_owner_context` - a required boolean value which, when true, is
+      designates an Application Context record as establishing the default
+      values for Instance Datastore/database owners.  If true, the
+      `start_context` and `login_context` attributes must be set false as owner
+      contexts are not used for database connectivity not may be started during
+      the Instance start process.
+
+  ## Examples
+
+  Create an database owner Application Context record.
+
+      iex> new_context_params = %{
+      ...>   internal_name: "ex_app2_owner",
+      ...>   display_name: "Example App 2 Owner",
+      ...>   application_name: "ex_app2",
+      ...>   description: "Database role owning objects for 'ex_app2'.",
+      ...>   start_context: false,
+      ...>   login_context: false,
+      ...>   database_owner_context: true
+      ...> }
+      iex> {:ok, %Msdata.SystApplicationContexts{}} =
+      ...>   MscmpSystInstance.create_application_context(new_context_params)
+
+  """
+  @spec create_application_context(Types.application_context_params()) ::
+          {:ok, Msdata.SystApplicationContexts.t()} | {:error, MscmpSystError.t()}
+  defdelegate create_application_context(application_context_params), to: Impl.ApplicationContexts
+
+  @doc section: :application_data
+  @doc """
+  Retrieves the Application Context record ID for the record matching provided
+  Internal Name argument.
+
+  When the requested Application Context record can not be found this function
+  returns `nil`.  All errors raise an exception.
+
+  ## Parameters
+
+    * `application_context_name` - the Internal Name value of the Application
+    Context record to search for.
+
+  ## Examples
+
+  Finding an existing Application Context.
+
+      iex> id = MscmpSystInstance.get_application_context_id_by_name("ex_app2_idctx")
+      iex> is_binary(id)
+      true
+
+  Searching for a non-existent Application Context.
+
+      iex> MscmpSystInstance.get_application_context_id_by_name("nonexistent_context")
+      nil
+  """
+  @spec get_application_context_id_by_name(Types.application_context_name()) ::
+          Types.application_context_id() | nil
+  defdelegate get_application_context_id_by_name(application_context_name),
+    to: Impl.ApplicationContexts
+
+  @doc section: :application_data
+  @doc """
+  Returns a list of Application Context records.
+
+  ## Parameters
+
+    * `application_id` - an optional reference to a specific application for
+    which to return Application Context records.  By default this value is `nil`
+    which results in all Application Context records for all Applications being
+    returned.
+  """
+  @spec list_application_contexts(Types.application_id() | nil) ::
+          {:ok, list(Msdata.SystApplicationContexts.t())} | {:error, MscmpSystError.t()}
+  defdelegate list_application_contexts(application_id \\ nil), to: Impl.ApplicationContexts
+
+  @doc section: :application_data
+  @doc """
+  Updates an existing Application Context record.
+
+  Allows an Application Subsystem to update its Application Context entries as
+  permitted.
+
+  >#### Note {: .neutral}
+  >
+  > Note that this function is meant to expose Application record management to
+  > the relevant Application Subsystem programs and is not intended for regular
+  > management activities by end users.
+
+  ## Parameters
+
+    * `application_context` - this required parameter may either be the
+    Application Context record ID or the fully populated
+    `Msdata.SystApplicationContexts` struct to update.
+
+    * `application_context_params` - a map of attributes which are to be updated
+    with the new values of those attributes.  The available attributes for
+    updates are:
+
+      * `display_name` - a unique, friendly name identifying the Application
+      Context and for use in user interfaces.  This attribute is required and
+      must be unique in the system.
+
+      * `description` - a description of the Application Context's role in the
+      application and database.  This becomes a comment in the database attached
+      to the database role created for the context.
+
+      * `start_context` - a required boolean value which establishes the default
+      value of derived Instance Context (`Msdata.SystInstanceContexts`)
+      `start_context` settings.  When true, an Instance Context record derived
+      from this Application Context will be, by default, started as active
+      database connections when the parent Instance is started.  False indicates
+      that by default Instance startup will not establish database connections
+      for the context.  This value muse be set `false` for any Application
+      Context defining a Datastore Owner Context or any other Context where the
+      `login_context` is set `false`.
+
+  ## Examples
+
+  Updating an existing Application Context record
+
+      iex> app_context_id =
+      ...>   MscmpSystInstance.get_application_context_id_by_name("ex_app2_updctx")
+      iex> update_params = %{
+      ...>   display_name: "Updated Ex. App 2 Context",
+      ...>   description: "A now updated description",
+      ...>   start_context: false
+      ...> }
+      iex> {:ok,
+      ...>   %Msdata.SystApplicationContexts{
+      ...>     display_name: "Updated Ex. App 2 Context",
+      ...>     description: "A now updated description",
+      ...>     start_context: false
+      ...>   }} =
+      ...>   MscmpSystInstance.update_application_context(app_context_id, update_params)
+
+  """
+  @spec update_application_context(
+          Types.application_context_id() | Msdata.SystApplicationContexts.t(),
+          Types.application_context_params()
+        ) :: {:ok, Msdata.SystApplicationContexts.t()} | {:error, MscmpSystError.t()}
+  defdelegate update_application_context(application_context, application_context_params),
+    to: Impl.ApplicationContexts
+
+  @doc section: :application_data
+  @doc """
+  Deletes an Application Context record from the system
+
+  Application Subsystems may use this function to remove an obsolete Application
+  Context record from the system.
+
+  >#### Note {: .neutral}
+  >
+  > Note that this function is meant to expose Application record management to
+  > the relevant Application Subsystem programs and is not intended for regular
+  > management activities by end users.
+
+  >#### Warning! {: .warning}
+  >
+  > While this function will remove an Application Context record from the
+  > system and prevent any new Instances of the Application from including the
+  > deleted Context, existing Instance Contexts based on the Application
+  > Context are not currently cleaned up by this function.  Any clean-up of
+  > existing Instance Context data and of associated database roles and
+  > verification of extended clean-up activities is therefore the responsibility
+  > of the caller.
+
+  On successful delete of the record, a success tuple is returned to the caller
+  (`{:ok, :deleted}`).  If the requested record is not found in the database,
+  the returned value is `{:ok, :not_found}`.  Any other outcome is returned via
+  an error tuple.
+
+  ## Parameters
+
+    * `application_context_id` - the record ID of the Application Context record
+    to delete.  This value is required.
+
+  ## Examples
+
+  Deleting an existing Application Context.
+
+      iex> record_id = MscmpSystInstance.get_application_context_id_by_name("ex_app2_delctx")
+      iex> MscmpSystInstance.delete_application_context(record_id)
+      {:ok, :deleted}
+
+  Attempting to delete a non-existent record.
+
+      iex> record_id = "00000000-0000-0000-0000-000000000000"
+      iex> MscmpSystInstance.delete_application_context(record_id)
+      {:ok, :not_found}
+  """
+  @spec delete_application_context(Types.application_context_id()) ::
+          {:ok, :deleted | :not_found} | {:error, MscmpSystError.t()}
+  defdelegate delete_application_context(application_context_id), to: Impl.ApplicationContexts
 
   # ==============================================================================================
   #
@@ -313,7 +701,7 @@ defmodule MscmpSystInstance do
       record for use in programmatic contexts.  This attribute is required and
       must be unique in the system.
 
-      * `display_name` - a unique, friendly name identifying the owner and for
+      * `display_name` - a unique, friendly name identifying the Owner and for
       use in user interfaces.  This attribute is required and must be unique in
       the system.
 

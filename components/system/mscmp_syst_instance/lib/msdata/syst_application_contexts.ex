@@ -21,7 +21,7 @@ defmodule Msdata.SystApplicationContexts do
 
   Applications are written with certain security and connection characteristics
   in mind which correlate to database roles used by the application for
-  establishing connections.  This data type defines the datastore contexts the
+  establishing connections.  This data type defines the Datastore contexts the
   application is expecting so that Instance records can be validated against the
   application expectations.
 
@@ -69,7 +69,22 @@ defmodule Msdata.SystApplicationContexts do
     belongs_to(:application, Msdata.SystApplications)
   end
 
-  @spec update_changeset(Msdata.SystApplicationContexts.t(), boolean()) :: Ecto.Changeset.t()
-  defdelegate update_changeset(application_context, start_context),
+  @doc """
+  Validates presented Application Context parameters for inserting a new
+  Application Context record.
+  """
+  @spec insert_changeset(Types.application_context_params(), Keyword.t()) :: Ecto.Changeset.t()
+  defdelegate insert_changeset(insert_params, opts \\ []), to: Validators.SystApplicationContexts
+
+  @doc """
+  Validates update Application Context parameters for use in updating an
+  existing Application Context record.
+  """
+  @spec update_changeset(
+          Msdata.SystApplicationContexts.t(),
+          Types.application_context_params(),
+          Keyword.t()
+        ) :: Ecto.Changeset.t()
+  defdelegate update_changeset(application_context, update_params, opts \\ []),
     to: Validators.SystApplicationContexts
 end
