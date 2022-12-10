@@ -13,7 +13,7 @@
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
     <script src="dist/handlebars.templates-IV5W3OL2.js"></script>
-    <script src="dist/sidebar_items-7E880F5A.js"></script>
+    <script src="dist/sidebar_items-9F6F3750.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -142,6 +142,16 @@ mscmp_syst_instance
 
     <div class="summary-row">
       <div class="summary-signature">
+        <a href="#t:application_context_params/0" translate="no">application_context_params()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Attributes used in creating or updating Application Context records.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
         <a href="#t:application_id/0" translate="no">application_id()</a>
 
       </div>
@@ -157,6 +167,16 @@ mscmp_syst_instance
       </div>
 
         <div class="summary-synopsis"><p>The data type describing unique naming for known system applications in programmatic contexts.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:application_params/0" translate="no">application_params()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Attributes used in the creation or updating of Application records.</p></div>
 
     </div>
 
@@ -226,7 +246,7 @@ mscmp_syst_instance
 
       </div>
 
-        <div class="summary-synopsis"><p>Establishes the available instance state functional types understood by the
+        <div class="summary-synopsis"><p>Establishes the available Instance state functional types understood by the
 module.</p></div>
 
     </div>
@@ -383,6 +403,16 @@ module.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
+        <a href="#t:owner_state_name/0" translate="no">owner_state_name()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Type for identifying Owner States by name.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
         <a href="#t:owner_state_params/0" translate="no">owner_state_params()</a>
 
       </div>
@@ -451,6 +481,38 @@ Types
 <p>The data type describing unique naming for known application contexts in programmatic contexts.</p>
   </section>
 </section>
+<section class="detail" id="t:application_context_params/0">
+
+  <div class="detail-header">
+    <a href="#t:application_context_params/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">application_context_params()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> application_context_params() :: %{
+  optional(:internal_name) =&gt; <a href="#t:application_context_name/0">application_context_name</a>(),
+  optional(:display_name) =&gt; <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  optional(:application_id) =&gt; <a href="#t:application_id/0">application_id</a>(),
+  optional(:application_name) =&gt; <a href="#t:application_name/0">application_name</a>(),
+  optional(:description) =&gt; <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  optional(:start_context) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  optional(:login_context) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
+  optional(:database_owner_context) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()
+}</pre>
+
+      </div>
+
+<p>Attributes used in creating or updating Application Context records.</p>
+  </section>
+</section>
 <section class="detail" id="t:application_id/0">
 
   <div class="detail-header">
@@ -495,6 +557,33 @@ Types
       </div>
 
 <p>The data type describing unique naming for known system applications in programmatic contexts.</p>
+  </section>
+</section>
+<section class="detail" id="t:application_params/0">
+
+  <div class="detail-header">
+    <a href="#t:application_params/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">application_params()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> application_params() :: %{
+  optional(:internal_name) =&gt; <a href="#t:application_name/0">application_name</a>(),
+  optional(:display_name) =&gt; <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  optional(:syst_description) =&gt; <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()
+}</pre>
+
+      </div>
+
+<p>Attributes used in the creation or updating of Application records.</p>
   </section>
 </section>
 <section class="detail" id="t:instance_context_id/0">
@@ -674,21 +763,28 @@ Application's Contexts, setting value specific for the Instance.</p>
           <pre translate="no"><span class="attribute">@type</span> instance_state_functional_types() ::
   :instance_states_uninitialized
   | :instance_states_initializing
+  | :instance_states_initialized
   | :instance_states_active
+  | :instance_states_migrating
   | :instance_states_suspended
   | :instance_states_inactive
+  | :instance_states_failed
   | :instance_states_purge_eligible</pre>
 
       </div>
 
-<p>Establishes the available instance state functional types understood by the
-module.</p><ul><li><p><code class="inline">:instance_states_uninitialized</code> - The instance definition record has been
-created, but the corresponding instance has not been created on the
-database server and is awaiting processing.</p></li><li><p><code class="inline">:instance_states_initializing</code> - The process of creating the instance has
-been started.</p></li><li><p><code class="inline">:instance_states_active</code> - The instance is created and usable by users.</p></li><li><p><code class="inline">:instance_states_suspended</code> - The instance is not available for regular
-use, though some limited functionality may be available.  The instance is
-likely visible to users for this reason.</p></li><li><p><code class="inline">:instance_states_inactive</code> - The instance is not available for any use
-and would not typically be visible tp users for any purpose.</p></li><li><p><code class="inline">:instance_states_purge_eligible</code> - The instance is not available for any
+<p>Establishes the available Instance state functional types understood by the
+module.</p><ul><li><p><code class="inline">:instance_states_uninitialized</code> - The Instance definition record has been
+created, but the corresponding Instance has not been created on the database
+server and is awaiting processing.</p></li><li><p><code class="inline">:instance_states_initializing</code> - The process of creating the Instance has
+been started.</p></li><li><p><code class="inline">:instance_states_initialized</code> - The Instance Datastore has been
+initialized meaning the Instance Datastore has been created on the database
+server, but has not yet been finalized as being &quot;active&quot;.</p></li><li><p><code class="inline">:instance_states_active</code> - The Instance is created and usable by users.</p></li><li><p><code class="inline">:instance_states_migrating</code> - The Instance Datastore is in the process of
+being updated to the latest version of the schema.</p></li><li><p><code class="inline">:instance_states_suspended</code> - The Instance is not available for regular
+use, though some limited functionality may be available.  The Instance is
+likely visible to users for this reason.</p></li><li><p><code class="inline">:instance_states_inactive</code> - The Instance is not available for any use
+and would not typically be visible to users for any purpose.</p></li><li><p><code class="inline">:instance_states_failed</code> - The Instance startup process has failed to
+start the Instance for some reason and requires intervention.</p></li><li><p><code class="inline">:instance_states_purge_eligible</code> - The Instance is not available for any
 use, not visible to users and subject to be completely deleted from the
 system at any point in time.</p></li></ul>
   </section>
@@ -732,7 +828,7 @@ system at any point in time.</p></li></ul>
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@type</span> instance_state_name() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+          <pre translate="no"><span class="attribute">@type</span> instance_state_name() :: <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.Types.html#t:enum_item_name/0">MscmpSystEnums.Types.enum_item_name</a>()</pre>
 
       </div>
 
@@ -939,7 +1035,7 @@ host Instances of the Instance Type.</p>
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@type</span> instance_type_name() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+          <pre translate="no"><span class="attribute">@type</span> instance_type_name() :: <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.Types.html#t:enum_item_name/0">MscmpSystEnums.Types.enum_item_name</a>()</pre>
 
       </div>
 
@@ -1082,6 +1178,29 @@ visible to users for this reason.</p></li><li><p><code class="inline">:owner_sta
 would not typically be visible tp users for any purpose.</p></li><li><p><code class="inline">:owner_states_purge_eligible</code> - The owner is not available for any use,
 not visible to users and subject to be completely deleted from the system
 at any point in time.</p></li></ul>
+  </section>
+</section>
+<section class="detail" id="t:owner_state_name/0">
+
+  <div class="detail-header">
+    <a href="#t:owner_state_name/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">owner_state_name()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> owner_state_name() :: <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.Types.html#t:enum_item_name/0">MscmpSystEnums.Types.enum_item_name</a>()</pre>
+
+      </div>
+
+<p>Type for identifying Owner States by name.</p>
   </section>
 </section>
 <section class="detail" id="t:owner_state_params/0">
