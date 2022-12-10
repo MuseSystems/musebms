@@ -13,7 +13,7 @@
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
     <script src="dist/handlebars.templates-IV5W3OL2.js"></script>
-    <script src="dist/sidebar_items-7E880F5A.js"></script>
+    <script src="dist/sidebar_items-9F6F3750.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -456,6 +456,105 @@ default.</p></div>
     </div>
 
 </div>
+<div class="summary-applications summary">
+  <h2>
+    <a href="#applications">Applications</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#create_application/1" translate="no">create_application(application_params)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Creates a new Application record.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#create_application_context/1" translate="no">create_application_context(application_context_params)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Creates Application Context records for the identified Application.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#delete_application_context/1" translate="no">delete_application_context(application_context_id)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Deletes an Application Context record from the system</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_application/2" translate="no">get_application(application, opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Returns a populated <a href="Msdata.SystApplications.html"><code class="inline">Msdata.SystApplications</code></a> struct for the requested record.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_application_context_id_by_name/1" translate="no">get_application_context_id_by_name(application_context_name)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Retrieves the Application Context record ID for the record matching provided
+Internal Name argument.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_application_id_by_name/1" translate="no">get_application_id_by_name(application_name)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Returns the Application record ID for the requested Application Internal Name;
+raises on error.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#list_application_contexts/1" translate="no">list_application_contexts(application_id \\ nil)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Returns a list of Application Context records.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#update_application/2" translate="no">update_application(application, application_params)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Updates an existing Application record using the provided parameters as new
+values.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#update_application_context/2" translate="no">update_application_context(application_context, application_context_params)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Updates an existing Application Context record.</p></div>
+
+    </div>
+
+</div>
 <div class="summary-runtime summary">
   <h2>
     <a href="#runtime">Runtime</a>
@@ -494,6 +593,16 @@ supervisor.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
+        <a href="#start_link/1" translate="no">start_link(opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Starts the MscmpSystInstance services and supervisors.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
         <a href="#stop_all_applications/1" translate="no">stop_all_applications(opts \\ [])</a>
 
       </div>
@@ -520,23 +629,6 @@ child processes, including Instances.</p></div>
       </div>
 
         <div class="summary-synopsis"><p>Stops an Instance.</p></div>
-
-    </div>
-
-</div>
-<div class="summary-functions summary">
-  <h2>
-    <a href="#functions">Functions</a>
-  </h2>
-
-    <div class="summary-row">
-      <div class="summary-signature">
-        <a href="#get_application_id_by_name/1" translate="no">get_application_id_by_name(application_name)</a>
-
-      </div>
-
-        <div class="summary-synopsis"><p>Returns the Application record ID for the requested Application Internal Name;
-raises on error.</p></div>
 
     </div>
 
@@ -584,7 +676,7 @@ Owners
 <ul><li><p><code class="inline">owner_params</code> - a map of Owner record attributes to use when creating a
 new record.</p><ul><li><p><code class="inline">internal_name</code> - a predetermined unique identifier for the Owner
 record for use in programmatic contexts.  This attribute is required and
-must be unique in the system.</p></li><li><p><code class="inline">display_name</code> - a unique, friendly name identifying the owner and for
+must be unique in the system.</p></li><li><p><code class="inline">display_name</code> - a unique, friendly name identifying the Owner and for
 use in user interfaces.  This attribute is required and must be unique in
 the system.</p></li><li><p><code class="inline">owner_state_id</code> - the Owner State value with which to create the new
 Owner record.  If not provided in the function call, this attribute will
@@ -672,7 +764,7 @@ State and the Owner State Functional Type.</p><h2 id="get_owner_by_name/1-exampl
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> get_owner_state_by_name(<a href="../../../../documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.Types.html#t:enum_item_name/0">MscmpSystEnums.Types.enum_item_name</a>()) ::
+          <pre translate="no"><span class="attribute">@spec</span> get_owner_state_by_name(<a href="MscmpSystInstance.Types.html#t:owner_state_name/0">MscmpSystInstance.Types.owner_state_name</a>()) ::
   <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/Msdata.SystEnumItems.html#t:t/0">Msdata.SystEnumItems.t</a>() | nil</pre>
 
       </div>
@@ -690,8 +782,8 @@ Enumeration record <code class="inline">nil</code> is returned.</p><h2 id="get_o
   </a>
   Examples
 </h2>
-<p>Retrieving an Owner State Enumeration record.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="7883958384-1">%</span><span class="nc" data-group-id="7883958384-1">Msdata.SystEnumItems</span><span class="p" data-group-id="7883958384-1">{</span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;owner_states_sysdef_active&quot;</span><span class="p" data-group-id="7883958384-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_owner_state_by_name</span><span class="p" data-group-id="7883958384-2">(</span><span class="s">&quot;owner_states_sysdef_active&quot;</span><span class="p" data-group-id="7883958384-2">)</span></code></pre><p>Trying to retrieve a non-existent Owner State.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_owner_state_by_name</span><span class="p" data-group-id="4616342990-1">(</span><span class="s">&quot;nonexistent_state&quot;</span><span class="p" data-group-id="4616342990-1">)</span><span class="w">
+<p>Retrieving an Owner State Enumeration record.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="2294255590-1">%</span><span class="nc" data-group-id="2294255590-1">Msdata.SystEnumItems</span><span class="p" data-group-id="2294255590-1">{</span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;owner_states_sysdef_active&quot;</span><span class="p" data-group-id="2294255590-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_owner_state_by_name</span><span class="p" data-group-id="2294255590-2">(</span><span class="s">&quot;owner_states_sysdef_active&quot;</span><span class="p" data-group-id="2294255590-2">)</span></code></pre><p>Trying to retrieve a non-existent Owner State.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_owner_state_by_name</span><span class="p" data-group-id="5529219213-1">(</span><span class="s">&quot;nonexistent_state&quot;</span><span class="p" data-group-id="5529219213-1">)</span><span class="w">
 </span><span class="no">nil</span></code></pre>
   </section>
 </section>
@@ -738,9 +830,9 @@ default for this parameter is to treat the parameter as not provided
   </a>
   Examples
 </h2>
-<p>Requesting the system default Owner State.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="4182300708-1">%</span><span class="nc" data-group-id="4182300708-1">Msdata.SystEnumItems</span><span class="p" data-group-id="4182300708-1">{</span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;owner_states_sysdef_active&quot;</span><span class="p" data-group-id="4182300708-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_owner_state_default</span><span class="p" data-group-id="4182300708-2">(</span><span class="p" data-group-id="4182300708-2">)</span></code></pre><p>Requesting the default Owner State for a specific functional type.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="3235222141-1">%</span><span class="nc" data-group-id="3235222141-1">Msdata.SystEnumItems</span><span class="p" data-group-id="3235222141-1">{</span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;owner_states_sysdef_inactive&quot;</span><span class="p" data-group-id="3235222141-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_owner_state_default</span><span class="p" data-group-id="3235222141-2">(</span><span class="ss">:owner_states_inactive</span><span class="p" data-group-id="3235222141-2">)</span></code></pre>
+<p>Requesting the system default Owner State.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="9468092786-1">%</span><span class="nc" data-group-id="9468092786-1">Msdata.SystEnumItems</span><span class="p" data-group-id="9468092786-1">{</span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;owner_states_sysdef_active&quot;</span><span class="p" data-group-id="9468092786-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_owner_state_default</span><span class="p" data-group-id="9468092786-2">(</span><span class="p" data-group-id="9468092786-2">)</span></code></pre><p>Requesting the default Owner State for a specific functional type.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="5746203447-1">%</span><span class="nc" data-group-id="5746203447-1">Msdata.SystEnumItems</span><span class="p" data-group-id="5746203447-1">{</span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;owner_states_sysdef_inactive&quot;</span><span class="p" data-group-id="5746203447-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_owner_state_default</span><span class="p" data-group-id="5746203447-2">(</span><span class="ss">:owner_states_inactive</span><span class="p" data-group-id="5746203447-2">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="purge_owner/1">
@@ -1003,8 +1095,8 @@ record to return.</li></ul><h2 id="get_instance_type_by_name/1-examples" class="
   </a>
   Examples
 </h2>
-<p>Finding a Instance Type record by Internal Name.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="1772142859-1">%</span><span class="nc" data-group-id="1772142859-1">Msdata.SystEnumItems</span><span class="p" data-group-id="1772142859-1">{</span><span class="p" data-group-id="1772142859-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_type_by_name</span><span class="p" data-group-id="1772142859-2">(</span><span class="s">&quot;instance_types_big&quot;</span><span class="p" data-group-id="1772142859-2">)</span></code></pre><p>Looking for a non-existent record.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_type_by_name</span><span class="p" data-group-id="6689887042-1">(</span><span class="s">&quot;nonexistent_type&quot;</span><span class="p" data-group-id="6689887042-1">)</span><span class="w">
+<p>Finding a Instance Type record by Internal Name.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="3708186142-1">%</span><span class="nc" data-group-id="3708186142-1">Msdata.SystEnumItems</span><span class="p" data-group-id="3708186142-1">{</span><span class="p" data-group-id="3708186142-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_type_by_name</span><span class="p" data-group-id="3708186142-2">(</span><span class="s">&quot;instance_types_big&quot;</span><span class="p" data-group-id="3708186142-2">)</span></code></pre><p>Looking for a non-existent record.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_type_by_name</span><span class="p" data-group-id="4678931217-1">(</span><span class="s">&quot;nonexistent_type&quot;</span><span class="p" data-group-id="4678931217-1">)</span><span class="w">
 </span><span class="no">nil</span></code></pre>
   </section>
 </section>
@@ -1035,7 +1127,7 @@ Instance Type.</p><p>If no system default has not been defined <code class="inli
   </a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="8259565570-1">%</span><span class="nc" data-group-id="8259565570-1">Msdata.SystEnumItems</span><span class="p" data-group-id="8259565570-1">{</span><span class="p" data-group-id="8259565570-1">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_type_default</span><span class="p" data-group-id="8259565570-2">(</span><span class="p" data-group-id="8259565570-2">)</span></code></pre>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="8432521840-1">%</span><span class="nc" data-group-id="8432521840-1">Msdata.SystEnumItems</span><span class="p" data-group-id="8432521840-1">{</span><span class="p" data-group-id="8432521840-1">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_type_default</span><span class="p" data-group-id="8432521840-2">(</span><span class="p" data-group-id="8432521840-2">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="update_instance_type/2">
@@ -1266,8 +1358,8 @@ State value is not provided by the caller.</p>
   </a>
   Example
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="7361299545-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7361299545-2">%</span><span class="nc" data-group-id="7361299545-2">Msdata.SystInstances</span><span class="p" data-group-id="7361299545-2">{</span><span class="p" data-group-id="7361299545-2">}</span><span class="p" data-group-id="7361299545-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_by_name</span><span class="p" data-group-id="7361299545-3">(</span><span class="s">&quot;app1_owner1_instance_types_sml&quot;</span><span class="p" data-group-id="7361299545-3">)</span></code></pre>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="9840780738-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="9840780738-2">%</span><span class="nc" data-group-id="9840780738-2">Msdata.SystInstances</span><span class="p" data-group-id="9840780738-2">{</span><span class="p" data-group-id="9840780738-2">}</span><span class="p" data-group-id="9840780738-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_by_name</span><span class="p" data-group-id="9840780738-3">(</span><span class="s">&quot;app1_owner1_instance_types_sml&quot;</span><span class="p" data-group-id="9840780738-3">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_instance_datastore_options/2">
@@ -1339,9 +1431,9 @@ obtained from the <a href="../../../../documentation/technical/app_server/mscmp_
   </a>
   Example
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="7792167193-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">instance_id</span><span class="p" data-group-id="7792167193-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_id_by_name</span><span class="p" data-group-id="7792167193-2">(</span><span class="s">&quot;app1_owner1_instance_types_sml&quot;</span><span class="p" data-group-id="7792167193-2">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="n">is_binary</span><span class="p" data-group-id="7792167193-3">(</span><span class="n">instance_id</span><span class="p" data-group-id="7792167193-3">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="1752114160-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">instance_id</span><span class="p" data-group-id="1752114160-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_id_by_name</span><span class="p" data-group-id="1752114160-2">(</span><span class="s">&quot;app1_owner1_instance_types_sml&quot;</span><span class="p" data-group-id="1752114160-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_binary</span><span class="p" data-group-id="1752114160-3">(</span><span class="n">instance_id</span><span class="p" data-group-id="1752114160-3">)</span><span class="w">
 </span><span class="no">true</span></code></pre>
   </section>
 </section>
@@ -1380,8 +1472,8 @@ Enumeration record <code class="inline">nil</code> is returned.</p><h2 id="get_i
   </a>
   Examples
 </h2>
-<p>Retrieving an Instance State Enumeration record.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="8215201457-1">%</span><span class="nc" data-group-id="8215201457-1">Msdata.SystEnumItems</span><span class="p" data-group-id="8215201457-1">{</span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;instance_states_sysdef_active&quot;</span><span class="p" data-group-id="8215201457-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_state_by_name</span><span class="p" data-group-id="8215201457-2">(</span><span class="s">&quot;instance_states_sysdef_active&quot;</span><span class="p" data-group-id="8215201457-2">)</span></code></pre><p>Trying to retrieve a non-existent Instance State.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_state_by_name</span><span class="p" data-group-id="6767051566-1">(</span><span class="s">&quot;nonexistent_state&quot;</span><span class="p" data-group-id="6767051566-1">)</span><span class="w">
+<p>Retrieving an Instance State Enumeration record.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="7366834418-1">%</span><span class="nc" data-group-id="7366834418-1">Msdata.SystEnumItems</span><span class="p" data-group-id="7366834418-1">{</span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;instance_states_sysdef_active&quot;</span><span class="p" data-group-id="7366834418-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_state_by_name</span><span class="p" data-group-id="7366834418-2">(</span><span class="s">&quot;instance_states_sysdef_active&quot;</span><span class="p" data-group-id="7366834418-2">)</span></code></pre><p>Trying to retrieve a non-existent Instance State.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_state_by_name</span><span class="p" data-group-id="8662152182-1">(</span><span class="s">&quot;nonexistent_state&quot;</span><span class="p" data-group-id="8662152182-1">)</span><span class="w">
 </span><span class="no">nil</span></code></pre>
   </section>
 </section>
@@ -1428,9 +1520,9 @@ The default for this parameter is to treat the parameter as not provided
   </a>
   Examples
 </h2>
-<p>Requesting the system default Instance State.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="9107490360-1">%</span><span class="nc" data-group-id="9107490360-1">Msdata.SystEnumItems</span><span class="p" data-group-id="9107490360-1">{</span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;instance_states_sysdef_uninitialized&quot;</span><span class="p" data-group-id="9107490360-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_state_default</span><span class="p" data-group-id="9107490360-2">(</span><span class="p" data-group-id="9107490360-2">)</span></code></pre><p>Requesting the default Instance State for a specific functional type.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="9855464586-1">%</span><span class="nc" data-group-id="9855464586-1">Msdata.SystEnumItems</span><span class="p" data-group-id="9855464586-1">{</span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;instance_states_sysdef_active&quot;</span><span class="p" data-group-id="9855464586-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_state_default</span><span class="p" data-group-id="9855464586-2">(</span><span class="ss">:instance_states_active</span><span class="p" data-group-id="9855464586-2">)</span></code></pre>
+<p>Requesting the system default Instance State.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="2630843122-1">%</span><span class="nc" data-group-id="2630843122-1">Msdata.SystEnumItems</span><span class="p" data-group-id="2630843122-1">{</span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;instance_states_sysdef_uninitialized&quot;</span><span class="p" data-group-id="2630843122-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_state_default</span><span class="p" data-group-id="2630843122-2">(</span><span class="p" data-group-id="2630843122-2">)</span></code></pre><p>Requesting the default Instance State for a specific functional type.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="4827500538-1">%</span><span class="nc" data-group-id="4827500538-1">Msdata.SystEnumItems</span><span class="p" data-group-id="4827500538-1">{</span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;instance_states_sysdef_active&quot;</span><span class="p" data-group-id="4827500538-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_state_default</span><span class="p" data-group-id="4827500538-2">(</span><span class="ss">:instance_states_active</span><span class="p" data-group-id="4827500538-2">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="initialize_instance/3">
@@ -1564,6 +1656,507 @@ which to place the Instance record.</p></li></ul>
     </div>
   </section>
 
+  <section id="applications" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#applications">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+Applications
+    </h1>
+    <div class="applications-list">
+<section class="detail" id="create_application/1">
+
+  <div class="detail-header">
+    <a href="#create_application/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">create_application(application_params)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> create_application(<a href="MscmpSystInstance.Types.html#t:application_params/0">MscmpSystInstance.Types.application_params</a>()) ::
+  {:ok, <a href="Msdata.SystApplications.html#t:t/0">Msdata.SystApplications.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Creates a new Application record.</p><p>Application Subsystems need means by which they can make the MscmpSystInstance
+component aware of their existence and this function provides the means by
+which to do that.</p><blockquote><h4 class="neutral">Note</h4><p>Note that this function is meant to expose Application record management to
+the relevant Application Subsystem programs and is not intended for regular
+management activities by end users.</p></blockquote><h2 id="create_application/1-parameters" class="section-heading">
+  <a href="#create_application/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">application_params</code> - the parameters with which the new Application
+record should be created.  The following attribute values are available:</p><ul><li><p><code class="inline">internal_name</code> - a predetermined unique identifier for the Application
+record for use in programmatic contexts.  This attribute is required and
+must be unique in the system.</p></li><li><p><code class="inline">display_name</code> - a unique, friendly name identifying the Application and
+for use in user interfaces.  This attribute is required and must be unique
+in the system.</p></li><li><p><code class="inline">syst_description</code> - a user facing description of the Application
+including any special usage requirements or preconditions.  This
+attribute is required.</p></li></ul></li></ul><h2 id="create_application/1-examples" class="section-heading">
+  <a href="#create_application/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
+  Examples
+</h2>
+<p>Creating a new Application record.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">new_app_params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="5126805011-1">%{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ex_app1&quot;</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">display_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Example App 1&quot;</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">syst_description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;An example application&quot;</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="5126805011-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="5126805011-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="5126805011-3">%</span><span class="nc" data-group-id="5126805011-3">Msdata.SystApplications</span><span class="p" data-group-id="5126805011-3">{</span><span class="p" data-group-id="5126805011-3">}</span><span class="p" data-group-id="5126805011-2">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">create_application</span><span class="p" data-group-id="5126805011-4">(</span><span class="n">new_app_params</span><span class="p" data-group-id="5126805011-4">)</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="create_application_context/1">
+
+  <div class="detail-header">
+    <a href="#create_application_context/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">create_application_context(application_context_params)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> create_application_context(<a href="MscmpSystInstance.Types.html#t:application_context_params/0">MscmpSystInstance.Types.application_context_params</a>()) ::
+  {:ok, <a href="Msdata.SystApplicationContexts.html#t:t/0">Msdata.SystApplicationContexts.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Creates Application Context records for the identified Application.</p><p>Application Contexts describe the Datastore Contexts each Instance is expected
+to support to allow an Application to access its data.  Application Subsystems
+use this function to create the any required Application Context records not
+already registered in the MscmpSystInstance data.  Application Contexts are
+used in the creation of <a href="Msdata.SystInstanceContexts.html"><code class="inline">Msdata.SystInstanceContexts</code></a> records and provide a
+number of default values for the Instance Context records.</p><blockquote><h4 class="neutral">Note</h4><p>Note that this function is meant to expose Application record management to
+the relevant Application Subsystem programs and is not intended for regular
+management activities by end users.</p></blockquote><h2 id="create_application_context/1-parameters" class="section-heading">
+  <a href="#create_application_context/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">application_context_params</code> - a map defining the attributes which will be
+used to create the new Application Context record.  The attributes are:</p><ul><li><p><code class="inline">internal_name</code> - a predetermined unique identifier for the Application
+Context record for use in programmatic contexts.  This attribute is
+required and must be unique in the system.</p></li><li><p><code class="inline">display_name</code> - a unique, friendly name identifying the Application
+Context and for use in user interfaces.  This attribute is required and
+must be unique in the system.</p></li><li><p><code class="inline">application_id</code> - a reference to the ID value of the parent Application
+record.  A valid value for this attribute is required unless the
+<code class="inline">application_name</code> attribute is set with the Internal Name of an existing
+Application record.  If both this attribute and the <code class="inline">application_name</code>
+attributes are set, the <code class="inline">attribute_name</code> value will be used to resolve
+the parent Application.</p></li><li><p><code class="inline">application_name</code> - a reference to the Internal Name value of an
+existing Application record.  This value is used to look-up the
+<code class="inline">application_id</code> and so if this attribute is provided with a valid value,
+the <code class="inline">application_id</code> attribute may be omitted.  The value of this
+attribute takes precedence over any value set explicitly in the
+<code class="inline">application_id</code> attribute.  If <code class="inline">application_id</code> is omitted, then this
+attribute is required.</p></li><li><p><code class="inline">description</code> - a description of the Application Context's role in the
+application and database.  This becomes a comment in the database attached
+to the database role created for the context.</p></li><li><p><code class="inline">start_context</code> - a required boolean value which establishes the default
+value of derived Instance Context (<a href="Msdata.SystInstanceContexts.html"><code class="inline">Msdata.SystInstanceContexts</code></a>)
+<code class="inline">start_context</code> settings.  When true, an Instance Context record derived
+from this Application Context will be, by default, started as active
+database connections when the parent Instance is started.  False indicates
+that by default Instance startup will not establish database connections
+for the context.  This value muse be set <code class="inline">false</code> for any Application
+Context defining a Datastore Owner Context or any other Context where the
+<code class="inline">login_context</code> is set <code class="inline">false</code>.</p></li><li><p><code class="inline">login_context</code> - a required boolean value which indicates if a derived
+Instance Context is used to create database connections.  If true, a
+derived Instance Context record will provide login information to
+establish a database connection on Instance start so long as its
+<code class="inline">start_context</code> value is also <code class="inline">true</code>.  If this attribute is set <code class="inline">false</code>
+the derived Instance Context record will not define a Context capable of
+logging into the database.</p></li><li><p><code class="inline">database_owner_context</code> - a required boolean value which, when true, is
+designates an Application Context record as establishing the default
+values for Instance Datastore/database owners.  If true, the
+<code class="inline">start_context</code> and <code class="inline">login_context</code> attributes must be set false as owner
+contexts are not used for database connectivity not may be started during
+the Instance start process.</p></li></ul></li></ul><h2 id="create_application_context/1-examples" class="section-heading">
+  <a href="#create_application_context/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
+  Examples
+</h2>
+<p>Create an database owner Application Context record.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">new_context_params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="8929225478-1">%{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ex_app2_owner&quot;</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">display_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Example App 2 Owner&quot;</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">application_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ex_app2&quot;</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Database role owning objects for &#39;ex_app2&#39;.&quot;</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">start_context</span><span class="p">:</span><span class="w"> </span><span class="no">false</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">login_context</span><span class="p">:</span><span class="w"> </span><span class="no">false</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">database_owner_context</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="8929225478-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="8929225478-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8929225478-3">%</span><span class="nc" data-group-id="8929225478-3">Msdata.SystApplicationContexts</span><span class="p" data-group-id="8929225478-3">{</span><span class="p" data-group-id="8929225478-3">}</span><span class="p" data-group-id="8929225478-2">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">create_application_context</span><span class="p" data-group-id="8929225478-4">(</span><span class="n">new_context_params</span><span class="p" data-group-id="8929225478-4">)</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="delete_application_context/1">
+
+  <div class="detail-header">
+    <a href="#delete_application_context/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">delete_application_context(application_context_id)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> delete_application_context(<a href="MscmpSystInstance.Types.html#t:application_context_id/0">MscmpSystInstance.Types.application_context_id</a>()) ::
+  {:ok, :deleted | :not_found} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Deletes an Application Context record from the system</p><p>Application Subsystems may use this function to remove an obsolete Application
+Context record from the system.</p><blockquote><h4 class="neutral">Note</h4><p>Note that this function is meant to expose Application record management to
+the relevant Application Subsystem programs and is not intended for regular
+management activities by end users.</p></blockquote><blockquote><h4 class="warning">Warning!</h4><p>While this function will remove an Application Context record from the
+system and prevent any new Instances of the Application from including the
+deleted Context, existing Instance Contexts based on the Application
+Context are not currently cleaned up by this function.  Any clean-up of
+existing Instance Context data and of associated database roles and
+verification of extended clean-up activities is therefore the responsibility
+of the caller.</p></blockquote><p>On successful delete of the record, a success tuple is returned to the caller
+(<code class="inline">{:ok, :deleted}</code>).  If the requested record is not found in the database,
+the returned value is <code class="inline">{:ok, :not_found}</code>.  Any other outcome is returned via
+an error tuple.</p><h2 id="delete_application_context/1-parameters" class="section-heading">
+  <a href="#delete_application_context/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">application_context_id</code> - the record ID of the Application Context record
+to delete.  This value is required.</li></ul><h2 id="delete_application_context/1-examples" class="section-heading">
+  <a href="#delete_application_context/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
+  Examples
+</h2>
+<p>Deleting an existing Application Context.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">record_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_application_context_id_by_name</span><span class="p" data-group-id="5893068793-1">(</span><span class="s">&quot;ex_app2_delctx&quot;</span><span class="p" data-group-id="5893068793-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">delete_application_context</span><span class="p" data-group-id="5893068793-2">(</span><span class="n">record_id</span><span class="p" data-group-id="5893068793-2">)</span><span class="w">
+</span><span class="p" data-group-id="5893068793-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="ss">:deleted</span><span class="p" data-group-id="5893068793-3">}</span></code></pre><p>Attempting to delete a non-existent record.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">record_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;00000000-0000-0000-0000-000000000000&quot;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">delete_application_context</span><span class="p" data-group-id="0851371077-1">(</span><span class="n">record_id</span><span class="p" data-group-id="0851371077-1">)</span><span class="w">
+</span><span class="p" data-group-id="0851371077-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="ss">:not_found</span><span class="p" data-group-id="0851371077-2">}</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="get_application/2">
+
+    <span id="get_application/1"></span>
+
+  <div class="detail-header">
+    <a href="#get_application/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_application(application, opts \\ [])</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_application(
+  <a href="MscmpSystInstance.Types.html#t:application_id/0">MscmpSystInstance.Types.application_id</a>()
+  | <a href="MscmpSystInstance.Types.html#t:application_name/0">MscmpSystInstance.Types.application_name</a>(),
+  <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
+) :: <a href="Msdata.SystApplications.html#t:t/0">Msdata.SystApplications.t</a>() | nil</pre>
+
+      </div>
+
+<p>Returns a populated <a href="Msdata.SystApplications.html"><code class="inline">Msdata.SystApplications</code></a> struct for the requested record.</p><h2 id="get_application/2-parameters" class="section-heading">
+  <a href="#get_application/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">application</code> - either the record ID of the desired Application record or
+its Internal Name.  This parameter is required.</p></li><li><p><code class="inline">opts</code> - allows optional parameters to be provided which govern the
+behavior of this function.  The options are provided via a Keyword List.
+The available options are:</p><ul><li><code class="inline">include_contexts</code> - a boolean value indicating whether or not to also
+retrieve the fully populated list of <code class="inline">:application_contexts</code> associated
+with the requested Application.  Contexts are returned as a standard
+association of <a href="Msdata.SystApplicationContexts.html"><code class="inline">Msdata.SystApplicationContexts</code></a> structs.  The default
+value of this option is <code class="inline">false</code>.</li></ul></li></ul>
+  </section>
+</section>
+<section class="detail" id="get_application_context_id_by_name/1">
+
+  <div class="detail-header">
+    <a href="#get_application_context_id_by_name/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_application_context_id_by_name(application_context_name)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_application_context_id_by_name(
+  <a href="MscmpSystInstance.Types.html#t:application_context_name/0">MscmpSystInstance.Types.application_context_name</a>()
+) ::
+  <a href="MscmpSystInstance.Types.html#t:application_context_id/0">MscmpSystInstance.Types.application_context_id</a>() | nil</pre>
+
+      </div>
+
+<p>Retrieves the Application Context record ID for the record matching provided
+Internal Name argument.</p><p>When the requested Application Context record can not be found this function
+returns <code class="inline">nil</code>.  All errors raise an exception.</p><h2 id="get_application_context_id_by_name/1-parameters" class="section-heading">
+  <a href="#get_application_context_id_by_name/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">application_context_name</code> - the Internal Name value of the Application
+Context record to search for.</li></ul><h2 id="get_application_context_id_by_name/1-examples" class="section-heading">
+  <a href="#get_application_context_id_by_name/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
+  Examples
+</h2>
+<p>Finding an existing Application Context.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_application_context_id_by_name</span><span class="p" data-group-id="7471156125-1">(</span><span class="s">&quot;ex_app2_idctx&quot;</span><span class="p" data-group-id="7471156125-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_binary</span><span class="p" data-group-id="7471156125-2">(</span><span class="n">id</span><span class="p" data-group-id="7471156125-2">)</span><span class="w">
+</span><span class="no">true</span></code></pre><p>Searching for a non-existent Application Context.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_application_context_id_by_name</span><span class="p" data-group-id="5969432783-1">(</span><span class="s">&quot;nonexistent_context&quot;</span><span class="p" data-group-id="5969432783-1">)</span><span class="w">
+</span><span class="no">nil</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="get_application_id_by_name/1">
+
+  <div class="detail-header">
+    <a href="#get_application_id_by_name/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_application_id_by_name(application_name)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_application_id_by_name(<a href="MscmpSystInstance.Types.html#t:application_name/0">MscmpSystInstance.Types.application_name</a>()) ::
+  <a href="MscmpSystInstance.Types.html#t:application_id/0">MscmpSystInstance.Types.application_id</a>() | nil</pre>
+
+      </div>
+
+<p>Returns the Application record ID for the requested Application Internal Name;
+raises on error.</p><p>On successful execution the record ID of the requested Application is
+returned.  If the requested Application Internal Name is not found <code class="inline">nil</code> is
+returned.</p><blockquote><h4 class="neutral">Note</h4><p>Note that this function is meant to expose Application record management to
+the relevant Application Subsystem programs and is not intended for regular
+management activities by end users.</p></blockquote><h2 id="get_application_id_by_name/1-parameters" class="section-heading">
+  <a href="#get_application_id_by_name/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">applicaton_name</code> - the internal name of the desired Application record.</li></ul><h2 id="get_application_id_by_name/1-examples" class="section-heading">
+  <a href="#get_application_id_by_name/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
+  Examples
+</h2>
+<p>  Finding an application returns its ID value.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">application_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_application_id_by_name</span><span class="p" data-group-id="3182189147-1">(</span><span class="s">&quot;app1&quot;</span><span class="p" data-group-id="3182189147-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_binary</span><span class="p" data-group-id="3182189147-2">(</span><span class="n">application_id</span><span class="p" data-group-id="3182189147-2">)</span><span class="w">
+</span><span class="no">true</span></code></pre><p>  Asking for a non-existent application returns <code class="inline">nil</code>.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="w"> </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_application_id_by_name</span><span class="p" data-group-id="5190684986-1">(</span><span class="s">&quot;nonexistent_application&quot;</span><span class="p" data-group-id="5190684986-1">)</span><span class="w">
+</span><span class="no">nil</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="list_application_contexts/1">
+
+    <span id="list_application_contexts/0"></span>
+
+  <div class="detail-header">
+    <a href="#list_application_contexts/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">list_application_contexts(application_id \\ nil)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> list_application_contexts(<a href="MscmpSystInstance.Types.html#t:application_id/0">MscmpSystInstance.Types.application_id</a>() | nil) ::
+  {:ok, [<a href="Msdata.SystApplicationContexts.html#t:t/0">Msdata.SystApplicationContexts.t</a>()]} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Returns a list of Application Context records.</p><h2 id="list_application_contexts/1-parameters" class="section-heading">
+  <a href="#list_application_contexts/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">application_id</code> - an optional reference to a specific application for
+which to return Application Context records.  By default this value is <code class="inline">nil</code>
+which results in all Application Context records for all Applications being
+returned.</li></ul>
+  </section>
+</section>
+<section class="detail" id="update_application/2">
+
+  <div class="detail-header">
+    <a href="#update_application/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">update_application(application, application_params)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> update_application(
+  <a href="MscmpSystInstance.Types.html#t:application_id/0">MscmpSystInstance.Types.application_id</a>() | <a href="Msdata.SystApplications.html#t:t/0">Msdata.SystApplications.t</a>(),
+  <a href="MscmpSystInstance.Types.html#t:application_params/0">MscmpSystInstance.Types.application_params</a>()
+) :: {:ok, <a href="Msdata.SystApplications.html#t:t/0">Msdata.SystApplications.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Updates an existing Application record using the provided parameters as new
+values.</p><p>Allows an Application Subsystem program to update its representative
+Application record as required.</p><blockquote><h4 class="neutral">Note</h4><p>Note that this function is meant to expose Application record management to
+the relevant Application Subsystem programs and is not intended for regular
+management activities by end users.</p></blockquote><h2 id="update_application/2-parameters" class="section-heading">
+  <a href="#update_application/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">application</code> - either a fully populated <a href="Msdata.SystApplications.html"><code class="inline">Msdata.SystApplications</code></a> struct
+representing the current state of the Application record or the ID of the
+Application record to update.  This argument is required.</p></li><li><p><code class="inline">application_params</code> - a map containing the attributes with updated values
+for the Application record update operation.  The attributes which may be
+updated are:</p><ul><li><p><code class="inline">display_name</code> - a unique, friendly name identifying the Application and
+for use in user interfaces.  This value may not be set <code class="inline">nil</code> if it is
+included.</p></li><li><p><code class="inline">syst_description</code> - a user facing description of the Application
+including any special usage requirements or preconditions.  This attribute
+may not be set <code class="inline">nil</code> if it is included.</p></li></ul></li></ul><h2 id="update_application/2-examples" class="section-heading">
+  <a href="#update_application/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
+  Examples
+</h2>
+<p>Creating a new Application record.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">target_app_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_application_id_by_name</span><span class="p" data-group-id="7241532776-1">(</span><span class="s">&quot;ex_app2&quot;</span><span class="p" data-group-id="7241532776-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">update_app_params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="7241532776-2">%{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">display_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Example App #2&quot;</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">syst_description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;An updated example application.&quot;</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="7241532776-2">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="7241532776-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7241532776-4">%</span><span class="nc" data-group-id="7241532776-4">Msdata.SystApplications</span><span class="p" data-group-id="7241532776-4">{</span><span class="ss">display_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Example App #2&quot;</span><span class="p" data-group-id="7241532776-4">}</span><span class="p" data-group-id="7241532776-3">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">update_application</span><span class="p" data-group-id="7241532776-5">(</span><span class="n">target_app_id</span><span class="p">,</span><span class="w"> </span><span class="n">update_app_params</span><span class="p" data-group-id="7241532776-5">)</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="update_application_context/2">
+
+  <div class="detail-header">
+    <a href="#update_application_context/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">update_application_context(application_context, application_context_params)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> update_application_context(
+  <a href="MscmpSystInstance.Types.html#t:application_context_id/0">MscmpSystInstance.Types.application_context_id</a>()
+  | <a href="Msdata.SystApplicationContexts.html#t:t/0">Msdata.SystApplicationContexts.t</a>(),
+  <a href="MscmpSystInstance.Types.html#t:application_context_params/0">MscmpSystInstance.Types.application_context_params</a>()
+) :: {:ok, <a href="Msdata.SystApplicationContexts.html#t:t/0">Msdata.SystApplicationContexts.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Updates an existing Application Context record.</p><p>Allows an Application Subsystem to update its Application Context entries as
+permitted.</p><blockquote><h4 class="neutral">Note</h4><p>Note that this function is meant to expose Application record management to
+the relevant Application Subsystem programs and is not intended for regular
+management activities by end users.</p></blockquote><h2 id="update_application_context/2-parameters" class="section-heading">
+  <a href="#update_application_context/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">application_context</code> - this required parameter may either be the
+Application Context record ID or the fully populated
+<a href="Msdata.SystApplicationContexts.html"><code class="inline">Msdata.SystApplicationContexts</code></a> struct to update.</p></li><li><p><code class="inline">application_context_params</code> - a map of attributes which are to be updated
+with the new values of those attributes.  The available attributes for
+updates are:</p><ul><li><p><code class="inline">display_name</code> - a unique, friendly name identifying the Application
+Context and for use in user interfaces.  This attribute is required and
+must be unique in the system.</p></li><li><p><code class="inline">description</code> - a description of the Application Context's role in the
+application and database.  This becomes a comment in the database attached
+to the database role created for the context.</p></li><li><p><code class="inline">start_context</code> - a required boolean value which establishes the default
+value of derived Instance Context (<a href="Msdata.SystInstanceContexts.html"><code class="inline">Msdata.SystInstanceContexts</code></a>)
+<code class="inline">start_context</code> settings.  When true, an Instance Context record derived
+from this Application Context will be, by default, started as active
+database connections when the parent Instance is started.  False indicates
+that by default Instance startup will not establish database connections
+for the context.  This value muse be set <code class="inline">false</code> for any Application
+Context defining a Datastore Owner Context or any other Context where the
+<code class="inline">login_context</code> is set <code class="inline">false</code>.</p></li></ul></li></ul><h2 id="update_application_context/2-examples" class="section-heading">
+  <a href="#update_application_context/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
+  Examples
+</h2>
+<p>Updating an existing Application Context record</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">app_context_id</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_application_context_id_by_name</span><span class="p" data-group-id="3183613208-1">(</span><span class="s">&quot;ex_app2_updctx&quot;</span><span class="p" data-group-id="3183613208-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">update_params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="3183613208-2">%{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">display_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Updated Ex. App 2 Context&quot;</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;A now updated description&quot;</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">start_context</span><span class="p">:</span><span class="w"> </span><span class="no">false</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="3183613208-2">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="3183613208-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="3183613208-4">%</span><span class="nc" data-group-id="3183613208-4">Msdata.SystApplicationContexts</span><span class="p" data-group-id="3183613208-4">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">display_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Updated Ex. App 2 Context&quot;</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;A now updated description&quot;</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">start_context</span><span class="p">:</span><span class="w"> </span><span class="no">false</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="3183613208-4">}</span><span class="p" data-group-id="3183613208-3">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">update_application_context</span><span class="p" data-group-id="3183613208-5">(</span><span class="n">app_context_id</span><span class="p">,</span><span class="w"> </span><span class="n">update_params</span><span class="p" data-group-id="3183613208-5">)</span></code></pre>
+  </section>
+</section>
+
+    </div>
+  </section>
+
   <section id="runtime" class="details-list">
     <h1 class="section-heading">
       <a class="hover-link" href="#runtime">
@@ -1646,7 +2239,15 @@ obtained from the <a href="../../../../documentation/technical/app_server/mscmp_
 process.  The available options include:</p><ul><li><p><code class="inline">max_concurrency</code> - the maximum number of Instances to start
 concurrently.  This defaults to the greater of 1 or one quarter of the
 value returned by <a href="https://hexdocs.pm/elixir/System.html#schedulers_online/0"><code class="inline">System.schedulers_online/0</code></a> floored.</p></li><li><p>other available options are passed to <a href="#start_instance/3"><code class="inline">start_instance/3</code></a>.  See the
-documentation for <a href="#start_instance/3"><code class="inline">start_instance/3</code></a> for the options it is able to accept.</p></li></ul></li></ul>
+documentation for <a href="#start_instance/3"><code class="inline">start_instance/3</code></a> for the options it is able to accept.</p></li><li><p><code class="inline">registry_name</code> - the name of the Registry service used to resolve the
+supervisors dynamically created by MscmpSystInstance. The default value
+is <code class="inline">MscmpSystInstance.Registry</code>.</p></li><li><p><code class="inline">instance_supervisor_name</code> - the name of the supervisor to which all
+individual, dynamically created instance supervisors are children.  The
+default value is <code class="inline">MscmpSystInstance.InstanceSupervisor</code>.</p></li><li><p><code class="inline">task_supervisor_name</code> - on Instance startup, MscmpSystInstance will
+process Instance Datastore startup and migration application via
+concurrently <a href="https://hexdocs.pm/elixir/Task.html"><code class="inline">Task</code></a> processes.  This option establishes the name of the
+supervisor under which these <a href="https://hexdocs.pm/elixir/Task.html"><code class="inline">Task</code></a> processes are started.  The default
+value is <code class="inline">MscmpSystInstance.TaskSupervisor</code>.</p></li></ul></li></ul>
   </section>
 </section>
 <section class="detail" id="start_instance/3">
@@ -1705,7 +2306,61 @@ configured default Instance State for functional type
 be substituted into the migration SQL files used to update a Datastore
 to the current version of the Application.  Usually, there is no need to
 provide this option as the most common migration bindings are
-automatically generated from Instance record data.</p></li></ul></li></ul>
+automatically generated from Instance record data.</p></li><li><p><code class="inline">registry_name</code> - the name of the Registry service used to resolve the
+supervisors dynamically created by MscmpSystInstance. The default value
+is <code class="inline">MscmpSystInstance.Registry</code>.</p></li><li><p><code class="inline">instance_supervisor_name</code> - the name of the supervisor to which all
+individual, dynamically created instance supervisors are children.  The
+default value is <code class="inline">MscmpSystInstance.InstanceSupervisor</code>.</p></li></ul></li></ul>
+  </section>
+</section>
+<section class="detail" id="start_link/1">
+
+    <span id="start_link/0"></span>
+
+  <div class="detail-header">
+    <a href="#start_link/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">start_link(opts \\ [])</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> start_link(<a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: <a href="https://hexdocs.pm/elixir/Supervisor.html#t:on_start_child/0">Supervisor.on_start_child</a>()</pre>
+
+      </div>
+
+<p>Starts the MscmpSystInstance services and supervisors.</p><p>In an application context, MscmpSystInstances sets up a supervisory tree and
+a process registry so that Application and Instance supervisors may be found
+for later use.  At the top level, an Application Supervisor for each known
+Application is created and below that are Instance Supervisors for each
+Instance of the Application.  Finally, child services such as processes for
+Datastores and other processes and supervisors as appropriate and specific to
+a given Instance are started under each Instance Supervisor.</p><p>This function allows the client application to link the MscmpSystInstance
+services to where it wishes within its own supervision tree using the normal
+<a href="https://hexdocs.pm/elixir/Supervisor.html"><code class="inline">Supervisor</code></a> and <a href="https://hexdocs.pm/elixir/DynamicSupervisor.html"><code class="inline">DynamicSupervisor</code></a> calls for starting children.</p><h2 id="start_link/1-parameters" class="section-heading">
+  <a href="#start_link/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters:
+</h2>
+<ul><li><p><code class="inline">opts</code> - A Keyword List of optional settings which override the
+established default values.  The available options are:</p><ul><li><p><code class="inline">supervisor_name</code> - the name of the MscmpSystInstance root Supervisor to
+which other MscmpSystInstance processes and supervisors are bound.  The
+default value is <code class="inline">MscmpSystInstance.Supervisor</code>.</p></li><li><p><code class="inline">registry_name</code> - the name of the Registry service used to resolve the
+supervisors dynamically created by MscmpSystInstance. The default value
+is <code class="inline">MscmpSystInstance.Registry</code>.</p></li><li><p><code class="inline">instance_supervisor_name</code> - the name of the supervisor to which all
+individual, dynamically created instance supervisors are children.  The
+default value is <code class="inline">MscmpSystInstance.InstanceSupervisor</code>.</p></li><li><p><code class="inline">task_supervisor_name</code> - on Instance startup, MscmpSystInstance will
+process Instance Datastore startup and migration application via
+concurrently <a href="https://hexdocs.pm/elixir/Task.html"><code class="inline">Task</code></a> processes.  This option establishes the name of the
+supervisor under which these <a href="https://hexdocs.pm/elixir/Task.html"><code class="inline">Task</code></a> processes are started.  The default
+value is <code class="inline">MscmpSystInstance.TaskSupervisor</code>.</p></li></ul></li></ul>
   </section>
 </section>
 <section class="detail" id="stop_all_applications/1">
@@ -1817,62 +2472,9 @@ supervised by the Instance supervisor to shut down cleanly.  By default,
 this value is set to 60,000ms.</p></li><li><p><code class="inline">db_shutdown_timeout</code> - a timeout value used to limit the time allowed
 for a clean shutdown of the database connections used for operating
 Datastore.  See the documentation for
-<a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.html#stop_datastore/2"><code class="inline">MscmpSystDb.stop_datastore/2</code></a> for more information.</p></li></ul></li></ul>
-  </section>
-</section>
-
-    </div>
-  </section>
-
-  <section id="functions" class="details-list">
-    <h1 class="section-heading">
-      <a class="hover-link" href="#functions">
-        <i class="ri-link-m" aria-hidden="true"></i>
-        <span class="sr-only">Link to this section</span>
-      </a>
-Functions
-    </h1>
-    <div class="functions-list">
-<section class="detail" id="get_application_id_by_name/1">
-
-  <div class="detail-header">
-    <a href="#get_application_id_by_name/1" class="detail-link" title="Link to this function">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature" translate="no">get_application_id_by_name(application_name)</h1>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <div class="specs">
-
-          <pre translate="no"><span class="attribute">@spec</span> get_application_id_by_name(<a href="MscmpSystInstance.Types.html#t:application_name/0">MscmpSystInstance.Types.application_name</a>()) ::
-  <a href="MscmpSystInstance.Types.html#t:application_id/0">MscmpSystInstance.Types.application_id</a>() | nil</pre>
-
-      </div>
-
-<p>Returns the Application record ID for the requested Application Internal Name;
-raises on error.</p><p>On successful execution the record ID of the requested Application is
-returned.  If the requested Application Internal Name is not found <code class="inline">nil</code> is
-returned.</p><h2 id="get_application_id_by_name/1-parameters" class="section-heading">
-  <a href="#get_application_id_by_name/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">parameters</p>
-  </a>
-  Parameters
-</h2>
-<ul><li><code class="inline">applicaton_name</code> - the internal name of the desired Application record.</li></ul><h2 id="get_application_id_by_name/1-examples" class="section-heading">
-  <a href="#get_application_id_by_name/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">examples</p>
-  </a>
-  Examples
-</h2>
-<p>  Finding an application returns its ID value.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">application_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_application_id_by_name</span><span class="p" data-group-id="1856088419-1">(</span><span class="s">&quot;app1&quot;</span><span class="p" data-group-id="1856088419-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="n">is_binary</span><span class="p" data-group-id="1856088419-2">(</span><span class="n">application_id</span><span class="p" data-group-id="1856088419-2">)</span><span class="w">
-</span><span class="no">true</span></code></pre><p>  Asking for a non-existent application returns <code class="inline">nil</code>.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="w"> </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_application_id_by_name</span><span class="p" data-group-id="1540011750-1">(</span><span class="s">&quot;nonexistent_application&quot;</span><span class="p" data-group-id="1540011750-1">)</span><span class="w">
-</span><span class="no">nil</span></code></pre>
+<a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.html#stop_datastore/2"><code class="inline">MscmpSystDb.stop_datastore/2</code></a> for more information.</p></li><li><p><code class="inline">registry_name</code> - the name of the Registry service used to resolve the
+supervisors dynamically created by MscmpSystInstance. The default value
+is <code class="inline">MscmpSystInstance.Registry</code>.</p></li></ul></li></ul>
   </section>
 </section>
 
