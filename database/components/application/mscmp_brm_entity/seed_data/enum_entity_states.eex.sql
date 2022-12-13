@@ -1,5 +1,5 @@
--- File:        initialize_enum_contact_states.eex.sql
--- Location:    musebms/database/components/application/mscmp_brm_contact/seed_data/initialize_enum_contact_states.eex.sql
+-- File:        enum_entity_states.eex.sql
+-- Location:    musebms/database/components/application/mscmp_brm_entity/seed_data/enum_entity_states.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -16,11 +16,11 @@ BEGIN
 
 PERFORM
     ms_syst_priv.initialize_enum(
-        p_enum_def => $INIT_ENUM_CONTACT_STATES$
+        p_enum_def => $INIT_ENUM_ENTITY_STATES$
         {
-          "internal_name": "contact_states",
-          "display_name": "Contact States",
-          "syst_description": "Establishes the available life-cycle states for contact information.",
+          "internal_name": "entity_states",
+          "display_name": "Entity States",
+          "syst_description": "Lifecycle management stages for business entities.",
           "syst_defined": true,
           "user_maintainable": true,
           "default_syst_options": null,
@@ -28,7 +28,7 @@ PERFORM
           "functional_types": [],
           "enum_items": []
         }
-            $INIT_ENUM_CONTACT_STATES$::jsonb);
+            $INIT_ENUM_ENTITY_STATES$::jsonb);
 
 END;
 $INIT_ENUM$;

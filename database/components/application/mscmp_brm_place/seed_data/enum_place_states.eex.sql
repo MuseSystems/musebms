@@ -1,5 +1,5 @@
--- File:        initialize_enum_login_states.eex.sql
--- Location:    musebms/database/components/application/mscmp_syst_interactions/seed_data/initialize_enum_login_states.eex.sql
+-- File:        enum_place_states.eex.sql
+-- Location:    musebms/database/components/application/mscmp_brm_place/seed_data/enum_place_states.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -16,11 +16,11 @@ BEGIN
 
 PERFORM
     ms_syst_priv.initialize_enum(
-        p_enum_def => $INIT_ENUM_LOGIN_STATES$
+        p_enum_def => $INIT_ENUM_PLACE_STATES$
         {
-          "internal_name": "login_states",
-          "display_name": "Login States",
-          "syst_description": "Defines the life-cycle states in which user login records may exist.",
+          "internal_name": "pace_states",
+          "display_name": "Place States",
+          "syst_description": "Defines the available states which govern the place life-cycle and establishes what capabilities are supported in such states by default.",
           "syst_defined": true,
           "user_maintainable": true,
           "default_syst_options": null,
@@ -28,7 +28,7 @@ PERFORM
           "functional_types": [],
           "enum_items": []
         }
-            $INIT_ENUM_LOGIN_STATES$::jsonb);
+            $INIT_ENUM_PLACE_STATES$::jsonb);
 
 END;
 $INIT_ENUM$;

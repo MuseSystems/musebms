@@ -25,5 +25,5 @@ load_files = [
     "components/system/mscmp_syst_docnum/ms_syst_priv/functions/set_next_sequence_value.eex.sql",
     "components/system/mscmp_syst_docnum/ms_syst_data/syst_numbering_segment_types/syst_numbering_segment_types.eex.sql",
     "components/system/mscmp_syst_docnum/ms_syst_data/syst_numbering_segments/syst_numbering_segments.eex.sql",
-    "components/system/mscmp_syst_docnum/seed_data/initialize_numbering_segment_types.eex.sql",
+    "components/system/mscmp_syst_docnum/seed_data/numbering_segment_types.eex.sql",
 ]

@@ -1,5 +1,5 @@
--- File:        initialize_enum_person_states.eex.sql
--- Location:    musebms/database/components/application/mscmp_brm_person/seed_data/initialize_enum_person_states.eex.sql
+-- File:        enum_entity_person_roles.eex.sql
+-- Location:    musebms/database/components/application/mscmp_brm_entity_person/seed_data/enum_entity_person_roles.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -16,11 +16,11 @@ BEGIN
 
 PERFORM
     ms_syst_priv.initialize_enum(
-        p_enum_def => $INIT_ENUM_PERSON_STATES$
+        p_enum_def => $INIT_ENUM_ENTITY_PERSON_ROLES$
         {
-          "internal_name": "person_states",
-          "display_name": "Person States",
-          "syst_description": "Lifecycle management stages for persons.",
+          "internal_name": "entity_person_roles",
+          "display_name": "Entity - Person Roles",
+          "syst_description": "Defines the various roles which a person may assume on behalf of a given entity.",
           "syst_defined": true,
           "user_maintainable": true,
           "default_syst_options": null,
@@ -28,7 +28,7 @@ PERFORM
           "functional_types": [],
           "enum_items": []
         }
-            $INIT_ENUM_PERSON_STATES$::jsonb);
+            $INIT_ENUM_ENTITY_PERSON_ROLES$::jsonb);
 
 END;
 $INIT_ENUM$;

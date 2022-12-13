@@ -1,5 +1,5 @@
--- File:        initialize_enum_instance_types.eex.sql
--- Location:    musebms/database/components/system/mscmp_syst_instance/seed_data/initialize_enum_instance_types.eex.sql
+-- File:        enum_instance_types.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_instance/seed_data/enum_instance_types.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

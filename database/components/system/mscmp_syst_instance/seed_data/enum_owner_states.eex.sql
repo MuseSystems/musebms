@@ -1,5 +1,5 @@
--- File:        initialize_enum_owner_states.eex.sql
--- Location:    musebms/database/components/system/mscmp_syst_instance/seed_data/initialize_enum_owner_states.eex.sql
+-- File:        enum_owner_states.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_instance/seed_data/enum_owner_states.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

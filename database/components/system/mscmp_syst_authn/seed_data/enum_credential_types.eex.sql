@@ -1,5 +1,5 @@
--- File:        initialize_enum_credential_types.eex.sql
--- Location:    musebms/database/components/system/mscmp_syst_authn/seed_data/initialize_enum_credential_types.eex.sql
+-- File:        enum_credential_types.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_authn/seed_data/enum_credential_types.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

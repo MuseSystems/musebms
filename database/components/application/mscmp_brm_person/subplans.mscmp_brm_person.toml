@@ -17,8 +17,8 @@ update               = 0
 sponsor              = 820
 sponsor_modification = 0
 load_files = [
-    "components/application/mscmp_brm_person/seed_data/initialize_enum_person_types.eex.sql",
-    "components/application/mscmp_brm_person/seed_data/initialize_enum_person_states.eex.sql",
+    "components/application/mscmp_brm_person/seed_data/enum_person_types.eex.sql",
+    "components/application/mscmp_brm_person/seed_data/enum_person_states.eex.sql",
 
     "components/application/mscmp_brm_person/ms_appl_data/mstr_persons/mstr_persons.eex.sql",
 ]

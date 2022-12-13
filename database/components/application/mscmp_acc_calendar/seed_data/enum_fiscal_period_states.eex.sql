@@ -1,5 +1,5 @@
--- File:        initialize_enum_interaction_types.eex.sql
--- Location:    musebms/database/components/application/mscmp_syst_interactions/seed_data/initialize_enum_interaction_types.eex.sql
+-- File:        enum_fiscal_period_states.eex.sql
+-- Location:    musebms/database/components/application/mscmp_acc_calendar/seed_data/enum_fiscal_period_states.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -16,11 +16,11 @@ BEGIN
 
 PERFORM
     ms_syst_priv.initialize_enum(
-        p_enum_def => $INIT_ENUM_INTERACTION_TYPES$
+        p_enum_def => $INIT_ENUM_FISCAL_PERIOD_STATES$
         {
-          "internal_name": "interaction_types",
-          "display_name": "Interaction Types",
-          "syst_description": "Identifies classes of actions that a user or external system may request of the application.",
+          "internal_name": "fiscal_period_states",
+          "display_name": "Fiscal Period States",
+          "syst_description": "Life-cycle management stages for fiscal period records.",
           "syst_defined": true,
           "user_maintainable": true,
           "default_syst_options": null,
@@ -28,7 +28,7 @@ PERFORM
           "functional_types": [],
           "enum_items": []
         }
-            $INIT_ENUM_INTERACTION_TYPES$::jsonb);
+            $INIT_ENUM_FISCAL_PERIOD_STATES$::jsonb);
 
 END;
 $INIT_ENUM$;

@@ -1,5 +1,5 @@
--- File:        initialize_enum_entity_inventory_roles.eex.sql
--- Location:    musebms/database/components/application/mscmp_brm_entity_inventory/seed_data/initialize_enum_entity_inventory_roles.eex.sql
+-- File:        enum_entity_inventory_roles.eex.sql
+-- Location:    musebms/database/components/application/mscmp_brm_entity_inventory/seed_data/enum_entity_inventory_roles.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

@@ -1,5 +1,5 @@
--- File:        initialize_enum_contact_types.eex.sql
--- Location:    musebms/database/components/application/mscmp_brm_contact/seed_data/initialize_enum_contact_types.eex.sql
+-- File:        enum_contact_types.eex.sql
+-- Location:    musebms/database/components/application/mscmp_brm_contact/seed_data/enum_contact_types.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
