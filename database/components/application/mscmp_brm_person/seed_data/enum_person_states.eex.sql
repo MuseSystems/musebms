@@ -1,5 +1,5 @@
--- File:        initialize_enum_place_types.eex.sql
--- Location:    musebms/database/components/application/mscmp_brm_place/seed_data/initialize_enum_place_types.eex.sql
+-- File:        enum_person_states.eex.sql
+-- Location:    musebms/database/components/application/mscmp_brm_person/seed_data/enum_person_states.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -16,11 +16,11 @@ BEGIN
 
 PERFORM
     ms_syst_priv.initialize_enum(
-        p_enum_def => $INIT_ENUM_PLACE_TYPES$
+        p_enum_def => $INIT_ENUM_PERSON_STATES$
         {
-          "internal_name": "pace_types",
-          "display_name": "Place Types",
-          "syst_description": "Establishes the different kinds of places in which the place may be categorized",
+          "internal_name": "person_states",
+          "display_name": "Person States",
+          "syst_description": "Lifecycle management stages for persons.",
           "syst_defined": true,
           "user_maintainable": true,
           "default_syst_options": null,
@@ -28,7 +28,7 @@ PERFORM
           "functional_types": [],
           "enum_items": []
         }
-            $INIT_ENUM_PLACE_TYPES$::jsonb);
+            $INIT_ENUM_PERSON_STATES$::jsonb);
 
 END;
 $INIT_ENUM$;

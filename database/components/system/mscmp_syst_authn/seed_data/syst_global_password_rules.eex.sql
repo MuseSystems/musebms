@@ -1,5 +1,5 @@
--- File:        initialize_syst_global_password_rules.eex.sql
--- Location:    musebms/database/components/system/mscmp_syst_authn/seed_data/initialize_syst_global_password_rules.eex.sql
+-- File:        syst_global_password_rules.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_authn/seed_data/syst_global_password_rules.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

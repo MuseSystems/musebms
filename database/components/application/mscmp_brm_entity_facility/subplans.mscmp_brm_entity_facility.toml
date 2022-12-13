@@ -17,7 +17,7 @@ update               = 0
 sponsor              = 820
 sponsor_modification = 0
 load_files = [
-    "components/application/mscmp_brm_entity_facility/seed_data/initialize_enum_entity_facility_roles.eex.sql",
+    "components/application/mscmp_brm_entity_facility/seed_data/enum_entity_facility_roles.eex.sql",
 
     "components/application/mscmp_brm_entity_facility/ms_appl_data/mstr_entity_facility_places/mstr_entity_facility_places.eex.sql",
 ]

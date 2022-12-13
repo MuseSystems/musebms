@@ -1,5 +1,5 @@
--- File:        initialize_enum_fiscal_year_states.eex.sql
--- Location:    musebms/database/components/application/mscmp_acc_calendar/seed_data/initialize_enum_fiscal_year_states.eex.sql
+-- File:        enum_entity_types.eex.sql
+-- Location:    musebms/database/components/application/mscmp_brm_entity/seed_data/enum_entity_types.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -16,11 +16,11 @@ BEGIN
 
 PERFORM
     ms_syst_priv.initialize_enum(
-        p_enum_def => $INIT_ENUM_FISCAL_YEAR_STATES$
+        p_enum_def => $INIT_ENUM_ENTITY_TYPES$
         {
-          "internal_name": "fiscal_year_states",
-          "display_name": "Fiscal Year States",
-          "syst_description": "Life-cycle management stages for fiscal year records.",
+          "internal_name": "entity_types",
+          "display_name": "Entity Types",
+          "syst_description": "Lists the different kinds of legal business entities with which business is conducted.",
           "syst_defined": true,
           "user_maintainable": true,
           "default_syst_options": null,
@@ -28,7 +28,7 @@ PERFORM
           "functional_types": [],
           "enum_items": []
         }
-            $INIT_ENUM_FISCAL_YEAR_STATES$::jsonb);
+            $INIT_ENUM_ENTITY_TYPES$::jsonb);
 
 END;
 $INIT_ENUM$;

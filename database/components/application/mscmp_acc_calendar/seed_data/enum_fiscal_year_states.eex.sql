@@ -1,5 +1,5 @@
--- File:        initialize_enum_person_contact_roles.eex.sql
--- Location:    musebms/database/components/application/mscmp_brm_person_contact/seed_data/initialize_enum_person_contact_roles.eex.sql
+-- File:        enum_fiscal_year_states.eex.sql
+-- Location:    musebms/database/components/application/mscmp_acc_calendar/seed_data/enum_fiscal_year_states.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -16,11 +16,11 @@ BEGIN
 
 PERFORM
     ms_syst_priv.initialize_enum(
-        p_enum_def => $INIT_ENUM_PERSON_CONTACT_ROLES$
+        p_enum_def => $INIT_ENUM_FISCAL_YEAR_STATES$
         {
-          "internal_name": "person_contact_roles",
-          "display_name": "Person - Contact Roles",
-          "syst_description": "Defines the role that a contact information record may fulfill with a given person.  This could be mailing address, mobile phone contact, primary email, etc.",
+          "internal_name": "fiscal_year_states",
+          "display_name": "Fiscal Year States",
+          "syst_description": "Life-cycle management stages for fiscal year records.",
           "syst_defined": true,
           "user_maintainable": true,
           "default_syst_options": null,
@@ -28,7 +28,7 @@ PERFORM
           "functional_types": [],
           "enum_items": []
         }
-            $INIT_ENUM_PERSON_CONTACT_ROLES$::jsonb);
+            $INIT_ENUM_FISCAL_YEAR_STATES$::jsonb);
 
 END;
 $INIT_ENUM$;

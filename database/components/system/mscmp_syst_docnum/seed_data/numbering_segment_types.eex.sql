@@ -1,5 +1,5 @@
--- File:        initialize_numbering_segment_types.eex.sql
--- Location:    musebms/database/components/system/mscmp_syst_docnum/seed_data/initialize_numbering_segment_types.eex.sql
+-- File:        numbering_segment_types.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_docnum/seed_data/numbering_segment_types.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

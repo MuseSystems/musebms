@@ -64,7 +64,7 @@ load_files = [
     "components/system/mscmp_syst_instance/ms_syst/api_views/syst_instance_contexts/trig_i_d_syst_instance_contexts.eex.sql",
     "components/system/mscmp_syst_instance/ms_syst/api_views/syst_instance_contexts/syst_instance_contexts.eex.sql",
 
-    "components/system/mscmp_syst_instance/seed_data/initialize_enum_owner_states.eex.sql",
-    "components/system/mscmp_syst_instance/seed_data/initialize_enum_instance_states.eex.sql",
-    "components/system/mscmp_syst_instance/seed_data/initialize_enum_instance_types.eex.sql",
+    "components/system/mscmp_syst_instance/seed_data/enum_owner_states.eex.sql",
+    "components/system/mscmp_syst_instance/seed_data/enum_instance_states.eex.sql",
+    "components/system/mscmp_syst_instance/seed_data/enum_instance_types.eex.sql",
 ]

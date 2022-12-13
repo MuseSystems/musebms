@@ -1,5 +1,5 @@
--- File:        initialize_enum_identity_types.eex.sql
--- Location:    musebms/database/components/system/mscmp_syst_authn/seed_data/initialize_enum_identity_types.eex.sql
+-- File:        enum_identity_types.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_authn/seed_data/enum_identity_types.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
