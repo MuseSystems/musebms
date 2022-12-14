@@ -27,9 +27,9 @@ Supervisor.start_link(children, strategy: :one_for_one)
 
 limiter_service_spec = %{id: TestingLimiter, start: {MscmpSystLimiter, :start_link, []}}
 
-DynamicSupervisor.start_child(MscmpSystLimiter.TestingSupervisor, limiter_service_spec)
-
 TestSupport.setup_testing_database(test_kind)
+
+DynamicSupervisor.start_child(MscmpSystLimiter.TestingSupervisor, limiter_service_spec)
 
 Logger.configure(level: :info)
 
