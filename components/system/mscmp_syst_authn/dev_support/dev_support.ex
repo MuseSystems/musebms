@@ -59,7 +59,6 @@ defmodule DevSupport do
 
   def start_dev_environment(db_kind \\ :unit_testing) do
     _ = setup_database(db_kind)
-    _ = setup_mnesia_database(db_kind)
 
     _ = MscmpSystDb.put_datastore_context(get_datastore_context_id())
 
@@ -87,7 +86,6 @@ defmodule DevSupport do
 
   def stop_dev_environment(db_kind \\ :unit_testing) do
     _ = cleanup_database()
-    cleanup_mnesia_database(db_kind)
   end
 
   def get_datastore_context_id, do: @datastore_context_name
@@ -113,10 +111,6 @@ defmodule DevSupport do
     {:ok, _, _} = MscmpSystDb.start_datastore(datastore_options)
   end
 
-  defp setup_mnesia_database(:unit_testing) do
-    MscmpSystLimiter.init_rate_limiter()
-  end
-
   defp cleanup_database() do
     datastore_options = @datastore_options
 
@@ -124,8 +118,6 @@ defmodule DevSupport do
     :ok = MscmpSystDb.drop_datastore(datastore_options)
     File.rm_rf!(Path.join(["priv/database"]))
   end
-
-  defp cleanup_mnesia_database(:unit_testing), do: nil
 
   defp get_datastore_type(:unit_testing), do: @migration_unit_test_ds_type
 
