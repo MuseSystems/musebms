@@ -246,8 +246,7 @@ defmodule MscmpSystLimiter do
   @doc """
   Starts the rate limiter services.
 
-  This service should be started after the Mnesia has had its schema created and
-  before any call to `init_rate_limiter/1`.
+  This service should be started after the Mnesia has had its schema created.
 
   ## Parameters
 
@@ -271,27 +270,12 @@ defmodule MscmpSystLimiter do
       (`:mscmp_syst_limiter_counters`) unless there's a compelling reason to do
       otherwise.
 
-  """
-  @spec start_link(Keyword.t()) :: Supervisor.on_start_child()
-  defdelegate start_link(opts \\ []), to: Runtime.Services
-
-  @doc section: :service_management
-  @doc """
-  Initializes the rate limiter table.
-
-  This function must be called per the instructions of `MscmpSystLimiter`
-  prior to the checking the rate of any counter.
-
-  ## Parameters
-
-    * `opts` - a keyword list of optional parameters.  Valid options are:
       * `mnesia_table_args` - a list of options to be passed directly to
       `:mnesia.create_table/2`.  For complete documentation of the
       available Mnesia table options see
       [the Erlang documentation](https://www.erlang.org/doc/man/mnesia.html#create_table-2).
-  """
 
-  @spec init_rate_limiter(Keyword.t()) ::
-          {:ok, detail :: atom()} | {:error, MscmpSystError.t()}
-  defdelegate init_rate_limiter(opts \\ []), to: Runtime.Services
+  """
+  @spec start_link(Keyword.t()) :: Supervisor.on_start()
+  defdelegate start_link(opts \\ []), to: Runtime.Services
 end

@@ -34,7 +34,7 @@ defmodule TestSupport do
     :mnesia.start()
   end
 
-  def setup_testing_database(:unit_testing), do: MscmpSystLimiter.init_rate_limiter()
+  def setup_testing_database(:unit_testing), do: nil
 
   def cleanup_testing_database(:integration_testing) do
     File.rm_rf!(@mnesia_database_location)

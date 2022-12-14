@@ -95,7 +95,7 @@ defmodule TestSupport do
     {:ok, _, _} = MscmpSystDb.start_datastore(datastore_options)
   end
 
-  defp setup_rate_limiter(:unit_testing), do: MscmpSystLimiter.init_rate_limiter()
+  defp setup_rate_limiter(:unit_testing), do: nil
 
   defp setup_rate_limiter(:integration_testing) do
     File.mkdir_p!(@mnesia_database_location)
@@ -104,8 +104,6 @@ defmodule TestSupport do
     :mnesia.stop()
     :mnesia.create_schema([node()])
     :mnesia.start()
-
-    MscmpSystLimiter.init_rate_limiter()
   end
 
   def cleanup_testing_database(test_kind) do

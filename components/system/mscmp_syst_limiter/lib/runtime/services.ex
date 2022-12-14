@@ -21,7 +21,7 @@ defmodule MscmpSystLimiter.Runtime.Services do
 
   @moduledoc false
 
-  @spec start_link(Keyword.t()) :: Supervisor.on_start_child()
+  @spec start_link(Keyword.t()) :: Supervisor.on_start()
   def start_link(opts) do
     opts =
       MscmpSystUtils.resolve_options(opts,
@@ -39,14 +39,15 @@ defmodule MscmpSystLimiter.Runtime.Services do
          table_name: opts[:table_name]
        ]}
 
-    Application.put_env(:hammer, :backend, hammer_config)
-
-    Hammer.Supervisor.start_link(hammer_config, name: opts[:supervisor_name])
+    with :ok <- Application.put_env(:hammer, :backend, hammer_config),
+         {:ok, _} = return_value <-
+           Hammer.Supervisor.start_link(hammer_config, name: opts[:supervisor_name]),
+         {:ok, _} <- init_rate_limiter(opts) do
+      return_value
+    end
   end
 
-  @spec init_rate_limiter(Keyword.t()) ::
-          {:ok, detail :: atom()} | {:error, MscmpSystError.t()}
-  def init_rate_limiter(opts) do
+  defp init_rate_limiter(opts) do
     {_backend, config_opts} = Application.get_env(:hammer, :backend)
 
     mnesia_table_args = opts[:mnesia_table_args] || []
@@ -54,26 +55,18 @@ defmodule MscmpSystLimiter.Runtime.Services do
     # credo:disable-for-next-line Credo.Check.Design.AliasUsage
     Hammer.Backend.Mnesia.create_mnesia_table(config_opts[:table_name], mnesia_table_args)
     |> process_create_mnesia_table_result()
-  rescue
-    error ->
-      Logger.error(Exception.format(:error, error, __STACKTRACE__))
-
-      {:error,
-       %MscmpSystError{
-         code: :undefined_error,
-         message: "Failure initializing rate limiter.",
-         cause: error
-       }}
   end
 
   defp process_create_mnesia_table_result({:aborted, {:already_exists, _}}),
     do: {:ok, :resource_exists}
 
   defp process_create_mnesia_table_result({:aborted, _} = reason) do
-    raise MscmpSystError,
-      code: :undefined_error,
-      message: "Internal error initializing rate limiter.",
-      cause: reason
+    {:error,
+     %MscmpSystError{
+       code: :undefined_error,
+       message: "Internal error initializing rate limiter.",
+       cause: reason
+     }}
   end
 
   defp process_create_mnesia_table_result(result), do: {:ok, result}
