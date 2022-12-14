@@ -1,11 +1,22 @@
-# This file is responsible for configuring your application
-# and its dependencies with the aid of the Config module.
+# Source File: config.exs
+# Location:    musebms/application/msapp_platform/config/config.exs
+# Project:     Muse Systems Business Management System
 #
-# This configuration file is loaded before any dependency and
-# is restricted to this project.
+# Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+# This file may include content copyrighted and licensed from third parties.
+#
+# See the LICENSE file in the project root for license terms and conditions.
+# See the NOTICE file in the project root for copyright ownership information.
+#
+# muse.information@musesystems.com :: https://muse.systems
 
-# General application configuration
 import Config
+
+# The supported Muse Systems Application Subsystems
+config :msapp_platform, MsappPlatform.StartupOptions, path: "ms_startup_options.toml"
+
+# Configure Mnesia for MscmpSystLimiter use
+config :mnesia, dir: '.mnesia'
 
 # Configures the endpoint
 config :msapp_platform, MsappPlatformWeb.Endpoint,
@@ -55,9 +66,6 @@ config :logger, :console,
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
-
-# Configure Mnesia for MscmpSystLimiter use
-config :mnesia, dir: '.mnesia'
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

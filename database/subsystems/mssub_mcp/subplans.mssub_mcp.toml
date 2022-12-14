@@ -1,5 +1,5 @@
-# Source File: buildplans.mssub_mcp.toml
-# Location:    musebms/database/buildplans.mssub_mcp.toml
+# Source File: subplans.mssub_mcp.toml
+# Location:    musebms/database/subsystems/mssub_mcp/subplans.mssub_mcp.toml
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -22,41 +22,34 @@ load_files = [
     #
 
     {type = "plan", file = "all/subplans.common_init.toml"},
-    "subsystems/mssub_mcp/dbinit/initial_privileges.eex.sql",
 
     #
     # MscmpSystSettings
     #
 
     {type = "plan", file = "components/system/mscmp_syst_settings/subplans.mscmp_syst_settings.toml"},
-    "subsystems/mssub_mcp/components/mscmp_syst_settings/privileges.eex.sql",
 
     #
     # MscmpSystEnums
     #
 
     {type = "plan", file = "components/system/mscmp_syst_enums/subplans.mscmp_syst_enums.toml"},
-    "subsystems/mssub_mcp/components/mscmp_syst_enums/privileges.eex.sql",
 
     #
     # MscmpSystFeatures
     #
 
     {type = "plan", file = "components/system/mscmp_syst_features/subplans.mscmp_syst_features.toml"},
-    "subsystems/mssub_mcp/gen_seed_data/initialize_feature_mapping.eex.sql",
 
     #
     # MscmpSystInstance
     #
 
     {type = "plan", file = "components/system/mscmp_syst_instance/subplans.mscmp_syst_instance.toml"},
-    "subsystems/mssub_mcp/components/mscmp_syst_instance/privileges.eex.sql",
-    "subsystems/mssub_mcp/gen_seed_data/initialize_enum_instance_types.eex.sql",
 
     #
     # MscmpSystAuthn
     #
 
     {type = "plan", file = "components/system/mscmp_syst_authn/subplans.mscmp_syst_authn.toml"},
-    "subsystems/mssub_mcp/components/mscmp_syst_authn/privileges.eex.sql",
 ]

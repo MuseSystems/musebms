@@ -19,29 +19,53 @@ defmodule MssubMcp.Runtime.Datastore do
 
   mcp_constants()
 
+  @default_datastore_type "mssub_mcp"
   @default_owner_name "mssub_mcp_owner"
   @default_app_access_role_name "mssub_mcp_app_access"
 
+  def datastore_update_child_spec(opts) do
+    %{
+      id: __MODULE__.Updater,
+      start: {MssubMcp.Runtime.Datastore, :start_link, [opts]},
+      type: :supervisor,
+      restart: :transient
+    }
+  end
+
+  @spec start_link(Keyword.t()) :: :ignore | {:error, MscmpSystError.t() | any()}
   def start_link(opts) do
+    case datastore_update(opts) do
+      :ok -> :ignore
+      error -> error
+    end
+  end
+
+  @spec datastore_update(Keyword.t()) :: :ok | {:error, MscmpSystError.t() | any()}
+  def datastore_update(opts) do
     opts =
       MscmpSystUtils.resolve_options(opts,
+        datastore_type: @default_datastore_type,
         owner_name: @default_owner_name,
         app_access_role_name: @default_app_access_role_name,
         name: opts[:datastore_name]
       )
 
-    with %{} = datastore_options <- Runtime.Options.get_datastore_options(opts),
+    startup_options = opts[:startup_options]
+    migrations_root_dir = opts[:migrations_root_dir]
+
+    with %{} = datastore_options <- Runtime.Options.get_datastore_options(startup_options, opts),
          {:ok, :ready, _} = datastore_state <- process_bootstrap_sequence(datastore_options),
          {:ok, :ready, _} <- process_context_changes(datastore_state, datastore_options, opts),
          {:ok, _} <-
            MscmpSystDb.upgrade_datastore(
              datastore_options,
-             "mssub_mcp",
+             opts[:datastore_type],
              [ms_owner: opts[:owner_name], ms_appusr: opts[:app_access_role_name]],
-             migrations_root_dir: Path.join([:code.priv_dir(:mssub_mcp), "database"])
+             migrations_root_dir: migrations_root_dir
            ) do
-      start_link_opts = [{:datastore_options, datastore_options} | opts]
-      MscmpSystDb.Datastore.start_link(start_link_opts)
+      :ok
+    else
+      error -> {:error, error}
     end
   end
 

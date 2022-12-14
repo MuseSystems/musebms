@@ -1,5 +1,5 @@
--- File:        test_data_integration_test.eex.sql
--- Location:    musebms/database/subsystems/mssub_mcp/testing_support/test_data_integration_test.eex.sql
+-- File:        initial_privileges.eex.sql
+-- Location:    musebms/database/application/msapp_platform/mssub_mcp/privileges/initial_privileges.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,11 +10,4 @@
 --
 -- muse.information@musesystems.com :: https://muse.systems
 
-DO
-$MCP_TESTING_INIT$
-    BEGIN
-
-        RAISE NOTICE 'There is no special mssub_mcp integration testing data.';
-
-    END;
-$MCP_TESTING_INIT$;
+GRANT USAGE ON SCHEMA ms_syst TO <%= ms_appusr %>;

@@ -1,5 +1,5 @@
--- Migration: priv/database/mssub_mcp/mssub_mcp.01.01.000.0000MS.000.eex.sql
--- Built on:  2022-12-10 13:56:05.205316Z
+-- Migration: priv/database/msapp_platform_mssub_mcp/msapp_platform_mssub_mcp.01.01.000.0000MS.000.eex.sql
+-- Built on:  2022-12-13 23:32:03.257787Z
 
 DO
 $MIGRATION$
@@ -664,19 +664,6 @@ GRANT EXECUTE ON FUNCTION
 COMMENT ON FUNCTION ms_syst_priv.get_random_string(p_length integer, p_tokens text) IS
 $DOC$Returns a random text string, by default consisting of alpha-numeric symbols, of
 the requested length. Arbitrary characters may be provided my the caller.$DOC$;
--- File:        initial_privileges.eex.sql
--- Location:    musebms/database/subsystems/mssub_mcp/dbinit/initial_privileges.eex.sql
--- Project:     Muse Systems Business Management System
---
--- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
--- This file may include content copyrighted and licensed from third parties.
---
--- See the LICENSE file in the project root for license terms and conditions.
--- See the NOTICE file in the project root for copyright ownership information.
---
--- muse.information@musesystems.com :: https://muse.systems
-
-GRANT USAGE ON SCHEMA ms_syst TO <%= ms_appusr %>;
 -- File:        syst_settings.eex.sql
 -- Location:    musebms/database/components/system/mscmp_syst_settings/ms_syst_data/syst_settings/syst_settings.eex.sql
 -- Project:     Muse Systems Business Management System
@@ -1338,22 +1325,6 @@ updates can be found.  This row starts at 0 and therefore may be the same as the
 diag_row_version - 1.
 
 Note that this column may not be updated via this API View.$DOC$;
--- File:        privileges.eex.sql
--- Location:    musebms/database/application/msmcp/components/ms_syst_settings/privileges.eex.sql
--- Project:     Muse Systems Business Management System
---
--- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
--- This file may include content copyrighted and licensed from third parties.
---
--- See the LICENSE file in the project root for license terms and conditions.
--- See the NOTICE file in the project root for copyright ownership information.
---
--- muse.information@musesystems.com  :: https://muse.systems
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE ms_syst.syst_settings TO <%= ms_appusr %>;
-GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_settings() TO <%= ms_appusr %>;
-GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_settings() TO <%= ms_appusr %>;
-GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_settings() TO <%= ms_appusr %>;
 -- File:        syst_enums.eex.sql
 -- Location:    musebms/database/components/system/mscmp_syst_enums/ms_syst_data/syst_enums/syst_enums.eex.sql
 -- Project:     Muse Systems Business Management System
@@ -3619,38 +3590,6 @@ updates can be found.  This row starts at 0 and therefore may be the same as the
 diag_row_version - 1.
 
 Note that this column may not be updated via this API View.$DOC$;
--- File:        privileges.eex.sql
--- Location:    musebms/database/application/msmcp/components/ms_syst_enums/privileges.eex.sql
--- Project:     Muse Systems Business Management System
---
--- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
--- This file may include content copyrighted and licensed from third parties.
---
--- See the LICENSE file in the project root for license terms and conditions.
--- See the NOTICE file in the project root for copyright ownership information.
---
--- muse.information@musesystems.com  :: https://muse.systems
-
--- syst_enums
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE ms_syst.syst_enums TO <%= ms_appusr %>;
-GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_enums() TO <%= ms_appusr %>;
-GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_enums() TO <%= ms_appusr %>;
-GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_enums() TO <%= ms_appusr %>;
-
--- syst_enum_functional_types
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE ms_syst.syst_enum_functional_types TO <%= ms_appusr %>;
-GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_enum_functional_types() TO <%= ms_appusr %>;
-GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_enum_functional_types() TO <%= ms_appusr %>;
-GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_enum_functional_types() TO <%= ms_appusr %>;
-
--- syst_enum_items
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE ms_syst.syst_enum_items TO <%= ms_appusr %>;
-GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_enum_items() TO <%= ms_appusr %>;
-GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_enum_items() TO <%= ms_appusr %>;
-GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_enum_items() TO <%= ms_appusr %>;
 -- File:        syst_relations.eex.sql
 -- Location:    musebms/database/components/system/mscmp_syst_features/ms_syst_data/syst_relations/syst_relations.eex.sql
 -- Project:     Muse Systems Business Management System
@@ -4928,241 +4867,6 @@ data is the preferred method of data maintenance in the course of normal usage.$
         END IF;
     END;
 $SYS_SETTINGS_OPTION$;
--- File:        initialize_feature_mapping.eex.sql
--- Location:    musebms/database/application/msmcp/gen_seed_data/initialize_feature_mapping.eex.sql
--- Project:     Muse Systems Business Management System
---
--- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
--- This file may include content copyrighted and licensed from third parties.
---
--- See the LICENSE file in the project root for license terms and conditions.
--- See the NOTICE file in the project root for copyright ownership information.
---
--- muse.information@musesystems.com  :: https://muse.systems
-
-INSERT INTO ms_syst_data.syst_feature_map_levels
-    ( internal_name
-    , display_name
-    , functional_type
-    , syst_description
-    , system_defined
-    , user_maintainable )
-VALUES
-    ( 'global_module'
-    , 'Modules'
-    , 'nonassignable'
-    , 'Broad, top level feature grouping.'
-    , TRUE
-    , FALSE )
-     ,
-    ( 'global_kind'
-    , 'Kinds'
-    , 'assignable'
-    , 'Identifies different kinds of mappable features such as forms, settings, or enumerations.'
-    , TRUE
-    , FALSE );
-
---------------------------------------------------------------------------------
--- 01 - Global Settings Module
---------------------------------------------------------------------------------
-
--- Module Definition
-
-INSERT INTO ms_syst_data.syst_feature_map
-    ( internal_name
-    , display_name
-    , external_name
-    , feature_map_level_id
-    , parent_feature_map_id
-    , system_defined
-    , user_maintainable
-    , displayable
-    , syst_description
-    , sort_order )
-VALUES
-    ( 'global_settings'
-    , 'Global Settings'
-    , 'Global Settings'
-    , ( SELECT id
-        FROM ms_syst_data.syst_feature_map_levels
-        WHERE internal_name = 'global_module' )
-    , NULL
-    , TRUE
-    , FALSE
-    , TRUE
-    , 'Global settings which define behaviors for the system, including across instances.'
-    , 1 );
-
--- Kinds Definition
-
-INSERT INTO ms_syst_data.syst_feature_map
-    ( internal_name
-    , display_name
-    , external_name
-    , feature_map_level_id
-    , parent_feature_map_id
-    , system_defined
-    , user_maintainable
-    , displayable
-    , syst_description
-    , sort_order )
-VALUES
-    ( 'global_settings_settings'
-    , 'Global Settings/Settings'
-    , 'Settings'
-    , ( SELECT id
-        FROM ms_syst_data.syst_feature_map_levels
-        WHERE internal_name = 'global_kind' )
-    , ( SELECT id FROM ms_syst_data.syst_feature_map WHERE internal_name = 'global_settings' )
-    , TRUE
-    , FALSE
-    , TRUE
-    , 'Global settings which define behaviors for the system, including across instances.'
-    , 1 );
-
---------------------------------------------------------------------------------
--- 02 - Global Authentication Module
---------------------------------------------------------------------------------
-
--- Module Definition
-
-INSERT INTO ms_syst_data.syst_feature_map
-    ( internal_name
-    , display_name
-    , external_name
-    , feature_map_level_id
-    , parent_feature_map_id
-    , system_defined
-    , user_maintainable
-    , displayable
-    , syst_description
-    , sort_order )
-VALUES
-    ( 'global_authentication'
-    , 'Global Authentication'
-    , 'Global Authentication'
-    , ( SELECT id
-        FROM ms_syst_data.syst_feature_map_levels
-        WHERE internal_name = 'global_module' )
-    , NULL
-    , TRUE
-    , FALSE
-    , TRUE
-    , 'Functionality related to managing and providing global user authentication.'
-    , 2 );
-
--- Kinds Definition
-
-INSERT INTO ms_syst_data.syst_feature_map
-    ( internal_name
-    , display_name
-    , external_name
-    , feature_map_level_id
-    , parent_feature_map_id
-    , system_defined
-    , user_maintainable
-    , displayable
-    , syst_description
-    , sort_order )
-VALUES
-    ( 'global_authentication_settings'
-    , 'Global Authentication/Settings'
-    , 'Settings'
-    , ( SELECT id
-        FROM ms_syst_data.syst_feature_map_levels
-        WHERE internal_name = 'global_kind' )
-    , ( SELECT id
-        FROM ms_syst_data.syst_feature_map
-        WHERE internal_name = 'global_authentication' )
-    , TRUE
-    , FALSE
-    , TRUE
-    , 'Global settings which define system wide authentication behaviors.'
-    , 1 )
-     ,
-    ( 'global_authentication_enumerations'
-    , 'Global Authentication/Enumerations'
-    , 'Enumerations'
-    , ( SELECT id FROM ms_syst_data.syst_feature_map_levels WHERE internal_name = 'global_kind' )
-    , ( SELECT id
-        FROM ms_syst_data.syst_feature_map
-        WHERE internal_name = 'global_authentication' )
-    , TRUE
-    , FALSE
-    , TRUE
-    , 'Lists of values which are available in support of global user authentication.'
-    , 2 );
-
---------------------------------------------------------------------------------
--- 03 - Global Instance Management Module
---------------------------------------------------------------------------------
-
--- Module Definition
-
-INSERT INTO ms_syst_data.syst_feature_map
-    ( internal_name
-    , display_name
-    , external_name
-    , feature_map_level_id
-    , parent_feature_map_id
-    , system_defined
-    , user_maintainable
-    , displayable
-    , syst_description
-    , sort_order )
-VALUES
-    ( 'global_instance_management'
-    , 'Global Instance Management'
-    , 'Global Instance Management'
-    , ( SELECT id
-        FROM ms_syst_data.syst_feature_map_levels
-        WHERE internal_name = 'global_module' )
-    , NULL
-    , TRUE
-    , FALSE
-    , TRUE
-    , 'Management of individual instances from the Global context.'
-    , 3 );
-
--- Kinds Definition
-
-INSERT INTO ms_syst_data.syst_feature_map
-    ( internal_name
-    , display_name
-    , external_name
-    , feature_map_level_id
-    , parent_feature_map_id
-    , system_defined
-    , user_maintainable
-    , displayable
-    , syst_description
-    , sort_order )
-VALUES
-    ( 'global_instance_management_settings'
-    , 'Global Instance Management/Settings'
-    , 'Settings'
-    , ( SELECT id FROM ms_syst_data.syst_feature_map_levels WHERE internal_name = 'global_kind' )
-    , ( SELECT id
-        FROM ms_syst_data.syst_feature_map
-        WHERE internal_name = 'global_instance_management' )
-    , TRUE
-    , FALSE
-    , TRUE
-    , 'Settings which define behaviors for global instance management.'
-    , 1 )
-     ,
-    ( 'global_instance_management_enumerations'
-    , 'Global Instance Management/Enumerations'
-    , 'Enumerations'
-    , ( SELECT id FROM ms_syst_data.syst_feature_map_levels WHERE internal_name = 'global_kind' )
-    , ( SELECT id
-        FROM ms_syst_data.syst_feature_map
-        WHERE internal_name = 'global_authentication' )
-    , TRUE
-    , FALSE
-    , TRUE
-    , 'Lists of values available for global instance management as applicable.'
-    , 2 );
 CREATE OR REPLACE FUNCTION ms_syst_data.trig_b_d_syst_applications_delete_contexts()
 RETURNS trigger AS
 $BODY$
@@ -8572,8 +8276,8 @@ updates can be found.  This row starts at 0 and therefore may be the same as the
 diag_row_version - 1.
 
 This column is read only and not maintainable via this API view.$DOC$;
--- File:        initialize_enum_owner_states.eex.sql
--- Location:    musebms/database/components/system/mscmp_syst_instance/seed_data/initialize_enum_owner_states.eex.sql
+-- File:        enum_owner_states.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_instance/seed_data/enum_owner_states.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -8680,8 +8384,8 @@ PERFORM
 
 END;
 $INIT_ENUM$;
--- File:        initialize_enum_instance_states.eex.sql
--- Location:    musebms/database/components/system/mscmp_syst_instance/seed_data/initialize_enum_instance_states.eex.sql
+-- File:        enum_instance_states.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_instance/seed_data/enum_instance_states.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -8878,8 +8582,8 @@ PERFORM
 
 END;
 $INIT_ENUM$;
--- File:        initialize_enum_instance_types.eex.sql
--- Location:    musebms/database/components/system/mscmp_syst_instance/seed_data/initialize_enum_instance_types.eex.sql
+-- File:        enum_instance_types.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_instance/seed_data/enum_instance_types.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -8912,106 +8616,8 @@ BEGIN
 
 END;
 $INIT_ENUM$;
--- File:        privileges.eex.sql
--- Location:    musebms/database/application/msmcp/components/ms_syst_instance_mgr/privileges.eex.sql
--- Project:     Muse Systems Business Management System
---
--- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
--- This file may include content copyrighted and licensed from third parties.
---
--- See the LICENSE file in the project root for license terms and conditions.
--- See the NOTICE file in the project root for copyright ownership information.
---
--- muse.information@musesystems.com  :: https://muse.systems
-
---
--- MscmpSystInstance
---
-
--- syst_applications
-
-GRANT SELECT, INSERT, UPDATE ON TABLE ms_syst.syst_applications TO <%= ms_appusr %>;
-GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_applications() TO <%= ms_appusr %>;
-GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_applications() TO <%= ms_appusr %>;
-GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_applications() TO <%= ms_appusr %>;
-
--- syst_application_contexts
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE ms_syst.syst_application_contexts TO <%= ms_appusr %>;
-GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_application_contexts() TO <%= ms_appusr %>;
-GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_application_contexts() TO <%= ms_appusr %>;
-GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_application_contexts() TO <%= ms_appusr %>;
-
--- syst_owners
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE ms_syst.syst_owners TO <%= ms_appusr %>;
-GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_owners() TO <%= ms_appusr %>;
-GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_owners() TO <%= ms_appusr %>;
-GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_owners() TO <%= ms_appusr %>;
-
--- syst_instance_type_applications
-
-GRANT SELECT, INSERT, DELETE ON TABLE ms_syst.syst_instance_type_applications TO <%= ms_appusr %>;
-GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_instance_type_applications() TO <%= ms_appusr %>;
-GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_instance_type_applications() TO <%= ms_appusr %>;
-GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_instance_type_applications() TO <%= ms_appusr %>;
-
--- syst_instance_type_contexts
-
-GRANT SELECT, UPDATE ON TABLE ms_syst.syst_instance_type_contexts TO <%= ms_appusr %>;
-GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_instance_type_contexts() TO <%= ms_appusr %>;
-GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_instance_type_contexts() TO <%= ms_appusr %>;
-GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_instance_type_contexts() TO <%= ms_appusr %>;
-
--- syst_instances
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE ms_syst.syst_instances TO <%= ms_appusr %>;
-GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_instances() TO <%= ms_appusr %>;
-GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_instances() TO <%= ms_appusr %>;
-GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_instances() TO <%= ms_appusr %>;
-
--- syst_instance_contexts
-
-GRANT SELECT, UPDATE ON TABLE ms_syst.syst_instance_contexts TO <%= ms_appusr %>;
-GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_instance_contexts() TO <%= ms_appusr %>;
-GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_instance_contexts() TO <%= ms_appusr %>;
-GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_instance_contexts() TO <%= ms_appusr %>;
--- File:        initialize_enum_instance_types.eex.sql
--- Location:    musebms/database/subsystems/mssub_mcp/gen_seed_data/initialize_enum_instance_types.eex.sql
--- Project:     Muse Systems Business Management System
---
--- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
--- This file may include content copyrighted and licensed from third parties.
---
--- See the LICENSE file in the project root for license terms and conditions.
--- See the NOTICE file in the project root for copyright ownership information.
---
--- muse.information@musesystems.com :: https://muse.systems
-
-INSERT INTO ms_syst_data.syst_enum_items
-    ( internal_name
-    , display_name
-    , external_name
-    , enum_id
-    , enum_default
-    , syst_defined
-    , user_maintainable
-    , syst_description
-    , sort_order )
-VALUES
-    ( 'instance_types_sysdef_standard'
-    , 'Instance Types / Standard'
-    , 'Standard'
-    , ( SELECT id
-        FROM ms_syst_data.syst_enums
-        WHERE internal_name = 'instance_types' )
-    , TRUE
-    , TRUE
-    , TRUE
-    , 'A simple type representing the most typical kind of Instance.'
-    , 1 );
--- File:        initialize_enum_access_account_states.eex.sql
--- Location:    musebms/database/components/system/mscmp_syst_authn/seed_data/initialize_enum_access_account_states.eex.sql
+-- File:        enum_access_account_states.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_authn/seed_data/enum_access_account_states.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -9136,8 +8742,8 @@ PERFORM
 
 END;
 $INIT_ENUM$;
--- File:        initialize_enum_credential_types.eex.sql
--- Location:    musebms/database/components/system/mscmp_syst_authn/seed_data/initialize_enum_credential_types.eex.sql
+-- File:        enum_credential_types.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_authn/seed_data/enum_credential_types.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -9298,8 +8904,8 @@ PERFORM
 
 END;
 $INIT_ENUM$;
--- File:        initialize_enum_identity_types.eex.sql
--- Location:    musebms/database/components/system/mscmp_syst_authn/seed_data/initialize_enum_identity_types.eex.sql
+-- File:        enum_identity_types.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_authn/seed_data/enum_identity_types.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -11794,8 +11400,8 @@ updates can be found.  This row starts at 0 and therefore may be the same as the
 diag_row_version - 1.$DOC$;
 
 CREATE INDEX syst_password_history_access_account_idx ON ms_syst_data.syst_password_history ( access_account_id );
--- File:        initialize_syst_global_password_rules.eex.sql
--- Location:    musebms/database/components/system/mscmp_syst_authn/seed_data/initialize_syst_global_password_rules.eex.sql
+-- File:        syst_global_password_rules.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_authn/seed_data/syst_global_password_rules.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -15872,8 +15478,155 @@ updates can be found.  This row starts at 0 and therefore may be the same as the
 diag_row_version - 1.
 
 This value is read only from this API view.$DOC$;
--- File:        privileges.eex.sql
--- Location:    musebms/database/subsystems/mssub_mcp/components/mscmp_syst_authn/privileges.eex.sql
+-- File:        initial_privileges.eex.sql
+-- Location:    musebms/database/application/msapp_platform/privileges/initial_privileges.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+GRANT USAGE ON SCHEMA ms_syst TO <%= ms_appusr %>;
+-- File:        mscmp_syst_settings.eex.sql
+-- Location:    musebms/database/application/msapp_platform/privileges/mscmp_syst_settings.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE ms_syst.syst_settings TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_settings() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_settings() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_settings() TO <%= ms_appusr %>;
+-- File:        mscmp_syst_enums.eex.sql
+-- Location:    musebms/database/application/msapp_platform/privileges/mscmp_syst_enums.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+-- syst_enums
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE ms_syst.syst_enums TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_enums() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_enums() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_enums() TO <%= ms_appusr %>;
+
+-- syst_enum_functional_types
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE ms_syst.syst_enum_functional_types TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_enum_functional_types() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_enum_functional_types() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_enum_functional_types() TO <%= ms_appusr %>;
+
+-- syst_enum_items
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE ms_syst.syst_enum_items TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_enum_items() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_enum_items() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_enum_items() TO <%= ms_appusr %>;
+-- File:        mscmp_syst_features.eex.sql
+-- Location:    musebms/database/application/msapp_platform/privileges/mscmp_syst_features.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+--
+-- MscmpSystFeatures
+--
+
+-- syst_feature_setting_assigns
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE ms_syst.syst_feature_setting_assigns TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_feature_setting_assigns() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_feature_setting_assigns() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_feature_setting_assigns() TO <%= ms_appusr %>;
+-- File:        mscmp_syst_instance.eex.sql
+-- Location:    musebms/database/application/msapp_platform/privileges/mscmp_syst_instance.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+--
+-- MscmpSystInstance
+--
+
+-- syst_applications
+
+GRANT SELECT, INSERT, UPDATE ON TABLE ms_syst.syst_applications TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_applications() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_applications() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_applications() TO <%= ms_appusr %>;
+
+-- syst_application_contexts
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE ms_syst.syst_application_contexts TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_application_contexts() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_application_contexts() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_application_contexts() TO <%= ms_appusr %>;
+
+-- syst_owners
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE ms_syst.syst_owners TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_owners() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_owners() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_owners() TO <%= ms_appusr %>;
+
+-- syst_instance_type_applications
+
+GRANT SELECT, INSERT, DELETE ON TABLE ms_syst.syst_instance_type_applications TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_instance_type_applications() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_instance_type_applications() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_instance_type_applications() TO <%= ms_appusr %>;
+
+-- syst_instance_type_contexts
+
+GRANT SELECT, UPDATE ON TABLE ms_syst.syst_instance_type_contexts TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_instance_type_contexts() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_instance_type_contexts() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_instance_type_contexts() TO <%= ms_appusr %>;
+
+-- syst_instances
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE ms_syst.syst_instances TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_instances() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_instances() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_instances() TO <%= ms_appusr %>;
+
+-- syst_instance_contexts
+
+GRANT SELECT, UPDATE ON TABLE ms_syst.syst_instance_contexts TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_instance_contexts() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_instance_contexts() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_instance_contexts() TO <%= ms_appusr %>;
+-- File:        mscmp_syst_authn.eex.sql
+-- Location:    musebms/database/application/msapp_platform/privileges/mscmp_syst_authn.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -15979,5 +15732,428 @@ GRANT EXECUTE
                                               , p_instance_id       uuid
                                               , p_instance_owner_id uuid )
   TO <%= ms_appusr %>;
+-- File:        applications.eex.sql
+-- Location:    musebms/database/application/msapp_platform/gen_seed_data/applications.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+DO
+$INIT_PLATFORM_APPLICATIONS$
+    DECLARE
+        var_mssub_bms_app_id uuid;
+
+    BEGIN
+
+        ----------------------------------------------------------------------------------------------------------------
+        --
+        -- MS-BMS Application Initialization
+        --
+        ----------------------------------------------------------------------------------------------------------------
+
+        INSERT INTO ms_syst_data.syst_applications
+            ( internal_name, display_name, syst_description )
+        VALUES
+            ( 'msbms', 'Muse Systems Business Management System'
+            , 'A general purpose, whole business management system.' )
+        RETURNING id INTO var_mssub_bms_app_id;
+
+        INSERT INTO ms_syst_data.syst_application_contexts
+            ( internal_name
+            , display_name
+            , application_id
+            , description
+            , start_context
+            , login_context
+            , database_owner_context )
+        VALUES
+            ( 'msbms_owner'
+            , 'MS-BMS Datastore Owner Role'
+            , var_mssub_bms_app_id
+            , 'Ownership and privileged access for Muse Systems Business Management System databases.'
+            , FALSE
+            , FALSE
+            , TRUE )
+
+          ,
+            ( 'msbms_app'
+            , 'MS-BMS Application Access Role'
+            , var_mssub_bms_app_id
+            , 'Regular interactive user session access for Muse Systems Business Management System databases.'
+            , TRUE
+            , TRUE
+            , FALSE );
+    END ;
+$INIT_PLATFORM_APPLICATIONS$;
+-- File:        enum_instance_types.eex.sql
+-- Location:    musebms/database/subsystems/mssub_mcp/gen_seed_data/enum_instance_types.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+INSERT INTO ms_syst_data.syst_enum_items
+    ( internal_name
+    , display_name
+    , external_name
+    , enum_id
+    , enum_default
+    , syst_defined
+    , user_maintainable
+    , syst_description
+    , sort_order )
+VALUES
+    ( 'instance_types_sysdef_standard'
+    , 'Instance Types / Standard'
+    , 'Standard'
+    , ( SELECT id
+        FROM ms_syst_data.syst_enums
+        WHERE internal_name = 'instance_types' )
+    , TRUE
+    , TRUE
+    , TRUE
+    , 'A simple type representing the most typical kind of Instance.'
+    , 1 );
+-- File:        enum_platform_states.eex.sql
+-- Location:    musebms/database/application/msapp_platform/gen_seed_data/enum_platform_states.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+DO
+$INIT_ENUM_PLATFORM_STATES$
+    DECLARE
+        var_enum_id uuid;
+
+    BEGIN
+
+        INSERT INTO ms_syst_data.syst_enums
+            ( internal_name
+            , display_name
+            , syst_description
+            , syst_defined
+            , user_maintainable )
+        VALUES
+            ( 'platform_states'
+            , 'Platform States'
+            , 'Defines the available values describing the MsappPlatform life-cycle states.'
+            , TRUE
+            , FALSE)
+        RETURNING id INTO var_enum_id;
+
+        INSERT INTO ms_syst_data.syst_enum_items
+            ( internal_name
+            , display_name
+            , external_name
+            , enum_id
+            , enum_default
+            , functional_type_default
+            , syst_defined
+            , user_maintainable
+            , syst_description
+            , sort_order )
+        VALUES
+            ( 'platform_states_sysdef_bootstrapping'
+            , 'Platform States / Bootstrapping'
+            , 'Bootstrapping'
+            , var_enum_id
+            , TRUE
+            , TRUE
+            , TRUE
+            , FALSE
+            , 'The system is freshly installed and no platform management instance has been installed or configured.'
+            , 001)
+
+            ,
+            ( 'platform_states_sysdef_active'
+            , 'Platform States / Active'
+            , 'Active'
+            , var_enum_id
+            , FALSE
+            , FALSE
+            , TRUE
+            , FALSE
+            , 'The is fully bootstrapped and ready for normal interactive use.'
+            , 002);
+
+    END;
+$INIT_ENUM_PLATFORM_STATES$;
+-- File:        settings.eex.sql
+-- Location:    musebms/database/application/msapp_platform/gen_seed_data/settings.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+INSERT INTO ms_syst_data.syst_settings
+    ( internal_name
+    , display_name
+    , syst_defined
+    , syst_description
+    , setting_uuid )
+VALUES
+    ( 'msapp_platform_general_state'
+    , 'MsappPlatform General State'
+    , TRUE
+    , 'Defines the current installation and runtime state of the platform as a whole.  ' ||
+      'Valid values are drawn from the system enumeration "platform_states".'
+    , (SELECT id FROM ms_syst_data.syst_enum_items WHERE internal_name = 'platform_states_sysdef_bootstrapping') );
+-- File:        feature_mapping.eex.sql
+-- Location:    musebms/database/application/msmcp/gen_seed_data/feature_mapping.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com  :: https://muse.systems
+
+INSERT INTO ms_syst_data.syst_feature_map_levels
+    ( internal_name
+    , display_name
+    , functional_type
+    , syst_description
+    , system_defined
+    , user_maintainable )
+VALUES
+    ( 'global_module'
+    , 'Modules'
+    , 'nonassignable'
+    , 'Broad, top level feature grouping.'
+    , TRUE
+    , FALSE )
+     ,
+    ( 'global_kind'
+    , 'Kinds'
+    , 'assignable'
+    , 'Identifies different kinds of mappable features such as forms, settings, or enumerations.'
+    , TRUE
+    , FALSE );
+
+--------------------------------------------------------------------------------
+-- 01 - Global Settings Module
+--------------------------------------------------------------------------------
+
+-- Module Definition
+
+INSERT INTO ms_syst_data.syst_feature_map
+    ( internal_name
+    , display_name
+    , external_name
+    , feature_map_level_id
+    , parent_feature_map_id
+    , system_defined
+    , user_maintainable
+    , displayable
+    , syst_description
+    , sort_order )
+VALUES
+    ( 'global_settings'
+    , 'Global Settings'
+    , 'Global Settings'
+    , ( SELECT id
+        FROM ms_syst_data.syst_feature_map_levels
+        WHERE internal_name = 'global_module' )
+    , NULL
+    , TRUE
+    , FALSE
+    , TRUE
+    , 'Global settings which define behaviors for the system, including across instances.'
+    , 1 );
+
+-- Kinds Definition
+
+INSERT INTO ms_syst_data.syst_feature_map
+    ( internal_name
+    , display_name
+    , external_name
+    , feature_map_level_id
+    , parent_feature_map_id
+    , system_defined
+    , user_maintainable
+    , displayable
+    , syst_description
+    , sort_order )
+VALUES
+    ( 'global_settings_settings'
+    , 'Global Settings/Settings'
+    , 'Settings'
+    , ( SELECT id
+        FROM ms_syst_data.syst_feature_map_levels
+        WHERE internal_name = 'global_kind' )
+    , ( SELECT id FROM ms_syst_data.syst_feature_map WHERE internal_name = 'global_settings' )
+    , TRUE
+    , FALSE
+    , TRUE
+    , 'Global settings which define behaviors for the system, including across instances.'
+    , 1 );
+
+--------------------------------------------------------------------------------
+-- 02 - Global Authentication Module
+--------------------------------------------------------------------------------
+
+-- Module Definition
+
+INSERT INTO ms_syst_data.syst_feature_map
+    ( internal_name
+    , display_name
+    , external_name
+    , feature_map_level_id
+    , parent_feature_map_id
+    , system_defined
+    , user_maintainable
+    , displayable
+    , syst_description
+    , sort_order )
+VALUES
+    ( 'global_authentication'
+    , 'Global Authentication'
+    , 'Global Authentication'
+    , ( SELECT id
+        FROM ms_syst_data.syst_feature_map_levels
+        WHERE internal_name = 'global_module' )
+    , NULL
+    , TRUE
+    , FALSE
+    , TRUE
+    , 'Functionality related to managing and providing global user authentication.'
+    , 2 );
+
+-- Kinds Definition
+
+INSERT INTO ms_syst_data.syst_feature_map
+    ( internal_name
+    , display_name
+    , external_name
+    , feature_map_level_id
+    , parent_feature_map_id
+    , system_defined
+    , user_maintainable
+    , displayable
+    , syst_description
+    , sort_order )
+VALUES
+    ( 'global_authentication_settings'
+    , 'Global Authentication/Settings'
+    , 'Settings'
+    , ( SELECT id
+        FROM ms_syst_data.syst_feature_map_levels
+        WHERE internal_name = 'global_kind' )
+    , ( SELECT id
+        FROM ms_syst_data.syst_feature_map
+        WHERE internal_name = 'global_authentication' )
+    , TRUE
+    , FALSE
+    , TRUE
+    , 'Global settings which define system wide authentication behaviors.'
+    , 1 )
+     ,
+    ( 'global_authentication_enumerations'
+    , 'Global Authentication/Enumerations'
+    , 'Enumerations'
+    , ( SELECT id FROM ms_syst_data.syst_feature_map_levels WHERE internal_name = 'global_kind' )
+    , ( SELECT id
+        FROM ms_syst_data.syst_feature_map
+        WHERE internal_name = 'global_authentication' )
+    , TRUE
+    , FALSE
+    , TRUE
+    , 'Lists of values which are available in support of global user authentication.'
+    , 2 );
+
+--------------------------------------------------------------------------------
+-- 03 - Global Instance Management Module
+--------------------------------------------------------------------------------
+
+-- Module Definition
+
+INSERT INTO ms_syst_data.syst_feature_map
+    ( internal_name
+    , display_name
+    , external_name
+    , feature_map_level_id
+    , parent_feature_map_id
+    , system_defined
+    , user_maintainable
+    , displayable
+    , syst_description
+    , sort_order )
+VALUES
+    ( 'global_instance_management'
+    , 'Global Instance Management'
+    , 'Global Instance Management'
+    , ( SELECT id
+        FROM ms_syst_data.syst_feature_map_levels
+        WHERE internal_name = 'global_module' )
+    , NULL
+    , TRUE
+    , FALSE
+    , TRUE
+    , 'Management of individual instances from the Global context.'
+    , 3 );
+
+-- Kinds Definition
+
+INSERT INTO ms_syst_data.syst_feature_map
+    ( internal_name
+    , display_name
+    , external_name
+    , feature_map_level_id
+    , parent_feature_map_id
+    , system_defined
+    , user_maintainable
+    , displayable
+    , syst_description
+    , sort_order )
+VALUES
+    ( 'global_instance_management_settings'
+    , 'Global Instance Management/Settings'
+    , 'Settings'
+    , ( SELECT id FROM ms_syst_data.syst_feature_map_levels WHERE internal_name = 'global_kind' )
+    , ( SELECT id
+        FROM ms_syst_data.syst_feature_map
+        WHERE internal_name = 'global_instance_management' )
+    , TRUE
+    , FALSE
+    , TRUE
+    , 'Settings which define behaviors for global instance management.'
+    , 1 )
+     ,
+    ( 'global_instance_management_enumerations'
+    , 'Global Instance Management/Enumerations'
+    , 'Enumerations'
+    , ( SELECT id FROM ms_syst_data.syst_feature_map_levels WHERE internal_name = 'global_kind' )
+    , ( SELECT id
+        FROM ms_syst_data.syst_feature_map
+        WHERE internal_name = 'global_authentication' )
+    , TRUE
+    , FALSE
+    , TRUE
+    , 'Lists of values available for global instance management as applicable.'
+    , 2 );
 END;
 $MIGRATION$;

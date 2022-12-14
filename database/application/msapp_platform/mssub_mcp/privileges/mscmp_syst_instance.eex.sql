@@ -1,5 +1,5 @@
--- File:        privileges.eex.sql
--- Location:    musebms/database/application/msmcp/components/ms_syst_instance_mgr/privileges.eex.sql
+-- File:        mscmp_syst_instance.eex.sql
+-- Location:    musebms/database/application/msapp_platform/mssub_mcp/privileges/mscmp_syst_instance.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -8,7 +8,7 @@
 -- See the LICENSE file in the project root for license terms and conditions.
 -- See the NOTICE file in the project root for copyright ownership information.
 --
--- muse.information@musesystems.com  :: https://muse.systems
+-- muse.information@musesystems.com :: https://muse.systems
 
 --
 -- MscmpSystInstance

@@ -19,10 +19,25 @@ test_kind =
     :unit_testing
   end
 
-TestSupport.setup_testing_database(test_kind)
+children = [
+  {DynamicSupervisor, strategy: :one_for_one, name: MssubMcp.TestingSupervisor}
+]
+
+Supervisor.start_link(children, strategy: :one_for_one)
+
+startup_options = MscmpSystOptions.get_options!("test_startup_options.toml")
+
+TestSupport.setup_testing_database(test_kind, startup_options)
+
+DynamicSupervisor.start_child(
+  MssubMcp.TestingSupervisor,
+  {MssubMcp.Supervisor, startup_options: startup_options}
+)
 
 ExUnit.start()
 
+MscmpSystDb.put_datastore_context(TestSupport.get_testing_datastore_context_id())
+
 ExUnit.after_suite(fn _suite_result ->
-  TestSupport.cleanup_testing_database(test_kind)
+  TestSupport.cleanup_testing_database(test_kind, startup_options)
 end)
