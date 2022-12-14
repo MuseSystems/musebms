@@ -66,6 +66,6 @@ defmodule MscmpSystDb.Datastore do
     Datastore and Datastore Context related connection options.  See
     `t:MscmpSystDb.Types.datastore_options/0` for more.
   """
-  @spec start_link(Keyword.t()) :: Supervisor.on_start_child()
+  @spec start_link(Keyword.t()) :: Supervisor.on_start()
   defdelegate start_link(opts \\ []), to: Runtime.Datastore, as: :start_link_datastore
 end
