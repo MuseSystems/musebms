@@ -27,64 +27,57 @@ defmodule TestSupport do
 
   use MssubMcp.Macros
 
+  mcp_constants()
+
   @migration_test_source_root_dir "../../database"
   @migration_unit_test_ds_type "mssub_mcp_unit_test"
   @migration_integration_test_ds_type "mssub_mcp_integration_test"
 
-  mcp_constants()
+  @mnesia_database_location Path.join([".mnesia"])
 
-  def setup_testing_database(test_kind) do
+  def setup_testing_database(test_kind, startup_options) do
+    setup_rate_limiter(test_kind)
+
     :ok = build_migrations(test_kind)
 
-    opts = [
-      owner_name: @mcp_db_owner_role,
-      app_access_role_name: @mcp_db_app_access_role,
-      name: @mcp_datastore_supervisor_name
-    ]
-
-    datastore_options = MssubMcp.Runtime.Options.get_datastore_options(opts)
-    datastore_type = get_datastore_type(test_kind)
-
-    database_owner = Enum.find(datastore_options.contexts, &(&1[:database_owner_context] == true))
-
-    {:ok, _} =
-      MscmpSystDb.upgrade_datastore(
-        datastore_options,
-        datastore_type,
-        ms_owner: database_owner.database_role,
-        ms_appusr: "mssub_mcp_app_access"
+    :ignore =
+      MssubMcp.Updater.start_link(
+        startup_options: startup_options,
+        datastore_type: get_datastore_type(test_kind)
       )
-
-    # This is required post upgrade because we're loading enumerations data
-    # migrations after the enums service is started and initialized.  This isn't
-    # an expected use case and is an artifact of our testing jury rigging.  By
-    # killing the process and allowing it to restart, it refreshes its data with
-    # the newly migrated values now in the database.
-    #
-    # TODO:  Expose the refresh from database functionality in MscmpSystEnums.
-
-    Process.whereis(@mcp_enums_service_name) |> Process.exit(:kill)
   end
 
-  defp get_datastore_type(:unit_testing), do: @migration_unit_test_ds_type
-  defp get_datastore_type(:integration_testing), do: @migration_integration_test_ds_type
+  defp setup_rate_limiter(:unit_testing), do: nil
 
-  def cleanup_testing_database(test_kind) do
+  defp setup_rate_limiter(:integration_testing) do
+    File.mkdir_p!(@mnesia_database_location)
+    Application.put_env(:mnesia, :dir, @mnesia_database_location)
+
+    :mnesia.stop()
+    :mnesia.create_schema([node()])
+    :mnesia.start()
+  end
+
+  def cleanup_testing_database(test_kind, startup_options) do
+    cleanup_rate_limiter(test_kind)
+
     datastore_type = get_datastore_type(test_kind)
 
-    opts = [
-      owner_name: @mcp_db_owner_role,
-      app_access_role_name: @mcp_db_app_access_role,
-      name: @mcp_datastore_supervisor_name
-    ]
-
-    datastore_options = MssubMcp.Runtime.Options.get_datastore_options(opts)
+    datastore_options = MssubMcp.Runtime.Options.get_datastore_options(startup_options, [])
 
     :ok = MscmpSystDb.stop_datastore(datastore_options)
     :ok = MscmpSystDb.drop_datastore(datastore_options)
 
     File.rm_rf!(Path.join(["priv/database", datastore_type]))
   end
+
+  defp cleanup_rate_limiter(:integration_testing), do: File.rm_rf!(@mnesia_database_location)
+  defp cleanup_rate_limiter(_), do: nil
+
+  def get_testing_datastore_context_id, do: @mcp_db_app_access_context
+
+  defp get_datastore_type(:unit_testing), do: @migration_unit_test_ds_type
+  defp get_datastore_type(:integration_testing), do: @migration_integration_test_ds_type
 
   defp build_migrations(test_kind) do
     Builddb.run([

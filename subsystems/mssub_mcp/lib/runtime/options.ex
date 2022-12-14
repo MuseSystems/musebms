@@ -24,13 +24,8 @@ defmodule MssubMcp.Runtime.Options do
   # isn't right here.
   @password_magic <<44, 60, 238, 75, 246, 83, 116, 104, 187, 163, 159, 83, 37, 2, 54, 86>>
 
-  @spec get_datastore_options(Keyword.t()) :: MscmpSystDb.Types.datastore_options()
-  def get_datastore_options(opts) do
-    startup_options =
-      MscmpSystOptions.get_options!(
-        Application.get_env(:mssub_mcp, :startup_options_path, "ms_startup_options.toml")
-      )
-
+  @spec get_datastore_options(map(), Keyword.t()) :: MscmpSystDb.Types.datastore_options()
+  def get_datastore_options(startup_options, opts) do
     db_server = MscmpSystOptions.get_global_dbserver(startup_options)
     database_name = @mcp_db_name
     datastore_code = MscmpSystOptions.get_global_pepper_value(startup_options)

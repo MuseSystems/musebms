@@ -28,7 +28,8 @@ defmodule MsappPlatform.MixProject do
     {:gradient, github: "esl/gradient", only: [:dev], runtime: false},
 
     # Muse Systems Business Management System Components
-    {:mssub_mcp, path: "../../subsystems/mssub_mcp"}
+    {:mssub_mcp, path: "../../subsystems/mssub_mcp"},
+    {:mssub_bms, path: "../../subsystems/mssub_bms"}
   ]
 
   @dialyzer_opts [
@@ -64,7 +65,7 @@ defmodule MsappPlatform.MixProject do
 
   def application do
     [
-      mod: {MsappPlatform.Application, []},
+      mod: {MsappPlatform.Runtime.Application, []},
       # built-in apps that need starting
       extra_applications: [:logger, :runtime_tools, :crypto, :mnesia]
     ]

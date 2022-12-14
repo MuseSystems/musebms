@@ -1,5 +1,5 @@
--- File:        initialize_feature_mapping.eex.sql
--- Location:    musebms/database/application/msmcp/gen_seed_data/initialize_feature_mapping.eex.sql
+-- File:        feature_mapping.eex.sql
+-- Location:    musebms/database/application/msapp_platform/mssub_mcp/seed_data/feature_mapping.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -8,7 +8,7 @@
 -- See the LICENSE file in the project root for license terms and conditions.
 -- See the NOTICE file in the project root for copyright ownership information.
 --
--- muse.information@musesystems.com  :: https://muse.systems
+-- muse.information@musesystems.com :: https://muse.systems
 
 INSERT INTO ms_syst_data.syst_feature_map_levels
     ( internal_name

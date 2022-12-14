@@ -21,7 +21,7 @@ defmodule IntegrationTest do
   @moduletag :integration
   @moduletag :capture_log
 
-  @startup_options_path "ms_startup_options.toml"
+  @startup_options_path "test_startup_options.toml"
   @migrations_root_dir "../../database/subsystems/mssub_mcp/testing_support"
 
   # Special Note:

@@ -16,9 +16,13 @@
 ##         activities.  It is not used to build released software.
 ##
 
-# The database should have been migrated at application start so what we're
-# building here is just the data required for testing.  That will, as all other
-# tests, be part of sponsor 821 ("MT").
+[[build_plan]]
+release              = 1
+version              = 1
+update               = 0
+sponsor              = 820
+sponsor_modification = 0
+load_files = [ {type = "plan", file = "subsystems/mssub_mcp/subplans.mssub_mcp.toml"} ]
 
 [[build_plan]]
 release              = 1
@@ -27,6 +31,7 @@ update               = 0
 sponsor              = 821
 sponsor_modification = 0
 load_files = [
+    "subsystems/mssub_mcp/testing_support/test_privileges.eex.sql",
     "components/system/mscmp_syst_instance/testing_support/test_data_unit_test.eex.sql",
     "components/system/mscmp_syst_authn/testing_support/test_data_unit_test.eex.sql",
  ]

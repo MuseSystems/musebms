@@ -97,8 +97,7 @@ defmodule MssubMcp.MixProject do
         :logger,
         :crypto,
         :mnesia
-      ],
-      mod: {MssubMcp.Runtime.Application, []}
+      ]
     ]
   end
 

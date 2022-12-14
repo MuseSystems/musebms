@@ -24,32 +24,18 @@ defmodule DevSupport do
   def start_dev_environment(db_kind \\ :unit_testing) do
     :ok = build_migrations(db_kind)
 
-    opts = [
-      owner_name: @mcp_db_owner_role,
-      app_access_role_name: @mcp_db_app_access_role,
-      name: @mcp_datastore_supervisor_name
-    ]
+    startup_options = MscmpSystOptions.get_options!("test_startup_options.toml") |> IO.inspect()
 
-    datastore_options = MssubMcp.Runtime.Options.get_datastore_options(opts)
-    datastore_type = get_datastore_type(db_kind)
-
-    {:ok, _} =
-      MscmpSystDb.upgrade_datastore(
-        datastore_options,
-        datastore_type,
-        ms_owner: @mcp_db_owner_role,
-        ms_appusr: @mcp_db_app_access_role
+    :ignore =
+      MssubMcp.Updater.start_link(
+        startup_options: startup_options,
+        datastore_type: get_datastore_type(db_kind)
       )
 
-    # This is required post upgrade because we're loading enumerations data
-    # migrations after the enums service is started and initialized.  This isn't
-    # an expected use case and is an artifact of our testing jury rigging.  By
-    # killing the process and allowing it to restart, it refreshes its data with
-    # the newly migrated values now in the database.
-    #
-    # TODO:  Expose the refresh from database functionality in MscmpSystEnums.
-
-    Process.whereis(@mcp_enums_service_name) |> Process.exit(:kill)
+    Supervisor.start_link([{MssubMcp.Supervisor, startup_options: startup_options}],
+      strategy: :one_for_one,
+      name: DevSupport.Supervisor
+    )
   end
 
   def stop_dev_environment(db_kind \\ :unit_testing), do: cleanup_database(db_kind)
@@ -60,13 +46,11 @@ defmodule DevSupport do
   def cleanup_database(db_kind) do
     datastore_type = get_datastore_type(db_kind)
 
-    opts = [
-      owner_name: @mcp_db_owner_role,
-      app_access_role_name: @mcp_db_app_access_role,
-      name: @mcp_datastore_supervisor_name
-    ]
+    Supervisor.stop(DevSupport.Supervisor)
 
-    datastore_options = MssubMcp.Runtime.Options.get_datastore_options(opts)
+    startup_options = MscmpSystOptions.get_options!("test_startup_options.toml")
+
+    datastore_options = MssubMcp.Runtime.Options.get_datastore_options(startup_options, [])
 
     :ok = MscmpSystDb.stop_datastore(datastore_options)
     :ok = MscmpSystDb.drop_datastore(datastore_options)
