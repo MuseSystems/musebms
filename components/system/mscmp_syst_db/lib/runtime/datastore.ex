@@ -41,7 +41,7 @@ defmodule MscmpSystDb.Runtime.Datastore do
     }
   end
 
-  @spec start_link_datastore(Keyword.t()) :: Supervisor.on_start_child()
+  @spec start_link_datastore(Keyword.t()) :: Supervisor.on_start()
   def start_link_datastore(opts) when is_list(opts) do
     {:ok, datastore_options} = validate_datastore_options(opts[:datastore_options])
 
@@ -161,7 +161,7 @@ defmodule MscmpSystDb.Runtime.Datastore do
     }
   end
 
-  @spec start_link_context(Keyword.t()) :: Supervisor.on_start_child()
+  @spec start_link_context(Keyword.t()) :: Supervisor.on_start()
   def start_link_context(opts) when is_list(opts) do
     {:ok, datastore_options} = validate_datastore_options(opts[:datastore_options])
 

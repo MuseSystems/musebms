@@ -67,6 +67,6 @@ defmodule MscmpSystDb.DatastoreContext do
     * `context` - a required map describing the Context to be started.  See
     `t:MscmpSystDb.Types.datastore_context()` for more information.
   """
-  @spec start_link(Keyword.t()) :: Supervisor.on_start_child()
+  @spec start_link(Keyword.t()) :: Supervisor.on_start()
   defdelegate start_link(opts \\ []), to: Runtime.Datastore, as: :start_link_context
 end
