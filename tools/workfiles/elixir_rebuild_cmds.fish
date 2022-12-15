@@ -26,6 +26,10 @@ cd components/system/mscmp_syst_enums
 rm -Rf _build; rm -Rf deps
 mix deps.clean --all; mix deps.update --all; mix deps.get
 cd ../../../
+cd components/system/mscmp_syst_perms
+rm -Rf _build; rm -Rf deps
+mix deps.clean --all; mix deps.update --all; mix deps.get
+cd ../../../
 cd components/system/mscmp_syst_instance
 rm -Rf _build; rm -Rf deps
 mix deps.clean --all; mix deps.update --all; mix deps.get
@@ -75,6 +79,10 @@ cd components/system/mscmp_syst_enums
 rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
 mix deps.clean --all; mix deps.unlock --all; mix deps.get; MIX_ENV=test mix compile; mix dialyzer.clean; mix dialyzer --plt
 cd ../../../
+cd components/system/mscmp_syst_perms
+rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
+mix deps.clean --all; mix deps.unlock --all; mix deps.get; MIX_ENV=test mix compile; MIX_ENV=dev mix compile; mix dialyzer.clean; mix dialyzer --plt
+cd ../../../
 cd components/system/mscmp_syst_instance
 rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
 mix deps.clean --all; mix deps.unlock --all; mix deps.get; MIX_ENV=test mix compile; mix dialyzer.clean; mix dialyzer --plt
@@ -120,6 +128,10 @@ rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
 mix deps.clean --all; mix deps.get; MIX_ENV=test mix compile; mix dialyzer.clean; mix dialyzer --plt &
 cd ../../../
 cd components/system/mscmp_syst_enums
+rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
+mix deps.clean --all; mix deps.get; MIX_ENV=test mix compile; mix dialyzer.clean; mix dialyzer --plt &
+cd ../../../
+cd components/system/mscmp_syst_perms
 rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
 mix deps.clean --all; mix deps.get; MIX_ENV=test mix compile; mix dialyzer.clean; mix dialyzer --plt &
 cd ../../../
@@ -172,6 +184,10 @@ cd components/system/mscmp_syst_enums
 rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
 mix deps.clean --all; mix deps.unlock --all; mix deps.get; MIX_ENV=test mix compile
 cd ../../../
+cd components/system/mscmp_syst_perms
+rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
+mix deps.clean --all; mix deps.unlock --all; mix deps.get; MIX_ENV=test mix compile
+cd ../../../
 cd components/system/mscmp_syst_instance
 rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
 mix deps.clean --all; mix deps.unlock --all; mix deps.get; MIX_ENV=test mix compile
@@ -204,6 +220,9 @@ cd components/system/mscmp_syst_settings
 mix dialyzer.clean; mix dialyzer --plt
 cd ../../../
 cd components/system/mscmp_syst_enums
+mix dialyzer.clean; mix dialyzer --plt
+cd ../../../
+cd components/system/mscmp_syst_perms
 mix dialyzer.clean; mix dialyzer --plt
 cd ../../../
 cd components/system/mscmp_syst_instance
@@ -247,6 +266,10 @@ cd components/system/mscmp_syst_enums
 rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
 mix deps.clean --all; mix deps.get; MIX_ENV=test mix compile; mix test --trace
 cd ../../../
+cd components/system/mscmp_syst_perms
+rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
+mix deps.clean --all; mix deps.get; MIX_ENV=test mix compile; mix test --trace
+cd ../../../
 cd components/system/mscmp_syst_instance
 rm -Rf _build; rm -Rf .elixir_ls; rm -Rf deps
 mix deps.clean --all; mix deps.get; MIX_ENV=test mix compile; mix test --trace
@@ -286,6 +309,9 @@ cd components/system/mscmp_syst_settings
 mix credo --strict; mix dialyzer
 cd ../../../
 cd components/system/mscmp_syst_enums
+mix credo --strict; mix dialyzer
+cd ../../../
+cd components/system/mscmp_syst_perms
 mix credo --strict; mix dialyzer
 cd ../../../
 cd components/system/mscmp_syst_instance

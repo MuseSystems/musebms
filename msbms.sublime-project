@@ -35,6 +35,9 @@
             "path": "components/system/mscmp_syst_authn",
         },
         {
+            "path": "components/system/mscmp_syst_perms",
+        },
+        {
             "path": "subsystems/mssub_mcp",
         },
         {
