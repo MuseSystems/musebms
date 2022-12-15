@@ -17,24 +17,6 @@ defmodule MscmpSystPerms.MixProject do
     {:mscmp_syst_db, path: "../mscmp_syst_db"}
   ]
 
-  @docs [
-    name: "MscmpSystPerms",
-    main: "MscmpSystPerms",
-    output: "../../../documentation/technical/app_server/mscmp_syst_perms",
-    deps: [
-      mscmp_syst_utils: "../../../../documentation/technical/app_server/mscmp_syst_utils",
-      mscmp_syst_error: "../../../../documentation/technical/app_server/mscmp_syst_error",
-      mscmp_syst_db: "../../../../documentation/technical/app_server/mscmp_syst_db"
-    ],
-    groups_for_functions: [],
-    nest_modules_by_prefix: [Msdata],
-    groups_for_modules: [
-      API: [MscmpSystPerms],
-      Data: [],
-      "Supporting Types": [MscmpSystPerms.Types]
-    ]
-  ]
-
   @dialyzer_opts [
     flags: ["-Wunmatched_returns", :error_handling, :underspecs],
     plt_add_apps: [:mix]
@@ -54,7 +36,23 @@ defmodule MscmpSystPerms.MixProject do
       start_permanent: in_production,
       dialyzer: @dialyzer_opts,
       elixirc_paths: elixirc_paths(Mix.env()),
-      docs: @docs
+      docs: [
+        name: "MscmpSystPerms",
+        main: "MscmpSystPerms",
+        output: "../../../documentation/technical/app_server/mscmp_syst_perms",
+        deps: [
+          mscmp_syst_utils: "../../../../documentation/technical/app_server/mscmp_syst_utils",
+          mscmp_syst_error: "../../../../documentation/technical/app_server/mscmp_syst_error",
+          mscmp_syst_db: "../../../../documentation/technical/app_server/mscmp_syst_db"
+        ],
+        groups_for_functions: [],
+        nest_modules_by_prefix: [Msdata],
+        groups_for_modules: [
+          API: [MscmpSystPerms],
+          Data: [],
+          "Supporting Types": [MscmpSystPerms.Types]
+        ]
+      ]
     ]
   end
 
