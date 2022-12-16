@@ -1,0 +1,56 @@
+# Source File: subplans.mscmp_syst_perms.toml
+# Location:    musebms/database/mscmp_syst_perms/subplans.mscmp_syst_perms.toml
+# Project:     Muse Systems Business Management System
+#
+# Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+# This file may include content copyrighted and licensed from third parties.
+#
+# See the LICENSE file in the project root for license terms and conditions.
+# See the NOTICE file in the project root for copyright ownership information.
+#
+# muse.information@musesystems.com :: https://muse.systems
+
+[[build_plan]]
+release              = 1
+version              = 1
+update               = 0
+sponsor              = 820
+sponsor_modification = 0
+load_files = [
+    "components/system/mscmp_syst_perms/ms_syst_data/syst_perm_types/syst_perm_types.eex.sql",
+
+    "components/system/mscmp_syst_perms/ms_syst_data/syst_perm_type_degrees/trig_a_iu_syst_perm_type_degrees_ordering.eex.sql",
+    "components/system/mscmp_syst_perms/ms_syst_data/syst_perm_type_degrees/syst_perm_type_degrees.eex.sql",
+
+    "components/system/mscmp_syst_perms/ms_syst_data/syst_perms/syst_perms.eex.sql",
+
+    "components/system/mscmp_syst_perms/ms_syst_data/syst_perm_roles/syst_perm_roles.eex.sql",
+
+    "components/system/mscmp_syst_perms/ms_syst_data/syst_perm_role_grants/trig_b_iu_syst_perm_role_grants_validate_degree.eex.sql",
+    "components/system/mscmp_syst_perms/ms_syst_data/syst_perm_role_grants/syst_perm_role_grants.eex.sql",
+
+    "components/system/mscmp_syst_perms/ms_syst/api_views/syst_perm_types/trig_i_i_syst_perm_types.eex.sql",
+    "components/system/mscmp_syst_perms/ms_syst/api_views/syst_perm_types/trig_i_u_syst_perm_types.eex.sql",
+    "components/system/mscmp_syst_perms/ms_syst/api_views/syst_perm_types/trig_i_d_syst_perm_types.eex.sql",
+    "components/system/mscmp_syst_perms/ms_syst/api_views/syst_perm_types/syst_perm_types.eex.sql",
+
+    "components/system/mscmp_syst_perms/ms_syst/api_views/syst_perm_type_degrees/trig_i_i_syst_perm_type_degrees.eex.sql",
+    "components/system/mscmp_syst_perms/ms_syst/api_views/syst_perm_type_degrees/trig_i_u_syst_perm_type_degrees.eex.sql",
+    "components/system/mscmp_syst_perms/ms_syst/api_views/syst_perm_type_degrees/trig_i_d_syst_perm_type_degrees.eex.sql",
+    "components/system/mscmp_syst_perms/ms_syst/api_views/syst_perm_type_degrees/syst_perm_type_degrees.eex.sql",
+
+    "components/system/mscmp_syst_perms/ms_syst/api_views/syst_perms/trig_i_i_syst_perms.eex.sql",
+    "components/system/mscmp_syst_perms/ms_syst/api_views/syst_perms/trig_i_u_syst_perms.eex.sql",
+    "components/system/mscmp_syst_perms/ms_syst/api_views/syst_perms/trig_i_d_syst_perms.eex.sql",
+    "components/system/mscmp_syst_perms/ms_syst/api_views/syst_perms/syst_perms.eex.sql",
+
+    "components/system/mscmp_syst_perms/ms_syst/api_views/syst_perm_roles/trig_i_i_syst_perm_roles.eex.sql",
+    "components/system/mscmp_syst_perms/ms_syst/api_views/syst_perm_roles/trig_i_u_syst_perm_roles.eex.sql",
+    "components/system/mscmp_syst_perms/ms_syst/api_views/syst_perm_roles/trig_i_d_syst_perm_roles.eex.sql",
+    "components/system/mscmp_syst_perms/ms_syst/api_views/syst_perm_roles/syst_perm_roles.eex.sql",
+
+    "components/system/mscmp_syst_perms/ms_syst/api_views/syst_perm_role_grants/trig_i_i_syst_perm_role_grants.eex.sql",
+    "components/system/mscmp_syst_perms/ms_syst/api_views/syst_perm_role_grants/trig_i_u_syst_perm_role_grants.eex.sql",
+    "components/system/mscmp_syst_perms/ms_syst/api_views/syst_perm_role_grants/trig_i_d_syst_perm_role_grants.eex.sql",
+    "components/system/mscmp_syst_perms/ms_syst/api_views/syst_perm_role_grants/syst_perm_role_grants.eex.sql",
+]
