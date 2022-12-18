@@ -27,7 +27,7 @@ CREATE VIEW ms_syst.syst_perm_types AS
         , diag_update_count
     FROM ms_syst_data.syst_perm_types;
 
-ALTER VIEW ms_syst.syst_perm_types OWNER TO <%= msbms_owner %>;
+ALTER VIEW ms_syst.syst_perm_types OWNER TO <%= ms_owner %>;
 
 REVOKE ALL ON TABLE ms_syst.syst_perm_types FROM PUBLIC;
 

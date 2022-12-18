@@ -54,10 +54,10 @@ CREATE TABLE ms_syst_data.syst_perm_role_grants
         NOT NULL DEFAULT 0
 );
 
-ALTER TABLE ms_syst_data.syst_perm_role_grants OWNER TO <%= msbms_owner %>;
+ALTER TABLE ms_syst_data.syst_perm_role_grants OWNER TO <%= ms_owner %>;
 
 REVOKE ALL ON TABLE ms_syst_data.syst_perm_role_grants FROM public;
-GRANT ALL ON TABLE ms_syst_data.syst_perm_role_grants TO <%= msbms_owner %>;
+GRANT ALL ON TABLE ms_syst_data.syst_perm_role_grants TO <%= ms_owner %>;
 
 CREATE TRIGGER c50_trig_b_iu_syst_perm_role_grants_validate_degree
     BEFORE INSERT OR UPDATE ON ms_syst_data.syst_perm_role_grants

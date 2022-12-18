@@ -28,7 +28,7 @@ SELECT
   , diag_update_count
 FROM ms_syst_data.syst_perms;
 
-ALTER VIEW ms_syst.syst_perms OWNER TO <%= msbms_owner %>;
+ALTER VIEW ms_syst.syst_perms OWNER TO <%= ms_owner %>;
 
 REVOKE ALL ON TABLE ms_syst.syst_perms FROM PUBLIC;
 

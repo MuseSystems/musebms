@@ -62,10 +62,10 @@ CREATE TABLE ms_syst_data.syst_perm_type_degrees
         NOT NULL DEFAULT 0
 );
 
-ALTER TABLE ms_syst_data.syst_perm_type_degrees OWNER TO <%= msbms_owner %>;
+ALTER TABLE ms_syst_data.syst_perm_type_degrees OWNER TO <%= ms_owner %>;
 
 REVOKE ALL ON TABLE ms_syst_data.syst_perm_type_degrees FROM public;
-GRANT ALL ON TABLE ms_syst_data.syst_perm_type_degrees TO <%= msbms_owner %>;
+GRANT ALL ON TABLE ms_syst_data.syst_perm_type_degrees TO <%= ms_owner %>;
 
 CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
     BEFORE INSERT OR UPDATE ON ms_syst_data.syst_perm_type_degrees

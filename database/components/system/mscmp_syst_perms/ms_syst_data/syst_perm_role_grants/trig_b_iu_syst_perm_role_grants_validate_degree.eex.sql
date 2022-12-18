@@ -54,10 +54,10 @@ $BODY$
 LANGUAGE plpgsql VOLATILE;
 
 ALTER FUNCTION ms_syst_data.trig_b_iu_syst_perm_role_grants_validate_degree()
-    OWNER TO <%= msbms_owner %>;
+    OWNER TO <%= ms_owner %>;
 
 REVOKE EXECUTE ON FUNCTION ms_syst_data.trig_b_iu_syst_perm_role_grants_validate_degree() FROM public;
-GRANT EXECUTE ON FUNCTION ms_syst_data.trig_b_iu_syst_perm_role_grants_validate_degree() TO <%= msbms_owner %>;
+GRANT EXECUTE ON FUNCTION ms_syst_data.trig_b_iu_syst_perm_role_grants_validate_degree() TO <%= ms_owner %>;
 
 COMMENT ON FUNCTION ms_syst_data.trig_b_iu_syst_perm_role_grants_validate_degree() IS
 $DOC$Validates that the assigned syst_perm_role_grants.perm_type_degree_id value is
