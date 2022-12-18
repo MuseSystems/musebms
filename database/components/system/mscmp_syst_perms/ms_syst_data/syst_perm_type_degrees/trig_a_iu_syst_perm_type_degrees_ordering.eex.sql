@@ -27,10 +27,10 @@ $BODY$
 LANGUAGE plpgsql VOLATILE;
 
 ALTER FUNCTION ms_syst_data.trig_a_iu_syst_perm_type_degrees_ordering()
-    OWNER TO <%= msbms_owner %>;
+    OWNER TO <%= ms_owner %>;
 
 REVOKE EXECUTE ON FUNCTION ms_syst_data.trig_a_iu_syst_perm_type_degrees_ordering() FROM public;
-GRANT EXECUTE ON FUNCTION ms_syst_data.trig_a_iu_syst_perm_type_degrees_ordering() TO <%= msbms_owner %>;
+GRANT EXECUTE ON FUNCTION ms_syst_data.trig_a_iu_syst_perm_type_degrees_ordering() TO <%= ms_owner %>;
 
 COMMENT ON FUNCTION ms_syst_data.trig_a_iu_syst_perm_type_degrees_ordering() IS
 $DOC$Automatically maintains the ordering of syst_perm_type_degrees records in cases

@@ -62,10 +62,10 @@ $BODY$
     SET search_path TO ms_syst, pg_temp;
 
 ALTER FUNCTION ms_syst.trig_i_u_syst_perms()
-    OWNER TO <%= msbms_owner %>;
+    OWNER TO <%= ms_owner %>;
 
 REVOKE EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_perms() FROM public;
-GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_perms() TO <%= msbms_owner %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_perms() TO <%= ms_owner %>;
 
 COMMENT ON FUNCTION ms_syst.trig_i_u_syst_perms() IS
 $DOC$An INSTEAD OF trigger function which applies business rules when using the

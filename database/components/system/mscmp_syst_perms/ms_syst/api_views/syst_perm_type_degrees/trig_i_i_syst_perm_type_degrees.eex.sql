@@ -71,10 +71,10 @@ $BODY$
     SET search_path TO ms_syst, pg_temp;
 
 ALTER FUNCTION ms_syst.trig_i_i_syst_perm_type_degrees()
-    OWNER TO <%= msbms_owner %>;
+    OWNER TO <%= ms_owner %>;
 
 REVOKE EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_perm_type_degrees() FROM public;
-GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_perm_type_degrees() TO <%= msbms_owner %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_perm_type_degrees() TO <%= ms_owner %>;
 
 COMMENT ON FUNCTION ms_syst.trig_i_i_syst_perm_type_degrees() IS
 $DOC$An INSTEAD OF trigger function which applies business rules when using the

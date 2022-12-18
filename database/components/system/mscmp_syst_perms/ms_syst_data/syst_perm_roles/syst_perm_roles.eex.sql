@@ -53,10 +53,10 @@ CREATE TABLE ms_syst_data.syst_perm_roles
         NOT NULL DEFAULT 0
 );
 
-ALTER TABLE ms_syst_data.syst_perm_roles OWNER TO <%= msbms_owner %>;
+ALTER TABLE ms_syst_data.syst_perm_roles OWNER TO <%= ms_owner %>;
 
 REVOKE ALL ON TABLE ms_syst_data.syst_perm_roles FROM public;
-GRANT ALL ON TABLE ms_syst_data.syst_perm_roles TO <%= msbms_owner %>;
+GRANT ALL ON TABLE ms_syst_data.syst_perm_roles TO <%= ms_owner %>;
 
 CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
     BEFORE INSERT OR UPDATE ON ms_syst_data.syst_perm_roles

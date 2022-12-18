@@ -51,10 +51,10 @@ $BODY$
 LANGUAGE plpgsql VOLATILE;
 
 ALTER FUNCTION ms_syst.trig_i_d_syst_perm_role_grants()
-    OWNER TO <%= msbms_owner %>;
+    OWNER TO <%= ms_owner %>;
 
 REVOKE EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_perm_role_grants() FROM public;
-GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_perm_role_grants() TO <%= msbms_owner %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_perm_role_grants() TO <%= ms_owner %>;
 
 COMMENT ON FUNCTION ms_syst.trig_i_d_syst_perm_role_grants() IS
 $DOC$An INSTEAD OF trigger function which applies business rules when using the
