@@ -30,14 +30,12 @@ defmodule MscmpSystAuthn.Impl.AccessAccount do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure creating Access Account.",
-          cause: error
-        }
-      }
+      {:error,
+       %MscmpSystError{
+         code: :undefined_error,
+         message: "Failure creating Access Account.",
+         cause: error
+       }}
   end
 
   @spec get_access_account_state_by_name(Types.access_account_state_name()) ::
@@ -70,14 +68,12 @@ defmodule MscmpSystAuthn.Impl.AccessAccount do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure updating Access Account by ID.",
-          cause: error
-        }
-      }
+      {:error,
+       %MscmpSystError{
+         code: :undefined_error,
+         message: "Failure updating Access Account by ID.",
+         cause: error
+       }}
   end
 
   def update_access_account(%Msdata.SystAccessAccounts{} = access_account, access_account_params) do
@@ -89,14 +85,12 @@ defmodule MscmpSystAuthn.Impl.AccessAccount do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure updating Access Account.",
-          cause: error
-        }
-      }
+      {:error,
+       %MscmpSystError{
+         code: :undefined_error,
+         message: "Failure updating Access Account.",
+         cause: error
+       }}
   end
 
   @spec get_access_account_id_by_name(Types.access_account_name()) ::
@@ -112,14 +106,12 @@ defmodule MscmpSystAuthn.Impl.AccessAccount do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure retrieving Access Account ID by internal name.",
-          cause: error
-        }
-      }
+      {:error,
+       %MscmpSystError{
+         code: :undefined_error,
+         message: "Failure retrieving Access Account ID by internal name.",
+         cause: error
+       }}
   end
 
   @spec get_access_account_by_name(Types.access_account_name()) ::
@@ -138,14 +130,12 @@ defmodule MscmpSystAuthn.Impl.AccessAccount do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure retrieving Access Account data.",
-          cause: error
-        }
-      }
+      {:error,
+       %MscmpSystError{
+         code: :undefined_error,
+         message: "Failure retrieving Access Account data.",
+         cause: error
+       }}
   end
 
   @spec purge_access_account(Types.access_account_id() | Msdata.SystAccessAccounts.t()) ::
@@ -186,14 +176,12 @@ defmodule MscmpSystAuthn.Impl.AccessAccount do
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure purging Access Account.",
-          cause: error
-        }
-      }
+      {:error,
+       %MscmpSystError{
+         code: :undefined_error,
+         message: "Failure purging Access Account.",
+         cause: error
+       }}
   end
 
   def purge_access_account(%Msdata.SystAccessAccounts{id: access_account_id}),
