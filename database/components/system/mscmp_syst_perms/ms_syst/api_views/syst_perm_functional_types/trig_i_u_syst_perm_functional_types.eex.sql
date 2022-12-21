@@ -1,9 +1,9 @@
-CREATE OR REPLACE FUNCTION ms_syst.trig_i_d_syst_perm_types()
+CREATE OR REPLACE FUNCTION ms_syst.trig_i_u_syst_perm_functional_types()
 RETURNS trigger AS
 $BODY$
 
--- File:        trig_i_d_syst_perm_types.eex.sql
--- Location:    musebms/database/components/system/mscmp_syst_perms/ms_syst/api_views/syst_perm_types/trig_i_d_syst_perm_types.eex.sql
+-- File:        trig_i_u_syst_perm_functional_types.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_perms/ms_syst/api_views/syst_perm_functional_types/trig_i_u_syst_perm_functional_types.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -16,17 +16,17 @@ $BODY$
 
 BEGIN
 
-    IF old.syst_defined THEN
+    IF new.internal_name != old.internal_name THEN
         RAISE EXCEPTION
             USING
-                MESSAGE = 'You may not delete system defined permission types ' ||
-                          'using this API view.',
+                MESSAGE = 'The requested data update included changes to fields disallowed ' ||
+                          'by the business rules of the API View.',
                 DETAIL = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst'
-                            ,p_proc_name      => 'trig_i_u_syst_perm_types'
+                            ,p_proc_name      => 'trig_i_u_syst_perm_functional_types'
                             ,p_exception_name => 'invalid_api_view_call'
                             ,p_errcode        => 'PM008'
-                            ,p_param_data     => to_jsonb(old)
+                            ,p_param_data     => to_jsonb(new)
                             ,p_context_data   =>
                                 jsonb_build_object(
                                      'tg_op',         tg_op
@@ -38,9 +38,14 @@ BEGIN
                 TABLE = tg_table_name;
     END IF;
 
-    DELETE FROM ms_syst_data.syst_perm_types WHERE id = old.id RETURNING * INTO old;
+    UPDATE ms_syst_data.syst_perm_functional_types
+    SET
+        display_name     = new.display_name
+      , user_description = new.user_description
+    WHERE id = new.id
+    RETURNING * INTO new;
 
-    RETURN old;
+    RETURN new;
 
 END;
 $BODY$
@@ -49,12 +54,12 @@ $BODY$
     SECURITY DEFINER
     SET search_path TO ms_syst, pg_temp;
 
-ALTER FUNCTION ms_syst.trig_i_d_syst_perm_types()
+ALTER FUNCTION ms_syst.trig_i_u_syst_perm_functional_types()
     OWNER TO <%= ms_owner %>;
 
-REVOKE EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_perm_types() FROM public;
-GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_perm_types() TO <%= ms_owner %>;
+REVOKE EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_perm_functional_types() FROM public;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_perm_functional_types() TO <%= ms_owner %>;
 
-COMMENT ON FUNCTION ms_syst.trig_i_d_syst_perm_types() IS
+COMMENT ON FUNCTION ms_syst.trig_i_u_syst_perm_functional_types() IS
 $DOC$An INSTEAD OF trigger function which applies business rules when using the
-syst_perm_types API View for DELETE operations.$DOC$;
+syst_perm_functional_types API View for UPDATE operations.$DOC$;

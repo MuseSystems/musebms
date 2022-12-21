@@ -19,8 +19,12 @@ BEGIN
     IF
         (old.syst_defined AND
             (new.internal_name != old.internal_name OR
-             new.perm_type_id != old.perm_type_id)) OR
-        new.syst_defined != old.syst_defined
+             new.view_scope_options != old.view_scope_options OR
+             new.maint_scope_options != old.maint_scope_options OR
+             new.admin_scope_options != old.admin_scope_options OR
+             new.ops_scope_options != old.ops_scope_options )) OR
+        new.syst_defined != old.syst_defined OR
+        new.perm_functional_type_id != old.perm_functional_type_id
     THEN
         RAISE EXCEPTION
             USING
@@ -45,10 +49,13 @@ BEGIN
 
     UPDATE ms_syst_data.syst_perms
     SET
-        internal_name    = new.internal_name
-      , display_name     = new.display_name
-      , user_description = new.user_description
-      , perm_type_id     = new.perm_type_id
+        internal_name       = new.internal_name
+      , display_name        = new.display_name
+      , user_description    = new.user_description
+      , view_scope_options  = new.view_scope_options
+      , maint_scope_options = new.maint_scope_options
+      , admin_scope_options = new.admin_scope_options
+      , ops_scope_options   = new.ops_scope_options
     WHERE id = new.id
     RETURNING * INTO new;
 

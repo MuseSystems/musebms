@@ -15,10 +15,14 @@ SELECT
     id
   , internal_name
   , display_name
+  , perm_functional_type_id
+  , syst_defined
   , syst_description
   , user_description
-  , perm_type_id
-  , syst_defined
+  , view_scope_options
+  , maint_scope_options
+  , admin_scope_options
+  , ops_scope_options
   , diag_timestamp_created
   , diag_role_created
   , diag_timestamp_modified
@@ -47,7 +51,8 @@ CREATE TRIGGER a50_trig_i_d_syst_perms
 COMMENT ON
     VIEW ms_syst.syst_perms IS
 $DOC$Defines the available system and application permissions which can be
-assigned to users.
+assigned to users.  For a more detailed description see the table comment for
+ms_syst_data.syst_perms.
 
 This API View allows the application to read and maintain the data according to
 well defined application business rules.  Using this API view for updates to
@@ -76,6 +81,22 @@ $DOC$A friendly name and candidate key for the record, suitable for use in user
 interactions.$DOC$;
 
 COMMENT ON
+    COLUMN ms_syst.syst_perms.perm_functional_type_id IS
+$DOC$Assigns the Permission to a specific Permission Functional Type.
+
+Permissions may only be granted in Permission Roles of the same Permission
+Functional Type.
+
+This value can only be set at record INSERT time using this API view.$DOC$;
+
+COMMENT ON
+     COLUMN ms_syst.syst_perms.syst_defined IS
+$DOC$If true, indicates that the permission was created by the system or system
+installation process.  A false value indicates that the record was user created.
+
+This value is system maintained and read only via this API.$DOC$;
+
+COMMENT ON
      COLUMN ms_syst.syst_perms.syst_description IS
 $DOC$A system default description describing the permission and its uses in the
 system.
@@ -92,19 +113,39 @@ This field is intended to accommodate end user defined descriptions and is
 maintainable via this view.$DOC$;
 
 COMMENT ON
-     COLUMN ms_syst.syst_perms.perm_type_id IS
-$DOC$Determines what the available degrees of permission which may be assigned.  This
-can range from a simple boolean type value to different variations on
-view/edit/admin.
+    COLUMN ms_syst.syst_perms.view_scope_options IS
+$DOC$If applicable, enumerates the available Scopes of viewable data offered by the
+permission.  If not applicable the only option will be 'unused'.
 
-This value may only be updated if the record's syst_defined value is 'false'.$DOC$;
+If the Permission is system defined, the data in this column is not maintainable
+via this API view.$DOC$;
 
 COMMENT ON
-     COLUMN ms_syst.syst_perms.syst_defined IS
-$DOC$If true, indicates that the permission was created by the system or system
-installation process.  A false value indicates that the record was user created.
+    COLUMN ms_syst.syst_perms.maint_scope_options IS
+$DOC$If applicable, enumerates the available Scopes of maintainable data offered by
+the permission.  Maintenance in this context refers to changing existing data.
+If not applicable the only option will be 'unused'.
 
-This value is system maintained and read only via this API.$DOC$;
+If the Permission is system defined, the data in this column is not maintainable
+via this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perms.admin_scope_options IS
+$DOC$If applicable, enumerates the available Scopes of data administration offered
+by the permission.  Administration in this context refers to creating or
+deleting records.  If not applicable the only option will be 'unused'.
+
+If the Permission is system defined, the data in this column is not maintainable
+via this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perms.ops_scope_options IS
+$DOC$If applicable, enumerates the available Scopes of a given operation or
+processing capability offered by the permission.  If not applicable the only
+option will be 'unused'.
+
+If the Permission is system defined, the data in this column is not maintainable
+via this API view.$DOC$;
 
 COMMENT ON
     COLUMN ms_syst.syst_perms.diag_timestamp_created IS

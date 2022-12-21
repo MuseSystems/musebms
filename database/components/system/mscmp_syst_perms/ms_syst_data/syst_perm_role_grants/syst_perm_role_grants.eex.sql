@@ -28,11 +28,18 @@ CREATE TABLE ms_syst_data.syst_perm_role_grants
         CONSTRAINT syst_perm_role_grants_perm_fk
             REFERENCES ms_syst_data.syst_perms ( id )
             ON DELETE CASCADE
-    ,perm_type_degree_id
-        uuid
+    ,view_scope
+        text
         NOT NULL
-        CONSTRAINT syst_perm_role_grants_perm_type_degree_fk
-            REFERENCES ms_syst_data.syst_perm_type_degrees ( id )
+    ,maint_scope
+        text
+        NOT NULL
+    ,admin_scope
+        text
+        NOT NULL
+    ,ops_scope
+        text
+        NOT NULL
     ,diag_timestamp_created
         timestamptz
         NOT NULL DEFAULT now( )
@@ -59,14 +66,23 @@ ALTER TABLE ms_syst_data.syst_perm_role_grants OWNER TO <%= ms_owner %>;
 REVOKE ALL ON TABLE ms_syst_data.syst_perm_role_grants FROM public;
 GRANT ALL ON TABLE ms_syst_data.syst_perm_role_grants TO <%= ms_owner %>;
 
-CREATE TRIGGER c50_trig_b_iu_syst_perm_role_grants_validate_degree
+CREATE TRIGGER b50_trig_b_iu_syst_perm_role_grants_default_scopes
     BEFORE INSERT OR UPDATE ON ms_syst_data.syst_perm_role_grants
-    FOR EACH ROW EXECUTE PROCEDURE
-        ms_syst_data.trig_b_iu_syst_perm_role_grants_validate_degree();
+    FOR EACH ROW
+    WHEN ( new.view_scope IS NULL OR
+           new.maint_scope IS NULL OR
+           new.admin_scope IS NULL OR
+           new.ops_scope IS NULL )
+    EXECUTE PROCEDURE ms_syst_data.trig_b_iu_syst_perm_role_grants_default_scopes();
 
 CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
     BEFORE INSERT OR UPDATE ON ms_syst_data.syst_perm_role_grants
     FOR EACH ROW EXECUTE PROCEDURE ms_syst_priv.trig_b_iu_set_diagnostic_columns();
+
+CREATE CONSTRAINT TRIGGER c50_trig_a_iu_syst_perm_role_grants_related_data_checks
+    AFTER INSERT OR UPDATE ON ms_syst_data.syst_perm_role_grants
+    FOR EACH ROW EXECUTE PROCEDURE
+        ms_syst_data.trig_a_iu_syst_perm_role_grants_related_data_checks();
 
 COMMENT ON
     TABLE ms_syst_data.syst_perm_role_grants IS
@@ -90,8 +106,31 @@ COMMENT ON
 $DOC$The permission being granted by the role.$DOC$;
 
 COMMENT ON
-    COLUMN ms_syst_data.syst_perm_role_grants.perm_type_degree_id IS
-$DOC$The degree of authority being granted to the role by the permission grant.$DOC$;
+    COLUMN ms_syst_data.syst_perm_role_grants.view_scope IS
+$DOC$Assigns the Scope of the Permission's View Right being granted by the Role.
+
+The valid Scope options are defined by the Permission record.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perm_role_grants.maint_scope IS
+$DOC$Assigns the Scope of the Permission's Maintenance Right being granted by the
+Role.
+
+The valid Scope options are defined by the Permission record.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perm_role_grants.admin_scope IS
+$DOC$Assigns the Scope of the Permission's Data Administration Right being granted by
+the Role.
+
+The valid Scope options are defined by the Permission record.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perm_role_grants.ops_scope IS
+$DOC$Assigns the Scope of the Permission's Operations Right being granted by the
+Role.
+
+The valid Scope options are defined by the Permission record.$DOC$;
 
 COMMENT ON
     COLUMN ms_syst_data.syst_perm_role_grants.diag_timestamp_created IS

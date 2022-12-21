@@ -45,7 +45,11 @@ BEGIN
     END IF;
 
     UPDATE ms_syst_data.syst_perm_role_grants
-    SET perm_type_degree_id = new.perm_type_degree_id
+    SET
+        view_scope  = new.view_scope
+      , maint_scope = new.maint_scope
+      , admin_scope = new.admin_scope
+      , ops_scope   = new.ops_scope
     WHERE id = new.id
     RETURNING * INTO new;
 

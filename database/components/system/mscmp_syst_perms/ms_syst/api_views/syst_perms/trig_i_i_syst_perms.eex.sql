@@ -19,17 +19,25 @@ BEGIN
     INSERT INTO ms_syst_data.syst_perms
         ( internal_name
         , display_name
+        , perm_functional_type_id
+        , syst_defined
         , syst_description
         , user_description
-        , perm_type_id
-        , syst_defined )
+        , view_scope_options
+        , maint_scope_options
+        , admin_scope_options
+        , ops_scope_options )
     VALUES
         ( new.internal_name
         , new.display_name
+        , new.perm_functional_type_id
+        , FALSE
         , '(System Description Not Available)'
         , new.user_description
-        , new.perm_type_id
-        , FALSE )
+        , new.view_scope_options
+        , new.maint_scope_options
+        , new.admin_scope_options
+        , new.ops_scope_options )
     RETURNING * INTO new;
 
     RETURN new;
