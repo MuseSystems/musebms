@@ -44,13 +44,19 @@ BEGIN
     END IF;
 
     INSERT INTO ms_syst_data.syst_perm_role_grants
-        (perm_role_id
-         ,perm_id
-         ,perm_type_degree_id)
+        ( perm_role_id
+        , perm_id
+        , view_scope
+        , maint_scope
+        , admin_scope
+        , ops_scope )
     VALUES
-        (new.perm_role_id
-        ,new.perm_id
-        ,new.perm_type_degree_id)
+        ( new.perm_role_id
+        , new.perm_id
+        , new.view_scope
+        , new.maint_scope
+        , new.admin_scope
+        , new.ops_scope )
     RETURNING * INTO new;
 
     RETURN new;

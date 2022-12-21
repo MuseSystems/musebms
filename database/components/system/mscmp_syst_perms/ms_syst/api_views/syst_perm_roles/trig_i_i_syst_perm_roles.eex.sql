@@ -19,12 +19,14 @@ BEGIN
     INSERT INTO ms_syst_data.syst_perm_roles
         ( internal_name
         , display_name
+        , perm_functional_type_id
         , syst_defined
         , syst_description
         , user_description )
     VALUES
         ( new.internal_name
         , new.display_name
+        , new.perm_functional_type_id
         , FALSE
         , '(System Description Not Available)'
         , new.user_description )

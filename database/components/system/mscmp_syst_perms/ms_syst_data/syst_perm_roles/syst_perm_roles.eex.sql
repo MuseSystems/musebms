@@ -24,6 +24,11 @@ CREATE TABLE ms_syst_data.syst_perm_roles
         text
         NOT NULL
         CONSTRAINT syst_perm_roles_display_name_udx UNIQUE
+    ,perm_functional_type_id
+        uuid
+        NOT NULL
+        CONSTRAINT syst_perm_roles_perm_functional_type_fk
+            REFERENCES ms_syst_data.syst_perm_functional_types ( id )
     ,syst_defined
         boolean
         NOT NULL DEFAULT FALSE
@@ -79,6 +84,13 @@ COMMENT ON
     COLUMN ms_syst_data.syst_perm_roles.display_name IS
 $DOC$A friendly name and candidate key for the record, suitable for use in user
 interactions$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perm_roles.perm_functional_type_id IS
+$DOC$Assigns the Permission Role to a specific Permission Functional Type.
+
+Only Permissions with the same Permission Functional Type may be granted by the
+Permission Role.$DOC$;
 
 COMMENT ON
     COLUMN ms_syst_data.syst_perm_roles.syst_defined IS

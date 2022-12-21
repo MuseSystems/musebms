@@ -14,6 +14,7 @@ SELECT
     id
   , internal_name
   , display_name
+  , perm_functional_type_id
   , syst_defined
   , syst_description
   , user_description
@@ -71,6 +72,15 @@ COMMENT ON
     COLUMN ms_syst.syst_perm_roles.display_name IS
 $DOC$A friendly name and candidate key for the record, suitable for use in user
 interactions$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perm_roles.perm_functional_type_id IS
+$DOC$Assigns the Permission Role to a specific Permission Functional Type.
+
+Only Permissions with the same Permission Functional Type may be granted by the
+Permission Role.
+
+This value may only be set at record INSERT time using this API view.$DOC$;
 
 COMMENT ON
     COLUMN ms_syst.syst_perm_roles.syst_defined IS

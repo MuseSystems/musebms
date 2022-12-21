@@ -15,7 +15,10 @@ SELECT
     id
   , perm_role_id
   , perm_id
-  , perm_type_degree_id
+  , view_scope
+  , maint_scope
+  , admin_scope
+  , ops_scope
   , diag_timestamp_created
   , diag_role_created
   , diag_timestamp_modified
@@ -80,12 +83,43 @@ This value is set at record creation time and may not be updated later via this
 API view.$DOC$;
 
 COMMENT ON
-    COLUMN ms_syst.syst_perm_role_grants.perm_type_degree_id IS
-$DOC$The degree of authority being granted to the role by the permission grant.
+    COLUMN ms_syst.syst_perm_role_grants.view_scope IS
+$DOC$Assigns the Scope of the Permission's View Right being granted by the Role.
 
-If the parent syst_perm_roles.syst_defined value is set true, then this value
-may not be updated via this API view.  If syst_defined is set false then this
-value may be updated using this API view.$DOC$;
+The valid Scope options are defined by the Permission record.
+
+If the parent Permission Role record is a system defined record, this value may
+not be changed using this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perm_role_grants.maint_scope IS
+$DOC$Assigns the Scope of the Permission's Maintenance Right being granted by the
+Role.
+
+The valid Scope options are defined by the Permission record.
+
+If the parent Permission Role record is a system defined record, this value may
+not be changed using this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perm_role_grants.admin_scope IS
+$DOC$Assigns the Scope of the Permission's Data Administration Right being granted by
+the Role.
+
+The valid Scope options are defined by the Permission record.
+
+If the parent Permission Role record is a system defined record, this value may
+not be changed using this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perm_role_grants.ops_scope IS
+$DOC$Assigns the Scope of the Permission's Operations Right being granted by the
+Role.
+
+The valid Scope options are defined by the Permission record.
+
+If the parent Permission Role record is a system defined record, this value may
+not be changed using this API view.$DOC$;
 
 COMMENT ON
     COLUMN ms_syst.syst_perm_role_grants.diag_timestamp_created IS

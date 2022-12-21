@@ -19,7 +19,8 @@ BEGIN
     IF
         (old.syst_defined AND
         new.internal_name != old.internal_name) OR
-        new.syst_defined != old.syst_defined
+        new.syst_defined != old.syst_defined OR
+        new.perm_functional_type_id != old.perm_functional_type_id
     THEN
         RAISE EXCEPTION
             USING

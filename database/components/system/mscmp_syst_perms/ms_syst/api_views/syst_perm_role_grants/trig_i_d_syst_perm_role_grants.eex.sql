@@ -48,7 +48,10 @@ BEGIN
 
 END;
 $BODY$
-LANGUAGE plpgsql VOLATILE;
+    LANGUAGE plpgsql
+    VOLATILE
+    SECURITY DEFINER
+    SET search_path TO ms_syst, pg_temp;
 
 ALTER FUNCTION ms_syst.trig_i_d_syst_perm_role_grants()
     OWNER TO <%= ms_owner %>;
