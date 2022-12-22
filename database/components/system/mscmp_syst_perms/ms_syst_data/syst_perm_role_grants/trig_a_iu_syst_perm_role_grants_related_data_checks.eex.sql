@@ -78,25 +78,25 @@ BEGIN
     IF var_context_data.view_scope_invalid THEN
             var_errors :=
                 var_errors ||
-                'The assigned View Right Scope is not valid for this Permission.';
+                'The assigned View Right Scope is not valid for this Permission.'::text;
     END IF;
 
     IF var_context_data.maint_scope_invalid THEN
             var_errors :=
                 var_errors ||
-                'The assigned Maintenance Right Scope is not valid for this Permission.';
+                'The assigned Maintenance Right Scope is not valid for this Permission.'::text;
     END IF;
 
     IF var_context_data.admin_scope_invalid THEN
             var_errors :=
                 var_errors ||
-                'The assigned Administration Right Scope is not valid for this Permission.';
+                'The assigned Administration Right Scope is not valid for this Permission.'::text;
     END IF;
 
     IF var_context_data.ops_scope_invalid THEN
             var_errors :=
                 var_errors ||
-                'The assigned Operations Right Scope is not valid for this Permission.';
+                'The assigned Operations Right Scope is not valid for this Permission.'::text;
     END IF;
 
 
