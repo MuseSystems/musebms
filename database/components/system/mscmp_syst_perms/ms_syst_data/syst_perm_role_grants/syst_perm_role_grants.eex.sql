@@ -28,6 +28,8 @@ CREATE TABLE ms_syst_data.syst_perm_role_grants
         CONSTRAINT syst_perm_role_grants_perm_fk
             REFERENCES ms_syst_data.syst_perms ( id )
             ON DELETE CASCADE
+    ,CONSTRAINT syst_perm_role_grants_perm_perm_role_udx
+        UNIQUE ( perm_role_id, perm_id )
     ,view_scope
         text
         NOT NULL
