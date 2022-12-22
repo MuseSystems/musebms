@@ -34,10 +34,10 @@ BEGIN
         , FALSE
         , '(System Description Not Available)'
         , new.user_description
-        , new.view_scope_options
-        , new.maint_scope_options
-        , new.admin_scope_options
-        , new.ops_scope_options )
+        , coalesce(new.view_scope_options, array['unused'])
+        , coalesce(new.maint_scope_options, array['unused'])
+        , coalesce(new.admin_scope_options, array['unused'])
+        , coalesce(new.ops_scope_options, array['unused']) )
     RETURNING * INTO new;
 
     RETURN new;
