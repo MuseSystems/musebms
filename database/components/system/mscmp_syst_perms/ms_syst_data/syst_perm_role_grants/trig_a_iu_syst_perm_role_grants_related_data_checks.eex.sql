@@ -75,25 +75,25 @@ BEGIN
     -- Rights Scoping Checks
     --
 
-    IF NOT var_context_data.view_scope_invalid THEN
+    IF var_context_data.view_scope_invalid THEN
             var_errors :=
                 var_errors ||
                 'The assigned View Right Scope is not valid for this Permission.';
     END IF;
 
-    IF NOT var_context_data.maint_scope_invalid THEN
+    IF var_context_data.maint_scope_invalid THEN
             var_errors :=
                 var_errors ||
                 'The assigned Maintenance Right Scope is not valid for this Permission.';
     END IF;
 
-    IF NOT var_context_data.admin_scope_invalid THEN
+    IF var_context_data.admin_scope_invalid THEN
             var_errors :=
                 var_errors ||
                 'The assigned Administration Right Scope is not valid for this Permission.';
     END IF;
 
-    IF NOT var_context_data.ops_scope_invalid THEN
+    IF var_context_data.ops_scope_invalid THEN
             var_errors :=
                 var_errors ||
                 'The assigned Operations Right Scope is not valid for this Permission.';
