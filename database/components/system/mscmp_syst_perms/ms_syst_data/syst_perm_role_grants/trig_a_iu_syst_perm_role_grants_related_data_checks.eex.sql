@@ -27,11 +27,11 @@ BEGIN
       , sp.ops_scope_options
       , sp.perm_functional_type_id                              AS perm_perm_functional_type_id
       , spr.perm_functional_type_id                             AS perm_role_perm_functional_type_id
-      , NOT spr.view_scope = ANY (sp.view_scope_options)        AS view_scope_invalid
-      , NOT spr.maint_scope = ANY (sp.maint_scope_options)      AS maint_scope_invalid
-      , NOT spr.admin_scope = ANY (sp.admin_scope_options)      AS admin_scope_invalid
-      , NOT spr.ops_scope = ANY (sp.ops_scope_options)          AS ops_scope_invalid
-      , spr.perm_function_type_id != sp.perm_functional_type_id AS perm_functional_type_invalid
+      , NOT new.view_scope = ANY (sp.view_scope_options)        AS view_scope_invalid
+      , NOT new.maint_scope = ANY (sp.maint_scope_options)      AS maint_scope_invalid
+      , NOT new.admin_scope = ANY (sp.admin_scope_options)      AS admin_scope_invalid
+      , NOT new.ops_scope = ANY (sp.ops_scope_options)          AS ops_scope_invalid
+      , spr.perm_functional_type_id != sp.perm_functional_type_id AS perm_functional_type_invalid
     FROM
         ms_syst_data.syst_perms sp
       , ms_syst_data.syst_perm_roles spr
