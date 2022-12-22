@@ -16,7 +16,7 @@ $BODY$
 
 DECLARE
     var_context_data record;
-    var_errors       text[] := ARRAY [];
+    var_errors       text[] := ARRAY []::text[];
 
 BEGIN
 
