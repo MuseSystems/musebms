@@ -27,8 +27,10 @@ defmodule MscmpSystPerms.Msdata.Validators.SystPerms do
   def insert_changeset(insert_params, opts) do
     opts = MscmpSystUtils.resolve_options(opts, Helpers.OptionDefaults.defaults())
 
+    resolved_insert_params = resolve_scopes(insert_params)
+
     %Msdata.SystPerms{}
-    |> cast(insert_params, [
+    |> cast(resolved_insert_params, [
       :internal_name,
       :display_name,
       :perm_functional_type_id,
@@ -50,7 +52,9 @@ defmodule MscmpSystPerms.Msdata.Validators.SystPerms do
     |> check_constraint(:maint_scope_options, name: :syst_perms_maint_scope_options_chk)
     |> check_constraint(:admin_scope_options, name: :syst_perms_admin_scope_options_chk)
     |> check_constraint(:ops_scope_options, name: :syst_perms_ops_scope_options_chk)
-    |> foreign_key_constraint(:perm_functional_type_id, name: :syst_perms_perm_functional_type_fk)
+    |> foreign_key_constraint(:perm_functional_type_id,
+      name: :syst_perms_perm_functional_type_fk
+    )
   end
 
   @spec update_changeset(Msdata.SystPerms.t(), Types.perm_params(), Keyword.t()) ::
@@ -58,8 +62,10 @@ defmodule MscmpSystPerms.Msdata.Validators.SystPerms do
   def update_changeset(perm, update_params, opts) do
     opts = MscmpSystUtils.resolve_options(opts, Helpers.OptionDefaults.defaults())
 
+    resolved_update_params = resolve_scopes(update_params)
+
     perm
-    |> cast(update_params, [
+    |> cast(resolved_update_params, [
       :internal_name,
       :display_name,
       :user_description,
@@ -94,4 +100,15 @@ defmodule MscmpSystPerms.Msdata.Validators.SystPerms do
     |> check_constraint(:ops_scope_options, name: :syst_perms_ops_scope_options_chk)
     |> foreign_key_constraint(:perm_functional_type_id, name: :syst_perms_perm_functional_type_fk)
   end
+
+  defp resolve_scopes(params) do
+    params
+    |> Map.replace(:view_scope_options, convert_scope_list(params[:view_scope_options]))
+    |> Map.replace(:maint_scope_options, convert_scope_list(params[:maint_scope_options]))
+    |> Map.replace(:admin_scope_options, convert_scope_list(params[:admin_scope_options]))
+    |> Map.replace(:ops_scope_options, convert_scope_list(params[:ops_scope_options]))
+  end
+
+  defp convert_scope_list(nil), do: nil
+  defp convert_scope_list(scope_list), do: Enum.map(scope_list, &Atom.to_string/1)
 end

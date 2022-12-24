@@ -27,8 +27,10 @@ defmodule MscmpSystPerms.Msdata.Validators.SystPermRoleGrants do
 
   @spec insert_changeset(Types.syst_perm_role_grant_params()) :: Ecto.Changeset.t()
   def insert_changeset(insert_params) do
+    resolved_insert_params = resolve_scopes(insert_params)
+
     %Msdata.SystPermRoleGrants{}
-    |> cast(insert_params, [
+    |> cast(resolved_insert_params, [
       :perm_role_id,
       :perm_id,
       :view_scope,
@@ -54,8 +56,10 @@ defmodule MscmpSystPerms.Msdata.Validators.SystPermRoleGrants do
   @spec update_changeset(Msdata.SystPermRoleGrants.t(), Types.syst_perm_role_grant_params()) ::
           Ecto.Changeset.t()
   def update_changeset(perm_role_grant, update_params) do
+    resolved_update_params = resolve_scopes(update_params)
+
     perm_role_grant
-    |> cast(update_params, [:view_scope, :maint_scope, :admin_scope, :ops_scope])
+    |> cast(resolved_update_params, [:view_scope, :maint_scope, :admin_scope, :ops_scope])
     |> validate_required([
       :perm_role_id,
       :perm_id,
@@ -70,5 +74,13 @@ defmodule MscmpSystPerms.Msdata.Validators.SystPermRoleGrants do
     )
     |> foreign_key_constraint(:perm_role_id, name: :syst_perm_role_grants_perm_role_fk)
     |> foreign_key_constraint(:perm_id, name: :syst_perm_role_grants_perm_fk)
+  end
+
+  defp resolve_scopes(params) do
+    params
+    |> Map.replace(:view_scope, Atom.to_string(params[:view_scope]))
+    |> Map.replace(:maint_scope, Atom.to_string(params[:maint_scope]))
+    |> Map.replace(:admin_scope, Atom.to_string(params[:admin_scope]))
+    |> Map.replace(:ops_scope, Atom.to_string(params[:ops_scope]))
   end
 end
