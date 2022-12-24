@@ -11,8 +11,6 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystPerms.Impl.PermFunctionalType do
-  import Ecto.Query
-
   alias MscmpSystPerms.Types
 
   @moduledoc false
