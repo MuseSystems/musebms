@@ -32,9 +32,9 @@ defmodule PermTest do
       display_name: "Create Perm",
       user_description: "Create Perm Test",
       perm_functional_type_id: perm_functional_type_id,
-      view_scope_options: ["deny", "same_user", "all"],
-      maint_scope_options: ["deny", "same_user"],
-      ops_scope_options: ["unused"]
+      view_scope_options: [:deny, :same_user, :all],
+      maint_scope_options: [:deny, :same_user],
+      ops_scope_options: [:unused]
     }
 
     assert {:ok, %Msdata.SystPerms{} = inserted_perm} = Impl.Perm.create_perm(insert_params)
@@ -44,10 +44,17 @@ defmodule PermTest do
     assert inserted_perm.user_description == insert_params.user_description
     assert inserted_perm.perm_functional_type_id == insert_params.perm_functional_type_id
     assert inserted_perm.syst_defined == false
-    assert inserted_perm.view_scope_options == insert_params.view_scope_options
-    assert inserted_perm.maint_scope_options == insert_params.maint_scope_options
+
+    assert inserted_perm.view_scope_options ==
+             Enum.map(insert_params.view_scope_options, &Atom.to_string/1)
+
+    assert inserted_perm.maint_scope_options ==
+             Enum.map(insert_params.maint_scope_options, &Atom.to_string/1)
+
     assert inserted_perm.admin_scope_options == ["unused"]
-    assert inserted_perm.ops_scope_options == insert_params.ops_scope_options
+
+    assert inserted_perm.ops_scope_options ==
+             Enum.map(insert_params.ops_scope_options, &Atom.to_string/1)
 
     assert {:error, _} = Impl.Perm.create_perm(insert_params)
   end
@@ -107,7 +114,7 @@ defmodule PermTest do
     assert update_ignored_perm.perm_functional_type_id == perm_1.perm_functional_type_id
 
     update_params_3 = %{
-      view_scope_options: ["deny", "all"]
+      view_scope_options: [:deny, :all]
     }
 
     assert {:error, _} = Impl.Perm.update_perm(perm_1.id, update_params_3)

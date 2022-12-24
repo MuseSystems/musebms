@@ -66,4 +66,5 @@ defmodule MscmpSystPerms.Types do
         }
 
   @type rights_scope() :: String.t()
+  @type rights_scope() :: :deny | :same_user | :same_group | :all | :unused
 end

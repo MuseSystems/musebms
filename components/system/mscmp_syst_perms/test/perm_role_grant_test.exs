@@ -37,10 +37,10 @@ defmodule PermRoleGrantTest do
     insert_params = %{
       perm_role_id: perm_role_id,
       perm_id: perm_id,
-      view_scope: "unused",
-      maint_scope: "unused",
-      admin_scope: "unused",
-      ops_scope: "same_user"
+      view_scope: :unused,
+      maint_scope: :unused,
+      admin_scope: :unused,
+      ops_scope: :same_user
     }
 
     assert {:ok, %Msdata.SystPermRoleGrants{} = inserted_grant} =
@@ -48,10 +48,10 @@ defmodule PermRoleGrantTest do
 
     assert inserted_grant.perm_role_id == insert_params.perm_role_id
     assert inserted_grant.perm_id == insert_params.perm_id
-    assert inserted_grant.view_scope == insert_params.view_scope
-    assert inserted_grant.maint_scope == insert_params.maint_scope
-    assert inserted_grant.admin_scope == insert_params.admin_scope
-    assert inserted_grant.ops_scope == insert_params.ops_scope
+    assert inserted_grant.view_scope == Atom.to_string(insert_params.view_scope)
+    assert inserted_grant.maint_scope == Atom.to_string(insert_params.maint_scope)
+    assert inserted_grant.admin_scope == Atom.to_string(insert_params.admin_scope)
+    assert inserted_grant.ops_scope == Atom.to_string(insert_params.ops_scope)
 
     assert {:error, _} = Impl.PermRoleGrant.create_perm_role_grant(insert_params)
   end
@@ -74,10 +74,10 @@ defmodule PermRoleGrantTest do
     insert_params = %{
       perm_role_id: perm_role_id,
       perm_id: perm_id,
-      view_scope: "all",
-      maint_scope: "all",
-      admin_scope: "all",
-      ops_scope: "unused"
+      view_scope: :all,
+      maint_scope: :all,
+      admin_scope: :all,
+      ops_scope: :unused
     }
 
     assert {:error, _} = Impl.PermRoleGrant.create_perm_role_grant(insert_params)
@@ -93,7 +93,7 @@ defmodule PermRoleGrantTest do
       )
       |> MscmpSystDb.one!()
 
-    update_params = %{ops_scope: "deny"}
+    update_params = %{ops_scope: :deny}
 
     assert {:error, _} = Impl.PermRoleGrant.update_perm_role_grant(grant_id, update_params)
   end
@@ -108,12 +108,12 @@ defmodule PermRoleGrantTest do
       )
       |> MscmpSystDb.one!()
 
-    update_params = %{ops_scope: "deny"}
+    update_params = %{ops_scope: :deny}
 
     assert {:ok, updated_grant} =
              Impl.PermRoleGrant.update_perm_role_grant(grant_id, update_params)
 
-    revert_parmas = %{ops_scope: "same_user"}
+    revert_parmas = %{ops_scope: :same_user}
 
     assert {:ok, _} = Impl.PermRoleGrant.update_perm_role_grant(updated_grant, revert_parmas)
   end
@@ -147,7 +147,7 @@ defmodule PermRoleGrantTest do
 
     assert perm_role_updated_grant.perm_role_id == grant.perm_role_id
 
-    update_params_3 = %{view_scope: "same_user"}
+    update_params_3 = %{view_scope: :same_user}
 
     assert {:error, _} = Impl.PermRoleGrant.update_perm_role_grant(grant, update_params_3)
   end
