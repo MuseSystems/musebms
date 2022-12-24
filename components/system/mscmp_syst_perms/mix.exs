@@ -45,11 +45,18 @@ defmodule MscmpSystPerms.MixProject do
           mscmp_syst_error: "../../../../documentation/technical/app_server/mscmp_syst_error",
           mscmp_syst_db: "../../../../documentation/technical/app_server/mscmp_syst_db"
         ],
-        groups_for_functions: [],
+        groups_for_functions: [
+          "Data Management": &(&1[:section] == :perms_data)
+        ],
         nest_modules_by_prefix: [Msdata],
         groups_for_modules: [
           API: [MscmpSystPerms],
-          Data: [],
+          Data: [
+            Msdata.SystPermFunctionalTypes,
+            Msdata.SystPerms,
+            Msdata.SystPermRoles,
+            Msdata.SystPermRoleGrants
+          ],
           "Supporting Types": [MscmpSystPerms.Types]
         ]
       ]
