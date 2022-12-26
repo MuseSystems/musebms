@@ -25,7 +25,7 @@ defmodule MscmpSystPerms.Msdata.Validators.SystPermRoleGrants do
   #        We might need a way to catch the PostgreSQL raised exception and
   #        turn it into a nice Ecto.Changeset validation error.
 
-  @spec insert_changeset(Types.syst_perm_role_grant_params()) :: Ecto.Changeset.t()
+  @spec insert_changeset(Types.perm_role_grant_params()) :: Ecto.Changeset.t()
   def insert_changeset(insert_params) do
     resolved_insert_params = resolve_scopes(insert_params)
 
@@ -53,7 +53,7 @@ defmodule MscmpSystPerms.Msdata.Validators.SystPermRoleGrants do
     |> foreign_key_constraint(:perm_id, name: :syst_perm_role_grants_perm_fk)
   end
 
-  @spec update_changeset(Msdata.SystPermRoleGrants.t(), Types.syst_perm_role_grant_params()) ::
+  @spec update_changeset(Msdata.SystPermRoleGrants.t(), Types.perm_role_grant_params()) ::
           Ecto.Changeset.t()
   def update_changeset(perm_role_grant, update_params) do
     resolved_update_params = resolve_scopes(update_params)
