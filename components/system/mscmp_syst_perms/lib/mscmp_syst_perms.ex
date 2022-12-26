@@ -12,6 +12,7 @@
 
 defmodule MscmpSystPerms do
   alias MscmpSystPerms.Impl
+  alias MscmpSystPerms.Types
 
   @external_resource "README.md"
 
