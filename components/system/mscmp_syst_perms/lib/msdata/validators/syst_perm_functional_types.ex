@@ -29,14 +29,8 @@ defmodule MscmpSystPerms.Msdata.Validators.SystPermFunctionalTypes do
     opts = MscmpSystUtils.resolve_options(opts, Helpers.OptionDefaults.defaults())
 
     perm_functional_type
-    |> cast(update_params, [
-      :display_name,
-      :user_description
-    ])
-    |> validate_required([
-      :display_name,
-      :user_description
-    ])
+    |> cast(update_params, [:display_name, :user_description])
+    |> validate_required([:display_name])
     |> Validators.General.validate_display_name(opts)
     |> optimistic_lock(:diag_row_version)
   end

@@ -85,7 +85,6 @@ defmodule MscmpSystPerms.Msdata.Validators.SystPerms do
       :internal_name,
       :display_name,
       :perm_functional_type_id,
-      :user_description,
       :view_scope_options,
       :maint_scope_options,
       :admin_scope_options,

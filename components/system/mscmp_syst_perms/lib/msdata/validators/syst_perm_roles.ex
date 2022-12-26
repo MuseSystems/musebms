@@ -58,8 +58,7 @@ defmodule MscmpSystPerms.Msdata.Validators.SystPermRoles do
     |> validate_required([
       :internal_name,
       :display_name,
-      :perm_functional_type_id,
-      :user_description
+      :perm_functional_type_id
     ])
     |> Validators.General.validate_internal_name(opts)
     |> Validators.General.validate_display_name(opts)
