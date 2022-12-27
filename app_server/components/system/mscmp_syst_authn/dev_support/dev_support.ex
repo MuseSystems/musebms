@@ -84,7 +84,7 @@ defmodule DevSupport do
     _ = MscmpSystEnums.put_enums_service(:ms_dev_enum_service)
   end
 
-  def stop_dev_environment(db_kind \\ :unit_testing) do
+  def stop_dev_environment(_db_kind \\ :unit_testing) do
     _ = cleanup_database()
   end
 
