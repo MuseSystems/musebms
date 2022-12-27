@@ -46,6 +46,7 @@ defmodule MscmpSystPerms.Msdata.Validators.SystPermRoleGrants do
       :admin_scope,
       :ops_scope
     ])
+    |> validate_view_maint_relative_scopes()
     |> unique_constraint([:pern_role_id, :perm_id],
       name: :syst_perm_role_grants_perm_perm_role_udx
     )
@@ -68,6 +69,7 @@ defmodule MscmpSystPerms.Msdata.Validators.SystPermRoleGrants do
       :admin_scope,
       :ops_scope
     ])
+    |> validate_view_maint_relative_scopes()
     |> optimistic_lock(:diag_row_version)
     |> unique_constraint([:pern_role_id, :perm_id],
       name: :syst_perm_role_grants_perm_perm_role_udx
@@ -82,5 +84,48 @@ defmodule MscmpSystPerms.Msdata.Validators.SystPermRoleGrants do
     |> Map.replace(:maint_scope, Atom.to_string(params[:maint_scope]))
     |> Map.replace(:admin_scope, Atom.to_string(params[:admin_scope]))
     |> Map.replace(:ops_scope, Atom.to_string(params[:ops_scope]))
+  end
+
+  defp validate_view_maint_relative_scopes(changeset) do
+    view_scope = get_field(changeset, :view_scope)
+    maint_scope = get_field(changeset, :maint_scope)
+
+    comparision_result = compare_scopes(view_scope, maint_scope)
+
+    maybe_add_view_maint_scope_error(comparision_result, changeset)
+  end
+
+  defp maybe_add_view_maint_scope_error(:lt, changeset) do
+    add_error(
+      changeset,
+      :view_scope,
+      "The View Right Scope must be equal to or larger than the Maintenance Right Scope."
+    )
+  end
+
+  defp maybe_add_view_maint_scope_error(_, changeset), do: changeset
+
+  defp compare_scopes(test_scope, standard_scope) do
+    scopes = ["unused", "deny", "same_user", "same_group", "all"]
+
+    test_scope_score = Enum.find_index(scopes, &(&1 == test_scope))
+    standard_scope_score = Enum.find_index(scopes, &(&1 == standard_scope))
+
+    cond do
+      test_scope_score == standard_scope_score ->
+        :eq
+
+      test_scope_score > standard_scope_score ->
+        :gt
+
+      test_scope_score < standard_scope_score ->
+        :lt
+
+      true ->
+        raise MscmpSystError,
+          code: :undefined_error,
+          message: "Invalid scope test",
+          cause: %{parameters: %{test_scope: test_scope, standard_scope: standard_scope}}
+    end
   end
 end
