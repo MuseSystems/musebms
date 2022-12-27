@@ -83,6 +83,33 @@ defmodule PermRoleGrantTest do
     assert {:error, _} = Impl.PermRoleGrant.create_perm_role_grant(insert_params)
   end
 
+  test "Cannot create Grant when View Scope is less than Maint Scope" do
+    perm_role_id =
+      from(pr in Msdata.SystPermRoles,
+        where: pr.internal_name == "perm_role_3",
+        select: pr.id
+      )
+      |> MscmpSystDb.one!()
+
+    perm_id =
+      from(p in Msdata.SystPerms,
+        where: p.internal_name == "perm_6",
+        select: p.id
+      )
+      |> MscmpSystDb.one!()
+
+    insert_params = %{
+      perm_role_id: perm_role_id,
+      perm_id: perm_id,
+      view_scope: :same_user,
+      maint_scope: :same_group,
+      admin_scope: :same_group,
+      ops_scope: :unused
+    }
+
+    assert {:error, _} = Impl.PermRoleGrant.create_perm_role_grant(insert_params)
+  end
+
   test "Cannot update Syst Defined unmaintainable fields" do
     grant_id =
       from(prg in Msdata.SystPermRoleGrants,
@@ -116,6 +143,21 @@ defmodule PermRoleGrantTest do
     revert_parmas = %{ops_scope: :same_user}
 
     assert {:ok, _} = Impl.PermRoleGrant.update_perm_role_grant(updated_grant, revert_parmas)
+  end
+
+  test "Cannot update View Scope to less than Maint Scope" do
+    grant =
+      from(prg in Msdata.SystPermRoleGrants,
+        join: pr in assoc(prg, :perm_role),
+        join: p in assoc(prg, :perm),
+        where: p.internal_name == "perm_6" and pr.internal_name == "perm_role_6",
+        select: prg
+      )
+      |> MscmpSystDb.one!()
+
+    update_params = %{view_scope: :same_group}
+
+    assert {:error, _} = Impl.PermRoleGrant.update_perm_role_grant(grant, update_params)
   end
 
   test "Cannot update User Defined unmaintainable fields" do

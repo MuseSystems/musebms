@@ -24,9 +24,8 @@ There are a small handful of Rights:
 
   * "View Right" - the ability of a user to see data. For users lacking this
   Right for a certain data element, the element will either be presented as an
-  empty field or hidden altogether.  The View Right is implicitly always at
-  least equal to, but may be greater than the "Maintenance Right" or
-  "Administrative Right" defined below.
+  empty field or hidden altogether.  The View Right must always be at
+  least equal to or more expansive than the "Maintenance Right" defined below.
 
   * "Maintenance Right" - the ability to perform data maintenance specifically
   maintaining (editing) pre-existing data.  This Right does not include the

@@ -167,8 +167,36 @@ BEGIN
           "ops_scope_options": [
             "unused"
           ]
-        }
-      ],
+        },
+        {
+          "internal_name": "perm_6",
+          "display_name": "Perm 6",
+          "perm_functional_type_name": "func_type_2",
+          "syst_defined": false,
+          "syst_description": "User Defined Permission 6",
+          "user_description": "Permission 6",
+          "view_scope_options": [
+            "deny",
+            "same_user",
+            "same_group",
+            "all"
+          ],
+          "maint_scope_options": [
+            "deny",
+            "same_user",
+            "same_group",
+            "all"
+          ],
+          "admin_scope_options": [
+            "deny",
+            "same_user",
+            "same_group",
+            "all"
+          ],
+          "ops_scope_options": [
+            "unused"
+          ]
+        }      ],
       "perm_roles": [
         {
           "internal_name": "perm_role_1",
@@ -209,6 +237,14 @@ BEGIN
           "syst_defined": false,
           "syst_description": "Permission Role 5 User Defined (Delete Test)",
           "user_description": "Permission Role 5 User Description (Delete Test)"
+        },
+        {
+          "internal_name": "perm_role_6",
+          "display_name": "Perm Role 6",
+          "perm_functional_type_name": "func_type_2",
+          "syst_defined": false,
+          "syst_description": "Permission Role 6 User Defined",
+          "user_description": "Permission Role 6 User Description"
         }
       ],
       "perm_role_grants": [
@@ -250,6 +286,14 @@ BEGIN
           "view_scope": "all",
           "maint_scope": "deny",
           "admin_scope": "deny",
+          "ops_scope": "unused"
+        },
+        {
+          "perm_role_name": "perm_role_6",
+          "perm_name": "perm_6",
+          "view_scope": "all",
+          "maint_scope": "all",
+          "admin_scope": "all",
           "ops_scope": "unused"
         }
 
