@@ -27,20 +27,20 @@ load_files = [
     # MsappPlatform - Privileges
     #
 
-    "application/msapp_platform/mssub_mcp/privileges/initial_privileges.eex.sql",
-    "application/msapp_platform/mssub_mcp/privileges/mscmp_syst_settings.eex.sql",
-    "application/msapp_platform/mssub_mcp/privileges/mscmp_syst_enums.eex.sql",
-    "application/msapp_platform/mssub_mcp/privileges/mscmp_syst_features.eex.sql",
-    "application/msapp_platform/mssub_mcp/privileges/mscmp_syst_instance.eex.sql",
-    "application/msapp_platform/mssub_mcp/privileges/mscmp_syst_authn.eex.sql",
+    "platform/msapp_platform/mssub_mcp/privileges/initial_privileges.eex.sql",
+    "platform/msapp_platform/mssub_mcp/privileges/mscmp_syst_settings.eex.sql",
+    "platform/msapp_platform/mssub_mcp/privileges/mscmp_syst_enums.eex.sql",
+    "platform/msapp_platform/mssub_mcp/privileges/mscmp_syst_features.eex.sql",
+    "platform/msapp_platform/mssub_mcp/privileges/mscmp_syst_instance.eex.sql",
+    "platform/msapp_platform/mssub_mcp/privileges/mscmp_syst_authn.eex.sql",
 
     #
     # MsappPlatform - Seed Data
     #
 
-    "application/msapp_platform/mssub_mcp/seed_data/applications.eex.sql",
-    "application/msapp_platform/mssub_mcp/seed_data/enum_instance_types.eex.sql",
-    "application/msapp_platform/mssub_mcp/seed_data/enum_platform_states.eex.sql",
-    "application/msapp_platform/mssub_mcp/seed_data/settings.eex.sql",
-    "application/msapp_platform/mssub_mcp/seed_data/feature_mapping.eex.sql",
+    "platform/msapp_platform/mssub_mcp/seed_data/applications.eex.sql",
+    "platform/msapp_platform/mssub_mcp/seed_data/enum_instance_types.eex.sql",
+    "platform/msapp_platform/mssub_mcp/seed_data/enum_platform_states.eex.sql",
+    "platform/msapp_platform/mssub_mcp/seed_data/settings.eex.sql",
+    "platform/msapp_platform/mssub_mcp/seed_data/feature_mapping.eex.sql",
 ]
