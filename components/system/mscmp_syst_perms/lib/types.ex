@@ -20,6 +20,37 @@ defmodule MscmpSystPerms.Types do
   """
 
   @typedoc """
+  Defines the return value type for certain functions returning existing
+  Permission Grants.
+
+  Functions which retrieve Permission Grant Role records for specific selection
+  criteria will often return a simplified value indicating the Permissions
+  granted including the Scope granted for each of the Permission's Rights.
+
+  In some cases a specific requested Permission may not be granted at all.  In
+  this scenario, an Msdata.SystPermRoleGrants role record won't exist, but the
+  function should still return a `t:perm_grants/0` value with the default Scopes
+  for the requested Permission's Rights (usually `:deny`).
+
+  The keys for this map should be `t:perm_name/0` value of the Permission record
+  in question.
+  """
+  @type perm_grants() :: %{required(permission_name :: perm_name()) => perm_grant_value()}
+
+  @typedoc """
+  Describes the Scopes granted by a Permission for each of the Permission's
+  Rights.
+
+  See the conceptual documentation at `MscmpSystPerms` for more.
+  """
+  @type perm_grant_value() :: %{
+          required(:view_scope) => rights_scope(),
+          required(:maint_scope) => rights_scope(),
+          required(:admin_scope) => rights_scope(),
+          required(:ops_scope) => rights_scope()
+        }
+
+  @typedoc """
   The type of the Permission record ID value.
   """
   @type perm_id() :: Ecto.UUID.t()
