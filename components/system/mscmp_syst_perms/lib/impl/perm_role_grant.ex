@@ -19,6 +19,8 @@ defmodule MscmpSystPerms.Impl.PermRoleGrant do
 
   require Logger
 
+  @scopes ["unused", "deny", "same_user", "same_group", "all"]
+
   @spec create_perm_role_grant(Types.perm_role_grant_params()) ::
           {:ok, Msdata.SystPermRoleGrants.t()} | {:error, MscmpSystError.t()}
   def create_perm_role_grant(perm_role_grant_params) do
@@ -113,4 +115,38 @@ defmodule MscmpSystPerms.Impl.PermRoleGrant do
 
   def delete_perm_role_grant(%Msdata.SystPermRoleGrants{} = perm),
     do: delete_perm_role_grant(perm.id)
+
+  @spec compare_scopes(Types.rights_scope() | String.t(), Types.rights_scope() | String.t()) ::
+          :eq | :gt | :lt
+  def compare_scopes(test_scope, standard_scope)
+      when is_binary(test_scope) and is_binary(standard_scope) do
+    test_scope_score = Enum.find_index(@scopes, &(&1 == test_scope))
+    standard_scope_score = Enum.find_index(@scopes, &(&1 == standard_scope))
+
+    cond do
+      test_scope_score == standard_scope_score ->
+        :eq
+
+      test_scope_score > standard_scope_score ->
+        :gt
+
+      test_scope_score < standard_scope_score ->
+        :lt
+
+      true ->
+        raise MscmpSystError,
+          code: :undefined_error,
+          message: "Invalid scope comparison.",
+          cause: %{parameters: %{test_scope: test_scope, standard_scope: standard_scope}}
+    end
+  end
+
+  def compare_scopes(test_scope, standard_scope) do
+    test_scope = if is_atom(test_scope), do: Atom.to_string(test_scope), else: test_scope
+
+    standard_scope =
+      if is_atom(standard_scope), do: Atom.to_string(standard_scope), else: standard_scope
+
+    compare_scopes(test_scope, standard_scope)
+  end
 end

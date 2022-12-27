@@ -275,4 +275,35 @@ defmodule MscmpSystPerms do
   @spec delete_perm_role_grant(Msdata.SystPermRoleGrants.t() | Types.perm_role_grant_id()) ::
           {:ok, :deleted | :not_found} | {:error, MscmpSystError.t()}
   defdelegate delete_perm_role_grant(perm_role_grant), to: Impl.PermRoleGrant
+
+  @doc section: :perms_data
+  @doc """
+  Compares two Scope values and returns a value indicating the relative
+  expansiveness of Scope.
+
+  Scopes restrict, to varying degrees, how much data a user might access for a
+  given Right.  We can compare Scopes relative to how much more or less data
+  a Scope grants to a user and that's what this function does.  Scopes granting
+  more expansive access to data are considered greater than Scopes granting data
+  on more restrictive terms.  Of course any two scopes may be equal as well.
+
+  The return value is an atom indicating whether the Scope in the first
+  parameter position is greater than, less than, or equal to the expansiveness
+  of Scope in the second parameter position.  These return values are:
+
+    * `:eq` - both the first and second Scopes are equal in terms of the
+    expansiveness and are considered 'equal' to each other.
+
+    * `:gt` - the first Scope parameter confers a greater expansiveness than the
+    second Scope parameter and is considered 'greater than' the Scope of the
+    second parameter.
+
+    * `:lt` - the first Scope parameter confers a lesser expansiveness than the
+    second Scope parameter and is considered 'less than' the Scope of the second
+    parameter.
+
+  """
+  @spec compare_scopes(Types.rights_scope() | String.t(), Types.rights_scope() | String.t()) ::
+          :eq | :gt | :lt
+  defdelegate compare_scopes(test_scope, standard_scope), to: Impl.PermRoleGrant
 end

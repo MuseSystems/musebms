@@ -13,6 +13,7 @@
 defmodule MscmpSystPerms.Msdata.Validators.SystPermRoleGrants do
   import Ecto.Changeset
 
+  alias MscmpSystPerms.Impl
   alias MscmpSystPerms.Types
 
   @moduledoc false
@@ -90,7 +91,7 @@ defmodule MscmpSystPerms.Msdata.Validators.SystPermRoleGrants do
     view_scope = get_field(changeset, :view_scope)
     maint_scope = get_field(changeset, :maint_scope)
 
-    comparision_result = compare_scopes(view_scope, maint_scope)
+    comparision_result = Impl.PermRoleGrant.compare_scopes(view_scope, maint_scope)
 
     maybe_add_view_maint_scope_error(comparision_result, changeset)
   end
@@ -104,28 +105,4 @@ defmodule MscmpSystPerms.Msdata.Validators.SystPermRoleGrants do
   end
 
   defp maybe_add_view_maint_scope_error(_, changeset), do: changeset
-
-  defp compare_scopes(test_scope, standard_scope) do
-    scopes = ["unused", "deny", "same_user", "same_group", "all"]
-
-    test_scope_score = Enum.find_index(scopes, &(&1 == test_scope))
-    standard_scope_score = Enum.find_index(scopes, &(&1 == standard_scope))
-
-    cond do
-      test_scope_score == standard_scope_score ->
-        :eq
-
-      test_scope_score > standard_scope_score ->
-        :gt
-
-      test_scope_score < standard_scope_score ->
-        :lt
-
-      true ->
-        raise MscmpSystError,
-          code: :undefined_error,
-          message: "Invalid scope test",
-          cause: %{parameters: %{test_scope: test_scope, standard_scope: standard_scope}}
-    end
-  end
 end
