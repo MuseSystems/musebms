@@ -22,23 +22,23 @@ use the permissions of the system.
 A Right is defined as the general ability to perform an action in the system.
 There are a small handful of Rights:
 
-  * "View Right" - the ability of a user to see data. For users lacking this
+  * "__View Right__" - the ability of a user to see data. For users lacking this
   Right for a certain data element, the element will either be presented as an
   empty field or hidden altogether.  The View Right must always be at
   least equal to or more expansive than the "Maintenance Right" defined below.
 
-  * "Maintenance Right" - the ability to perform data maintenance specifically
+  * "__Maintenance Right__" - the ability to perform data maintenance specifically
   maintaining (editing) pre-existing data.  This Right does not include the
   idea of being able to create new records or deleting existing records; just
   changing existing records.
 
-  * "Administrative Right" - the ability to perform data administration which is
+  * "__Administrative Right__" - the ability to perform data administration which is
   the ability to create or destroy data.  While it is typical for Administrative
   Right holders to also be granted similar Maintenance Rights, it is not
   implicitly so and there are some circumstances where it can be desirable for
   these two rights to not be equal.
 
-  * "Operations Right" - whereas the previous Rights all concern being able to
+  * "__Operations Right__" - whereas the previous Rights all concern being able to
   view or manipulate data, the Operations Right expresses the ability to perform
   system operations or processes.  Such an operation might be logging into the
   system, scheduling a job, starting some expensive process, or launching an
@@ -57,24 +57,24 @@ allows the View to be fine tuned in that way.
 
 Similar to Rights, a small number of Scopes are available for use:
 
-  * "Deny" - the Right is not actually granted to the user but instead is
+  * "__Deny__" - the Right is not actually granted to the user but instead is
   explicitly denied to the user.  The use of the Deny Scope will become clearer
   when we discuss Permissions and Permission Role Grants.
 
-  * "Same User" - the Right is limited to the current user exercising the Right.
+  * "__Same User__" - the Right is limited to the current user exercising the Right.
   This is the case from the section summary example can only view their own
   Sales Orders. The Right does not extend to data owned by other users.
 
-  * "Same Group" - the Right is limited to data belonging to a group or
+  * "__Same Group__" - the Right is limited to data belonging to a group or
   organizational designation to which the user is also assigned.  The details of
   group membership/designation will be specific to the implementation but the
   concept of a group based limitation of Rights is supported by this Scope.
 
-  * "All" - the Right grant permits access to all applicable data or operations
+  * "__All__" - the Right grant permits access to all applicable data or operations
   without additional limitation.  From the summary example this is the case
   where the user can see all Sales Orders.
 
-  * "Unused" - is a special scope which indicates that a Right is not applicable
+  * "__Unused__" - is a special scope which indicates that a Right is not applicable
   to any grants in question.  The use of the Unused Scope will become clearer
   when we discuss Permissions and Permission Role Grants.
 
