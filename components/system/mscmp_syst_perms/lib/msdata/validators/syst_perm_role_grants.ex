@@ -16,6 +16,8 @@ defmodule MscmpSystPerms.Msdata.Validators.SystPermRoleGrants do
   alias MscmpSystPerms.Impl
   alias MscmpSystPerms.Types
 
+  @scopes ["unused", "deny", "same_user", "same_group", "all"]
+
   @moduledoc false
 
   # TODO:  The SystPermRoles record controls whether or not this record is also
@@ -47,6 +49,10 @@ defmodule MscmpSystPerms.Msdata.Validators.SystPermRoleGrants do
       :admin_scope,
       :ops_scope
     ])
+    |> validate_inclusion(:view_scope, @scopes)
+    |> validate_inclusion(:maint_scope, @scopes)
+    |> validate_inclusion(:admin_scope, @scopes)
+    |> validate_inclusion(:ops_scope, @scopes)
     |> validate_view_maint_relative_scopes()
     |> unique_constraint([:pern_role_id, :perm_id],
       name: :syst_perm_role_grants_perm_perm_role_udx
@@ -70,6 +76,10 @@ defmodule MscmpSystPerms.Msdata.Validators.SystPermRoleGrants do
       :admin_scope,
       :ops_scope
     ])
+    |> validate_inclusion(:view_scope, @scopes)
+    |> validate_inclusion(:maint_scope, @scopes)
+    |> validate_inclusion(:admin_scope, @scopes)
+    |> validate_inclusion(:ops_scope, @scopes)
     |> validate_view_maint_relative_scopes()
     |> optimistic_lock(:diag_row_version)
     |> unique_constraint([:pern_role_id, :perm_id],
