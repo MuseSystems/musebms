@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.29.1">
+    <meta name="project" content="mscmp_syst_perms v0.1.0">
+
+    <title>MscmpSystPerms — mscmp_syst_perms v0.1.0</title>
+    <link rel="stylesheet" href="dist/html-elixir-V2ETBPMB.css" />
+
+
+    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
+    <script src="dist/handlebars.templates-IV5W3OL2.js"></script>
+    <script src="dist/sidebar_items-2813030D.js"></script>
+
+      <script src="docs_config.js"></script>
+
+    <script async src="dist/html-XN2TSG4M.js"></script>
+
+
+  </head>
+  <body data-type="modules" class="page-module">
+    <script>
+
+      try {
+        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
+
+        if (settings.theme === 'dark' ||
+           ((settings.theme === 'system' || settings.theme == null) &&
+             window.matchMedia('(prefers-color-scheme: dark)').matches)
+           ) {
+          document.body.classList.add('dark')
+        }
+      } catch (error) { }
+    </script>
+
+<div class="main">
+
+<button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<section class="sidebar">
+  <form class="sidebar-search" action="search.html">
+    <button type="submit" class="search-button" aria-label="Submit Search">
+      <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
+    </button>
+    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
+      <i class="ri-close-line ri-lg" aria-hidden="true" title="Cancel search"></i>
+    </button>
+    <label class="search-label">
+      <p class="sr-only">Search</p>
+      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+    </label>
+  </form>
+
+  <div class="autocomplete">
+    <div class="autocomplete-results">
+    </div>
+  </div>
+
+  <div class="sidebar-header">
+
+    <div class="sidebar-projectDetails">
+      <a href="MscmpSystPerms.html" class="sidebar-projectName" translate="no">
+mscmp_syst_perms
+      </a>
+      <strong class="sidebar-projectVersion" translate="no">
+        v0.1.0
+      </strong>
+    </div>
+    <ul class="sidebar-listNav">
+      <li><a id="extras-list-link" href="#full-list">Pages</a></li>
+
+        <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+
+
+    </ul>
+  </div>
+
+  <div class="gradient"></div>
+  <ul id="full-list" class="sidebar-fullList"></ul>
+</section>
+
+<section class="content">
+  <output role="status" id="toast"></output>
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+<h1>
+<button class="icon-action display-settings">
+  <i class="ri-settings-3-line"></i>
+  <span class="sr-only">Settings</span>
+</button>
+
+
+  <span translate="no">MscmpSystPerms</span> 
+  <small class="app-vsn" translate="no">(mscmp_syst_perms v0.1.0)</small>
+
+</h1>
+
+
+  <section id="moduledoc">
+<h1>MscmpSystPerms - Permissions System Foundation</h1><p>Provides a generalized foundation for user permission system
+implementations.</p><p>The principle idea of this component is to organization permissions in a way
+that higher level components can introduce the concept of user and
+establish contexts of applicability while keeping a cohesion in permissioning
+capability.  To this end this component provides the core concepts for use in
+any permissioning system using this ecosystem of components.</p><h2 id="module-concepts" class="section-heading">
+  <a href="#module-concepts" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">concepts</p>
+  </a>
+  Concepts
+</h2>
+<p>Below are the concepts used in formulating the functional design of this
+component.  While these concepts are generally applicable it's worth keeping
+in mind that any specific implementation of these concepts in an application
+will have its own nuance and details that will have to be understood to properly
+use the permissions of the system.</p><h4>Rights</h4><p>A Right is defined as the general ability to perform an action in the system.
+There are a small handful of Rights:</p><ul><li><p>&quot;<strong>View Right</strong>&quot; - the ability of a user to see data. For users lacking this
+Right for a certain data element, the element will either be presented as an
+empty field or hidden altogether.  The View Right must always be at
+least equal to or more expansive than the &quot;Maintenance Right&quot; defined below.</p></li><li><p>&quot;<strong>Maintenance Right</strong>&quot; - the ability to perform data maintenance specifically
+maintaining (editing) pre-existing data.  This Right does not include the
+idea of being able to create new records or deleting existing records; just
+changing existing records.</p></li><li><p>&quot;<strong>Administrative Right</strong>&quot; - the ability to perform data administration which is
+the ability to create or destroy data.  While it is typical for Administrative
+Right holders to also be granted similar Maintenance Rights, it is not
+implicitly so and there are some circumstances where it can be desirable for
+these two rights to not be equal.</p></li><li><p>&quot;<strong>Operations Right</strong>&quot; - whereas the previous Rights all concern being able to
+view or manipulate data, the Operations Right expresses the ability to perform
+system operations or processes.  Such an operation might be logging into the
+system, scheduling a job, starting some expensive process, or launching an
+integration job to a third party platform.  The operation or process will
+naturally likely be working with system data, but the user is not directly
+doing so and as such data related rights are not necessarily required to
+exercise a granted Operations Right.</p></li></ul><h4>Scopes</h4><p>Scopes define the extent to which a granted Right applies.  For example, a user
+being given View Rights to a document such as a Sales Order may be allowed to
+view all Sales Orders in the system or they may be limited to those Sales Orders
+for which they are designated as the &quot;owner&quot;.  Scope is the mechanism which
+allows the View to be fine tuned in that way.</p><p>Similar to Rights, a small number of Scopes are available for use:</p><ul><li><p>&quot;<strong>Deny</strong>&quot; - the Right is not actually granted to the user but instead is
+explicitly denied to the user.  The use of the Deny Scope will become clearer
+when we discuss Permissions and Permission Role Grants.</p></li><li><p>&quot;<strong>Same User</strong>&quot; - the Right is limited to the current user exercising the Right.
+This is the case from the section summary example can only view their own
+Sales Orders. The Right does not extend to data owned by other users.</p></li><li><p>&quot;<strong>Same Group</strong>&quot; - the Right is limited to data belonging to a group or
+organizational designation to which the user is also assigned.  The details of
+group membership/designation will be specific to the implementation but the
+concept of a group based limitation of Rights is supported by this Scope.</p></li><li><p>&quot;<strong>All</strong>&quot; - the Right grant permits access to all applicable data or operations
+without additional limitation.  From the summary example this is the case
+where the user can see all Sales Orders.</p></li><li><p>&quot;<strong>Unused</strong>&quot; - is a special scope which indicates that a Right is not applicable
+to any grants in question.  The use of the Unused Scope will become clearer
+when we discuss Permissions and Permission Role Grants.</p></li></ul><h4>Permission Functional Types</h4><p>Permission Functional Types provide a grouping mechanism for Permissions and
+Permission Roles (discussed below).  The idea here is that an application may
+define different applicability contexts for the permissions of the system.
+Consider an application which supports business operations and inventory
+management across multiple warehouses.  A permission such as one that grants an
+employee the right to log into the system might have a &quot;global&quot; reach (there's
+only one system) but having permission to process inventory transactions may be
+specific to each warehouse, a &quot;warehouse&quot; reach.  The application could
+accommodate this by implementing a &quot;Global&quot; Permission Functional Type to
+include all those permissions which are global in nature and a &quot;Warehouse&quot;
+Permission Functional Type to include all permissions which are granted
+warehouse by warehouse.</p><p>Permission Functional Types are deeply tied to the implementation of application
+functionality and as such they are for the most part not end user configurable.
+The exception to this are the user interface representations such as the display
+name and description fields.</p><p>This concept is conveyed via the <a href="Msdata.SystPermFunctionalTypes.html"><code class="inline">Msdata.SystPermFunctionalTypes</code></a> struct.</p><h4>Permissions</h4><p>A Permission defines the specific data point, application document, or operation
+for which Rights may be granted.  For all Rights a Permission will define the
+available Scopes which may be granted; this means that any given Permission may
+offer all Scopes or some subset of them for a given Right.</p><p>If a Permission's functional use doesn't include a specific Right, the only
+available Scope for the irrelevant Right will be the special &quot;Unused&quot; Scope.
+For example a Permission for logging into the system doesn't include the concept
+of viewing data, logging in is only an &quot;Operation&quot;; so the login Permission will
+make the &quot;Unused&quot; Scope the only available scope for its View Right.</p><p>Because a Permission's functional use may include multiple Rights and it may
+only be appropriate to grant some of the of those Rights to the user, a
+Permission may include the Scope of &quot;Deny&quot; as an available Scope.  An example of
+this would be viewing certain documents; it might be appropriate to grant a user
+read only access to all Purchase Orders in the system.  In this case a Purchase
+Order Document Permission grant to the user would use the &quot;All&quot; Scope for the
+View Right, but would set the Maintenance and Administration Rights of that
+permission to &quot;Deny&quot;.  Since the Purchase Order Document Permission is for all
+rights pertaining to Purchase Order Documents, we need that ability to
+selectively deny permission.</p><p>This concept is conveyed via the <code class="inline">Msdata.SystPermFuncs</code> struct.</p><h4>Permission Roles</h4><p>Permission Roles allow for the grouping of specific Permissions and the specific
+grants of Rights.  These Permission Roles are then the assigned to system users,
+giving these users the collective Rights of their assigned Permission Roles.
+Note that Permission Roles are intended to be additive; this means that if a
+two Permission Roles are granted to a user, an one Role gives the user view only
+access to Sales Orders but the other Role gives the user both Maintenance and
+Administrative Rights to Sales Orders, the Role which gives Maintenance and
+Administrative Rights will be the effective Role for that Permission.  Its the
+greatest of grants from each granted Permission Roles which wins.</p><p>Permission Roles may be system defined, which means they cannot be changed
+except for their user interface presentation elements.  This component also
+supports arbitrarily defined user Permission Roles as user security policy
+dictates as appropriate.</p><p>A Permission Role is defined for a specific Permission Functional Type which
+becomes important to the Permission Role's child Permission Role Grants.  In
+essence this means that a single Permission Role may not span the application
+defined Permission Functional Type boundaries when granting Permissions to
+users.</p><h4>Permission Role Grants</h4><p>A child of the Permission Role, a single Permission Role Grant grants a single
+Permission and defines the specific Scope for each of the Rights from the
+available Scopes defined by the Permission itself.</p><p>Only Permissions which share the same Permission Functional Type as the parent
+Permission Role may be granted using the Permission Role Grants.  This ensures
+that each Permission Role functions which a cohesive application context.</p><p>Permission Role Grants assume the system defined status of their parent
+Permission Role.  If the parent Permission Role is system defined then the
+Permission Role Grant may not be changed or deleted nor may new Permission Role
+Grant records be created for that Permission Role.  User defined Permission Role
+parents allow editing Scope assignments to Rights and the addition and removal
+of Permission Role Grant records.</p><p>Naturally, only a single Permission Role Grant record for exist for any
+combination of Permission Role and Permission records.</p><h2 id="module-a-basis-for-permissions" class="section-heading">
+  <a href="#module-a-basis-for-permissions" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">a-basis-for-permissions</p>
+  </a>
+  A Basis for Permissions
+</h2>
+<p>As has been stated before, this component provides the basic concepts of what it
+means to have Permissions in an application and the general aspects of
+implementing these concepts.  Notably absent is what constitutes a &quot;user&quot;, how
+contexts of applicability are established, or implementations of permission
+checks.</p><p>The thinking in this regard is that higher level components or applications
+themselves will use MscmpSystPerms as a library providing basic Permissions data
+management while providing implementations for users, Permission Role assignment
+to those users in their correct contexts, and necessarily building on those next
+steps the actual evaluation of whether or not a user has a permission to do
+something in the system.</p><p>One recommendation for implementing applications is that the Permission Role
+assignment to users should be the exclusive mechanism for granting Permission
+Rights; what we mean by this is that Permission specific, one-off grants to
+users are to be avoided.  From a user security perspective it becomes difficult
+to consistently manage two paths for granting authority in the system,
+especially if one of those paths is genuinely exceptional.  One-off revocations
+of Permissions Rights from specific individual users is acceptable, however,
+because the its immediately apparent to the user when user maintenance has
+overlooked the removal of a one-off revocations (the user can't dont something
+they expect to be able to do).</p>
+  </section>
+
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+      Summary
+    </h1>
+<div class="summary-data-management summary">
+  <h2>
+    <a href="#data-management">Data Management</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#compare_scopes/2" translate="no">compare_scopes(test_scope, standard_scope)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Compares two Scope values and returns a value indicating the relative
+expansiveness of Scope.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#create_perm/1" translate="no">create_perm(perm_params)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Creates a new user defined Permission record.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#create_perm_role/1" translate="no">create_perm_role(perm_role_params)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Creates a new user defined Permission Role record.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#create_perm_role_grant/1" translate="no">create_perm_role_grant(perm_role_grant_params)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Creates a new Permission Role Grant to a user defined Permission Role.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#delete_perm/1" translate="no">delete_perm(perm)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Deletes a user defined Permission record.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#delete_perm_role/1" translate="no">delete_perm_role(perm_role)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Deletes user defined Permission Role records.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#delete_perm_role_grant/1" translate="no">delete_perm_role_grant(perm_role_grant)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Deletes the Permission Role Grant records of user defined Permission Roles.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#update_perm/2" translate="no">update_perm(perm, perm_params)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Updates an existing Permission record.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#update_perm_functional_type/2" translate="no">update_perm_functional_type(perm_functional_type, perm_functional_type_params)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Updates Permission Functional Type user maintainable data.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#update_perm_role/2" translate="no">update_perm_role(perm_role, perm_role_params)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Updates Permission Role records.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#update_perm_role_grant/2" translate="no">update_perm_role_grant(perm_role_grant, perm_role_grant_params)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Updates the Permission Role Grant records of user defined Permission Roles.</p></div>
+
+    </div>
+
+</div>
+
+  </section>
+
+
+  <section id="data-management" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#data-management">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+Data Management
+    </h1>
+    <div class="data-management-list">
+<section class="detail" id="compare_scopes/2">
+
+  <div class="detail-header">
+    <a href="#compare_scopes/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">compare_scopes(test_scope, standard_scope)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> compare_scopes(
+  <a href="MscmpSystPerms.Types.html#t:rights_scope/0">MscmpSystPerms.Types.rights_scope</a>() | <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  <a href="MscmpSystPerms.Types.html#t:rights_scope/0">MscmpSystPerms.Types.rights_scope</a>() | <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()
+) :: :eq | :gt | :lt</pre>
+
+      </div>
+
+<p>Compares two Scope values and returns a value indicating the relative
+expansiveness of Scope.</p><p>Scopes restrict, to varying degrees, how much data a user might access for a
+given Right.  We can compare Scopes relative to how much more or less data
+a Scope grants to a user and that's what this function does.  Scopes granting
+more expansive access to data are considered greater than Scopes granting data
+on more restrictive terms.  Of course any two scopes may be equal as well.</p><p>The return value is an atom indicating whether the Scope in the first
+parameter position is greater than, less than, or equal to the expansiveness
+of Scope in the second parameter position.  These return values are:</p><ul><li><p><code class="inline">:eq</code> - both the first and second Scopes are equal in terms of the
+expansiveness and are considered 'equal' to each other.</p></li><li><p><code class="inline">:gt</code> - the first Scope parameter confers a greater expansiveness than the
+second Scope parameter and is considered 'greater than' the Scope of the
+second parameter.</p></li><li><p><code class="inline">:lt</code> - the first Scope parameter confers a lesser expansiveness than the
+second Scope parameter and is considered 'less than' the Scope of the second
+parameter.</p></li></ul>
+  </section>
+</section>
+<section class="detail" id="create_perm/1">
+
+  <div class="detail-header">
+    <a href="#create_perm/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">create_perm(perm_params)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> create_perm(<a href="MscmpSystPerms.Types.html#t:perm_params/0">MscmpSystPerms.Types.perm_params</a>()) ::
+  {:ok, <a href="Msdata.SystPerms.html#t:t/0">Msdata.SystPerms.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Creates a new user defined Permission record.</p><p>Upon creation this function returns a success tuple in the form
+<code class="inline">{:ok, %Msdata.SystPerms{}}</code> where the struct is the data of the newly created
+record.  On error an error tuple is returned (<code class="inline">{:error, %MscmpSystError{}}</code>).</p><h2 id="create_perm/1-parameters" class="section-heading">
+  <a href="#create_perm/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">perm_params</code> - a map of values which describe the Permission record to
+create.  For details see <a href="MscmpSystPerms.Types.html#t:perm_params/0"><code class="inline">MscmpSystPerms.Types.perm_params/0</code></a>.</li></ul>
+  </section>
+</section>
+<section class="detail" id="create_perm_role/1">
+
+  <div class="detail-header">
+    <a href="#create_perm_role/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">create_perm_role(perm_role_params)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> create_perm_role(<a href="MscmpSystPerms.Types.html#t:perm_role_params/0">MscmpSystPerms.Types.perm_role_params</a>()) ::
+  {:ok, <a href="Msdata.SystPermRoles.html#t:t/0">Msdata.SystPermRoles.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Creates a new user defined Permission Role record.</p><p>On successful record creation this function returns a success tuple in the
+form <code class="inline">{:ok, %Msdata.SystPermRoles{}}</code> where the struct is the data of the
+created record.  On error an error tuple is returned
+(<code class="inline">{:error, %MscmpSystError{}}</code>).</p><h2 id="create_perm_role/1-parameters" class="section-heading">
+  <a href="#create_perm_role/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">perm_role_params</code> - a map describing the new Permission Role record's
+values.  For more about see <a href="MscmpSystPerms.Types.html#t:perm_role_params/0"><code class="inline">MscmpSystPerms.Types.perm_role_params/0</code></a>.</li></ul>
+  </section>
+</section>
+<section class="detail" id="create_perm_role_grant/1">
+
+  <div class="detail-header">
+    <a href="#create_perm_role_grant/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">create_perm_role_grant(perm_role_grant_params)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> create_perm_role_grant(<a href="MscmpSystPerms.Types.html#t:perm_role_grant_params/0">MscmpSystPerms.Types.perm_role_grant_params</a>()) ::
+  {:ok, <a href="Msdata.SystPermRoleGrants.html#t:t/0">Msdata.SystPermRoleGrants.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Creates a new Permission Role Grant to a user defined Permission Role.</p><p>On successful record creation this function returns a success tuple in the
+form <code class="inline">{:ok, %Msdata.SystPermRoleGrants{}}</code> where the struct is the data of the
+created record.  On error an error tuple is returned
+(<code class="inline">{:error, %MscmpSystError{}}</code>).</p><p>New Permission Role Grant records can only be created for parent Permission
+Role records that are not set as being system defined.</p><h2 id="create_perm_role_grant/1-parameters" class="section-heading">
+  <a href="#create_perm_role_grant/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">perm_role_grant_params</code> - a map describing the new Permission Role Grant
+record's values.  For more about see
+<a href="MscmpSystPerms.Types.html#t:perm_role_grant_params/0"><code class="inline">MscmpSystPerms.Types.perm_role_grant_params/0</code></a>.</li></ul>
+  </section>
+</section>
+<section class="detail" id="delete_perm/1">
+
+  <div class="detail-header">
+    <a href="#delete_perm/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">delete_perm(perm)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> delete_perm(<a href="Msdata.SystPerms.html#t:t/0">Msdata.SystPerms.t</a>() | <a href="MscmpSystPerms.Types.html#t:perm_id/0">MscmpSystPerms.Types.perm_id</a>()) ::
+  {:ok, :deleted | :not_found} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Deletes a user defined Permission record.</p><p>On successful deletion of the record this function returns a success tuple in
+the form <code class="inline">{:ok, :deleted}</code>.  If the requested record is not found a success
+tuple in the form <code class="inline">{:ok, :not_found}</code> is returned.  On error an error tuple is
+returned (<code class="inline">{:error, %MscmpSystError{}}</code>).</p><h2 id="delete_perm/1-parameters" class="section-heading">
+  <a href="#delete_perm/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">perm</code> - either a populated <a href="Msdata.SystPerms.html"><code class="inline">Msdata.SystPerms</code></a> struct or the record ID
+value of the Permission record to delete.</li></ul>
+  </section>
+</section>
+<section class="detail" id="delete_perm_role/1">
+
+  <div class="detail-header">
+    <a href="#delete_perm_role/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">delete_perm_role(perm_role)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> delete_perm_role(<a href="Msdata.SystPermRoles.html#t:t/0">Msdata.SystPermRoles.t</a>() | <a href="MscmpSystPerms.Types.html#t:perm_role_id/0">MscmpSystPerms.Types.perm_role_id</a>()) ::
+  {:ok, :deleted | :not_found} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Deletes user defined Permission Role records.</p><p>On successful deletion of the record this function returns a success tuple in
+the form <code class="inline">{:ok, :deleted}</code>.  If the requested record is not found a success
+tuple in the form <code class="inline">{:ok, :not_found}</code> is returned.  On error an error tuple is
+returned (<code class="inline">{:error, %MscmpSystError{}}</code>).</p><p>System defined Permission Role records may not be deleted using this API.</p><h2 id="delete_perm_role/1-parameters" class="section-heading">
+  <a href="#delete_perm_role/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">perm_role</code> - either the record ID value of the Permission Role record to
+delete or a populated <a href="Msdata.SystPermRoles.html"><code class="inline">Msdata.SystPermRoles</code></a> struct representing the
+Permission Role record.</li></ul>
+  </section>
+</section>
+<section class="detail" id="delete_perm_role_grant/1">
+
+  <div class="detail-header">
+    <a href="#delete_perm_role_grant/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">delete_perm_role_grant(perm_role_grant)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> delete_perm_role_grant(
+  <a href="Msdata.SystPermRoleGrants.html#t:t/0">Msdata.SystPermRoleGrants.t</a>()
+  | <a href="MscmpSystPerms.Types.html#t:perm_role_grant_id/0">MscmpSystPerms.Types.perm_role_grant_id</a>()
+) ::
+  {:ok, :deleted | :not_found} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Deletes the Permission Role Grant records of user defined Permission Roles.</p><p>On successful deletion of the record this function returns a success tuple in
+the form <code class="inline">{:ok, :deleted}</code>.  If the requested record is not found a success
+tuple in the form <code class="inline">{:ok, :not_found}</code> is returned.  On error an error tuple is
+returned (<code class="inline">{:error, %MscmpSystError{}}</code>).</p><p>Permission Role Grant records belonging to System defined Permission Roles may
+not be deleted using this API.</p><h2 id="delete_perm_role_grant/1-parameters" class="section-heading">
+  <a href="#delete_perm_role_grant/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">perm_role_grant</code> - either the record ID value of the Permission Role
+Grant record to delete or a populated <a href="Msdata.SystPermRoleGrants.html"><code class="inline">Msdata.SystPermRoleGrants</code></a> struct
+representing the Permission Role Grant record.</li></ul>
+  </section>
+</section>
+<section class="detail" id="update_perm/2">
+
+  <div class="detail-header">
+    <a href="#update_perm/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">update_perm(perm, perm_params)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> update_perm(
+  <a href="MscmpSystPerms.Types.html#t:perm_id/0">MscmpSystPerms.Types.perm_id</a>() | <a href="Msdata.SystPerms.html#t:t/0">Msdata.SystPerms.t</a>(),
+  <a href="MscmpSystPerms.Types.html#t:perm_params/0">MscmpSystPerms.Types.perm_params</a>()
+) :: {:ok, <a href="Msdata.SystPerms.html#t:t/0">Msdata.SystPerms.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Updates an existing Permission record.</p><p>Upon update this function returns a success tuple in the form
+<code class="inline">{:ok, %Msdata.SystPerms{}}</code> where the struct is the data of the updated
+record.  On error an error tuple is returned (<code class="inline">{:error, %MscmpSystError{}}</code>).</p><p>System defined Permission records only allow the user interface display fields
+to be updated (<code class="inline">display_name</code>, <code class="inline">user_description</code>).  User defined permissions
+allow a broader range of changes.</p><h2 id="update_perm/2-parameters" class="section-heading">
+  <a href="#update_perm/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">perm</code> - either a fully populated <a href="Msdata.SystPerms.html"><code class="inline">Msdata.SystPerms</code></a> struct representing
+the before-update state of the Permission record or the record ID of the
+Permission record to update.</p></li><li><p><code class="inline">perm_params</code> - a map of values which describe the desired update fields
+and their new values.  For details see <a href="MscmpSystPerms.Types.html#t:perm_params/0"><code class="inline">MscmpSystPerms.Types.perm_params/0</code></a>.</p></li></ul>
+  </section>
+</section>
+<section class="detail" id="update_perm_functional_type/2">
+
+  <div class="detail-header">
+    <a href="#update_perm_functional_type/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">update_perm_functional_type(perm_functional_type, perm_functional_type_params)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> update_perm_functional_type(
+  <a href="MscmpSystPerms.Types.html#t:perm_functional_type_id/0">MscmpSystPerms.Types.perm_functional_type_id</a>()
+  | <a href="Msdata.SystPermFunctionalTypes.html#t:t/0">Msdata.SystPermFunctionalTypes.t</a>(),
+  <a href="MscmpSystPerms.Types.html#t:perm_functional_type_params/0">MscmpSystPerms.Types.perm_functional_type_params</a>()
+) :: {:ok, <a href="Msdata.SystPermFunctionalTypes.html#t:t/0">Msdata.SystPermFunctionalTypes.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Updates Permission Functional Type user maintainable data.</p><p>This record type is usually maintained via database migrations and most
+changes are not possible at the application server level.  However the user
+facing <code class="inline">display_name</code> and <code class="inline">user_description</code> fields are available for update.</p><p>On successful update, a success tuple is returned including a copy of the
+updated Permission Functional Type record (<code class="inline">{:ok, &lt;record&gt;}</code>).  On failure
+an error tuple is returned indicating the reason for failure
+(<code class="inline">{:error, reason}</code>).</p><h2 id="update_perm_functional_type/2-parameters" class="section-heading">
+  <a href="#update_perm_functional_type/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">perm_functional_type</code> - a required value which is either the populated
+<a href="Msdata.SystPermFunctionalTypes.html"><code class="inline">Msdata.SystPermFunctionalTypes</code></a> struct or ID value of the record to be
+updated.</p></li><li><p><code class="inline">perm_functional_type_params</code> - a map of values which define the change to
+be made to the database.  For details on which fields may be maintained see
+<a href="MscmpSystPerms.Types.html#t:perm_functional_type_params/0"><code class="inline">MscmpSystPerms.Types.perm_functional_type_params/0</code></a>.</p></li></ul>
+  </section>
+</section>
+<section class="detail" id="update_perm_role/2">
+
+  <div class="detail-header">
+    <a href="#update_perm_role/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">update_perm_role(perm_role, perm_role_params)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> update_perm_role(
+  <a href="MscmpSystPerms.Types.html#t:perm_role_id/0">MscmpSystPerms.Types.perm_role_id</a>() | <a href="Msdata.SystPermRoles.html#t:t/0">Msdata.SystPermRoles.t</a>(),
+  <a href="MscmpSystPerms.Types.html#t:perm_role_params/0">MscmpSystPerms.Types.perm_role_params</a>()
+) :: {:ok, <a href="Msdata.SystPermRoles.html#t:t/0">Msdata.SystPermRoles.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Updates Permission Role records.</p><p>Upon update this function returns a success tuple in the form
+<code class="inline">{:ok, %Msdata.SystPermRoles{}}</code> where the struct is the data of the updated
+record.  On error an error tuple is returned (<code class="inline">{:error, %MscmpSystError{}}</code>).</p><p>System defined Permission Role records only allow the user interface display
+fields to be updated (<code class="inline">display_name</code>, <code class="inline">user_description</code>).  User defined
+Permission Roles allow a broader range of changes.</p><h2 id="update_perm_role/2-parameters" class="section-heading">
+  <a href="#update_perm_role/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">perm_role</code> - either the record ID of the Permission Role record to update
+or a populated <a href="Msdata.SystPermRoles.html"><code class="inline">Msdata.SystPermRoles</code></a> struct representing the pre-update
+version of the record's data.</p></li><li><p><code class="inline">perm_role_params</code> - a map describing the new Permission Role record's
+values.  For more about see <a href="MscmpSystPerms.Types.html#t:perm_role_params/0"><code class="inline">MscmpSystPerms.Types.perm_role_params/0</code></a>.</p></li></ul>
+  </section>
+</section>
+<section class="detail" id="update_perm_role_grant/2">
+
+  <div class="detail-header">
+    <a href="#update_perm_role_grant/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">update_perm_role_grant(perm_role_grant, perm_role_grant_params)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> update_perm_role_grant(
+  <a href="MscmpSystPerms.Types.html#t:perm_role_grant_id/0">MscmpSystPerms.Types.perm_role_grant_id</a>() | <a href="Msdata.SystPermRoleGrants.html#t:t/0">Msdata.SystPermRoleGrants.t</a>(),
+  <a href="MscmpSystPerms.Types.html#t:perm_role_grant_params/0">MscmpSystPerms.Types.perm_role_grant_params</a>()
+) :: {:ok, <a href="Msdata.SystPermRoleGrants.html#t:t/0">Msdata.SystPermRoleGrants.t</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Updates the Permission Role Grant records of user defined Permission Roles.</p><p>Upon update this function returns a success tuple in the form
+<code class="inline">{:ok, %Msdata.SystPermRoleGrants{}}</code> where the struct is the data of the
+updated record.  On error an error tuple is returned
+(<code class="inline">{:error, %MscmpSystError{}}</code>).</p><p>Permission Role Grant records which are children of system defined Permission
+Roles may not be updated using this API.</p><h2 id="update_perm_role_grant/2-parameters" class="section-heading">
+  <a href="#update_perm_role_grant/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">perm_role_grant</code> - either the record ID of the Permission Role Grant
+record to update or a populated <a href="Msdata.SystPermRoleGrants.html"><code class="inline">Msdata.SystPermRoleGrants</code></a> struct
+representing the pre-update version of the record's data.</p></li><li><p><code class="inline">perm_role_grant_params</code> - a map describing the Permission Role Grant
+record values to update.  For more about see
+<a href="MscmpSystPerms.Types.html#t:perm_role_grant_params/0"><code class="inline">MscmpSystPerms.Types.perm_role_grant_params/0</code></a>.</p></li></ul>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+      <footer class="footer">
+        <p>
+
+          <span class="line">
+            <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+              Search HexDocs
+            </button>
+
+              <a href="mscmp_syst_perms.epub" title="ePub version">
+                Download ePub version
+              </a>
+
+          </span>
+        </p>
+
+        <p class="built-using">
+          Built using
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.29.1) for the
+
+            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+        </p>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+
+
+  </body>
+</html>
