@@ -157,5 +157,7 @@ defmodule Msdata.SystSettings do
     |> ChangesetHelpers.validate_user_description(opts)
     |> ChangesetHelpers.maybe_put_syst_defined()
     |> optimistic_lock(:diag_row_version)
+    |> unique_constraint(:internal_name, name: :syst_settings_internal_name_udx)
+    |> unique_constraint(:display_name, name: :syst_settings_display_name_udx)
   end
 end

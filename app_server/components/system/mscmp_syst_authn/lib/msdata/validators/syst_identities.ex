@@ -56,5 +56,10 @@ defmodule MscmpSystAuthn.Msdata.Validators.SystIdentities do
       :account_identifier
     ])
     |> unique_constraint(:validates_identity_id, name: :syst_identities_validates_identities_udx)
+    |> foreign_key_constraint(:access_account_id, name: :syst_identities_access_accounts_fk)
+    |> foreign_key_constraint(:identity_type_id, name: :syst_identities_identity_types_fk)
+    |> foreign_key_constraint(:validates_identity_id,
+      name: :syst_identities_validates_identities_fk
+    )
   end
 end

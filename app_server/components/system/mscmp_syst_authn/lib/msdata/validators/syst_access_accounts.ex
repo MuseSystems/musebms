@@ -69,5 +69,10 @@ defmodule MscmpSystAuthn.Msdata.Validators.SystAccessAccounts do
       :access_account_state_id,
       :allow_global_logins
     ])
+    |> unique_constraint(:internal_name, name: :syst_access_accounts_internal_name_udx)
+    |> foreign_key_constraint(:owning_owner_id, name: :syst_access_accounts_owners_fk)
+    |> foreign_key_constraint(:access_account_state_id,
+      name: :syst_access_accounts_access_account_states_fk
+    )
   end
 end

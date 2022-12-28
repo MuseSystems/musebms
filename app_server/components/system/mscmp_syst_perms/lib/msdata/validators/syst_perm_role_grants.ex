@@ -49,16 +49,7 @@ defmodule MscmpSystPerms.Msdata.Validators.SystPermRoleGrants do
       :admin_scope,
       :ops_scope
     ])
-    |> validate_inclusion(:view_scope, @scopes)
-    |> validate_inclusion(:maint_scope, @scopes)
-    |> validate_inclusion(:admin_scope, @scopes)
-    |> validate_inclusion(:ops_scope, @scopes)
-    |> validate_view_maint_relative_scopes()
-    |> unique_constraint([:pern_role_id, :perm_id],
-      name: :syst_perm_role_grants_perm_perm_role_udx
-    )
-    |> foreign_key_constraint(:perm_role_id, name: :syst_perm_role_grants_perm_role_fk)
-    |> foreign_key_constraint(:perm_id, name: :syst_perm_role_grants_perm_fk)
+    |> validate_common()
   end
 
   @spec update_changeset(Msdata.SystPermRoleGrants.t(), Types.perm_role_grant_params()) ::
@@ -76,12 +67,17 @@ defmodule MscmpSystPerms.Msdata.Validators.SystPermRoleGrants do
       :admin_scope,
       :ops_scope
     ])
+    |> validate_common()
+    |> optimistic_lock(:diag_row_version)
+  end
+
+  defp validate_common(changeset) do
+    changeset
     |> validate_inclusion(:view_scope, @scopes)
     |> validate_inclusion(:maint_scope, @scopes)
     |> validate_inclusion(:admin_scope, @scopes)
     |> validate_inclusion(:ops_scope, @scopes)
     |> validate_view_maint_relative_scopes()
-    |> optimistic_lock(:diag_row_version)
     |> unique_constraint([:pern_role_id, :perm_id],
       name: :syst_perm_role_grants_perm_perm_role_udx
     )

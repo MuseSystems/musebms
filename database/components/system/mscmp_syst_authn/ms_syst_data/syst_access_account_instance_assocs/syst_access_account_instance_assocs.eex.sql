@@ -26,7 +26,7 @@ CREATE TABLE ms_syst_data.syst_access_account_instance_assocs
         NOT NULL
         CONSTRAINT syst_access_account_instance_assocs_instances_fk
             REFERENCES ms_syst_data.syst_instances (id) ON DELETE CASCADE
-    ,CONSTRAINT syst_access_account_instance_assoc_a_c_i_udx
+    ,CONSTRAINT syst_access_account_instance_assoc_a_i_udx
         UNIQUE ( access_account_id, instance_id )
     ,access_granted
         timestamptz

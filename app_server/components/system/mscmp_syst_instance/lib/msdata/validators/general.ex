@@ -31,7 +31,6 @@ defmodule MscmpSystInstance.Msdata.Validators.General do
       min: opts[:min_internal_name_length],
       max: opts[:max_internal_name_length]
     )
-    |> unique_constraint(:internal_name)
   end
 
   # Validate the display_name key for the changeset.
@@ -50,6 +49,5 @@ defmodule MscmpSystInstance.Msdata.Validators.General do
       min: opts[:min_display_name_length],
       max: opts[:max_display_name_length]
     )
-    |> unique_constraint(:display_name)
   end
 end

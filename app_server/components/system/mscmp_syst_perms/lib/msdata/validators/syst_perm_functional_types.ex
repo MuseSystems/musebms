@@ -33,5 +33,7 @@ defmodule MscmpSystPerms.Msdata.Validators.SystPermFunctionalTypes do
     |> validate_required([:display_name])
     |> Validators.General.validate_display_name(opts)
     |> optimistic_lock(:diag_row_version)
+    |> unique_constraint(:internal_name, name: :syst_perm_functional_types_internal_name_udx)
+    |> unique_constraint(:display_name, name: :syst_perm_functional_types_display_name_udx)
   end
 end

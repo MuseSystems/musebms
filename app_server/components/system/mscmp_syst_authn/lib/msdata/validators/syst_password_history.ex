@@ -26,5 +26,6 @@ defmodule MscmpSystAuthn.Msdata.Validators.SystPasswordHistory do
       :credential_data
     ])
     |> validate_required([:access_account_id, :credential_data])
+    |> foreign_key_constraint(:access_account_id, name: :syst_password_history_access_account_fk)
   end
 end

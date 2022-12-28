@@ -67,6 +67,14 @@ defmodule MscmpSystAuthn.Msdata.Validators.SystInstanceNetworkRules do
       :ordering,
       :functional_type
     ])
+    |> foreign_key_constraint(:instance_id, name: :syst_instance_network_rules_instance_fk)
+    |> unique_constraint([:instance_id, :ordering],
+      name: :syst_instance_network_rules_instance_ordering_udx
+    )
+    |> check_constraint(:ip_host_or_network, name: :syst_instance_network_rules_host_or_range_chk)
+    |> check_constraint(:ip_host_range_lower,
+      name: :syst_instance_network_rules_ip_range_family_chk
+    )
   end
 
   defp validate_functional_type(changeset) do
