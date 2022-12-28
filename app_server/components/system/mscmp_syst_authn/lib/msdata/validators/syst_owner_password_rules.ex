@@ -91,6 +91,8 @@ defmodule MscmpSystAuthn.Msdata.Validators.SystOwnerPasswordRules do
     |> validate_password_length_min()
     |> validate_password_length_mix_max()
     |> validate_password_length_max()
+    |> foreign_key_constraint(:owner_id, name: :syst_owner_password_rules_owner_fk)
+    |> unique_constraint(:owner_id, name: :syst_owner_password_rules_owner_udx)
   end
 
   defp validate_password_length_min(changeset) do

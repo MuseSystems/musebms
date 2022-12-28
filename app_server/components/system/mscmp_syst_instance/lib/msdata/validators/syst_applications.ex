@@ -29,9 +29,7 @@ defmodule MscmpSystInstance.Msdata.Validators.SystApplications do
       :display_name,
       :syst_description
     ])
-    |> Validators.General.validate_internal_name(opts)
-    |> Validators.General.validate_display_name(opts)
-    |> validate_required([:internal_name, :display_name, :syst_description])
+    |> validate_common(opts)
   end
 
   @spec update_changeset(Msdata.SystApplications.t(), Types.application_params(), Keyword.t()) ::
@@ -44,9 +42,16 @@ defmodule MscmpSystInstance.Msdata.Validators.SystApplications do
       :display_name,
       :syst_description
     ])
-    |> Validators.General.validate_display_name(opts)
-    |> validate_required([:display_name, :syst_description])
-    |> validate_required([:internal_name, :display_name, :syst_description])
+    |> validate_common(opts)
     |> optimistic_lock(:diag_row_version)
+  end
+
+  defp validate_common(changeset, opts) do
+    changeset
+    |> Validators.General.validate_internal_name(opts)
+    |> Validators.General.validate_display_name(opts)
+    |> validate_required([:internal_name, :display_name, :syst_description])
+    |> unique_constraint(:internal_name, name: :syst_applications_internal_name_udx)
+    |> unique_constraint(:display_name, name: :syst_applications_display_name_udx)
   end
 end

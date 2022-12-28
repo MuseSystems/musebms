@@ -90,5 +90,7 @@ defmodule Msdata.SystEnums do
     |> ChangesetHelpers.maybe_put_syst_defined()
     |> ChangesetHelpers.maybe_put_user_maintainable()
     |> optimistic_lock(:diag_row_version)
+    |> unique_constraint(:internal_name, name: :syst_enums_internal_name_udx)
+    |> unique_constraint(:display_name, name: :syst_enums_display_name_udx)
   end
 end

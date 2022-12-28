@@ -36,17 +36,7 @@ defmodule MscmpSystInstance.Msdata.Validators.SystApplicationContexts do
       :login_context,
       :database_owner_context
     ])
-    |> Validators.General.validate_internal_name(opts)
-    |> Validators.General.validate_display_name(opts)
-    |> validate_required([
-      :internal_name,
-      :display_name,
-      :application_id,
-      :description,
-      :start_context,
-      :login_context,
-      :database_owner_context
-    ])
+    |> validate_common(opts)
   end
 
   @spec update_changeset(
@@ -60,6 +50,13 @@ defmodule MscmpSystInstance.Msdata.Validators.SystApplicationContexts do
 
     application_context
     |> cast(update_params, [:display_name, :description, :start_context])
+    |> optimistic_lock(:diag_row_version)
+    |> validate_common(opts)
+  end
+
+  defp validate_common(changeset, opts) do
+    changeset
+    |> Validators.General.validate_internal_name(opts)
     |> Validators.General.validate_display_name(opts)
     |> validate_required([
       :internal_name,
@@ -70,6 +67,8 @@ defmodule MscmpSystInstance.Msdata.Validators.SystApplicationContexts do
       :login_context,
       :database_owner_context
     ])
-    |> optimistic_lock(:diag_row_version)
+    |> unique_constraint(:internal_name, name: :syst_application_contexts_internal_name_udx)
+    |> unique_constraint(:display_name, name: :syst_application_contexts_display_name_udx)
+    |> foreign_key_constraint(:application_id, name: :syst_application_contexts_applications_fk)
   end
 end

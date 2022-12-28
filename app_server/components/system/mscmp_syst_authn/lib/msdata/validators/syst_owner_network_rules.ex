@@ -64,6 +64,13 @@ defmodule MscmpSystAuthn.Msdata.Validators.SystOwnerNetworkRules do
       :ordering,
       :functional_type
     ])
+    |> foreign_key_constraint(:owner_id, name: :syst_owner_network_rules_owner_fk)
+    |> unique_constraint([:owner_id, :ordering],
+      name: :syst_owner_network_rules_owner_ordering_udx
+    )
+    |> check_constraint(:functional_type, name: :syst_owner_network_rules_functional_type_chk)
+    |> check_constraint(:ip_host_or_network, name: :syst_owner_network_rules_host_or_range_chk)
+    |> check_constraint(:ip_host_range_lower, name: :syst_owner_network_rules_ip_range_family_chk)
   end
 
   defp validate_functional_type(changeset) do

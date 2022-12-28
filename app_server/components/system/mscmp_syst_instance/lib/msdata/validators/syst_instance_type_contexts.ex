@@ -25,11 +25,7 @@ defmodule MscmpSystInstance.Msdata.Validators.SystInstanceTypeContexts do
       :application_context_id,
       :default_db_pool_size
     ])
-    |> validate_required([
-      :instance_type_application_id,
-      :application_context_id,
-      :default_db_pool_size
-    ])
+    |> validate_common()
   end
 
   @spec update_changeset(
@@ -42,11 +38,28 @@ defmodule MscmpSystInstance.Msdata.Validators.SystInstanceTypeContexts do
     |> cast(update_params, [
       :default_db_pool_size
     ])
+    |> validate_common()
+    |> optimistic_lock(:diag_row_version)
+  end
+
+  defp validate_common(changeset) do
+    changeset
     |> validate_required([
       :instance_type_application_id,
       :application_context_id,
       :default_db_pool_size
     ])
-    |> optimistic_lock(:diag_row_version)
+    |> foreign_key_constraint(:instance_type_application_id,
+      name: :syst_instance_type_contexts_inst_type_app_fk
+    )
+    |> foreign_key_constraint(:application_context_id,
+      name: :syst_instance_type_contexts_application_contexts_fk
+    )
+    |> check_constraint(:default_db_pool_size,
+      name: :syst_instance_type_contexts_default_db_pool_size_chk
+    )
+    |> unique_constraint([:instance_type_application_id, :application_context_id],
+      name: :syst_instance_type_contexts_instance_types_applications_udx
+    )
   end
 end

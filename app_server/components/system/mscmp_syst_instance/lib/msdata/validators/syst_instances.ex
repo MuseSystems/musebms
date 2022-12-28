@@ -44,14 +44,7 @@ defmodule MscmpSystInstance.Msdata.Validators.SystInstances do
       :instance_code,
       :instance_options
     ])
-    |> Validators.General.validate_internal_name(opts)
-    |> Validators.General.validate_display_name(opts)
-    |> validate_instance_code(opts)
-    |> validate_required([
-      :application_id,
-      :instance_type_id,
-      :instance_state_id
-    ])
+    |> validate_common(opts)
   end
 
   @spec update_changeset(Msdata.SystInstances.t(), Types.instance_params(), Keyword.t()) ::
@@ -71,6 +64,12 @@ defmodule MscmpSystInstance.Msdata.Validators.SystInstances do
       :instance_code,
       :instance_options
     ])
+    |> validate_common(opts)
+    |> optimistic_lock(:diag_row_version)
+  end
+
+  defp validate_common(changeset, opts) do
+    changeset
     |> Validators.General.validate_internal_name(opts)
     |> Validators.General.validate_display_name(opts)
     |> validate_instance_code(opts)
@@ -79,7 +78,14 @@ defmodule MscmpSystInstance.Msdata.Validators.SystInstances do
       :instance_type_id,
       :instance_state_id
     ])
-    |> optimistic_lock(:diag_row_version)
+    |> unique_constraint(:internal_name, name: :syst_instances_internal_name_udx)
+    |> unique_constraint(:display_name, name: :syst_instances_display_name_udx)
+    |> foreign_key_constraint(:application_id, name: :syst_instances_applications_fk)
+    |> foreign_key_constraint(:instance_type_id, name: :syst_instances_enum_instance_type_fk)
+    |> foreign_key_constraint(:instance_state_id, name: :syst_instances_enum_instance_state_fk)
+    |> foreign_key_constraint(:owner_id, name: :syst_instances_owners_fk)
+    |> foreign_key_constraint(:owning_instance_id, name: :syst_instances_owning_instance_fk)
+    |> check_constraint(:owning_instance_id, name: :syst_instances_self_ownership_chk)
   end
 
   defp validate_instance_code(changeset, opts) do

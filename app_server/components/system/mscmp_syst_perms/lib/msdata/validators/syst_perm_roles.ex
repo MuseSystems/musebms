@@ -36,11 +36,7 @@ defmodule MscmpSystPerms.Msdata.Validators.SystPermRoles do
       :perm_functional_type_id,
       :user_description
     ])
-    |> Validators.General.validate_internal_name(opts)
-    |> Validators.General.validate_display_name(opts)
-    |> foreign_key_constraint(:perm_functional_type_id,
-      name: :syst_perm_roles_perm_functional_type_fk
-    )
+    |> validate_common(opts)
   end
 
   @spec update_changeset(Msdata.SystPermRoles.t(), Types.perm_role_params(), Keyword.t()) ::
@@ -60,9 +56,16 @@ defmodule MscmpSystPerms.Msdata.Validators.SystPermRoles do
       :display_name,
       :perm_functional_type_id
     ])
+    |> optimistic_lock(:diag_row_version)
+    |> validate_common(opts)
+  end
+
+  defp validate_common(changeset, opts) do
+    changeset
     |> Validators.General.validate_internal_name(opts)
     |> Validators.General.validate_display_name(opts)
-    |> optimistic_lock(:diag_row_version)
+    |> unique_constraint(:internal_name, name: :syst_perm_roles_internal_name_udx)
+    |> unique_constraint(:display_name, name: :syst_perm_roles_display_name_udx)
     |> foreign_key_constraint(:perm_functional_type_id,
       name: :syst_perm_roles_perm_functional_type_fk
     )

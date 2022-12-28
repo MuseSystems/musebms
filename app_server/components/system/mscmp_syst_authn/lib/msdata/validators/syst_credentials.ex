@@ -65,5 +65,13 @@ defmodule MscmpSystAuthn.Msdata.Validators.SystCredentials do
       :credential_data,
       :last_updated
     ])
+    |> foreign_key_constraint(:access_account_id, name: :syst_credentials_access_accounts_fk)
+    |> foreign_key_constraint(:credential_type_id, name: :syst_credentials_credential_types_fk)
+    |> foreign_key_constraint(:credential_for_identity_id,
+      name: :syst_credentials_for_identities_fk
+    )
+    |> unique_constraint([:access_account_id, :credential_type_id, :credential_for_identity_id],
+      name: :syst_credentials_udx
+    )
   end
 end

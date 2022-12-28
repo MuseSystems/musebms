@@ -59,5 +59,14 @@ defmodule MscmpSystAuthn.Msdata.Validators.SystAccessAccountInstanceAssocs do
       :access_account_id,
       :instance_id
     ])
+    |> foreign_key_constraint(:access_account_id,
+      name: :syst_access_account_instance_assocs_access_accounts_fk
+    )
+    |> foreign_key_constraint(:instance_id,
+      name: :syst_access_account_instance_assocs_instances_fk
+    )
+    |> unique_constraint([:access_account_id, :instance_id],
+      name: :syst_access_account_instance_assoc_a_i_udx
+    )
   end
 end

@@ -22,5 +22,14 @@ defmodule MscmpSystInstance.Msdata.Validators.SystInstanceTypeApplications do
     %Msdata.SystInstanceTypeApplications{}
     |> cast(instance_type_application_params, [:instance_type_id, :application_id])
     |> validate_required([:instance_type_id, :application_id])
+    |> foreign_key_constraint(:instance_type_id,
+      name: :syst_instance_type_applications_instance_types_fk
+    )
+    |> foreign_key_constraint(:application_id,
+      name: :syst_instance_type_applications_applications_fk
+    )
+    |> unique_constraint([:instance_type_id, :application_id],
+      name: :syst_instance_type_applications_instance_type_applications_udx
+    )
   end
 end

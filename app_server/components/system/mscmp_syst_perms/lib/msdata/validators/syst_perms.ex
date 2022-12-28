@@ -46,15 +46,7 @@ defmodule MscmpSystPerms.Msdata.Validators.SystPerms do
       :perm_functional_type_id,
       :user_description
     ])
-    |> Validators.General.validate_internal_name(opts)
-    |> Validators.General.validate_display_name(opts)
-    |> check_constraint(:view_scope_options, name: :syst_perms_view_scope_options_chk)
-    |> check_constraint(:maint_scope_options, name: :syst_perms_maint_scope_options_chk)
-    |> check_constraint(:admin_scope_options, name: :syst_perms_admin_scope_options_chk)
-    |> check_constraint(:ops_scope_options, name: :syst_perms_ops_scope_options_chk)
-    |> foreign_key_constraint(:perm_functional_type_id,
-      name: :syst_perms_perm_functional_type_fk
-    )
+    |> validate_common(opts)
   end
 
   @spec update_changeset(Msdata.SystPerms.t(), Types.perm_params(), Keyword.t()) ::
@@ -90,9 +82,16 @@ defmodule MscmpSystPerms.Msdata.Validators.SystPerms do
       :admin_scope_options,
       :ops_scope_options
     ])
+    |> optimistic_lock(:diag_row_version)
+    |> validate_common(opts)
+  end
+
+  defp validate_common(changeset, opts) do
+    changeset
     |> Validators.General.validate_internal_name(opts)
     |> Validators.General.validate_display_name(opts)
-    |> optimistic_lock(:diag_row_version)
+    |> unique_constraint(:internal_name, name: :syst_perms_internal_name_udx)
+    |> unique_constraint(:display_name, name: :syst_perms_display_name_udx)
     |> check_constraint(:view_scope_options, name: :syst_perms_view_scope_options_chk)
     |> check_constraint(:maint_scope_options, name: :syst_perms_maint_scope_options_chk)
     |> check_constraint(:admin_scope_options, name: :syst_perms_admin_scope_options_chk)

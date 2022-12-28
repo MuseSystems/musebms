@@ -95,5 +95,8 @@ defmodule Msdata.SystEnumFunctionalTypes do
     |> ChangesetHelpers.validate_external_name(opts)
     |> ChangesetHelpers.validate_user_description(opts)
     |> optimistic_lock(:diag_row_version)
+    |> unique_constraint(:internal_name, name: :syst_enum_functional_types_internal_name_udx)
+    |> unique_constraint(:display_name, name: :syst_enum_functional_types_display_name_udx)
+    |> foreign_key_constraint(:enum_id, name: :syst_enum_functional_types_enum_fk)
   end
 end

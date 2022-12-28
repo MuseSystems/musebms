@@ -22,5 +22,6 @@ defmodule MscmpSystAuthn.Msdata.Validators.SystDisallowedHosts do
     %Msdata.SystDisallowedHosts{}
     |> cast(%{host_address: host_address}, [:host_address])
     |> validate_required([:host_address])
+    |> unique_constraint(:host_address, name: :syst_disallowed_hosts_host_address_udx)
   end
 end

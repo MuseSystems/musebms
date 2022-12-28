@@ -108,6 +108,10 @@ defmodule Msdata.SystEnumItems do
     |> ChangesetHelpers.maybe_put_syst_defined()
     |> ChangesetHelpers.maybe_put_user_maintainable()
     |> optimistic_lock(:diag_row_version)
+    |> unique_constraint(:internal_name, name: :syst_enum_items_internal_name_udx)
+    |> unique_constraint(:display_name, name: :syst_enum_items_display_name_udx)
+    |> foreign_key_constraint(:enum_id, name: :syst_enum_items_enum_fk)
+    |> foreign_key_constraint(:functional_type_id, name: :syst_enum_items_enum_functional_type_fk)
   end
 
   defp maybe_default_enum_default(changeset),

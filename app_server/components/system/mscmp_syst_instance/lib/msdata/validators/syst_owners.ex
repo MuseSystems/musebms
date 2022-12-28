@@ -29,9 +29,7 @@ defmodule MscmpSystInstance.Msdata.Validators.SystOwners do
       :display_name,
       :owner_state_id
     ])
-    |> validate_required([:owner_state_id])
-    |> Validators.General.validate_internal_name(opts)
-    |> Validators.General.validate_display_name(opts)
+    |> validate_common(opts)
   end
 
   @spec update_changeset(Msdata.SystOwners.t(), Types.owner_params(), Keyword.t()) ::
@@ -45,9 +43,17 @@ defmodule MscmpSystInstance.Msdata.Validators.SystOwners do
       :display_name,
       :owner_state_id
     ])
+    |> validate_common(opts)
+    |> optimistic_lock(:diag_row_version)
+  end
+
+  defp validate_common(changeset, opts) do
+    changeset
     |> validate_required([:owner_state_id])
     |> Validators.General.validate_internal_name(opts)
     |> Validators.General.validate_display_name(opts)
-    |> optimistic_lock(:diag_row_version)
+    |> unique_constraint(:internal_name, name: :syst_owners_internal_name_udx)
+    |> unique_constraint(:display_name, name: :syst_owners_display_name_udx)
+    |> foreign_key_constraint(:owner_state_id, name: :syst_owner_owner_states_fk)
   end
 end

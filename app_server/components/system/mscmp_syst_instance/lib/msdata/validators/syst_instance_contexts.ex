@@ -42,6 +42,12 @@ defmodule MscmpSystInstance.Msdata.Validators.SystInstanceContexts do
     ])
     |> validate_number(:db_pool_size, greater_than_or_equal_to: 0)
     |> optimistic_lock(:diag_row_version)
+    |> unique_constraint(:internal_name, name: :syst_instance_contexts_internal_name_udx)
+    |> foreign_key_constraint(:instance_id, name: :syst_instance_contexts_instances_fk)
+    |> foreign_key_constraint(:application_context_id,
+      name: :syst_instance_contexts_application_contexts_fk
+    )
+    |> check_constraint(:db_pool_size, name: :syst_instance_contexts_db_pool_size_chk)
   end
 
   defp validate_context_code(changeset, opts) do
