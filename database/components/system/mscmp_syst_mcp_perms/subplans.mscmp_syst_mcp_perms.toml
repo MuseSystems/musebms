@@ -22,4 +22,10 @@ load_files = [
     "components/system/mscmp_syst_mcp_perms/seed_data/syst_perm_roles.eex.sql",
     "components/system/mscmp_syst_mcp_perms/seed_data/syst_perm_role_grants.eex.sql",
 
+    "components/system/mscmp_syst_mcp_perms/ms_syst_data/syst_access_account_perm_role_assigns/syst_access_account_perm_role_assigns.eex.sql",
+
+    "components/system/mscmp_syst_mcp_perms/ms_syst/api_views/syst_access_account_perm_role_assigns/trig_i_i_syst_access_account_perm_role_assigns.eex.sql",
+    "components/system/mscmp_syst_mcp_perms/ms_syst/api_views/syst_access_account_perm_role_assigns/trig_i_u_syst_access_account_perm_role_assigns.eex.sql",
+    "components/system/mscmp_syst_mcp_perms/ms_syst/api_views/syst_access_account_perm_role_assigns/trig_i_d_syst_access_account_perm_role_assigns.eex.sql",
+    "components/system/mscmp_syst_mcp_perms/ms_syst/api_views/syst_access_account_perm_role_assigns/syst_access_account_perm_role_assigns.eex.sql",
 ]
