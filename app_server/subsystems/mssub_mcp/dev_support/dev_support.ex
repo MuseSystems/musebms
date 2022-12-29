@@ -15,7 +15,7 @@ defmodule DevSupport do
 
   use MssubMcp.Macros
 
-  @migration_test_source_root_dir "../../database"
+  @migration_test_source_root_dir "../../../database"
   @migration_unit_test_ds_type "mssub_mcp_unit_test"
   @migration_integration_test_ds_type "mssub_mcp_integration_test"
 
