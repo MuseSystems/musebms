@@ -38,6 +38,9 @@
             "path": "app_server/components/system/mscmp_syst_perms",
         },
         {
+            "path": "app_server/components/system/mscmp_syst_mcp_perms",
+        },
+        {
             "path": "app_server/subsystems/mssub_mcp",
         },
         {
