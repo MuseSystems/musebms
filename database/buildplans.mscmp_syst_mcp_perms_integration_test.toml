@@ -24,7 +24,11 @@ sponsor              = 820
 sponsor_modification = 0
 load_files = [
     {type = "plan", file = "all/subplans.common_init.toml"},
-    {type = "plan", file = "components/system/mscmp_syst_mcp_perms/subplans.mscmp_syst_mcp_perms.toml"}
+    {type = "plan", file = "components/system/mscmp_syst_enums/subplans.mscmp_syst_enums.toml"},
+    {type = "plan", file = "components/system/mscmp_syst_instance/subplans.mscmp_syst_instance.toml"},
+    {type = "plan", file = "components/system/mscmp_syst_authn/subplans.mscmp_syst_authn.toml"},
+    {type = "plan", file = "components/system/mscmp_syst_mcp_perms/subplans.mscmp_syst_perms.toml"},
+    {type = "plan", file = "components/system/mscmp_syst_mcp_perms/subplans.mscmp_syst_mcp_perms.toml"},
 ]
 
 [[build_plan]]
@@ -34,6 +38,13 @@ update               = 0
 sponsor              = 821
 sponsor_modification = 0
 load_files = [
+    "components/system/mscmp_syst_enums/testing_support/test_privileges.eex.sql",
+    "components/system/mscmp_syst_instance/testing_support/test_privileges.eex.sql",
+    "components/system/mscmp_syst_authn/testing_support/test_privileges.eex.sql",
+    "components/system/mscmp_syst_perms/testing_support/test_privileges.eex.sql",
     "components/system/mscmp_syst_mcp_perms/testing_support/test_privileges.eex.sql",
+
+    "components/system/mscmp_syst_instance/testing_support/test_data_unit_test.eex.sql",
+    "components/system/mscmp_syst_authn/testing_support/test_data_unit_test.eex.sql",
     "components/system/mscmp_syst_mcp_perms/testing_support/test_data_integration_test.eex.sql",
 ]
