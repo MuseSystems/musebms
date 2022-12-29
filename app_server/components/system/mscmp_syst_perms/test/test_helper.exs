@@ -35,17 +35,6 @@ Logger.configure(level: :info)
 
 ExUnit.start()
 
-# enum_service_spec = %{
-#   id: TestingEnumService,
-#   start: {
-#     MscmpSystEnums,
-#     :start_link,
-#     [{:instance_mgr, TestSupport.get_testing_datastore_context_id()}]
-#   }
-# }
-
-# DynamicSupervisor.start_child(MscmpSystPerms.TestingSupervisor, enum_service_spec)
-
 ExUnit.after_suite(fn _suite_result ->
   TestSupport.cleanup_testing_database(test_kind)
 end)

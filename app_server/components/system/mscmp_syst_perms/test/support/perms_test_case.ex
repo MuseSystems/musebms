@@ -21,9 +21,4 @@ defmodule PermsTestCase do
         MscmpSystDb.put_datastore_context(TestSupport.get_testing_datastore_context_id())
     ]
   end
-
-  # setup do
-  #   MscmpSystEnums.put_enums_service(:instance_mgr)
-  #   :ok
-  # end
 end

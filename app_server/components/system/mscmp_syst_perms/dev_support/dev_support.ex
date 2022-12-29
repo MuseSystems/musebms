@@ -63,25 +63,12 @@ defmodule DevSupport do
 
     _ = MscmpSystDb.put_datastore_context(get_datastore_context_id())
 
-    # enum_service_spec = %{
-    #   id: MscmpDevEnumService,
-    #   start: {
-    #     MscmpSystEnums,
-    #     :start_link,
-    #     [{:ms_dev_enum_service, get_datastore_context_id()}]
-    #   }
-    # }
-
     children = [
       {DynamicSupervisor, strategy: :one_for_one, name: Mscmp.DevSupervisor}
     ]
 
     _ = Supervisor.start_link(children, strategy: :one_for_one)
     Logger.configure(level: :info)
-
-    # _ = DynamicSupervisor.start_child(Mscmp.DevSupervisor, enum_service_spec)
-
-    # _ = MscmpSystEnums.put_enums_service(:ms_dev_enum_service)
   end
 
   def stop_dev_environment(), do: cleanup_database()
