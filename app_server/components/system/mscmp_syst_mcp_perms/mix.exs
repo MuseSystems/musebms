@@ -27,7 +27,6 @@ defmodule MscmpSystMcpPerms.MixProject do
     {:mscmp_syst_error, path: "../mscmp_syst_error"},
     {:mscmp_syst_utils, path: "../mscmp_syst_utils"},
     {:mscmp_syst_db, path: "../mscmp_syst_db"},
-    {:mscmp_syst_instance, path: "../mscmp_syst_instance"},
     {:mscmp_syst_authn, path: "../mscmp_syst_authn"},
     {:mscmp_syst_perms, path: "../mscmp_syst_perms"}
   ]
@@ -59,8 +58,6 @@ defmodule MscmpSystMcpPerms.MixProject do
           mscmp_syst_error: "../../../../documentation/technical/app_server/mscmp_syst_error",
           mscmp_syst_utils: "../../../../documentation/technical/app_server/mscmp_syst_utils",
           mscmp_syst_db: "../../../../documentation/technical/app_server/mscmp_syst_db",
-          mscmp_syst_instance:
-            "../../../../documentation/technical/app_server/mscmp_syst_instance",
           mscmp_syst_authn: "../../../../documentation/technical/app_server/mscmp_syst_authn",
           mscmp_syst_perms: "../../../../documentation/technical/app_server/mscmp_syst_perms"
         ],
