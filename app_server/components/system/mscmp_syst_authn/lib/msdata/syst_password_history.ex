@@ -44,12 +44,12 @@ defmodule Msdata.SystPasswordHistory do
   schema "syst_password_history" do
     field(:credential_data, :string)
     field(:diag_timestamp_created, :utc_datetime)
-    field(:diag_role_created, :string)
+    field(:diag_role_created, :string, load_in_query: false)
     field(:diag_timestamp_modified, :utc_datetime)
-    field(:diag_wallclock_modified, :utc_datetime)
-    field(:diag_role_modified, :string)
+    field(:diag_wallclock_modified, :utc_datetime, load_in_query: false)
+    field(:diag_role_modified, :string, load_in_query: false)
     field(:diag_row_version, :integer)
-    field(:diag_update_count, :integer)
+    field(:diag_update_count, :integer, load_in_query: false)
 
     belongs_to(:access_account, Msdata.SystAccessAccounts)
   end

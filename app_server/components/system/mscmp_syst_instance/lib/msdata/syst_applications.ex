@@ -46,12 +46,12 @@ defmodule Msdata.SystApplications do
     field(:display_name, :string)
     field(:syst_description, :string)
     field(:diag_timestamp_created, :utc_datetime)
-    field(:diag_role_created, :string)
+    field(:diag_role_created, :string, load_in_query: false)
     field(:diag_timestamp_modified, :utc_datetime)
-    field(:diag_wallclock_modified, :utc_datetime)
-    field(:diag_role_modified, :string)
+    field(:diag_wallclock_modified, :utc_datetime, load_in_query: false)
+    field(:diag_role_modified, :string, load_in_query: false)
     field(:diag_row_version, :integer)
-    field(:diag_update_count, :integer)
+    field(:diag_update_count, :integer, load_in_query: false)
 
     has_many(:instances, Msdata.SystInstances, foreign_key: :application_id)
 

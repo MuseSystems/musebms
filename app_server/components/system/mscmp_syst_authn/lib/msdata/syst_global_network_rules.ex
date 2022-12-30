@@ -57,12 +57,12 @@ defmodule Msdata.SystGlobalNetworkRules do
     field(:ip_host_range_upper, DbTypes.Inet)
     field(:ip_family, :integer)
     field(:diag_timestamp_created, :utc_datetime)
-    field(:diag_role_created, :string)
+    field(:diag_role_created, :string, load_in_query: false)
     field(:diag_timestamp_modified, :utc_datetime)
-    field(:diag_wallclock_modified, :utc_datetime)
-    field(:diag_role_modified, :string)
+    field(:diag_wallclock_modified, :utc_datetime, load_in_query: false)
+    field(:diag_role_modified, :string, load_in_query: false)
     field(:diag_row_version, :integer)
-    field(:diag_update_count, :integer)
+    field(:diag_update_count, :integer, load_in_query: false)
   end
 
   @spec insert_changeset(Types.global_network_rule_params()) :: Ecto.Changeset.t()
