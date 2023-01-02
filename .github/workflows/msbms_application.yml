@@ -383,7 +383,7 @@ jobs:
 
   mscmp-syst-perms:
     runs-on: ubuntu-latest
-    name: MscmpSystAuthn (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
+    name: MscmpSystPerms (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
     strategy:
       matrix:
         otp: ['25.1.2']
@@ -439,7 +439,7 @@ jobs:
 
   mscmp-syst-mcp-perms:
     runs-on: ubuntu-latest
-    name: MscmpSystAuthn (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
+    name: MscmpSystMcpPerms (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
     strategy:
       matrix:
         otp: ['25.1.2']
