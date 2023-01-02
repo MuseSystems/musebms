@@ -58,6 +58,7 @@ defmodule MscmpSystPerms.MixProject do
           mscmp_syst_db: "../../../../documentation/technical/app_server/mscmp_syst_db"
         ],
         groups_for_functions: [
+          Permissions: &(&1[:section] == :perms_management),
           "Data Management": &(&1[:section] == :perms_data)
         ],
         nest_modules_by_prefix: [Msdata],
