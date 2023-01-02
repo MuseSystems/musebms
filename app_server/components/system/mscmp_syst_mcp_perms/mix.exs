@@ -61,9 +61,7 @@ defmodule MscmpSystMcpPerms.MixProject do
           mscmp_syst_authn: "../../../../documentation/technical/app_server/mscmp_syst_authn",
           mscmp_syst_perms: "../../../../documentation/technical/app_server/mscmp_syst_perms"
         ],
-        groups_for_functions: [
-          "Data Management": &(&1[:section] == :perms_data)
-        ],
+        groups_for_functions: [],
         nest_modules_by_prefix: [Msdata],
         groups_for_modules: [
           API: [MscmpSystMcpPerms],
