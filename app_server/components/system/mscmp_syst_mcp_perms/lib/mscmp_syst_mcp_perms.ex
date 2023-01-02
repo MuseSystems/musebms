@@ -11,7 +11,7 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystMcpPerms do
-  @moduledoc """
-  Documentation for `MscmpSystMcpPerms`.
-  """
+  @external_resource "README.md"
+
+  @moduledoc File.read!(Path.join([__DIR__, "..", "README.md"]))
 end
