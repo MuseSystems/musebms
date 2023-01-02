@@ -437,7 +437,7 @@ jobs:
           run: mix dialyzer
           working-directory: ./app_server/components/system/mscmp_syst_perms
 
-mscmp-syst-mcp-perms:
+ mscmp-syst-mcp-perms:
     runs-on: ubuntu-latest
     name: MscmpSystAuthn (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
     strategy:
