@@ -27,7 +27,7 @@ load_files = [
     {type = "plan", file = "components/system/mscmp_syst_enums/subplans.mscmp_syst_enums.toml"},
     {type = "plan", file = "components/system/mscmp_syst_instance/subplans.mscmp_syst_instance.toml"},
     {type = "plan", file = "components/system/mscmp_syst_authn/subplans.mscmp_syst_authn.toml"},
-    {type = "plan", file = "components/system/mscmp_syst_mcp_perms/subplans.mscmp_syst_perms.toml"},
+    {type = "plan", file = "components/system/mscmp_syst_perms/subplans.mscmp_syst_perms.toml"},
     {type = "plan", file = "components/system/mscmp_syst_mcp_perms/subplans.mscmp_syst_mcp_perms.toml"},
 ]
 
