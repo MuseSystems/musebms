@@ -43,3 +43,7 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE ms_syst.syst_perm_role_grants TO <
 GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_perm_role_grants() TO <%= ms_appusr %>;
 GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_perm_role_grants() TO <%= ms_appusr %>;
 GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_perm_role_grants() TO <%= ms_appusr %>;
+
+-- API Functions
+
+GRANT EXECUTE ON FUNCTION ms_syst.get_greatest_rights_scope(text[]) TO <%= ms_appusr %>;
