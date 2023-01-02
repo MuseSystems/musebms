@@ -28,6 +28,9 @@ load_files = [
     "components/system/mscmp_syst_perms/ms_syst_data/syst_perm_role_grants/trig_a_iu_syst_perm_role_grants_related_data_checks.eex.sql",
     "components/system/mscmp_syst_perms/ms_syst_data/syst_perm_role_grants/syst_perm_role_grants.eex.sql",
 
+    "components/system/mscmp_syst_perms/ms_syst_priv/functions/get_greatest_rights_scope.eex.sql",
+    "components/system/mscmp_syst_perms/ms_syst/functions/get_greatest_rights_scope.eex.sql",
+
     "components/system/mscmp_syst_perms/ms_syst/api_views/syst_perm_functional_types/trig_i_i_syst_perm_functional_types.eex.sql",
     "components/system/mscmp_syst_perms/ms_syst/api_views/syst_perm_functional_types/trig_i_u_syst_perm_functional_types.eex.sql",
     "components/system/mscmp_syst_perms/ms_syst/api_views/syst_perm_functional_types/trig_i_d_syst_perm_functional_types.eex.sql",
