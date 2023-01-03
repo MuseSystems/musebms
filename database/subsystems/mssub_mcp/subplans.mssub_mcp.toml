@@ -52,4 +52,16 @@ load_files = [
     #
 
     {type = "plan", file = "components/system/mscmp_syst_authn/subplans.mscmp_syst_authn.toml"},
+
+    #
+    # MscmpSystPerms
+    #
+
+    {type = "plan", file = "components/system/mscmp_syst_perms/subplans.mscmp_syst_perms.toml"},
+
+    #
+    # MscmpSystMcpPerms
+    #
+
+    {type = "plan", file = "components/system/mscmp_syst_mcp_perms/subplans.mscmp_syst_mcp_perms.toml"},
 ]

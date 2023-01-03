@@ -13,6 +13,8 @@
 defmodule MssubMcp do
   alias MscmpSystAuthn.Types, as: AuthnTypes
   alias MscmpSystInstance.Types, as: InstanceTypes
+  alias MscmpSystMcpPerms.Types, as: McpPermTypes
+  alias MscmpSystPerms.Types, as: PermTypes
   alias MssubMcp.Runtime
 
   @external_resource "README.md"
@@ -4107,6 +4109,192 @@ defmodule MssubMcp do
                 opts \\ []
               ),
               to: Runtime.AuthnManager
+
+  # ==============================================================================================
+  #
+  # Permissions Management
+  #
+  # ==============================================================================================
+
+  @doc section: :perms_management
+  @doc """
+  Compares two Scope values and returns a value indicating the relative
+  expansiveness of Scope.
+
+  Scopes restrict, to varying degrees, how much data a user might access for a
+  given Right.  We can compare Scopes relative to how much more or less data
+  a Scope grants to a user and that's what this function does.  Scopes granting
+  more expansive access to data are considered greater than Scopes granting data
+  on more restrictive terms.  Of course any two scopes may be equal as well.
+
+  The return value is an atom indicating whether the Scope in the first
+  parameter position is greater than, less than, or equal to the expansiveness
+  of Scope in the second parameter position.  These return values are:
+
+    * `:eq` - both the first and second Scopes are equal in terms of the
+    expansiveness and are considered 'equal' to each other.
+
+    * `:gt` - the first Scope parameter confers a greater expansiveness than the
+    second Scope parameter and is considered 'greater than' the Scope of the
+    second parameter.
+
+    * `:lt` - the first Scope parameter confers a lesser expansiveness than the
+    second Scope parameter and is considered 'less than' the Scope of the second
+    parameter.
+
+  """
+  @spec compare_scopes(
+          PermTypes.rights_scope() | String.t(),
+          PermTypes.rights_scope() | String.t()
+        ) ::
+          :eq | :gt | :lt
+  defdelegate compare_scopes(test_scope, standard_scope), to: Runtime.McpPermsManager
+
+  @doc section: :perms_management
+  @doc """
+  Provides the effective Permissions/Rights/Scopes for the user context
+  identified by the `selector` as calculated from all effective grants and
+  revocations.
+
+  This function answers the question, "what rights does this user really have?"
+
+  On successful execution, a success tuple is returned including a map of the
+  selected Permissions and the Rights/Scopes granted.  Errors will result in the
+  return of an error tuple.
+
+  ## Parameters
+
+    * `selector` - this value is a struct which determines the specific
+    implementation of this function to call and which contains the keys/values
+    to use in selecting which Permission and Permission Role Grant records to
+    retrieve.  Specific details about what records are involved and how the
+    selection return values are determine are implementation specific and will
+    be documented on a case-by-case basis.
+
+    * `opts` - a Keyword List of optional parameters which may be provided.  The
+    only general option is listed below, each specific implementation of this
+    function may extend the available options as appropriate to the
+    implementation.
+
+      * `permissions` - a list of specific Permission names to lookup.  This is
+      usually supplied as a limiting filter; without this list the typical
+      behavior is to return all of the permissions for a given Permission
+      Functional Type filtered only by the `selector` data.  Again, the details
+      of the filtering or inclusion using this option will be implementation
+      specific and documented for each individual implementation.
+  """
+  @spec get_effective_perm_grants(McpPermTypes.AccessAccountPermsSelector.t(), Keyword.t()) ::
+          {:ok, PermTypes.perm_grants()} | {:error, MscmpSystError.t()}
+  defdelegate get_effective_perm_grants(selector, opts \\ []), to: Runtime.McpPermsManager
+
+  @doc section: :perms_management
+  @doc """
+  Lists all of the Permission Role records granted to the user context
+  identified by the `selector`, including the Rights/Scopes of the grants.
+
+  This function facilitates understanding what roles have been granted to user
+  and what Permissions/Rights/Scopes those roles grant to the user.  This list
+  is intended to be descriptive and not directly indicating the effective grants
+  applied to the user.  Typical uses of this function are to populate lists of
+  Permission Role Grants for the purposes of managing user access.
+
+  ## Parameters
+
+    * `selector` - this value is a struct which determines the specific
+    implementation of this function to call and which contains the keys/values
+    to use in selecting which Permission and Permission Role Grant records to
+    retrieve.  Specific details about what records are involved and how the
+    selection return values are determine are implementation specific and will
+    be documented on a case-by-case basis.
+
+    * `opts` - a Keyword List of optional parameters which may be provided.  The
+    only general option is listed below, each specific implementation of this
+    function may extend the available options as appropriate to the
+    implementation.
+
+      * `include_perms` - a boolean option which, when set `true`, will preload
+      the `Msdata.SystPermRoleGrants` `perm` data.  The default value for this
+      option is `false`.
+  """
+  @spec list_perm_grants(McpPermTypes.AccessAccountPermsSelector.t(), Keyword.t()) ::
+          {:ok, [Msdata.SystPermRoles.t()]} | {:error, MscmpSystError.t()}
+  defdelegate list_perm_grants(selector, opts \\ []), to: Runtime.McpPermsManager
+
+  @doc section: :perms_management
+  @doc """
+  List all explicit denials of Permissions from the identified user context.
+
+  An assumption made by this module is that Permission Roles are granted to
+  users as whole roles, but individual Permissions may be explicitly denied from
+  users on a Permission by Permission basis.  This function is intended to list
+  Permission denials for a user context so that the denials may be managed.
+
+  Some user contexts may not offer explicit Permission denials.  In these cases
+  this function should simply return a success tuple containing an empty list as
+  the value.
+
+  ## Parameters
+
+    * `selector` - this value is a struct which determines the specific
+    implementation of this function to call and which contains the keys/values
+    to use in selecting which Permission denial records to retrieve.  Specific
+    details about what records are involved and how the selection return values
+    are determine are implementation specific and will be documented on a case-
+    by-case basis.
+
+    * `opts` - a Keyword List of optional parameters which may be provided.  The
+    only general option is listed below, each specific implementation of this
+    function may extend the available options as appropriate to the
+    implementation.
+  """
+  @spec list_perm_denials(McpPermTypes.AccessAccountPermsSelector.t(), Keyword.t()) ::
+          {:ok, [Msdata.SystPerms.t()] | []} | {:error, MscmpSystError.t()}
+  defdelegate list_perm_denials(selector, opts \\ []), to: Runtime.McpPermsManager
+
+  @doc section: :perms_management
+  @doc """
+  Grants a Permission Role to the given selector.
+
+  On successful execution of the grant, the function will return a simple `:ok`.
+  On error, an error tuple is returned.
+
+  ## Parameters
+
+    * `selector` - this value is a struct which determines the specific
+    implementation of this function to call and which contains the keys/values
+    to use as the unique identifier of the user context to which you are
+    granting Permission Roles.
+
+    * `perm_role_id` - the record ID value of the Permission Role record which
+    you are granting to the user context identified by the `selector`.
+  """
+  @spec grant_perm_role(McpPermTypes.AccessAccountPermsSelector.t(), PermTypes.perm_role_id()) ::
+          :ok | {:error, MscmpSystError.t()}
+  defdelegate grant_perm_role(selector, perm_role_id), to: Runtime.McpPermsManager
+
+  @doc section: :perms_management
+  @doc """
+  Revokes a previously granted Permission Role from the given selector.
+
+  On successful execution a success tuple is returned.  If the grant was
+  actually deleted this tuple will take the form `{:ok, :deleted}`.  If the
+  grant was not found for the user context identified by the `selector` then the
+  `{:ok, :not_found}` tuple will be returned.  Any other outcome is an error
+  resulting in an error tuple being returned.
+
+  ## Parameters
+
+    * `selector` - this value is a struct which determines the specific
+    implementation of this function to call and which contains the keys/values
+    to use as the unique identifier of the user context from which you are
+    revoking Permission Roles.
+
+    * `perm_role_id` - the record ID value of the Permission Role record which
+    you are revoking from the user context identified by the `selector`.
+  """
+  @spec revoke_perm_role(McpPermTypes.AccessAccountPermsSelector.t(), PermTypes.perm_role_id()) ::
+          {:ok, :deleted | :not_found} | {:error, MscmpSystError.t()}
+  defdelegate revoke_perm_role(selector, perm_role_id), to: Runtime.McpPermsManager
 
   # ==============================================================================================
   #

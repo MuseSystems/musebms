@@ -22,7 +22,7 @@ defmodule IntegrationTest do
   @moduletag :capture_log
 
   @startup_options_path "test_startup_options.toml"
-  @migrations_root_dir "../../database/subsystems/mssub_mcp/testing_support"
+  @migrations_root_dir "../../../database/subsystems/mssub_mcp/testing_support"
 
   # Special Note:
   #
@@ -735,15 +735,289 @@ defmodule IntegrationTest do
 
   # ==============================================================================================
   #
-  # Topic 5: Instance Purge & Clean-up
+  # Topic 5: Permissions Management
   #
   # ==============================================================================================
 
-  test "Step 5.01: Stop Instances" do
+  test "Step 5.01: Grant Permission Role to Access Account" do
+    {:ok, access_account_id} = MssubMcp.get_access_account_id_by_name("owner1_access_account")
+
+    selector = %MscmpSystMcpPerms.Types.AccessAccountPermsSelector{
+      access_account_id: access_account_id
+    }
+
+    mcp_role_id =
+      MssubMcp.process_operation(fn ->
+        from(pr in Msdata.SystPermRoles, where: pr.internal_name == "mcp_login", select: pr.id)
+        |> MscmpSystDb.one!()
+      end)
+
+    assert :ok = MssubMcp.grant_perm_role(selector, mcp_role_id)
+
+    assert {:error, _} = MssubMcp.grant_perm_role(selector, mcp_role_id)
+
+    global_role_id =
+      MssubMcp.process_operation(fn ->
+        from(pr in Msdata.SystPermRoles, where: pr.internal_name == "global_login", select: pr.id)
+        |> MscmpSystDb.one!()
+      end)
+
+    assert :ok = MssubMcp.grant_perm_role(selector, global_role_id)
+
+    assert {:error, _} = MssubMcp.grant_perm_role(selector, global_role_id)
+  end
+
+  test "Step 5.02: Get effective Permission grants for Access Account" do
+    {:ok, access_account_id} = MssubMcp.get_access_account_id_by_name("owner1_access_account")
+
+    selector = %MscmpSystMcpPerms.Types.AccessAccountPermsSelector{
+      access_account_id: access_account_id
+    }
+
+    assert {:ok, %{} = all_grants} = MssubMcp.get_effective_perm_grants(selector)
+
+    assert {
+             "mcp_login",
+             %{
+               view_scope: :unused,
+               maint_scope: :unused,
+               admin_scope: :unused,
+               ops_scope: :all
+             }
+           } =
+             Enum.find(all_grants, fn curr_grant ->
+               case curr_grant do
+                 {"mcp_login", _} -> true
+                 _ -> false
+               end
+             end)
+
+    assert {
+             "global_login",
+             %{
+               view_scope: :unused,
+               maint_scope: :unused,
+               admin_scope: :unused,
+               ops_scope: :all
+             }
+           } =
+             Enum.find(all_grants, fn curr_grant ->
+               case curr_grant do
+                 {"global_login", _} -> true
+                 _ -> false
+               end
+             end)
+
+    assert {:ok, %{} = filtered1_grants} =
+             MssubMcp.get_effective_perm_grants(selector,
+               permissions: ["mcp_login"]
+             )
+
+    assert {
+             "mcp_login",
+             %{
+               view_scope: :unused,
+               maint_scope: :unused,
+               admin_scope: :unused,
+               ops_scope: :all
+             }
+           } =
+             Enum.find(filtered1_grants, fn curr_grant ->
+               case curr_grant do
+                 {"mcp_login", _} -> true
+                 _ -> false
+               end
+             end)
+
+    assert nil ==
+             Enum.find(filtered1_grants, fn curr_grant ->
+               case curr_grant do
+                 {"global_login", _} -> true
+                 _ -> false
+               end
+             end)
+
+    assert {:ok, %{} = filtered2_grants} =
+             MssubMcp.get_effective_perm_grants(selector,
+               permissions: "global_login"
+             )
+
+    assert {
+             "global_login",
+             %{
+               view_scope: :unused,
+               maint_scope: :unused,
+               admin_scope: :unused,
+               ops_scope: :all
+             }
+           } =
+             Enum.find(filtered2_grants, fn curr_grant ->
+               case curr_grant do
+                 {"global_login", _} -> true
+                 _ -> false
+               end
+             end)
+
+    assert nil ==
+             Enum.find(filtered2_grants, fn curr_grant ->
+               case curr_grant do
+                 {"mcp_login", _} -> true
+                 _ -> false
+               end
+             end)
+  end
+
+  test "Step 5.03: List Access Account Permission Role Grants" do
+    {:ok, access_account_id} = MssubMcp.get_access_account_id_by_name("owner1_access_account")
+
+    selector = %MscmpSystMcpPerms.Types.AccessAccountPermsSelector{
+      access_account_id: access_account_id
+    }
+
+    assert {:ok, perm_roles} = MssubMcp.list_perm_grants(selector)
+
+    assert 2 == length(perm_roles)
+
+    assert %Msdata.SystPermRoles{internal_name: "mcp_login"} =
+             Enum.find(perm_roles, &(&1.internal_name == "mcp_login"))
+
+    assert %Msdata.SystPermRoles{internal_name: "global_login"} =
+             Enum.find(perm_roles, &(&1.internal_name == "global_login"))
+
+    assert {:ok, perm_roles} = MssubMcp.list_perm_grants(selector, include_perms: true)
+
+    assert 2 == length(perm_roles)
+
+    assert %Msdata.SystPermRoles{internal_name: "mcp_login"} =
+             mcp_login = Enum.find(perm_roles, &(&1.internal_name == "mcp_login"))
+
+    assert %Msdata.SystPermRoleGrants{perm: %Msdata.SystPerms{}} =
+             Enum.find(mcp_login.perm_role_grants, &(&1.perm.internal_name == "mcp_login"))
+
+    assert %Msdata.SystPermRoles{internal_name: "global_login"} =
+             global_login = Enum.find(perm_roles, &(&1.internal_name == "global_login"))
+
+    assert %Msdata.SystPermRoleGrants{perm: %Msdata.SystPerms{}} =
+             Enum.find(global_login.perm_role_grants, &(&1.perm.internal_name == "global_login"))
+  end
+
+  test "Step 5.04: List Access Account Permission Denials" do
+    {:ok, access_account_id} = MssubMcp.get_access_account_id_by_name("owner1_access_account")
+
+    selector = %MscmpSystMcpPerms.Types.AccessAccountPermsSelector{
+      access_account_id: access_account_id
+    }
+
+    # Right now this is effectively a no-op since no explicit permission
+    # denial process exists for Access Accounts
+    assert {:ok, []} = MssubMcp.list_perm_denials(selector)
+  end
+
+  test "Step 5.05: Revoke Access Account Permission Role" do
+    {:ok, access_account_id} = MssubMcp.get_access_account_id_by_name("owner1_access_account")
+
+    selector = %MscmpSystMcpPerms.Types.AccessAccountPermsSelector{
+      access_account_id: access_account_id
+    }
+
+    global_role_id =
+      MssubMcp.process_operation(fn ->
+        from(pr in Msdata.SystPermRoles, where: pr.internal_name == "global_login", select: pr.id)
+        |> MscmpSystDb.one!()
+      end)
+
+    assert {:ok, :deleted} = MssubMcp.revoke_perm_role(selector, global_role_id)
+    assert {:ok, :not_found} = MssubMcp.revoke_perm_role(selector, global_role_id)
+
+    {:ok, all_grants} = MssubMcp.get_effective_perm_grants(selector)
+
+    assert {
+             "mcp_login",
+             %{
+               view_scope: :unused,
+               maint_scope: :unused,
+               admin_scope: :unused,
+               ops_scope: :all
+             }
+           } =
+             Enum.find(all_grants, fn curr_grant ->
+               case curr_grant do
+                 {"mcp_login", _} -> true
+                 _ -> false
+               end
+             end)
+
+    assert {
+             "global_login",
+             %{
+               view_scope: :deny,
+               maint_scope: :deny,
+               admin_scope: :deny,
+               ops_scope: :deny
+             }
+           } ==
+             Enum.find(all_grants, fn curr_grant ->
+               case curr_grant do
+                 {"global_login", _} -> true
+                 _ -> false
+               end
+             end)
+
+    mcp_role_id =
+      MssubMcp.process_operation(fn ->
+        from(pr in Msdata.SystPermRoles, where: pr.internal_name == "mcp_login", select: pr.id)
+        |> MscmpSystDb.one!()
+      end)
+
+    assert {:ok, :deleted} = MssubMcp.revoke_perm_role(selector, mcp_role_id)
+    assert {:ok, :not_found} = MssubMcp.revoke_perm_role(selector, mcp_role_id)
+
+    {:ok, all_grants} = MssubMcp.get_effective_perm_grants(selector)
+
+    assert {
+             "mcp_login",
+             %{
+               view_scope: :deny,
+               maint_scope: :deny,
+               admin_scope: :deny,
+               ops_scope: :deny
+             }
+           } =
+             Enum.find(all_grants, fn curr_grant ->
+               case curr_grant do
+                 {"mcp_login", _} -> true
+                 _ -> false
+               end
+             end)
+
+    assert {
+             "global_login",
+             %{
+               view_scope: :deny,
+               maint_scope: :deny,
+               admin_scope: :deny,
+               ops_scope: :deny
+             }
+           } ==
+             Enum.find(all_grants, fn curr_grant ->
+               case curr_grant do
+                 {"global_login", _} -> true
+                 _ -> false
+               end
+             end)
+  end
+
+  # ==============================================================================================
+  #
+  # Topic 6: Instance Purge & Clean-up
+  #
+  # ==============================================================================================
+
+  test "Step 6.01: Stop Instances" do
     assert :ok = MssubMcp.stop_all_applications()
   end
 
-  test "Step 5.02: Purge Instances" do
+  test "Step 6.02: Purge Instances" do
     startup_options = MscmpSystOptions.get_options!(@startup_options_path)
 
     purge_instance_state = MssubMcp.get_instance_state_default(:instance_states_purge_eligible)
@@ -766,11 +1040,11 @@ defmodule IntegrationTest do
 
   # ==============================================================================================
   #
-  # Topic 6: Application Context Delete
+  # Topic 7: Application Context Delete
   #
   # ==============================================================================================
 
-  test "Step 6.01: Delete Application Contexts" do
+  test "Step 7.01: Delete Application Contexts" do
     assert app_context1_id = MssubMcp.get_application_context_id_by_name("test_app_access")
 
     assert {:ok, :deleted} = MssubMcp.delete_application_context(app_context1_id)
