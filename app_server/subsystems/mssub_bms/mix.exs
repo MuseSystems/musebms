@@ -26,7 +26,6 @@ defmodule MssubBms.MixProject do
     # Muse Systems Business Management System Components
     {:mscmp_syst_utils, path: "../../components/system/mscmp_syst_utils"},
     {:mscmp_syst_error, path: "../../components/system/mscmp_syst_error"},
-    {:mscmp_syst_app_subsystem, path: "../../components/system/mscmp_syst_app_subsystem"},
     {:mscmp_syst_enums, path: "../../components/system/mscmp_syst_enums"},
     {:mscmp_syst_settings, path: "../../components/system/mscmp_syst_settings"}
   ]
