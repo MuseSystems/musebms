@@ -1,5 +1,5 @@
 -- Migration: priv/database/msapp_platform_mssub_mcp/msapp_platform_mssub_mcp.01.01.000.0000MS.000.eex.sql
--- Built on:  2022-12-13 23:32:03.257787Z
+-- Built on:  2023-01-04 13:12:40.636686Z
 
 DO
 $MIGRATION$
@@ -9751,7 +9751,7 @@ CREATE TABLE ms_syst_data.syst_access_account_instance_assocs
         NOT NULL
         CONSTRAINT syst_access_account_instance_assocs_instances_fk
             REFERENCES ms_syst_data.syst_instances (id) ON DELETE CASCADE
-    ,CONSTRAINT syst_access_account_instance_assoc_a_c_i_udx
+    ,CONSTRAINT syst_access_account_instance_assoc_a_i_udx
         UNIQUE ( access_account_id, instance_id )
     ,access_granted
         timestamptz
@@ -15478,8 +15478,2978 @@ updates can be found.  This row starts at 0 and therefore may be the same as the
 diag_row_version - 1.
 
 This value is read only from this API view.$DOC$;
+-- File:        syst_perm_functional_types.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_perms/ms_syst_data/syst_perm_functional_types/syst_perm_functional_types.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+CREATE TABLE ms_syst_data.syst_perm_functional_types
+(
+     id
+        uuid
+        NOT NULL DEFAULT uuid_generate_v1( )
+        CONSTRAINT syst_perm_functional_types_pk PRIMARY KEY
+    ,internal_name
+        text
+        NOT NULL
+        CONSTRAINT syst_perm_functional_types_internal_name_udx UNIQUE
+    ,display_name
+        text
+        NOT NULL
+        CONSTRAINT syst_perm_functional_types_display_name_udx UNIQUE
+    ,syst_description
+        text
+        NOT NULL
+    ,user_description
+        text
+    ,diag_timestamp_created
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_role_created
+        text
+    ,diag_timestamp_modified
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_wallclock_modified
+        timestamptz
+        NOT NULL DEFAULT clock_timestamp( )
+    ,diag_role_modified
+        text
+    ,diag_row_version
+        bigint
+        NOT NULL DEFAULT 1
+    ,diag_update_count
+        bigint
+        NOT NULL DEFAULT 0
+);
+
+ALTER TABLE ms_syst_data.syst_perm_functional_types OWNER TO <%= ms_owner %>;
+
+REVOKE ALL ON TABLE ms_syst_data.syst_perm_functional_types FROM public;
+GRANT ALL ON TABLE ms_syst_data.syst_perm_functional_types TO <%= ms_owner %>;
+
+CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
+    BEFORE INSERT OR UPDATE ON ms_syst_data.syst_perm_functional_types
+    FOR EACH ROW EXECUTE PROCEDURE ms_syst_priv.trig_b_iu_set_diagnostic_columns();
+
+COMMENT ON
+    TABLE ms_syst_data.syst_perm_functional_types IS
+$DOC$Defines application specific areas of applicability to which Permissions and
+Permission Roles are assigned.
+
+When an application defines varying areas of business controls, Permission
+Functional Types can be used to group Permissions into their specific areas and
+limit usage and role assignment by area.  Consider an application which supports
+multiple warehouses containing inventory.  The application may define globally
+applicable Permissions such as the ability to log into the application, but may
+allow employees to be granted varying degrees of Permission to each individual
+warehouse's inventory management features.  In this case there would be "Global"
+Permission Functional Type containing the log in Permission and a "Warehouse"
+Permission Functional Type for those Permissions and Permission Roles which can
+vary warehouse by warehouse.
+
+Both Permissions and Permission Roles must share a Permission Functional Type
+since the Permission Functional Type establishes the context of applicability
+for both.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perm_functional_types.id IS
+$DOC$The record's primary key.  The definitive identifier of the record in the
+system.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perm_functional_types.internal_name IS
+$DOC$A candidate key useful for programmatic references to individual records.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perm_functional_types.display_name IS
+$DOC$A friendly name and candidate key for the record, suitable for use in user
+interactions$DOC$;
+
+COMMENT ON
+     COLUMN ms_syst_data.syst_perm_functional_types.syst_description IS
+$DOC$A system default description describing the Permission Functional Type and its
+uses in the system.$DOC$;
+
+COMMENT ON
+     COLUMN ms_syst_data.syst_perm_functional_types.user_description IS
+$DOC$A custom user defined description which overrides the syst_description value
+where it would otherwise be used.  If this column is set NULL the
+syst_description value will be used.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perm_functional_types.diag_timestamp_created IS
+$DOC$The database server date/time when the transaction which created the record
+started.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perm_functional_types.diag_role_created IS
+$DOC$The database role which created the record.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perm_functional_types.diag_timestamp_modified IS
+$DOC$The database server date/time when the transaction which modified the record
+started.  This field will be the same as diag_timestamp_created for inserted
+records.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perm_functional_types.diag_wallclock_modified IS
+$DOC$The database server date/time at the moment the record was actually modified.
+For long running transactions this time may be significantly later than the
+value of diag_timestamp_modified.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perm_functional_types.diag_role_modified IS
+$DOC$The database role which modified the record.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perm_functional_types.diag_row_version IS
+$DOC$The current version of the row.  The value here indicates how many actual
+data changes have been made to the row.  If an update of the row leaves all data
+fields the same, disregarding the updates to the diag_* columns, the row version
+is not updated, nor are any updates made to the other diag_* columns other than
+diag_update_count.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perm_functional_types.diag_update_count IS
+$DOC$Records the number of times the record has been updated regardless as to if
+the update actually changed any data.  In this way needless or redundant record
+updates can be found.  This row starts at 0 and therefore may be the same as the
+diag_row_version - 1.$DOC$;
+-- File:        syst_perms.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_perms/ms_syst_data/syst_perms/syst_perms.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+CREATE TABLE ms_syst_data.syst_perms
+(
+     id
+        uuid
+        NOT NULL DEFAULT uuid_generate_v1( )
+        CONSTRAINT syst_perms_pk PRIMARY KEY
+    ,internal_name
+        text
+        NOT NULL
+        CONSTRAINT syst_perms_internal_name_udx UNIQUE
+    ,display_name
+        text
+        NOT NULL
+        CONSTRAINT syst_perms_display_name_udx UNIQUE
+    ,perm_functional_type_id
+        uuid
+        NOT NULL
+        CONSTRAINT syst_perms_perm_functional_type_fk
+            REFERENCES ms_syst_data.syst_perm_functional_types ( id )
+    ,syst_defined
+        boolean
+        NOT NULL DEFAULT FALSE
+    ,syst_description
+        text
+        NOT NULL
+    ,user_description
+        text
+    ,view_scope_options
+        text[]
+        NOT NULL DEFAULT ARRAY ['unused']::text[]
+        CONSTRAINT syst_perms_view_scope_options_chk
+            CHECK ( cardinality(view_scope_options) > 0 AND
+                    view_scope_options <@ ARRAY ['unused', 'deny', 'same_user', 'same_group', 'all']::text[] )
+    ,maint_scope_options
+        text[]
+        NOT NULL DEFAULT ARRAY ['unused']::text[]
+        CONSTRAINT syst_perms_maint_scope_options_chk
+            CHECK ( cardinality(maint_scope_options) > 0 AND
+                    maint_scope_options <@ ARRAY ['unused', 'deny', 'same_user', 'same_group', 'all']::text[] )
+    ,admin_scope_options
+        text[]
+        NOT NULL DEFAULT ARRAY ['unused']::text[]
+        CONSTRAINT syst_perms_admin_scope_options_chk
+            CHECK ( cardinality(admin_scope_options) > 0 AND
+                    admin_scope_options <@ ARRAY ['unused', 'deny', 'same_user', 'same_group', 'all']::text[] )
+    ,ops_scope_options
+        text[]
+        NOT NULL DEFAULT ARRAY ['unused']::text[]
+        CONSTRAINT syst_perms_ops_scope_options_chk
+            CHECK ( cardinality(ops_scope_options) > 0 AND
+                    ops_scope_options <@ ARRAY ['unused', 'deny', 'same_user', 'same_group', 'all']::text[] )
+    ,diag_timestamp_created
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_role_created
+        text
+    ,diag_timestamp_modified
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_wallclock_modified
+        timestamptz
+        NOT NULL DEFAULT clock_timestamp( )
+    ,diag_role_modified
+        text
+    ,diag_row_version
+        bigint
+        NOT NULL DEFAULT 1
+    ,diag_update_count
+        bigint
+        NOT NULL DEFAULT 0
+);
+
+ALTER TABLE ms_syst_data.syst_perms OWNER TO <%= ms_owner %>;
+
+REVOKE ALL ON TABLE ms_syst_data.syst_perms FROM public;
+GRANT ALL ON TABLE ms_syst_data.syst_perms TO <%= ms_owner %>;
+
+CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
+    BEFORE INSERT OR UPDATE ON ms_syst_data.syst_perms
+    FOR EACH ROW EXECUTE PROCEDURE ms_syst_priv.trig_b_iu_set_diagnostic_columns();
+
+COMMENT ON
+    TABLE ms_syst_data.syst_perms IS
+$DOC$Defines the available system and application permissions which can be
+assigned to users.
+
+The Permission is divided into the following concepts:
+
+    1- The Permission record itself defines a subject for which application
+    security and control concerns exist.
+
+    2- Each Permission is made up of standard Rights.  These Rights are:
+
+        * View - the ability to view data.
+
+        * Maintenance - the ability to change or process existing data.
+
+        * Administration - the ability to create or destroy data.
+
+        * Operations - the ability to perform certain operations or processes.
+
+    3- The Right for each Permission is assigned a Scope of applicability which
+    can limit or extend the grant of a Right.  Each Right of the Permission may
+    define which Scopes it supports out of the following possibilities:
+
+        * Unused - The Right does not exist in any meaningful way for the
+        Permission.
+
+        * Deny - The Right is not granted by the Permission grant; this is
+        typically used in cases where other Rights may be granted, for example
+        permitting a user to see a value (View Right), but not to Maintain or
+        perform data Admin tasks (Maint & Admin Rights).
+
+        * Same User - The Right grant is limited in Scope to those records which
+        are in some way designated as belonging to the specific user exercising
+        the Right.  Ownership designation will be defined by those functions
+        where a Permission is checked.
+
+        * Same Group - The Right grant is limited in Scope to those records
+        which are in some way designated as belonging to a specific group or
+        groups and to which the user belongs in some way.  Ownership designation
+        will be defined by those functions where a Permission is checked.
+
+        * All - The Right grant is not limited in Scope and all records which
+        are subject to the Permission are available to the user.
+
+Permissions are assigned to Permission Roles which are in turn granted to
+individual users.  If a Permission is not assigned to a Permission Role, then
+the assumption is that the Permission Role's users are denied all rights granted
+by the unassigned Permission.
+
+Some Permissions may be dependent on the grants of other more fundamental
+Permissions.  For example, a user may be granted only View Rights to the sales
+order form, but also granted Maintenance Rights to sales pricing data.  In such
+a case the sales order Rights would dictate that the user does not have the
+ability to maintain sales pricing in the sales order context.
+
+Specific details of applicability and the determination of Scope boundaries will
+vary by each specific scenario.  Consult individual Permission documentation for
+specific understanding of how determinations of access are made.
+$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perms.id IS
+$DOC$The record's primary key.  The definitive identifier of the record in the
+system.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perms.internal_name IS
+$DOC$A candidate key useful for programmatic references to individual records.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perms.display_name IS
+$DOC$A friendly name and candidate key for the record, suitable for use in user
+interactions$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perms.perm_functional_type_id IS
+$DOC$Assigns the Permission to a specific Permission Functional Type.
+
+Permissions may only be granted in Permission Roles of the same Permission
+Functional Type.$DOC$;
+
+COMMENT ON
+     COLUMN ms_syst_data.syst_perms.syst_defined IS
+$DOC$If true, indicates that the permission was created by the system or system
+installation process.  A false value indicates that the record was user created.$DOC$;
+
+COMMENT ON
+     COLUMN ms_syst_data.syst_perms.syst_description IS
+$DOC$A system default description describing the permission and its uses in the
+system.$DOC$;
+
+COMMENT ON
+     COLUMN ms_syst_data.syst_perms.user_description IS
+$DOC$A custom user defined description which overrides the syst_description value
+where it would otherwise be used.  If this column is set NULL the
+syst_description value will be used.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perms.view_scope_options IS
+$DOC$If applicable, enumerates the available Scopes of viewable data offered by the
+permission.  If not applicable the only option will be 'unused'.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perms.maint_scope_options IS
+$DOC$If applicable, enumerates the available Scopes of maintainable data offered by
+the permission.  Maintenance in this context refers to changing existing data.
+If not applicable the only option will be 'unused'.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perms.admin_scope_options IS
+$DOC$If applicable, enumerates the available Scopes of data administration offered
+by the permission.  Administration in this context refers to creating or
+deleting records.  If not applicable the only option will be 'unused'.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perms.ops_scope_options IS
+$DOC$If applicable, enumerates the available Scopes of a given operation or
+processing capability offered by the permission.  If not applicable the only
+option will be 'unused'.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perms.diag_timestamp_created IS
+$DOC$The database server date/time when the transaction which created the record
+started.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perms.diag_role_created IS
+$DOC$The database role which created the record.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perms.diag_timestamp_modified IS
+$DOC$The database server date/time when the transaction which modified the record
+started.  This field will be the same as diag_timestamp_created for inserted
+records.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perms.diag_wallclock_modified IS
+$DOC$The database server date/time at the moment the record was actually modified.
+For long running transactions this time may be significantly later than the
+value of diag_timestamp_modified.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perms.diag_role_modified IS
+$DOC$The database role which modified the record.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perms.diag_row_version IS
+$DOC$The current version of the row.  The value here indicates how many actual
+data changes have been made to the row.  If an update of the row leaves all data
+fields the same, disregarding the updates to the diag_* columns, the row version
+is not updated, nor are any updates made to the other diag_* columns other than
+diag_update_count.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perms.diag_update_count IS
+$DOC$Records the number of times the record has been updated regardless as to if
+the update actually changed any data.  In this way needless or redundant record
+updates can be found.  This row starts at 0 and therefore may be the same as the
+diag_row_version - 1.$DOC$;
+-- File:        syst_perm_roles.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_perms/ms_syst_data/syst_perm_roles/syst_perm_roles.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+CREATE TABLE ms_syst_data.syst_perm_roles
+(
+     id
+        uuid
+        NOT NULL DEFAULT uuid_generate_v1( )
+        CONSTRAINT syst_perm_roles_pk PRIMARY KEY
+    ,internal_name
+        text
+        NOT NULL
+        CONSTRAINT syst_perm_roles_internal_name_udx UNIQUE
+    ,display_name
+        text
+        NOT NULL
+        CONSTRAINT syst_perm_roles_display_name_udx UNIQUE
+    ,perm_functional_type_id
+        uuid
+        NOT NULL
+        CONSTRAINT syst_perm_roles_perm_functional_type_fk
+            REFERENCES ms_syst_data.syst_perm_functional_types ( id )
+    ,syst_defined
+        boolean
+        NOT NULL DEFAULT FALSE
+    ,syst_description
+        text
+        NOT NULL
+    ,user_description
+        text
+    ,diag_timestamp_created
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_role_created
+        text
+    ,diag_timestamp_modified
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_wallclock_modified
+        timestamptz
+        NOT NULL DEFAULT clock_timestamp( )
+    ,diag_role_modified
+        text
+    ,diag_row_version
+        bigint
+        NOT NULL DEFAULT 1
+    ,diag_update_count
+        bigint
+        NOT NULL DEFAULT 0
+);
+
+ALTER TABLE ms_syst_data.syst_perm_roles OWNER TO <%= ms_owner %>;
+
+REVOKE ALL ON TABLE ms_syst_data.syst_perm_roles FROM public;
+GRANT ALL ON TABLE ms_syst_data.syst_perm_roles TO <%= ms_owner %>;
+
+CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
+    BEFORE INSERT OR UPDATE ON ms_syst_data.syst_perm_roles
+    FOR EACH ROW EXECUTE PROCEDURE ms_syst_priv.trig_b_iu_set_diagnostic_columns();
+
+COMMENT ON
+    TABLE ms_syst_data.syst_perm_roles IS
+$DOC$Defines collections of permissions which are then assignable to users.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perm_roles.id IS
+$DOC$The record's primary key.  The definitive identifier of the record in the
+system.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perm_roles.internal_name IS
+$DOC$A candidate key useful for programmatic references to individual records.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perm_roles.display_name IS
+$DOC$A friendly name and candidate key for the record, suitable for use in user
+interactions$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perm_roles.perm_functional_type_id IS
+$DOC$Assigns the Permission Role to a specific Permission Functional Type.
+
+Only Permissions with the same Permission Functional Type may be granted by the
+Permission Role.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perm_roles.syst_defined IS
+$DOC$If true, indicates that the permission role was created by the system or system
+installation process.  A false value indicates that the record was user created.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perm_roles.syst_description IS
+$DOC$A system default description describing the permission role and its uses in the
+system.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perm_roles.user_description IS
+$DOC$A custom user defined description which overrides the syst_description value
+where it would otherwise be used.  If this column is set NULL the
+syst_description value will be used.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perm_roles.diag_timestamp_created IS
+$DOC$The database server date/time when the transaction which created the record
+started.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perm_roles.diag_role_created IS
+$DOC$The database role which created the record.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perm_roles.diag_timestamp_modified IS
+$DOC$The database server date/time when the transaction which modified the record
+started.  This field will be the same as diag_timestamp_created for inserted
+records.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perm_roles.diag_wallclock_modified IS
+$DOC$The database server date/time at the moment the record was actually modified.
+For long running transactions this time may be significantly later than the
+value of diag_timestamp_modified.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perm_roles.diag_role_modified IS
+$DOC$The database role which modified the record.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perm_roles.diag_row_version IS
+$DOC$The current version of the row.  The value here indicates how many actual
+data changes have been made to the row.  If an update of the row leaves all data
+fields the same, disregarding the updates to the diag_* columns, the row version
+is not updated, nor are any updates made to the other diag_* columns other than
+diag_update_count.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perm_roles.diag_update_count IS
+$DOC$Records the number of times the record has been updated regardless as to if
+the update actually changed any data.  In this way needless or redundant record
+updates can be found.  This row starts at 0 and therefore may be the same as the
+diag_row_version - 1.$DOC$;
+CREATE OR REPLACE FUNCTION ms_syst_data.trig_b_iu_syst_perm_role_grants_default_scopes()
+RETURNS trigger AS
+$BODY$
+
+-- File:        trig_b_iu_syst_perm_role_grants_default_scopes.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_perms/ms_syst_data/syst_perm_role_grants/trig_b_iu_syst_perm_role_grants_default_scopes.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+DECLARE
+    var_perm ms_syst_data.syst_perms;
+
+BEGIN
+
+    SELECT * INTO STRICT var_perm FROM ms_syst_data.syst_perms WHERE id = new.perm_id;
+
+    IF new.view_scope IS NULL THEN
+        new.view_scope = var_perm.view_scope_options[1];
+    END IF;
+
+    IF new.maint_scope IS NULL THEN
+        new.maint_scope = var_perm.maint_scope_options[1];
+    END IF;
+
+    IF new.admin_scope IS NULL THEN
+        new.admin_scope = var_perm.admin_scope_options[1];
+    END IF;
+
+    IF new.ops_scope IS NULL THEN
+        new.ops_scope = var_perm.ops_scope_options[1];
+    END IF;
+
+    RETURN new;
+
+END;
+$BODY$
+LANGUAGE plpgsql VOLATILE;
+
+ALTER FUNCTION ms_syst_data.trig_b_iu_syst_perm_role_grants_default_scopes()
+    OWNER TO <%= ms_owner %>;
+
+REVOKE EXECUTE ON FUNCTION ms_syst_data.trig_b_iu_syst_perm_role_grants_default_scopes() FROM public;
+GRANT EXECUTE ON FUNCTION ms_syst_data.trig_b_iu_syst_perm_role_grants_default_scopes() TO <%= ms_owner %>;
+
+COMMENT ON FUNCTION ms_syst_data.trig_b_iu_syst_perm_role_grants_default_scopes() IS
+$DOC$This function is not yet documented.$DOC$;
+CREATE OR REPLACE FUNCTION ms_syst_data.trig_a_iu_syst_perm_role_grants_related_data_checks()
+RETURNS trigger AS
+$BODY$
+
+-- File:        trig_a_iu_syst_perm_role_grants_related_data_checks.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_perms/ms_syst_data/syst_perm_role_grants/trig_a_iu_syst_perm_role_grants_related_data_checks.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+DECLARE
+    var_context_data record;
+    var_errors       text[] := ARRAY []::text[];
+
+BEGIN
+
+    SELECT INTO STRICT var_context_data
+        sp.view_scope_options
+      , sp.maint_scope_options
+      , sp.admin_scope_options
+      , sp.ops_scope_options
+      , sp.perm_functional_type_id                              AS perm_perm_functional_type_id
+      , spr.perm_functional_type_id                             AS perm_role_perm_functional_type_id
+      , NOT new.view_scope = ANY (sp.view_scope_options)        AS view_scope_invalid
+      , NOT new.maint_scope = ANY (sp.maint_scope_options)      AS maint_scope_invalid
+      , NOT new.admin_scope = ANY (sp.admin_scope_options)      AS admin_scope_invalid
+      , NOT new.ops_scope = ANY (sp.ops_scope_options)          AS ops_scope_invalid
+      , spr.perm_functional_type_id != sp.perm_functional_type_id AS perm_functional_type_invalid
+    FROM
+        ms_syst_data.syst_perms sp
+      , ms_syst_data.syst_perm_roles spr
+    WHERE sp.id = new.perm_id AND spr.id = new.perm_role_id;
+
+    --
+    -- Functional Type Check
+    --
+
+    IF var_context_data.perm_functional_type_invalid THEN
+
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'This record may only grant Permissions of the same ' ||
+                          'Permission Functional Type that is assigned to the ' ||
+                          'Permission Role which owns this record.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst'
+                            ,p_proc_name      => 'trig_a_iu_syst_perm_role_grants_related_data_checks'
+                            ,p_exception_name => 'invalid_data'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     =>
+                                jsonb_build_object(
+                                     'syst_perms_perm_functional_type_id'
+                                    , var_context_data.perm_perm_functional_type_id
+                                    ,'syst_perm_roles_perm_functional_type_id'
+                                    ,var_context_data.perm_role_perm_functional_type_id )
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+
+    END IF;
+
+    --
+    -- Rights Scoping Checks
+    --
+
+    IF var_context_data.view_scope_invalid THEN
+            var_errors :=
+                var_errors ||
+                'The assigned View Right Scope is not valid for this Permission.'::text;
+    END IF;
+
+    IF var_context_data.maint_scope_invalid THEN
+            var_errors :=
+                var_errors ||
+                'The assigned Maintenance Right Scope is not valid for this Permission.'::text;
+    END IF;
+
+    IF var_context_data.admin_scope_invalid THEN
+            var_errors :=
+                var_errors ||
+                'The assigned Administration Right Scope is not valid for this Permission.'::text;
+    END IF;
+
+    IF var_context_data.ops_scope_invalid THEN
+            var_errors :=
+                var_errors ||
+                'The assigned Operations Right Scope is not valid for this Permission.'::text;
+    END IF;
+
+
+    IF array_length(var_errors, 1) > 0 THEN
+
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'Invalid Scopes for Permission Rights provided.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst'
+                            ,p_proc_name      => 'trig_a_iu_syst_perm_role_grants_related_data_checks'
+                            ,p_exception_name => 'invalid_data'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     =>
+                                jsonb_build_object(
+                                     'error_scopes',        var_errors
+                                    ,'view_scope_options',  var_context_data.view_scope_options
+                                    ,'maint_scope_options', var_context_data.maint_scope_options
+                                    ,'admin_scope_options', var_context_data.admin_scope_options
+                                    ,'ops_scope_options',   var_context_data.ops_scope_options
+                                    ,'parameters',          new )
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+
+    END IF;
+
+    RETURN new;
+
+END;
+$BODY$
+LANGUAGE plpgsql VOLATILE;
+
+ALTER FUNCTION ms_syst_data.trig_a_iu_syst_perm_role_grants_related_data_checks()
+    OWNER TO <%= ms_owner %>;
+
+REVOKE EXECUTE ON FUNCTION ms_syst_data.trig_a_iu_syst_perm_role_grants_related_data_checks() FROM public;
+GRANT EXECUTE ON FUNCTION ms_syst_data.trig_a_iu_syst_perm_role_grants_related_data_checks() TO <%= ms_owner %>;
+
+COMMENT ON FUNCTION ms_syst_data.trig_a_iu_syst_perm_role_grants_related_data_checks() IS
+$DOC$Checks that Permission Role Grant records are consistent with their defining
+parent records.
+
+This trigger $DOC$;
+-- File:        syst_perm_role_grants.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_perms/ms_syst_data/syst_perm_role_grants/syst_perm_role_grants.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+CREATE TABLE ms_syst_data.syst_perm_role_grants
+(
+     id
+        uuid
+        NOT NULL DEFAULT uuid_generate_v1( )
+        CONSTRAINT syst_perm_role_grants_pk PRIMARY KEY
+    ,perm_role_id
+        uuid
+        NOT NULL
+        CONSTRAINT syst_perm_role_grants_perm_role_fk
+            REFERENCES ms_syst_data.syst_perm_roles ( id )
+            ON DELETE CASCADE
+    ,perm_id
+        uuid
+        NOT NULL
+        CONSTRAINT syst_perm_role_grants_perm_fk
+            REFERENCES ms_syst_data.syst_perms ( id )
+            ON DELETE CASCADE
+    ,CONSTRAINT syst_perm_role_grants_perm_perm_role_udx
+        UNIQUE ( perm_role_id, perm_id )
+    ,view_scope
+        text
+        NOT NULL
+    ,maint_scope
+        text
+        NOT NULL
+    ,admin_scope
+        text
+        NOT NULL
+    ,ops_scope
+        text
+        NOT NULL
+    ,diag_timestamp_created
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_role_created
+        text
+    ,diag_timestamp_modified
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_wallclock_modified
+        timestamptz
+        NOT NULL DEFAULT clock_timestamp( )
+    ,diag_role_modified
+        text
+    ,diag_row_version
+        bigint
+        NOT NULL DEFAULT 1
+    ,diag_update_count
+        bigint
+        NOT NULL DEFAULT 0
+);
+
+ALTER TABLE ms_syst_data.syst_perm_role_grants OWNER TO <%= ms_owner %>;
+
+REVOKE ALL ON TABLE ms_syst_data.syst_perm_role_grants FROM public;
+GRANT ALL ON TABLE ms_syst_data.syst_perm_role_grants TO <%= ms_owner %>;
+
+CREATE TRIGGER b50_trig_b_iu_syst_perm_role_grants_default_scopes
+    BEFORE INSERT OR UPDATE ON ms_syst_data.syst_perm_role_grants
+    FOR EACH ROW
+    WHEN ( new.view_scope IS NULL OR
+           new.maint_scope IS NULL OR
+           new.admin_scope IS NULL OR
+           new.ops_scope IS NULL )
+    EXECUTE PROCEDURE ms_syst_data.trig_b_iu_syst_perm_role_grants_default_scopes();
+
+CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
+    BEFORE INSERT OR UPDATE ON ms_syst_data.syst_perm_role_grants
+    FOR EACH ROW EXECUTE PROCEDURE ms_syst_priv.trig_b_iu_set_diagnostic_columns();
+
+CREATE CONSTRAINT TRIGGER c50_trig_a_iu_syst_perm_role_grants_related_data_checks
+    AFTER INSERT OR UPDATE ON ms_syst_data.syst_perm_role_grants
+    FOR EACH ROW EXECUTE PROCEDURE
+        ms_syst_data.trig_a_iu_syst_perm_role_grants_related_data_checks();
+
+COMMENT ON
+    TABLE ms_syst_data.syst_perm_role_grants IS
+$DOC$Establishes the individual permissions which are granted by the given permission
+role.
+
+Note that the absence of an explicit permission grant to a role is an implicit
+denial of that permission.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perm_role_grants.id IS
+$DOC$The record's primary key.  The definitive identifier of the record in the
+system.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perm_role_grants.perm_role_id IS
+$DOC$Identifies the role to which the permission grant is being made.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perm_role_grants.perm_id IS
+$DOC$The permission being granted by the role.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perm_role_grants.view_scope IS
+$DOC$Assigns the Scope of the Permission's View Right being granted by the Role.
+
+The valid Scope options are defined by the Permission record.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perm_role_grants.maint_scope IS
+$DOC$Assigns the Scope of the Permission's Maintenance Right being granted by the
+Role.
+
+The valid Scope options are defined by the Permission record.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perm_role_grants.admin_scope IS
+$DOC$Assigns the Scope of the Permission's Data Administration Right being granted by
+the Role.
+
+The valid Scope options are defined by the Permission record.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perm_role_grants.ops_scope IS
+$DOC$Assigns the Scope of the Permission's Operations Right being granted by the
+Role.
+
+The valid Scope options are defined by the Permission record.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perm_role_grants.diag_timestamp_created IS
+$DOC$The database server date/time when the transaction which created the record
+started.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perm_role_grants.diag_role_created IS
+$DOC$The database role which created the record.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perm_role_grants.diag_timestamp_modified IS
+$DOC$The database server date/time when the transaction which modified the record
+started.  This field will be the same as diag_timestamp_created for inserted
+records.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perm_role_grants.diag_wallclock_modified IS
+$DOC$The database server date/time at the moment the record was actually modified.
+For long running transactions this time may be significantly later than the
+value of diag_timestamp_modified.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perm_role_grants.diag_role_modified IS
+$DOC$The database role which modified the record.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perm_role_grants.diag_row_version IS
+$DOC$The current version of the row.  The value here indicates how many actual
+data changes have been made to the row.  If an update of the row leaves all data
+fields the same, disregarding the updates to the diag_* columns, the row version
+is not updated, nor are any updates made to the other diag_* columns other than
+diag_update_count.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_perm_role_grants.diag_update_count IS
+$DOC$Records the number of times the record has been updated regardless as to if
+the update actually changed any data.  In this way needless or redundant record
+updates can be found.  This row starts at 0 and therefore may be the same as the
+diag_row_version - 1.$DOC$;
+CREATE OR REPLACE FUNCTION ms_syst_priv.get_greatest_rights_scope(p_scopes text[])
+RETURNS text AS
+$BODY$
+
+-- File:        get_greatest_rights_scope.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_perms/ms_syst_priv/functions/get_greatest_rights_scope.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+DECLARE
+    var_resolved_scopes text[] := coalesce(p_scopes, ARRAY ['deny']::text[]);
+
+BEGIN
+
+    RETURN
+        CASE
+            WHEN 'all'        = ANY (var_resolved_scopes) THEN 'all'
+            WHEN 'same_group' = ANY (var_resolved_scopes) THEN 'same_group'
+            WHEN 'same_user'  = ANY (var_resolved_scopes) THEN 'same_user'
+            WHEN 'unused'     = ANY (var_resolved_scopes) THEN 'unused'
+            ELSE 'deny'
+        END CASE;
+
+END;
+$BODY$
+LANGUAGE plpgsql IMMUTABLE;
+
+ALTER FUNCTION ms_syst_priv.get_greatest_rights_scope(p_scopes text[])
+    OWNER TO <%= ms_owner %>;
+
+REVOKE EXECUTE ON FUNCTION ms_syst_priv.get_greatest_rights_scope(p_scopes text[]) FROM public;
+GRANT EXECUTE ON FUNCTION ms_syst_priv.get_greatest_rights_scope(p_scopes text[]) TO <%= ms_owner %>;
+
+COMMENT ON FUNCTION ms_syst_priv.get_greatest_rights_scope(p_scopes text[]) IS
+$DOC$Given an array of Permission Right Scopes, returns the most expansive scope
+found in the array.
+
+If the array is NULL the returned value is 'deny'.$DOC$;
+CREATE OR REPLACE FUNCTION ms_syst.get_greatest_rights_scope(p_scopes text[] DEFAULT NULL::text[])
+RETURNS text AS
+$BODY$
+
+-- File:        get_greatest_rights_scope.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_perms/ms_syst/functions/get_greatest_rights_scope.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+    SELECT ms_syst_priv.get_greatest_rights_scope(p_scopes);
+
+$BODY$
+    LANGUAGE sql
+    IMMUTABLE
+    SECURITY DEFINER
+    SET search_path TO ms_syst, pg_temp;
+
+ALTER FUNCTION ms_syst.get_greatest_rights_scope(p_scopes text[])
+    OWNER TO <%= ms_owner %>;
+
+REVOKE EXECUTE ON FUNCTION ms_syst.get_greatest_rights_scope(p_scopes text[]) FROM public;
+GRANT EXECUTE ON FUNCTION ms_syst.get_greatest_rights_scope(p_scopes text[]) TO <%= ms_owner %>;
+
+COMMENT ON FUNCTION ms_syst.get_greatest_rights_scope(p_scopes text[]) IS
+$DOC$Given an array of Permission Right Scopes, returns the most expansive scope
+found in the array.
+
+If the array is NULL the returned value is 'deny'.$DOC$;
+CREATE OR REPLACE FUNCTION ms_syst.trig_i_i_syst_perm_functional_types()
+RETURNS trigger AS
+$BODY$
+
+-- File:        trig_i_i_syst_perm_functional_types.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_perms/ms_syst/api_views/syst_perm_functional_types/trig_i_i_syst_perm_functional_types.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    RAISE EXCEPTION
+        USING
+            MESSAGE = 'You may not create new Permission Functional Type ' ||
+                      'records using this API view.',
+            DETAIL = ms_syst_priv.get_exception_details(
+                         p_proc_schema    => 'ms_syst'
+                        ,p_proc_name      => 'trig_i_i_syst_perm_functional_types'
+                        ,p_exception_name => 'invalid_api_view_call'
+                        ,p_errcode        => 'PM008'
+                        ,p_param_data     => to_jsonb(new)
+                        ,p_context_data   =>
+                            jsonb_build_object(
+                                 'tg_op',         tg_op
+                                ,'tg_when',       tg_when
+                                ,'tg_schema',     tg_table_schema
+                                ,'tg_table_name', tg_table_name)),
+            ERRCODE = 'PM008',
+            SCHEMA = tg_table_schema,
+            TABLE = tg_table_name;
+
+END;
+$BODY$
+    LANGUAGE plpgsql
+    VOLATILE
+    SECURITY DEFINER
+    SET search_path TO ms_syst, pg_temp;
+
+ALTER FUNCTION ms_syst.trig_i_i_syst_perm_functional_types()
+    OWNER TO <%= ms_owner %>;
+
+REVOKE EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_perm_functional_types() FROM public;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_perm_functional_types() TO <%= ms_owner %>;
+
+COMMENT ON FUNCTION ms_syst.trig_i_i_syst_perm_functional_types() IS
+$DOC$An INSTEAD OF trigger function which applies business rules when using the
+syst_perm_functional_types API View for INSERT operations.$DOC$;
+CREATE OR REPLACE FUNCTION ms_syst.trig_i_u_syst_perm_functional_types()
+RETURNS trigger AS
+$BODY$
+
+-- File:        trig_i_u_syst_perm_functional_types.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_perms/ms_syst/api_views/syst_perm_functional_types/trig_i_u_syst_perm_functional_types.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    IF new.internal_name != old.internal_name THEN
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'The requested data update included changes to fields disallowed ' ||
+                          'by the business rules of the API View.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst'
+                            ,p_proc_name      => 'trig_i_u_syst_perm_functional_types'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(new)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+    END IF;
+
+    UPDATE ms_syst_data.syst_perm_functional_types
+    SET
+        display_name     = new.display_name
+      , user_description = new.user_description
+    WHERE id = new.id
+    RETURNING * INTO new;
+
+    RETURN new;
+
+END;
+$BODY$
+    LANGUAGE plpgsql
+    VOLATILE
+    SECURITY DEFINER
+    SET search_path TO ms_syst, pg_temp;
+
+ALTER FUNCTION ms_syst.trig_i_u_syst_perm_functional_types()
+    OWNER TO <%= ms_owner %>;
+
+REVOKE EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_perm_functional_types() FROM public;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_perm_functional_types() TO <%= ms_owner %>;
+
+COMMENT ON FUNCTION ms_syst.trig_i_u_syst_perm_functional_types() IS
+$DOC$An INSTEAD OF trigger function which applies business rules when using the
+syst_perm_functional_types API View for UPDATE operations.$DOC$;
+CREATE OR REPLACE FUNCTION ms_syst.trig_i_d_syst_perm_functional_types()
+RETURNS trigger AS
+$BODY$
+
+-- File:        trig_i_d_syst_perm_functional_types.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_perms/ms_syst/api_views/syst_perm_functional_types/trig_i_d_syst_perm_functional_types.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    RAISE EXCEPTION
+        USING
+            MESSAGE = 'You may not delete Permission Functional Type records ' ||
+                      'using this API view.',
+            DETAIL = ms_syst_priv.get_exception_details(
+                         p_proc_schema    => 'ms_syst'
+                        ,p_proc_name      => 'trig_i_d_syst_perm_functional_types'
+                        ,p_exception_name => 'invalid_api_view_call'
+                        ,p_errcode        => 'PM008'
+                        ,p_param_data     => to_jsonb(new)
+                        ,p_context_data   =>
+                            jsonb_build_object(
+                                 'tg_op',         tg_op
+                                ,'tg_when',       tg_when
+                                ,'tg_schema',     tg_table_schema
+                                ,'tg_table_name', tg_table_name)),
+            ERRCODE = 'PM008',
+            SCHEMA = tg_table_schema,
+            TABLE = tg_table_name;
+
+END;
+$BODY$
+    LANGUAGE plpgsql
+    VOLATILE
+    SECURITY DEFINER
+    SET search_path TO ms_syst, pg_temp;
+
+ALTER FUNCTION ms_syst.trig_i_d_syst_perm_functional_types()
+    OWNER TO <%= ms_owner %>;
+
+REVOKE EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_perm_functional_types() FROM public;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_perm_functional_types() TO <%= ms_owner %>;
+
+COMMENT ON FUNCTION ms_syst.trig_i_d_syst_perm_functional_types() IS
+$DOC$An INSTEAD OF trigger function which applies business rules when using the
+syst_perm_functional_types API View for DELETE operations.$DOC$;
+-- File:        syst_perm_functional_types.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_perms/ms_syst/api_views/syst_perm_functional_types/syst_perm_functional_types.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+CREATE VIEW ms_syst.syst_perm_functional_types AS
+SELECT
+    id
+  , internal_name
+  , display_name
+  , syst_description
+  , user_description
+  , diag_timestamp_created
+  , diag_role_created
+  , diag_timestamp_modified
+  , diag_wallclock_modified
+  , diag_role_modified
+  , diag_row_version
+  , diag_update_count
+FROM ms_syst_data.syst_perm_functional_types;
+
+ALTER VIEW ms_syst.syst_perm_functional_types OWNER TO <%= ms_owner %>;
+
+REVOKE ALL ON TABLE ms_syst.syst_perm_functional_types FROM PUBLIC;
+
+CREATE TRIGGER a50_trig_i_i_syst_perm_functional_types
+    INSTEAD OF INSERT ON ms_syst.syst_perm_functional_types
+    FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_i_syst_perm_functional_types();
+
+CREATE TRIGGER a50_trig_i_u_syst_perm_functional_types
+    INSTEAD OF UPDATE ON ms_syst.syst_perm_functional_types
+    FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_u_syst_perm_functional_types();
+
+CREATE TRIGGER a50_trig_i_d_syst_perm_functional_types
+    INSTEAD OF DELETE ON ms_syst.syst_perm_functional_types
+    FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_d_syst_perm_functional_types();
+
+COMMENT ON
+    VIEW ms_syst.syst_perm_functional_types IS
+$DOC$Defines application specific areas of applicability to which Permissions and
+Permission Roles are assigned.
+
+When an application defines varying areas of business controls, Permission
+Functional Types can be used to group Permissions into their specific areas and
+limit usage and role assignment by area.  Consider an application which supports
+multiple warehouses containing inventory.  The application may define globally
+applicable Permissions such as the ability to log into the application, but may
+allow employees to be granted varying degrees of Permission to each individual
+warehouse's inventory management features.  In this case there would be "Global"
+Permission Functional Type containing the log in Permission and a "Warehouse"
+Permission Functional Type for those Permissions and Permission Roles which can
+vary warehouse by warehouse.
+
+Both Permissions and Permission Roles must share a Permission Functional Type
+since the Permission Functional Type establishes the context of applicability
+for both.
+
+This API View allows the application to read and maintain the data according to
+well defined application business rules.  Using this API view for updates to
+data is the preferred method of data maintenance in the course of normal usage.
+
+Only user maintainable values may be maintained via this API.  System created or
+maintained data is not maintainable via this view.  Attempts at invalid data
+maintenance via this API may result in the invalid changes being ignored or may
+raise an exception.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perm_functional_types.id IS
+$DOC$The record's primary key.  The definitive identifier of the record in the
+system.
+
+This value is system maintained and may not be set or changed using this API
+view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perm_functional_types.internal_name IS
+$DOC$A candidate key useful for programmatic references to individual records.
+
+This value is system maintained and may not be set or changed using this API
+view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perm_functional_types.display_name IS
+$DOC$A friendly name and candidate key for the record, suitable for use in user
+interactions.
+
+This value may be updated using this API view.$DOC$;
+
+COMMENT ON
+     COLUMN ms_syst.syst_perm_functional_types.syst_description IS
+$DOC$A system default description describing the Permission Functional Type and its
+uses in the system.
+
+This value is system maintained and may not be set or changed using this API
+view.$DOC$;
+
+COMMENT ON
+     COLUMN ms_syst.syst_perm_functional_types.user_description IS
+$DOC$A custom user defined description which overrides the syst_description value
+where it would otherwise be used.  If this column is set NULL the
+syst_description value will be used.
+
+This value may be updated using this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perm_functional_types.diag_timestamp_created IS
+$DOC$The database server date/time when the transaction which created the record
+started.
+
+This value is system maintained and may not be set or changed using this API
+view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perm_functional_types.diag_role_created IS
+$DOC$The database role which created the record.
+
+This value is system maintained and may not be set or changed using this API
+view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perm_functional_types.diag_timestamp_modified IS
+$DOC$The database server date/time when the transaction which modified the record
+started.  This field will be the same as diag_timestamp_created for inserted
+records.
+
+This value is system maintained and may not be set or changed using this API
+view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perm_functional_types.diag_wallclock_modified IS
+$DOC$The database server date/time at the moment the record was actually modified.
+For long running transactions this time may be significantly later than the
+value of diag_timestamp_modified.
+
+This value is system maintained and may not be set or changed using this API
+view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perm_functional_types.diag_role_modified IS
+$DOC$The database role which modified the record.
+
+This value is system maintained and may not be set or changed using this API
+view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perm_functional_types.diag_row_version IS
+$DOC$The current version of the row.  The value here indicates how many actual
+data changes have been made to the row.  If an update of the row leaves all data
+fields the same, disregarding the updates to the diag_* columns, the row version
+is not updated, nor are any updates made to the other diag_* columns other than
+diag_update_count.
+
+This value is system maintained and may not be set or changed using this API
+view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perm_functional_types.diag_update_count IS
+$DOC$Records the number of times the record has been updated regardless as to if
+the update actually changed any data.  In this way needless or redundant record
+updates can be found.  This row starts at 0 and therefore may be the same as the
+diag_row_version - 1.
+
+This value is system maintained and may not be set or changed using this API
+view.$DOC$;
+CREATE OR REPLACE FUNCTION ms_syst.trig_i_i_syst_perms()
+RETURNS trigger AS
+$BODY$
+
+-- File:        trig_i_i_syst_perms.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_perms/ms_syst/api_views/syst_perms/trig_i_i_syst_perms.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    INSERT INTO ms_syst_data.syst_perms
+        ( internal_name
+        , display_name
+        , perm_functional_type_id
+        , syst_defined
+        , syst_description
+        , user_description
+        , view_scope_options
+        , maint_scope_options
+        , admin_scope_options
+        , ops_scope_options )
+    VALUES
+        ( new.internal_name
+        , new.display_name
+        , new.perm_functional_type_id
+        , FALSE
+        , '(System Description Not Available)'
+        , new.user_description
+        , coalesce(new.view_scope_options, array['unused'])
+        , coalesce(new.maint_scope_options, array['unused'])
+        , coalesce(new.admin_scope_options, array['unused'])
+        , coalesce(new.ops_scope_options, array['unused']) )
+    RETURNING * INTO new;
+
+    RETURN new;
+
+END;
+$BODY$
+    LANGUAGE plpgsql
+    VOLATILE
+    SECURITY DEFINER
+    SET search_path TO ms_syst, pg_temp;
+
+ALTER FUNCTION ms_syst.trig_i_i_syst_perms()
+    OWNER TO <%= ms_owner %>;
+
+REVOKE EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_perms() FROM public;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_perms() TO <%= ms_owner %>;
+
+COMMENT ON FUNCTION ms_syst.trig_i_i_syst_perms() IS
+$DOC$An INSTEAD OF trigger function which applies business rules when using the
+syst_perms API View for INSERT operations.$DOC$;
+CREATE OR REPLACE FUNCTION ms_syst.trig_i_u_syst_perms()
+RETURNS trigger AS
+$BODY$
+
+-- File:        trig_i_u_syst_perms.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_perms/ms_syst/api_views/syst_perms/trig_i_u_syst_perms.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    IF
+        (old.syst_defined AND
+            (new.internal_name != old.internal_name OR
+             new.view_scope_options != old.view_scope_options OR
+             new.maint_scope_options != old.maint_scope_options OR
+             new.admin_scope_options != old.admin_scope_options OR
+             new.ops_scope_options != old.ops_scope_options )) OR
+        new.syst_defined != old.syst_defined OR
+        new.perm_functional_type_id != old.perm_functional_type_id
+    THEN
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'The requested data update included changes to fields disallowed ' ||
+                          'by the business rules of the API View.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst'
+                            ,p_proc_name      => 'trig_i_u_syst_perms'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(new)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+    END IF;
+
+    UPDATE ms_syst_data.syst_perms
+    SET
+        internal_name       = new.internal_name
+      , display_name        = new.display_name
+      , user_description    = new.user_description
+      , view_scope_options  = new.view_scope_options
+      , maint_scope_options = new.maint_scope_options
+      , admin_scope_options = new.admin_scope_options
+      , ops_scope_options   = new.ops_scope_options
+    WHERE id = new.id
+    RETURNING * INTO new;
+
+    RETURN new;
+
+END;
+$BODY$
+    LANGUAGE plpgsql
+    VOLATILE
+    SECURITY DEFINER
+    SET search_path TO ms_syst, pg_temp;
+
+ALTER FUNCTION ms_syst.trig_i_u_syst_perms()
+    OWNER TO <%= ms_owner %>;
+
+REVOKE EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_perms() FROM public;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_perms() TO <%= ms_owner %>;
+
+COMMENT ON FUNCTION ms_syst.trig_i_u_syst_perms() IS
+$DOC$An INSTEAD OF trigger function which applies business rules when using the
+syst_perms API View for UPDATE operations.$DOC$;
+CREATE OR REPLACE FUNCTION ms_syst.trig_i_d_syst_perms()
+RETURNS trigger AS
+$BODY$
+
+-- File:        trig_i_d_syst_perms.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_perms/ms_syst/api_views/syst_perms/trig_i_d_syst_perms.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    IF old.syst_defined THEN
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'You cannot delete a system defined permission using the API Views.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst'
+                            ,p_proc_name      => 'trig_i_d_syst_perms'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(old)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+    END IF;
+
+    DELETE FROM ms_syst_data.syst_perms WHERE id = old.id RETURNING * INTO old;
+
+    RETURN old;
+END;
+$BODY$
+    LANGUAGE plpgsql
+    VOLATILE
+    SECURITY DEFINER
+    SET search_path TO ms_syst, pg_temp;
+
+ALTER FUNCTION ms_syst.trig_i_d_syst_perms()
+    OWNER TO <%= ms_owner %>;
+
+REVOKE EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_perms() FROM public;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_perms() TO <%= ms_owner %>;
+
+COMMENT ON FUNCTION ms_syst.trig_i_d_syst_perms() IS
+$DOC$An INSTEAD OF trigger function which applies business rules when using the
+syst_perms API View for DELETE operations.$DOC$;
+-- File:        syst_perms.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_perms/ms_syst/api_views/syst_perms/syst_perms.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+CREATE VIEW ms_syst.syst_perms AS
+SELECT
+    id
+  , internal_name
+  , display_name
+  , perm_functional_type_id
+  , syst_defined
+  , syst_description
+  , user_description
+  , view_scope_options
+  , maint_scope_options
+  , admin_scope_options
+  , ops_scope_options
+  , diag_timestamp_created
+  , diag_role_created
+  , diag_timestamp_modified
+  , diag_wallclock_modified
+  , diag_role_modified
+  , diag_row_version
+  , diag_update_count
+FROM ms_syst_data.syst_perms;
+
+ALTER VIEW ms_syst.syst_perms OWNER TO <%= ms_owner %>;
+
+REVOKE ALL ON TABLE ms_syst.syst_perms FROM PUBLIC;
+
+CREATE TRIGGER a50_trig_i_i_syst_perms
+    INSTEAD OF INSERT ON ms_syst.syst_perms
+    FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_i_syst_perms();
+
+CREATE TRIGGER a50_trig_i_u_syst_perms
+    INSTEAD OF UPDATE ON ms_syst.syst_perms
+    FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_u_syst_perms();
+
+CREATE TRIGGER a50_trig_i_d_syst_perms
+    INSTEAD OF DELETE ON ms_syst.syst_perms
+    FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_d_syst_perms();
+
+COMMENT ON
+    VIEW ms_syst.syst_perms IS
+$DOC$Defines the available system and application permissions which can be
+assigned to users.  For a more detailed description see the table comment for
+ms_syst_data.syst_perms.
+
+This API View allows the application to read and maintain the data according to
+well defined application business rules.  Using this API view for updates to
+data is the preferred method of data maintenance in the course of normal usage.
+
+Only user maintainable values may be maintained via this API.  System created or
+maintained data is not maintainable via this view.  Attempts at invalid data
+maintenance via this API may result in the invalid changes being ignored or may
+raise an exception.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perms.id IS
+$DOC$The record's primary key.  The definitive identifier of the record in the
+system.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perms.internal_name IS
+$DOC$A candidate key useful for programmatic references to individual records.
+
+Updates to this value are only acceptable if the record's syst_defined value is
+set 'false'.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perms.display_name IS
+$DOC$A friendly name and candidate key for the record, suitable for use in user
+interactions.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perms.perm_functional_type_id IS
+$DOC$Assigns the Permission to a specific Permission Functional Type.
+
+Permissions may only be granted in Permission Roles of the same Permission
+Functional Type.
+
+This value can only be set at record INSERT time using this API view.$DOC$;
+
+COMMENT ON
+     COLUMN ms_syst.syst_perms.syst_defined IS
+$DOC$If true, indicates that the permission was created by the system or system
+installation process.  A false value indicates that the record was user created.
+
+This value is system maintained and read only via this API.$DOC$;
+
+COMMENT ON
+     COLUMN ms_syst.syst_perms.syst_description IS
+$DOC$A system default description describing the permission and its uses in the
+system.
+
+This value is a system defined, read only value.$DOC$;
+
+COMMENT ON
+     COLUMN ms_syst.syst_perms.user_description IS
+$DOC$A custom user defined description which overrides the syst_description value
+where it would otherwise be used.  If this column is set NULL the
+syst_description value will be used.
+
+This field is intended to accommodate end user defined descriptions and is
+maintainable via this view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perms.view_scope_options IS
+$DOC$If applicable, enumerates the available Scopes of viewable data offered by the
+permission.  If not applicable the only option will be 'unused'.
+
+If the Permission is system defined, the data in this column is not maintainable
+via this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perms.maint_scope_options IS
+$DOC$If applicable, enumerates the available Scopes of maintainable data offered by
+the permission.  Maintenance in this context refers to changing existing data.
+If not applicable the only option will be 'unused'.
+
+If the Permission is system defined, the data in this column is not maintainable
+via this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perms.admin_scope_options IS
+$DOC$If applicable, enumerates the available Scopes of data administration offered
+by the permission.  Administration in this context refers to creating or
+deleting records.  If not applicable the only option will be 'unused'.
+
+If the Permission is system defined, the data in this column is not maintainable
+via this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perms.ops_scope_options IS
+$DOC$If applicable, enumerates the available Scopes of a given operation or
+processing capability offered by the permission.  If not applicable the only
+option will be 'unused'.
+
+If the Permission is system defined, the data in this column is not maintainable
+via this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perms.diag_timestamp_created IS
+$DOC$The database server date/time when the transaction which created the record
+started.
+
+This value is system maintained and is read only via this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perms.diag_role_created IS
+$DOC$The database role which created the record.
+
+This value is system maintained and is read only via this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perms.diag_timestamp_modified IS
+$DOC$The database server date/time when the transaction which modified the record
+started.  This field will be the same as diag_timestamp_created for inserted
+records.
+
+This value is system maintained and is read only via this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perms.diag_wallclock_modified IS
+$DOC$The database server date/time at the moment the record was actually modified.
+For long running transactions this time may be significantly later than the
+value of diag_timestamp_modified.
+
+This value is system maintained and is read only via this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perms.diag_role_modified IS
+$DOC$The database role which modified the record.
+
+This value is system maintained and is read only via this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perms.diag_row_version IS
+$DOC$The current version of the row.  The value here indicates how many actual
+data changes have been made to the row.  If an update of the row leaves all data
+fields the same, disregarding the updates to the diag_* columns, the row version
+is not updated, nor are any updates made to the other diag_* columns other than
+diag_update_count.
+
+This value is system maintained and is read only via this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perms.diag_update_count IS
+$DOC$Records the number of times the record has been updated regardless as to if
+the update actually changed any data.  In this way needless or redundant record
+updates can be found.  This row starts at 0 and therefore may be the same as the
+diag_row_version - 1.
+
+This value is system maintained and is read only via this API view.$DOC$;
+CREATE OR REPLACE FUNCTION ms_syst.trig_i_i_syst_perm_roles()
+RETURNS trigger AS
+$BODY$
+
+-- File:        trig_i_i_syst_perm_roles.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_perms/ms_syst/api_views/syst_perm_roles/trig_i_i_syst_perm_roles.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    INSERT INTO ms_syst_data.syst_perm_roles
+        ( internal_name
+        , display_name
+        , perm_functional_type_id
+        , syst_defined
+        , syst_description
+        , user_description )
+    VALUES
+        ( new.internal_name
+        , new.display_name
+        , new.perm_functional_type_id
+        , FALSE
+        , '(System Description Not Available)'
+        , new.user_description )
+    RETURNING * INTO new;
+
+    RETURN new;
+
+END;
+$BODY$
+    LANGUAGE plpgsql
+    VOLATILE
+    SECURITY DEFINER
+    SET search_path TO ms_syst, pg_temp;
+
+ALTER FUNCTION ms_syst.trig_i_i_syst_perm_roles()
+    OWNER TO <%= ms_owner %>;
+
+REVOKE EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_perm_roles() FROM public;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_perm_roles() TO <%= ms_owner %>;
+
+COMMENT ON FUNCTION ms_syst.trig_i_i_syst_perm_roles() IS
+$DOC$An INSTEAD OF trigger function which applies business rules when using the
+syst_perm_roles API View for INSERT operations.$DOC$;
+CREATE OR REPLACE FUNCTION ms_syst.trig_i_u_syst_perm_roles()
+RETURNS trigger AS
+$BODY$
+
+-- File:        trig_i_u_syst_perm_roles.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_perms/ms_syst/api_views/syst_perm_roles/trig_i_u_syst_perm_roles.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    IF
+        (old.syst_defined AND
+        new.internal_name != old.internal_name) OR
+        new.syst_defined != old.syst_defined OR
+        new.perm_functional_type_id != old.perm_functional_type_id
+    THEN
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'The requested data update included changes to fields disallowed ' ||
+                          'by the business rules of the API View.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst'
+                            ,p_proc_name      => 'trig_i_u_syst_perm_roles'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(new)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+    END IF;
+
+    UPDATE ms_syst_data.syst_perm_roles
+    SET
+        internal_name    = new.internal_name
+      , display_name     = new.display_name
+      , user_description = new.user_description
+    WHERE id = new.id
+    RETURNING * INTO new;
+
+    RETURN new;
+
+END;
+$BODY$
+    LANGUAGE plpgsql
+    VOLATILE
+    SECURITY DEFINER
+    SET search_path TO ms_syst, pg_temp;
+
+ALTER FUNCTION ms_syst.trig_i_u_syst_perm_roles()
+    OWNER TO <%= ms_owner %>;
+
+REVOKE EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_perm_roles() FROM public;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_perm_roles() TO <%= ms_owner %>;
+
+COMMENT ON FUNCTION ms_syst.trig_i_u_syst_perm_roles() IS
+$DOC$An INSTEAD OF trigger function which applies business rules when using the
+syst_perm_roles API View for UPDATE operations.$DOC$;
+CREATE OR REPLACE FUNCTION ms_syst.trig_i_d_syst_perm_roles()
+RETURNS trigger AS
+$BODY$
+
+-- File:        trig_i_d_syst_perm_roles.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_perms/ms_syst/api_views/syst_perm_roles/trig_i_d_syst_perm_roles.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    IF old.syst_defined THEN
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'You cannot delete a system defined permission role ' ||
+                          'using the API Views.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst'
+                            ,p_proc_name      => 'trig_i_d_syst_perm_roles'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(old)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+    END IF;
+
+    DELETE FROM ms_syst_data.syst_perm_roles WHERE id = old.id RETURNING * INTO old;
+
+    RETURN old;
+
+END;
+$BODY$
+    LANGUAGE plpgsql
+    VOLATILE
+    SECURITY DEFINER
+    SET search_path TO ms_syst, pg_temp;
+
+ALTER FUNCTION ms_syst.trig_i_d_syst_perm_roles()
+    OWNER TO <%= ms_owner %>;
+
+REVOKE EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_perm_roles() FROM public;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_perm_roles() TO <%= ms_owner %>;
+
+COMMENT ON FUNCTION ms_syst.trig_i_d_syst_perm_roles() IS
+$DOC$An INSTEAD OF trigger function which applies business rules when using the
+syst_perms API View for DELETE operations.$DOC$;
+-- File:        syst_perm_roles.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_perms/ms_syst/api_views/syst_perm_roles/syst_perm_roles.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+CREATE VIEW ms_syst.syst_perm_roles AS
+SELECT
+    id
+  , internal_name
+  , display_name
+  , perm_functional_type_id
+  , syst_defined
+  , syst_description
+  , user_description
+  , diag_timestamp_created
+  , diag_role_created
+  , diag_timestamp_modified
+  , diag_wallclock_modified
+  , diag_role_modified
+  , diag_row_version
+  , diag_update_count
+FROM ms_syst_data.syst_perm_roles;
+
+ALTER VIEW ms_syst.syst_perm_roles OWNER TO <%= ms_owner %>;
+
+REVOKE ALL ON TABLE ms_syst.syst_perm_roles FROM PUBLIC;
+
+CREATE TRIGGER a50_trig_i_i_syst_perm_roles
+    INSTEAD OF INSERT ON ms_syst.syst_perm_roles
+    FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_i_syst_perm_roles();
+
+CREATE TRIGGER a50_trig_i_u_syst_perm_roles
+    INSTEAD OF UPDATE ON ms_syst.syst_perm_roles
+    FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_u_syst_perm_roles();
+
+CREATE TRIGGER a50_trig_i_d_syst_perm_roles
+    INSTEAD OF DELETE ON ms_syst.syst_perm_roles
+    FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_d_syst_perm_roles();
+
+COMMENT ON
+    VIEW ms_syst.syst_perm_roles IS
+$DOC$Defines collections of permissions which are then assignable to users.
+
+This API View allows the application to read and maintain the data according to
+well defined application business rules.  Using this API view for updates to
+data is the preferred method of data maintenance in the course of normal usage.
+
+Only user maintainable values may be maintained via this API.  System created or
+maintained data is not maintainable via this view.  Attempts at invalid data
+maintenance via this API may result in the invalid changes being ignored or may
+raise an exception.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perm_roles.id IS
+$DOC$The record's primary key.  The definitive identifier of the record in the
+system.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perm_roles.internal_name IS
+$DOC$A candidate key useful for programmatic references to individual records.
+
+If the record's syst_defined column is set true, then this column will not be
+updatable via this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perm_roles.display_name IS
+$DOC$A friendly name and candidate key for the record, suitable for use in user
+interactions$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perm_roles.perm_functional_type_id IS
+$DOC$Assigns the Permission Role to a specific Permission Functional Type.
+
+Only Permissions with the same Permission Functional Type may be granted by the
+Permission Role.
+
+This value may only be set at record INSERT time using this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perm_roles.syst_defined IS
+$DOC$If true, indicates that the permission role was created by the system or system
+installation process.  A false value indicates that the record was user created.
+
+This column may not be set via this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perm_roles.syst_description IS
+$DOC$A system default description describing the permission role and its uses in the
+system.
+
+This value may not be set via this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perm_roles.user_description IS
+$DOC$A custom user defined description which overrides the syst_description value
+where it would otherwise be used.  If this column is set NULL the
+syst_description value will be used.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perm_roles.diag_timestamp_created IS
+$DOC$The database server date/time when the transaction which created the record
+started.
+
+This value is system maintained and read only in this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perm_roles.diag_role_created IS
+$DOC$The database role which created the record.
+
+This value is system maintained and read only in this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perm_roles.diag_timestamp_modified IS
+$DOC$The database server date/time when the transaction which modified the record
+started.  This field will be the same as diag_timestamp_created for inserted
+records.
+
+This value is system maintained and read only in this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perm_roles.diag_wallclock_modified IS
+$DOC$The database server date/time at the moment the record was actually modified.
+For long running transactions this time may be significantly later than the
+value of diag_timestamp_modified.
+
+This value is system maintained and read only in this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perm_roles.diag_role_modified IS
+$DOC$The database role which modified the record.
+
+This value is system maintained and read only in this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perm_roles.diag_row_version IS
+$DOC$The current version of the row.  The value here indicates how many actual
+data changes have been made to the row.  If an update of the row leaves all data
+fields the same, disregarding the updates to the diag_* columns, the row version
+is not updated, nor are any updates made to the other diag_* columns other than
+diag_update_count.
+
+This value is system maintained and read only in this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perm_roles.diag_update_count IS
+$DOC$Records the number of times the record has been updated regardless as to if
+the update actually changed any data.  In this way needless or redundant record
+updates can be found.  This row starts at 0 and therefore may be the same as the
+diag_row_version - 1.
+
+This value is system maintained and read only in this API view.$DOC$;
+CREATE OR REPLACE FUNCTION ms_syst.trig_i_i_syst_perm_role_grants()
+RETURNS trigger AS
+$BODY$
+
+-- File:        trig_i_i_syst_perm_role_grants.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_perms/ms_syst/api_views/syst_perm_role_grants/trig_i_i_syst_perm_role_grants.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    IF
+        ( SELECT syst_defined
+          FROM ms_syst_data.syst_perm_roles
+          WHERE id = new.perm_role_id )
+    THEN
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'You may not create new permission role grant ' ||
+                          'records for system defined permission roles ' ||
+                          'using this API view.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst'
+                            ,p_proc_name      => 'trig_i_i_syst_perm_role_grants'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(new)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+    END IF;
+
+    INSERT INTO ms_syst_data.syst_perm_role_grants
+        ( perm_role_id
+        , perm_id
+        , view_scope
+        , maint_scope
+        , admin_scope
+        , ops_scope )
+    VALUES
+        ( new.perm_role_id
+        , new.perm_id
+        , new.view_scope
+        , new.maint_scope
+        , new.admin_scope
+        , new.ops_scope )
+    RETURNING * INTO new;
+
+    RETURN new;
+
+END;
+$BODY$
+    LANGUAGE plpgsql
+    VOLATILE
+    SECURITY DEFINER
+    SET search_path TO ms_syst, pg_temp;
+
+ALTER FUNCTION ms_syst.trig_i_i_syst_perm_role_grants()
+    OWNER TO <%= ms_owner %>;
+
+REVOKE EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_perm_role_grants() FROM public;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_perm_role_grants() TO <%= ms_owner %>;
+
+COMMENT ON FUNCTION ms_syst.trig_i_i_syst_perm_role_grants() IS
+$DOC$An INSTEAD OF trigger function which applies business rules when using the
+syst_perm_role_grants API View for INSERT operations.$DOC$;
+CREATE OR REPLACE FUNCTION ms_syst.trig_i_u_syst_perm_role_grants()
+RETURNS trigger AS
+$BODY$
+
+-- File:        trig_i_u_syst_perm_role_grants.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_perms/ms_syst/api_views/syst_perm_role_grants/trig_i_u_syst_perm_role_grants.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    IF
+        ( SELECT syst_defined
+          FROM ms_syst_data.syst_perm_roles
+          WHERE id = new.perm_role_id ) OR
+        new.perm_role_id != old.perm_role_id OR
+        new.perm_id != old.perm_id
+    THEN
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'The requested data update included changes to fields disallowed ' ||
+                          'by the business rules of the API View.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst'
+                            ,p_proc_name      => 'trig_i_u_syst_perm_role_grants'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(new)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+    END IF;
+
+    UPDATE ms_syst_data.syst_perm_role_grants
+    SET
+        view_scope  = new.view_scope
+      , maint_scope = new.maint_scope
+      , admin_scope = new.admin_scope
+      , ops_scope   = new.ops_scope
+    WHERE id = new.id
+    RETURNING * INTO new;
+
+    RETURN new;
+
+END;
+$BODY$
+    LANGUAGE plpgsql
+    VOLATILE
+    SECURITY DEFINER
+    SET search_path TO ms_syst, pg_temp;
+
+ALTER FUNCTION ms_syst.trig_i_u_syst_perm_role_grants()
+    OWNER TO <%= ms_owner %>;
+
+REVOKE EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_perm_role_grants() FROM public;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_perm_role_grants() TO <%= ms_owner %>;
+
+COMMENT ON FUNCTION ms_syst.trig_i_u_syst_perm_role_grants() IS
+$DOC$An INSTEAD OF trigger function which applies business rules when using the
+syst_perm_role_grants API View for UPDATE operations.$DOC$;
+CREATE OR REPLACE FUNCTION ms_syst.trig_i_d_syst_perm_role_grants()
+RETURNS trigger AS
+$BODY$
+
+-- File:        trig_i_d_syst_perm_role_grants.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_perms/ms_syst/api_views/syst_perm_role_grants/trig_i_d_syst_perm_role_grants.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    IF
+        ( SELECT syst_defined
+          FROM ms_syst_data.syst_perm_roles
+          WHERE id = old.perm_role_id )
+    THEN
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'You cannot delete a system defined permission role ' ||
+                          'grant using the API Views.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst'
+                            ,p_proc_name      => 'trig_i_d_syst_perm_role_grants'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(old)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+    END IF;
+
+    DELETE FROM ms_syst_data.syst_perm_role_grants WHERE id = old.id RETURNING * INTO old;
+
+    RETURN old;
+
+END;
+$BODY$
+    LANGUAGE plpgsql
+    VOLATILE
+    SECURITY DEFINER
+    SET search_path TO ms_syst, pg_temp;
+
+ALTER FUNCTION ms_syst.trig_i_d_syst_perm_role_grants()
+    OWNER TO <%= ms_owner %>;
+
+REVOKE EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_perm_role_grants() FROM public;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_perm_role_grants() TO <%= ms_owner %>;
+
+COMMENT ON FUNCTION ms_syst.trig_i_d_syst_perm_role_grants() IS
+$DOC$An INSTEAD OF trigger function which applies business rules when using the
+syst_perm_role_grants API View for DELETE operations.$DOC$;
+-- File:        syst_perm_role_grants.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_perms/ms_syst/api_views/syst_perm_role_grants/syst_perm_role_grants.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+CREATE VIEW ms_syst.syst_perm_role_grants AS
+SELECT
+    id
+  , perm_role_id
+  , perm_id
+  , view_scope
+  , maint_scope
+  , admin_scope
+  , ops_scope
+  , diag_timestamp_created
+  , diag_role_created
+  , diag_timestamp_modified
+  , diag_wallclock_modified
+  , diag_role_modified
+  , diag_row_version
+  , diag_update_count
+FROM ms_syst_data.syst_perm_role_grants;
+
+ALTER VIEW ms_syst.syst_perm_role_grants OWNER TO <%= ms_owner %>;
+
+REVOKE ALL ON TABLE ms_syst.syst_perm_role_grants FROM PUBLIC;
+
+CREATE TRIGGER a50_trig_i_i_syst_perm_role_grants
+    INSTEAD OF INSERT ON ms_syst.syst_perm_role_grants
+    FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_i_syst_perm_role_grants();
+
+CREATE TRIGGER a50_trig_i_u_syst_perm_role_grants
+    INSTEAD OF UPDATE ON ms_syst.syst_perm_role_grants
+    FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_u_syst_perm_role_grants();
+
+CREATE TRIGGER a50_trig_i_d_syst_perm_role_grants
+    INSTEAD OF DELETE ON ms_syst.syst_perm_role_grants
+    FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_d_syst_perm_role_grants();
+
+COMMENT ON
+    VIEW ms_syst.syst_perm_role_grants IS
+$DOC$Establishes the individual permissions which are granted by the given permission
+role.
+
+Note that the absence of an explicit permission grant to a role is an implicit
+denial of that permission.
+
+This API View allows the application to read and maintain the data according to
+well defined application business rules.  Using this API view for updates to
+data is the preferred method of data maintenance in the course of normal usage.
+
+Only user maintainable values may be maintained via this API.  System created or
+maintained data is not maintainable via this view.  Attempts at invalid data
+maintenance via this API may result in the invalid changes being ignored or may
+raise an exception.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perm_role_grants.id IS
+$DOC$The record's primary key.  The definitive identifier of the record in the
+system.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perm_role_grants.perm_role_id IS
+$DOC$Identifies the role to which the permission grant is being made.  This
+value is a reference to a syst_perm_roles record which is considered the parent
+of this record.
+
+This value is set at record creation time and may not be updated later via this
+API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perm_role_grants.perm_id IS
+$DOC$The permission being granted by the role.
+
+This value is set at record creation time and may not be updated later via this
+API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perm_role_grants.view_scope IS
+$DOC$Assigns the Scope of the Permission's View Right being granted by the Role.
+
+The valid Scope options are defined by the Permission record.
+
+If the parent Permission Role record is a system defined record, this value may
+not be changed using this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perm_role_grants.maint_scope IS
+$DOC$Assigns the Scope of the Permission's Maintenance Right being granted by the
+Role.
+
+The valid Scope options are defined by the Permission record.
+
+If the parent Permission Role record is a system defined record, this value may
+not be changed using this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perm_role_grants.admin_scope IS
+$DOC$Assigns the Scope of the Permission's Data Administration Right being granted by
+the Role.
+
+The valid Scope options are defined by the Permission record.
+
+If the parent Permission Role record is a system defined record, this value may
+not be changed using this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perm_role_grants.ops_scope IS
+$DOC$Assigns the Scope of the Permission's Operations Right being granted by the
+Role.
+
+The valid Scope options are defined by the Permission record.
+
+If the parent Permission Role record is a system defined record, this value may
+not be changed using this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perm_role_grants.diag_timestamp_created IS
+$DOC$The database server date/time when the transaction which created the record
+started.
+
+This value is system maintained and is read only via this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perm_role_grants.diag_role_created IS
+$DOC$The database role which created the record.
+
+This value is system maintained and is read only via this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perm_role_grants.diag_timestamp_modified IS
+$DOC$The database server date/time when the transaction which modified the record
+started.  This field will be the same as diag_timestamp_created for inserted
+records.
+
+This value is system maintained and is read only via this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perm_role_grants.diag_wallclock_modified IS
+$DOC$The database server date/time at the moment the record was actually modified.
+For long running transactions this time may be significantly later than the
+value of diag_timestamp_modified.
+
+This value is system maintained and is read only via this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perm_role_grants.diag_role_modified IS
+$DOC$The database role which modified the record.
+
+This value is system maintained and is read only via this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perm_role_grants.diag_row_version IS
+$DOC$The current version of the row.  The value here indicates how many actual
+data changes have been made to the row.  If an update of the row leaves all data
+fields the same, disregarding the updates to the diag_* columns, the row version
+is not updated, nor are any updates made to the other diag_* columns other than
+diag_update_count.
+
+This value is system maintained and is read only via this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_perm_role_grants.diag_update_count IS
+$DOC$Records the number of times the record has been updated regardless as to if
+the update actually changed any data.  In this way needless or redundant record
+updates can be found.  This row starts at 0 and therefore may be the same as the
+diag_row_version - 1.
+
+This value is system maintained and is read only via this API view.$DOC$;
+-- File:        syst_perm_functional_types.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_mcp_perms/seed_data/syst_perm_functional_types.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+INSERT INTO ms_syst_data.syst_perm_functional_types
+    ( internal_name, display_name, syst_description )
+VALUES
+    ( 'mcp_access_accounts'
+    , 'MCP Access Accounts'
+    , 'Permissioning for MCP functionality which may be granted to MCP ' ||
+      'Access Accounts.' );
+-- File:        syst_perms.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_mcp_perms/seed_data/syst_perms.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+INSERT INTO ms_syst_data.syst_perms
+    ( internal_name
+    , display_name
+    , perm_functional_type_id
+    , syst_defined
+    , syst_description
+    , view_scope_options
+    , maint_scope_options
+    , admin_scope_options
+    , ops_scope_options )
+VALUES
+    ( 'global_login'
+    , 'Global Login'
+    , ( SELECT id FROM ms_syst_data.syst_perm_functional_types WHERE internal_name = 'mcp_access_accounts' )
+    , TRUE
+    , 'Allows Access Accounts to log in without specifying a specific Instance.  Access ' ||
+        'Account holders may log into the system and then select an Instance from the list ' ||
+        'of Instances to which they have access.'
+    , ARRAY ['unused']::text[]
+    , ARRAY ['unused']::text[]
+    , ARRAY ['unused']::text[]
+    , ARRAY ['all']::text[] )
+  ,
+    ( 'mcp_login'
+    , 'MCP Login'
+    , ( SELECT id FROM ms_syst_data.syst_perm_functional_types WHERE internal_name = 'mcp_access_accounts' )
+    , TRUE
+    , 'Grants an Access Account visibility and access to MCP management functionality.'
+    , ARRAY ['unused']::text[]
+    , ARRAY ['unused']::text[]
+    , ARRAY ['unused']::text[]
+    , ARRAY ['all']::text[] );
+-- File:        syst_perm_roles.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_mcp_perms/seed_data/syst_perm_roles.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+INSERT INTO ms_syst_data.syst_perm_roles
+    ( internal_name
+    , display_name
+    , perm_functional_type_id
+    , syst_defined
+    , syst_description )
+VALUES
+    ( 'global_login'
+    , 'Global Login'
+    , ( SELECT id FROM ms_syst_data.syst_perm_functional_types WHERE internal_name = 'mcp_access_accounts' )
+    , TRUE
+    , 'Allows Access Accounts to log in without specifying a specific Instance.  Access ' ||
+        'Account holders may log into the system and then select an Instance from the list ' ||
+        'of Instances to which they have access.' )
+  ,
+    ( 'mcp_login'
+    , 'MCP Login'
+    , ( SELECT id FROM ms_syst_data.syst_perm_functional_types WHERE internal_name = 'mcp_access_accounts' )
+    , TRUE
+    , 'Grants an Access Account visibility and access to MCP management functionality.' );
+-- File:        syst_perm_role_grants.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_mcp_perms/seed_data/syst_perm_role_grants.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+INSERT INTO ms_syst_data.syst_perm_role_grants
+    ( perm_role_id
+    , perm_id
+    , view_scope
+    , maint_scope
+    , admin_scope
+    , ops_scope )
+VALUES
+    ( ( SELECT id FROM ms_syst_data.syst_perm_roles WHERE internal_name = 'global_login' )
+    , ( SELECT id FROM ms_syst_data.syst_perms WHERE internal_name = 'global_login' )
+    , 'unused'
+    , 'unused'
+    , 'unused'
+    , 'all' )
+  ,
+    ( ( SELECT id FROM ms_syst_data.syst_perm_roles WHERE internal_name = 'mcp_login' )
+    , ( SELECT id FROM ms_syst_data.syst_perms WHERE internal_name = 'mcp_login' )
+    , 'unused'
+    , 'unused'
+    , 'unused'
+    , 'all' );
+-- File:        syst_access_account_perm_role_assigns.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_mcp_perms/ms_syst_data/syst_access_account_perm_role_assigns/syst_access_account_perm_role_assigns.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+CREATE TABLE ms_syst_data.syst_access_account_perm_role_assigns
+(
+     id
+        uuid
+        NOT NULL DEFAULT uuid_generate_v1( )
+        CONSTRAINT syst_access_account_perm_role_assigns_pk PRIMARY KEY
+    ,access_account_id
+        uuid
+        NOT NULL
+        CONSTRAINT syst_access_account_perm_role_assigns_access_account_fk
+            REFERENCES ms_syst_data.syst_access_accounts ( id )
+            ON DELETE CASCADE
+    ,perm_role_id
+        uuid
+        NOT NULL
+        CONSTRAINT syst_access_account_perm_role_assigns_perm_role_fk
+            REFERENCES ms_syst_data.syst_perm_roles ( id )
+            ON DELETE CASCADE
+    ,CONSTRAINT syst_access_account_perm_role_assigns_udx
+        UNIQUE ( access_account_id, perm_role_id )
+    ,diag_timestamp_created
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_role_created
+        text
+    ,diag_timestamp_modified
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_wallclock_modified
+        timestamptz
+        NOT NULL DEFAULT clock_timestamp( )
+    ,diag_role_modified
+        text
+    ,diag_row_version
+        bigint
+        NOT NULL DEFAULT 1
+    ,diag_update_count
+        bigint
+        NOT NULL DEFAULT 0
+);
+
+ALTER TABLE ms_syst_data.syst_access_account_perm_role_assigns OWNER TO <%= ms_owner %>;
+
+REVOKE ALL ON TABLE ms_syst_data.syst_access_account_perm_role_assigns FROM public;
+GRANT ALL ON TABLE ms_syst_data.syst_access_account_perm_role_assigns TO <%= ms_owner %>;
+
+CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
+    BEFORE INSERT OR UPDATE ON ms_syst_data.syst_access_account_perm_role_assigns
+    FOR EACH ROW EXECUTE PROCEDURE ms_syst_priv.trig_b_iu_set_diagnostic_columns();
+
+COMMENT ON
+    TABLE ms_syst_data.syst_access_account_perm_role_assigns IS
+$DOC$Assigns Permission Roles to Access Accounts providing an MCP authentication
+mechanism.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_access_account_perm_role_assigns.id IS
+$DOC$The record's primary key.  The definitive identifier of the record in the
+system.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_access_account_perm_role_assigns.access_account_id IS
+$DOC$References the Access Account to which the Permission Role is being assigned.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_access_account_perm_role_assigns.perm_role_id IS
+$DOC$A reference to the Permission Role being assigned to the Access Account.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_access_account_perm_role_assigns.diag_timestamp_created IS
+$DOC$The database server date/time when the transaction which created the record
+started.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_access_account_perm_role_assigns.diag_role_created IS
+$DOC$The database role which created the record.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_access_account_perm_role_assigns.diag_timestamp_modified IS
+$DOC$The database server date/time when the transaction which modified the record
+started.  This field will be the same as diag_timestamp_created for inserted
+records.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_access_account_perm_role_assigns.diag_wallclock_modified IS
+$DOC$The database server date/time at the moment the record was actually modified.
+For long running transactions this time may be significantly later than the
+value of diag_timestamp_modified.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_access_account_perm_role_assigns.diag_role_modified IS
+$DOC$The database role which modified the record.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_access_account_perm_role_assigns.diag_row_version IS
+$DOC$The current version of the row.  The value here indicates how many actual
+data changes have been made to the row.  If an update of the row leaves all data
+fields the same, disregarding the updates to the diag_* columns, the row version
+is not updated, nor are any updates made to the other diag_* columns other than
+diag_update_count.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_access_account_perm_role_assigns.diag_update_count IS
+$DOC$Records the number of times the record has been updated regardless as to if
+the update actually changed any data.  In this way needless or redundant record
+updates can be found.  This row starts at 0 and therefore may be the same as the
+diag_row_version - 1.$DOC$;
+CREATE OR REPLACE FUNCTION ms_syst.trig_i_i_syst_access_account_perm_role_assigns()
+RETURNS trigger AS
+$BODY$
+
+-- File:        trig_i_i_syst_access_account_perm_role_assigns.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_mcp_perms/ms_syst/api_views/syst_access_account_perm_role_assigns/trig_i_i_syst_access_account_perm_role_assigns.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    INSERT INTO ms_syst_data.syst_access_account_perm_role_assigns
+        ( access_account_id, perm_role_id )
+    VALUES
+        ( new.access_account_id, new.perm_role_id )
+    RETURNING * INTO new;
+
+    RETURN new;
+
+END;
+$BODY$
+    LANGUAGE plpgsql
+    VOLATILE
+    SECURITY DEFINER
+    SET search_path TO ms_syst, pg_temp;
+
+ALTER FUNCTION ms_syst.trig_i_i_syst_access_account_perm_role_assigns()
+    OWNER TO <%= ms_owner %>;
+
+REVOKE EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_access_account_perm_role_assigns() FROM public;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_access_account_perm_role_assigns() TO <%= ms_owner %>;
+
+COMMENT ON FUNCTION ms_syst.trig_i_i_syst_access_account_perm_role_assigns() IS
+$DOC$An INSTEAD OF trigger function which applies business rules when using the
+syst_access_account_perm_role_assigns API View for INSERT operations.$DOC$;
+CREATE OR REPLACE FUNCTION ms_syst.trig_i_u_syst_access_account_perm_role_assigns()
+RETURNS trigger AS
+$BODY$
+
+-- File:        trig_i_u_syst_access_account_perm_role_assigns.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_mcp_perms/ms_syst/api_views/syst_access_account_perm_role_assigns/trig_i_u_syst_access_account_perm_role_assigns.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    RAISE EXCEPTION
+        USING
+            MESSAGE = 'Data updates are not supported via this API view.  ' ||
+                      'Only INSERTs and DELETEs are allowed.',
+            DETAIL = ms_syst_priv.get_exception_details(
+                         p_proc_schema    => 'ms_syst'
+                        ,p_proc_name      => 'trig_i_u_syst_perms'
+                        ,p_exception_name => 'invalid_api_view_call'
+                        ,p_errcode        => 'PM008'
+                        ,p_param_data     => to_jsonb(new)
+                        ,p_context_data   =>
+                            jsonb_build_object(
+                                 'tg_op',         tg_op
+                                ,'tg_when',       tg_when
+                                ,'tg_schema',     tg_table_schema
+                                ,'tg_table_name', tg_table_name)),
+            ERRCODE = 'PM008',
+            SCHEMA = tg_table_schema,
+            TABLE = tg_table_name;
+
+END;
+$BODY$
+    LANGUAGE plpgsql
+    VOLATILE
+    SECURITY DEFINER
+    SET search_path TO ms_syst, pg_temp;
+
+ALTER FUNCTION ms_syst.trig_i_u_syst_access_account_perm_role_assigns()
+    OWNER TO <%= ms_owner %>;
+
+REVOKE EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_access_account_perm_role_assigns() FROM public;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_access_account_perm_role_assigns() TO <%= ms_owner %>;
+
+COMMENT ON FUNCTION ms_syst.trig_i_u_syst_access_account_perm_role_assigns() IS
+$DOC$An INSTEAD OF trigger function which applies business rules when using the
+syst_access_account_perm_role_assigns API View for UPDATE operations.$DOC$;
+CREATE OR REPLACE FUNCTION ms_syst.trig_i_d_syst_access_account_perm_role_assigns()
+RETURNS trigger AS
+$BODY$
+
+-- File:        trig_i_d_syst_access_account_perm_role_assigns.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_mcp_perms/ms_syst/api_views/syst_access_account_perm_role_assigns/trig_i_d_syst_access_account_perm_role_assigns.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    DELETE FROM ms_syst_data.syst_access_account_perm_role_assigns
+    WHERE id = old.id
+    RETURNING * INTO old;
+
+    RETURN old;
+
+END;
+$BODY$
+    LANGUAGE plpgsql
+    VOLATILE
+    SECURITY DEFINER
+    SET search_path TO ms_syst, pg_temp;
+
+ALTER FUNCTION ms_syst.trig_i_d_syst_access_account_perm_role_assigns()
+    OWNER TO <%= ms_owner %>;
+
+REVOKE EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_access_account_perm_role_assigns() FROM public;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_access_account_perm_role_assigns() TO <%= ms_owner %>;
+
+COMMENT ON FUNCTION ms_syst.trig_i_d_syst_access_account_perm_role_assigns() IS
+$DOC$An INSTEAD OF trigger function which applies business rules when using the
+syst_access_account_perm_role_assigns API View for DELETE operations.$DOC$;
+-- File:        syst_access_account_perm_role_assigns.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_mcp_perms/ms_syst/api_views/syst_access_account_perm_role_assigns/syst_access_account_perm_role_assigns.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+CREATE VIEW ms_syst.syst_access_account_perm_role_assigns AS
+    SELECT
+          id
+        , access_account_id
+        , perm_role_id
+        , diag_timestamp_created
+        , diag_role_created
+        , diag_timestamp_modified
+        , diag_wallclock_modified
+        , diag_role_modified
+        , diag_row_version
+        , diag_update_count
+    FROM ms_syst_data.syst_access_account_perm_role_assigns;
+
+ALTER VIEW ms_syst.syst_access_account_perm_role_assigns OWNER TO <%= ms_owner %>;
+
+REVOKE ALL ON TABLE ms_syst.syst_access_account_perm_role_assigns FROM PUBLIC;
+
+CREATE TRIGGER a50_trig_i_i_syst_access_account_perm_role_assigns
+    INSTEAD OF INSERT ON ms_syst.syst_access_account_perm_role_assigns
+    FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_i_syst_access_account_perm_role_assigns();
+
+CREATE TRIGGER a50_trig_i_u_syst_access_account_perm_role_assigns
+    INSTEAD OF UPDATE ON ms_syst.syst_access_account_perm_role_assigns
+    FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_u_syst_access_account_perm_role_assigns();
+
+CREATE TRIGGER a50_trig_i_d_syst_access_account_perm_role_assigns
+    INSTEAD OF DELETE ON ms_syst.syst_access_account_perm_role_assigns
+    FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_d_syst_access_account_perm_role_assigns();
+
+COMMENT ON
+    VIEW ms_syst.syst_access_account_perm_role_assigns IS
+$DOC$Assigns Permission Roles to Access Accounts providing an MCP authentication
+mechanism.
+
+This API View allows the application to read and maintain the data according to
+well defined application business rules.  Using this API view for updates to
+data is the preferred method of data maintenance in the course of normal usage.
+
+Only user maintainable values may be maintained via this API.  System created or
+maintained data is not maintainable via this view.  Attempts at invalid data
+maintenance via this API may result in the invalid changes being ignored or may
+raise an exception.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_access_account_perm_role_assigns.id IS
+$DOC$The record's primary key.  The definitive identifier of the record in the
+system.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_access_account_perm_role_assigns.access_account_id IS
+$DOC$References the Access Account to which the Permission Role is being assigned.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_access_account_perm_role_assigns.perm_role_id IS
+$DOC$A reference to the Permission Role being assigned to the Access Account.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_access_account_perm_role_assigns.diag_timestamp_created IS
+$DOC$The database server date/time when the transaction which created the record
+started.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_access_account_perm_role_assigns.diag_role_created IS
+$DOC$The database role which created the record.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_access_account_perm_role_assigns.diag_timestamp_modified IS
+$DOC$The database server date/time when the transaction which modified the record
+started.  This field will be the same as diag_timestamp_created for inserted
+records.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_access_account_perm_role_assigns.diag_wallclock_modified IS
+$DOC$The database server date/time at the moment the record was actually modified.
+For long running transactions this time may be significantly later than the
+value of diag_timestamp_modified.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_access_account_perm_role_assigns.diag_role_modified IS
+$DOC$The database role which modified the record.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_access_account_perm_role_assigns.diag_row_version IS
+$DOC$The current version of the row.  The value here indicates how many actual
+data changes have been made to the row.  If an update of the row leaves all data
+fields the same, disregarding the updates to the diag_* columns, the row version
+is not updated, nor are any updates made to the other diag_* columns other than
+diag_update_count.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_access_account_perm_role_assigns.diag_update_count IS
+$DOC$Records the number of times the record has been updated regardless as to if
+the update actually changed any data.  In this way needless or redundant record
+updates can be found.  This row starts at 0 and therefore may be the same as the
+diag_row_version - 1.$DOC$;
 -- File:        initial_privileges.eex.sql
--- Location:    musebms/database/application/msapp_platform/privileges/initial_privileges.eex.sql
+-- Location:    musebms/database/application/msapp_platform/mssub_mcp/privileges/initial_privileges.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -15492,7 +18462,7 @@ This value is read only from this API view.$DOC$;
 
 GRANT USAGE ON SCHEMA ms_syst TO <%= ms_appusr %>;
 -- File:        mscmp_syst_settings.eex.sql
--- Location:    musebms/database/application/msapp_platform/privileges/mscmp_syst_settings.eex.sql
+-- Location:    musebms/database/application/msapp_platform/mssub_mcp/privileges/mscmp_syst_settings.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -15508,7 +18478,7 @@ GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_settings() TO <%= ms_appusr %>;
 GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_settings() TO <%= ms_appusr %>;
 GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_settings() TO <%= ms_appusr %>;
 -- File:        mscmp_syst_enums.eex.sql
--- Location:    musebms/database/application/msapp_platform/privileges/mscmp_syst_enums.eex.sql
+-- Location:    musebms/database/application/msapp_platform/mssub_mcp/privileges/mscmp_syst_enums.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -15540,7 +18510,7 @@ GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_enum_items() TO <%= ms_appusr %>
 GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_enum_items() TO <%= ms_appusr %>;
 GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_enum_items() TO <%= ms_appusr %>;
 -- File:        mscmp_syst_features.eex.sql
--- Location:    musebms/database/application/msapp_platform/privileges/mscmp_syst_features.eex.sql
+-- Location:    musebms/database/application/msapp_platform/mssub_mcp/privileges/mscmp_syst_features.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -15551,18 +18521,12 @@ GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_enum_items() TO <%= ms_appusr %>
 --
 -- muse.information@musesystems.com :: https://muse.systems
 
---
--- MscmpSystFeatures
---
-
--- syst_feature_setting_assigns
-
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE ms_syst.syst_feature_setting_assigns TO <%= ms_appusr %>;
 GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_feature_setting_assigns() TO <%= ms_appusr %>;
 GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_feature_setting_assigns() TO <%= ms_appusr %>;
 GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_feature_setting_assigns() TO <%= ms_appusr %>;
 -- File:        mscmp_syst_instance.eex.sql
--- Location:    musebms/database/application/msapp_platform/privileges/mscmp_syst_instance.eex.sql
+-- Location:    musebms/database/application/msapp_platform/mssub_mcp/privileges/mscmp_syst_instance.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -15626,7 +18590,7 @@ GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_instance_contexts() TO <%= ms_ap
 GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_instance_contexts() TO <%= ms_appusr %>;
 GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_instance_contexts() TO <%= ms_appusr %>;
 -- File:        mscmp_syst_authn.eex.sql
--- Location:    musebms/database/application/msapp_platform/privileges/mscmp_syst_authn.eex.sql
+-- Location:    musebms/database/application/msapp_platform/mssub_mcp/privileges/mscmp_syst_authn.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -15732,8 +18696,77 @@ GRANT EXECUTE
                                               , p_instance_id       uuid
                                               , p_instance_owner_id uuid )
   TO <%= ms_appusr %>;
+-- File:        mscmp_syst_perms.eex.sql
+-- Location:    musebms/database/platform/msapp_platform/mssub_mcp/privileges/mscmp_syst_perms.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+--
+-- MscmpSystPerms
+--
+
+-- syst_perm_functional_types
+
+GRANT SELECT, UPDATE ON TABLE ms_syst.syst_perm_functional_types TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_perm_functional_types() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_perm_functional_types() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_perm_functional_types() TO <%= ms_appusr %>;
+
+-- syst_perms
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE ms_syst.syst_perms TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_perms() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_perms() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_perms() TO <%= ms_appusr %>;
+
+-- syst_perm_roles
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE ms_syst.syst_perm_roles TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_perm_roles() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_perm_roles() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_perm_roles() TO <%= ms_appusr %>;
+
+-- syst_perm_role_grants
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE ms_syst.syst_perm_role_grants TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_perm_role_grants() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_perm_role_grants() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_perm_role_grants() TO <%= ms_appusr %>;
+
+-- API Functions
+
+GRANT EXECUTE ON FUNCTION ms_syst.get_greatest_rights_scope(text[]) TO <%= ms_appusr %>;
+-- File:        mscmp_syst_mcp_perms.eex.sql
+-- Location:    musebms/database/platform/msapp_platform/mssub_mcp/privileges/mscmp_syst_mcp_perms.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+--
+-- MscmpSystMcpPerms
+--
+
+-- syst_access_account_perm_role_assigns
+
+GRANT SELECT, INSERT, DELETE ON TABLE ms_syst.syst_access_account_perm_role_assigns TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_access_account_perm_role_assigns() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_access_account_perm_role_assigns() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_access_account_perm_role_assigns() TO <%= ms_appusr %>;
 -- File:        applications.eex.sql
--- Location:    musebms/database/application/msapp_platform/gen_seed_data/applications.eex.sql
+-- Location:    musebms/database/application/msapp_platform/mssub_mcp/seed_data/applications.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -15792,7 +18825,7 @@ $INIT_PLATFORM_APPLICATIONS$
     END ;
 $INIT_PLATFORM_APPLICATIONS$;
 -- File:        enum_instance_types.eex.sql
--- Location:    musebms/database/subsystems/mssub_mcp/gen_seed_data/enum_instance_types.eex.sql
+-- Location:    musebms/database/application/msapp_platform/mssub_mcp/seed_data/enum_instance_types.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -15826,7 +18859,7 @@ VALUES
     , 'A simple type representing the most typical kind of Instance.'
     , 1 );
 -- File:        enum_platform_states.eex.sql
--- Location:    musebms/database/application/msapp_platform/gen_seed_data/enum_platform_states.eex.sql
+-- Location:    musebms/database/application/msapp_platform/mssub_mcp/seed_data/enum_platform_states.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -15896,7 +18929,7 @@ $INIT_ENUM_PLATFORM_STATES$
     END;
 $INIT_ENUM_PLATFORM_STATES$;
 -- File:        settings.eex.sql
--- Location:    musebms/database/application/msapp_platform/gen_seed_data/settings.eex.sql
+-- Location:    musebms/database/application/msapp_platform/mssub_mcp/seed_data/settings.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -15921,7 +18954,7 @@ VALUES
       'Valid values are drawn from the system enumeration "platform_states".'
     , (SELECT id FROM ms_syst_data.syst_enum_items WHERE internal_name = 'platform_states_sysdef_bootstrapping') );
 -- File:        feature_mapping.eex.sql
--- Location:    musebms/database/application/msmcp/gen_seed_data/feature_mapping.eex.sql
+-- Location:    musebms/database/application/msapp_platform/mssub_mcp/seed_data/feature_mapping.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -15930,7 +18963,7 @@ VALUES
 -- See the LICENSE file in the project root for license terms and conditions.
 -- See the NOTICE file in the project root for copyright ownership information.
 --
--- muse.information@musesystems.com  :: https://muse.systems
+-- muse.information@musesystems.com :: https://muse.systems
 
 INSERT INTO ms_syst_data.syst_feature_map_levels
     ( internal_name
