@@ -25,4 +25,5 @@ erl_crash.dump
 # Temporary files, for example, from tests.
 /tmp
 
-
+# Ignore our working Mnesia directory.
+/.mnesia/
