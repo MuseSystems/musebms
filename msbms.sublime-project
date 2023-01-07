@@ -47,7 +47,7 @@
             "path": "app_server/subsystems/mssub_bms",
         },
         {
-            "path": "app_server/platform/msapp_platform",
+            "path": "app_server/platform/msplatform",
         },
         {
             "path": "documentation",
@@ -77,8 +77,8 @@
         {
 			"lsp-elixir":
 			{
-				"enabled": true
-			}
+				"enabled": true,
+			},
 		},
     },
     "build_systems":
