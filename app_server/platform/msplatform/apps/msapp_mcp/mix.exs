@@ -59,7 +59,7 @@ defmodule MsappMcp.MixProject do
 
   def application do
     [
-      mod: {MsappMcp.Application, []},
+      mod: {MsappMcp.Runtime.Application, []},
       extra_applications: [
         :logger,
         :runtime_tools,

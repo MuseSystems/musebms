@@ -33,7 +33,7 @@ config :mnesia, dir: '.mnesia'
 #
 # For production it's recommended to configure a different adapter
 # at the `config/runtime.exs`.
-config :msapp_mcp, MsappMcp.Mailer, adapter: Swoosh.Adapters.Local
+config :msapp_mcp, MsappMcp.Runtime.Mailer, adapter: Swoosh.Adapters.Local
 
 config :msapp_mcp_web,
   generators: [context_app: :msapp_mcp]
