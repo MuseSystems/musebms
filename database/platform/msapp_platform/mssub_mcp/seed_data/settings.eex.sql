@@ -17,8 +17,8 @@ INSERT INTO ms_syst_data.syst_settings
     , syst_description
     , setting_uuid )
 VALUES
-    ( 'msapp_platform_general_state'
-    , 'MsappPlatform General State'
+    ( 'msplatform_state'
+    , 'Platform State'
     , TRUE
     , 'Defines the current installation and runtime state of the platform as a whole.  ' ||
       'Valid values are drawn from the system enumeration "platform_states".'
