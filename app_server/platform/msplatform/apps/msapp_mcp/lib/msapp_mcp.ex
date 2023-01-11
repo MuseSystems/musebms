@@ -1,9 +1,13 @@
 defmodule MsappMcp do
   @moduledoc """
-  MsappMcp keeps the contexts that define your domain
-  and business logic.
-
-  Contexts are also responsible for managing your data, regardless
-  if it comes from the database, an external API or others.
+  MsappMcp API
   """
+  alias MsappMcp.Impl
+  alias MsappMcp.Types
+
+  @spec launch_bootstrap?() :: boolean()
+  defdelegate launch_bootstrap?, to: Impl.Settings
+
+  @spec get_platform_state() :: Types.platform_states()
+  defdelegate get_platform_state, to: Impl.Settings
 end
