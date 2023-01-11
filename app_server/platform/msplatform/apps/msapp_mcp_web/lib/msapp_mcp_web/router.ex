@@ -14,10 +14,20 @@ defmodule MsappMcpWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :bootstrap do
+    plug :bootstrap_check
+  end
+
   scope "/", MsappMcpWeb do
-    pipe_through :browser
+    pipe_through [:browser, :bootstrap]
 
     get "/", PageController, :home
+  end
+
+  scope "/bootstrap", MsappMcpWeb do
+    pipe_through :browser
+
+    get "/", BootstrapController, :home
   end
 
   # Other scopes may use custom stacks.
@@ -40,5 +50,11 @@ defmodule MsappMcpWeb.Router do
       live_dashboard "/dashboard", metrics: MsappMcpWeb.Telemetry
       forward "/mailbox", Plug.Swoosh.MailboxPreview
     end
+  end
+
+  defp bootstrap_check(conn, _opts) do
+    if MsappMcp.launch_bootstrap?(),
+      do: redirect(conn, to: "/bootstrap") |> halt(),
+      else: conn
   end
 end
