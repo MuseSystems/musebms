@@ -1,5 +1,5 @@
 -- Migration: priv/database/msplatform_mssub_mcp/msplatform_mssub_mcp.01.01.000.0000MS.000.eex.sql
--- Built on:  2023-01-07 22:02:28.756153Z
+-- Built on:  2023-01-09 13:54:58.024794Z
 
 DO
 $MIGRATION$
@@ -18947,8 +18947,8 @@ INSERT INTO ms_syst_data.syst_settings
     , syst_description
     , setting_uuid )
 VALUES
-    ( 'msapp_platform_general_state'
-    , 'MsappPlatform General State'
+    ( 'msplatform_state'
+    , 'Platform State'
     , TRUE
     , 'Defines the current installation and runtime state of the platform as a whole.  ' ||
       'Valid values are drawn from the system enumeration "platform_states".'
