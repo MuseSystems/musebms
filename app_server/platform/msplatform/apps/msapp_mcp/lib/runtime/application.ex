@@ -10,7 +10,7 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule MsappMcp.Application do
+defmodule MsappMcp.Runtime.Application do
   use Application
 
   @default_startup_options_path "ms_startup_options.toml"
