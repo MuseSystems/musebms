@@ -14,8 +14,15 @@ DROP DATABASE IF EXISTS test_app_test_owner1_inst2;
 DROP DATABASE IF EXISTS test_app_test_owner2_inst3;
 DROP DATABASE IF EXISTS test_app_test_owner2_inst4;
 
+DROP FUNCTION IF EXISTS ms_syst.create_login_role(text, text, text);
+DROP FUNCTION IF EXISTS ms_syst.create_nonlogin_role(text, text);
+DROP FUNCTION IF EXISTS ms_syst.drop_role(text);
+
+DROP SCHEMA IF EXISTS ms_syst;
+
 DROP ROLE IF EXISTS ms_syst_access;
-DROP ROLE IF EXISTS ms_syst_dba;
+DROP ROLE IF EXISTS ms_syst_owner;
+DROP ROLE IF EXISTS ms_syst_privileged;
 
 DROP ROLE IF EXISTS mssub_mcp_owner;
 DROP ROLE IF EXISTS mssub_mcp_app_access;
@@ -29,4 +36,4 @@ DROP ROLE IF EXISTS test_app_test_owner2_inst3_test_app_access;
 DROP ROLE IF EXISTS test_app_test_owner2_inst4_test_app_owner;
 DROP ROLE IF EXISTS test_app_test_owner2_inst4_test_app_access;
 
-\ir bootstrap_database.psql
+\ir ../../../../tools/database_scripts/bootstrap_database.psql

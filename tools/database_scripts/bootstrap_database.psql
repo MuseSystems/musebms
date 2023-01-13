@@ -14,15 +14,30 @@ $BOOTSTRAPDB$
         IF
             NOT EXISTS(SELECT true
                        FROM   pg_roles
-                       WHERE  rolname = 'ms_syst_dba')
+                       WHERE  rolname = 'ms_syst_owner')
         THEN
 
-            CREATE ROLE ms_syst_dba
-                CREATEROLE CREATEDB NOINHERIT
+            CREATE ROLE ms_syst_owner
+                CREATEROLE NOINHERIT
+                NOLOGIN;
+
+            COMMENT ON ROLE ms_syst_owner IS
+            $DOC$A non-login role which owns highly privileged database functions, including those which may create new database roles.$DOC$;
+
+        END IF;
+
+        IF
+            NOT EXISTS(SELECT true
+                       FROM   pg_roles
+                       WHERE  rolname = 'ms_syst_privileged')
+        THEN
+
+            CREATE ROLE ms_syst_privileged
+                CREATEDB NOINHERIT
                 LOGIN PASSWORD 'muse.syst.dba.testing.password';
 
-            COMMENT ON ROLE ms_syst_dba IS
-            $DOC$Privileged account which performs database server administrative actions.  Does not have access to application data and may not perform actions requiring PostgreSQL superuser privileges.$DOC$;
+            COMMENT ON ROLE ms_syst_privileged IS
+            $DOC$Privileged login account which performs database server administrative actions.  Does not have access to application data and may not perform actions requiring PostgreSQL superuser privileges.$DOC$;
 
         END IF;
 
@@ -32,13 +47,211 @@ $BOOTSTRAPDB$
                        WHERE  rolname = 'ms_syst_access')
         THEN
 
-            CREATE ROLE ms_syst_access
-            ADMIN ms_syst_dba;
+            CREATE ROLE ms_syst_access;
 
             COMMENT ON ROLE ms_syst_access IS
-            $DOC$An unprivileged role used to control access via pg_hba.conf rules.  All system login roles are members of this role.$DOC$;
+            $DOC$An unprivileged group role used to control access via pg_hba.conf rules.  All system login roles are members of this role.$DOC$;
 
         END IF;
+
+        IF
+            NOT EXISTS(SELECT true
+                       FROM   pg_roles
+                       WHERE  rolname = 'ms_syst_managable')
+        THEN
+
+            CREATE ROLE ms_syst_managable;
+
+            COMMENT ON ROLE ms_syst_managable IS
+            $DOC$An unprivileged group role used to indicate which other roles may be automatically managed by the application processes.$DOC$;
+
+        END IF;
+
+        CREATE SCHEMA IF NOT EXISTS ms_syst AUTHORIZATION ms_syst_owner;
+
+        GRANT USAGE ON SCHEMA ms_syst TO ms_syst_privileged;
+
+        CREATE OR REPLACE FUNCTION
+            ms_syst.create_login_role(p_role_name text, p_credential text, p_comment text)
+        RETURNS void AS
+        $BODY$
+
+        -- File:        bootstrap_database.psql
+        -- Location:    musebms/tools/database_scripts/bootstrap_database.psql
+        -- Project:     Muse Systems Business Management System
+        --
+        -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+        -- This file may include content copyrighted and licensed from third parties.
+        --
+        -- See the LICENSE file in the project root for license terms and conditions.
+        -- See the NOTICE file in the project root for copyright ownership information.
+        --
+        -- muse.information@musesystems.com :: https://muse.systems
+
+        BEGIN
+
+            EXECUTE
+                format(
+                    'CREATE ROLE %1$I '
+                        'WITH NOINHERIT LOGIN '
+                        'IN ROLE ms_syst_managable, ms_syst_access '
+                        'PASSWORD %2$L;',
+                    p_role_name, p_credential );
+
+            EXECUTE format( 'COMMENT ON ROLE %1$I IS %2$L; ', p_role_name, p_comment );
+
+            RETURN;
+
+        END;
+        $BODY$
+            LANGUAGE plpgsql
+            VOLATILE
+            SECURITY DEFINER
+            SET search_path TO ms_syst, pg_temp;
+
+        ALTER FUNCTION ms_syst.create_login_role(p_role_name text, p_credential text, p_comment text)
+            OWNER TO ms_syst_owner;
+
+        REVOKE EXECUTE ON FUNCTION
+            ms_syst.create_login_role(p_role_name text, p_credential text, p_comment text)
+            FROM public;
+
+        GRANT EXECUTE ON FUNCTION
+            ms_syst.create_login_role(p_role_name text, p_credential text, p_comment text)
+            TO ms_syst_owner;
+
+        GRANT EXECUTE ON FUNCTION
+            ms_syst.create_login_role(p_role_name text, p_credential text, p_comment text)
+            TO ms_syst_privileged;
+
+
+        COMMENT ON FUNCTION ms_syst.create_login_role(p_role_name text, p_credential text, p_comment text) IS
+        $DOC$Allows the MscmpSystDb "privileged" database role (ms_syst_privileged) to create
+unprivileged login database roles without needing the `CREATEROLE` PostgreSQL privilege.
+
+By allowing this type of highly regulated database role creation, we can prevent application
+automated processes from being capable of creating arbitrarily powerful database roles which the
+`CREATEROLE` privilege allows.
+        $DOC$;
+
+        CREATE OR REPLACE FUNCTION
+            ms_syst.create_nonlogin_role(p_role_name text, p_comment text)
+        RETURNS void AS
+        $BODY$
+
+        -- File:        bootstrap_database.psql
+        -- Location:    musebms/tools/database_scripts/bootstrap_database.psql
+        -- Project:     Muse Systems Business Management System
+        --
+        -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+        -- This file may include content copyrighted and licensed from third parties.
+        --
+        -- See the LICENSE file in the project root for license terms and conditions.
+        -- See the NOTICE file in the project root for copyright ownership information.
+        --
+        -- muse.information@musesystems.com :: https://muse.systems
+
+        BEGIN
+
+            EXECUTE format(
+                'CREATE ROLE %1$I WITH NOINHERIT NOLOGIN IN ROLE ms_syst_managable; ',
+                p_role_name );
+            EXECUTE format( 'COMMENT ON ROLE %1$I IS %2$L; ', p_role_name, p_comment );
+            EXECUTE format( 'GRANT %1$I TO ms_syst_privileged; ', p_role_name );
+
+            RETURN;
+
+        END;
+        $BODY$
+            LANGUAGE plpgsql
+            VOLATILE
+            SECURITY DEFINER
+            SET search_path TO ms_syst, pg_temp;
+
+        ALTER FUNCTION ms_syst.create_nonlogin_role(p_role_name text, p_comment text)
+            OWNER TO ms_syst_owner;
+
+        REVOKE EXECUTE ON FUNCTION
+            ms_syst.create_nonlogin_role(p_role_name text, p_comment text)
+            FROM public;
+
+        GRANT EXECUTE ON FUNCTION
+            ms_syst.create_nonlogin_role(p_role_name text, p_comment text)
+            TO ms_syst_owner;
+
+        GRANT EXECUTE ON FUNCTION
+            ms_syst.create_nonlogin_role(p_role_name text, p_comment text)
+            TO ms_syst_privileged;
+
+
+        COMMENT ON FUNCTION ms_syst.create_nonlogin_role(p_role_name text, p_comment text) IS
+        $DOC$Allows the MscmpSystDb "privileged" database role (ms_syst_privileged) to create
+unprivileged, non-login database roles without needing the `CREATEROLE` PostgreSQL privilege.
+
+By allowing this type of highly regulated database role creation, we can prevent application
+automated processes from being capable of creating arbitrarily powerful database roles which the
+`CREATEROLE` privilege allows.
+        $DOC$;
+
+        CREATE OR REPLACE FUNCTION ms_syst.drop_role(p_role_name text)
+        RETURNS void AS
+        $BODY$
+
+        -- File:        bootstrap_database.psql
+        -- Location:    musebms/tools/database_scripts/bootstrap_database.psql
+        -- Project:     Muse Systems Business Management System
+        --
+        -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+        -- This file may include content copyrighted and licensed from third parties.
+        --
+        -- See the LICENSE file in the project root for license terms and conditions.
+        -- See the NOTICE file in the project root for copyright ownership information.
+        --
+        -- muse.information@musesystems.com :: https://muse.systems
+
+        BEGIN
+
+            IF
+                exists(
+                        SELECT TRUE
+                        FROM
+                            pg_catalog.pg_roles users
+                                JOIN pg_catalog.pg_auth_members pam ON pam.member = users.oid
+                                JOIN pg_roles groups ON pam.roleid = groups.oid
+                        WHERE users.rolname = p_role_name AND groups.rolname = 'ms_syst_managable'
+                    )
+            THEN
+                EXECUTE format( 'DROP ROLE IF EXISTS %1$I;', p_role_name );
+            ELSE
+                RAISE EXCEPTION 'Role % may not be deleted using this function.', p_role_name;
+            END IF;
+
+            RETURN;
+
+        END;
+        $BODY$
+            LANGUAGE plpgsql
+            VOLATILE
+            SECURITY DEFINER
+            SET search_path TO ms_syst, pg_temp;
+
+        ALTER FUNCTION ms_syst.drop_role(p_role_name text)
+            OWNER TO ms_syst_owner;
+
+        REVOKE EXECUTE ON FUNCTION
+            ms_syst.drop_role(p_role_name text)
+            FROM public;
+
+        GRANT EXECUTE ON FUNCTION
+            ms_syst.drop_role(p_role_name text)
+            TO ms_syst_owner;
+
+        GRANT EXECUTE ON FUNCTION
+            ms_syst.drop_role(p_role_name text)
+            TO ms_syst_privileged;
+
+        COMMENT ON FUNCTION ms_syst.drop_role(p_role_name text) IS
+        $DOC$This function is not yet documented.$DOC$;
 
     END;
 $BOOTSTRAPDB$;

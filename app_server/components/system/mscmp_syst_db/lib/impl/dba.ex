@@ -22,8 +22,8 @@ defmodule MscmpSystDb.Impl.Dba do
   ######
   #
   # DBA actions are those which require highly privileged access to the database
-  # server (CREATEDB CREATEROLE).  DBA actions are executed while connected to
-  # postgres database using designated DBA database role (see @dba_role_name).
+  # server (CREATEDB).  DBA actions are executed while connected to postgres
+  # database using designated DBA database role (see @dba_role_name).
   #
   # DBA level database connections should only be opened while work requiring
   # DBA access is required.  While a single DBA connection should be used across
@@ -33,7 +33,7 @@ defmodule MscmpSystDb.Impl.Dba do
   #
   ######
 
-  @dba_role_name "ms_syst_dba"
+  @dba_role_name "ms_syst_privileged"
   @dba_database_name "postgres"
   @dba_application_name "MscmpSystDb System DBA Access"
 
@@ -409,17 +409,10 @@ defmodule MscmpSystDb.Impl.Dba do
          database_password: password,
          description: role_comment
        }) do
-    Datastore.query("""
-    DO
-    $ROLESCRIPT$
-      BEGIN
-        CREATE ROLE #{role_name}
-          WITH NOINHERIT LOGIN IN ROLE ms_syst_access PASSWORD '#{password}';
-
-        COMMENT ON ROLE #{role_name} IS $DOC$#{role_comment}$DOC$;
-      END;
-    $ROLESCRIPT$;
-    """)
+    Datastore.query(
+      "SELECT ms_syst.create_login_role(p_role_name => $1, p_credential => $2, p_comment => $3);",
+      [role_name, password, role_comment]
+    )
   end
 
   defp create_database_role(%{
@@ -427,18 +420,10 @@ defmodule MscmpSystDb.Impl.Dba do
          database_role: role_name,
          description: role_comment
        }) do
-    Datastore.query("""
-    DO
-    $ROLESCRIPT$
-      BEGIN
-        CREATE ROLE #{role_name} WITH NOINHERIT NOLOGIN;
-
-        COMMENT ON ROLE #{role_name} IS $DOC$#{role_comment}$DOC$;
-
-        GRANT #{role_name} TO #{@dba_role_name};
-      END;
-    $ROLESCRIPT$;
-    """)
+    Datastore.query(
+      "SELECT ms_syst.create_nonlogin_role(p_role_name => $1, p_comment => $2);",
+      [role_name, role_comment]
+    )
   end
 
   defp parse_create_database_role_result({:ok, _database_result}), do: :ok
@@ -532,7 +517,7 @@ defmodule MscmpSystDb.Impl.Dba do
   end
 
   defp drop_database_role(%{database_role: role_name}) do
-    Datastore.query("DROP ROLE IF EXISTS #{role_name};")
+    Datastore.query("SELECT ms_syst.drop_role(p_role_name => $1);", [role_name])
   end
 
   defp parse_drop_database_role_result({:ok, _database_result}), do: :ok
