@@ -9,8 +9,15 @@
 
 DROP DATABASE IF EXISTS mscmp_syst_instance;
 
+DROP FUNCTION IF EXISTS ms_syst.create_login_role(text, text, text);
+DROP FUNCTION IF EXISTS ms_syst.create_nonlogin_role(text, text);
+DROP FUNCTION IF EXISTS ms_syst.drop_role(text);
+
+DROP SCHEMA IF EXISTS ms_syst;
+
 DROP ROLE IF EXISTS ms_syst_access;
-DROP ROLE IF EXISTS ms_syst_dba;
+DROP ROLE IF EXISTS ms_syst_owner;
+DROP ROLE IF EXISTS ms_syst_privileged;
 
 DROP ROLE IF EXISTS mscmp_syst_instance_owner;
 DROP ROLE IF EXISTS mscmp_syst_instance_app_user;
@@ -39,4 +46,4 @@ DROP ROLE IF EXISTS app2_owner2_app2_owner;
 DROP ROLE IF EXISTS app2_owner2_app2_appusr;
 DROP ROLE IF EXISTS app2_owner2_app2_apiusr;
 
-\ir bootstrap_database.psql
+\ir ../../../../../tools/database_scripts/bootstrap_database.psql

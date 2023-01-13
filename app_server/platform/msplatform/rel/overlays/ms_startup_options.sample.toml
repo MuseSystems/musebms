@@ -74,9 +74,9 @@ db_max_instances               = 0
 # and is ideally randomly generated.
 server_salt                    = ""
 
-# The database password used by the system for the connecting the ms_syst_dba
-# database user account on this database server.  This password must be at least
-# 32 bytes long.
+# The database password used by the system for the connecting the
+# ms_syst_privileged database user account on this database server.  This
+# password must be at least 32 bytes long.
 dbadmin_password               = ""
 
 # The number of pooled database connections to create for the dbadmin repo.
@@ -118,9 +118,9 @@ db_max_instances               = 0
 # and is ideally randomly generated.
 server_salt                    = ""
 
-# The database password used by the system for the connecting the ms_syst_dba
-# database user account on this database server.  This password must be at least
-# 32 bytes long.
+# The database password used by the system for the connecting the
+# ms_syst_privileged database user account on this database server.  This
+# password must be at least 32 bytes long.
 dbadmin_password               = ""
 
 # The number of pooled database connections to create for the dbadmin repo.
@@ -162,9 +162,9 @@ db_max_instances               = 0
 # and is ideally randomly generated.
 server_salt                    = ""
 
-# The database password used by the system for the connecting the ms_syst_dba
-# database user account on this database server.  This password must be at least
-# 32 bytes long.
+# The database password used by the system for the connecting the
+# ms_syst_privileged database user account on this database server.  This
+# password must be at least 32 bytes long.
 dbadmin_password               = ""
 
 # The number of pooled database connections to create for the dbadmin repo.
