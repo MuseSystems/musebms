@@ -52,7 +52,7 @@ defmodule Msdata.SystIdentities do
   @schema_prefix "ms_syst"
 
   schema "syst_identities" do
-    field(:account_identifier, :string)
+    field(:account_identifier, :string, redact: true)
     field(:validated, :utc_datetime)
     field(:validation_requested, :utc_datetime)
     field(:identity_expires, :utc_datetime)

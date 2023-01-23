@@ -52,7 +52,7 @@ defmodule Msdata.SystCredentials do
   @schema_prefix "ms_syst"
 
   schema "syst_credentials" do
-    field(:credential_data, :string)
+    field(:credential_data, :string, redact: true)
     field(:last_updated, :utc_datetime)
     field(:force_reset, :utc_datetime)
     field(:diag_timestamp_created, :utc_datetime)
