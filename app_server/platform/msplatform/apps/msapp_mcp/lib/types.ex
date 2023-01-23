@@ -12,7 +12,7 @@
 
 defmodule MsappMcp.Types do
   @moduledoc """
-  Defines types defined Msplatform/MsappMcp and used in application
+  Defines Msplatform/MsappMcp data types which appear in processing
   functionality.
   """
 
