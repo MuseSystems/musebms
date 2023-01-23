@@ -71,6 +71,25 @@ defmodule PasswordRulesTest do
     assert is_binary(second_rule_id)
   end
 
+  test "Can convert Global Password Rules to Generic Rules" do
+    {:ok, pwd_rules} = Impl.PasswordRules.get_global_password_rules()
+
+    generic_rules = Impl.PasswordRules.get_generic_password_rules(pwd_rules, nil)
+
+    assert generic_rules.owner_id == nil
+    assert generic_rules.access_account_id == nil
+    assert pwd_rules.password_length == generic_rules.password_length
+    assert pwd_rules.max_age == generic_rules.max_age
+    assert pwd_rules.require_upper_case == generic_rules.require_upper_case
+    assert pwd_rules.require_lower_case == generic_rules.require_lower_case
+    assert pwd_rules.require_numbers == generic_rules.require_numbers
+    assert pwd_rules.require_symbols == generic_rules.require_symbols
+    assert pwd_rules.disallow_recently_used == generic_rules.disallow_recently_used
+    assert pwd_rules.disallow_compromised == generic_rules.disallow_compromised
+    assert pwd_rules.require_mfa == generic_rules.require_mfa
+    assert pwd_rules.allowed_mfa_types == generic_rules.allowed_mfa_types
+  end
+
   test "Can update Global Password Rules / Success Tuple" do
     {:ok, original_pwd_rules} = Impl.PasswordRules.get_global_password_rules()
 
@@ -304,6 +323,29 @@ defmodule PasswordRulesTest do
 
     assert owner_id == rule_owner_id
     assert is_binary(rule_id)
+  end
+
+  test "Can convert Owner Password Rules to Generic Rules" do
+    {:ok, access_account_id} = MscmpSystAuthn.get_access_account_id_by_name("owned_all_access")
+
+    {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner1")
+
+    {:ok, pwd_rules} = Impl.PasswordRules.get_owner_password_rules(owner_id)
+
+    generic_rules = Impl.PasswordRules.get_generic_password_rules(pwd_rules, access_account_id)
+
+    assert generic_rules.owner_id == owner_id
+    assert generic_rules.access_account_id == access_account_id
+    assert pwd_rules.password_length == generic_rules.password_length
+    assert pwd_rules.max_age == generic_rules.max_age
+    assert pwd_rules.require_upper_case == generic_rules.require_upper_case
+    assert pwd_rules.require_lower_case == generic_rules.require_lower_case
+    assert pwd_rules.require_numbers == generic_rules.require_numbers
+    assert pwd_rules.require_symbols == generic_rules.require_symbols
+    assert pwd_rules.disallow_recently_used == generic_rules.disallow_recently_used
+    assert pwd_rules.disallow_compromised == generic_rules.disallow_compromised
+    assert pwd_rules.require_mfa == generic_rules.require_mfa
+    assert pwd_rules.allowed_mfa_types == generic_rules.allowed_mfa_types
   end
 
   test "Can update Owner Password Rules / Success Tuple" do

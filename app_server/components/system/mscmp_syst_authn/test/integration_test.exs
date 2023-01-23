@@ -86,6 +86,21 @@ defmodule IntegrationTest do
     assert new_pwd_rules.disallow_compromised == new_rule_params.disallow_compromised
     assert new_pwd_rules.require_mfa == new_rule_params.require_mfa
     assert new_pwd_rules.allowed_mfa_types == new_rule_params.allowed_mfa_types
+
+    generic_rules = MscmpSystAuthn.get_generic_password_rules(orig_pwd_rules)
+
+    assert generic_rules.owner_id == nil
+    assert generic_rules.access_account_id == nil
+    assert orig_pwd_rules.password_length == generic_rules.password_length
+    assert orig_pwd_rules.max_age == generic_rules.max_age
+    assert orig_pwd_rules.require_upper_case == generic_rules.require_upper_case
+    assert orig_pwd_rules.require_lower_case == generic_rules.require_lower_case
+    assert orig_pwd_rules.require_numbers == generic_rules.require_numbers
+    assert orig_pwd_rules.require_symbols == generic_rules.require_symbols
+    assert orig_pwd_rules.disallow_recently_used == generic_rules.disallow_recently_used
+    assert orig_pwd_rules.disallow_compromised == generic_rules.disallow_compromised
+    assert orig_pwd_rules.require_mfa == generic_rules.require_mfa
+    assert orig_pwd_rules.allowed_mfa_types == generic_rules.allowed_mfa_types
   end
 
   test "Step 1.03: Add Owner Password Rules" do
@@ -139,6 +154,21 @@ defmodule IntegrationTest do
     assert pwd_rules.disallow_compromised == false
     assert pwd_rules.require_mfa == true
     assert ["credential_types_secondary_totp"] = pwd_rules.allowed_mfa_types
+
+    generic_rules = MscmpSystAuthn.get_generic_password_rules(pwd_rules)
+
+    assert generic_rules.owner_id == owner_id
+    assert generic_rules.access_account_id == nil
+    assert pwd_rules.password_length == generic_rules.password_length
+    assert pwd_rules.max_age == generic_rules.max_age
+    assert pwd_rules.require_upper_case == generic_rules.require_upper_case
+    assert pwd_rules.require_lower_case == generic_rules.require_lower_case
+    assert pwd_rules.require_numbers == generic_rules.require_numbers
+    assert pwd_rules.require_symbols == generic_rules.require_symbols
+    assert pwd_rules.disallow_recently_used == generic_rules.disallow_recently_used
+    assert pwd_rules.disallow_compromised == generic_rules.disallow_compromised
+    assert pwd_rules.require_mfa == generic_rules.require_mfa
+    assert pwd_rules.allowed_mfa_types == generic_rules.allowed_mfa_types
   end
 
   test "Step 1.04: Manage Disallowed Host" do

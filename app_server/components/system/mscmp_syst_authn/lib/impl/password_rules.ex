@@ -335,6 +335,13 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
     |> parse_data_struct_to_generic_rule(access_account_id)
   end
 
+  @spec get_generic_password_rules(
+          Msdata.SystGlobalPasswordRules.t() | Msdata.SystOwnerPasswordRules.t(),
+          Types.access_account_id() | nil
+        ) :: Types.password_rules() | nil
+  def get_generic_password_rules(pwd_rules_struct, access_account_id),
+    do: parse_data_struct_to_generic_rule(pwd_rules_struct, access_account_id)
+
   defp parse_data_struct_to_generic_rule(nil = _rule, _access_account_id), do: nil
 
   defp parse_data_struct_to_generic_rule(rule, access_account_id) when is_struct(rule) do

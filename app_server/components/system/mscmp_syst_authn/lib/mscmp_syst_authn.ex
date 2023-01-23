@@ -857,6 +857,26 @@ defmodule MscmpSystAuthn do
 
   @doc section: :password_rule_data
   @doc """
+  Converts a Global or Owner Password Rule struct into the generic map based
+  Password Rule required by some functions.
+
+  `Msdata.SystGlobalPasswordRules` and `Msdata.SystOwnerPasswordRules` both
+  define a standard set of known password rules, but do so as different data
+  types.  While this works well for database record management features, testing
+  and validating actual password rules do not benefit from the distinction.
+  In these evaluation scenarios it's better to treat the password rule without
+  consideration of its source.  This function returns the generic representation
+  that certain evaluation features such as `test_credential/2` are expecting.
+  """
+  @spec get_generic_password_rules(
+          Msdata.SystGlobalPasswordRules.t() | Msdata.SystOwnerPasswordRules.t(),
+          Types.access_account_id() | nil
+        ) :: Types.password_rules() | nil
+  defdelegate get_generic_password_rules(pwd_rules_struct, access_account_id \\ nil),
+    to: Impl.PasswordRules
+
+  @doc section: :password_rule_data
+  @doc """
   Retrieves the Password Rules to apply for a requested Access Account as
   identified by its record ID.
 
@@ -1020,7 +1040,8 @@ defmodule MscmpSystAuthn do
   @spec test_credential(Types.access_account_id() | Types.password_rules(), Types.credential()) ::
           {:ok, Keyword.t(Types.password_rule_violations())}
           | {:error, MscmpSystError.t() | Exception.t()}
-  defdelegate test_credential(access_account_id, plaintext_pwd), to: Impl.Credential.Password
+  defdelegate test_credential(pwd_rules_or_access_account_id, plaintext_pwd),
+    to: Impl.Credential.Password
 
   # ==============================================================================================
   # ==============================================================================================
