@@ -24,7 +24,7 @@ defmodule DevSupport do
   def start_dev_environment(db_kind \\ :unit_testing) do
     :ok = build_migrations(db_kind)
 
-    startup_options = MscmpSystOptions.get_options!("test_startup_options.toml") |> IO.inspect()
+    startup_options = MscmpSystOptions.get_options!("test_startup_options.toml")
 
     :ignore =
       MssubMcp.Updater.start_link(
