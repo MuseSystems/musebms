@@ -124,7 +124,7 @@ jobs:
       postgres:
         image: postgres
         env:
-          POSTGRES_USER: ms_syst_dba
+          POSTGRES_USER: ms_syst_privileged
           POSTGRES_PASSWORD: muse.syst.dba.testing.password
           POSTGRES_PORT: 5432
         ports:
@@ -146,7 +146,7 @@ jobs:
             elixir-version: ${{matrix.elixir}}
 
         - name: Initialize Database
-          run: psql -f database/utility/bootstrap_database.psql postgresql://ms_syst_dba:muse.syst.dba.testing.password@localhost:5432/postgres
+          run: psql -f database/utility/bootstrap_database.psql postgresql://ms_syst_privileged:muse.syst.dba.testing.password@localhost:5432/postgres
           working-directory: ./app_server/components/system/mscmp_syst_db
 
         - name: Build Mix Dependencies
@@ -176,7 +176,7 @@ jobs:
       postgres:
         image: postgres
         env:
-          POSTGRES_USER: ms_syst_dba
+          POSTGRES_USER: ms_syst_privileged
           POSTGRES_PASSWORD: muse.syst.dba.testing.password
           POSTGRES_PORT: 5432
         ports:
@@ -198,7 +198,7 @@ jobs:
             elixir-version: ${{matrix.elixir}}
 
         - name: Initialize Database
-          run: psql -f database_utils/bootstrap_database.psql postgresql://ms_syst_dba:muse.syst.dba.testing.password@localhost:5432/postgres
+          run: psql -f database_utils/bootstrap_database.psql postgresql://ms_syst_privileged:muse.syst.dba.testing.password@localhost:5432/postgres
           working-directory: ./app_server/components/system/mscmp_syst_settings
 
         - name: Build Mix Dependencies
@@ -228,7 +228,7 @@ jobs:
       postgres:
         image: postgres
         env:
-          POSTGRES_USER: ms_syst_dba
+          POSTGRES_USER: ms_syst_privileged
           POSTGRES_PASSWORD: muse.syst.dba.testing.password
           POSTGRES_PORT: 5432
         ports:
@@ -250,7 +250,7 @@ jobs:
             elixir-version: ${{matrix.elixir}}
 
         - name: Initialize Database
-          run: psql -f database_utils/bootstrap_database.psql postgresql://ms_syst_dba:muse.syst.dba.testing.password@localhost:5432/postgres
+          run: psql -f database_utils/bootstrap_database.psql postgresql://ms_syst_privileged:muse.syst.dba.testing.password@localhost:5432/postgres
           working-directory: ./app_server/components/system/mscmp_syst_enums
 
         - name: Build Mix Dependencies
@@ -280,7 +280,7 @@ jobs:
       postgres:
         image: postgres
         env:
-          POSTGRES_USER: ms_syst_dba
+          POSTGRES_USER: ms_syst_privileged
           POSTGRES_PASSWORD: muse.syst.dba.testing.password
           POSTGRES_PORT: 5432
         ports:
@@ -302,7 +302,7 @@ jobs:
             elixir-version: ${{matrix.elixir}}
 
         - name: Initialize Database
-          run: psql -f database_utils/bootstrap_database.psql postgresql://ms_syst_dba:muse.syst.dba.testing.password@localhost:5432/postgres
+          run: psql -f database_utils/bootstrap_database.psql postgresql://ms_syst_privileged:muse.syst.dba.testing.password@localhost:5432/postgres
           working-directory: ./app_server/components/system/mscmp_syst_instance
 
         - name: Build Mix Dependencies
@@ -336,7 +336,7 @@ jobs:
       postgres:
         image: postgres
         env:
-          POSTGRES_USER: ms_syst_dba
+          POSTGRES_USER: ms_syst_privileged
           POSTGRES_PASSWORD: muse.syst.dba.testing.password
           POSTGRES_PORT: 5432
         ports:
@@ -358,7 +358,7 @@ jobs:
             elixir-version: ${{matrix.elixir}}
 
         - name: Initialize Database
-          run: psql -f database_utils/bootstrap_database.psql postgresql://ms_syst_dba:muse.syst.dba.testing.password@localhost:5432/postgres
+          run: psql -f database_utils/bootstrap_database.psql postgresql://ms_syst_privileged:muse.syst.dba.testing.password@localhost:5432/postgres
           working-directory: ./app_server/components/system/mscmp_syst_authn
 
         - name: Build Mix Dependencies
@@ -392,7 +392,7 @@ jobs:
       postgres:
         image: postgres
         env:
-          POSTGRES_USER: ms_syst_dba
+          POSTGRES_USER: ms_syst_privileged
           POSTGRES_PASSWORD: muse.syst.dba.testing.password
           POSTGRES_PORT: 5432
         ports:
@@ -414,7 +414,7 @@ jobs:
             elixir-version: ${{matrix.elixir}}
 
         - name: Initialize Database
-          run: psql -f database_utils/bootstrap_database.psql postgresql://ms_syst_dba:muse.syst.dba.testing.password@localhost:5432/postgres
+          run: psql -f database_utils/bootstrap_database.psql postgresql://ms_syst_privileged:muse.syst.dba.testing.password@localhost:5432/postgres
           working-directory: ./app_server/components/system/mscmp_syst_perms
 
         - name: Build Mix Dependencies
@@ -448,7 +448,7 @@ jobs:
       postgres:
         image: postgres
         env:
-          POSTGRES_USER: ms_syst_dba
+          POSTGRES_USER: ms_syst_privileged
           POSTGRES_PASSWORD: muse.syst.dba.testing.password
           POSTGRES_PORT: 5432
         ports:
@@ -470,7 +470,7 @@ jobs:
             elixir-version: ${{matrix.elixir}}
 
         - name: Initialize Database
-          run: psql -f database_utils/bootstrap_database.psql postgresql://ms_syst_dba:muse.syst.dba.testing.password@localhost:5432/postgres
+          run: psql -f database_utils/bootstrap_database.psql postgresql://ms_syst_privileged:muse.syst.dba.testing.password@localhost:5432/postgres
           working-directory: ./app_server/components/system/mscmp_syst_mcp_perms
 
         - name: Build Mix Dependencies
@@ -504,7 +504,7 @@ jobs:
       postgres:
         image: postgres
         env:
-          POSTGRES_USER: ms_syst_dba
+          POSTGRES_USER: ms_syst_privileged
           POSTGRES_PASSWORD: muse.syst.dba.testing.password
           POSTGRES_PORT: 5432
         ports:
@@ -526,7 +526,7 @@ jobs:
             elixir-version: ${{matrix.elixir}}
 
         - name: Initialize Database
-          run: psql -f database_utils/bootstrap_database.psql postgresql://ms_syst_dba:muse.syst.dba.testing.password@localhost:5432/postgres
+          run: psql -f database_utils/bootstrap_database.psql postgresql://ms_syst_privileged:muse.syst.dba.testing.password@localhost:5432/postgres
           working-directory: ./app_server/subsystems/mssub_mcp
 
         - name: Build Mix Dependencies
@@ -560,7 +560,7 @@ jobs:
   #     postgres:
   #       image: postgres
   #       env:
-  #         POSTGRES_USER: ms_syst_dba
+  #         POSTGRES_USER: ms_syst_privileged
   #         POSTGRES_PASSWORD: muse.syst.dba.testing.password
   #         POSTGRES_PORT: 5432
   #       ports:
@@ -582,7 +582,7 @@ jobs:
   #           elixir-version: ${{matrix.elixir}}
 
   #       - name: Initialize Database
-  #         run: psql -f database_utils/bootstrap_database.psql postgresql://ms_syst_dba:muse.syst.dba.testing.password@localhost:5432/postgres
+  #         run: psql -f database_utils/bootstrap_database.psql postgresql://ms_syst_privileged:muse.syst.dba.testing.password@localhost:5432/postgres
   #         working-directory: ./app_server/subsystems/mssub_bms
 
   #       - name: Build Mix Dependencies
@@ -616,7 +616,7 @@ jobs:
   #     postgres:
   #       image: postgres
   #       env:
-  #         POSTGRES_USER: ms_syst_dba
+  #         POSTGRES_USER: ms_syst_privileged
   #         POSTGRES_PASSWORD: muse.syst.dba.testing.password
   #         POSTGRES_PORT: 5432
   #       ports:
@@ -638,7 +638,7 @@ jobs:
   #           elixir-version: ${{matrix.elixir}}
 
   #       - name: Initialize Database
-  #         run: psql -f database_utils/bootstrap_database.psql postgresql://ms_syst_dba:muse.syst.dba.testing.password@localhost:5432/postgres
+  #         run: psql -f database_utils/bootstrap_database.psql postgresql://ms_syst_privileged:muse.syst.dba.testing.password@localhost:5432/postgres
   #         working-directory: ./app_server/platform/msapp_platform
 
   #       - name: Build Mix Dependencies
