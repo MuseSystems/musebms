@@ -1,0 +1,224 @@
+  <.mswizard changeset={@changeset}>
+  <:mswizard_progress>
+
+    <.mswizard_step_item step={:welcome} current_step={@current_step}>
+      Welcome & Process Overview
+    </.mswizard_step_item>
+
+    <.mswizard_step_item step={:records} current_step={@current_step}>
+      Platform Owner & Administrative User
+    </.mswizard_step_item>
+
+    <.mswizard_step_item step={:finish} current_step={@current_step}>
+      Finish Setup
+    </.mswizard_step_item>
+
+  </:mswizard_progress>
+
+  <:mswizard_steps :let={f} >
+
+    <.mswizard_step step={:welcome} current_step={@current_step} >
+
+      <div class="my-auto p-8">
+        <h3 class="font-black text-xl text-center my-4">Welcome to the Muse System Application Platform Setup Process</h3>
+        <p>
+          The following one-time process will bootstrap the Application Platform
+          by creating an initial Platform Administrator user account which can
+          then be used to log into the system for additional setup and
+          configuration activities.
+        </p>
+        <br/>
+        <p>
+          To complete this process you will need the following information:
+        </p>
+        <br/>
+        <ul class="list-disc list-outside mx-8">
+          <li class=" m-4">
+            The system "Owner" information.  This will have been provided to
+            you by Muse Systems.
+          </li>
+          <li class=" m-4">
+            The full name and email address (user name) of the initial Platform
+            Administrator Access Account.  You will be asked for a password to
+            use with this Access Account.
+          </li>
+        </ul>
+        <br/>
+        <p>
+          Once this setup process is finished all other setup and administrative
+          activities, including setting up additional Platform Administrator
+          accounts, may be performed as a normally logged in Platform
+          Administrator.
+        </p>
+        <br/>
+        <div class="border-2 rounded-md border-orange-600">
+          <div class="p-4">
+            <p class="text-xl font-black underline">Notice</p>
+            <br/>
+            <p>
+              The Platform Administrator account created in this process, by
+              default, will have permission to perform all functions of the
+              system including permission to use data destroying features and to
+              grant other Access Accounts any system privilege.
+            </p>
+            <br/>
+            <p>
+              Please treat this Platform Administrator account as highly
+              security sensitive or restrict its privileges as desired after
+              this bootstrapping process.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="py-8 flex justify-center space-x-4">
+        <.msbutton id="welcome-next" phx-click="change_step" phx-value-step={:records} autofocus>
+          Next
+        </.msbutton>
+      </div>
+    </.mswizard_step>
+
+    <.mswizard_step step={:records} current_step={@current_step} >
+      <div class="flex flex-col">
+
+        <.mssection title="Platform Owner Setup">
+          <div class="flex space-x-4 p-4">
+            <.msinput
+              field={{f, :owner_name}}
+              label={@form_data.owner_name.label}
+              maxlength="6"
+              size="6"
+              phx-debounce="2000"/>
+            <.msinput
+              field={{f, :owner_display_name}}
+              label={@form_data.owner_display_name.label}
+              maxlength="40"
+              size="40"
+              phx-debounce="2000"/>
+          </div>
+
+        </.mssection>
+        <.mssection title="Platform Administrator Access Account">
+          <div class="flex space-x-4 p-4">
+            <.msinput
+              field={{f, :admin_access_account_display_name}}
+              label={@form_data.admin_access_account_display_name.label}
+              maxlength="40"
+              size="40"
+              phx-debounce="2000"/>
+            <.msinput
+              type="email"
+              field={{f, :admin_identifier}}
+              label="Email Address (User Name)"
+              maxlength="70"
+              size="40"
+              phx-debounce="2000"/>
+          </div>
+          <div class="flex space-x-4 p-4">
+            <.msinput
+              type="password"
+              field={{f, :admin_credential}}
+              label={@form_data.admin_credential.label}
+              maxlength="128"
+              size="40"
+              phx-debounce="2000"/>
+            <.msinput
+              type="password"
+              field={{f, :admin_credential_verify}}
+              label={@form_data.admin_credential_verify.label}
+              maxlength="128"
+              size="40"
+              phx-debounce="2000"/>
+          </div>
+
+        </.mssection>
+        <div class="py-8 flex justify-center space-x-4">
+          <.msbutton phx-click="change_step" phx-value-step={:welcome} id="records-back">Back</.msbutton>
+          <div class="flex-none">
+            <.msbutton kind="validated" errors={f.errors} id="records-save">
+              <:valid action="save" show_icon="true">
+                Save
+              </:valid>
+              <:invalid show_icon="true">
+                Invalid
+              </:invalid>
+            </.msbutton>
+        </div>
+        </div>
+        <.msinfo_widget id="records-info">
+          <:msinfo_help>
+            <div class="flex flex-col space-y-2">
+              <p>
+                This form collects the values required to create the "Owner" and "Access Account"
+                records which represent this system's owner and the owner's system administrator.
+              </p>
+              <h3 class="font-black py-2">Platform Owner Setup Fields</h3>
+              <.list>
+                <:item title={@form_data.owner_name.label}>
+                  <p><%= @form_data.owner_name.info %></p>
+                </:item>
+                <:item title={@form_data.owner_display_name.label}>
+                  <p><%= @form_data.owner_display_name.info %></p>
+                </:item>
+              </.list>
+              <h3 class="font-black py-2">Platform Administrator Access Account Fields</h3>
+              <.list>
+                <:item title={@form_data.admin_access_account_display_name.label}>
+                  <p><%= @form_data.admin_access_account_display_name.info %></p>
+                </:item>
+                <:item title={@form_data.admin_identifier.label}>
+                  <p><%= @form_data.admin_identifier.info %></p>
+                </:item>
+                <:item title={@form_data.admin_credential.label}>
+                  <p><%= @form_data.admin_credential.info %></p>
+                </:item>
+                <:item title={@form_data.admin_credential_verify.label}>
+                  <p><%= @form_data.admin_credential_verify.info %></p>
+                </:item>
+              </.list>
+            </div>
+          </:msinfo_help>
+
+        </.msinfo_widget>
+      </div>
+    </.mswizard_step>
+
+    <.mswizard_step step={:finish} current_step={@current_step} >
+      form section 4
+      <div class="py-8 flex justify-center space-x-4">
+        <.msbutton id="finish-back" phx-click="change_step" phx-value-step={:records} >Back</.msbutton>
+        <.msbutton id="finish-next" phx-click="change_step" phx-value-step={:finish} >Next</.msbutton>
+      </div>
+    </.mswizard_step>
+  </:mswizard_steps>
+
+  <:mswizard_step_comments>
+
+    <.mswizard_comment step={:welcome} current_step={@current_step} />
+
+    <.mswizard_comment step={:records} current_step={@current_step}>
+      <p>
+        "Owners" in the system are the entities which own Access Accounts and
+        Instances of applications.  "Access Accounts" are user accounts used to
+        log into the system. "Instances" are the independent application
+        environments each backed by its own database.
+      </p>
+      <br/>
+      <p>
+        For on-premise installations of the software typically only a single
+        Owner is ever required.  Multiple Owner records support certain advanced
+        implementation scenarios and multi-tenant supporting installations.
+      </p>
+      <br/>
+      <p>
+        The Owner defined here will own the Access Account of the initial system
+        administrator account set up in the next step.
+      </p>
+    </.mswizard_comment>
+
+    <.mswizard_comment step={:finish} current_step={@current_step}>
+      <p><strong>Verify Settings & Complete Setup</strong>: (undocumented) </p>
+    </.mswizard_comment>
+
+  </:mswizard_step_comments>
+</.mswizard>
+
