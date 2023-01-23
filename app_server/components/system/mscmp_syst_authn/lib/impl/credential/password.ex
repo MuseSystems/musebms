@@ -174,6 +174,8 @@ defmodule MscmpSystAuthn.Impl.Credential.Password do
     end
   end
 
+  defp check_recent_pwd(nil, _), do: false
+
   defp check_recent_pwd(access_account_id, pwd_text) do
     from(ph in Msdata.SystPasswordHistory,
       where: ph.access_account_id == ^access_account_id,
