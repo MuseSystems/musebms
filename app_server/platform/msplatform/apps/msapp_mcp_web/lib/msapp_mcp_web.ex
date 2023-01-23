@@ -82,7 +82,8 @@ defmodule MsappMcpWeb do
   defp html_helpers do
     quote do
       # HTML escaping functionality
-      import Phoenix.HTML
+      use Phoenix.HTML
+      use Phoenix.Component
       # Core UI components and translation
       import MsappMcpWeb.CoreComponents
       import MsappMcpWeb.Gettext
