@@ -2,32 +2,36 @@ defmodule MsappMcpWeb.Router do
   use MsappMcpWeb, :router
 
   pipeline :browser do
-    plug :accepts, ["html"]
-    plug :fetch_session
-    plug :fetch_live_flash
-    plug :put_root_layout, {MsappMcpWeb.Layouts, :root}
-    plug :protect_from_forgery
-    plug :put_secure_browser_headers
+    plug(:accepts, ["html"])
+    plug(:fetch_session)
+    plug(:fetch_live_flash)
+    plug(:put_root_layout, {MsappMcpWeb.Layouts, :root})
+    plug(:protect_from_forgery)
+    plug(:put_secure_browser_headers)
   end
 
   pipeline :api do
-    plug :accepts, ["json"]
+    plug(:accepts, ["json"])
   end
 
   pipeline :bootstrap do
-    plug :bootstrap_check
+    plug(:bootstrap_check)
+  end
+
+  pipeline :no_bootstrap do
+    plug(:not_bootstrapping_check)
   end
 
   scope "/", MsappMcpWeb do
-    pipe_through [:browser, :bootstrap]
+    pipe_through([:browser, :bootstrap])
 
-    get "/", PageController, :home
+    get("/", PageController, :home)
   end
 
   scope "/bootstrap", MsappMcpWeb do
-    pipe_through :browser
+    pipe_through([:browser, :no_bootstrap])
 
-    get "/", BootstrapController, :home
+    live("/", BootstrapLive)
   end
 
   # Other scopes may use custom stacks.
@@ -45,10 +49,10 @@ defmodule MsappMcpWeb.Router do
     import Phoenix.LiveDashboard.Router
 
     scope "/dev" do
-      pipe_through :browser
+      pipe_through(:browser)
 
-      live_dashboard "/dashboard", metrics: MsappMcpWeb.Telemetry
-      forward "/mailbox", Plug.Swoosh.MailboxPreview
+      live_dashboard("/dashboard", metrics: MsappMcpWeb.Telemetry)
+      forward("/mailbox", Plug.Swoosh.MailboxPreview)
     end
   end
 
@@ -56,5 +60,11 @@ defmodule MsappMcpWeb.Router do
     if MsappMcp.launch_bootstrap?(),
       do: redirect(conn, to: "/bootstrap") |> halt(),
       else: conn
+  end
+
+  defp not_bootstrapping_check(conn, _opts) do
+    if MsappMcp.launch_bootstrap?(),
+      do: conn,
+      else: redirect(conn, to: "/") |> halt()
   end
 end
