@@ -296,6 +296,17 @@ defmodule MssubMcp.Runtime.AuthnManager do
     MscmpSystAuthn.test_credential(access_account_id, plaintext_pwd)
   end
 
+  @spec load_disallowed_passwords(Enumerable.t(), Keyword.t()) ::
+          :ok | {:error, MscmpSystError.t()}
+  mcp_opfn load_disallowed_passwords(password_list, opts) do
+    MscmpSystAuthn.load_disallowed_passwords(password_list, opts)
+  end
+
+  @spec disallowed_passwords_populated?() :: boolean()
+  mcp_opfn disallowed_passwords_populated?() do
+    MscmpSystAuthn.disallowed_passwords_populated?()
+  end
+
   # ==============================================================================================
   #
   # Network Rule Data

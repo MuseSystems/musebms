@@ -341,6 +341,8 @@ defmodule IntegrationTest do
   # ==============================================================================================
 
   test "Step 3.01: Manage Disallowed Passwords" do
+    assert false == MssubMcp.disallowed_passwords_populated?()
+
     assert :ok = MssubMcp.create_disallowed_password("IntegrationDuplicateTest")
 
     assert :ok = MssubMcp.create_disallowed_password("IntegrationDuplicateTest")
@@ -350,6 +352,19 @@ defmodule IntegrationTest do
     assert {:ok, :deleted} = MssubMcp.delete_disallowed_password("IntegrationDeleteTest")
 
     assert {:ok, :not_found} = MssubMcp.delete_disallowed_password("IntegrationDeleteTest")
+
+    assert :ok =
+             Path.join(["database", "test_pg_disallowed_passwords.txt"])
+             |> File.stream!()
+             |> MssubMcp.load_disallowed_passwords(pg_format: true)
+
+    assert :ok =
+             Path.join(["database", "test_plain_disallowed_passwords.txt"])
+             |> File.stream!()
+             |> Stream.map(&String.trim_trailing(&1, "\n"))
+             |> MssubMcp.load_disallowed_passwords()
+
+    assert true == MssubMcp.disallowed_passwords_populated?()
 
     # Add password for later test usage
 
