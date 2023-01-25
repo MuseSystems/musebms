@@ -28,6 +28,8 @@ defmodule IntegrationTest do
   # ==============================================================================================
 
   test "Step 1.01: Manage Disallowed Passwords" do
+    assert false == MscmpSystAuthn.disallowed_passwords_populated?()
+
     assert :ok = MscmpSystAuthn.create_disallowed_password("IntegrationDuplicateTest")
     assert :ok = MscmpSystAuthn.create_disallowed_password("IntegrationDuplicateTest")
 
@@ -47,6 +49,8 @@ defmodule IntegrationTest do
              |> File.stream!()
              |> Stream.map(&String.trim_trailing(&1, "\n"))
              |> MscmpSystAuthn.load_disallowed_passwords()
+
+    assert true == MscmpSystAuthn.disallowed_passwords_populated?()
 
     # Add password for later test usage
 
