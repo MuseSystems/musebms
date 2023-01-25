@@ -642,4 +642,68 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
         message: "Failure deleting Owner Password Rules.",
         cause: error
   end
+
+  @spec load_disallowed_passwords(Enumerable.t(), Keyword.t()) ::
+          :ok | {:error, MscmpSystError.t()}
+  def load_disallowed_passwords(password_list, opts) do
+    opts = MscmpSystUtils.resolve_options(opts, pg_format: false, timeout: 300_000)
+
+    transform_func = get_disallowed_passwords_transform(opts[:pg_format])
+
+    data_stream =
+      Ecto.Adapters.SQL.stream(
+        MscmpSystDb.current_datastore_context(),
+        "COPY ms_syst.syst_disallowed_passwords FROM stdin",
+        [],
+        log: false
+      )
+
+    # Informal testing of 488127 records indicated that the this transaction
+    # runs somewhere less than one minute (closer to 30 secs).  So for some
+    # safety margin make our transaction timeout 5 minutes and hope we're in a
+    # semi-reasonable environment.
+
+    MscmpSystDb.transaction(
+      fn ->
+        password_list |> Stream.into(data_stream, transform_func) |> Stream.run()
+      end,
+      timeout: opts[:timeout]
+    )
+    |> case do
+      {:ok, _} ->
+        :ok
+
+      error ->
+        {:error,
+         %MscmpSystError{
+           code: :undefined_error,
+           message: "Failure while loading Disallowed Passwords list.",
+           cause: error
+         }}
+    end
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {:error,
+       %MscmpSystError{
+         code: :undefined_error,
+         message: "Failure loading Disallowed Passwords list.",
+         cause: error
+       }}
+  end
+
+  defp get_disallowed_passwords_transform(true), do: fn bytea_hash -> bytea_hash end
+
+  defp get_disallowed_passwords_transform(false) do
+    fn plain_password ->
+      plain_password
+      |> then(&:crypto.hash(:sha, &1))
+      |> Base.encode16()
+      |> then(&("\\\\x" <> &1 <> "\n"))
+    end
+  end
+
+  @spec disallowed_passwords_populated?() :: boolean()
+  def disallowed_passwords_populated?(), do: MscmpSystDb.exists?(Msdata.SystDisallowedPasswords)
 end

@@ -565,6 +565,104 @@ defmodule MscmpSystAuthn do
 
   @doc section: :password_rule_data
   @doc """
+  Bulk loads a list of passwords into the Disallowed Passwords database table.
+
+  Typically this function will be used to receive a stream of passwords which
+  should be added to the system Disallowed Passwords list.  The passwords
+  passed to this function are streamed into the PostgreSQL database via a
+  `COPY ms_syst.syst_disallowed_passwords FROM` command.
+
+  The system Disallowed Password List is stored using SHA-1 hashes of the
+  disallowed passwords to prevent the casual disclosure of possibly sensitive
+  information including so called "Personally Identifiable Information" (PII).
+  If passwords to this function are provided via plain text this function will
+  convert them to the expected SHA-1 representation.
+
+  ## Parameters
+
+    * `password_list` - A required Enumerable of passwords to disallow. The
+    passwords in this list are accepted in one of two possible formats: simple
+    plain text passwords or as sha1 hashes represented using PostgreSQL's `bytea`
+    textual export format (e.g. "example_pg_disallowed" =
+    "\\\\x32dc749fd3ef7bcf79d125a3f9146c0f122f8763").  Which is expected depends
+    on the `pg_format` option described below.
+
+    > #### Plain Text Processing Tip {: .tip}
+    >
+    > If the `password_list` is using the plain text representation, some
+    > sources, such as `File.stream!/3` may add an extraneous newline (or
+    > similar) to the password which must be stripped prior to passing to this
+    > function.  Failing to do so will result in incorrect hashing and the
+    > requested passwords will not be effectively disallowed.
+
+    * `options` - An optional Keyword List of settings with which the caller can
+    influence the behavior of this function.  The available options are:
+
+      * `pg_format` - a boolean value which indicates the format that the source
+      passwords are being provided in.  If true, the passwords to disallow are
+      expected to be already be SHA-1 hashed and represented using PostgreSQL's
+      `bytea` textual representation; if false, the passwords are assumed to be
+      represented using simple plain text which will be transformed as needed by
+      this function.  The default value of this parameter is `false` for plain
+      text processing.
+
+      * `timeout` - an integer representing the number of milliseconds that the
+      database transaction processing the load operation will wait prior to
+      timing out with an error.  Bulk loading is assumed to be used in cases
+      where a substantial amount of data might be processed; certainly enough
+      data to possibly exceed the system default database transaction timeout.
+      As such it is recommend to be sure the timeout here is fit for the data
+      requirements expected for any given call.  The default value is 300,000
+      milliseconds (5 minutes).
+
+  ## Examples
+
+  Loading the Disallowed Passwords List using a file listing plain text
+  passwords.
+
+      iex> MscmpSystAuthn.password_disallowed?("example_plain_disallowed")
+      false
+      iex> Path.join(["database", "example_plain_disallowed_passwords.txt"])
+      ...>   |> File.stream!()
+      ...>   |> Stream.map(&String.trim_trailing(&1, "\\n"))
+      ...>   |> MscmpSystAuthn.load_disallowed_passwords()
+      :ok
+      iex> MscmpSystAuthn.password_disallowed?("example_plain_disallowed")
+      true
+
+  Loading the Disallowed Passwords List using a file already formatted for
+  direct loading into PostgreSQL.
+
+      iex> MscmpSystAuthn.password_disallowed?("example_pg_disallowed")
+      false
+      iex> Path.join(["database", "example_pg_disallowed_passwords.txt"])
+      ...>   |> File.stream!()
+      ...>   |> MscmpSystAuthn.load_disallowed_passwords(pg_format: true)
+      :ok
+      iex> MscmpSystAuthn.password_disallowed?("example_pg_disallowed")
+      true
+  """
+  @spec load_disallowed_passwords(Enumerable.t(), Keyword.t()) ::
+          :ok | {:error, MscmpSystError.t()}
+  defdelegate load_disallowed_passwords(password_list, opts \\ []), to: Impl.PasswordRules
+
+  @doc section: :password_rule_data
+  @doc """
+  Tests if the Disallowed Password List has any entries or not.
+
+  Returns a simple boolean value.  If true, there are existing entries in the
+  Disallowed Passwords Lists; otherwise false is returned.
+
+  ## Examples
+
+      iex> MscmpSystAuthn.disallowed_passwords_populated?()
+      true
+  """
+  @spec disallowed_passwords_populated?() :: boolean()
+  defdelegate disallowed_passwords_populated?(), to: Impl.PasswordRules
+
+  @doc section: :password_rule_data
+  @doc """
   Adds a new password to the Disallowed Passwords list.
 
   Disallowed passwords are passwords that are commonly known, are known to have
@@ -699,8 +797,6 @@ defmodule MscmpSystAuthn do
   stringent than the current Global Password Rules, the Owner Password Rules
   will be saved as requested, but ignored when applied in favor of the more
   stringent rule.
-
-
 
   ## Parameters
 

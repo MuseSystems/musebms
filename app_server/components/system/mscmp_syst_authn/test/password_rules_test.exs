@@ -21,6 +21,33 @@ defmodule PasswordRulesTest do
 
   @moduletag :capture_log
 
+  test "Can load PostgreSQL formatted Disallowed Password List" do
+    test_password = "load_test_password_" <> Integer.to_string(:rand.uniform(100))
+
+    assert :ok =
+             Path.join(["database", "test_pg_disallowed_passwords.txt"])
+             |> File.stream!()
+             |> Impl.PasswordRules.load_disallowed_passwords(pg_format: true)
+
+    assert Impl.PasswordRules.password_disallowed?(test_password) == true
+  end
+
+  test "Can load plain Disallowed Password List" do
+    test_password = "plain_load_test_password_" <> Integer.to_string(:rand.uniform(100))
+
+    assert :ok =
+             Path.join(["database", "test_plain_disallowed_passwords.txt"])
+             |> File.stream!()
+             |> Stream.map(&String.trim_trailing(&1, "\n"))
+             |> Impl.PasswordRules.load_disallowed_passwords(pg_format: false)
+
+    assert Impl.PasswordRules.password_disallowed?(test_password) == true
+  end
+
+  test "Can determine if Disallowed Passwords List populated" do
+    assert Impl.PasswordRules.disallowed_passwords_populated?() == true
+  end
+
   test "Can add Disallowed Password" do
     assert :ok = Impl.PasswordRules.create_disallowed_password("can_add_disallowed_password_test")
 
