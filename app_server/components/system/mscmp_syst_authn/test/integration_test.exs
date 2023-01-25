@@ -37,6 +37,17 @@ defmodule IntegrationTest do
 
     assert {:ok, :not_found} = MscmpSystAuthn.delete_disallowed_password("IntegrationDeleteTest")
 
+    assert :ok =
+             Path.join(["database", "test_pg_disallowed_passwords.txt"])
+             |> File.stream!()
+             |> MscmpSystAuthn.load_disallowed_passwords(pg_format: true)
+
+    assert :ok =
+             Path.join(["database", "test_plain_disallowed_passwords.txt"])
+             |> File.stream!()
+             |> Stream.map(&String.trim_trailing(&1, "\n"))
+             |> MscmpSystAuthn.load_disallowed_passwords()
+
     # Add password for later test usage
 
     assert :ok = MscmpSystAuthn.create_disallowed_password("DisallowedPassword#123#")
@@ -327,11 +338,20 @@ defmodule IntegrationTest do
     {:ok, access_account_id} =
       MscmpSystAuthn.get_access_account_id_by_name("unowned_access_account")
 
+    disallowed_pgload_pwd = "load_test_password_" <> Integer.to_string(:rand.uniform(100))
+    disallowed_plain_pwd = "plain_load_test_password_" <> Integer.to_string(:rand.uniform(100))
+
     assert {:ok, [password_rule_length_min: 8]} =
              MscmpSystAuthn.test_credential(access_account_id, "short")
 
     assert {:ok, [password_rule_disallowed_password: true]} =
              MscmpSystAuthn.test_credential(access_account_id, "DisallowedPassword#123#")
+
+    assert {:ok, [password_rule_disallowed_password: true]} =
+             MscmpSystAuthn.test_credential(access_account_id, disallowed_pgload_pwd)
+
+    assert {:ok, [password_rule_disallowed_password: true]} =
+             MscmpSystAuthn.test_credential(access_account_id, disallowed_plain_pwd)
 
     assert {:ok, []} = MscmpSystAuthn.test_credential(access_account_id, "A valid password.")
   end
