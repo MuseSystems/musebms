@@ -173,4 +173,36 @@ defmodule MscmpSystInstance.Impl.Owner do
   end
 
   def purge_owner(%Msdata.SystOwners{id: owner_id}), do: purge_owner(owner_id)
+
+  @spec owner_exists?(Keyword.t()) :: :ok | {:ok, :not_found} | {:error, MscmpSystError.t()}
+  def owner_exists?(opts) do
+    opts = MscmpSystUtils.resolve_options(opts, owner_name: nil, owner_id: nil)
+
+    Msdata.SystOwners
+    |> maybe_filter_by_owner_name(opts[:owner_name])
+    |> maybe_filter_by_owner_id(opts[:owner_id])
+    |> MscmpSystDb.exists?()
+    |> case do
+      true -> :ok
+      false -> {:ok, :not_found}
+    end
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {:error,
+       %MscmpSystError{
+         code: :undefined_error,
+         message: "Failure testing if owner exists.",
+         cause: error
+       }}
+  end
+
+  defp maybe_filter_by_owner_name(query, nil), do: query
+
+  defp maybe_filter_by_owner_name(query, owner_name),
+    do: where(query, internal_name: ^owner_name)
+
+  defp maybe_filter_by_owner_id(query, nil), do: query
+  defp maybe_filter_by_owner_id(query, owner_id), do: where(query, id: ^owner_id)
 end

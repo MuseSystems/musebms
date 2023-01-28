@@ -994,6 +994,51 @@ defmodule MssubMcp do
           :ok | {:error, MscmpSystError.t()}
   defdelegate purge_owner(owner), to: Runtime.InstanceManager
 
+  @doc section: :instance_owner_data
+  @doc """
+  Tests to see if a specific Owner, or any Owner, record exists in the database.
+
+  The functions provides an optional test on either an Owner record's Internal
+  Name or record ID value.  If no selectivity option is made, the test checks if
+  any Owner records exist in the database at all.
+
+  If an appropriate Owner record is found, the function will return `:ok`.  If
+  no matching Owner record is found the function will return
+  `{:ok, :not_found}`.  Any other condition is considered an error and will
+  result in an error tuple being returned indicating the cause of the error.
+
+  ## Parameters
+
+    * `opts` - an optional Keyword List of optional parameters which can
+    influence the result of calling the function.  The available options are:
+
+      * `owner_id` - tests if a specific Owner record exists as referenced by
+      its record ID value.
+
+      * `owner_name` - tests if a specific Owner record exists as referenced by
+      its Internal Name.
+
+  ## Examples
+
+  Check if any Owner record exists.
+
+      iex> MssubMcp.owner_exists?()
+      :ok
+
+  Check if a specific Owner record exists.
+
+      iex> MssubMcp.owner_exists?(owner_name: "owner1")
+      :ok
+
+  If a non-existent Owner is requested, the function indicates the record was
+  not found.
+
+      iex> MssubMcp.owner_exists?(owner_name: "nonexistent_owner")
+      {:ok, :not_found}
+  """
+  @spec owner_exists?(Keyword.t()) :: :ok | {:ok, :not_found} | {:error, MscmpSystError.t()}
+  defdelegate owner_exists?(opts \\ []), to: Runtime.InstanceManager
+
   # ==============================================================================================
   #
   # Instances

@@ -172,7 +172,14 @@ defmodule IntegrationTest do
       owner_state_id: owner1_state.id
     }
 
+    assert {:ok, :not_found} = MssubMcp.owner_exists?()
+    assert {:ok, :not_found} = MssubMcp.owner_exists?(owner_name: "test_owner1")
+
     {:ok, owner1} = MssubMcp.create_owner(owner1_params)
+
+    assert :ok = MssubMcp.owner_exists?()
+    assert :ok = MssubMcp.owner_exists?(owner_name: "test_owner1")
+    assert :ok = MssubMcp.owner_exists?(owner_id: owner1.id)
 
     assert owner1.internal_name == owner1_params.internal_name
     assert owner1.display_name == owner1_params.display_name
