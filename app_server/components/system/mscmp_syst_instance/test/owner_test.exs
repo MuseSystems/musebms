@@ -193,4 +193,16 @@ defmodule OwnerTest do
              |> MscmpSystDb.one!()
              |> MscmpSystInstance.purge_owner()
   end
+
+  test "Can test if Owner Exists" do
+    owner_record =
+      from(o in Msdata.SystOwners, limit: 1)
+      |> MscmpSystDb.one!()
+
+    assert :ok = Impl.Owner.owner_exists?([])
+    assert :ok = Impl.Owner.owner_exists?(owner_id: owner_record.id)
+    assert :ok = Impl.Owner.owner_exists?(owner_name: owner_record.internal_name)
+
+    assert {:ok, :not_found} = Impl.Owner.owner_exists?(owner_name: "nonexistent_owner")
+  end
 end
