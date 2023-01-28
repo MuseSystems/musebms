@@ -329,13 +329,25 @@ defmodule IntegrationTest do
   test "Step 2.01: Add Unowned Access Accounts" do
     state = MscmpSystEnums.get_default_enum_item("access_account_states")
 
-    assert {:ok, %Msdata.SystAccessAccounts{}} =
+    assert {:ok, :not_found} = MscmpSystAuthn.access_account_exists?()
+
+    assert {:ok, :not_found} =
+             MscmpSystAuthn.access_account_exists?(access_account_name: "unowned_access_account")
+
+    assert {:ok, %Msdata.SystAccessAccounts{} = access_account} =
              MscmpSystAuthn.create_access_account(%{
                internal_name: "unowned_access_account",
                external_name: "Unowned Access Account",
                access_account_state_id: state.id,
                allow_global_logins: true
              })
+
+    assert :ok = MscmpSystAuthn.access_account_exists?()
+
+    assert :ok =
+             MscmpSystAuthn.access_account_exists?(access_account_name: "unowned_access_account")
+
+    assert :ok = MscmpSystAuthn.access_account_exists?(access_account_id: access_account.id)
   end
 
   test "Step 2.02: Test Password for Unowned Access Account" do
