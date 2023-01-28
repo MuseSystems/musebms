@@ -15,6 +15,17 @@ defmodule OwnerTest do
 
   import Ecto.Query
 
+  alias MscmpSystInstance.Impl
+
+  # TODO: Historically, unit testing was performed using the public API calls.
+  #       while unit testing the public API helps to ensure the bare essentials
+  #       are tested, it's not the final approach we've settled on.  Unit tests
+  #       should exercise the internal API and integration tests should exercise
+  #       the public API.  These tests were mostly written using the old way and
+  #       should be converted at some point.  This only applies to the direct
+  #       code being tested; incidental calls supporting the tests should remain
+  #       directed to their respective public APIs,
+
   test "Can Create Owner" do
     new_owner_state = MscmpSystEnums.get_default_enum_item("owner_states")
 
