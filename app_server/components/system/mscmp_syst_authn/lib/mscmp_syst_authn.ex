@@ -344,6 +344,53 @@ defmodule MscmpSystAuthn do
           :ok | {:error, MscmpSystError.t()}
   defdelegate purge_access_account(access_account), to: Impl.AccessAccount
 
+  @doc section: :access_account_data
+  @doc """
+  Tests to see if a specific Access Account, or any Access Account, record
+  exists in the database.
+
+  The functions provides an optional test on either an Access Account record's
+  Internal Name or record ID value.  If no selectivity option is made, the test
+  checks if any Access Account records exist in the database at all.
+
+  If an appropriate Access Account record is found, the function will return
+  `:ok`.  If no matching Access Account record is found the function will return
+  `{:ok, :not_found}`.  Any other condition is considered an error and will
+  result in an error tuple being returned indicating the cause of the error.
+
+  ## Parameters
+
+    * `opts` - an optional Keyword List of optional parameters which can
+    influence the result of calling the function.  The available options are:
+
+      * `access_account_id` - tests if a specific Access Account record exists
+      as referenced by its record ID value.
+
+      * `access_account_name` - tests if a specific Access Account record exists
+      as referenced by its Internal Name.
+
+  ## Examples
+
+  Check if any Access Account record exists.
+
+      iex> MscmpSystAuthn.access_account_exists?()
+      :ok
+
+  Check if a specific Access Account record exists.
+
+      iex> MscmpSystAuthn.access_account_exists?(access_account_name: "example_accnt")
+      :ok
+
+  If a non-existent Access Account is requested, the function indicates the record was
+  not found.
+
+      iex> MscmpSystAuthn.access_account_exists?(access_account_name: "nonexistent_access_account")
+      {:ok, :not_found}
+  """
+  @spec access_account_exists?(Keyword.t()) ::
+          :ok | {:ok, :not_found} | {:error, MscmpSystError.t()}
+  defdelegate access_account_exists?(opts \\ []), to: Impl.AccessAccount
+
   # ==============================================================================================
   # ==============================================================================================
   #
