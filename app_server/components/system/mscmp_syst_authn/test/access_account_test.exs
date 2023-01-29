@@ -162,19 +162,19 @@ defmodule AccessAccountTest do
   test "Can test if Access Account Exists" do
     {:ok, access_account_record} = MscmpSystAuthn.get_access_account_by_name("owned_all_access")
 
-    assert :ok = Impl.AccessAccount.access_account_exists?([])
+    assert true == Impl.AccessAccount.access_account_exists?([])
 
-    assert :ok =
+    assert true ==
              Impl.AccessAccount.access_account_exists?(
                access_account_id: access_account_record.id
              )
 
-    assert :ok =
+    assert true ==
              Impl.AccessAccount.access_account_exists?(
                access_account_name: access_account_record.internal_name
              )
 
-    assert {:ok, :not_found} =
+    assert false ==
              Impl.AccessAccount.access_account_exists?(
                access_account_name: "nonexistent_access_account"
              )

@@ -353,9 +353,8 @@ defmodule MscmpSystAuthn do
   Internal Name or record ID value.  If no selectivity option is made, the test
   checks if any Access Account records exist in the database at all.
 
-  If an appropriate Access Account record is found, the function will return
-  `:ok`.  If no matching Access Account record is found the function will return
-  `{:ok, :not_found}`.  Any other condition is considered an error and will
+  If an appropriate Access Account record is found, the function returns true,
+  otherwise false.  Any other condition is considered an error and will
   result in an error tuple being returned indicating the cause of the error.
 
   ## Parameters
@@ -374,21 +373,20 @@ defmodule MscmpSystAuthn do
   Check if any Access Account record exists.
 
       iex> MscmpSystAuthn.access_account_exists?()
-      :ok
+      true
 
   Check if a specific Access Account record exists.
 
       iex> MscmpSystAuthn.access_account_exists?(access_account_name: "example_accnt")
-      :ok
+      true
 
   If a non-existent Access Account is requested, the function indicates the record was
   not found.
 
       iex> MscmpSystAuthn.access_account_exists?(access_account_name: "nonexistent_access_account")
-      {:ok, :not_found}
+      false
   """
-  @spec access_account_exists?(Keyword.t()) ::
-          :ok | {:ok, :not_found} | {:error, MscmpSystError.t()}
+  @spec access_account_exists?(Keyword.t()) :: boolean() | {:error, MscmpSystError.t()}
   defdelegate access_account_exists?(opts \\ []), to: Impl.AccessAccount
 
   # ==============================================================================================

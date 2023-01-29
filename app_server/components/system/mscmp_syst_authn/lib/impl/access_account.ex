@@ -187,8 +187,7 @@ defmodule MscmpSystAuthn.Impl.AccessAccount do
   def purge_access_account(%Msdata.SystAccessAccounts{id: access_account_id}),
     do: purge_access_account(access_account_id)
 
-  @spec access_account_exists?(Keyword.t()) ::
-          :ok | {:ok, :not_found} | {:error, MscmpSystError.t()}
+  @spec access_account_exists?(Keyword.t()) :: boolean() | {:error, MscmpSystError.t()}
   def access_account_exists?(opts) do
     opts = MscmpSystUtils.resolve_options(opts, access_account_name: nil, access_account_id: nil)
 
@@ -196,10 +195,6 @@ defmodule MscmpSystAuthn.Impl.AccessAccount do
     |> maybe_filter_by_access_account_name(opts[:access_account_name])
     |> maybe_filter_by_access_account_id(opts[:access_account_id])
     |> MscmpSystDb.exists?()
-    |> case do
-      true -> :ok
-      false -> {:ok, :not_found}
-    end
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
