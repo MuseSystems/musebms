@@ -174,7 +174,7 @@ defmodule MscmpSystInstance.Impl.Owner do
 
   def purge_owner(%Msdata.SystOwners{id: owner_id}), do: purge_owner(owner_id)
 
-  @spec owner_exists?(Keyword.t()) :: :ok | {:ok, :not_found} | {:error, MscmpSystError.t()}
+  @spec owner_exists?(Keyword.t()) :: boolean() | {:error, MscmpSystError.t()}
   def owner_exists?(opts) do
     opts = MscmpSystUtils.resolve_options(opts, owner_name: nil, owner_id: nil)
 
@@ -182,10 +182,6 @@ defmodule MscmpSystInstance.Impl.Owner do
     |> maybe_filter_by_owner_name(opts[:owner_name])
     |> maybe_filter_by_owner_id(opts[:owner_id])
     |> MscmpSystDb.exists?()
-    |> case do
-      true -> :ok
-      false -> {:ok, :not_found}
-    end
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
