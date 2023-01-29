@@ -100,8 +100,7 @@ defmodule MssubMcp.Runtime.AuthnManager do
     MscmpSystAuthn.purge_access_account(access_account)
   end
 
-  @spec access_account_exists?(Keyword.t()) ::
-          :ok | {:ok, :not_found} | {:error, MscmpSystError.t()}
+  @spec access_account_exists?(Keyword.t()) :: boolean() | {:error, MscmpSystError.t()}
   mcp_opfn access_account_exists?(opts) do
     MscmpSystAuthn.access_account_exists?(opts)
   end

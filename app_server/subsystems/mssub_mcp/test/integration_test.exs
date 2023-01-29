@@ -608,10 +608,8 @@ defmodule IntegrationTest do
   test "Step 4.01: Add Owned Access Accounts" do
     {:ok, owner1_id} = MssubMcp.get_owner_id_by_name("test_owner1")
 
-    assert {:ok, :not_found} = MssubMcp.access_account_exists?()
-
-    assert {:ok, :not_found} =
-             MssubMcp.access_account_exists?(access_account_name: "owner1_access_account")
+    assert false == MssubMcp.access_account_exists?()
+    assert false == MssubMcp.access_account_exists?(access_account_name: "owner1_access_account")
 
     state = MssubMcp.get_access_account_state_default()
 
@@ -624,9 +622,9 @@ defmodule IntegrationTest do
                allow_global_logins: false
              })
 
-    assert :ok = MssubMcp.access_account_exists?()
-    assert :ok = MssubMcp.access_account_exists?(access_account_name: "owner1_access_account")
-    assert :ok = MssubMcp.access_account_exists?(access_account_id: access_account1.id)
+    assert true == MssubMcp.access_account_exists?()
+    assert true == MssubMcp.access_account_exists?(access_account_name: "owner1_access_account")
+    assert true == MssubMcp.access_account_exists?(access_account_id: access_account1.id)
 
     assert access_account1.owning_owner_id == owner1_id
 
