@@ -799,10 +799,8 @@ defmodule MscmpSystInstance do
   Name or record ID value.  If no selectivity option is made, the test checks if
   any Owner records exist in the database at all.
 
-  If an appropriate Owner record is found, the function will return `:ok`.  If
-  no matching Owner record is found the function will return
-  `{:ok, :not_found}`.  Any other condition is considered an error and will
-  result in an error tuple being returned indicating the cause of the error.
+  If the Owner record(s) is found, the function returns true; other false.
+  Errors produce a result tuple.
 
   ## Parameters
 
@@ -820,20 +818,20 @@ defmodule MscmpSystInstance do
   Check if any Owner record exists.
 
       iex> MscmpSystInstance.owner_exists?()
-      :ok
+      true
 
   Check if a specific Owner record exists.
 
       iex> MscmpSystInstance.owner_exists?(owner_name: "owner1")
-      :ok
+      true
 
   If a non-existent Owner is requested, the function indicates the record was
   not found.
 
       iex> MscmpSystInstance.owner_exists?(owner_name: "nonexistent_owner")
-      {:ok, :not_found}
+      false
   """
-  @spec owner_exists?(Keyword.t()) :: :ok | {:ok, :not_found} | {:error, MscmpSystError.t()}
+  @spec owner_exists?(Keyword.t()) :: boolean() | {:error, MscmpSystError.t()}
   defdelegate owner_exists?(opts \\ []), to: Impl.Owner
 
   # ==============================================================================================

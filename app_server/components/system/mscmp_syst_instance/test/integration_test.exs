@@ -294,14 +294,14 @@ defmodule IntegrationTest do
       owner_state_id: owner1_state.id
     }
 
-    assert {:ok, :not_found} = MscmpSystInstance.owner_exists?()
-    assert {:ok, :not_found} = MscmpSystInstance.owner_exists?(owner_name: "owner1")
+    assert false == MscmpSystInstance.owner_exists?()
+    assert false == MscmpSystInstance.owner_exists?(owner_name: "owner1")
 
     assert {:ok, owner1} = MscmpSystInstance.create_owner(owner1_params)
 
-    assert :ok = MscmpSystInstance.owner_exists?()
-    assert :ok = MscmpSystInstance.owner_exists?(owner_name: "owner1")
-    assert :ok = MscmpSystInstance.owner_exists?(owner_id: owner1.id)
+    assert true == MscmpSystInstance.owner_exists?()
+    assert true == MscmpSystInstance.owner_exists?(owner_name: "owner1")
+    assert true == MscmpSystInstance.owner_exists?(owner_id: owner1.id)
 
     assert owner1.internal_name == owner1_params.internal_name
     assert owner1.display_name == owner1_params.display_name

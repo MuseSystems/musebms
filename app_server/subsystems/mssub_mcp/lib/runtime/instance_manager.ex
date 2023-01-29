@@ -286,7 +286,7 @@ defmodule MssubMcp.Runtime.InstanceManager do
     MscmpSystInstance.purge_owner(owner)
   end
 
-  @spec owner_exists?(Keyword.t()) :: :ok | {:ok, :not_found} | {:error, MscmpSystError.t()}
+  @spec owner_exists?(Keyword.t()) :: boolean() | {:error, MscmpSystError.t()}
   mcp_opfn owner_exists?(opts) do
     MscmpSystInstance.owner_exists?(opts)
   end
