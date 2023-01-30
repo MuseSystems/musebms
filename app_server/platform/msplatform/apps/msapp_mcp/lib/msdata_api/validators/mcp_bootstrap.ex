@@ -13,7 +13,7 @@
 defmodule MsdataApi.Validators.McpBootstrap do
   import Ecto.Changeset
 
-  alias MsappMcpWeb.Types
+  alias MsappMcp.Types
 
   @spec changeset(MsdataApi.McpBootstrap.t(), Types.mcp_bootstrap_params()) :: Ecto.Changeset.t()
   def changeset(mcp_bootstrap, change_params) do

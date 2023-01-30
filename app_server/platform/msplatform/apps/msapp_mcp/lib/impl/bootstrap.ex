@@ -13,6 +13,7 @@
 defmodule MsappMcp.Impl.Bootstrap do
   @moduledoc false
 
+  alias MsappMcp.Types
   @spec load_disallowed_passwords() :: :ok | {:error, MscmpSystError.t()}
   def load_disallowed_passwords() do
     Path.join([
