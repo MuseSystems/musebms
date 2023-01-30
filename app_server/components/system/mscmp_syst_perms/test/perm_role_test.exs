@@ -166,4 +166,12 @@ defmodule PermRoleTest do
     assert {:ok, :deleted} = Impl.PermRole.delete_perm_role(perm_5)
     assert {:ok, :not_found} = Impl.PermRole.delete_perm_role(perm_5.id)
   end
+
+  test "Can look up Perm Role Id by Internal Name" do
+    perm_role_id =
+      from(pr in Msdata.SystPermRoles, where: pr.internal_name == "perm_role_1", select: pr.id)
+      |> MscmpSystDb.one!()
+
+    assert ^perm_role_id = Impl.PermRole.get_perm_role_id_by_name("func_type_1", "perm_role_1")
+  end
 end

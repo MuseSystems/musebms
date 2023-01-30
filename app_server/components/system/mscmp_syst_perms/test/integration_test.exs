@@ -168,7 +168,16 @@ defmodule IntegrationTest do
     assert updated_record_4.syst_description == perm_role.syst_description
   end
 
-  test "Step 1.04: Validate System Defined Permission Role Grant Data Maintenance" do
+  test "Step 1.04: Validate Permission Role Record ID Look-Up" do
+    perm_role_id =
+      from(pr in Msdata.SystPermRoles, where: pr.internal_name == "perm_role_1", select: pr.id)
+      |> MscmpSystDb.one!()
+
+    assert ^perm_role_id = MscmpSystPerms.get_perm_role_id_by_name("func_type_1", "perm_role_1")
+    assert is_nil(MscmpSystPerms.get_perm_role_id_by_name("func_type_1", "nonexistent_role"))
+  end
+
+  test "Step 1.05: Validate System Defined Permission Role Grant Data Maintenance" do
     perm_role_grant =
       from(prg in Msdata.SystPermRoleGrants,
         join: pr in assoc(prg, :perm_role),
