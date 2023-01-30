@@ -10,4 +10,7 @@ defmodule MsappMcp do
 
   @spec get_platform_state() :: Types.platform_states()
   defdelegate get_platform_state, to: Impl.Settings
+
+  @spec load_disallowed_passwords() :: :ok | {:error, MscmpSystError.t()}
+  defdelegate load_disallowed_passwords(), to: Impl.Bootstrap
 end
