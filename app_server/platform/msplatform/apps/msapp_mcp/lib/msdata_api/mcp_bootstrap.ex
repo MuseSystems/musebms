@@ -1,5 +1,5 @@
 # Source File: mcp_bootstrap.ex
-# Location:    musebms/app_server/platform/msplatform/apps/msapp_mcp_web/lib/msapp_mcp_web/ms_form_data/mcp_bootstrap.ex
+# Location:    musebms/app_server/platform/msplatform/apps/msapp_mcp/lib/msdata_api/mcp_bootstrap.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,10 +10,10 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule MsformData.McpBootstrap do
+defmodule MsdataApi.McpBootstrap do
   use Ecto.Schema
 
-  alias MsformData.Validators
+  alias MsdataApi.Validators
   alias MsappMcpWeb.Types
 
   @moduledoc """
@@ -46,7 +46,7 @@ defmodule MsformData.McpBootstrap do
   Validates a map of form data for validation of form entry prior to final
   submission.
   """
-  @spec changeset(MsformData.McpBootstrap.t(), Types.mcp_bootstrap_params()) :: Ecto.Changeset.t()
+  @spec changeset(MsdataApi.McpBootstrap.t(), Types.mcp_bootstrap_params()) :: Ecto.Changeset.t()
   defdelegate changeset(mcp_bootstrap, change_params \\ %{}), to: Validators.McpBootstrap
 
   @doc """

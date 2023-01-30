@@ -1,5 +1,5 @@
 # Source File: mcp_bootstrap.ex
-# Location:    musebms/app_server/platform/msplatform/apps/msapp_mcp_web/lib/msapp_mcp_web/msform_data/validators/mcp_bootstrap.ex
+# Location:    musebms/app_server/platform/msplatform/apps/msapp_mcp/lib/msdata_api/validators/mcp_bootstrap.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,12 +10,12 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule MsformData.Validators.McpBootstrap do
+defmodule MsdataApi.Validators.McpBootstrap do
   import Ecto.Changeset
 
   alias MsappMcpWeb.Types
 
-  @spec changeset(MsformData.McpBootstrap.t(), Types.mcp_bootstrap_params()) :: Ecto.Changeset.t()
+  @spec changeset(MsdataApi.McpBootstrap.t(), Types.mcp_bootstrap_params()) :: Ecto.Changeset.t()
   def changeset(mcp_bootstrap, change_params) do
     mcp_bootstrap
     |> cast(change_params, [
@@ -98,10 +98,10 @@ defmodule MsformData.Validators.McpBootstrap do
   defp password_violation_text({:password_rule_required_symbols, value}),
     do: "must have #{value} symbol characters"
 
-  defp password_violation_text({:password_rule_disallowed_password, value}),
+  defp password_violation_text({:password_rule_disallowed_password, _value}),
     do: "password has been disallowed"
 
-  defp password_violation_text({:password_rule_recent_password, value}),
+  defp password_violation_text({:password_rule_recent_password, _value}),
     do: "password used too recently"
 
   defp validate_credential_verify(changeset) do
