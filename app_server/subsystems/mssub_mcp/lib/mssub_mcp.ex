@@ -4502,6 +4502,41 @@ defmodule MssubMcp do
           {:ok, :deleted | :not_found} | {:error, MscmpSystError.t()}
   defdelegate revoke_perm_role(selector, perm_role_id), to: Runtime.McpPermsManager
 
+  @doc section: :perms_data
+  @doc """
+  Retrieves the Permission Role record ID as found by its functional type name
+  and Internal Name.
+
+  The function will either return the record ID of the requested Permission Role
+  or `nil` of that role was not found.  If an error occurs an error tuple is
+  returned.
+
+  ## Parameters
+
+   * `perm_func_type_name` - the Internal Name of the Permission Functional Type
+   to which the search should be restricted.  While the Permission Role name
+   itself is unique, specifying the Permission Functional Type serves as a check
+   that request context is correct.
+
+   * `perm_role_name` - the Internal Name value of the Permission Role to search
+   for.
+
+  ## Examples
+
+  Retrieve the record ID of a Permission Role record.
+
+      iex> _perm_role_id =
+      ...>   MssubMcp.get_perm_role_id_by_name("func_type_1", "perm_role_1")
+
+  Searching for a non-existent record returns `nil`.
+
+      iex> MssubMcp.get_perm_role_id_by_name("func_type_1", "nonexistent_role")
+      nil
+  """
+  @spec get_perm_role_id_by_name(Types.perm_functional_type_name(), Types.perm_role_name()) ::
+          Types.perm_role_id() | nil | {:error, MscmpSystError.t()}
+  defdelegate get_perm_role_id_by_name(perm_func_type_name, perm_role_name),
+    to: Runtime.McpPermsManager
   # ==============================================================================================
   #
   # MCP Processing

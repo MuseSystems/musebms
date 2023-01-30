@@ -75,6 +75,27 @@ defmodule MscmpSystPerms.Impl.PermRole do
        }}
   end
 
+  @spec get_perm_role_id_by_name(Types.perm_functional_type_name(), Types.perm_role_name()) ::
+          Types.perm_role_id() | nil | {:error, MscmpSystError.t()}
+  def get_perm_role_id_by_name(perm_func_type_name, perm_role_name) do
+    from(pr in Msdata.SystPermRoles,
+      join: pft in assoc(pr, :perm_functional_type),
+      where: pr.internal_name == ^perm_role_name and pft.internal_name == ^perm_func_type_name,
+      select: pr.id
+    )
+    |> MscmpSystDb.one()
+  rescue
+    error ->
+      Logger.error(Exception.format(:error, error, __STACKTRACE__))
+
+      {:error,
+       %MscmpSystError{
+         code: :undefined_error,
+         message: "Failure retrieving Permission Role record ID by name.",
+         cause: error
+       }}
+  end
+
   @spec delete_perm_role(Msdata.SystPermRoles.t() | Types.perm_role_id()) ::
           {:ok, :deleted | :not_found} | {:error, MscmpSystError.t()}
   def delete_perm_role(perm_role_id) when is_binary(perm_role_id) do
