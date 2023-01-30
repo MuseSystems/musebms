@@ -16,5 +16,32 @@ defmodule MsappMcp.Types do
   functionality.
   """
 
+  @type form_data_def() :: %{required(form_field_name()) => form_field_def()}
+
+  @type form_field_def() :: %{
+          required(:label) => String.t(),
+          required(:info) => String.t()
+        }
+
+  @type form_field_name() :: atom()
+
+  @type mcp_bootstrap_params() :: %{
+          optional(:owner_name) => String.t() | nil,
+          optional(:owner_display_name) => String.t() | nil,
+          optional(:admin_access_account_display_name) => String.t() | nil,
+          optional(:admin_identifier) => String.t() | nil,
+          optional(:admin_credential) => String.t() | nil,
+          optional(:admin_credential_verify) => String.t() | nil
+        }
+
+  @type mcp_bootstrap_text() :: %{
+          required(:owner_name) => String.t(),
+          required(:owner_display_name) => String.t(),
+          required(:admin_access_account_display_name) => String.t(),
+          required(:admin_identifier) => String.t(),
+          required(:admin_credential) => String.t(),
+          required(:admin_credential_verify) => String.t()
+        }
+
   @type platform_states() :: :platform_bootstrapping | :platform_active
 end

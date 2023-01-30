@@ -14,7 +14,7 @@ defmodule MsdataApi.McpBootstrap do
   use Ecto.Schema
 
   alias MsdataApi.Validators
-  alias MsappMcpWeb.Types
+  alias MsappMcp.Types
 
   @moduledoc """
   Form data used during the MCP Bootstrapping process.
