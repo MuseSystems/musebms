@@ -457,6 +457,17 @@ defmodule MscmpSystAuthn.Types do
         }
 
   @typedoc """
+  The supported types of authentication.
+
+  Though the system separates out the notion of what Identities & Credentials
+  are, there are nonetheless matched pairs of identities/credentials which the
+  system treat as a unit.  This type encapsulates those functional combinations
+  making it easier for code to communicate intentions while avoiding invalid
+  combinations of Identity/Credential Types.
+  """
+  @type authenticator_types() :: :email_password | :api_token
+
+  @typedoc """
   Defines the type expected for user provided plaintext Credentials.
   """
   @type credential() :: String.t()
