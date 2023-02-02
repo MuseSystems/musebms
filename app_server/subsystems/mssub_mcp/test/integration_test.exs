@@ -163,7 +163,59 @@ defmodule IntegrationTest do
              MssubMcp.create_instance_type_application(instance_type.id, application_id)
   end
 
-  test "Step 2.03: Create Owners" do
+  test "Step 2.03: Verify Owners Don't Exist" do
+    assert false == MssubMcp.owner_exists?()
+    assert false == MssubMcp.owner_exists?(owner_name: "platform_owner")
+  end
+
+  test "Step 2.04: Verify Access Accounts Don't Exist" do
+    assert false == MssubMcp.access_account_exists?()
+    assert false == MssubMcp.access_account_exists?(access_account_name: "platform_admin")
+  end
+
+  test "Step 2.05: Test MCP Platform Bootstrapping" do
+    owner_state = MssubMcp.get_owner_state_default(:owner_states_active)
+
+    owner_params = %{
+      internal_name: "platform_owner",
+      display_name: "Platform Owner",
+      owner_state_id: owner_state.id
+    }
+
+    access_account_state =
+      MssubMcp.get_access_account_state_default(:access_account_states_active)
+
+    access_account_params = %{
+      internal_name: "platform_admin",
+      external_name: "Platform Administrator",
+      owning_owner_name: "platform_owner",
+      allow_global_logins: false,
+      access_account_state_id: access_account_state.id
+    }
+
+    bootstrap_params = %{
+      owner: owner_params,
+      access_account: access_account_params,
+      authenticator_type: :email_password,
+      account_identifier: "test_platform_admin@musesystems.com",
+      credential: "MCP Testing Password",
+      application: :mcp
+    }
+
+    assert {:ok, _} = MssubMcp.bootstrap_tenant(bootstrap_params)
+  end
+
+  test "Step 2.06: Verify Owners Do Exist" do
+    assert true == MssubMcp.owner_exists?()
+    assert true == MssubMcp.owner_exists?(owner_name: "platform_owner")
+  end
+
+  test "Step 2.07: Verify Access Accounts Do Exist" do
+    assert true == MssubMcp.access_account_exists?()
+    assert true == MssubMcp.access_account_exists?(access_account_name: "platform_admin")
+  end
+
+  test "Step 2.08: Create Owners" do
     owner1_state = MssubMcp.get_owner_state_default()
 
     owner1_params = %{
@@ -172,13 +224,8 @@ defmodule IntegrationTest do
       owner_state_id: owner1_state.id
     }
 
-    assert false == MssubMcp.owner_exists?()
-    assert false == MssubMcp.owner_exists?(owner_name: "test_owner1")
-
     {:ok, owner1} = MssubMcp.create_owner(owner1_params)
 
-    assert true == MssubMcp.owner_exists?()
-    assert true == MssubMcp.owner_exists?(owner_name: "test_owner1")
     assert true == MssubMcp.owner_exists?(owner_id: owner1.id)
 
     assert owner1.internal_name == owner1_params.internal_name
@@ -200,7 +247,11 @@ defmodule IntegrationTest do
     assert owner2.owner_state_id == owner2_params.owner_state_id
   end
 
-  test "Step 2.04: Create Instances w/MssubMcp.process_operation" do
+  # TODO: Once we add tests for Tenant.bootstrap/1, be sure to test the ability
+  #       of the function to default Owner & Access Account internal names to
+  #       the random string if not internal_names are not otherwise provided.
+
+  test "Step 2.09: Create Instances w/MssubMcp.process_operation" do
     mcp_ops_func = fn ->
       new_instance1_params = %{
         internal_name: "test_app_test_owner1_inst1",
@@ -240,7 +291,7 @@ defmodule IntegrationTest do
     assert :ok = MssubMcp.process_operation(mcp_ops_func)
   end
 
-  test "Step 2.05: Create Instances w/MssubMcp Wrapper API" do
+  test "Step 2.10: Create Instances w/MssubMcp Wrapper API" do
     new_instance3_params = %{
       internal_name: "test_app_test_owner2_inst3",
       display_name: "Test App / Test Owner 2 / Instance 3",
@@ -274,7 +325,7 @@ defmodule IntegrationTest do
     assert new_instance4.instance_code == new_instance4_params.instance_code
   end
 
-  test "Step 2.06: Initialize Instances" do
+  test "Step 2.11: Initialize Instances" do
     startup_options = MscmpSystOptions.get_options!(@startup_options_path)
 
     mcp_ops_func = fn ->
@@ -305,7 +356,7 @@ defmodule IntegrationTest do
     assert :ok = MssubMcp.process_operation(mcp_ops_func)
   end
 
-  test "Step 2.07: Start Instances" do
+  test "Step 2.12: Start Instances" do
     startup_options = MscmpSystOptions.get_options!(@startup_options_path)
 
     assert :ok =
@@ -314,7 +365,7 @@ defmodule IntegrationTest do
              )
   end
 
-  test "Step 2.08: Make use of Instances" do
+  test "Step 2.13: Make use of Instances" do
     mcp_ops_func = fn ->
       from(
         ic in Msdata.SystInstanceContexts,
@@ -608,9 +659,6 @@ defmodule IntegrationTest do
   test "Step 4.01: Add Owned Access Accounts" do
     {:ok, owner1_id} = MssubMcp.get_owner_id_by_name("test_owner1")
 
-    assert false == MssubMcp.access_account_exists?()
-    assert false == MssubMcp.access_account_exists?(access_account_name: "owner1_access_account")
-
     state = MssubMcp.get_access_account_state_default()
 
     assert {:ok, %Msdata.SystAccessAccounts{} = access_account1} =
@@ -622,8 +670,6 @@ defmodule IntegrationTest do
                allow_global_logins: false
              })
 
-    assert true == MssubMcp.access_account_exists?()
-    assert true == MssubMcp.access_account_exists?(access_account_name: "owner1_access_account")
     assert true == MssubMcp.access_account_exists?(access_account_id: access_account1.id)
 
     assert access_account1.owning_owner_id == owner1_id
@@ -926,7 +972,20 @@ defmodule IntegrationTest do
              end)
   end
 
-  test "Step 5.03: List Access Account Permission Role Grants" do
+  test "Step 5.03: Look-up Permission Role Record ID by Name" do
+    global_role_id =
+      MssubMcp.process_operation(fn ->
+        from(pr in Msdata.SystPermRoles, where: pr.internal_name == "global_login", select: pr.id)
+        |> MscmpSystDb.one!()
+      end)
+
+    assert ^global_role_id =
+             MssubMcp.get_perm_role_id_by_name("mcp_access_accounts", "global_login")
+
+    assert is_nil(MssubMcp.get_perm_role_id_by_name("mcp_access_accounts", "nonexistent_role"))
+  end
+
+  test "Step 5.04: List Access Account Permission Role Grants" do
     {:ok, access_account_id} = MssubMcp.get_access_account_id_by_name("owner1_access_account")
 
     selector = %MscmpSystMcpPerms.Types.AccessAccountPermsSelector{
@@ -960,7 +1019,7 @@ defmodule IntegrationTest do
              Enum.find(global_login.perm_role_grants, &(&1.perm.internal_name == "global_login"))
   end
 
-  test "Step 5.04: List Access Account Permission Denials" do
+  test "Step 5.05: List Access Account Permission Denials" do
     {:ok, access_account_id} = MssubMcp.get_access_account_id_by_name("owner1_access_account")
 
     selector = %MscmpSystMcpPerms.Types.AccessAccountPermsSelector{
@@ -972,7 +1031,7 @@ defmodule IntegrationTest do
     assert {:ok, []} = MssubMcp.list_perm_denials(selector)
   end
 
-  test "Step 5.05: Revoke Access Account Permission Role" do
+  test "Step 5.06: Revoke Access Account Permission Role" do
     {:ok, access_account_id} = MssubMcp.get_access_account_id_by_name("owner1_access_account")
 
     selector = %MscmpSystMcpPerms.Types.AccessAccountPermsSelector{

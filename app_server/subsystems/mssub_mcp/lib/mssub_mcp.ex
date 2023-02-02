@@ -16,6 +16,7 @@ defmodule MssubMcp do
   alias MscmpSystMcpPerms.Types, as: McpPermTypes
   alias MscmpSystPerms.Types, as: PermTypes
   alias MssubMcp.Runtime
+  alias MssubMcp.Impl
 
   @external_resource "README.md"
 
@@ -4537,6 +4538,30 @@ defmodule MssubMcp do
           Types.perm_role_id() | nil | {:error, MscmpSystError.t()}
   defdelegate get_perm_role_id_by_name(perm_func_type_name, perm_role_name),
     to: Runtime.McpPermsManager
+
+  # ==============================================================================================
+  #
+  # MCP Tenant Management
+  #
+  # ==============================================================================================
+
+  @doc section: :mcp_processing
+  @doc """
+  Bootstraps the initial setup of either the MCP Application Platform or a new
+  tenant.
+
+  In this context, a "tenant" is the combination of an MCP Owner Record, a
+  linked Access Account record and related Authenticator, and an Application
+  Instance.
+
+  This process also bootstraps the system Owner and Platform Administrator
+  Access Account if the Application Platform itself has not been previously set
+  up.
+  """
+  @spec bootstrap_tenant(Types.tenant_bootstrap_params()) ::
+          {:ok, Types.tenant_bootstrap_result()} | {:error, MscmpSystError.t()}
+  defdelegate bootstrap_tenant(params), to: Impl.Tenant, as: :bootstrap
+
   # ==============================================================================================
   #
   # MCP Processing
