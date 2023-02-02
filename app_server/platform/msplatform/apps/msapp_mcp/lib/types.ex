@@ -28,7 +28,7 @@ defmodule MsappMcp.Types do
   @type mcp_bootstrap_params() :: %{
           optional(:owner_name) => String.t() | nil,
           optional(:owner_display_name) => String.t() | nil,
-          optional(:admin_access_account_display_name) => String.t() | nil,
+          optional(:admin_display_name) => String.t() | nil,
           optional(:admin_identifier) => String.t() | nil,
           optional(:admin_credential) => String.t() | nil,
           optional(:admin_credential_verify) => String.t() | nil
@@ -37,7 +37,7 @@ defmodule MsappMcp.Types do
   @type mcp_bootstrap_text() :: %{
           required(:owner_name) => String.t(),
           required(:owner_display_name) => String.t(),
-          required(:admin_access_account_display_name) => String.t(),
+          required(:admin_display_name) => String.t(),
           required(:admin_identifier) => String.t(),
           required(:admin_credential) => String.t(),
           required(:admin_credential_verify) => String.t()
