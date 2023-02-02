@@ -29,8 +29,6 @@ defmodule MsappMcp.Runtime.Application do
 
     startup_options = MscmpSystOptions.get_options!(startup_options_config[:path])
 
-    :ok = setup_rate_limiter()
-
     children = [
       {Phoenix.PubSub, name: MsappMcp.PubSub},
       {Finch, name: MsappMcp.Finch},
@@ -44,25 +42,5 @@ defmodule MsappMcp.Runtime.Application do
     ]
 
     Supervisor.start_link(children, strategy: :one_for_one, name: MsappMcp.Supervisor)
-  end
-
-  defp setup_rate_limiter do
-    with :stopped <- :mnesia.stop(),
-         :ok <- maybe_create_mnesia_schema() do
-      :mnesia.start()
-    else
-      error ->
-        raise MscmpSystError,
-          code: :undefined_error,
-          message: "Unable to setup Mnesia for MscmpSystLimiter.",
-          cause: error
-    end
-  end
-
-  defp maybe_create_mnesia_schema do
-    case :mnesia.create_schema([node()]) do
-      {:error, {_node, {:already_exists, _node_again}}} -> :ok
-      :ok -> :ok
-    end
   end
 end
