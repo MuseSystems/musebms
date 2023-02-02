@@ -44,7 +44,15 @@ defmodule Msplatform.MixProject do
       deps: @deps,
       aliases: @aliases,
       start_permanent: in_production,
-      dialyzer: @dialyzer_opts
+      dialyzer: @dialyzer_opts,
+      releases: [
+        demo: [
+          applications: [
+            msapp_mcp: :permanent,
+            msapp_mcp_web: :permanent
+          ]
+        ]
+      ]
     ]
   end
 end
