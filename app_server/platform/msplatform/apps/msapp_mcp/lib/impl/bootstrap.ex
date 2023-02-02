@@ -14,6 +14,9 @@ defmodule MsappMcp.Impl.Bootstrap do
   @moduledoc false
 
   alias MsappMcp.Types
+
+  require Logger
+
   @spec load_disallowed_passwords() :: :ok | {:error, MscmpSystError.t()}
   def load_disallowed_passwords() do
     Path.join([
@@ -23,5 +26,67 @@ defmodule MsappMcp.Impl.Bootstrap do
     ])
     |> File.stream!()
     |> MssubMcp.load_disallowed_passwords(pg_format: true)
+  end
+
+  @spec process_bootstrap_data(Types.mcp_bootstrap_params()) ::
+          {:ok, MssubMcp.Types.tenant_bootstrap_result()} | {:error, MscmpSystError.t()}
+  def process_bootstrap_data(data) do
+    starting_contexts = MssubMcp.start_mcp_service_context()
+
+    active_state =
+      MscmpSystEnums.get_enum_item_by_name("platform_states", "platform_states_sysdef_active")
+
+    {:ok, result} =
+      MscmpSystDb.transaction(fn ->
+        MscmpSystSettings.set_setting_value("platform_state", :setting_uuid, active_state.id)
+
+        case validate_bootstrap_data(data) do
+          :ok ->
+            data
+            |> parse_bootstrap_params()
+            |> MssubMcp.bootstrap_tenant()
+
+          errors ->
+            {:error,
+             %MscmpSystError{
+               code: :undefined_error,
+               message: "Failed bootstrapping MCP Platform",
+               cause: errors
+             }}
+        end
+      end)
+
+    MssubMcp.stop_mcp_service_context(starting_contexts)
+
+    result
+  end
+
+  defp validate_bootstrap_data(%Ecto.Changeset{valid?: true}), do: :ok
+  defp validate_bootstrap_data(%Ecto.Changeset{} = changeset), do: changeset.errors
+
+  defp validate_bootstrap_data(%{} = data) do
+    changeset = MsdataApi.McpBootstrap.changeset(%MsdataApi.McpBootstrap{}, data)
+    validate_bootstrap_data(changeset)
+  end
+
+  # MssubMcp will default both the owner and access account states to the
+  # default active status.
+  defp parse_bootstrap_params(data) do
+    %{
+      owner: %{
+        internal_name: data.owner_name,
+        display_name: data.owner_display_name
+      },
+      access_account: %{
+        external_name: data.admin_display_name,
+        owning_owner_name: data.owner_name,
+        allow_global_logins: false
+      },
+      authenticator_type: :email_password,
+      account_identifier: data.admin_identifier,
+      credential: data.admin_credential,
+      mfa_credential: nil,
+      application: :mcp
+    }
   end
 end

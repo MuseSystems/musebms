@@ -304,7 +304,6 @@ defmodule MsappMcpWeb.CoreComponents do
 
   defp msinfo_button_style(_, []), do: "w-8 h-8 fill-gray-300"
   defp msinfo_button_style(:info, [_ | _]), do: "w-8 h-8 fill-blue-600 hover:fill-blue-400"
-  defp msinfo_button_style(:errors, [_ | _]), do: "w-8 h-8 fill-red-600 hover:fill-red-400"
 
   attr(:id, :any, required: true)
 
@@ -346,27 +345,176 @@ defmodule MsappMcpWeb.CoreComponents do
   defp display_field_errors(_), do: false
 
   attr(:id, :string, required: true)
-  attr(:type, :string, default: nil)
-  attr(:kind, :string, default: "standard", values: ~w(standard validated))
-  attr(:errors, :list, default: [])
+  attr(:type, :string, default: "button")
+  attr(:state, :atom, values: ~w(action processing message)a)
   attr(:class, :string, default: nil)
   attr(:rest, :global, include: ~w(disabled form name value))
 
   slot(:inner_block, required: true)
 
-  slot :valid do
-    attr(:action, :string)
-    attr(:show_icon, :string)
+  slot :action do
+    attr(:click_action, :string)
+    attr(:show_icon, :boolean)
   end
 
-  slot :invalid do
-    attr(:action, :string)
-    attr(:show_icon, :string)
+  slot :processing do
+    attr(:show_icon, :boolean)
   end
 
-  def msbutton(%{kind: "standard"} = assigns) do
+  slot :message do
+    attr(:show_icon, :boolean)
+    attr(:message_title, :string)
+    attr(:message_items, :list)
+    attr(:message_text, :string)
+    attr(:line_title_label, :string)
+    attr(:line_item_label, :string)
+  end
+
+  # TODO: The msbutton can probably be condensed/cleaned up a fair amount.  For now
+  #       this is is working, so lets leave this big case statement for now.
+
+  def msbutton(%{state: :message} = assigns) do
+    first_message = List.first(assigns.message)
+
+    assigns =
+      assigns
+      |> assign(first_message: first_message)
+      |> assign_new(:show_icon, fn -> Map.get(first_message, :show_icon, false) end)
+      |> assign_new(:message_title, fn -> Map.get(first_message, :message_title, "Error") end)
+      |> assign_new(:message_items, fn -> Map.get(first_message, :message_items, nil) end)
+      |> assign_new(:message_text, fn -> Map.get(first_message, :message_text, nil) end)
+      |> assign_new(:line_title_label, fn -> Map.get(first_message, :line_title_label, nil) end)
+      |> assign_new(:line_item_label, fn -> Map.get(first_message, :line_item_label, nil) end)
+
     ~H"""
     <button
+      id={"#{@id}-msbutton-message"}
+      type="button"
+      class={[
+        "phx-submit-loading:opacity-75 rounded-lg border-2 border-zinc-900 bg-zinc-500 hover:bg-zinc-400 py-2 px-3",
+        "focus:ring-4 focus:ring-zinc-800",
+        "text-sm font-semibold leading-6 text-white active:text-white/80",
+        @class
+      ]}
+      phx-click={show_modal("#{@id}-msbutton-message-modal")}
+    >
+      <div class="flex space-x-2">
+        <div><%= render_slot([@first_message]) %></div>
+        <svg
+          :if={@show_icon}
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          class="w-5 h-5 fill-red-600 stroke-white"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z"
+            clip-rule="evenodd"
+          />
+        </svg>
+      </div>
+    </button>
+    <.modal id={"#{@id}-msbutton-message-modal"}>
+      <:title><%= @message_title %></:title>
+      <p :if={@message_text} class="mt-4"><%= @message_text %></p>
+      <div :if={@message_items} class="m-4">
+        <.mslist header_title={@line_title_label} header_item={@line_item_label}>
+          <:item :for={item <- condense_message_items(@message_items)} title={item.label}>
+            <p><%= Phoenix.HTML.raw(item.message_text) %></p>
+          </:item>
+        </.mslist>
+      </div>
+    </.modal>
+    """
+  end
+
+  def msbutton(%{state: :action} = assigns) do
+    first_action = List.first(assigns.action)
+
+    assigns =
+      assigns
+      |> assign(first_action: first_action)
+      |> assign_new(:click_action, fn -> Map.get(first_action, :click_action, nil) end)
+      |> assign_new(:show_icon, fn -> Map.get(first_action, :show_icon, false) end)
+
+    ~H"""
+    <button
+      id={"#{@id}-msbutton-action"}
+      type={@type}
+      class={[
+        "phx-submit-loading:opacity-75 rounded-lg border-2 border-zinc-900 bg-zinc-500 hover:bg-zinc-400 py-2 px-3",
+        "focus:ring-4 focus:ring-zinc-800",
+        "text-sm font-semibold leading-6 text-white active:text-white/80",
+        @class
+      ]}
+      phx-click={@click_action}
+    >
+      <div class="flex space-x-2">
+        <div><%= render_slot([@first_action]) %></div>
+        <svg
+          :if={@show_icon}
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          class="w-5 h-5 fill-green-600 stroke-white"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+            clip-rule="evenodd"
+          />
+        </svg>
+      </div>
+    </button>
+    """
+  end
+
+  def msbutton(%{state: :processing} = assigns) do
+    first_processing = List.first(assigns.processing)
+
+    assigns =
+      assigns
+      |> assign(first_processing: first_processing)
+      |> assign_new(:show_icon, fn -> Map.get(first_processing, :show_icon, false) end)
+
+    ~H"""
+    <button
+      id={"#{@id}-msbutton-processing"}
+      type="button"
+      class={[
+        "phx-submit-loading:opacity-75 rounded-lg border-2 border-zinc-900 bg-zinc-500 hover:bg-zinc-400 py-2 px-3",
+        "focus:ring-4 focus:ring-zinc-800",
+        "text-sm font-semibold leading-6 text-white active:text-white/80",
+        "disabled",
+        @class
+      ]}
+    >
+      <div class="flex space-x-2">
+        <div><%= render_slot([@first_processing]) %></div>
+        <svg
+          :if={@show_icon}
+          class="animate-spin -ml-1 mr-3 h-5 w-5 text-white "
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+          </circle>
+          <path
+            class="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          >
+          </path>
+        </svg>
+      </div>
+    </button>
+    """
+  end
+
+  def msbutton(assigns) do
+    ~H"""
+    <button
+      id={@id}
       type={@type}
       class={[
         "phx-submit-loading:opacity-75 rounded-lg border-2 border-zinc-900 bg-zinc-500 hover:bg-zinc-400 py-2 px-3",
@@ -381,100 +529,23 @@ defmodule MsappMcpWeb.CoreComponents do
     """
   end
 
-  # TODO: The msbutton can probably be condensed/cleaned up a fair amount.  For now
-  #       this is is working, so lets leave this big case statement for now.
-  def msbutton(%{kind: "validated"} = assigns) do
-    assigns =
-      assigns
-      |> assign_new(:valid_item, fn -> List.first(assigns.valid) end)
-      |> assign_new(:invalid_item, fn -> List.first(assigns.invalid) end)
+  defp condense_message_items([{_, _} | _] = message_items) do
+    form_data = MsdataApi.McpBootstrap.get_data_definition()
 
-    ~H"""
-    <%= case @errors do %>
-      <% [] -> %>
-        <button
-          type={@type}
-          class={[
-            "phx-submit-loading:opacity-75 rounded-lg border-2 border-zinc-900 bg-zinc-500 hover:bg-zinc-400 py-2 px-3",
-            "focus:ring-4 focus:ring-zinc-800",
-            "text-sm font-semibold leading-6 text-white active:text-white/80",
-            @class
-          ]}
-          phx-click={@valid_item.action}
-        >
-          <div class="flex space-x-2">
-            <div><%= render_slot(@valid) %></div>
-            <svg
-              :if={@valid_item[:show_icon]}
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              class="w-5 h-5 fill-green-600 stroke-white"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                clip-rule="evenodd"
-              />
-            </svg>
-          </div>
-        </button>
-      <% [_ | _] -> %>
-        <button
-          type={@type}
-          class={[
-            "phx-submit-loading:opacity-75 rounded-lg border-2 border-zinc-900 bg-zinc-500 hover:bg-zinc-400 py-2 px-3",
-            "focus:ring-4 focus:ring-zinc-800",
-            "text-sm font-semibold leading-6 text-white active:text-white/80",
-            @class
-          ]}
-          phx-click={show_modal("#{@id}-msformerrors")}
-        >
-          <div class="flex space-x-2">
-            <div><%= render_slot(@invalid) %></div>
-            <svg
-              :if={@invalid_item[:show_icon]}
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              class="w-5 h-5 fill-red-600 stroke-white"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z"
-                clip-rule="evenodd"
-              />
-            </svg>
-          </div>
-        </button>
-        <.modal id={"#{@id}-msformerrors"}>
-          <:title>Form Incomplete or Invalid</:title>
-          <p class="mt-4">The following issues must be resolved prior to continuing.</p>
-          <div class="m-4">
-            <.mslist header_title="Field Name" header_item="Issue">
-              <:item :for={error <- condense_errors(@errors)} title={error.label}>
-                <p><%= Phoenix.HTML.raw(error.error_text) %></p>
-              </:item>
-            </.mslist>
-          </div>
-        </.modal>
-    <% end %>
-    """
-  end
-
-  defp condense_errors([{_, _} | _] = errors) do
-    form_data = MsformData.McpBootstrap.get_data_definition()
-
-    errors
+    message_items
     |> Keyword.keys()
     |> Enum.uniq()
     |> Enum.reduce([], fn key, acc ->
-      error_text =
-        Keyword.get_values(errors, key) |> Enum.map(&translate_error(&1)) |> Enum.join("<br/>")
+      message_item_text =
+        Keyword.get_values(message_items, key)
+        |> Enum.map(&translate_error(&1))
+        |> Enum.join("<br/>")
 
-      [%{label: form_data[key][:label], error_text: error_text} | acc]
+      [%{label: form_data[key][:label], message_text: message_item_text} | acc]
     end)
   end
 
-  defp condense_errors(errors), do: errors
+  defp condense_message_items(message_items), do: message_items
 
   attr(:header_title, :string, default: nil)
   attr(:header_item, :string, default: nil)

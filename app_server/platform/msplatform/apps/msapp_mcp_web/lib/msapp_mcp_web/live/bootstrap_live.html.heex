@@ -5,6 +5,10 @@
       Welcome & Process Overview
     </.mswizard_step_item>
 
+    <.mswizard_step_item step={:disallowed} current_step={@current_step}>
+      Load Disallowed Passwords List
+    </.mswizard_step_item>
+
     <.mswizard_step_item step={:records} current_step={@current_step}>
       Platform Owner & Administrative User
     </.mswizard_step_item>
@@ -71,7 +75,37 @@
         </div>
       </div>
       <div class="py-8 flex justify-center space-x-4">
-        <.msbutton id="welcome-next" phx-click="change_step" phx-value-step={:records} autofocus>
+        <.msbutton id="welcome-next" phx-click="change_step" phx-value-step={:disallowed} autofocus>
+          Next
+        </.msbutton>
+      </div>
+    </.mswizard_step>
+
+    <.mswizard_step step={:disallowed} current_step={@current_step}>
+      <div class="flex items-center justify-center space-x-4 my-24">
+        <p>Load "Disallowed Passwords" starter list?</p>
+        <div class="flex-none">
+          <.msbutton id="disallowed-loaded" state={@disallowed_list_state}>
+            <:action click_action="load_disallowed">
+              Load
+            </:action>
+            <:message
+              show_icon={true}
+              message_title="Disallowed Passwords List Populated"
+              message_text="The Disallowed Passwords List has already been populated.  You may not perform this action again using this process.">
+              Already Populated
+            </:message>
+            <:processing show_icon={true}>
+              Loading
+            </:processing>
+          </.msbutton>
+        </div>
+      </div>
+      <div class="py-8 flex justify-center space-x-4">
+        <.msbutton id="disallowed-back" phx-click="change_step" phx-value-step={:welcome}>
+          Back
+        </.msbutton>
+        <.msbutton id="disallowed-next" phx-click="change_step" phx-value-step={:records}>
           Next
         </.msbutton>
       </div>
@@ -84,13 +118,13 @@
           <div class="flex space-x-4 p-4">
             <.msinput
               field={{f, :owner_name}}
-              label={@form_data.owner_name.label}
+              label={@form_data_def.owner_name.label}
               maxlength="6"
               size="6"
               phx-debounce="2000"/>
             <.msinput
               field={{f, :owner_display_name}}
-              label={@form_data.owner_display_name.label}
+              label={@form_data_def.owner_display_name.label}
               maxlength="40"
               size="40"
               phx-debounce="2000"/>
@@ -100,8 +134,8 @@
         <.mssection title="Platform Administrator Access Account">
           <div class="flex space-x-4 p-4">
             <.msinput
-              field={{f, :admin_access_account_display_name}}
-              label={@form_data.admin_access_account_display_name.label}
+              field={{f, :admin_display_name}}
+              label={@form_data_def.admin_display_name.label}
               maxlength="40"
               size="40"
               phx-debounce="2000"/>
@@ -117,14 +151,14 @@
             <.msinput
               type="password"
               field={{f, :admin_credential}}
-              label={@form_data.admin_credential.label}
+              label={@form_data_def.admin_credential.label}
               maxlength="128"
               size="40"
               phx-debounce="2000"/>
             <.msinput
               type="password"
               field={{f, :admin_credential_verify}}
-              label={@form_data.admin_credential_verify.label}
+              label={@form_data_def.admin_credential_verify.label}
               maxlength="128"
               size="40"
               phx-debounce="2000"/>
@@ -132,15 +166,24 @@
 
         </.mssection>
         <div class="py-8 flex justify-center space-x-4">
-          <.msbutton phx-click="change_step" phx-value-step={:welcome} id="records-back">Back</.msbutton>
+          <.msbutton phx-click="change_step" phx-value-step={:disallowed} id="records-back">Back</.msbutton>
           <div class="flex-none">
-            <.msbutton kind="validated" errors={f.errors} id="records-save">
-              <:valid action="save" show_icon="true">
-                Save
-              </:valid>
-              <:invalid show_icon="true">
+            <.msbutton state={@records_state} id="records-save" type="submit">
+              <:message
+                show_icon={true}
+                message_title="Form Incomplete or Invalid"
+                message_text="You must correct the following issues prior to continuing"
+                line_title_label="Field Name"
+                line_item_label="Issue"
+                message_items={f.errors}>
                 Invalid
-              </:invalid>
+              </:message>
+              <:processing show_icon={true}>
+                Saving
+              </:processing>
+              <:action click_action="" show_icon={true}>
+                Save
+              </:action>
             </.msbutton>
         </div>
         </div>
@@ -153,26 +196,26 @@
               </p>
               <h3 class="font-black py-2">Platform Owner Setup Fields</h3>
               <.list>
-                <:item title={@form_data.owner_name.label}>
-                  <p><%= @form_data.owner_name.info %></p>
+                <:item title={@form_data_def.owner_name.label}>
+                  <p><%= @form_data_def.owner_name.info %></p>
                 </:item>
-                <:item title={@form_data.owner_display_name.label}>
-                  <p><%= @form_data.owner_display_name.info %></p>
+                <:item title={@form_data_def.owner_display_name.label}>
+                  <p><%= @form_data_def.owner_display_name.info %></p>
                 </:item>
               </.list>
               <h3 class="font-black py-2">Platform Administrator Access Account Fields</h3>
               <.list>
-                <:item title={@form_data.admin_access_account_display_name.label}>
-                  <p><%= @form_data.admin_access_account_display_name.info %></p>
+                <:item title={@form_data_def.admin_display_name.label}>
+                  <p><%= @form_data_def.admin_display_name.info %></p>
                 </:item>
-                <:item title={@form_data.admin_identifier.label}>
-                  <p><%= @form_data.admin_identifier.info %></p>
+                <:item title={@form_data_def.admin_identifier.label}>
+                  <p><%= @form_data_def.admin_identifier.info %></p>
                 </:item>
-                <:item title={@form_data.admin_credential.label}>
-                  <p><%= @form_data.admin_credential.info %></p>
+                <:item title={@form_data_def.admin_credential.label}>
+                  <p><%= @form_data_def.admin_credential.info %></p>
                 </:item>
-                <:item title={@form_data.admin_credential_verify.label}>
-                  <p><%= @form_data.admin_credential_verify.info %></p>
+                <:item title={@form_data_def.admin_credential_verify.label}>
+                  <p><%= @form_data_def.admin_credential_verify.info %></p>
                 </:item>
               </.list>
             </div>
@@ -183,10 +226,26 @@
     </.mswizard_step>
 
     <.mswizard_step step={:finish} current_step={@current_step} >
-      form section 4
+      <div class="my-auto p-8">
+        <h3 class="font-black text-xl text-center my-4">Muse System Application Platform Setup Complete</h3>
+        <p>
+          You have completed the Application Platform setup process.
+        </p>
+        <br/>
+        <p>
+          When you click the "Finish" button below, you will be redirected to the
+          Application Platform login form.  Use the Platform Administrator Access
+          Account and password that you just created to log into the system.
+        </p>
+        <br/>
+        <p>
+          Once logged in as the Platform Administrator you may continue other
+          setup and configuration activities, including creating your first
+          Application Instance.
+        </p>
+      </div>
       <div class="py-8 flex justify-center space-x-4">
-        <.msbutton id="finish-back" phx-click="change_step" phx-value-step={:records} >Back</.msbutton>
-        <.msbutton id="finish-next" phx-click="change_step" phx-value-step={:finish} >Next</.msbutton>
+        <.msbutton id="finish-next" phx-click="finish_redirect" phx-value-step={:finish} >Finish</.msbutton>
       </div>
     </.mswizard_step>
   </:mswizard_steps>
@@ -194,6 +253,36 @@
   <:mswizard_step_comments>
 
     <.mswizard_comment step={:welcome} current_step={@current_step} />
+
+    <.mswizard_comment step={:disallowed} current_step={@current_step}>
+      <p>
+        "Disallowed Passwords" are passwords which can be reasonably expected to
+        be used by malicious parties in efforts to compromise system login
+        accounts and as such users are prevented from using them here.  These
+        passwords are typically added to the list because they may be known to
+        be commonly used or because they've become publicly known through
+        internet service provider breaches where those providers did not store
+        their user account data, including passwords, securely.
+      </p>
+      <br/>
+      <p>
+        The Disallowed Password Starter List offered in this step is a list of
+        488,127 commonly seen passwords which are 8 characters in length or more.
+      </p>
+      <br/>
+      <p>
+        We strongly recommend either installing this list in this step or
+        sourcing a more current and detailed list of common passwords prior to
+        launching this system into regular use.
+      </p>
+      <br/>
+      <p>
+        If the system Disallowed Passwords list has already been populated, the
+        option to load the starter list in this step will not be available.  If
+        you wish to skip loading the starter list simply press the "Next" or
+        "Back" buttons.
+      </p>
+    </.mswizard_comment>
 
     <.mswizard_comment step={:records} current_step={@current_step}>
       <p>
@@ -215,10 +304,7 @@
       </p>
     </.mswizard_comment>
 
-    <.mswizard_comment step={:finish} current_step={@current_step}>
-      <p><strong>Verify Settings & Complete Setup</strong>: (undocumented) </p>
-    </.mswizard_comment>
-
+    <.mswizard_comment step={:finish} current_step={@current_step}/>
   </:mswizard_step_comments>
 </.mswizard>
 

@@ -26,6 +26,8 @@ defmodule MsappMcpWeb.Router do
     pipe_through([:browser, :bootstrap])
 
     get("/", PageController, :home)
+
+    live("/login", LoginLive)
   end
 
   scope "/bootstrap", MsappMcpWeb do
@@ -63,8 +65,8 @@ defmodule MsappMcpWeb.Router do
   end
 
   defp not_bootstrapping_check(conn, _opts) do
-    if MsappMcp.launch_bootstrap?(),
-      do: conn,
-      else: redirect(conn, to: "/") |> halt()
+    unless MsappMcp.launch_bootstrap?(),
+      do: redirect(conn, to: "/") |> halt(),
+      else: conn
   end
 end
