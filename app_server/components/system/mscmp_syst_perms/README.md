@@ -132,9 +132,9 @@ Permission Roles allow for the grouping of specific Permissions and the specific
 grants of Rights.  These Permission Roles are then the assigned to system users,
 giving these users the collective Rights of their assigned Permission Roles.
 Note that Permission Roles are intended to be additive; this means that if a
-two Permission Roles are granted to a user, an one Role gives the user view only
-access to Sales Orders but the other Role gives the user both Maintenance and
-Administrative Rights to Sales Orders, the Role which gives Maintenance and
+two Permission Roles are granted to a user, and one Role gives the user view
+only access to Sales Orders but the other Role gives the user both Maintenance
+and Administrative Rights to Sales Orders, the Role which gives Maintenance and
 Administrative Rights will be the effective Role for that Permission.  Its the
 greatest of grants from each granted Permission Roles which wins.
 
