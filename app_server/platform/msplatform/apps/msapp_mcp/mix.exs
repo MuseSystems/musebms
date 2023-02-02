@@ -63,8 +63,7 @@ defmodule MsappMcp.MixProject do
       extra_applications: [
         :logger,
         :runtime_tools,
-        :crypto,
-        :mnesia
+        :crypto
       ]
     ]
   end

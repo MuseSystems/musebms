@@ -21,8 +21,7 @@ defmodule MscmpSystLimiter.MixProject do
     {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
     {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
     {:ex_doc, "~> 0.20", only: :dev, runtime: false},
-    {:hammer_backend_mnesia, "~> 0.5", runtime: false},
-    {:hammer, "~> 6.0", runtime: false},
+    {:hammer, "~> 6.0"},
     {:gradient, github: "esl/gradient", only: [:dev], runtime: false},
 
     # Muse Systems Business Management System Components
@@ -72,8 +71,7 @@ defmodule MscmpSystLimiter.MixProject do
   def application do
     [
       extra_applications: [
-        :logger,
-        :mnesia
+        :logger
       ]
     ]
   end

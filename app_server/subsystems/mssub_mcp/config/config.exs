@@ -15,6 +15,7 @@ import Config
 config :mssub_mcp,
   startup_options_path: "ms_startup_options.toml"
 
-config :mnesia, dir: '.mnesia'
+config :hammer,
+  backend: {Hammer.Backend.ETS, [expiry_ms: 60_000 * 60 * 2, cleanup_interval_ms: 60_000 * 10]}
 
 import_config "#{Mix.env()}.exs"

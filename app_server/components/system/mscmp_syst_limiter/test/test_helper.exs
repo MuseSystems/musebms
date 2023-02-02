@@ -10,7 +10,7 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-test_kind =
+_test_kind =
   if ExUnit.configuration() |> Keyword.get(:include) |> Enum.member?(:integration) do
     ExUnit.configure(seed: 0)
     :integration_testing
@@ -19,22 +19,4 @@ test_kind =
     :unit_testing
   end
 
-children = [
-  {DynamicSupervisor, strategy: :one_for_one, name: MscmpSystLimiter.TestingSupervisor}
-]
-
-Supervisor.start_link(children, strategy: :one_for_one)
-
-limiter_service_spec = %{id: TestingLimiter, start: {MscmpSystLimiter, :start_link, []}}
-
-TestSupport.setup_testing_database(test_kind)
-
-DynamicSupervisor.start_child(MscmpSystLimiter.TestingSupervisor, limiter_service_spec)
-
-Logger.configure(level: :info)
-
 ExUnit.start()
-
-ExUnit.after_suite(fn _suite_result ->
-  TestSupport.cleanup_testing_database(test_kind)
-end)

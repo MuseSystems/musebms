@@ -12,7 +12,6 @@
 
 defmodule MscmpSystLimiter do
   alias MscmpSystLimiter.Impl
-  alias MscmpSystLimiter.Runtime
   alias MscmpSystLimiter.Types
 
   @external_resource "README.md"
@@ -241,41 +240,4 @@ defmodule MscmpSystLimiter do
   @spec delete_counters(Types.counter_type(), Types.counter_id()) ::
           {:ok, integer()} | {:error, MscmpSystError.t()}
   defdelegate delete_counters(counter_type, counter_id), to: Impl.RateLimiter
-
-  @doc section: :service_management
-  @doc """
-  Starts the rate limiter services.
-
-  This service should be started after the Mnesia has had its schema created.
-
-  ## Parameters
-
-    * `opts` - a Keyword List of options which can be used to override default
-    values typically used to initialize the service.  The available options are:
-
-      * `supervisor_name` - the name of the supervisor which will manage the
-      Rate Limiter services.  The default value is `MscmpSystLimiter.Supervisor`.
-
-      * `expiry_ms` - the life time in milliseconds of any single Counter.  This
-      should be longer than the life of the longest bucket that will be created.
-      A shorter value could result in an active counter being deleted prior to
-      becoming inactive.
-
-      * `cleanup_interval_ms` - the time in milliseconds to wait between sweeps
-      of the stale Counter cleaner.  During a sweep any Counter past its expiry
-      time (see `expiry_ms`) will be purged from the system.
-
-      * `table_name` - the name of the backend database table to use for
-      tracking counters.  Typically this value should be allowed to default
-      (`:mscmp_syst_limiter_counters`) unless there's a compelling reason to do
-      otherwise.
-
-      * `mnesia_table_args` - a list of options to be passed directly to
-      `:mnesia.create_table/2`.  For complete documentation of the
-      available Mnesia table options see
-      [the Erlang documentation](https://www.erlang.org/doc/man/mnesia.html#create_table-2).
-
-  """
-  @spec start_link(Keyword.t()) :: Supervisor.on_start()
-  defdelegate start_link(opts \\ []), to: Runtime.Services
 end

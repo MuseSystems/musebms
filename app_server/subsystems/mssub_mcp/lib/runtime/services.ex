@@ -54,26 +54,13 @@ defmodule MssubMcp.Runtime.Services do
          [{@mcp_settings_service_name, @mcp_db_app_access_context}]}
     }
 
-    limiter_service_spec = %{
-      id: MssubMcpLimiterService,
-      start:
-        {MscmpSystLimiter, :start_link, [[supervisor_name: @mcp_limiter_config.supervisor_name]]}
-    }
-
     mcp_service_children = [
-      limiter_service_spec,
       datastore_spec,
       instance_manager_spec,
       enum_service_spec,
       settings_service_spec
     ]
 
-    result = Supervisor.init(mcp_service_children, strategy: :one_for_one)
-
-    # TODO: This return should probably be checked for errors rather than
-    #       just glossed over like this.
-    # _ = MscmpSystLimiter.init_rate_limiter()
-
-    result
+    Supervisor.init(mcp_service_children, strategy: :one_for_one)
   end
 end
