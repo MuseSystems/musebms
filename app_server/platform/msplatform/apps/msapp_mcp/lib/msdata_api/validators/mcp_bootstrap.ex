@@ -21,7 +21,7 @@ defmodule MsdataApi.Validators.McpBootstrap do
     |> cast(change_params, [
       :owner_name,
       :owner_display_name,
-      :admin_access_account_display_name,
+      :admin_display_name,
       :admin_identifier,
       :admin_credential,
       :admin_credential_verify
@@ -29,14 +29,14 @@ defmodule MsdataApi.Validators.McpBootstrap do
     |> validate_required([
       :owner_name,
       :owner_display_name,
-      :admin_access_account_display_name,
+      :admin_display_name,
       :admin_identifier,
       :admin_credential,
       :admin_credential_verify
     ])
     |> validate_length(:owner_name, min: 6, max: 6)
     |> validate_length(:owner_display_name, min: 3, max: 40)
-    |> validate_length(:admin_access_account_display_name, min: 3, max: 40)
+    |> validate_length(:admin_display_name, min: 3, max: 40)
     |> validate_format(:admin_identifier, ~r/@/)
     |> validate_credential()
     |> validate_credential_verify()

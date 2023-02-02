@@ -27,7 +27,7 @@ defmodule MsdataApi.McpBootstrap do
           %__MODULE__{
             owner_name: String.t() | nil,
             owner_display_name: String.t() | nil,
-            admin_access_account_display_name: String.t() | nil,
+            admin_display_name: String.t() | nil,
             admin_identifier: String.t() | nil,
             admin_credential: String.t() | nil,
             admin_credential_verify: String.t() | nil
@@ -36,7 +36,7 @@ defmodule MsdataApi.McpBootstrap do
   embedded_schema do
     field(:owner_name, :string)
     field(:owner_display_name, :string)
-    field(:admin_access_account_display_name, :string)
+    field(:admin_display_name, :string)
     field(:admin_identifier, :string, redact: true)
     field(:admin_credential, :string, redact: true)
     field(:admin_credential_verify, :string, redact: true)
@@ -73,7 +73,7 @@ defmodule MsdataApi.McpBootstrap do
         characters are recommended.
         """
       },
-      admin_access_account_display_name: %{
+      admin_display_name: %{
         label: "Display/Full Name",
         info: """
         The full name of the Platform Administrator user account visible through
