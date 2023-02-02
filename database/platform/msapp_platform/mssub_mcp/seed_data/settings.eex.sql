@@ -17,7 +17,7 @@ INSERT INTO ms_syst_data.syst_settings
     , syst_description
     , setting_uuid )
 VALUES
-    ( 'msplatform_state'
+    ( 'platform_state'
     , 'Platform State'
     , TRUE
     , 'Defines the current installation and runtime state of the platform as a whole.  ' ||
