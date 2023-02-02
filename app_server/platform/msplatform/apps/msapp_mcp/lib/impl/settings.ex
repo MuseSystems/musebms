@@ -24,7 +24,7 @@ defmodule MsappMcp.Impl.Settings do
 
   @spec get_platform_state :: Types.platform_states()
   mcp_opfn get_platform_state do
-    "msplatform_state"
+    "platform_state"
     |> MscmpSystSettings.get_setting_value(:setting_uuid)
     |> then(&MscmpSystEnums.get_enum_item_by_id("platform_states", &1))
     |> case do
