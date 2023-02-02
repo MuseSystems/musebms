@@ -100,8 +100,7 @@ defmodule MssubMcp.MixProject do
     [
       extra_applications: [
         :logger,
-        :crypto,
-        :mnesia
+        :crypto
       ]
     ]
   end
