@@ -73,6 +73,13 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     :check_instance_network_rules
   ]
 
+  @email_password_instance_bypass_operations [
+    :check_global_network_rules,
+    :check_identifier_rate_limit,
+    :check_identity,
+    :check_credential
+  ]
+
   @api_token_operations [
     :check_global_network_rules,
     :check_identifier_rate_limit,
@@ -80,6 +87,13 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     :check_credential,
     :check_instance,
     :check_instance_network_rules
+  ]
+
+  @api_token_instance_bypass_operations [
+    :check_global_network_rules,
+    :check_identifier_rate_limit,
+    :check_identity,
+    :check_credential
   ]
 
   @validation_token_operations [
@@ -155,9 +169,13 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
   def authenticate_email_password(auth_state, opts) do
     preliminary_auth_state =
       auth_state
+      |> Map.merge(%{
+        instance_id: auth_state[:instance_id] || opts[:instance_id],
+        owning_owner_id: auth_state[:owning_owner_id] || opts[:owning_owner_id]
+      })
       |> maybe_start_email_password_authentication()
       |> confirm_deadline()
-      |> maybe_clear_require_instance(opts[:instance_id])
+      |> confirm_instance_identified()
       |> confirm_identifier_rate_limit(opts)
       |> confirm_global_network_rules()
       |> confirm_email_identity()
@@ -188,28 +206,28 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
   end
 
   defp maybe_start_email_password_authentication(%{status: :not_started} = auth_state) do
-    base_ops = @email_password_operations
+    resolved_ops = resolve_email_password_operations(auth_state)
 
-    all_ops = if auth_state.instance_id == nil, do: [:require_instance | base_ops], else: base_ops
-
-    Map.merge(auth_state, %{status: :pending, pending_operations: all_ops})
+    Map.merge(auth_state, %{status: :pending, pending_operations: resolved_ops})
   end
 
   defp maybe_start_email_password_authentication(auth_state), do: auth_state
 
-  defp maybe_clear_require_instance(%{status: :pending} = auth_state, instance_id)
-       when is_binary(instance_id) do
-    case Enum.member?(auth_state.pending_operations, :require_instance) do
-      true ->
-        new_ops = List.delete(auth_state.pending_operations, :require_instance)
-        Map.merge(auth_state, %{pending_operations: new_ops, instance_id: instance_id})
+  defp resolve_email_password_operations(%{instance_id: nil}),
+    do: [:require_instance | @email_password_operations]
 
-      false ->
-        auth_state
-    end
+  defp resolve_email_password_operations(%{instance_id: :bypass}),
+    do: @email_password_instance_bypass_operations
+
+  defp resolve_email_password_operations(_),
+    do: @email_password_operations
+
+  defp confirm_instance_identified(%{instance_id: nil} = auth_state), do: auth_state
+
+  defp confirm_instance_identified(auth_state) do
+    new_ops = List.delete(auth_state.pending_operations, :require_instance)
+    Map.put(auth_state, :pending_operations, new_ops)
   end
-
-  defp maybe_clear_require_instance(auth_state, _instance_id), do: auth_state
 
   defp extended_email_password_ops_required?(auth_state) do
     extended_operations = MapSet.new(@email_password_extended_auth_ops)
@@ -283,7 +301,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
       identifier: identifier,
       owning_owner_id: opts[:owning_owner_id],
       plaintext_credential: token,
-      pending_operations: @api_token_operations
+      pending_operations: resolve_api_token_operations(instance_id)
     }
 
     authenticate_api_token(pending_auth_state, opts)
@@ -293,6 +311,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
           {:ok, Types.authentication_state()} | {:error, MscmpSystError.t()}
   def authenticate_api_token(auth_state, opts) do
     auth_state
+    |> Map.merge(%{owning_owner_id: auth_state[:owning_owner_id] || opts[:owning_owner_id]})
     |> confirm_deadline()
     |> confirm_identifier_rate_limit(opts)
     |> confirm_global_network_rules()
@@ -316,6 +335,9 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
          cause: error
        }}
   end
+
+  defp resolve_api_token_operations(:bypass), do: @api_token_instance_bypass_operations
+  defp resolve_api_token_operations(_), do: @api_token_operations
 
   defp confirm_api_token_identity(auth_state) do
     if :check_identity in auth_state.pending_operations do
