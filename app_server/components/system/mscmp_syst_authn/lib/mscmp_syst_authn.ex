@@ -2686,14 +2686,18 @@ defmodule MscmpSystAuthn do
       `nil`.
 
       * `instance_id` - the record ID of the Application Instance to which the
-      Access Account holder wishes to authenticate.  This is not required when
-      the Email/Password authentication process is initiated but is required for
-      it to complete.  If this value is not initially provided, the function
-      will be `interrupted` returning an Authentication State status value of
-      `:pending`.  Deferral may be appropriate if, for example, we want to allow
-      the Access Account holder to select the specific Instance they wish to
-      access from a list of their permitted Instances.  The default value of
-      this option is `nil`.
+      Access Account holder wishes to authenticate.  A final value for
+      instance_id is not required when the Email/Password authentication process
+      is initiated but is required for it to complete.  If this value is not
+      initially provided, the function will be `interrupted` returning an
+      Authentication State status value of `:pending`.  Deferral may be
+      appropriate if, for example, we want to allow the Access Account holder to
+      select the specific Instance they wish to access from a list of their
+      permitted Instances.  Final resolution of the value must reference an
+      Instance for which the Access Account permitted authentication attempts or
+      must be set `:bypass` if the authentication attempt is a special case
+      where a specific Instance is not relevant.  The default value of this
+      option is `nil`.
 
       * `host_ban_rate_limit` - overrides the default host IP address based Rate
       Limit.  The value is set via a tuple in the following form:
@@ -2948,8 +2952,11 @@ defmodule MscmpSystAuthn do
       * `instance_id` - the record ID of the Application Instance to which the
       Access Account holder wishes to authenticate.  This value is required must
       be provided at function call time or the Authentication State will be
-      returned in a `:rejected` status.  There is no default value (default
-      `nil`).
+      returned in a `:rejected` status.  In special cases where the
+      authentication attempt is outside of the context of a specific Instance,
+      the special value `:bypass` may be used for this option indicating that
+      the authentication attempt may skip the permitted Instance check. There is
+      no default value (default `nil`).
 
       * `host_ban_rate_limit` - overrides the default host IP address based Rate
       Limit.  The value is set via a tuple in the following form:

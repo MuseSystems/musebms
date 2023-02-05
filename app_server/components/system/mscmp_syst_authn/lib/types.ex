@@ -289,8 +289,10 @@ defmodule MscmpSystAuthn.Types do
 
     * `instance_id` - the Instance ID that the Access Account holder is
     attempting to authenticate to.  For certain authentication types, this value
-    may initially be `nil`, but must be non-nil prior to a successful completion
-    of the authentication process.
+    may initially be `nil` for later resolution to a specific instance.  In some
+    special cases, authentication may not be contextually bound to a specific
+    Instance.  In this cases, the special value `:bypass` can be used it
+    indicate that the Instance is not relevant for the authentication.
 
     * `identity_type_id` - the record ID referencing the Identity Type used to
     identify the Access Account.
@@ -332,7 +334,7 @@ defmodule MscmpSystAuthn.Types do
           required(:status) => authentication_status(),
           required(:deadline) => DateTime.t(),
           required(:access_account_id) => access_account_id() | nil,
-          required(:instance_id) => MscmpSystInstance.Types.instance_id() | nil,
+          required(:instance_id) => MscmpSystInstance.Types.instance_id() | :bypass | nil,
           required(:identity_type_id) => identity_type_id(),
           required(:host_address) => host_address(),
           required(:applied_network_rule) => applied_network_rule() | nil,
