@@ -45,6 +45,7 @@ defmodule MsappMcp.Impl.Bootstrap do
             data
             |> parse_bootstrap_params()
             |> MssubMcp.bootstrap_tenant()
+            |> maybe_set_platform_owner()
 
           errors ->
             {:error,
@@ -89,4 +90,11 @@ defmodule MsappMcp.Impl.Bootstrap do
       application: :mcp
     }
   end
+
+  defp maybe_set_platform_owner({:ok, values} = result) do
+    MscmpSystSettings.set_setting_value("platform_owner", :setting_uuid, values.owner_id)
+    result
+  end
+
+  defp maybe_set_platform_owner(result), do: result
 end
