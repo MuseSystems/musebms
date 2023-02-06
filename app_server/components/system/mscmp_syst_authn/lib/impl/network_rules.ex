@@ -213,7 +213,13 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
   def get_applied_network_rule!(host_addr, instance_id \\ nil, instance_owner_id \\ nil)
       when is_tuple(host_addr) do
     target_host = %DbTypes.Inet{address: host_addr} |> DbTypes.Inet.to_postgrex_inet()
-    target_instance_id = if instance_id != nil, do: Ecto.UUID.dump!(instance_id), else: nil
+
+    target_instance_id =
+      case instance_id do
+        nil -> nil
+        :bypass -> nil
+        instance_id -> Ecto.UUID.dump!(instance_id)
+      end
 
     target_owner_id =
       if instance_owner_id != nil, do: Ecto.UUID.dump!(instance_owner_id), else: nil
