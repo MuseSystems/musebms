@@ -132,26 +132,44 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     %{id: identity_type_id} =
       Impl.Identity.get_identity_type_by_name("identity_types_sysdef_email")
 
-    resolved_email_addr =
-      email_addr
-      |> Impl.Identity.Email.verify_email_address()
-      |> Impl.Identity.Email.normalize_email_address()
+    initial_auth_state =
+      case Impl.Identity.Email.verify_email_address(email_addr) do
+        {:ok, validated_email} ->
+          normalized_email = Impl.Identity.Email.normalize_email_address(validated_email)
 
-    not_started_auth_state = %{
-      status: :not_started,
-      deadline: authentication_deadline,
-      access_account_id: nil,
-      instance_id: opts[:instance_id],
-      identity_type_id: identity_type_id,
-      host_address: host_addr,
-      applied_network_rule: nil,
-      identifier: resolved_email_addr,
-      owning_owner_id: opts[:owning_owner_id],
-      plaintext_credential: pwd_text,
-      pending_operations: []
-    }
+          %{
+            status: :not_started,
+            deadline: authentication_deadline,
+            access_account_id: nil,
+            instance_id: opts[:instance_id],
+            identity_type_id: identity_type_id,
+            host_address: host_addr,
+            applied_network_rule: nil,
+            identifier: normalized_email,
+            owning_owner_id: opts[:owning_owner_id],
+            plaintext_credential: pwd_text,
+            pending_operations: []
+          }
 
-    authenticate_email_password(not_started_auth_state, opts)
+        {:error, _} ->
+          Impl.Hash.fake_credential_hash_verify()
+
+          %{
+            status: :rejected,
+            deadline: authentication_deadline,
+            access_account_id: nil,
+            instance_id: opts[:instance_id],
+            identity_type_id: identity_type_id,
+            host_address: host_addr,
+            applied_network_rule: nil,
+            identifier: email_addr,
+            owning_owner_id: opts[:owning_owner_id],
+            plaintext_credential: pwd_text,
+            pending_operations: [:check_instance_network_rules, :check_host_rate_limit]
+          }
+      end
+
+    authenticate_email_password(initial_auth_state, opts)
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
