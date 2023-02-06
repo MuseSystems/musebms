@@ -20,13 +20,11 @@ defmodule IdentityEmailTest do
   @moduletag :capture_log
 
   test "Can validate Email Address format" do
-    assert "AValid!EmailAddress@MuseSystems.Com" =
+    assert {:ok, "AValid!EmailAddress@MuseSystems.Com"} =
              Impl.Identity.Email.verify_email_address("AValid!EmailAddress@MuseSystems.Com")
 
-    assert_raise MscmpSystError,
-                 fn ->
-                   Impl.Identity.Email.verify_email_address("AValid!EmailAddress")
-                 end
+    assert {:error, %MscmpSystError{}} =
+             Impl.Identity.Email.verify_email_address("AValid!EmailAddress")
   end
 
   test "Can normalize Email Address" do

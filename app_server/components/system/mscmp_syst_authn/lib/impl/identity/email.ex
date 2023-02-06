@@ -28,30 +28,38 @@ defmodule MscmpSystAuthn.Impl.Identity.Email do
       when is_binary(access_account_id) and is_binary(email_address) do
     opts = MscmpSystUtils.resolve_options(opts, create_validated: @default_create_validated)
 
-    email_address =
-      email_address
-      |> verify_email_address()
-      |> normalize_email_address()
+    case verify_email_address(email_address) do
+      {:ok, valid_email} ->
+        normalized_email = normalize_email_address(valid_email)
 
-    identity_params = %{
-      access_account_id: access_account_id,
-      identity_type_name: "identity_types_sysdef_email",
-      account_identifier: email_address
-    }
+        identity_params = %{
+          access_account_id: access_account_id,
+          identity_type_name: "identity_types_sysdef_email",
+          account_identifier: normalized_email
+        }
 
-    {:ok, Helpers.create_identity(identity_params, opts)}
+        created_identity = Helpers.create_identity(identity_params, opts)
+
+        {:ok, created_identity}
+
+      {:error, _} = error ->
+        {:error,
+         %MscmpSystError{
+           code: :undefined_error,
+           message: "Failure creating Email Identity.",
+           cause: error
+         }}
+    end
   rescue
     error ->
       Logger.error(Exception.format(:error, error, __STACKTRACE__))
 
-      {
-        :error,
-        %MscmpSystError{
-          code: :undefined_error,
-          message: "Failure creating Email Identity.",
-          cause: error
-        }
-      }
+      {:error,
+       %MscmpSystError{
+         code: :undefined_error,
+         message: "Failure creating Email Identity.",
+         cause: error
+       }}
   end
 
   @spec identify_access_account(
@@ -59,11 +67,16 @@ defmodule MscmpSystAuthn.Impl.Identity.Email do
           MscmpSystInstance.Types.owner_id() | nil
         ) :: Msdata.SystIdentities.t() | nil
   def identify_access_account(email_address, owner_id) when is_binary(email_address) do
-    email_address
-    |> verify_email_address()
-    |> normalize_email_address()
-    |> Helpers.get_identification_query("identity_types_sysdef_email", owner_id)
-    |> MscmpSystDb.one()
+    case verify_email_address(email_address) do
+      {:ok, valid_email} ->
+        valid_email
+        |> normalize_email_address()
+        |> Helpers.get_identification_query("identity_types_sysdef_email", owner_id)
+        |> MscmpSystDb.one()
+
+      _ ->
+        nil
+    end
   end
 
   # This doesn't catch all RFC compliant email addresses; specifically "@" is
@@ -72,15 +85,18 @@ defmodule MscmpSystAuthn.Impl.Identity.Email do
   # separating "@" were missing.  But we should properly handle the vast
   # majority of cases as embedded "@" should be very rare (and expected to be
   # unreliable).
-  @spec verify_email_address(Types.account_identifier()) :: Types.account_identifier()
+  @spec verify_email_address(Types.account_identifier()) ::
+          {:ok, Types.account_identifier()} | {:error, MscmpSystError.t()}
   def verify_email_address(email_address) when is_binary(email_address) do
     if Regex.match?(~r/.+@.+/, email_address) do
-      email_address
+      {:ok, email_address}
     else
-      raise MscmpSystError,
-        message: "The value passed was not a valid email address.",
-        code: :undefined_error,
-        cause: %{parameters: [email_address: email_address]}
+      {:error,
+       %MscmpSystError{
+         message: "The value passed was not a valid email address.",
+         code: :undefined_error,
+         cause: %{parameters: [email_address: email_address]}
+       }}
     end
   end
 
