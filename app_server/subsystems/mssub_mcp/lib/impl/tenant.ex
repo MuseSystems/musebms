@@ -98,10 +98,14 @@ defmodule MssubMcp.Impl.Tenant do
       MscmpSystAuthn.create_authenticator_email_password(
         access_account.id,
         params.account_identifier,
-        params.credential
+        params.credential,
+        get_email_password_authenticator_opts(params)
       )
     end)
   end
+
+  defp get_email_password_authenticator_opts(%{application: :mcp}), do: [create_validated: true]
+  defp get_email_password_authenticator_opts(_), do: []
 
   defp maybe_create_instance(multi, _), do: multi
 
