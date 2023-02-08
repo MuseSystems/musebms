@@ -840,11 +840,80 @@ defmodule IntegrationTest do
 
   # ==============================================================================================
   #
-  # Topic 5: Permissions Management
+  # Topic 5: Session Management
   #
   # ==============================================================================================
 
-  test "Step 5.01: Grant Permission Role to Access Account" do
+  test "Step 5.01: Non-expired Session Processing." do
+    assert {:ok, session_name} =
+             MssubMcp.create_session(%{test_key1: "test_value", test_key2: 1234})
+
+    assert {:ok, %{"test_key1" => "test_value", "test_key2" => 1234}} =
+             MssubMcp.get_session(session_name, 4600)
+
+    assert :ok = MssubMcp.update_session(session_name, %{updated_key: "updated_value"})
+
+    assert {:ok, %{"updated_key" => "updated_value"}} = MssubMcp.get_session(session_name, 4600)
+
+    assert MssubMcp.process_operation(fn -> MscmpSystDb.exists?(Msdata.SystSessions) end) == true
+
+    assert :ok = MssubMcp.delete_session(session_name)
+
+    assert MssubMcp.process_operation(fn -> MscmpSystDb.exists?(Msdata.SystSessions) end) == false
+  end
+
+  test "Step 5.02: Get Expired Session" do
+    {:ok, session_name} = MssubMcp.create_session(%{key: "value"}, 0)
+
+    Process.sleep(1000)
+
+    assert {:ok, :not_found} = MssubMcp.get_session(session_name)
+  end
+
+  test "Step 5.03: Update Expired Session" do
+    {:ok, session_name} = MssubMcp.create_session(%{key: "value"}, 0)
+
+    Process.sleep(1000)
+
+    assert {:ok, :not_found} =
+             MssubMcp.update_session(session_name, %{updated_key: "updated_value"})
+  end
+
+  test "Step 5.04: Delete Expired Session" do
+    {:ok, session_name} = MssubMcp.create_session(%{key: "value"}, 0)
+
+    Process.sleep(1000)
+
+    assert :ok = MssubMcp.delete_session(session_name)
+  end
+
+  test "Step 5.05: Purge Sessions" do
+    {:ok, _} = MssubMcp.create_session(%{key: "value"}, 0)
+
+    {:ok, _} = MssubMcp.create_session(%{key: "value"})
+
+    Process.sleep(1000)
+
+    count_query = from(s in Msdata.SystSessions, select: count(s.id))
+
+    # Note that the Topic 2 testing may leave some expired records behind.
+    # We shouldn't depend on that here for our test, but we need to be sure
+    # we accommodate the possibility here.
+
+    assert MssubMcp.process_operation(fn -> MscmpSystDb.one(count_query) end) >= 2
+
+    assert :ok = MssubMcp.purge_expired_sessions()
+
+    assert MssubMcp.process_operation(fn -> MscmpSystDb.one(count_query) end) == 1
+  end
+
+  # ==============================================================================================
+  #
+  # Topic 6: Permissions Management
+  #
+  # ==============================================================================================
+
+  test "Step 6.01: Grant Permission Role to Access Account" do
     {:ok, access_account_id} = MssubMcp.get_access_account_id_by_name("owner1_access_account")
 
     selector = %MscmpSystMcpPerms.Types.AccessAccountPermsSelector{
@@ -872,7 +941,7 @@ defmodule IntegrationTest do
     assert {:error, _} = MssubMcp.grant_perm_role(selector, global_role_id)
   end
 
-  test "Step 5.02: Get effective Permission grants for Access Account" do
+  test "Step 6.02: Get effective Permission grants for Access Account" do
     {:ok, access_account_id} = MssubMcp.get_access_account_id_by_name("owner1_access_account")
 
     selector = %MscmpSystMcpPerms.Types.AccessAccountPermsSelector{
@@ -972,7 +1041,7 @@ defmodule IntegrationTest do
              end)
   end
 
-  test "Step 5.03: Look-up Permission Role Record ID by Name" do
+  test "Step 6.03: Look-up Permission Role Record ID by Name" do
     global_role_id =
       MssubMcp.process_operation(fn ->
         from(pr in Msdata.SystPermRoles, where: pr.internal_name == "global_login", select: pr.id)
@@ -985,7 +1054,7 @@ defmodule IntegrationTest do
     assert is_nil(MssubMcp.get_perm_role_id_by_name("mcp_access_accounts", "nonexistent_role"))
   end
 
-  test "Step 5.04: List Access Account Permission Role Grants" do
+  test "Step 6.04: List Access Account Permission Role Grants" do
     {:ok, access_account_id} = MssubMcp.get_access_account_id_by_name("owner1_access_account")
 
     selector = %MscmpSystMcpPerms.Types.AccessAccountPermsSelector{
@@ -1019,7 +1088,7 @@ defmodule IntegrationTest do
              Enum.find(global_login.perm_role_grants, &(&1.perm.internal_name == "global_login"))
   end
 
-  test "Step 5.05: List Access Account Permission Denials" do
+  test "Step 6.05: List Access Account Permission Denials" do
     {:ok, access_account_id} = MssubMcp.get_access_account_id_by_name("owner1_access_account")
 
     selector = %MscmpSystMcpPerms.Types.AccessAccountPermsSelector{
@@ -1031,7 +1100,7 @@ defmodule IntegrationTest do
     assert {:ok, []} = MssubMcp.list_perm_denials(selector)
   end
 
-  test "Step 5.06: Revoke Access Account Permission Role" do
+  test "Step 6.06: Revoke Access Account Permission Role" do
     {:ok, access_account_id} = MssubMcp.get_access_account_id_by_name("owner1_access_account")
 
     selector = %MscmpSystMcpPerms.Types.AccessAccountPermsSelector{
@@ -1127,15 +1196,15 @@ defmodule IntegrationTest do
 
   # ==============================================================================================
   #
-  # Topic 6: Instance Purge & Clean-up
+  # Topic 7: Instance Purge & Clean-up
   #
   # ==============================================================================================
 
-  test "Step 6.01: Stop Instances" do
+  test "Step 7.01: Stop Instances" do
     assert :ok = MssubMcp.stop_all_applications()
   end
 
-  test "Step 6.02: Purge Instances" do
+  test "Step 7.02: Purge Instances" do
     startup_options = MscmpSystOptions.get_options!(@startup_options_path)
 
     purge_instance_state = MssubMcp.get_instance_state_default(:instance_states_purge_eligible)
@@ -1158,11 +1227,11 @@ defmodule IntegrationTest do
 
   # ==============================================================================================
   #
-  # Topic 7: Application Context Delete
+  # Topic 8: Application Context Delete
   #
   # ==============================================================================================
 
-  test "Step 7.01: Delete Application Contexts" do
+  test "Step 8.01: Delete Application Contexts" do
     assert app_context1_id = MssubMcp.get_application_context_id_by_name("test_app_access")
 
     assert {:ok, :deleted} = MssubMcp.delete_application_context(app_context1_id)

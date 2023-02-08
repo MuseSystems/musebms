@@ -245,6 +245,17 @@ GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_access_account_perm_role_assigns
 GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_access_account_perm_role_assigns() TO <%= ms_appusr %>;
 GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_access_account_perm_role_assigns() TO <%= ms_appusr %>;
 
+--
+-- MscmpSystSession
+--
+
+-- syst_sessions
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE ms_syst.syst_sessions TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_sessions() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_sessions() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_sessions() TO <%= ms_appusr %>;
+
 -- API Functions
 
 GRANT EXECUTE
