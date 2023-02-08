@@ -32,7 +32,8 @@ defmodule MssubMcp.MixProject do
     {:mscmp_syst_instance, path: "../../components/system/mscmp_syst_instance"},
     {:mscmp_syst_authn, path: "../../components/system/mscmp_syst_authn"},
     {:mscmp_syst_perms, path: "../../components/system/mscmp_syst_perms"},
-    {:mscmp_syst_mcp_perms, path: "../../components/system/mscmp_syst_mcp_perms"}
+    {:mscmp_syst_mcp_perms, path: "../../components/system/mscmp_syst_mcp_perms"},
+    {:mscmp_syst_session, path: "../../components/system/mscmp_syst_session"}
   ]
 
   @dialyzer_opts [
@@ -85,6 +86,7 @@ defmodule MssubMcp.MixProject do
           "Account Code": &(&1[:section] == :authn_account_code),
           "Authenticator Management": &(&1[:section] == :authn_authenticator_management),
           Authentication: &(&1[:section] == :authn_authentication),
+          "Session Management": &(&1[:section] == :session_management),
           Permissions: &(&1[:section] == :perms_management),
           "MCP Processing": &(&1[:section] == :mcp_processing)
         ],
