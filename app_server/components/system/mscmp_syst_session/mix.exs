@@ -22,7 +22,6 @@ defmodule MscmpSystSession.MixProject do
     {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
     {:ex_doc, "~> 0.20", only: :dev, runtime: false},
     {:gradient, github: "esl/gradient", only: [:dev], runtime: false},
-    {:plug_cowboy, "~> 2.0"},
 
     # Muse Systems Business Management System Components
     {:mscmp_syst_utils, path: "../mscmp_syst_utils"},
@@ -58,11 +57,11 @@ defmodule MscmpSystSession.MixProject do
           mscmp_syst_error: "../../../../documentation/technical/app_server/mscmp_syst_error",
           mscmp_syst_db: "../../../../documentation/technical/app_server/mscmp_syst_db"
         ],
-        groups_for_functions: [],
+        groups_for_functions: [:session_management],
         nest_modules_by_prefix: [Msdata],
         groups_for_modules: [
           API: [MscmpSystSession],
-          Data: [],
+          Data: [Msdata.SystSessions],
           "Supporting Types": [MscmpSystSession.Types]
         ]
       ]
