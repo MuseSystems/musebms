@@ -19,8 +19,6 @@ defmodule MscmpSystSession.Impl.DbSession do
 
   require Logger
 
-  @default_expires_after_secs 3600
-
   @spec create_session(map(), non_neg_integer()) ::
           {:ok, Types.session_name()} | {:error, MscmpSystError.t()}
   def create_session(session_data, expires_after_secs) do
