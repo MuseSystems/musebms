@@ -18,7 +18,7 @@ defmodule MscmpSystSession.Types do
   @typedoc """
   The internal reference to the session in the store.
   """
-  @type session_name :: binary() | nil
+  @type session_name :: binary()
 
   @typedoc """
   The session contents, the final data to be stored after it has been built

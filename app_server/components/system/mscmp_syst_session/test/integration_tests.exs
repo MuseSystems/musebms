@@ -15,8 +15,6 @@ defmodule IntegrationTests do
 
   import Ecto.Query
 
-  alias MscmpSystDb.DbTypes
-
   @moduletag :integration
   @moduletag :capture_log
 
@@ -28,15 +26,17 @@ defmodule IntegrationTests do
 
   test "Step 1.01: Non-expired Session Processing." do
     assert {:ok, session_name} =
-             MscmpSystSession.create_session(%{test_key1: "test_value", test_key2: 1234})
+             MscmpSystSession.create_session(%{test_key1: "test_value", test_key2: 1234},
+               session_name: "create_session_test"
+             )
 
     assert {:ok, %{"test_key1" => "test_value", "test_key2" => 1234}} =
-             MscmpSystSession.get_session(session_name, 4600)
+             MscmpSystSession.get_session("create_session_test", expires_after: 4600)
 
     assert :ok = MscmpSystSession.update_session(session_name, %{updated_key: "updated_value"})
 
     assert {:ok, %{"updated_key" => "updated_value"}} =
-             MscmpSystSession.get_session(session_name, 4600)
+             MscmpSystSession.get_session(session_name, expires_after: 4600)
 
     assert MscmpSystDb.exists?(Msdata.SystSessions) == true
 
@@ -52,7 +52,7 @@ defmodule IntegrationTests do
   # ==============================================================================================
 
   test "Step 2.01: Get Expired Session" do
-    {:ok, session_name} = MscmpSystSession.create_session(%{key: "value"}, 0)
+    {:ok, session_name} = MscmpSystSession.create_session(%{key: "value"}, expires_after: 0)
 
     Process.sleep(1000)
 
@@ -60,7 +60,7 @@ defmodule IntegrationTests do
   end
 
   test "Step 2.02: Update Expired Session" do
-    {:ok, session_name} = MscmpSystSession.create_session(%{key: "value"}, 0)
+    {:ok, session_name} = MscmpSystSession.create_session(%{key: "value"}, expires_after: 0)
 
     Process.sleep(1000)
 
@@ -69,7 +69,7 @@ defmodule IntegrationTests do
   end
 
   test "Step 2.03: Delete Expired Session" do
-    {:ok, session_name} = MscmpSystSession.create_session(%{key: "value"}, 0)
+    {:ok, session_name} = MscmpSystSession.create_session(%{key: "value"}, expires_after: 0)
 
     Process.sleep(1000)
 
@@ -83,7 +83,7 @@ defmodule IntegrationTests do
   # ==============================================================================================
 
   test "Step 3.01: Purge Sessions" do
-    {:ok, _} = MscmpSystSession.create_session(%{key: "value"}, 0)
+    {:ok, _} = MscmpSystSession.create_session(%{key: "value"}, expires_after: 0)
 
     {:ok, _} = MscmpSystSession.create_session(%{key: "value"})
 

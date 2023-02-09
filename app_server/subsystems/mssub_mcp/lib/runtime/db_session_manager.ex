@@ -19,31 +19,28 @@ defmodule MssubMcp.Runtime.DbSessionManager do
 
   mcp_constants()
 
-  @spec create_session(SessionTypes.session_data(), non_neg_integer()) ::
+  @spec create_session(map(), Keyword.t()) ::
           {:ok, SessionTypes.session_name()} | {:error, MscmpSystError.t()}
-  mcp_opfn create_session(session_data, expires_after_secs) do
-    MscmpSystSession.create_session(session_data, expires_after_secs)
+  mcp_opfn create_session(session_data, opts) do
+    MscmpSystSession.create_session(session_data, opts)
   end
 
-  @spec get_session(SessionTypes.session_name(), non_neg_integer()) ::
+  @spec get_session(SessionTypes.session_name(), Keyword.t()) ::
           {:ok, SessionTypes.session_data()} | {:ok, :not_found} | {:error, MscmpSystError.t()}
-  mcp_opfn get_session(session_name, expires_after_secs) do
-    MscmpSystSession.get_session(session_name, expires_after_secs)
+  mcp_opfn get_session(session_name, opts) do
+    MscmpSystSession.get_session(session_name, opts)
   end
 
-  @spec refresh_session_expiration(SessionTypes.session_name(), non_neg_integer()) ::
+  @spec refresh_session_expiration(SessionTypes.session_name(), Keyword.t()) ::
           :ok | {:ok, :not_found} | {:error, MscmpSystError.t()}
-  mcp_opfn refresh_session_expiration(session_name, expires_after_secs) do
-    MscmpSystSession.refresh_session_expiration(session_name, expires_after_secs)
+  mcp_opfn refresh_session_expiration(session_name, opts) do
+    MscmpSystSession.refresh_session_expiration(session_name, opts)
   end
 
-  @spec update_session(
-          SessionTypes.session_name(),
-          SessionTypes.session_data(),
-          non_neg_integer()
-        ) :: :ok | {:ok, :not_found} | {:error, MscmpSystError.t()}
-  mcp_opfn update_session(session_name, session_data, expires_after_secs) do
-    MscmpSystSession.update_session(session_name, session_data, expires_after_secs)
+  @spec update_session(SessionTypes.session_name(), SessionTypes.session_data(), Keyword.t()) ::
+          :ok | {:ok, :not_found} | {:error, MscmpSystError.t()}
+  mcp_opfn update_session(session_name, session_data, opts) do
+    MscmpSystSession.update_session(session_name, session_data, opts)
   end
 
   @spec delete_session(SessionTypes.session_name()) ::
@@ -52,8 +49,8 @@ defmodule MssubMcp.Runtime.DbSessionManager do
     MscmpSystSession.delete_session(session_name)
   end
 
-  @spec purge_expired_sessions() :: :ok | {:error, MscmpSystError.t()}
-  mcp_opfn purge_expired_sessions do
-    MscmpSystSession.purge_expired_sessions()
+  @spec purge_expired_sessions(Keyword.t()) :: :ok | {:error, MscmpSystError.t()}
+  mcp_opfn purge_expired_sessions(opts) do
+    MscmpSystSession.purge_expired_sessions(opts)
   end
 end

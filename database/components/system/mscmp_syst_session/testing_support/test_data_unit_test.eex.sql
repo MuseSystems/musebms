@@ -16,6 +16,7 @@ VALUES
      ( 'get_session', jsonb_build_object('test_key', 'test_value'), now() + interval '1 hour')
     ,( 'expired_session', jsonb_build_object('expired_key', 'expired_value'), now() - interval '1 second')
     ,( 'update_session', jsonb_build_object('update_key', 'update_value'), now() + interval '1 hour')
+    ,( 'update_session_date', jsonb_build_object('update_key', 'update_value'), now() + interval '1 hour')
     ,( 'delete_session', jsonb_build_object('delete_key', 'delete_value'), now() + interval '1 hour')
     ,( 'delete_expired_session', jsonb_build_object('delete_key', 'delete_value'), now() - interval '1 second')
     ,( 'example_session', jsonb_build_object('test_key', 'test_value'), now() + interval '1 hour')

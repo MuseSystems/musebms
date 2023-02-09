@@ -19,15 +19,25 @@ defmodule MscmpSystSession.Impl.DbSession do
 
   require Logger
 
-  @spec create_session(map(), non_neg_integer()) ::
-          {:ok, Types.session_name()} | {:error, MscmpSystError.t()}
-  def create_session(session_data, expires_after_secs) do
-    session_name = Base.encode64(:crypto.strong_rand_bytes(96))
+  @default_db_timeout 300
+  @default_expires_after 3600
 
-    expiration = get_expiration_date(expires_after_secs)
+  @spec generate_session_name() :: Types.session_name()
+  def generate_session_name, do: MscmpSystUtils.get_random_string(16, :mixed_alphanum)
+
+  @spec create_session(map(), Keyword.t()) ::
+          {:ok, Types.session_name()} | {:error, MscmpSystError.t()}
+  def create_session(session_data, opts) do
+    opts =
+      MscmpSystUtils.resolve_options(opts,
+        session_name: generate_session_name(),
+        expires_after: @default_expires_after
+      )
+
+    expiration = get_expiration_date(opts[:expires_after])
 
     new_session_params = %{
-      internal_name: session_name,
+      internal_name: opts[:session_name],
       session_data: session_data,
       session_expires: expiration
     }
@@ -48,12 +58,14 @@ defmodule MscmpSystSession.Impl.DbSession do
        }}
   end
 
-  @spec get_session(Types.session_name(), non_neg_integer()) ::
+  @spec get_session(Types.session_name(), Keyword.t()) ::
           {:ok, Types.session_data()} | {:ok, :not_found} | {:error, MscmpSystError.t()}
-  def get_session(session_name, expires_after_secs) when is_binary(session_name) do
+  def get_session(session_name, opts) when is_binary(session_name) do
+    opts = MscmpSystUtils.resolve_options(opts, expires_after: @default_expires_after)
+
     current_datetime = DateTime.utc_now() |> DateTime.truncate(:second)
 
-    new_expiration = get_expiration_date(expires_after_secs)
+    new_expiration = get_expiration_date(opts[:expires_after])
 
     from(s in Msdata.SystSessions,
       update: [set: [session_expires: ^new_expiration]],
@@ -90,12 +102,14 @@ defmodule MscmpSystSession.Impl.DbSession do
 
   def get_session(_, _), do: {:ok, :not_found}
 
-  @spec refresh_session_expiration(Types.session_name(), non_neg_integer()) ::
+  @spec refresh_session_expiration(Types.session_name(), Keyword.t()) ::
           :ok | {:ok, :not_found} | {:error, MscmpSystError.t()}
-  def refresh_session_expiration(session_name, expires_after_secs) do
+  def refresh_session_expiration(session_name, opts) do
+    opts = MscmpSystUtils.resolve_options(opts, expires_after: @default_expires_after)
+
     current_datetime = DateTime.utc_now() |> DateTime.truncate(:second)
 
-    new_expiration = get_expiration_date(expires_after_secs)
+    new_expiration = get_expiration_date(opts[:expires_after])
 
     from(s in Msdata.SystSessions,
       update: [set: [session_expires: ^new_expiration]],
@@ -129,12 +143,14 @@ defmodule MscmpSystSession.Impl.DbSession do
        }}
   end
 
-  @spec update_session(Types.session_name(), Types.session_data(), non_neg_integer()) ::
+  @spec update_session(Types.session_name(), Types.session_data(), Keyword.t()) ::
           :ok | {:ok, :not_found} | {:error, MscmpSystError.t()}
-  def update_session(session_name, session_data, expires_after_secs) do
+  def update_session(session_name, session_data, opts) do
+    opts = MscmpSystUtils.resolve_options(opts, expires_after: @default_expires_after)
+
     current_datetime = DateTime.utc_now() |> DateTime.truncate(:second)
 
-    new_expiration = get_expiration_date(expires_after_secs)
+    new_expiration = get_expiration_date(opts[:expires_after])
 
     from(s in Msdata.SystSessions,
       update: [set: [session_data: ^session_data, session_expires: ^new_expiration]],
@@ -203,12 +219,15 @@ defmodule MscmpSystSession.Impl.DbSession do
   # Note that we can't readily test purging in the Unit Tests suite.  We have
   # sufficient control to test in the Integration Tests suite.
 
-  @spec purge_expired_sessions() :: :ok | {:error, MscmpSystError.t()}
-  def purge_expired_sessions do
+  @spec purge_expired_sessions(Keyword.t()) :: :ok | {:error, MscmpSystError.t()}
+  def purge_expired_sessions(opts) do
+    opts = MscmpSystUtils.resolve_options(opts, db_timeout: @default_db_timeout)
+
     current_datetime = DateTime.utc_now() |> DateTime.truncate(:second)
+    db_timeout_ms = opts[:db_timeout] * 1000
 
     from(s in Msdata.SystSessions, where: s.session_expires < ^current_datetime)
-    |> MscmpSystDb.delete_all()
+    |> MscmpSystDb.delete_all(timeout: db_timeout_ms)
     |> case do
       {_, _} ->
         :ok
@@ -233,9 +252,9 @@ defmodule MscmpSystSession.Impl.DbSession do
        }}
   end
 
-  defp get_expiration_date(expires_after_secs) do
+  defp get_expiration_date(expires_after) do
     DateTime.utc_now()
-    |> DateTime.add(expires_after_secs)
+    |> DateTime.add(expires_after)
     |> DateTime.truncate(:second)
   end
 end
