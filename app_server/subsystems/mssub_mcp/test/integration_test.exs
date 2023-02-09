@@ -846,14 +846,20 @@ defmodule IntegrationTest do
 
   test "Step 5.01: Non-expired Session Processing." do
     assert {:ok, session_name} =
-             MssubMcp.create_session(%{test_key1: "test_value", test_key2: 1234})
+             MssubMcp.create_session(%{test_key1: "test_value", test_key2: 1234},
+               session_name: "test_session_5.01"
+             )
 
     assert {:ok, %{"test_key1" => "test_value", "test_key2" => 1234}} =
-             MssubMcp.get_session(session_name, 4600)
+             MssubMcp.get_session(session_name)
 
-    assert :ok = MssubMcp.update_session(session_name, %{updated_key: "updated_value"})
+    assert :ok =
+             MssubMcp.update_session(session_name, %{updated_key: "updated_value"},
+               expires_after: 3600
+             )
 
-    assert {:ok, %{"updated_key" => "updated_value"}} = MssubMcp.get_session(session_name, 4600)
+    assert {:ok, %{"updated_key" => "updated_value"}} =
+             MssubMcp.get_session(session_name, expires_after: 4600)
 
     assert MssubMcp.process_operation(fn -> MscmpSystDb.exists?(Msdata.SystSessions) end) == true
 
@@ -863,24 +869,26 @@ defmodule IntegrationTest do
   end
 
   test "Step 5.02: Get Expired Session" do
-    {:ok, session_name} = MssubMcp.create_session(%{key: "value"}, 0)
+    {:ok, session_name} = MssubMcp.create_session(%{key: "value"}, expires_after: 0)
 
     Process.sleep(1000)
 
-    assert {:ok, :not_found} = MssubMcp.get_session(session_name)
+    assert {:ok, :not_found} = MssubMcp.get_session(session_name, expires_after: 3600)
   end
 
   test "Step 5.03: Update Expired Session" do
-    {:ok, session_name} = MssubMcp.create_session(%{key: "value"}, 0)
+    {:ok, session_name} = MssubMcp.create_session(%{key: "value"}, expires_after: 0)
 
     Process.sleep(1000)
 
     assert {:ok, :not_found} =
-             MssubMcp.update_session(session_name, %{updated_key: "updated_value"})
+             MssubMcp.update_session(session_name, %{updated_key: "updated_value"},
+               expires_after: 3600
+             )
   end
 
   test "Step 5.04: Delete Expired Session" do
-    {:ok, session_name} = MssubMcp.create_session(%{key: "value"}, 0)
+    {:ok, session_name} = MssubMcp.create_session(%{key: "value"}, expires_after: 0)
 
     Process.sleep(1000)
 
@@ -888,9 +896,9 @@ defmodule IntegrationTest do
   end
 
   test "Step 5.05: Purge Sessions" do
-    {:ok, _} = MssubMcp.create_session(%{key: "value"}, 0)
+    {:ok, _} = MssubMcp.create_session(%{key: "value"}, expires_after: 0)
 
-    {:ok, _} = MssubMcp.create_session(%{key: "value"})
+    {:ok, _} = MssubMcp.create_session(%{key: "value"}, expires_after: 3600)
 
     Process.sleep(1000)
 
