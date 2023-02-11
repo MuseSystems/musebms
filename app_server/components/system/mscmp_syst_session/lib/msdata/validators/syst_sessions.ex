@@ -22,6 +22,7 @@ defmodule MscmpSystSession.Msdata.Validators.SystSessions do
     %Msdata.SystSessions{}
     |> cast(insert_params, [:internal_name, :session_data, :session_expires])
     |> validate_required([:internal_name, :session_expires])
+    |> unique_constraint(:internal_name, name: :syst_sessions_internal_name_udx)
   end
 
   @spec update_changeset(Msdata.SystSessions.t(), Types.session_params()) :: Ecto.Changeset.t()
