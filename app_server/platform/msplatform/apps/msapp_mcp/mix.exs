@@ -24,6 +24,7 @@ defmodule MsappMcp.MixProject do
     {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
     {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
     {:ex_doc, "~> 0.20", only: :dev, runtime: false},
+    {:net_address, "~> 0.2.0"},
 
     # Muse Systems Business Management System Components
     {:mscmp_syst_error, path: "../../../../components/system/mscmp_syst_error", override: true},
