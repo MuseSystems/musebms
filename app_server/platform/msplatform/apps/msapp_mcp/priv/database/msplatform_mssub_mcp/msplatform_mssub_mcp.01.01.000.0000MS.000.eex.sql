@@ -1,5 +1,5 @@
 -- Migration: priv/database/msplatform_mssub_mcp/msplatform_mssub_mcp.01.01.000.0000MS.000.eex.sql
--- Built on:  2023-02-04 16:19:46.512292Z
+-- Built on:  2023-02-10 13:03:05.054323Z
 
 DO
 $MIGRATION$
@@ -18448,6 +18448,438 @@ $DOC$Records the number of times the record has been updated regardless as to if
 the update actually changed any data.  In this way needless or redundant record
 updates can be found.  This row starts at 0 and therefore may be the same as the
 diag_row_version - 1.$DOC$;
+-- File:        syst_sessions.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_session/ms_syst_data/syst_sessions/syst_sessions.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+CREATE TABLE ms_syst_data.syst_sessions
+(
+     id
+        uuid
+        NOT NULL DEFAULT uuid_generate_v1( )
+        CONSTRAINT syst_sessions_pk PRIMARY KEY
+    ,internal_name
+        text
+        NOT NULL
+        CONSTRAINT syst_sessions_internal_name_udx UNIQUE
+    ,session_data
+        jsonb
+    ,session_expires
+        timestamptz
+        NOT NULL
+    ,diag_timestamp_created
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_role_created
+        text
+    ,diag_timestamp_modified
+        timestamptz
+        NOT NULL DEFAULT now( )
+    ,diag_wallclock_modified
+        timestamptz
+        NOT NULL DEFAULT clock_timestamp( )
+    ,diag_role_modified
+        text
+    ,diag_row_version
+        bigint
+        NOT NULL DEFAULT 1
+    ,diag_update_count
+        bigint
+        NOT NULL DEFAULT 0
+) WITH (fillfactor = 90);
+
+ALTER TABLE ms_syst_data.syst_sessions OWNER TO <%= ms_owner %>;
+
+REVOKE ALL ON TABLE ms_syst_data.syst_sessions FROM public;
+GRANT ALL ON TABLE ms_syst_data.syst_sessions TO <%= ms_owner %>;
+
+CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
+    BEFORE INSERT OR UPDATE ON ms_syst_data.syst_sessions
+    FOR EACH ROW EXECUTE PROCEDURE ms_syst_priv.trig_b_iu_set_diagnostic_columns();
+
+COMMENT ON
+    TABLE ms_syst_data.syst_sessions IS
+$DOC$Database persistence of user interface related session data.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_sessions.id IS
+$DOC$The record's primary key.  The definitive identifier of the record in the
+system.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_sessions.internal_name IS
+$DOC$A candidate key useful for programmatic references to individual records.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_sessions.session_data IS
+$DOC$A binary representation of user session data.  The data itself will vary
+depending on the specific needs of user interface interactions.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_sessions.session_expires IS
+$DOC$A Timestamp indicating the Date/Time at which the session will no longer be
+considered valid and will eligible for purging from the system.  Prior to the
+expiration time, the session may be renewed and the session_expires time may be
+updated to a later time.  After the session_expires timestamp is past, however,
+the session may not be updated and a new session will need to be established,
+typically via a new user authentication process.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_sessions.diag_timestamp_created IS
+$DOC$The database server date/time when the transaction which created the record
+started.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_sessions.diag_role_created IS
+$DOC$The database role which created the record.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_sessions.diag_timestamp_modified IS
+$DOC$The database server date/time when the transaction which modified the record
+started.  This field will be the same as diag_timestamp_created for inserted
+records.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_sessions.diag_wallclock_modified IS
+$DOC$The database server date/time at the moment the record was actually modified.
+For long running transactions this time may be significantly later than the
+value of diag_timestamp_modified.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_sessions.diag_role_modified IS
+$DOC$The database role which modified the record.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_sessions.diag_row_version IS
+$DOC$The current version of the row.  The value here indicates how many actual
+data changes have been made to the row.  If an update of the row leaves all data
+fields the same, disregarding the updates to the diag_* columns, the row version
+is not updated, nor are any updates made to the other diag_* columns other than
+diag_update_count.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst_data.syst_sessions.diag_update_count IS
+$DOC$Records the number of times the record has been updated regardless as to if
+the update actually changed any data.  In this way needless or redundant record
+updates can be found.  This row starts at 0 and therefore may be the same as the
+diag_row_version - 1.$DOC$;
+CREATE OR REPLACE FUNCTION ms_syst.trig_i_i_syst_sessions()
+RETURNS trigger AS
+$BODY$
+
+-- File:        trig_i_i_syst_sessions.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_session/ms_syst/api_views/syst_sessions/trig_i_i_syst_sessions.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    INSERT INTO ms_syst_data.syst_sessions
+        ( internal_name, session_data, session_expires )
+    VALUES
+        ( new.internal_name, new.session_data, new.session_expires )
+    RETURNING * INTO new;
+
+    RETURN new;
+
+END;
+$BODY$
+    LANGUAGE plpgsql
+    VOLATILE
+    SECURITY DEFINER
+    SET search_path TO ms_syst, pg_temp;
+
+ALTER FUNCTION ms_syst.trig_i_i_syst_sessions()
+    OWNER TO <%= ms_owner %>;
+
+REVOKE EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_sessions() FROM public;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_sessions() TO <%= ms_owner %>;
+
+COMMENT ON FUNCTION ms_syst.trig_i_i_syst_sessions() IS
+$DOC$An INSTEAD OF trigger function which applies business rules when using the
+syst_sessions API View for INSERT operations.$DOC$;
+CREATE OR REPLACE FUNCTION ms_syst.trig_i_u_syst_sessions()
+RETURNS trigger AS
+$BODY$
+
+-- File:        trig_i_u_syst_sessions.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_session/ms_syst/api_views/syst_sessions/trig_i_u_syst_sessions.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    CASE
+        WHEN new.internal_name != old.internal_name THEN
+
+            RAISE EXCEPTION
+                USING
+                    MESSAGE = 'The requested data update included changes to fields disallowed ' ||
+                              'by the business rules of the API View.',
+                    DETAIL = ms_syst_priv.get_exception_details(
+                                 p_proc_schema    => 'ms_syst'
+                                ,p_proc_name      => 'trig_i_u_syst_sessions'
+                                ,p_exception_name => 'invalid_api_view_call'
+                                ,p_errcode        => 'PM008'
+                                ,p_param_data     => jsonb_build_object('new', new, 'old', old)
+                                ,p_context_data   =>
+                                    jsonb_build_object(
+                                         'tg_op',         tg_op
+                                        ,'tg_when',       tg_when
+                                        ,'tg_schema',     tg_table_schema
+                                        ,'tg_table_name', tg_table_name)),
+                    ERRCODE = 'PM008',
+                    SCHEMA = tg_table_schema,
+                    TABLE = tg_table_name;
+
+        WHEN new.session_expires < now() THEN
+
+            RAISE EXCEPTION
+                USING
+                    MESSAGE = 'The syst_sessions record may not be updated after the ' ||
+                              'session_expires date/time is past.',
+                    DETAIL = ms_syst_priv.get_exception_details(
+                                 p_proc_schema    => 'ms_syst'
+                                ,p_proc_name      => 'trig_i_u_syst_sessions'
+                                ,p_exception_name => 'invalid_api_view_call'
+                                ,p_errcode        => 'PM008'
+                                ,p_param_data     => jsonb_build_object('new', new, 'old', old)
+                                ,p_context_data   =>
+                                    jsonb_build_object(
+                                         'tg_op',         tg_op
+                                        ,'tg_when',       tg_when
+                                        ,'tg_schema',     tg_table_schema
+                                        ,'tg_table_name', tg_table_name)),
+                    ERRCODE = 'PM008',
+                    SCHEMA = tg_table_schema,
+                    TABLE = tg_table_name;
+
+        ELSE
+
+            UPDATE ms_syst_data.syst_sessions
+            SET
+                session_data    = new.session_data
+              , session_expires = new.session_expires
+            WHERE id = new.id
+            RETURNING * INTO new;
+
+            RETURN new;
+
+    END CASE;
+
+END;
+$BODY$
+    LANGUAGE plpgsql
+    VOLATILE
+    SECURITY DEFINER
+    SET search_path TO ms_syst, pg_temp;
+
+ALTER FUNCTION ms_syst.trig_i_u_syst_sessions()
+    OWNER TO <%= ms_owner %>;
+
+REVOKE EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_sessions() FROM public;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_sessions() TO <%= ms_owner %>;
+
+COMMENT ON FUNCTION ms_syst.trig_i_u_syst_sessions() IS
+$DOC$An INSTEAD OF trigger function which applies business rules when using the
+syst_sessions API View for UPDATE operations.$DOC$;
+CREATE OR REPLACE FUNCTION ms_syst.trig_i_d_syst_sessions()
+RETURNS trigger AS
+$BODY$
+
+-- File:        trig_i_d_syst_sessions.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_session/ms_syst/api_views/syst_sessions/trig_i_d_syst_sessions.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    DELETE FROM ms_syst_data.syst_sessions WHERE id = old.id RETURNING * INTO old;
+
+    RETURN old;
+
+END;
+$BODY$
+    LANGUAGE plpgsql
+    VOLATILE
+    SECURITY DEFINER
+    SET search_path TO ms_syst, pg_temp;
+
+ALTER FUNCTION ms_syst.trig_i_d_syst_sessions()
+    OWNER TO <%= ms_owner %>;
+
+REVOKE EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_sessions() FROM public;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_sessions() TO <%= ms_owner %>;
+
+COMMENT ON FUNCTION ms_syst.trig_i_d_syst_sessions() IS
+$DOC$An INSTEAD OF trigger function which applies business rules when using the
+syst_sessions API View for DELETE operations.$DOC$;
+-- File:        syst_sessions.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_session/ms_syst/api_views/syst_sessions/syst_sessions.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+CREATE VIEW ms_syst.syst_sessions AS
+SELECT
+    id
+  , internal_name
+  , session_data
+  , session_expires
+  , diag_timestamp_created
+  , diag_role_created
+  , diag_timestamp_modified
+  , diag_wallclock_modified
+  , diag_role_modified
+  , diag_row_version
+  , diag_update_count
+FROM ms_syst_data.syst_sessions;
+
+ALTER VIEW ms_syst.syst_sessions OWNER TO <%= ms_owner %>;
+
+REVOKE ALL ON TABLE ms_syst.syst_sessions FROM PUBLIC;
+
+CREATE TRIGGER a50_trig_i_i_syst_sessions
+    INSTEAD OF INSERT ON ms_syst.syst_sessions
+    FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_i_syst_sessions();
+
+CREATE TRIGGER a50_trig_i_u_syst_sessions
+    INSTEAD OF UPDATE ON ms_syst.syst_sessions
+    FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_u_syst_sessions();
+
+CREATE TRIGGER a50_trig_i_d_syst_sessions
+    INSTEAD OF DELETE ON ms_syst.syst_sessions
+    FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_d_syst_sessions();
+
+COMMENT ON
+    VIEW ms_syst.syst_sessions IS
+$DOC$Database persistence of user interface related session data.
+
+This API View allows the application to read and maintain the data according to
+well defined application business rules.  Using this API view for updates to
+data is the preferred method of data maintenance in the course of normal usage.
+
+Only user maintainable values may be maintained via this API.  System created or
+maintained data is not maintainable via this view.  Attempts at invalid data
+maintenance via this API may result in the invalid changes being ignored or may
+raise an exception.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_sessions.id IS
+$DOC$The record's primary key.  The definitive identifier of the record in the
+system.
+
+This value is read only from this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_sessions.internal_name IS
+$DOC$A candidate key useful for programmatic references to individual records.
+
+This value may only be set on INSERT via this API view.  UPDATE operations are
+not allowed to this column once the record is created.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_sessions.session_data IS
+$DOC$A binary representation of user session data.  The data itself will vary
+depending on the specific needs of user interface interactions.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_sessions.session_expires IS
+$DOC$A Timestamp indicating the Date/Time at which the session will no longer be
+considered valid and will eligible for purging from the system.  Prior to the
+expiration time, the session may be renewed and the session_expires time may be
+updated to a later time.  After the session_expires timestamp is past, however,
+the session may not be updated and a new session will need to be established,
+typically via a new user authentication process.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_sessions.diag_timestamp_created IS
+$DOC$The database server date/time when the transaction which created the record
+started.
+
+This value is read only from this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_sessions.diag_role_created IS
+$DOC$The database role which created the record.
+
+This value is read only from this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_sessions.diag_timestamp_modified IS
+$DOC$The database server date/time when the transaction which modified the record
+started.  This field will be the same as diag_timestamp_created for inserted
+records.
+
+This value is read only from this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_sessions.diag_wallclock_modified IS
+$DOC$The database server date/time at the moment the record was actually modified.
+For long running transactions this time may be significantly later than the
+value of diag_timestamp_modified.
+
+This value is read only from this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_sessions.diag_role_modified IS
+$DOC$The database role which modified the record.
+
+This value is read only from this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_sessions.diag_row_version IS
+$DOC$The current version of the row.  The value here indicates how many actual
+data changes have been made to the row.  If an update of the row leaves all data
+fields the same, disregarding the updates to the diag_* columns, the row version
+is not updated, nor are any updates made to the other diag_* columns other than
+diag_update_count.
+
+This value is read only from this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_sessions.diag_update_count IS
+$DOC$Records the number of times the record has been updated regardless as to if
+the update actually changed any data.  In this way needless or redundant record
+updates can be found.  This row starts at 0 and therefore may be the same as the
+diag_row_version - 1.
+
+This value is read only from this API view.$DOC$;
 -- File:        initial_privileges.eex.sql
 -- Location:    musebms/database/application/msapp_platform/mssub_mcp/privileges/initial_privileges.eex.sql
 -- Project:     Muse Systems Business Management System
@@ -18696,6 +19128,28 @@ GRANT EXECUTE
                                               , p_instance_id       uuid
                                               , p_instance_owner_id uuid )
   TO <%= ms_appusr %>;
+-- File:        mscmp_syst_session.eex.sql
+-- Location:    musebms/database/platform/msapp_platform/mssub_mcp/privileges/mscmp_syst_session.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+--
+-- MscmpSystSession
+--
+
+-- syst_sessions
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE ms_syst.syst_sessions TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_sessions() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_sessions() TO <%= ms_appusr %>;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_sessions() TO <%= ms_appusr %>;
 -- File:        mscmp_syst_perms.eex.sql
 -- Location:    musebms/database/platform/msapp_platform/mssub_mcp/privileges/mscmp_syst_perms.eex.sql
 -- Project:     Muse Systems Business Management System
@@ -18945,21 +19399,31 @@ INSERT INTO ms_syst_data.syst_settings
     , display_name
     , syst_defined
     , syst_description
-    , setting_uuid )
+    , setting_uuid
+    , setting_integer )
 VALUES
     ( 'platform_state'
     , 'Platform State'
     , TRUE
     , 'Defines the current installation and runtime state of the platform as a whole.  ' ||
       'Valid values are drawn from the system enumeration "platform_states".'
-    , (SELECT id FROM ms_syst_data.syst_enum_items WHERE internal_name = 'platform_states_sysdef_bootstrapping') )
+    , (SELECT id FROM ms_syst_data.syst_enum_items WHERE internal_name = 'platform_states_sysdef_bootstrapping')
+    , NULL::integer )
   , ( 'platform_owner'
     , 'Platform Owner'
     , TRUE
     , 'Identifies the Platform Owner once the system is bootstrapped.  ' ||
       'The system assumes that all Platform Administrator Access Accounts ' ||
       'are owned by the Platform Owner defined in this configuration point.'
-    , NULL::uuid );
+    , NULL::uuid
+    , NULL::integer )
+  , ( 'platform_session_expiration'
+    , 'Platform Session Expiration'
+    , TRUE
+    , 'The number of seconds after which stale user interface session ' ||
+      'records should be considered expired and eligible for purging.'
+    , NULL::uuid
+    , (3600)::integer );
 -- File:        feature_mapping.eex.sql
 -- Location:    musebms/database/application/msapp_platform/mssub_mcp/seed_data/feature_mapping.eex.sql
 -- Project:     Muse Systems Business Management System
