@@ -33,6 +33,7 @@ load_files = [
     "platform/msapp_platform/mssub_mcp/privileges/mscmp_syst_features.eex.sql",
     "platform/msapp_platform/mssub_mcp/privileges/mscmp_syst_instance.eex.sql",
     "platform/msapp_platform/mssub_mcp/privileges/mscmp_syst_authn.eex.sql",
+    "platform/msapp_platform/mssub_mcp/privileges/mscmp_syst_session.eex.sql",
     "platform/msapp_platform/mssub_mcp/privileges/mscmp_syst_perms.eex.sql",
     "platform/msapp_platform/mssub_mcp/privileges/mscmp_syst_mcp_perms.eex.sql",
 
