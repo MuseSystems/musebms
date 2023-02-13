@@ -10,10 +10,10 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule MsdataApi.McpBootstrap do
+defmodule Msform.McpBootstrap do
   use Ecto.Schema
 
-  alias MsdataApi.Validators
+  alias Msform.Validators
   alias MsappMcp.Types
 
   @moduledoc """
@@ -46,7 +46,7 @@ defmodule MsdataApi.McpBootstrap do
   Validates a map of form data for validation of form entry prior to final
   submission.
   """
-  @spec changeset(MsdataApi.McpBootstrap.t(), Types.mcp_bootstrap_params()) :: Ecto.Changeset.t()
+  @spec changeset(Msform.McpBootstrap.t(), Types.mcp_bootstrap_params()) :: Ecto.Changeset.t()
   defdelegate changeset(mcp_bootstrap, change_params \\ %{}), to: Validators.McpBootstrap
 
   @doc """

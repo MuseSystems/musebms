@@ -66,7 +66,7 @@ defmodule MsappMcp.Impl.Bootstrap do
   defp validate_bootstrap_data(%Ecto.Changeset{} = changeset), do: changeset.errors
 
   defp validate_bootstrap_data(%{} = data) do
-    changeset = MsdataApi.McpBootstrap.changeset(%MsdataApi.McpBootstrap{}, data)
+    changeset = Msform.McpBootstrap.changeset(%Msform.McpBootstrap{}, data)
     validate_bootstrap_data(changeset)
   end
 

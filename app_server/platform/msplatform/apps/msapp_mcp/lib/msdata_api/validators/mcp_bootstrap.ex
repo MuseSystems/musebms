@@ -10,12 +10,12 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule MsdataApi.Validators.McpBootstrap do
+defmodule Msform.Validators.McpBootstrap do
   import Ecto.Changeset
 
   alias MsappMcp.Types
 
-  @spec changeset(MsdataApi.McpBootstrap.t(), Types.mcp_bootstrap_params()) :: Ecto.Changeset.t()
+  @spec changeset(Msform.McpBootstrap.t(), Types.mcp_bootstrap_params()) :: Ecto.Changeset.t()
   def changeset(mcp_bootstrap, change_params) do
     mcp_bootstrap
     |> cast(change_params, [
