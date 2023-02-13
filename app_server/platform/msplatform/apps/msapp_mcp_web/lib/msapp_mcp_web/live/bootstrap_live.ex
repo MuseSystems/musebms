@@ -17,13 +17,13 @@ defmodule MsappMcpWeb.BootstrapLive do
 
   def mount(_, _, socket) do
     changeset =
-      MsdataApi.McpBootstrap.changeset(%MsdataApi.McpBootstrap{})
+      Msform.McpBootstrap.changeset(%Msform.McpBootstrap{})
       |> then(&if connected?(socket), do: Map.put(&1, :action, :insert), else: &1)
 
     starting_params = %{
       current_step: :welcome,
       page_title: "New System Startup",
-      form_data_def: MsdataApi.McpBootstrap.get_data_definition(),
+      form_data_def: Msform.McpBootstrap.get_data_definition(),
       disallowed_list_state:
         determine_disallowed_list_state(MssubMcp.disallowed_passwords_populated?()),
       records_state: determine_records_state(changeset),
@@ -35,7 +35,7 @@ defmodule MsappMcpWeb.BootstrapLive do
 
   def handle_event("validate", %{"mcp_bootstrap" => form_data}, socket) do
     changeset =
-      MsdataApi.McpBootstrap.changeset(%MsdataApi.McpBootstrap{}, form_data)
+      Msform.McpBootstrap.changeset(%Msform.McpBootstrap{}, form_data)
       |> Map.put(:action, :insert)
 
     {:noreply,
