@@ -18,7 +18,6 @@ defmodule Msplatform.MixProject do
 
   @deps [
     # Third Party Dependencies
-    {:phoenix, "~> 1.7.0-rc.1", override: true},
     {:phoenix_live_view, ">= 0.0.0"},
     {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
     {:dialyxir, "~> 1.0", only: [:dev], runtime: false},

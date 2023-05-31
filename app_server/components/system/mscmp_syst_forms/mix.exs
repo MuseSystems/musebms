@@ -25,6 +25,7 @@ defmodule MscmpSystForms.MixProject do
     {:phoenix, "~> 1.6"},
     {:phoenix_live_view, "~> 0.18.3"},
     {:phoenix_ecto, "~> 4.0"},
+    {:gettext, "~> 0.20"},
 
     # Muse Systems Business Management System Components
     {:mscmp_syst_utils, path: "../mscmp_syst_utils"},
