@@ -28,6 +28,7 @@ BEGIN
         -- later we bypass all of the fields indicating a real change.  We still
         -- update the diag_update_count field, because the database is still
         -- doing work in that scenario.
+
         bypass_change_fields := CASE
                                     WHEN tg_op = 'UPDATE' THEN
                                         to_jsonb( new ) = to_jsonb( old )
@@ -35,9 +36,6 @@ BEGIN
                                         FALSE
                                 END;
 
-        -- Let's turn the new and old records into hstores so we can arbitrarily
-        -- get their columns.  We also need to make the final hstore look a lot
-        -- like NEW.
         var_jsonb_new := to_jsonb( new );
         var_jsonb_old := to_jsonb( old );
 
@@ -49,7 +47,6 @@ BEGIN
                                                   ,'diag_row_version'
                                                   ,'diag_update_count'];
 
-        -- Now we can get some work done.
         CASE tg_op
             WHEN 'INSERT' THEN
                 var_jsonb_final :=
@@ -122,7 +119,6 @@ BEGIN
 
         END CASE;
 
-        -- We've done our jsonb magic, lets actually get a record to return...
         new := jsonb_populate_record( new, var_jsonb_final );
 
         RETURN new;
