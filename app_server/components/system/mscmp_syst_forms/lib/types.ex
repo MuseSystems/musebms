@@ -11,4 +11,62 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystForms.Types do
+  @type display_mode() ::
+          :deemphasis
+          | :reference
+          | :normal
+          | :emphasis
+          | :warning
+          | :alert
+          | :approve
+          | :deny
+          | :info
+
+  @type component_mode() :: :removed | :hidden | :cleared | :processing | :visible | :entry
+end
+
+defmodule MscmpSystForms.Types.FormConfig do
+  @type t() :: %__MODULE__{
+          form_id: atom() | nil,
+          binding_id: atom() | nil,
+          permission: atom() | nil,
+          label: String.t() | nil,
+          label_link: String.t() | nil,
+          info: String.t() | nil,
+          button_state: atom() | nil,
+          children: list(t()) | [] | nil
+        }
+
+  defstruct form_id: nil,
+            binding_id: nil,
+            permission: nil,
+            label: nil,
+            label_link: nil,
+            info: nil,
+            button_state: nil,
+            children: []
+end
+
+defmodule MscmpSystForms.Types.ComponentConfig do
+  @type t() :: %__MODULE__{
+          form_id: atom() | nil,
+          binding_id: atom() | nil,
+          permission: atom() | nil,
+          label: String.t() | nil,
+          label_link: String.t() | nil,
+          info: String.t() | nil,
+          button_state: atom() | nil,
+          overrides: list(atom()) | nil,
+          modes: map()
+        }
+
+  defstruct form_id: nil,
+            binding_id: nil,
+            permission: nil,
+            label: nil,
+            label_link: nil,
+            info: nil,
+            button_state: nil,
+            overrides: nil,
+            modes: nil
 end
