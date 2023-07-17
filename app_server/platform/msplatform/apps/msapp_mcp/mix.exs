@@ -30,6 +30,7 @@ defmodule MsappMcp.MixProject do
     {:mscmp_syst_error, path: "../../../../components/system/mscmp_syst_error", override: true},
     {:mscmp_syst_options,
      path: "../../../../components/system/mscmp_syst_options", override: true},
+    {:mscmp_syst_forms, path: "../../../../components/system/mscmp_syst_forms", override: true},
     {:mssub_mcp, path: "../../../../subsystems/mssub_mcp", override: true}
   ]
 
