@@ -25,7 +25,7 @@ config :msapp_mcp_web, MsappMcpWeb.Endpoint,
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
-  secret_key_base: "QFbwKzgxEU0stJ46wMRWlA9mP2SH66w/0Zl3xuHqsf3GmeSyl/JF0B9vT6SKlqUx",
+  secret_key_base: "yB7IfRIBftt8aySgtKchjdH4JxLISb+xI4MstxplQb3bTPi7APmyEpVUDoq/4Wa1",
   watchers: [
     esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
     tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]}

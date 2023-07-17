@@ -1,0 +1,49 @@
+<div class="flex flex-col h-[85vh]">
+  <header class="w-full flex mx-auto px-4">
+    <div id="header-logo" class="basis-1/4">
+      <svg
+        viewBox="0 0 132.94945 132.94945"
+        version="1.1"
+        id="header-logo"
+        class="mx-auto my-2 h-24"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:svg="http://www.w3.org/2000/svg"
+      >
+        <g id="layer1" transform="translate(-42.870251,-48.352886)">
+          <rect
+            style="fill:none;stroke:#000000;stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+            id="rect1134"
+            width="129.94945"
+            height="129.94945"
+            x="44.370251"
+            y="49.852886"
+          />
+          <circle
+            style="fill:none;stroke:#999999;stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+            id="path1246"
+            cy="114.82761"
+            cx="109.34497"
+            r="62.102901"
+          />
+          <path
+            style="fill:none;stroke:#ff0000;stroke-width:11.3386;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+            id="path20796"
+            d="m 418.41181,217.83839 189.04459,327.43486 -378.0892,-10e-6 z"
+            transform="matrix(0.26386884,0,0,0.26395538,-1.0608621,-0.282387)"
+          />
+        </g>
+      </svg>
+    </div>
+    <div id="header-title" class="basis-3/4 h-24 font-black text-2xl text-color-normal mx-auto my-auto text-center align-middle">
+      <h1>Muse Systems Application Platform</h1>
+      <h2><%= @page_title %></h2>
+    </div>
+  </header>
+  <main class="w-full h-full mx-auto">
+    <div class="w-full h-full">
+      <.flash_group flash={@flash} />
+      <%= @inner_content %>
+    </div>
+  </main>
+</div>

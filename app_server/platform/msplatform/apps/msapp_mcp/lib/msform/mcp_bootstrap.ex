@@ -12,8 +12,9 @@
 
 defmodule Msform.McpBootstrap do
   use Ecto.Schema
+  use MscmpSystForms
 
-  alias Msform.Validators
+  alias Msform.McpBootstrap
   alias MsappMcp.Types
 
   @moduledoc """
@@ -42,73 +43,38 @@ defmodule Msform.McpBootstrap do
     field(:admin_credential_verify, :string, redact: true)
   end
 
+  @impl true
+  defdelegate get_form_config, to: McpBootstrap.Definitions
+
+  @impl true
+  defdelegate get_form_modes, to: McpBootstrap.Definitions
+
+  @impl true
+  defdelegate preconnect_init(socket, session_name, feature, mode, state, opts \\ []),
+    to: McpBootstrap.Events
+
+  @impl true
+  defdelegate postconnect_init(form_config), to: McpBootstrap.Events
+
   @doc """
   Validates a map of form data for validation of form entry prior to final
   submission.
   """
-  @spec changeset(Msform.McpBootstrap.t(), Types.mcp_bootstrap_params()) :: Ecto.Changeset.t()
-  defdelegate changeset(mcp_bootstrap, change_params \\ %{}), to: Validators.McpBootstrap
+  @impl true
+  @spec validate_save(Msform.McpBootstrap.t(), Types.bootstrap_params()) :: Ecto.Changeset.t()
+  defdelegate validate_save(original_data, current_data \\ %{}), to: McpBootstrap.Data
 
-  @doc """
-  Returns the user interface textual labels associated with each form field.
+  @impl true
+  @spec validate_post(Msform.McpBootstrap.t(), Types.bootstrap_params()) :: Ecto.Changeset.t()
+  defdelegate validate_post(original_data, current_data \\ %{}), to: McpBootstrap.Data
 
-  We define these here so that the rest of the application has a common
-  definition of how these form fields should be labelled.
-  """
-  @spec get_data_definition() :: Types.form_data_def()
-  def get_data_definition do
-    %{
-      owner_name: %{
-        label: "Owner Code",
-        info: """
-        A six character alpha-numeric code which uniquely identifies the system
-        Owner.  This value should have been provided to you by Muse Systems.
-        """
-      },
-      owner_display_name: %{
-        label: "Owner Display Name",
-        info: """
-        The full name of the Owner visible through system user interfaces.  This
-        field must be at least 3 characters long and no more than 40.  20 or fewer
-        characters are recommended.
-        """
-      },
-      admin_display_name: %{
-        label: "Display/Full Name",
-        info: """
-        The full name of the Platform Administrator user account visible through
-        system user interfaces.  This value is required and must be at least 3
-        characters long and no more than 40.  20 or fewer characters are
-        recommended.
-        """
-      },
-      admin_identifier: %{
-        label: "Email Address (User Name)",
-        info: """
-        The email address of the Platform Administrator user account.  This value
-        is required and will be used as the Platform Administrator's user name
-        when logging into the system.  The value provided must be in the form of a
-        valid email address (e.g. "name@example.com").
-        """
-      },
-      admin_credential: %{
-        label: "Password",
-        info: """
-        The password the Platform Administrator will use to log into the system.
-        This value is required and by default must be 8 or more characters long,
-        no longer than 128 characters, and may not be a "Disallowed Password".
-        The Disallowed Passwords List is a list of passwords in the system which
-        are expected to be vulnerable to attack by malicious parties.
-        """
-      },
-      admin_credential_verify: %{
-        label: "Verify Password",
-        info: """
-        Provides confirmation that the value entered in the "Password" field is
-        correct and repeatable.  This value is required and must match the value
-        of the "Password" field exactly.
-        """
-      }
-    }
-  end
+  defdelegate enter_disallowed_state(socket), to: McpBootstrap.Events
+  defdelegate enter_welcome_state(socket), to: McpBootstrap.Events
+  defdelegate enter_records_state(socket), to: McpBootstrap.Events
+  defdelegate enter_finished_state(socket), to: McpBootstrap.Events
+  defdelegate process_disallowed_load(socket), to: McpBootstrap.Events
+  defdelegate process_disallowed_finished(socket), to: McpBootstrap.Events
+  defdelegate process_records_save(socket), to: McpBootstrap.Events
+  defdelegate process_records_save_finished(socket), to: McpBootstrap.Events
+  defdelegate validate_form_data(socket, form_data), to: McpBootstrap.Events
 end

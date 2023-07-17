@@ -16,7 +16,7 @@ import Config
 # you can enable the server option below.
 config :msapp_mcp_web, MsappMcpWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4386],
-  secret_key_base: "im6CvA53jMUu0u9uRgn70rOwR2fojPtgOnk05XqC7Rs6yoLme9fSPRQL1V7DKrQ1",
+  secret_key_base: "/htcnJB+SGWj++9Jc8bg/ufeayCmCKHj3gv2ZtJb74uaBEUIz5ULn4VB95uMOII4",
   server: false
 
 # Print only warnings and errors during test

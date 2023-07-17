@@ -1,6 +1,6 @@
 <div class="flex flex-col h-[85vh]">
   <header class="w-full flex mx-auto px-4">
-    <div id="header-logo" class="basis-1/4">
+    <div id="header-logo-container" class="basis-1/4">
       <svg
         viewBox="0 0 132.94945 132.94945"
         version="1.1"
@@ -35,26 +35,17 @@
         </g>
       </svg>
     </div>
-    <div id="header-title" class="basis-3/4 h-24 font-black text-2xl mx-auto my-auto text-center align-middle">
+    <div
+      id="header-title"
+      class="basis-3/4 h-24 font-black text-2xl text-color-normal mx-auto my-auto text-center align-middle"
+    >
       <h1>Muse Systems Application Platform</h1>
       <h2><%= @page_title %></h2>
     </div>
   </header>
   <main class="w-full h-full mx-auto">
     <div class="w-full h-full">
-      <.flash kind={:info} title="Success!" flash={@flash} />
-      <.flash kind={:error} title="Error!" flash={@flash} />
-      <.flash
-        id="disconnected"
-        kind={:error}
-        title="We can't find the internet"
-        close={false}
-        autoshow={false}
-        phx-disconnected={show("#disconnected")}
-        phx-connected={hide("#disconnected")}
-      >
-        Attempting to reconnect <Heroicons.arrow_path class="ml-1 w-3 h-3 inline animate-spin" />
-      </.flash>
+      <.flash_group flash={@flash} />
       <%= @inner_content %>
     </div>
   </main>

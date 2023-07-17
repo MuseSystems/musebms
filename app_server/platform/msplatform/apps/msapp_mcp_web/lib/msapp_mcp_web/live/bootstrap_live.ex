@@ -15,101 +15,100 @@ defmodule MsappMcpWeb.BootstrapLive do
 
   @moduledoc false
 
-  def mount(_, _, socket) do
-    changeset =
-      Msform.McpBootstrap.changeset(%Msform.McpBootstrap{})
-      |> then(&if connected?(socket), do: Map.put(&1, :action, :insert), else: &1)
+  def mount(_params, session, socket) do
+    updated_socket =
+      socket
+      |> assign(:page_title, "Muse Systems Platform Management Bootstrapping")
+      |> Msform.McpBootstrap.preconnect_init(
+        session["session_name"],
+        :default,
+        :entry,
+        :welcome
+      )
+      |> Msform.McpBootstrap.update_button_state(:mcpbs_step_disallowed_button_load, :message)
+      |> Msform.McpBootstrap.update_button_state(:mcpbs_step_records_button_save, :message)
 
-    starting_params = %{
-      current_step: :welcome,
-      page_title: "New System Startup",
-      form_data_def: Msform.McpBootstrap.get_data_definition(),
-      disallowed_list_state:
-        determine_disallowed_list_state(MssubMcp.disallowed_passwords_populated?()),
-      records_state: determine_records_state(changeset),
-      changeset: changeset
-    }
-
-    {:ok, assign(socket, starting_params)}
+    {:ok, updated_socket}
   end
 
-  def handle_event("validate", %{"mcp_bootstrap" => form_data}, socket) do
-    changeset =
-      Msform.McpBootstrap.changeset(%Msform.McpBootstrap{}, form_data)
-      |> Map.put(:action, :insert)
+  # def handle_event("save", %{"bootstrap" => form_data}, socket) do
+  #   Task.Supervisor.async_nolink(
+  #     MsappMcpWeb.TaskSupervisor,
+  #     fn ->
+  #       form_data
+  #       |> Map.new(fn {k, v} -> {String.to_atom(k), v} end)
+  #       |> MsappMcp.Impl.McpBootstrap.process_bootstrap_data()
 
-    {:noreply,
-     assign(socket, changeset: changeset, records_state: determine_records_state(changeset))}
+  #       send(self(), :records_saved)
+  #     end
+  #   )
+
+  #   {:noreply, assign(socket, current_step: :finish)}
+  # end
+
+  def handle_event("button_welcome_next", _params, socket) do
+    socket = Msform.McpBootstrap.enter_disallowed_state(socket)
+    {:noreply, socket}
   end
 
-  def handle_event("save", %{"mcp_bootstrap" => form_data}, socket) do
-    Task.Supervisor.async_nolink(
-      MsappMcpWeb.TaskSupervisor,
-      fn ->
-        form_data
-        |> Map.new(fn {k, v} -> {String.to_atom(k), v} end)
-        |> MsappMcp.Impl.Bootstrap.process_bootstrap_data()
-
-        send(self(), :records_saved)
-      end
-    )
-
-    {:noreply, assign(socket, current_step: :finish)}
+  def handle_event("button_disallowed_back", _params, socket) do
+    socket = Msform.McpBootstrap.enter_welcome_state(socket)
+    {:noreply, socket}
   end
 
-  def handle_event("change_step", %{"step" => step}, socket) do
-    {:noreply, assign(socket, current_step: String.to_existing_atom(step))}
+  def handle_event("button_disallowed_next", _params, socket) do
+    socket = Msform.McpBootstrap.enter_records_state(socket)
+    {:noreply, socket}
   end
 
-  def handle_event("load_disallowed", _params, socket) do
-    Task.Supervisor.async_nolink(
-      MsappMcpWeb.TaskSupervisor,
-      fn ->
-        case MsappMcp.load_disallowed_passwords() do
-          :ok ->
-            send(self(), :disallowed_list_loaded)
-
-          error ->
-            raise MscmpSystError,
-              code: :undefined_error,
-              message: "Unexpected failure loading Disallowed Passwords starter list.",
-              cause: error
-        end
-      end,
-      shutdown: 300_000
-    )
-
-    {:noreply, assign(socket, disallowed_list_state: :processing)}
+  def handle_event("button_disallowed_load", _params, socket) do
+    socket = Msform.McpBootstrap.process_disallowed_load(socket)
+    {:noreply, socket}
   end
 
-  def handle_event("finish_redirect", params, socket) do
+  def handle_event("button_disallowed_populate", _params, socket) do
+    socket = Msform.McpBootstrap.enter_records_state(socket)
+    {:noreply, socket}
+  end
+
+  def handle_event("button_records_back", _params, socket) do
+    socket = Msform.McpBootstrap.enter_disallowed_state(socket)
+    {:noreply, socket}
+  end
+
+  def handle_event("records_validate", %{"mcp_bootstrap" => form_data}, socket) do
+    socket = Msform.McpBootstrap.validate_form_data(socket, form_data)
+    {:noreply, socket}
+  end
+
+  def handle_event("form_records_submit", _params, socket) do
+    socket = Msform.McpBootstrap.process_records_save(socket)
+    {:noreply, socket}
+  end
+
+  def handle_event("button_finish", _params, socket) do
     {:noreply, redirect(socket, to: ~p"/login")}
   end
 
   def handle_info({ref, :disallowed_list_loaded}, socket) do
     Process.demonitor(ref, [:flush])
 
-    disallowed_state =
-      MssubMcp.disallowed_passwords_populated?() |> determine_disallowed_list_state()
-
-    socket =
-      socket
-      |> assign(disallowed_list_state: disallowed_state)
-      |> then(&if disallowed_state == :message, do: assign(&1, current_step: :records), else: &1)
+    socket = Msform.McpBootstrap.process_disallowed_finished(socket)
 
     {:noreply, socket}
   end
 
   def handle_info({ref, :records_saved}, socket) do
     Process.demonitor(ref, [:flush])
-    {:noreply, assign(socket, records_state: :message)}
+    socket = Msform.McpBootstrap.process_records_save_finished(socket)
+    {:noreply, socket}
   end
 
   def handle_info({:DOWN, _, _, _, _}, socket), do: {:noreply, socket}
 
-  defp determine_records_state(%Ecto.Changeset{valid?: true}), do: :action
-  defp determine_records_state(%Ecto.Changeset{valid?: false}), do: :message
+  # defp determine_records_state(%Ecto.Changeset{valid?: true}), do: :action
+  # defp determine_records_state(%Ecto.Changeset{valid?: false}), do: :message
 
-  defp determine_disallowed_list_state(true), do: :message
-  defp determine_disallowed_list_state(false), do: :action
+  # defp determine_disallowed_list_state(true), do: :message
+  # defp determine_disallowed_list_state(false), do: :action
 end

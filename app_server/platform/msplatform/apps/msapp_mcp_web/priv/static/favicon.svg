@@ -1,32 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
-<svg
-   viewBox="0 0 132.94945 132.94945"
-   version="1.1"
-   id="muse-systems-favicon"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-   <g
-      id="layer1"
-      transform="translate(-42.870251,-48.352886)">
-      <rect
-      style="fill:none;stroke:#000000;stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-      id="rect1134"
-      width="129.94945"
-      height="129.94945"
-      x="44.370251"
-      y="49.852886" />
-      <circle
-      style="fill:none;stroke:#555555;stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-      id="path1246"
-      cy="114.82761"
-      cx="109.34497"
-      r="62.102901" />
-      <path
-         style="fill:none;stroke:#ff0000;stroke-width:11.3386;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         id="path20796"
-         d="m 418.41181,217.83839 189.04459,327.43486 -378.0892,-10e-6 z"
-         transform="matrix(0.26386884,0,0,0.26395538,-1.0608621,-0.282387)" />
-      </g>
-   </svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 16.933333 16.933334">
+  <rect width="16.404167" height="16.404167" x=".26458317" y=".26458317" ry="0" style="fill:none;stroke:#000;stroke-width:.529167;stroke-miterlimit:4;stroke-dasharray:none"/>
+  <circle cx="8.4666672" cy="8.4666672" r="7.6688361" style="fill:none;stroke:gray;stroke-width:.529167;stroke-miterlimit:4;stroke-dasharray:none"/>
+  <path d="M9.3654371 45.109706 31.931571 5.9901103 54.527068 45.092753Z" style="fill:none;stroke:red;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none" transform="scale(.2646)"/>
+</svg>
