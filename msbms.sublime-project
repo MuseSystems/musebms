@@ -41,6 +41,9 @@
             "path": "app_server/components/system/mscmp_syst_session",
         },
         {
+            "path": "app_server/components/system/mscmp_syst_forms",
+        },
+        {
             "path": "app_server/subsystems/mssub_mcp",
         },
         {
