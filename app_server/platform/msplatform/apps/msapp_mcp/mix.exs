@@ -49,9 +49,12 @@ defmodule MsappMcp.MixProject do
     [
       app: @name,
       version: @version,
+      build_path: "../../_build",
+      config_path: "../../config/config.exs",
+      deps_path: "../../deps",
+      lockfile: "../../mix.lock",
       elixir: "~> 1.14",
       deps: @deps,
-      build_embedded: in_production,
       start_permanent: in_production,
       dialyzer: @dialyzer_opts,
       elixirc_paths: elixirc_paths(Mix.env()),
