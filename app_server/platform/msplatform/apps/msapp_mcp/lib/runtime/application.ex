@@ -38,7 +38,8 @@ defmodule MsappMcp.Runtime.Application do
          migrations_root_dir: migrations_root_dir,
          datastore_type: @mcp_datastore_type
        ]},
-      {MssubMcp.Supervisor, startup_options: startup_options}
+      {MssubMcp.Supervisor, startup_options: startup_options},
+      {Task.Supervisor, name: MsappMcp.TaskSupervisor}
     ]
 
     Supervisor.start_link(children, strategy: :one_for_one, name: MsappMcp.Supervisor)
