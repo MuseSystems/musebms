@@ -20,11 +20,6 @@
 # configurations or dependencies per app, it is best to
 # move said applications out of the umbrella.
 import Config
-# The supported Muse Systems Application Subsystems
-config :msapp_mcp, Msplatform.StartupOptions, path: "ms_startup_options.toml"
-
-# Configure Mnesia for MscmpSystLimiter use
-config :mnesia, dir: '.mnesia'
 
 # Configures the mailer
 #
@@ -46,7 +41,7 @@ config :msapp_mcp_web, MsappMcpWeb.Endpoint,
     layout: false
   ],
   pubsub_server: MsappMcp.PubSub,
-  live_view: [signing_salt: "jmLfXfA6"]
+  live_view: [signing_salt: "VRrRqkFX"]
 
 # Configure esbuild (the version is required)
 config :esbuild,

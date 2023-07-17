@@ -17,7 +17,8 @@ defmodule MsappMcpWeb do
   those modules here.
   """
 
-  def static_paths, do: ~w(assets fonts images favicon.svg robots.txt)
+  def static_paths,
+    do: ~w(assets fonts images documentation favicon.svg robots.txt)
 
   def router do
     quote do
@@ -58,6 +59,24 @@ defmodule MsappMcpWeb do
     end
   end
 
+  def bootstrap_live_view do
+    quote do
+      use Phoenix.LiveView,
+        layout: {MsappMcpWeb.Layouts, :bootstrap}
+
+      unquote(html_helpers())
+    end
+  end
+
+  def login_live_view do
+    quote do
+      use Phoenix.LiveView,
+        layout: {MsappMcpWeb.Layouts, :login}
+
+      unquote(html_helpers())
+    end
+  end
+
   def live_component do
     quote do
       use Phoenix.LiveComponent
@@ -82,10 +101,11 @@ defmodule MsappMcpWeb do
   defp html_helpers do
     quote do
       # HTML escaping functionality
-      use Phoenix.HTML
-      use Phoenix.Component
+      import Phoenix.HTML
+
       # Core UI components and translation
       import MsappMcpWeb.CoreComponents
+      import MscmpSystForms.WebComponents
       import MsappMcpWeb.Gettext
 
       # Shortcut for generating JS commands

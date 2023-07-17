@@ -25,7 +25,7 @@ defmodule MsappMcp.Types do
 
   @type form_field_name() :: atom()
 
-  @type mcp_bootstrap_params() :: %{
+  @type bootstrap_params() :: %{
           optional(:owner_name) => String.t() | nil,
           optional(:owner_display_name) => String.t() | nil,
           optional(:admin_display_name) => String.t() | nil,
@@ -34,7 +34,7 @@ defmodule MsappMcp.Types do
           optional(:admin_credential_verify) => String.t() | nil
         }
 
-  @type mcp_bootstrap_text() :: %{
+  @type bootstrap_text() :: %{
           required(:owner_name) => String.t(),
           required(:owner_display_name) => String.t(),
           required(:admin_display_name) => String.t(),

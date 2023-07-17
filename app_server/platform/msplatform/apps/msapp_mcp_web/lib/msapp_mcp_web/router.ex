@@ -22,16 +22,31 @@ defmodule MsappMcpWeb.Router do
     plug(:not_bootstrapping_check)
   end
 
+  pipeline :authenticated do
+    plug(:authentication_check)
+  end
+
+  pipeline :logout do
+    plug(:drop_session)
+  end
+
   scope "/", MsappMcpWeb do
-    pipe_through([:browser, :bootstrap])
-
+    pipe_through([:browser, :bootstrap, :authenticated])
     get("/", PageController, :home)
+  end
 
-    live("/login", LoginLive)
+  scope "/login", MsappMcpWeb do
+    pipe_through([:browser, :bootstrap, :authenticated])
+    live("/", LoginLive)
+  end
+
+  scope "/logout", MsappMcpWeb do
+    pipe_through([:browser, :logout])
+    live("/", LoginLive)
   end
 
   scope "/bootstrap", MsappMcpWeb do
-    pipe_through([:browser, :no_bootstrap])
+    pipe_through([:browser, :no_bootstrap, :authenticated])
 
     live("/", BootstrapLive)
   end
@@ -68,5 +83,24 @@ defmodule MsappMcpWeb.Router do
     unless MsappMcp.launch_bootstrap?(),
       do: redirect(conn, to: "/") |> halt(),
       else: conn
+  end
+
+  defp authentication_check(conn, _opts) do
+    conn
+    |> put_session("session_name", MssubMcp.generate_session_name())
+  end
+
+  defp drop_session(conn, _opts) do
+    conn =
+      case get_session(conn, "session_name") do
+        name when is_binary(name) ->
+          MsappMcp.delete_session(name)
+          delete_session(conn, "session_name")
+
+        _ ->
+          conn
+      end
+
+    redirect(conn, to: "/login") |> halt()
   end
 end

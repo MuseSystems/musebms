@@ -11,8 +11,9 @@ defmodule MsappMcpWeb.Application do
       # Start the Telemetry supervisor
       MsappMcpWeb.Telemetry,
       # Start the Endpoint (http/https)
-      MsappMcpWeb.Endpoint,
-      {Task.Supervisor, name: MsappMcpWeb.TaskSupervisor}
+      MsappMcpWeb.Endpoint
+      # Start a worker by calling: MsappMcpWeb.Worker.start_link(arg)
+      # {MsappMcpWeb.Worker, arg}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
