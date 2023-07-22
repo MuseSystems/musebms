@@ -11,14 +11,14 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MsappMcpWeb.BootstrapLive do
-  use MsappMcpWeb, :live_view
+  use MsappMcpWeb, :bootstrap_live_view
 
   @moduledoc false
 
   def mount(_params, session, socket) do
     updated_socket =
       socket
-      |> assign(:page_title, "Muse Systems Platform Management Bootstrapping")
+      |> assign(:page_title, "Platform Bootstrap Process")
       |> Msform.McpBootstrap.preconnect_init(
         session["session_name"],
         :default,
