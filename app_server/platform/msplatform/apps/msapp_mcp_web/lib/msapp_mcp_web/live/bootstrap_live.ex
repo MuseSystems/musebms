@@ -25,26 +25,9 @@ defmodule MsappMcpWeb.BootstrapLive do
         :entry,
         :welcome
       )
-      |> Msform.McpBootstrap.update_button_state(:mcpbs_step_disallowed_button_load, :message)
-      |> Msform.McpBootstrap.update_button_state(:mcpbs_step_records_button_save, :message)
 
     {:ok, updated_socket}
   end
-
-  # def handle_event("save", %{"bootstrap" => form_data}, socket) do
-  #   Task.Supervisor.async_nolink(
-  #     MsappMcpWeb.TaskSupervisor,
-  #     fn ->
-  #       form_data
-  #       |> Map.new(fn {k, v} -> {String.to_atom(k), v} end)
-  #       |> MsappMcp.Impl.McpBootstrap.process_bootstrap_data()
-
-  #       send(self(), :records_saved)
-  #     end
-  #   )
-
-  #   {:noreply, assign(socket, current_step: :finish)}
-  # end
 
   def handle_event("button_welcome_next", _params, socket) do
     socket = Msform.McpBootstrap.enter_disallowed_state(socket)
@@ -100,15 +83,11 @@ defmodule MsappMcpWeb.BootstrapLive do
 
   def handle_info({ref, :records_saved}, socket) do
     Process.demonitor(ref, [:flush])
+
     socket = Msform.McpBootstrap.process_records_save_finished(socket)
+
     {:noreply, socket}
   end
 
   def handle_info({:DOWN, _, _, _, _}, socket), do: {:noreply, socket}
-
-  # defp determine_records_state(%Ecto.Changeset{valid?: true}), do: :action
-  # defp determine_records_state(%Ecto.Changeset{valid?: false}), do: :message
-
-  # defp determine_disallowed_list_state(true), do: :message
-  # defp determine_disallowed_list_state(false), do: :action
 end
