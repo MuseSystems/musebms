@@ -10,14 +10,14 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule Msform.McpBootstrap.Events do
+defmodule Msform.McpBootstrap.Actions do
   # For McpBootstrap user permissions are assumed since no user will exist at
   # bootstrap time
   @user_perms %{mcpbs_bootstrap_form: %{view_scope: :all, maint_scope: :all}}
 
   def preconnect_init(socket, session_name, feature, mode, state, opts) do
-    MscmpSystForms.init_assigns(
-      socket,
+    socket
+    |> MscmpSystForms.init_assigns(
       session_name,
       Msform.McpBootstrap,
       feature,
@@ -26,6 +26,8 @@ defmodule Msform.McpBootstrap.Events do
       @user_perms,
       opts
     )
+    |> MscmpSystForms.update_button_state(:mcpbs_step_disallowed_button_load, :message)
+    |> MscmpSystForms.update_button_state(:mcpbs_step_records_button_save, :message)
   end
 
   def postconnect_init(socket), do: MscmpSystForms.rebuild_component_assigns(socket)
