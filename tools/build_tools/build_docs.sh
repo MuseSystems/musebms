@@ -4,8 +4,6 @@
 # relative to that starting point.
 
 mkdir -p documentation/technical/database
-mkdir -p documentation/user/TheBook
-mkdir -p documentation/project
 
 ################################################################################
 #
@@ -19,9 +17,9 @@ mkdir -p documentation/project
 
 rm -Rf documentation/technical/app_server/mscmp_syst_utils
 mkdir -p documentation/technical/app_server/mscmp_syst_utils
-cd components/system/mscmp_syst_utils
+cd app_server/components/system/mscmp_syst_utils
 mix docs
-cd ../../../
+cd ../../../../
 
 #
 # MscmpSystError
@@ -29,9 +27,9 @@ cd ../../../
 
 rm -Rf documentation/technical/app_server/mscmp_syst_error
 mkdir -p documentation/technical/app_server/mscmp_syst_error
-cd components/system/mscmp_syst_error
+cd app_server/components/system/mscmp_syst_error
 mix docs
-cd ../../../
+cd ../../../../
 
 #
 # MscmpSystDb
@@ -39,9 +37,9 @@ cd ../../../
 
 rm -Rf documentation/technical/app_server/mscmp_syst_db
 mkdir -p documentation/technical/app_server/mscmp_syst_db
-cd components/system/mscmp_syst_db
+cd app_server/components/system/mscmp_syst_db
 mix docs
-cd ../../../
+cd ../../../../
 
 #
 # MscmpSystOptions
@@ -49,9 +47,9 @@ cd ../../../
 
 rm -Rf documentation/technical/app_server/mscmp_syst_options
 mkdir -p documentation/technical/app_server/mscmp_syst_options
-cd components/system/mscmp_syst_options
+cd app_server/components/system/mscmp_syst_options
 mix docs
-cd ../../../
+cd ../../../../
 
 #
 # MscmpSystSettings
@@ -59,9 +57,9 @@ cd ../../../
 
 rm -Rf documentation/technical/app_server/mscmp_syst_settings
 mkdir -p documentation/technical/app_server/mscmp_syst_settings
-cd components/system/mscmp_syst_settings
+cd app_server/components/system/mscmp_syst_settings
 mix docs
-cd ../../../
+cd ../../../../
 
 #
 # MscmpSystEnums
@@ -69,9 +67,9 @@ cd ../../../
 
 rm -Rf documentation/technical/app_server/mscmp_syst_enums
 mkdir -p documentation/technical/app_server/mscmp_syst_enums
-cd components/system/mscmp_syst_enums
+cd app_server/components/system/mscmp_syst_enums
 mix docs
-cd ../../../
+cd ../../../../
 
 #
 # MscmpSystInstance
@@ -79,9 +77,9 @@ cd ../../../
 
 rm -Rf documentation/technical/app_server/mscmp_syst_instance
 mkdir -p documentation/technical/app_server/mscmp_syst_instance
-cd components/system/mscmp_syst_instance
+cd app_server/components/system/mscmp_syst_instance
 mix docs
-cd ../../../
+cd ../../../../
 
 #
 # MscmpSystLimiter
@@ -89,9 +87,49 @@ cd ../../../
 
 rm -Rf documentation/technical/app_server/mscmp_syst_limiter
 mkdir -p documentation/technical/app_server/mscmp_syst_limiter
-cd components/system/mscmp_syst_limiter
+cd app_server/components/system/mscmp_syst_limiter
 mix docs
-cd ../../../
+cd ../../../../
+
+#
+# MscmpSystPerms
+#
+
+rm -Rf documentation/technical/app_server/mscmp_syst_perms
+mkdir -p documentation/technical/app_server/mscmp_syst_perms
+cd app_server/components/system/mscmp_syst_perms
+mix docs
+cd ../../../../
+
+#
+# MscmpSystMcpPerms
+#
+
+rm -Rf documentation/technical/app_server/mscmp_syst_mcp_perms
+mkdir -p documentation/technical/app_server/mscmp_syst_mcp_perms
+cd app_server/components/system/mscmp_syst_mcp_perms
+mix docs
+cd ../../../../
+
+#
+# MscmpSystSession
+#
+
+rm -Rf documentation/technical/app_server/mscmp_syst_session
+mkdir -p documentation/technical/app_server/mscmp_syst_session
+cd app_server/components/system/mscmp_syst_session
+mix docs
+cd ../../../../
+
+#
+# MscmpSystForms
+#
+
+rm -Rf documentation/technical/app_server/mscmp_syst_forms
+mkdir -p documentation/technical/app_server/mscmp_syst_forms
+cd app_server/components/system/mscmp_syst_forms
+mix docs
+cd ../../../../
 
 #
 # MscmpSystAuthn
@@ -99,9 +137,9 @@ cd ../../../
 
 rm -Rf documentation/technical/app_server/mscmp_syst_authn
 mkdir -p documentation/technical/app_server/mscmp_syst_authn
-cd components/system/mscmp_syst_authn
+cd app_server/components/system/mscmp_syst_authn
 mix docs
-cd ../../../
+cd ../../../../
 
 #
 # MssubMcp
@@ -109,9 +147,9 @@ cd ../../../
 
 rm -Rf documentation/technical/app_server/mssub_mcp
 mkdir -p documentation/technical/app_server/mssub_mcp
-cd subsystems/mssub_mcp
+cd app_server/subsystems/mssub_mcp
 mix docs
-cd ../../
+cd ../../../
 
 ################################################################################
 #
