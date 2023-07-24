@@ -4,20 +4,20 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.29.1">
+    <meta name="generator" content="ExDoc v0.29.4">
     <meta name="project" content="mscmp_syst_perms v0.1.0">
 
     <title>MscmpSystPerms.Protocol — mscmp_syst_perms v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-V2ETBPMB.css" />
+    <link rel="stylesheet" href="dist/html-elixir-HHVY3JYD.css" />
 
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-IV5W3OL2.js"></script>
-    <script src="dist/sidebar_items-2813030D.js"></script>
+    <script src="dist/handlebars.templates-XWGFFSCD.js"></script>
+    <script src="dist/sidebar_items-35D82283.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/html-XN2TSG4M.js"></script>
+    <script async src="dist/html-JDI3AVDD.js"></script>
 
 
   </head>
@@ -67,9 +67,9 @@
       <a href="MscmpSystPerms.html" class="sidebar-projectName" translate="no">
 mscmp_syst_perms
       </a>
-      <strong class="sidebar-projectVersion" translate="no">
+      <div class="sidebar-projectVersion" translate="no">
         v0.1.0
-      </strong>
+      </div>
     </div>
     <ul class="sidebar-listNav">
       <li><a id="extras-list-link" href="#full-list">Pages</a></li>
@@ -81,7 +81,7 @@ mscmp_syst_perms
   </div>
 
   <div class="gradient"></div>
-  <ul id="full-list" class="sidebar-fullList"></ul>
+  <ul id="full-list"></ul>
 </section>
 
 <section class="content">
@@ -137,11 +137,54 @@ mscmp_syst_perms
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#get_perm_grants/2" translate="no">get_perm_grants(selector, opts)</a>
+        <a href="#get_effective_perm_grants/2" translate="no">get_effective_perm_grants(selector, opts)</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>Returns the Permission Role Grant records for the given selector.</p></div>
+        <div class="summary-synopsis"><p>Provides the effective Permissions/Rights/Scopes for the user context
+identified by the <code class="inline">selector</code> as calculated from all effective grants and
+revocations.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#grant_perm_role/2" translate="no">grant_perm_role(selector, perm_role_id)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Grants a Permission Role to the given selector.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#list_perm_denials/2" translate="no">list_perm_denials(selector, opts)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>List all explicit denials of Permissions from the identified user context.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#list_perm_grants/2" translate="no">list_perm_grants(selector, opts)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Lists all of the Permission Role records granted to the user context
+identified by the <code class="inline">selector</code>, including the Rights/Scopes of the grants.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#revoke_perm_role/2" translate="no">revoke_perm_role(selector, perm_role_id)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Revokes a previously granted Permission Role from the given selector.</p></div>
 
     </div>
 
@@ -195,14 +238,14 @@ Types
 Functions
     </h1>
     <div class="functions-list">
-<section class="detail" id="get_perm_grants/2">
+<section class="detail" id="get_effective_perm_grants/2">
 
   <div class="detail-header">
-    <a href="#get_perm_grants/2" class="detail-link" title="Link to this function">
+    <a href="#get_effective_perm_grants/2" class="detail-link" title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">get_perm_grants(selector, opts)</h1>
+    <h1 class="signature" translate="no">get_effective_perm_grants(selector, opts)</h1>
 
 
   </div>
@@ -211,17 +254,19 @@ Functions
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> get_perm_grants(
+          <pre translate="no"><span class="attribute">@spec</span> get_effective_perm_grants(
   <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">struct</a>(),
   <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
 ) :: {:ok, <a href="MscmpSystPerms.Types.html#t:perm_grants/0">MscmpSystPerms.Types.perm_grants</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
 
       </div>
 
-<p>Returns the Permission Role Grant records for the given selector.</p><p>On successful execution, a success tuple is returned including a map of the
+<p>Provides the effective Permissions/Rights/Scopes for the user context
+identified by the <code class="inline">selector</code> as calculated from all effective grants and
+revocations.</p><p>This function answers the question, &quot;what rights does this user really have?&quot;</p><p>On successful execution, a success tuple is returned including a map of the
 selected Permissions and the Rights/Scopes granted.  Errors will result in the
-return of an error tuple.</p><h2 id="get_perm_grants/2-parameters" class="section-heading">
-  <a href="#get_perm_grants/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+return of an error tuple.</p><h2 id="get_effective_perm_grants/2-parameters" class="section-heading">
+  <a href="#get_effective_perm_grants/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
   <p class="sr-only">parameters</p>
   </a>
   Parameters
@@ -240,6 +285,175 @@ behavior is to return all of the permissions for a given Permission
 Functional Type filtered only by the <code class="inline">selector</code> data.  Again, the details
 of the filtering or inclusion using this option will be implementation
 specific and documented for each individual implementation.</li></ul></li></ul>
+  </section>
+</section>
+<section class="detail" id="grant_perm_role/2">
+
+  <div class="detail-header">
+    <a href="#grant_perm_role/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">grant_perm_role(selector, perm_role_id)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> grant_perm_role(
+  <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">struct</a>(),
+  <a href="MscmpSystPerms.Types.html#t:perm_role_id/0">MscmpSystPerms.Types.perm_role_id</a>()
+) :: :ok | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Grants a Permission Role to the given selector.</p><p>On successful execution of the grant, the function will return a simple <code class="inline">:ok</code>.
+On error, an error tuple is returned.</p><h2 id="grant_perm_role/2-parameters" class="section-heading">
+  <a href="#grant_perm_role/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">selector</code> - this value is a struct which determines the specific
+implementation of this function to call and which contains the keys/values
+to use as the unique identifier of the user context to which you are
+granting Permission Roles.</p></li><li><p><code class="inline">perm_role_id</code> - the record ID value of the Permission Role record which
+you are granting to the user context identified by the <code class="inline">selector</code>.</p></li></ul>
+  </section>
+</section>
+<section class="detail" id="list_perm_denials/2">
+
+  <div class="detail-header">
+    <a href="#list_perm_denials/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">list_perm_denials(selector, opts)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> list_perm_denials(
+  <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">struct</a>(),
+  <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
+) :: {:ok, [<a href="Msdata.SystPerms.html#t:t/0">Msdata.SystPerms.t</a>()] | []} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>List all explicit denials of Permissions from the identified user context.</p><p>An assumption made by this module is that Permission Roles are granted to
+users as whole roles, but individual Permissions may be explicitly denied from
+users on a Permission by Permission basis.  This function is intended to list
+Permission denials for a user context so that the denials may be managed.</p><p>Some user contexts may not offer explicit Permission denials.  In these cases
+this function should simply return a success tuple containing an empty list as
+the value.</p><h2 id="list_perm_denials/2-parameters" class="section-heading">
+  <a href="#list_perm_denials/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">selector</code> - this value is a struct which determines the specific
+implementation of this function to call and which contains the keys/values
+to use in selecting which Permission denial records to retrieve. Specific
+details about what records are involved and how the selection return values
+are determine are implementation specific and will be documented on a case-
+by-case basis.</p></li><li><p><code class="inline">opts</code> - a Keyword List of optional parameters which may be provided.  The
+only general option is listed below, each specific implementation of this
+function may extend the available options as appropriate to the
+implementation.</p></li></ul>
+  </section>
+</section>
+<section class="detail" id="list_perm_grants/2">
+
+  <div class="detail-header">
+    <a href="#list_perm_grants/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">list_perm_grants(selector, opts)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> list_perm_grants(
+  <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">struct</a>(),
+  <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
+) :: {:ok, [<a href="Msdata.SystPermRoles.html#t:t/0">Msdata.SystPermRoles.t</a>()]} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Lists all of the Permission Role records granted to the user context
+identified by the <code class="inline">selector</code>, including the Rights/Scopes of the grants.</p><p>This function facilitates understanding what roles have been granted to user
+and what Permissions/Rights/Scopes those roles grant to the user.  This list
+is intended to be descriptive and not directly indicating the effective grants
+applied to the user.  Typical uses of this function are to populate lists of
+Permission Role Grants for the purposes of managing user access.</p><h2 id="list_perm_grants/2-parameters" class="section-heading">
+  <a href="#list_perm_grants/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">selector</code> - this value is a struct which determines the specific
+implementation of this function to call and which contains the keys/values
+to use in selecting which Permission and Permission Role Grant records to
+retrieve.  Specific details about what records are involved and how the
+selection return values are determine are implementation specific and will
+be documented on a case-by-case basis.</p></li><li><p><code class="inline">opts</code> - a Keyword List of optional parameters which may be provided.  The
+only general option is listed below, each specific implementation of this
+function may extend the available options as appropriate to the
+implementation.</p><ul><li><code class="inline">include_perms</code> - a boolean option which, when set <code class="inline">true</code>, will preload
+the <a href="Msdata.SystPermRoleGrants.html"><code class="inline">Msdata.SystPermRoleGrants</code></a> <code class="inline">perm</code> data.  The default value for this
+option is <code class="inline">false</code>.</li></ul></li></ul>
+  </section>
+</section>
+<section class="detail" id="revoke_perm_role/2">
+
+  <div class="detail-header">
+    <a href="#revoke_perm_role/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">revoke_perm_role(selector, perm_role_id)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> revoke_perm_role(
+  <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">struct</a>(),
+  <a href="MscmpSystPerms.Types.html#t:perm_role_id/0">MscmpSystPerms.Types.perm_role_id</a>()
+) :: {:ok, :deleted | :not_found} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Revokes a previously granted Permission Role from the given selector.</p><p>On successful execution a success tuple is returned.  If the grant was
+actually deleted this tuple will take the form <code class="inline">{:ok, :deleted}</code>.  If the
+grant was not found for the user context identified by the <code class="inline">selector</code> then the
+<code class="inline">{:ok, :not_found}</code> tuple will be returned.  Any other outcome is an error
+resulting in an error tuple being returned.</p><h2 id="revoke_perm_role/2-parameters" class="section-heading">
+  <a href="#revoke_perm_role/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">selector</code> - this value is a struct which determines the specific
+implementation of this function to call and which contains the keys/values
+to use as the unique identifier of the user context from which you are
+revoking Permission Roles.</p></li><li><p><code class="inline">perm_role_id</code> - the record ID value of the Permission Role record which
+you are revoking from the user context identified by the <code class="inline">selector</code>.</p></li></ul>
   </section>
 </section>
 
@@ -263,7 +477,7 @@ specific and documented for each individual implementation.</li></ul></li></ul>
 
         <p class="built-using">
           Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.29.1) for the
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.29.4) for the
 
             <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 

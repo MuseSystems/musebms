@@ -4,20 +4,20 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.29.1">
+    <meta name="generator" content="ExDoc v0.29.4">
     <meta name="project" content="mscmp_syst_instance v0.1.0">
 
     <title>MscmpSystInstance — mscmp_syst_instance v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-V2ETBPMB.css" />
+    <link rel="stylesheet" href="dist/html-elixir-HHVY3JYD.css" />
 
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-IV5W3OL2.js"></script>
-    <script src="dist/sidebar_items-9F6F3750.js"></script>
+    <script src="dist/handlebars.templates-XWGFFSCD.js"></script>
+    <script src="dist/sidebar_items-1FFEBBD0.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/html-XN2TSG4M.js"></script>
+    <script async src="dist/html-JDI3AVDD.js"></script>
 
 
   </head>
@@ -67,9 +67,9 @@
       <a href="MscmpSystInstance.html" class="sidebar-projectName" translate="no">
 mscmp_syst_instance
       </a>
-      <strong class="sidebar-projectVersion" translate="no">
+      <div class="sidebar-projectVersion" translate="no">
         v0.1.0
-      </strong>
+      </div>
     </div>
     <ul class="sidebar-listNav">
       <li><a id="extras-list-link" href="#full-list">Pages</a></li>
@@ -81,7 +81,7 @@ mscmp_syst_instance
   </div>
 
   <div class="gradient"></div>
-  <ul id="full-list" class="sidebar-fullList"></ul>
+  <ul id="full-list"></ul>
 </section>
 
 <section class="content">
@@ -234,6 +234,16 @@ fail if the <a href="../../../../documentation/technical/app_server/mscmp_syst_e
 
         <div class="summary-synopsis"><p>Returns the Owner State Enumeration record which is configured as being
 default.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#owner_exists?/1" translate="no">owner_exists?(opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Tests to see if a specific Owner, or any Owner, record exists in the database.</p></div>
 
     </div>
 
@@ -782,8 +792,8 @@ Enumeration record <code class="inline">nil</code> is returned.</p><h2 id="get_o
   </a>
   Examples
 </h2>
-<p>Retrieving an Owner State Enumeration record.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="2294255590-1">%</span><span class="nc" data-group-id="2294255590-1">Msdata.SystEnumItems</span><span class="p" data-group-id="2294255590-1">{</span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;owner_states_sysdef_active&quot;</span><span class="p" data-group-id="2294255590-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_owner_state_by_name</span><span class="p" data-group-id="2294255590-2">(</span><span class="s">&quot;owner_states_sysdef_active&quot;</span><span class="p" data-group-id="2294255590-2">)</span></code></pre><p>Trying to retrieve a non-existent Owner State.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_owner_state_by_name</span><span class="p" data-group-id="5529219213-1">(</span><span class="s">&quot;nonexistent_state&quot;</span><span class="p" data-group-id="5529219213-1">)</span><span class="w">
+<p>Retrieving an Owner State Enumeration record.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="7576061799-1">%</span><span class="nc" data-group-id="7576061799-1">Msdata.SystEnumItems</span><span class="p" data-group-id="7576061799-1">{</span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;owner_states_sysdef_active&quot;</span><span class="p" data-group-id="7576061799-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_owner_state_by_name</span><span class="p" data-group-id="7576061799-2">(</span><span class="s">&quot;owner_states_sysdef_active&quot;</span><span class="p" data-group-id="7576061799-2">)</span></code></pre><p>Trying to retrieve a non-existent Owner State.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_owner_state_by_name</span><span class="p" data-group-id="4963762521-1">(</span><span class="s">&quot;nonexistent_state&quot;</span><span class="p" data-group-id="4963762521-1">)</span><span class="w">
 </span><span class="no">nil</span></code></pre>
   </section>
 </section>
@@ -830,9 +840,56 @@ default for this parameter is to treat the parameter as not provided
   </a>
   Examples
 </h2>
-<p>Requesting the system default Owner State.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="9468092786-1">%</span><span class="nc" data-group-id="9468092786-1">Msdata.SystEnumItems</span><span class="p" data-group-id="9468092786-1">{</span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;owner_states_sysdef_active&quot;</span><span class="p" data-group-id="9468092786-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_owner_state_default</span><span class="p" data-group-id="9468092786-2">(</span><span class="p" data-group-id="9468092786-2">)</span></code></pre><p>Requesting the default Owner State for a specific functional type.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="5746203447-1">%</span><span class="nc" data-group-id="5746203447-1">Msdata.SystEnumItems</span><span class="p" data-group-id="5746203447-1">{</span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;owner_states_sysdef_inactive&quot;</span><span class="p" data-group-id="5746203447-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_owner_state_default</span><span class="p" data-group-id="5746203447-2">(</span><span class="ss">:owner_states_inactive</span><span class="p" data-group-id="5746203447-2">)</span></code></pre>
+<p>Requesting the system default Owner State.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="9201002476-1">%</span><span class="nc" data-group-id="9201002476-1">Msdata.SystEnumItems</span><span class="p" data-group-id="9201002476-1">{</span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;owner_states_sysdef_active&quot;</span><span class="p" data-group-id="9201002476-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_owner_state_default</span><span class="p" data-group-id="9201002476-2">(</span><span class="p" data-group-id="9201002476-2">)</span></code></pre><p>Requesting the default Owner State for a specific functional type.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="7083538706-1">%</span><span class="nc" data-group-id="7083538706-1">Msdata.SystEnumItems</span><span class="p" data-group-id="7083538706-1">{</span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;owner_states_sysdef_inactive&quot;</span><span class="p" data-group-id="7083538706-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_owner_state_default</span><span class="p" data-group-id="7083538706-2">(</span><span class="ss">:owner_states_inactive</span><span class="p" data-group-id="7083538706-2">)</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="owner_exists?/1">
+
+    <span id="owner_exists?/0"></span>
+
+  <div class="detail-header">
+    <a href="#owner_exists?/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">owner_exists?(opts \\ [])</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> owner_exists?(<a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>() | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Tests to see if a specific Owner, or any Owner, record exists in the database.</p><p>The functions provides an optional test on either an Owner record's Internal
+Name or record ID value.  If no selectivity option is made, the test checks if
+any Owner records exist in the database at all.</p><p>If the Owner record(s) is found, the function returns true; other false.
+Errors produce a result tuple.</p><h2 id="owner_exists?/1-parameters" class="section-heading">
+  <a href="#owner_exists?/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">opts</code> - an optional Keyword List of optional parameters which can
+influence the result of calling the function.  The available options are:</p><ul><li><p><code class="inline">owner_id</code> - tests if a specific Owner record exists as referenced by
+its record ID value.</p></li><li><p><code class="inline">owner_name</code> - tests if a specific Owner record exists as referenced by
+its Internal Name.</p></li></ul></li></ul><h2 id="owner_exists?/1-examples" class="section-heading">
+  <a href="#owner_exists?/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">examples</p>
+  </a>
+  Examples
+</h2>
+<p>Check if any Owner record exists.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">owner_exists?</span><span class="p" data-group-id="1795098738-1">(</span><span class="p" data-group-id="1795098738-1">)</span><span class="w">
+</span><span class="no">true</span></code></pre><p>Check if a specific Owner record exists.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">owner_exists?</span><span class="p" data-group-id="0539345186-1">(</span><span class="ss">owner_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;owner1&quot;</span><span class="p" data-group-id="0539345186-1">)</span><span class="w">
+</span><span class="no">true</span></code></pre><p>If a non-existent Owner is requested, the function indicates the record was
+not found.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">owner_exists?</span><span class="p" data-group-id="9634458946-1">(</span><span class="ss">owner_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;nonexistent_owner&quot;</span><span class="p" data-group-id="9634458946-1">)</span><span class="w">
+</span><span class="no">false</span></code></pre>
   </section>
 </section>
 <section class="detail" id="purge_owner/1">
@@ -1095,8 +1152,8 @@ record to return.</li></ul><h2 id="get_instance_type_by_name/1-examples" class="
   </a>
   Examples
 </h2>
-<p>Finding a Instance Type record by Internal Name.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="3708186142-1">%</span><span class="nc" data-group-id="3708186142-1">Msdata.SystEnumItems</span><span class="p" data-group-id="3708186142-1">{</span><span class="p" data-group-id="3708186142-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_type_by_name</span><span class="p" data-group-id="3708186142-2">(</span><span class="s">&quot;instance_types_big&quot;</span><span class="p" data-group-id="3708186142-2">)</span></code></pre><p>Looking for a non-existent record.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_type_by_name</span><span class="p" data-group-id="4678931217-1">(</span><span class="s">&quot;nonexistent_type&quot;</span><span class="p" data-group-id="4678931217-1">)</span><span class="w">
+<p>Finding a Instance Type record by Internal Name.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="6824548903-1">%</span><span class="nc" data-group-id="6824548903-1">Msdata.SystEnumItems</span><span class="p" data-group-id="6824548903-1">{</span><span class="p" data-group-id="6824548903-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_type_by_name</span><span class="p" data-group-id="6824548903-2">(</span><span class="s">&quot;instance_types_big&quot;</span><span class="p" data-group-id="6824548903-2">)</span></code></pre><p>Looking for a non-existent record.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_type_by_name</span><span class="p" data-group-id="2750837059-1">(</span><span class="s">&quot;nonexistent_type&quot;</span><span class="p" data-group-id="2750837059-1">)</span><span class="w">
 </span><span class="no">nil</span></code></pre>
   </section>
 </section>
@@ -1127,7 +1184,7 @@ Instance Type.</p><p>If no system default has not been defined <code class="inli
   </a>
   Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="8432521840-1">%</span><span class="nc" data-group-id="8432521840-1">Msdata.SystEnumItems</span><span class="p" data-group-id="8432521840-1">{</span><span class="p" data-group-id="8432521840-1">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_type_default</span><span class="p" data-group-id="8432521840-2">(</span><span class="p" data-group-id="8432521840-2">)</span></code></pre>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="8587923488-1">%</span><span class="nc" data-group-id="8587923488-1">Msdata.SystEnumItems</span><span class="p" data-group-id="8587923488-1">{</span><span class="p" data-group-id="8587923488-1">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_type_default</span><span class="p" data-group-id="8587923488-2">(</span><span class="p" data-group-id="8587923488-2">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="update_instance_type/2">
@@ -1358,8 +1415,8 @@ State value is not provided by the caller.</p>
   </a>
   Example
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="9840780738-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="9840780738-2">%</span><span class="nc" data-group-id="9840780738-2">Msdata.SystInstances</span><span class="p" data-group-id="9840780738-2">{</span><span class="p" data-group-id="9840780738-2">}</span><span class="p" data-group-id="9840780738-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_by_name</span><span class="p" data-group-id="9840780738-3">(</span><span class="s">&quot;app1_owner1_instance_types_sml&quot;</span><span class="p" data-group-id="9840780738-3">)</span></code></pre>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="8776348107-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8776348107-2">%</span><span class="nc" data-group-id="8776348107-2">Msdata.SystInstances</span><span class="p" data-group-id="8776348107-2">{</span><span class="p" data-group-id="8776348107-2">}</span><span class="p" data-group-id="8776348107-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_by_name</span><span class="p" data-group-id="8776348107-3">(</span><span class="s">&quot;app1_owner1_instance_types_sml&quot;</span><span class="p" data-group-id="8776348107-3">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_instance_datastore_options/2">
@@ -1431,9 +1488,9 @@ obtained from the <a href="../../../../documentation/technical/app_server/mscmp_
   </a>
   Example
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="1752114160-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">instance_id</span><span class="p" data-group-id="1752114160-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_id_by_name</span><span class="p" data-group-id="1752114160-2">(</span><span class="s">&quot;app1_owner1_instance_types_sml&quot;</span><span class="p" data-group-id="1752114160-2">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="n">is_binary</span><span class="p" data-group-id="1752114160-3">(</span><span class="n">instance_id</span><span class="p" data-group-id="1752114160-3">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="0987244293-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">instance_id</span><span class="p" data-group-id="0987244293-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_id_by_name</span><span class="p" data-group-id="0987244293-2">(</span><span class="s">&quot;app1_owner1_instance_types_sml&quot;</span><span class="p" data-group-id="0987244293-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_binary</span><span class="p" data-group-id="0987244293-3">(</span><span class="n">instance_id</span><span class="p" data-group-id="0987244293-3">)</span><span class="w">
 </span><span class="no">true</span></code></pre>
   </section>
 </section>
@@ -1472,8 +1529,8 @@ Enumeration record <code class="inline">nil</code> is returned.</p><h2 id="get_i
   </a>
   Examples
 </h2>
-<p>Retrieving an Instance State Enumeration record.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="7366834418-1">%</span><span class="nc" data-group-id="7366834418-1">Msdata.SystEnumItems</span><span class="p" data-group-id="7366834418-1">{</span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;instance_states_sysdef_active&quot;</span><span class="p" data-group-id="7366834418-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_state_by_name</span><span class="p" data-group-id="7366834418-2">(</span><span class="s">&quot;instance_states_sysdef_active&quot;</span><span class="p" data-group-id="7366834418-2">)</span></code></pre><p>Trying to retrieve a non-existent Instance State.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_state_by_name</span><span class="p" data-group-id="8662152182-1">(</span><span class="s">&quot;nonexistent_state&quot;</span><span class="p" data-group-id="8662152182-1">)</span><span class="w">
+<p>Retrieving an Instance State Enumeration record.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="5988312179-1">%</span><span class="nc" data-group-id="5988312179-1">Msdata.SystEnumItems</span><span class="p" data-group-id="5988312179-1">{</span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;instance_states_sysdef_active&quot;</span><span class="p" data-group-id="5988312179-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_state_by_name</span><span class="p" data-group-id="5988312179-2">(</span><span class="s">&quot;instance_states_sysdef_active&quot;</span><span class="p" data-group-id="5988312179-2">)</span></code></pre><p>Trying to retrieve a non-existent Instance State.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_state_by_name</span><span class="p" data-group-id="2436695983-1">(</span><span class="s">&quot;nonexistent_state&quot;</span><span class="p" data-group-id="2436695983-1">)</span><span class="w">
 </span><span class="no">nil</span></code></pre>
   </section>
 </section>
@@ -1520,9 +1577,9 @@ The default for this parameter is to treat the parameter as not provided
   </a>
   Examples
 </h2>
-<p>Requesting the system default Instance State.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="2630843122-1">%</span><span class="nc" data-group-id="2630843122-1">Msdata.SystEnumItems</span><span class="p" data-group-id="2630843122-1">{</span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;instance_states_sysdef_uninitialized&quot;</span><span class="p" data-group-id="2630843122-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_state_default</span><span class="p" data-group-id="2630843122-2">(</span><span class="p" data-group-id="2630843122-2">)</span></code></pre><p>Requesting the default Instance State for a specific functional type.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="4827500538-1">%</span><span class="nc" data-group-id="4827500538-1">Msdata.SystEnumItems</span><span class="p" data-group-id="4827500538-1">{</span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;instance_states_sysdef_active&quot;</span><span class="p" data-group-id="4827500538-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_state_default</span><span class="p" data-group-id="4827500538-2">(</span><span class="ss">:instance_states_active</span><span class="p" data-group-id="4827500538-2">)</span></code></pre>
+<p>Requesting the system default Instance State.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="4109882171-1">%</span><span class="nc" data-group-id="4109882171-1">Msdata.SystEnumItems</span><span class="p" data-group-id="4109882171-1">{</span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;instance_states_sysdef_uninitialized&quot;</span><span class="p" data-group-id="4109882171-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_state_default</span><span class="p" data-group-id="4109882171-2">(</span><span class="p" data-group-id="4109882171-2">)</span></code></pre><p>Requesting the default Instance State for a specific functional type.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="8538387591-1">%</span><span class="nc" data-group-id="8538387591-1">Msdata.SystEnumItems</span><span class="p" data-group-id="8538387591-1">{</span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;instance_states_sysdef_active&quot;</span><span class="p" data-group-id="8538387591-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_instance_state_default</span><span class="p" data-group-id="8538387591-2">(</span><span class="ss">:instance_states_active</span><span class="p" data-group-id="8538387591-2">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="initialize_instance/3">
@@ -1709,13 +1766,13 @@ attribute is required.</p></li></ul></li></ul><h2 id="create_application/1-examp
   </a>
   Examples
 </h2>
-<p>Creating a new Application record.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">new_app_params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="5126805011-1">%{</span><span class="w">
+<p>Creating a new Application record.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">new_app_params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="7012936763-1">%{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ex_app1&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">display_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Example App 1&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">syst_description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;An example application&quot;</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="5126805011-1">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="5126805011-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="5126805011-3">%</span><span class="nc" data-group-id="5126805011-3">Msdata.SystApplications</span><span class="p" data-group-id="5126805011-3">{</span><span class="p" data-group-id="5126805011-3">}</span><span class="p" data-group-id="5126805011-2">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">create_application</span><span class="p" data-group-id="5126805011-4">(</span><span class="n">new_app_params</span><span class="p" data-group-id="5126805011-4">)</span></code></pre>
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="7012936763-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="7012936763-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7012936763-3">%</span><span class="nc" data-group-id="7012936763-3">Msdata.SystApplications</span><span class="p" data-group-id="7012936763-3">{</span><span class="p" data-group-id="7012936763-3">}</span><span class="p" data-group-id="7012936763-2">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">create_application</span><span class="p" data-group-id="7012936763-4">(</span><span class="n">new_app_params</span><span class="p" data-group-id="7012936763-4">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="create_application_context/1">
@@ -1795,7 +1852,7 @@ the Instance start process.</p></li></ul></li></ul><h2 id="create_application_co
   </a>
   Examples
 </h2>
-<p>Create an database owner Application Context record.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">new_context_params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="8929225478-1">%{</span><span class="w">
+<p>Create an database owner Application Context record.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">new_context_params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="9678359125-1">%{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ex_app2_owner&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">display_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Example App 2 Owner&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">application_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ex_app2&quot;</span><span class="p">,</span><span class="w">
@@ -1803,9 +1860,9 @@ the Instance start process.</p></li></ul></li></ul><h2 id="create_application_co
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">start_context</span><span class="p">:</span><span class="w"> </span><span class="no">false</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">login_context</span><span class="p">:</span><span class="w"> </span><span class="no">false</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">database_owner_context</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="8929225478-1">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="8929225478-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8929225478-3">%</span><span class="nc" data-group-id="8929225478-3">Msdata.SystApplicationContexts</span><span class="p" data-group-id="8929225478-3">{</span><span class="p" data-group-id="8929225478-3">}</span><span class="p" data-group-id="8929225478-2">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">create_application_context</span><span class="p" data-group-id="8929225478-4">(</span><span class="n">new_context_params</span><span class="p" data-group-id="8929225478-4">)</span></code></pre>
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="9678359125-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="9678359125-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="9678359125-3">%</span><span class="nc" data-group-id="9678359125-3">Msdata.SystApplicationContexts</span><span class="p" data-group-id="9678359125-3">{</span><span class="p" data-group-id="9678359125-3">}</span><span class="p" data-group-id="9678359125-2">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">create_application_context</span><span class="p" data-group-id="9678359125-4">(</span><span class="n">new_context_params</span><span class="p" data-group-id="9678359125-4">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="delete_application_context/1">
@@ -1854,11 +1911,11 @@ to delete.  This value is required.</li></ul><h2 id="delete_application_context/
   </a>
   Examples
 </h2>
-<p>Deleting an existing Application Context.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">record_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_application_context_id_by_name</span><span class="p" data-group-id="5893068793-1">(</span><span class="s">&quot;ex_app2_delctx&quot;</span><span class="p" data-group-id="5893068793-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">delete_application_context</span><span class="p" data-group-id="5893068793-2">(</span><span class="n">record_id</span><span class="p" data-group-id="5893068793-2">)</span><span class="w">
-</span><span class="p" data-group-id="5893068793-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="ss">:deleted</span><span class="p" data-group-id="5893068793-3">}</span></code></pre><p>Attempting to delete a non-existent record.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">record_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;00000000-0000-0000-0000-000000000000&quot;</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">delete_application_context</span><span class="p" data-group-id="0851371077-1">(</span><span class="n">record_id</span><span class="p" data-group-id="0851371077-1">)</span><span class="w">
-</span><span class="p" data-group-id="0851371077-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="ss">:not_found</span><span class="p" data-group-id="0851371077-2">}</span></code></pre>
+<p>Deleting an existing Application Context.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">record_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_application_context_id_by_name</span><span class="p" data-group-id="2530377375-1">(</span><span class="s">&quot;ex_app2_delctx&quot;</span><span class="p" data-group-id="2530377375-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">delete_application_context</span><span class="p" data-group-id="2530377375-2">(</span><span class="n">record_id</span><span class="p" data-group-id="2530377375-2">)</span><span class="w">
+</span><span class="p" data-group-id="2530377375-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="ss">:deleted</span><span class="p" data-group-id="2530377375-3">}</span></code></pre><p>Attempting to delete a non-existent record.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">record_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;00000000-0000-0000-0000-000000000000&quot;</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">delete_application_context</span><span class="p" data-group-id="1713330010-1">(</span><span class="n">record_id</span><span class="p" data-group-id="1713330010-1">)</span><span class="w">
+</span><span class="p" data-group-id="1713330010-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="ss">:not_found</span><span class="p" data-group-id="1713330010-2">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_application/2">
@@ -1941,9 +1998,9 @@ Context record to search for.</li></ul><h2 id="get_application_context_id_by_nam
   </a>
   Examples
 </h2>
-<p>Finding an existing Application Context.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_application_context_id_by_name</span><span class="p" data-group-id="7471156125-1">(</span><span class="s">&quot;ex_app2_idctx&quot;</span><span class="p" data-group-id="7471156125-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="n">is_binary</span><span class="p" data-group-id="7471156125-2">(</span><span class="n">id</span><span class="p" data-group-id="7471156125-2">)</span><span class="w">
-</span><span class="no">true</span></code></pre><p>Searching for a non-existent Application Context.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_application_context_id_by_name</span><span class="p" data-group-id="5969432783-1">(</span><span class="s">&quot;nonexistent_context&quot;</span><span class="p" data-group-id="5969432783-1">)</span><span class="w">
+<p>Finding an existing Application Context.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_application_context_id_by_name</span><span class="p" data-group-id="7405690987-1">(</span><span class="s">&quot;ex_app2_idctx&quot;</span><span class="p" data-group-id="7405690987-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_binary</span><span class="p" data-group-id="7405690987-2">(</span><span class="n">id</span><span class="p" data-group-id="7405690987-2">)</span><span class="w">
+</span><span class="no">true</span></code></pre><p>Searching for a non-existent Application Context.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_application_context_id_by_name</span><span class="p" data-group-id="8023710321-1">(</span><span class="s">&quot;nonexistent_context&quot;</span><span class="p" data-group-id="8023710321-1">)</span><span class="w">
 </span><span class="no">nil</span></code></pre>
   </section>
 </section>
@@ -1985,9 +2042,9 @@ management activities by end users.</p></blockquote><h2 id="get_application_id_b
   </a>
   Examples
 </h2>
-<p>  Finding an application returns its ID value.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">application_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_application_id_by_name</span><span class="p" data-group-id="3182189147-1">(</span><span class="s">&quot;app1&quot;</span><span class="p" data-group-id="3182189147-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="n">is_binary</span><span class="p" data-group-id="3182189147-2">(</span><span class="n">application_id</span><span class="p" data-group-id="3182189147-2">)</span><span class="w">
-</span><span class="no">true</span></code></pre><p>  Asking for a non-existent application returns <code class="inline">nil</code>.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="w"> </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_application_id_by_name</span><span class="p" data-group-id="5190684986-1">(</span><span class="s">&quot;nonexistent_application&quot;</span><span class="p" data-group-id="5190684986-1">)</span><span class="w">
+<p>  Finding an application returns its ID value.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">application_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_application_id_by_name</span><span class="p" data-group-id="1373353453-1">(</span><span class="s">&quot;app1&quot;</span><span class="p" data-group-id="1373353453-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_binary</span><span class="p" data-group-id="1373353453-2">(</span><span class="n">application_id</span><span class="p" data-group-id="1373353453-2">)</span><span class="w">
+</span><span class="no">true</span></code></pre><p>  Asking for a non-existent application returns <code class="inline">nil</code>.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="w"> </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_application_id_by_name</span><span class="p" data-group-id="8466063294-1">(</span><span class="s">&quot;nonexistent_application&quot;</span><span class="p" data-group-id="8466063294-1">)</span><span class="w">
 </span><span class="no">nil</span></code></pre>
   </section>
 </section>
@@ -2073,13 +2130,13 @@ may not be set <code class="inline">nil</code> if it is included.</p></li></ul><
   </a>
   Examples
 </h2>
-<p>Creating a new Application record.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">target_app_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_application_id_by_name</span><span class="p" data-group-id="7241532776-1">(</span><span class="s">&quot;ex_app2&quot;</span><span class="p" data-group-id="7241532776-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="n">update_app_params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="7241532776-2">%{</span><span class="w">
+<p>Creating a new Application record.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">target_app_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_application_id_by_name</span><span class="p" data-group-id="1734861017-1">(</span><span class="s">&quot;ex_app2&quot;</span><span class="p" data-group-id="1734861017-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">update_app_params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="1734861017-2">%{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">display_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Example App #2&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">syst_description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;An updated example application.&quot;</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="7241532776-2">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="7241532776-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7241532776-4">%</span><span class="nc" data-group-id="7241532776-4">Msdata.SystApplications</span><span class="p" data-group-id="7241532776-4">{</span><span class="ss">display_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Example App #2&quot;</span><span class="p" data-group-id="7241532776-4">}</span><span class="p" data-group-id="7241532776-3">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">update_application</span><span class="p" data-group-id="7241532776-5">(</span><span class="n">target_app_id</span><span class="p">,</span><span class="w"> </span><span class="n">update_app_params</span><span class="p" data-group-id="7241532776-5">)</span></code></pre>
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="1734861017-2">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="1734861017-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="1734861017-4">%</span><span class="nc" data-group-id="1734861017-4">Msdata.SystApplications</span><span class="p" data-group-id="1734861017-4">{</span><span class="ss">display_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Example App #2&quot;</span><span class="p" data-group-id="1734861017-4">}</span><span class="p" data-group-id="1734861017-3">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">update_application</span><span class="p" data-group-id="1734861017-5">(</span><span class="n">target_app_id</span><span class="p">,</span><span class="w"> </span><span class="n">update_app_params</span><span class="p" data-group-id="1734861017-5">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="update_application_context/2">
@@ -2138,19 +2195,19 @@ Context defining a Datastore Owner Context or any other Context where the
   Examples
 </h2>
 <p>Updating an existing Application Context record</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">app_context_id</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_application_context_id_by_name</span><span class="p" data-group-id="3183613208-1">(</span><span class="s">&quot;ex_app2_updctx&quot;</span><span class="p" data-group-id="3183613208-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="n">update_params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="3183613208-2">%{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">get_application_context_id_by_name</span><span class="p" data-group-id="7755121425-1">(</span><span class="s">&quot;ex_app2_updctx&quot;</span><span class="p" data-group-id="7755121425-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">update_params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="7755121425-2">%{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">display_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Updated Ex. App 2 Context&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;A now updated description&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">start_context</span><span class="p">:</span><span class="w"> </span><span class="no">false</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="3183613208-2">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="3183613208-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="3183613208-4">%</span><span class="nc" data-group-id="3183613208-4">Msdata.SystApplicationContexts</span><span class="p" data-group-id="3183613208-4">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="7755121425-2">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="7755121425-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="7755121425-4">%</span><span class="nc" data-group-id="7755121425-4">Msdata.SystApplicationContexts</span><span class="p" data-group-id="7755121425-4">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">display_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Updated Ex. App 2 Context&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;A now updated description&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">start_context</span><span class="p">:</span><span class="w"> </span><span class="no">false</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="3183613208-4">}</span><span class="p" data-group-id="3183613208-3">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">update_application_context</span><span class="p" data-group-id="3183613208-5">(</span><span class="n">app_context_id</span><span class="p">,</span><span class="w"> </span><span class="n">update_params</span><span class="p" data-group-id="3183613208-5">)</span></code></pre>
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="7755121425-4">}</span><span class="p" data-group-id="7755121425-3">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystInstance</span><span class="o">.</span><span class="n">update_application_context</span><span class="p" data-group-id="7755121425-5">(</span><span class="n">app_context_id</span><span class="p">,</span><span class="w"> </span><span class="n">update_params</span><span class="p" data-group-id="7755121425-5">)</span></code></pre>
   </section>
 </section>
 
@@ -2498,7 +2555,7 @@ is <code class="inline">MscmpSystInstance.Registry</code>.</p></li></ul></li></u
 
         <p class="built-using">
           Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.29.1) for the
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.29.4) for the
 
             <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 
