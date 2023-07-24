@@ -84,6 +84,12 @@ defmodule Msform.McpBootstrap.Actions do
             send(self(), :disallowed_list_loaded)
 
           error ->
+            # TODO: This should probably return a failure result instead of an 
+            #       exception.  I'm not sure the exception here will propagate 
+            #       back to self() they way I'd like it to, in fact, I'm pretty 
+            #       confident it doesn't, especially because we're no-link. For 
+            #       now we'll keep this because the expected failure modes here 
+            #       are expected to be rare, but something to keep in mind.
             raise MscmpSystError,
               code: :undefined_error,
               message: "Unexpected failure loading Disallowed Passwords starter list.",
