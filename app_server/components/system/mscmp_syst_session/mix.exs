@@ -57,7 +57,7 @@ defmodule MscmpSystSession.MixProject do
           mscmp_syst_error: "../../../../documentation/technical/app_server/mscmp_syst_error",
           mscmp_syst_db: "../../../../documentation/technical/app_server/mscmp_syst_db"
         ],
-        groups_for_functions: [:session_management],
+        groups_for_functions: ["Session Management": &(&1[:section] == :session_management)],
         nest_modules_by_prefix: [Msdata],
         groups_for_modules: [
           API: [MscmpSystSession],
