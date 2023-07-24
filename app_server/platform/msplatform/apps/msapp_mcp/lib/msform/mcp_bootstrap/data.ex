@@ -16,8 +16,7 @@ defmodule Msform.McpBootstrap.Data do
   alias MsappMcp.Types
 
   @spec validate_save(Msform.McpBootstrap.t(), Types.bootstrap_params()) :: Ecto.Changeset.t()
-  def validate_save(original_data, current_data),
-    do: validate_post(original_data, current_data)
+  def validate_save(original_data, current_data), do: validate_post(original_data, current_data)
 
   @spec validate_post(Msform.McpBootstrap.t(), Types.bootstrap_params()) :: Ecto.Changeset.t()
   def validate_post(original_data, current_data) do
