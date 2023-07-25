@@ -253,6 +253,12 @@ Rules.
 > rules according to studies on the matter. In fact, defining rules with
 > greater stringency may well result in less security than that offered by the
 > default Global Password Rules.
+>
+> Studies which provide further insight:
+>
+> [Human Generated Passwords – The Impacts of Password Requirements and Presentation Styles (2015)](https://link.springer.com/chapter/10.1007/978-3-319-20376-8_8)
+>
+> [Practical Recommendations for Stronger, More Usable Passwords Combining Minimum-strength, Minimum-length, and Blocklist Requirements (2020)](https://www.andrew.cmu.edu/user/nicolasc/publications/Tan-CCS20.pdf)
 
 The default Global Password Rules are largely compatible with "Authenticator
 Assurance Level 1" as defined by the National Institute of Standards and
