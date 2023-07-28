@@ -58,7 +58,7 @@ defmodule MsappMcpWeb.Router do
   end
 
   scope "/bootstrap", MsappMcpWeb do
-    pipe_through([:browser, :no_bootstrap, :authenticated])
+    pipe_through([:browser, :no_bootstrap])
 
     live("/", BootstrapLive)
   end
