@@ -16,6 +16,7 @@ defmodule MssubMcp do
   alias MscmpSystMcpPerms.Types, as: McpPermTypes
   alias MscmpSystPerms.Types, as: PermTypes
   alias MscmpSystSession.Types, as: SessionTypes
+  alias MscmpSystSettings.Types, as: SettingTypes
   alias MssubMcp.Runtime
   alias MssubMcp.Impl
 
@@ -24,6 +25,134 @@ defmodule MssubMcp do
   @moduledoc File.read!(Path.join([__DIR__, "..", "README.md"]))
 
   require Logger
+
+  # ==============================================================================================
+  #
+  # Settings Management
+  #
+  # ==============================================================================================
+
+  @doc section: :settings_data
+  @doc """
+  Retrieves the value of the given type for the requested setting.
+
+  ## Parameters
+  * `setting_name` - the name of the setting for which to retrieve a value.
+
+  * `setting_type` - the type of value which to return.
+
+  ## Examples
+
+      iex> MssubMcp.get_setting_value(
+      ...>   "get_example_setting",
+      ...>   :setting_decimal_range)
+      %MscmpSystDb.DbTypes.DecimalRange{
+        lower: Decimal.new("1.1"),
+        upper: Decimal.new("99.99"),
+        lower_inclusive: true,
+        upper_inclusive: false
+      }
+  """
+  @spec get_setting_value(SettingsTypes.setting_name(), SettingsTypes.setting_types()) :: any()
+  defdelegate get_setting_value(setting_name, setting_type), to: Runtime.Settings
+
+  @doc section: :settings_data
+  @doc """
+  Retrieves all values associated with the requested setting.
+
+  ## Parameters
+
+    * `setting_name` - the name of the setting for which to retrieve values.
+
+  The successful return of this function is an instance of the
+  `Msdata.SystSettings` struct containing the values requested.
+
+  ## Examples
+
+      iex> MssubMcp.get_setting_values("get_example_setting")
+  """
+  @spec get_setting_values(SettingsTypes.setting_name()) :: Msdata.SystSettings.t()
+  defdelegate get_setting_values(setting_name), to: Runtime.Settings
+
+  @doc section: :settings_data
+  @doc """
+  Retrieves all values for all settings.
+
+  This function returns all other setting metadata, such as the records' IDs,
+  descriptions, etc.
+
+  ## Examples
+
+      iex> MssubMcp.list_all_settings()
+  """
+  @spec list_all_settings() :: list(Msdata.SystSettings)
+  defdelegate list_all_settings(), to: Runtime.Settings
+
+  @doc section: :settings_data
+  @doc """
+  Sets the value of any one setting type for the named setting.
+
+  ## Parameters
+
+    * `setting_name` - the name of the setting to update with the new value.
+
+    * `setting_type` - sets which of the different available value types is
+      being updated.
+
+    * `setting_value` - is the new value to set on the setting. Note that the
+      setting value must be appropriate for the `setting_type` argument or an
+      error will be raised.
+
+  ## Examples
+
+      iex> MssubMcp.set_setting_value(
+      ...>   "set_example_setting",
+      ...>   :setting_decimal,
+      ...>   Decimal.new("1029.3847"))
+      :ok
+  """
+  @spec set_setting_value(SettingsTypes.setting_name(), SettingsTypes.setting_types(), any()) ::
+          :ok | {:error, MscmpSystError.t()}
+  defdelegate set_setting_value(setting_name, setting_type, setting_value), to: Runtime.Settings
+
+  @doc section: :settings_data
+  @doc """
+  Sets one or more of the available setting types for the named setting.
+
+  This function is similar to `set_setting_values/4`, except that multiple
+  setting types can have their values set at the same time.  In addition to the
+  typed setting values, the setting display name and/or user description values
+  may also be set.
+
+  ## Parameters
+
+    * `setting_name` - the name of the setting to update with the new values.
+
+    * `update_params` - is a map that complies with the
+      `MscmpSystSettings.Types.setting_service_params()` type specification and
+      includes the updates to setting type values, updates to the `display_name`
+      value, and/or updates to the `user_description` value.
+
+  ## Examples
+
+      iex> update_values = %{
+      ...>   user_description: "An example of updating the user description.",
+      ...>   setting_integer: 6758,
+      ...>   setting_date_range:
+      ...>      %MscmpSystDb.DbTypes.DateRange{
+      ...>        lower: ~D[2022-04-01],
+      ...>        upper: ~D[2022-04-12],
+      ...>        upper_inclusive: true
+      ...>      }
+      ...> }
+      iex> MssubMcp.set_setting_values(
+      ...>   "set_example_setting",
+      ...>   update_values)
+      :ok
+  """
+  @spec set_setting_values(SettingsTypes.setting_name(), SettingsTypes.setting_service_params()) ::
+          :ok | {:error, MscmpSystError.t()}
+  defdelegate set_setting_values(setting_name, update_params), to: Runtime.Settings
 
   # ==============================================================================================
   #
