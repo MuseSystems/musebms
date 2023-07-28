@@ -9,6 +9,7 @@
 # See the NOTICE file in the project root for copyright ownership information.
 #
 # muse.information@musesystems.com :: https://muse.systems
+
 defmodule MsappMcpWeb.Router do
   use MsappMcpWeb, :router
 
@@ -53,7 +54,7 @@ defmodule MsappMcpWeb.Router do
 
   scope "/logout", MsappMcpWeb do
     pipe_through([:browser, :logout])
-    live("/", LoginLive)
+    get("/", PageController, :home)
   end
 
   scope "/bootstrap", MsappMcpWeb do
@@ -77,7 +78,7 @@ defmodule MsappMcpWeb.Router do
     import Phoenix.LiveDashboard.Router
 
     scope "/dev" do
-      pipe_through(:browser)
+      pipe_through([:browser, :bootstrap, :authenticated])
 
       live_dashboard("/dashboard", metrics: MsappMcpWeb.Telemetry)
       forward("/mailbox", Plug.Swoosh.MailboxPreview)
@@ -97,8 +98,38 @@ defmodule MsappMcpWeb.Router do
   end
 
   defp authentication_check(conn, _opts) do
-    conn
-    |> put_session("session_name", MssubMcp.generate_session_name())
+    authentication_action =
+      conn
+      |> get_session(:session_name)
+      |> MsappMcp.test_session_authentication()
+      |> IO.inspect()
+
+    case authentication_action do
+      :session_valid ->
+        unless conn.request_path == "/login" do
+          conn
+        else
+          conn |> redirect(to: "/") |> halt()
+        end
+
+      :session_invalid ->
+        if conn.request_path == "/login" do
+          conn
+          |> put_session(:session_name, MsappMcp.generate_session_name())
+        else
+          conn
+          |> put_session(:original_request_path, conn.request_path)
+          |> redirect(to: "/login")
+          |> halt()
+        end
+
+      {:session_reset, reset_reason} ->
+        conn
+        |> put_session(:original_request_path, conn.request_path)
+        |> put_session(:authenticator_reset_reason, reset_reason)
+        |> redirect(to: "/password-reset")
+        |> halt()
+    end
   end
 
   defp drop_session(conn, _opts) do
