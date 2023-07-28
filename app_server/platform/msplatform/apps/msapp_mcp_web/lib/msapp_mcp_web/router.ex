@@ -102,7 +102,6 @@ defmodule MsappMcpWeb.Router do
       conn
       |> get_session(:session_name)
       |> MsappMcp.test_session_authentication()
-      |> IO.inspect()
 
     case authentication_action do
       :session_valid ->
