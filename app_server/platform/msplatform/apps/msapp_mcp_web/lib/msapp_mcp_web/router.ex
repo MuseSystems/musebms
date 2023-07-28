@@ -48,7 +48,7 @@ defmodule MsappMcpWeb.Router do
 
   scope "/login", MsappMcpWeb do
     pipe_through([:browser, :bootstrap, :authenticated])
-    live("/", LoginLive)
+    live("/", AuthEmailPasswordLive)
   end
 
   scope "/logout", MsappMcpWeb do
