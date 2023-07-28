@@ -109,7 +109,7 @@ defmodule MscmpSystForms.Impl.WebComponents.Msbuttons do
   attr(:type, :atom, default: @default_type, values: ~w(standard form_submit)a)
   attr(:modes, :map, default: %{})
   attr(:button_state, :atom, values: ~w(action processing message)a)
-  attr(:click_action, :string)
+  attr(:click_action, :string, default: nil)
   attr(:layout, :list, default: @default_layout)
   attr(:alignment, :list, default: @default_alignment)
   attr(:sizing, :list, default: @default_sizing)
@@ -183,9 +183,15 @@ defmodule MscmpSystForms.Impl.WebComponents.Msbuttons do
     assigns =
       assigns
       |> assign(first_action: first_action)
-      |> assign_new(:click_action, fn -> Map.get(first_action, :click_action, nil) end)
+      |> assign_new(
+        :resolved_click_action,
+        fn ->
+          resolve_click_action(button_state, resolved_id, assigns.click_action)
+        end
+      )
       |> assign_new(:show_action_icon, fn -> Map.get(first_action, :show_icon, false) end)
-      |> assign(:html_type, if(assigns.type == :form_submit, do: "submit", else: "button"))
+      |> assign_new(:button_state, fn -> button_state end)
+      |> assign(:html_type, resolve_button_type(assigns.type, button_state))
       |> assign(first_processing: first_processing)
       |> assign_new(:show_processing_icon, fn -> Map.get(first_processing, :show_icon, false) end)
       |> assign(first_message: first_message)
@@ -199,9 +205,7 @@ defmodule MscmpSystForms.Impl.WebComponents.Msbuttons do
       |> assign_new(:line_title_label, fn -> Map.get(first_message, :line_title_label, nil) end)
       |> assign_new(:line_item_label, fn -> Map.get(first_message, :line_item_label, nil) end)
       |> assign_new(:form_data_def, fn -> Map.get(first_message, :form_data_def, nil) end)
-      |> assign_new(:button_state, fn -> button_state end)
-      |> maybe_assign_action_disabled(resolved_modes.component_mode, button_state)
-      |> maybe_assign_message_disabled(resolved_modes.component_mode, button_state)
+      |> maybe_assign_validated_disabled(resolved_modes.component_mode, button_state)
       |> assign(:component_classes, component_classes)
       |> assign(:resolved_classes, resolved_classes)
       |> assign(:resolved_id, resolved_id)
@@ -209,75 +213,61 @@ defmodule MscmpSystForms.Impl.WebComponents.Msbuttons do
     ~H"""
     <div id={@resolved_id} class={@component_classes}>
       <button
-        id={"#{@resolved_id}-action"}
+        id={"#{@resolved_id}-button"}
         type={@html_type}
         class={@resolved_classes}
-        phx-click={@click_action}
-        disabled={@action_disabled == true}
-        hidden={@button_state != :action}>
+        phx-click={@resolved_click_action}
+        disabled={@button_disabled == true}
+        >
         <div class="flex space-x-2">
-          <p><%= @first_action.title %></p>
-          <svg
-            :if={@show_action_icon}
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            class="w-5 h-5 fill-green-600 stroke-white"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-              clip-rule="evenodd"
-            />
-          </svg>
-        </div>
-      </button>
-      <button 
-        id={"#{@resolved_id}-processing"} 
-        type="button" 
-        class={@resolved_classes} 
-        disabled
-        hidden={@button_state != :processing}>
-        <div class="flex space-x-2">
-          <p><%= @first_processing.title %></p>
-          <svg
-            :if={@show_processing_icon}
-            class="animate-spin -ml-1 mr-3 h-5 w-5 text-white "
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
-            </circle>
-            <path
-              class="opacity-75"
-              fill="currentColor"
-              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-            >
-            </path>
-          </svg>
-        </div>
-      </button>
-      <button 
-        id={"#{@resolved_id}-message"} 
-        type="button" 
-        phx-click={Js.show_modal("#{@resolved_id}-validation-modal")}
-        class={@resolved_classes}         
-        disabled={@message_disabled == true}
-        hidden={@button_state != :message}>
-        <div class="flex space-x-2">
-          <p><%= @first_message.title %></p>
-          <svg
-            :if={@show_message_icon}
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            class="w-5 h-5 fill-red-600 stroke-white"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z"
-              clip-rule="evenodd"
-            />
-          </svg>
+          <%= case @button_state do %>
+            <% :action -> %>
+              <p><%= @first_action.title %></p>
+              <svg
+                :if={@show_action_icon}
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                class="w-5 h-5 fill-green-600 stroke-white"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            <% :processing -> %>
+              <p><%= @first_processing.title %></p>
+              <svg
+                :if={@show_processing_icon}
+                class="animate-spin -ml-1 mr-3 h-5 w-5 text-white "
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                </circle>
+                <path
+                  class="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                >
+                </path>
+              </svg>
+            <% :message -> %>
+              <p><%= @first_message.title %></p>
+              <svg
+                :if={@show_message_icon}
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                class="w-5 h-5 fill-red-600 stroke-white"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+          <% end %>
         </div>
       </button>
       <WebComponents.Msmodals.msmodal id={"#{@resolved_id}-validation-modal"}>
@@ -335,6 +325,16 @@ defmodule MscmpSystForms.Impl.WebComponents.Msbuttons do
       cause: %{params: %{assigns: assigns}}
   end
 
+  defp resolve_button_type(:form_submit, :action), do: "submit"
+  defp resolve_button_type(_, _), do: "button"
+
+  defp resolve_click_action(:action, _resolved_id, action), do: action
+
+  defp resolve_click_action(:message, resolved_id, _),
+    do: Js.show_modal("#{resolved_id}-validation-modal")
+
+  defp resolve_click_action(:processing, _, _), do: false
+
   defp condense_message_items([{_, _} | _] = message_items, form_module) do
     message_items
     |> Keyword.keys()
@@ -355,16 +355,14 @@ defmodule MscmpSystForms.Impl.WebComponents.Msbuttons do
 
   defp condense_message_items(message_items, _), do: message_items
 
-  defp maybe_assign_action_disabled(assigns, :entry, :action),
-    do: assign(assigns, :action_disabled, false)
+  defp maybe_assign_validated_disabled(assigns, :entry, :action),
+    do: assign(assigns, :button_disabled, false)
 
-  defp maybe_assign_action_disabled(assigns, _, _), do: assign(assigns, :action_disabled, true)
+  defp maybe_assign_validated_disabled(assigns, :entry, :message),
+    do: assign(assigns, :button_disabled, false)
 
-  defp maybe_assign_message_disabled(assigns, :entry, :message),
-    do: assign(assigns, :message_disabled, false)
-
-  defp maybe_assign_message_disabled(assigns, _, _),
-    do: assign(assigns, :message_disabled, true)
+  defp maybe_assign_validated_disabled(assigns, _, _),
+    do: assign(assigns, :button_disabled, true)
 
   defp get_component_classes(:removed), do: ~w(hidden)
   defp get_component_classes(:hidden), do: ~w(invisible)
