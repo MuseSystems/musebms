@@ -49,9 +49,9 @@ defmodule Msform.AuthEmailPassword.Definitions do
     %{
       default: %{
         default: %{
-          mcpauthnep_form_identifier: %{component_mode: :entry},
-          mcpauthnep_form_credential: %{component_mode: :entry},
-          mcpauthnep_button_login: %{component_mode: :entry}
+          mcpauthnep_form_identifier: %{component_mode: :visible},
+          mcpauthnep_form_credential: %{component_mode: :visible},
+          mcpauthnep_button_login: %{component_mode: :visible}
         },
         entry: %{
           login: %{
