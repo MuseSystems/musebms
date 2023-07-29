@@ -15,7 +15,6 @@ defmodule Msform.AuthEmailPassword do
   use MscmpSystForms
 
   alias MsappMcp.Types
-  alias Msform.AuthEmailPassword
 
   @moduledoc """
   Form/API data used the Email/Password authentication process.
@@ -39,12 +38,12 @@ defmodule Msform.AuthEmailPassword do
   @impl true
   @spec validate_post(Msform.AuthEmailPassword.t(), Types.auth_email_password()) ::
           Ecto.Changeset.t()
-  defdelegate validate_post(original_data, current_data \\ %{}), to: AuthEmailPassword.Data
+  defdelegate validate_post(original_data, current_data \\ %{}), to: Msform.AuthEmailPassword.Data
 
   @impl true
   @spec validate_save(Msform.AuthEmailPassword.t(), Types.auth_email_password()) ::
           Ecto.Changeset.t()
-  defdelegate validate_save(original_data, current_data \\ %{}), to: AuthEmailPassword.Data
+  defdelegate validate_save(original_data, current_data \\ %{}), to: Msform.AuthEmailPassword.Data
 
   @doc """
   Returns the user interface textual labels associated with each form field.
@@ -53,21 +52,21 @@ defmodule Msform.AuthEmailPassword do
   definition of how these form fields should be labelled.
   """
   @impl true
-  defdelegate get_form_config, to: AuthEmailPassword.Definitions
+  defdelegate get_form_config, to: Msform.AuthEmailPassword.Definitions
 
   @impl true
-  defdelegate get_form_modes, to: AuthEmailPassword.Definitions
+  defdelegate get_form_modes, to: Msform.AuthEmailPassword.Definitions
 
   @impl true
   defdelegate preconnect_init(socket, session_name, feature, mode, state, opts \\ []),
-    to: AuthEmailPassword.Actions
+    to: Msform.AuthEmailPassword.Actions
 
   @impl true
-  defdelegate postconnect_init(form_config), to: AuthEmailPassword.Actions
+  defdelegate postconnect_init(form_config), to: Msform.AuthEmailPassword.Actions
 
-  defdelegate validate_form_data(socket, form_data), to: AuthEmailPassword.Actions
+  defdelegate validate_form_data(socket, form_data), to: Msform.AuthEmailPassword.Actions
 
-  defdelegate process_login_attempt(socket, form_data), to: AuthEmailPassword.Actions
+  defdelegate process_login_attempt(socket, form_data), to: Msform.AuthEmailPassword.Actions
 
-  defdelegate process_login_denied(socket), to: AuthEmailPassword.Actions
+  defdelegate process_login_denied(socket), to: Msform.AuthEmailPassword.Actions
 end
