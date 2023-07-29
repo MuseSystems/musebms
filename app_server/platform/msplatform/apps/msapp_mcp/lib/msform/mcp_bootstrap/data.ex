@@ -13,12 +13,12 @@
 defmodule Msform.McpBootstrap.Data do
   import Ecto.Changeset
 
-  alias MsappMcp.Types
+  alias Msform.McpBootstrap.Types
 
-  @spec validate_save(Msform.McpBootstrap.t(), Types.bootstrap_params()) :: Ecto.Changeset.t()
+  @spec validate_save(Msform.McpBootstrap.t(), Types.parameters()) :: Ecto.Changeset.t()
   def validate_save(original_data, current_data), do: validate_post(original_data, current_data)
 
-  @spec validate_post(Msform.McpBootstrap.t(), Types.bootstrap_params()) :: Ecto.Changeset.t()
+  @spec validate_post(Msform.McpBootstrap.t(), Types.parameters()) :: Ecto.Changeset.t()
   def validate_post(original_data, current_data) do
     original_data
     |> cast(current_data, [

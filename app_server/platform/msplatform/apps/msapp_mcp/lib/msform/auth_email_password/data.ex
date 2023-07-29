@@ -13,12 +13,12 @@
 defmodule Msform.AuthEmailPassword.Data do
   import Ecto.Changeset
 
-  alias MsappMcp.Types
+  alias Msform.AuthEmailPassword.Types
 
+  @spec validate_save(Msform.AuthEmailPassword.t(), Types.parameters()) :: Ecto.Changeset.t()
   def validate_save(original_data, current_data), do: validate_post(original_data, current_data)
 
-  @spec validate_post(Msform.AuthEmailPassword.t(), Types.auth_email_password()) ::
-          Ecto.Changeset.t()
+  @spec validate_post(Msform.AuthEmailPassword.t(), Types.parameters()) :: Ecto.Changeset.t()
   def validate_post(original_data, current_data) do
     original_data
     |> cast(current_data, [:identifier, :credential])

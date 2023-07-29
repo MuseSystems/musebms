@@ -14,7 +14,7 @@ defmodule Msform.AuthEmailPassword do
   use Ecto.Schema
   use MscmpSystForms
 
-  alias MsappMcp.Types
+  alias Msform.AuthEmailPassword.Types
 
   @moduledoc """
   Form/API data used the Email/Password authentication process.
@@ -36,13 +36,11 @@ defmodule Msform.AuthEmailPassword do
   submission.
   """
   @impl true
-  @spec validate_post(Msform.AuthEmailPassword.t(), Types.auth_email_password()) ::
-          Ecto.Changeset.t()
+  @spec validate_post(Msform.AuthEmailPassword.t(), Types.parameters()) :: Ecto.Changeset.t()
   defdelegate validate_post(original_data, current_data \\ %{}), to: Msform.AuthEmailPassword.Data
 
   @impl true
-  @spec validate_save(Msform.AuthEmailPassword.t(), Types.auth_email_password()) ::
-          Ecto.Changeset.t()
+  @spec validate_save(Msform.AuthEmailPassword.t(), Types.parameters()) :: Ecto.Changeset.t()
   defdelegate validate_save(original_data, current_data \\ %{}), to: Msform.AuthEmailPassword.Data
 
   @doc """

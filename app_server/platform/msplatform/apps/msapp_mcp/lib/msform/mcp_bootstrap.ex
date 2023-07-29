@@ -14,8 +14,7 @@ defmodule Msform.McpBootstrap do
   use Ecto.Schema
   use MscmpSystForms
 
-  alias Msform.McpBootstrap
-  alias MsappMcp.Types
+  alias Msform.McpBootstrap.Types
 
   @moduledoc """
   Form data used during the MCP Bootstrapping process.
@@ -44,37 +43,37 @@ defmodule Msform.McpBootstrap do
   end
 
   @impl true
-  defdelegate get_form_config, to: McpBootstrap.Definitions
+  defdelegate get_form_config, to: Msform.McpBootstrap.Definitions
 
   @impl true
-  defdelegate get_form_modes, to: McpBootstrap.Definitions
+  defdelegate get_form_modes, to: Msform.McpBootstrap.Definitions
 
   @impl true
   defdelegate preconnect_init(socket, session_name, feature, mode, state, opts \\ []),
-    to: McpBootstrap.Actions
+    to: Msform.McpBootstrap.Actions
 
   @impl true
-  defdelegate postconnect_init(form_config), to: McpBootstrap.Actions
+  defdelegate postconnect_init(form_config), to: Msform.McpBootstrap.Actions
 
   @doc """
   Validates a map of form data for validation of form entry prior to final
   submission.
   """
   @impl true
-  @spec validate_save(Msform.McpBootstrap.t(), Types.bootstrap_params()) :: Ecto.Changeset.t()
-  defdelegate validate_save(original_data, current_data \\ %{}), to: McpBootstrap.Data
+  @spec validate_save(Msform.McpBootstrap.t(), Types.parameters()) :: Ecto.Changeset.t()
+  defdelegate validate_save(original_data, current_data \\ %{}), to: Msform.McpBootstrap.Data
 
   @impl true
-  @spec validate_post(Msform.McpBootstrap.t(), Types.bootstrap_params()) :: Ecto.Changeset.t()
-  defdelegate validate_post(original_data, current_data \\ %{}), to: McpBootstrap.Data
+  @spec validate_post(Msform.McpBootstrap.t(), Types.parameters()) :: Ecto.Changeset.t()
+  defdelegate validate_post(original_data, current_data \\ %{}), to: Msform.McpBootstrap.Data
 
-  defdelegate enter_disallowed_state(socket), to: McpBootstrap.Actions
-  defdelegate enter_welcome_state(socket), to: McpBootstrap.Actions
-  defdelegate enter_records_state(socket), to: McpBootstrap.Actions
-  defdelegate enter_finished_state(socket), to: McpBootstrap.Actions
-  defdelegate process_disallowed_load(socket), to: McpBootstrap.Actions
-  defdelegate process_disallowed_finished(socket), to: McpBootstrap.Actions
-  defdelegate process_records_save(socket), to: McpBootstrap.Actions
-  defdelegate process_records_save_finished(socket), to: McpBootstrap.Actions
-  defdelegate validate_form_data(socket, form_data), to: McpBootstrap.Actions
+  defdelegate enter_disallowed_state(socket), to: Msform.McpBootstrap.Actions
+  defdelegate enter_welcome_state(socket), to: Msform.McpBootstrap.Actions
+  defdelegate enter_records_state(socket), to: Msform.McpBootstrap.Actions
+  defdelegate enter_finished_state(socket), to: Msform.McpBootstrap.Actions
+  defdelegate process_disallowed_load(socket), to: Msform.McpBootstrap.Actions
+  defdelegate process_disallowed_finished(socket), to: Msform.McpBootstrap.Actions
+  defdelegate process_records_save(socket), to: Msform.McpBootstrap.Actions
+  defdelegate process_records_save_finished(socket), to: Msform.McpBootstrap.Actions
+  defdelegate validate_form_data(socket, form_data), to: Msform.McpBootstrap.Actions
 end
