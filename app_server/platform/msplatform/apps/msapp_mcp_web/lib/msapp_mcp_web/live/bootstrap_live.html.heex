@@ -163,14 +163,12 @@
               <.msinput
                 component_config={@mcpbs_step_records_field_owner_name}
                 field={@msrd_display_data[:owner_name]}
-                title="Owner Code"
                 maxlength={6}
                 fieldsize={6}
               />
               <.msinput
                 component_config={@mcpbs_step_records_field_owner_display_name}
                 field={@msrd_display_data[:owner_display_name]}
-                title="Owner Display Name"
                 maxlength={40}
                 fieldsize={40}
               />
@@ -186,7 +184,6 @@
               <.msinput
                 component_config={@mcpbs_step_records_field_admin_display_name}
                 field={@msrd_display_data[:admin_display_name]}
-                title="Display/Full Name"
                 maxlength={40}
                 fieldsize={40}
               />
@@ -194,7 +191,6 @@
                 component_config={@mcpbs_step_records_field_admin_identifier}
                 type={:email}
                 field={@msrd_display_data[:admin_identifier]}
-                title="Email Address (User Name)"
                 maxlength={70}
                 fieldsize={40}
               />
@@ -204,7 +200,6 @@
                 component_config={@mcpbs_step_records_field_admin_credential}
                 type={:password}
                 field={@msrd_display_data[:admin_credential]}
-                title="Password"
                 maxlength={128}
                 fieldsize={40}
               />
@@ -212,7 +207,6 @@
                 component_config={@mcpbs_step_records_field_admin_credential_verify}
                 type={:password}
                 field={@msrd_display_data[:admin_credential_verify]}
-                title="Verify Password"
                 maxlength={128}
                 fieldsize={40}
               />
