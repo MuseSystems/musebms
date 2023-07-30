@@ -78,6 +78,12 @@ defmodule MscmpSystAuthn.Impl.ExtendedMgmtLogic do
   defp maybe_create_email_validator(false = _create_validated, email_identity, opts),
     do: create_validator(email_identity, opts)
 
+  @spec reset_password_credential(Types.access_account_id(), Types.credential()) ::
+          :ok | Types.credential_set_failures() | {:error, MscmpSystError.t()}
+  def reset_password_credential(access_account_id, new_credential)
+      when is_binary(new_credential),
+      do: Impl.Credential.Password.set_credential(access_account_id, nil, new_credential, [])
+
   # ============================================================================
   #
   # Validation Token Management

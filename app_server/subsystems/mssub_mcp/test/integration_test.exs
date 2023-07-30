@@ -838,6 +838,47 @@ defmodule IntegrationTest do
     assert Enum.member?(auth_status2.pending_operations, :require_mfa)
   end
 
+  test "Step 4.07: Reset Password for Owned Access Account" do
+    {:ok, instance1_id} = MssubMcp.get_instance_id_by_name("test_app_test_owner1_inst1")
+
+    {:ok, owner1_id} = MssubMcp.get_owner_id_by_name("test_owner1")
+
+    assert {:ok, before_auth_status} =
+             MssubMcp.authenticate_email_password(
+               "owned.access.account@MuseSystems.Com",
+               "owner1.password",
+               ~i"10.100.170.10",
+               instance_id: instance1_id,
+               owning_owner_id: owner1_id
+             )
+
+    assert %{status: :authenticated, access_account_id: access_account_id} = before_auth_status
+
+    assert :ok = MssubMcp.reset_password_credential(access_account_id, "reset.owner1.password")
+
+    assert {:ok, after_auth_status} =
+             MssubMcp.authenticate_email_password(
+               "owned.access.account@MuseSystems.Com",
+               "reset.owner1.password",
+               ~i"10.100.170.10",
+               instance_id: instance1_id,
+               owning_owner_id: owner1_id
+             )
+
+    assert %{status: :authenticated} = after_auth_status
+
+    assert {:ok, oldpw_auth_status} =
+             MssubMcp.authenticate_email_password(
+               "owned.access.account@MuseSystems.Com",
+               "owner1.password",
+               ~i"10.100.170.10",
+               instance_id: instance1_id,
+               owning_owner_id: owner1_id
+             )
+
+    assert %{status: :rejected} = oldpw_auth_status
+  end
+
   # ==============================================================================================
   #
   # Topic 5: Session Management

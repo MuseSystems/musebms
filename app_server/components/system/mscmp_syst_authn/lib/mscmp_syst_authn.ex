@@ -11,6 +11,7 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystAuthn do
+  alias MscmpSystAuthn.Impl.Credential.Password
   alias MscmpSystAuthn.Impl
   alias MscmpSystAuthn.Types
 
@@ -2298,6 +2299,42 @@ defmodule MscmpSystAuthn do
                 opts \\ []
               ),
               to: Impl.ExtendedMgmtLogic
+
+  @doc section: :authenticator_management
+  @doc """
+  Allows for an existing password to be changed to a new password.
+
+  The assumption is that a Password Credential already exists and that only the
+  password itself is being changed from an old value to a new value.
+
+  This function ensures that the new password meets all applicable Password 
+  Rules prior to completing the change.  This function will not allow you to set
+  the password to an invalid value.
+
+  Finally, in the case of a user initiated password change, it is traditional 
+  that the user has to re-authenticate or provide their current password to 
+  verify they are, in fact, the person initiating the change.  This function 
+  does not try to achieve this goal.  The scope of this function assumes that 
+  any such confirmation of identity has been completed satisfactorily elsewhere. 
+
+  On successful Password Credential reset this function will return `:ok`.  If
+  the new credential fails to meet the Password Rule criteria that applies to 
+  it, the function will return a failure tuple of type 
+  `t:MscmpSystAuthn.Types.credential_set_failures/0`.  All other return 
+  conditions are errors and result in an error tuple.
+
+  ## Parameters
+
+    * `access_account_id` - the Access Account for whom the Password is being
+    changed.
+
+    * `new_credential` - the new Password which will become the credential on
+    the successful completion of the function.
+  """
+  @spec reset_password_credential(Types.access_account_id(), Types.credential()) ::
+          :ok | Types.credential_set_failures() | {:error, MscmpSystError.t()}
+  defdelegate reset_password_credential(access_account_id, new_credential),
+    to: Impl.ExtendedMgmtLogic
 
   @doc section: :authenticator_management
   @doc """
