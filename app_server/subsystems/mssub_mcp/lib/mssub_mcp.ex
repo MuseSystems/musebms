@@ -53,7 +53,7 @@ defmodule MssubMcp do
         upper_inclusive: false
       }
   """
-  @spec get_setting_value(SettingsTypes.setting_name(), SettingsTypes.setting_types()) :: any()
+  @spec get_setting_value(SettingTypes.setting_name(), SettingTypes.setting_types()) :: any()
   defdelegate get_setting_value(setting_name, setting_type), to: Runtime.Settings
 
   @doc section: :settings_data
@@ -71,7 +71,7 @@ defmodule MssubMcp do
 
       iex> MssubMcp.get_setting_values("get_example_setting")
   """
-  @spec get_setting_values(SettingsTypes.setting_name()) :: Msdata.SystSettings.t()
+  @spec get_setting_values(SettingTypes.setting_name()) :: Msdata.SystSettings.t()
   defdelegate get_setting_values(setting_name), to: Runtime.Settings
 
   @doc section: :settings_data
@@ -111,7 +111,7 @@ defmodule MssubMcp do
       ...>   Decimal.new("1029.3847"))
       :ok
   """
-  @spec set_setting_value(SettingsTypes.setting_name(), SettingsTypes.setting_types(), any()) ::
+  @spec set_setting_value(SettingTypes.setting_name(), SettingTypes.setting_types(), any()) ::
           :ok | {:error, MscmpSystError.t()}
   defdelegate set_setting_value(setting_name, setting_type, setting_value), to: Runtime.Settings
 
@@ -150,7 +150,7 @@ defmodule MssubMcp do
       ...>   update_values)
       :ok
   """
-  @spec set_setting_values(SettingsTypes.setting_name(), SettingsTypes.setting_service_params()) ::
+  @spec set_setting_values(SettingTypes.setting_name(), SettingTypes.setting_service_params()) ::
           :ok | {:error, MscmpSystError.t()}
   defdelegate set_setting_values(setting_name, update_params), to: Runtime.Settings
 
