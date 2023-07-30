@@ -705,5 +705,5 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
   end
 
   @spec disallowed_passwords_populated?() :: boolean()
-  def disallowed_passwords_populated?(), do: MscmpSystDb.exists?(Msdata.SystDisallowedPasswords)
+  def disallowed_passwords_populated?, do: MscmpSystDb.exists?(Msdata.SystDisallowedPasswords)
 end
