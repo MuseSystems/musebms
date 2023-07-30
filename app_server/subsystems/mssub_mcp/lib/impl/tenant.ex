@@ -14,8 +14,8 @@ defmodule MssubMcp.Impl.Tenant do
   @moduledoc false
 
   alias Ecto.Multi
-  alias MssubMcp.Types
   alias MscmpSystMcpPerms.Types, as: McpPermTypes
+  alias MssubMcp.Types
 
   @spec bootstrap(Types.tenant_bootstrap_params()) ::
           {:ok, Types.tenant_bootstrap_result()} | {:error, MscmpSystError.t()}

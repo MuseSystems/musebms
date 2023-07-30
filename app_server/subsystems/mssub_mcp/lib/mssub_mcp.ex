@@ -17,8 +17,8 @@ defmodule MssubMcp do
   alias MscmpSystPerms.Types, as: PermTypes
   alias MscmpSystSession.Types, as: SessionTypes
   alias MscmpSystSettings.Types, as: SettingTypes
-  alias MssubMcp.Runtime
   alias MssubMcp.Impl
+  alias MssubMcp.Runtime
 
   @external_resource "README.md"
 
