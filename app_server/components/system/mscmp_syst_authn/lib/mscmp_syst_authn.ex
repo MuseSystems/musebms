@@ -11,7 +11,6 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystAuthn do
-  alias MscmpSystAuthn.Impl.Credential.Password
   alias MscmpSystAuthn.Impl
   alias MscmpSystAuthn.Types
 
