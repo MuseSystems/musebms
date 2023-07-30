@@ -19,6 +19,7 @@ defmodule MssubMcp do
   alias MscmpSystSettings.Types, as: SettingTypes
   alias MssubMcp.Impl
   alias MssubMcp.Runtime
+  alias MssubMcp.Types
 
   @external_resource "README.md"
 
@@ -2471,8 +2472,8 @@ defmodule MssubMcp do
   """
   @spec get_generic_password_rules(
           Msdata.SystGlobalPasswordRules.t() | Msdata.SystOwnerPasswordRules.t(),
-          Types.access_account_id() | nil
-        ) :: Types.password_rules() | nil
+          AuthnTypes.access_account_id() | nil
+        ) :: AuthnTypes.password_rules() | nil
   defdelegate get_generic_password_rules(pwd_rules_struct, access_account_id \\ nil),
     to: MscmpSystAuthn
 
@@ -4955,8 +4956,11 @@ defmodule MssubMcp do
       iex> MssubMcp.get_perm_role_id_by_name("func_type_1", "nonexistent_role")
       nil
   """
-  @spec get_perm_role_id_by_name(Types.perm_functional_type_name(), Types.perm_role_name()) ::
-          Types.perm_role_id() | nil | {:error, MscmpSystError.t()}
+  @spec get_perm_role_id_by_name(
+          PermTypes.perm_functional_type_name(),
+          PermTypes.perm_role_name()
+        ) ::
+          PermTypes.perm_role_id() | nil | {:error, MscmpSystError.t()}
   defdelegate get_perm_role_id_by_name(perm_func_type_name, perm_role_name),
     to: Runtime.McpPermsManager
 

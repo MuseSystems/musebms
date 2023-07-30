@@ -59,8 +59,11 @@ defmodule MssubMcp.Runtime.McpPermsManager do
     MscmpSystPerms.revoke_perm_role(selector, perm_role_id)
   end
 
-  @spec get_perm_role_id_by_name(Types.perm_functional_type_name(), Types.perm_role_name()) ::
-          Types.perm_role_id() | nil | {:error, MscmpSystError.t()}
+  @spec get_perm_role_id_by_name(
+          PermTypes.perm_functional_type_name(),
+          PermTypes.perm_role_name()
+        ) ::
+          PermTypes.perm_role_id() | nil | {:error, MscmpSystError.t()}
   mcp_opfn get_perm_role_id_by_name(perm_func_type_name, perm_role_name) do
     MscmpSystPerms.get_perm_role_id_by_name(perm_func_type_name, perm_role_name)
   end
