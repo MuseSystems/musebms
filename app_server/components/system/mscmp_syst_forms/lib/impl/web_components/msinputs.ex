@@ -85,6 +85,13 @@ defmodule MscmpSystForms.Impl.WebComponents.Msinputs do
         assigns.active_overrides
       )
 
+    resolved_title =
+      cond do
+        is_binary(assigns.title) -> assigns.title
+        not is_nil(assigns[:component_config]) -> assigns.component_config.label
+        true -> "(Field Unlabelled)"
+      end
+
     input_classes = [
       ~w(mt-2 block w-full rounded-lg py-[7px] px-[11px] disabled:bg-color-deemphasis),
       msinput_border(assigns.errors)
@@ -101,6 +108,7 @@ defmodule MscmpSystForms.Impl.WebComponents.Msinputs do
     ]
 
     assigns
+    |> assign(:resolved_title, resolved_title)
     |> assign(:resolved_id, resolved_id)
     |> assign(field: nil, id: resolved_id || field.id)
     |> assign(:errors, Enum.map(field.errors, &translate_error(&1)))
@@ -128,7 +136,7 @@ defmodule MscmpSystForms.Impl.WebComponents.Msinputs do
     ~H"""
     <div id={@resolved_id} phx-feedback-for={@field_name} class={@component_classes}>
       <div class="flex space-x-1">
-        <label for={"#{@resolved_id}-msinput"} class={@label_classes}><%= @title %></label>
+        <label for={"#{@resolved_id}-msinput"} class={@label_classes}><%= @resolved_title %></label>
         <WebComponents.MsfieldErrors.msfield_errors :if={@errors != []} id={"#{@resolved_id}-errors"}>
           <:msfield_error_item :for={msg <- @errors}>
             <p><%= msg %></p>
