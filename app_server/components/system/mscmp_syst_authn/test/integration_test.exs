@@ -890,7 +890,51 @@ defmodule IntegrationTest do
     assert :ok = MscmpSystAuthn.access_account_credential_recoverable!(access_account_id)
   end
 
-  test "Step 2.26: Create Account Code for Unowned Access Account" do
+  test "Step 2.26: Reset Password for Unowned Access Account" do
+    {:ok, access_account_id} =
+      MscmpSystAuthn.get_access_account_id_by_name("unowned_access_account")
+
+    {:ok, instance1_id} =
+      MscmpSystInstance.get_instance_id_by_name("app1_owner1_instance_types_std")
+
+    assert {:ok, before_auth_status} =
+             MscmpSystAuthn.authenticate_email_password(
+               "UnownedAccessAccount@Musesystems.Com",
+               "Unowned testing password",
+               ~i"10.100.170.10",
+               instance_id: instance1_id
+             )
+
+    assert %{status: :authenticated} = before_auth_status
+
+    assert :ok =
+             MscmpSystAuthn.reset_password_credential(
+               access_account_id,
+               "Reset unowned testing password"
+             )
+
+    assert {:ok, after_auth_status} =
+             MscmpSystAuthn.authenticate_email_password(
+               "UnownedAccessAccount@Musesystems.Com",
+               "Reset unowned testing password",
+               ~i"10.100.170.10",
+               instance_id: instance1_id
+             )
+
+    assert %{status: :authenticated} = after_auth_status
+
+    assert {:ok, oldpw_auth_status} =
+             MscmpSystAuthn.authenticate_email_password(
+               "UnownedAccessAccount@Musesystems.Com",
+               "Unowned testing password",
+               ~i"10.100.170.10",
+               instance_id: instance1_id
+             )
+
+    assert %{status: :rejected} = oldpw_auth_status
+  end
+
+  test "Step 2.27: Create Account Code for Unowned Access Account" do
     {:ok, access_account_id} =
       MscmpSystAuthn.get_access_account_id_by_name("unowned_access_account")
 
@@ -903,7 +947,7 @@ defmodule IntegrationTest do
     assert authenticator_result.account_identifier == "Unowned Access Account Code"
   end
 
-  test "Step 2.27: Identify Unowned Access Account by Account Code" do
+  test "Step 2.28: Identify Unowned Access Account by Account Code" do
     assert {:ok, :not_found} = MscmpSystAuthn.identify_access_account_by_code("A Bad Code", nil)
 
     assert {:ok, %Msdata.SystIdentities{}} =
@@ -913,7 +957,7 @@ defmodule IntegrationTest do
              )
   end
 
-  test "Step 2.28: Reset Unowned Access Account Code" do
+  test "Step 2.29: Reset Unowned Access Account Code" do
     {:ok, %Msdata.SystIdentities{} = identity} =
       MscmpSystAuthn.identify_access_account_by_code(
         "Unowned Access Account Code",
@@ -927,7 +971,7 @@ defmodule IntegrationTest do
     assert authenticator_result.account_identifier != "Unowned Access Account Code"
   end
 
-  test "Step 2.29: Get Account Code by Unowned Access Account ID" do
+  test "Step 2.30: Get Account Code by Unowned Access Account ID" do
     {:ok, access_account_id} =
       MscmpSystAuthn.get_access_account_id_by_name("unowned_access_account")
 
@@ -938,7 +982,7 @@ defmodule IntegrationTest do
              MscmpSystAuthn.get_account_code_by_access_account_id(access_account_id)
   end
 
-  test "Step 2.30: Revoke Account Code by Unowned Access Account ID" do
+  test "Step 2.31: Revoke Account Code by Unowned Access Account ID" do
     {:ok, access_account_id} =
       MscmpSystAuthn.get_access_account_id_by_name("unowned_access_account")
 
@@ -947,7 +991,7 @@ defmodule IntegrationTest do
     assert {:ok, :deleted} = MscmpSystAuthn.revoke_account_code(access_account_id)
   end
 
-  test "Step 2.31: Create API Token for Unowned Access Account" do
+  test "Step 2.32: Create API Token for Unowned Access Account" do
     {:ok, access_account_id} =
       MscmpSystAuthn.get_access_account_id_by_name("unowned_access_account")
 
@@ -968,7 +1012,7 @@ defmodule IntegrationTest do
              )
   end
 
-  test "Step 2.32: Authenticate API Token for Unowned Access Account" do
+  test "Step 2.33: Authenticate API Token for Unowned Access Account" do
     {:ok, instance_id} =
       MscmpSystInstance.get_instance_id_by_name("app1_owner1_instance_types_std")
 
@@ -1021,7 +1065,7 @@ defmodule IntegrationTest do
     assert auth_state.access_account_id == access_account_id
   end
 
-  test "Step 2.33: Authenticate API Token for Unowned Access Account with Instance Bypass" do
+  test "Step 2.34: Authenticate API Token for Unowned Access Account with Instance Bypass" do
     {:ok, access_account_id} =
       MscmpSystAuthn.get_access_account_id_by_name("unowned_access_account")
 
@@ -1039,7 +1083,7 @@ defmodule IntegrationTest do
     assert auth_state.access_account_id == access_account_id
   end
 
-  test "Step 2.34: Set Unowned Access Account API Token External Name" do
+  test "Step 2.35: Set Unowned Access Account API Token External Name" do
     {:ok, access_account_id} =
       MscmpSystAuthn.get_access_account_id_by_name("unowned_access_account")
 
@@ -1063,7 +1107,7 @@ defmodule IntegrationTest do
     assert updated_identity.external_name == "A Test API Token"
   end
 
-  test "Step 2.35: Revoke Unowned Access Account API Token" do
+  test "Step 2.36: Revoke Unowned Access Account API Token" do
     {:ok, access_account_id} =
       MscmpSystAuthn.get_access_account_id_by_name("unowned_access_account")
 

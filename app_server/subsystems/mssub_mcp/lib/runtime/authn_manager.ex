@@ -561,6 +561,12 @@ defmodule MssubMcp.Runtime.AuthnManager do
     )
   end
 
+  @spec reset_password_credential(AuthnTypes.access_account_id(), AuthnTypes.credential()) ::
+          :ok | AuthnTypes.credential_set_failures() | {:error, MscmpSystError.t()}
+  mcp_opfn reset_password_credential(access_account_id, new_credential) do
+    MscmpSystAuthn.reset_password_credential(access_account_id, new_credential)
+  end
+
   @spec request_identity_validation(
           AuthnTypes.identity_id() | Msdata.SystIdentities.t(),
           Keyword.t()
