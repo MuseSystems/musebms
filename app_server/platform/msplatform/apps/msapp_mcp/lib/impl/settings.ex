@@ -20,18 +20,18 @@ defmodule MsappMcp.Impl.Settings do
   mcp_constants()
 
   @spec launch_bootstrap?() :: boolean()
-  def launch_bootstrap?, do: get_platform_state() == :platform_bootstrapping
+  def launch_bootstrap?, do: get_mssub_mcp_state() == :platform_bootstrapping
 
-  @spec get_platform_state :: Types.platform_states()
-  mcp_opfn get_platform_state do
-    "platform_state"
+  @spec get_mssub_mcp_state :: Types.mssub_mcp_states()
+  mcp_opfn get_mssub_mcp_state do
+    "mssub_mcp_state"
     |> MscmpSystSettings.get_setting_value(:setting_uuid)
-    |> then(&MscmpSystEnums.get_enum_item_by_id("platform_states", &1))
+    |> then(&MscmpSystEnums.get_enum_item_by_id("mssub_mcp_states", &1))
     |> case do
-      %Msdata.SystEnumItems{internal_name: "platform_states_sysdef_bootstrapping"} ->
+      %Msdata.SystEnumItems{internal_name: "mssub_mcp_states_sysdef_bootstrapping"} ->
         :platform_bootstrapping
 
-      %Msdata.SystEnumItems{internal_name: "platform_states_sysdef_active"} ->
+      %Msdata.SystEnumItems{internal_name: "mssub_mcp_states_sysdef_active"} ->
         :platform_active
 
       error ->

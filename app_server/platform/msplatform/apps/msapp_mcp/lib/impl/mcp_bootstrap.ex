@@ -34,18 +34,18 @@ defmodule MsappMcp.Impl.McpBootstrap do
     starting_contexts = MssubMcp.start_mcp_service_context()
 
     active_state =
-      MscmpSystEnums.get_enum_item_by_name("platform_states", "platform_states_sysdef_active")
+      MscmpSystEnums.get_enum_item_by_name("mssub_mcp_states", "mssub_mcp_states_sysdef_active")
 
     {:ok, result} =
       MscmpSystDb.transaction(fn ->
-        MscmpSystSettings.set_setting_value("platform_state", :setting_uuid, active_state.id)
+        MscmpSystSettings.set_setting_value("mssub_mcp_state", :setting_uuid, active_state.id)
 
         case validate_bootstrap_data(data) do
           :ok ->
             data
             |> parse_bootstrap_params()
             |> MssubMcp.bootstrap_tenant()
-            |> maybe_set_platform_owner()
+            |> maybe_set_mcp_owner()
 
           errors ->
             {:error,
@@ -91,10 +91,10 @@ defmodule MsappMcp.Impl.McpBootstrap do
     }
   end
 
-  defp maybe_set_platform_owner({:ok, values} = result) do
-    MscmpSystSettings.set_setting_value("platform_owner", :setting_uuid, values.owner_id)
+  defp maybe_set_mcp_owner({:ok, values} = result) do
+    MscmpSystSettings.set_setting_value("mcp_owner", :setting_uuid, values.owner_id)
     result
   end
 
-  defp maybe_set_platform_owner(result), do: result
+  defp maybe_set_mcp_owner(result), do: result
 end

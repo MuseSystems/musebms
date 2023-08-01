@@ -1,5 +1,5 @@
 -- File:        feature_mapping.eex.sql
--- Location:    musebms/database/application/msapp_platform/mssub_mcp/seed_data/feature_mapping.eex.sql
+-- Location:    musebms/database/subsystems/mssub_mcp/seed_data/feature_mapping.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

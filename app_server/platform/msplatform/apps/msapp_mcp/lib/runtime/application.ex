@@ -14,13 +14,12 @@ defmodule MsappMcp.Runtime.Application do
   use Application
 
   @default_startup_options_path "ms_startup_options.toml"
-  @mcp_datastore_type "msplatform_mssub_mcp"
 
   @moduledoc false
 
   @impl true
   def start(_type, _args) do
-    migrations_root_dir = Path.join([:code.priv_dir(:msapp_mcp), "database"])
+    migrations_root_dir = Path.join([:code.priv_dir(:mssub_mcp), "database"])
 
     startup_options_config =
       Application.get_env(:msapp_mcp, Msplatform.StartupOptions,
@@ -35,8 +34,7 @@ defmodule MsappMcp.Runtime.Application do
       {MssubMcp.Updater,
        [
          startup_options: startup_options,
-         migrations_root_dir: migrations_root_dir,
-         datastore_type: @mcp_datastore_type
+         migrations_root_dir: migrations_root_dir
        ]},
       {MssubMcp.Supervisor, startup_options: startup_options},
       {Task.Supervisor, name: MsappMcp.TaskSupervisor}
