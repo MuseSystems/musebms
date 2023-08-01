@@ -22,24 +22,64 @@ defmodule MssubMcp.Runtime.DbSessionManager do
   @spec create_session(map(), Keyword.t()) ::
           {:ok, SessionTypes.session_name()} | {:error, MscmpSystError.t()}
   mcp_opfn create_session(session_data, opts) do
+    opts =
+      if opts[:expires_after] == nil do
+        expires_after =
+          MscmpSystSettings.get_setting_value("mssub_mcp_session_expiration", :setting_integer)
+
+        MscmpSystUtils.resolve_options(opts, expires_after: expires_after)
+      else
+        opts
+      end
+
     MscmpSystSession.create_session(session_data, opts)
   end
 
   @spec get_session(SessionTypes.session_name(), Keyword.t()) ::
           {:ok, SessionTypes.session_data()} | {:ok, :not_found} | {:error, MscmpSystError.t()}
   mcp_opfn get_session(session_name, opts) do
+    opts =
+      if opts[:expires_after] == nil do
+        expires_after =
+          MscmpSystSettings.get_setting_value("mssub_mcp_session_expiration", :setting_integer)
+
+        MscmpSystUtils.resolve_options(opts, expires_after: expires_after)
+      else
+        opts
+      end
+
     MscmpSystSession.get_session(session_name, opts)
   end
 
   @spec refresh_session_expiration(SessionTypes.session_name(), Keyword.t()) ::
           :ok | {:ok, :not_found} | {:error, MscmpSystError.t()}
   mcp_opfn refresh_session_expiration(session_name, opts) do
+    opts =
+      if opts[:expires_after] == nil do
+        expires_after =
+          MscmpSystSettings.get_setting_value("mssub_mcp_session_expiration", :setting_integer)
+
+        MscmpSystUtils.resolve_options(opts, expires_after: expires_after)
+      else
+        opts
+      end
+
     MscmpSystSession.refresh_session_expiration(session_name, opts)
   end
 
   @spec update_session(SessionTypes.session_name(), SessionTypes.session_data(), Keyword.t()) ::
           :ok | {:ok, :not_found} | {:error, MscmpSystError.t()}
   mcp_opfn update_session(session_name, session_data, opts) do
+    opts =
+      if opts[:expires_after] == nil do
+        expires_after =
+          MscmpSystSettings.get_setting_value("mssub_mcp_session_expiration", :setting_integer)
+
+        MscmpSystUtils.resolve_options(opts, expires_after: expires_after)
+      else
+        opts
+      end
+
     MscmpSystSession.update_session(session_name, session_data, opts)
   end
 
