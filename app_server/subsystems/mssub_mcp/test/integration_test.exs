@@ -165,7 +165,7 @@ defmodule IntegrationTest do
 
   test "Step 2.03: Verify Owners Don't Exist" do
     assert false == MssubMcp.owner_exists?()
-    assert false == MssubMcp.owner_exists?(owner_name: "platform_owner")
+    assert false == MssubMcp.owner_exists?(owner_name: "mcp_owner")
   end
 
   test "Step 2.04: Verify Access Accounts Don't Exist" do
@@ -177,7 +177,7 @@ defmodule IntegrationTest do
     owner_state = MssubMcp.get_owner_state_default(:owner_states_active)
 
     owner_params = %{
-      internal_name: "platform_owner",
+      internal_name: "mcp_owner",
       display_name: "Platform Owner",
       owner_state_id: owner_state.id
     }
@@ -188,7 +188,7 @@ defmodule IntegrationTest do
     access_account_params = %{
       internal_name: "platform_admin",
       external_name: "Platform Administrator",
-      owning_owner_name: "platform_owner",
+      owning_owner_name: "mcp_owner",
       allow_global_logins: false,
       access_account_state_id: access_account_state.id
     }
@@ -207,7 +207,7 @@ defmodule IntegrationTest do
 
   test "Step 2.06: Verify Owners Do Exist" do
     assert true == MssubMcp.owner_exists?()
-    assert true == MssubMcp.owner_exists?(owner_name: "platform_owner")
+    assert true == MssubMcp.owner_exists?(owner_name: "mcp_owner")
   end
 
   test "Step 2.07: Verify Access Accounts Do Exist" do

@@ -18,14 +18,14 @@ INSERT INTO ms_syst_data.syst_settings
     , setting_uuid
     , setting_integer )
 VALUES
-    ( 'platform_state'
-    , 'Platform State'
+    ( 'mssub_mcp_state'
+    , 'MCP State'
     , TRUE
-    , 'Defines the current installation and runtime state of the platform as a whole.  ' ||
-      'Valid values are drawn from the system enumeration "platform_states".'
-    , (SELECT id FROM ms_syst_data.syst_enum_items WHERE internal_name = 'platform_states_sysdef_bootstrapping')
+    , 'Defines the current installation and runtime state of the MCP as a whole.  ' ||
+      'Valid values are drawn from the system enumeration "mssub_mcp_states".'
+    , (SELECT id FROM ms_syst_data.syst_enum_items WHERE internal_name = 'mssub_mcp_states_sysdef_bootstrapping')
     , NULL::integer )
-  , ( 'platform_owner'
+  , ( 'mcp_owner'
     , 'Platform Owner'
     , TRUE
     , 'Identifies the Platform Owner once the system is bootstrapped.  ' ||
@@ -33,8 +33,8 @@ VALUES
       'are owned by the Platform Owner defined in this configuration point.'
     , NULL::uuid
     , NULL::integer )
-  , ( 'platform_session_expiration'
-    , 'Platform Session Expiration'
+  , ( 'mssub_mcp_session_expiration'
+    , 'MCP Session Expiration'
     , TRUE
     , 'The number of seconds after which stale user interface session ' ||
       'records should be considered expired and eligible for purging.'

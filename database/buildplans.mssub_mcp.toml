@@ -22,52 +22,65 @@ load_files = [
     #
 
     {type = "plan", file = "all/subplans.common_init.toml"},
-
-    #
-    # MscmpSystSettings
-    #
-
-    {type = "plan", file = "components/system/mscmp_syst_settings/subplans.mscmp_syst_settings.toml"},
+    "subsystems/mssub_mcp/privileges/initial_privileges.eex.sql",
 
     #
     # MscmpSystEnums
     #
 
     {type = "plan", file = "components/system/mscmp_syst_enums/subplans.mscmp_syst_enums.toml"},
+    "subsystems/mssub_mcp/privileges/mscmp_syst_enums.eex.sql",
+    "subsystems/mssub_mcp/seed_data/enum_mssub_mcp_states.eex.sql",
+
+    #
+    # MscmpSystSettings
+    #
+
+    {type = "plan", file = "components/system/mscmp_syst_settings/subplans.mscmp_syst_settings.toml"},
+    "subsystems/mssub_mcp/privileges/mscmp_syst_settings.eex.sql",
+    "subsystems/mssub_mcp/seed_data/settings.eex.sql",
 
     #
     # MscmpSystFeatures
     #
 
     {type = "plan", file = "components/system/mscmp_syst_features/subplans.mscmp_syst_features.toml"},
+    "subsystems/mssub_mcp/privileges/mscmp_syst_features.eex.sql",
+    "subsystems/mssub_mcp/seed_data/feature_mapping.eex.sql",
 
     #
     # MscmpSystInstance
     #
 
     {type = "plan", file = "components/system/mscmp_syst_instance/subplans.mscmp_syst_instance.toml"},
+    "subsystems/mssub_mcp/privileges/mscmp_syst_instance.eex.sql",
+    "subsystems/mssub_mcp/seed_data/enum_instance_types.eex.sql",
 
     #
     # MscmpSystAuthn
     #
 
     {type = "plan", file = "components/system/mscmp_syst_authn/subplans.mscmp_syst_authn.toml"},
+    "subsystems/mssub_mcp/privileges/mscmp_syst_authn.eex.sql",
 
     #
     # MscmpSystPerms
     #
 
     {type = "plan", file = "components/system/mscmp_syst_perms/subplans.mscmp_syst_perms.toml"},
+    "subsystems/mssub_mcp/privileges/mscmp_syst_perms.eex.sql",
 
     #
     # MscmpSystMcpPerms
     #
 
     {type = "plan", file = "components/system/mscmp_syst_mcp_perms/subplans.mscmp_syst_mcp_perms.toml"},
+    "subsystems/mssub_mcp/privileges/mscmp_syst_mcp_perms.eex.sql",
 
     #
     # MscmpSystSession
     #
 
     {type = "plan", file = "components/system/mscmp_syst_session/subplans.mscmp_syst_session.toml"},
+    "subsystems/mssub_mcp/privileges/mscmp_syst_session.eex.sql",
 ]

@@ -8,8 +8,8 @@ defmodule MsappMcp do
   @spec launch_bootstrap?() :: boolean()
   defdelegate launch_bootstrap?, to: Impl.Settings
 
-  @spec get_platform_state() :: Types.platform_states()
-  defdelegate get_platform_state, to: Impl.Settings
+  @spec get_mssub_mcp_state() :: Types.mssub_mcp_states()
+  defdelegate get_mssub_mcp_state, to: Impl.Settings
 
   @spec load_disallowed_passwords() :: :ok | {:error, MscmpSystError.t()}
   defdelegate load_disallowed_passwords(), to: Impl.McpBootstrap

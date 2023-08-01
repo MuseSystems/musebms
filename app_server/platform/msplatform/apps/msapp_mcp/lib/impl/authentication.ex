@@ -31,7 +31,7 @@ defmodule MsappMcp.Impl.Authentication do
   end
 
   defp attempt_authentication(identifier, credential, host_addr) do
-    owner_id = MssubMcp.get_setting_value("platform_owner", :setting_uuid)
+    owner_id = MssubMcp.get_setting_value("mcp_owner", :setting_uuid)
 
     MssubMcp.authenticate_email_password(identifier, credential, host_addr,
       owning_owner_id: owner_id,

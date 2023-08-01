@@ -25,5 +25,5 @@ defmodule MsappMcp.Types do
 
   @type form_field_name() :: atom()
 
-  @type platform_states() :: :platform_bootstrapping | :platform_active
+  @type mssub_mcp_states() :: :platform_bootstrapping | :platform_active
 end
