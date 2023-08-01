@@ -47,15 +47,9 @@ defmodule MsappMcp.Impl.Authentication do
        do: auth_state
 
   defp maybe_create_db_session(auth_state, session_name) do
-    expires_after = MssubMcp.get_setting_value("platform_session_expiration", :setting_integer)
-
     session_data = %{auth_state: encode_auth_state_for_json(auth_state)}
 
-    session_result =
-      MssubMcp.create_session(session_data,
-        session_name: session_name,
-        expires_after: expires_after
-      )
+    session_result = MssubMcp.create_session(session_data, session_name: session_name)
 
     case session_result do
       {:ok, _} ->
@@ -107,8 +101,7 @@ defmodule MsappMcp.Impl.Authentication do
   defp maybe_get_db_session(nil), do: {:ok, :not_found}
 
   defp maybe_get_db_session(session_name) do
-    expires_after = MssubMcp.get_setting_value("platform_session_expiration", :setting_integer)
-    MssubMcp.get_session(session_name, expires_after: expires_after)
+    MssubMcp.get_session(session_name)
   end
 
   defp maybe_get_auth_state({:ok, %{"auth_state" => auth_state}}), do: auth_state

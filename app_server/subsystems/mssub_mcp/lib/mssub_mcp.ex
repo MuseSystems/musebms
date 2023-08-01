@@ -4541,8 +4541,9 @@ defmodule MssubMcp do
       for the system to set the session name using `generate_session_name/0`.
 
       * `expires_after` - the number of seconds for which the session will be
-      considered valid.  The default value for this setting is 3,600 seconds
-      (1 hour).
+      considered valid.  The default value for this setting via this API is the
+      current value of the MCP integer setting `mssub_mcp_session_expiration`; 
+      by default that value is 3,600 seconds (1 hour).
 
   ## Examples
 
@@ -4577,8 +4578,9 @@ defmodule MssubMcp do
     are:
 
       * `expires_after` - the number of seconds for which the session will be
-      considered valid.  The default value for this setting is 3,600 seconds
-      (1 hour).
+      considered valid.  The default value for this setting via this API is the
+      current value of the MCP integer setting `mssub_mcp_session_expiration`; 
+      by default that value is 3,600 seconds (1 hour).
 
   ## Examples
 
@@ -4619,8 +4621,9 @@ defmodule MssubMcp do
     are:
 
       * `expires_after` - the number of seconds for which the session will be
-      considered valid.  The default value for this setting is 3,600 seconds
-      (1 hour).
+      considered valid.  The default value for this setting via this API is the
+      current value of the MCP integer setting `mssub_mcp_session_expiration`; 
+      by default that value is 3,600 seconds (1 hour).
 
   ## Examples
 
@@ -4663,8 +4666,9 @@ defmodule MssubMcp do
     are:
 
       * `expires_after` - the number of seconds for which the session will be
-      considered valid.  The default value for this setting is 3,600 seconds
-      (1 hour).
+      considered valid.  The default value for this setting via this API is the
+      current value of the MCP integer setting `mssub_mcp_session_expiration`; 
+      by default that value is 3,600 seconds (1 hour).
 
   ## Examples
 
