@@ -22,11 +22,14 @@ defmodule MsappMcp.Impl.Authentication do
     :rejected_deadline_expired
   ]
 
-  @spec authenticate(map(), IP.addr(), MscmpSystSession.Types.session_name()) :: any()
-  def authenticate(%{} = params, host_addr, session_name) do
+  @spec authenticate(map(), IP.addr(), MscmpSystSession.Types.session_name() | nil, Keyword.t()) ::
+          any()
+  def authenticate(%{} = params, host_addr, session_name, opts) do
+    opts = MscmpSystUtils.resolve_options(opts, mode: :session)
+
     attempt_authentication(params["identifier"], params["credential"], host_addr)
     |> process_auth_result()
-    |> maybe_create_db_session(session_name)
+    |> maybe_create_db_session(session_name, opts[:mode])
     |> get_auth_action()
   end
 
@@ -42,11 +45,13 @@ defmodule MsappMcp.Impl.Authentication do
   defp process_auth_result({:ok, auth_state}), do: auth_state
   defp process_auth_result({:error, error}), do: %{status: :auth_error, auth_error: error}
 
-  defp maybe_create_db_session(%{status: status} = auth_state, _)
+  defp maybe_create_db_session(auth_state, _, :confirm), do: auth_state
+
+  defp maybe_create_db_session(%{status: status} = auth_state, _, _)
        when status in @no_session_auth_statuses,
        do: auth_state
 
-  defp maybe_create_db_session(auth_state, session_name) do
+  defp maybe_create_db_session(auth_state, session_name, :session) do
     session_data = %{auth_state: encode_auth_state_for_json(auth_state)}
 
     session_result = MssubMcp.create_session(session_data, session_name: session_name)

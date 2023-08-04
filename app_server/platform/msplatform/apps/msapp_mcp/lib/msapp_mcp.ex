@@ -18,8 +18,9 @@ defmodule MsappMcp do
           {:ok, MssubMcp.Types.tenant_bootstrap_result()} | {:error, MscmpSystError.t()}
   defdelegate process_bootstrap_data(data), to: Impl.McpBootstrap
 
-  @spec authenticate(map(), IP.addr(), MscmpSystSession.Types.session_name()) :: any()
-  defdelegate authenticate(params, host_addr, session_name), to: Impl.Authentication
+  @spec authenticate(map(), IP.addr(), MscmpSystSession.Types.session_name() | nil, Keyword.t()) ::
+          any()
+  defdelegate authenticate(params, host_addr, session_name, opts \\ []), to: Impl.Authentication
 
   @spec test_session_authentication(Types.session_name()) :: map()
   defdelegate test_session_authentication(session_name), to: Impl.Authentication
