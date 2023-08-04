@@ -110,7 +110,7 @@ defmodule MscmpSystForms.Impl.WebComponents.Msinputs do
     assigns
     |> assign(:resolved_title, resolved_title)
     |> assign(:resolved_id, resolved_id)
-    |> assign(field: nil, id: resolved_id || field.id)
+    |> assign(:field, nil)
     |> assign(:errors, Enum.map(field.errors, &translate_error(&1)))
     |> assign(:label_classes, label_classes)
     |> assign(:input_classes, input_classes)
