@@ -50,6 +50,8 @@ defmodule Msdata.SystIdentities do
           }
 
   @schema_prefix "ms_syst"
+  @derive {Jason.Encoder,
+           except: [:__meta__, :access_account, :identity_type, :validates_identity]}
 
   schema "syst_identities" do
     field(:account_identifier, :string, redact: true)

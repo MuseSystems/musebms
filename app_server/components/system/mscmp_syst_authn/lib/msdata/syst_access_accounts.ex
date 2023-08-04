@@ -48,6 +48,16 @@ defmodule Msdata.SystAccessAccounts do
           }
 
   @schema_prefix "ms_syst"
+  @derive {Jason.Encoder,
+           except: [
+             :__meta__,
+             :access_account_instance_assocs,
+             :access_account_state,
+             :owning_owner,
+             :identities,
+             :credentials,
+             :password_history
+           ]}
 
   schema "syst_access_accounts" do
     field(:internal_name, :string)
