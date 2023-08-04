@@ -38,7 +38,8 @@ defmodule MsappMcpWeb.AuthEmailPasswordLive do
     {:ok, socket}
   end
 
-  def handle_event("form_login_validate", %{"auth_email_password" => form_data}, socket) do
+  def handle_event("form_login_validate", params, socket) do
+    %{"auth_email_password" => form_data} = params
     socket = Msform.AuthEmailPassword.validate_form_data(socket, form_data)
     {:noreply, socket}
   end
@@ -47,6 +48,13 @@ defmodule MsappMcpWeb.AuthEmailPasswordLive do
     socket = Msform.AuthEmailPassword.process_login_attempt(socket, form_data)
     {:noreply, socket}
   end
+
+  # When login_status = :login_reset, we do the same thing as when authenticated
+  # because we let the router.ex figure out if we need to perform the reset
+  # (that comes from the auth_state in the session) and in so doing we let the
+  # original_request_path get forwarded to the password reset form; in theory
+  # once all is said and done the user should be forwarded to their original
+  # desired path once they've logged in and reset if so required.
 
   def handle_info({ref, :login_authenticated}, socket) do
     Process.demonitor(ref, [:flush])

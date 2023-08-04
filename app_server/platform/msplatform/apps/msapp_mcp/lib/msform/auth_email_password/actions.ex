@@ -11,8 +11,6 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule Msform.AuthEmailPassword.Actions do
-  alias MsappMcp.Impl
-
   # For AuthEmailPassword user permissions are assumed since this we don't even
   # have a authenticated user at this point.
   @user_perms %{mcpauthnep_form: %{view_scope: :all, maint_scope: :all}}
@@ -41,18 +39,28 @@ defmodule Msform.AuthEmailPassword.Actions do
 
     socket
     |> Phoenix.Component.assign(:msrd_current_data, form_data)
-    |> Msform.McpBootstrap.update_display_data(post_changeset)
+    |> Msform.AuthEmailPassword.update_display_data(post_changeset)
     |> MscmpSystForms.update_button_state(:mcpauthnep_button_login, updated_button_state)
   end
 
   def process_login_attempt(socket, form_data) do
+    # TODO: I don't think requiring or using form data here is correct.  We have
+    #       msrd_current_data which should be validated at the point of a login
+    #       attempt.  This is a nit-picky point; there shouldn't be a functional
+    #       difference, but in other forms and circumstances we wouldn't expect
+    #       form_data to be complete, but something that is merged in some way
+    #       with msrd_current_data to create a complete data picture; part of
+    #       this has to do with the fact that form_data is filtered by what the
+    #       user can work with whereas msrd_current_data would include data that
+    #       the user may not have permission to manipulate or even see.
+
     session_name = socket.assigns.msrd_session_name
     host_addr = socket.assigns.host_addr
 
     Task.Supervisor.async_nolink(
       MsappMcp.TaskSupervisor,
       fn ->
-        auth_result = Impl.Authentication.authenticate(form_data, host_addr, session_name)
+        auth_result = MsappMcp.authenticate(form_data, host_addr, session_name)
         send(self(), auth_result)
       end
     )
@@ -72,11 +80,11 @@ defmodule Msform.AuthEmailPassword.Actions do
     MscmpSystForms.finish_processing_override(socket, :process_login_attempt)
   end
 
-  def process_login_reset(socket, auth_state) do
+  def process_login_reset(socket, _auth_state) do
     MscmpSystForms.finish_processing_override(socket, :process_login_attempt)
   end
 
-  def process_platform_error(socket, auth_state) do
+  def process_platform_error(socket, _auth_state) do
     MscmpSystForms.finish_processing_override(socket, :process_login_attempt)
   end
 end

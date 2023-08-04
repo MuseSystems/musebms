@@ -70,6 +70,16 @@ defmodule MsappMcp.Impl.Authentication do
   defp get_auth_action(%{status: status}) when status in @no_session_auth_statuses,
     do: {:login_denied, status}
 
+  defp get_auth_action(
+         %{
+           status: :pending,
+           reset_reason: reset_reason,
+           pending_operations: [:require_credential_reset]
+         } = auth_state
+       )
+       when is_atom(reset_reason),
+       do: :login_authenticated
+
   defp get_auth_action(%{status: :pending} = auth_state), do: {:login_pending, auth_state}
 
   defp get_auth_action(%{status: :authenticated, reset_reason: reset_reason} = auth_state)
@@ -123,6 +133,18 @@ defmodule MsappMcp.Impl.Authentication do
        when is_binary(reset_reason),
        do: {:session_reset, reset_reason}
 
+  defp get_session_auth_result(%{
+         "status" => "pending",
+         "reset_reason" => reset_reason,
+         "pending_operations" => ["require_credential_reset"]
+       })
+       when is_binary(reset_reason),
+       do: {:session_reset, reset_reason}
+
   defp get_session_auth_result(%{"status" => "authenticated"}), do: :session_valid
-  defp get_session_auth_result(_), do: :session_invalid
+
+  defp get_session_auth_result(auth_state) do
+    IO.inspect(auth_state)
+    :session_invalid
+  end
 end

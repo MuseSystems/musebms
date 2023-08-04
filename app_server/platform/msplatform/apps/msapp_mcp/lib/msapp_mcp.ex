@@ -22,7 +22,8 @@ defmodule MsappMcp do
           any()
   defdelegate authenticate(params, host_addr, session_name, opts \\ []), to: Impl.Authentication
 
-  @spec test_session_authentication(Types.session_name()) :: map()
+  @spec test_session_authentication(Types.session_name()) ::
+          :session_valid | :session_invalid | {:session_reset, String.t()}
   defdelegate test_session_authentication(session_name), to: Impl.Authentication
 
   @spec delete_session(MscmpSystSession.Types.session_name()) ::
