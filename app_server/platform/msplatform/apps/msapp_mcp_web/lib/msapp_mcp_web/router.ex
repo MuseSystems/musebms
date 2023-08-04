@@ -63,6 +63,11 @@ defmodule MsappMcpWeb.Router do
     live("/", BootstrapLive)
   end
 
+  scope "/password-reset", MsappMcpWeb do
+    pipe_through([:browser, :bootstrap, :authenticated])
+    live("/", AuthPasswordResetLive)
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", MsappMcpWeb do
   #   pipe_through :api
@@ -123,11 +128,15 @@ defmodule MsappMcpWeb.Router do
         end
 
       {:session_reset, reset_reason} ->
-        conn
-        |> put_session(:original_request_path, conn.request_path)
-        |> put_session(:authenticator_reset_reason, reset_reason)
-        |> redirect(to: "/password-reset")
-        |> halt()
+        if conn.request_path == "/password-reset" do
+          conn
+        else
+          conn
+          |> put_session(:original_request_path, conn.request_path)
+          |> put_session(:authenticator_reset_reason, reset_reason)
+          |> redirect(to: "/password-reset")
+          |> halt()
+        end
     end
   end
 
@@ -136,7 +145,10 @@ defmodule MsappMcpWeb.Router do
       case get_session(conn, "session_name") do
         name when is_binary(name) ->
           MsappMcp.delete_session(name)
-          delete_session(conn, "session_name")
+
+          conn
+          |> delete_session("session_name")
+          |> delete_session("authenticator_reset_reason")
 
         _ ->
           conn

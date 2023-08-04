@@ -59,7 +59,8 @@ defmodule MsappMcpWeb.BootstrapLive do
     {:noreply, socket}
   end
 
-  def handle_event("records_validate", %{"mcp_bootstrap" => form_data}, socket) do
+  def handle_event("records_validate", params, socket) do
+    %{"mcp_bootstrap" => form_data} = params
     socket = Msform.McpBootstrap.validate_form_data(socket, form_data)
     {:noreply, socket}
   end
