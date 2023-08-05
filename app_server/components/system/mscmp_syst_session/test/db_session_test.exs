@@ -44,7 +44,7 @@ defmodule DbSessionTest do
 
   test "Can create Session with custom expires after" do
     current_timestamp = DateTime.utc_now()
-    expires_secs = :rand.uniform(10000)
+    expires_secs = :rand.uniform(10_000)
 
     a_little_before =
       DateTime.add(current_timestamp, expires_secs - 5) |> DateTime.truncate(:second)
@@ -70,7 +70,7 @@ defmodule DbSessionTest do
 
   test "Can update existing Session with custom expires after" do
     current_timestamp = DateTime.utc_now()
-    expires_secs = :rand.uniform(10000)
+    expires_secs = :rand.uniform(10_000)
 
     a_little_before =
       DateTime.add(current_timestamp, expires_secs - 5) |> DateTime.truncate(:second)
@@ -102,7 +102,7 @@ defmodule DbSessionTest do
 
   test "Can get existing Session data with custom expires after" do
     current_timestamp = DateTime.utc_now()
-    expires_secs = :rand.uniform(10000)
+    expires_secs = :rand.uniform(10_000)
 
     a_little_before =
       DateTime.add(current_timestamp, expires_secs - 5) |> DateTime.truncate(:second)
@@ -127,7 +127,7 @@ defmodule DbSessionTest do
 
   test "Can refresh Session expiration date with custom expires after" do
     current_timestamp = DateTime.utc_now()
-    expires_secs = :rand.uniform(10000)
+    expires_secs = :rand.uniform(10_000)
 
     a_little_before =
       DateTime.add(current_timestamp, expires_secs - 5) |> DateTime.truncate(:second)
