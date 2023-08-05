@@ -13,8 +13,8 @@
 defmodule Msdata.SystSessions do
   use MscmpSystDb.Schema
 
-  alias MscmpSystSession.Types
   alias MscmpSystSession.Msdata.Validators
+  alias MscmpSystSession.Types
 
   @moduledoc """
   User interface session data.
