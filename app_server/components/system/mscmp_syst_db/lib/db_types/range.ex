@@ -105,7 +105,7 @@ defprotocol MscmpSystDb.DbTypes.Range do
       ...>     upper_inclusive: false
       ...>   }
       iex> MscmpSystDb.DbTypes.Range.upper(range)
-      #Decimal<75.49>
+      %Decimal{coef: 7549, exp: -2, sign: 1}
   """
   @spec upper(any()) :: any()
   def(upper(range))
