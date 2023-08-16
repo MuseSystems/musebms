@@ -12,4 +12,5 @@
 
 defmodule MscmpSystForms.Impl.Gettext do
   use Gettext, otp_app: :mscmp_syst_forms
+  @moduledoc false
 end

@@ -22,6 +22,8 @@ defmodule MscmpSystForms.Impl.WebComponents.Msinputs do
   alias MscmpSystForms.Impl.WebComponents.Helpers
   alias MscmpSystForms.Types.ComponentConfig
 
+  @moduledoc false
+
   @default_modes %{
     component_mode: :entry,
     border_mode: [],

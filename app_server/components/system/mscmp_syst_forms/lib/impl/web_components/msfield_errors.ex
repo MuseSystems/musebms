@@ -18,6 +18,8 @@ defmodule MscmpSystForms.Impl.WebComponents.MsfieldErrors do
   alias MscmpSystForms.Impl.WebComponents
   alias MscmpSystForms.Impl.WebComponents.Helpers.Js
 
+  @moduledoc false
+
   attr(:id, :any, required: true)
 
   slot(:msfield_error_item)

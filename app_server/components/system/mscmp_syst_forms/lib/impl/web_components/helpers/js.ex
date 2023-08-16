@@ -18,6 +18,8 @@ defmodule MscmpSystForms.Impl.WebComponents.Helpers.Js do
 
   alias Phoenix.LiveView.JS
 
+  @moduledoc false
+
   def show(js \\ %JS{}, selector) do
     JS.show(js,
       to: selector,

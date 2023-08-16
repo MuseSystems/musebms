@@ -14,8 +14,6 @@ defmodule MscmpSystForms.Impl.WebComponents.Helpers do
   alias MscmpSystForms.Types
   alias MscmpSystForms.Types.ComponentConfig
 
-  import MscmpSystForms.Impl.Gettext
-
   @moduledoc false
 
   ##############################################################################
@@ -244,7 +242,7 @@ defmodule MscmpSystForms.Impl.WebComponents.Helpers do
 
   def resolve_modes(component_config, attr_modes, default_modes, active_overrides) do
     given_modes =
-      unless component_config == nil do
+      if component_config != nil do
         (component_config.modes || attr_modes || %{})
         |> maybe_apply_processing_override(component_config.overrides, active_overrides)
       else

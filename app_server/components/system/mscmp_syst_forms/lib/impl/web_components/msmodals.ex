@@ -19,6 +19,8 @@ defmodule MscmpSystForms.Impl.WebComponents.Msmodals do
   alias MscmpSystForms.Impl.WebComponents.Helpers.Js
   alias Phoenix.LiveView.JS
 
+  @moduledoc false
+
   attr(:id, :string, required: true)
   attr(:show, :boolean, default: false)
   attr(:on_cancel, JS, default: %JS{})

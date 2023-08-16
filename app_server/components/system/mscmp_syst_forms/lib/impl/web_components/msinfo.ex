@@ -18,6 +18,8 @@ defmodule MscmpSystForms.Impl.WebComponents.Msinfo do
   alias MscmpSystForms.Impl.WebComponents
   alias MscmpSystForms.Impl.WebComponents.Helpers.Js
 
+  @moduledoc false
+
   attr(:id, :any, required: true)
 
   slot(:msinfo_help)
