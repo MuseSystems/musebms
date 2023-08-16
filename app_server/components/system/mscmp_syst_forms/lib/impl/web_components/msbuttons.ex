@@ -15,8 +15,10 @@ defmodule MscmpSystForms.Impl.WebComponents.Msbuttons do
 
   alias MscmpSystForms.Impl.WebComponents
   alias MscmpSystForms.Impl.WebComponents.Helpers
-  alias MscmpSystForms.Types.ComponentConfig
   alias MscmpSystForms.Impl.WebComponents.Helpers.Js
+  alias MscmpSystForms.Types.ComponentConfig
+
+  @moduledoc false
 
   @default_modes %{
     component_mode: :visible,
@@ -61,10 +63,10 @@ defmodule MscmpSystForms.Impl.WebComponents.Msbuttons do
       assigns.sizing,
       assigns.spacing,
       ~w(
-        phx-submit-loading:opacity-75 
-        bg-zinc-500 
-        hover:bg-zinc-400 
-        py-2 px-3 
+        phx-submit-loading:opacity-75
+        bg-zinc-500
+        hover:bg-zinc-400
+        py-2 px-3
         disabled:bg-zinc-200
         disabled:ring-zinc-500
         focus:ring-4
@@ -142,10 +144,10 @@ defmodule MscmpSystForms.Impl.WebComponents.Msbuttons do
 
     # We'll handle the active_overrides directly in this component since v
     # validated buttons have a button state which already has a processing
-    # appropriate class set and since we need to set the button state 
+    # appropriate class set and since we need to set the button state
     # appropriately.  This means the button state should normally not be set
-    # to `:processing`, but should remain either `:action` or `message` and 
-    # allow the `:active_overrides` evaluation to cause the button state to 
+    # to `:processing`, but should remain either `:action` or `message` and
+    # allow the `:active_overrides` evaluation to cause the button state to
     # end up in `:processing`.
 
     resolved_modes =
@@ -162,10 +164,10 @@ defmodule MscmpSystForms.Impl.WebComponents.Msbuttons do
 
     resolved_classes = [
       ~w(
-        phx-submit-loading:opacity-75 
-        bg-zinc-500 
-        hover:bg-zinc-400 
-        py-2 px-3 
+        phx-submit-loading:opacity-75
+        bg-zinc-500
+        hover:bg-zinc-400
+        py-2 px-3
         disabled:bg-zinc-200
         disabled:ring-zinc-500
         focus:ring-4
@@ -341,9 +343,9 @@ defmodule MscmpSystForms.Impl.WebComponents.Msbuttons do
     |> Enum.uniq()
     |> Enum.reduce([], fn binding_id, acc ->
       message_item_text =
-        Keyword.get_values(message_items, binding_id)
-        |> Enum.map(&Helpers.translate_error(&1))
-        |> Enum.join("<br/>")
+        message_items
+        |> Keyword.get_values(binding_id)
+        |> Enum.map_join("<br/>", &Helpers.translate_error(&1))
 
       message_item_label =
         MscmpSystForms.get_component_info(form_module, %{binding_id: binding_id})

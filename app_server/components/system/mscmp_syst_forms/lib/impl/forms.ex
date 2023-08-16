@@ -11,10 +11,12 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystForms.Impl.Forms do
-  alias MscmpSystForms.Types.FormConfig
   alias MscmpSystForms.Types.ComponentConfig
+  alias MscmpSystForms.Types.FormConfig
 
   import Phoenix.Component, only: [assign: 2, assign: 3]
+
+  @moduledoc false
 
   @default_perm :default_permission
   @default_modes %{component_mode: :cleared}
@@ -77,8 +79,8 @@ defmodule MscmpSystForms.Impl.Forms do
   end
 
   def get_render_configs(module, feature, mode, state, user_perms) do
-    form_configs = apply(module, :get_form_config, [])
-    form_modes = apply(module, :get_form_modes, [])
+    form_configs = module.get_form_config()
+    form_modes = module.get_form_modes()
 
     state_modes =
       Map.merge(
@@ -144,8 +146,8 @@ defmodule MscmpSystForms.Impl.Forms do
     end)
   end
 
-  # TODO: This function head being called might be indicative of a poorly 
-  #       constructed form configuration entry; we should warn/log on this 
+  # TODO: This function head being called might be indicative of a poorly
+  #       constructed form configuration entry; we should warn/log on this
   #       condition once we have our logging strategy figured out.
   defp process_form_configs(%FormConfig{form_id: nil}, render_items, _, _, _, _, _),
     do: render_items
@@ -238,17 +240,14 @@ defmodule MscmpSystForms.Impl.Forms do
         :component_skip_hidden
       ])
       |> Enum.reduce([], fn {k, v}, acc ->
-        unless v == nil do
-          case k do
-            :component_id -> Keyword.put(acc, :id, v)
-            :component_as -> Keyword.put(acc, :as, v)
-            :component_default -> Keyword.put(acc, :default, v)
-            :component_prepend -> Keyword.put(acc, :prepend, v)
-            :component_append -> Keyword.put(acc, :append, v)
-            :component_skip_hidden -> Keyword.put(acc, :skip_hidden, v)
-          end
-        else
-          acc
+        cond do
+          v == nil -> acc
+          k == :component_id -> Keyword.put(acc, :id, v)
+          k == :component_as -> Keyword.put(acc, :as, v)
+          k == :component_default -> Keyword.put(acc, :default, v)
+          k == :component_prepend -> Keyword.put(acc, :prepend, v)
+          k == :component_append -> Keyword.put(acc, :append, v)
+          k == :component_skip_hidden -> Keyword.put(acc, :skip_hidden, v)
         end
       end)
 
@@ -282,10 +281,7 @@ defmodule MscmpSystForms.Impl.Forms do
   defp apply_data_perm(data, key, value, %{view_scope: :all}), do: Map.put(data, key, value)
   defp apply_data_perm(data, key, _, _), do: Map.put(data, key, nil)
 
-  defp get_data_perms(module) do
-    form_configs = apply(module, :get_form_config, [])
-    process_data_perms(form_configs, @default_perm)
-  end
+  defp get_data_perms(module), do: module.get_form_config() |> process_data_perms(@default_perm)
 
   defp process_data_perms([_ | _] = configs, default_perm) do
     Enum.reduce(configs, %{}, fn config, perm_items ->
@@ -399,11 +395,11 @@ defmodule MscmpSystForms.Impl.Forms do
   def start_processing_override(socket_or_assigns, override) when is_atom(override) do
     working_assigns = get_working_assigns(socket_or_assigns)
 
-    unless Enum.member?(working_assigns.msrd_overrides, override) do
+    if Enum.member?(working_assigns.msrd_overrides, override) do
+      socket_or_assigns
+    else
       updated_processing = [override | working_assigns.msrd_overrides]
       assign(socket_or_assigns, :msrd_overrides, updated_processing)
-    else
-      socket_or_assigns
     end
   end
 
@@ -418,11 +414,8 @@ defmodule MscmpSystForms.Impl.Forms do
     end
   end
 
-  def get_component_info(module, form_id) do
-    module
-    |> apply(:get_form_config, [])
-    |> find_component_config(form_id)
-  end
+  def get_component_info(module, form_id),
+    do: module.get_form_config() |> find_component_config(form_id)
 
   def find_component_config([_ | _] = form_configs, form_id) do
     Enum.reduce_while(

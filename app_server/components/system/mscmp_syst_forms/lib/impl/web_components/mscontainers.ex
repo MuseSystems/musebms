@@ -14,8 +14,9 @@ defmodule MscmpSystForms.Impl.WebComponents.Mscontainers do
   use Phoenix.Component
 
   alias MscmpSystForms.Impl.WebComponents.Helpers
-  alias MscmpSystForms.Types
   alias MscmpSystForms.Types.ComponentConfig
+
+  @moduledoc false
 
   @default_modes %{
     component_mode: :entry,

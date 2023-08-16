@@ -16,6 +16,8 @@ defmodule MscmpSystForms.Impl.WebComponents.Mssections do
   alias MscmpSystForms.Impl.WebComponents.Helpers
   alias MscmpSystForms.Types.ComponentConfig
 
+  @moduledoc false
+
   @default_modes %{
     component_mode: :entry,
     border_mode: :normal,
@@ -128,9 +130,9 @@ defmodule MscmpSystForms.Impl.WebComponents.Mssections do
   defp get_component_mode_classes(mode) when mode in [:hidden, :cleared], do: ~w(invisible)
   defp get_component_mode_classes(_), do: []
 
-  # TODO: get_border_classes/1 here is a bit of a hack.  The double border in 
+  # TODO: get_border_classes/1 here is a bit of a hack.  The double border in
   #       the helper border class definition doesn't work well for our section
-  #       component.  While the local exceptions below get us around that 
+  #       component.  While the local exceptions below get us around that
   #       formatting issue, it defeats our "single place of definition" goal.
 
   defp get_border_classes([_ | _] = classes), do: Helpers.get_border_classes(classes)

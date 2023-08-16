@@ -16,6 +16,8 @@ defmodule MscmpSystForms.Impl.WebComponents.Mslists do
   alias MscmpSystForms.Impl.WebComponents.Helpers
   alias MscmpSystForms.Types.ComponentConfig
 
+  @moduledoc false
+
   @default_modes %{
     component_mode: :visible,
     border_mode: :none,
@@ -106,7 +108,7 @@ defmodule MscmpSystForms.Impl.WebComponents.Mslists do
   def mslist(type, assigns) when type in @unordered_list_types do
     ~H"""
     <ul id={@resolved_id} class={@resolved_classes} hidden={@hidden == true}>
-      <%= render_slot(@inner_block) %>    
+      <%= render_slot(@inner_block) %>
     </ul>
     """
   end
@@ -114,7 +116,7 @@ defmodule MscmpSystForms.Impl.WebComponents.Mslists do
   def mslist(type, assigns) when type in @ordered_list_types do
     ~H"""
     <ol id={@resolved_id} class={@resolved_classes} hidden={@hidden == true}>
-      <%= render_slot(@inner_block) %>    
+      <%= render_slot(@inner_block) %>
     </ol>
     """
   end
@@ -166,7 +168,7 @@ defmodule MscmpSystForms.Impl.WebComponents.Mslists do
 
     ~H"""
     <li id={@resolved_id} class={@resolved_classes} hidden={@hidden == true}>
-      <%= render_slot(@inner_block) %>  
+      <%= render_slot(@inner_block) %>
     </li>
     """
   end

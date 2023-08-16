@@ -15,6 +15,8 @@ defmodule MscmpSystForms.Impl.WebComponents.Msforms do
 
   alias MscmpSystForms.Impl.WebComponents
 
+  @moduledoc false
+
   @default_modes %{
     component_mode: :entry,
     border_mode: :none,

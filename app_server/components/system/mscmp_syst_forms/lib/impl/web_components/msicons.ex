@@ -13,6 +13,8 @@
 defmodule MscmpSystForms.Impl.WebComponents.Msicons do
   use Phoenix.Component
 
+  @moduledoc false
+
   attr(:name, :string, required: true)
   attr(:class, :string, default: nil)
 

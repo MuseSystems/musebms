@@ -11,12 +11,12 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystForms.Impl.WebComponents.Msdisplays do
-  alias Phoenix.Router.Helpers
-  alias MscmpSystForms.Types
-  alias MscmpSystForms.Types.ComponentConfig
   alias MscmpSystForms.Impl.WebComponents.Helpers
+  alias MscmpSystForms.Types.ComponentConfig
 
   use Phoenix.Component
+
+  @moduledoc false
 
   @default_type :text
   @default_layout ~w(flex flex-row)
