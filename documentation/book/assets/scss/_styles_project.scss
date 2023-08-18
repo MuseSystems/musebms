@@ -1,3 +1,81 @@
+.td-navbar {
+  @extend .navbar;
+  @extend .navbar-expand;
+
+  background: $body-bg;
+  min-height: 4rem;
+  margin: 0;
+  z-index: 32;
+
+  .navbar-brand {
+    text-transform: none;
+
+    &__name {
+      font-weight: $font-weight-bold;
+    }
+
+    svg {
+      display: inline-block;
+      margin: 0 10px;
+      height: 30px;
+    }
+  }
+
+  .navbar-nav {
+    padding-top: $spacer * 0.5;
+    white-space: nowrap;
+  }
+
+  .nav-link {
+    text-transform: none;
+    font-weight: $font-weight-bold;
+  }
+
+  // For .td-search__input styling, see _search.scss
+
+  .dropdown {
+    min-width: 100px;
+  }
+
+  @include media-breakpoint-up(md) {
+    position: fixed;
+    top: 0;
+    width: 100%;
+
+    .nav-item {
+      padding-inline-end: $spacer * 0.5;
+    }
+
+    .navbar-nav {
+      padding-top: 0 !important;
+    }
+  }
+
+  @include media-breakpoint-down(lg) {
+    .td-navbar-nav-scroll {
+      max-width: 100%;
+      height: 2.5rem;
+      overflow: hidden;
+      font-size: 0.9rem;
+    }
+
+    .navbar-brand {
+      margin-right: 0;
+    }
+
+    .navbar-nav {
+      padding-bottom: 2rem;
+      overflow-x: auto;
+    }
+  }
+}
+
+
 .td-navbar .navbar-brand__name {
   display: none;
 }
+
+.td-page-meta--view { display: none !important; }
+.td-page-meta--edit { display: none !important; }
+.td-page-meta--child { display: none !important; }
+.td-page-meta--issue { display: none !important; }
