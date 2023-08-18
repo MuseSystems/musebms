@@ -1,6 +1,6 @@
 # MscmpSystError - Exception Handling Component
 
-API for working with the MuseBMS error reporting subsystem.
+API for defining a standard for error handling and reporting.
 
 This module defines a nested structure for reporting errors in contexts where a result should be
 represented by an error result.  By capturing lower level errors and reporting them in a
