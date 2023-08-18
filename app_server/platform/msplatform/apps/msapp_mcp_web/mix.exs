@@ -37,6 +37,7 @@ defmodule MsappMcpWeb.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      # Third Party Dependencies
       {:phoenix, "~> 1.7.1"},
       {:phoenix_ecto, "~> 4.0"},
       {:phoenix_html, "~> 3.3"},
@@ -49,9 +50,12 @@ defmodule MsappMcpWeb.MixProject do
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.20"},
-      {:msapp_mcp, in_umbrella: true},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
+      {:ex_doc, "~> 0.20", only: :dev, runtime: false},
+
+      # Muse Systems Business Management System Dependencies
+      {:msapp_mcp, in_umbrella: true},
       {:mscmp_syst_forms, path: "../../../../components/system/mscmp_syst_forms", override: true}
     ]
   end
