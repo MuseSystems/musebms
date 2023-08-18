@@ -26,7 +26,6 @@ defmodule MscmpSystDb.MixProject do
     {:jason, "~> 1.0"},
     {:postgrex, "~> 0.10"},
     {:toml, "~> 0.7"},
-    {:gradient, github: "esl/gradient", only: [:dev], runtime: false},
     {:net_address, "~> 0.3.0"},
 
     # Muse Systems Business Management System Components
