@@ -2692,10 +2692,14 @@ defmodule MscmpSystAuthn do
   Email/Password authentication is an interruptible process, meaning that this
   function may return prior to the authentication having been fully processed to
   a final result.  The two most common examples of when this partial processing
-  may happen are 1) the Application Instance was not initially identified; and
-  2) further authentication is required such as when Multi-Factor Authentication
-  is required.  In these cases the returned Authentication State is resubmitted
-  for process via `authenticate_email_password/2` along with the updated
+  may happen are:
+
+  1. The Application Instance was not initially identified.
+  2. Further authentication is required such as when Multi-Factor Authentication
+  is required.
+
+  In these cases the returned Authentication State is resubmitted
+  for processing via `authenticate_email_password/2` along with the updated
   information which allows authentication processing to complete.
 
   ## Parameters
