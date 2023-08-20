@@ -65,15 +65,33 @@ defmodule MscmpSystDb.DbTypes.Inet do
 
   def dump(_), do: :error
 
+  @doc """
+  Converts a network address represented as a `t:MscmpSystDb.DbTypes.Inet.t/0`
+  value into one represented as a `t:Postgrex.INET.t/0` value.
+  """
   @spec to_postgrex_inet(t()) :: Postgrex.INET.t()
   defdelegate to_postgrex_inet(address), to: Impl.Inet
 
+  @doc """
+  Converts a network address represented as a `t:Postgrex.INET.t/0`
+  value into one represented as a `t:MscmpSystDb.DbTypes.Inet.t/0` value.
+  """
   @spec from_postgrex_inet(Postgrex.INET.t()) :: t()
   defdelegate from_postgrex_inet(address), to: Impl.Inet
 
+  @doc """
+  Converts a network address represented as a `t:MscmpSystDb.DbTypes.Inet.t/0`
+  value into one represented as either a `t:IP.addr/0` or `t:IP.Subnet.t/0`
+  value.
+  """
   @spec to_net_address(t()) :: IP.addr() | IP.Subnet.t()
   defdelegate to_net_address(address_or_network), to: Impl.Inet
 
+  @doc """
+  Converts a network address represented either as a `t:IP.addr/0` or
+  `t:IP.Subnet.t/0` value into one represented as a
+  `t:MscmpSystDb.DbTypes.Inet.t/0` value.
+  """
   @spec from_net_address(IP.addr() | IP.Subnet.t()) :: t()
   defdelegate from_net_address(address_or_network), to: Impl.Inet
 end

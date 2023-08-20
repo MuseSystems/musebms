@@ -91,9 +91,13 @@ defmodule Mix.Tasks.Builddb do
     * `sponsor` - In cases where specific clients that use the software are able
       to sponsor client-specific customizations, this field identifies the
       client sponsoring the change.  This element is the fourth element of the
-      migration file name.  For non-sponsored changes, a special sponsor value
-      designated to mean 'Muse Systems' is used (`820`).
-
+      migration file name.  All sponsor numbers in the range 0 - 1295 are
+      reserved for Muse Systems internal use and some specific values in that
+      range currently have assigned meanings.  General public software releases
+      from Muse Systems will have a sponsor value of `820` (`MS` in Base 36),
+      software versions including sponsor number `821` (`MT` in Base 36)
+      indicate software created for internal, development testing purposes which
+      should never be part of a public release of the software.
 
     * `sponsor_modification` - This field allows for sponsored customization to
       both be versioned and sequenced in the migration process.  This is the

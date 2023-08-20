@@ -103,6 +103,26 @@ defmodule MscmpSystDb do
   @doc section: :datastore_migrations
   @doc """
   Returns the most recently installed database migration version number.
+
+  The version is returned as the string representation of our segmented version
+  number in the format `RR.VV.UUU.SSSSSS.MMM` where each segment represents a
+  Base 36 number for specific versioning purposes.  The segments are defined as:
+
+    * `RR` - The major feature release number in the decimal range of 0 - 1,295.
+
+    * `VV` - The minor feature version within the release in the decimal range
+      of 0 - 1,295.
+
+    * `UUU` - The update patch number of the specified release/version in the
+      decimal range of 0 - 46,655.
+
+    * `SSSSSS` - Sponsor or client number for whom the specific migration or
+      version is being produced for in the decimal range of 0 - 2,176,782,335.
+
+    * `MMM` - Sponsor modification number in the decimal range of 0 - 46,655.
+
+  See `mix builddb` for further explanation version number segment meanings.
+
   """
   @spec get_datastore_version(Types.datastore_options(), Keyword.t()) ::
           {:ok, String.t()} | {:error, MscmpSystError.t()}
@@ -248,116 +268,245 @@ defmodule MscmpSystDb do
   # reasonably familiar to other developers.
 
   @doc section: :service_management
+  @doc """
+  Establishes the Datastore Context to use for Datastore interactions in the
+  Elixir process where this function is called.
+
+  Using this function will set the given Datastore Context in the Process
+  Dictionary of the process from which the function call is made.
+  """
   @spec put_datastore_context(pid() | Ecto.Repo.t() | Ecto.Adapter.adapter_meta()) ::
           atom() | pid()
   defdelegate put_datastore_context(context), to: Datastore
 
   @doc section: :service_management
+  @doc """
+  Retrieves either atom name or `t:pid/0` of the currently established Datastore
+  context, unless no context has been established.
+  """
   @spec current_datastore_context :: atom() | pid()
   defdelegate current_datastore_context(), to: Datastore
 
   @doc section: :query
+  @doc """
+  A convenience function that currently wraps the `c:Ecto.Repo.transaction/2`
+  function.
+  """
   @spec transaction(fun | Ecto.Multi.t(), keyword) :: {:error, MscmpSystError.t()} | {:ok, any}
   defdelegate transaction(job, opts \\ []), to: Datastore, as: :ecto_transaction
 
   @doc section: :query
+  @doc """
+  Returns the record count of the given queryable argument.
+  """
   defdelegate record_count(queryable, opts), to: Datastore, as: :record_count
 
   @doc section: :query
+  @doc """
+  A convenience function that currently wraps the `c:Ecto.Repo.aggregate/4`
+  function.
+  """
   defdelegate aggregate(queryable, aggregate, field, opts \\ []), to: Datastore
 
   @doc section: :query
+  @doc """
+  A convenience function that currently wraps the `c:Ecto.Repo.all/2` function.
+  """
   @spec all(Ecto.Queryable.t(), Keyword.t()) :: list(Ecto.Schema.t())
   defdelegate all(queryable, opts \\ []), to: Datastore
 
   @doc section: :query
+  @doc """
+  A convenience function that currently wraps the `c:Ecto.Repo.delete/2`
+  function.
+  """
   defdelegate delete(struct_or_changeset, opts \\ []),
     to: Datastore
 
   @doc section: :query
+  @doc """
+  A convenience function that currently wraps the `c:Ecto.Repo.delete!/2`
+  function.
+  """
   defdelegate delete!(struct_or_changeset, opts \\ []),
     to: Datastore
 
   @doc section: :query
+  @doc """
+  A convenience function that currently wraps the `c:Ecto.Repo.delete_all/2`
+  function.
+  """
   defdelegate delete_all(queryable, opts \\ []), to: Datastore
 
   @doc section: :query
+  @doc """
+  A convenience function that currently wraps the `c:Ecto.Repo.exists?/2`
+  function.
+  """
   defdelegate exists?(queryable, opts \\ []), to: Datastore
 
   @doc section: :query
+  @doc """
+  A convenience function that currently wraps the `c:Ecto.Repo.get/3`
+  function.
+  """
   defdelegate get(queryable, id, opts \\ []), to: Datastore
 
   @doc section: :query
+  @doc """
+  A convenience function that currently wraps the `c:Ecto.Repo.get!/3`
+  function.
+  """
   defdelegate get!(queryable, id, opts \\ []), to: Datastore
 
   @doc section: :query
+  @doc """
+  A convenience function that currently wraps the `c:Ecto.Repo.get_by/3`
+  function.
+  """
   defdelegate get_by(queryable, clauses, opts \\ []),
     to: Datastore
 
   @doc section: :query
+  @doc """
+  A convenience function that currently wraps the `c:Ecto.Repo.get_by!/3`
+  function.
+  """
   defdelegate get_by!(queryable, clauses, opts \\ []),
     to: Datastore
 
   @doc section: :query
+  @doc """
+  A convenience function that currently wraps the `c:Ecto.Repo.in_transaction?/0`
+  function.
+  """
   defdelegate in_transaction?, to: Datastore
 
   @doc section: :query
+  @doc """
+  A convenience function that currently wraps the `c:Ecto.Repo.insert/2`
+  function.
+  """
   defdelegate insert(struct_or_changeset, opts \\ []),
     to: Datastore
 
   @doc section: :query
+  @doc """
+  A convenience function that currently wraps the `c:Ecto.Repo.insert!/2`
+  function.
+  """
   defdelegate insert!(struct_or_changeset, opts \\ []),
     to: Datastore
 
   @doc section: :query
+  @doc """
+  A convenience function that currently wraps the `c:Ecto.Repo.insert_all/3`
+  function.
+  """
   defdelegate insert_all(schema_or_source, entries_or_query, opts \\ []),
     to: Datastore
 
   @doc section: :query
+  @doc """
+  A convenience function that currently wraps the `c:Ecto.Repo.insert_or_update/2`
+  function.
+  """
   defdelegate insert_or_update(changeset, opts \\ []),
     to: Datastore
 
   @doc section: :query
+  @doc """
+  A convenience function that currently wraps the `c:Ecto.Repo.insert_or_update!/2`
+  function.
+  """
   defdelegate insert_or_update!(changeset, opts \\ []),
     to: Datastore
 
   @doc section: :query
+  @doc """
+  A convenience function that currently wraps the `c:Ecto.Repo.load/2`
+  function.
+  """
   defdelegate load(module_or_map, data), to: Datastore
 
   @doc section: :query
+  @doc """
+  A convenience function that currently wraps the `c:Ecto.Repo.one/2`
+  function.
+  """
   defdelegate one(queryable, opts \\ []), to: Datastore
 
   @doc section: :query
+  @doc """
+  A convenience function that currently wraps the `c:Ecto.Repo.one!/2`
+  function.
+  """
   defdelegate one!(queryable, opts \\ []), to: Datastore
 
   @doc section: :query
+  @doc """
+  A convenience function that currently wraps the `c:Ecto.Repo.preload/3`
+  function.
+  """
   defdelegate preload(structs_or_struct_or_nil, preloads, opts \\ []),
     to: Datastore
 
   @doc section: :query
+  @doc """
+  A convenience function that currently wraps the `c:Ecto.Repo.prepare_query/3`
+  function.
+  """
   defdelegate prepare_query(operation, query, opts \\ []),
     to: Datastore
 
   @doc section: :query
+  @doc """
+  A convenience function that currently wraps the `c:Ecto.Repo.reload/2`
+  function.
+  """
   defdelegate reload(struct_or_structs, opts \\ []), to: Datastore
 
   @doc section: :query
+  @doc """
+  A convenience function that currently wraps the `c:Ecto.Repo.reload!/2`
+  function.
+  """
   defdelegate reload!(struct_or_structs, opts \\ []),
     to: Datastore
 
   @doc section: :query
+  @doc """
+  A convenience function that currently wraps the `c:Ecto.Repo.rollback/1`
+  function.
+  """
   defdelegate rollback(value), to: Datastore
 
   @doc section: :query
+  @doc """
+  A convenience function that currently wraps the `c:Ecto.Repo.stream/2`
+  function.
+  """
   defdelegate stream(queryable, opts \\ []), to: Datastore
 
   @doc section: :query
+  @doc """
+  A convenience function that currently wraps the `c:Ecto.Repo.update/2`
+  function.
+  """
   defdelegate update(changeset, opts \\ []), to: Datastore
 
   @doc section: :query
+  @doc """
+  A convenience function that currently wraps the `c:Ecto.Repo.update!/2`
+  function.
+  """
   defdelegate update!(changeset, opts \\ []), to: Datastore
 
   @doc section: :query
+  @doc """
+  A convenience function that currently wraps the `c:Ecto.Repo.update_all/3`
+  function.
+  """
   defdelegate update_all(queryable, updates, opts \\ []),
     to: Datastore
 end

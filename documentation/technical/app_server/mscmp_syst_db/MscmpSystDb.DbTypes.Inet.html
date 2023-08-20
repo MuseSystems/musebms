@@ -13,7 +13,7 @@
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
     <script src="dist/handlebars.templates-XWGFFSCD.js"></script>
-    <script src="dist/sidebar_items-A88B08BB.js"></script>
+    <script src="dist/sidebar_items-FA845B90.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -163,7 +163,9 @@ data type, see: <a href="https://www.postgresql.org/docs/current/datatype-net-ty
 
       </div>
 
-        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.DbTypes.Impl.Inet.from_net_address/1</code>.</p></div>
+        <div class="summary-synopsis"><p>Converts a network address represented either as a <a href="https://hexdocs.pm/net_address/0.3.0/IP.html#t:addr/0"><code class="inline">IP.addr/0</code></a> or
+<a href="https://hexdocs.pm/net_address/0.3.0/IP.Subnet.html#t:t/0"><code class="inline">IP.Subnet.t/0</code></a> value into one represented as a
+<a href="#t:t/0"><code class="inline">MscmpSystDb.DbTypes.Inet.t/0</code></a> value.</p></div>
 
     </div>
 
@@ -173,7 +175,8 @@ data type, see: <a href="https://www.postgresql.org/docs/current/datatype-net-ty
 
       </div>
 
-        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.DbTypes.Impl.Inet.from_postgrex_inet/1</code>.</p></div>
+        <div class="summary-synopsis"><p>Converts a network address represented as a <a href="https://hexdocs.pm/postgrex/0.17.1/Postgrex.INET.html#t:t/0"><code class="inline">Postgrex.INET.t/0</code></a>
+value into one represented as a <a href="#t:t/0"><code class="inline">MscmpSystDb.DbTypes.Inet.t/0</code></a> value.</p></div>
 
     </div>
 
@@ -183,7 +186,9 @@ data type, see: <a href="https://www.postgresql.org/docs/current/datatype-net-ty
 
       </div>
 
-        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.DbTypes.Impl.Inet.to_net_address/1</code>.</p></div>
+        <div class="summary-synopsis"><p>Converts a network address represented as a <a href="#t:t/0"><code class="inline">MscmpSystDb.DbTypes.Inet.t/0</code></a>
+value into one represented as either a <a href="https://hexdocs.pm/net_address/0.3.0/IP.html#t:addr/0"><code class="inline">IP.addr/0</code></a> or <a href="https://hexdocs.pm/net_address/0.3.0/IP.Subnet.html#t:t/0"><code class="inline">IP.Subnet.t/0</code></a>
+value.</p></div>
 
     </div>
 
@@ -193,7 +198,8 @@ data type, see: <a href="https://www.postgresql.org/docs/current/datatype-net-ty
 
       </div>
 
-        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.DbTypes.Impl.Inet.to_postgrex_inet/1</code>.</p></div>
+        <div class="summary-synopsis"><p>Converts a network address represented as a <a href="#t:t/0"><code class="inline">MscmpSystDb.DbTypes.Inet.t/0</code></a>
+value into one represented as a <a href="https://hexdocs.pm/postgrex/0.17.1/Postgrex.INET.html#t:t/0"><code class="inline">Postgrex.INET.t/0</code></a> value.</p></div>
 
     </div>
 
@@ -304,7 +310,9 @@ Functions
 
       </div>
 
-<p>See <code class="inline">MscmpSystDb.DbTypes.Impl.Inet.from_net_address/1</code>.</p>
+<p>Converts a network address represented either as a <a href="https://hexdocs.pm/net_address/0.3.0/IP.html#t:addr/0"><code class="inline">IP.addr/0</code></a> or
+<a href="https://hexdocs.pm/net_address/0.3.0/IP.Subnet.html#t:t/0"><code class="inline">IP.Subnet.t/0</code></a> value into one represented as a
+<a href="#t:t/0"><code class="inline">MscmpSystDb.DbTypes.Inet.t/0</code></a> value.</p>
   </section>
 </section>
 <section class="detail" id="from_postgrex_inet/1">
@@ -327,7 +335,8 @@ Functions
 
       </div>
 
-<p>See <code class="inline">MscmpSystDb.DbTypes.Impl.Inet.from_postgrex_inet/1</code>.</p>
+<p>Converts a network address represented as a <a href="https://hexdocs.pm/postgrex/0.17.1/Postgrex.INET.html#t:t/0"><code class="inline">Postgrex.INET.t/0</code></a>
+value into one represented as a <a href="#t:t/0"><code class="inline">MscmpSystDb.DbTypes.Inet.t/0</code></a> value.</p>
   </section>
 </section>
 <section class="detail" id="to_net_address/1">
@@ -350,7 +359,9 @@ Functions
 
       </div>
 
-<p>See <code class="inline">MscmpSystDb.DbTypes.Impl.Inet.to_net_address/1</code>.</p>
+<p>Converts a network address represented as a <a href="#t:t/0"><code class="inline">MscmpSystDb.DbTypes.Inet.t/0</code></a>
+value into one represented as either a <a href="https://hexdocs.pm/net_address/0.3.0/IP.html#t:addr/0"><code class="inline">IP.addr/0</code></a> or <a href="https://hexdocs.pm/net_address/0.3.0/IP.Subnet.html#t:t/0"><code class="inline">IP.Subnet.t/0</code></a>
+value.</p>
   </section>
 </section>
 <section class="detail" id="to_postgrex_inet/1">
@@ -373,7 +384,8 @@ Functions
 
       </div>
 
-<p>See <code class="inline">MscmpSystDb.DbTypes.Impl.Inet.to_postgrex_inet/1</code>.</p>
+<p>Converts a network address represented as a <a href="#t:t/0"><code class="inline">MscmpSystDb.DbTypes.Inet.t/0</code></a>
+value into one represented as a <a href="https://hexdocs.pm/postgrex/0.17.1/Postgrex.INET.html#t:t/0"><code class="inline">Postgrex.INET.t/0</code></a> value.</p>
   </section>
 </section>
 

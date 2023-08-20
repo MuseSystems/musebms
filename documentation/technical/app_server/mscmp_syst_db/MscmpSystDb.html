@@ -13,7 +13,7 @@
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
     <script src="dist/handlebars.templates-XWGFFSCD.js"></script>
-    <script src="dist/sidebar_items-A88B08BB.js"></script>
+    <script src="dist/sidebar_items-FA845B90.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -105,7 +105,191 @@ mscmp_syst_db
 
 
   <section id="moduledoc">
-<h1>MscmpSystDb - Database Connectivity &amp; Migrations</h1><p>The public API for database interactions.</p>
+<h1>MscmpSystDb - Database Migrations, Connectivity, and Querying</h1><p>A database management Component for developing and managing database-per-tenant
+oriented systems.  To achieve this we wrap and extend the popular <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.html"><code class="inline">Ecto</code></a> and
+<code class="inline">EctoSql</code> libraries with a specialized templated (<a href="https://hexdocs.pm/eex/EEx.html"><code class="inline">EEx</code></a>) migrations system and add
+additional, opinionated abstractions encapsulating the tenant model as it
+relates to development, data access, and runtime concerns.</p><blockquote><h4 class="warning">Important</h4><p>&quot;Database-per-tenant&quot; is not the typical tenancy implementation pattern for
+Elixir/Phoenix based applications.  As with most choices in software
+architecture and engineering there are trade-offs between the different
+tenancy approaches that you should be well-versed with prior to committing to
+this or any other tenancy model for your applications.</p></blockquote><h2 id="module-concepts" class="section-heading">
+  <a href="#module-concepts" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">concepts</p>
+  </a>
+  Concepts
+</h2>
+<p>There are several concepts requiring definitions which should be understood
+before continuing.  Most of these concepts relate to runtime concerns though
+understanding them will inform your sense of the possibilities and constraints
+on development and deployment scenarios.</p><h4>Datastore</h4><p>A Datastore can most simply be thought of as a single database created to
+support either a tenant environment or an administrative function of the
+application.  More specifically speaking, a Datastore establishes a store of
+data and a security boundary at the database level for the data of a tenant or
+of administrative functionality.</p><p>Using <a href="#create_datastore/2"><code class="inline">MscmpSystDb.create_datastore/2</code></a> automatically will create the database
+backing the Datastore.</p><p>Datastores and the Ecto dynamic repositories which back them are started and
+stopped at runtime using this Component's API.  Datastores are not typically
+started directly via OTP application related functionality at application
+startup.  This is chiefly because we don't assume to even know what Datastores
+actually exist until we've started up an administrative Datastore which records
+the information.</p><h4>Datastore Context</h4><p>A Datastore Context represents a PostgreSQL database role which is used to
+establish Datastore access and security contexts using database security
+features. Datastore Contexts are specific to a single Datastore and are managed
+by the this Component, including the creation, maintenance, and dropping of them
+as needed, typically in conjunction with Datastore creation/deletion.</p><p>Behind the scenes Datastore Contexts use the <a href="https://hexdocs.pm/ecto/replicas-and-dynamic-repositories.html#dynamic-repositories">&quot;Ecto Dynamic Repositories&quot;</a> feature.
+Each Datastore Context is backed by an Ecto Dynamic Repo.   Starting a Datastore
+Context starts its Ecto Dynamic Repo including establishing the connections to
+the database.  Stopping a Datastore Context shuts that associated Dynamic Repo
+down and terminates its database connections.</p><p>There are several different kinds of Datastore Contexts which can be defined:</p><ul><li><p><strong>Owner</strong>: This kind of Datastore Context creates a database role to serve
+as the database owner of all the database objects backing the Datastore
+making it the de facto admin role for the Datastore.  While the Owner
+Datastore Context owns the database objects backing the Datastore, it is
+only a regular database role (no special database rights) and it cannot be a
+database login role itself.  All Datastores must have exactly one Owner
+Datastore Context defined.</p></li><li><p><strong>Login</strong>: The Login Datastore Context is a regular database role with which
+the application can log into the database and perform operations allowed by
+the database security policies established by the database developer.  There
+can be one or more Login Datastore Contexts in order to support various
+security profiles that the application may assume or in order to build
+connection pools with varying limits depending on some application specific
+need (e.g. connections support web user interface vs. connections supporting
+external API interactions.).  For a Datastore to be useful there must be at
+least one Login Datastore Context defined for the Datastore.</p></li><li><p><strong>Non-Login</strong>: While the Owner Datastore Context is required, there are
+other possible scenarios where non-login roles could be useful in managing
+access to specific database objects, but how useful Non-Login roles might
+be will depend on application specific factors; the expectation is that
+their use will be rare.  Naturally, there is no requirement for Non-Login
+Datastore Contexts to be defined for any Datastore.</p></li></ul><p>Finally, when we access the database from the application we'll always be doing
+so identifying one of our Login Datastore Contexts.  This is done using
+<a href="#put_datastore_context/1"><code class="inline">MscmpSystDb.put_datastore_context/1</code></a> which behind the scenes is using the
+<a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html"><code class="inline">Ecto.Repo</code></a> dynamic repository features (<a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:put_dynamic_repo/1"><code class="inline">Ecto.Repo.put_dynamic_repo/1</code></a>).
+Note that there is no default Ecto Repo, dynamic or otherwise, defined in the
+system.  Any attempts to access a Datastore Context without having established
+the current Datastore Context for the process will cause the process to crash.</p><blockquote><h4 class="warning">Warning!</h4><p>Datastore Contexts are created and destroyed by the application using the API
+functions in this Component.  The current implementation of Login Datastore
+Contexts, however, is expected to have certain security weaknesses related to
+database role credential management.</p><p>With this in mind, <strong><em>do not look to our implementation as an example of how
+to approach such a problem</em></strong> until this and other warnings disappear.  The
+reality is that while in certain on-premise scenarios our current approach
+might well be workable, it was designed with the idea of kicking the can of a
+difficult and sensitive problem down the road and not as a final solution that
+we'd stand behind.  We do believe this problem is solvable with sufficient
+time and expertise.</p></blockquote><h2 id="module-database-development" class="section-heading">
+  <a href="#module-database-development" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">database-development</p>
+  </a>
+  Database Development
+</h2>
+<p>Our development model assumes that there are fundamentally two phases of
+development related to the database: <strong><em>Initial/Major Development</em></strong> and
+<strong><em>Ongoing Maintenance</em></strong>.</p><h4>Initial/Major Development</h4><p>When initially developing a database schema, prior to any releases of usable
+software the typical &quot;migrations&quot; oriented development pattern of a continuing
+sequence of incremental changes is significantly less useful than it is during
+later, maintenance oriented phases of development.  During initial development
+it is more useful to see database schema changes through the lens of traditional
+source control methodologies.  The extend to which this is true will naturally
+vary depending on the application.  Larger, database-centric applications will
+benefit from this phase of development significantly more than smaller
+applications where the database is simple persistence and data isn't significant
+beyond this persistence support role.</p><h4>Ongoing Maintenance</h4><p>Once there is an active release of the software and future deployments will be
+focused on maintaining already running databases, our model shifts to the norms
+typical of the traditional migrations database development model.  We expect
+smaller, relatively independent changes which are simply applied in sequence.
+Unlike other migration tools such as the migrator built into <code class="inline">EctoSql</code>, we have
+some additional ceremony related to sequencing migrations, but aside from these
+minor differences our migrations will resemble those of other tools once in the
+maintenance phase of development.</p><blockquote><h4 class="neutral">Note</h4><p>Despite the discussion above, the distinction between &quot;Initial/Major
+Development&quot; and &quot;Ongoing Maintenance&quot; is a distinction in developer practice
+only; the tool itself doesn't make this distinction but merely is designed to
+work in a way which supports a workflow recognizing these phases.  The cost of
+being able to support the Initial/Major Development concept is that migrations
+are not numbered or sequenced automatically as will be shown below.  If you
+don't need the Initial/Major Development phase, the traditional <code class="inline">EctoSql</code>
+migrator may be more suitable to your needs.</p></blockquote><h4>Source Files &amp; Building Migrations Overview</h4><p>In the more typical migrations model, the migration files are themselves the
+source code of the database changes.  This Component separates the two concepts:</p><ul><li><p>Database source code files are written by the developer as the developer
+sees fit.  Database source files are what we are most concerned with from a
+source control perspective; and these files can be freely modified and
+changes committed up to the point that they are built into released
+migrations.  Database source files are written in (mostly) plain SQL; <a href="https://hexdocs.pm/eex/EEx.html"><code class="inline">EEx</code></a>
+tags are allowed in the SQL and can be bound during migration time.</p></li><li><p>Once the database source code has reached some stage of completion, the
+developer can use the <a href="Mix.Tasks.Builddb.html"><code class="inline">mix builddb</code></a> task to generate migration files from
+the database sources.  In order to build the migration files, the developer
+will create a <code class="inline">TOML</code> &quot;build plan&quot; file which indicates which database source
+files to include in the migrations and their sequence.  For more about the
+build process and build plans see the <a href="Mix.Tasks.Builddb.html"><code class="inline">mix builddb</code></a> task documentation.</p></li></ul><p>Now let's connect this back to the development phases discussed previously.
+During the &quot;Initial/Major Development&quot; phase, we expect that there will be many
+database source files and that these files will be written, committed to source
+control, modified, and re-committed to source control not as migrations but as
+you would any other source file (for example, maybe one file per table.); we
+might also be building migration files at this time for testing purposes, but
+until the application is released we'd expect the migration files to be cleaned
+out and rebuilt.  Finally once tests, code, reviews, etc. are complete and a
+release is ready to be prepared, a final <a href="Mix.Tasks.Builddb.html"><code class="inline">mix builddb</code></a> is run to create the
+release migrations and those migrations are committed to source control.</p><p>From this point forward we generally wouldn't modify the original database
+source files or the final release migrations: the release migrations are
+essentially set in stone once they may be deployed to a environment where
+dropping the database is not an option.  Subsequent development in the &quot;Ongoing
+Maintenance&quot; phase looks similar to traditional migration development.  For any
+modification to the database you'll create new a database source file(s) for
+those modifications specifically and they'll get new version numbers which will
+in turn create new migrations when <a href="Mix.Tasks.Builddb.html"><code class="inline">mix builddb</code></a> builds them.  These will then
+be deployed to the database as standard migrations would.</p><h2 id="module-migration-deployments" class="section-heading">
+  <a href="#module-migration-deployments" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">migration-deployments</p>
+  </a>
+  Migration Deployments
+</h2>
+<p>Once built, migration files are deployed to a database similar to the way
+traditional migration systems perform their deployments: the migrations are
+checked, in migration number order, against a special database table listing the
+previously deployed migrations (table <code class="inline">ms_syst_db.migrations</code>).  If a migration
+has been previously deployed, it's skipped and the deployment process moves onto
+the next migration; if the migration needs to be deployed it is applied to the
+database and, assuming successful deployment, the process moves onto the next
+migration or exits when all outstanding migrations have been applied.</p><p>Each individual migration is applied in a single database transaction.  This
+means that if part of a migration fails to apply to the database successfully,
+the entire migration is rolled back and the database will be in the state of the
+last fully successful migration application.  A migration application failure
+will abort the migration process, cancelling the attempted application of
+migrations after the failed migration.</p><p>Unlike the <code class="inline">EctoSql</code> based migration process, migrations in <a href="MscmpSystDb.html#content"><code class="inline">MscmpSystDb</code></a> are
+expected to be managed at runtime by the application.  There is no external
+<code class="inline">mix</code> oriented migration deployment process.  Migration processes are started
+for each tenant database individually allowing for selective application of
+migrations to the specified environment or allowing for &quot;upgrade window&quot; style
+functionality.  Migrations are also <a href="https://hexdocs.pm/eex/EEx.html"><code class="inline">EEx</code></a> templates and template bindings can be
+supplied to the migrator to make each deployment specific to the database being
+migrated if appropriate.   Naturally, much depends on the broader application
+design, but the migrator can support a number of different scenarios for
+deployment of database changes.</p><p>Finally, the migrator, can in a single application, manage and migrate different
+database schemas/migration sets depending on the identified &quot;type&quot;.  This means
+that different database schemas for different subsystems can be supported by the
+migration system in a single application.  This assumes that a single database
+is of a single type; that type may be any of the available types, but mixing of
+types in a single database is not allowed.</p><h2 id="module-custom-database-types" class="section-heading">
+  <a href="#module-custom-database-types" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">custom-database-types</p>
+  </a>
+  Custom Database Types
+</h2>
+<p><a href="https://hexdocs.pm/ecto/3.10.2/Ecto.html"><code class="inline">Ecto</code></a>, <code class="inline">EctoSql</code>, and the underlying PostgreSQL library <a href="https://hexdocs.pm/postgrex/0.17.1/Postgrex.html"><code class="inline">Postgrex</code></a> offer decent
+PostgreSQL data type support out of box, but they don't directly map some of the
+database types that can be helpful in business software such as PostgreSQL range
+types, internet address types, and interval types.  To this end we add some
+custom database data types via the modules in the <code class="inline">MscmpSystDb.DbTypes.*</code>
+namespace.</p><h2 id="module-data-access-interface" class="section-heading">
+  <a href="#module-data-access-interface" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">data-access-interface</p>
+  </a>
+  Data Access Interface
+</h2>
+<p>The <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.html"><code class="inline">Ecto</code></a> library offers a data access and manipulation API via the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html"><code class="inline">Ecto.Repo</code></a>
+module.  We wrap and in some cases extend the majority of that functionality in
+this Component as documented in the <a href="#query">Query section</a>.  As a rule of
+thumb, you want to call on this module for such needs even if the same can be
+achieved with the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.html"><code class="inline">Ecto</code></a> library.  This recommendation is not meant to suggest
+that you shouldn't use the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Query.html"><code class="inline">Ecto.Query</code></a> related DSL or methods for constructing
+queries; using the Ecto Query DSL is, in fact, recommended absent compelling
+reason to do otherwise.</p>
   </section>
 
 
@@ -128,7 +312,8 @@ mscmp_syst_db
 
       </div>
 
-        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.aggregate/4</code>.</p></div>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:aggregate/4"><code class="inline">Ecto.Repo.aggregate/4</code></a>
+function.</p></div>
 
     </div>
 
@@ -138,7 +323,7 @@ mscmp_syst_db
 
       </div>
 
-        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.all/2</code>.</p></div>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:all/2"><code class="inline">Ecto.Repo.all/2</code></a> function.</p></div>
 
     </div>
 
@@ -148,7 +333,8 @@ mscmp_syst_db
 
       </div>
 
-        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.delete/2</code>.</p></div>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:delete/2"><code class="inline">Ecto.Repo.delete/2</code></a>
+function.</p></div>
 
     </div>
 
@@ -158,7 +344,8 @@ mscmp_syst_db
 
       </div>
 
-        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.delete!/2</code>.</p></div>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:delete!/2"><code class="inline">Ecto.Repo.delete!/2</code></a>
+function.</p></div>
 
     </div>
 
@@ -168,7 +355,8 @@ mscmp_syst_db
 
       </div>
 
-        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.delete_all/2</code>.</p></div>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:delete_all/2"><code class="inline">Ecto.Repo.delete_all/2</code></a>
+function.</p></div>
 
     </div>
 
@@ -178,7 +366,8 @@ mscmp_syst_db
 
       </div>
 
-        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.exists?/2</code>.</p></div>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:exists?/2"><code class="inline">Ecto.Repo.exists?/2</code></a>
+function.</p></div>
 
     </div>
 
@@ -188,7 +377,8 @@ mscmp_syst_db
 
       </div>
 
-        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.get/3</code>.</p></div>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:get/3"><code class="inline">Ecto.Repo.get/3</code></a>
+function.</p></div>
 
     </div>
 
@@ -198,7 +388,8 @@ mscmp_syst_db
 
       </div>
 
-        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.get!/3</code>.</p></div>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:get!/3"><code class="inline">Ecto.Repo.get!/3</code></a>
+function.</p></div>
 
     </div>
 
@@ -208,7 +399,8 @@ mscmp_syst_db
 
       </div>
 
-        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.get_by/3</code>.</p></div>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:get_by/3"><code class="inline">Ecto.Repo.get_by/3</code></a>
+function.</p></div>
 
     </div>
 
@@ -218,7 +410,8 @@ mscmp_syst_db
 
       </div>
 
-        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.get_by!/3</code>.</p></div>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:get_by!/3"><code class="inline">Ecto.Repo.get_by!/3</code></a>
+function.</p></div>
 
     </div>
 
@@ -228,7 +421,8 @@ mscmp_syst_db
 
       </div>
 
-        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.in_transaction?/0</code>.</p></div>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:in_transaction?/0"><code class="inline">Ecto.Repo.in_transaction?/0</code></a>
+function.</p></div>
 
     </div>
 
@@ -238,7 +432,8 @@ mscmp_syst_db
 
       </div>
 
-        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.insert/2</code>.</p></div>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:insert/2"><code class="inline">Ecto.Repo.insert/2</code></a>
+function.</p></div>
 
     </div>
 
@@ -248,7 +443,8 @@ mscmp_syst_db
 
       </div>
 
-        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.insert!/2</code>.</p></div>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:insert!/2"><code class="inline">Ecto.Repo.insert!/2</code></a>
+function.</p></div>
 
     </div>
 
@@ -258,7 +454,8 @@ mscmp_syst_db
 
       </div>
 
-        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.insert_all/3</code>.</p></div>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:insert_all/3"><code class="inline">Ecto.Repo.insert_all/3</code></a>
+function.</p></div>
 
     </div>
 
@@ -268,7 +465,8 @@ mscmp_syst_db
 
       </div>
 
-        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.insert_or_update/2</code>.</p></div>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:insert_or_update/2"><code class="inline">Ecto.Repo.insert_or_update/2</code></a>
+function.</p></div>
 
     </div>
 
@@ -278,7 +476,8 @@ mscmp_syst_db
 
       </div>
 
-        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.insert_or_update!/2</code>.</p></div>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:insert_or_update!/2"><code class="inline">Ecto.Repo.insert_or_update!/2</code></a>
+function.</p></div>
 
     </div>
 
@@ -288,7 +487,8 @@ mscmp_syst_db
 
       </div>
 
-        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.load/2</code>.</p></div>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:load/2"><code class="inline">Ecto.Repo.load/2</code></a>
+function.</p></div>
 
     </div>
 
@@ -298,7 +498,8 @@ mscmp_syst_db
 
       </div>
 
-        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.one/2</code>.</p></div>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:one/2"><code class="inline">Ecto.Repo.one/2</code></a>
+function.</p></div>
 
     </div>
 
@@ -308,7 +509,8 @@ mscmp_syst_db
 
       </div>
 
-        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.one!/2</code>.</p></div>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:one!/2"><code class="inline">Ecto.Repo.one!/2</code></a>
+function.</p></div>
 
     </div>
 
@@ -318,7 +520,8 @@ mscmp_syst_db
 
       </div>
 
-        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.preload/3</code>.</p></div>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:preload/3"><code class="inline">Ecto.Repo.preload/3</code></a>
+function.</p></div>
 
     </div>
 
@@ -328,7 +531,8 @@ mscmp_syst_db
 
       </div>
 
-        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.prepare_query/3</code>.</p></div>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:prepare_query/3"><code class="inline">Ecto.Repo.prepare_query/3</code></a>
+function.</p></div>
 
     </div>
 
@@ -418,7 +622,7 @@ mscmp_syst_db
 
       </div>
 
-        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.record_count/2</code>.</p></div>
+        <div class="summary-synopsis"><p>Returns the record count of the given queryable argument.</p></div>
 
     </div>
 
@@ -428,7 +632,8 @@ mscmp_syst_db
 
       </div>
 
-        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.reload/2</code>.</p></div>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:reload/2"><code class="inline">Ecto.Repo.reload/2</code></a>
+function.</p></div>
 
     </div>
 
@@ -438,7 +643,8 @@ mscmp_syst_db
 
       </div>
 
-        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.reload!/2</code>.</p></div>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:reload!/2"><code class="inline">Ecto.Repo.reload!/2</code></a>
+function.</p></div>
 
     </div>
 
@@ -448,7 +654,8 @@ mscmp_syst_db
 
       </div>
 
-        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.rollback/1</code>.</p></div>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:rollback/1"><code class="inline">Ecto.Repo.rollback/1</code></a>
+function.</p></div>
 
     </div>
 
@@ -458,7 +665,8 @@ mscmp_syst_db
 
       </div>
 
-        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.stream/2</code>.</p></div>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:stream/2"><code class="inline">Ecto.Repo.stream/2</code></a>
+function.</p></div>
 
     </div>
 
@@ -468,7 +676,8 @@ mscmp_syst_db
 
       </div>
 
-        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.ecto_transaction/2</code>.</p></div>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:transaction/2"><code class="inline">Ecto.Repo.transaction/2</code></a>
+function.</p></div>
 
     </div>
 
@@ -478,7 +687,8 @@ mscmp_syst_db
 
       </div>
 
-        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.update/2</code>.</p></div>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:update/2"><code class="inline">Ecto.Repo.update/2</code></a>
+function.</p></div>
 
     </div>
 
@@ -488,7 +698,8 @@ mscmp_syst_db
 
       </div>
 
-        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.update!/2</code>.</p></div>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:update!/2"><code class="inline">Ecto.Repo.update!/2</code></a>
+function.</p></div>
 
     </div>
 
@@ -498,7 +709,8 @@ mscmp_syst_db
 
       </div>
 
-        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.update_all/3</code>.</p></div>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:update_all/3"><code class="inline">Ecto.Repo.update_all/3</code></a>
+function.</p></div>
 
     </div>
 
@@ -607,7 +819,8 @@ and contexts, respectively, of the provided Datastore options definition.</p></d
 
       </div>
 
-        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.current_datastore_context/0</code>.</p></div>
+        <div class="summary-synopsis"><p>Retrieves either atom name or <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">pid/0</code></a> of the currently established Datastore
+context, unless no context has been established.</p></div>
 
     </div>
 
@@ -617,7 +830,8 @@ and contexts, respectively, of the provided Datastore options definition.</p></d
 
       </div>
 
-        <div class="summary-synopsis"><p>See <code class="inline">MscmpSystDb.Runtime.Datastore.put_datastore_context/1</code>.</p></div>
+        <div class="summary-synopsis"><p>Establishes the Datastore Context to use for Datastore interactions in the
+Elixir process where this function is called.</p></div>
 
     </div>
 
@@ -691,7 +905,8 @@ Query
 
   <section class="docstring">
 
-<p>See <code class="inline">MscmpSystDb.Runtime.Datastore.aggregate/4</code>.</p>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:aggregate/4"><code class="inline">Ecto.Repo.aggregate/4</code></a>
+function.</p>
   </section>
 </section>
 <section class="detail" id="all/2">
@@ -716,7 +931,7 @@ Query
 
       </div>
 
-<p>See <code class="inline">MscmpSystDb.Runtime.Datastore.all/2</code>.</p>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:all/2"><code class="inline">Ecto.Repo.all/2</code></a> function.</p>
   </section>
 </section>
 <section class="detail" id="delete/2">
@@ -735,7 +950,8 @@ Query
 
   <section class="docstring">
 
-<p>See <code class="inline">MscmpSystDb.Runtime.Datastore.delete/2</code>.</p>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:delete/2"><code class="inline">Ecto.Repo.delete/2</code></a>
+function.</p>
   </section>
 </section>
 <section class="detail" id="delete!/2">
@@ -754,7 +970,8 @@ Query
 
   <section class="docstring">
 
-<p>See <code class="inline">MscmpSystDb.Runtime.Datastore.delete!/2</code>.</p>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:delete!/2"><code class="inline">Ecto.Repo.delete!/2</code></a>
+function.</p>
   </section>
 </section>
 <section class="detail" id="delete_all/2">
@@ -773,7 +990,8 @@ Query
 
   <section class="docstring">
 
-<p>See <code class="inline">MscmpSystDb.Runtime.Datastore.delete_all/2</code>.</p>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:delete_all/2"><code class="inline">Ecto.Repo.delete_all/2</code></a>
+function.</p>
   </section>
 </section>
 <section class="detail" id="exists?/2">
@@ -792,7 +1010,8 @@ Query
 
   <section class="docstring">
 
-<p>See <code class="inline">MscmpSystDb.Runtime.Datastore.exists?/2</code>.</p>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:exists?/2"><code class="inline">Ecto.Repo.exists?/2</code></a>
+function.</p>
   </section>
 </section>
 <section class="detail" id="get/3">
@@ -811,7 +1030,8 @@ Query
 
   <section class="docstring">
 
-<p>See <code class="inline">MscmpSystDb.Runtime.Datastore.get/3</code>.</p>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:get/3"><code class="inline">Ecto.Repo.get/3</code></a>
+function.</p>
   </section>
 </section>
 <section class="detail" id="get!/3">
@@ -830,7 +1050,8 @@ Query
 
   <section class="docstring">
 
-<p>See <code class="inline">MscmpSystDb.Runtime.Datastore.get!/3</code>.</p>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:get!/3"><code class="inline">Ecto.Repo.get!/3</code></a>
+function.</p>
   </section>
 </section>
 <section class="detail" id="get_by/3">
@@ -849,7 +1070,8 @@ Query
 
   <section class="docstring">
 
-<p>See <code class="inline">MscmpSystDb.Runtime.Datastore.get_by/3</code>.</p>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:get_by/3"><code class="inline">Ecto.Repo.get_by/3</code></a>
+function.</p>
   </section>
 </section>
 <section class="detail" id="get_by!/3">
@@ -868,7 +1090,8 @@ Query
 
   <section class="docstring">
 
-<p>See <code class="inline">MscmpSystDb.Runtime.Datastore.get_by!/3</code>.</p>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:get_by!/3"><code class="inline">Ecto.Repo.get_by!/3</code></a>
+function.</p>
   </section>
 </section>
 <section class="detail" id="in_transaction?/0">
@@ -885,7 +1108,8 @@ Query
 
   <section class="docstring">
 
-<p>See <code class="inline">MscmpSystDb.Runtime.Datastore.in_transaction?/0</code>.</p>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:in_transaction?/0"><code class="inline">Ecto.Repo.in_transaction?/0</code></a>
+function.</p>
   </section>
 </section>
 <section class="detail" id="insert/2">
@@ -904,7 +1128,8 @@ Query
 
   <section class="docstring">
 
-<p>See <code class="inline">MscmpSystDb.Runtime.Datastore.insert/2</code>.</p>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:insert/2"><code class="inline">Ecto.Repo.insert/2</code></a>
+function.</p>
   </section>
 </section>
 <section class="detail" id="insert!/2">
@@ -923,7 +1148,8 @@ Query
 
   <section class="docstring">
 
-<p>See <code class="inline">MscmpSystDb.Runtime.Datastore.insert!/2</code>.</p>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:insert!/2"><code class="inline">Ecto.Repo.insert!/2</code></a>
+function.</p>
   </section>
 </section>
 <section class="detail" id="insert_all/3">
@@ -942,7 +1168,8 @@ Query
 
   <section class="docstring">
 
-<p>See <code class="inline">MscmpSystDb.Runtime.Datastore.insert_all/3</code>.</p>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:insert_all/3"><code class="inline">Ecto.Repo.insert_all/3</code></a>
+function.</p>
   </section>
 </section>
 <section class="detail" id="insert_or_update/2">
@@ -961,7 +1188,8 @@ Query
 
   <section class="docstring">
 
-<p>See <code class="inline">MscmpSystDb.Runtime.Datastore.insert_or_update/2</code>.</p>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:insert_or_update/2"><code class="inline">Ecto.Repo.insert_or_update/2</code></a>
+function.</p>
   </section>
 </section>
 <section class="detail" id="insert_or_update!/2">
@@ -980,7 +1208,8 @@ Query
 
   <section class="docstring">
 
-<p>See <code class="inline">MscmpSystDb.Runtime.Datastore.insert_or_update!/2</code>.</p>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:insert_or_update!/2"><code class="inline">Ecto.Repo.insert_or_update!/2</code></a>
+function.</p>
   </section>
 </section>
 <section class="detail" id="load/2">
@@ -997,7 +1226,8 @@ Query
 
   <section class="docstring">
 
-<p>See <code class="inline">MscmpSystDb.Runtime.Datastore.load/2</code>.</p>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:load/2"><code class="inline">Ecto.Repo.load/2</code></a>
+function.</p>
   </section>
 </section>
 <section class="detail" id="one/2">
@@ -1016,7 +1246,8 @@ Query
 
   <section class="docstring">
 
-<p>See <code class="inline">MscmpSystDb.Runtime.Datastore.one/2</code>.</p>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:one/2"><code class="inline">Ecto.Repo.one/2</code></a>
+function.</p>
   </section>
 </section>
 <section class="detail" id="one!/2">
@@ -1035,7 +1266,8 @@ Query
 
   <section class="docstring">
 
-<p>See <code class="inline">MscmpSystDb.Runtime.Datastore.one!/2</code>.</p>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:one!/2"><code class="inline">Ecto.Repo.one!/2</code></a>
+function.</p>
   </section>
 </section>
 <section class="detail" id="preload/3">
@@ -1054,7 +1286,8 @@ Query
 
   <section class="docstring">
 
-<p>See <code class="inline">MscmpSystDb.Runtime.Datastore.preload/3</code>.</p>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:preload/3"><code class="inline">Ecto.Repo.preload/3</code></a>
+function.</p>
   </section>
 </section>
 <section class="detail" id="prepare_query/3">
@@ -1073,7 +1306,8 @@ Query
 
   <section class="docstring">
 
-<p>See <code class="inline">MscmpSystDb.Runtime.Datastore.prepare_query/3</code>.</p>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:prepare_query/3"><code class="inline">Ecto.Repo.prepare_query/3</code></a>
+function.</p>
   </section>
 </section>
 <section class="detail" id="query_for_many/3">
@@ -1320,7 +1554,7 @@ Query
 
   <section class="docstring">
 
-<p>See <code class="inline">MscmpSystDb.Runtime.Datastore.record_count/2</code>.</p>
+<p>Returns the record count of the given queryable argument.</p>
   </section>
 </section>
 <section class="detail" id="reload/2">
@@ -1339,7 +1573,8 @@ Query
 
   <section class="docstring">
 
-<p>See <code class="inline">MscmpSystDb.Runtime.Datastore.reload/2</code>.</p>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:reload/2"><code class="inline">Ecto.Repo.reload/2</code></a>
+function.</p>
   </section>
 </section>
 <section class="detail" id="reload!/2">
@@ -1358,7 +1593,8 @@ Query
 
   <section class="docstring">
 
-<p>See <code class="inline">MscmpSystDb.Runtime.Datastore.reload!/2</code>.</p>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:reload!/2"><code class="inline">Ecto.Repo.reload!/2</code></a>
+function.</p>
   </section>
 </section>
 <section class="detail" id="rollback/1">
@@ -1375,7 +1611,8 @@ Query
 
   <section class="docstring">
 
-<p>See <code class="inline">MscmpSystDb.Runtime.Datastore.rollback/1</code>.</p>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:rollback/1"><code class="inline">Ecto.Repo.rollback/1</code></a>
+function.</p>
   </section>
 </section>
 <section class="detail" id="stream/2">
@@ -1394,7 +1631,8 @@ Query
 
   <section class="docstring">
 
-<p>See <code class="inline">MscmpSystDb.Runtime.Datastore.stream/2</code>.</p>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:stream/2"><code class="inline">Ecto.Repo.stream/2</code></a>
+function.</p>
   </section>
 </section>
 <section class="detail" id="transaction/2">
@@ -1422,7 +1660,8 @@ Query
 
       </div>
 
-<p>See <code class="inline">MscmpSystDb.Runtime.Datastore.ecto_transaction/2</code>.</p>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:transaction/2"><code class="inline">Ecto.Repo.transaction/2</code></a>
+function.</p>
   </section>
 </section>
 <section class="detail" id="update/2">
@@ -1441,7 +1680,8 @@ Query
 
   <section class="docstring">
 
-<p>See <code class="inline">MscmpSystDb.Runtime.Datastore.update/2</code>.</p>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:update/2"><code class="inline">Ecto.Repo.update/2</code></a>
+function.</p>
   </section>
 </section>
 <section class="detail" id="update!/2">
@@ -1460,7 +1700,8 @@ Query
 
   <section class="docstring">
 
-<p>See <code class="inline">MscmpSystDb.Runtime.Datastore.update!/2</code>.</p>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:update!/2"><code class="inline">Ecto.Repo.update!/2</code></a>
+function.</p>
   </section>
 </section>
 <section class="detail" id="update_all/3">
@@ -1479,7 +1720,8 @@ Query
 
   <section class="docstring">
 
-<p>See <code class="inline">MscmpSystDb.Runtime.Datastore.update_all/3</code>.</p>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Repo.html#c:update_all/3"><code class="inline">Ecto.Repo.update_all/3</code></a>
+function.</p>
   </section>
 </section>
 
@@ -1715,7 +1957,12 @@ Datastore Migrations
 
       </div>
 
-<p>Returns the most recently installed database migration version number.</p>
+<p>Returns the most recently installed database migration version number.</p><p>The version is returned as the string representation of our segmented version
+number in the format <code class="inline">RR.VV.UUU.SSSSSS.MMM</code> where each segment represents a
+Base 36 number for specific versioning purposes.  The segments are defined as:</p><ul><li><p><code class="inline">RR</code> - The major feature release number in the decimal range of 0 - 1,295.</p></li><li><p><code class="inline">VV</code> - The minor feature version within the release in the decimal range
+of 0 - 1,295.</p></li><li><p><code class="inline">UUU</code> - The update patch number of the specified release/version in the
+decimal range of 0 - 46,655.</p></li><li><p><code class="inline">SSSSSS</code> - Sponsor or client number for whom the specific migration or
+version is being produced for in the decimal range of 0 - 2,176,782,335.</p></li><li><p><code class="inline">MMM</code> - Sponsor modification number in the decimal range of 0 - 46,655.</p></li></ul><p>See <a href="Mix.Tasks.Builddb.html"><code class="inline">mix builddb</code></a> for further explanation version number segment meanings.</p>
   </section>
 </section>
 <section class="detail" id="upgrade_datastore/4">
@@ -1784,7 +2031,8 @@ Runtime
 
       </div>
 
-<p>See <code class="inline">MscmpSystDb.Runtime.Datastore.current_datastore_context/0</code>.</p>
+<p>Retrieves either atom name or <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types"><code class="inline">pid/0</code></a> of the currently established Datastore
+context, unless no context has been established.</p>
   </section>
 </section>
 <section class="detail" id="put_datastore_context/1">
@@ -1808,7 +2056,9 @@ Runtime
 
       </div>
 
-<p>See <code class="inline">MscmpSystDb.Runtime.Datastore.put_datastore_context/1</code>.</p>
+<p>Establishes the Datastore Context to use for Datastore interactions in the
+Elixir process where this function is called.</p><p>Using this function will set the given Datastore Context in the Process
+Dictionary of the process from which the function call is made.</p>
   </section>
 </section>
 <section class="detail" id="start_datastore/2">
