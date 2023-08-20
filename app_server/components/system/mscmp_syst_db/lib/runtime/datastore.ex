@@ -459,7 +459,5 @@ defmodule MscmpSystDb.Runtime.Datastore do
     end
   end
 
-  def record_count(queryable, opts) do
-    aggregate(queryable, :count, opts)
-  end
+  def record_count(queryable, opts), do: aggregate(queryable, :count, opts)
 end
