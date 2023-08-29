@@ -22,12 +22,12 @@ defmodule MscmpSystForms.Impl.WebComponents.Helpers do
   #
   ##############################################################################
 
-  @spec get_least_component_mode(Types.component_mode(), Types.component_mode()) ::
-          Types.component_mode()
+  @spec get_least_component_mode(Types.component_modes(), Types.component_modes()) ::
+          Types.component_modes()
   def get_least_component_mode(mode_left, mode_right),
     do: get_least_component_mode([mode_left, mode_right])
 
-  @spec get_least_component_mode(list(Types.component_mode())) :: Types.component_mode()
+  @spec get_least_component_mode(list(Types.component_modes())) :: Types.component_modes()
   def get_least_component_mode([_ | _] = mode_list) do
     cond do
       :removed in mode_list -> :removed
@@ -45,13 +45,13 @@ defmodule MscmpSystForms.Impl.WebComponents.Helpers do
   #
   ##############################################################################
 
-  @spec get_background_classes(Types.display_mode() | list(String.t()) | nil) :: list(String.t())
+  @spec get_background_classes(Types.display_modes() | list(String.t()) | nil) :: list(String.t())
   def get_background_classes([_ | _] = classes), do: classes
 
   def get_background_classes(display_mode) when is_atom(display_mode),
     do: get_background_classes(display_mode, :standard)
 
-  @spec get_background_classes(Types.display_mode() | nil, :standard | :inverted) ::
+  @spec get_background_classes(Types.display_modes() | nil, :standard | :inverted) ::
           list(String.t())
   def get_background_classes(:deemphasis, :standard), do: ~w(bg-color-deemphasis)
   def get_background_classes(:reference, :standard), do: ~w(bg-color-reference)
@@ -84,7 +84,7 @@ defmodule MscmpSystForms.Impl.WebComponents.Helpers do
   # we add a border to something, we won't see the container contents shifting
   # around (that's the idea anyway).
 
-  @spec get_border_classes(Types.display_mode() | list(String.t()) | nil) :: list(String.t())
+  @spec get_border_classes(Types.display_modes() | list(String.t()) | nil) :: list(String.t())
   def get_border_classes([_ | _] = classes), do: classes
   def get_border_classes(:deemphasis), do: ~w(border-2 p-1 border-color-deemphasis)
   def get_border_classes(:reference), do: ~w(border-2 p-1 border-color-reference)
@@ -103,7 +103,7 @@ defmodule MscmpSystForms.Impl.WebComponents.Helpers do
   #
   ##############################################################################
 
-  @spec get_text_classes(Types.display_mode() | list(String.t()) | nil) :: list(String.t())
+  @spec get_text_classes(Types.display_modes() | list(String.t()) | nil) :: list(String.t())
   def get_text_classes([_ | _] = classes), do: classes
 
   def get_text_classes(:deemphasis),
@@ -125,13 +125,13 @@ defmodule MscmpSystForms.Impl.WebComponents.Helpers do
   #
   ##############################################################################
 
-  @spec get_label_classes(Types.display_mode() | list(String.t()) | nil) :: list(String.t())
+  @spec get_label_classes(Types.display_modes() | list(String.t()) | nil) :: list(String.t())
   def get_label_classes([_ | _] = classes), do: classes
 
   def get_label_classes(display_mode) when is_atom(display_mode),
     do: get_label_classes(display_mode, :standard)
 
-  @spec get_label_classes(Types.display_mode() | nil, :standard | :inverted) :: list(String.t())
+  @spec get_label_classes(Types.display_modes() | nil, :standard | :inverted) :: list(String.t())
   def get_label_classes(:deemphasis, :standard),
     do: ~w(font-sans text-sm font-normal text-color-deemphasis)
 
@@ -192,7 +192,7 @@ defmodule MscmpSystForms.Impl.WebComponents.Helpers do
   #
   ##############################################################################
 
-  @spec get_color_name(Types.display_mode() | nil) :: String.t()
+  @spec get_color_name(Types.display_modes() | nil) :: String.t()
   def get_color_name(:reference), do: "color-reference"
   def get_color_name(:normal), do: "color-normal"
   def get_color_name(:emphasis), do: "color-emphasis"

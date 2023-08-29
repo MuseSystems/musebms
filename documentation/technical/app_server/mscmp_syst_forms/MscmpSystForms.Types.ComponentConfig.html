@@ -13,7 +13,7 @@
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
     <script src="dist/handlebars.templates-XWGFFSCD.js"></script>
-    <script src="dist/sidebar_items-D20AF560.js"></script>
+    <script src="dist/sidebar_items-A6868B84.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -102,6 +102,30 @@ mscmp_syst_forms
 </h1>
 
 
+  <section id="moduledoc">
+<p>An essential data type returned by the system using the
+<a href="MscmpSystForms.html#get_render_configs/5"><code class="inline">MscmpSystForms.get_render_configs/5</code></a> function.  That function returns
+a full form aggregate render configuration which is a combination of the
+developer created <a href="MscmpSystForms.Types.FormConfig.html#t:t/0"><code class="inline">MscmpSystForms.Types.FormConfig.t/0</code></a> values and various
+values determined at runtime such as the current form state,  active
+processing overrides, and current user permissions.</p><p>This would be called a &quot;Render Time&quot; concern/derived configuration.</p><p>The ComponentConfig values created by <a href="MscmpSystForms.html#get_render_configs/5"><code class="inline">MscmpSystForms.get_render_configs/5</code></a>
+just described are passed to the view where each Web Component will respond to
+its ComponentConfig value in order to meet the then prevailing view
+requirements.</p><blockquote><h3 id="module-note" class="info section-heading">
+  <a href="#module-note" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">note</p>
+  </a>
+  Note
+</h3>
+<p>This struct will not typically be created or used directly by a developer
+creating user forms.  In this sense this struct could be considered an
+internal implementation concern which shouldn't be part of the public
+documentation.  However, developers creating components which need to
+participate in <a href="MscmpSystForms.html"><code class="inline">MscmpSystForms</code></a> form processing will need to know how to
+make their components respond to <code class="inline">ComponentConfig</code> values so we do include
+it in the documentation here.</p></blockquote>
+  </section>
+
 
   <section id="summary" class="details-list">
     <h1 class="section-heading">
@@ -121,6 +145,9 @@ mscmp_syst_forms
         <a href="#t:t/0" translate="no">t()</a>
 
       </div>
+
+        <div class="summary-synopsis"><p>Defines a struct which encapsulates runtime component configurations using
+<a href="MscmpSystForms.html#get_render_configs/5"><code class="inline">MscmpSystForms.get_render_configs/5</code></a>.</p></div>
 
     </div>
 
@@ -155,20 +182,68 @@ Types
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@type</span> t() :: %MscmpSystForms.Types.ComponentConfig{
-  binding_id: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>() | nil,
-  button_state: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>() | nil,
-  form_id: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>() | nil,
+  binding_id: <a href="MscmpSystForms.Types.html#t:binding_id/0">MscmpSystForms.Types.binding_id</a>() | nil,
+  button_state: <a href="MscmpSystForms.Types.html#t:msvalidated_button_states/0">MscmpSystForms.Types.msvalidated_button_states</a>() | nil,
+  form_id: <a href="MscmpSystForms.Types.html#t:form_id/0">MscmpSystForms.Types.form_id</a>(),
   info: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil,
   label: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil,
   label_link: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil,
   modes: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(),
   overrides: [<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()] | nil,
-  permission: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>() | nil
+  permission: <a href="MscmpSystForms.Types.html#t:permission_name/0">MscmpSystForms.Types.permission_name</a>() | nil
 }</pre>
 
       </div>
 
-
+<p>Defines a struct which encapsulates runtime component configurations using
+<a href="MscmpSystForms.html#get_render_configs/5"><code class="inline">MscmpSystForms.get_render_configs/5</code></a>.</p><h2 id="t:t/0-fields" class="section-heading">
+  <a href="#t:t/0-fields" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">fields</p>
+  </a>
+  Fields
+</h2>
+<ul><li><p><code class="inline">form_id</code> - identifies the user interface form element to which the
+component configuration will be applied.  Note that whereas
+<a href="MscmpSystForms.Types.FormConfig.html#t:t/0"><code class="inline">MscmpSystForms.Types.FormConfig.t/0</code></a> allows configurations of virtual or
+abstract components, these configurations will never appear as a
+<a href="#t:t/0"><code class="inline">MscmpSystForms.Types.ComponentConfig.t/0</code></a> value.  Only concrete
+components with a <code class="inline">form_id</code> value are allowed to represented by component
+configurations.</p></li><li><p><code class="inline">binding_id</code> - for user interface elements which display application data
+to identify the data field from which to draw values using this identifier.
+If the <code class="inline">binding_id</code> is <code class="inline">nil</code> then the element will not be bound to a field
+in the form's backing data.</p></li><li><p><code class="inline">permission</code> - the identifier of the permission which determined may have
+changed the <code class="inline">modes</code> value which control element rendering.  This value will
+either be the permission set explicitly for field or that which the element
+inherited through its <a href="MscmpSystForms.Types.FormConfig.html"><code class="inline">MscmpSystForms.Types.FormConfig</code></a> parent.  This value
+may also be <code class="inline">nil</code> in which case permissions didn't influence the <code class="inline">modes</code>
+value because no permissions were defined to apply.</p></li><li><p><code class="inline">label</code> - if set, this value will determine the label text for any Web
+Component which can display a label, such as
+<a href="MscmpSystForms.WebComponents.html#msinput/1"><code class="inline">MscmpSystForms.WebComponents.msinput/1</code></a>.  If the component's <code class="inline">title</code>
+attribute is set directly in the view, it will override any value here.</p></li><li><p><code class="inline">label_link</code> - the label of a user interface element may optionally define
+a URL to link to when clicking the label, such as a link to relevant
+documentation.  When this value is not <code class="inline">nil</code>, the link is the URL to the
+resource to access; when <code class="inline">nil</code> the label is rendered without a link.
+(<em>Note that <code class="inline">label_link</code> is not yet implemented in most components.</em>)</p></li><li><p><code class="inline">info</code> - in some situations, abbreviated additional information for a
+user interface element is made available to the user, for example via the
+<code class="inline">MscmpSystForms.WebComponent.msinfo/1</code> web component.  This attribute
+configures the text that is displayed to the user in these scenarios.  If
+the value is <code class="inline">nil</code> then no text is displayed even if it could be.</p></li><li><p><code class="inline">button_state</code> - if the component being configured by this value is a
+<a href="MscmpSystForms.WebComponents.html#msvalidated_button/1"><code class="inline">MscmpSystForms.WebComponents.msvalidated_button/1</code></a> component, the
+<code class="inline">button_state</code> value will indicate the current display state of the button.
+See <a href="MscmpSystForms.Types.html#t:msvalidated_button_states/0"><code class="inline">MscmpSystForms.Types.msvalidated_button_states/0</code></a> for the available
+states.</p></li><li><p><code class="inline">overrides</code> - a list of currently active processing overrides. A process
+override is a state which can be set for the form which simply indicates
+that some possibly long running application operation has been started, but
+is not yet finished.  See <a href="MscmpSystForms.html#start_processing_override/2"><code class="inline">MscmpSystForms.start_processing_override/2</code></a> for
+more about processing overrides.  The form and its components can respond to
+an active processing override by, for example, changing their display and
+interactivity characteristics until the processing override condition ends.
+If there are no processing overrides active, this value will be an empty
+list.</p></li><li><p><code class="inline">modes</code> - the currently computed display modes for the component.  The
+display modes are computed by assessing the prevailing runtime form state
+and user permissions to determine the behavior of the component at render
+time.  These modes are then used by the component when creating the view
+to render.</p></li></ul>
   </section>
 </section>
 

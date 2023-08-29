@@ -59,12 +59,26 @@ defmodule MscmpSystForms.MixProject do
           mscmp_syst_error: "../../../../documentation/technical/app_server/mscmp_syst_error",
           mscmp_syst_db: "../../../../documentation/technical/app_server/mscmp_syst_db"
         ],
-        groups_for_functions: [],
-        nest_modules_by_prefix: [],
+        groups_for_functions: [
+          Containers: &(&1[:section] == :container_components),
+          Controls: &(&1[:section] == :control_components),
+          Inputs: &(&1[:section] == :input_components),
+          Utility: &(&1[:section] == :utility_components),
+          "Form Definition": &(&1[:section] == :form_definition),
+          "Form Generation": &(&1[:section] == :form_generation),
+          "Form Data Management": &(&1[:section] == :data_management),
+          "State Management": &(&1[:section] == :state_management),
+          Macros: &(&1[:section] == :macros)
+        ],
+        nest_modules_by_prefix: [MscmpSystForms.WebComponents],
         groups_for_modules: [
           API: [MscmpSystForms],
-          Data: [],
-          "Supporting Types": [MscmpSystForms.Types]
+          "Web Components": [MscmpSystForms.WebComponents],
+          "Supporting Types": [
+            MscmpSystForms.Types,
+            MscmpSystForms.Types.ComponentConfig,
+            MscmpSystForms.Types.FormConfig
+          ]
         ]
       ]
     ]
