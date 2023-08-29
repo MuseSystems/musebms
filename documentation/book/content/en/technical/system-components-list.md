@@ -133,7 +133,7 @@ These Components are listed in "Lower Level Component" to "Higher Level Componen
 
     <sup>(<a href="/musebms/documentation/technical/app_server/mscmp_syst_db" target="_blank">API Docs</a>)</sup>
 
-    The public API for database interactions.
+    A database management library for developing and managing database-per-tenant oriented systems.  To achieve this we wrap and extend the popular `Ecto` and `EctoSql` libraries with a specialized templated migration system and add additional, opinionated abstractions encapsulating the tenant model as it relates to development, data access, and runtime concerns.
 
     * __First Party Dependencies__
 
