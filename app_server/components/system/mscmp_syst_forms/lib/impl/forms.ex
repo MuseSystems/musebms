@@ -259,21 +259,19 @@ defmodule MscmpSystForms.Impl.Forms do
     form_opts =
       Keyword.take(opts, [
         :component_id,
-        :component_as,
-        :component_default,
-        :component_prepend,
-        :component_append,
-        :component_skip_hidden
+        :component_method,
+        :component_multipart,
+        :component_csrf_token,
+        :component_errors
       ])
       |> Enum.reduce([], fn {k, v}, acc ->
         cond do
           v == nil -> acc
           k == :component_id -> Keyword.put(acc, :id, v)
-          k == :component_as -> Keyword.put(acc, :as, v)
-          k == :component_default -> Keyword.put(acc, :default, v)
-          k == :component_prepend -> Keyword.put(acc, :prepend, v)
-          k == :component_append -> Keyword.put(acc, :append, v)
-          k == :component_skip_hidden -> Keyword.put(acc, :skip_hidden, v)
+          k == :component_method -> Keyword.put(acc, :method, v)
+          k == :component_multipart -> Keyword.put(acc, :multipart, v)
+          k == :component_csrf_token -> Keyword.put(acc, :csrf_token, v)
+          k == :component_errors -> Keyword.put(acc, :errors, v)
         end
       end)
 
