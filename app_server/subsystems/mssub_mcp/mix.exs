@@ -58,7 +58,7 @@ defmodule MssubMcp.MixProject do
       docs: [
         name: "MssubMcp",
         main: "MssubMcp",
-        output: "../../documentation/technical/app_server/mssub_mcp",
+        output: "../../../documentation/technical/app_server/mssub_mcp",
         deps: [
           mscmp_syst_db: "../mscmp_syst_db",
           mscmp_syst_error: "../mscmp_syst_error",

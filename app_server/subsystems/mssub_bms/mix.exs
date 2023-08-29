@@ -52,7 +52,7 @@ defmodule MssubBms.MixProject do
       docs: [
         name: "MssubBms",
         main: "MssubBms",
-        output: "../../documentation/technical/app_server/mssub_bms",
+        output: "../../../documentation/technical/app_server/mssub_bms",
         deps: [
           mscmp_syst_db: "../mscmp_syst_db",
           mscmp_syst_error: "../mscmp_syst_error",

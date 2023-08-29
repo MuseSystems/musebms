@@ -57,6 +57,13 @@ defmodule MsappMcp.MixProject do
       deps: @deps,
       start_permanent: in_production,
       dialyzer: @dialyzer_opts,
+      docs: [
+        output: "../../../../../documentation/technical/app_server/msapp_mcp",
+        deps: [],
+        groups_for_functions: [],
+        nest_modules_by_prefix: [],
+        groups_for_modules: []
+      ],
       elixirc_paths: elixirc_paths(Mix.env()),
       aliases: @aliases
     ]

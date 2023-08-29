@@ -37,6 +37,7 @@ defmodule Msplatform.MixProject do
     in_production = Mix.env() == :prod
 
     [
+      name: "Msplatform",
       apps_path: @apps_path,
       version: @version,
       elixir: "~> 1.14",
@@ -44,6 +45,13 @@ defmodule Msplatform.MixProject do
       aliases: @aliases,
       start_permanent: in_production,
       dialyzer: @dialyzer_opts,
+      docs: [
+        output: "../../../documentation/technical/app_server/msplatform",
+        deps: [],
+        groups_for_functions: [],
+        nest_modules_by_prefix: [],
+        groups_for_modules: []
+      ],
       releases: [
         demo: [
           applications: [
