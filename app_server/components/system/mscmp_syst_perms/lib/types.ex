@@ -35,7 +35,7 @@ defmodule MscmpSystPerms.Types do
   The keys for this map should be `t:perm_name/0` value of the Permission record
   in question.
   """
-  @type perm_grants() :: %{required(permission_name :: perm_name()) => perm_grant_value()}
+  @type perm_grants() :: %{required(perm_name()) => perm_grant_value()}
 
   @typedoc """
   Describes the Scopes granted by a Permission for each of the Permission's
