@@ -11,6 +11,7 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystForms.Impl.Forms do
+  alias MscmpSystForms.Types
   alias MscmpSystForms.Types.ComponentConfig
   alias MscmpSystForms.Types.FormConfig
 
@@ -21,6 +22,16 @@ defmodule MscmpSystForms.Impl.Forms do
   @default_perm :default_permission
   @default_modes %{component_mode: :cleared}
 
+  @spec init_assigns(
+          Types.socket_or_assigns(),
+          Types.session_name(),
+          module(),
+          Types.form_state_feature_name(),
+          Types.form_state_mode_name(),
+          Types.form_state_state_name(),
+          MscmpSystPerms.Types.perm_grants(),
+          Keyword.t() | []
+        ) :: Types.socket_or_assigns()
   def init_assigns(
         socket_or_assigns,
         session_name,
@@ -63,6 +74,7 @@ defmodule MscmpSystForms.Impl.Forms do
     |> assign(base_render_config)
   end
 
+  @spec rebuild_component_assigns(Types.socket_or_assigns()) :: Types.socket_or_assigns()
   def rebuild_component_assigns(socket_or_assigns) do
     working_assigns = get_working_assigns(socket_or_assigns)
 
@@ -78,6 +90,13 @@ defmodule MscmpSystForms.Impl.Forms do
     assign(socket_or_assigns, updated_render_configs)
   end
 
+  @spec get_render_configs(
+          module(),
+          Types.form_state_feature_name(),
+          Types.form_state_mode_name(),
+          Types.form_state_state_name(),
+          MscmpSystPerms.Types.perm_grants()
+        ) :: Types.render_configs()
   def get_render_configs(module, feature, mode, state, user_perms) do
     form_configs = module.get_form_config()
     form_modes = module.get_form_modes()
@@ -217,6 +236,11 @@ defmodule MscmpSystForms.Impl.Forms do
 
   defp apply_permissions(curr_modes, _), do: curr_modes
 
+  @spec update_display_data(
+          Types.socket_or_assigns(),
+          Ecto.Changeset.t() | Phoenix.HTML.Form.t(),
+          Keyword.t()
+        ) :: Types.socket_or_assigns()
   def update_display_data(socket_or_assigns, display_data, opts) do
     working_assigns = get_working_assigns(socket_or_assigns)
 
@@ -226,6 +250,8 @@ defmodule MscmpSystForms.Impl.Forms do
     assign(socket_or_assigns, :msrd_display_data, updated_display_data)
   end
 
+  @spec to_form(Ecto.Changeset.t(), MscmpSystPerms.Types.perm_grants(), Keyword.t()) ::
+          Phoenix.HTML.Form.t()
   def to_form(changeset, user_perms, opts) do
     msform_module = changeset.data.__struct__
     data_perms = get_data_perms(msform_module)
@@ -381,6 +407,11 @@ defmodule MscmpSystForms.Impl.Forms do
 
   defp resolve_display_data(%Phoenix.HTML.Form{} = display_data, _, _), do: display_data
 
+  @spec update_button_state(
+          Types.socket_or_assigns(),
+          Types.form_id(),
+          Types.msvalidated_button_states()
+        ) :: Types.socket_or_assigns()
   def update_button_state(socket_or_assigns, form_id, button_state)
       when is_atom(form_id) and button_state in [:action, :processing, :message] do
     socket_or_assigns
@@ -392,6 +423,8 @@ defmodule MscmpSystForms.Impl.Forms do
     |> then(&assign(socket_or_assigns, form_id, &1))
   end
 
+  @spec start_processing_override(Types.socket_or_assigns(), Types.processing_override_name()) ::
+          Types.socket_or_assigns()
   def start_processing_override(socket_or_assigns, override) when is_atom(override) do
     working_assigns = get_working_assigns(socket_or_assigns)
 
@@ -403,6 +436,8 @@ defmodule MscmpSystForms.Impl.Forms do
     end
   end
 
+  @spec finish_processing_override(Types.socket_or_assigns(), Types.processing_override_name()) ::
+          Types.socket_or_assigns()
   def finish_processing_override(socket_or_assigns, override) when is_atom(override) do
     working_assigns = get_working_assigns(socket_or_assigns)
 
@@ -414,15 +449,17 @@ defmodule MscmpSystForms.Impl.Forms do
     end
   end
 
-  def get_component_info(module, form_id),
-    do: module.get_form_config() |> find_component_config(form_id)
+  @spec get_component_info(module(), Types.form_id() | Types.binding_id()) ::
+          Types.component_info() | nil
+  def get_component_info(module, component_id),
+    do: module.get_form_config() |> find_component_config(component_id)
 
-  def find_component_config([_ | _] = form_configs, form_id) do
+  defp find_component_config([_ | _] = form_configs, component_id) do
     Enum.reduce_while(
       form_configs,
       nil,
       fn config, default ->
-        case find_component_config(config, form_id) do
+        case find_component_config(config, component_id) do
           %{} = component_config -> {:halt, component_config}
           nil -> {:cont, default}
         end
@@ -430,11 +467,11 @@ defmodule MscmpSystForms.Impl.Forms do
     )
   end
 
-  def find_component_config(
-        %{form_id: candidate_form_id} = form_config,
-        %{form_id: form_id}
-      )
-      when candidate_form_id == form_id do
+  defp find_component_config(
+         %{form_id: candidate_form_id} = form_config,
+         %{form_id: form_id}
+       )
+       when candidate_form_id == form_id do
     %{
       label: form_config.label,
       label_link: form_config.label_link,
@@ -442,11 +479,11 @@ defmodule MscmpSystForms.Impl.Forms do
     }
   end
 
-  def find_component_config(
-        %{binding_id: candidate_form_id} = form_config,
-        %{binding_id: form_id}
-      )
-      when candidate_form_id == form_id do
+  defp find_component_config(
+         %{binding_id: candidate_binding_id} = form_config,
+         %{binding_id: binding_id}
+       )
+       when candidate_binding_id == binding_id do
     %{
       label: form_config.label,
       label_link: form_config.label_link,
@@ -454,21 +491,36 @@ defmodule MscmpSystForms.Impl.Forms do
     }
   end
 
-  def find_component_config(%{children: [_ | _] = children}, form_id),
-    do: find_component_config(children, form_id)
+  defp find_component_config(%{children: [_ | _] = children}, component_id),
+    do: find_component_config(children, component_id)
 
-  def find_component_config(_, _), do: nil
+  defp find_component_config(_, _), do: nil
 
+  @spec set_form_state(Types.socket_or_assigns(), Types.form_state_state_name()) ::
+          Types.socket_or_assigns()
   def set_form_state(socket_or_assigns, state) do
     wa = get_working_assigns(socket_or_assigns)
     set_form_state(socket_or_assigns, wa.msrd_feature, wa.msrd_mode, state)
   end
 
+  @spec set_form_state(
+          Types.socket_or_assigns(),
+          Types.form_state_mode_name(),
+          Types.form_state_state_name()
+        ) ::
+          Types.socket_or_assigns()
   def set_form_state(socket_or_assigns, mode, state) do
     wa = get_working_assigns(socket_or_assigns)
     set_form_state(socket_or_assigns, wa.msrd_feature, mode, state)
   end
 
+  @spec set_form_state(
+          Types.socket_or_assigns(),
+          Types.form_state_feature_name(),
+          Types.form_state_mode_name(),
+          Types.form_state_state_name()
+        ) ::
+          Types.socket_or_assigns()
   def set_form_state(socket_or_assigns, feature, mode, state),
     do: assign(socket_or_assigns, %{msrd_feature: feature, msrd_mode: mode, msrd_state: state})
 
