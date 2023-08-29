@@ -61,7 +61,7 @@ This is the implementation layer in which we use the Phoenix Framework to delive
 
 The Platform level is designed to host multiple distinct user applications.  Currently there are two applications expected to be hosted on the platform: 1) a central application responsible for administration of the platform as a whole including the creation and maintenance of instances of the other applications available in the Platform and authentication; 2) the MuseBMS application itself.  It is conceivable that other applications could also be supported alongside MuseBMS, such as specialized versions of the MuseBMS dedicated to specific industrial verticals.
 
-There are substantial third party dependencies due to the nature of Phoenix Framework, but of our logic we should only be depending on the created Subsystems as dependencies; note there are a couple exceptions to this rule, for example the web form components are implemented as a Component level Elixir/OTP Application (<a href="/musebms/technical/system-components/#mscmpsystforms">MscmpSystForms</a>) and that Component is directly depended on by the Platform.
+There are substantial third party dependencies due to the nature of Phoenix Framework, but of our logic we should only be depending on the created Subsystems as dependencies; note there are a couple exceptions to this rule, for example the web form components are implemented as a Component level Elixir/OTP Application (<a href="/musebms/technical/system-components-list/#mscmpsystforms">MscmpSystForms</a>) and that Component is directly depended on by the Platform.
 
 It is expected that there will only be one Platform level Elixir Application, though that Application may have different release profiles depending on which Subsystems are to be released to the final user.
 
@@ -71,7 +71,7 @@ We try to use language, terminology, and other jargon in consistent ways but thi
 
 ## Database Handling and the Component Model
 
-Another of our departures from typical Elixir/Phoenix related software development is that we do not use Ecto migrations for database deployment, but rather use our own database management Component (<a href="/musebms/technical/system-components/#mscmpsystdb">MscmpSystDb</a>) for managing and deploying the database related code.
+Another of our departures from typical Elixir/Phoenix related software development is that we do not use Ecto migrations for database deployment, but rather use our own database management Component (<a href="/musebms/technical/system-components-list/#mscmpsystdb">MscmpSystDb</a>) for managing and deploying the database related code.
 
 As it relates to our levels of abstraction, the Component level is where the database schemas for persistence and other required database support is defined.  Migrations are built and deployed at the Subsystem level; all of the database sources of the Subsystem's dependencies are incorporated into the migrations of the Subsystem and at runtime the Subsystem will ensure that any unapplied migrations required by that Subsystem are applied as needed.
 
