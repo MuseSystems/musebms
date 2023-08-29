@@ -1,5 +1,5 @@
 +++
-title = "End Use Documentation"
+title = "End User Guide"
 linkTitle = "User"
 
 draft = true
@@ -10,6 +10,8 @@ pre = "<i class='fa-solid fa-book'></i>"
 
 [[cascade]]
 type = "docs"
+toc_hide = false
+hide_summary = false
 +++
 
 This is the end user documentation root.
