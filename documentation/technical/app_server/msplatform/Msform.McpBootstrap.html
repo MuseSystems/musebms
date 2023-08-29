@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.29.4">
+    <meta name="project" content="Msplatform v0.1.0">
+
+    <title>Msform.McpBootstrap — Msplatform v0.1.0</title>
+    <link rel="stylesheet" href="dist/html-elixir-HHVY3JYD.css" />
+
+
+    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
+    <script src="dist/handlebars.templates-XWGFFSCD.js"></script>
+    <script src="dist/sidebar_items-4A6ACAF5.js"></script>
+
+      <script src="docs_config.js"></script>
+
+    <script async src="dist/html-JDI3AVDD.js"></script>
+
+
+  </head>
+  <body data-type="modules" class="page-module">
+    <script>
+
+      try {
+        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
+
+        if (settings.theme === 'dark' ||
+           ((settings.theme === 'system' || settings.theme == null) &&
+             window.matchMedia('(prefers-color-scheme: dark)').matches)
+           ) {
+          document.body.classList.add('dark')
+        }
+      } catch (error) { }
+    </script>
+
+<div class="main">
+
+<button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<section class="sidebar">
+  <form class="sidebar-search" action="search.html">
+    <button type="submit" class="search-button" aria-label="Submit Search">
+      <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
+    </button>
+    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
+      <i class="ri-close-line ri-lg" aria-hidden="true" title="Cancel search"></i>
+    </button>
+    <label class="search-label">
+      <p class="sr-only">Search</p>
+      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+    </label>
+  </form>
+
+  <div class="autocomplete">
+    <div class="autocomplete-results">
+    </div>
+  </div>
+
+  <div class="sidebar-header">
+
+    <div class="sidebar-projectDetails">
+      <a href="api-reference.html" class="sidebar-projectName" translate="no">
+Msplatform
+      </a>
+      <div class="sidebar-projectVersion" translate="no">
+        v0.1.0
+      </div>
+    </div>
+    <ul class="sidebar-listNav">
+      <li><a id="extras-list-link" href="#full-list">Pages</a></li>
+
+        <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+
+
+    </ul>
+  </div>
+
+  <div class="gradient"></div>
+  <ul id="full-list"></ul>
+</section>
+
+<section class="content">
+  <output role="status" id="toast"></output>
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+<h1>
+<button class="icon-action display-settings">
+  <i class="ri-settings-3-line"></i>
+  <span class="sr-only">Settings</span>
+</button>
+
+
+  <span translate="no">Msform.McpBootstrap</span> 
+  <small class="app-vsn" translate="no">(Msplatform v0.1.0)</small>
+
+</h1>
+
+
+  <section id="moduledoc">
+<p>Form data used during the MCP Bootstrapping process.</p><p>Note that currently the data assumes that only an email/password Authenticator
+will be provided for the administrative Access Account.</p>
+  </section>
+
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+      Summary
+    </h1>
+<div class="summary-types summary">
+  <h2>
+    <a href="#types">Types</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:t/0" translate="no">t()</a>
+
+      </div>
+
+    </div>
+
+</div>
+<div class="summary-functions summary">
+  <h2>
+    <a href="#functions">Functions</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#enter_disallowed_state/1" translate="no">enter_disallowed_state(socket)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>See <a href="Msform.McpBootstrap.Actions.html#enter_disallowed_state/1"><code class="inline">Msform.McpBootstrap.Actions.enter_disallowed_state/1</code></a>.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#enter_finished_state/1" translate="no">enter_finished_state(socket)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>See <a href="Msform.McpBootstrap.Actions.html#enter_finished_state/1"><code class="inline">Msform.McpBootstrap.Actions.enter_finished_state/1</code></a>.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#enter_records_state/1" translate="no">enter_records_state(socket)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>See <a href="Msform.McpBootstrap.Actions.html#enter_records_state/1"><code class="inline">Msform.McpBootstrap.Actions.enter_records_state/1</code></a>.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#enter_welcome_state/1" translate="no">enter_welcome_state(socket)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>See <a href="Msform.McpBootstrap.Actions.html#enter_welcome_state/1"><code class="inline">Msform.McpBootstrap.Actions.enter_welcome_state/1</code></a>.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#finish_processing_override/2" translate="no">finish_processing_override(socket_or_assigns, override)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Removes a processing override from the active overrides list.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_component_info/1" translate="no">get_component_info(component_id)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Retrieves the textual information (<code class="inline">label</code>, <code class="inline">label_link</code>, and <code class="inline">info</code>)
+field values from the Form Configuration for the identified component.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#process_disallowed_finished/1" translate="no">process_disallowed_finished(socket)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>See <a href="Msform.McpBootstrap.Actions.html#process_disallowed_finished/1"><code class="inline">Msform.McpBootstrap.Actions.process_disallowed_finished/1</code></a>.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#process_disallowed_load/1" translate="no">process_disallowed_load(socket)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>See <a href="Msform.McpBootstrap.Actions.html#process_disallowed_load/1"><code class="inline">Msform.McpBootstrap.Actions.process_disallowed_load/1</code></a>.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#process_records_save/1" translate="no">process_records_save(socket)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>See <a href="Msform.McpBootstrap.Actions.html#process_records_save/1"><code class="inline">Msform.McpBootstrap.Actions.process_records_save/1</code></a>.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#process_records_save_finished/1" translate="no">process_records_save_finished(socket)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>See <a href="Msform.McpBootstrap.Actions.html#process_records_save_finished/1"><code class="inline">Msform.McpBootstrap.Actions.process_records_save_finished/1</code></a>.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#start_processing_override/2" translate="no">start_processing_override(socket_or_assigns, override)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Adds a processing override to the active overrides list.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#update_button_state/3" translate="no">update_button_state(socket_or_assigns, form_id, button_state)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Sets the state of <a href="https://hexdocs.pm/mscmp_syst_forms/0.1.0/MscmpSystForms.WebComponents.html#msvalidated_button/1"><code class="inline">MscmpSystForms.WebComponents.msvalidated_button/1</code></a>
+components.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#update_display_data/3" translate="no">update_display_data(socket_or_assigns, display_data, opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Updates the display form data with new values.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#validate_form_data/2" translate="no">validate_form_data(socket, form_data)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>See <a href="Msform.McpBootstrap.Actions.html#validate_form_data/2"><code class="inline">Msform.McpBootstrap.Actions.validate_form_data/2</code></a>.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#validate_save/2" translate="no">validate_save(original_data, current_data \\ %{})</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Validates a map of form data for validation of form entry prior to final
+submission.</p></div>
+
+    </div>
+
+</div>
+
+  </section>
+
+
+  <section id="types" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#types">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+Types
+    </h1>
+    <div class="types-list">
+<section class="detail" id="t:t/0">
+
+  <div class="detail-header">
+    <a href="#t:t/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">t()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> t() :: %Msform.McpBootstrap{
+  admin_credential: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil,
+  admin_credential_verify: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil,
+  admin_display_name: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil,
+  admin_identifier: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil,
+  id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
+  owner_display_name: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil,
+  owner_name: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil
+}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+
+    </div>
+  </section>
+
+  <section id="functions" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#functions">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+Functions
+    </h1>
+    <div class="functions-list">
+<section class="detail" id="enter_disallowed_state/1">
+
+  <div class="detail-header">
+    <a href="#enter_disallowed_state/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">enter_disallowed_state(socket)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>See <a href="Msform.McpBootstrap.Actions.html#enter_disallowed_state/1"><code class="inline">Msform.McpBootstrap.Actions.enter_disallowed_state/1</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="enter_finished_state/1">
+
+  <div class="detail-header">
+    <a href="#enter_finished_state/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">enter_finished_state(socket)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>See <a href="Msform.McpBootstrap.Actions.html#enter_finished_state/1"><code class="inline">Msform.McpBootstrap.Actions.enter_finished_state/1</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="enter_records_state/1">
+
+  <div class="detail-header">
+    <a href="#enter_records_state/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">enter_records_state(socket)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>See <a href="Msform.McpBootstrap.Actions.html#enter_records_state/1"><code class="inline">Msform.McpBootstrap.Actions.enter_records_state/1</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="enter_welcome_state/1">
+
+  <div class="detail-header">
+    <a href="#enter_welcome_state/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">enter_welcome_state(socket)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>See <a href="Msform.McpBootstrap.Actions.html#enter_welcome_state/1"><code class="inline">Msform.McpBootstrap.Actions.enter_welcome_state/1</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="finish_processing_override/2">
+
+  <div class="detail-header">
+    <a href="#finish_processing_override/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">finish_processing_override(socket_or_assigns, override)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> finish_processing_override(
+  <a href="https://hexdocs.pm/mscmp_syst_forms/0.1.0/MscmpSystForms.Types.html#t:socket_or_assigns/0">MscmpSystForms.Types.socket_or_assigns</a>(),
+  <a href="https://hexdocs.pm/mscmp_syst_forms/0.1.0/MscmpSystForms.Types.html#t:processing_override_name/0">MscmpSystForms.Types.processing_override_name</a>()
+) :: <a href="https://hexdocs.pm/mscmp_syst_forms/0.1.0/MscmpSystForms.Types.html#t:socket_or_assigns/0">MscmpSystForms.Types.socket_or_assigns</a>()</pre>
+
+      </div>
+
+<p>Removes a processing override from the active overrides list.</p><p>Once an active operation previously added to the process overrides list has
+completed its processing, this function is used to remove it from the list so
+that any user interface components that are watching for the operation to be
+active can resume their normal behavior.</p><h2 id="finish_processing_override/2-parameters" class="section-heading">
+  <a href="#finish_processing_override/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">socket_or_assigns</code> - the socket or assigns for the current view.</p></li><li><p><code class="inline">override</code> - the name of the processing override to remove from the active
+process overrides list.</p></li></ul>
+  </section>
+</section>
+<section class="detail" id="get_component_info/1">
+
+  <div class="detail-header">
+    <a href="#get_component_info/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_component_info(component_id)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_component_info(
+  <a href="https://hexdocs.pm/mscmp_syst_forms/0.1.0/MscmpSystForms.Types.html#t:form_id/0">MscmpSystForms.Types.form_id</a>()
+  | <a href="https://hexdocs.pm/mscmp_syst_forms/0.1.0/MscmpSystForms.Types.html#t:binding_id/0">MscmpSystForms.Types.binding_id</a>()
+) ::
+  <a href="https://hexdocs.pm/mscmp_syst_forms/0.1.0/MscmpSystForms.Types.html#t:component_info/0">MscmpSystForms.Types.component_info</a>() | nil</pre>
+
+      </div>
+
+<p>Retrieves the textual information (<code class="inline">label</code>, <code class="inline">label_link</code>, and <code class="inline">info</code>)
+field values from the Form Configuration for the identified component.</p><p>This is a convenience function which accepts either a <code class="inline">form_id</code> value or
+a <code class="inline">binding_id</code> value and returns the textual information for the
+component if found by the passed identifier.</p><h2 id="get_component_info/1-parameters" class="section-heading">
+  <a href="#get_component_info/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><code class="inline">component_id</code> - this value is either the <code class="inline">form_id</code> or <code class="inline">binding_id</code>
+that is associated with the component for which textual information is
+being retrieved.</li></ul>
+  </section>
+</section>
+<section class="detail" id="process_disallowed_finished/1">
+
+  <div class="detail-header">
+    <a href="#process_disallowed_finished/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">process_disallowed_finished(socket)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>See <a href="Msform.McpBootstrap.Actions.html#process_disallowed_finished/1"><code class="inline">Msform.McpBootstrap.Actions.process_disallowed_finished/1</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="process_disallowed_load/1">
+
+  <div class="detail-header">
+    <a href="#process_disallowed_load/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">process_disallowed_load(socket)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>See <a href="Msform.McpBootstrap.Actions.html#process_disallowed_load/1"><code class="inline">Msform.McpBootstrap.Actions.process_disallowed_load/1</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="process_records_save/1">
+
+  <div class="detail-header">
+    <a href="#process_records_save/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">process_records_save(socket)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>See <a href="Msform.McpBootstrap.Actions.html#process_records_save/1"><code class="inline">Msform.McpBootstrap.Actions.process_records_save/1</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="process_records_save_finished/1">
+
+  <div class="detail-header">
+    <a href="#process_records_save_finished/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">process_records_save_finished(socket)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>See <a href="Msform.McpBootstrap.Actions.html#process_records_save_finished/1"><code class="inline">Msform.McpBootstrap.Actions.process_records_save_finished/1</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="start_processing_override/2">
+
+  <div class="detail-header">
+    <a href="#start_processing_override/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">start_processing_override(socket_or_assigns, override)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> start_processing_override(
+  <a href="https://hexdocs.pm/mscmp_syst_forms/0.1.0/MscmpSystForms.Types.html#t:socket_or_assigns/0">MscmpSystForms.Types.socket_or_assigns</a>(),
+  <a href="https://hexdocs.pm/mscmp_syst_forms/0.1.0/MscmpSystForms.Types.html#t:processing_override_name/0">MscmpSystForms.Types.processing_override_name</a>()
+) :: <a href="https://hexdocs.pm/mscmp_syst_forms/0.1.0/MscmpSystForms.Types.html#t:socket_or_assigns/0">MscmpSystForms.Types.socket_or_assigns</a>()</pre>
+
+      </div>
+
+<p>Adds a processing override to the active overrides list.</p><p>Some user interface components are configured to change their presentation and
+interactivity when certain, possibly long running, processes are underway.
+This function adds the value of the <code class="inline">override</code> parameter to the active
+processes list allowing components interest in that processing state to
+respond accordingly.</p><h2 id="start_processing_override/2-parameters" class="section-heading">
+  <a href="#start_processing_override/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">socket_or_assigns</code> - the socket or assigns for the current view.</p></li><li><p><code class="inline">override</code> - the name of the processing override to activate.  This value
+will be an atom and will be form implementation specific.</p></li></ul>
+  </section>
+</section>
+<section class="detail" id="update_button_state/3">
+
+  <div class="detail-header">
+    <a href="#update_button_state/3" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">update_button_state(socket_or_assigns, form_id, button_state)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> update_button_state(
+  <a href="https://hexdocs.pm/mscmp_syst_forms/0.1.0/MscmpSystForms.Types.html#t:socket_or_assigns/0">MscmpSystForms.Types.socket_or_assigns</a>(),
+  <a href="https://hexdocs.pm/mscmp_syst_forms/0.1.0/MscmpSystForms.Types.html#t:form_id/0">MscmpSystForms.Types.form_id</a>(),
+  <a href="https://hexdocs.pm/mscmp_syst_forms/0.1.0/MscmpSystForms.Types.html#t:msvalidated_button_states/0">MscmpSystForms.Types.msvalidated_button_states</a>()
+) :: <a href="https://hexdocs.pm/mscmp_syst_forms/0.1.0/MscmpSystForms.Types.html#t:socket_or_assigns/0">MscmpSystForms.Types.socket_or_assigns</a>()</pre>
+
+      </div>
+
+<p>Sets the state of <a href="https://hexdocs.pm/mscmp_syst_forms/0.1.0/MscmpSystForms.WebComponents.html#msvalidated_button/1"><code class="inline">MscmpSystForms.WebComponents.msvalidated_button/1</code></a>
+components.</p><p>Validated buttons exist in one of three states defined by
+<a href="https://hexdocs.pm/mscmp_syst_forms/0.1.0/MscmpSystForms.Types.html#t:msvalidated_button_states/0"><code class="inline">MscmpSystForms.Types.msvalidated_button_states/0</code></a>.  This function will
+set the state of the validated button identified by the <code class="inline">form_id</code>
+parameters to the state identified by the <code class="inline">button_state</code> parameters.</p><h2 id="update_button_state/3-parameters" class="section-heading">
+  <a href="#update_button_state/3-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">parameters</p>
+  </a>
+  Parameters
+</h2>
+<ul><li><p><code class="inline">socket_or_assigns</code> - the socket or assigns for the current view.</p></li><li><p><code class="inline">form_id</code> - the identifier of the component to update.  See
+<a href="https://hexdocs.pm/mscmp_syst_forms/0.1.0/MscmpSystForms.html#c:get_form_config/0"><code class="inline">MscmpSystForms.get_form_config/0</code></a> for more about form configuration
+attributes.</p></li><li><p><code class="inline">button_state</code> - the state to which the validated button component
+should be set.  Any value defined by the
+<a href="https://hexdocs.pm/mscmp_syst_forms/0.1.0/MscmpSystForms.Types.html#t:msvalidated_button_states/0"><code class="inline">MscmpSystForms.Types.msvalidated_button_states/0</code></a> type is valid for
+this purpose.</p></li></ul>
+  </section>
+</section>
+<section class="detail" id="update_display_data/3">
+
+    <span id="update_display_data/2"></span>
+
+  <div class="detail-header">
+    <a href="#update_display_data/3" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">update_display_data(socket_or_assigns, display_data, opts \\ [])</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> update_display_data(
+  <a href="https://hexdocs.pm/mscmp_syst_forms/0.1.0/MscmpSystForms.Types.html#t:socket_or_assigns/0">MscmpSystForms.Types.socket_or_assigns</a>(),
+  <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>() | <a href="https://hexdocs.pm/phoenix_html/3.3.1/Phoenix.HTML.Form.html#t:t/0">Phoenix.HTML.Form.t</a>(),
+  <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
+) :: <a href="https://hexdocs.pm/mscmp_syst_forms/0.1.0/MscmpSystForms.Types.html#t:socket_or_assigns/0">MscmpSystForms.Types.socket_or_assigns</a>()</pre>
+
+      </div>
+
+<p>Updates the display form data with new values.</p><p>The display data of the form, which represents the form's backing data
+after the application of effective user permissions to purge values that
+the user is not entitled to see, is set using this function.  The data is
+stored in the view's assigns as a <code class="inline">t:Phoenix.HTML.Form.t/0' value which is then passed to the view for rendering. ## Parameters *</code>socket_or_assigns<code class="inline">- the socket or assigns for the current view. *</code>display_data<code class="inline">- this is either an</code>t:Ecto.Changeset.t/0<code class="inline">or a</code>t:Phoenix.HTML.Form.t/0<code class="inline">value representing the data of the form after it has been filtered based on user permissions regarding data visibility. This is the value that will become the new form Display Data. *</code>opts<code class="inline">- this function defines some optionally required parameters which are dependent on the</code>display_data<code class="inline">parameter. When</code>display_data<code class="inline">is of type</code>t:Ecto.Changeset.t/0<code class="inline">, the following additional parameters are required: *</code>original_data<code class="inline">- a map of values representing the starting data initialized on initial form loading and absent any changes the user may have made and not yet committed to the database. This value should be available in the standard assigns for</code>MscmpSystForms<code class="inline">based forms. *</code>current_data<code class="inline">- a map of values representing the current data backing the form. This data is complete (unfiltered by user data related permissions) and includes and edits made by the user and not yet committed to the database. This value should be available in the standard assigns for</code>MscmpSystForms` based forms.</p>
+  </section>
+</section>
+<section class="detail" id="validate_form_data/2">
+
+  <div class="detail-header">
+    <a href="#validate_form_data/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">validate_form_data(socket, form_data)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>See <a href="Msform.McpBootstrap.Actions.html#validate_form_data/2"><code class="inline">Msform.McpBootstrap.Actions.validate_form_data/2</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="validate_save/2">
+
+    <span id="validate_save/1"></span>
+
+  <div class="detail-header">
+    <a href="#validate_save/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">validate_save(original_data, current_data \\ %{})</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> validate_save(<a href="#t:t/0">t</a>(), <a href="Msform.McpBootstrap.Types.html#t:parameters/0">Msform.McpBootstrap.Types.parameters</a>()) :: <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>()</pre>
+
+      </div>
+
+<p>Validates a map of form data for validation of form entry prior to final
+submission.</p>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+      <footer class="footer">
+        <p>
+
+          <span class="line">
+            <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+              Search HexDocs
+            </button>
+
+              <a href="Msplatform.epub" title="ePub version">
+                Download ePub version
+              </a>
+
+          </span>
+        </p>
+
+        <p class="built-using">
+          Built using
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.29.4) for the
+
+            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+        </p>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+
+
+  </body>
+</html>

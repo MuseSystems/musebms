@@ -14,7 +14,14 @@ defmodule MsappMcpWeb.MixProject do
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps(),
-      prune_code_paths: false
+      prune_code_paths: false,
+      docs: [
+        output: "../../../../../documentation/technical/app_server/msapp_mcp_web",
+        deps: [],
+        groups_for_functions: [],
+        nest_modules_by_prefix: [],
+        groups_for_modules: []
+      ]
     ]
   end
 
