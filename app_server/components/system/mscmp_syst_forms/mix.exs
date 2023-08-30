@@ -28,7 +28,8 @@ defmodule MscmpSystForms.MixProject do
 
     # Muse Systems Business Management System Components
     {:mscmp_syst_utils, path: "../mscmp_syst_utils"},
-    {:mscmp_syst_error, path: "../mscmp_syst_error"}
+    {:mscmp_syst_error, path: "../mscmp_syst_error"},
+    {:mscmp_syst_perms, path: "../mscmp_syst_perms"}
   ]
 
   @dialyzer_opts [

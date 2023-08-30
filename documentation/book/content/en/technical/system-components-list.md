@@ -282,7 +282,8 @@ These Components are listed in "Lower Level Component" to "Higher Level Componen
     * __First Party Dependencies__
 
       <a href="#mscmpsysterror">`MscmpSystError`</a>,
-      <a href="#mscmpsystutils">`MscmpSystUtils`</a>
+      <a href="#mscmpsystutils">`MscmpSystUtils`</a>,
+      <a href="#mscmpsystperms">`MscmpSystPerms`</a>
 
     * __Third Party Dependencies__
 
