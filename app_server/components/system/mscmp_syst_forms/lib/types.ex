@@ -11,6 +11,11 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystForms.Types do
+  @moduledoc """
+  Defines the data types, formats, and structures used by `MscmpSysForms`
+  module.
+  """
+
   #
   # Note that the ordering of typespecs here is alphabetical.
   #
