@@ -97,7 +97,7 @@ the current Datastore Context for the process will cause the process to crash.
 >
 > With this in mind, __*do not look to our implementation as an example of how
 > to approach such a problem*__ until this and other warnings disappear.  The
-> reality is that while in certain on-premise scenarios our current approach
+> reality is that while in certain on-premises scenarios our current approach
 > might well be workable, it was designed with the idea of kicking the can of a
 > difficult and sensitive problem down the road and not as a final solution that
 > we'd stand behind.  We do believe this problem is solvable with sufficient

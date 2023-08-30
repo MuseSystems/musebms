@@ -1,7 +1,7 @@
 +++
 title = "Basic Installation Quick Start Guide"
 linkTitle = "Quick Start"
-description = "This guide will walk you through the steps to install the software in its most basic configuration.  This type of installation is suitable for demonstration purposes, implementation project team support, or very basic on-premise production application support."
+description = "This guide will walk you through the steps to install the software in its most basic configuration.  This type of installation is suitable for demonstration purposes, implementation project team support, or very basic on-premises production application support."
 draft = true
 
 weight = 20
