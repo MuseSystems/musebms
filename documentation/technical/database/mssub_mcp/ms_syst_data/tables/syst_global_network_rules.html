@@ -73,7 +73,7 @@
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
-                    <h1>syst_global_network_rules</h1><p><span id="recordNumber">0</span> rows</p><br />
+                    <h1>syst_global_network_rules</h1><p><span id="recordNumber">-1</span> rows</p><br />
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <i class="fa fa-file-text-o"></i>
@@ -418,40 +418,6 @@ diag_row_version - 1.</p></td>
                                 </tbody>
                             </table>
                         </div><!-- /.box-body -->
-                    </div>
-                    <div class="box box-primary">
-                        <div class="box-header with-border">
-                            <i class="fa fa-sitemap"></i>
-                            <h3 class="box-title">Check Constraints</h3>
-                            <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                            </div>
-                        </div>
-                        <div class="box-body">
-                            <table id="check_table" class="table table-bordered table-striped dataTable" role="grid">
-                                <thead align='left'>
-                                <tr>
-                                    <th>Constraint Name</th>
-                                    <th>Constraint</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>syst_global_network_rules_host_or_range_chk</td>
-                                    <td>((((ip_host_or_network IS NOT NULL) AND (ip_host_range_lower IS NULL) AND (ip_host_range_upper IS NULL)) OR ((ip_host_or_network IS NULL) AND (ip_host_range_lower IS NOT NULL) AND (ip_host_range_upper IS NOT NULL))))</td>
-                                </tr>
-                                <tr>
-                                    <td>syst_global_network_rules_ip_range_family_chk</td>
-                                    <td>((family(ip_host_range_lower) = family(ip_host_range_upper)))</td>
-                                </tr>
-                                <tr>
-                                    <td>syst_global_network_rules_functional_type_chk</td>
-                                    <td>((functional_type = ANY (ARRAY[&#39;allow&#39;::text, &#39;deny&#39;::text])))</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
                     </div>
                     <div class="alert alert-warning alert-dismissible">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>

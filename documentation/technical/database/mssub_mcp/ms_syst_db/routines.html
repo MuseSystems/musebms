@@ -96,30 +96,6 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td><a href="routines/trig_b_iu_set_diagnostic_columns.html">trig_b_iu_set_diagnostic_columns</a></td>
-                                        <td>FUNCTION</td>
-                                        <td>PLPGSQL</td>
-                                        <td>false</td>
-                                        <td>trigger</td>
-                                        <td>INVOKER</td>
-                                        <td><p>Automatically maintains the common table diagnostic columns whenever data is<br />
-inserted or updated.  For UPDATE transactions, the trigger will determine if<br />
-there are &lsquo;real data changes&rsquo;, meaning any fields other than the common<br />
-diagnostic columns being changed by the transaction.  If not, only the<br />
-diag_update_count column will be updated.</p></td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="routines/get_exception_details.html">get_exception_details</a></td>
-                                        <td>FUNCTION</td>
-                                        <td>SQL</td>
-                                        <td>false</td>
-                                        <td>text</td>
-                                        <td>INVOKER</td>
-                                        <td><p>Returns exception details based on the passed parameters represented as a pretty-printed JSON<br />
-object.  The returned value is intended to standardize the details related to RAISEd exceptions and<br />
-be suitable for use in setting the RAISE DETAILS variable.</p></td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>

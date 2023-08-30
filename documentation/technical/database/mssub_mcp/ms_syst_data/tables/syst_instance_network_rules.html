@@ -73,7 +73,7 @@
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
-                    <h1>syst_instance_network_rules</h1><p><span id="recordNumber">0</span> rows</p><br />
+                    <h1>syst_instance_network_rules</h1><p><span id="recordNumber">-1</span> rows</p><br />
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <i class="fa fa-file-text-o"></i>
@@ -447,40 +447,6 @@ diag_row_version - 1.</p></td>
                     </div>
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <i class="fa fa-sitemap"></i>
-                            <h3 class="box-title">Check Constraints</h3>
-                            <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                            </div>
-                        </div>
-                        <div class="box-body">
-                            <table id="check_table" class="table table-bordered table-striped dataTable" role="grid">
-                                <thead align='left'>
-                                <tr>
-                                    <th>Constraint Name</th>
-                                    <th>Constraint</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>syst_instance_network_rules_host_or_range_chk</td>
-                                    <td>((((ip_host_or_network IS NOT NULL) AND (ip_host_range_lower IS NULL) AND (ip_host_range_upper IS NULL)) OR ((ip_host_or_network IS NULL) AND (ip_host_range_lower IS NOT NULL) AND (ip_host_range_upper IS NOT NULL))))</td>
-                                </tr>
-                                <tr>
-                                    <td>syst_instance_network_rules_ip_range_family_chk</td>
-                                    <td>((family(ip_host_range_lower) = family(ip_host_range_upper)))</td>
-                                </tr>
-                                <tr>
-                                    <td>syst_instance_network_rules_functional_type_chk</td>
-                                    <td>((functional_type = ANY (ARRAY[&#39;allow&#39;::text, &#39;deny&#39;::text])))</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="box box-primary">
-                        <div class="box-header with-border">
                             <i class="fa fa-code-fork"></i>
                             <h3 id="Relationships" class="box-title">Relationships</h3>
                             <div class="box-tools pull-right">
@@ -498,20 +464,20 @@ diag_row_version - 1.</p></td>
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="syst_instance_network_rules.html" target="_top" title="syst_instance_network_rules" alt="" coords="329,5,785,485">
-<area shape="rect" id="node2" href="syst_instances.html" target="_top" title="syst_instances" alt="" coords="5,37,285,360">
+<area shape="rect" id="node1" href="syst_instance_network_rules.html" target="_top" title="syst_instance_network_rules" alt="" coords="304,5,709,485">
+<area shape="rect" id="node2" href="syst_instances.html" target="_top" title="syst_instances" alt="" coords="5,37,260,360">
 </map>
                                         <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/syst_instance_network_rules.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="twodegreesDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
-<area shape="rect" id="node1" href="syst_access_account_instance_assocs.html" target="_top" title="syst_access_account_instance_assocs" alt="" coords="908,5,1308,93">
-<area shape="rect" id="node2" href="syst_instances.html" target="_top" title="syst_instances" alt="" coords="556,108,836,431">
-<area shape="rect" id="node5" href="syst_applications.html" target="_top" title="syst_applications" alt="" coords="280,156,512,244">
-<area shape="rect" id="node6" href="syst_enum_items.html" target="_top" title="syst_enum_items" alt="" coords="5,260,236,348">
-<area shape="rect" id="node7" href="syst_owners.html" target="_top" title="syst_owners" alt="" coords="300,333,492,421">
-<area shape="rect" id="node3" href="syst_instance_contexts.html" target="_top" title="syst_instance_contexts" alt="" coords="968,111,1248,199">
-<area shape="rect" id="node4" href="syst_instance_network_rules.html" target="_top" title="syst_instance_network_rules" alt="" coords="880,216,1336,696">
+<area shape="rect" id="node1" href="syst_access_account_instance_assocs.html" target="_top" title="syst_access_account_instance_assocs" alt="" coords="823,5,1177,93">
+<area shape="rect" id="node2" href="syst_instances.html" target="_top" title="syst_instances" alt="" coords="499,108,753,431">
+<area shape="rect" id="node5" href="syst_applications.html" target="_top" title="syst_applications" alt="" coords="252,156,455,244">
+<area shape="rect" id="node6" href="syst_enum_items.html" target="_top" title="syst_enum_items" alt="" coords="5,260,208,348">
+<area shape="rect" id="node7" href="syst_owners.html" target="_top" title="syst_owners" alt="" coords="269,333,438,421">
+<area shape="rect" id="node3" href="syst_instance_contexts.html" target="_top" title="syst_instance_contexts" alt="" coords="877,111,1123,199">
+<area shape="rect" id="node4" href="syst_instance_network_rules.html" target="_top" title="syst_instance_network_rules" alt="" coords="797,216,1203,696">
 </map>
                                         <a name='diagram'><img id="twodegreesDegreeImg" src="../diagrams/tables/syst_instance_network_rules.2degrees.png" usemap="#twoDegreesRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>

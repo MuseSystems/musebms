@@ -73,7 +73,7 @@
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
-                    <h1>syst_instances</h1><p><span id="recordNumber">0</span> rows</p><br />
+                    <h1>syst_instances</h1><p><span id="recordNumber">-1</span> rows</p><br />
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <i class="fa fa-file-text-o"></i>
@@ -538,32 +538,6 @@ diag_row_version - 1.</p></td>
                     </div>
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <i class="fa fa-sitemap"></i>
-                            <h3 class="box-title">Check Constraints</h3>
-                            <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                            </div>
-                        </div>
-                        <div class="box-body">
-                            <table id="check_table" class="table table-bordered table-striped dataTable" role="grid">
-                                <thead align='left'>
-                                <tr>
-                                    <th>Constraint Name</th>
-                                    <th>Constraint</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>syst_instances_self_ownership_chk</td>
-                                    <td>(((owning_instance_id IS NULL) OR (owning_instance_id &lt;&gt; id)))</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="box box-primary">
-                        <div class="box-header with-border">
                             <i class="fa fa-code-fork"></i>
                             <h3 id="Relationships" class="box-title">Relationships</h3>
                             <div class="box-tools pull-right">
@@ -581,34 +555,34 @@ diag_row_version - 1.</p></td>
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="syst_access_account_instance_assocs.html" target="_top" title="syst_access_account_instance_assocs" alt="" coords="1136,5,1536,181">
-<area shape="rect" id="node2" href="syst_instances.html" target="_top" title="syst_instances" alt="" coords="653,255,1092,852">
-<area shape="rect" id="node5" href="syst_applications.html" target="_top" title="syst_applications" alt="" coords="329,217,609,393">
-<area shape="rect" id="node6" href="syst_enum_items.html" target="_top" title="syst_enum_items" alt="" coords="5,407,285,641">
-<area shape="rect" id="node7" href="syst_owners.html" target="_top" title="syst_owners" alt="" coords="329,483,609,688">
-<area shape="rect" id="node3" href="syst_instance_contexts.html" target="_top" title="syst_instance_contexts" alt="" coords="1196,199,1476,404">
-<area shape="rect" id="node4" href="syst_instance_network_rules.html" target="_top" title="syst_instance_network_rules" alt="" coords="1173,421,1499,597">
+<area shape="rect" id="node1" href="syst_access_account_instance_assocs.html" target="_top" title="syst_access_account_instance_assocs" alt="" coords="1039,5,1392,181">
+<area shape="rect" id="node2" href="syst_instances.html" target="_top" title="syst_instances" alt="" coords="603,255,995,852">
+<area shape="rect" id="node5" href="syst_applications.html" target="_top" title="syst_applications" alt="" coords="304,217,559,393">
+<area shape="rect" id="node6" href="syst_enum_items.html" target="_top" title="syst_enum_items" alt="" coords="5,407,260,641">
+<area shape="rect" id="node7" href="syst_owners.html" target="_top" title="syst_owners" alt="" coords="304,483,559,688">
+<area shape="rect" id="node3" href="syst_instance_contexts.html" target="_top" title="syst_instance_contexts" alt="" coords="1088,199,1343,404">
+<area shape="rect" id="node4" href="syst_instance_network_rules.html" target="_top" title="syst_instance_network_rules" alt="" coords="1073,421,1357,597">
 </map>
                                         <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/syst_instances.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="twodegreesDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
-<area shape="rect" id="node1" href="syst_access_account_instance_assocs.html" target="_top" title="syst_access_account_instance_assocs" alt="" coords="1729,244,2129,420">
-<area shape="rect" id="node2" href="syst_access_accounts.html" target="_top" title="syst_access_accounts" alt="" coords="1331,139,1601,227">
-<area shape="rect" id="node3" href="syst_instances.html" target="_top" title="syst_instances" alt="" coords="1247,479,1685,1076">
-<area shape="rect" id="node4" href="syst_enum_items.html" target="_top" title="syst_enum_items" alt="" coords="599,401,879,636">
-<area shape="rect" id="node5" href="syst_owners.html" target="_top" title="syst_owners" alt="" coords="923,313,1203,519">
-<area shape="rect" id="node7" href="syst_applications.html" target="_top" title="syst_applications" alt="" coords="923,1043,1203,1219">
-<area shape="rect" id="node10" href="syst_enum_functional_types.html" target="_top" title="syst_enum_functional_types" alt="" coords="236,543,555,631">
-<area shape="rect" id="node11" href="syst_enums.html" target="_top" title="syst_enums" alt="" coords="5,507,192,595">
-<area shape="rect" id="node6" href="syst_application_contexts.html" target="_top" title="syst_application_contexts" alt="" coords="1315,1093,1617,1181">
-<area shape="rect" id="node8" href="syst_credentials.html" target="_top" title="syst_credentials" alt="" coords="2173,87,2397,175">
-<area shape="rect" id="node9" href="syst_identities.html" target="_top" title="syst_identities" alt="" coords="1824,87,2035,175">
-<area shape="rect" id="node12" href="syst_instance_contexts.html" target="_top" title="syst_instance_contexts" alt="" coords="1789,824,2069,1029">
-<area shape="rect" id="node13" href="syst_instance_network_rules.html" target="_top" title="syst_instance_network_rules" alt="" coords="1767,452,2092,628">
-<area shape="rect" id="node14" href="syst_instance_type_applications.html" target="_top" title="syst_instance_type_applications" alt="" coords="1289,1199,1643,1287">
-<area shape="rect" id="node15" href="syst_owner_network_rules.html" target="_top" title="syst_owner_network_rules" alt="" coords="1313,244,1619,332">
-<area shape="rect" id="node16" href="syst_owner_password_rules.html" target="_top" title="syst_owner_password_rules" alt="" coords="1307,349,1625,437">
+<area shape="rect" id="node1" href="syst_access_account_instance_assocs.html" target="_top" title="syst_access_account_instance_assocs" alt="" coords="1573,179,1927,355">
+<area shape="rect" id="node2" href="syst_access_accounts.html" target="_top" title="syst_access_accounts" alt="" coords="1215,73,1452,161">
+<area shape="rect" id="node3" href="syst_instances.html" target="_top" title="syst_instances" alt="" coords="1137,413,1529,1011">
+<area shape="rect" id="node4" href="syst_enum_items.html" target="_top" title="syst_enum_items" alt="" coords="540,336,795,571">
+<area shape="rect" id="node5" href="syst_owners.html" target="_top" title="syst_owners" alt="" coords="839,248,1093,453">
+<area shape="rect" id="node7" href="syst_applications.html" target="_top" title="syst_applications" alt="" coords="839,977,1093,1153">
+<area shape="rect" id="node10" href="syst_enum_functional_types.html" target="_top" title="syst_enum_functional_types" alt="" coords="215,477,496,565">
+<area shape="rect" id="node11" href="syst_enums.html" target="_top" title="syst_enums" alt="" coords="5,441,171,529">
+<area shape="rect" id="node6" href="syst_application_contexts.html" target="_top" title="syst_application_contexts" alt="" coords="1202,1028,1465,1116">
+<area shape="rect" id="node8" href="syst_credentials.html" target="_top" title="syst_credentials" alt="" coords="1971,21,2165,109">
+<area shape="rect" id="node9" href="syst_identities.html" target="_top" title="syst_identities" alt="" coords="1659,21,1841,109">
+<area shape="rect" id="node12" href="syst_instance_contexts.html" target="_top" title="syst_instance_contexts" alt="" coords="1623,759,1877,964">
+<area shape="rect" id="node13" href="syst_instance_network_rules.html" target="_top" title="syst_instance_network_rules" alt="" coords="1608,387,1892,563">
+<area shape="rect" id="node14" href="syst_instance_type_applications.html" target="_top" title="syst_instance_type_applications" alt="" coords="1179,1133,1487,1221">
+<area shape="rect" id="node15" href="syst_owner_network_rules.html" target="_top" title="syst_owner_network_rules" alt="" coords="1199,179,1467,267">
+<area shape="rect" id="node16" href="syst_owner_password_rules.html" target="_top" title="syst_owner_password_rules" alt="" coords="1193,284,1473,372">
 </map>
                                         <a name='diagram'><img id="twodegreesDegreeImg" src="../diagrams/tables/syst_instances.2degrees.png" usemap="#twoDegreesRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>

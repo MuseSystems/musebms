@@ -73,7 +73,7 @@
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
-                    <h1>migrations</h1><p><span id="recordNumber">1</span> rows</p><br />
+                    <h1>migrations</h1><p><span id="recordNumber">-1</span> rows</p><br />
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <i class="fa fa-file-text-o"></i>
@@ -457,48 +457,6 @@ diag_row_version - 1.</p></td>
                                 </tbody>
                             </table>
                         </div><!-- /.box-body -->
-                    </div>
-                    <div class="box box-primary">
-                        <div class="box-header with-border">
-                            <i class="fa fa-sitemap"></i>
-                            <h3 class="box-title">Check Constraints</h3>
-                            <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                            </div>
-                        </div>
-                        <div class="box-body">
-                            <table id="check_table" class="table table-bordered table-striped dataTable" role="grid">
-                                <thead align='left'>
-                                <tr>
-                                    <th>Constraint Name</th>
-                                    <th>Constraint</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>migrations_release_range_chk</td>
-                                    <td>(((release)::integer &lt;@ &#39;[1,1296)&#39;::int4range))</td>
-                                </tr>
-                                <tr>
-                                    <td>migrations_update_range_chk</td>
-                                    <td>((update &lt;@ &#39;[0,46656)&#39;::int4range))</td>
-                                </tr>
-                                <tr>
-                                    <td>migrations_sponsor_range_chk</td>
-                                    <td>((sponsor &lt;@ &#39;[0,2176782336)&#39;::int8range))</td>
-                                </tr>
-                                <tr>
-                                    <td>migrations_sponsor_modification_range_chk</td>
-                                    <td>((sponsor_modification &lt;@ &#39;[0,46656)&#39;::int4range))</td>
-                                </tr>
-                                <tr>
-                                    <td>migrations_version_range_chk</td>
-                                    <td>(((version)::integer &lt;@ &#39;[1,1296)&#39;::int4range))</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
                     </div>
                     <div class="alert alert-warning alert-dismissible">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
