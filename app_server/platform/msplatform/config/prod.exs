@@ -22,7 +22,7 @@ import Config
 # which you should run after static files are built and
 # before starting your production server.
 config :msapp_mcp_web, MsappMcpWeb.Endpoint,
-  url: [host: "example.com", port: 80],
+  url: [host: "localhost", port: 4380],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 # Configures Swoosh API Client
