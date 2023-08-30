@@ -636,7 +636,10 @@ defmodule MscmpSystForms do
     that is associated with the component for which textual information is
     being retrieved.
   """
-  @spec get_component_info(module(), Types.form_id() | Types.binding_id()) ::
+  @spec get_component_info(
+          module(),
+          %{form_id: Types.form_id()} | %{binding_id: Types.binding_id()}
+        ) ::
           Types.component_info() | nil
   defdelegate get_component_info(module, component_id), to: Impl.Forms
 
@@ -1076,7 +1079,7 @@ defmodule MscmpSystForms do
         that is associated with the component for which textual information is
         being retrieved.
       """
-      @spec get_component_info(Types.form_id() | Types.binding_id()) ::
+      @spec get_component_info(%{form_id: Types.form_id()} | %{binding_id: Types.binding_id()}) ::
               Types.component_info() | nil
       def get_component_info(component_id),
         do: MscmpSystForms.get_component_info(__MODULE__, component_id)
