@@ -913,6 +913,7 @@ defmodule MscmpSystForms do
   ##############################################################################
 
   defmacro __using__(_) do
+    # credo:disable-for-next-line Credo.Check.Refactor.LongQuoteBlocks
     quote do
       @behaviour MscmpSystForms
 
