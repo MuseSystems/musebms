@@ -1,7 +1,7 @@
 +++
 title = "Muse Systems Business Management System Software License Agreement v1.0"
 linkTitle = "License"
-description = "This guide will walk you through the steps to install the software in its most basic configuration.  This type of installation is suitable for demonstration purposes, implementation project team support, or very basic on-premise production application support."
+description = "The software license under which the software and associated documentation are licensed."
 draft = true
 
 weight = 10
