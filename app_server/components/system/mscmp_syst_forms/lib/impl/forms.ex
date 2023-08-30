@@ -447,7 +447,10 @@ defmodule MscmpSystForms.Impl.Forms do
     end
   end
 
-  @spec get_component_info(module(), Types.form_id() | Types.binding_id()) ::
+  @spec get_component_info(
+          module(),
+          %{form_id: Types.form_id()} | %{binding_id: Types.binding_id()}
+        ) ::
           Types.component_info() | nil
   def get_component_info(module, component_id),
     do: module.get_form_config() |> find_component_config(component_id)
