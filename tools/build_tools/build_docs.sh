@@ -151,6 +151,16 @@ cd app_server/subsystems/mssub_mcp
 mix docs
 cd ../../../
 
+#
+# Msplatform Applications
+#
+
+rm -Rf documentation/technical/app_server/msapp_mcp_web
+rm -Rf documentation/technical/app_server/msapp_mcp
+cd app_server/platform/msplatform
+mix cmd mix docs
+cd ../../../
+
 ################################################################################
 #
 #  Database
