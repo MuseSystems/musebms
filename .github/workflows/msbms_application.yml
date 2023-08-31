@@ -198,8 +198,7 @@ jobs:
             elixir-version: ${{matrix.elixir}}
 
         - name: Initialize Database
-          run: psql -f database_utils/bootstrap_database.psql postgresql://ms_syst_privileged:muse.syst.dba.testing.password@localhost:5432/postgres
-          working-directory: ./app_server/components/system/mscmp_syst_settings
+          run: psql -f tools/database_scripts/bootstrap_database.psql postgresql://ms_syst_privileged:muse.syst.dba.testing.password@localhost:5432/postgres
 
         - name: Build Mix Dependencies
           run: mix deps.get
@@ -250,8 +249,7 @@ jobs:
             elixir-version: ${{matrix.elixir}}
 
         - name: Initialize Database
-          run: psql -f database_utils/bootstrap_database.psql postgresql://ms_syst_privileged:muse.syst.dba.testing.password@localhost:5432/postgres
-          working-directory: ./app_server/components/system/mscmp_syst_enums
+          run: psql -f tools/database_scripts/bootstrap_database.psql postgresql://ms_syst_privileged:muse.syst.dba.testing.password@localhost:5432/postgres
 
         - name: Build Mix Dependencies
           run: mix deps.get
@@ -302,8 +300,7 @@ jobs:
             elixir-version: ${{matrix.elixir}}
 
         - name: Initialize Database
-          run: psql -f database_utils/bootstrap_database.psql postgresql://ms_syst_privileged:muse.syst.dba.testing.password@localhost:5432/postgres
-          working-directory: ./app_server/components/system/mscmp_syst_instance
+          run: psql -f tools/database_scripts/bootstrap_database.psql postgresql://ms_syst_privileged:muse.syst.dba.testing.password@localhost:5432/postgres
 
         - name: Build Mix Dependencies
           run: mix deps.get
@@ -358,8 +355,7 @@ jobs:
             elixir-version: ${{matrix.elixir}}
 
         - name: Initialize Database
-          run: psql -f database_utils/bootstrap_database.psql postgresql://ms_syst_privileged:muse.syst.dba.testing.password@localhost:5432/postgres
-          working-directory: ./app_server/components/system/mscmp_syst_authn
+          run: psql -f tools/database_scripts/bootstrap_database.psql postgresql://ms_syst_privileged:muse.syst.dba.testing.password@localhost:5432/postgres
 
         - name: Build Mix Dependencies
           run: mix deps.get
@@ -414,8 +410,7 @@ jobs:
             elixir-version: ${{matrix.elixir}}
 
         - name: Initialize Database
-          run: psql -f database_utils/bootstrap_database.psql postgresql://ms_syst_privileged:muse.syst.dba.testing.password@localhost:5432/postgres
-          working-directory: ./app_server/components/system/mscmp_syst_perms
+          run: psql -f tools/database_scripts/bootstrap_database.psql postgresql://ms_syst_privileged:muse.syst.dba.testing.password@localhost:5432/postgres
 
         - name: Build Mix Dependencies
           run: mix deps.get
@@ -470,8 +465,7 @@ jobs:
             elixir-version: ${{matrix.elixir}}
 
         - name: Initialize Database
-          run: psql -f database_utils/bootstrap_database.psql postgresql://ms_syst_privileged:muse.syst.dba.testing.password@localhost:5432/postgres
-          working-directory: ./app_server/components/system/mscmp_syst_mcp_perms
+          run: psql -f tools/database_scripts/bootstrap_database.psql postgresql://ms_syst_privileged:muse.syst.dba.testing.password@localhost:5432/postgres
 
         - name: Build Mix Dependencies
           run: mix deps.get
@@ -526,8 +520,7 @@ jobs:
             elixir-version: ${{matrix.elixir}}
 
         - name: Initialize Database
-          run: psql -f database_utils/bootstrap_database.psql postgresql://ms_syst_privileged:muse.syst.dba.testing.password@localhost:5432/postgres
-          working-directory: ./app_server/components/system/mscmp_syst_mcp_session
+          run: psql -f tools/database_scripts/bootstrap_database.psql postgresql://ms_syst_privileged:muse.syst.dba.testing.password@localhost:5432/postgres
 
         - name: Build Mix Dependencies
           run: mix deps.get
@@ -616,8 +609,7 @@ jobs:
             elixir-version: ${{matrix.elixir}}
 
         - name: Initialize Database
-          run: psql -f database_utils/bootstrap_database.psql postgresql://ms_syst_privileged:muse.syst.dba.testing.password@localhost:5432/postgres
-          working-directory: ./app_server/subsystems/mssub_mcp
+          run: psql -f tools/database_scripts/bootstrap_database.psql postgresql://ms_syst_privileged:muse.syst.dba.testing.password@localhost:5432/postgres
 
         - name: Build Mix Dependencies
           run: mix deps.get
@@ -672,8 +664,7 @@ jobs:
   #           elixir-version: ${{matrix.elixir}}
 
   #       - name: Initialize Database
-  #         run: psql -f database_utils/bootstrap_database.psql postgresql://ms_syst_privileged:muse.syst.dba.testing.password@localhost:5432/postgres
-  #         working-directory: ./app_server/subsystems/mssub_bms
+  #         run: psql -f tools/database_scripts/bootstrap_database.psql postgresql://ms_syst_privileged:muse.syst.dba.testing.password@localhost:5432/postgres
 
   #       - name: Build Mix Dependencies
   #         run: mix deps.get
