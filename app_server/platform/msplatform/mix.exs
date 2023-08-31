@@ -53,7 +53,7 @@ defmodule Msplatform.MixProject do
         groups_for_modules: []
       ],
       releases: [
-        demo: [
+        msplatform: [
           applications: [
             msapp_mcp: :permanent,
             msapp_mcp_web: :permanent
