@@ -2,7 +2,7 @@
 title = "Technical Documentation"
 linkTitle = "Technical"
 
-draft = true
+draft = false
 
 [menu.main]
 weight = 40

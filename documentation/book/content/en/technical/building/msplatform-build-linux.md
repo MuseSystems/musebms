@@ -3,7 +3,7 @@ title = "Msplatform Build Process / Linux"
 linkTitle = "msplatform-build-linux"
 description = "Instructions for building the Msplatform Elixir application as a release.  This process targets Linux x86_64 systems."
 
-draft = true
+draft = false
 
 weight = 10
 +++

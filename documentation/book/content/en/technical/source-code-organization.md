@@ -3,7 +3,7 @@ title = "Source Code Organization"
 linkTitle = "Source Code Organization"
 description = "A discussion on how the MuseBMS source code is organized."
 
-draft = true
+draft = false
 
 weight = 20
 +++

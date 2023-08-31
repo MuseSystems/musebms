@@ -3,7 +3,7 @@ title = "What is a \"Business System\"?"
 linkTitle = "What is a \"Business System\"?"
 description = "In this section we'll ask and answer the question of what we mean when we talk about \"business systems\".  We'll also discuss why these systems exist and characterize how organizations use them to advantage (or not)."
 
-draft = true
+draft = false
 
 weight = 10
 +++

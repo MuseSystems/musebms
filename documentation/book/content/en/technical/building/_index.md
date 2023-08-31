@@ -2,7 +2,7 @@
 title = "Build Processes"
 linkTitle = "Build Processes"
 description = "Overview of building various pieces of our application including application releases and documentation."
-draft = true
+draft = false
 
 weight = 40
 +++
