@@ -8,7 +8,7 @@ draft = false
 weight = 10
 +++
 
-When building <a href="/musebms/technical/system-components-list/#msplatform">`Msplatform`</a> we assume that we are including ERTS as part of the release.
+When building <a href="/technical/system-components-list/#msplatform">`Msplatform`</a> we assume that we are including ERTS as part of the release.
 
 We largely follow the standard Phoenix <a href="https://hexdocs.pm/phoenix/releases.html" target="_blank">"Deploying with Releases"</a> documentation to build a release, modified somewhat to support both the umbrella project structure and our own needs.  this process looks like:
 

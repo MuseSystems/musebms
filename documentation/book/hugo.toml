@@ -1,4 +1,4 @@
-baseURL = "https://docs.muse.systems/musebms"
+baseURL = "https://docs.muse.systems"
 languageCode = "en-us"
 title = "Muse Systems Business Management System"
 theme = "github.com/google/docsy"
