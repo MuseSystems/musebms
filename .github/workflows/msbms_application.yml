@@ -524,23 +524,23 @@ jobs:
 
         - name: Build Mix Dependencies
           run: mix deps.get
-          working-directory: ./app_server/components/system/mscmp_syst_mcp_session
+          working-directory: ./app_server/components/system/mscmp_syst_session
 
         - name: Run Unit Tests
           run: mix test
-          working-directory: ./app_server/components/system/mscmp_syst_mcp_session
+          working-directory: ./app_server/components/system/mscmp_syst_session
 
         - name: Run Integration Tests
           run: mix test --only integration
-          working-directory: ./app_server/components/system/mscmp_syst_mcp_session
+          working-directory: ./app_server/components/system/mscmp_syst_session
 
         - name: Run Credo
           run: mix credo
-          working-directory: ./app_server/components/system/mscmp_syst_mcp_session
+          working-directory: ./app_server/components/system/mscmp_syst_session
 
         - name: Run Dialyzer
           run: mix dialyzer
-          working-directory: ./app_server/components/system/mscmp_syst_mcp_session
+          working-directory: ./app_server/components/system/mscmp_syst_session
 
   mscmp-syst-forms:
     runs-on: ubuntu-latest
