@@ -489,7 +489,7 @@ jobs:
 
   mscmp-syst-session:
     runs-on: ubuntu-latest
-    name: MscmpSystMcpPerms (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
+    name: MscmpSystSession (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
     strategy:
       matrix:
         otp: ['25.3.2']
@@ -544,7 +544,7 @@ jobs:
 
   mscmp-syst-forms:
     runs-on: ubuntu-latest
-    name: MscmpSystError (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
+    name: MscmpSystForms (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
     strategy:
       matrix:
         otp: ['25.3.2']
