@@ -70,13 +70,11 @@ defmodule MsappMcp.Impl.Authentication do
   defp get_auth_action(%{status: status}) when status in @no_session_auth_statuses,
     do: {:login_denied, status}
 
-  defp get_auth_action(
-         %{
-           status: :pending,
-           reset_reason: reset_reason,
-           pending_operations: [:require_credential_reset]
-         } = auth_state
-       )
+  defp get_auth_action(%{
+         status: :pending,
+         reset_reason: reset_reason,
+         pending_operations: [:require_credential_reset]
+       })
        when is_atom(reset_reason),
        do: :login_authenticated
 
