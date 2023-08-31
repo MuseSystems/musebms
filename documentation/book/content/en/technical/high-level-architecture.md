@@ -3,7 +3,7 @@ title = "High Level Architecture"
 linkTitle = "High Level Architecture"
 description = "This section describes the highest level concepts used to organize the software."
 
-draft = true
+draft = false
 
 weight = 10
 +++

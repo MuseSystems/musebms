@@ -3,7 +3,7 @@ title = "System Component Listing"
 linkTitle = "System Component Listing"
 description = "Here we begin documenting the system in detail, moving away from purely conceptual discussions to examining more concrete implementation details."
 
-draft = true
+draft = false
 
 weight = 30
 +++
