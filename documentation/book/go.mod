@@ -1,6 +1,6 @@
-module muse.systems/documentation/the-book
+module muse.systems/documentation/book
 
-go 1.19
+go 1.20
 
 require (
 	github.com/google/docsy v0.7.1 // indirect
