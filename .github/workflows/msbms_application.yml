@@ -493,6 +493,96 @@ jobs:
           run: mix dialyzer
           working-directory: ./app_server/components/system/mscmp_syst_mcp_perms
 
+  mscmp-syst-session:
+    runs-on: ubuntu-latest
+    name: MscmpSystMcpPerms (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
+    strategy:
+      matrix:
+        otp: ['25.3.2']
+        elixir: ['1.14.5']
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: ms_syst_privileged
+          POSTGRES_PASSWORD: muse.syst.dba.testing.password
+          POSTGRES_PORT: 5432
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+        - name: Checkout repository code
+          uses: actions/checkout@v3
+
+        - name: Install Elixir
+          uses: erlef/setup-beam@v1
+          with:
+            otp-version: ${{matrix.otp}}
+            elixir-version: ${{matrix.elixir}}
+
+        - name: Initialize Database
+          run: psql -f database_utils/bootstrap_database.psql postgresql://ms_syst_privileged:muse.syst.dba.testing.password@localhost:5432/postgres
+          working-directory: ./app_server/components/system/mscmp_syst_mcp_session
+
+        - name: Build Mix Dependencies
+          run: mix deps.get
+          working-directory: ./app_server/components/system/mscmp_syst_mcp_session
+
+        - name: Run Unit Tests
+          run: mix test
+          working-directory: ./app_server/components/system/mscmp_syst_mcp_session
+
+        - name: Run Integration Tests
+          run: mix test --only integration
+          working-directory: ./app_server/components/system/mscmp_syst_mcp_session
+
+        - name: Run Credo
+          run: mix credo
+          working-directory: ./app_server/components/system/mscmp_syst_mcp_session
+
+        - name: Run Dialyzer
+          run: mix dialyzer
+          working-directory: ./app_server/components/system/mscmp_syst_mcp_session
+
+  mscmp-syst-forms:
+    runs-on: ubuntu-latest
+    name: MscmpSystError (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
+    strategy:
+      matrix:
+        otp: ['25.3.2']
+        elixir: ['1.14.5']
+
+    steps:
+        - name: Checkout repository code
+          uses: actions/checkout@v3
+
+        - name: Install Elixir
+          uses: erlef/setup-beam@v1
+          with:
+            otp-version: ${{matrix.otp}}
+            elixir-version: ${{matrix.elixir}}
+
+        - name: Build Mix Dependencies
+          run: mix deps.get
+          working-directory: ./app_server/components/system/mscmp_syst_forms
+
+        - name: Run Tests
+          run: mix test
+          working-directory: ./app_server/components/system/mscmp_syst_forms
+
+        - name: Run Credo
+          run: mix credo
+          working-directory: ./app_server/components/system/mscmp_syst_forms
+
+        - name: Run Dialyzer
+          run: mix dialyzer
+          working-directory: ./app_server/components/system/mscmp_syst_forms
+
   mssub-mcp:
     runs-on: ubuntu-latest
     name: MssubMcp (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
