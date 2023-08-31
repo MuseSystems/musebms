@@ -1,5 +1,5 @@
-# Source File: integration_tests.exs
-# Location:    musebms/app_server/components/system/mscmp_syst_session/test/integration_tests.exs
+# Source File: integration_test.exs
+# Location:    musebms/app_server/components/system/mscmp_syst_session/test/integration_test.exs
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,7 +10,7 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule IntegrationTests do
+defmodule IntegrationTest do
   use SessionTestCase, async: false
 
   import Ecto.Query
@@ -24,14 +24,12 @@ defmodule IntegrationTests do
   #
   # ==============================================================================================
 
-  test "Step 1.01: Non-expired Session Processing." do
+  test "Step 1.01: Non-Expired / Random Name Session Processing." do
     assert {:ok, session_name} =
-             MscmpSystSession.create_session(%{test_key1: "test_value", test_key2: 1234},
-               session_name: "create_session_test"
-             )
+             MscmpSystSession.create_session(%{test_key1: "test_value", test_key2: 1234})
 
     assert {:ok, %{"test_key1" => "test_value", "test_key2" => 1234}} =
-             MscmpSystSession.get_session("create_session_test", expires_after: 4600)
+             MscmpSystSession.get_session(session_name, expires_after: 4600)
 
     assert :ok = MscmpSystSession.update_session(session_name, %{updated_key: "updated_value"})
 
@@ -45,13 +43,43 @@ defmodule IntegrationTests do
     assert MscmpSystDb.exists?(Msdata.SystSessions) == false
   end
 
+  test "Step 1.02: Non-Expired Create Session" do
+    assert {:ok, "non_random_session_name"} =
+             MscmpSystSession.create_session(%{test_key1: "test_value", test_key2: 1234},
+               session_name: "non_random_session_name"
+             )
+  end
+
+  test "Step 1.03: Non-Expired Get Session" do
+    assert {:ok, %{"test_key1" => "test_value", "test_key2" => 1234}} =
+             MscmpSystSession.get_session("non_random_session_name", expires_after: 4600)
+  end
+
+  test "Step 1.04: Non-Expired Update Session" do
+    assert :ok =
+             MscmpSystSession.update_session("non_random_session_name", %{
+               updated_key: "updated_value"
+             })
+
+    assert {:ok, %{"updated_key" => "updated_value"}} =
+             MscmpSystSession.get_session("non_random_session_name", expires_after: 4600)
+  end
+
+  test "Step 1.05: Non-Expired Delete Session" do
+    assert MscmpSystDb.exists?(Msdata.SystSessions) == true
+
+    assert :ok = MscmpSystSession.delete_session("non_random_session_name")
+
+    assert MscmpSystDb.exists?(Msdata.SystSessions) == false
+  end
+
   # ==============================================================================================
   #
   # Topic 2: Expired Sessions
   #
   # ==============================================================================================
 
-  test "Step 2.01: Get Expired Session" do
+  test "Step 2.01: Cannot Get Expired Session" do
     {:ok, session_name} = MscmpSystSession.create_session(%{key: "value"}, expires_after: 0)
 
     Process.sleep(1000)
@@ -59,7 +87,7 @@ defmodule IntegrationTests do
     assert {:ok, :not_found} = MscmpSystSession.get_session(session_name)
   end
 
-  test "Step 2.02: Update Expired Session" do
+  test "Step 2.02: Cannot Update Expired Session" do
     {:ok, session_name} = MscmpSystSession.create_session(%{key: "value"}, expires_after: 0)
 
     Process.sleep(1000)
