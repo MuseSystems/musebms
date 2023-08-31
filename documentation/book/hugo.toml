@@ -1,6 +1,7 @@
 baseURL = "https://docs.muse.systems/musebms"
 languageCode = "en-us"
 title = "Muse Systems Business Management System"
+theme = "github.com/google/docsy"
 
 enableRobotsTXT = true
 
