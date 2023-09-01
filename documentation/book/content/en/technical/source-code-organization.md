@@ -100,7 +100,7 @@ Here we describe the general organization of the top level directories which pro
 
 ### __`app_server`__
 
-The directory which contains the Elixir Projects and related source code.  These are organized into "[MuseBMS Component Model](/musebms/technical/high-level-architecture/#the-musebms-component-model)" related directories.
+The directory which contains the Elixir Projects and related source code.  These are organized into "[MuseBMS Component Model](/technical/high-level-architecture/#the-musebms-component-model)" related directories.
 
   * __`components/application`__
 
@@ -120,7 +120,7 @@ The directory which contains the Elixir Projects and related source code.  These
 
 ### __`database`__
 
-This directory contains database source files which define the schema, functions and procedures, and any seed data which will be built into migrations by the [MscmpSystDb](/musebms/documentation/technical/app_server/mscmp_syst_db) migrator. Sub-directory structure generally follows the "[MuseBMS Component Model](/musebms/technical/high-level-architecture/#the-musebms-component-model)", with some exception.  Finally, these directories will also contain data and functionality which are used in support of application unit and integration tests as the tests require.
+This directory contains database source files which define the schema, functions and procedures, and any seed data which will be built into migrations by the [MscmpSystDb](/documentation/technical/app_server/mscmp_syst_db) migrator. Sub-directory structure generally follows the "[MuseBMS Component Model](/technical/high-level-architecture/#the-musebms-component-model)", with some exception.  Finally, these directories will also contain data and functionality which are used in support of application unit and integration tests as the tests require.
 
   * __`all`__
 
