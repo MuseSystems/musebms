@@ -42,7 +42,7 @@ defmodule MscmpSystMcpPerms.MixProject do
     [
       app: @name,
       version: @version,
-      elixir: "~> 1.14",
+      elixir: "~> 1.15",
       deps: @deps,
       build_embedded: in_production,
       start_permanent: in_production,

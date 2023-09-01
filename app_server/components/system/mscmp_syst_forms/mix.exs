@@ -22,7 +22,7 @@ defmodule MscmpSystForms.MixProject do
     {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
     {:ex_doc, "~> 0.20", only: :dev, runtime: false},
     {:phoenix, "~> 1.7"},
-    {:phoenix_live_view, "~> 0.18.3"},
+    {:phoenix_live_view, "~> 0.19"},
     {:phoenix_ecto, "~> 4.0"},
     {:gettext, "~> 0.20"},
 
@@ -45,7 +45,7 @@ defmodule MscmpSystForms.MixProject do
     [
       app: @name,
       version: @version,
-      elixir: "~> 1.14",
+      elixir: "~> 1.15",
       deps: @deps,
       build_embedded: in_production,
       start_permanent: in_production,

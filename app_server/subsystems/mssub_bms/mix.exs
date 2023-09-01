@@ -21,7 +21,6 @@ defmodule MssubBms.MixProject do
     {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
     {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
     {:ex_doc, "~> 0.20", only: :dev, runtime: false},
-    {:gradient, github: "esl/gradient", only: [:dev], runtime: false},
 
     # Muse Systems Business Management System Components
     {:mscmp_syst_utils, path: "../../components/system/mscmp_syst_utils"},
@@ -43,7 +42,7 @@ defmodule MssubBms.MixProject do
     [
       app: @name,
       version: @version,
-      elixir: "~> 1.14",
+      elixir: "~> 1.15",
       deps: @deps,
       build_embedded: in_production,
       start_permanent: in_production,

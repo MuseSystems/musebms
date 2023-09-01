@@ -18,7 +18,7 @@ defmodule Msplatform.MixProject do
 
   @deps [
     # Third Party Dependencies
-    {:phoenix_live_view, ">= 0.0.0"},
+    {:phoenix_live_view, "~> 0.19"},
     {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
     {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
     {:ex_doc, "~> 0.20", only: :dev, runtime: false}
@@ -40,7 +40,7 @@ defmodule Msplatform.MixProject do
       name: "Msplatform",
       apps_path: @apps_path,
       version: @version,
-      elixir: "~> 1.14",
+      elixir: "~> 1.15",
       deps: @deps,
       aliases: @aliases,
       start_permanent: in_production,

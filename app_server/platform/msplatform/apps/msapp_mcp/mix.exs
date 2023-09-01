@@ -53,7 +53,7 @@ defmodule MsappMcp.MixProject do
       config_path: "../../config/config.exs",
       deps_path: "../../deps",
       lockfile: "../../mix.lock",
-      elixir: "~> 1.14",
+      elixir: "~> 1.15",
       deps: @deps,
       start_permanent: in_production,
       dialyzer: @dialyzer_opts,
