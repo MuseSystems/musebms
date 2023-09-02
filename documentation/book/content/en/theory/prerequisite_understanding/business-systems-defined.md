@@ -8,15 +8,15 @@ draft = false
 weight = 10
 +++
 
-The phrase "business system" can refer to any computer system supporting business operations, but here we mean it to be something very specific: a system used to coordinate business activities across different operating units of a company or corporate division and record the results of those activities.
+The phrase "business system" can refer to any computer system supporting business operations, but here we mean it to be something very specific: a system used to coordinate business activities across different operating units of a company or corporate division and to record the results of those activities.
 
-Historically such systems are called "Enterprise Resource Planning" (ERP) systems.  This term is still used broadly today, but we'll not use this term in our documentation.  ERP systems are widely viewed negatively and with good reason: companies building and implementing ERP systems offer sprawling, labyrinthine applications that are difficult to configure and operate, are sold with expensive professional services engagements to implement, and often times are sold on false promises of effortless benefit.  While some of these realities of ERP system adoption are unavoidable, others are simply the result of low quality offerings designed to maximize software and service profits without incurring the expense of developing higher quality products.
+Historically such systems have been called "Enterprise Resource Planning" (ERP) systems.  This term is still used broadly today, but we'll not use this term in our documentation.  ERP systems are widely viewed negatively and with good reason: companies building and implementing ERP systems offer sprawling, labyrinthine applications that are difficult to configure and operate, are sold with expensive professional services implementation engagements, and often times are sold on false promises of seemingly effortless benefit.  While some of these realities of ERP system adoption are unavoidable, others are simply the result of low quality offerings designed to maximize software and service profits without incurring the expense of developing higher quality products.
 
 Our position is that there is real value that can be extracted from a business system implementation so long as the offering is built understanding business realities and that the staff tasked with incorporating these systems into their business operations understand the system realities and the related trade-offs of utilizing system functions and features.  
 
 ## The Obvious
 
-Adding detail our initial definition of "business system" we can describe what business system software is in terms that will be most familiar to those that use it on a daily basis.
+Adding detail to our initial definition of "business system", we can describe what business system software is in terms that will be familiar to those that use it on a daily basis.
 
 Business systems coordinate and record business activities through the entry of "transaction documents" (transactions) into the system.  These transactions record the activities of typical business functional areas:
 
@@ -127,13 +127,13 @@ Naturally, the lists above can be constructed differently, at different granular
 
 ## Deeper Purpose
 
-Looking behind the business activities of a typical company, a business system's features can be reduced to three principle activities or functional areas of concern:
+Looking beyond the individual features that are offered by typical business systems, such systems can be reduced to three principle activities or functional areas of concern:
 
 ### Accounting
 
-The accounting function is geared towards reporting on the financial outcomes of the business's activities, ensuring that those activities were conducted in accordance with the company's policies, and are recorded accurately.  
+The accounting function is geared toward reporting on the financial outcomes of the business's activities, ensuring that those activities were conducted in accordance with the company's policies, and are recorded accurately.
 
-The primary product of the accounting function are the corporate financial statements prepared for investors, lending institutions, and regulatory/taxing authorities.  To ensure that financial statements are accurate, and to limit risks to the business, controls are established regarding which members of staff may conduct business on behalf of the company and dictate the standards to which business transactions are recorded.  Finally, reconciliation and audits of the business records and financial statements are conducted to find errors or unauthorized transactions.
+The primary product of the accounting function is the corporate financial statements prepared for investors, lending institutions, and regulatory/taxing authorities.  To ensure that financial statements are accurate, and to limit risks to the business, controls are established regarding which members of staff may conduct business on behalf of the company and dictate the standards to which business transactions are recorded.  Finally, reconciliation and audits of the business records and financial statements are conducted to find errors or unauthorized transactions.
 
 Importantly, this is the domain of financial accounting were the accurate recording and reporting of information is done under the auspices of the professional accounting standards (i.e. the [Generally Accepted Accounting Principles](https://www.fasb.org/standards) or the [International Financial Reporting Standards](https://www.ifrs.org/issued-standards/list-of-standards/)) or according to the rules of the pertinent regulatory or taxing authorities.
 
@@ -143,7 +143,7 @@ Supporting business operations involves maintaining records of business relation
 
 Initially and on an ongoing basis staff will create lists of entities in the system which are pertinent to business operations.  Entities may include relationships such as vendors and customers or other kinds of entities such as products or company facilities.  These entities will then be used to standardize the recording of business transactions in the system.
 
-Transaction processing from the business operations perspective in principally focused on managing the life-cycle of the transactions.  A sales quote may eventually become a sales order which in turn will need to be fulfilled or it may be cancelled or the product returned for some reason.  This all has bearing on what actions must be performed by staff.  Reviewing transactions in the system can indicate to staff what work must be done or is no longer needed.
+Transaction processing from the business operations perspective is principally focused on managing the life-cycle of the transactions.  A sales quote may eventually become a sales order which in turn will need to be fulfilled or it may be cancelled or the product eventually returned for some reason.  This all has bearing on what actions must be performed by staff.  Reviewing transactions in the system can indicate to staff what work must be done or is no longer needed.
 
 As transaction processing moves through the business system, the system can centralize and facilitate communication across operating departments and even with relevant third parties. In our sales example from the previous paragraph, a shipping department may record that a product on the sales order is not available which the sales department will be able to see; the sales demand from the order may cause an automatic purchase order for the product to be placed with the appropriate vendor.  
 
@@ -153,7 +153,7 @@ Information collected in support of business operations or for accounting can be
 
 Analytic reporting is in the domain of management accounting practices. Representations of financial information may depart from those of financial accounting and the financial statements.  For example, many manufacturing businesses use the Standard Cost methodology of inventory item costing which uses projected costs for items and inventory analysis rather than costs derived from actual transactions; this is helpful for understanding variances from the planned costs of manufacturing, but is not allowed for valuation purposes by any of the financial accounting standards.
 
-Also unique to the analysis area of concern are long range concerns.  Analysis of results and projects may well include multiple years of past results or project performance into the distant future.  Accounting and business operation concerns, however, are usually much more immediate and sensitive to current conditions.
+Also unique to the analysis area of concern is the greater importance of long range concerns.  Analysis of results and projects may well include multiple years of past results or project performance into the distant future.  Accounting and business operation concerns, however, are usually much more immediate and sensitive to current conditions.
   
 ## Inferences
 
@@ -161,5 +161,4 @@ With an understanding of the basic functions and the defined areas of concern, w
 
 ### User Intent
 
-When a user sits down to use the system, they are typically doing so in service of only one of the three areas of concern described above.  This isn't to say that an individual staff member will only ever be interest in a single area of concern, but that any one task to be completed will focus on a single area of concern.
-
+When a user sits down to use the system, they are typically doing so in service of only one of the three areas of concern described above.  This isn't to say that an individual staff member will only ever be interested in a single area of concern, but rather that any one task to be completed will focus on a single area of concern.
