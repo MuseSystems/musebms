@@ -164,3 +164,9 @@ With an understanding of the basic functions and the defined areas of concern, w
 ### User Intent
 
 When a user sits down to use the system, they are typically doing so in service of only one of the three areas of concern described above.  This isn't to say that an individual staff member will only ever be interested in a single area of concern, but rather that any one task to be completed will focus on a single area of concern.
+
+Therefore any given feature of a business system or information product that system produces will typically be designed to support the needs of a specific area of concern so that a user's task may be completed as efficiently and clearly as possible.
+
+### Presentation
+
+Because business system functionality is likely to be facilitating a specific user task within a specific area of concern, the system needs to present its interface and results in way that makes it clear what the scope, applicability, and limits of the function or result are while maintaining clarity.  This can be a difficult balance to achieve, but it is essential for success.
