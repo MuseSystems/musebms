@@ -32,4 +32,8 @@ The application is built using a few core, widely available open source technolo
 
     The Phoenix Framework is used to create complex, interactive web based user interfaces and APIs using Elixir.
 
+  * <a href="https://gohugo.io" target="_blank"> __Hugo__</a> & The <a href="https://www.docsy.dev" target="_blank"> __Docsy__</a> Theme for Hugo
+
+    This documentation is created using the Hugo static web site generator and the Docsy theme for Hugo.  Our Elixir API documentation is create using Elixir's <a href="https://hexdocs.pm/ex_doc" target="_blank"> __ExDoc__</a> library.
+
 Naturally there are many other libraries and technologies involved in supporting more specific or niche roles, but the three listed above are foundational technologies used in the MuseBMS.
