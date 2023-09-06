@@ -13,6 +13,8 @@
 defmodule Msform.AuthPasswordReset.Definitions do
   alias MscmpSystForms.Types.FormConfig
 
+  @moduledoc false
+
   def get_form_config do
     [
       %FormConfig{

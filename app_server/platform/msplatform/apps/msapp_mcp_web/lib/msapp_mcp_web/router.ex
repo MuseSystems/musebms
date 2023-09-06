@@ -97,9 +97,9 @@ defmodule MsappMcpWeb.Router do
   end
 
   defp not_bootstrapping_check(conn, _opts) do
-    unless MsappMcp.launch_bootstrap?(),
-      do: redirect(conn, to: "/") |> halt(),
-      else: conn
+    if MsappMcp.launch_bootstrap?(),
+      do: conn,
+      else: redirect(conn, to: "/") |> halt()
   end
 
   defp authentication_check(conn, _opts) do
@@ -110,10 +110,10 @@ defmodule MsappMcpWeb.Router do
 
     case authentication_action do
       :session_valid ->
-        unless conn.request_path == "/login" do
-          conn
-        else
+        if conn.request_path == "/login" do
           conn |> redirect(to: "/") |> halt()
+        else
+          conn
         end
 
       :session_invalid ->

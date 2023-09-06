@@ -15,6 +15,8 @@ defmodule Msform.AuthPasswordReset.Data do
 
   alias Msform.AuthPasswordReset.Types
 
+  @moduledoc false
+
   @spec validate_save(Msform.AuthPasswordReset.t(), Types.parameters()) :: Ecto.Changeset.t()
   def validate_save(original_data, current_data),
     do: validate_post(original_data, current_data)
@@ -85,7 +87,7 @@ defmodule Msform.AuthPasswordReset.Data do
     do: "password used too recently"
 
   # This is required so that a password reset to the same password doesn't cause
-  # a forced credential reset to be valid without an actual change of 
+  # a forced credential reset to be valid without an actual change of
   # credential.  Other than for this case, we wouldn't care unless a password
   # rule demanded no credential reuse.
 
@@ -93,9 +95,9 @@ defmodule Msform.AuthPasswordReset.Data do
     password = get_change(changeset, :credential)
     password_new = get_change(changeset, :new_credential)
 
-    unless password == password_new,
-      do: changeset,
-      else: add_error(changeset, :new_credential, "must be different from current password")
+    if password == password_new,
+      do: add_error(changeset, :new_credential, "must be different from current password"),
+      else: changeset
   end
 
   defp validate_credential_verify(changeset) do

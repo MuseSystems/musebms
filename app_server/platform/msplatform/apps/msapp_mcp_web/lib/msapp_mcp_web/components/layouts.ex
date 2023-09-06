@@ -1,5 +1,7 @@
 defmodule MsappMcpWeb.Layouts do
   use MsappMcpWeb, :html
 
-  embed_templates "layouts/*"
+  @moduledoc false
+
+  embed_templates("layouts/*")
 end

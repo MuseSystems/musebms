@@ -11,10 +11,12 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule Msform.AuthPasswordReset.Actions do
+  @moduledoc false
+
   # This form always assumes that the password reset is for the currently logged
   # in user and a user always has permission to change their own credentials.
   #
-  # A more accurate permission here would be `:same_user`, but we're not 
+  # A more accurate permission here would be `:same_user`, but we're not
   # implementing that just yet.
 
   @user_perms %{mcpauthnpr_form: %{view_scope: :all, maint_scope: :all}}
@@ -22,7 +24,7 @@ defmodule Msform.AuthPasswordReset.Actions do
   def preconnect_init(socket, session_name, feature, mode, state, opts) do
     # First test the session and extract the access_acocunt_id
 
-    # Next get the access account name and populate that into the original 
+    # Next get the access account name and populate that into the original
     # data
 
     with {:ok, %{"auth_state" => auth_state}} <- MssubMcp.get_session(session_name),

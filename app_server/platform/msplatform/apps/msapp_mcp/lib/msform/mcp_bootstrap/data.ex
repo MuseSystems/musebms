@@ -15,6 +15,8 @@ defmodule Msform.McpBootstrap.Data do
 
   alias Msform.McpBootstrap.Types
 
+  @moduledoc false
+
   @spec validate_save(Msform.McpBootstrap.t(), Types.parameters()) :: Ecto.Changeset.t()
   def validate_save(original_data, current_data), do: validate_post(original_data, current_data)
 

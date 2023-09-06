@@ -11,6 +11,8 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule Msform.AuthEmailPassword.Actions do
+  @moduledoc false
+
   # For AuthEmailPassword user permissions are assumed since this we don't even
   # have a authenticated user at this point.
   @user_perms %{mcpauthnep_form: %{view_scope: :all, maint_scope: :all}}
