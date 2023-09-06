@@ -15,6 +15,8 @@ defmodule Msform.AuthEmailPassword.Data do
 
   alias Msform.AuthEmailPassword.Types
 
+  @moduledoc false
+
   @spec validate_save(Msform.AuthEmailPassword.t(), Types.parameters()) :: Ecto.Changeset.t()
   def validate_save(original_data, current_data), do: validate_post(original_data, current_data)
 
