@@ -18,7 +18,7 @@ defmodule MsappMcp.Impl.McpBootstrap do
   require Logger
 
   @spec load_disallowed_passwords() :: :ok | {:error, MscmpSystError.t()}
-  def load_disallowed_passwords() do
+  def load_disallowed_passwords do
     Path.join([
       :code.priv_dir(:msapp_mcp),
       "database",
