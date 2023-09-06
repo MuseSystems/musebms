@@ -85,7 +85,7 @@ defmodule Msform.AuthPasswordReset.Actions do
   def process_reset_attempt(socket) do
     session_name = socket.assigns.msrd_session_name
     host_addr = socket.assigns.host_addr
-    current_data = socket.assigns.msrd_current_data |> IO.inspect()
+    current_data = socket.assigns.msrd_current_data
 
     Task.Supervisor.async_nolink(
       MsappMcp.TaskSupervisor,
