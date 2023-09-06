@@ -53,8 +53,6 @@ defmodule Msform.AuthPasswordReset.Data do
         )
 
       {:error, error} ->
-        IO.inspect(error, label: :maybe_validate_password_error)
-
         raise MscmpSystError,
           code: :undefined_error,
           message: "Failure testing password credentials.",
