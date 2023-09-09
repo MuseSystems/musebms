@@ -11,11 +11,10 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystUtils do
-  alias MscmpSystUtils.Impl
-
   @external_resource "README.md"
-
   @moduledoc File.read!(Path.join([__DIR__, "..", "README.md"]))
+
+  alias MscmpSystUtils.Impl
 
   @doc section: :options_management
   @doc """
