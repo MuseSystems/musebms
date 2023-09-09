@@ -12,11 +12,15 @@
 
 defmodule MscmpSystError do
   @external_resource "README.md"
-
   @moduledoc File.read!(Path.join([__DIR__, "..", "README.md"]))
 
   alias MscmpSystError.Impl.MscmpError
   alias MscmpSystError.Types
+
+  @enforce_keys [:code, :message, :cause]
+  defexception code: :undefined_error,
+               message: "undefined error",
+               cause: nil
 
   @typedoc """
   Defines a nestable exception format for reporting MuseBMS application exceptions.
@@ -39,11 +43,6 @@ defmodule MscmpSystError do
           message: String.t(),
           cause: any()
         }
-
-  @enforce_keys [:code, :message, :cause]
-  defexception code: :undefined_error,
-               message: "undefined error",
-               cause: nil
 
   @doc section: :error_parsing
   @doc """
