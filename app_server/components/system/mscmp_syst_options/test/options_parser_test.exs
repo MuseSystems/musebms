@@ -22,7 +22,8 @@ defmodule OptionsParserTest do
   end
 
   test "Can Retrieve Global Database Server", %{options: options} do
-    assert %{server_name: "global_db"} = MscmpSystOptions.get_global_dbserver(options)
+    assert %MscmpSystDb.Types.DbServer{server_name: "global_db"} =
+             MscmpSystOptions.get_global_dbserver(options)
   end
 
   test "Can Retrieve Global Database Password", %{options: options} do
@@ -49,14 +50,14 @@ defmodule OptionsParserTest do
   end
 
   test "Can Retrieve DbServers List Filtered", %{options: options} do
-    assert [%{server_pools: server_pools} | []] =
+    assert [%MscmpSystDb.Types.DbServer{server_pools: server_pools} | []] =
              MscmpSystOptions.list_dbservers(options, ["primary"])
 
     assert "primary" in server_pools
   end
 
   test "Can Retrieve DbServer by Name", %{options: options} do
-    assert %{server_name: "global_db"} =
+    assert %MscmpSystDb.Types.DbServer{server_name: "global_db"} =
              MscmpSystOptions.get_dbserver_by_name(options, "global_db")
   end
 end

@@ -1,11 +1,10 @@
 defmodule MscmpSystOptions do
+  @external_resource "README.md"
+  @moduledoc File.read!(Path.join([__DIR__, "..", "README.md"]))
+
   alias MscmpSystOptions.Impl.OptionsFile
   alias MscmpSystOptions.Impl.OptionsParser
   alias MscmpSystOptions.Types
-
-  @external_resource "README.md"
-
-  @moduledoc File.read!(Path.join([__DIR__, "..", "README.md"]))
 
   @doc section: :file_handling
   @doc """
@@ -145,7 +144,7 @@ defmodule MscmpSystOptions do
 
   @doc section: :options_parsing
   @doc """
-  Returns the `t:MscmpSystDb.Types.db_server/0` data for the database
+  Returns the `t:MscmpSystDb.Types.DbServer.t/0` data for the database
   server designated as hosting the global database.
 
   ## Parameters
@@ -154,10 +153,11 @@ defmodule MscmpSystOptions do
 
   ## Examples
       iex> config_options = MscmpSystOptions.get_options!("./testing_options.toml")
-      iex> %{server_name: "global_db"} = MscmpSystOptions.get_global_dbserver(config_options)
+      iex> %MscmpSystDb.Types.DbServer{server_name: "global_db"} =
+      iex>   MscmpSystOptions.get_global_dbserver(config_options)
 
   """
-  @spec get_global_dbserver(map()) :: MscmpSystDb.Types.db_server()
+  @spec get_global_dbserver(map()) :: MscmpSystDb.Types.DbServer.t()
   defdelegate get_global_dbserver(options), to: OptionsParser
 
   @doc section: :options_parsing
@@ -267,7 +267,7 @@ defmodule MscmpSystOptions do
       iex> config_options = MscmpSystOptions.get_options!("./testing_options.toml")
       iex> [_ | _] = MscmpSystOptions.list_dbservers(config_options)
       [
-        %{
+        %MscmpSystDb.Types.DbServer{
           db_host: "127.0.0.1",
           db_max_instances: 0,
           db_port: 5432,
@@ -279,7 +279,7 @@ defmodule MscmpSystOptions do
           start_server_instances: false,
           server_pools: []
         },
-        %{
+        %MscmpSystDb.Types.DbServer{
           db_host: "127.0.0.1",
           db_max_instances: 30,
           db_port: 5432,
@@ -298,7 +298,7 @@ defmodule MscmpSystOptions do
       iex> config_options = MscmpSystOptions.get_options!("./testing_options.toml")
       iex> [_ | _] = MscmpSystOptions.list_dbservers(config_options, ["primary"])
       [
-        %{
+        %MscmpSystDb.Types.DbServer{
           db_host: "127.0.0.1",
           db_max_instances: 30,
           db_port: 5432,
@@ -314,7 +314,7 @@ defmodule MscmpSystOptions do
 
   """
   @spec list_dbservers(map(), list(Types.server_pool())) ::
-          list(MscmpSystDb.Types.db_server())
+          list(MscmpSystDb.Types.DbServer.t())
   defdelegate list_dbservers(options, filters \\ []), to: OptionsParser
 
   @doc section: :options_parsing
@@ -333,7 +333,7 @@ defmodule MscmpSystOptions do
 
       iex> config_options = MscmpSystOptions.get_options!("./testing_options.toml")
       iex> MscmpSystOptions.get_dbserver_by_name(config_options, "instance_db")
-      %{
+      %MscmpSystDb.Types.DbServer{
         db_host: "127.0.0.1",
         db_max_instances: 30,
         db_port: 5432,
@@ -352,6 +352,6 @@ defmodule MscmpSystOptions do
       iex> MscmpSystOptions.get_dbserver_by_name(config_options, "non_existent_db")
       nil
   """
-  @spec get_dbserver_by_name(map(), String.t()) :: MscmpSystDb.Types.db_server()
+  @spec get_dbserver_by_name(map(), String.t()) :: MscmpSystDb.Types.DbServer.t() | nil
   defdelegate get_dbserver_by_name(options, dbserver_name), to: OptionsParser
 end
