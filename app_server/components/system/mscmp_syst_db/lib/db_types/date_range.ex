@@ -11,8 +11,6 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystDb.DbTypes.DateRange do
-  use Ecto.Type
-
   @moduledoc """
   An Elixir representation of the PostgreSQL `daterange` data type.
 
@@ -22,14 +20,16 @@ defmodule MscmpSystDb.DbTypes.DateRange do
   This type implements the `MscmpSystDb.DbTypes` protocol.
   """
 
+  use Ecto.Type
+
+  defstruct lower: :empty, upper: :empty, lower_inclusive: true, upper_inclusive: false
+
   @type t :: %__MODULE__{
           lower: Date.t() | :empty | :unbound,
           upper: Date.t() | :empty | :unbound,
           lower_inclusive: boolean,
           upper_inclusive: boolean
         }
-
-  defstruct lower: :empty, upper: :empty, lower_inclusive: true, upper_inclusive: false
 
   @spec type :: :daterange
   @impl true

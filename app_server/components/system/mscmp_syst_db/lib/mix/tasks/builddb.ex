@@ -11,7 +11,9 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule Mix.Tasks.Builddb do
-  use Mix.Task
+  @shortdoc """
+  Builds database sources into their respective migrations according to build plans.
+  """
 
   @moduledoc """
   Builds database sources into their respective migrations according to build
@@ -139,14 +141,15 @@ defmodule Mix.Tasks.Builddb do
   being added in their zero padded, base-36 representations.
   """
 
+  use Mix.Task
+
   alias MscmpSystDb.Impl.Migrations
+
   require IEx
+
   @default_src "database"
   @default_dst "priv/database"
 
-  @shortdoc """
-  Builds database sources into their respective migrations according to build plans.
-  """
   @spec run([binary()]) :: :ok
   def run(args) do
     with {opts_cli, _, _} <-

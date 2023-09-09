@@ -11,12 +11,12 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defprotocol MscmpSystDb.DbTypes.Range do
-  alias MscmpSystDb.Types
-
   @moduledoc """
   Defines the common functions which should be implemented for all database
   range types.
   """
+
+  alias MscmpSystDb.Types.BoundsCompareResult
 
   @doc """
   Compares a range with either a range or related base type and returns a map
@@ -39,7 +39,7 @@ defprotocol MscmpSystDb.DbTypes.Range do
       ...>     upper: 200
       ...>   }
       iex> MscmpSystDb.DbTypes.Range.bounds_compare(left_range, right_range)
-      %{lower_comparison: :lt, upper_comparison: :lt}
+      %MscmpSystDb.Types.BoundsCompareResult{lower_comparison: :lt, upper_comparison: :lt}
 
 
   Comparing a range value on the left side with a base value on the right. In
@@ -53,7 +53,7 @@ defprotocol MscmpSystDb.DbTypes.Range do
       ...>     upper_inclusive: false
       ...>   }
       iex> MscmpSystDb.DbTypes.Range.bounds_compare(left_range, 99)
-      %{lower_comparison: :lt, upper_comparison: :eq}
+      %MscmpSystDb.Types.BoundsCompareResult{lower_comparison: :lt, upper_comparison: :eq}
 
   Comparing two ranges where the right side range is contained by the left side
   range.  The left side lower bound is less than the right side lower bound and
@@ -71,9 +71,9 @@ defprotocol MscmpSystDb.DbTypes.Range do
       ...>     upper: 50
       ...>   }
       iex> MscmpSystDb.DbTypes.Range.bounds_compare(left_range, right_range)
-      %{lower_comparison: :lt, upper_comparison: :gt}
+      %MscmpSystDb.Types.BoundsCompareResult{lower_comparison: :lt, upper_comparison: :gt}
   """
-  @spec bounds_compare(any(), any()) :: Types.bounds_compare_result()
+  @spec bounds_compare(any(), any()) :: BoundsCompareResult.t()
   def(bounds_compare(left, right))
 
   @doc """

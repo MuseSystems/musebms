@@ -13,9 +13,9 @@
 defmodule MixBuilddbTaskTest do
   use ExUnit.Case
 
-  require IEx
-
   alias Mix.Tasks.Builddb
+
+  require IEx
 
   @standard_migrations_root_dir "priv/database"
 

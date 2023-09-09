@@ -33,10 +33,10 @@ defimpl MscmpSystDb.DbTypes.Range, for: Date do
 end
 
 defmodule MscmpSystDb.DbTypes.Impl.Date do
+  @moduledoc false
+
   alias MscmpSystDb.DbTypes
   alias MscmpSystDb.DbTypes.Impl.DateRange
-
-  @moduledoc false
 
   def compare(left, %Date{} = right), do: Date.compare(left, right)
 

@@ -2,13 +2,14 @@ defmodule MscmpSystDbTest do
   use ExUnit.Case, async: false
 
   alias Mix.Tasks.Builddb
+  alias MscmpSystDb.Types.{DatastoreContext, DatastoreOptions, DbServer}
 
-  @datastore_options_type_one %{
+  @datastore_options_type_one %DatastoreOptions{
     database_name: "ms_test_type_one",
     datastore_code: "datastore_code_test_type_one",
     datastore_name: :ms_type_one_datastore,
     contexts: [
-      %{
+      %DatastoreContext{
         context_name: nil,
         description: "Type One Owner",
         database_role: "ms_test_type_one_owner",
@@ -18,7 +19,7 @@ defmodule MscmpSystDbTest do
         login_context: false,
         database_owner_context: true
       },
-      %{
+      %DatastoreContext{
         context_name: :ms_type_one_role_01,
         description: "Type One Role 01 ",
         database_role: "ms_type_one_role_01",
@@ -27,7 +28,7 @@ defmodule MscmpSystDbTest do
         start_context: true,
         login_context: true
       },
-      %{
+      %DatastoreContext{
         context_name: :ms_type_one_role_02,
         description: "Type One Role 02 ",
         database_role: "ms_type_one_role_02",
@@ -38,7 +39,7 @@ defmodule MscmpSystDbTest do
         database_owner_context: false
       }
     ],
-    db_server: %{
+    db_server: %DbServer{
       server_name: "test_server",
       start_server_instances: true,
       server_pools: [],
@@ -53,7 +54,7 @@ defmodule MscmpSystDbTest do
   }
 
   @context_type_one_group_two [
-    %{
+    %DatastoreContext{
       context_name: :ms_type_one_role_03,
       description: "Type One Role 03 ",
       database_role: "ms_type_one_role_03",
@@ -62,7 +63,7 @@ defmodule MscmpSystDbTest do
       start_context: true,
       login_context: true
     },
-    %{
+    %DatastoreContext{
       context_name: :ms_type_one_role_04,
       description: "Type One Role 04 ",
       database_role: "ms_type_one_role_04",
@@ -79,12 +80,12 @@ defmodule MscmpSystDbTest do
   @migration_test_datastore_type "test_type_four"
   @migration_test_opts [migrations_root_dir: @migration_test_migrations_root_dir]
 
-  @migration_test_datastore_options %{
+  @migration_test_datastore_options %DatastoreOptions{
     database_name: "ms_test_type_four",
     datastore_code: "datastore_code_test_type_four",
     datastore_name: :ms_type_four_datastore,
     contexts: [
-      %{
+      %DatastoreContext{
         context_name: nil,
         description: "Type Four Owner",
         database_role: "ms_test_type_four_owner",
@@ -94,7 +95,7 @@ defmodule MscmpSystDbTest do
         login_context: false,
         database_owner_context: true
       },
-      %{
+      %DatastoreContext{
         context_name: :ms_type_four_role_01,
         description: "Type Four Role 01 ",
         database_role: "ms_type_four_role_01",
@@ -105,7 +106,7 @@ defmodule MscmpSystDbTest do
         database_owner_context: false
       }
     ],
-    db_server: %{
+    db_server: %DbServer{
       server_name: "test_server",
       start_server_instances: true,
       server_pools: [],
@@ -206,7 +207,7 @@ defmodule MscmpSystDbTest do
 
     datastore_options = @migration_test_datastore_options
 
-    database_owner = Enum.find(datastore_options.contexts, &(&1[:database_owner_context] == true))
+    database_owner = Enum.find(datastore_options.contexts, &(&1.database_owner_context == true))
 
     {:ok, :ready, _} = MscmpSystDb.create_datastore(datastore_options)
 

@@ -11,8 +11,6 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystDb.DbTypes.IntegerRange do
-  use Ecto.Type
-
   @moduledoc """
   An Elixir representation of the PostgreSQL `int8range` data type.
 
@@ -20,14 +18,16 @@ defmodule MscmpSystDb.DbTypes.IntegerRange do
   data type, see: [The PostgreSQL Documentation: Range Types](https://www.postgresql.org/docs/current/rangetypes.html)
   """
 
+  use Ecto.Type
+
+  defstruct lower: :empty, upper: :empty, lower_inclusive: true, upper_inclusive: false
+
   @type t :: %__MODULE__{
           lower: integer() | :empty | :unbound,
           upper: integer() | :empty | :unbound,
           lower_inclusive: boolean,
           upper_inclusive: boolean
         }
-
-  defstruct lower: :empty, upper: :empty, lower_inclusive: true, upper_inclusive: false
 
   @spec type :: :integerrange
   @impl true

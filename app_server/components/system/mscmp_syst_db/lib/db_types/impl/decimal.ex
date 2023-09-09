@@ -33,10 +33,10 @@ defimpl MscmpSystDb.DbTypes.Range, for: Decimal do
 end
 
 defmodule MscmpSystDb.DbTypes.Impl.Decimal do
+  @moduledoc false
+
   alias MscmpSystDb.DbTypes
   alias MscmpSystDb.DbTypes.Impl.DecimalRange
-
-  @moduledoc false
 
   def compare(left, %Decimal{} = right), do: Decimal.compare(left, right)
 

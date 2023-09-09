@@ -11,11 +11,11 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystDb.Impl.Migrations do
+  @moduledoc false
+
   alias MscmpSystDb.Runtime.Datastore
 
   require Logger
-
-  @moduledoc false
 
   ######
   #

@@ -27,9 +27,10 @@ defimpl MscmpSystDb.DbTypes.Range, for: MscmpSystDb.DbTypes.DateRange do
 end
 
 defmodule MscmpSystDb.DbTypes.Impl.DateRange do
-  alias MscmpSystDb.DbTypes
-
   @moduledoc false
+
+  alias MscmpSystDb.DbTypes
+  alias MscmpSystDb.Types.BoundsCompareResult
 
   # TODO: These may be candidates to set up as constants.  Right now I'm hoping
   #       that most comparisons needing a date that is earlier/later than all
@@ -83,7 +84,7 @@ defmodule MscmpSystDb.DbTypes.Impl.DateRange do
     lower_comparison = Date.compare(left_lower, right_lower)
     upper_comparison = Date.compare(left_upper, right_upper)
 
-    %{lower_comparison: lower_comparison, upper_comparison: upper_comparison}
+    %BoundsCompareResult{lower_comparison: lower_comparison, upper_comparison: upper_comparison}
   end
 
   def lower(range), do: calc_lower(range.lower, range.lower_inclusive)

@@ -14,6 +14,7 @@ defmodule DbTypesDateTimeRangeDateTimeTest do
   use ExUnit.Case, async: true
 
   alias MscmpSystDb.DbTypes
+  alias MscmpSystDb.Types.BoundsCompareResult
 
   test "Can compute DateTime/DateTime result operators" do
     assert DbTypes.compare(~U[2022-01-01 00:00:00Z], ~U[2022-01-01 00:00:00Z]) == :eq
@@ -404,10 +405,11 @@ defmodule DbTypesDateTimeRangeDateTimeTest do
       upper_inclusive: true
     }
 
-    assert DbTypes.Range.bounds_compare(control, eq_eq_test) == %{
-             lower_comparison: :eq,
-             upper_comparison: :eq
-           }
+    assert DbTypes.Range.bounds_compare(control, eq_eq_test) ==
+             %BoundsCompareResult{
+               lower_comparison: :eq,
+               upper_comparison: :eq
+             }
 
     # gt/gt
 
@@ -418,10 +420,11 @@ defmodule DbTypesDateTimeRangeDateTimeTest do
       upper_inclusive: true
     }
 
-    assert DbTypes.Range.bounds_compare(control, gt_gt_test) == %{
-             lower_comparison: :gt,
-             upper_comparison: :gt
-           }
+    assert DbTypes.Range.bounds_compare(control, gt_gt_test) ==
+             %BoundsCompareResult{
+               lower_comparison: :gt,
+               upper_comparison: :gt
+             }
 
     # lt/lt
 
@@ -432,10 +435,11 @@ defmodule DbTypesDateTimeRangeDateTimeTest do
       upper_inclusive: true
     }
 
-    assert DbTypes.Range.bounds_compare(control, lt_lt_test) == %{
-             lower_comparison: :lt,
-             upper_comparison: :lt
-           }
+    assert DbTypes.Range.bounds_compare(control, lt_lt_test) ==
+             %BoundsCompareResult{
+               lower_comparison: :lt,
+               upper_comparison: :lt
+             }
 
     # gt/lt
 
@@ -446,10 +450,11 @@ defmodule DbTypesDateTimeRangeDateTimeTest do
       upper_inclusive: true
     }
 
-    assert DbTypes.Range.bounds_compare(control, gt_lt_test) == %{
-             lower_comparison: :gt,
-             upper_comparison: :lt
-           }
+    assert DbTypes.Range.bounds_compare(control, gt_lt_test) ==
+             %BoundsCompareResult{
+               lower_comparison: :gt,
+               upper_comparison: :lt
+             }
 
     # lt/gt
 
@@ -460,10 +465,11 @@ defmodule DbTypesDateTimeRangeDateTimeTest do
       upper_inclusive: true
     }
 
-    assert DbTypes.Range.bounds_compare(control, lt_gt_test) == %{
-             lower_comparison: :lt,
-             upper_comparison: :gt
-           }
+    assert DbTypes.Range.bounds_compare(control, lt_gt_test) ==
+             %BoundsCompareResult{
+               lower_comparison: :lt,
+               upper_comparison: :gt
+             }
   end
 
   test "Can compute DateTime/DateTimeRange bounds operators" do
@@ -476,38 +482,43 @@ defmodule DbTypesDateTimeRangeDateTimeTest do
 
     # eq/gt
 
-    assert DbTypes.Range.bounds_compare(control, ~U[2022-09-01 00:00:00Z]) == %{
-             lower_comparison: :eq,
-             upper_comparison: :gt
-           }
+    assert DbTypes.Range.bounds_compare(control, ~U[2022-09-01 00:00:00Z]) ==
+             %BoundsCompareResult{
+               lower_comparison: :eq,
+               upper_comparison: :gt
+             }
 
     # gt/eq
 
-    assert DbTypes.Range.bounds_compare(~U[2022-09-30 23:59:59Z], control) == %{
-             lower_comparison: :gt,
-             upper_comparison: :eq
-           }
+    assert DbTypes.Range.bounds_compare(~U[2022-09-30 23:59:59Z], control) ==
+             %BoundsCompareResult{
+               lower_comparison: :gt,
+               upper_comparison: :eq
+             }
 
     # gt/gt
 
-    assert DbTypes.Range.bounds_compare(control, ~U[2022-08-31 23:59:59Z]) == %{
-             lower_comparison: :gt,
-             upper_comparison: :gt
-           }
+    assert DbTypes.Range.bounds_compare(control, ~U[2022-08-31 23:59:59Z]) ==
+             %BoundsCompareResult{
+               lower_comparison: :gt,
+               upper_comparison: :gt
+             }
 
     # lt/lt
 
-    assert DbTypes.Range.bounds_compare(~U[2022-08-31 23:59:59Z], control) == %{
-             lower_comparison: :lt,
-             upper_comparison: :lt
-           }
+    assert DbTypes.Range.bounds_compare(~U[2022-08-31 23:59:59Z], control) ==
+             %BoundsCompareResult{
+               lower_comparison: :lt,
+               upper_comparison: :lt
+             }
 
     # gt/lt
 
-    assert DbTypes.Range.bounds_compare(~U[2022-09-15 00:00:00Z], control) == %{
-             lower_comparison: :gt,
-             upper_comparison: :lt
-           }
+    assert DbTypes.Range.bounds_compare(~U[2022-09-15 00:00:00Z], control) ==
+             %BoundsCompareResult{
+               lower_comparison: :gt,
+               upper_comparison: :lt
+             }
   end
 
   test "Can extract DateTimeRange lower bound" do
