@@ -27,9 +27,10 @@ defimpl MscmpSystDb.DbTypes.Range, for: MscmpSystDb.DbTypes.IntegerRange do
 end
 
 defmodule MscmpSystDb.DbTypes.Impl.IntegerRange do
-  alias MscmpSystDb.DbTypes
-
   @moduledoc false
+
+  alias MscmpSystDb.DbTypes
+  alias MscmpSystDb.Types.BoundsCompareResult
 
   def compare(left, right, range \\ :range_both), do: compare_start(left, right, range)
 
@@ -75,7 +76,7 @@ defmodule MscmpSystDb.DbTypes.Impl.IntegerRange do
     lower_comparison = compare_lower(left_lower, right_lower)
     upper_comparison = compare_upper(left_upper, right_upper)
 
-    %{lower_comparison: lower_comparison, upper_comparison: upper_comparison}
+    %BoundsCompareResult{lower_comparison: lower_comparison, upper_comparison: upper_comparison}
   end
 
   def lower(range), do: calc_lower(range.lower, range.lower_inclusive)

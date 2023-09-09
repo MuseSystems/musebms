@@ -1,20 +1,20 @@
 defmodule MscmpSystDb do
+  @external_resource "README.md"
+  @moduledoc File.read!(Path.join([__DIR__, "..", "README.md"]))
+
   alias MscmpSystDb.Impl.Dba
   alias MscmpSystDb.Impl.Privileged
   alias MscmpSystDb.Runtime.Datastore
   alias MscmpSystDb.Types
-
-  @external_resource "README.md"
-
-  @moduledoc File.read!(Path.join([__DIR__, "..", "README.md"]))
+  alias MscmpSystDb.Types.{ContextState, DatastoreContext, DatastoreOptions}
 
   @doc section: :datastore_management
   @doc """
   Returns the state of the database and database roles which back the Datastore
   and contexts, respectively, of the provided Datastore options definition.
   """
-  @spec get_datastore_state(Types.datastore_options(), Keyword.t()) ::
-          {:ok, Types.database_state_values(), list(Types.context_state())}
+  @spec get_datastore_state(DatastoreOptions.t(), Keyword.t()) ::
+          {:ok, Types.database_state_values(), list(ContextState.t())}
           | {:error, MscmpSystError.t()}
   defdelegate get_datastore_state(datastore_options, opts \\ []), to: Dba
 
@@ -25,8 +25,8 @@ defmodule MscmpSystDb do
   The creation of a new Datastore includes creating new database to back the
   Datastore and database roles representing each of the Datastore contexts.
   """
-  @spec create_datastore(Types.datastore_options(), Keyword.t()) ::
-          {:ok, Types.database_state_values(), list(Types.context_state())}
+  @spec create_datastore(DatastoreOptions.t(), Keyword.t()) ::
+          {:ok, Types.database_state_values(), list(ContextState.t())}
           | {:error, MscmpSystError.t()}
   defdelegate create_datastore(datastore_options, opts \\ []), to: Dba
 
@@ -44,8 +44,7 @@ defmodule MscmpSystDb do
   __Note that this is am irreversible, destructive action.  Any successful call
   will result in data loss.__
   """
-  @spec drop_datastore(Types.datastore_options(), Keyword.t()) ::
-          :ok | {:error, MscmpSystError.t()}
+  @spec drop_datastore(DatastoreOptions.t(), Keyword.t()) :: :ok | {:error, MscmpSystError.t()}
   defdelegate drop_datastore(datastore_options, opts \\ []), to: Dba
 
   @doc section: :datastore_management
@@ -60,8 +59,8 @@ defmodule MscmpSystDb do
   is not startable or has `id: nil`, the context will be excluded from the
   results of this function.
   """
-  @spec get_datastore_context_states(Types.datastore_options(), Keyword.t()) ::
-          {:ok, nonempty_list(Types.context_state())} | {:error, MscmpSystError.t()}
+  @spec get_datastore_context_states(DatastoreOptions.t(), Keyword.t()) ::
+          {:ok, nonempty_list(ContextState.t())} | {:error, MscmpSystError.t()}
   defdelegate get_datastore_context_states(datastore_contexts, opts \\ []), to: Dba
 
   @doc section: :datastore_management
@@ -74,11 +73,11 @@ defmodule MscmpSystDb do
   contexts to existing Datastores.
   """
   @spec create_datastore_contexts(
-          Types.datastore_options(),
-          nonempty_list(Types.datastore_context()),
+          DatastoreOptions.t(),
+          nonempty_list(DatastoreContext.t()),
           Keyword.t()
         ) ::
-          {:ok, nonempty_list(Types.context_state())} | {:error, MscmpSystError.t()}
+          {:ok, nonempty_list(ContextState.t())} | {:error, MscmpSystError.t()}
   defdelegate create_datastore_contexts(datastore_options, datastore_contexts, opts \\ []),
     to: Dba
 
@@ -93,8 +92,8 @@ defmodule MscmpSystDb do
   error condition.
   """
   @spec drop_datastore_contexts(
-          Types.datastore_options(),
-          nonempty_list(Types.datastore_context()),
+          DatastoreOptions.t(),
+          nonempty_list(DatastoreContext.t()),
           Keyword.t()
         ) ::
           :ok | {:error, MscmpSystError.t()}
@@ -124,7 +123,7 @@ defmodule MscmpSystDb do
   See `mix builddb` for further explanation version number segment meanings.
 
   """
-  @spec get_datastore_version(Types.datastore_options(), Keyword.t()) ::
+  @spec get_datastore_version(DatastoreOptions.t(), Keyword.t()) ::
           {:ok, String.t()} | {:error, MscmpSystError.t()}
   defdelegate get_datastore_version(datastore_options, opts \\ []), to: Privileged
 
@@ -138,7 +137,7 @@ defmodule MscmpSystDb do
   recent schema version.
   """
   @spec upgrade_datastore(
-          Types.datastore_options(),
+          DatastoreOptions.t(),
           String.t(),
           Keyword.t(),
           Keyword.t()
@@ -156,7 +155,7 @@ defmodule MscmpSystDb do
   @doc """
   Starts database connections for all of login contexts in the Datastore options.
   """
-  @spec start_datastore(Types.datastore_options(), Supervisor.supervisor() | nil) ::
+  @spec start_datastore(DatastoreOptions.t(), Supervisor.supervisor() | nil) ::
           {:ok, :all_started | :some_started, list(Types.context_state_values())}
           | {:error, MscmpSystError.t()}
   defdelegate start_datastore(datastore_options, supervisor_name \\ nil), to: Datastore
@@ -165,7 +164,7 @@ defmodule MscmpSystDb do
   @doc """
   Starts a database connection for the specific Datastore context provided.
   """
-  @spec start_datastore_context(Types.datastore_options(), atom() | Types.datastore_context()) ::
+  @spec start_datastore_context(DatastoreOptions.t(), atom() | DatastoreContext.t()) ::
           {:ok, pid()} | {:error, MscmpSystError.t()}
   defdelegate start_datastore_context(datastore_options, context), to: Datastore
 
@@ -174,8 +173,8 @@ defmodule MscmpSystDb do
   Disconnects the database connections for all of the login Datastore option contexts.
   """
   @spec stop_datastore(
-          Types.datastore_options()
-          | list(Types.datastore_context())
+          DatastoreOptions.t()
+          | list(DatastoreContext.t())
           | list(%{context_name: Types.context_name()}),
           non_neg_integer()
         ) ::
@@ -187,8 +186,7 @@ defmodule MscmpSystDb do
   @doc """
   Disconnects the database connection for the specific Datastore context provided.
   """
-  @spec stop_datastore_context(pid() | atom() | Types.datastore_context(), non_neg_integer()) ::
-          :ok
+  @spec stop_datastore_context(pid() | atom() | DatastoreContext.t(), non_neg_integer()) :: :ok
   defdelegate stop_datastore_context(context, db_shutdown_timeout \\ 60_000),
     to: Datastore
 

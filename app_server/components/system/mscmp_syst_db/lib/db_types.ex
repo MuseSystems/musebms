@@ -11,12 +11,12 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defprotocol MscmpSystDb.DbTypes do
-  alias MscmpSystDb.Types
-
   @moduledoc """
   Defines the common functions which should be implemented for all custom
   DbTypes implemented in MscmpSystDb.
   """
+
+  alias MscmpSystDb.Types
 
   @doc """
   Compares two values and returns the effective operating describing the

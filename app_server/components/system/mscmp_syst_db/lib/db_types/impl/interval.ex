@@ -25,10 +25,10 @@ defimpl String.Chars, for: MscmpSystDb.DbTypes.Interval do
 end
 
 defmodule MscmpSystDb.DbTypes.Impl.Interval do
+  @moduledoc false
+
   alias MscmpSystDb.DbTypes
   alias MscmpSystDb.Types
-
-  @moduledoc false
 
   def compare(left, right) do
     postgrex_left =

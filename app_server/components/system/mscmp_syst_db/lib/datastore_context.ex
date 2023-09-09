@@ -11,9 +11,6 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystDb.DatastoreContext do
-  alias MscmpSystDb.Runtime
-  alias MscmpSystDb.Types
-
   @moduledoc """
   Provides basic OTP related features for Datastore Contexts.
 
@@ -23,6 +20,10 @@ defmodule MscmpSystDb.DatastoreContext do
   and then restarting a specific Context for maintenance reasons.
   """
 
+  alias MscmpSystDb.Runtime
+  alias MscmpSystDb.Types
+  alias MscmpSystDb.Types.DatastoreOptions
+
   @doc """
   Returns the Child Specification used to start the DatastoreContext service.
 
@@ -30,7 +31,7 @@ defmodule MscmpSystDb.DatastoreContext do
 
     * `datastore_options` - a required Map of values which describe the
     Datastore and Datastore Context related connection options.  See
-    `t:MscmpSystDb.Types.datastore_options/0` for more.
+    `t:MscmpSystDb.Types.DatastoreOptions.t/0` for more.
 
     * `context_name` - the identity of the context as understood by the system.
     The context name is both the identity of the context as an Ecto Repo and is
@@ -40,7 +41,7 @@ defmodule MscmpSystDb.DatastoreContext do
     * `options` - a Keyword List of optional values.  Currently there are no
     attributes which are expected in this list and it is safe to omit.
   """
-  @spec child_spec(Types.datastore_options(), Types.context_name(), Keyword.t()) ::
+  @spec child_spec(DatastoreOptions.t(), Types.context_name(), Keyword.t()) ::
           Supervisor.child_spec()
   defdelegate child_spec(datastore_options, context_name, opts \\ []),
     to: Runtime.Datastore,

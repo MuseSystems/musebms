@@ -11,25 +11,20 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystDb.Runtime.Datastore do
+  @moduledoc false
+
   use Ecto.Repo,
     otp_app: :mscmp_syst_db,
     adapter: Ecto.Adapters.Postgres
 
   alias MscmpSystDb.Types
+  alias MscmpSystDb.Types.{ContextState, DatastoreContext, DatastoreOptions}
 
   require Logger
 
   @query_log_level :debug
 
-  # TODO: figure out why start_datastore_post_processing fails the Dialyzer
-  #       test.  Insofar as I've been able to see, it shouldn't cause a no_match
-  #       warning.
-  @dialyzer {:no_match, start_datastore_post_processing: 2}
-
-  @moduledoc false
-
-  @spec get_datastore_child_spec(Types.datastore_options(), Keyword.t()) ::
-          Supervisor.child_spec()
+  @spec get_datastore_child_spec(DatastoreOptions.t(), Keyword.t()) :: Supervisor.child_spec()
   def get_datastore_child_spec(datastore_options, opts)
       when is_map(datastore_options) and is_list(opts) do
     %{
@@ -67,10 +62,7 @@ defmodule MscmpSystDb.Runtime.Datastore do
        }}
   end
 
-  @spec start_datastore(
-          MscmpSystDb.Types.datastore_options(),
-          Supervisor.supervisor() | nil
-        ) ::
+  @spec start_datastore(DatastoreOptions.t(), Supervisor.supervisor() | nil) ::
           {:ok, :all_started | :some_started, list(Types.context_state_values())}
           | {:error, MscmpSystError.t()}
   def start_datastore(datastore_options, supervisor_name) when is_map(datastore_options) do
@@ -118,12 +110,12 @@ defmodule MscmpSystDb.Runtime.Datastore do
   end
 
   defp ds_start_map_reduce_value({:ok, _pid}, acc, context_id) when acc in [nil, :all_started] do
-    {%{context: context_id, state: :started}, :all_started}
+    {%ContextState{context: context_id, state: :started}, :all_started}
   end
 
   defp ds_start_map_reduce_value({:ok, _pid}, acc, context_id)
        when acc in [:some_started, :error] do
-    {%{context: context_id, state: :started}, :some_started}
+    {%ContextState{context: context_id, state: :started}, :some_started}
   end
 
   defp ds_start_map_reduce_value({:error, {:already_started, pid}}, acc, context_id) do
@@ -131,13 +123,18 @@ defmodule MscmpSystDb.Runtime.Datastore do
   end
 
   defp ds_start_map_reduce_value({:error, _}, acc, context_id) when acc in [nil, :error] do
-    {%{context: context_id, state: :not_started}, :error}
+    {%ContextState{context: context_id, state: :not_started}, :error}
   end
 
   defp ds_start_map_reduce_value({:error, _}, acc, context_id)
        when acc in [:all_started, :some_started] do
-    {%{context: context_id, state: :not_started}, :some_started}
+    {%ContextState{context: context_id, state: :not_started}, :some_started}
   end
+
+  # TODO: figure out why start_datastore_post_processing fails the Dialyzer
+  #       test.  Insofar as I've been able to see, it shouldn't cause a no_match
+  #       warning.
+  @dialyzer {:no_match, start_datastore_post_processing: 2}
 
   defp start_datastore_post_processing({:ok, result, context_states}, datastore_supervisor_pid),
     do: {:ok, datastore_supervisor_pid, {result, context_states}}
@@ -147,7 +144,7 @@ defmodule MscmpSystDb.Runtime.Datastore do
     error
   end
 
-  @spec get_context_child_spec(Types.datastore_options(), Types.context_name(), Keyword.t()) ::
+  @spec get_context_child_spec(DatastoreOptions.t(), Types.context_name(), Keyword.t()) ::
           Supervisor.child_spec()
   def get_context_child_spec(datastore_options, context_name, opts)
       when is_atom(context_name) and is_list(opts) do
@@ -183,7 +180,9 @@ defmodule MscmpSystDb.Runtime.Datastore do
   defp validate_datastore_context(context_name) when is_atom(context_name),
     do: {:ok, context_name}
 
-  defp validate_datastore_context(%{context_name: context_name} = datastore_context)
+  defp validate_datastore_context(
+         %DatastoreContext{context_name: context_name} = datastore_context
+       )
        when is_binary(context_name) or is_atom(context_name),
        do: {:ok, datastore_context}
 
@@ -196,9 +195,9 @@ defmodule MscmpSystDb.Runtime.Datastore do
      }}
   end
 
-  @spec start_datastore_context(Types.datastore_options(), atom() | Types.datastore_context()) ::
+  @spec start_datastore_context(DatastoreOptions.t(), atom() | DatastoreContext.t()) ::
           {:ok, pid()} | {:error, MscmpSystError.t()}
-  def start_datastore_context(datastore_options, context) when is_map(context) do
+  def start_datastore_context(datastore_options, %DatastoreContext{} = context) do
     [
       name: context.context_name,
       database: datastore_options.database_name,
@@ -243,7 +242,9 @@ defmodule MscmpSystDb.Runtime.Datastore do
       cause: reason
   end
 
-  defp validate_datastore_options(%{datastore_name: datastore_name} = datastore_options)
+  defp validate_datastore_options(
+         %DatastoreOptions{datastore_name: datastore_name} = datastore_options
+       )
        when is_atom(datastore_name),
        do: {:ok, datastore_options}
 
@@ -257,8 +258,8 @@ defmodule MscmpSystDb.Runtime.Datastore do
   end
 
   @spec stop_datastore(
-          Types.datastore_options()
-          | list(Types.datastore_context())
+          DatastoreOptions.t()
+          | list(DatastoreContext.t())
           | list(%{context_name: Types.context_name()}),
           non_neg_integer()
         ) ::
@@ -282,7 +283,7 @@ defmodule MscmpSystDb.Runtime.Datastore do
       }
   end
 
-  @spec stop_datastore_context(pid() | atom() | Types.datastore_context(), non_neg_integer()) ::
+  @spec stop_datastore_context(pid() | atom() | DatastoreContext.t(), non_neg_integer()) ::
           :ok
   def stop_datastore_context(context, shutdown_timeout) when is_map(context) do
     context.context_name

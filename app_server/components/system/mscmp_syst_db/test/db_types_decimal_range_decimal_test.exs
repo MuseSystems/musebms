@@ -14,6 +14,7 @@ defmodule DbTypesDecimalRangeDecimalTest do
   use ExUnit.Case, async: true
 
   alias MscmpSystDb.DbTypes
+  alias MscmpSystDb.Types.BoundsCompareResult
 
   test "Can compute Decimal/Decimal result operators" do
     assert DbTypes.compare(Decimal.new("1.1"), Decimal.new("1.1")) == :eq
@@ -401,7 +402,7 @@ defmodule DbTypesDecimalRangeDecimalTest do
       upper_inclusive: true
     }
 
-    assert DbTypes.Range.bounds_compare(control, eq_eq_test) == %{
+    assert DbTypes.Range.bounds_compare(control, eq_eq_test) == %BoundsCompareResult{
              lower_comparison: :eq,
              upper_comparison: :eq
            }
@@ -415,7 +416,7 @@ defmodule DbTypesDecimalRangeDecimalTest do
       upper_inclusive: true
     }
 
-    assert DbTypes.Range.bounds_compare(control, gt_gt_test) == %{
+    assert DbTypes.Range.bounds_compare(control, gt_gt_test) == %BoundsCompareResult{
              lower_comparison: :gt,
              upper_comparison: :gt
            }
@@ -429,7 +430,7 @@ defmodule DbTypesDecimalRangeDecimalTest do
       upper_inclusive: true
     }
 
-    assert DbTypes.Range.bounds_compare(control, lt_lt_test) == %{
+    assert DbTypes.Range.bounds_compare(control, lt_lt_test) == %BoundsCompareResult{
              lower_comparison: :lt,
              upper_comparison: :lt
            }
@@ -443,7 +444,7 @@ defmodule DbTypesDecimalRangeDecimalTest do
       upper_inclusive: true
     }
 
-    assert DbTypes.Range.bounds_compare(control, gt_lt_test) == %{
+    assert DbTypes.Range.bounds_compare(control, gt_lt_test) == %BoundsCompareResult{
              lower_comparison: :gt,
              upper_comparison: :lt
            }
@@ -457,7 +458,7 @@ defmodule DbTypesDecimalRangeDecimalTest do
       upper_inclusive: true
     }
 
-    assert DbTypes.Range.bounds_compare(control, lt_gt_test) == %{
+    assert DbTypes.Range.bounds_compare(control, lt_gt_test) == %BoundsCompareResult{
              lower_comparison: :lt,
              upper_comparison: :gt
            }
@@ -473,35 +474,35 @@ defmodule DbTypesDecimalRangeDecimalTest do
 
     # eq/gt
 
-    assert DbTypes.Range.bounds_compare(control, Decimal.new("100")) == %{
+    assert DbTypes.Range.bounds_compare(control, Decimal.new("100")) == %BoundsCompareResult{
              lower_comparison: :eq,
              upper_comparison: :gt
            }
 
     # gt/eq
 
-    assert DbTypes.Range.bounds_compare(Decimal.new("199"), control) == %{
+    assert DbTypes.Range.bounds_compare(Decimal.new("199"), control) == %BoundsCompareResult{
              lower_comparison: :gt,
              upper_comparison: :eq
            }
 
     # gt/gt
 
-    assert DbTypes.Range.bounds_compare(control, Decimal.new("99")) == %{
+    assert DbTypes.Range.bounds_compare(control, Decimal.new("99")) == %BoundsCompareResult{
              lower_comparison: :gt,
              upper_comparison: :gt
            }
 
     # lt/lt
 
-    assert DbTypes.Range.bounds_compare(Decimal.new("99"), control) == %{
+    assert DbTypes.Range.bounds_compare(Decimal.new("99"), control) == %BoundsCompareResult{
              lower_comparison: :lt,
              upper_comparison: :lt
            }
 
     # gt/lt
 
-    assert DbTypes.Range.bounds_compare(Decimal.new("150"), control) == %{
+    assert DbTypes.Range.bounds_compare(Decimal.new("150"), control) == %BoundsCompareResult{
              lower_comparison: :gt,
              upper_comparison: :lt
            }

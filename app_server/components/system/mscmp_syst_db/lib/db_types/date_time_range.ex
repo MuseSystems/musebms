@@ -11,8 +11,6 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystDb.DbTypes.DateTimeRange do
-  use Ecto.Type
-
   @moduledoc """
   An Elixir representation of the PostgreSQL `tstzrange` data type.
 
@@ -20,14 +18,16 @@ defmodule MscmpSystDb.DbTypes.DateTimeRange do
   data type, see: [The PostgreSQL Documentation: Range Types](https://www.postgresql.org/docs/current/rangetypes.html)
   """
 
+  use Ecto.Type
+
+  defstruct lower: :empty, upper: :empty, lower_inclusive: true, upper_inclusive: false
+
   @type t :: %__MODULE__{
           lower: DateTime.t() | :empty | :unbound,
           upper: DateTime.t() | :empty | :unbound,
           lower_inclusive: boolean,
           upper_inclusive: boolean
         }
-
-  defstruct lower: :empty, upper: :empty, lower_inclusive: true, upper_inclusive: false
 
   @spec type :: :datetimerange
   @impl true

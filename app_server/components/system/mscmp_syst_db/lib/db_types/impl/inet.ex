@@ -11,12 +11,12 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystDb.DbTypes.Impl.Inet do
+  @moduledoc false
+
   alias MscmpSystDb.DbTypes
 
   require IP
   require IP.Subnet
-
-  @moduledoc false
 
   @spec to_postgrex_inet(DbTypes.Inet.t()) :: Postgrex.INET.t()
   def to_postgrex_inet(%DbTypes.Inet{address: address, netmask: netmask}),

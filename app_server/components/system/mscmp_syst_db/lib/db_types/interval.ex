@@ -11,17 +11,18 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystDb.DbTypes.Interval do
-  use Ecto.Type
-
-  alias MscmpSystDb.DbTypes.Impl
-  alias MscmpSystDb.Types
-
   @moduledoc """
   An Elixir representation of the PostgreSQL `interval` data type.
 
   Derived from the Postgrex.Interval data type.  For more information about this
   data type, see: [The PostgreSQL Documentation: Date/Time Types](https://www.postgresql.org/docs/current/datatype-datetime.html#DATATYPE-INTERVAL-INPUT)
   """
+  use Ecto.Type
+
+  alias MscmpSystDb.DbTypes.Impl
+  alias MscmpSystDb.Types
+
+  defstruct months: 0, days: 0, secs: 0, microsecs: 0
 
   @type t :: %__MODULE__{
           months: integer(),
@@ -29,8 +30,6 @@ defmodule MscmpSystDb.DbTypes.Interval do
           secs: integer(),
           microsecs: integer()
         }
-
-  defstruct months: 0, days: 0, secs: 0, microsecs: 0
 
   @spec type :: :interval
   @impl true

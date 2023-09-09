@@ -11,10 +11,6 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystDb.DbTypes.Inet do
-  use Ecto.Type
-
-  alias MscmpSystDb.DbTypes.Impl
-
   @moduledoc """
   An Elixir representation of the PostgreSQL `inet` and `cidr` data types.
 
@@ -22,9 +18,13 @@ defmodule MscmpSystDb.DbTypes.Inet do
   data type, see: [The PostgreSQL Documentation: Network Address Types](https://www.postgresql.org/docs/current/datatype-net-types.html)
   """
 
-  @type t :: %__MODULE__{address: :inet.ip_address(), netmask: nil | 0..128}
+  use Ecto.Type
+
+  alias MscmpSystDb.DbTypes.Impl
 
   defstruct address: nil, netmask: nil
+
+  @type t :: %__MODULE__{address: :inet.ip_address(), netmask: nil | 0..128}
 
   @spec type :: :inet
   @impl true

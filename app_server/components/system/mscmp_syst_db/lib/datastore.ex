@@ -11,9 +11,6 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystDb.Datastore do
-  alias MscmpSystDb.Runtime
-  alias MscmpSystDb.Types
-
   @moduledoc """
   Provides basic OTP related features for Datastores.
 
@@ -21,6 +18,9 @@ defmodule MscmpSystDb.Datastore do
   creates a Datastore supervisor for managing Datastore Context worker
   processes.
   """
+
+  alias MscmpSystDb.Runtime
+  alias MscmpSystDb.Types.DatastoreOptions
 
   @doc """
   Provides a Datastore child specification for use with supervisors.
@@ -34,7 +34,7 @@ defmodule MscmpSystDb.Datastore do
 
     * `datastore_options` - a required Map of values which describe the
     Datastore and Datastore Context related connection options.  See
-    `t:MscmpSystDb.Types.datastore_options/0` for more.
+    `t:MscmpSystDb.Types.DatastoreOptions.t/0` for more.
 
     * `opts` - a Keyword list of various options accepted or required by the
     `DynamicSupervisor.start_link/1` function.  Note that we provide some
@@ -42,7 +42,7 @@ defmodule MscmpSystDb.Datastore do
     `timeout: 60_000`, and the `:name` option is defaulted to the
     `datastore_options.datastore_name` value.
   """
-  @spec child_spec(Types.datastore_options(), Keyword.t()) :: Supervisor.child_spec()
+  @spec child_spec(DatastoreOptions.t(), Keyword.t()) :: Supervisor.child_spec()
   defdelegate child_spec(datastore_options, opts \\ []),
     to: Runtime.Datastore,
     as: :get_datastore_child_spec
@@ -64,7 +64,7 @@ defmodule MscmpSystDb.Datastore do
 
     * `datastore_options` - a required Map of values which describe the
     Datastore and Datastore Context related connection options.  See
-    `t:MscmpSystDb.Types.datastore_options/0` for more.
+    `t:MscmpSystDb.Types.DatastoreOptions.t/0` for more.
   """
   @spec start_link(Keyword.t()) :: Supervisor.on_start()
   defdelegate start_link(opts \\ []), to: Runtime.Datastore, as: :start_link_datastore

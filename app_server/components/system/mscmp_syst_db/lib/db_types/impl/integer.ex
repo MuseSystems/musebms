@@ -33,10 +33,10 @@ defimpl MscmpSystDb.DbTypes.Range, for: Integer do
 end
 
 defmodule MscmpSystDb.DbTypes.Impl.Integer do
+  @moduledoc false
+
   alias MscmpSystDb.DbTypes
   alias MscmpSystDb.DbTypes.Impl.IntegerRange
-
-  @moduledoc false
 
   def compare(left, right) when is_integer(left) and is_integer(right) and left == right, do: :eq
   def compare(left, right) when is_integer(left) and is_integer(right) and left > right, do: :gt

@@ -11,13 +11,13 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystDb.Impl.Privileged do
+  @moduledoc false
+
   alias MscmpSystDb.Impl.Migrations
   alias MscmpSystDb.Runtime.Datastore
-  alias MscmpSystDb.Types
+  alias MscmpSystDb.Types.{DatastoreContext, DatastoreOptions, DbServer}
 
   require Logger
-
-  @moduledoc false
 
   ######
   #
@@ -42,7 +42,7 @@ defmodule MscmpSystDb.Impl.Privileged do
   @priv_connection_role "ms_syst_privileged"
   @priv_application_name "MscmpSystDb Datastore Privileged Access"
 
-  @spec get_datastore_version(Types.datastore_options(), Keyword.t()) ::
+  @spec get_datastore_version(DatastoreOptions.t(), Keyword.t()) ::
           {:ok, String.t()} | {:error, MscmpSystError.t()}
   def get_datastore_version(datastore_options, opts) do
     opts = MscmpSystUtils.resolve_options(opts, db_shutdown_timeout: @default_db_shutdown_timeout)
@@ -72,12 +72,12 @@ defmodule MscmpSystDb.Impl.Privileged do
       }
   end
 
-  @spec initialize_datastore(Types.datastore_options(), Keyword.t()) ::
+  @spec initialize_datastore(DatastoreOptions.t(), Keyword.t()) ::
           :ok | {:error, MscmpSystError.t()}
   def initialize_datastore(datastore_options, opts \\ []) do
     opts = MscmpSystUtils.resolve_options(opts, db_shutdown_timeout: @default_db_shutdown_timeout)
 
-    database_owner = Enum.find(datastore_options.contexts, &(&1[:database_owner_context] == true))
+    database_owner = Enum.find(datastore_options.contexts, &(&1.database_owner_context == true))
 
     :ok = start_priv_connection(datastore_options)
 
@@ -98,7 +98,7 @@ defmodule MscmpSystDb.Impl.Privileged do
       }
   end
 
-  @spec upgrade_datastore(Types.datastore_options(), String.t(), Keyword.t(), Keyword.t()) ::
+  @spec upgrade_datastore(DatastoreOptions.t(), String.t(), Keyword.t(), Keyword.t()) ::
           {:ok, [String.t()]} | {:error, MscmpSystError.t()}
   def upgrade_datastore(datastore_options, datastore_type, migration_bindings, opts \\ []) do
     opts = MscmpSystUtils.resolve_options(opts, db_shutdown_timeout: @default_db_shutdown_timeout)
@@ -133,14 +133,14 @@ defmodule MscmpSystDb.Impl.Privileged do
       }
   end
 
-  defp get_priv_connection_options(
-         %{db_server: db_server, database_name: database_name} = options
-       )
-       when is_map(options) do
-    %{
+  defp get_priv_connection_options(%DatastoreOptions{
+         db_server: db_server,
+         database_name: database_name
+       }) do
+    %DatastoreOptions{
       database_name: database_name,
       contexts: [
-        %{
+        %DatastoreContext{
           context_name: nil,
           description: @priv_application_name,
           database_role: @priv_connection_role,
@@ -149,7 +149,7 @@ defmodule MscmpSystDb.Impl.Privileged do
           start_context: true
         }
       ],
-      db_server: %{
+      db_server: %DbServer{
         server_name: db_server.server_name,
         start_server_instances: true,
         server_pools: [],
@@ -168,7 +168,7 @@ defmodule MscmpSystDb.Impl.Privileged do
     priv_options = get_priv_connection_options(datastore_options)
     priv_context = hd(priv_options.contexts)
 
-    database_owner = Enum.find(datastore_options.contexts, &(&1[:database_owner_context] == true))
+    database_owner = Enum.find(datastore_options.contexts, &(&1.database_owner_context == true))
 
     case Datastore.start_datastore_context(priv_options, priv_context) do
       {:ok, priv_pid} ->

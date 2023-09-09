@@ -59,7 +59,7 @@ defmodule MscmpSystDb.MixProject do
           mscmp_syst_error: "../../../../documentation/technical/app_server/mscmp_syst_error",
           mscmp_syst_utils: "../../../../documentation/technical/app_server/mscmp_syst_utils"
         ],
-        nest_modules_by_prefix: [MscmpSystDb.DbTypes],
+        nest_modules_by_prefix: [MscmpSystDb.DbTypes, MscmpSystDb.Types],
         groups_for_functions: [
           Query: &(&1[:section] == :query),
           "Datastore Management": &(&1[:section] == :datastore_management),
@@ -68,7 +68,14 @@ defmodule MscmpSystDb.MixProject do
         ],
         groups_for_modules: [
           API: [MscmpSystDb],
-          "Supporting Types": [MscmpSystDb.Types],
+          "Supporting Types": [
+            MscmpSystDb.Types,
+            MscmpSystDb.Types.ContextState,
+            MscmpSystDb.Types.DatastoreContext,
+            MscmpSystDb.Types.DatastoreOptions,
+            MscmpSystDb.Types.DbServer,
+            MscmpSystDb.Types.BoundsCompareResult
+          ],
           "Database Types": [
             MscmpSystDb.DbTypes.DateRange,
             MscmpSystDb.DbTypes.DecimalRange,
