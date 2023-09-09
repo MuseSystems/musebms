@@ -11,11 +11,11 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystLimiter.Impl.RateLimiter do
+  @moduledoc false
+
   alias MscmpSystLimiter.Types
 
   require Logger
-
-  @moduledoc false
 
   @spec get_counter_name(Types.counter_type(), Types.counter_id()) :: Types.counter_name()
   def get_counter_name(counter_type, counter_id),
