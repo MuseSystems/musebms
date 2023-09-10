@@ -11,18 +11,18 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule Msdata.SystSettings do
+  @moduledoc """
+  The primary data structure for applications settings data.
+
+  Defined in `MscmpSystSettings`.
+  """
+
   use MscmpSystDb.Schema
 
   import Ecto.Changeset
 
   alias MscmpSystDb.DbTypes
   alias MscmpSystSettings.Impl.ChangesetHelpers
-
-  @moduledoc """
-  The primary data structure for applications settings data.
-
-  Defined in `MscmpSystSettings`.
-  """
 
   @type t() ::
           %__MODULE__{

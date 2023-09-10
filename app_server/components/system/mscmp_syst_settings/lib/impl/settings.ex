@@ -11,14 +11,14 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystSettings.Impl.Settings do
-  alias MscmpSystSettings.Runtime.ProcessUtils
-  alias MscmpSystSettings.Types
+  @moduledoc false
 
   import Ecto.Query
 
-  require Logger
+  alias MscmpSystSettings.Runtime.ProcessUtils
+  alias MscmpSystSettings.Types
 
-  @moduledoc false
+  require Logger
 
   ######
   #
