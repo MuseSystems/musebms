@@ -11,6 +11,8 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystAuthn.Impl.Identity.Validation do
+  @moduledoc false
+
   import Ecto.Query
 
   alias MscmpSystAuthn.Impl.Identity.Helpers
@@ -27,8 +29,6 @@ defmodule MscmpSystAuthn.Impl.Identity.Validation do
   # identities that we shouldn't implement the
   # MscmpSystAuthn.Impl.Identity behaviour here, though we should be
   # true to its spirit when appropriate.
-
-  @moduledoc false
 
   @spec request_identity_validation(Types.identity_id() | Msdata.SystIdentities.t(), Keyword.t()) ::
           {:ok, Msdata.SystIdentities.t()} | {:error, MscmpSystError.t() | Exception.t()}
@@ -125,7 +125,9 @@ defmodule MscmpSystAuthn.Impl.Identity.Validation do
       date_now = DateTime.now!("Etc/UTC")
 
       validated_identity =
-        from(i in Msdata.SystIdentities, where: i.id == ^validation_identity.validates_identity_id)
+        from(i in Msdata.SystIdentities,
+          where: i.id == ^validation_identity.validates_identity_id
+        )
         |> MscmpSystDb.one!()
         |> verify_not_expired()
         |> verify_not_validated()
@@ -154,7 +156,9 @@ defmodule MscmpSystAuthn.Impl.Identity.Validation do
   def revoke_identity_validation(validation_identity) do
     MscmpSystDb.transaction(fn ->
       revoked_identity =
-        from(i in Msdata.SystIdentities, where: i.id == ^validation_identity.validates_identity_id)
+        from(i in Msdata.SystIdentities,
+          where: i.id == ^validation_identity.validates_identity_id
+        )
         |> MscmpSystDb.one!()
         |> verify_not_validated()
         |> Helpers.update_record(%{validation_requested: nil})

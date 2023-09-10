@@ -11,9 +11,9 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystAuthn.Msdata.Helpers.SystCredentials do
-  alias MscmpSystAuthn.Msdata.Helpers
-
   @moduledoc false
+
+  alias MscmpSystAuthn.Msdata.Helpers
 
   def resolve_name_params(change_params, operation) do
     change_params

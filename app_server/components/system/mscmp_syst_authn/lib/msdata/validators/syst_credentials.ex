@@ -11,12 +11,12 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystAuthn.Msdata.Validators.SystCredentials do
+  @moduledoc false
+
   import Ecto.Changeset
 
   alias MscmpSystAuthn.Msdata.Helpers
   alias MscmpSystAuthn.Types
-
-  @moduledoc false
 
   @spec insert_changeset(Types.credential_params()) :: Ecto.Changeset.t()
   def insert_changeset(insert_params) do

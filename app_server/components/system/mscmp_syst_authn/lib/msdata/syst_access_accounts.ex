@@ -11,11 +11,7 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule Msdata.SystAccessAccounts do
-  use MscmpSystDb.Schema
-
-  alias MscmpSystAuthn.Msdata.Validators
-  alias MscmpSystAuthn.Types
-
+  @moduledoc tags: [:mscmp_syst_authn]
   @moduledoc """
   Contains the known login accounts which are used solely for the purpose of
   authentication of users.
@@ -25,7 +21,10 @@ defmodule Msdata.SystAccessAccounts do
   Defined in `MscmpSystAuthn`
   """
 
-  @moduledoc tags: [:mscmp_syst_authn]
+  use MscmpSystDb.Schema
+
+  alias MscmpSystAuthn.Msdata.Validators
+  alias MscmpSystAuthn.Types
 
   @type t() ::
           %__MODULE__{

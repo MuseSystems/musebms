@@ -11,17 +11,17 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule Msdata.SystPasswordHistory do
-  use MscmpSystDb.Schema
-
-  alias MscmpSystAuthn.Msdata.Validators
-  alias MscmpSystAuthn.Types
-
   @moduledoc """
   A history of previous user passwords credentials kept for the purpose of
   enforcing the reused password exclusion rule.
 
   Defined in `MscmpSystAuthn`.
   """
+
+  use MscmpSystDb.Schema
+
+  alias MscmpSystAuthn.Msdata.Validators
+  alias MscmpSystAuthn.Types
 
   @type t() ::
           %__MODULE__{

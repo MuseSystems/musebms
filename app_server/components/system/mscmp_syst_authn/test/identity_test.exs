@@ -11,6 +11,11 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule IdentityTest do
+  # credo:disable-for-this-file Credo.Check.Design.AliasUsage
+  #
+  # In the tests we'll be more permissive of failing this check for now.
+  # In application code we should adhere to our configured checks.
+
   use AuthenticationTestCase, async: true
 
   alias MscmpSystAuthn.Impl

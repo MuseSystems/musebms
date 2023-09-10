@@ -11,9 +11,9 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystAuthn.Msdata.Validators.SystDisallowedPasswords do
-  import Ecto.Changeset
-
   @moduledoc false
+
+  import Ecto.Changeset
 
   @spec insert_changeset(binary()) :: Ecto.Changeset.t()
   def insert_changeset(password_hash) do

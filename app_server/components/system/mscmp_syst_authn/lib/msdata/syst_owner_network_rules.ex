@@ -11,12 +11,6 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule Msdata.SystOwnerNetworkRules do
-  use MscmpSystDb.Schema
-
-  alias MscmpSystAuthn.Msdata.Validators
-  alias MscmpSystAuthn.Types
-  alias MscmpSystDb.DbTypes
-
   @moduledoc """
   Expresses Owner specific rules concerning which hosts, as identified by
   IP address, may or may not attempt to authenticate with the system.
@@ -27,6 +21,12 @@ defmodule Msdata.SystOwnerNetworkRules do
 
   Defined in `MscmpSystAuthn`.
   """
+
+  use MscmpSystDb.Schema
+
+  alias MscmpSystAuthn.Msdata.Validators
+  alias MscmpSystAuthn.Types
+  alias MscmpSystDb.DbTypes
 
   @type t() ::
           %__MODULE__{

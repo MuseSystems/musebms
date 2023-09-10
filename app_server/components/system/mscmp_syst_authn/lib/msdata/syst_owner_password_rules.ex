@@ -11,13 +11,6 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule Msdata.SystOwnerPasswordRules do
-  use MscmpSystDb.Schema
-
-  alias MscmpSystAuthn.Msdata.Validators
-  alias MscmpSystAuthn.Types
-
-  alias MscmpSystDb.DbTypes
-
   @moduledoc """
   Establishes Owner specific rules defining the minimum allowed password
   complexity.
@@ -27,6 +20,12 @@ defmodule Msdata.SystOwnerPasswordRules do
 
   Defined in `MscmpSystAuthn`.
   """
+
+  use MscmpSystDb.Schema
+
+  alias MscmpSystAuthn.Msdata.Validators
+  alias MscmpSystAuthn.Types
+  alias MscmpSystDb.DbTypes
 
   @type t() ::
           %__MODULE__{

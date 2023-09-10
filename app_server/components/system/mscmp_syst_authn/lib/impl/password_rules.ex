@@ -11,17 +11,17 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystAuthn.Impl.PasswordRules do
-  import Ecto.Query
+  @moduledoc false
 
   use Pathex
+
+  import Ecto.Query
 
   alias MscmpSystAuthn.Impl
   alias MscmpSystAuthn.Types
   alias MscmpSystDb.DbTypes
 
   require Logger
-
-  @moduledoc false
 
   @spec create_disallowed_password(Types.credential()) ::
           :ok | {:error, MscmpSystError.t() | Exception.t()}
@@ -486,17 +486,27 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
     |> verify_rule_max_length(compare_result, std_rules)
   end
 
-  defp verify_rule_min_length(failure_list, %{lower_comparison: :gt}, std_rules),
-    do: [
-      {:required_rule_min_length, DbTypes.Range.lower(std_rules.password_length)} | failure_list
-    ]
+  defp verify_rule_min_length(
+         failure_list,
+         %MscmpSystDb.Types.BoundsCompareResult{lower_comparison: :gt},
+         std_rules
+       ),
+       do: [
+         {:required_rule_min_length, DbTypes.Range.lower(std_rules.password_length)}
+         | failure_list
+       ]
 
   defp verify_rule_min_length(failure_list, _, _), do: failure_list
 
-  defp verify_rule_max_length(failure_list, %{upper_comparison: :gt}, std_rules),
-    do: [
-      {:required_rule_max_length, DbTypes.Range.upper(std_rules.password_length)} | failure_list
-    ]
+  defp verify_rule_max_length(
+         failure_list,
+         %MscmpSystDb.Types.BoundsCompareResult{upper_comparison: :gt},
+         std_rules
+       ),
+       do: [
+         {:required_rule_max_length, DbTypes.Range.upper(std_rules.password_length)}
+         | failure_list
+       ]
 
   defp verify_rule_max_length(failure_list, _, _), do: failure_list
 

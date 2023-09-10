@@ -11,12 +11,10 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystAuthn.Msdata.Helpers.SystInstanceNetworkRules do
-  alias MscmpSystAuthn.Msdata.Helpers
-
   @moduledoc false
 
-  def resolve_name_params(network_rule_params, _operation) do
-    network_rule_params
-    |> Helpers.General.resolve_instance_id()
-  end
+  alias MscmpSystAuthn.Msdata.Helpers
+
+  def resolve_name_params(network_rule_params, _operation),
+    do: Helpers.General.resolve_instance_id(network_rule_params)
 end

@@ -11,15 +11,15 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystAuthn.Types do
+  @moduledoc """
+  Types used by the Authentication module.
+  """
+
   alias MscmpSystDb.DbTypes
 
   #
   # Note that the ordering of typespecs here is alphabetical.
   #
-
-  @moduledoc """
-  Types used by the Authentication module.
-  """
 
   @typedoc """
   Access Account State functional types which are assigned to Access Account

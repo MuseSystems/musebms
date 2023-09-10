@@ -11,12 +11,12 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystAuthn.Impl.ExtendedMgmtLogic do
+  @moduledoc false
+
   alias MscmpSystAuthn.Impl
   alias MscmpSystAuthn.Types
 
   require Logger
-
-  @moduledoc false
 
   # ============================================================================
   #

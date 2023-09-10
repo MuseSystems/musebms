@@ -11,6 +11,11 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule IdentityRecoveryTest do
+  # credo:disable-for-this-file Credo.Check.Design.AliasUsage
+  #
+  # In the tests we'll be more permissive of failing this check for now.
+  # In application code we should adhere to our configured checks.
+
   use AuthenticationTestCase, async: true
 
   import Ecto.Query
@@ -118,7 +123,7 @@ defmodule IdentityRecoveryTest do
 
     assert {:ok, recovery_identity} =
              Impl.Identity.Recovery.request_credential_recovery(access_account_id,
-               identity_tokens: 'ABC'
+               identity_tokens: ~c"ABC"
              )
 
     assert :rcl = DbTypes.compare(recovery_identity.identity_expires, expires_datetime_range)

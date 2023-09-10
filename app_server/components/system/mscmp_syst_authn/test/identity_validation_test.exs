@@ -11,6 +11,11 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule IdentityValidationTest do
+  # credo:disable-for-this-file Credo.Check.Design.AliasUsage
+  #
+  # In the tests we'll be more permissive of failing this check for now.
+  # In application code we should adhere to our configured checks.
+
   use AuthenticationTestCase, async: true
 
   import Ecto.Query
@@ -211,7 +216,7 @@ defmodule IdentityValidationTest do
 
     assert {:ok, validation_identity} =
              Impl.Identity.Validation.request_identity_validation(target_identity.id,
-               identity_tokens: 'ABC'
+               identity_tokens: ~c"ABC"
              )
 
     updated_target_identity =
@@ -430,7 +435,7 @@ defmodule IdentityValidationTest do
 
     assert {:ok, validation_identity} =
              Impl.Identity.Validation.request_identity_validation(updated_target_identity,
-               identity_tokens: 'ABC'
+               identity_tokens: ~c"ABC"
              )
 
     updated_target_identity =

@@ -11,11 +11,11 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystAuthn.Msdata.Validators.SystPasswordHistory do
+  @moduledoc false
+
   import Ecto.Changeset
 
   alias MscmpSystAuthn.Types
-
-  @moduledoc false
 
   @spec insert_changeset(Types.access_account_id(), String.t()) :: Ecto.Changeset.t()
   def insert_changeset(access_account_id, credential_data)

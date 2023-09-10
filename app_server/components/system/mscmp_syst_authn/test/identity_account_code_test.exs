@@ -11,6 +11,11 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule IdentityAccountCodeTest do
+  # credo:disable-for-this-file Credo.Check.Design.AliasUsage
+  #
+  # In the tests we'll be more permissive of failing this check for now.
+  # In application code we should adhere to our configured checks.
+
   use AuthenticationTestCase, async: true
 
   import Ecto.Query
@@ -66,7 +71,7 @@ defmodule IdentityAccountCodeTest do
     # identity_tokens
     assert {:ok, tokens_identity} =
              Impl.Identity.AccountCode.create_identity(access_account_id, nil,
-               identity_tokens: 'ABC'
+               identity_tokens: ~c"ABC"
              )
 
     assert %Msdata.SystIdentities{validated: val_date, account_identifier: identifier} =
@@ -174,7 +179,7 @@ defmodule IdentityAccountCodeTest do
     assert {:ok, %Msdata.SystIdentities{} = tokens_identity} =
              Impl.Identity.AccountCode.reset_identity_for_access_account_id(
                target.access_account_id,
-               identity_tokens: 'ABC'
+               identity_tokens: ~c"ABC"
              )
 
     assert String.length(tokens_identity.account_identifier) == 12

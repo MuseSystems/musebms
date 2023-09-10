@@ -11,9 +11,9 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystAuthn.Msdata.Helpers.SystAccessAccounts do
-  alias MscmpSystAuthn.Msdata.Helpers
-
   @moduledoc false
+
+  alias MscmpSystAuthn.Msdata.Helpers
 
   def resolve_name_params(access_account_params, operation) do
     access_account_params

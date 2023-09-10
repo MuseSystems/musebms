@@ -11,11 +11,6 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule Msdata.SystAccessAccountInstanceAssocs do
-  use MscmpSystDb.Schema
-
-  alias MscmpSystAuthn.Msdata.Validators
-  alias MscmpSystAuthn.Types
-
   @moduledoc """
   Associates access accounts with the instances for which they are allowed to
   authenticate to.
@@ -26,6 +21,11 @@ defmodule Msdata.SystAccessAccountInstanceAssocs do
 
   Defined in `MscmpSystAuthn`.
   """
+
+  use MscmpSystDb.Schema
+
+  alias MscmpSystAuthn.Msdata.Validators
+  alias MscmpSystAuthn.Types
 
   @type t() ::
           %__MODULE__{

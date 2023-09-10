@@ -11,11 +11,11 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystAuthn.Impl.Identity.Helpers do
+  @moduledoc false
+
   import Ecto.Query
 
   require Logger
-
-  @moduledoc false
 
   def create_identity(create_params, opts) do
     create_params

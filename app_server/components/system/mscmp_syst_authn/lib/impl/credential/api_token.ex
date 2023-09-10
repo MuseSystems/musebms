@@ -11,14 +11,14 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystAuthn.Impl.Credential.ApiToken do
+  @moduledoc false
+
+  @behaviour MscmpSystAuthn.Impl.Credential
+
   alias MscmpSystAuthn.Impl.Credential.GenericToken
   alias MscmpSystAuthn.Types
 
   require Logger
-
-  @behaviour MscmpSystAuthn.Impl.Credential
-
-  @moduledoc false
 
   @default_credential_token_length 40
   @default_credential_tokens :mixed_alphanum

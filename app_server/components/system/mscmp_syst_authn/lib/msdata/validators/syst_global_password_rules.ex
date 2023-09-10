@@ -11,13 +11,12 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystAuthn.Msdata.Validators.SystGlobalPasswordRules do
+  @moduledoc false
+
   import Ecto.Changeset
 
   alias MscmpSystAuthn.Types
-
   alias MscmpSystDb.DbTypes
-
-  @moduledoc false
 
   # The min and min/max password length constraints are derived from
   # NIST SP800-63B.  The absolute max constraint is an arbitrarily chosen value.
@@ -67,7 +66,7 @@ defmodule MscmpSystAuthn.Msdata.Validators.SystGlobalPasswordRules do
     password_length = get_field(changeset, :password_length)
 
     case DbTypes.Range.bounds_compare(@min_password_length, password_length) do
-      %{lower_comparison: :gt} ->
+      %MscmpSystDb.Types.BoundsCompareResult{lower_comparison: :gt} ->
         add_error(
           changeset,
           :password_length,
@@ -83,7 +82,7 @@ defmodule MscmpSystAuthn.Msdata.Validators.SystGlobalPasswordRules do
     password_length = get_field(changeset, :password_length)
 
     case DbTypes.Range.bounds_compare(@min_max_password_length, password_length) do
-      %{upper_comparison: :gt} ->
+      %MscmpSystDb.Types.BoundsCompareResult{upper_comparison: :gt} ->
         add_error(
           changeset,
           :password_length,
@@ -99,7 +98,7 @@ defmodule MscmpSystAuthn.Msdata.Validators.SystGlobalPasswordRules do
     password_length = get_field(changeset, :password_length)
 
     case DbTypes.Range.bounds_compare(@max_password_length, password_length) do
-      %{upper_comparison: :lt} ->
+      %MscmpSystDb.Types.BoundsCompareResult{upper_comparison: :lt} ->
         add_error(
           changeset,
           :password_length,
