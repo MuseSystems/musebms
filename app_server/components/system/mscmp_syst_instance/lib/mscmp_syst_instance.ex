@@ -1,11 +1,10 @@
 defmodule MscmpSystInstance do
+  @external_resource "README.md"
+  @moduledoc File.read!(Path.join([__DIR__, "..", "README.md"]))
+
   alias MscmpSystInstance.Impl
   alias MscmpSystInstance.Runtime
   alias MscmpSystInstance.Types
-
-  @external_resource "README.md"
-
-  @moduledoc File.read!(Path.join([__DIR__, "..", "README.md"]))
 
   # ==============================================================================================
   #
@@ -995,7 +994,7 @@ defmodule MscmpSystInstance do
     obtained from the `MscmpSystOptions` component.
   """
   @spec get_instance_datastore_options(Types.instance_id() | Msdata.SystInstances.t(), map()) ::
-          MscmpSystDb.Types.datastore_options()
+          MscmpSystDb.Types.DatastoreOptions.t()
   defdelegate get_instance_datastore_options(instance, startup_options), to: Impl.Instance
 
   @doc section: :instance_data

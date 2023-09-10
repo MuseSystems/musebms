@@ -11,13 +11,13 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystInstance.Impl.ApplicationContexts do
+  @moduledoc false
+
   import Ecto.Query
 
   alias MscmpSystInstance.Types
 
   require Logger
-
-  @moduledoc false
 
   @spec create_application_context(Types.application_context_params()) ::
           {:ok, Msdata.SystApplicationContexts.t()} | {:error, MscmpSystError.t()}

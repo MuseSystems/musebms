@@ -11,18 +11,17 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystInstance.Msdata.Helpers.SystApplicationContexts do
-  import Ecto.Query
-
   @moduledoc false
+
+  import Ecto.Query
 
   # Currently the operation parameter has no real use and is maintained here for
   # consistency with helper functions found elsewhere in the code base.  We'll
   # go ahead and ensure that the only operation expected (:insert) is checked
   # just as an extra check on correct usage.
 
-  def resolve_name_params(application_context_params, :insert = _operation) do
-    resolve_application_id(application_context_params)
-  end
+  def resolve_name_params(application_context_params, :insert = _operation),
+    do: resolve_application_id(application_context_params)
 
   def resolve_application_id(%{application_name: application_name} = application_context_params)
       when is_binary(application_name) do

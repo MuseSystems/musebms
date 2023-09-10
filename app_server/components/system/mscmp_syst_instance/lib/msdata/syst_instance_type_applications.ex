@@ -11,11 +11,6 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule Msdata.SystInstanceTypeApplications do
-  use MscmpSystDb.Schema
-
-  alias MscmpSystInstance.Msdata.Validators
-  alias MscmpSystInstance.Types
-
   @moduledoc """
   Associates SystApplications to SystInstanceTypes.
 
@@ -24,6 +19,11 @@ defmodule Msdata.SystInstanceTypeApplications do
 
   Defined in `MscmpSystInstance`.
   """
+
+  use MscmpSystDb.Schema
+
+  alias MscmpSystInstance.Msdata.Validators
+  alias MscmpSystInstance.Types
 
   @type t() ::
           %__MODULE__{

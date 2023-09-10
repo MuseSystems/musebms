@@ -11,13 +11,13 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystInstance.Msdata.Validators.SystInstances do
+  @moduledoc false
+
   import Ecto.Changeset
 
   alias MscmpSystInstance.Msdata.Helpers
   alias MscmpSystInstance.Msdata.Validators
   alias MscmpSystInstance.Types
-
-  @moduledoc false
 
   # The expected behavior of instance name resolution is to favor the name over
   # the ID if both are provided and they conflict.  On insert, this is likely

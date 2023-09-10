@@ -13,9 +13,9 @@
 defmodule ApplicationTest do
   use InstanceMgrTestCase, async: true
 
-  alias MscmpSystInstance.Impl
-
   import Ecto.Query
+
+  alias MscmpSystInstance.Impl
 
   test "Can retrieve Application ID by Internal Name" do
     target_app_name = "app1"

@@ -11,6 +11,8 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystInstance.Runtime.Services do
+  @moduledoc false
+
   import Ecto.Query
 
   alias MscmpSystInstance.Impl
@@ -22,8 +24,6 @@ defmodule MscmpSystInstance.Runtime.Services do
   @default_registry_name MscmpSystInstance.Registry
   @default_instance_supervisor_name MscmpSystInstance.InstanceSupervisor
   @default_task_supervisor_name MscmpSystInstance.TaskSupervisor
-
-  @moduledoc false
 
   @spec start_link(Keyword.t()) :: Supervisor.on_start_child()
   def start_link(opts) do

@@ -11,6 +11,8 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystInstance.Impl.Instance do
+  @moduledoc false
+
   import Ecto.Query
 
   alias MscmpSystInstance.Impl
@@ -23,8 +25,6 @@ defmodule MscmpSystInstance.Impl.Instance do
   # a bad idea and terribly naive.  Put "magic" in the name to make apparent
   # that something isn't right here.
   @password_magic <<56, 14, 219, 174, 116, 26, 213, 144, 140, 191, 255, 187, 27, 58, 226, 253>>
-
-  @moduledoc false
 
   @spec create_instance(Types.instance_params()) ::
           {:ok, Msdata.SystInstances.t()} | {:error, MscmpSystError.t()}
@@ -52,7 +52,7 @@ defmodule MscmpSystInstance.Impl.Instance do
           Types.instance_id() | Msdata.SystInstances.t(),
           startup_options :: map()
         ) ::
-          MscmpSystDb.Types.datastore_options()
+          MscmpSystDb.Types.DatastoreOptions.t()
   def get_instance_datastore_options(instance_id, startup_options) when is_binary(instance_id) do
     from(i in Msdata.SystInstances,
       as: :instances,
@@ -85,7 +85,7 @@ defmodule MscmpSystInstance.Impl.Instance do
         &get_instance_context_datastore_options(&1, instance, instance_dbserver, startup_options)
       )
 
-    %{
+    %MscmpSystDb.Types.DatastoreOptions{
       database_name: instance.internal_name,
       datastore_code: global_pepper,
       datastore_name: String.to_atom(instance.internal_name),
@@ -104,7 +104,7 @@ defmodule MscmpSystInstance.Impl.Instance do
          instance_dbserver,
          startup_options
        ) do
-    %{
+    %MscmpSystDb.Types.DatastoreContext{
       context_name: String.to_atom(instance_context.internal_name),
       description:
         instance_data.display_name <>
