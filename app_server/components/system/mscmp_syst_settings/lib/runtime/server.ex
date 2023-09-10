@@ -11,13 +11,14 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystSettings.Runtime.Server do
+  @moduledoc false
+
   use GenServer
-  require Logger
 
   alias MscmpSystSettings.Impl.Settings
   alias MscmpSystSettings.Runtime.ProcessUtils
 
-  @moduledoc false
+  require Logger
 
   ######
   #

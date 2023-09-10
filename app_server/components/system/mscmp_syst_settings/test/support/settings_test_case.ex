@@ -11,8 +11,9 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule SettingsTestCase do
-  use ExUnit.CaseTemplate
   @moduledoc false
+
+  use ExUnit.CaseTemplate
 
   setup do
     [
