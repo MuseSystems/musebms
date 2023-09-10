@@ -11,6 +11,8 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
+  @moduledoc false
+
   alias MscmpSystAuthn.Impl
   alias MscmpSystAuthn.Types
   alias MscmpSystDb.DbTypes
@@ -109,8 +111,6 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     :check_identity,
     :check_credential
   ]
-
-  @moduledoc false
 
   @spec authenticate_email_password(
           Types.account_identifier(),

@@ -11,16 +11,16 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystAuthn.Impl.Identity.ApiToken do
+  @moduledoc false
+
+  @behaviour MscmpSystAuthn.Impl.Identity
+
   import Ecto.Query
 
   alias MscmpSystAuthn.Impl.Identity.Helpers
   alias MscmpSystAuthn.Types
 
   require Logger
-
-  @behaviour MscmpSystAuthn.Impl.Identity
-
-  @moduledoc false
 
   @default_create_validated true
   @default_identity_token_length 20

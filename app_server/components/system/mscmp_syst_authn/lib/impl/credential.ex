@@ -11,9 +11,9 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystAuthn.Impl.Credential do
-  alias MscmpSystAuthn.Types
-
   @moduledoc false
+
+  alias MscmpSystAuthn.Types
 
   # Setup callbacks for Credential type specific calls
 

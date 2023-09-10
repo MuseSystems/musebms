@@ -11,11 +11,6 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule Msdata.SystIdentities do
-  use MscmpSystDb.Schema
-
-  alias MscmpSystAuthn.Msdata.Validators
-  alias MscmpSystAuthn.Types
-
   @moduledoc """
   The identities with which access accounts are identified to the system.
 
@@ -24,6 +19,11 @@ defmodule Msdata.SystIdentities do
 
   Defined in `MscmpSystAuthn`.
   """
+
+  use MscmpSystDb.Schema
+
+  alias MscmpSystAuthn.Msdata.Validators
+  alias MscmpSystAuthn.Types
 
   @type t() ::
           %__MODULE__{

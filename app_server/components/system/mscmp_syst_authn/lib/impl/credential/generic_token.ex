@@ -11,14 +11,14 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystAuthn.Impl.Credential.GenericToken do
+  @moduledoc false
+
   import Ecto.Query
 
   alias MscmpSystAuthn.Impl
   alias MscmpSystAuthn.Types
 
   require Logger
-
-  @moduledoc false
 
   @token_types [
     :credential_types_sysdef_token_api,

@@ -11,12 +11,10 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystAuthn.Msdata.Helpers.SystOwnerPasswordRules do
-  alias MscmpSystAuthn.Msdata.Helpers
-
   @moduledoc false
 
-  def resolve_name_params(password_rule_params, _operation) do
-    password_rule_params
-    |> Helpers.General.resolve_owner_id()
-  end
+  alias MscmpSystAuthn.Msdata.Helpers
+
+  def resolve_name_params(password_rule_params, _operation),
+    do: Helpers.General.resolve_owner_id(password_rule_params)
 end

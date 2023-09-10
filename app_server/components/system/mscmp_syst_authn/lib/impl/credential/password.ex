@@ -11,18 +11,17 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystAuthn.Impl.Credential.Password do
+  @moduledoc false
+
+  @behaviour MscmpSystAuthn.Impl.Credential
+
   import Ecto.Query
 
   alias MscmpSystAuthn.Impl
   alias MscmpSystAuthn.Types
-
   alias MscmpSystDb.DbTypes
 
   require Logger
-
-  @behaviour MscmpSystAuthn.Impl.Credential
-
-  @moduledoc false
 
   # TODO: Really think about logging in this context.  We don't want
   #       plaintext_pwd to leak here.  No special care has been taken at this
@@ -81,13 +80,21 @@ defmodule MscmpSystAuthn.Impl.Credential.Password do
     |> verify_max_length(compare_result, DbTypes.Range.upper(length_rule))
   end
 
-  defp verify_min_length(violations_list, %{lower_comparison: :lt}, min_length),
-    do: [{:password_rule_length_min, min_length} | violations_list]
+  defp verify_min_length(
+         violations_list,
+         %MscmpSystDb.Types.BoundsCompareResult{lower_comparison: :lt},
+         min_length
+       ),
+       do: [{:password_rule_length_min, min_length} | violations_list]
 
   defp verify_min_length(violations_list, _, _), do: violations_list
 
-  defp verify_max_length(violations_list, %{upper_comparison: :gt}, max_length),
-    do: [{:password_rule_length_max, max_length} | violations_list]
+  defp verify_max_length(
+         violations_list,
+         %MscmpSystDb.Types.BoundsCompareResult{upper_comparison: :gt},
+         max_length
+       ),
+       do: [{:password_rule_length_max, max_length} | violations_list]
 
   defp verify_max_length(violations_list, _, _), do: violations_list
 

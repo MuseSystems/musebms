@@ -11,6 +11,11 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule CredentialValidationTest do
+  # credo:disable-for-this-file Credo.Check.Design.AliasUsage
+  #
+  # In the tests we'll be more permissive of failing this check for now.
+  # In application code we should adhere to our configured checks.
+
   use AuthenticationTestCase, async: true
 
   import Ecto.Query
@@ -110,7 +115,7 @@ defmodule CredentialValidationTest do
                test_account.access_account_id,
                test_account.identity_id,
                nil,
-               credential_tokens: 'XYZ'
+               credential_tokens: ~c"XYZ"
              )
 
     assert String.length(returned_credential) == 40

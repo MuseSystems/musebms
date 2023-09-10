@@ -11,9 +11,9 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystAuthn.Msdata.Validators.General do
-  import Ecto.Changeset
-
   @moduledoc false
+
+  import Ecto.Changeset
 
   # Validate the internal_name key for the changeset.
   #

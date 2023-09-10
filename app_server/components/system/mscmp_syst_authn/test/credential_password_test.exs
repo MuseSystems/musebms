@@ -11,6 +11,11 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule CredentialPasswordTest do
+  # credo:disable-for-this-file Credo.Check.Design.AliasUsage
+  #
+  # In the tests we'll be more permissive of failing this check for now.
+  # In application code we should adhere to our configured checks.
+
   use AuthenticationTestCase, async: true
 
   import Ecto.Query
@@ -213,7 +218,7 @@ defmodule CredentialPasswordTest do
     # according to the rules, but I expect that with 64 characters the chances
     # of randomly generating an invalid password is low.
 
-    new_pwd = MscmpSystUtils.get_random_string(64, '0123456789ABCDEFGHIJabcdefghij`~!@#$%^&*')
+    new_pwd = MscmpSystUtils.get_random_string(64, ~c"0123456789ABCDEFGHIJabcdefghij`~!@#$%^&*")
 
     test_time = DateTime.truncate(DateTime.utc_now(), :second)
 
@@ -245,9 +250,9 @@ defmodule CredentialPasswordTest do
     # according to the rules, but I expect that with 64 characters the chances
     # of randomly generating an invalid password is low.
 
-    new1_pwd = MscmpSystUtils.get_random_string(64, '0123456789ABCDEFGHIJabcdefghij`~!@#$%^&*')
-    new2_pwd = MscmpSystUtils.get_random_string(64, '0123456789ABCDEFGHIJabcdefghij`~!@#$%^&*')
-    new3_pwd = MscmpSystUtils.get_random_string(64, '0123456789ABCDEFGHIJabcdefghij`~!@#$%^&*')
+    new1_pwd = MscmpSystUtils.get_random_string(64, ~c"0123456789ABCDEFGHIJabcdefghij`~!@#$%^&*")
+    new2_pwd = MscmpSystUtils.get_random_string(64, ~c"0123456789ABCDEFGHIJabcdefghij`~!@#$%^&*")
+    new3_pwd = MscmpSystUtils.get_random_string(64, ~c"0123456789ABCDEFGHIJabcdefghij`~!@#$%^&*")
 
     assert :ok = Impl.Credential.Password.set_credential(access_account_id, new1_pwd, nil)
 

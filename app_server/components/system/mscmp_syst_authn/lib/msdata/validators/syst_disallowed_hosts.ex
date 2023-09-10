@@ -11,11 +11,11 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystAuthn.Msdata.Validators.SystDisallowedHosts do
+  @moduledoc false
+
   import Ecto.Changeset
 
   alias MscmpSystDb.DbTypes
-
-  @moduledoc false
 
   @spec insert_changeset(DbTypes.Inet.t()) :: Ecto.Changeset.t()
   def insert_changeset(host_address) do

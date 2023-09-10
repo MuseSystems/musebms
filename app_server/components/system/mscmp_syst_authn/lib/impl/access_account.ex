@@ -11,13 +11,13 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystAuthn.Impl.AccessAccount do
+  @moduledoc false
+
   import Ecto.Query
 
   alias MscmpSystAuthn.Types
 
   require Logger
-
-  @moduledoc false
 
   @spec create_access_account(Types.access_account_params()) ::
           {:ok, Msdata.SystAccessAccounts.t()} | {:error, MscmpSystError.t()}

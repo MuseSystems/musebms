@@ -11,7 +11,10 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule IdentityApiTokenTest do
-  use AuthenticationTestCase, async: true
+  # credo:disable-for-this-file Credo.Check.Design.AliasUsage
+  #
+  # In the tests we'll be more permissive of failing this check for now.
+  # In application code we should adhere to our configured checks.  use AuthenticationTestCase, async: true
 
   import Ecto.Query
 
@@ -81,7 +84,9 @@ defmodule IdentityApiTokenTest do
 
     # identity_tokens
     assert {:ok, tokens_identity} =
-             Impl.Identity.ApiToken.create_identity(access_account_id, nil, identity_tokens: 'ABC')
+             Impl.Identity.ApiToken.create_identity(access_account_id, nil,
+               identity_tokens: ~c"ABC"
+             )
 
     assert %Msdata.SystIdentities{validated: val_date, account_identifier: identifier} =
              tokens_identity

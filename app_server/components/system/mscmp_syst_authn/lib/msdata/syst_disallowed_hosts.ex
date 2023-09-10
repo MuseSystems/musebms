@@ -11,11 +11,6 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule Msdata.SystDisallowedHosts do
-  use MscmpSystDb.Schema
-
-  alias MscmpSystAuthn.Msdata.Validators
-  alias MscmpSystDb.DbTypes
-
   @moduledoc """
   A simple listing of "banned" IP address which are not allowed to authenticate
   their users to the system.
@@ -29,6 +24,11 @@ defmodule Msdata.SystDisallowedHosts do
 
   Defined in `MscmpSystAuthn`.
   """
+
+  use MscmpSystDb.Schema
+
+  alias MscmpSystAuthn.Msdata.Validators
+  alias MscmpSystDb.DbTypes
 
   @type t() ::
           %__MODULE__{

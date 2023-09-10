@@ -11,16 +11,16 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystAuthn.Impl.Identity.AccountCode do
+  @moduledoc false
+
+  @behaviour MscmpSystAuthn.Impl.Identity
+
   import Ecto.Query
 
   alias MscmpSystAuthn.Impl
   alias MscmpSystAuthn.Types
 
   require Logger
-
-  @behaviour MscmpSystAuthn.Impl.Identity
-
-  @moduledoc false
 
   @default_identity_token_length 12
   @default_identity_tokens :b32c

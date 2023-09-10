@@ -11,13 +11,13 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystAuthn.Impl.AccessAccountInstanceAssoc do
+  @moduledoc false
+
   import Ecto.Query
 
   alias MscmpSystAuthn.Types
 
   require Logger
-
-  @moduledoc false
 
   @spec invite_to_instance(
           Types.access_account_id(),

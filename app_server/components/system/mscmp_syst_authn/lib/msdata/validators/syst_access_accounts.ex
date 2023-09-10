@@ -11,13 +11,13 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystAuthn.Msdata.Validators.SystAccessAccounts do
+  @moduledoc false
+
   import Ecto.Changeset
 
   alias MscmpSystAuthn.Msdata.Helpers
   alias MscmpSystAuthn.Msdata.Validators
   alias MscmpSystAuthn.Types
-
-  @moduledoc false
 
   @spec insert_changeset(Types.access_account_params(), Keyword.t()) :: Ecto.Changeset.t()
   def insert_changeset(insert_params, opts) do

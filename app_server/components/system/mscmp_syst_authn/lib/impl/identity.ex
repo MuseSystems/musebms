@@ -11,14 +11,14 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystAuthn.Impl.Identity do
+  @moduledoc false
+
   import Ecto.Query
 
   alias MscmpSystAuthn.Impl.Identity.Helpers
   alias MscmpSystAuthn.Types
 
   require Logger
-
-  @moduledoc false
 
   # Setup callbacks for Identity type specific calls
 

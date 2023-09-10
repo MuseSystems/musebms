@@ -11,6 +11,8 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystAuthn.Impl.Identity.Recovery do
+  @moduledoc false
+
   import Ecto.Query
 
   alias MscmpSystAuthn.Impl.Identity.Helpers
@@ -27,8 +29,6 @@ defmodule MscmpSystAuthn.Impl.Identity.Recovery do
   # identities that we shouldn't implement the
   # MscmpSystAuthn.Impl.Identity behaviour here, though we should be
   # true to its spirit when appropriate.
-
-  @moduledoc false
 
   @default_expiration_hours 24
   @default_identity_token_length 40

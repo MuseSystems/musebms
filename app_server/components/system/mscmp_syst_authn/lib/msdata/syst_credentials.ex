@@ -11,11 +11,6 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule Msdata.SystCredentials do
-  use MscmpSystDb.Schema
-
-  alias MscmpSystAuthn.Msdata.Validators
-  alias MscmpSystAuthn.Types
-
   @moduledoc """
   Hosts the credentials by which a user or external system will prove its
   identity.
@@ -25,6 +20,11 @@ defmodule Msdata.SystCredentials do
 
   Defined in `MscmpSystAuthn`.
   """
+
+  use MscmpSystDb.Schema
+
+  alias MscmpSystAuthn.Msdata.Validators
+  alias MscmpSystAuthn.Types
 
   @type t() ::
           %__MODULE__{

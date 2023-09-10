@@ -11,12 +11,11 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystAuthn do
+  @external_resource "README.md"
+  @moduledoc File.read!(Path.join([__DIR__, "..", "README.md"]))
+
   alias MscmpSystAuthn.Impl
   alias MscmpSystAuthn.Types
-
-  @external_resource "README.md"
-
-  @moduledoc File.read!(Path.join([__DIR__, "..", "README.md"]))
 
   # ==============================================================================================
   # ==============================================================================================

@@ -11,6 +11,8 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystAuthn.Impl.NetworkRules do
+  @moduledoc false
+
   import Ecto.Query
 
   alias MscmpSystAuthn.Types
@@ -19,8 +21,6 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
   require IP
   require IP.Subnet
   require Logger
-
-  @moduledoc false
 
   @spec host_disallowed(Types.host_address()) ::
           {:ok, boolean()} | {:error, MscmpSystError.t() | Exception.t()}

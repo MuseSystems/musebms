@@ -11,12 +11,6 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule Msdata.SystGlobalPasswordRules do
-  use MscmpSystDb.Schema
-
-  alias MscmpSystAuthn.Msdata.Validators
-  alias MscmpSystAuthn.Types
-  alias MscmpSystDb.DbTypes
-
   @moduledoc """
   Establishes rules defining the minimum allowed password complexity
   on a global, whole system basis.
@@ -26,6 +20,12 @@ defmodule Msdata.SystGlobalPasswordRules do
 
   Defined in `MscmpSystAuthn`.
   """
+
+  use MscmpSystDb.Schema
+
+  alias MscmpSystAuthn.Msdata.Validators
+  alias MscmpSystAuthn.Types
+  alias MscmpSystDb.DbTypes
 
   @type t() ::
           %__MODULE__{

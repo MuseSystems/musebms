@@ -11,12 +11,12 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystAuthn.Msdata.Validators.SystGlobalNetworkRules do
+  @moduledoc false
+
   import Ecto.Changeset
 
   alias MscmpSystAuthn.Msdata.Helpers
   alias MscmpSystAuthn.Types
-
-  @moduledoc false
 
   @spec insert_changeset(Types.global_network_rule_params()) :: Ecto.Changeset.t()
   def insert_changeset(insert_params) do
@@ -62,7 +62,9 @@ defmodule MscmpSystAuthn.Msdata.Validators.SystGlobalNetworkRules do
     |> unique_constraint(:ordering, name: :syst_global_network_rules_ordering_udx)
     |> check_constraint(:functional_type, name: :syst_global_network_rules_functional_type_chk)
     |> check_constraint(:ip_host_or_network, name: :syst_global_network_rules_host_or_range_chk)
-    |> check_constraint(:ip_host_range_lower, name: :syst_global_network_rules_ip_range_family_chk)
+    |> check_constraint(:ip_host_range_lower,
+      name: :syst_global_network_rules_ip_range_family_chk
+    )
   end
 
   defp validate_functional_type(changeset) do

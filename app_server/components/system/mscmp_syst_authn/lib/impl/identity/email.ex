@@ -11,14 +11,14 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystAuthn.Impl.Identity.Email do
+  @moduledoc false
+
+  @behaviour MscmpSystAuthn.Impl.Identity
+
   alias MscmpSystAuthn.Impl.Identity.Helpers
   alias MscmpSystAuthn.Types
 
   require Logger
-
-  @behaviour MscmpSystAuthn.Impl.Identity
-
-  @moduledoc false
 
   @default_create_validated false
 
