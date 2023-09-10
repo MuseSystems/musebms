@@ -11,14 +11,14 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystEnums.Impl.Enums do
+  @moduledoc false
+
   import Ecto.Query
 
   alias MscmpSystEnums.Runtime.ProcessUtils
   alias MscmpSystEnums.Types
 
   require Logger
-
-  @moduledoc false
 
   ######
   #

@@ -11,9 +11,9 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystEnums.Impl.ChangesetHelpers do
-  import Ecto.Changeset
-
   @moduledoc false
+
+  import Ecto.Changeset
 
   @default_min_internal_name_length 6
   @default_max_internal_name_length 64

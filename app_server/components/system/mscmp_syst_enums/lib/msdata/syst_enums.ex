@@ -11,17 +11,17 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule Msdata.SystEnums do
-  use MscmpSystDb.Schema
-
-  import Ecto.Changeset
-
-  alias MscmpSystEnums.Impl.ChangesetHelpers
-
   @moduledoc """
   The data structure defining available system enumerations (lists of values).
 
   Defined in `MscmpSystEnums`.
   """
+
+  use MscmpSystDb.Schema
+
+  import Ecto.Changeset
+
+  alias MscmpSystEnums.Impl.ChangesetHelpers
 
   @type t() ::
           %__MODULE__{

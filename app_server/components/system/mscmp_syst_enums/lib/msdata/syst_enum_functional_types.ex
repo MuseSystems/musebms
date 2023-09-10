@@ -11,12 +11,6 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule Msdata.SystEnumFunctionalTypes do
-  use MscmpSystDb.Schema
-
-  import Ecto.Changeset
-
-  alias MscmpSystEnums.Impl.ChangesetHelpers
-
   @moduledoc """
   The data structure defining the functional types associated with a given
   enumeration.
@@ -34,6 +28,12 @@ defmodule Msdata.SystEnumFunctionalTypes do
 
   Defined in `MscmpSystEnums`.
   """
+
+  use MscmpSystDb.Schema
+
+  import Ecto.Changeset
+
+  alias MscmpSystEnums.Impl.ChangesetHelpers
 
   @type t() ::
           %__MODULE__{

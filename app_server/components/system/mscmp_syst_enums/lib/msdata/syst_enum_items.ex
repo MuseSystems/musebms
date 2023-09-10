@@ -11,16 +11,17 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule Msdata.SystEnumItems do
-  use MscmpSystDb.Schema
-  import Ecto.Changeset
-
-  alias MscmpSystEnums.Impl.ChangesetHelpers
-
   @moduledoc """
   The data structure defining individual enumerated values.
 
   Defined in `MscmpSystEnums`.
   """
+
+  use MscmpSystDb.Schema
+
+  import Ecto.Changeset
+
+  alias MscmpSystEnums.Impl.ChangesetHelpers
 
   @type t() ::
           %__MODULE__{
