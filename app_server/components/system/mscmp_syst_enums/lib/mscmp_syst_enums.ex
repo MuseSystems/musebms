@@ -1,11 +1,10 @@
 defmodule MscmpSystEnums do
+  @external_resource "README.md"
+  @moduledoc File.read!(Path.join([__DIR__, "..", "README.md"]))
+
   alias MscmpSystEnums.Impl
   alias MscmpSystEnums.Runtime
   alias MscmpSystEnums.Types
-
-  @external_resource "README.md"
-
-  @moduledoc File.read!(Path.join([__DIR__, "..", "README.md"]))
 
   @doc section: :service_management
   @doc """

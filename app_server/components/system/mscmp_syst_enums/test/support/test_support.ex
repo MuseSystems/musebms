@@ -24,13 +24,14 @@ defmodule TestSupport do
   ########################
 
   alias Mix.Tasks.Builddb
+  alias MscmpSystDb.Types.{DatastoreContext, DatastoreOptions, DbServer}
 
-  @datastore_options %{
+  @datastore_options %DatastoreOptions{
     database_name: "mscmp_syst_enums",
     datastore_code: "mscmp_syst_enums.testing.code",
     datastore_name: :mscmp_syst_enums,
     contexts: [
-      %{
+      %DatastoreContext{
         context_name: nil,
         description: "MscmpSystEnums Testing Owner",
         database_role: "mscmp_syst_enums_owner",
@@ -40,7 +41,7 @@ defmodule TestSupport do
         login_context: false,
         database_owner_context: true
       },
-      %{
+      %DatastoreContext{
         context_name: :enums_app_context,
         description: "MscmpSystEnums Testing App User",
         database_role: "mscmp_syst_enums_app_user",
@@ -50,7 +51,7 @@ defmodule TestSupport do
         login_context: true
       }
     ],
-    db_server: %{
+    db_server: %DbServer{
       server_name: "test_server",
       start_server_instances: true,
       server_pools: [],
@@ -74,7 +75,7 @@ defmodule TestSupport do
 
     datastore_options = @datastore_options
 
-    database_owner = Enum.find(datastore_options.contexts, &(&1[:database_owner_context] == true))
+    database_owner = Enum.find(datastore_options.contexts, &(&1.database_owner_context == true))
 
     {:ok, :ready, _} = MscmpSystDb.create_datastore(datastore_options)
 

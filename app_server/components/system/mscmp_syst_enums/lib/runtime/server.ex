@@ -10,13 +10,14 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 defmodule MscmpSystEnums.Runtime.Server do
+  @moduledoc false
+
   use GenServer
-  require Logger
 
   alias MscmpSystEnums.Impl.Enums
   alias MscmpSystEnums.Runtime.ProcessUtils
 
-  @moduledoc false
+  require Logger
 
   ######
   #
