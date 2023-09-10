@@ -11,17 +11,17 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule Msdata.SystApplications do
-  use MscmpSystDb.Schema
-
-  alias MscmpSystInstance.Msdata.Validators
-  alias MscmpSystInstance.Types
-
   @moduledoc """
   Data structure describing the known applications for which instances may be
   hosted.
 
   Defined in `MscmpSystInstance`.
   """
+
+  use MscmpSystDb.Schema
+
+  alias MscmpSystInstance.Msdata.Validators
+  alias MscmpSystInstance.Types
 
   @type t() ::
           %__MODULE__{

@@ -11,11 +11,11 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystInstance.Impl.InstanceTypeContext do
+  @moduledoc false
+
   alias MscmpSystInstance.Types
 
   require Logger
-
-  @moduledoc false
 
   @spec update_instance_type_context(
           Types.instance_type_context_id() | Msdata.SystInstanceTypeContexts.t(),

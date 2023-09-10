@@ -11,13 +11,13 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystInstance.Msdata.Validators.SystInstanceContexts do
+  @moduledoc false
+
   import Ecto.Changeset
 
   alias MscmpSystInstance.Msdata.Helpers
   alias MscmpSystInstance.Msdata.Validators
   alias MscmpSystInstance.Types
-
-  @moduledoc false
 
   @spec update_changeset(
           Msdata.SystInstanceContexts.t(),

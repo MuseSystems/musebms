@@ -11,11 +11,11 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystInstance.Msdata.Validators.SystInstanceTypeApplications do
+  @moduledoc false
+
   import Ecto.Changeset
 
   alias MscmpSystInstance.Types
-
-  @moduledoc false
 
   @spec insert_changeset(Types.instance_type_application_params()) :: Ecto.Changeset.t()
   def insert_changeset(instance_type_application_params) do

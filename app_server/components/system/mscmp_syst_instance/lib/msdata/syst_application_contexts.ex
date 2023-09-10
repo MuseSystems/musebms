@@ -11,11 +11,6 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule Msdata.SystApplicationContexts do
-  use MscmpSystDb.Schema
-
-  alias MscmpSystInstance.Msdata.Validators
-  alias MscmpSystInstance.Types
-
   @moduledoc """
   Defines the data structure of the Application Context.
 
@@ -27,6 +22,11 @@ defmodule Msdata.SystApplicationContexts do
 
   Defined in `MscmpSystInstance`.
   """
+
+  use MscmpSystDb.Schema
+
+  alias MscmpSystInstance.Msdata.Validators
+  alias MscmpSystInstance.Types
 
   @type t() ::
           %__MODULE__{

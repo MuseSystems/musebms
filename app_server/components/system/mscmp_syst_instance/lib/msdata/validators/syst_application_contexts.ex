@@ -11,13 +11,13 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystInstance.Msdata.Validators.SystApplicationContexts do
+  @moduledoc false
+
   import Ecto.Changeset
 
   alias MscmpSystInstance.Msdata.Helpers
   alias MscmpSystInstance.Msdata.Validators
   alias MscmpSystInstance.Types
-
-  @moduledoc false
 
   @spec insert_changeset(Types.application_context_params(), Keyword.t()) :: Ecto.Changeset.t()
   def insert_changeset(insert_params, opts) do

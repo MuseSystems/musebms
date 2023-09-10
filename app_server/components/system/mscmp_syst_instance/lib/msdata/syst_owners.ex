@@ -11,16 +11,16 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule Msdata.SystOwners do
-  use MscmpSystDb.Schema
-
-  alias MscmpSystInstance.Msdata.Validators
-  alias MscmpSystInstance.Types
-
   @moduledoc """
   Data description for known instance owners.
 
   Defined in `MscmpSystInstance`.
   """
+
+  use MscmpSystDb.Schema
+
+  alias MscmpSystInstance.Msdata.Validators
+  alias MscmpSystInstance.Types
 
   @type t() ::
           %__MODULE__{

@@ -11,13 +11,13 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystInstance.Impl.Application do
+  @moduledoc false
+
   import Ecto.Query
 
   alias MscmpSystInstance.Types
 
   require Logger
-
-  @moduledoc false
 
   # Note that this module, despite the name, is not the OTP Application related
   # code.  Please see `MscmpSystInstance.Runtime.Application` for that code.

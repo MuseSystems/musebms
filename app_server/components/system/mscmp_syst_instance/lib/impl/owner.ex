@@ -11,13 +11,13 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystInstance.Impl.Owner do
+  @moduledoc false
+
   import Ecto.Query
 
   alias MscmpSystInstance.Types
 
   require Logger
-
-  @moduledoc false
 
   @spec create_owner(Types.owner_params()) ::
           {:ok, Msdata.SystOwners.t()} | {:error, MscmpSystError.t()}

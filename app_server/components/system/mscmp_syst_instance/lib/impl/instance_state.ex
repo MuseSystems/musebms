@@ -11,9 +11,9 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystInstance.Impl.InstanceState do
-  alias MscmpSystInstance.Types
-
   @moduledoc false
+
+  alias MscmpSystInstance.Types
 
   @spec get_instance_state_by_name(Types.instance_state_name()) :: Msdata.SystEnumItems.t() | nil
   def get_instance_state_by_name(instance_state_name),

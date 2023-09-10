@@ -11,9 +11,9 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystInstance.Msdata.Helpers.SystInstances do
-  import Ecto.Query
-
   @moduledoc false
+
+  import Ecto.Query
 
   def resolve_name_params(instance_params, operation) do
     instance_params

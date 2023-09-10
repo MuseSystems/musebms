@@ -11,11 +11,11 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystInstance.Impl.InstanceType do
+  @moduledoc false
+
   alias MscmpSystInstance.Types
 
   require Logger
-
-  @moduledoc false
 
   @spec create_instance_type(Types.instance_type_params()) ::
           {:ok, Msdata.SystEnumItems.t()} | {:error, MscmpSystError.t()}
