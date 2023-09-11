@@ -27,7 +27,7 @@ defmodule MscmpSystAuthn.Impl.Credential.Password do
   #       plaintext_pwd to leak here.  No special care has been taken at this
   #       point time.
 
-  @spec test_credential(Types.access_account_id() | Types.password_rules(), Types.credential()) ::
+  @spec test_credential(Types.access_account_id() | Types.PasswordRules.t(), Types.credential()) ::
           {:ok, Keyword.t(Types.password_rule_violations())}
           | {:error, MscmpSystError.t() | Exception.t()}
   def test_credential(access_account_id, plaintext_pwd) do
@@ -36,7 +36,7 @@ defmodule MscmpSystAuthn.Impl.Credential.Password do
     error -> {:error, error}
   end
 
-  @spec test_credential!(Types.access_account_id() | Types.password_rules(), Types.credential()) ::
+  @spec test_credential!(Types.access_account_id() | Types.PasswordRules.t(), Types.credential()) ::
           Keyword.t(Types.password_rule_violations())
   def test_credential!(access_account_id, plaintext_pwd) when is_binary(access_account_id) do
     access_account_id
