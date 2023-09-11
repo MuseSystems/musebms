@@ -407,8 +407,8 @@ defmodule IntegrationTest do
 
     assert access_account_id == authenticator_result.access_account_id
     assert "UnownedAccessAccount@musesystems.com" == authenticator_result.account_identifier
-    assert nil != authenticator_result[:validation_identifier]
-    assert nil != authenticator_result[:validation_credential]
+    assert nil != authenticator_result.validation_identifier
+    assert nil != authenticator_result.validation_credential
   end
 
   test "Step 2.05: Violate Rate Limit for Unowned Access Account Validation Identity" do
@@ -485,8 +485,8 @@ defmodule IntegrationTest do
              )
 
     assert email_identity.access_account_id == validator_result.access_account_id
-    assert nil != validator_result[:validation_identifier]
-    assert "My Known Token" = validator_result[:validation_credential]
+    assert nil != validator_result.validation_identifier
+    assert "My Known Token" = validator_result.validation_credential
   end
 
   test "Step 2.09: Validator confirmation for Unowned Access Account" do
@@ -804,8 +804,8 @@ defmodule IntegrationTest do
              )
 
     assert access_account_id == recovery_result.access_account_id
-    assert nil != recovery_result[:account_identifier]
-    assert "My Known Token" = recovery_result[:credential]
+    assert nil != recovery_result.account_identifier
+    assert "My Known Token" = recovery_result.credential
   end
 
   test "Step 2.23: Cannot Double Unowned Access Account Email/Password Recovery Authenticator" do
@@ -1231,8 +1231,8 @@ defmodule IntegrationTest do
 
     assert owner1_access_account_id == owner1_result.access_account_id
     assert "owned.access.account@musesystems.com" == owner1_result.account_identifier
-    assert nil == owner1_result[:validation_identifier]
-    assert nil == owner1_result[:validation_credential]
+    assert nil == owner1_result.validation_identifier
+    assert nil == owner1_result.validation_credential
 
     {:ok, owner2_access_account_id} =
       MscmpSystAuthn.get_access_account_id_by_name("owner2_access_account")
@@ -1249,8 +1249,8 @@ defmodule IntegrationTest do
 
     assert owner2_access_account_id == owner2_result.access_account_id
     assert "owned.access.account@musesystems.com" == owner2_result.account_identifier
-    assert nil == owner2_result[:validation_identifier]
-    assert nil == owner2_result[:validation_credential]
+    assert nil == owner2_result.validation_identifier
+    assert nil == owner2_result.validation_credential
   end
 
   test "Step 3.04: Violate Rate Limit for Owned Access Account Email Identity" do

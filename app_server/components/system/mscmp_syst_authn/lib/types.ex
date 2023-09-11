@@ -190,41 +190,6 @@ defmodule MscmpSystAuthn.Types do
   @type account_identifier() :: String.t()
 
   @typedoc """
-  Represents the return value of functions which evaluate whether or not a
-  specific originating host IP address is allowed to attempt an authentication.
-
-  When an authentication is attempted, a number of different rules and data
-  sources may determine what kind of connection is allowed based on the host IP
-  address from which the attempt appears to be originating and the destination
-  Instance for which the authentication is being processed.  To normalize the
-  return from the evaluation of these different network based evaluations we
-  define a simplified `t:applied_network_rule/0` value to represent the
-  actionable data of the evaluation.
-
-  ## Attributes
-
-    * `precedence` - this will indicate the precedence of the applied Network
-    Rule.  This value can aid in identifying the origin of a given applied
-    allowance or denial.
-
-    * `network_rule_id` - this is the record ID of the rule which was evaluated
-    to govern the authentication attempt.  Which specific relation the ID refers
-    to will depend on the specific precedence of the rule applied.  This value
-    may be `nil` if the implied default Network Rule is applied since, by
-    definition, this means no other explicitly defined Network Rule was found.
-
-    * `functional_type` - May be either `:allow` or `:deny`.  `:allow` means
-    that the Network Rule evaluation allows the host IP address to attempt
-    authentication.  `:deny` indicates that the host IP address may not attempt
-    an authentication.
-  """
-  @type applied_network_rule() :: %{
-          required(:precedence) => network_rule_precedence(),
-          required(:network_rule_id) => Ecto.UUID.t() | nil,
-          required(:functional_type) => network_rule_functional_type()
-        }
-
-  @typedoc """
   Defines required operations during an authentication attempt which are
   considered `extended`, meaning that they interrupt the normal authentication
   flow.
@@ -262,90 +227,6 @@ defmodule MscmpSystAuthn.Types do
           | :check_instance_network_rules
           | :check_host_rate_limit
           | authentication_extended_operations()
-
-  @typedoc """
-  The return type describing the result of authentication attempts via the
-  authentication functions.
-
-  When a user attempts to validate an Access Account, the result is returned as
-  a value of this type. This includes whether or not an authentication attempt
-  was successful or rejected.
-
-  An result indicating that the status is pending may also be returned from an
-  attempt if the authentication requires intervention to complete successfully.
-
-  ## Attributes
-
-    * `status` - the result of the authentication attempt.
-
-    * `deadline` - the date/time by which the authentication attempt must be
-    resolved by before being considered expired.  Since the authentication
-    process may be interrupted and resumed, it requires that we establish some
-    limit by which the process must be completed.  By default this value will be
-    5 minutes after the time the authentication process starts.
-
-    * `access_account_id` - the Access Account record ID if the authentication
-    attempt has successfully completed the identification operation.
-
-    * `instance_id` - the Instance ID that the Access Account holder is
-    attempting to authenticate to.  For certain authentication types, this value
-    may initially be `nil` for later resolution to a specific instance.  In some
-    special cases, authentication may not be contextually bound to a specific
-    Instance.  In this cases, the special value `:bypass` can be used it
-    indicate that the Instance is not relevant for the authentication.
-
-    * `identity_type_id` - the record ID referencing the Identity Type used to
-    identify the Access Account.
-
-    * `host_address` -  the apparent Host IP Address from which the
-    authentication attempt originated.
-
-    * `applied_network_rule` - the Network Rule that was applied during the
-    authentication attempt.  This value may be `nil` if the evaluation of the
-    Network Rules has not yet made.
-
-    * `pending_operations` - the ordered list of remaining authentication
-    operations which must complete successfully prior to the authentication
-    being successfully completed.
-
-    * `identifier` - the user supplied account identifier used to identify the
-    Access Account.
-
-    * `plaintext_credential` - the unencrypted, user supplied credential to
-    test during the authentication process.  This value will be made `nil` as
-    soon as it has been tested or is created `nil` for the Account Code
-    Authenticator which isn't a true authentication method (it's just a lookup).
-
-    * `owning_owner_id` - an Owner record ID for the Owner which manages the
-    authenticating Access Account in cases where it's an Owned Access Account.
-
-    * `identity_id` - the record ID of the Identity record located to identify
-    the Access Account.
-
-    * `identity` - the Identity record data struct.  This should be the same
-    record as that identified by the `identity_id` attribute
-
-    * `reset_reason` - in cases where a pending operation of
-    `:require_credential_reset` is added to the authentication process, this
-    value indicates the reason for the reset.  Available values are defined in
-    `t:credential_reset_reason/0`.
-  """
-  @type authentication_state() :: %{
-          required(:status) => authentication_status(),
-          required(:deadline) => DateTime.t(),
-          required(:access_account_id) => access_account_id() | nil,
-          required(:instance_id) => MscmpSystInstance.Types.instance_id() | :bypass | nil,
-          required(:identity_type_id) => identity_type_id(),
-          required(:host_address) => host_address(),
-          required(:applied_network_rule) => applied_network_rule() | nil,
-          required(:pending_operations) => list(authentication_operations()),
-          optional(:identifier) => account_identifier(),
-          optional(:plaintext_credential) => credential(),
-          optional(:owning_owner_id) => MscmpSystInstance.Types.owner_id() | nil,
-          optional(:identity_id) => identity_id(),
-          optional(:identity) => Msdata.SystIdentities.t(),
-          optional(:reset_reason) => credential_reset_reason()
-        }
 
   @typedoc """
   The understood life-cycle states of the authentication process.
@@ -408,55 +289,6 @@ defmodule MscmpSystAuthn.Types do
           | :rejected_deadline_expired
           | :rejected
           | :authenticated
-
-  @typedoc """
-  The return type used when creating Authenticators via the API.
-
-  The included values and attributes will vary somewhat from Authenticator type
-  to Authenticator type, but they will all follow this basic form.
-
-  ## Attributes
-
-    * `access_account_id` - the Access Account record ID for which the
-    Authenticator has been created.
-
-    * `account_identifier` - the Access Account Identifier for use in
-    identifying the Access Account in the authentication process.  Depending on
-    the Authenticator type, this could be a restatement of what the user
-    provided, such as an Email address, or may be system generated such as the
-    identifier for user with an API Token.
-
-    * `credential` - the plaintext Credential created for the Authenticator.
-    This attribute is only returned in cases where the typical Authenticator
-    creation flow includes the system randomly generating the Credential.  For
-    example, an API Token Credential is automatically created by the system and
-    the Credential must be communicated to the user once created.  Note that
-    even in these cases the only time the Credential is available for disclosure
-    to the user is immediately after the Authenticator creation via this value.
-    Once the return result is discarded the Credential is unrecoverable.
-
-    * `validation_identifier` - when creating an Email/Password Authenticator,
-    the default options mandate that validating the Email Identity is required.
-    Assuming the default is not overridden, the system generated Identifier for
-    the user to use to validate the Email Identity is provided via this
-    attribute.  If validation is not required this attribute will not be present
-    in the return value of the Authenticator creation call.
-
-    * `validation_credential` - the (usually) system generated Credential in
-    plaintext which compliments the `validation_identifier` value.  This
-    attribute is either included or excluded on the same terms as the
-    `validation_identifier`.  Note that the return of this value after
-    the creation of an Email/Password Authenticator is the only time that this
-    value is available in plaintext; after this point the plaintext is not
-    retrievable.
-  """
-  @type authenticator_result() :: %{
-          required(:access_account_id) => access_account_id(),
-          optional(:account_identifier) => account_identifier(),
-          optional(:credential) => credential(),
-          optional(:validation_identifier) => account_identifier() | nil,
-          optional(:validation_credential) => credential_id() | nil
-        }
 
   @typedoc """
   The supported types of authentication.
@@ -1006,93 +838,6 @@ defmodule MscmpSystAuthn.Types do
         }
 
   @typedoc """
-  Defines a generic Password Rule record allowing Password Rules originating
-  from different database sources a common representation.
-
-  Password Rules are defined in two different database tables,
-  `Msdata.SystGlobalPasswordRules` and
-  `Msdata.SystOwnerPasswordRules`.  This type defines a
-  common representation of Password Rule data for those parts of the system that
-  apply Password Rules after the applicable Password Rules have been resolved.
-
-  ## Attributes
-
-    * `access_account_id` - the Access Account for which the effective Password
-    Rules has been resolved.
-
-    * `owner_id` - the Owner record ID of the Owner which owns the Access
-    Account.  The Access Account's Owner may have established Password Rules
-    which would apply to the Access Account.  A value here does not mean that
-    the Owner's rules necessarily are part of the resolved Password Rule, just
-    that they would have been considered.
-
-    * `password_length` - the resolved value of type
-    `t:MscmpSystDb.DbTypes.IntegerRange.t/0` describing the password
-    length in terms of the number of characters.  The lower bound defines the
-    minimum number of characters a password may have and the upper bound is the
-    most characters that can be added to password.
-
-    * `max_age` - the resolved value of type `t:MscmpSystDb.DbTypes.Interval.t/0`
-    which, when added to the `last_updated` value of the Password Credential
-    record, sets the expiration date of the password.  After the password's age
-    has exceeded it's max age, the password must be reset prior to finalizing
-    authentication. A zero interval value here means that password ages are not
-    checked.  The zero interval is the default setting.
-
-    * `require_upper_case` - the resolved minimum number of upper case
-    characters that a valid password must posses.  A setting of zero here
-    disables the requirement.
-
-    * `require_lower_case` - the resolved minimum number of lower case
-    characters that a valid password must posses.  A setting of zero here
-    disables the requirement.
-
-    * `require_numbers` - the resolved minimum number of number characters that
-    a valid password must posses.  A setting of zero here disables the
-    requirement.
-
-    * `require_symbols` - the resolved minimum number of symbol characters that
-    a valid password must posses.  A setting of zero here disables the
-    requirement.
-
-    * `disallow_recently_used` - A positive integer representing the number of
-    most recently used passwords to track and prohibit from re-use.  A zero
-    setting for this attribute indicates that recently used passwords should not
-    be tracked or prohibited.
-
-    * `disallow_compromised` - A boolean value which, if true, indicates that
-    any new password requested by a user be first checked against the Disallowed
-    Passwords list and, if found on the list, rejected for use.  When set true,
-    the system will also check the password against the Disallowed Password list
-    on authentication; if found on the list at authentication time, the user
-    will be required to reset their password to something value not otherwise
-    disallowed.  If set false the Disallowed Password list is not checked.
-
-    * `require_mfa` - A boolean value which indicates if multi-factor
-    authentication is required for password authentication.  If true MFA is
-    required, otherwise MFA is per user preference.  MFA may not be completely
-    disabled.
-
-    * `allowed_mfa_types` - A list of strings identifying the allowed second
-    factor methods. Currently only MFA type `credential_types_secondary_totp` is
-    available.
-  """
-  @type password_rules() :: %{
-          optional(:access_account_id) => access_account_id() | nil,
-          optional(:owner_id) => MscmpSystInstance.Types.owner_id() | nil,
-          optional(:password_length) => DbTypes.IntegerRange.t(),
-          optional(:max_age) => DbTypes.Interval.t(),
-          optional(:require_upper_case) => non_neg_integer(),
-          optional(:require_lower_case) => non_neg_integer(),
-          optional(:require_numbers) => non_neg_integer(),
-          optional(:require_symbols) => non_neg_integer(),
-          optional(:disallow_recently_used) => non_neg_integer(),
-          optional(:disallow_compromised) => boolean(),
-          optional(:require_mfa) => boolean(),
-          optional(:allowed_mfa_types) => list(String.t())
-        }
-
-  @typedoc """
   A map of attributes used to create or update Global and Owner Password Rules.
 
   Note that only those attributes which are necessary to represent the desired
@@ -1216,4 +961,349 @@ defmodule MscmpSystAuthn.Types do
           | {:password_rule_required_symbols, pos_integer()}
           | {:password_rule_disallowed_password, true}
           | {:password_rule_recent_password, true}
+end
+
+defmodule MscmpSystAuthn.Types.AppliedNetworkRule do
+  @moduledoc """
+  Represents the return value of functions which evaluate whether or not a
+  specific originating host IP address is allowed to attempt an authentication.
+
+  When an authentication is attempted, a number of different rules and data
+  sources may determine what kind of connection is allowed based on the host IP
+  address from which the attempt appears to be originating and the destination
+  Instance for which the authentication is being processed.  To normalize the
+  return from the evaluation of these different network based evaluations we
+  define a simplified `t:applied_network_rule/0` value to represent the
+  actionable data of the evaluation.
+  """
+
+  alias MscmpSystAuthn.Types
+
+  @enforce_keys [:precedence, :network_rule_id, :functional_type]
+  defstruct [:precedence, :network_rule_id, :functional_type]
+
+  @typedoc """
+  Describes the fields which make up the
+  `MscmpSystAuthn.Types.AppliedNetworkRule`.
+
+  ## Attributes
+
+    * `precedence` - this will indicate the precedence of the applied Network
+    Rule.  This value can aid in identifying the origin of a given applied
+    allowance or denial.
+
+    * `network_rule_id` - this is the record ID of the rule which was evaluated
+    to govern the authentication attempt.  Which specific relation the ID refers
+    to will depend on the specific precedence of the rule applied.  This value
+    may be `nil` if the implied default Network Rule is applied since, by
+    definition, this means no other explicitly defined Network Rule was found.
+
+    * `functional_type` - May be either `:allow` or `:deny`.  `:allow` means
+    that the Network Rule evaluation allows the host IP address to attempt
+    authentication.  `:deny` indicates that the host IP address may not attempt
+    an authentication.
+  """
+  @type t :: %__MODULE__{
+          precedence: Types.network_rule_precedence(),
+          network_rule_id: Ecto.UUID.t() | nil,
+          functional_type: Types.network_rule_functional_type()
+        }
+end
+
+defmodule MscmpSystAuthn.Types.AuthenticationState do
+  @moduledoc """
+  The return type describing the result of authentication attempts via the
+  authentication functions.
+
+  When a user attempts to validate an Access Account, the result is returned as
+  a value of this type. This includes whether or not an authentication attempt
+  was successful or rejected.
+
+  An result indicating that the status is pending may also be returned from an
+  attempt if the authentication requires intervention to complete successfully.
+  """
+
+  alias MscmpSystAuthn.Types
+
+  @enforce_keys [
+    :status,
+    :deadline,
+    :access_account_id,
+    :instance_id,
+    :identity_type_id,
+    :host_address,
+    :applied_network_rule,
+    :pending_operations
+  ]
+  defstruct [
+    :status,
+    :deadline,
+    :access_account_id,
+    :instance_id,
+    :identity_type_id,
+    :host_address,
+    :applied_network_rule,
+    :pending_operations,
+    :identifier,
+    :plaintext_credential,
+    :owning_owner_id,
+    :identity_id,
+    :identity,
+    :reset_reason
+  ]
+
+  @typedoc """
+  Describes the fields of the `MscmpSystAuthn.Types.AuthenticationState` struct.
+
+  ## Attributes
+
+    * `status` - the result of the authentication attempt.
+
+    * `deadline` - the date/time by which the authentication attempt must be
+    resolved by before being considered expired.  Since the authentication
+    process may be interrupted and resumed, it requires that we establish some
+    limit by which the process must be completed.  By default this value will be
+    5 minutes after the time the authentication process starts.
+
+    * `access_account_id` - the Access Account record ID if the authentication
+    attempt has successfully completed the identification operation.
+
+    * `instance_id` - the Instance ID that the Access Account holder is
+    attempting to authenticate to.  For certain authentication types, this value
+    may initially be `nil` for later resolution to a specific instance.  In some
+    special cases, authentication may not be contextually bound to a specific
+    Instance.  In this cases, the special value `:bypass` can be used it
+    indicate that the Instance is not relevant for the authentication.
+
+    * `identity_type_id` - the record ID referencing the Identity Type used to
+    identify the Access Account.
+
+    * `host_address` -  the apparent Host IP Address from which the
+    authentication attempt originated.
+
+    * `applied_network_rule` - the Network Rule that was applied during the
+    authentication attempt.  This value may be `nil` if the evaluation of the
+    Network Rules has not yet made.
+
+    * `pending_operations` - the ordered list of remaining authentication
+    operations which must complete successfully prior to the authentication
+    being successfully completed.
+
+    * `identifier` - the user supplied account identifier used to identify the
+    Access Account.
+
+    * `plaintext_credential` - the unencrypted, user supplied credential to
+    test during the authentication process.  This value will be made `nil` as
+    soon as it has been tested or is created `nil` for the Account Code
+    Authenticator which isn't a true authentication method (it's just a lookup).
+
+    * `owning_owner_id` - an Owner record ID for the Owner which manages the
+    authenticating Access Account in cases where it's an Owned Access Account.
+
+    * `identity_id` - the record ID of the Identity record located to identify
+    the Access Account.
+
+    * `identity` - the Identity record data struct.  This should be the same
+    record as that identified by the `identity_id` attribute
+
+    * `reset_reason` - in cases where a pending operation of
+    `:require_credential_reset` is added to the authentication process, this
+    value indicates the reason for the reset.  Available values are defined in
+    `t:credential_reset_reason/0`.
+  """
+  @type t :: %__MODULE__{
+          status: Types.authentication_status(),
+          deadline: DateTime.t(),
+          access_account_id: Types.access_account_id() | nil,
+          instance_id: MscmpSystInstance.Types.instance_id() | :bypass | nil,
+          identity_type_id: Types.identity_type_id() | nil,
+          host_address: Types.host_address(),
+          applied_network_rule: Types.AppliedNetworkRule.t() | nil,
+          pending_operations: list(Types.authentication_operations()),
+          identifier: Types.account_identifier(),
+          plaintext_credential: Types.credential() | nil,
+          owning_owner_id: MscmpSystInstance.Types.owner_id() | nil,
+          identity_id: Types.identity_id() | nil,
+          identity: Msdata.SystIdentities.t() | nil,
+          reset_reason: Types.credential_reset_reason() | nil
+        }
+end
+
+defmodule MscmpSystAuthn.Types.AuthenticatorResult do
+  @moduledoc """
+  The return type used when creating Authenticators via the API.
+
+  The included values and attributes will vary somewhat from Authenticator type
+  to Authenticator type, but they will all follow this basic form.
+  """
+
+  alias MscmpSystAuthn.Types
+
+  @enforce_keys [:access_account_id]
+  defstruct [
+    :access_account_id,
+    :account_identifier,
+    :credential,
+    :validation_identifier,
+    :validation_credential
+  ]
+
+  @typedoc """
+  Defines the available attributes of the
+  `MscmpSystAuthn.Types.AuthenticatorResult` struct.
+
+  ## Attributes
+
+    * `access_account_id` - the Access Account record ID for which the
+    Authenticator has been created.
+
+    * `account_identifier` - the Access Account Identifier for use in
+    identifying the Access Account in the authentication process.  Depending on
+    the Authenticator type, this could be a restatement of what the user
+    provided, such as an Email address, or may be system generated such as the
+    identifier for user with an API Token.
+
+    * `credential` - the plaintext Credential created for the Authenticator.
+    This attribute is only returned in cases where the typical Authenticator
+    creation flow includes the system randomly generating the Credential.  For
+    example, an API Token Credential is automatically created by the system and
+    the Credential must be communicated to the user once created.  Note that
+    even in these cases the only time the Credential is available for disclosure
+    to the user is immediately after the Authenticator creation via this value.
+    Once the return result is discarded the Credential is unrecoverable.
+
+    * `validation_identifier` - when creating an Email/Password Authenticator,
+    the default options mandate that validating the Email Identity is required.
+    Assuming the default is not overridden, the system generated Identifier for
+    the user to use to validate the Email Identity is provided via this
+    attribute.  If validation is not required this attribute will not be present
+    in the return value of the Authenticator creation call.
+
+    * `validation_credential` - the (usually) system generated Credential in
+    plaintext which compliments the `validation_identifier` value.  This
+    attribute is either included or excluded on the same terms as the
+    `validation_identifier`.  Note that the return of this value after
+    the creation of an Email/Password Authenticator is the only time that this
+    value is available in plaintext; after this point the plaintext is not
+    retrievable.
+  """
+  @type t :: %__MODULE__{
+          access_account_id: Types.access_account_id(),
+          account_identifier: Types.account_identifier(),
+          credential: Types.credential(),
+          validation_identifier: Types.account_identifier() | nil,
+          validation_credential: Types.credential_id() | nil
+        }
+end
+
+defmodule MscmpSystAuthn.Types.PasswordRules do
+  @moduledoc """
+  Defines a generic Password Rule record allowing Password Rules originating
+  from different database sources a common representation.
+
+  Password Rules are defined in two different database tables,
+  `Msdata.SystGlobalPasswordRules` and
+  `Msdata.SystOwnerPasswordRules`.  This type defines a
+  common representation of Password Rule data for those parts of the system that
+  apply Password Rules after the applicable Password Rules have been resolved.
+  """
+
+  alias MscmpSystAuthn.Types
+  alias MscmpSystDb.DbTypes
+
+  defstruct [
+    :access_account_id,
+    :owner_id,
+    :password_length,
+    :max_age,
+    :require_upper_case,
+    :require_lower_case,
+    :require_numbers,
+    :require_symbols,
+    :disallow_recently_used,
+    :disallow_compromised,
+    :require_mfa,
+    :allowed_mfa_types
+  ]
+
+  @typedoc """
+  Establishes the fields data types of the `MscmpSystAuthn.Types.PasswordRules`
+  struct.
+
+  ## Attributes
+
+    * `access_account_id` - the Access Account for which the effective Password
+    Rules has been resolved.
+
+    * `owner_id` - the Owner record ID of the Owner which owns the Access
+    Account.  The Access Account's Owner may have established Password Rules
+    which would apply to the Access Account.  A value here does not mean that
+    the Owner's rules necessarily are part of the resolved Password Rule, just
+    that they would have been considered.
+
+    * `password_length` - the resolved value of type
+    `t:MscmpSystDb.DbTypes.IntegerRange.t/0` describing the password
+    length in terms of the number of characters.  The lower bound defines the
+    minimum number of characters a password may have and the upper bound is the
+    most characters that can be added to password.
+
+    * `max_age` - the resolved value of type `t:MscmpSystDb.DbTypes.Interval.t/0`
+    which, when added to the `last_updated` value of the Password Credential
+    record, sets the expiration date of the password.  After the password's age
+    has exceeded it's max age, the password must be reset prior to finalizing
+    authentication. A zero interval value here means that password ages are not
+    checked.  The zero interval is the default setting.
+
+    * `require_upper_case` - the resolved minimum number of upper case
+    characters that a valid password must posses.  A setting of zero here
+    disables the requirement.
+
+    * `require_lower_case` - the resolved minimum number of lower case
+    characters that a valid password must posses.  A setting of zero here
+    disables the requirement.
+
+    * `require_numbers` - the resolved minimum number of number characters that
+    a valid password must posses.  A setting of zero here disables the
+    requirement.
+
+    * `require_symbols` - the resolved minimum number of symbol characters that
+    a valid password must posses.  A setting of zero here disables the
+    requirement.
+
+    * `disallow_recently_used` - A positive integer representing the number of
+    most recently used passwords to track and prohibit from re-use.  A zero
+    setting for this attribute indicates that recently used passwords should not
+    be tracked or prohibited.
+
+    * `disallow_compromised` - A boolean value which, if true, indicates that
+    any new password requested by a user be first checked against the Disallowed
+    Passwords list and, if found on the list, rejected for use.  When set true,
+    the system will also check the password against the Disallowed Password list
+    on authentication; if found on the list at authentication time, the user
+    will be required to reset their password to something value not otherwise
+    disallowed.  If set false the Disallowed Password list is not checked.
+
+    * `require_mfa` - A boolean value which indicates if multi-factor
+    authentication is required for password authentication.  If true MFA is
+    required, otherwise MFA is per user preference.  MFA may not be completely
+    disabled.
+
+    * `allowed_mfa_types` - A list of strings identifying the allowed second
+    factor methods. Currently only MFA type `credential_types_secondary_totp` is
+    available.
+  """
+  @type t :: %__MODULE__{
+          access_account_id: Types.access_account_id() | nil,
+          owner_id: MscmpSystInstance.Types.owner_id() | nil,
+          password_length: DbTypes.IntegerRange.t(),
+          max_age: DbTypes.Interval.t(),
+          require_upper_case: non_neg_integer(),
+          require_lower_case: non_neg_integer(),
+          require_numbers: non_neg_integer(),
+          require_symbols: non_neg_integer(),
+          disallow_recently_used: non_neg_integer(),
+          disallow_compromised: boolean(),
+          require_mfa: boolean(),
+          allowed_mfa_types: list(String.t())
+        }
 end

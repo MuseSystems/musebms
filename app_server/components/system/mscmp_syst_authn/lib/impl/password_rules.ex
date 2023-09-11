@@ -19,6 +19,7 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
 
   alias MscmpSystAuthn.Impl
   alias MscmpSystAuthn.Types
+  alias MscmpSystAuthn.Types.PasswordRules
   alias MscmpSystDb.DbTypes
 
   require Logger
@@ -295,14 +296,14 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
   end
 
   @spec get_access_account_password_rule(Types.access_account_id()) ::
-          {:ok, Types.password_rules()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, PasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
   def get_access_account_password_rule(access_account_id) when is_binary(access_account_id) do
     {:ok, get_access_account_password_rule!(access_account_id)}
   rescue
     error -> {:error, error}
   end
 
-  @spec get_access_account_password_rule!(Types.access_account_id()) :: Types.password_rules()
+  @spec get_access_account_password_rule!(Types.access_account_id()) :: PasswordRules.t()
   def get_access_account_password_rule!(access_account_id) when is_binary(access_account_id) do
     global_rule =
       get_global_password_rules!() |> parse_data_struct_to_generic_rule(access_account_id)
@@ -338,7 +339,7 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
   @spec get_generic_password_rules(
           Msdata.SystGlobalPasswordRules.t() | Msdata.SystOwnerPasswordRules.t(),
           Types.access_account_id() | nil
-        ) :: Types.password_rules() | nil
+        ) :: PasswordRules.t() | nil
   def get_generic_password_rules(pwd_rules_struct, access_account_id),
     do: parse_data_struct_to_generic_rule(pwd_rules_struct, access_account_id)
 
@@ -347,24 +348,8 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
   defp parse_data_struct_to_generic_rule(rule, access_account_id) when is_struct(rule) do
     rule
     |> Map.from_struct()
-    |> Map.put(:access_account_id, access_account_id)
-    |> Map.put_new(:owner_id, nil)
-    |> Map.filter(fn {key, _value} ->
-      key in [
-        :access_account_id,
-        :owner_id,
-        :password_length,
-        :max_age,
-        :require_upper_case,
-        :require_lower_case,
-        :require_numbers,
-        :require_symbols,
-        :disallow_recently_used,
-        :disallow_compromised,
-        :require_mfa,
-        :allowed_mfa_types
-      ]
-    end)
+    |> then(&struct(PasswordRules, &1))
+    |> then(&%PasswordRules{&1 | access_account_id: access_account_id})
   end
 
   defp set_required_rule_value(:required_rule_min_length, req_value, rule) do
@@ -426,8 +411,8 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
   end
 
   @spec verify_password_rules(
-          Types.password_rules(),
-          Msdata.SystGlobalPasswordRules.t() | Types.password_rules() | nil
+          PasswordRules.t(),
+          Msdata.SystGlobalPasswordRules.t() | PasswordRules.t() | nil
         ) ::
           {:ok, Keyword.t(Types.password_rule_violations())}
           | {:error, MscmpSystError.t() | Exception.t()}
@@ -439,11 +424,11 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
   end
 
   @spec verify_password_rules!(
-          Types.password_rules(),
-          Msdata.SystGlobalPasswordRules.t() | Types.password_rules() | nil
+          PasswordRules.t(),
+          Msdata.SystGlobalPasswordRules.t() | PasswordRules.t() | nil
         ) ::
           Keyword.t(Types.password_rule_violations())
-  def verify_password_rules!(%{} = test_rules, nil = _standard_rules) do
+  def verify_password_rules!(%PasswordRules{} = test_rules, nil = _standard_rules) do
     {:ok, standard_rules} = get_global_password_rules()
     verify_password_rules!(test_rules, standard_rules)
   rescue
@@ -456,7 +441,7 @@ defmodule MscmpSystAuthn.Impl.PasswordRules do
         cause: error
   end
 
-  def verify_password_rules!(%{} = test_rules, %{} = standard_rules) do
+  def verify_password_rules!(%PasswordRules{} = test_rules, %{} = standard_rules) do
     []
     |> verify_password_rule_length(test_rules, standard_rules)
     |> verify_password_rule_max_age(test_rules, standard_rules)

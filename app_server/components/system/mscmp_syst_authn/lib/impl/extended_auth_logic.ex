@@ -15,6 +15,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
 
   alias MscmpSystAuthn.Impl
   alias MscmpSystAuthn.Types
+  alias MscmpSystAuthn.Types.AuthenticationState
   alias MscmpSystDb.DbTypes
 
   # TODO: This whole module and approach feels too complex.  The flexibility
@@ -118,7 +119,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
           IP.addr(),
           Keyword.t()
         ) ::
-          {:ok, Types.authentication_state()} | {:error, MscmpSystError.t()}
+          {:ok, AuthenticationState.t()} | {:error, MscmpSystError.t()}
   def authenticate_email_password(email_addr, pwd_text, host_addr, opts) do
     opts =
       MscmpSystUtils.resolve_options(opts,
@@ -137,7 +138,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
         {:ok, validated_email} ->
           normalized_email = Impl.Identity.Email.normalize_email_address(validated_email)
 
-          %{
+          %AuthenticationState{
             status: :not_started,
             deadline: authentication_deadline,
             access_account_id: nil,
@@ -154,7 +155,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
         {:error, _} ->
           Impl.Hash.fake_credential_hash_verify()
 
-          %{
+          %AuthenticationState{
             status: :rejected,
             deadline: authentication_deadline,
             access_account_id: nil,
@@ -182,15 +183,15 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
        }}
   end
 
-  @spec authenticate_email_password(Types.authentication_state(), Keyword.t()) ::
-          {:ok, Types.authentication_state()} | {:error, MscmpSystError.t()}
+  @spec authenticate_email_password(AuthenticationState.t(), Keyword.t()) ::
+          {:ok, AuthenticationState.t()} | {:error, MscmpSystError.t()}
   def authenticate_email_password(auth_state, opts) do
     preliminary_auth_state =
       auth_state
-      |> Map.merge(%{
-        instance_id: auth_state[:instance_id] || opts[:instance_id],
-        owning_owner_id: auth_state[:owning_owner_id] || opts[:owning_owner_id]
-      })
+      |> struct!(
+        instance_id: auth_state.instance_id || opts[:instance_id],
+        owning_owner_id: auth_state.owning_owner_id || opts[:owning_owner_id]
+      )
       |> maybe_start_email_password_authentication()
       |> confirm_deadline()
       |> confirm_instance_identified()
@@ -223,28 +224,31 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
        }}
   end
 
-  defp maybe_start_email_password_authentication(%{status: :not_started} = auth_state) do
+  defp maybe_start_email_password_authentication(
+         %AuthenticationState{status: :not_started} = auth_state
+       ) do
     resolved_ops = resolve_email_password_operations(auth_state)
 
-    Map.merge(auth_state, %{status: :pending, pending_operations: resolved_ops})
+    %AuthenticationState{auth_state | status: :pending, pending_operations: resolved_ops}
   end
 
   defp maybe_start_email_password_authentication(auth_state), do: auth_state
 
-  defp resolve_email_password_operations(%{instance_id: nil}),
+  defp resolve_email_password_operations(%AuthenticationState{instance_id: nil}),
     do: [:require_instance | @email_password_operations]
 
-  defp resolve_email_password_operations(%{instance_id: :bypass}),
+  defp resolve_email_password_operations(%AuthenticationState{instance_id: :bypass}),
     do: @email_password_instance_bypass_operations
 
   defp resolve_email_password_operations(_),
     do: @email_password_operations
 
-  defp confirm_instance_identified(%{instance_id: nil} = auth_state), do: auth_state
+  defp confirm_instance_identified(%AuthenticationState{instance_id: nil} = auth_state),
+    do: auth_state
 
   defp confirm_instance_identified(auth_state) do
     new_ops = List.delete(auth_state.pending_operations, :require_instance)
-    Map.put(auth_state, :pending_operations, new_ops)
+    %AuthenticationState{auth_state | pending_operations: new_ops}
   end
 
   defp extended_email_password_ops_required?(auth_state) do
@@ -280,11 +284,10 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
           auth_state.plaintext_credential
         )
 
-      auth_state
-      |> Map.delete(:plaintext_credential)
+      %AuthenticationState{auth_state | plaintext_credential: nil}
       |> process_credential_result(confirm_result)
     else
-      Map.delete(auth_state, :plaintext_credential)
+      %AuthenticationState{auth_state | plaintext_credential: nil}
     end
   end
 
@@ -295,7 +298,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
           MscmpSystInstance.Types.instance_id(),
           Keyword.t()
         ) ::
-          {:ok, Types.authentication_state()} | {:error, MscmpSystError.t()}
+          {:ok, AuthenticationState.t()} | {:error, MscmpSystError.t()}
 
   def authenticate_api_token(identifier, token, host_addr, instance_id, opts) do
     opts =
@@ -308,7 +311,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
 
     %{id: identity_type_id} = Impl.Identity.get_identity_type_by_name("identity_types_sysdef_api")
 
-    pending_auth_state = %{
+    pending_auth_state = %AuthenticationState{
       status: :pending,
       deadline: authentication_deadline,
       access_account_id: nil,
@@ -325,11 +328,11 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     authenticate_api_token(pending_auth_state, opts)
   end
 
-  @spec authenticate_api_token(Types.authentication_state(), Keyword.t()) ::
-          {:ok, Types.authentication_state()} | {:error, MscmpSystError.t()}
+  @spec authenticate_api_token(AuthenticationState.t(), Keyword.t()) ::
+          {:ok, AuthenticationState.t()} | {:error, MscmpSystError.t()}
   def authenticate_api_token(auth_state, opts) do
     auth_state
-    |> Map.merge(%{owning_owner_id: auth_state[:owning_owner_id] || opts[:owning_owner_id]})
+    |> struct!(owning_owner_id: auth_state.owning_owner_id || opts[:owning_owner_id])
     |> confirm_deadline()
     |> confirm_identifier_rate_limit(opts)
     |> confirm_global_network_rules()
@@ -381,10 +384,10 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
         )
 
       auth_state
-      |> Map.delete(:plaintext_credential)
+      |> struct!(plaintext_credential: nil)
       |> process_credential_result(confirm_result)
     else
-      Map.delete(auth_state, :plaintext_credential)
+      %AuthenticationState{auth_state | plaintext_credential: nil}
     end
   end
 
@@ -394,7 +397,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
           IP.addr(),
           Keyword.t()
         ) ::
-          {:ok, Types.authentication_state()} | {:error, MscmpSystError.t()}
+          {:ok, AuthenticationState.t()} | {:error, MscmpSystError.t()}
 
   def authenticate_validation_token(identifier, token, host_addr, opts) do
     opts =
@@ -408,7 +411,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     %{id: identity_type_id} =
       Impl.Identity.get_identity_type_by_name("identity_types_sysdef_validation")
 
-    pending_auth_state = %{
+    pending_auth_state = %AuthenticationState{
       status: :pending,
       deadline: authentication_deadline,
       access_account_id: nil,
@@ -425,8 +428,8 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     authenticate_validation_token(pending_auth_state, opts)
   end
 
-  @spec authenticate_validation_token(Types.authentication_state(), Keyword.t()) ::
-          {:ok, Types.authentication_state()} | {:error, MscmpSystError.t()}
+  @spec authenticate_validation_token(AuthenticationState.t(), Keyword.t()) ::
+          {:ok, AuthenticationState.t()} | {:error, MscmpSystError.t()}
   def authenticate_validation_token(auth_state, opts) do
     auth_state
     |> confirm_deadline()
@@ -475,11 +478,10 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
           auth_state.plaintext_credential
         )
 
-      auth_state
-      |> Map.delete(:plaintext_credential)
+      %AuthenticationState{auth_state | plaintext_credential: nil}
       |> process_credential_result(confirm_result)
     else
-      Map.delete(auth_state, :plaintext_credential)
+      %AuthenticationState{auth_state | plaintext_credential: nil}
     end
   end
 
@@ -504,7 +506,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
           IP.addr(),
           Keyword.t()
         ) ::
-          {:ok, Types.authentication_state()} | {:error, MscmpSystError.t()}
+          {:ok, AuthenticationState.t()} | {:error, MscmpSystError.t()}
   def authenticate_recovery_token(identifier, token, host_addr, opts) do
     opts =
       MscmpSystUtils.resolve_options(opts,
@@ -517,7 +519,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     %{id: identity_type_id} =
       Impl.Identity.get_identity_type_by_name("identity_types_sysdef_password_recovery")
 
-    pending_auth_state = %{
+    pending_auth_state = %AuthenticationState{
       status: :pending,
       deadline: authentication_deadline,
       access_account_id: nil,
@@ -534,8 +536,8 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     authenticate_recovery_token(pending_auth_state, opts)
   end
 
-  @spec authenticate_recovery_token(Types.authentication_state(), Keyword.t()) ::
-          {:ok, Types.authentication_state()} | {:error, MscmpSystError.t()}
+  @spec authenticate_recovery_token(AuthenticationState.t(), Keyword.t()) ::
+          {:ok, AuthenticationState.t()} | {:error, MscmpSystError.t()}
   def authenticate_recovery_token(auth_state, opts) do
     auth_state
     |> confirm_deadline()
@@ -584,11 +586,10 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
           auth_state.plaintext_credential
         )
 
-      auth_state
-      |> Map.delete(:plaintext_credential)
+      %AuthenticationState{auth_state | plaintext_credential: nil}
       |> process_credential_result(confirm_result)
     else
-      Map.delete(auth_state, :plaintext_credential)
+      %AuthenticationState{auth_state | plaintext_credential: nil}
     end
   end
 
@@ -648,10 +649,11 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
   defp process_identity(auth_state, nil = _identity, _validated) do
     Impl.Hash.fake_credential_hash_verify()
 
-    Map.merge(auth_state, %{
-      status: :rejected,
-      pending_operations: [:check_instance_network_rules, :check_host_rate_limit]
-    })
+    %AuthenticationState{
+      auth_state
+      | status: :rejected,
+        pending_operations: [:check_instance_network_rules, :check_host_rate_limit]
+    }
   end
 
   defp process_identity(auth_state, %Msdata.SystIdentities{} = identity, validated) do
@@ -681,20 +683,21 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
           auth_state.pending_operations
       end
 
-    Map.merge(auth_state, %{
-      identity_id: identity.id,
-      identity: identity,
-      access_account_id: identity.access_account_id,
-      status: status,
-      pending_operations: new_ops
-    })
+    %AuthenticationState{
+      auth_state
+      | identity_id: identity.id,
+        identity: identity,
+        access_account_id: identity.access_account_id,
+        status: status,
+        pending_operations: new_ops
+    }
   end
 
   defp process_credential_result(auth_state, {:confirmed, cred_ext_state}) do
     new_ops = List.delete(auth_state.pending_operations, :check_credential)
 
     auth_state
-    |> Map.put(:pending_operations, new_ops)
+    |> struct!(pending_operations: new_ops)
     |> maybe_add_mfa_operation(cred_ext_state)
     |> maybe_add_password_reset_operation(cred_ext_state)
   end
@@ -702,22 +705,27 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
   defp process_credential_result(auth_state, {:no_credential, _}) do
     Impl.Hash.fake_credential_hash_verify()
 
-    Map.merge(auth_state, %{
-      status: :rejected,
-      pending_operations: [:check_instance_network_rules, :check_host_rate_limit]
-    })
+    %AuthenticationState{
+      auth_state
+      | status: :rejected,
+        pending_operations: [:check_instance_network_rules, :check_host_rate_limit]
+    }
   end
 
-  defp process_credential_result(auth_state, {:wrong_credential, _}),
-    do:
-      Map.merge(auth_state, %{
-        status: :rejected,
+  defp process_credential_result(auth_state, {:wrong_credential, _}) do
+    %AuthenticationState{
+      auth_state
+      | status: :rejected,
         pending_operations: [:check_instance_network_rules, :check_host_rate_limit]
-      })
+    }
+  end
 
   defp maybe_add_mfa_operation(auth_state, cred_ext_state) do
     if :require_mfa in cred_ext_state do
-      Map.put(auth_state, :pending_operations, [:require_mfa | auth_state.pending_operations])
+      %AuthenticationState{
+        auth_state
+        | pending_operations: [:require_mfa | auth_state.pending_operations]
+      }
     else
       auth_state
     end
@@ -726,22 +734,25 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
   defp maybe_add_password_reset_operation(auth_state, cred_ext_state) do
     cond do
       :reset_forced in cred_ext_state ->
-        Map.merge(auth_state, %{
-          pending_operations: [:require_credential_reset | auth_state.pending_operations],
-          reset_reason: :reset_forced
-        })
+        %AuthenticationState{
+          auth_state
+          | pending_operations: [:require_credential_reset | auth_state.pending_operations],
+            reset_reason: :reset_forced
+        }
 
       :reset_age in cred_ext_state ->
-        Map.merge(auth_state, %{
-          pending_operations: [:require_credential_reset | auth_state.pending_operations],
-          reset_reason: :reset_age
-        })
+        %AuthenticationState{
+          auth_state
+          | pending_operations: [:require_credential_reset | auth_state.pending_operations],
+            reset_reason: :reset_age
+        }
 
       :reset_disallowed in cred_ext_state ->
-        Map.merge(auth_state, %{
-          pending_operations: [:require_credential_reset | auth_state.pending_operations],
-          reset_reason: :reset_disallowed
-        })
+        %AuthenticationState{
+          auth_state
+          | pending_operations: [:require_credential_reset | auth_state.pending_operations],
+            reset_reason: :reset_disallowed
+        }
 
       true ->
         auth_state
@@ -756,12 +767,13 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     end
   end
 
-  defp process_check_instance(%{instance_id: nil} = auth_state),
-    do:
-      Map.merge(auth_state, %{
-        status: :rejected,
+  defp process_check_instance(%{instance_id: nil} = auth_state) do
+    %AuthenticationState{
+      auth_state
+      | status: :rejected,
         pending_operations: [:check_instance_network_rules, :check_host_rate_limit]
-      })
+    }
+  end
 
   defp process_check_instance(auth_state) do
     instance_access_granted =
@@ -772,10 +784,9 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
 
     if instance_access_granted do
       new_ops = List.delete(auth_state.pending_operations, :check_instance)
-      Map.put(auth_state, :pending_operations, new_ops)
+      %AuthenticationState{auth_state | pending_operations: new_ops}
     else
-      auth_state
-      |> Map.put(:status, :rejected)
+      %AuthenticationState{auth_state | status: :rejected}
     end
   end
 
@@ -792,7 +803,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
   defp confirm_instance_network_rules(auth_state) do
     if :check_instance_network_rules in auth_state.pending_operations do
       auth_state.host_address
-      |> Impl.NetworkRules.get_applied_network_rule!(auth_state[:instance_id])
+      |> Impl.NetworkRules.get_applied_network_rule!(auth_state.instance_id)
       |> process_network_rule_result(auth_state, :check_instance_network_rules)
     else
       auth_state
@@ -801,7 +812,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
 
   defp process_network_rule_result(%{functional_type: :allow} = net_rule, auth_state, curr_op) do
     new_ops = List.delete(auth_state.pending_operations, curr_op)
-    Map.merge(auth_state, %{applied_network_rule: net_rule, pending_operations: new_ops})
+    %AuthenticationState{auth_state | applied_network_rule: net_rule, pending_operations: new_ops}
   end
 
   defp process_network_rule_result(%{functional_type: :deny} = net_rule, auth_state, _curr_op) do
@@ -811,11 +822,12 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     failed_status =
       if auth_state.status == :pending, do: :rejected_host_check, else: auth_state.status
 
-    Map.merge(auth_state, %{
-      applied_network_rule: net_rule,
-      status: failed_status,
-      pending_operations: []
-    })
+    %AuthenticationState{
+      auth_state
+      | applied_network_rule: net_rule,
+        status: failed_status,
+        pending_operations: []
+    }
   end
 
   defp confirm_identifier_rate_limit(auth_state, opts) do
@@ -831,12 +843,11 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
   defp process_identifier_rate_limit_result({:allow, _}, auth_state) do
     auth_state.pending_operations
     |> List.delete(:check_identifier_rate_limit)
-    |> then(&Map.put(auth_state, :pending_operations, &1))
+    |> then(&%AuthenticationState{auth_state | pending_operations: &1})
   end
 
-  defp process_identifier_rate_limit_result({:deny, _}, auth_state) do
-    Map.merge(auth_state, %{status: :rejected_rate_limited, pending_operations: []})
-  end
+  defp process_identifier_rate_limit_result({:deny, _}, auth_state),
+    do: %AuthenticationState{auth_state | status: :rejected_rate_limited, pending_operations: []}
 
   defp process_identifier_rate_limit_result(error, _auth_state) do
     raise MscmpSystError,
@@ -855,7 +866,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
       new_ops = List.delete(auth_state.pending_operations, :check_host_rate_limit)
 
       auth_state
-      |> Map.put(:pending_operations, new_ops)
+      |> struct!(pending_operations: new_ops)
       |> check_host_rate_limit(opts)
     else
       auth_state
@@ -883,7 +894,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
   defp process_host_rate_limit_result({:deny, _}, auth_state) do
     _ = Impl.NetworkRules.create_disallowed_host(auth_state.host_address)
 
-    Map.merge(auth_state, %{status: :rejected, pending_operations: []})
+    %AuthenticationState{auth_state | status: :rejected, pending_operations: []}
   end
 
   defp process_host_rate_limit_result(error, _auth_state) do
@@ -912,7 +923,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
     MscmpSystLimiter.check_rate(counter_type, target, time_window, attempts)
   end
 
-  defp maybe_reset_rate_limits(%{status: status} = auth_state)
+  defp maybe_reset_rate_limits(%AuthenticationState{status: status} = auth_state)
        when status in @reset_rate_limit_statuses do
     _ = reset_identifier_rate_limit(auth_state.identifier)
     _ = reset_host_ban_rate_limit(auth_state.host_address)
@@ -929,8 +940,10 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
   defp reset_rate_limit(counter_type, target),
     do: MscmpSystLimiter.delete_counters(counter_type, target)
 
-  defp finalize_authentication(%{status: :pending, pending_operations: []} = auth_state),
-    do: auth_state |> Map.put(:status, :authenticated)
+  defp finalize_authentication(
+         %AuthenticationState{status: :pending, pending_operations: []} = auth_state
+       ),
+       do: %AuthenticationState{auth_state | status: :authenticated}
 
   defp finalize_authentication(auth_state), do: auth_state
 
@@ -940,14 +953,14 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
   # an absolute check which shouldn't be bypassed unless the authentication
   # state has already been resolved to a different state.
 
-  defp confirm_deadline(%{status: :pending} = auth_state) do
+  defp confirm_deadline(%AuthenticationState{status: :pending} = auth_state) do
     %{deadline: deadline} = auth_state
     is_deadline_expired = DateTime.compare(DateTime.utc_now(), deadline) == :gt
 
     case is_deadline_expired do
       true ->
         auth_state
-        |> Map.merge(%{status: :rejected_deadline_expired, pending_operations: []})
+        |> struct!(status: :rejected_deadline_expired, pending_operations: [])
         |> cleanse_auth_state()
 
       false ->
@@ -957,11 +970,9 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
 
   defp confirm_deadline(auth_state), do: auth_state
 
-  defp cleanse_auth_state(auth_state) do
-    # The credential clear should have happened at credential validation time,
-    # but just in case, do it here, too.
-    auth_state
-    |> Map.delete(:plaintext_credential)
-    |> Map.delete(:identity)
-  end
+  # The credential clear should have happened at credential validation time, but
+  # just in case, do it here, too.
+
+  defp cleanse_auth_state(auth_state),
+    do: %AuthenticationState{auth_state | plaintext_credential: nil, identity: nil}
 end

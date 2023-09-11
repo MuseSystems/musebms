@@ -197,7 +197,7 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
           Types.host_address(),
           MscmpSystInstance.Types.instance_id() | nil,
           MscmpSystInstance.Types.owner_id() | nil
-        ) :: {:ok, Types.applied_network_rule()} | {:error, MscmpSystError.t() | Exception.t()}
+        ) :: {:ok, Types.AppliedNetworkRule.t()} | {:error, MscmpSystError.t() | Exception.t()}
   def get_applied_network_rule(host_addr, instance_id \\ nil, instance_owner_id \\ nil)
       when is_tuple(host_addr) do
     {:ok, get_applied_network_rule!(host_addr, instance_id, instance_owner_id)}
@@ -209,7 +209,7 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
           Types.host_address(),
           MscmpSystInstance.Types.instance_id() | nil,
           MscmpSystInstance.Types.owner_id() | nil
-        ) :: Types.applied_network_rule()
+        ) :: Types.AppliedNetworkRule.t()
   def get_applied_network_rule!(host_addr, instance_id \\ nil, instance_owner_id \\ nil)
       when is_tuple(host_addr) do
     target_host = %DbTypes.Inet{address: host_addr} |> DbTypes.Inet.to_postgrex_inet()
@@ -239,7 +239,7 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
     )
     |> MscmpSystDb.one!()
     |> then(
-      &%{
+      &%Types.AppliedNetworkRule{
         precedence: String.to_atom(&1.precedence),
         network_rule_id:
           if(&1.network_rule_id != nil, do: Ecto.UUID.cast!(&1.network_rule_id), else: nil),

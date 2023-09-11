@@ -14,7 +14,9 @@ defmodule IdentityApiTokenTest do
   # credo:disable-for-this-file Credo.Check.Design.AliasUsage
   #
   # In the tests we'll be more permissive of failing this check for now.
-  # In application code we should adhere to our configured checks.  use AuthenticationTestCase, async: true
+  # In application code we should adhere to our configured checks.
+
+  use AuthenticationTestCase, async: true
 
   import Ecto.Query
 

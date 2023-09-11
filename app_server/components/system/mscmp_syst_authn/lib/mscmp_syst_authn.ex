@@ -1011,7 +1011,7 @@ defmodule MscmpSystAuthn do
   @spec get_generic_password_rules(
           Msdata.SystGlobalPasswordRules.t() | Msdata.SystOwnerPasswordRules.t(),
           Types.access_account_id() | nil
-        ) :: Types.password_rules() | nil
+        ) :: Types.PasswordRules.t() | nil
   defdelegate get_generic_password_rules(pwd_rules_struct, access_account_id \\ nil),
     to: Impl.PasswordRules
 
@@ -1037,7 +1037,7 @@ defmodule MscmpSystAuthn do
     * `access_account_id` - the Access Account record ID of the user.
   """
   @spec get_access_account_password_rule(Types.access_account_id()) ::
-          {:ok, Types.password_rules()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, Types.PasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate get_access_account_password_rule(access_account_id), to: Impl.PasswordRules
 
   @doc section: :password_rule_data
@@ -1052,7 +1052,7 @@ defmodule MscmpSystAuthn do
 
     * `access_account_id` - the Access Account record ID of the user.
   """
-  @spec get_access_account_password_rule!(Types.access_account_id()) :: Types.password_rules()
+  @spec get_access_account_password_rule!(Types.access_account_id()) :: Types.PasswordRules.t()
   defdelegate get_access_account_password_rule!(access_account_id), to: Impl.PasswordRules
 
   @doc section: :password_rule_data
@@ -1082,13 +1082,13 @@ defmodule MscmpSystAuthn do
     * `standard_rules` - the "Standard" against which the `test_rules` are
     judged.  This parameter is optional and when nil the Global Password
     Rule is retrieved and used as the default "Standard" Rules.  Otherwise
-    either a generic `t:MscmpSystAuthn.Types.password_rules/0` value
+    either a generic `t:MscmpSystAuthn.Types.PasswordRules.t/0` value
     or a populated `Msdata.SystGlobalPasswordRules` data
     struct may be provided.
   """
   @spec verify_password_rules(
-          Types.password_rules(),
-          Msdata.SystGlobalPasswordRules.t() | Types.password_rules() | nil
+          Types.PasswordRules.t(),
+          Msdata.SystGlobalPasswordRules.t() | Types.PasswordRules.t() | nil
         ) ::
           {:ok, Keyword.t(Types.password_rule_violations())}
           | {:error, MscmpSystError.t() | Exception.t()}
@@ -1112,13 +1112,13 @@ defmodule MscmpSystAuthn do
     * `standard_rules` - the "Standard" against which the `test_rules` are
     judged.  This parameter is optional and when nil the Global Password
     Rule is retrieved and used as the default "Standard" Rules.  Otherwise
-    either a generic `t:MscmpSystAuthn.Types.password_rules/0` value
+    either a generic `t:MscmpSystAuthn.Types.PasswordRules.t/0` value
     or a populated `Msdata.SystGlobalPasswordRules` data
     struct may be provided.
   """
   @spec verify_password_rules!(
-          Types.password_rules(),
-          Msdata.SystGlobalPasswordRules.t() | Types.password_rules() | nil
+          Types.PasswordRules.t(),
+          Msdata.SystGlobalPasswordRules.t() | Types.PasswordRules.t() | nil
         ) ::
           Keyword.t(Types.password_rule_violations())
   defdelegate verify_password_rules!(test_rules, standard_rules \\ nil),
@@ -1177,7 +1177,7 @@ defmodule MscmpSystAuthn do
       iex> MscmpSystAuthn.test_credential(access_account_id, "short")
       {:ok, [password_rule_length_min: 8]}
   """
-  @spec test_credential(Types.access_account_id() | Types.password_rules(), Types.credential()) ::
+  @spec test_credential(Types.access_account_id() | Types.PasswordRules.t(), Types.credential()) ::
           {:ok, Keyword.t(Types.password_rule_violations())}
           | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate test_credential(pwd_rules_or_access_account_id, plaintext_pwd),
@@ -1531,7 +1531,7 @@ defmodule MscmpSystAuthn do
   ## Return Value
 
     This function returns a result tuple.  The value element of the result tuple
-    is a map of type `t:MscmpSystAuthn.Types.applied_network_rule/0`.
+    is a map of type `t:MscmpSystAuthn.Types.AppliedNetworkRule.t/0`.
     The map indicates which precedence group the rule came from, the ID of the
     Network Rule record if the rule was derived from the various Network Rule
     data tables, and the Functional Type of the rule: `:allow` meaning the
@@ -1561,8 +1561,10 @@ defmodule MscmpSystAuthn do
     When the host is a member of the Disallowed Hosts lists.
 
       iex> import IP, only: [sigil_i: 2]
-      iex> {:ok, %{functional_type: :deny, network_rule_id: id, precedence: :disallowed}} =
-      ...>   MscmpSystAuthn.get_applied_network_rule(~i"10.123.123.3")
+      iex> {:ok,
+      ...>  %MscmpSystAuthn.Types.AppliedNetworkRule{
+      ...>    functional_type: :deny, network_rule_id: id, precedence: :disallowed}
+      ...>  } =  MscmpSystAuthn.get_applied_network_rule(~i"10.123.123.3")
       iex> is_binary(id)
       true
 
@@ -1571,14 +1573,19 @@ defmodule MscmpSystAuthn do
 
       iex> import IP, only: [sigil_i: 2]
       iex> MscmpSystAuthn.get_applied_network_rule(~i"10.124.124.3")
-      {:ok, %{functional_type: :allow, network_rule_id: nil, precedence: :implied}}
+      {:ok,
+        %MscmpSystAuthn.Types.AppliedNetworkRule{
+          functional_type: :allow, network_rule_id: nil, precedence: :implied}
+        }
 
     When a Global Network Rule explicitly allows the Host IP Address to attempt
     authentication.
 
       iex> import IP, only: [sigil_i: 2]
-      iex> {:ok, %{functional_type: :allow, network_rule_id: id, precedence: :global}} =
-      ...>   MscmpSystAuthn.get_applied_network_rule(~i"10.125.125.3")
+      iex> {:ok,
+      ...>   %MscmpSystAuthn.Types.AppliedNetworkRule{
+      ...>     functional_type: :allow, network_rule_id: id, precedence: :global}
+      ...>   } = MscmpSystAuthn.get_applied_network_rule(~i"10.125.125.3")
       iex> is_binary(id)
       true
 
@@ -1590,7 +1597,7 @@ defmodule MscmpSystAuthn do
           Types.host_address(),
           MscmpSystInstance.Types.instance_id() | nil,
           MscmpSystInstance.Types.owner_id() | nil
-        ) :: {:ok, Types.applied_network_rule()} | {:error, MscmpSystError.t() | Exception.t()}
+        ) :: {:ok, Types.AppliedNetworkRule.t()} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate get_applied_network_rule(
                 host_address,
                 instance_id \\ nil,
@@ -1630,8 +1637,9 @@ defmodule MscmpSystAuthn do
     When the host is a member of the Disallowed Hosts lists.
 
       iex> import IP, only: [sigil_i: 2]
-      iex> %{functional_type: :deny, network_rule_id: id, precedence: :disallowed} =
-      ...>   MscmpSystAuthn.get_applied_network_rule!(~i"10.123.123.3")
+      iex> %MscmpSystAuthn.Types.AppliedNetworkRule{
+      ...>   functional_type: :deny, network_rule_id: id, precedence: :disallowed
+      ...> } = MscmpSystAuthn.get_applied_network_rule!(~i"10.123.123.3")
       iex> is_binary(id)
       true
 
@@ -1640,14 +1648,17 @@ defmodule MscmpSystAuthn do
 
       iex> import IP, only: [sigil_i: 2]
       iex> MscmpSystAuthn.get_applied_network_rule!(~i"10.124.124.3")
-      %{functional_type: :allow, network_rule_id: nil, precedence: :implied}
+      %MscmpSystAuthn.Types.AppliedNetworkRule{
+        functional_type: :allow, network_rule_id: nil, precedence: :implied
+      }
 
     When a Global Network Rule explicitly allows the Host IP Address to attempt
     authentication.
 
       iex> import IP, only: [sigil_i: 2]
-      iex> %{functional_type: :allow, network_rule_id: id, precedence: :global} =
-      ...>   MscmpSystAuthn.get_applied_network_rule!(~i"10.125.125.3")
+      iex> %MscmpSystAuthn.Types.AppliedNetworkRule{
+      ...>   functional_type: :allow, network_rule_id: id, precedence: :global
+      ...> } = MscmpSystAuthn.get_applied_network_rule!(~i"10.125.125.3")
       iex> is_binary(id)
       true
 
@@ -1658,7 +1669,7 @@ defmodule MscmpSystAuthn do
           Types.host_address(),
           MscmpSystInstance.Types.instance_id() | nil,
           MscmpSystInstance.Types.owner_id() | nil
-        ) :: Types.applied_network_rule()
+        ) :: Types.AppliedNetworkRule.t()
   defdelegate get_applied_network_rule!(
                 host_address,
                 instance_id \\ nil,
@@ -2148,7 +2159,7 @@ defmodule MscmpSystAuthn do
       regarding valid values for this setting.
   """
   @spec create_or_reset_account_code(Types.access_account_id(), Keyword.t()) ::
-          {:ok, Types.authenticator_result()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, Types.AuthenticatorResult.t()} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate create_or_reset_account_code(access_account_id, opts \\ []),
     to: Impl.ExtendedMgmtLogic
 
@@ -2288,7 +2299,7 @@ defmodule MscmpSystAuthn do
           Types.credential(),
           Keyword.t()
         ) ::
-          {:ok, Types.authenticator_result()}
+          {:ok, Types.AuthenticatorResult.t()}
           | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate create_authenticator_email_password(
                 access_account_id,
@@ -2404,7 +2415,7 @@ defmodule MscmpSystAuthn do
       system to automatically generate the credential.
   """
   @spec request_identity_validation(Types.identity_id() | Msdata.SystIdentities.t(), Keyword.t()) ::
-          {:ok, Types.authenticator_result()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, Types.AuthenticatorResult.t()} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate request_identity_validation(target_identity, opts \\ []), to: Impl.ExtendedMgmtLogic
 
   @doc section: :authenticator_management
@@ -2525,7 +2536,7 @@ defmodule MscmpSystAuthn do
       automatically generate the credential.
   """
   @spec request_password_recovery(Types.access_account_id(), Keyword.t()) ::
-          {:ok, Types.authenticator_result()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, Types.AuthenticatorResult.t()} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate request_password_recovery(access_account_id, opts \\ []), to: Impl.ExtendedMgmtLogic
 
   @doc section: :authenticator_management
@@ -2611,7 +2622,7 @@ defmodule MscmpSystAuthn do
       automatically generate the credential.
   """
   @spec create_authenticator_api_token(Types.access_account_id(), Keyword.t()) ::
-          {:ok, Types.authenticator_result()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, Types.AuthenticatorResult.t()} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate create_authenticator_api_token(access_account_id, opts \\ []),
     to: Impl.ExtendedMgmtLogic
 
@@ -2684,7 +2695,7 @@ defmodule MscmpSystAuthn do
   that the authentication was successful.  The value element of the success
   tuple, the Authentication State, carries information about the outcome of the
   authentication attempt; see
-  `t:MscmpSystAuthn.Types.authentication_state/0` for more about the
+  `t:MscmpSystAuthn.Types.AuthenticationState.t/0` for more about the
   specific information carried by the Authentication State value.  Otherwise,
   an error tuple is returned indicating the nature of the processing failure.
 
@@ -2761,7 +2772,7 @@ defmodule MscmpSystAuthn do
           IP.addr(),
           Keyword.t()
         ) ::
-          {:ok, Types.authentication_state()} | {:error, MscmpSystError.t()}
+          {:ok, Types.AuthenticationState.t()} | {:error, MscmpSystError.t()}
   defdelegate authenticate_email_password(email_address, plaintext_pwd, host_address, opts \\ []),
     to: Impl.ExtendedAuthLogic
 
@@ -2789,8 +2800,8 @@ defmodule MscmpSystAuthn do
   See `authenticate_email_password/4` for a discussion of the possible return
   values.
   """
-  @spec authenticate_email_password(Types.authentication_state(), Keyword.t()) ::
-          {:ok, Types.authentication_state()} | {:error, MscmpSystError.t()}
+  @spec authenticate_email_password(Types.AuthenticationState.t(), Keyword.t()) ::
+          {:ok, Types.AuthenticationState.t()} | {:error, MscmpSystError.t()}
   defdelegate authenticate_email_password(authentication_state, opts \\ []),
     to: Impl.ExtendedAuthLogic
 
@@ -2803,7 +2814,7 @@ defmodule MscmpSystAuthn do
   that the validation was successful.  The value element of the success
   tuple, the Authentication State, carries information about the actual outcome
   of the authentication attempt; see
-  `t:MscmpSystAuthn.Types.authentication_state/0` for more about the
+  `t:MscmpSystAuthn.Types.AuthenticationState.t/0` for more about the
   specific information carried by the Authentication State value.  Otherwise,
   an error tuple is returned indicating the nature of the processing failure.
 
@@ -2863,7 +2874,7 @@ defmodule MscmpSystAuthn do
           IP.addr(),
           Keyword.t()
         ) ::
-          {:ok, Types.authentication_state()} | {:error, MscmpSystError.t()}
+          {:ok, Types.AuthenticationState.t()} | {:error, MscmpSystError.t()}
   defdelegate authenticate_validation_token(
                 identifier,
                 plaintext_token,
@@ -2881,7 +2892,7 @@ defmodule MscmpSystAuthn do
   that the Recovery Token Authenticator was successfully authenticated.  The
   value element of the success tuple, the Authentication State, carries
   information about the actual outcome of the authentication attempt; see
-  `t:MscmpSystAuthn.Types.authentication_state/0` for more about the
+  `t:MscmpSystAuthn.Types.AuthenticationState.t/0` for more about the
   specific information carried by the Authentication State value.  Otherwise,
   an error tuple is returned indicating the nature of the processing failure.
 
@@ -2942,7 +2953,7 @@ defmodule MscmpSystAuthn do
           IP.addr(),
           Keyword.t()
         ) ::
-          {:ok, Types.authentication_state()} | {:error, MscmpSystError.t()}
+          {:ok, Types.AuthenticationState.t()} | {:error, MscmpSystError.t()}
   defdelegate authenticate_recovery_token(identifier, plaintext_token, host_addr, opts \\ []),
     to: Impl.ExtendedAuthLogic
 
@@ -2956,7 +2967,7 @@ defmodule MscmpSystAuthn do
   that the API Token Authenticator was successfully authenticated.  The value
   element of the success tuple, the Authentication State, carries information
   about the actual outcome of the authentication attempt; see
-  `t:MscmpSystAuthn.Types.authentication_state/0` for more about the
+  `t:MscmpSystAuthn.Types.AuthenticationState.t/0` for more about the
   specific information carried by the Authentication State value.  Otherwise,
   an error tuple is returned indicating the nature of the processing failure.
 
@@ -3021,7 +3032,7 @@ defmodule MscmpSystAuthn do
           MscmpSystInstance.Types.instance_id(),
           Keyword.t()
         ) ::
-          {:ok, Types.authentication_state()} | {:error, MscmpSystError.t()}
+          {:ok, Types.AuthenticationState.t()} | {:error, MscmpSystError.t()}
 
   defdelegate authenticate_api_token(
                 identifier,

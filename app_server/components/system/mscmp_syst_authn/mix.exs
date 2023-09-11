@@ -82,7 +82,7 @@ defmodule MscmpSystAuthn.MixProject do
           "Enumeration Access": &(&1[:section] == :enumerations_data),
           Runtime: &(&1[:section] == :service_management)
         ],
-        nest_modules_by_prefix: [Msdata],
+        nest_modules_by_prefix: [Msdata, MscmpSystAuthn.Types],
         groups_for_modules: [
           API: [MscmpSystAuthn],
           Data: [
@@ -99,7 +99,13 @@ defmodule MscmpSystAuthn.MixProject do
             Msdata.SystOwnerPasswordRules,
             Msdata.SystPasswordHistory
           ],
-          "Supporting Types": [MscmpSystAuthn.Types]
+          "Supporting Types": [
+            MscmpSystAuthn.Types,
+            MscmpSystAuthn.Types.AppliedNetworkRule,
+            MscmpSystAuthn.Types.AuthenticationState,
+            MscmpSystAuthn.Types.AuthenticatorResult,
+            MscmpSystAuthn.Types.PasswordRules
+          ]
         ]
       ]
     ]

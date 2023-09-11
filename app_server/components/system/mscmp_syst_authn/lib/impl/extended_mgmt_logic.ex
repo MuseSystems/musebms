@@ -15,6 +15,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedMgmtLogic do
 
   alias MscmpSystAuthn.Impl
   alias MscmpSystAuthn.Types
+  alias MscmpSystAuthn.Types.AuthenticatorResult
 
   require Logger
 
@@ -30,7 +31,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedMgmtLogic do
           Types.credential(),
           Keyword.t()
         ) ::
-          {:ok, Types.authenticator_result()}
+          {:ok, AuthenticatorResult.t()}
           | {:error, MscmpSystError.t() | Exception.t()}
   def create_authenticator_email_password(access_account_id, email_addr, plaintext_pwd, opts) do
     opts = MscmpSystUtils.resolve_options(opts, create_validated: false, credential_token: nil)
@@ -42,10 +43,12 @@ defmodule MscmpSystAuthn.Impl.ExtendedMgmtLogic do
              Impl.Credential.Password.set_credential(access_account_id, plaintext_pwd, opts),
            {:ok, validator_result} <-
              maybe_create_email_validator(opts[:create_validated], email_identity, opts) do
-        Map.merge(validator_result, %{
+        %AuthenticatorResult{
+          validation_identifier: validator_result[:validation_identifier],
+          validation_credential: validator_result[:validation_credential],
           access_account_id: access_account_id,
           account_identifier: email_identity.account_identifier
-        })
+        }
       else
         {:invalid_credential, _} = cred_violations ->
           MscmpSystDb.rollback(cred_violations)
@@ -91,7 +94,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedMgmtLogic do
   # ============================================================================
 
   @spec request_identity_validation(Types.identity_id() | Msdata.SystIdentities.t(), Keyword.t()) ::
-          {:ok, Types.authenticator_result()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, AuthenticatorResult.t()} | {:error, MscmpSystError.t() | Exception.t()}
   def request_identity_validation(target_identity_id, opts) when is_binary(target_identity_id) do
     target_identity_id
     |> Impl.Identity.get_identity_record()
@@ -111,9 +114,12 @@ defmodule MscmpSystAuthn.Impl.ExtendedMgmtLogic do
   def request_identity_validation(%Msdata.SystIdentities{} = target_identity, opts) do
     case create_validator(target_identity, opts) do
       {:ok, validator} ->
-        validator
-        |> Map.put(:access_account_id, target_identity.access_account_id)
-        |> then(&{:ok, &1})
+        {:ok,
+         %AuthenticatorResult{
+           access_account_id: target_identity.access_account_id,
+           validation_identifier: validator[:validation_identifier],
+           validation_credential: validator[:validation_credential]
+         }}
 
       error ->
         raise MscmpSystError,
@@ -208,7 +214,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedMgmtLogic do
   # ============================================================================
 
   @spec request_password_recovery(Types.access_account_id(), Keyword.t()) ::
-          {:ok, Types.authenticator_result()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, AuthenticatorResult.t()} | {:error, MscmpSystError.t() | Exception.t()}
   def request_password_recovery(access_account_id, opts) do
     recovery_func = fn ->
       with {:ok, recovery_identity} <-
@@ -220,7 +226,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedMgmtLogic do
                opts[:credential_token],
                opts
              ) do
-        %{
+        %AuthenticatorResult{
           access_account_id: recovery_identity.access_account_id,
           account_identifier: recovery_identity.account_identifier,
           credential: recovery_credential
@@ -286,7 +292,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedMgmtLogic do
   # ============================================================================
 
   @spec create_authenticator_api_token(Types.access_account_id(), Keyword.t()) ::
-          {:ok, Types.authenticator_result()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, AuthenticatorResult.t()} | {:error, MscmpSystError.t() | Exception.t()}
   def create_authenticator_api_token(access_account_id, opts) do
     opts = MscmpSystUtils.resolve_options(opts, identity_token: nil, credential_token: nil)
 
@@ -304,7 +310,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedMgmtLogic do
                opts[:credential_token],
                opts
              ) do
-        %{
+        %AuthenticatorResult{
           access_account_id: access_account_id,
           account_identifier: identity.account_identifier,
           credential: credential
@@ -376,7 +382,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedMgmtLogic do
   # ============================================================================
 
   @spec create_or_reset_account_code(Types.access_account_id(), Keyword.t()) ::
-          {:ok, Types.authenticator_result()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, AuthenticatorResult.t()} | {:error, MscmpSystError.t() | Exception.t()}
   def create_or_reset_account_code(access_account_id, opts) do
     access_account_id
     |> Impl.Identity.AccountCode.reset_identity_for_access_account_id(opts)
@@ -395,7 +401,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedMgmtLogic do
 
   defp process_account_code_create_result({:ok, %Msdata.SystIdentities{} = identity}) do
     {:ok,
-     %{
+     %AuthenticatorResult{
        access_account_id: identity.access_account_id,
        account_identifier: identity.account_identifier
      }}
