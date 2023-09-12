@@ -11,9 +11,9 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystSession.Msdata.Validators.SystSessions do
-  import Ecto.Changeset
-
   @moduledoc false
+
+  import Ecto.Changeset
 
   alias MscmpSystSession.Types
 

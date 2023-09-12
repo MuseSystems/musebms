@@ -11,11 +11,11 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystSession.Impl.DbSession do
+  @moduledoc false
+
   import Ecto.Query
 
   alias MscmpSystSession.Types
-
-  @moduledoc false
 
   require Logger
 
