@@ -11,11 +11,11 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystPerms.Impl.PermRole do
+  @moduledoc false
+
   import Ecto.Query
 
   alias MscmpSystPerms.Types
-
-  @moduledoc false
 
   require Logger
 

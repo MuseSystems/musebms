@@ -11,13 +11,13 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystPerms.Msdata.Validators.SystPermRoles do
+  @moduledoc false
+
   import Ecto.Changeset
 
   alias MscmpSystPerms.Msdata.Helpers
   alias MscmpSystPerms.Msdata.Validators
   alias MscmpSystPerms.Types
-
-  @moduledoc false
 
   @spec insert_changeset(Types.perm_role_params(), Keyword.t()) :: Ecto.Changeset.t()
   def insert_changeset(insert_params, opts) do

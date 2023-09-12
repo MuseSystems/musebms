@@ -11,11 +11,6 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule Msdata.SystPermRoles do
-  use MscmpSystDb.Schema
-
-  alias MscmpSystPerms.Msdata.Validators
-  alias MscmpSystPerms.Types
-
   @moduledoc """
   Groups together individual permissions such that they can be sensibly granted
   to users.
@@ -23,24 +18,10 @@ defmodule Msdata.SystPermRoles do
   Defined in `MscmpSystPerms`.
   """
 
-  @type t() ::
-          %__MODULE__{
-            __meta__: Ecto.Schema.Metadata.t(),
-            id: Ecto.UUID.t() | nil,
-            internal_name: Types.perm_role_name() | nil,
-            display_name: String.t() | nil,
-            perm_functional_type_id: Types.perm_functional_type_id() | nil,
-            syst_defined: boolean() | nil,
-            syst_description: String.t() | nil,
-            user_description: String.t() | nil,
-            diag_timestamp_created: DateTime.t() | nil,
-            diag_role_created: String.t() | nil,
-            diag_timestamp_modified: DateTime.t() | nil,
-            diag_wallclock_modified: DateTime.t() | nil,
-            diag_role_modified: String.t() | nil,
-            diag_row_version: integer() | nil,
-            diag_update_count: integer() | nil
-          }
+  use MscmpSystDb.Schema
+
+  alias MscmpSystPerms.Msdata.Validators
+  alias MscmpSystPerms.Types
 
   @schema_prefix "ms_syst"
 
@@ -62,6 +43,25 @@ defmodule Msdata.SystPermRoles do
 
     has_many(:perm_role_grants, Msdata.SystPermRoleGrants, foreign_key: :perm_role_id)
   end
+
+  @type t() ::
+          %__MODULE__{
+            __meta__: Ecto.Schema.Metadata.t(),
+            id: Ecto.UUID.t() | nil,
+            internal_name: Types.perm_role_name() | nil,
+            display_name: String.t() | nil,
+            perm_functional_type_id: Types.perm_functional_type_id() | nil,
+            syst_defined: boolean() | nil,
+            syst_description: String.t() | nil,
+            user_description: String.t() | nil,
+            diag_timestamp_created: DateTime.t() | nil,
+            diag_role_created: String.t() | nil,
+            diag_timestamp_modified: DateTime.t() | nil,
+            diag_wallclock_modified: DateTime.t() | nil,
+            diag_role_modified: String.t() | nil,
+            diag_row_version: integer() | nil,
+            diag_update_count: integer() | nil
+          }
 
   @spec insert_changeset(Types.perm_role_params(), Keyword.t()) :: Ecto.Changeset.t()
   defdelegate insert_changeset(insert_params, opts \\ []), to: Validators.SystPermRoles

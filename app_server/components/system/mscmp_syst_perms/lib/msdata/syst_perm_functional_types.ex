@@ -11,11 +11,6 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule Msdata.SystPermFunctionalTypes do
-  use MscmpSystDb.Schema
-
-  alias MscmpSystPerms.Msdata.Validators
-  alias MscmpSystPerms.Types
-
   @moduledoc """
   Defines the different kinds of permissions and allows those permissions to be
   associated with various degrees of authority.
@@ -23,22 +18,10 @@ defmodule Msdata.SystPermFunctionalTypes do
   Defined in `MscmpSystPerms`.
   """
 
-  @type t() ::
-          %__MODULE__{
-            __meta__: Ecto.Schema.Metadata.t(),
-            id: Ecto.UUID.t() | nil,
-            internal_name: Types.perm_functional_type_name() | nil,
-            display_name: String.t() | nil,
-            syst_description: String.t() | nil,
-            user_description: String.t() | nil,
-            diag_timestamp_created: DateTime.t() | nil,
-            diag_role_created: String.t() | nil,
-            diag_timestamp_modified: DateTime.t() | nil,
-            diag_wallclock_modified: DateTime.t() | nil,
-            diag_role_modified: String.t() | nil,
-            diag_row_version: integer() | nil,
-            diag_update_count: integer() | nil
-          }
+  use MscmpSystDb.Schema
+
+  alias MscmpSystPerms.Msdata.Validators
+  alias MscmpSystPerms.Types
 
   @schema_prefix "ms_syst"
 
@@ -58,6 +41,23 @@ defmodule Msdata.SystPermFunctionalTypes do
     has_many(:perms, Msdata.SystPerms, foreign_key: :perm_functional_type_id)
     has_many(:perm_roles, Msdata.SystPermRoles, foreign_key: :perm_functional_type_id)
   end
+
+  @type t() ::
+          %__MODULE__{
+            __meta__: Ecto.Schema.Metadata.t(),
+            id: Ecto.UUID.t() | nil,
+            internal_name: Types.perm_functional_type_name() | nil,
+            display_name: String.t() | nil,
+            syst_description: String.t() | nil,
+            user_description: String.t() | nil,
+            diag_timestamp_created: DateTime.t() | nil,
+            diag_role_created: String.t() | nil,
+            diag_timestamp_modified: DateTime.t() | nil,
+            diag_wallclock_modified: DateTime.t() | nil,
+            diag_role_modified: String.t() | nil,
+            diag_row_version: integer() | nil,
+            diag_update_count: integer() | nil
+          }
 
   @spec update_changeset(
           Msdata.SystPermFunctionalTypes.t(),

@@ -11,12 +11,12 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defprotocol MscmpSystPerms.Protocol do
-  alias MscmpSystPerms.Types
-
   @moduledoc """
   Defines a common API for the various higher level implementations which use
   `MscmpSystPerms` as a core for permission management.
   """
+
+  alias MscmpSystPerms.Types
 
   @doc """
   Provides the effective Permissions/Rights/Scopes for the user context

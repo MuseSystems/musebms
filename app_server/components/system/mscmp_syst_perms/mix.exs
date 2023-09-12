@@ -60,7 +60,7 @@ defmodule MscmpSystPerms.MixProject do
           Permissions: &(&1[:section] == :perms_management),
           "Data Management": &(&1[:section] == :perms_data)
         ],
-        nest_modules_by_prefix: [Msdata],
+        nest_modules_by_prefix: [Msdata, MscmpSystPerms.Types],
         groups_for_modules: [
           API: [MscmpSystPerms],
           Data: [
@@ -69,7 +69,7 @@ defmodule MscmpSystPerms.MixProject do
             Msdata.SystPermRoles,
             Msdata.SystPermRoleGrants
           ],
-          "Supporting Types": [MscmpSystPerms.Types]
+          "Supporting Types": [MscmpSystPerms.Types, MscmpSystPerms.Types.PermGrantValue]
         ]
       ]
     ]

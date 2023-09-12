@@ -11,13 +11,13 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystPerms.Msdata.Validators.SystPerms do
+  @moduledoc false
+
   import Ecto.Changeset
 
   alias MscmpSystPerms.Msdata.Helpers
   alias MscmpSystPerms.Msdata.Validators
   alias MscmpSystPerms.Types
-
-  @moduledoc false
 
   # The scope options fields are not "required" in the insert_changeset function
   # because the database will default them if they aren't provided.  On update

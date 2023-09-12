@@ -11,13 +11,13 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystPerms.Msdata.Validators.SystPermFunctionalTypes do
+  @moduledoc false
+
   import Ecto.Changeset
 
   alias MscmpSystPerms.Msdata.Helpers
   alias MscmpSystPerms.Msdata.Validators
   alias MscmpSystPerms.Types
-
-  @moduledoc false
 
   @spec update_changeset(
           Msdata.SystPermFunctionalTypes.t(),

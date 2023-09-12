@@ -11,14 +11,14 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystPerms.Msdata.Validators.SystPermRoleGrants do
+  @moduledoc false
+
   import Ecto.Changeset
 
   alias MscmpSystPerms.Impl
   alias MscmpSystPerms.Types
 
   @scopes ["unused", "deny", "same_user", "same_group", "all"]
-
-  @moduledoc false
 
   # TODO:  The SystPermRoles record controls whether or not this record is also
   #        considered system defined.  Really there should be some sort of

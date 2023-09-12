@@ -11,13 +11,13 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystPerms.Types do
-  #
-  # Note that the ordering of typespecs here is alphabetical.
-  #
-
   @moduledoc """
   Types used by the Perms component.
   """
+
+  #
+  # Note that the ordering of typespecs here is alphabetical.
+  #
 
   @typedoc """
   Defines the return value type for certain functions returning existing
@@ -35,20 +35,7 @@ defmodule MscmpSystPerms.Types do
   The keys for this map should be `t:perm_name/0` value of the Permission record
   in question.
   """
-  @type perm_grants() :: %{required(perm_name()) => perm_grant_value()}
-
-  @typedoc """
-  Describes the Scopes granted by a Permission for each of the Permission's
-  Rights.
-
-  See the conceptual documentation at `MscmpSystPerms` for more.
-  """
-  @type perm_grant_value() :: %{
-          required(:view_scope) => rights_scope(),
-          required(:maint_scope) => rights_scope(),
-          required(:admin_scope) => rights_scope(),
-          required(:ops_scope) => rights_scope()
-        }
+  @type perm_grants() :: %{required(perm_name()) => MscmpSystPerms.Types.PermGrantValue.t()}
 
   @typedoc """
   The type of the Permission record ID value.
@@ -58,7 +45,7 @@ defmodule MscmpSystPerms.Types do
   @typedoc """
   The Internal Name type for Permission records.
   """
-  @type perm_name() :: String.t()
+  @type perm_name() :: atom()
 
   @typedoc """
   A map defining the data used in creating or updating Permission records.
@@ -312,4 +299,29 @@ defmodule MscmpSystPerms.Types do
 
   """
   @type rights_scope() :: :deny | :same_user | :same_group | :all | :unused
+end
+
+defmodule MscmpSystPerms.Types.PermGrantValue do
+  @moduledoc """
+  A data structure describing what Scope is granted for each Right of a
+  Permission.
+  """
+
+  alias MscmpSystPerms.Types
+
+  defstruct view_scope: :deny, maint_scope: :deny, admin_scope: :deny, ops_scope: :deny
+
+  @typedoc """
+  A data structure describing what Scope is granted for each Right of a
+  Permission.
+
+  See the conceptual documentation at `MscmpSystPerms` for more about the
+  available Rights and Scopes.
+  """
+  @type t :: %__MODULE__{
+          view_scope: Types.rights_scope(),
+          maint_scope: Types.rights_scope(),
+          admin_scope: Types.rights_scope(),
+          ops_scope: Types.rights_scope()
+        }
 end

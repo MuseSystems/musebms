@@ -11,9 +11,9 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystPerms.Impl.PermFunctionalType do
-  alias MscmpSystPerms.Types
-
   @moduledoc false
+
+  alias MscmpSystPerms.Types
 
   require Logger
 
