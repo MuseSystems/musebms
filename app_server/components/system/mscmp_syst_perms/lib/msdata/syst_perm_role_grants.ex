@@ -11,11 +11,6 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule Msdata.SystPermRoleGrants do
-  use MscmpSystDb.Schema
-
-  alias MscmpSystPerms.Msdata.Validators
-  alias MscmpSystPerms.Types
-
   @moduledoc """
   Records that grant permissions to specific roles and in specific degrees of
   authority.
@@ -23,24 +18,10 @@ defmodule Msdata.SystPermRoleGrants do
   Defined in `MscmpSystPerms`.
   """
 
-  @type t() ::
-          %__MODULE__{
-            __meta__: Ecto.Schema.Metadata.t(),
-            id: Ecto.UUID.t() | nil,
-            perm_role_id: Types.perm_role_id() | nil,
-            perm_id: Types.perm_id() | nil,
-            view_scope: Types.rights_scope() | nil,
-            maint_scope: Types.rights_scope() | nil,
-            admin_scope: Types.rights_scope() | nil,
-            ops_scope: Types.rights_scope() | nil,
-            diag_timestamp_created: DateTime.t() | nil,
-            diag_role_created: String.t() | nil,
-            diag_timestamp_modified: DateTime.t() | nil,
-            diag_wallclock_modified: DateTime.t() | nil,
-            diag_role_modified: String.t() | nil,
-            diag_row_version: integer() | nil,
-            diag_update_count: integer() | nil
-          }
+  use MscmpSystDb.Schema
+
+  alias MscmpSystPerms.Msdata.Validators
+  alias MscmpSystPerms.Types
 
   @schema_prefix "ms_syst"
 
@@ -60,6 +41,25 @@ defmodule Msdata.SystPermRoleGrants do
     belongs_to(:perm_role, Msdata.SystPermRoles)
     belongs_to(:perm, Msdata.SystPerms)
   end
+
+  @type t() ::
+          %__MODULE__{
+            __meta__: Ecto.Schema.Metadata.t(),
+            id: Ecto.UUID.t() | nil,
+            perm_role_id: Types.perm_role_id() | nil,
+            perm_id: Types.perm_id() | nil,
+            view_scope: Types.rights_scope() | nil,
+            maint_scope: Types.rights_scope() | nil,
+            admin_scope: Types.rights_scope() | nil,
+            ops_scope: Types.rights_scope() | nil,
+            diag_timestamp_created: DateTime.t() | nil,
+            diag_role_created: String.t() | nil,
+            diag_timestamp_modified: DateTime.t() | nil,
+            diag_wallclock_modified: DateTime.t() | nil,
+            diag_role_modified: String.t() | nil,
+            diag_row_version: integer() | nil,
+            diag_update_count: integer() | nil
+          }
 
   @spec insert_changeset(Types.perm_role_grant_params()) :: Ecto.Changeset.t()
   defdelegate insert_changeset(insert_params), to: Validators.SystPermRoleGrants
