@@ -11,11 +11,11 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystMcpPerms.Impl.AccessAccountPermRole do
+  @moduledoc false
+
   import Ecto.Query
 
   alias MscmpSystMcpPerms.Types
-
-  @moduledoc false
 
   require Logger
 
@@ -61,7 +61,7 @@ defmodule MscmpSystMcpPerms.Impl.AccessAccountPermRole do
     |> maybe_filter_by_permissions(opts[:permissions])
     |> MscmpSystDb.all()
     |> Enum.reduce(%{}, fn perm, perm_map ->
-      Map.put_new(perm_map, perm.perm_name, %{
+      Map.put_new(perm_map, perm.perm_name, %MscmpSystPerms.Types.PermGrantValue{
         view_scope: String.to_atom(perm.view_scope),
         maint_scope: String.to_atom(perm.maint_scope),
         admin_scope: String.to_atom(perm.admin_scope),

@@ -11,11 +11,11 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystMcpPerms.Msdata.Validators.SystAccessAccountPermRoleAssigns do
+  @moduledoc false
+
   import Ecto.Changeset
 
   alias MscmpSystMcpPerms.Types
-
-  @moduledoc false
 
   @spec insert_changeset(Types.access_account_perm_role_params()) :: Ecto.Changeset.t()
   def insert_changeset(insert_params) do

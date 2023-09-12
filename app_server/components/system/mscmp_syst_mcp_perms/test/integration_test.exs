@@ -63,7 +63,7 @@ defmodule IntegrationTest do
 
     assert {
              "mcp_login",
-             %{
+             %MscmpSystPerms.Types.PermGrantValue{
                view_scope: :unused,
                maint_scope: :unused,
                admin_scope: :unused,
@@ -79,7 +79,7 @@ defmodule IntegrationTest do
 
     assert {
              "global_login",
-             %{
+             %MscmpSystPerms.Types.PermGrantValue{
                view_scope: :unused,
                maint_scope: :unused,
                admin_scope: :unused,
@@ -100,7 +100,7 @@ defmodule IntegrationTest do
 
     assert {
              "mcp_login",
-             %{
+             %MscmpSystPerms.Types.PermGrantValue{
                view_scope: :unused,
                maint_scope: :unused,
                admin_scope: :unused,
@@ -129,7 +129,7 @@ defmodule IntegrationTest do
 
     assert {
              "global_login",
-             %{
+             %MscmpSystPerms.Types.PermGrantValue{
                view_scope: :unused,
                maint_scope: :unused,
                admin_scope: :unused,
@@ -222,7 +222,7 @@ defmodule IntegrationTest do
 
     assert {
              "mcp_login",
-             %{
+             %MscmpSystPerms.Types.PermGrantValue{
                view_scope: :unused,
                maint_scope: :unused,
                admin_scope: :unused,
@@ -238,7 +238,7 @@ defmodule IntegrationTest do
 
     assert {
              "global_login",
-             %{
+             %MscmpSystPerms.Types.PermGrantValue{
                view_scope: :deny,
                maint_scope: :deny,
                admin_scope: :deny,
@@ -263,7 +263,7 @@ defmodule IntegrationTest do
 
     assert {
              "mcp_login",
-             %{
+             %MscmpSystPerms.Types.PermGrantValue{
                view_scope: :deny,
                maint_scope: :deny,
                admin_scope: :deny,
@@ -279,7 +279,7 @@ defmodule IntegrationTest do
 
     assert {
              "global_login",
-             %{
+             %MscmpSystPerms.Types.PermGrantValue{
                view_scope: :deny,
                maint_scope: :deny,
                admin_scope: :deny,
