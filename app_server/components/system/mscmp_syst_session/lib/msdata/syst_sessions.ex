@@ -11,16 +11,30 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule Msdata.SystSessions do
+  @moduledoc tags: [:mscmp_syst_session]
+  @moduledoc """
+  User interface session data.
+  """
+
   use MscmpSystDb.Schema
 
   alias MscmpSystSession.Msdata.Validators
   alias MscmpSystSession.Types
 
-  @moduledoc """
-  User interface session data.
-  """
+  @schema_prefix "ms_syst"
 
-  @moduledoc tags: [:mscmp_syst_session]
+  schema "syst_sessions" do
+    field(:internal_name, :string)
+    field(:session_data, :map)
+    field(:session_expires, :utc_datetime)
+    field(:diag_timestamp_created, :utc_datetime)
+    field(:diag_role_created, :string, load_in_query: false)
+    field(:diag_timestamp_modified, :utc_datetime)
+    field(:diag_wallclock_modified, :utc_datetime, load_in_query: false)
+    field(:diag_role_modified, :string, load_in_query: false)
+    field(:diag_row_version, :integer)
+    field(:diag_update_count, :integer, load_in_query: false)
+  end
 
   @type t() ::
           %__MODULE__{
@@ -37,21 +51,6 @@ defmodule Msdata.SystSessions do
             diag_row_version: integer() | nil,
             diag_update_count: integer() | nil
           }
-
-  @schema_prefix "ms_syst"
-
-  schema "syst_sessions" do
-    field(:internal_name, :string)
-    field(:session_data, :map)
-    field(:session_expires, :utc_datetime)
-    field(:diag_timestamp_created, :utc_datetime)
-    field(:diag_role_created, :string, load_in_query: false)
-    field(:diag_timestamp_modified, :utc_datetime)
-    field(:diag_wallclock_modified, :utc_datetime, load_in_query: false)
-    field(:diag_role_modified, :string, load_in_query: false)
-    field(:diag_row_version, :integer)
-    field(:diag_update_count, :integer, load_in_query: false)
-  end
 
   @spec insert_changeset(Types.session_params()) :: Ecto.Changeset.t()
   defdelegate insert_changeset(insert_params), to: Validators.SystSessions
