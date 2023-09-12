@@ -11,14 +11,14 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MssubMcp.Updater do
-  alias MssubMcp.Runtime
-
   @moduledoc """
   Provides an API for bootstrapping and migration application for the MCP
   subsystem.
   """
 
   use MssubMcp.Macros
+
+  alias MssubMcp.Runtime
 
   mcp_constants()
 

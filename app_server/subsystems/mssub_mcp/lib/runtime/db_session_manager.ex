@@ -11,11 +11,11 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MssubMcp.Runtime.DbSessionManager do
-  alias MscmpSystSession.Types, as: SessionTypes
-
   @moduledoc false
 
   use MssubMcp.Macros
+
+  alias MscmpSystSession.Types, as: SessionTypes
 
   mcp_constants()
 

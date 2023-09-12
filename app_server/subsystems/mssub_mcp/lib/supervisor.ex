@@ -11,11 +11,11 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MssubMcp.Supervisor do
-  alias MssubMcp.Runtime
-
   @moduledoc false
 
   use Supervisor
+
+  alias MssubMcp.Runtime
 
   def start_link(init_arg) do
     Supervisor.start_link(__MODULE__, init_arg, name: __MODULE__)
