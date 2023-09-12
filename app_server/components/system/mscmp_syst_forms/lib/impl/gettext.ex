@@ -11,6 +11,6 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystForms.Impl.Gettext do
-  use Gettext, otp_app: :mscmp_syst_forms
   @moduledoc false
+  use Gettext, otp_app: :mscmp_syst_forms
 end

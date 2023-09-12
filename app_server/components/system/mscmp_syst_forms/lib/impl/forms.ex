@@ -11,13 +11,13 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystForms.Impl.Forms do
-  alias MscmpSystForms.Types
-  alias MscmpSystForms.Types.ComponentConfig
-  alias MscmpSystForms.Types.FormConfig
+  @moduledoc false
 
   import Phoenix.Component, only: [assign: 2, assign: 3]
 
-  @moduledoc false
+  alias MscmpSystForms.Types
+  alias MscmpSystForms.Types.{ComponentConfig, ComponentInfo, FormConfig}
+  alias MscmpSystPerms.Types.PermGrantValue
 
   @default_perm :default_permission
   @default_modes %{component_mode: :cleared}
@@ -302,7 +302,10 @@ defmodule MscmpSystForms.Impl.Forms do
 
   defp apply_data_perm(data, _, _, nil), do: data
   defp apply_data_perm(data, :__struct__, _, _), do: data
-  defp apply_data_perm(data, key, value, %{view_scope: :all}), do: Map.put(data, key, value)
+
+  defp apply_data_perm(data, key, value, %PermGrantValue{view_scope: :all}),
+    do: Map.put(data, key, value)
+
   defp apply_data_perm(data, key, _, _), do: Map.put(data, key, nil)
 
   defp get_data_perms(module), do: module.get_form_config() |> process_data_perms(@default_perm)
@@ -450,8 +453,7 @@ defmodule MscmpSystForms.Impl.Forms do
   @spec get_component_info(
           module(),
           %{form_id: Types.form_id()} | %{binding_id: Types.binding_id()}
-        ) ::
-          Types.component_info() | nil
+        ) :: Types.ComponentInfo.t() | nil
   def get_component_info(module, component_id),
     do: module.get_form_config() |> find_component_config(component_id)
 
@@ -473,7 +475,7 @@ defmodule MscmpSystForms.Impl.Forms do
          %{form_id: form_id}
        )
        when candidate_form_id == form_id do
-    %{
+    %ComponentInfo{
       label: form_config.label,
       label_link: form_config.label_link,
       info: form_config.info
@@ -485,7 +487,7 @@ defmodule MscmpSystForms.Impl.Forms do
          %{binding_id: binding_id}
        )
        when candidate_binding_id == binding_id do
-    %{
+    %ComponentInfo{
       label: form_config.label,
       label_link: form_config.label_link,
       info: form_config.info

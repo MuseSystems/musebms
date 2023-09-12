@@ -33,37 +33,6 @@ defmodule MscmpSystForms.Types do
   @type binding_id() :: atom()
 
   @typedoc """
-  A structure defining the different kinds of display mode data which can be
-  communicated to a user interface component.
-
-  User interface components can be configured with a variety of display options,
-  called "modes".  Between the functions which generate the effective modes for
-  the user interface and the user interface components themselves there must be
-  a standard way to communicate and this type defines the structure of that
-  communication.
-
-  It is worth noting that the Component will receive its display modes in data
-  with this structure.
-  """
-  @type component_display_modes() ::
-          %{
-            optional(:component_mode) => component_modes(),
-            optional(:border_mode) => display_modes(),
-            optional(:text_mode) => display_modes() | list(String.t()),
-            optional(:label_mode) => display_modes() | list(String.t())
-          }
-
-  @typedoc """
-  The returned data type of the `MscmpSystForms.get_component_info/2` function.
-
-  The type identifies the specific returned textual information describing the
-  component and configured in the Form Configurations.
-
-  See `c:MscmpSystForms.get_form_config/0` for more.
-  """
-  @type component_info() :: %{label: String.t(), label_link: String.t(), info: String.t()}
-
-  @typedoc """
   Component level modes which govern the behavior of components in terms of
   interactivity, whether or not they may display data, and even if the component
   is visible to users or present in the layout.
@@ -182,7 +151,9 @@ defmodule MscmpSystForms.Types do
   The structure of data representing Components and their display modes within
   `t:form_state_states/0` structured data.
   """
-  @type form_state_components() :: %{required(form_id()) => component_display_modes()}
+  @type form_state_components() :: %{
+          required(form_id()) => MscmpSystForms.Types.ComponentDisplayModes.t()
+        }
 
   @typedoc """
   Defines the type used to express Form State Feature names.
@@ -197,8 +168,10 @@ defmodule MscmpSystForms.Types do
   First a `:default` set of component configurations which act as a fallback
   when a specific Mode/State combination do not fully address a component's
   configuration themselves.  When the `:default` component configuration also
-  doesn't address a component, the `t:component_display_modes/0` of last resort
-  is used (currently: `%{component_mode: :cleared}`).
+  doesn't address a component, the
+  `t:MscmpSystForms.Types.ComponentDisplayModes.t/0` of last resort is used
+  (currently:
+  `%MscmpSystForms.Types.ComponentDisplayModes{component_mode: :cleared}`).
 
   Next we define the `:processing_overrides` that each component should respond
   to when active.
@@ -347,113 +320,7 @@ defmodule MscmpSystForms.Types do
           Phoenix.Socket.t() | Phoenix.LiveView.Socket.t() | Phoenix.LiveView.Socket.assigns()
 end
 
-defmodule MscmpSystForms.Types.FormConfig do
-  alias MscmpSystForms.Types
-
-  @moduledoc """
-  A struct used by developers to define the abstract structure and configuration
-  details of user interface forms and their elements including their
-  permissions, data bindings, text strings, as well as their child elements
-  which may inherit certain properties such as permissions.
-
-  This would be called a "Definition Time" concern/configuration.
-
-  Note that while it is most typical for form configurations to be associated
-  directly with specific user interface elements, the configuration system
-  allows for grouping form configuration entries which do not related directly a
-  specific user interface element and exist purely to serve as parent to other
-  form configurations so that those children can inherit the parent's
-  properties.  A common example of this is most forms define an abstract top
-  level parent form configuration which defines the default permission for all
-  other form elements to inherit from.
-
-  Not all elements on a form must be represented by a `FormConfig` value,
-  however any element which must respond to runtime changes in form state,
-  processing overrides, or current user permissions must have at least a
-  `FormConfig` value defining its `form_id` value.
-  """
-
-  @typedoc """
-  Defines the attributes available to the developer to create an abstract form
-  definition.
-
-  ## Fields
-
-    * `form_id` - identifies the user interface form element to which the
-    configuration will be applied.  If this value is `nil` then the
-    configuration won't refer to specific element in the user interface, but is
-    a virtual or abstract configuration which may serve as parent to other
-    concrete element backing configurations.  Note that elements with
-    `FormConfigs` defined with `nil` `form_id` values will not appear at all in
-    render configurations.
-
-    * `binding_id` - for user interface elements which display application data
-    to identify the data field from which to draw values using this identifier.
-    If the `binding_id` is `nil` then the element will not be bound to a field
-    in the form's backing data.
-
-    * `permission` - the identifier of the permission which this form element
-    will test for element access when rendering the form, displaying data, and
-    permitting user interaction if the element being configured allows for
-    interaction.  This value will be inherited by any child of a configuration
-    that doesn't specify its own permission value.
-
-    * `label` - if the user interface element is backed by a component which
-    displays a label, such as an `MscmpSystForms.WebComponents.msinput/1`
-    component, the text of the label may be set using this value.  If this value
-    is `nil` either the label will be blank, not rendered, or determined by
-    directly setting the component's `title` value directly in the view layer.
-    Note that component's `title` attribute can override the value set in the
-    configuration using this configuration.
-
-    * `label_link` - the label of a user interface element may optionally define
-    a URL to link to when clicking the label, such as a link to relevant
-    documentation.  When this value is not `nil`, the link is the URL to the
-    resource to access; when `nil` the label is rendered without a link.
-    (*Note that `label_link` is not yet implemented in most components.*)
-
-    * `info` - in some situations, abbreviated additional information for a
-    user interface element is made available to the user, for example via the
-    `MscmpSystForms.WebComponent.msinfo/1` web component.  This attribute
-    configures the text that is displayed to the user in these scenarios.  If
-    the value is `nil` then no text is displayed even if it could be.
-
-    * `button_state` - for user interface buttons of type
-    `MscmpSystForms.WebComponents.msvalidated_button/1`, this attribute
-    configures the default button state.  The available values are defined by
-    the type `t:MscmpSystForms.Types.msvalidated_button_states/0`.
-
-    * `children` - A form configuration may optionally identify child
-    configurations which will inherit certain attributes and other traits from
-    the parent.  Naturally, an element should never be added as a child to
-    multiple parent configurations; doing so will result in undefined behaviors.
-    Examples of attributes and traits that can be inherited through parent/child
-    relationships defined in this field include permissions and component modes.
-  """
-  @type t() :: %__MODULE__{
-          form_id: Types.form_id() | nil,
-          binding_id: Types.binding_id() | nil,
-          permission: Types.permission_name() | nil,
-          label: String.t() | nil,
-          label_link: String.t() | nil,
-          info: String.t() | nil,
-          button_state: Types.msvalidated_button_states() | nil,
-          children: list(t()) | [] | nil
-        }
-
-  defstruct form_id: nil,
-            binding_id: nil,
-            permission: nil,
-            label: nil,
-            label_link: nil,
-            info: nil,
-            button_state: nil,
-            children: []
-end
-
 defmodule MscmpSystForms.Types.ComponentConfig do
-  alias MscmpSystForms.Types
-
   @moduledoc """
   An essential data type returned by the system using the
   `MscmpSystForms.get_render_configs/5` function.  That function returns
@@ -478,6 +345,18 @@ defmodule MscmpSystForms.Types.ComponentConfig do
   > make their components respond to `ComponentConfig` values so we do include
   > it in the documentation here.
   """
+
+  alias MscmpSystForms.Types
+
+  defstruct form_id: nil,
+            binding_id: nil,
+            permission: nil,
+            label: nil,
+            label_link: nil,
+            info: nil,
+            button_state: nil,
+            overrides: nil,
+            modes: nil
 
   @typedoc """
   Defines a struct which encapsulates runtime component configurations using
@@ -556,6 +435,86 @@ defmodule MscmpSystForms.Types.ComponentConfig do
           overrides: list(atom()) | nil,
           modes: map()
         }
+end
+
+defmodule MscmpSystForms.Types.ComponentDisplayModes do
+  @moduledoc """
+  A struct defining the different kinds of display mode data which can be
+  communicated to a user interface component.
+
+  User interface components can be configured with a variety of display options,
+  called "modes".  Between the functions which generate the effective modes for
+  the user interface and the user interface components themselves there must be
+  a standard way to communicate and this type defines the structure of that
+  communication.
+
+  It is worth noting that the Component will receive its display modes in data
+  with this structure.
+  """
+
+  alias MscmpSystForms.Types
+
+  defstruct [:component_mode, :border_mode, :text_mode, :label_mode]
+
+  @typedoc """
+  A struct defining the different kinds of display mode data which can be
+  communicated to a user interface component.
+  """
+  @type t :: %__MODULE__{
+          component_mode: Types.component_modes(),
+          border_mode: Types.display_modes(),
+          text_mode: Types.display_modes() | list(String.t()),
+          label_mode: Types.display_modes() | list(String.t())
+        }
+end
+
+defmodule MscmpSystForms.Types.ComponentInfo do
+  @moduledoc """
+  This struct identifies the specific returned textual information describing
+  the component and configured in the Form Configurations.
+  """
+
+  defstruct [:label, :label_link, :info]
+
+  @typedoc """
+  This struct identifies the specific returned textual information describing
+  the component and configured in the Form Configurations.
+
+  See `t:MscmpSystForms.Types.ComponentConfig.t/0` for information regarding the
+  attributes.
+  """
+  @type t :: %__MODULE__{
+          label: String.t() | nil,
+          label_link: String.t() | nil,
+          info: String.t() | nil
+        }
+end
+
+defmodule MscmpSystForms.Types.FormConfig do
+  @moduledoc """
+  A struct used by developers to define the abstract structure and configuration
+  details of user interface forms and their elements including their
+  permissions, data bindings, text strings, as well as their child elements
+  which may inherit certain properties such as permissions.
+
+  This would be called a "Definition Time" concern/configuration.
+
+  Note that while it is most typical for form configurations to be associated
+  directly with specific user interface elements, the configuration system
+  allows for grouping form configuration entries which do not related directly a
+  specific user interface element and exist purely to serve as parent to other
+  form configurations so that those children can inherit the parent's
+  properties.  A common example of this is most forms define an abstract top
+  level parent form configuration which defines the default permission for all
+  other form elements to inherit from.
+
+  Not all elements on a form must be represented by a `FormConfig` value,
+  however any element which must respond to runtime changes in form state,
+  processing overrides, or current user permissions must have at least a
+  `FormConfig` value defining its `form_id` value.
+  """
+
+  alias MscmpSystForms.Types
 
   defstruct form_id: nil,
             binding_id: nil,
@@ -564,6 +523,73 @@ defmodule MscmpSystForms.Types.ComponentConfig do
             label_link: nil,
             info: nil,
             button_state: nil,
-            overrides: nil,
-            modes: nil
+            children: []
+
+  @typedoc """
+  Defines the attributes available to the developer to create an abstract form
+  definition.
+
+  ## Fields
+
+    * `form_id` - identifies the user interface form element to which the
+    configuration will be applied.  If this value is `nil` then the
+    configuration won't refer to specific element in the user interface, but is
+    a virtual or abstract configuration which may serve as parent to other
+    concrete element backing configurations.  Note that elements with
+    `FormConfigs` defined with `nil` `form_id` values will not appear at all in
+    render configurations.
+
+    * `binding_id` - for user interface elements which display application data
+    to identify the data field from which to draw values using this identifier.
+    If the `binding_id` is `nil` then the element will not be bound to a field
+    in the form's backing data.
+
+    * `permission` - the identifier of the permission which this form element
+    will test for element access when rendering the form, displaying data, and
+    permitting user interaction if the element being configured allows for
+    interaction.  This value will be inherited by any child of a configuration
+    that doesn't specify its own permission value.
+
+    * `label` - if the user interface element is backed by a component which
+    displays a label, such as an `MscmpSystForms.WebComponents.msinput/1`
+    component, the text of the label may be set using this value.  If this value
+    is `nil` either the label will be blank, not rendered, or determined by
+    directly setting the component's `title` value directly in the view layer.
+    Note that component's `title` attribute can override the value set in the
+    configuration using this configuration.
+
+    * `label_link` - the label of a user interface element may optionally define
+    a URL to link to when clicking the label, such as a link to relevant
+    documentation.  When this value is not `nil`, the link is the URL to the
+    resource to access; when `nil` the label is rendered without a link.
+    (*Note that `label_link` is not yet implemented in most components.*)
+
+    * `info` - in some situations, abbreviated additional information for a
+    user interface element is made available to the user, for example via the
+    `MscmpSystForms.WebComponent.msinfo/1` web component.  This attribute
+    configures the text that is displayed to the user in these scenarios.  If
+    the value is `nil` then no text is displayed even if it could be.
+
+    * `button_state` - for user interface buttons of type
+    `MscmpSystForms.WebComponents.msvalidated_button/1`, this attribute
+    configures the default button state.  The available values are defined by
+    the type `t:MscmpSystForms.Types.msvalidated_button_states/0`.
+
+    * `children` - A form configuration may optionally identify child
+    configurations which will inherit certain attributes and other traits from
+    the parent.  Naturally, an element should never be added as a child to
+    multiple parent configurations; doing so will result in undefined behaviors.
+    Examples of attributes and traits that can be inherited through parent/child
+    relationships defined in this field include permissions and component modes.
+  """
+  @type t() :: %__MODULE__{
+          form_id: Types.form_id() | nil,
+          binding_id: Types.binding_id() | nil,
+          permission: Types.permission_name() | nil,
+          label: String.t() | nil,
+          label_link: String.t() | nil,
+          info: String.t() | nil,
+          button_state: Types.msvalidated_button_states() | nil,
+          children: list(t()) | [] | nil
+        }
 end

@@ -11,9 +11,9 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystForms.Impl.WebComponents.Msicons do
-  use Phoenix.Component
-
   @moduledoc false
+
+  use Phoenix.Component
 
   attr(:name, :string, required: true)
   attr(:class, :string, default: nil)

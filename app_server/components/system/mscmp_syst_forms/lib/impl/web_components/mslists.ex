@@ -11,14 +11,14 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystForms.Impl.WebComponents.Mslists do
+  @moduledoc false
+
   use Phoenix.Component
 
   alias MscmpSystForms.Impl.WebComponents.Helpers
-  alias MscmpSystForms.Types.ComponentConfig
+  alias MscmpSystForms.Types.{ComponentConfig, ComponentDisplayModes}
 
-  @moduledoc false
-
-  @default_modes %{
+  @default_modes %ComponentDisplayModes{
     component_mode: :visible,
     border_mode: :none,
     text_mode: [],

@@ -11,14 +11,14 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystForms.Impl.WebComponents.Helpers.Js do
+  @moduledoc false
+
   # Note that this file is pretty much just cut/paste from:
   #
   # https://github.com/phoenixframework/phoenix/blob/v1.7.1/installer/templates/phx_web/components/core_components.ex
   #
 
   alias Phoenix.LiveView.JS
-
-  @moduledoc false
 
   def show(js \\ %JS{}, selector) do
     JS.show(js,

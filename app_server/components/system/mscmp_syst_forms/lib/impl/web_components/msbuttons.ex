@@ -11,16 +11,16 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystForms.Impl.WebComponents.Msbuttons do
+  @moduledoc false
+
   use Phoenix.Component
 
   alias MscmpSystForms.Impl.WebComponents
   alias MscmpSystForms.Impl.WebComponents.Helpers
   alias MscmpSystForms.Impl.WebComponents.Helpers.Js
-  alias MscmpSystForms.Types.ComponentConfig
+  alias MscmpSystForms.Types.{ComponentConfig, ComponentDisplayModes}
 
-  @moduledoc false
-
-  @default_modes %{
+  @default_modes %ComponentDisplayModes{
     component_mode: :visible,
     border_mode: :none,
     text_mode: :normal,
@@ -349,7 +349,7 @@ defmodule MscmpSystForms.Impl.WebComponents.Msbuttons do
 
       message_item_label =
         MscmpSystForms.get_component_info(form_module, %{binding_id: binding_id})
-        |> then(&(&1[:label] || ""))
+        |> then(&(&1.label || ""))
 
       [%{label: message_item_label, message_text: message_item_text} | acc]
     end)

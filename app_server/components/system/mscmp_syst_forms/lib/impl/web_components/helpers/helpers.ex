@@ -11,10 +11,10 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystForms.Impl.WebComponents.Helpers do
-  alias MscmpSystForms.Types
-  alias MscmpSystForms.Types.ComponentConfig
-
   @moduledoc false
+
+  alias MscmpSystForms.Types
+  alias MscmpSystForms.Types.{ComponentConfig, ComponentDisplayModes}
 
   ##############################################################################
   #
@@ -253,12 +253,12 @@ defmodule MscmpSystForms.Impl.WebComponents.Helpers do
   end
 
   defp maybe_apply_processing_override(
-         %{component_mode: :entry} = modes,
+         %ComponentDisplayModes{component_mode: :entry} = modes,
          overrides,
          active_overrides
        ) do
     if Enum.any?(active_overrides, &Enum.member?(overrides, &1)),
-      do: Map.put(modes, :component_mode, :visible),
+      do: %ComponentDisplayModes{modes | component_mode: :visible},
       else: modes
   end
 

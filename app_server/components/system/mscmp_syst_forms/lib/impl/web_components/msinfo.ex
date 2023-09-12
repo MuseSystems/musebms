@@ -11,14 +11,14 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystForms.Impl.WebComponents.Msinfo do
+  @moduledoc false
+
   use Phoenix.Component
 
   import MscmpSystForms.Impl.Gettext
 
   alias MscmpSystForms.Impl.WebComponents
   alias MscmpSystForms.Impl.WebComponents.Helpers.Js
-
-  @moduledoc false
 
   attr(:id, :any, required: true)
 
