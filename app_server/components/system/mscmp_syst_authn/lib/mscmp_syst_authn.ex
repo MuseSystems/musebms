@@ -1562,8 +1562,9 @@ defmodule MscmpSystAuthn do
 
       iex> import IP, only: [sigil_i: 2]
       iex> {:ok,
-      ...>  %MscmpSystAuthn.Types.AppliedNetworkRule{
-      ...>    functional_type: :deny, network_rule_id: id, precedence: :disallowed}
+      ...>   %MscmpSystAuthn.Types.AppliedNetworkRule{
+      ...>     functional_type: :deny, network_rule_id: id, precedence: :disallowed
+      ...>   }
       ...>  } =  MscmpSystAuthn.get_applied_network_rule(~i"10.123.123.3")
       iex> is_binary(id)
       true
@@ -1575,8 +1576,9 @@ defmodule MscmpSystAuthn do
       iex> MscmpSystAuthn.get_applied_network_rule(~i"10.124.124.3")
       {:ok,
         %MscmpSystAuthn.Types.AppliedNetworkRule{
-          functional_type: :allow, network_rule_id: nil, precedence: :implied}
+          functional_type: :allow, network_rule_id: nil, precedence: :implied
         }
+      }
 
     When a Global Network Rule explicitly allows the Host IP Address to attempt
     authentication.
@@ -1584,8 +1586,9 @@ defmodule MscmpSystAuthn do
       iex> import IP, only: [sigil_i: 2]
       iex> {:ok,
       ...>   %MscmpSystAuthn.Types.AppliedNetworkRule{
-      ...>     functional_type: :allow, network_rule_id: id, precedence: :global}
-      ...>   } = MscmpSystAuthn.get_applied_network_rule(~i"10.125.125.3")
+      ...>     functional_type: :allow, network_rule_id: id, precedence: :global
+      ...>   }
+      ...> } = MscmpSystAuthn.get_applied_network_rule(~i"10.125.125.3")
       iex> is_binary(id)
       true
 
