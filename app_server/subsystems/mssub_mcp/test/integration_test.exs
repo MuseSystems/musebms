@@ -705,8 +705,8 @@ defmodule IntegrationTest do
 
     assert owner1_access_account_id == owner1_result.access_account_id
     assert "owned.access.account@musesystems.com" == owner1_result.account_identifier
-    assert nil == owner1_result[:validation_identifier]
-    assert nil == owner1_result[:validation_credential]
+    assert nil == owner1_result.validation_identifier
+    assert nil == owner1_result.validation_credential
 
     {:ok, owner2_access_account_id} =
       MssubMcp.get_access_account_id_by_name("owner2_access_account")
@@ -723,8 +723,8 @@ defmodule IntegrationTest do
 
     assert owner2_access_account_id == owner2_result.access_account_id
     assert "owned.access.account@musesystems.com" == owner2_result.account_identifier
-    assert nil == owner2_result[:validation_identifier]
-    assert nil == owner2_result[:validation_credential]
+    assert nil == owner2_result.validation_identifier
+    assert nil == owner2_result.validation_credential
   end
 
   test "Step 4.03: Violate Rate Limit for Owned Access Account Email Identity" do
@@ -1001,7 +1001,7 @@ defmodule IntegrationTest do
 
     assert {
              "mcp_login",
-             %{
+             %MscmpSystPerms.Types.PermGrantValue{
                view_scope: :unused,
                maint_scope: :unused,
                admin_scope: :unused,
@@ -1017,7 +1017,7 @@ defmodule IntegrationTest do
 
     assert {
              "global_login",
-             %{
+             %MscmpSystPerms.Types.PermGrantValue{
                view_scope: :unused,
                maint_scope: :unused,
                admin_scope: :unused,
@@ -1038,7 +1038,7 @@ defmodule IntegrationTest do
 
     assert {
              "mcp_login",
-             %{
+             %MscmpSystPerms.Types.PermGrantValue{
                view_scope: :unused,
                maint_scope: :unused,
                admin_scope: :unused,
@@ -1067,7 +1067,7 @@ defmodule IntegrationTest do
 
     assert {
              "global_login",
-             %{
+             %MscmpSystPerms.Types.PermGrantValue{
                view_scope: :unused,
                maint_scope: :unused,
                admin_scope: :unused,
@@ -1169,7 +1169,7 @@ defmodule IntegrationTest do
 
     assert {
              "mcp_login",
-             %{
+             %MscmpSystPerms.Types.PermGrantValue{
                view_scope: :unused,
                maint_scope: :unused,
                admin_scope: :unused,
@@ -1185,7 +1185,7 @@ defmodule IntegrationTest do
 
     assert {
              "global_login",
-             %{
+             %MscmpSystPerms.Types.PermGrantValue{
                view_scope: :deny,
                maint_scope: :deny,
                admin_scope: :deny,
@@ -1212,7 +1212,7 @@ defmodule IntegrationTest do
 
     assert {
              "mcp_login",
-             %{
+             %MscmpSystPerms.Types.PermGrantValue{
                view_scope: :deny,
                maint_scope: :deny,
                admin_scope: :deny,
@@ -1228,7 +1228,7 @@ defmodule IntegrationTest do
 
     assert {
              "global_login",
-             %{
+             %MscmpSystPerms.Types.PermGrantValue{
                view_scope: :deny,
                maint_scope: :deny,
                admin_scope: :deny,

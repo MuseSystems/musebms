@@ -11,11 +11,11 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MssubMcp.Runtime.InstanceManager do
-  alias MscmpSystInstance.Types, as: InstanceTypes
-
   @moduledoc false
 
   use MssubMcp.Macros
+
+  alias MscmpSystInstance.Types, as: InstanceTypes
 
   mcp_constants()
 
@@ -318,8 +318,7 @@ defmodule MssubMcp.Runtime.InstanceManager do
   @spec get_instance_datastore_options(
           InstanceTypes.instance_id() | Msdata.SystInstances.t(),
           map()
-        ) ::
-          MscmpSystDb.Types.datastore_options()
+        ) :: MscmpSystDb.Types.DatastoreOptions.t()
   mcp_opfn get_instance_datastore_options(instance, startup_options) do
     MscmpSystInstance.get_instance_datastore_options(instance, startup_options)
   end

@@ -11,11 +11,11 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MssubMcp.Runtime.AuthnManager do
-  alias MscmpSystAuthn.Types, as: AuthnTypes
-
   @moduledoc false
 
   use MssubMcp.Macros
+
+  alias MscmpSystAuthn.Types, as: AuthnTypes
 
   mcp_constants()
 
@@ -255,20 +255,20 @@ defmodule MssubMcp.Runtime.AuthnManager do
   end
 
   @spec get_access_account_password_rule(AuthnTypes.access_account_id()) ::
-          {:ok, AuthnTypes.password_rules()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, AuthnTypes.PasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
   mcp_opfn get_access_account_password_rule(access_account_id) do
     MscmpSystAuthn.get_access_account_password_rule(access_account_id)
   end
 
   @spec get_access_account_password_rule!(AuthnTypes.access_account_id()) ::
-          AuthnTypes.password_rules()
+          AuthnTypes.PasswordRules.t()
   mcp_opfn get_access_account_password_rule!(access_account_id) do
     MscmpSystAuthn.get_access_account_password_rule!(access_account_id)
   end
 
   @spec verify_password_rules(
-          AuthnTypes.password_rules(),
-          Msdata.SystGlobalPasswordRules.t() | AuthnTypes.password_rules() | nil
+          AuthnTypes.PasswordRules.t(),
+          Msdata.SystGlobalPasswordRules.t() | AuthnTypes.PasswordRules.t() | nil
         ) ::
           {:ok, Keyword.t(AuthnTypes.password_rule_violations())}
           | {:error, MscmpSystError.t() | Exception.t()}
@@ -277,8 +277,8 @@ defmodule MssubMcp.Runtime.AuthnManager do
   end
 
   @spec verify_password_rules!(
-          AuthnTypes.password_rules(),
-          Msdata.SystGlobalPasswordRules.t() | AuthnTypes.password_rules() | nil
+          AuthnTypes.PasswordRules.t(),
+          Msdata.SystGlobalPasswordRules.t() | AuthnTypes.PasswordRules.t() | nil
         ) ::
           Keyword.t(AuthnTypes.password_rule_violations())
   mcp_opfn verify_password_rules!(test_rules, standard_rules) do
@@ -292,7 +292,7 @@ defmodule MssubMcp.Runtime.AuthnManager do
   end
 
   @spec test_credential(
-          AuthnTypes.access_account_id() | AuthnTypes.password_rules(),
+          AuthnTypes.access_account_id() | AuthnTypes.PasswordRules.t(),
           AuthnTypes.credential()
         ) ::
           {:ok, Keyword.t(AuthnTypes.password_rule_violations())}
@@ -376,7 +376,7 @@ defmodule MssubMcp.Runtime.AuthnManager do
           MscmpSystInstance.Types.instance_id() | nil,
           MscmpSystInstance.Types.owner_id() | nil
         ) ::
-          {:ok, AuthnTypes.applied_network_rule()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, AuthnTypes.AppliedNetworkRule.t()} | {:error, MscmpSystError.t() | Exception.t()}
   mcp_opfn get_applied_network_rule(host_address, instance_id, instance_owner_id) do
     MscmpSystAuthn.get_applied_network_rule(host_address, instance_id, instance_owner_id)
   end
@@ -385,7 +385,7 @@ defmodule MssubMcp.Runtime.AuthnManager do
           AuthnTypes.host_address(),
           MscmpSystInstance.Types.instance_id() | nil,
           MscmpSystInstance.Types.owner_id() | nil
-        ) :: AuthnTypes.applied_network_rule()
+        ) :: AuthnTypes.AppliedNetworkRule.t()
   mcp_opfn get_applied_network_rule!(host_address, instance_id, instance_owner_id) do
     MscmpSystAuthn.get_applied_network_rule!(host_address, instance_id, instance_owner_id)
   end
@@ -507,7 +507,7 @@ defmodule MssubMcp.Runtime.AuthnManager do
   # ==============================================================================================
 
   @spec create_or_reset_account_code(AuthnTypes.access_account_id(), Keyword.t()) ::
-          {:ok, AuthnTypes.authenticator_result()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, AuthnTypes.AuthenticatorResult.t()} | {:error, MscmpSystError.t() | Exception.t()}
   mcp_opfn create_or_reset_account_code(access_account_id, opts) do
     MscmpSystAuthn.create_or_reset_account_code(access_account_id, opts)
   end
@@ -545,7 +545,7 @@ defmodule MssubMcp.Runtime.AuthnManager do
           AuthnTypes.credential(),
           Keyword.t()
         ) ::
-          {:ok, AuthnTypes.authenticator_result()}
+          {:ok, AuthnTypes.AuthenticatorResult.t()}
           | {:error, MscmpSystError.t() | Exception.t()}
   mcp_opfn create_authenticator_email_password(
              access_account_id,
@@ -571,7 +571,7 @@ defmodule MssubMcp.Runtime.AuthnManager do
           AuthnTypes.identity_id() | Msdata.SystIdentities.t(),
           Keyword.t()
         ) ::
-          {:ok, AuthnTypes.authenticator_result()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, AuthnTypes.AuthenticatorResult.t()} | {:error, MscmpSystError.t() | Exception.t()}
   mcp_opfn request_identity_validation(target_identity, opts) do
     MscmpSystAuthn.request_identity_validation(target_identity, opts)
   end
@@ -589,7 +589,7 @@ defmodule MssubMcp.Runtime.AuthnManager do
   end
 
   @spec request_password_recovery(AuthnTypes.access_account_id(), Keyword.t()) ::
-          {:ok, AuthnTypes.authenticator_result()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, AuthnTypes.AuthenticatorResult.t()} | {:error, MscmpSystError.t() | Exception.t()}
   mcp_opfn request_password_recovery(access_account_id, opts) do
     MscmpSystAuthn.request_password_recovery(access_account_id, opts)
   end
@@ -601,7 +601,7 @@ defmodule MssubMcp.Runtime.AuthnManager do
   end
 
   @spec create_authenticator_api_token(AuthnTypes.access_account_id(), Keyword.t()) ::
-          {:ok, AuthnTypes.authenticator_result()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, AuthnTypes.AuthenticatorResult.t()} | {:error, MscmpSystError.t() | Exception.t()}
   mcp_opfn create_authenticator_api_token(access_account_id, opts) do
     MscmpSystAuthn.create_authenticator_api_token(access_account_id, opts)
   end
@@ -633,13 +633,13 @@ defmodule MssubMcp.Runtime.AuthnManager do
           IP.addr(),
           Keyword.t()
         ) ::
-          {:ok, AuthnTypes.authentication_state()} | {:error, MscmpSystError.t()}
+          {:ok, AuthnTypes.AuthenticationState.t()} | {:error, MscmpSystError.t()}
   mcp_opfn authenticate_email_password(email_address, plaintext_pwd, host_address, opts) do
     MscmpSystAuthn.authenticate_email_password(email_address, plaintext_pwd, host_address, opts)
   end
 
-  @spec authenticate_email_password(AuthnTypes.authentication_state(), Keyword.t()) ::
-          {:ok, AuthnTypes.authentication_state()} | {:error, MscmpSystError.t()}
+  @spec authenticate_email_password(AuthnTypes.AuthenticationState.t(), Keyword.t()) ::
+          {:ok, AuthnTypes.AuthenticationState.t()} | {:error, MscmpSystError.t()}
   mcp_opfn authenticate_email_password(authentication_state, opts) do
     MscmpSystAuthn.authenticate_email_password(authentication_state, opts)
   end
@@ -650,7 +650,7 @@ defmodule MssubMcp.Runtime.AuthnManager do
           IP.addr(),
           Keyword.t()
         ) ::
-          {:ok, AuthnTypes.authentication_state()} | {:error, MscmpSystError.t()}
+          {:ok, AuthnTypes.AuthenticationState.t()} | {:error, MscmpSystError.t()}
   mcp_opfn authenticate_validation_token(identifier, plaintext_token, host_address, opts) do
     MscmpSystAuthn.authenticate_validation_token(identifier, plaintext_token, host_address, opts)
   end
@@ -661,7 +661,7 @@ defmodule MssubMcp.Runtime.AuthnManager do
           IP.addr(),
           Keyword.t()
         ) ::
-          {:ok, AuthnTypes.authentication_state()} | {:error, MscmpSystError.t()}
+          {:ok, AuthnTypes.AuthenticationState.t()} | {:error, MscmpSystError.t()}
   mcp_opfn authenticate_recovery_token(identifier, plaintext_token, host_addr, opts) do
     MscmpSystAuthn.authenticate_recovery_token(identifier, plaintext_token, host_addr, opts)
   end
@@ -673,7 +673,7 @@ defmodule MssubMcp.Runtime.AuthnManager do
           MscmpSystInstance.Types.instance_id(),
           Keyword.t()
         ) ::
-          {:ok, AuthnTypes.authentication_state()} | {:error, MscmpSystError.t()}
+          {:ok, AuthnTypes.AuthenticationState.t()} | {:error, MscmpSystError.t()}
   mcp_opfn authenticate_api_token(identifier, plaintext_token, host_addr, instance_id, opts) do
     MscmpSystAuthn.authenticate_api_token(
       identifier,

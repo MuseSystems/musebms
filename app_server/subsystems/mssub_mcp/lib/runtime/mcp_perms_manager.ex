@@ -11,12 +11,12 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MssubMcp.Runtime.McpPermsManager do
-  alias MscmpSystMcpPerms.Types, as: McpPermTypes
-  alias MscmpSystPerms.Types, as: PermTypes
-
   @moduledoc false
 
   use MssubMcp.Macros
+
+  alias MscmpSystMcpPerms.Types, as: McpPermTypes
+  alias MscmpSystPerms.Types, as: PermTypes
 
   mcp_constants()
 

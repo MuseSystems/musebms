@@ -23,9 +23,9 @@ defmodule TestSupport do
   #
   ########################
 
-  alias Mix.Tasks.Builddb
-
   use MssubMcp.Macros
+
+  alias Mix.Tasks.Builddb
 
   mcp_constants()
 

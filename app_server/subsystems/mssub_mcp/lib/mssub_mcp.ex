@@ -11,6 +11,9 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MssubMcp do
+  @external_resource "README.md"
+  @moduledoc File.read!(Path.join([__DIR__, "..", "README.md"]))
+
   alias MscmpSystAuthn.Types, as: AuthnTypes
   alias MscmpSystInstance.Types, as: InstanceTypes
   alias MscmpSystMcpPerms.Types, as: McpPermTypes
@@ -20,10 +23,6 @@ defmodule MssubMcp do
   alias MssubMcp.Impl
   alias MssubMcp.Runtime
   alias MssubMcp.Types
-
-  @external_resource "README.md"
-
-  @moduledoc File.read!(Path.join([__DIR__, "..", "README.md"]))
 
   require Logger
 
@@ -1333,8 +1332,7 @@ defmodule MssubMcp do
   @spec get_instance_datastore_options(
           InstanceTypes.instance_id() | Msdata.SystInstances.t(),
           map()
-        ) ::
-          MscmpSystDb.Types.datastore_options()
+        ) :: MscmpSystDb.Types.DatastoreOptions.t()
   defdelegate get_instance_datastore_options(instance, startup_options),
     to: Runtime.InstanceManager
 
@@ -2473,7 +2471,7 @@ defmodule MssubMcp do
   @spec get_generic_password_rules(
           Msdata.SystGlobalPasswordRules.t() | Msdata.SystOwnerPasswordRules.t(),
           AuthnTypes.access_account_id() | nil
-        ) :: AuthnTypes.password_rules() | nil
+        ) :: AuthnTypes.PasswordRules.t() | nil
   defdelegate get_generic_password_rules(pwd_rules_struct, access_account_id \\ nil),
     to: MscmpSystAuthn
 
@@ -2499,7 +2497,7 @@ defmodule MssubMcp do
     * `access_account_id` - the Access Account record ID of the user.
   """
   @spec get_access_account_password_rule(AuthnTypes.access_account_id()) ::
-          {:ok, AuthnTypes.password_rules()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, AuthnTypes.PasswordRules.t()} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate get_access_account_password_rule(access_account_id), to: Runtime.AuthnManager
 
   @doc section: :authn_password_rule_data
@@ -2515,7 +2513,7 @@ defmodule MssubMcp do
     * `access_account_id` - the Access Account record ID of the user.
   """
   @spec get_access_account_password_rule!(AuthnTypes.access_account_id()) ::
-          AuthnTypes.password_rules()
+          AuthnTypes.PasswordRules.t()
   defdelegate get_access_account_password_rule!(access_account_id), to: Runtime.AuthnManager
 
   @doc section: :authn_password_rule_data
@@ -2545,13 +2543,13 @@ defmodule MssubMcp do
     * `standard_rules` - the "Standard" against which the `test_rules` are
     judged.  This parameter is optional and when nil the Global Password
     Rule is retrieved and used as the default "Standard" Rules.  Otherwise
-    either a generic `t:MscmpSystAuthn.Types.password_rules/0` value
+    either a generic `t:MscmpSystAuthn.Types.PasswordRules.t/0` value
     or a populated `Msdata.SystGlobalPasswordRules` data
     struct may be provided.
   """
   @spec verify_password_rules(
-          AuthnTypes.password_rules(),
-          Msdata.SystGlobalPasswordRules.t() | AuthnTypes.password_rules() | nil
+          AuthnTypes.PasswordRules.t(),
+          Msdata.SystGlobalPasswordRules.t() | AuthnTypes.PasswordRules.t() | nil
         ) ::
           {:ok, Keyword.t(AuthnTypes.password_rule_violations())}
           | {:error, MscmpSystError.t() | Exception.t()}
@@ -2575,13 +2573,13 @@ defmodule MssubMcp do
     * `standard_rules` - the "Standard" against which the `test_rules` are
     judged.  This parameter is optional and when nil the Global Password
     Rule is retrieved and used as the default "Standard" Rules.  Otherwise
-    either a generic `t:MscmpSystAuthn.Types.password_rules/0` value
+    either a generic `t:MscmpSystAuthn.Types.PasswordRules.t/0` value
     or a populated `Msdata.SystGlobalPasswordRules` data
     struct may be provided.
   """
   @spec verify_password_rules!(
-          AuthnTypes.password_rules(),
-          Msdata.SystGlobalPasswordRules.t() | AuthnTypes.password_rules() | nil
+          AuthnTypes.PasswordRules.t(),
+          Msdata.SystGlobalPasswordRules.t() | AuthnTypes.PasswordRules.t() | nil
         ) ::
           Keyword.t(AuthnTypes.password_rule_violations())
   defdelegate verify_password_rules!(test_rules, standard_rules \\ nil),
@@ -2641,7 +2639,7 @@ defmodule MssubMcp do
       {:ok, [password_rule_length_min: 8]}
   """
   @spec test_credential(
-          AuthnTypes.access_account_id() | AuthnTypes.password_rules(),
+          AuthnTypes.access_account_id() | AuthnTypes.PasswordRules.t(),
           AuthnTypes.credential()
         ) ::
           {:ok, Keyword.t(AuthnTypes.password_rule_violations())}
@@ -2995,7 +2993,7 @@ defmodule MssubMcp do
   ## Return Value
 
     This function returns a result tuple.  The value element of the result tuple
-    is a map of type `t:MscmpSystAuthn.Types.applied_network_rule/0`.
+    is a map of type `t:MscmpSystAuthn.Types.AppliedNetworkRule.t/0`.
     The map indicates which precedence group the rule came from, the ID of the
     Network Rule record if the rule was derived from the various Network Rule
     data tables, and the Functional Type of the rule: `:allow` meaning the
@@ -3025,8 +3023,11 @@ defmodule MssubMcp do
     When the host is a member of the Disallowed Hosts lists.
 
       iex> import IP, only: [sigil_i: 2]
-      iex> {:ok, %{functional_type: :deny, network_rule_id: id, precedence: :disallowed}} =
-      ...>   MssubMcp.get_applied_network_rule(~i"10.123.123.3")
+      iex> {:ok,
+      ...>   %MscmpSystAuthn.Types.AppliedNetworkRule{
+      ...>     functional_type: :deny, network_rule_id: id, precedence: :disallowed
+      ...>   }
+      ...>  } = MssubMcp.get_applied_network_rule(~i"10.123.123.3")
       iex> is_binary(id)
       true
 
@@ -3035,14 +3036,21 @@ defmodule MssubMcp do
 
       iex> import IP, only: [sigil_i: 2]
       iex> MssubMcp.get_applied_network_rule(~i"10.124.124.3")
-      {:ok, %{functional_type: :allow, network_rule_id: nil, precedence: :implied}}
+      {:ok,
+        %MscmpSystAuthn.Types.AppliedNetworkRule{
+          functional_type: :allow, network_rule_id: nil, precedence: :implied
+        }
+      }
 
     When a Global Network Rule explicitly allows the Host IP Address to attempt
     authentication.
 
       iex> import IP, only: [sigil_i: 2]
-      iex> {:ok, %{functional_type: :allow, network_rule_id: id, precedence: :global}} =
-      ...>   MssubMcp.get_applied_network_rule(~i"10.125.125.3")
+      iex> {:ok,
+      ...>   %MscmpSystAuthn.Types.AppliedNetworkRule{
+      ...>     functional_type: :allow, network_rule_id: id, precedence: :global
+      ...>   }
+      ...> } = MssubMcp.get_applied_network_rule(~i"10.125.125.3")
       iex> is_binary(id)
       true
 
@@ -3055,7 +3063,7 @@ defmodule MssubMcp do
           InstanceTypes.instance_id() | nil,
           InstanceTypes.owner_id() | nil
         ) ::
-          {:ok, AuthnTypes.applied_network_rule()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, AuthnTypes.AppliedNetworkRule.t()} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate get_applied_network_rule(
                 host_address,
                 instance_id \\ nil,
@@ -3095,8 +3103,9 @@ defmodule MssubMcp do
     When the host is a member of the Disallowed Hosts lists.
 
       iex> import IP, only: [sigil_i: 2]
-      iex> %{functional_type: :deny, network_rule_id: id, precedence: :disallowed} =
-      ...>   MssubMcp.get_applied_network_rule!(~i"10.123.123.3")
+      iex> %MscmpSystAuthn.Types.AppliedNetworkRule{
+      ...>   functional_type: :deny, network_rule_id: id, precedence: :disallowed
+      ...> } = MssubMcp.get_applied_network_rule!(~i"10.123.123.3")
       iex> is_binary(id)
       true
 
@@ -3105,14 +3114,17 @@ defmodule MssubMcp do
 
       iex> import IP, only: [sigil_i: 2]
       iex> MssubMcp.get_applied_network_rule!(~i"10.124.124.3")
-      %{functional_type: :allow, network_rule_id: nil, precedence: :implied}
+      %MscmpSystAuthn.Types.AppliedNetworkRule{
+        functional_type: :allow, network_rule_id: nil, precedence: :implied
+      }
 
     When a Global Network Rule explicitly allows the Host IP Address to attempt
     authentication.
 
       iex> import IP, only: [sigil_i: 2]
-      iex> %{functional_type: :allow, network_rule_id: id, precedence: :global} =
-      ...>   MssubMcp.get_applied_network_rule!(~i"10.125.125.3")
+      iex> %MscmpSystAuthn.Types.AppliedNetworkRule{
+      ...>   functional_type: :allow, network_rule_id: id, precedence: :global
+      ...> } = MssubMcp.get_applied_network_rule!(~i"10.125.125.3")
       iex> is_binary(id)
       true
 
@@ -3123,7 +3135,7 @@ defmodule MssubMcp do
           AuthnTypes.host_address(),
           InstanceTypes.instance_id() | nil,
           InstanceTypes.owner_id() | nil
-        ) :: AuthnTypes.applied_network_rule()
+        ) :: AuthnTypes.AppliedNetworkRule.t()
   defdelegate get_applied_network_rule!(
                 host_address,
                 instance_id \\ nil,
@@ -3612,7 +3624,7 @@ defmodule MssubMcp do
       regarding valid values for this setting.
   """
   @spec create_or_reset_account_code(AuthnTypes.access_account_id(), Keyword.t()) ::
-          {:ok, AuthnTypes.authenticator_result()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, AuthnTypes.AuthenticatorResult.t()} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate create_or_reset_account_code(access_account_id, opts \\ []),
     to: Runtime.AuthnManager
 
@@ -3750,7 +3762,7 @@ defmodule MssubMcp do
           AuthnTypes.credential(),
           Keyword.t()
         ) ::
-          {:ok, AuthnTypes.authenticator_result()}
+          {:ok, AuthnTypes.AuthenticatorResult.t()}
           | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate create_authenticator_email_password(
                 access_account_id,
@@ -3869,7 +3881,7 @@ defmodule MssubMcp do
           AuthnTypes.identity_id() | Msdata.SystIdentities.t(),
           Keyword.t()
         ) ::
-          {:ok, AuthnTypes.authenticator_result()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, AuthnTypes.AuthenticatorResult.t()} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate request_identity_validation(target_identity, opts \\ []), to: Runtime.AuthnManager
 
   @doc section: :authn_authenticator_management
@@ -3990,7 +4002,7 @@ defmodule MssubMcp do
       automatically generate the credential.
   """
   @spec request_password_recovery(AuthnTypes.access_account_id(), Keyword.t()) ::
-          {:ok, AuthnTypes.authenticator_result()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, AuthnTypes.AuthenticatorResult.t()} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate request_password_recovery(access_account_id, opts \\ []), to: Runtime.AuthnManager
 
   @doc section: :authn_authenticator_management
@@ -4076,7 +4088,7 @@ defmodule MssubMcp do
       automatically generate the credential.
   """
   @spec create_authenticator_api_token(AuthnTypes.access_account_id(), Keyword.t()) ::
-          {:ok, AuthnTypes.authenticator_result()} | {:error, MscmpSystError.t() | Exception.t()}
+          {:ok, AuthnTypes.AuthenticatorResult.t()} | {:error, MscmpSystError.t() | Exception.t()}
   defdelegate create_authenticator_api_token(access_account_id, opts \\ []),
     to: Runtime.AuthnManager
 
@@ -4147,7 +4159,7 @@ defmodule MssubMcp do
   that the authentication was successful.  The value element of the success
   tuple, the Authentication State, carries information about the outcome of the
   authentication attempt; see
-  `t:MscmpSystAuthn.Types.authentication_state/0` for more about the
+  `t:MscmpSystAuthn.Types.AuthenticationState.t/0` for more about the
   specific information carried by the Authentication State value.  Otherwise,
   an error tuple is returned indicating the nature of the processing failure.
 
@@ -4220,7 +4232,7 @@ defmodule MssubMcp do
           IP.addr(),
           Keyword.t()
         ) ::
-          {:ok, AuthnTypes.authentication_state()} | {:error, MscmpSystError.t()}
+          {:ok, AuthnTypes.AuthenticationState.t()} | {:error, MscmpSystError.t()}
   defdelegate authenticate_email_password(email_address, plaintext_pwd, host_address, opts \\ []),
     to: Runtime.AuthnManager
 
@@ -4248,8 +4260,8 @@ defmodule MssubMcp do
   See `authenticate_email_password/4` for a discussion of the possible return
   values.
   """
-  @spec authenticate_email_password(AuthnTypes.authentication_state(), Keyword.t()) ::
-          {:ok, AuthnTypes.authentication_state()} | {:error, MscmpSystError.t()}
+  @spec authenticate_email_password(AuthnTypes.AuthenticationState.t(), Keyword.t()) ::
+          {:ok, AuthnTypes.AuthenticationState.t()} | {:error, MscmpSystError.t()}
   defdelegate authenticate_email_password(authentication_state, opts \\ []),
     to: Runtime.AuthnManager
 
@@ -4262,7 +4274,7 @@ defmodule MssubMcp do
   that the validation was successful.  The value element of the success
   tuple, the Authentication State, carries information about the actual outcome
   of the authentication attempt; see
-  `t:MscmpSystAuthn.Types.authentication_state/0` for more about the
+  `t:MscmpSystAuthn.Types.AuthenticationState.t/0` for more about the
   specific information carried by the Authentication State value.  Otherwise,
   an error tuple is returned indicating the nature of the processing failure.
 
@@ -4322,7 +4334,7 @@ defmodule MssubMcp do
           IP.addr(),
           Keyword.t()
         ) ::
-          {:ok, AuthnTypes.authentication_state()} | {:error, MscmpSystError.t()}
+          {:ok, AuthnTypes.AuthenticationState.t()} | {:error, MscmpSystError.t()}
   defdelegate authenticate_validation_token(
                 identifier,
                 plaintext_token,
@@ -4340,7 +4352,7 @@ defmodule MssubMcp do
   that the Recovery Token Authenticator was successfully authenticated.  The
   value element of the success tuple, the Authentication State, carries
   information about the actual outcome of the authentication attempt; see
-  `t:MscmpSystAuthn.Types.authentication_state/0` for more about the
+  `t:MscmpSystAuthn.Types.AuthenticationState.t/0` for more about the
   specific information carried by the Authentication State value.  Otherwise,
   an error tuple is returned indicating the nature of the processing failure.
 
@@ -4401,7 +4413,7 @@ defmodule MssubMcp do
           IP.addr(),
           Keyword.t()
         ) ::
-          {:ok, AuthnTypes.authentication_state()} | {:error, MscmpSystError.t()}
+          {:ok, AuthnTypes.AuthenticationState.t()} | {:error, MscmpSystError.t()}
   defdelegate authenticate_recovery_token(identifier, plaintext_token, host_addr, opts \\ []),
     to: Runtime.AuthnManager
 
@@ -4415,7 +4427,7 @@ defmodule MssubMcp do
   that the API Token Authenticator was successfully authenticated.  The value
   element of the success tuple, the Authentication State, carries information
   about the actual outcome of the authentication attempt; see
-  `t:MscmpSystAuthn.Types.authentication_state/0` for more about the
+  `t:MscmpSystAuthn.Types.AuthenticationState.t/0` for more about the
   specific information carried by the Authentication State value.  Otherwise,
   an error tuple is returned indicating the nature of the processing failure.
 
@@ -4480,7 +4492,7 @@ defmodule MssubMcp do
           MscmpSystInstance.Types.instance_id(),
           Keyword.t()
         ) ::
-          {:ok, AuthnTypes.authentication_state()} | {:error, MscmpSystError.t()}
+          {:ok, AuthnTypes.AuthenticationState.t()} | {:error, MscmpSystError.t()}
 
   defdelegate authenticate_api_token(
                 identifier,
@@ -5015,7 +5027,7 @@ defmodule MssubMcp do
       iex> mcp_operation = fn -> MscmpSystInstance.get_owner_by_name("owner1") end
       iex> {:ok, %Msdata.SystOwners{}} = MssubMcp.process_operation(mcp_operation)
   """
-  @spec process_operation((() -> any())) :: any()
+  @spec process_operation((-> any())) :: any()
   defdelegate process_operation(operation), to: Runtime.Processing
 
   @doc section: :mcp_processing

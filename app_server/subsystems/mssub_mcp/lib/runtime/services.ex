@@ -11,11 +11,11 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MssubMcp.Runtime.Services do
-  alias MssubMcp.Runtime
-
   @moduledoc false
 
   use MssubMcp.Macros
+
+  alias MssubMcp.Runtime
 
   mcp_constants()
 

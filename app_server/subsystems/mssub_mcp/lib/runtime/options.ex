@@ -11,10 +11,11 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MssubMcp.Runtime.Options do
-  require Logger
+  @moduledoc false
+
   use MssubMcp.Macros
 
-  @moduledoc false
+  require Logger
 
   mcp_constants()
 
@@ -24,14 +25,14 @@ defmodule MssubMcp.Runtime.Options do
   # isn't right here.
   @password_magic <<44, 60, 238, 75, 246, 83, 116, 104, 187, 163, 159, 83, 37, 2, 54, 86>>
 
-  @spec get_datastore_options(map(), Keyword.t()) :: MscmpSystDb.Types.datastore_options()
+  @spec get_datastore_options(map(), Keyword.t()) :: MscmpSystDb.Types.DatastoreOptions.t()
   def get_datastore_options(startup_options, opts) do
     db_server = MscmpSystOptions.get_global_dbserver(startup_options)
     database_name = @mcp_db_name
     datastore_code = MscmpSystOptions.get_global_pepper_value(startup_options)
     contexts = get_datastore_contexts(startup_options, opts)
 
-    %{
+    %MscmpSystDb.Types.DatastoreOptions{
       database_name: database_name,
       datastore_code: datastore_code,
       datastore_name: :mssub_mcp,
@@ -40,7 +41,7 @@ defmodule MssubMcp.Runtime.Options do
     }
   end
 
-  @spec get_datastore_contexts(map(), Keyword.t()) :: [MscmpSystDb.Types.datastore_context()]
+  @spec get_datastore_contexts(map(), Keyword.t()) :: [MscmpSystDb.Types.DatastoreContext.t()]
   def get_datastore_contexts(%{} = startup_options, opts) do
     opts =
       MscmpSystUtils.resolve_options(opts,
@@ -49,7 +50,7 @@ defmodule MssubMcp.Runtime.Options do
       )
 
     [
-      %{
+      %MscmpSystDb.Types.DatastoreContext{
         context_name: nil,
         description: "Muse Systems MCP Subsystem Database Owner",
         database_role: opts[:owner_name],
@@ -59,7 +60,7 @@ defmodule MssubMcp.Runtime.Options do
         login_context: false,
         database_owner_context: true
       },
-      %{
+      %MscmpSystDb.Types.DatastoreContext{
         context_name: @mcp_db_app_access_context,
         description: "Muse Systems MCP Subsystem Application Access",
         database_role: opts[:app_access_role_name],
