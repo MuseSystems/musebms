@@ -16,15 +16,15 @@
 # https://github.com/phoenixframework/phoenix/blob/v1.7.1/installer/templates/phx_web/components/core_components.ex
 
 defmodule MscmpSystForms.Impl.WebComponents.Msinputs do
+  @moduledoc false
+
   use Phoenix.Component
 
   alias MscmpSystForms.Impl.WebComponents
   alias MscmpSystForms.Impl.WebComponents.Helpers
-  alias MscmpSystForms.Types.ComponentConfig
+  alias MscmpSystForms.Types.{ComponentConfig, ComponentDisplayModes}
 
-  @moduledoc false
-
-  @default_modes %{
+  @default_modes %ComponentDisplayModes{
     component_mode: :entry,
     border_mode: [],
     text_mode: :normal,

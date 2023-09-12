@@ -1,10 +1,9 @@
 defmodule MscmpSystForms do
+  @external_resource "README.md"
+  @moduledoc File.read!(Path.join([__DIR__, "..", "README.md"]))
+
   alias MscmpSystForms.Impl
   alias MscmpSystForms.Types
-
-  @external_resource "README.md"
-
-  @moduledoc File.read!(Path.join([__DIR__, "..", "README.md"]))
 
   ##############################################################################
   #
@@ -178,7 +177,7 @@ defmodule MscmpSystForms do
   Names (`t:MscmpSystForms.Types.form_state_state_name/0`) and the values are
   maps of component Form IDs (`t:MscmpSystForms.Types.form_id/0`) as keys along
   with their configured component modes
-  (`t:MscmpSystForms.Types.component_display_modes/0`) for that given
+  (`t:MscmpSystForms.Types.ComponentDisplayModes.t/0`) for that given
   Feature/Mode/State combination.
 
   ## Examples
@@ -639,8 +638,7 @@ defmodule MscmpSystForms do
   @spec get_component_info(
           module(),
           %{form_id: Types.form_id()} | %{binding_id: Types.binding_id()}
-        ) ::
-          Types.component_info() | nil
+        ) :: Types.ComponentInfo.t() | nil
   defdelegate get_component_info(module, component_id), to: Impl.Forms
 
   @doc section: :data_management
@@ -1080,7 +1078,7 @@ defmodule MscmpSystForms do
         being retrieved.
       """
       @spec get_component_info(%{form_id: Types.form_id()} | %{binding_id: Types.binding_id()}) ::
-              Types.component_info() | nil
+              Types.ComponentInfo.t() | nil
       def get_component_info(component_id),
         do: MscmpSystForms.get_component_info(__MODULE__, component_id)
     end

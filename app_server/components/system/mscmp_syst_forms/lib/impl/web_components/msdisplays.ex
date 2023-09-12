@@ -11,12 +11,12 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystForms.Impl.WebComponents.Msdisplays do
-  alias MscmpSystForms.Impl.WebComponents.Helpers
-  alias MscmpSystForms.Types.ComponentConfig
+  @moduledoc false
 
   use Phoenix.Component
 
-  @moduledoc false
+  alias MscmpSystForms.Impl.WebComponents.Helpers
+  alias MscmpSystForms.Types.{ComponentConfig, ComponentDisplayModes}
 
   @default_type :text
   @default_layout ~w(flex flex-row)
@@ -93,7 +93,7 @@ defmodule MscmpSystForms.Impl.WebComponents.Msdisplays do
   end
 
   defp get_default_modes(type) when type in [:title, :subtitle] do
-    %{
+    %ComponentDisplayModes{
       component_mode: :visible,
       border_mode: :none,
       text_mode: :emphasis,
@@ -102,7 +102,7 @@ defmodule MscmpSystForms.Impl.WebComponents.Msdisplays do
   end
 
   defp get_default_modes(_) do
-    %{
+    %ComponentDisplayModes{
       component_mode: :visible,
       border_mode: :none,
       text_mode: :normal,

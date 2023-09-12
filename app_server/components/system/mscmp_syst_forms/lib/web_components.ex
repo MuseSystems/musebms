@@ -11,12 +11,12 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystForms.WebComponents do
-  alias MscmpSystForms.Impl.WebComponents
-
   @moduledoc """
   A set of web components which define the standard application user interface
   "widgets" from which the application is built.
   """
+
+  alias MscmpSystForms.Impl.WebComponents
 
   @doc section: :control_components
   @doc """
