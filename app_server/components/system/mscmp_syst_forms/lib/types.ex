@@ -461,10 +461,10 @@ defmodule MscmpSystForms.Types.ComponentDisplayModes do
   communicated to a user interface component.
   """
   @type t :: %__MODULE__{
-          component_mode: Types.component_modes(),
-          border_mode: Types.display_modes(),
-          text_mode: Types.display_modes() | list(String.t()),
-          label_mode: Types.display_modes() | list(String.t())
+          component_mode: Types.component_modes() | nil,
+          border_mode: Types.display_modes() | nil,
+          text_mode: Types.display_modes() | list(String.t()) | nil,
+          label_mode: Types.display_modes() | list(String.t()) | nil
         }
 end
 
