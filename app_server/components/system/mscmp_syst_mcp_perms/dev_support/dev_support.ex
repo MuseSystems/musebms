@@ -11,20 +11,22 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule DevSupport do
-  alias Mix.Tasks.Builddb
+  @moduledoc false
 
+  alias Mix.Tasks.Builddb
+  alias MscmpSystDb.Types.{DatastoreContext, DatastoreOptions, DbServer}
   @migration_test_source_root_dir "../../../../database"
   @migration_unit_test_ds_type "mscmp_syst_mcp_perms_unit_test"
   @migration_integration_test_ds_type "mscmp_syst_mcp_perms_integration_test"
 
   @datastore_context_name :dev_app_database
 
-  @datastore_options %{
+  @datastore_options %DatastoreOptions{
     database_name: "ms_dev_database",
     datastore_code: "ms.dev.code",
     datastore_name: :ms_dev_database,
     contexts: [
-      %{
+      %DatastoreContext{
         context_name: nil,
         description: "Muse Systems Development Owner",
         database_role: "ms_dev_owner",
@@ -34,7 +36,7 @@ defmodule DevSupport do
         login_context: false,
         database_owner_context: true
       },
-      %{
+      %DatastoreContext{
         context_name: @datastore_context_name,
         description: "Muse Systems Development App User",
         database_role: "ms_dev_app_user",
@@ -44,7 +46,7 @@ defmodule DevSupport do
         login_context: true
       }
     ],
-    db_server: %{
+    db_server: %DbServer{
       server_name: "dev_server",
       start_server_instances: true,
       db_host: "127.0.0.1",
@@ -81,7 +83,7 @@ defmodule DevSupport do
     datastore_options = @datastore_options
     datastore_type = get_datastore_type(db_kind)
 
-    database_owner = Enum.find(datastore_options.contexts, &(&1[:database_owner_context] == true))
+    database_owner = Enum.find(datastore_options.contexts, &(&1.database_owner_context == true))
 
     {:ok, :ready, _} = MscmpSystDb.create_datastore(datastore_options)
 

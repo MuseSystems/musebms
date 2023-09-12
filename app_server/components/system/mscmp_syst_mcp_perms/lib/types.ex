@@ -34,11 +34,11 @@ defmodule MscmpSystMcpPerms.Types do
 end
 
 defmodule MscmpSystMcpPerms.Types.AccessAccountPermsSelector do
-  alias MscmpSystMcpPerms.Impl
-
   @moduledoc """
   Defines the Access Account selector for globally applicable MCP permissions.
   """
+
+  alias MscmpSystMcpPerms.Impl
 
   @enforce_keys [:access_account_id]
   defstruct access_account_id: nil
@@ -51,7 +51,6 @@ defmodule MscmpSystMcpPerms.Types.AccessAccountPermsSelector do
     * `access_account_id` - the record ID of the Access Account which is the
     subject of Permissions related actions.
   """
-
   @type t() :: %__MODULE__{
           access_account_id: MscmpSystAuthn.Types.access_account_id()
         }

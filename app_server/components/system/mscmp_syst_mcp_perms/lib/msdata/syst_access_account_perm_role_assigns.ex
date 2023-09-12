@@ -11,31 +11,16 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule Msdata.SystAccessAccountPermRoleAssigns do
-  use MscmpSystDb.Schema
-
-  alias MscmpSystMcpPerms.Msdata.Validators
-  alias MscmpSystMcpPerms.Types
-
   @moduledoc """
   Definition of a system/application permission.
 
   Defined in `MscmpSystMcpPerms`.
   """
 
-  @type t() ::
-          %__MODULE__{
-            __meta__: Ecto.Schema.Metadata.t(),
-            id: Ecto.UUID.t() | nil,
-            access_account_id: MscmpSystAuthn.Types.access_account_id() | nil,
-            perm_role_id: MscmpSystPerms.Types.perm_role_id() | nil,
-            diag_timestamp_created: DateTime.t() | nil,
-            diag_role_created: String.t() | nil,
-            diag_timestamp_modified: DateTime.t() | nil,
-            diag_wallclock_modified: DateTime.t() | nil,
-            diag_role_modified: String.t() | nil,
-            diag_row_version: integer() | nil,
-            diag_update_count: integer() | nil
-          }
+  use MscmpSystDb.Schema
+
+  alias MscmpSystMcpPerms.Msdata.Validators
+  alias MscmpSystMcpPerms.Types
 
   @schema_prefix "ms_syst"
 
@@ -51,6 +36,21 @@ defmodule Msdata.SystAccessAccountPermRoleAssigns do
     belongs_to(:access_account, Msdata.SystAccessAccounts)
     belongs_to(:perm_role, Msdata.SystPermRoles)
   end
+
+  @type t() ::
+          %__MODULE__{
+            __meta__: Ecto.Schema.Metadata.t(),
+            id: Ecto.UUID.t() | nil,
+            access_account_id: MscmpSystAuthn.Types.access_account_id() | nil,
+            perm_role_id: MscmpSystPerms.Types.perm_role_id() | nil,
+            diag_timestamp_created: DateTime.t() | nil,
+            diag_role_created: String.t() | nil,
+            diag_timestamp_modified: DateTime.t() | nil,
+            diag_wallclock_modified: DateTime.t() | nil,
+            diag_role_modified: String.t() | nil,
+            diag_row_version: integer() | nil,
+            diag_update_count: integer() | nil
+          }
 
   @spec insert_changeset(Types.access_account_perm_role_params()) :: Ecto.Changeset.t()
   defdelegate insert_changeset(insert_params), to: Validators.SystAccessAccountPermRoleAssigns
