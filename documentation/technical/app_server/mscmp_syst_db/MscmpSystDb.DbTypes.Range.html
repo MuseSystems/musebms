@@ -4,20 +4,20 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.29.4">
+    <meta name="generator" content="ExDoc v0.30.6">
     <meta name="project" content="mscmp_syst_db v0.1.0">
 
     <title>MscmpSystDb.DbTypes.Range — mscmp_syst_db v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-HHVY3JYD.css" />
+    <link rel="stylesheet" href="dist/html-elixir-M3TQBNKO.css" />
 
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-XWGFFSCD.js"></script>
-    <script src="dist/sidebar_items-FA845B90.js"></script>
+    <script src="dist/handlebars.templates-KDPBTEPL.js"></script>
+    <script src="dist/sidebar_items-0BBD5E6C.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/html-JDI3AVDD.js"></script>
+    <script async src="dist/html-CP2A7WXZ.js"></script>
 
 
   </head>
@@ -82,7 +82,6 @@ mscmp_syst_db
     </ul>
   </div>
 
-  <div class="gradient"></div>
   <ul id="full-list"></ul>
 </section>
 
@@ -114,9 +113,8 @@ range types.</p>
     <h1 class="section-heading">
       <a class="hover-link" href="#summary">
         <i class="ri-link-m" aria-hidden="true"></i>
-        <span class="sr-only">Link to this section</span>
+        Summary
       </a>
-      Summary
     </h1>
 <div class="summary-types summary">
   <h2>
@@ -128,6 +126,8 @@ range types.</p>
         <a href="#t:t/0" translate="no">t()</a>
 
       </div>
+
+        <div class="summary-synopsis"><p>All the types that implement this protocol.</p></div>
 
     </div>
 
@@ -178,9 +178,8 @@ of the range.</p></div>
     <h1 class="section-heading">
       <a class="hover-link" href="#types">
         <i class="ri-link-m" aria-hidden="true"></i>
-        <span class="sr-only">Link to this section</span>
-      </a>
 Types
+      </a>
     </h1>
     <div class="types-list">
 <section class="detail" id="t:t/0">
@@ -203,7 +202,7 @@ Types
 
       </div>
 
-
+<p>All the types that implement this protocol.</p>
   </section>
 </section>
 
@@ -214,9 +213,8 @@ Types
     <h1 class="section-heading">
       <a class="hover-link" href="#functions">
         <i class="ri-link-m" aria-hidden="true"></i>
-        <span class="sr-only">Link to this section</span>
-      </a>
 Functions
+      </a>
     </h1>
     <div class="functions-list">
 <section class="detail" id="bounds_compare/2">
@@ -235,54 +233,54 @@ Functions
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> bounds_compare(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) :: <a href="MscmpSystDb.Types.html#t:bounds_compare_result/0">MscmpSystDb.Types.bounds_compare_result</a>()</pre>
+          <pre translate="no"><span class="attribute">@spec</span> bounds_compare(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) :: <a href="MscmpSystDb.Types.BoundsCompareResult.html#t:t/0">MscmpSystDb.Types.BoundsCompareResult.t</a>()</pre>
 
       </div>
 
 <p>Compares a range with either a range or related base type and returns a map
 indicating the applicable comparison operator for the lower and upper bound
 of the range.</p><h2 id="bounds_compare/2-examples" class="section-heading">
-  <a href="#bounds_compare/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">examples</p>
+  <a href="#bounds_compare/2-examples">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Examples
   </a>
-  Examples
 </h2>
 <p>Comparing two ranges where both the lower and upper values of the left range
 are less than the corresponding values of the right side.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">left_range</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="8224372473-1">%</span><span class="nc" data-group-id="8224372473-1">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="8224372473-1">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="2177372282-1">%</span><span class="nc" data-group-id="2177372282-1">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="2177372282-1">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="8224372473-1">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="2177372282-1">}</span><span class="w">
 </span><span class="gp unselectable">iex&gt; </span><span class="n">right_range</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="8224372473-2">%</span><span class="nc" data-group-id="8224372473-2">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="8224372473-2">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="2177372282-2">%</span><span class="nc" data-group-id="2177372282-2">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="2177372282-2">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="8224372473-2">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystDb.DbTypes.Range</span><span class="o">.</span><span class="n">bounds_compare</span><span class="p" data-group-id="8224372473-3">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="n">right_range</span><span class="p" data-group-id="8224372473-3">)</span><span class="w">
-</span><span class="p" data-group-id="8224372473-4">%{</span><span class="ss">lower_comparison</span><span class="p">:</span><span class="w"> </span><span class="ss">:lt</span><span class="p">,</span><span class="w"> </span><span class="ss">upper_comparison</span><span class="p">:</span><span class="w"> </span><span class="ss">:lt</span><span class="p" data-group-id="8224372473-4">}</span></code></pre><p>Comparing a range value on the left side with a base value on the right. In
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="2177372282-2">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystDb.DbTypes.Range</span><span class="o">.</span><span class="n">bounds_compare</span><span class="p" data-group-id="2177372282-3">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="n">right_range</span><span class="p" data-group-id="2177372282-3">)</span><span class="w">
+</span><span class="p" data-group-id="2177372282-4">%</span><span class="nc" data-group-id="2177372282-4">MscmpSystDb.Types.BoundsCompareResult</span><span class="p" data-group-id="2177372282-4">{</span><span class="ss">lower_comparison</span><span class="p">:</span><span class="w"> </span><span class="ss">:lt</span><span class="p">,</span><span class="w"> </span><span class="ss">upper_comparison</span><span class="p">:</span><span class="w"> </span><span class="ss">:lt</span><span class="p" data-group-id="2177372282-4">}</span></code></pre><p>Comparing a range value on the left side with a base value on the right. In
 this case the left side value is less than the right side value, but
 equal to the upper left side value.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">left_range</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="3331582991-1">%</span><span class="nc" data-group-id="3331582991-1">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="3331582991-1">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="9268400631-1">%</span><span class="nc" data-group-id="9268400631-1">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="9268400631-1">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper_inclusive</span><span class="p">:</span><span class="w"> </span><span class="no">false</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="3331582991-1">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystDb.DbTypes.Range</span><span class="o">.</span><span class="n">bounds_compare</span><span class="p" data-group-id="3331582991-2">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="mi">99</span><span class="p" data-group-id="3331582991-2">)</span><span class="w">
-</span><span class="p" data-group-id="3331582991-3">%{</span><span class="ss">lower_comparison</span><span class="p">:</span><span class="w"> </span><span class="ss">:lt</span><span class="p">,</span><span class="w"> </span><span class="ss">upper_comparison</span><span class="p">:</span><span class="w"> </span><span class="ss">:eq</span><span class="p" data-group-id="3331582991-3">}</span></code></pre><p>Comparing two ranges where the right side range is contained by the left side
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="9268400631-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystDb.DbTypes.Range</span><span class="o">.</span><span class="n">bounds_compare</span><span class="p" data-group-id="9268400631-2">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="mi">99</span><span class="p" data-group-id="9268400631-2">)</span><span class="w">
+</span><span class="p" data-group-id="9268400631-3">%</span><span class="nc" data-group-id="9268400631-3">MscmpSystDb.Types.BoundsCompareResult</span><span class="p" data-group-id="9268400631-3">{</span><span class="ss">lower_comparison</span><span class="p">:</span><span class="w"> </span><span class="ss">:lt</span><span class="p">,</span><span class="w"> </span><span class="ss">upper_comparison</span><span class="p">:</span><span class="w"> </span><span class="ss">:eq</span><span class="p" data-group-id="9268400631-3">}</span></code></pre><p>Comparing two ranges where the right side range is contained by the left side
 range.  The left side lower bound is less than the right side lower bound and
 the left side upper bound is greater than the right side upper bound.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">left_range</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="7577691287-1">%</span><span class="nc" data-group-id="7577691287-1">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="7577691287-1">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="4715525299-1">%</span><span class="nc" data-group-id="4715525299-1">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="4715525299-1">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper_inclusive</span><span class="p">:</span><span class="w"> </span><span class="no">false</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="7577691287-1">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="4715525299-1">}</span><span class="w">
 </span><span class="gp unselectable">iex&gt; </span><span class="n">right_range</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="7577691287-2">%</span><span class="nc" data-group-id="7577691287-2">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="7577691287-2">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="4715525299-2">%</span><span class="nc" data-group-id="4715525299-2">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="4715525299-2">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="7577691287-2">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystDb.DbTypes.Range</span><span class="o">.</span><span class="n">bounds_compare</span><span class="p" data-group-id="7577691287-3">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="n">right_range</span><span class="p" data-group-id="7577691287-3">)</span><span class="w">
-</span><span class="p" data-group-id="7577691287-4">%{</span><span class="ss">lower_comparison</span><span class="p">:</span><span class="w"> </span><span class="ss">:lt</span><span class="p">,</span><span class="w"> </span><span class="ss">upper_comparison</span><span class="p">:</span><span class="w"> </span><span class="ss">:gt</span><span class="p" data-group-id="7577691287-4">}</span></code></pre>
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="4715525299-2">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystDb.DbTypes.Range</span><span class="o">.</span><span class="n">bounds_compare</span><span class="p" data-group-id="4715525299-3">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="n">right_range</span><span class="p" data-group-id="4715525299-3">)</span><span class="w">
+</span><span class="p" data-group-id="4715525299-4">%</span><span class="nc" data-group-id="4715525299-4">MscmpSystDb.Types.BoundsCompareResult</span><span class="p" data-group-id="4715525299-4">{</span><span class="ss">lower_comparison</span><span class="p">:</span><span class="w"> </span><span class="ss">:lt</span><span class="p">,</span><span class="w"> </span><span class="ss">upper_comparison</span><span class="p">:</span><span class="w"> </span><span class="ss">:gt</span><span class="p" data-group-id="4715525299-4">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="lower/1">
@@ -306,12 +304,12 @@ the left side upper bound is greater than the right side upper bound.</p><pre><c
       </div>
 
 <p>Extracts and returns the lower bound of a range.</p><h1>Examples</h1><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">range</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="1700839497-1">%</span><span class="nc" data-group-id="1700839497-1">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="1700839497-1">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="2068632733-1">%</span><span class="nc" data-group-id="2068632733-1">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="2068632733-1">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper_inclusive</span><span class="p">:</span><span class="w"> </span><span class="no">false</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="1700839497-1">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystDb.DbTypes.Range</span><span class="o">.</span><span class="n">lower</span><span class="p" data-group-id="1700839497-2">(</span><span class="n">range</span><span class="p" data-group-id="1700839497-2">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="2068632733-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystDb.DbTypes.Range</span><span class="o">.</span><span class="n">lower</span><span class="p" data-group-id="2068632733-2">(</span><span class="n">range</span><span class="p" data-group-id="2068632733-2">)</span><span class="w">
 </span><span class="mi">10</span></code></pre>
   </section>
 </section>
@@ -336,13 +334,13 @@ the left side upper bound is greater than the right side upper bound.</p><pre><c
       </div>
 
 <p>Extracts and returns the upper bound of a range.</p><h1>Examples</h1><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">range</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="3095149301-1">%</span><span class="nc" data-group-id="3095149301-1">MscmpSystDb.DbTypes.DecimalRange</span><span class="p" data-group-id="3095149301-1">{</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="nc">Decimal</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="3095149301-2">(</span><span class="s">&quot;11.55&quot;</span><span class="p" data-group-id="3095149301-2">)</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="nc">Decimal</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="3095149301-3">(</span><span class="s">&quot;75.50&quot;</span><span class="p" data-group-id="3095149301-3">)</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="6943739123-1">%</span><span class="nc" data-group-id="6943739123-1">MscmpSystDb.DbTypes.DecimalRange</span><span class="p" data-group-id="6943739123-1">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="nc">Decimal</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="6943739123-2">(</span><span class="s">&quot;11.55&quot;</span><span class="p" data-group-id="6943739123-2">)</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="nc">Decimal</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="6943739123-3">(</span><span class="s">&quot;75.50&quot;</span><span class="p" data-group-id="6943739123-3">)</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper_inclusive</span><span class="p">:</span><span class="w"> </span><span class="no">false</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="3095149301-1">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystDb.DbTypes.Range</span><span class="o">.</span><span class="n">upper</span><span class="p" data-group-id="3095149301-4">(</span><span class="n">range</span><span class="p" data-group-id="3095149301-4">)</span><span class="w">
-</span><span class="p" data-group-id="3095149301-5">%</span><span class="nc" data-group-id="3095149301-5">Decimal</span><span class="p" data-group-id="3095149301-5">{</span><span class="ss">coef</span><span class="p">:</span><span class="w"> </span><span class="mi">7549</span><span class="p">,</span><span class="w"> </span><span class="ss">exp</span><span class="p">:</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="ss">sign</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="3095149301-5">}</span></code></pre>
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="6943739123-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystDb.DbTypes.Range</span><span class="o">.</span><span class="n">upper</span><span class="p" data-group-id="6943739123-4">(</span><span class="n">range</span><span class="p" data-group-id="6943739123-4">)</span><span class="w">
+</span><span class="p" data-group-id="6943739123-5">%</span><span class="nc" data-group-id="6943739123-5">Decimal</span><span class="p" data-group-id="6943739123-5">{</span><span class="ss">coef</span><span class="p">:</span><span class="w"> </span><span class="mi">7549</span><span class="p">,</span><span class="w"> </span><span class="ss">exp</span><span class="p">:</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="ss">sign</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="6943739123-5">}</span></code></pre>
   </section>
 </section>
 
@@ -366,7 +364,7 @@ the left side upper bound is greater than the right side upper bound.</p><pre><c
 
         <p class="built-using">
           Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.29.4) for the
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.30.6) for the
 
             <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 

@@ -4,20 +4,20 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.29.4">
+    <meta name="generator" content="ExDoc v0.30.6">
     <meta name="project" content="mscmp_syst_db v0.1.0">
 
     <title>MscmpSystDb.Types — mscmp_syst_db v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-HHVY3JYD.css" />
+    <link rel="stylesheet" href="dist/html-elixir-M3TQBNKO.css" />
 
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-XWGFFSCD.js"></script>
-    <script src="dist/sidebar_items-FA845B90.js"></script>
+    <script src="dist/handlebars.templates-KDPBTEPL.js"></script>
+    <script src="dist/sidebar_items-0BBD5E6C.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/html-JDI3AVDD.js"></script>
+    <script async src="dist/html-CP2A7WXZ.js"></script>
 
 
   </head>
@@ -82,7 +82,6 @@ mscmp_syst_db
     </ul>
   </div>
 
-  <div class="gradient"></div>
   <ul id="full-list"></ul>
 </section>
 
@@ -113,24 +112,13 @@ mscmp_syst_db
     <h1 class="section-heading">
       <a class="hover-link" href="#summary">
         <i class="ri-link-m" aria-hidden="true"></i>
-        <span class="sr-only">Link to this section</span>
+        Summary
       </a>
-      Summary
     </h1>
 <div class="summary-types summary">
   <h2>
     <a href="#types">Types</a>
   </h2>
-
-    <div class="summary-row">
-      <div class="summary-signature">
-        <a href="#t:bounds_compare_result/0" translate="no">bounds_compare_result()</a>
-
-      </div>
-
-        <div class="summary-synopsis"><p>The comparison operators for both the lower and upper bounds of a range type.</p></div>
-
-    </div>
 
     <div class="summary-row">
       <div class="summary-signature">
@@ -156,16 +144,6 @@ accounts.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:context_state/0" translate="no">context_state()</a>
-
-      </div>
-
-        <div class="summary-synopsis"></div>
-
-    </div>
-
-    <div class="summary-row">
-      <div class="summary-signature">
         <a href="#t:context_state_values/0" translate="no">context_state_values()</a>
 
       </div>
@@ -181,38 +159,6 @@ accounts.</p></div>
       </div>
 
         <div class="summary-synopsis"><p>Values indicating the state of the database which backs a given Datastore.</p></div>
-
-    </div>
-
-    <div class="summary-row">
-      <div class="summary-signature">
-        <a href="#t:datastore_context/0" translate="no">datastore_context()</a>
-
-      </div>
-
-        <div class="summary-synopsis"><p>Defines an application level security context which maps to a specific
-database role.</p></div>
-
-    </div>
-
-    <div class="summary-row">
-      <div class="summary-signature">
-        <a href="#t:datastore_options/0" translate="no">datastore_options()</a>
-
-      </div>
-
-        <div class="summary-synopsis"><p>Defines the options required for establishing the database connections which
-make up a Datastore.</p></div>
-
-    </div>
-
-    <div class="summary-row">
-      <div class="summary-signature">
-        <a href="#t:db_server/0" translate="no">db_server()</a>
-
-      </div>
-
-        <div class="summary-synopsis"><p>Represents a specific database server.</p></div>
 
     </div>
 
@@ -256,39 +202,10 @@ its schema migrations.</p></div>
     <h1 class="section-heading">
       <a class="hover-link" href="#types">
         <i class="ri-link-m" aria-hidden="true"></i>
-        <span class="sr-only">Link to this section</span>
-      </a>
 Types
+      </a>
     </h1>
     <div class="types-list">
-<section class="detail" id="t:bounds_compare_result/0">
-
-  <div class="detail-header">
-    <a href="#t:bounds_compare_result/0" class="detail-link" title="Link to this type">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature" translate="no">bounds_compare_result()</h1>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <div class="specs">
-
-          <pre translate="no"><span class="attribute">@type</span> bounds_compare_result() :: %{
-  lower_comparison: <a href="#t:db_type_comparison_operators/0">db_type_comparison_operators</a>(),
-  upper_comparison: <a href="#t:db_type_comparison_operators/0">db_type_comparison_operators</a>()
-}</pre>
-
-      </div>
-
-<p>The comparison operators for both the lower and upper bounds of a range type.</p><p>There are cases where normal comparisons are too coarse-grained to provide a
-meaningful result when dealing with ranges.  In these cases you need the
-detailed lower/upper comparison results.</p>
-  </section>
-</section>
 <section class="detail" id="t:context_name/0">
 
   <div class="detail-header">
@@ -335,29 +252,6 @@ accounts.</p>
 
 <p>The database role name for the specific access context defined by the
 <code class="inline">context_name()</code>.</p>
-  </section>
-</section>
-<section class="detail" id="t:context_state/0">
-
-  <div class="detail-header">
-    <a href="#t:context_state/0" class="detail-link" title="Link to this type">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature" translate="no">context_state()</h1>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <div class="specs">
-
-          <pre translate="no"><span class="attribute">@type</span> context_state() :: %{context: <a href="#t:context_name/0">context_name</a>(), state: <a href="#t:context_state_values/0">context_state_values</a>()}</pre>
-
-      </div>
-
-
   </section>
 </section>
 <section class="detail" id="t:context_state_values/0">
@@ -417,150 +311,6 @@ database server.</p></li><li><p><code class="inline">:ready</code> - The databas
 subsystem.</p></li></ul>
   </section>
 </section>
-<section class="detail" id="t:datastore_context/0">
-
-  <div class="detail-header">
-    <a href="#t:datastore_context/0" class="detail-link" title="Link to this type">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature" translate="no">datastore_context()</h1>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <div class="specs">
-
-          <pre translate="no"><span class="attribute">@type</span> datastore_context() :: %{
-  optional(:context_name) =&gt; <a href="#t:context_name/0">context_name</a>(),
-  optional(:description) =&gt; <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
-  optional(:database_role) =&gt; <a href="#t:context_role/0">context_role</a>(),
-  optional(:database_password) =&gt; <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil,
-  optional(:starting_pool_size) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
-  optional(:start_context) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  optional(:login_context) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  optional(:database_owner_context) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()
-}</pre>
-
-      </div>
-
-<p>Defines an application level security context which maps to a specific
-database role.</p><p>Datastore contexts allow the application to access the database using database
-roles which are limited by their database security configuration.</p><ul><li><p><code class="inline">:context_name</code> - the application's identifier for a specific security context.
-This isn't specific to a particular database, but to the application
-overall.</p></li><li><p><code class="inline">:description</code> - a user friendly description of the context.</p></li><li><p><code class="inline">:database_role</code> - maps the application context to a specific database
-role.  When establishing a connection to a database, this is the database
-role name that will be used.</p></li><li><p><code class="inline">:database_password</code> - the password used to connect the <code class="inline">:database_role</code>
-to the database server.</p></li><li><p><code class="inline">:starting_pool_size</code> - the number of database connections to initially
-open for this context.</p></li><li><p><code class="inline">:start_context</code> - when working with application database connections
-which are started and pooled at application start time, this value
-indicates whether or not the specific context should be started as normal.
-For normal startup to take place, both this value and the <code class="inline">:login_context</code>
-value must be true.  This setting is disregarded in operations involving
-database connections which are established on demand as needed, such as
-DBA related connections.</p></li><li><p><code class="inline">:login_context</code> - if <code class="inline">true</code>, the context is a normal context associated
-with a database login role and will be used in establishing connections to
-the database.  If <code class="inline">false</code>, the context is an administrative context which
-is only used in security definitions within the database.  Database owner
-roles, roles which own all of the application database tables/functions
-would typically not be login roles, even though the are highly privileged
-when their context is active in a database session. (default: true)</p></li><li><p><code class="inline">:database_owner_context</code> - if <code class="inline">true</code> the context represents the database
-owner role.  If <code class="inline">false</code> or not provided the database role is not used for
-this purpose.  Note that there should only be one context defined as the
-database owner for any Datastore.</p></li></ul>
-  </section>
-</section>
-<section class="detail" id="t:datastore_options/0">
-
-  <div class="detail-header">
-    <a href="#t:datastore_options/0" class="detail-link" title="Link to this type">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature" translate="no">datastore_options()</h1>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <div class="specs">
-
-          <pre translate="no"><span class="attribute">@type</span> datastore_options() :: %{
-  :database_name =&gt; <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
-  optional(:datastore_code) =&gt; <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
-  optional(:datastore_name) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>(),
-  contexts: [<a href="#t:datastore_context/0">datastore_context</a>()] | [],
-  db_server: <a href="#t:db_server/0">db_server</a>()
-}</pre>
-
-      </div>
-
-<p>Defines the options required for establishing the database connections which
-make up a Datastore.</p><ul><li><p><code class="inline">:database_name</code> - The name of the database in the database server to
-which the connection will be made.  Often times this value will be the
-same as the String.t() form of the <code class="inline">:datastore_name</code> value.</p></li><li><p><code class="inline">:datastore_code</code> - Defines a Datastore specific salting value for use in
-certain security and cryptographic related functions.</p></li><li><p><code class="inline">:datastore_name</code> - A name for use by the application to identify a given
-datastore.  This value will often time be the same as the <code class="inline">:database_name</code>
-value, except as an atom() rather than a String.t().</p></li><li><p><code class="inline">:contexts</code> - A list of available Datastore Context values defining which
-contexts are available for this Datastore.  See <code class="inline">datastore_context()</code> for
-more information concerning the values of each entry in the list.</p></li><li><p><code class="inline">:db_server</code> - The database server information for the server where the
-Datastore database resides.  See <code class="inline">db_server()</code> for additional details.</p></li></ul>
-  </section>
-</section>
-<section class="detail" id="t:db_server/0">
-
-  <div class="detail-header">
-    <a href="#t:db_server/0" class="detail-link" title="Link to this type">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature" translate="no">db_server()</h1>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <div class="specs">
-
-          <pre translate="no"><span class="attribute">@type</span> db_server() :: %{
-  server_name: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
-  start_server_instances: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  server_pools: [<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()] | [],
-  db_host: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
-  db_port: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
-  db_show_sensitive: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  db_max_instances: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
-  server_salt: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
-  dbadmin_password: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
-  dbadmin_pool_size: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()
-}</pre>
-
-      </div>
-
-<p>Represents a specific database server.</p><p>The data in the map includes fields which uniquely identifies the server,
-provides information for where on the network the server can be found, and
-connection related parameters.  Also, the full administrative credentials are
-included.</p><ul><li><p><code class="inline">:server_name</code> - Provides a unique identifier for a database server
-instance.</p></li><li><p><code class="inline">:start_server_instances</code> - If true, indicates that databases on the server
-can be started and made available as application Datastores.</p></li><li><p><code class="inline">:server_pools</code> - The server pools in which the database server
-participates.</p></li><li><p><code class="inline">:db_host</code> - The hostname or IP address of the database server on the
-network.</p></li><li><p><code class="inline">:db_port</code> - The TCP port on which the database server is listening for
-connections.</p></li><li><p><code class="inline">:db_show_sensitive</code> - If true, various logging events may show
-unredacted &quot;sensitive&quot; database connectivity information.  Note that even
-when false, the application still log sensitive application data.</p></li><li><p><code class="inline">:db_max_instances</code> - The total number of databases allowed to be
-established for the db_server instance.</p></li><li><p><code class="inline">:server_salt</code> - For certain cryptographic operations, such as password
-derivation, allows for the assignment of specific salting value for that is
-specific to a given database server.  This value must be at least 32 bytes
-long and should be a random string.</p></li><li><p><code class="inline">:dbadmin_password</code> - The ms_syst_privileged role password for privileged
-operations such as creating a new database/Datastore or new database roles
-on the database server instance.</p></li><li><p><code class="inline">:dbadmin_pool_size</code> - The pool size to use for creating connections for
-privileged operations using the ms_syst_privileged role.</p></li></ul>
-  </section>
-</section>
 <section class="detail" id="t:db_type_comparison_operators/0">
 
   <div class="detail-header">
@@ -584,82 +334,82 @@ privileged operations using the ms_syst_privileged role.</p></li></ul>
 <p>Defines operators for use in comparison functions.</p><p>These operators are used in conjunction with the <a href="MscmpSystDb.DbTypes.html"><code class="inline">MscmpSystDb.DbTypes</code></a>
 and <a href="MscmpSystDb.DbTypes.Range.html"><code class="inline">MscmpSystDb.DbTypes.Range</code></a> protocols.</p><p>The range related operator values are generally the same as those defined by
 the PostgreSQL database range types, but there are some small differences.</p><ul><li><p><code class="inline">:gt</code> - left is greater than right.</p></li><li><p><code class="inline">:lt</code> - left is less than right.</p></li><li><p><code class="inline">:eq</code> - the values are equal.</p></li><li><p><code class="inline">:lcr</code> - left contains right.</p></li><li><p><code class="inline">:rcl</code> - right contains left.</p></li><li><p><code class="inline">:gto</code> - greater than overlapping.</p></li><li><p><code class="inline">:lto</code> - less than overlapping.</p></li></ul><h1>Examples</h1><p>Greater Than (<code class="inline">:gt</code>)</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">left_range</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="0392447268-1">%</span><span class="nc" data-group-id="0392447268-1">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="0392447268-1">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="4180684719-1">%</span><span class="nc" data-group-id="4180684719-1">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="4180684719-1">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">210</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="0392447268-1">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="4180684719-1">}</span><span class="w">
 </span><span class="gp unselectable">iex&gt; </span><span class="n">right_range</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="0392447268-2">%</span><span class="nc" data-group-id="0392447268-2">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="0392447268-2">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="4180684719-2">%</span><span class="nc" data-group-id="4180684719-2">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="4180684719-2">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">110</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="0392447268-2">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystDb.DbTypes</span><span class="o">.</span><span class="n">compare</span><span class="p" data-group-id="0392447268-3">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="n">right_range</span><span class="p" data-group-id="0392447268-3">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="4180684719-2">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystDb.DbTypes</span><span class="o">.</span><span class="n">compare</span><span class="p" data-group-id="4180684719-3">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="n">right_range</span><span class="p" data-group-id="4180684719-3">)</span><span class="w">
 </span><span class="ss">:gt</span></code></pre><p>Less Than (<code class="inline">:lt</code>)</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">left_range</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="8979020717-1">%</span><span class="nc" data-group-id="8979020717-1">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="8979020717-1">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="4561424870-1">%</span><span class="nc" data-group-id="4561424870-1">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="4561424870-1">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">110</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="8979020717-1">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="4561424870-1">}</span><span class="w">
 </span><span class="gp unselectable">iex&gt; </span><span class="n">right_range</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="8979020717-2">%</span><span class="nc" data-group-id="8979020717-2">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="8979020717-2">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="4561424870-2">%</span><span class="nc" data-group-id="4561424870-2">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="4561424870-2">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">210</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="8979020717-2">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystDb.DbTypes</span><span class="o">.</span><span class="n">compare</span><span class="p" data-group-id="8979020717-3">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="n">right_range</span><span class="p" data-group-id="8979020717-3">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="4561424870-2">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystDb.DbTypes</span><span class="o">.</span><span class="n">compare</span><span class="p" data-group-id="4561424870-3">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="n">right_range</span><span class="p" data-group-id="4561424870-3">)</span><span class="w">
 </span><span class="ss">:lt</span></code></pre><p>Equal (<code class="inline">:eq</code>)</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">left_range</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="8386057274-1">%</span><span class="nc" data-group-id="8386057274-1">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="8386057274-1">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="7657582966-1">%</span><span class="nc" data-group-id="7657582966-1">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="7657582966-1">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">110</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="8386057274-1">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="7657582966-1">}</span><span class="w">
 </span><span class="gp unselectable">iex&gt; </span><span class="n">right_range</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="8386057274-2">%</span><span class="nc" data-group-id="8386057274-2">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="8386057274-2">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="7657582966-2">%</span><span class="nc" data-group-id="7657582966-2">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="7657582966-2">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">110</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="8386057274-2">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystDb.DbTypes</span><span class="o">.</span><span class="n">compare</span><span class="p" data-group-id="8386057274-3">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="n">right_range</span><span class="p" data-group-id="8386057274-3">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="7657582966-2">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystDb.DbTypes</span><span class="o">.</span><span class="n">compare</span><span class="p" data-group-id="7657582966-3">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="n">right_range</span><span class="p" data-group-id="7657582966-3">)</span><span class="w">
 </span><span class="ss">:eq</span></code></pre><p>Left Contains Right (<code class="inline">:lcr</code>)</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">left_range</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="3519321075-1">%</span><span class="nc" data-group-id="3519321075-1">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="3519321075-1">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="9479865539-1">%</span><span class="nc" data-group-id="9479865539-1">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="9479865539-1">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">90</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">110</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="3519321075-1">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="9479865539-1">}</span><span class="w">
 </span><span class="gp unselectable">iex&gt; </span><span class="n">right_range</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="3519321075-2">%</span><span class="nc" data-group-id="3519321075-2">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="3519321075-2">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="9479865539-2">%</span><span class="nc" data-group-id="9479865539-2">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="9479865539-2">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">110</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="3519321075-2">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystDb.DbTypes</span><span class="o">.</span><span class="n">compare</span><span class="p" data-group-id="3519321075-3">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="n">right_range</span><span class="p" data-group-id="3519321075-3">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="9479865539-2">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystDb.DbTypes</span><span class="o">.</span><span class="n">compare</span><span class="p" data-group-id="9479865539-3">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="n">right_range</span><span class="p" data-group-id="9479865539-3">)</span><span class="w">
 </span><span class="ss">:lcr</span></code></pre><p>Right Contains Left (<code class="inline">:rcl</code>)</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">left_range</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="7011778874-1">%</span><span class="nc" data-group-id="7011778874-1">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="7011778874-1">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="9964266848-1">%</span><span class="nc" data-group-id="9964266848-1">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="9964266848-1">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">110</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="7011778874-1">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="9964266848-1">}</span><span class="w">
 </span><span class="gp unselectable">iex&gt; </span><span class="n">right_range</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="7011778874-2">%</span><span class="nc" data-group-id="7011778874-2">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="7011778874-2">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="9964266848-2">%</span><span class="nc" data-group-id="9964266848-2">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="9964266848-2">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">111</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="7011778874-2">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystDb.DbTypes</span><span class="o">.</span><span class="n">compare</span><span class="p" data-group-id="7011778874-3">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="n">right_range</span><span class="p" data-group-id="7011778874-3">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="9964266848-2">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystDb.DbTypes</span><span class="o">.</span><span class="n">compare</span><span class="p" data-group-id="9964266848-3">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="n">right_range</span><span class="p" data-group-id="9964266848-3">)</span><span class="w">
 </span><span class="ss">:rcl</span></code></pre><p>Greater Than Overlapping (<code class="inline">:gto</code>)</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">left_range</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="2875117087-1">%</span><span class="nc" data-group-id="2875117087-1">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="2875117087-1">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="8221933647-1">%</span><span class="nc" data-group-id="8221933647-1">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="8221933647-1">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">150</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">250</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="2875117087-1">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="8221933647-1">}</span><span class="w">
 </span><span class="gp unselectable">iex&gt; </span><span class="n">right_range</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="2875117087-2">%</span><span class="nc" data-group-id="2875117087-2">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="2875117087-2">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="8221933647-2">%</span><span class="nc" data-group-id="8221933647-2">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="8221933647-2">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">175</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="2875117087-2">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystDb.DbTypes</span><span class="o">.</span><span class="n">compare</span><span class="p" data-group-id="2875117087-3">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="n">right_range</span><span class="p" data-group-id="2875117087-3">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="8221933647-2">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystDb.DbTypes</span><span class="o">.</span><span class="n">compare</span><span class="p" data-group-id="8221933647-3">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="n">right_range</span><span class="p" data-group-id="8221933647-3">)</span><span class="w">
 </span><span class="ss">:gto</span></code></pre><p>Less Than Overlapping (<code class="inline">:lto</code>)</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">left_range</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="1482513747-1">%</span><span class="nc" data-group-id="1482513747-1">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="1482513747-1">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="5069312177-1">%</span><span class="nc" data-group-id="5069312177-1">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="5069312177-1">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">150</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="1482513747-1">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="5069312177-1">}</span><span class="w">
 </span><span class="gp unselectable">iex&gt; </span><span class="n">right_range</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="1482513747-2">%</span><span class="nc" data-group-id="1482513747-2">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="1482513747-2">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="5069312177-2">%</span><span class="nc" data-group-id="5069312177-2">MscmpSystDb.DbTypes.IntegerRange</span><span class="p" data-group-id="5069312177-2">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="mi">125</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="mi">175</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="1482513747-2">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystDb.DbTypes</span><span class="o">.</span><span class="n">compare</span><span class="p" data-group-id="1482513747-3">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="n">right_range</span><span class="p" data-group-id="1482513747-3">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="5069312177-2">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystDb.DbTypes</span><span class="o">.</span><span class="n">compare</span><span class="p" data-group-id="5069312177-3">(</span><span class="n">left_range</span><span class="p">,</span><span class="w"> </span><span class="n">right_range</span><span class="p" data-group-id="5069312177-3">)</span><span class="w">
 </span><span class="ss">:lto</span></code></pre>
   </section>
 </section>
@@ -721,7 +471,7 @@ to serve the application as needed.</p></li></ul>
 which can be consumed by <code class="inline">Timex.shift/2</code> and this type defines the possible
 return values.</p><p>Note that this type should closely match the <code class="inline">t:Timex.shift_options</code> types
 except that we limit it to the types present in the
-<code class="inline">t:MscmpSystDb.DbTypes.Interval.t</code> data type.</p>
+<a href="MscmpSystDb.DbTypes.Interval.html#t:t/0"><code class="inline">MscmpSystDb.DbTypes.Interval.t/0</code></a> data type.</p>
   </section>
 </section>
 
@@ -745,7 +495,7 @@ except that we limit it to the types present in the
 
         <p class="built-using">
           Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.29.4) for the
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.30.6) for the
 
             <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 

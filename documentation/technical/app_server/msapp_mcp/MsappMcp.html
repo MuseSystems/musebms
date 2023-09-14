@@ -4,20 +4,20 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.29.4">
+    <meta name="generator" content="ExDoc v0.30.6">
     <meta name="project" content="msapp_mcp v0.1.0">
 
     <title>MsappMcp — msapp_mcp v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-HHVY3JYD.css" />
+    <link rel="stylesheet" href="dist/html-elixir-M3TQBNKO.css" />
 
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-XWGFFSCD.js"></script>
-    <script src="dist/sidebar_items-F9099EEC.js"></script>
+    <script src="dist/handlebars.templates-KDPBTEPL.js"></script>
+    <script src="dist/sidebar_items-C83B9726.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/html-JDI3AVDD.js"></script>
+    <script async src="dist/html-CP2A7WXZ.js"></script>
 
 
   </head>
@@ -80,7 +80,6 @@ msapp_mcp
     </ul>
   </div>
 
-  <div class="gradient"></div>
   <ul id="full-list"></ul>
 </section>
 
@@ -111,9 +110,8 @@ msapp_mcp
     <h1 class="section-heading">
       <a class="hover-link" href="#summary">
         <i class="ri-link-m" aria-hidden="true"></i>
-        <span class="sr-only">Link to this section</span>
+        Summary
       </a>
-      Summary
     </h1>
 <div class="summary-functions summary">
   <h2>
@@ -209,9 +207,8 @@ msapp_mcp
     <h1 class="section-heading">
       <a class="hover-link" href="#functions">
         <i class="ri-link-m" aria-hidden="true"></i>
-        <span class="sr-only">Link to this section</span>
-      </a>
 Functions
+      </a>
     </h1>
     <div class="functions-list">
 <section class="detail" id="authenticate/4">
@@ -232,12 +229,8 @@ Functions
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> authenticate(
-  <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(),
-  <a href="https://hexdocs.pm/net_address/0.3.0/IP.html#t:addr/0">IP.addr</a>(),
-  <a href="https://hexdocs.pm/mscmp_syst_session/0.1.0/MscmpSystSession.Types.html#t:session_name/0">MscmpSystSession.Types.session_name</a>() | nil,
-  <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
-) :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()</pre>
+          <pre translate="no"><span class="attribute">@spec</span> authenticate(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(), <a href="https://hexdocs.pm/net_address/0.3.0/IP.html#t:addr/0">IP.addr</a>(), <a href="https://hexdocs.pm/mssub_mcp/0.1.0/MssubMcp.Types.html#t:session_name/0">MssubMcp.Types.session_name</a>() | nil, <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) ::
+  <a href="MsappMcp.Types.html#t:login_result/0">MsappMcp.Types.login_result</a>()</pre>
 
       </div>
 
@@ -260,7 +253,7 @@ Functions
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> delete_session(<a href="https://hexdocs.pm/mscmp_syst_session/0.1.0/MscmpSystSession.Types.html#t:session_name/0">MscmpSystSession.Types.session_name</a>()) ::
+          <pre translate="no"><span class="attribute">@spec</span> delete_session(<a href="https://hexdocs.pm/mssub_mcp/0.1.0/MssubMcp.Types.html#t:session_name/0">MssubMcp.Types.session_name</a>()) ::
   :ok | {:ok, :not_found} | {:error, <a href="https://hexdocs.pm/mscmp_syst_error/0.1.0/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
 
       </div>
@@ -370,7 +363,7 @@ Functions
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> process_bootstrap_data(MsappMcp.Types.bootstrap_params()) ::
+          <pre translate="no"><span class="attribute">@spec</span> process_bootstrap_data(<a href="https://hexdocs.pm/mssub_mcp/0.1.0/MssubMcp.Types.html#t:tenant_bootstrap_params/0">MssubMcp.Types.tenant_bootstrap_params</a>()) ::
   {:ok, <a href="https://hexdocs.pm/mssub_mcp/0.1.0/MssubMcp.Types.html#t:tenant_bootstrap_result/0">MssubMcp.Types.tenant_bootstrap_result</a>()} | {:error, <a href="https://hexdocs.pm/mscmp_syst_error/0.1.0/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
 
       </div>
@@ -394,7 +387,7 @@ Functions
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> test_session_authentication(MsappMcp.Types.session_name()) ::
+          <pre translate="no"><span class="attribute">@spec</span> test_session_authentication(<a href="https://hexdocs.pm/mssub_mcp/0.1.0/MssubMcp.Types.html#t:session_name/0">MssubMcp.Types.session_name</a>()) ::
   :session_valid | :session_invalid | {:session_reset, <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()}</pre>
 
       </div>
@@ -423,7 +416,7 @@ Functions
 
         <p class="built-using">
           Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.29.4) for the
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.30.6) for the
 
             <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 

@@ -4,20 +4,20 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.29.4">
+    <meta name="generator" content="ExDoc v0.30.6">
     <meta name="project" content="mscmp_syst_db v0.1.0">
 
     <title>MscmpSystDb.DatastoreContext — mscmp_syst_db v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-HHVY3JYD.css" />
+    <link rel="stylesheet" href="dist/html-elixir-M3TQBNKO.css" />
 
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-XWGFFSCD.js"></script>
-    <script src="dist/sidebar_items-FA845B90.js"></script>
+    <script src="dist/handlebars.templates-KDPBTEPL.js"></script>
+    <script src="dist/sidebar_items-0BBD5E6C.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/html-JDI3AVDD.js"></script>
+    <script async src="dist/html-CP2A7WXZ.js"></script>
 
 
   </head>
@@ -82,7 +82,6 @@ mscmp_syst_db
     </ul>
   </div>
 
-  <div class="gradient"></div>
   <ul id="full-list"></ul>
 </section>
 
@@ -116,9 +115,8 @@ and then restarting a specific Context for maintenance reasons.</p>
     <h1 class="section-heading">
       <a class="hover-link" href="#summary">
         <i class="ri-link-m" aria-hidden="true"></i>
-        <span class="sr-only">Link to this section</span>
+        Summary
       </a>
-      Summary
     </h1>
 <div class="summary-functions summary">
   <h2>
@@ -154,9 +152,8 @@ and then restarting a specific Context for maintenance reasons.</p>
     <h1 class="section-heading">
       <a class="hover-link" href="#functions">
         <i class="ri-link-m" aria-hidden="true"></i>
-        <span class="sr-only">Link to this section</span>
-      </a>
 Functions
+      </a>
     </h1>
     <div class="functions-list">
 <section class="detail" id="child_spec/3">
@@ -178,7 +175,7 @@ Functions
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> child_spec(
-  <a href="MscmpSystDb.Types.html#t:datastore_options/0">MscmpSystDb.Types.datastore_options</a>(),
+  <a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0">MscmpSystDb.Types.DatastoreOptions.t</a>(),
   <a href="MscmpSystDb.Types.html#t:context_name/0">MscmpSystDb.Types.context_name</a>(),
   <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
 ) ::
@@ -187,14 +184,14 @@ Functions
       </div>
 
 <p>Returns the Child Specification used to start the DatastoreContext service.</p><h2 id="child_spec/3-parameters" class="section-heading">
-  <a href="#child_spec/3-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">parameters</p>
+  <a href="#child_spec/3-parameters">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Parameters
   </a>
-  Parameters
 </h2>
 <ul><li><p><code class="inline">datastore_options</code> - a required Map of values which describe the
 Datastore and Datastore Context related connection options.  See
-<a href="MscmpSystDb.Types.html#t:datastore_options/0"><code class="inline">MscmpSystDb.Types.datastore_options/0</code></a> for more.</p></li><li><p><code class="inline">context_name</code> - the identity of the context as understood by the system.
+<a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0"><code class="inline">MscmpSystDb.Types.DatastoreOptions.t/0</code></a> for more.</p></li><li><p><code class="inline">context_name</code> - the identity of the context as understood by the system.
 The context name is both the identity of the context as an Ecto Repo and is
 also used for the child specification ID value as there is the possibility
 of multiple contexts to start under the Datastore Supervisor process.</p></li><li><p><code class="inline">options</code> - a Keyword List of optional values.  Currently there are no
@@ -228,10 +225,10 @@ Datastore by the <a href="MscmpSystDb.Datastore.html#start_link/1"><code class="
 However there are some cases where starting a Datastore Context independently
 can be desirable, such as the Context was earlier stopped for some reason and
 needs to be started under it's original Datastore Supervisor.</p><h2 id="start_link/1-options" class="section-heading">
-  <a href="#start_link/1-options" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">options</p>
+  <a href="#start_link/1-options">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Options
   </a>
-  Options
 </h2>
 <ul><li><p><code class="inline">name</code> - see the <code class="inline">context_name</code> parameter for
 <a href="#child_spec/3"><code class="inline">MscmpSystDb.DatastoreContext.child_spec/3</code></a>.</p></li><li><p><code class="inline">datastore_options</code> - see the <code class="inline">datastore_options</code> parameter for
@@ -261,7 +258,7 @@ required.</p></li><li><p><code class="inline">context</code> - a required map de
 
         <p class="built-using">
           Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.29.4) for the
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.30.6) for the
 
             <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 

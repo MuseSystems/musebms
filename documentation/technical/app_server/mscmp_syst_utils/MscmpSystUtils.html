@@ -4,20 +4,20 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.29.4">
+    <meta name="generator" content="ExDoc v0.30.6">
     <meta name="project" content="mscmp_syst_utils v0.1.0">
 
     <title>MscmpSystUtils — mscmp_syst_utils v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-HHVY3JYD.css" />
+    <link rel="stylesheet" href="dist/html-elixir-M3TQBNKO.css" />
 
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-XWGFFSCD.js"></script>
-    <script src="dist/sidebar_items-3D6ADC0B.js"></script>
+    <script src="dist/handlebars.templates-KDPBTEPL.js"></script>
+    <script src="dist/sidebar_items-BC49A401.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/html-JDI3AVDD.js"></script>
+    <script async src="dist/html-CP2A7WXZ.js"></script>
 
 
   </head>
@@ -80,7 +80,6 @@ mscmp_syst_utils
     </ul>
   </div>
 
-  <div class="gradient"></div>
   <ul id="full-list"></ul>
 </section>
 
@@ -111,9 +110,8 @@ mscmp_syst_utils
     <h1 class="section-heading">
       <a class="hover-link" href="#summary">
         <i class="ri-link-m" aria-hidden="true"></i>
-        <span class="sr-only">Link to this section</span>
+        Summary
       </a>
-      Summary
     </h1>
 <div class="summary-function-opts summary">
   <h2>
@@ -156,9 +154,8 @@ provided or a default from a Keyword List of default values.</p></div>
     <h1 class="section-heading">
       <a class="hover-link" href="#function-opts">
         <i class="ri-link-m" aria-hidden="true"></i>
-        <span class="sr-only">Link to this section</span>
-      </a>
 Function Opts
+      </a>
     </h1>
     <div class="function-opts-list">
 <section class="detail" id="resolve_options/2">
@@ -188,25 +185,25 @@ option defaults, always preferring the user given options.</p><p>Note that for k
 default value of the argument is used instead; the default value may itself
 may be <code class="inline">nil</code>, but one should be aware that <code class="inline">nil</code> is not always respected as a
 given value.</p><p>The result is a Keyword List of the merged lists.</p><h2 id="resolve_options/2-parameters" class="section-heading">
-  <a href="#resolve_options/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">parameters</p>
+  <a href="#resolve_options/2-parameters">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Parameters
   </a>
-  Parameters
 </h2>
 <ul><li><p><code class="inline">opts_given</code> - a Keyword List of options provided by the caller.  This
 list may include all options, any subset of options, be an empty list, or be
 nil.</p></li><li><p><code class="inline">opts_default</code> - a Keyword List of options with their default values. This
 list defines the expected optional values and their default value should the
 user not provide a value.</p></li></ul><h2 id="resolve_options/2-examples" class="section-heading">
-  <a href="#resolve_options/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">examples</p>
+  <a href="#resolve_options/2-examples">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Examples
   </a>
-  Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">given_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="6865977071-1">[</span><span class="ss">test_value_one</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="6865977071-1">]</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="n">default_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="6865977071-2">[</span><span class="ss">test_value_one</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="ss">test_value_two</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="6865977071-2">]</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystUtils</span><span class="o">.</span><span class="n">resolve_options</span><span class="p" data-group-id="6865977071-3">(</span><span class="n">given_options</span><span class="p">,</span><span class="w"> </span><span class="n">default_options</span><span class="p" data-group-id="6865977071-3">)</span><span class="w">
-</span><span class="p" data-group-id="6865977071-4">[</span><span class="ss">test_value_one</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="ss">test_value_two</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="6865977071-4">]</span></code></pre>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">given_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="0174587838-1">[</span><span class="ss">test_value_one</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="0174587838-1">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">default_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="0174587838-2">[</span><span class="ss">test_value_one</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="ss">test_value_two</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="0174587838-2">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystUtils</span><span class="o">.</span><span class="n">resolve_options</span><span class="p" data-group-id="0174587838-3">(</span><span class="n">given_options</span><span class="p">,</span><span class="w"> </span><span class="n">default_options</span><span class="p" data-group-id="0174587838-3">)</span><span class="w">
+</span><span class="p" data-group-id="0174587838-4">[</span><span class="ss">test_value_one</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="ss">test_value_two</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="0174587838-4">]</span></code></pre>
   </section>
 </section>
 
@@ -217,9 +214,8 @@ user not provide a value.</p></li></ul><h2 id="resolve_options/2-examples" class
     <h1 class="section-heading">
       <a class="hover-link" href="#string-utilities">
         <i class="ri-link-m" aria-hidden="true"></i>
-        <span class="sr-only">Link to this section</span>
-      </a>
 String Utilities
+      </a>
     </h1>
     <div class="string-utilities-list">
 <section class="detail" id="get_random_string/2">
@@ -245,10 +241,10 @@ String Utilities
       </div>
 
 <p>Generates a random string drawn from a specified list of characters.</p><h2 id="get_random_string/2-parameters" class="section-heading">
-  <a href="#get_random_string/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">parameters</p>
+  <a href="#get_random_string/2-parameters">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Parameters
   </a>
-  Parameters
 </h2>
 <ul><li><p><code class="inline">string_length</code> - the number of characters in the returned string.</p></li><li><p><code class="inline">tokens</code> - this optional parameter may either be a <code class="inline">charlist()</code> including
 the desired characters from which to randomly select characters for the
@@ -283,7 +279,7 @@ compatible with Douglas Crockford's Base 32 (<a href="https://www.crockford.com/
 
         <p class="built-using">
           Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.29.4) for the
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.30.6) for the
 
             <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 
