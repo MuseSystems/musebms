@@ -11,6 +11,8 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule Msform.McpBootstrap.Types do
+  @moduledoc false
+
   @type parameters() :: %{
           optional(:owner_name) => String.t() | nil,
           optional(:owner_display_name) => String.t() | nil,

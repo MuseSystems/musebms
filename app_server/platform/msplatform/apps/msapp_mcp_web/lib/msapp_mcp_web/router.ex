@@ -144,7 +144,7 @@ defmodule MsappMcpWeb.Router do
     conn =
       case get_session(conn, "session_name") do
         name when is_binary(name) ->
-          MsappMcp.delete_session(name)
+          :ok = MsappMcp.delete_session(name)
 
           conn
           |> delete_session("session_name")

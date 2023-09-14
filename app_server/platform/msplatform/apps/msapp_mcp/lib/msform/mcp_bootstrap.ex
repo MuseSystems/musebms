@@ -11,17 +11,26 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule Msform.McpBootstrap do
-  use Ecto.Schema
-  use MscmpSystForms
-
-  alias Msform.McpBootstrap.Types
-
   @moduledoc """
   Form data used during the MCP Bootstrapping process.
 
   Note that currently the data assumes that only an email/password Authenticator
   will be provided for the administrative Access Account.
   """
+
+  use Ecto.Schema
+  use MscmpSystForms
+
+  alias Msform.McpBootstrap.Types
+
+  embedded_schema do
+    field(:owner_name, :string)
+    field(:owner_display_name, :string)
+    field(:admin_display_name, :string)
+    field(:admin_identifier, :string, redact: true)
+    field(:admin_credential, :string, redact: true)
+    field(:admin_credential_verify, :string, redact: true)
+  end
 
   @type t() ::
           %__MODULE__{
@@ -32,15 +41,6 @@ defmodule Msform.McpBootstrap do
             admin_credential: String.t() | nil,
             admin_credential_verify: String.t() | nil
           }
-
-  embedded_schema do
-    field(:owner_name, :string)
-    field(:owner_display_name, :string)
-    field(:admin_display_name, :string)
-    field(:admin_identifier, :string, redact: true)
-    field(:admin_credential, :string, redact: true)
-    field(:admin_credential_verify, :string, redact: true)
-  end
 
   @impl true
   defdelegate get_form_config, to: Msform.McpBootstrap.Definitions

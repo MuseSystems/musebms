@@ -11,9 +11,9 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule Msform.McpBootstrap.Definitions do
-  alias MscmpSystForms.Types.FormConfig
-
   @moduledoc false
+
+  alias MscmpSystForms.Types.{ComponentDisplayModes, FormConfig}
 
   def get_form_config do
     [
@@ -175,29 +175,29 @@ defmodule Msform.McpBootstrap.Definitions do
     %{
       default: %{
         default: %{
-          mcpbs_step_welcome: %{component_mode: :removed},
-          mcpbs_step_disallowed: %{component_mode: :removed},
-          mcpbs_step_records: %{component_mode: :removed},
-          mcpbs_step_finish: %{component_mode: :removed},
-          mcpbps_progress_list: %{component_mode: :visible}
+          mcpbs_step_welcome: %ComponentDisplayModes{component_mode: :removed},
+          mcpbs_step_disallowed: %ComponentDisplayModes{component_mode: :removed},
+          mcpbs_step_records: %ComponentDisplayModes{component_mode: :removed},
+          mcpbs_step_finish: %ComponentDisplayModes{component_mode: :removed},
+          mcpbps_progress_list: %ComponentDisplayModes{component_mode: :visible}
         },
         entry: %{
           welcome: %{
-            mcpbs_progress_item_welcome: %{text_mode: :emphasis},
-            mcpbs_step_welcome: %{component_mode: :entry},
-            mcpbs_comment_welcome_section: %{border_mode: :warning}
+            mcpbs_progress_item_welcome: %ComponentDisplayModes{text_mode: :emphasis},
+            mcpbs_step_welcome: %ComponentDisplayModes{component_mode: :entry},
+            mcpbs_comment_welcome_section: %ComponentDisplayModes{border_mode: :warning}
           },
           disallowed: %{
-            mcpbs_progress_item_disallowed: %{text_mode: :emphasis},
-            mcpbs_step_disallowed: %{component_mode: :entry}
+            mcpbs_progress_item_disallowed: %ComponentDisplayModes{text_mode: :emphasis},
+            mcpbs_step_disallowed: %ComponentDisplayModes{component_mode: :entry}
           },
           records: %{
-            mcpbs_progress_item_records: %{text_mode: :emphasis},
-            mcpbs_step_records: %{component_mode: :entry}
+            mcpbs_progress_item_records: %ComponentDisplayModes{text_mode: :emphasis},
+            mcpbs_step_records: %ComponentDisplayModes{component_mode: :entry}
           },
           finished: %{
-            mcpbs_progress_item_finish: %{text_mode: :emphasis},
-            mcpbs_step_finish: %{component_mode: :entry}
+            mcpbs_progress_item_finish: %ComponentDisplayModes{text_mode: :emphasis},
+            mcpbs_step_finish: %ComponentDisplayModes{component_mode: :entry}
           }
         },
         processing_overrides: %{

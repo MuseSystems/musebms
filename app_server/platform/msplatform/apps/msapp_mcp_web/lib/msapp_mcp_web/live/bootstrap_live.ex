@@ -11,9 +11,9 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MsappMcpWeb.BootstrapLive do
-  use MsappMcpWeb, :bootstrap_live_view
-
   @moduledoc false
+
+  use MsappMcpWeb, :bootstrap_live_view
 
   def mount(_params, session, socket) do
     updated_socket =

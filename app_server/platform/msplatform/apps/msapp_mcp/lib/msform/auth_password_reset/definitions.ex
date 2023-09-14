@@ -11,9 +11,9 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule Msform.AuthPasswordReset.Definitions do
-  alias MscmpSystForms.Types.FormConfig
-
   @moduledoc false
+
+  alias MscmpSystForms.Types.{ComponentDisplayModes, FormConfig}
 
   def get_form_config do
     [
@@ -68,19 +68,19 @@ defmodule Msform.AuthPasswordReset.Definitions do
     %{
       default: %{
         default: %{
-          mcpauthnpr_identifier: %{component_mode: :visible},
-          mcpauthnpr_credential: %{component_mode: :visible},
-          mcpauthnpr_new_credential: %{component_mode: :visible},
-          mcpauthnpr_verify_credential: %{component_mode: :visible},
-          mcpauthnpr_button_reset: %{component_mode: :visible}
+          mcpauthnpr_identifier: %ComponentDisplayModes{component_mode: :visible},
+          mcpauthnpr_credential: %ComponentDisplayModes{component_mode: :visible},
+          mcpauthnpr_new_credential: %ComponentDisplayModes{component_mode: :visible},
+          mcpauthnpr_verify_credential: %ComponentDisplayModes{component_mode: :visible},
+          mcpauthnpr_button_reset: %ComponentDisplayModes{component_mode: :visible}
         },
         entry: %{
           reset: %{
-            mcpauthnpr_identifier: %{component_mode: :visible},
-            mcpauthnpr_credential: %{component_mode: :entry},
-            mcpauthnpr_new_credential: %{component_mode: :entry},
-            mcpauthnpr_verify_credential: %{component_mode: :entry},
-            mcpauthnpr_button_reset: %{component_mode: :entry}
+            mcpauthnpr_identifier: %ComponentDisplayModes{component_mode: :visible},
+            mcpauthnpr_credential: %ComponentDisplayModes{component_mode: :entry},
+            mcpauthnpr_new_credential: %ComponentDisplayModes{component_mode: :entry},
+            mcpauthnpr_verify_credential: %ComponentDisplayModes{component_mode: :entry},
+            mcpauthnpr_button_reset: %ComponentDisplayModes{component_mode: :entry}
           }
         }
       },

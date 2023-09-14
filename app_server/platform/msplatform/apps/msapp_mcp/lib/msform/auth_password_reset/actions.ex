@@ -13,13 +13,15 @@
 defmodule Msform.AuthPasswordReset.Actions do
   @moduledoc false
 
+  alias MscmpSystPerms.Types.PermGrantValue
+
   # This form always assumes that the password reset is for the currently logged
   # in user and a user always has permission to change their own credentials.
   #
   # A more accurate permission here would be `:same_user`, but we're not
   # implementing that just yet.
 
-  @user_perms %{mcpauthnpr_form: %{view_scope: :all, maint_scope: :all}}
+  @user_perms %{mcpauthnpr_form: %PermGrantValue{view_scope: :all, maint_scope: :all}}
 
   def preconnect_init(socket, session_name, feature, mode, state, opts) do
     # First test the session and extract the access_acocunt_id
@@ -89,24 +91,26 @@ defmodule Msform.AuthPasswordReset.Actions do
     host_addr = socket.assigns.host_addr
     current_data = socket.assigns.msrd_current_data
 
-    Task.Supervisor.async_nolink(
-      MsappMcp.TaskSupervisor,
-      fn ->
-        reset_result =
-          :reset_in_progress
-          |> reconfirm_session_authenticated(session_name)
-          |> test_confirmation_credential(current_data, host_addr)
-          |> perform_credential_reset(current_data)
-          |> drop_existing_session(session_name)
-          |> finalize_reset_process()
+    %Task{} =
+      Task.Supervisor.async_nolink(
+        MsappMcp.TaskSupervisor,
+        fn ->
+          reset_result =
+            :reset_in_progress
+            |> reconfirm_session_authenticated(session_name)
+            |> test_confirmation_credential(current_data, host_addr)
+            |> perform_credential_reset(current_data)
+            |> drop_existing_session(session_name)
+            |> finalize_reset_process()
 
-        send(self(), reset_result)
-      end
-    )
+          send(self(), reset_result)
+        end
+      )
 
     MscmpSystForms.start_processing_override(socket, :process_password_reset)
   end
 
+  @dialyzer {:no_match, reconfirm_session_authenticated: 2}
   defp reconfirm_session_authenticated(:reset_in_progress, session_name) do
     with {:ok, %{"auth_state" => auth_state}} <- MssubMcp.get_session(session_name),
          :ok <- test_session_authentication(auth_state) do

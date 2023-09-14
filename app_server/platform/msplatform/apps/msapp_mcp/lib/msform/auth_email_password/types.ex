@@ -11,6 +11,8 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule Msform.AuthEmailPassword.Types do
+  @moduledoc false
+
   @type parameters() :: %{
           optional(:identifier) => String.t() | nil,
           optional(:credential) => String.t() | nil

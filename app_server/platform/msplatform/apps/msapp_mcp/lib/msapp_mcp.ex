@@ -14,19 +14,19 @@ defmodule MsappMcp do
   @spec load_disallowed_passwords() :: :ok | {:error, MscmpSystError.t()}
   defdelegate load_disallowed_passwords(), to: Impl.McpBootstrap
 
-  @spec process_bootstrap_data(Types.bootstrap_params()) ::
+  @spec process_bootstrap_data(MssubMcp.Types.tenant_bootstrap_params()) ::
           {:ok, MssubMcp.Types.tenant_bootstrap_result()} | {:error, MscmpSystError.t()}
   defdelegate process_bootstrap_data(data), to: Impl.McpBootstrap
 
-  @spec authenticate(map(), IP.addr(), MscmpSystSession.Types.session_name() | nil, Keyword.t()) ::
-          any()
+  @spec authenticate(map(), IP.addr(), MssubMcp.Types.session_name() | nil, Keyword.t()) ::
+          Types.login_result()
   defdelegate authenticate(params, host_addr, session_name, opts \\ []), to: Impl.Authentication
 
-  @spec test_session_authentication(Types.session_name()) ::
+  @spec test_session_authentication(MssubMcp.Types.session_name()) ::
           :session_valid | :session_invalid | {:session_reset, String.t()}
   defdelegate test_session_authentication(session_name), to: Impl.Authentication
 
-  @spec delete_session(MscmpSystSession.Types.session_name()) ::
+  @spec delete_session(MssubMcp.Types.session_name()) ::
           :ok | {:ok, :not_found} | {:error, MscmpSystError.t()}
   defdelegate delete_session(session_name), to: MssubMcp
 

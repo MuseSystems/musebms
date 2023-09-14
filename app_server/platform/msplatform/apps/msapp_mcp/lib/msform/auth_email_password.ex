@@ -11,25 +11,25 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule Msform.AuthEmailPassword do
+  @moduledoc """
+  Form/API data used the Email/Password authentication process.
+  """
+
   use Ecto.Schema
   use MscmpSystForms
 
   alias Msform.AuthEmailPassword.Types
 
-  @moduledoc """
-  Form/API data used the Email/Password authentication process.
-  """
+  embedded_schema do
+    field(:identifier, :string, redact: true)
+    field(:credential, :string, redact: true)
+  end
 
   @type t() ::
           %__MODULE__{
             identifier: String.t() | nil,
             credential: String.t() | nil
           }
-
-  embedded_schema do
-    field(:identifier, :string, redact: true)
-    field(:credential, :string, redact: true)
-  end
 
   @doc """
   Validates a map of form data for validation of form entry prior to final

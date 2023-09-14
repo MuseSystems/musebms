@@ -11,11 +11,11 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MsappMcp.Runtime.Application do
+  @moduledoc false
+
   use Application
 
   @default_startup_options_path "ms_startup_options.toml"
-
-  @moduledoc false
 
   @impl true
   def start(_type, _args) do

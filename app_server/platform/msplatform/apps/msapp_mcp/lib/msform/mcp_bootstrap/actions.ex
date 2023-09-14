@@ -13,9 +13,11 @@
 defmodule Msform.McpBootstrap.Actions do
   @moduledoc false
 
+  alias MscmpSystPerms.Types.PermGrantValue
+
   # For McpBootstrap user permissions are assumed since no user will exist at
   # bootstrap time
-  @user_perms %{mcpbs_bootstrap_form: %{view_scope: :all, maint_scope: :all}}
+  @user_perms %{mcpbs_bootstrap_form: %PermGrantValue{view_scope: :all, maint_scope: :all}}
 
   def preconnect_init(socket, session_name, feature, mode, state, opts) do
     socket
@@ -78,28 +80,29 @@ defmodule Msform.McpBootstrap.Actions do
   end
 
   def process_disallowed_load(socket) do
-    Task.Supervisor.async_nolink(
-      MsappMcp.TaskSupervisor,
-      fn ->
-        case MsappMcp.load_disallowed_passwords() do
-          :ok ->
-            send(self(), :disallowed_list_loaded)
+    %Task{} =
+      Task.Supervisor.async_nolink(
+        MsappMcp.TaskSupervisor,
+        fn ->
+          case MsappMcp.load_disallowed_passwords() do
+            :ok ->
+              send(self(), :disallowed_list_loaded)
 
-          error ->
-            # TODO: This should probably return a failure result instead of an
-            #       exception.  I'm not sure the exception here will propagate
-            #       back to self() they way I'd like it to, in fact, I'm pretty
-            #       confident it doesn't, especially because we're no-link. For
-            #       now we'll keep this because the expected failure modes here
-            #       are expected to be rare, but something to keep in mind.
-            raise MscmpSystError,
-              code: :undefined_error,
-              message: "Unexpected failure loading Disallowed Passwords starter list.",
-              cause: error
-        end
-      end,
-      shutdown: 300_000
-    )
+            error ->
+              # TODO: This should probably return a failure result instead of an
+              #       exception.  I'm not sure the exception here will propagate
+              #       back to self() they way I'd like it to, in fact, I'm pretty
+              #       confident it doesn't, especially because we're no-link. For
+              #       now we'll keep this because the expected failure modes here
+              #       are expected to be rare, but something to keep in mind.
+              raise MscmpSystError,
+                code: :undefined_error,
+                message: "Unexpected failure loading Disallowed Passwords starter list.",
+                cause: error
+          end
+        end,
+        shutdown: 300_000
+      )
 
     MscmpSystForms.start_processing_override(socket, :process_disallowed_load)
   end
@@ -114,26 +117,28 @@ defmodule Msform.McpBootstrap.Actions do
   end
 
   def process_records_save(socket) do
-    Task.Supervisor.async_nolink(
-      MsappMcp.TaskSupervisor,
-      fn ->
-        socket.assigns.msrd_current_data
-        |> Map.new(fn {k, v} -> {String.to_atom(k), v} end)
-        |> MsappMcp.process_bootstrap_data()
-        |> case do
-          {:ok, _} = result ->
-            result
+    %Task{} =
+      Task.Supervisor.async_nolink(
+        MsappMcp.TaskSupervisor,
+        fn ->
+          {:ok, _} =
+            socket.assigns.msrd_current_data
+            |> Map.new(fn {k, v} -> {String.to_atom(k), v} end)
+            |> MsappMcp.process_bootstrap_data()
+            |> case do
+              {:ok, _} = result ->
+                result
 
-          error ->
-            raise MscmpSystError,
-              code: :undefined_error,
-              message: "The bootstrapping record creation failed.",
-              cause: error
+              error ->
+                raise MscmpSystError,
+                  code: :undefined_error,
+                  message: "The bootstrapping record creation failed.",
+                  cause: error
+            end
+
+          send(self(), :records_saved)
         end
-
-        send(self(), :records_saved)
-      end
-    )
+      )
 
     MscmpSystForms.start_processing_override(socket, :process_records_save)
   end

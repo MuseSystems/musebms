@@ -13,8 +13,6 @@
 defmodule MsappMcp.Impl.McpBootstrap do
   @moduledoc false
 
-  alias MsappMcp.Types
-
   require Logger
 
   @spec load_disallowed_passwords() :: :ok | {:error, MscmpSystError.t()}
@@ -28,7 +26,7 @@ defmodule MsappMcp.Impl.McpBootstrap do
     |> MssubMcp.load_disallowed_passwords(pg_format: true)
   end
 
-  @spec process_bootstrap_data(Types.bootstrap_params()) ::
+  @spec process_bootstrap_data(MssubMcp.Types.tenant_bootstrap_params()) ::
           {:ok, MssubMcp.Types.tenant_bootstrap_result()} | {:error, MscmpSystError.t()}
   def process_bootstrap_data(data) do
     starting_contexts = MssubMcp.start_mcp_service_context()
@@ -38,7 +36,7 @@ defmodule MsappMcp.Impl.McpBootstrap do
 
     {:ok, result} =
       MscmpSystDb.transaction(fn ->
-        MscmpSystSettings.set_setting_value("mssub_mcp_state", :setting_uuid, active_state.id)
+        _ = MscmpSystSettings.set_setting_value("mssub_mcp_state", :setting_uuid, active_state.id)
 
         case validate_bootstrap_data(data) do
           :ok ->
@@ -91,8 +89,9 @@ defmodule MsappMcp.Impl.McpBootstrap do
     }
   end
 
+  @dialyzer {:no_match, maybe_set_mcp_owner: 1}
   defp maybe_set_mcp_owner({:ok, values} = result) do
-    MscmpSystSettings.set_setting_value("mcp_owner", :setting_uuid, values.owner_id)
+    :ok = MscmpSystSettings.set_setting_value("mcp_owner", :setting_uuid, values.owner_id)
     result
   end
 

@@ -11,9 +11,9 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule Msform.AuthEmailPassword.Definitions do
-  alias MscmpSystForms.Types.FormConfig
-
   @moduledoc false
+
+  alias MscmpSystForms.Types.{ComponentDisplayModes, FormConfig}
 
   def get_form_config do
     [
@@ -51,15 +51,15 @@ defmodule Msform.AuthEmailPassword.Definitions do
     %{
       default: %{
         default: %{
-          mcpauthnep_form_identifier: %{component_mode: :visible},
-          mcpauthnep_form_credential: %{component_mode: :visible},
-          mcpauthnep_button_login: %{component_mode: :visible}
+          mcpauthnep_form_identifier: %ComponentDisplayModes{component_mode: :visible},
+          mcpauthnep_form_credential: %ComponentDisplayModes{component_mode: :visible},
+          mcpauthnep_button_login: %ComponentDisplayModes{component_mode: :visible}
         },
         entry: %{
           login: %{
-            mcpauthnep_form_identifier: %{component_mode: :entry},
-            mcpauthnep_form_credential: %{component_mode: :entry},
-            mcpauthnep_button_login: %{component_mode: :entry}
+            mcpauthnep_form_identifier: %ComponentDisplayModes{component_mode: :entry},
+            mcpauthnep_form_credential: %ComponentDisplayModes{component_mode: :entry},
+            mcpauthnep_button_login: %ComponentDisplayModes{component_mode: :entry}
           }
         }
       },

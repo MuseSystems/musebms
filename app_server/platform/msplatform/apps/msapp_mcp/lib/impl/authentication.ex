@@ -23,7 +23,7 @@ defmodule MsappMcp.Impl.Authentication do
   ]
 
   @spec authenticate(map(), IP.addr(), MscmpSystSession.Types.session_name() | nil, Keyword.t()) ::
-          any()
+          MsappMcp.Types.login_result()
   def authenticate(%{} = params, host_addr, session_name, opts) do
     opts = MscmpSystUtils.resolve_options(opts, mode: :session)
 
@@ -140,5 +140,5 @@ defmodule MsappMcp.Impl.Authentication do
        do: {:session_reset, reset_reason}
 
   defp get_session_auth_result(%{"status" => "authenticated"}), do: :session_valid
-  defp get_session_auth_result(auth_state), do: :session_invalid
+  defp get_session_auth_result(_), do: :session_invalid
 end

@@ -13,9 +13,11 @@
 defmodule Msform.AuthEmailPassword.Actions do
   @moduledoc false
 
+  alias MscmpSystPerms.Types.PermGrantValue
+
   # For AuthEmailPassword user permissions are assumed since this we don't even
   # have a authenticated user at this point.
-  @user_perms %{mcpauthnep_form: %{view_scope: :all, maint_scope: :all}}
+  @user_perms %{mcpauthnep_form: %PermGrantValue{view_scope: :all, maint_scope: :all}}
 
   def preconnect_init(socket, session_name, feature, mode, state, opts) do
     socket
@@ -59,13 +61,14 @@ defmodule Msform.AuthEmailPassword.Actions do
     session_name = socket.assigns.msrd_session_name
     host_addr = socket.assigns.host_addr
 
-    Task.Supervisor.async_nolink(
-      MsappMcp.TaskSupervisor,
-      fn ->
-        auth_result = MsappMcp.authenticate(form_data, host_addr, session_name)
-        send(self(), auth_result)
-      end
-    )
+    %Task{} =
+      Task.Supervisor.async_nolink(
+        MsappMcp.TaskSupervisor,
+        fn ->
+          auth_result = MsappMcp.authenticate(form_data, host_addr, session_name)
+          send(self(), auth_result)
+        end
+      )
 
     MscmpSystForms.start_processing_override(socket, :process_login_attempt)
   end
