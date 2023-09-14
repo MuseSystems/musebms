@@ -16,13 +16,13 @@ defmodule MssubMcp.Types do
   """
 
   @type tenant_bootstrap_params() :: %{
-          required(:owner) => MscmpSystInstance.Types.owner_params(),
-          required(:access_account) => MscmpSystAuthn.Types.access_account_params(),
-          required(:authenticator_type) => MscmpSystAuthn.Types.authenticator_types(),
-          required(:account_identifier) => MscmpSystAuthn.Types.account_identifier(),
-          required(:credential) => MscmpSystAuthn.Types.credential(),
-          optional(:mfa_credential) => MscmpSystAuthn.Types.credential(),
-          required(:application) =>
+          optional(:owner) => MscmpSystInstance.Types.owner_params(),
+          optional(:access_account) => MscmpSystAuthn.Types.access_account_params(),
+          optional(:authenticator_type) => MscmpSystAuthn.Types.authenticator_types(),
+          optional(:account_identifier) => MscmpSystAuthn.Types.account_identifier(),
+          optional(:credential) => MscmpSystAuthn.Types.credential(),
+          optional(:mfa_credential) => MscmpSystAuthn.Types.credential() | nil,
+          optional(:application) =>
             MscmpSystInstance.Types.application_id()
             | MscmpSystInstance.Types.application_name()
             | :mcp
@@ -33,4 +33,6 @@ defmodule MssubMcp.Types do
           required(:access_account_id) => MscmpSystAuthn.Types.access_account_id(),
           optional(:instance_id) => MscmpSystInstance.Types.instance_id()
         }
+
+  @type session_name() :: MscmpSystSession.Types.session_name()
 end
