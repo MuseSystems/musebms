@@ -32,7 +32,7 @@ defmodule Msdata.SystDisallowedPasswords do
           }
 
   @schema_prefix "ms_syst"
-  @primary_key {:password_hash, :binary, autogenerate: false}
+  @primary_key {:password_hash, :binary, autogenerate: false, redact: true}
 
   schema "syst_disallowed_passwords" do
   end
