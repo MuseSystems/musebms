@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.30.6">
+    <meta name="project" content="mscmp_syst_authn v0.1.0">
+
+    <title>MscmpSystAuthn.Types.AppliedNetworkRule — mscmp_syst_authn v0.1.0</title>
+    <link rel="stylesheet" href="dist/html-elixir-M3TQBNKO.css" />
+
+
+    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
+    <script src="dist/handlebars.templates-KDPBTEPL.js"></script>
+    <script src="dist/sidebar_items-7CB1FAEB.js"></script>
+
+      <script src="docs_config.js"></script>
+
+    <script async src="dist/html-CP2A7WXZ.js"></script>
+
+
+  </head>
+  <body data-type="modules" class="page-module">
+    <script>
+
+      try {
+        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
+
+        if (settings.theme === 'dark' ||
+           ((settings.theme === 'system' || settings.theme == null) &&
+             window.matchMedia('(prefers-color-scheme: dark)').matches)
+           ) {
+          document.body.classList.add('dark')
+        }
+      } catch (error) { }
+    </script>
+
+<div class="main">
+
+<button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<section class="sidebar">
+  <form class="sidebar-search" action="search.html">
+    <button type="submit" class="search-button" aria-label="Submit Search">
+      <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
+    </button>
+    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
+      <i class="ri-close-line ri-lg" aria-hidden="true" title="Cancel search"></i>
+    </button>
+    <label class="search-label">
+      <p class="sr-only">Search</p>
+      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+    </label>
+  </form>
+
+  <div class="autocomplete">
+    <div class="autocomplete-results">
+    </div>
+  </div>
+
+  <div class="sidebar-header">
+
+    <div class="sidebar-projectDetails">
+      <a href="MscmpSystAuthn.html" class="sidebar-projectName" translate="no">
+mscmp_syst_authn
+      </a>
+      <div class="sidebar-projectVersion" translate="no">
+        v0.1.0
+      </div>
+    </div>
+    <ul class="sidebar-listNav">
+      <li><a id="extras-list-link" href="#full-list">Pages</a></li>
+
+        <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+
+
+    </ul>
+  </div>
+
+  <ul id="full-list"></ul>
+</section>
+
+<section class="content">
+  <output role="status" id="toast"></output>
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+<h1>
+<button class="icon-action display-settings">
+  <i class="ri-settings-3-line"></i>
+  <span class="sr-only">Settings</span>
+</button>
+
+
+  <span translate="no">MscmpSystAuthn.Types.AppliedNetworkRule</span> 
+  <small class="app-vsn" translate="no">(mscmp_syst_authn v0.1.0)</small>
+
+</h1>
+
+
+  <section id="moduledoc">
+<p>Represents the return value of functions which evaluate whether or not a
+specific originating host IP address is allowed to attempt an authentication.</p><p>When an authentication is attempted, a number of different rules and data
+sources may determine what kind of connection is allowed based on the host IP
+address from which the attempt appears to be originating and the destination
+Instance for which the authentication is being processed.  To normalize the
+return from the evaluation of these different network based evaluations we
+define a simplified <code class="inline">t:applied_network_rule/0</code> value to represent the
+actionable data of the evaluation.</p>
+  </section>
+
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        Summary
+      </a>
+    </h1>
+<div class="summary-types summary">
+  <h2>
+    <a href="#types">Types</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:t/0" translate="no">t()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Represents the return value of functions which evaluate whether or not a
+specific originating host IP address is allowed to attempt an authentication.</p></div>
+
+    </div>
+
+</div>
+
+  </section>
+
+
+  <section id="types" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#types">
+        <i class="ri-link-m" aria-hidden="true"></i>
+Types
+      </a>
+    </h1>
+    <div class="types-list">
+<section class="detail" id="t:t/0">
+
+  <div class="detail-header">
+    <a href="#t:t/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">t()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> t() :: %MscmpSystAuthn.Types.AppliedNetworkRule{
+  functional_type: <a href="MscmpSystAuthn.Types.html#t:network_rule_functional_type/0">MscmpSystAuthn.Types.network_rule_functional_type</a>(),
+  network_rule_id: <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>() | nil,
+  precedence: <a href="MscmpSystAuthn.Types.html#t:network_rule_precedence/0">MscmpSystAuthn.Types.network_rule_precedence</a>()
+}</pre>
+
+      </div>
+
+<p>Represents the return value of functions which evaluate whether or not a
+specific originating host IP address is allowed to attempt an authentication.</p><h2 id="t:t/0-attributes" class="section-heading">
+  <a href="#t:t/0-attributes">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Attributes
+  </a>
+</h2>
+<ul><li><p><code class="inline">precedence</code> - this will indicate the precedence of the applied Network
+Rule.  This value can aid in identifying the origin of a given applied
+allowance or denial.</p></li><li><p><code class="inline">network_rule_id</code> - this is the record ID of the rule which was evaluated
+to govern the authentication attempt.  Which specific relation the ID refers
+to will depend on the specific precedence of the rule applied.  This value
+may be <code class="inline">nil</code> if the implied default Network Rule is applied since, by
+definition, this means no other explicitly defined Network Rule was found.</p></li><li><p><code class="inline">functional_type</code> - May be either <code class="inline">:allow</code> or <code class="inline">:deny</code>.  <code class="inline">:allow</code> means
+that the Network Rule evaluation allows the host IP address to attempt
+authentication.  <code class="inline">:deny</code> indicates that the host IP address may not attempt
+an authentication.</p></li></ul><p>See <a href="MscmpSystAuthn.Types.AppliedNetworkRule.html#content"><code class="inline">MscmpSystAuthn.Types.AppliedNetworkRule</code></a> for more.</p>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+      <footer class="footer">
+        <p>
+
+          <span class="line">
+            <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+              Search HexDocs
+            </button>
+
+              <a href="mscmp_syst_authn.epub" title="ePub version">
+                Download ePub version
+              </a>
+
+          </span>
+        </p>
+
+        <p class="built-using">
+          Built using
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.30.6) for the
+
+            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+        </p>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+
+
+  </body>
+</html>

@@ -4,20 +4,20 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.29.4">
+    <meta name="generator" content="ExDoc v0.30.6">
     <meta name="project" content="mscmp_syst_settings v0.1.0">
 
     <title>MscmpSystSettings — mscmp_syst_settings v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-HHVY3JYD.css" />
+    <link rel="stylesheet" href="dist/html-elixir-M3TQBNKO.css" />
 
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-XWGFFSCD.js"></script>
-    <script src="dist/sidebar_items-4CFAE873.js"></script>
+    <script src="dist/handlebars.templates-KDPBTEPL.js"></script>
+    <script src="dist/sidebar_items-4F79D316.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/html-JDI3AVDD.js"></script>
+    <script async src="dist/html-CP2A7WXZ.js"></script>
 
 
   </head>
@@ -80,7 +80,6 @@ mscmp_syst_settings
     </ul>
   </div>
 
-  <div class="gradient"></div>
   <ul id="full-list"></ul>
 </section>
 
@@ -123,9 +122,8 @@ transaction.</p>
     <h1 class="section-heading">
       <a class="hover-link" href="#summary">
         <i class="ri-link-m" aria-hidden="true"></i>
-        <span class="sr-only">Link to this section</span>
+        Summary
       </a>
-      Summary
     </h1>
 <div class="summary-settings summary">
   <h2>
@@ -268,9 +266,8 @@ set.</p></div>
     <h1 class="section-heading">
       <a class="hover-link" href="#settings">
         <i class="ri-link-m" aria-hidden="true"></i>
-        <span class="sr-only">Link to this section</span>
-      </a>
 Settings
+      </a>
     </h1>
     <div class="settings-list">
 <section class="detail" id="create_setting/1">
@@ -297,10 +294,10 @@ Settings
 <p>Creates a new user defined setting.</p><p>This function creates a setting which is automatically marked as being user
 defined.  User created settings such as those created by this function are the
 only kind of settings which may be deleted via <code class="inline">delete_setting/2</code>.</p><h2 id="create_setting/1-parameters" class="section-heading">
-  <a href="#create_setting/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">parameters</p>
+  <a href="#create_setting/1-parameters">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Parameters
   </a>
-  Parameters
 </h2>
 <ul><li><p><code class="inline">creation_params</code>a map defining the new settings record.  The map must
 contain the following keys:</p><ul><li><p><code class="inline">internal_name</code> - This is the unique value which represents the name of
@@ -311,18 +308,18 @@ information describing how the setting is used in the application and
 directions for correct usage.  Currently, the description must be at least
 6 characters long.</p></li></ul><p>other allowed values, such as the setting values themselves, are also
 permitted here, but not required.</p></li></ul><h2 id="create_setting/1-examples" class="section-heading">
-  <a href="#create_setting/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">examples</p>
+  <a href="#create_setting/1-examples">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Examples
   </a>
-  Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">new_setting</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="1067131345-1">%{</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">new_setting</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="4931664932-1">%{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;create_example_setting&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">display_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Create Example Setting&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">user_description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;An example of setting creation.&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">setting_integer</span><span class="p">:</span><span class="w"> </span><span class="mi">9876</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="1067131345-1">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">create_setting</span><span class="p" data-group-id="1067131345-2">(</span><span class="n">new_setting</span><span class="p" data-group-id="1067131345-2">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="4931664932-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">create_setting</span><span class="p" data-group-id="4931664932-2">(</span><span class="n">new_setting</span><span class="p" data-group-id="4931664932-2">)</span><span class="w">
 </span><span class="ss">:ok</span></code></pre>
   </section>
 </section>
@@ -349,18 +346,18 @@ permitted here, but not required.</p></li></ul><h2 id="create_setting/1-examples
 
 <p>Deletes the named user defined setting from the system.</p><p>Note that this function cannot be used to delete a system defined setting.
 Trying to do so will result in a error being raised.</p><h2 id="delete_setting/1-parameters" class="section-heading">
-  <a href="#delete_setting/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">parameters</p>
+  <a href="#delete_setting/1-parameters">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Parameters
   </a>
-  Parameters
 </h2>
 <ul><li><code class="inline">setting_name</code> - the name of the setting should be deleted.</li></ul><h2 id="delete_setting/1-examples" class="section-heading">
-  <a href="#delete_setting/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">examples</p>
+  <a href="#delete_setting/1-examples">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Examples
   </a>
-  Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">delete_setting</span><span class="p" data-group-id="0101038212-1">(</span><span class="s">&quot;delete_example_setting&quot;</span><span class="p" data-group-id="0101038212-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">delete_setting</span><span class="p" data-group-id="3895265910-1">(</span><span class="s">&quot;delete_example_setting&quot;</span><span class="p" data-group-id="3895265910-1">)</span><span class="w">
 </span><span class="ss">:ok</span></code></pre>
   </section>
 </section>
@@ -388,26 +385,26 @@ Trying to do so will result in a error being raised.</p><h2 id="delete_setting/1
       </div>
 
 <p>Retrieves the value of the given type for the requested setting.</p><h2 id="get_setting_value/2-parameters" class="section-heading">
-  <a href="#get_setting_value/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">parameters</p>
+  <a href="#get_setting_value/2-parameters">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Parameters
   </a>
-  Parameters
 </h2>
 <ul><li><p><code class="inline">setting_name</code> - the name of the setting for which to retrieve a value.</p></li><li><p><code class="inline">setting_type</code> - the type of value which to return.</p></li></ul><h2 id="get_setting_value/2-examples" class="section-heading">
-  <a href="#get_setting_value/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">examples</p>
+  <a href="#get_setting_value/2-examples">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Examples
   </a>
-  Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">get_setting_value</span><span class="p" data-group-id="0853220825-1">(</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">get_setting_value</span><span class="p" data-group-id="9294914878-1">(</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="s">&quot;get_example_setting&quot;</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:setting_decimal_range</span><span class="p" data-group-id="0853220825-1">)</span><span class="w">
-</span><span class="p" data-group-id="0853220825-2">%</span><span class="nc" data-group-id="0853220825-2">MscmpSystDb.DbTypes.DecimalRange</span><span class="p" data-group-id="0853220825-2">{</span><span class="w">
-  </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="nc">Decimal</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="0853220825-3">(</span><span class="s">&quot;1.1&quot;</span><span class="p" data-group-id="0853220825-3">)</span><span class="p">,</span><span class="w">
-  </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="nc">Decimal</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="0853220825-4">(</span><span class="s">&quot;99.99&quot;</span><span class="p" data-group-id="0853220825-4">)</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:setting_decimal_range</span><span class="p" data-group-id="9294914878-1">)</span><span class="w">
+</span><span class="p" data-group-id="9294914878-2">%</span><span class="nc" data-group-id="9294914878-2">MscmpSystDb.DbTypes.DecimalRange</span><span class="p" data-group-id="9294914878-2">{</span><span class="w">
+  </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="nc">Decimal</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="9294914878-3">(</span><span class="s">&quot;1.1&quot;</span><span class="p" data-group-id="9294914878-3">)</span><span class="p">,</span><span class="w">
+  </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="nc">Decimal</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="9294914878-4">(</span><span class="s">&quot;99.99&quot;</span><span class="p" data-group-id="9294914878-4">)</span><span class="p">,</span><span class="w">
   </span><span class="ss">lower_inclusive</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
   </span><span class="ss">upper_inclusive</span><span class="p">:</span><span class="w"> </span><span class="no">false</span><span class="w">
-</span><span class="p" data-group-id="0853220825-2">}</span></code></pre>
+</span><span class="p" data-group-id="9294914878-2">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_setting_values/1">
@@ -432,19 +429,19 @@ Trying to do so will result in a error being raised.</p><h2 id="delete_setting/1
       </div>
 
 <p>Retrieves all values associated with the requested setting.</p><h2 id="get_setting_values/1-parameters" class="section-heading">
-  <a href="#get_setting_values/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">parameters</p>
+  <a href="#get_setting_values/1-parameters">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Parameters
   </a>
-  Parameters
 </h2>
 <ul><li><code class="inline">setting_name</code> - the name of the setting for which to retrieve values.</li></ul><p>The successful return of this function is an instance of the
 <a href="Msdata.SystSettings.html"><code class="inline">Msdata.SystSettings</code></a> struct containing the values requested.</p><h2 id="get_setting_values/1-examples" class="section-heading">
-  <a href="#get_setting_values/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">examples</p>
+  <a href="#get_setting_values/1-examples">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Examples
   </a>
-  Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">get_setting_values</span><span class="p" data-group-id="6062455962-1">(</span><span class="s">&quot;get_example_setting&quot;</span><span class="p" data-group-id="6062455962-1">)</span></code></pre>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">get_setting_values</span><span class="p" data-group-id="9248963287-1">(</span><span class="s">&quot;get_example_setting&quot;</span><span class="p" data-group-id="9248963287-1">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="list_all_settings/0">
@@ -469,12 +466,12 @@ Trying to do so will result in a error being raised.</p><h2 id="delete_setting/1
 
 <p>Retrieves all values for all settings.</p><p>This function returns all other setting metadata, such as the records' IDs,
 descriptions, etc.</p><h2 id="list_all_settings/0-examples" class="section-heading">
-  <a href="#list_all_settings/0-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">examples</p>
+  <a href="#list_all_settings/0-examples">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Examples
   </a>
-  Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">list_all_settings</span><span class="p" data-group-id="6639040973-1">(</span><span class="p" data-group-id="6639040973-1">)</span></code></pre>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">list_all_settings</span><span class="p" data-group-id="5449145832-1">(</span><span class="p" data-group-id="5449145832-1">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="set_setting_value/3">
@@ -502,24 +499,24 @@ descriptions, etc.</p><h2 id="list_all_settings/0-examples" class="section-headi
       </div>
 
 <p>Sets the value of any one setting type for the named setting.</p><h2 id="set_setting_value/3-parameters" class="section-heading">
-  <a href="#set_setting_value/3-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">parameters</p>
+  <a href="#set_setting_value/3-parameters">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Parameters
   </a>
-  Parameters
 </h2>
 <ul><li><p><code class="inline">setting_name</code> - the name of the setting to update with the new value.</p></li><li><p><code class="inline">setting_type</code> - sets which of the different available value types is
 being updated.</p></li><li><p><code class="inline">setting_value</code> - is the new value to set on the setting. Note that the
 setting value must be appropriate for the <code class="inline">setting_type</code> argument or an
 error will be raised.</p></li></ul><h2 id="set_setting_value/3-examples" class="section-heading">
-  <a href="#set_setting_value/3-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">examples</p>
+  <a href="#set_setting_value/3-examples">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Examples
   </a>
-  Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">set_setting_value</span><span class="p" data-group-id="1790989556-1">(</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">set_setting_value</span><span class="p" data-group-id="7596782045-1">(</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="s">&quot;set_example_setting&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:setting_decimal</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">Decimal</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="1790989556-2">(</span><span class="s">&quot;1029.3847&quot;</span><span class="p" data-group-id="1790989556-2">)</span><span class="p" data-group-id="1790989556-1">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">Decimal</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="7596782045-2">(</span><span class="s">&quot;1029.3847&quot;</span><span class="p" data-group-id="7596782045-2">)</span><span class="p" data-group-id="7596782045-1">)</span><span class="w">
 </span><span class="ss">:ok</span></code></pre>
   </section>
 </section>
@@ -550,33 +547,33 @@ error will be raised.</p></li></ul><h2 id="set_setting_value/3-examples" class="
 setting types can have their values set at the same time.  In addition to the
 typed setting values, the setting display name and/or user description values
 may also be set.</p><h2 id="set_setting_values/2-parameters" class="section-heading">
-  <a href="#set_setting_values/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">parameters</p>
+  <a href="#set_setting_values/2-parameters">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Parameters
   </a>
-  Parameters
 </h2>
 <ul><li><p><code class="inline">setting_name</code> - the name of the setting to update with the new values.</p></li><li><p><code class="inline">update_params</code> - is a map that complies with the
 <code class="inline">MscmpSystSettings.Types.setting_service_params()</code> type specification and
 includes the updates to setting type values, updates to the <code class="inline">display_name</code>
 value, and/or updates to the <code class="inline">user_description</code> value.</p></li></ul><h2 id="set_setting_values/2-examples" class="section-heading">
-  <a href="#set_setting_values/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">examples</p>
+  <a href="#set_setting_values/2-examples">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Examples
   </a>
-  Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">update_values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="4328329749-1">%{</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">update_values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="1282083094-1">%{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">user_description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;An example of updating the user description.&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">setting_integer</span><span class="p">:</span><span class="w"> </span><span class="mi">6758</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">setting_date_range</span><span class="p">:</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="p" data-group-id="4328329749-2">%</span><span class="nc" data-group-id="4328329749-2">MscmpSystDb.DbTypes.DateRange</span><span class="p" data-group-id="4328329749-2">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="p" data-group-id="1282083094-2">%</span><span class="nc" data-group-id="1282083094-2">MscmpSystDb.DbTypes.DateRange</span><span class="p" data-group-id="1282083094-2">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">       </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="ld">~D[2022-04-01]</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">       </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="ld">~D[2022-04-12]</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">       </span><span class="ss">upper_inclusive</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="p" data-group-id="4328329749-2">}</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="4328329749-1">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">set_setting_values</span><span class="p" data-group-id="4328329749-3">(</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="p" data-group-id="1282083094-2">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="1282083094-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">set_setting_values</span><span class="p" data-group-id="1282083094-3">(</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="s">&quot;set_example_setting&quot;</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="n">update_values</span><span class="p" data-group-id="4328329749-3">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="n">update_values</span><span class="p" data-group-id="1282083094-3">)</span><span class="w">
 </span><span class="ss">:ok</span></code></pre>
   </section>
 </section>
@@ -588,9 +585,8 @@ value, and/or updates to the <code class="inline">user_description</code> value.
     <h1 class="section-heading">
       <a class="hover-link" href="#runtime">
         <i class="ri-link-m" aria-hidden="true"></i>
-        <span class="sr-only">Link to this section</span>
-      </a>
 Runtime
+      </a>
     </h1>
     <div class="runtime-list">
 <section class="detail" id="get_settings_service/0">
@@ -615,12 +611,12 @@ Runtime
 
 <p>Retrieves the currently set Settings Service name or <code class="inline">nil</code> if none has been
 set.</p><h2 id="get_settings_service/0-examples" class="section-heading">
-  <a href="#get_settings_service/0-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">examples</p>
+  <a href="#get_settings_service/0-examples">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Examples
   </a>
-  Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">get_settings_service</span><span class="p" data-group-id="3827385186-1">(</span><span class="p" data-group-id="3827385186-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">get_settings_service</span><span class="p" data-group-id="3212410144-1">(</span><span class="p" data-group-id="3212410144-1">)</span><span class="w">
 </span><span class="ss">:settings_instance</span></code></pre>
   </section>
 </section>
@@ -655,19 +651,19 @@ which the calls are being made.  As such, you must call put_settings_service
 at least once for any process from which you wish to access the Settings
 Service.</p><p>Because we're just thinly wrapping <a href="https://hexdocs.pm/elixir/Process.html#put/2"><code class="inline">Process.put/2</code></a> here, the return value will
 be the previous value set here, or nil if no previous value was set.</p><h2 id="put_settings_service/1-parameters" class="section-heading">
-  <a href="#put_settings_service/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">parameters</p>
+  <a href="#put_settings_service/1-parameters">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Parameters
   </a>
-  Parameters
 </h2>
 <ul><li><code class="inline">service_name</code> - The name of the service which is to be set as servicing
 the process.</li></ul><h2 id="put_settings_service/1-examples" class="section-heading">
-  <a href="#put_settings_service/1-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">examples</p>
+  <a href="#put_settings_service/1-examples">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Examples
   </a>
-  Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">put_settings_service</span><span class="p" data-group-id="4792202859-1">(</span><span class="ss">:settings_instance</span><span class="p" data-group-id="4792202859-1">)</span></code></pre>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">put_settings_service</span><span class="p" data-group-id="1303995479-1">(</span><span class="ss">:settings_instance</span><span class="p" data-group-id="1303995479-1">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="refresh_from_database/0">
@@ -693,12 +689,12 @@ the process.</li></ul><h2 id="put_settings_service/1-examples" class="section-he
 <p>Refreshes the cached settings values from the database.</p><p>Calling this function causes the existing cached settings to be purged from
 the cache and the cache to be repopulated from the database using the
 datastore context provided to <a href="#start_link/1"><code class="inline">start_link/1</code></a>.</p><h2 id="refresh_from_database/0-examples" class="section-heading">
-  <a href="#refresh_from_database/0-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">examples</p>
+  <a href="#refresh_from_database/0-examples">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Examples
   </a>
-  Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">refresh_from_database</span><span class="p" data-group-id="3432125847-1">(</span><span class="p" data-group-id="3432125847-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">refresh_from_database</span><span class="p" data-group-id="7254069031-1">(</span><span class="p" data-group-id="7254069031-1">)</span><span class="w">
 </span><span class="ss">:ok</span></code></pre>
   </section>
 </section>
@@ -758,12 +754,12 @@ modifying database data.</p>
       </div>
 
 <p>Terminates a running instance of the settings service.</p><h2 id="terminate_settings_service/0-examples" class="section-heading">
-  <a href="#terminate_settings_service/0-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">examples</p>
+  <a href="#terminate_settings_service/0-examples">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Examples
   </a>
-  Examples
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="o">&gt;</span><span class="w"> </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">terminate_settings_service</span><span class="p" data-group-id="7119957812-1">(</span><span class="p" data-group-id="7119957812-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="o">&gt;</span><span class="w"> </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">terminate_settings_service</span><span class="p" data-group-id="4830754442-1">(</span><span class="p" data-group-id="4830754442-1">)</span><span class="w">
 </span><span class="ss">:ok</span></code></pre>
   </section>
 </section>
@@ -788,7 +784,7 @@ modifying database data.</p>
 
         <p class="built-using">
           Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.29.4) for the
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.30.6) for the
 
             <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 

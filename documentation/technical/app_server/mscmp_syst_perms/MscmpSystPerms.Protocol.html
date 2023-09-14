@@ -4,20 +4,20 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.29.4">
+    <meta name="generator" content="ExDoc v0.30.6">
     <meta name="project" content="mscmp_syst_perms v0.1.0">
 
     <title>MscmpSystPerms.Protocol — mscmp_syst_perms v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-HHVY3JYD.css" />
+    <link rel="stylesheet" href="dist/html-elixir-M3TQBNKO.css" />
 
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-XWGFFSCD.js"></script>
-    <script src="dist/sidebar_items-35D82283.js"></script>
+    <script src="dist/handlebars.templates-KDPBTEPL.js"></script>
+    <script src="dist/sidebar_items-B2377805.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/html-JDI3AVDD.js"></script>
+    <script async src="dist/html-CP2A7WXZ.js"></script>
 
 
   </head>
@@ -80,7 +80,6 @@ mscmp_syst_perms
     </ul>
   </div>
 
-  <div class="gradient"></div>
   <ul id="full-list"></ul>
 </section>
 
@@ -112,9 +111,8 @@ mscmp_syst_perms
     <h1 class="section-heading">
       <a class="hover-link" href="#summary">
         <i class="ri-link-m" aria-hidden="true"></i>
-        <span class="sr-only">Link to this section</span>
+        Summary
       </a>
-      Summary
     </h1>
 <div class="summary-types summary">
   <h2>
@@ -126,6 +124,8 @@ mscmp_syst_perms
         <a href="#t:t/0" translate="no">t()</a>
 
       </div>
+
+        <div class="summary-synopsis"><p>All the types that implement this protocol.</p></div>
 
     </div>
 
@@ -197,9 +197,8 @@ identified by the <code class="inline">selector</code>, including the Rights/Sco
     <h1 class="section-heading">
       <a class="hover-link" href="#types">
         <i class="ri-link-m" aria-hidden="true"></i>
-        <span class="sr-only">Link to this section</span>
-      </a>
 Types
+      </a>
     </h1>
     <div class="types-list">
 <section class="detail" id="t:t/0">
@@ -222,7 +221,7 @@ Types
 
       </div>
 
-
+<p>All the types that implement this protocol.</p>
   </section>
 </section>
 
@@ -233,9 +232,8 @@ Types
     <h1 class="section-heading">
       <a class="hover-link" href="#functions">
         <i class="ri-link-m" aria-hidden="true"></i>
-        <span class="sr-only">Link to this section</span>
-      </a>
 Functions
+      </a>
     </h1>
     <div class="functions-list">
 <section class="detail" id="get_effective_perm_grants/2">
@@ -266,10 +264,10 @@ identified by the <code class="inline">selector</code> as calculated from all ef
 revocations.</p><p>This function answers the question, &quot;what rights does this user really have?&quot;</p><p>On successful execution, a success tuple is returned including a map of the
 selected Permissions and the Rights/Scopes granted.  Errors will result in the
 return of an error tuple.</p><h2 id="get_effective_perm_grants/2-parameters" class="section-heading">
-  <a href="#get_effective_perm_grants/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">parameters</p>
+  <a href="#get_effective_perm_grants/2-parameters">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Parameters
   </a>
-  Parameters
 </h2>
 <ul><li><p><code class="inline">selector</code> - this value is a struct which determines the specific
 implementation of this function to call and which contains the keys/values
@@ -312,10 +310,10 @@ specific and documented for each individual implementation.</li></ul></li></ul>
 
 <p>Grants a Permission Role to the given selector.</p><p>On successful execution of the grant, the function will return a simple <code class="inline">:ok</code>.
 On error, an error tuple is returned.</p><h2 id="grant_perm_role/2-parameters" class="section-heading">
-  <a href="#grant_perm_role/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">parameters</p>
+  <a href="#grant_perm_role/2-parameters">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Parameters
   </a>
-  Parameters
 </h2>
 <ul><li><p><code class="inline">selector</code> - this value is a struct which determines the specific
 implementation of this function to call and which contains the keys/values
@@ -353,10 +351,10 @@ users on a Permission by Permission basis.  This function is intended to list
 Permission denials for a user context so that the denials may be managed.</p><p>Some user contexts may not offer explicit Permission denials.  In these cases
 this function should simply return a success tuple containing an empty list as
 the value.</p><h2 id="list_perm_denials/2-parameters" class="section-heading">
-  <a href="#list_perm_denials/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">parameters</p>
+  <a href="#list_perm_denials/2-parameters">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Parameters
   </a>
-  Parameters
 </h2>
 <ul><li><p><code class="inline">selector</code> - this value is a struct which determines the specific
 implementation of this function to call and which contains the keys/values
@@ -398,10 +396,10 @@ and what Permissions/Rights/Scopes those roles grant to the user.  This list
 is intended to be descriptive and not directly indicating the effective grants
 applied to the user.  Typical uses of this function are to populate lists of
 Permission Role Grants for the purposes of managing user access.</p><h2 id="list_perm_grants/2-parameters" class="section-heading">
-  <a href="#list_perm_grants/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">parameters</p>
+  <a href="#list_perm_grants/2-parameters">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Parameters
   </a>
-  Parameters
 </h2>
 <ul><li><p><code class="inline">selector</code> - this value is a struct which determines the specific
 implementation of this function to call and which contains the keys/values
@@ -444,10 +442,10 @@ actually deleted this tuple will take the form <code class="inline">{:ok, :delet
 grant was not found for the user context identified by the <code class="inline">selector</code> then the
 <code class="inline">{:ok, :not_found}</code> tuple will be returned.  Any other outcome is an error
 resulting in an error tuple being returned.</p><h2 id="revoke_perm_role/2-parameters" class="section-heading">
-  <a href="#revoke_perm_role/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">parameters</p>
+  <a href="#revoke_perm_role/2-parameters">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Parameters
   </a>
-  Parameters
 </h2>
 <ul><li><p><code class="inline">selector</code> - this value is a struct which determines the specific
 implementation of this function to call and which contains the keys/values
@@ -477,7 +475,7 @@ you are revoking from the user context identified by the <code class="inline">se
 
         <p class="built-using">
           Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.29.4) for the
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.30.6) for the
 
             <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 

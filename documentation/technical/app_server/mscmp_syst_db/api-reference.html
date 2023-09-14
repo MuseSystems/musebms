@@ -4,20 +4,20 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.29.4">
+    <meta name="generator" content="ExDoc v0.30.6">
     <meta name="project" content="mscmp_syst_db v0.1.0">
 
     <title>API Reference — mscmp_syst_db v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-HHVY3JYD.css" />
+    <link rel="stylesheet" href="dist/html-elixir-M3TQBNKO.css" />
 
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-XWGFFSCD.js"></script>
-    <script src="dist/sidebar_items-FA845B90.js"></script>
+    <script src="dist/handlebars.templates-KDPBTEPL.js"></script>
+    <script src="dist/sidebar_items-0BBD5E6C.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/html-JDI3AVDD.js"></script>
+    <script async src="dist/html-CP2A7WXZ.js"></script>
 
 
   </head>
@@ -82,7 +82,6 @@ mscmp_syst_db
     </ul>
   </div>
 
-  <div class="gradient"></div>
   <ul id="full-list"></ul>
 </section>
 
@@ -105,10 +104,10 @@ mscmp_syst_db
 
   <section class="details-list">
     <h2 id="modules" class="section-heading">
-  <a href="#modules" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">modules</p>
+  <a href="#modules">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Modules
   </a>
-  Modules
 </h2>
 
     <div class="summary">
@@ -119,7 +118,7 @@ mscmp_syst_db
   </div>
 
     <div class="summary-synopsis"><h1>MscmpSystDb - Database Migrations, Connectivity, and Querying</h1><p>A database management Component for developing and managing database-per-tenant
-oriented systems.  To achieve this we wrap and extend the popular <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.html"><code class="inline">Ecto</code></a> and
+oriented systems.  To achieve this we wrap and extend the popular <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.html"><code class="inline">Ecto</code></a> and
 <code class="inline">EctoSql</code> libraries with a specialized templated (<a href="https://hexdocs.pm/eex/EEx.html"><code class="inline">EEx</code></a>) migrations system and add
 additional, opinionated abstractions encapsulating the tenant model as it
 relates to development, data access, and runtime concerns.</p></div>
@@ -235,6 +234,54 @@ range types.</p></div>
     <div class="summary-synopsis"><p>Defines public types for use with the MscmpSystDb module.</p></div>
 
 </div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="MscmpSystDb.Types.BoundsCompareResult.html" translate="no">MscmpSystDb.Types.BoundsCompareResult</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>The comparison operators for both the lower and upper bounds of a range type.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="MscmpSystDb.Types.ContextState.html" translate="no">MscmpSystDb.Types.ContextState</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>A struct for reporting the runtime state of Datastore Contexts.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="MscmpSystDb.Types.DatastoreContext.html" translate="no">MscmpSystDb.Types.DatastoreContext</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>A struct defining an application level security context which maps to a
+specific database role.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="MscmpSystDb.Types.DatastoreOptions.html" translate="no">MscmpSystDb.Types.DatastoreOptions</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>A struct defining the connection parameters to use to connect to a Datastore
+backing database.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="MscmpSystDb.Types.DbServer.html" translate="no">MscmpSystDb.Types.DbServer</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Provides the definition of a database server which can back application
+instances.</p></div>
+
+</div>
 
     </div>
   </section>
@@ -242,10 +289,10 @@ range types.</p></div>
 
   <section class="details-list">
     <h2 id="mix-tasks" class="section-heading">
-  <a href="#mix-tasks" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">mix-tasks</p>
+  <a href="#mix-tasks">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Mix Tasks
   </a>
-  Mix Tasks
 </h2>
 
     <div class="summary">
@@ -288,7 +335,7 @@ plans.</p></div>
 
         <p class="built-using">
           Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.29.4) for the
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.30.6) for the
 
             <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 

@@ -4,20 +4,20 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.29.4">
+    <meta name="generator" content="ExDoc v0.30.6">
     <meta name="project" content="mscmp_syst_perms v0.1.0">
 
     <title>MscmpSystPerms — mscmp_syst_perms v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-HHVY3JYD.css" />
+    <link rel="stylesheet" href="dist/html-elixir-M3TQBNKO.css" />
 
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-XWGFFSCD.js"></script>
-    <script src="dist/sidebar_items-35D82283.js"></script>
+    <script src="dist/handlebars.templates-KDPBTEPL.js"></script>
+    <script src="dist/sidebar_items-B2377805.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/html-JDI3AVDD.js"></script>
+    <script async src="dist/html-CP2A7WXZ.js"></script>
 
 
   </head>
@@ -80,7 +80,6 @@ mscmp_syst_perms
     </ul>
   </div>
 
-  <div class="gradient"></div>
   <ul id="full-list"></ul>
 </section>
 
@@ -109,10 +108,10 @@ that higher level components can introduce the concept of user and
 establish contexts of applicability while keeping a cohesion in permissioning
 capability.  To this end this component provides the core concepts for use in
 any permissioning system using this ecosystem of components.</p><h2 id="module-concepts" class="section-heading">
-  <a href="#module-concepts" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">concepts</p>
+  <a href="#module-concepts">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Concepts
   </a>
-  Concepts
 </h2>
 <p>Below are the concepts used in formulating the functional design of this
 component.  While these concepts are generally applicable it's worth keeping
@@ -207,10 +206,10 @@ Grant records be created for that Permission Role.  User defined Permission Role
 parents allow editing Scope assignments to Rights and the addition and removal
 of Permission Role Grant records.</p><p>Naturally, only a single Permission Role Grant record for exist for any
 combination of Permission Role and Permission records.</p><h2 id="module-a-basis-for-permissions" class="section-heading">
-  <a href="#module-a-basis-for-permissions" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">a-basis-for-permissions</p>
+  <a href="#module-a-basis-for-permissions">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    A Basis for Permissions
   </a>
-  A Basis for Permissions
 </h2>
 <p>As has been stated before, this component provides the basic concepts of what it
 means to have Permissions in an application and the general aspects of
@@ -238,9 +237,8 @@ they expect to be able to do).</p>
     <h1 class="section-heading">
       <a class="hover-link" href="#summary">
         <i class="ri-link-m" aria-hidden="true"></i>
-        <span class="sr-only">Link to this section</span>
+        Summary
       </a>
-      Summary
     </h1>
 <div class="summary-permissions summary">
   <h2>
@@ -437,9 +435,8 @@ and Internal Name.</p></div>
     <h1 class="section-heading">
       <a class="hover-link" href="#permissions">
         <i class="ri-link-m" aria-hidden="true"></i>
-        <span class="sr-only">Link to this section</span>
-      </a>
 Permissions
+      </a>
     </h1>
     <div class="permissions-list">
 <section class="detail" id="get_effective_perm_grants/2">
@@ -472,10 +469,10 @@ identified by the <code class="inline">selector</code> as calculated from all ef
 revocations.</p><p>This function answers the question, &quot;what rights does this user really have?&quot;</p><p>On successful execution, a success tuple is returned including a map of the
 selected Permissions and the Rights/Scopes granted.  Errors will result in the
 return of an error tuple.</p><h2 id="get_effective_perm_grants/2-parameters" class="section-heading">
-  <a href="#get_effective_perm_grants/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">parameters</p>
+  <a href="#get_effective_perm_grants/2-parameters">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Parameters
   </a>
-  Parameters
 </h2>
 <ul><li><p><code class="inline">selector</code> - this value is a struct which determines the specific
 implementation of this function to call and which contains the keys/values
@@ -518,10 +515,10 @@ specific and documented for each individual implementation.</li></ul></li></ul>
 
 <p>Grants a Permission Role to the given selector.</p><p>On successful execution of the grant, the function will return a simple <code class="inline">:ok</code>.
 On error, an error tuple is returned.</p><h2 id="grant_perm_role/2-parameters" class="section-heading">
-  <a href="#grant_perm_role/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">parameters</p>
+  <a href="#grant_perm_role/2-parameters">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Parameters
   </a>
-  Parameters
 </h2>
 <ul><li><p><code class="inline">selector</code> - this value is a struct which determines the specific
 implementation of this function to call and which contains the keys/values
@@ -561,10 +558,10 @@ users on a Permission by Permission basis.  This function is intended to list
 Permission denials for a user context so that the denials may be managed.</p><p>Some user contexts may not offer explicit Permission denials.  In these cases
 this function should simply return a success tuple containing an empty list as
 the value.</p><h2 id="list_perm_denials/2-parameters" class="section-heading">
-  <a href="#list_perm_denials/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">parameters</p>
+  <a href="#list_perm_denials/2-parameters">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Parameters
   </a>
-  Parameters
 </h2>
 <ul><li><p><code class="inline">selector</code> - this value is a struct which determines the specific
 implementation of this function to call and which contains the keys/values
@@ -608,10 +605,10 @@ and what Permissions/Rights/Scopes those roles grant to the user.  This list
 is intended to be descriptive and not directly indicating the effective grants
 applied to the user.  Typical uses of this function are to populate lists of
 Permission Role Grants for the purposes of managing user access.</p><h2 id="list_perm_grants/2-parameters" class="section-heading">
-  <a href="#list_perm_grants/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">parameters</p>
+  <a href="#list_perm_grants/2-parameters">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Parameters
   </a>
-  Parameters
 </h2>
 <ul><li><p><code class="inline">selector</code> - this value is a struct which determines the specific
 implementation of this function to call and which contains the keys/values
@@ -654,10 +651,10 @@ actually deleted this tuple will take the form <code class="inline">{:ok, :delet
 grant was not found for the user context identified by the <code class="inline">selector</code> then the
 <code class="inline">{:ok, :not_found}</code> tuple will be returned.  Any other outcome is an error
 resulting in an error tuple being returned.</p><h2 id="revoke_perm_role/2-parameters" class="section-heading">
-  <a href="#revoke_perm_role/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">parameters</p>
+  <a href="#revoke_perm_role/2-parameters">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Parameters
   </a>
-  Parameters
 </h2>
 <ul><li><p><code class="inline">selector</code> - this value is a struct which determines the specific
 implementation of this function to call and which contains the keys/values
@@ -674,9 +671,8 @@ you are revoking from the user context identified by the <code class="inline">se
     <h1 class="section-heading">
       <a class="hover-link" href="#data-management">
         <i class="ri-link-m" aria-hidden="true"></i>
-        <span class="sr-only">Link to this section</span>
-      </a>
 Data Management
+      </a>
     </h1>
     <div class="data-management-list">
 <section class="detail" id="compare_scopes/2">
@@ -741,10 +737,10 @@ parameter.</p></li></ul>
 <p>Creates a new user defined Permission record.</p><p>Upon creation this function returns a success tuple in the form
 <code class="inline">{:ok, %Msdata.SystPerms{}}</code> where the struct is the data of the newly created
 record.  On error an error tuple is returned (<code class="inline">{:error, %MscmpSystError{}}</code>).</p><h2 id="create_perm/1-parameters" class="section-heading">
-  <a href="#create_perm/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">parameters</p>
+  <a href="#create_perm/1-parameters">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Parameters
   </a>
-  Parameters
 </h2>
 <ul><li><code class="inline">perm_params</code> - a map of values which describe the Permission record to
 create.  For details see <a href="MscmpSystPerms.Types.html#t:perm_params/0"><code class="inline">MscmpSystPerms.Types.perm_params/0</code></a>.</li></ul>
@@ -775,10 +771,10 @@ create.  For details see <a href="MscmpSystPerms.Types.html#t:perm_params/0"><co
 form <code class="inline">{:ok, %Msdata.SystPermRoles{}}</code> where the struct is the data of the
 created record.  On error an error tuple is returned
 (<code class="inline">{:error, %MscmpSystError{}}</code>).</p><h2 id="create_perm_role/1-parameters" class="section-heading">
-  <a href="#create_perm_role/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">parameters</p>
+  <a href="#create_perm_role/1-parameters">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Parameters
   </a>
-  Parameters
 </h2>
 <ul><li><code class="inline">perm_role_params</code> - a map describing the new Permission Role record's
 values.  For more about see <a href="MscmpSystPerms.Types.html#t:perm_role_params/0"><code class="inline">MscmpSystPerms.Types.perm_role_params/0</code></a>.</li></ul>
@@ -810,10 +806,10 @@ form <code class="inline">{:ok, %Msdata.SystPermRoleGrants{}}</code> where the s
 created record.  On error an error tuple is returned
 (<code class="inline">{:error, %MscmpSystError{}}</code>).</p><p>New Permission Role Grant records can only be created for parent Permission
 Role records that are not set as being system defined.</p><h2 id="create_perm_role_grant/1-parameters" class="section-heading">
-  <a href="#create_perm_role_grant/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">parameters</p>
+  <a href="#create_perm_role_grant/1-parameters">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Parameters
   </a>
-  Parameters
 </h2>
 <ul><li><code class="inline">perm_role_grant_params</code> - a map describing the new Permission Role Grant
 record's values.  For more about see
@@ -845,10 +841,10 @@ record's values.  For more about see
 the form <code class="inline">{:ok, :deleted}</code>.  If the requested record is not found a success
 tuple in the form <code class="inline">{:ok, :not_found}</code> is returned.  On error an error tuple is
 returned (<code class="inline">{:error, %MscmpSystError{}}</code>).</p><h2 id="delete_perm/1-parameters" class="section-heading">
-  <a href="#delete_perm/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">parameters</p>
+  <a href="#delete_perm/1-parameters">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Parameters
   </a>
-  Parameters
 </h2>
 <ul><li><code class="inline">perm</code> - either a populated <a href="Msdata.SystPerms.html"><code class="inline">Msdata.SystPerms</code></a> struct or the record ID
 value of the Permission record to delete.</li></ul>
@@ -879,10 +875,10 @@ value of the Permission record to delete.</li></ul>
 the form <code class="inline">{:ok, :deleted}</code>.  If the requested record is not found a success
 tuple in the form <code class="inline">{:ok, :not_found}</code> is returned.  On error an error tuple is
 returned (<code class="inline">{:error, %MscmpSystError{}}</code>).</p><p>System defined Permission Role records may not be deleted using this API.</p><h2 id="delete_perm_role/1-parameters" class="section-heading">
-  <a href="#delete_perm_role/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">parameters</p>
+  <a href="#delete_perm_role/1-parameters">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Parameters
   </a>
-  Parameters
 </h2>
 <ul><li><code class="inline">perm_role</code> - either the record ID value of the Permission Role record to
 delete or a populated <a href="Msdata.SystPermRoles.html"><code class="inline">Msdata.SystPermRoles</code></a> struct representing the
@@ -918,10 +914,10 @@ the form <code class="inline">{:ok, :deleted}</code>.  If the requested record i
 tuple in the form <code class="inline">{:ok, :not_found}</code> is returned.  On error an error tuple is
 returned (<code class="inline">{:error, %MscmpSystError{}}</code>).</p><p>Permission Role Grant records belonging to System defined Permission Roles may
 not be deleted using this API.</p><h2 id="delete_perm_role_grant/1-parameters" class="section-heading">
-  <a href="#delete_perm_role_grant/1-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">parameters</p>
+  <a href="#delete_perm_role_grant/1-parameters">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Parameters
   </a>
-  Parameters
 </h2>
 <ul><li><code class="inline">perm_role_grant</code> - either the record ID value of the Permission Role
 Grant record to delete or a populated <a href="Msdata.SystPermRoleGrants.html"><code class="inline">Msdata.SystPermRoleGrants</code></a> struct
@@ -955,23 +951,23 @@ representing the Permission Role Grant record.</li></ul>
 and Internal Name.</p><p>The function will either return the record ID of the requested Permission Role
 or <code class="inline">nil</code> of that role was not found.  If an error occurs an error tuple is
 returned.</p><h2 id="get_perm_role_id_by_name/2-parameters" class="section-heading">
-  <a href="#get_perm_role_id_by_name/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">parameters</p>
+  <a href="#get_perm_role_id_by_name/2-parameters">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Parameters
   </a>
-  Parameters
 </h2>
 <ul><li><p><code class="inline">perm_func_type_name</code> - the Internal Name of the Permission Functional Type
 to which the search should be restricted.  While the Permission Role name
 itself is unique, specifying the Permission Functional Type serves as a check
 that request context is correct.</p></li><li><p><code class="inline">perm_role_name</code> - the Internal Name value of the Permission Role to search
 for.</p></li></ul><h2 id="get_perm_role_id_by_name/2-examples" class="section-heading">
-  <a href="#get_perm_role_id_by_name/2-examples" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">examples</p>
+  <a href="#get_perm_role_id_by_name/2-examples">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Examples
   </a>
-  Examples
 </h2>
 <p>Retrieve the record ID of a Permission Role record.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="c">_perm_role_id</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystPerms</span><span class="o">.</span><span class="n">get_perm_role_id_by_name</span><span class="p" data-group-id="5666651205-1">(</span><span class="s">&quot;func_type_1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;perm_role_1&quot;</span><span class="p" data-group-id="5666651205-1">)</span></code></pre><p>Searching for a non-existent record returns <code class="inline">nil</code>.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystPerms</span><span class="o">.</span><span class="n">get_perm_role_id_by_name</span><span class="p" data-group-id="8822615713-1">(</span><span class="s">&quot;func_type_1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;nonexistent_role&quot;</span><span class="p" data-group-id="8822615713-1">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystPerms</span><span class="o">.</span><span class="n">get_perm_role_id_by_name</span><span class="p" data-group-id="4606165780-1">(</span><span class="s">&quot;func_type_1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;perm_role_1&quot;</span><span class="p" data-group-id="4606165780-1">)</span></code></pre><p>Searching for a non-existent record returns <code class="inline">nil</code>.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystPerms</span><span class="o">.</span><span class="n">get_perm_role_id_by_name</span><span class="p" data-group-id="1637597862-1">(</span><span class="s">&quot;func_type_1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;nonexistent_role&quot;</span><span class="p" data-group-id="1637597862-1">)</span><span class="w">
 </span><span class="no">nil</span></code></pre>
   </section>
 </section>
@@ -1003,10 +999,10 @@ for.</p></li></ul><h2 id="get_perm_role_id_by_name/2-examples" class="section-he
 record.  On error an error tuple is returned (<code class="inline">{:error, %MscmpSystError{}}</code>).</p><p>System defined Permission records only allow the user interface display fields
 to be updated (<code class="inline">display_name</code>, <code class="inline">user_description</code>).  User defined permissions
 allow a broader range of changes.</p><h2 id="update_perm/2-parameters" class="section-heading">
-  <a href="#update_perm/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">parameters</p>
+  <a href="#update_perm/2-parameters">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Parameters
   </a>
-  Parameters
 </h2>
 <ul><li><p><code class="inline">perm</code> - either a fully populated <a href="Msdata.SystPerms.html"><code class="inline">Msdata.SystPerms</code></a> struct representing
 the before-update state of the Permission record or the record ID of the
@@ -1044,10 +1040,10 @@ facing <code class="inline">display_name</code> and <code class="inline">user_de
 updated Permission Functional Type record (<code class="inline">{:ok, &lt;record&gt;}</code>).  On failure
 an error tuple is returned indicating the reason for failure
 (<code class="inline">{:error, reason}</code>).</p><h2 id="update_perm_functional_type/2-parameters" class="section-heading">
-  <a href="#update_perm_functional_type/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">parameters</p>
+  <a href="#update_perm_functional_type/2-parameters">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Parameters
   </a>
-  Parameters
 </h2>
 <ul><li><p><code class="inline">perm_functional_type</code> - a required value which is either the populated
 <a href="Msdata.SystPermFunctionalTypes.html"><code class="inline">Msdata.SystPermFunctionalTypes</code></a> struct or ID value of the record to be
@@ -1084,10 +1080,10 @@ be made to the database.  For details on which fields may be maintained see
 record.  On error an error tuple is returned (<code class="inline">{:error, %MscmpSystError{}}</code>).</p><p>System defined Permission Role records only allow the user interface display
 fields to be updated (<code class="inline">display_name</code>, <code class="inline">user_description</code>).  User defined
 Permission Roles allow a broader range of changes.</p><h2 id="update_perm_role/2-parameters" class="section-heading">
-  <a href="#update_perm_role/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">parameters</p>
+  <a href="#update_perm_role/2-parameters">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Parameters
   </a>
-  Parameters
 </h2>
 <ul><li><p><code class="inline">perm_role</code> - either the record ID of the Permission Role record to update
 or a populated <a href="Msdata.SystPermRoles.html"><code class="inline">Msdata.SystPermRoles</code></a> struct representing the pre-update
@@ -1123,10 +1119,10 @@ values.  For more about see <a href="MscmpSystPerms.Types.html#t:perm_role_param
 updated record.  On error an error tuple is returned
 (<code class="inline">{:error, %MscmpSystError{}}</code>).</p><p>Permission Role Grant records which are children of system defined Permission
 Roles may not be updated using this API.</p><h2 id="update_perm_role_grant/2-parameters" class="section-heading">
-  <a href="#update_perm_role_grant/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">parameters</p>
+  <a href="#update_perm_role_grant/2-parameters">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Parameters
   </a>
-  Parameters
 </h2>
 <ul><li><p><code class="inline">perm_role_grant</code> - either the record ID of the Permission Role Grant
 record to update or a populated <a href="Msdata.SystPermRoleGrants.html"><code class="inline">Msdata.SystPermRoleGrants</code></a> struct
@@ -1156,7 +1152,7 @@ record values to update.  For more about see
 
         <p class="built-using">
           Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.29.4) for the
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.30.6) for the
 
             <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 

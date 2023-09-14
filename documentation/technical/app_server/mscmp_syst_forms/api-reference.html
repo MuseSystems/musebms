@@ -4,20 +4,20 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.29.4">
+    <meta name="generator" content="ExDoc v0.30.6">
     <meta name="project" content="mscmp_syst_forms v0.1.0">
 
     <title>API Reference — mscmp_syst_forms v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-HHVY3JYD.css" />
+    <link rel="stylesheet" href="dist/html-elixir-M3TQBNKO.css" />
 
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-XWGFFSCD.js"></script>
-    <script src="dist/sidebar_items-A6868B84.js"></script>
+    <script src="dist/handlebars.templates-KDPBTEPL.js"></script>
+    <script src="dist/sidebar_items-79A36FF1.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/html-JDI3AVDD.js"></script>
+    <script async src="dist/html-CP2A7WXZ.js"></script>
 
 
   </head>
@@ -80,7 +80,6 @@ mscmp_syst_forms
     </ul>
   </div>
 
-  <div class="gradient"></div>
   <ul id="full-list"></ul>
 </section>
 
@@ -103,10 +102,10 @@ mscmp_syst_forms
 
   <section class="details-list">
     <h2 id="modules" class="section-heading">
-  <a href="#modules" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">modules</p>
+  <a href="#modules">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Modules
   </a>
-  Modules
 </h2>
 
     <div class="summary">
@@ -126,6 +125,9 @@ application user interface forms in support of business systems development.</p>
 
   </div>
 
+    <div class="summary-synopsis"><p>Defines the data types, formats, and structures used by <code class="inline">MscmpSysForms</code>
+module.</p></div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
@@ -133,12 +135,27 @@ application user interface forms in support of business systems development.</p>
 
   </div>
 
-    <div class="summary-synopsis"><p>An essential data type returned by the system using the
-<a href="MscmpSystForms.html#get_render_configs/5"><code class="inline">MscmpSystForms.get_render_configs/5</code></a> function.  That function returns
-a full form aggregate render configuration which is a combination of the
-developer created <a href="MscmpSystForms.Types.FormConfig.html#t:t/0"><code class="inline">MscmpSystForms.Types.FormConfig.t/0</code></a> values and various
-values determined at runtime such as the current form state,  active
-processing overrides, and current user permissions.</p></div>
+    <div class="summary-synopsis"><p>Defines the rendering configurations used by components at runtime.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="MscmpSystForms.Types.ComponentDisplayModes.html" translate="no">MscmpSystForms.Types.ComponentDisplayModes</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>A struct defining the different kinds of display mode data which can be
+communicated to a user interface component.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="MscmpSystForms.Types.ComponentInfo.html" translate="no">MscmpSystForms.Types.ComponentInfo</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>This struct identifies the specific returned textual information describing
+the component and configured in the Form Configurations.</p></div>
 
 </div>
 <div class="summary-row">
@@ -193,7 +210,7 @@ which may inherit certain properties such as permissions.</p></div>
 
         <p class="built-using">
           Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.29.4) for the
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.30.6) for the
 
             <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 

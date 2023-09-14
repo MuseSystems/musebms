@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.30.6">
+    <meta name="project" content="mscmp_syst_db v0.1.0">
+
+    <title>MscmpSystDb.Types.DbServer — mscmp_syst_db v0.1.0</title>
+    <link rel="stylesheet" href="dist/html-elixir-M3TQBNKO.css" />
+
+
+    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
+    <script src="dist/handlebars.templates-KDPBTEPL.js"></script>
+    <script src="dist/sidebar_items-0BBD5E6C.js"></script>
+
+      <script src="docs_config.js"></script>
+
+    <script async src="dist/html-CP2A7WXZ.js"></script>
+
+
+  </head>
+  <body data-type="modules" class="page-module">
+    <script>
+
+      try {
+        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
+
+        if (settings.theme === 'dark' ||
+           ((settings.theme === 'system' || settings.theme == null) &&
+             window.matchMedia('(prefers-color-scheme: dark)').matches)
+           ) {
+          document.body.classList.add('dark')
+        }
+      } catch (error) { }
+    </script>
+
+<div class="main">
+
+<button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<section class="sidebar">
+  <form class="sidebar-search" action="search.html">
+    <button type="submit" class="search-button" aria-label="Submit Search">
+      <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
+    </button>
+    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
+      <i class="ri-close-line ri-lg" aria-hidden="true" title="Cancel search"></i>
+    </button>
+    <label class="search-label">
+      <p class="sr-only">Search</p>
+      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+    </label>
+  </form>
+
+  <div class="autocomplete">
+    <div class="autocomplete-results">
+    </div>
+  </div>
+
+  <div class="sidebar-header">
+
+    <div class="sidebar-projectDetails">
+      <a href="MscmpSystDb.html" class="sidebar-projectName" translate="no">
+mscmp_syst_db
+      </a>
+      <div class="sidebar-projectVersion" translate="no">
+        v0.1.0
+      </div>
+    </div>
+    <ul class="sidebar-listNav">
+      <li><a id="extras-list-link" href="#full-list">Pages</a></li>
+
+        <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+
+
+        <li><a id="tasks-list-link" href="#full-list"><span translate="no">Mix</span> Tasks</a></li>
+
+    </ul>
+  </div>
+
+  <ul id="full-list"></ul>
+</section>
+
+<section class="content">
+  <output role="status" id="toast"></output>
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+<h1>
+<button class="icon-action display-settings">
+  <i class="ri-settings-3-line"></i>
+  <span class="sr-only">Settings</span>
+</button>
+
+
+  <span translate="no">MscmpSystDb.Types.DbServer</span> 
+  <small class="app-vsn" translate="no">(mscmp_syst_db v0.1.0)</small>
+
+</h1>
+
+
+  <section id="moduledoc">
+<p>Provides the definition of a database server which can back application
+instances.</p><p>The data in the struct includes fields which uniquely identifies the server,
+provides information for where on the network the server can be found, and
+connection related parameters.  Also, the full administrative credentials are
+included.</p>
+  </section>
+
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        Summary
+      </a>
+    </h1>
+<div class="summary-types summary">
+  <h2>
+    <a href="#types">Types</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:t/0" translate="no">t()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Provides the definition of a database server which can back application
+instances.</p></div>
+
+    </div>
+
+</div>
+
+  </section>
+
+
+  <section id="types" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#types">
+        <i class="ri-link-m" aria-hidden="true"></i>
+Types
+      </a>
+    </h1>
+    <div class="types-list">
+<section class="detail" id="t:t/0">
+
+  <div class="detail-header">
+    <a href="#t:t/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">t()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> t() :: %MscmpSystDb.Types.DbServer{
+  db_host: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil,
+  db_max_instances: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>() | nil,
+  db_port: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>() | nil,
+  db_show_sensitive: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>() | nil,
+  dbadmin_password: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil,
+  dbadmin_pool_size: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>() | nil,
+  server_name: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil,
+  server_pools: [<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()] | [] | nil,
+  server_salt: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil,
+  start_server_instances: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>() | nil
+}</pre>
+
+      </div>
+
+<p>Provides the definition of a database server which can back application
+instances.</p><h2 id="t:t/0-attributes" class="section-heading">
+  <a href="#t:t/0-attributes">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Attributes
+  </a>
+</h2>
+<ul><li><p><code class="inline">:server_name</code> - Provides a unique identifier for a database server
+instance.</p></li><li><p><code class="inline">:start_server_instances</code> - If true, indicates that databases on the
+server can be started and made available as application Datastores.</p></li><li><p><code class="inline">:server_pools</code> - The server pools in which the database server
+participates.</p></li><li><p><code class="inline">:db_host</code> - The hostname or IP address of the database server on the
+network.</p></li><li><p><code class="inline">:db_port</code> - The TCP port on which the database server is listening for
+connections.</p></li><li><p><code class="inline">:db_show_sensitive</code> - If true, various logging events may show unredacted
+&quot;sensitive&quot; database connectivity information.  Note that even when false,
+the application still log sensitive application data.</p></li><li><p><code class="inline">:db_max_instances</code> - The total number of databases allowed to be
+established for the db_server instance.</p></li><li><p><code class="inline">:server_salt</code> - For certain cryptographic operations, such as password
+derivation, allows for the assignment of specific salting value for that is
+specific to a given database server.  This value must be at least 32 bytes
+long and should be a random string.</p></li><li><p><code class="inline">:dbadmin_password</code> - The ms_syst_privileged role password for privileged
+operations such as creating a new database/Datastore or new database roles
+on the database server instance.</p></li><li><p><code class="inline">:dbadmin_pool_size</code> - The pool size to use for creating connections for
+privileged operations using the ms_syst_privileged role.</p></li></ul><p>See <a href="MscmpSystDb.Types.DbServer.html#content"><code class="inline">MscmpSystDb.Types.DbServer</code></a> for more.</p>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+      <footer class="footer">
+        <p>
+
+          <span class="line">
+            <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+              Search HexDocs
+            </button>
+
+              <a href="mscmp_syst_db.epub" title="ePub version">
+                Download ePub version
+              </a>
+
+          </span>
+        </p>
+
+        <p class="built-using">
+          Built using
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.30.6) for the
+
+            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+        </p>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+
+
+  </body>
+</html>

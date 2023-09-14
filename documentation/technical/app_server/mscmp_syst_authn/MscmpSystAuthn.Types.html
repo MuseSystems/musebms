@@ -4,20 +4,20 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.29.4">
+    <meta name="generator" content="ExDoc v0.30.6">
     <meta name="project" content="mscmp_syst_authn v0.1.0">
 
     <title>MscmpSystAuthn.Types — mscmp_syst_authn v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-HHVY3JYD.css" />
+    <link rel="stylesheet" href="dist/html-elixir-M3TQBNKO.css" />
 
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-XWGFFSCD.js"></script>
-    <script src="dist/sidebar_items-F1896EA0.js"></script>
+    <script src="dist/handlebars.templates-KDPBTEPL.js"></script>
+    <script src="dist/sidebar_items-7CB1FAEB.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/html-JDI3AVDD.js"></script>
+    <script async src="dist/html-CP2A7WXZ.js"></script>
 
 
   </head>
@@ -80,7 +80,6 @@ mscmp_syst_authn
     </ul>
   </div>
 
-  <div class="gradient"></div>
   <ul id="full-list"></ul>
 </section>
 
@@ -111,9 +110,8 @@ mscmp_syst_authn
     <h1 class="section-heading">
       <a class="hover-link" href="#summary">
         <i class="ri-link-m" aria-hidden="true"></i>
-        <span class="sr-only">Link to this section</span>
+        Summary
       </a>
-      Summary
     </h1>
 <div class="summary-types summary">
   <h2>
@@ -216,17 +214,6 @@ behavior.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:applied_network_rule/0" translate="no">applied_network_rule()</a>
-
-      </div>
-
-        <div class="summary-synopsis"><p>Represents the return value of functions which evaluate whether or not a
-specific originating host IP address is allowed to attempt an authentication.</p></div>
-
-    </div>
-
-    <div class="summary-row">
-      <div class="summary-signature">
         <a href="#t:authentication_extended_operations/0" translate="no">authentication_extended_operations()</a>
 
       </div>
@@ -249,32 +236,11 @@ flow.</p></div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:authentication_state/0" translate="no">authentication_state()</a>
-
-      </div>
-
-        <div class="summary-synopsis"><p>The return type describing the result of authentication attempts via the
-authentication functions.</p></div>
-
-    </div>
-
-    <div class="summary-row">
-      <div class="summary-signature">
         <a href="#t:authentication_status/0" translate="no">authentication_status()</a>
 
       </div>
 
         <div class="summary-synopsis"><p>The understood life-cycle states of the authentication process.</p></div>
-
-    </div>
-
-    <div class="summary-row">
-      <div class="summary-signature">
-        <a href="#t:authenticator_result/0" translate="no">authenticator_result()</a>
-
-      </div>
-
-        <div class="summary-synopsis"><p>The return type used when creating Authenticators via the API.</p></div>
 
     </div>
 
@@ -568,17 +534,6 @@ Network Rule records.</p></div>
 
     </div>
 
-    <div class="summary-row">
-      <div class="summary-signature">
-        <a href="#t:password_rules/0" translate="no">password_rules()</a>
-
-      </div>
-
-        <div class="summary-synopsis"><p>Defines a generic Password Rule record allowing Password Rules originating
-from different database sources a common representation.</p></div>
-
-    </div>
-
 </div>
 
   </section>
@@ -588,9 +543,8 @@ from different database sources a common representation.</p></div>
     <h1 class="section-heading">
       <a class="hover-link" href="#types">
         <i class="ri-link-m" aria-hidden="true"></i>
-        <span class="sr-only">Link to this section</span>
-      </a>
 Types
+      </a>
     </h1>
     <div class="types-list">
 <section class="detail" id="t:access_account_id/0">
@@ -609,7 +563,7 @@ Types
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@type</span> access_account_id() :: <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()</pre>
+          <pre translate="no"><span class="attribute">@type</span> access_account_id() :: <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()</pre>
 
       </div>
 
@@ -632,7 +586,7 @@ Types
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@type</span> access_account_instance_assoc_id() :: <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()</pre>
+          <pre translate="no"><span class="attribute">@type</span> access_account_instance_assoc_id() :: <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()</pre>
 
       </div>
 
@@ -672,10 +626,10 @@ values.</p>
 <p>Defines the expected shape and types of Access Account Instance Association
 Parameters.</p><p>These parameters are passed to the database Changeset functions for tasks such
 as record creation or updating.</p><h2 id="t:access_account_instance_assoc_params/0-attributes" class="section-heading">
-  <a href="#t:access_account_instance_assoc_params/0-attributes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">attributes</p>
+  <a href="#t:access_account_instance_assoc_params/0-attributes">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Attributes
   </a>
-  Attributes
 </h2>
 <ul><li><p><code class="inline">access_account_id</code> - the Access Account record ID which will be
 associated with the Instance.</p></li><li><p><code class="inline">access_account_name</code> - an alternate method of identifying an Access
@@ -749,10 +703,10 @@ then the Access Account holder has not specifically declined the request.</p></l
       </div>
 
 <p>Defines the shape and expected types of Access Account Changeset parameters.</p><h2 id="t:access_account_params/0-attributes" class="section-heading">
-  <a href="#t:access_account_params/0-attributes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">attributes</p>
+  <a href="#t:access_account_params/0-attributes">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Attributes
   </a>
-  Attributes
 </h2>
 <ul><li><p><code class="inline">internal_name</code> - a candidate key for the Access Account record. This
 value must be unique system wide.</p></li><li><p><code class="inline">external_name</code> - an externally/user visible name of the Access Account.
@@ -883,55 +837,6 @@ API Token Identities, the Account Identifier will likely be a pre-generated
 short string of random characters.</p>
   </section>
 </section>
-<section class="detail" id="t:applied_network_rule/0">
-
-  <div class="detail-header">
-    <a href="#t:applied_network_rule/0" class="detail-link" title="Link to this type">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature" translate="no">applied_network_rule()</h1>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <div class="specs">
-
-          <pre translate="no"><span class="attribute">@type</span> applied_network_rule() :: %{
-  precedence: <a href="#t:network_rule_precedence/0">network_rule_precedence</a>(),
-  network_rule_id: <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>() | nil,
-  functional_type: <a href="#t:network_rule_functional_type/0">network_rule_functional_type</a>()
-}</pre>
-
-      </div>
-
-<p>Represents the return value of functions which evaluate whether or not a
-specific originating host IP address is allowed to attempt an authentication.</p><p>When an authentication is attempted, a number of different rules and data
-sources may determine what kind of connection is allowed based on the host IP
-address from which the attempt appears to be originating and the destination
-Instance for which the authentication is being processed.  To normalize the
-return from the evaluation of these different network based evaluations we
-define a simplified <a href="#t:applied_network_rule/0"><code class="inline">applied_network_rule/0</code></a> value to represent the
-actionable data of the evaluation.</p><h2 id="t:applied_network_rule/0-attributes" class="section-heading">
-  <a href="#t:applied_network_rule/0-attributes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">attributes</p>
-  </a>
-  Attributes
-</h2>
-<ul><li><p><code class="inline">precedence</code> - this will indicate the precedence of the applied Network
-Rule.  This value can aid in identifying the origin of a given applied
-allowance or denial.</p></li><li><p><code class="inline">network_rule_id</code> - this is the record ID of the rule which was evaluated
-to govern the authentication attempt.  Which specific relation the ID refers
-to will depend on the specific precedence of the rule applied.  This value
-may be <code class="inline">nil</code> if the implied default Network Rule is applied since, by
-definition, this means no other explicitly defined Network Rule was found.</p></li><li><p><code class="inline">functional_type</code> - May be either <code class="inline">:allow</code> or <code class="inline">:deny</code>.  <code class="inline">:allow</code> means
-that the Network Rule evaluation allows the host IP address to attempt
-authentication.  <code class="inline">:deny</code> indicates that the host IP address may not attempt
-an authentication.</p></li></ul>
-  </section>
-</section>
 <section class="detail" id="t:authentication_extended_operations/0">
 
   <div class="detail-header">
@@ -1004,80 +909,6 @@ that may be required and then includes the
 to the authentication process.</p>
   </section>
 </section>
-<section class="detail" id="t:authentication_state/0">
-
-  <div class="detail-header">
-    <a href="#t:authentication_state/0" class="detail-link" title="Link to this type">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature" translate="no">authentication_state()</h1>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <div class="specs">
-
-          <pre translate="no"><span class="attribute">@type</span> authentication_state() :: %{
-  :status =&gt; <a href="#t:authentication_status/0">authentication_status</a>(),
-  :deadline =&gt; <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0">DateTime.t</a>(),
-  :access_account_id =&gt; <a href="#t:access_account_id/0">access_account_id</a>() | nil,
-  :instance_id =&gt; <a href="../../../../documentation/technical/app_server/mscmp_syst_instance/MscmpSystInstance.Types.html#t:instance_id/0">MscmpSystInstance.Types.instance_id</a>() | :bypass | nil,
-  :identity_type_id =&gt; <a href="#t:identity_type_id/0">identity_type_id</a>(),
-  :host_address =&gt; <a href="#t:host_address/0">host_address</a>(),
-  :applied_network_rule =&gt; <a href="#t:applied_network_rule/0">applied_network_rule</a>() | nil,
-  :pending_operations =&gt; [<a href="#t:authentication_operations/0">authentication_operations</a>()],
-  optional(:identifier) =&gt; <a href="#t:account_identifier/0">account_identifier</a>(),
-  optional(:plaintext_credential) =&gt; <a href="#t:credential/0">credential</a>(),
-  optional(:owning_owner_id) =&gt; <a href="../../../../documentation/technical/app_server/mscmp_syst_instance/MscmpSystInstance.Types.html#t:owner_id/0">MscmpSystInstance.Types.owner_id</a>() | nil,
-  optional(:identity_id) =&gt; <a href="#t:identity_id/0">identity_id</a>(),
-  optional(:identity) =&gt; <a href="Msdata.SystIdentities.html#t:t/0">Msdata.SystIdentities.t</a>(),
-  optional(:reset_reason) =&gt; <a href="#t:credential_reset_reason/0">credential_reset_reason</a>()
-}</pre>
-
-      </div>
-
-<p>The return type describing the result of authentication attempts via the
-authentication functions.</p><p>When a user attempts to validate an Access Account, the result is returned as
-a value of this type. This includes whether or not an authentication attempt
-was successful or rejected.</p><p>An result indicating that the status is pending may also be returned from an
-attempt if the authentication requires intervention to complete successfully.</p><h2 id="t:authentication_state/0-attributes" class="section-heading">
-  <a href="#t:authentication_state/0-attributes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">attributes</p>
-  </a>
-  Attributes
-</h2>
-<ul><li><p><code class="inline">status</code> - the result of the authentication attempt.</p></li><li><p><code class="inline">deadline</code> - the date/time by which the authentication attempt must be
-resolved by before being considered expired.  Since the authentication
-process may be interrupted and resumed, it requires that we establish some
-limit by which the process must be completed.  By default this value will be
-5 minutes after the time the authentication process starts.</p></li><li><p><code class="inline">access_account_id</code> - the Access Account record ID if the authentication
-attempt has successfully completed the identification operation.</p></li><li><p><code class="inline">instance_id</code> - the Instance ID that the Access Account holder is
-attempting to authenticate to.  For certain authentication types, this value
-may initially be <code class="inline">nil</code> for later resolution to a specific instance.  In some
-special cases, authentication may not be contextually bound to a specific
-Instance.  In this cases, the special value <code class="inline">:bypass</code> can be used it
-indicate that the Instance is not relevant for the authentication.</p></li><li><p><code class="inline">identity_type_id</code> - the record ID referencing the Identity Type used to
-identify the Access Account.</p></li><li><p><code class="inline">host_address</code> -  the apparent Host IP Address from which the
-authentication attempt originated.</p></li><li><p><code class="inline">applied_network_rule</code> - the Network Rule that was applied during the
-authentication attempt.  This value may be <code class="inline">nil</code> if the evaluation of the
-Network Rules has not yet made.</p></li><li><p><code class="inline">pending_operations</code> - the ordered list of remaining authentication
-operations which must complete successfully prior to the authentication
-being successfully completed.</p></li><li><p><code class="inline">identifier</code> - the user supplied account identifier used to identify the
-Access Account.</p></li><li><p><code class="inline">plaintext_credential</code> - the unencrypted, user supplied credential to
-test during the authentication process.  This value will be made <code class="inline">nil</code> as
-soon as it has been tested or is created <code class="inline">nil</code> for the Account Code
-Authenticator which isn't a true authentication method (it's just a lookup).</p></li><li><p><code class="inline">owning_owner_id</code> - an Owner record ID for the Owner which manages the
-authenticating Access Account in cases where it's an Owned Access Account.</p></li><li><p><code class="inline">identity_id</code> - the record ID of the Identity record located to identify
-the Access Account.</p></li><li><p><code class="inline">identity</code> - the Identity record data struct.  This should be the same
-record as that identified by the <code class="inline">identity_id</code> attribute</p></li><li><p><code class="inline">reset_reason</code> - in cases where a pending operation of
-<code class="inline">:require_credential_reset</code> is added to the authentication process, this
-value indicates the reason for the reset.  Available values are defined in
-<a href="#t:credential_reset_reason/0"><code class="inline">credential_reset_reason/0</code></a>.</p></li></ul>
-  </section>
-</section>
 <section class="detail" id="t:authentication_status/0">
 
   <div class="detail-header">
@@ -1109,7 +940,7 @@ value indicates the reason for the reset.  Available values are defined in
 
 <p>The understood life-cycle states of the authentication process.</p><p>Any authentication process will exist in one of the states defined by the
 list below.  The list is used to populate the <code class="inline">status</code> field of the
-<a href="#t:authentication_state/0"><code class="inline">authentication_state/0</code></a> type.</p><p>Note that while the authentication process may provide the caller information
+<code class="inline">t:authentication_state/0</code> type.</p><p>Note that while the authentication process may provide the caller information
 regarding the nature of any rejection, the developer should nonetheless make
 well considered judgements regarding what, if any, detail to disclose to the
 user attempting authentication.  More often than not no specificity for a
@@ -1134,65 +965,6 @@ attempt for undeclared reasons.  Examples of reasons that can prompt this
 authentication end state are a user providing a wrong password or no
 Instance to access being identified.</p></li><li><p><code class="inline">:authenticated</code> - the authentication process has finished successfully
 and the Access Account is now authenticated for the identified Instance.</p></li></ul>
-  </section>
-</section>
-<section class="detail" id="t:authenticator_result/0">
-
-  <div class="detail-header">
-    <a href="#t:authenticator_result/0" class="detail-link" title="Link to this type">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature" translate="no">authenticator_result()</h1>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <div class="specs">
-
-          <pre translate="no"><span class="attribute">@type</span> authenticator_result() :: %{
-  :access_account_id =&gt; <a href="#t:access_account_id/0">access_account_id</a>(),
-  optional(:account_identifier) =&gt; <a href="#t:account_identifier/0">account_identifier</a>(),
-  optional(:credential) =&gt; <a href="#t:credential/0">credential</a>(),
-  optional(:validation_identifier) =&gt; <a href="#t:account_identifier/0">account_identifier</a>() | nil,
-  optional(:validation_credential) =&gt; <a href="#t:credential_id/0">credential_id</a>() | nil
-}</pre>
-
-      </div>
-
-<p>The return type used when creating Authenticators via the API.</p><p>The included values and attributes will vary somewhat from Authenticator type
-to Authenticator type, but they will all follow this basic form.</p><h2 id="t:authenticator_result/0-attributes" class="section-heading">
-  <a href="#t:authenticator_result/0-attributes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">attributes</p>
-  </a>
-  Attributes
-</h2>
-<ul><li><p><code class="inline">access_account_id</code> - the Access Account record ID for which the
-Authenticator has been created.</p></li><li><p><code class="inline">account_identifier</code> - the Access Account Identifier for use in
-identifying the Access Account in the authentication process.  Depending on
-the Authenticator type, this could be a restatement of what the user
-provided, such as an Email address, or may be system generated such as the
-identifier for user with an API Token.</p></li><li><p><code class="inline">credential</code> - the plaintext Credential created for the Authenticator.
-This attribute is only returned in cases where the typical Authenticator
-creation flow includes the system randomly generating the Credential.  For
-example, an API Token Credential is automatically created by the system and
-the Credential must be communicated to the user once created.  Note that
-even in these cases the only time the Credential is available for disclosure
-to the user is immediately after the Authenticator creation via this value.
-Once the return result is discarded the Credential is unrecoverable.</p></li><li><p><code class="inline">validation_identifier</code> - when creating an Email/Password Authenticator,
-the default options mandate that validating the Email Identity is required.
-Assuming the default is not overridden, the system generated Identifier for
-the user to use to validate the Email Identity is provided via this
-attribute.  If validation is not required this attribute will not be present
-in the return value of the Authenticator creation call.</p></li><li><p><code class="inline">validation_credential</code> - the (usually) system generated Credential in
-plaintext which compliments the <code class="inline">validation_identifier</code> value.  This
-attribute is either included or excluded on the same terms as the
-<code class="inline">validation_identifier</code>.  Note that the return of this value after
-the creation of an Email/Password Authenticator is the only time that this
-value is available in plaintext; after this point the plaintext is not
-retrievable.</p></li></ul>
   </section>
 </section>
 <section class="detail" id="t:authenticator_types/0">
@@ -1353,7 +1125,7 @@ Credential reset related reasons defined in <a href="#t:credential_reset_reason/
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@type</span> credential_id() :: <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()</pre>
+          <pre translate="no"><span class="attribute">@type</span> credential_id() :: <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()</pre>
 
       </div>
 
@@ -1389,10 +1161,10 @@ Credential reset related reasons defined in <a href="#t:credential_reset_reason/
 
 <p>A type to facilitate data maintenance operations related to Credential
 records.</p><h2 id="t:credential_params/0-attributes" class="section-heading">
-  <a href="#t:credential_params/0-attributes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">attributes</p>
+  <a href="#t:credential_params/0-attributes">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Attributes
   </a>
-  Attributes
 </h2>
 <ul><li><p><code class="inline">access_account_id</code> - identifies the Access Account to which the
 Credential pertains as identified by its record ID.</p></li><li><p><code class="inline">access_account_name</code> - an alternative method of using the Access Account
@@ -1597,7 +1369,7 @@ functionality.</p></li></ul>
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@type</span> disallowed_host_id() :: <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()</pre>
+          <pre translate="no"><span class="attribute">@type</span> disallowed_host_id() :: <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()</pre>
 
       </div>
 
@@ -1632,10 +1404,10 @@ functionality.</p></li></ul>
 
 <p>Defines the available parameters for use in creating or updating Global
 Network Rule records.</p><h2 id="t:global_network_rule_params/0-attributes" class="section-heading">
-  <a href="#t:global_network_rule_params/0-attributes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">attributes</p>
+  <a href="#t:global_network_rule_params/0-attributes">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Attributes
   </a>
-  Attributes
 </h2>
 <ul><li><p><code class="inline">ordering</code> - the order in which the new record should apply relative to
 other Global Network Rule records.  lower <code class="inline">ordering</code> values take precedence
@@ -1699,7 +1471,7 @@ provided the <code class="inline">ip_host_range_lower</code> attribute must also
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@type</span> identity_id() :: <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()</pre>
+          <pre translate="no"><span class="attribute">@type</span> identity_id() :: <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()</pre>
 
       </div>
 
@@ -1738,10 +1510,10 @@ provided the <code class="inline">ip_host_range_lower</code> attribute must also
       </div>
 
 <p>Defines a map of attributes for use in Identity record Changeset processing.</p><h2 id="t:identity_params/0-attributes" class="section-heading">
-  <a href="#t:identity_params/0-attributes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">attributes</p>
+  <a href="#t:identity_params/0-attributes">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Attributes
   </a>
-  Attributes
 </h2>
 <ul><li><p><code class="inline">access_account_id</code> - the record ID of the Access Account for which the
 record is being defined.</p></li><li><p><code class="inline">access_account_name</code> - an alternative means of selecting the Access
@@ -1910,10 +1682,10 @@ value.</p>
 
 <p>Defines the available parameters for use in creating or updating Instance
 Network Rule records.</p><h2 id="t:instance_network_rule_params/0-attributes" class="section-heading">
-  <a href="#t:instance_network_rule_params/0-attributes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">attributes</p>
+  <a href="#t:instance_network_rule_params/0-attributes">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Attributes
   </a>
-  Attributes
 </h2>
 <ul><li><p><code class="inline">instance_id</code> - the value of this attribute identifies the Instance for
 which the Network Rule is being defined.  This value doesn't have to be set
@@ -2038,10 +1810,10 @@ allows any host to attempt authentication.</p></li></ul>
 
 <p>Defines the available parameters for use in creating or updating Owner
 Network Rule records.</p><h2 id="t:owner_network_rule_params/0-attributes" class="section-heading">
-  <a href="#t:owner_network_rule_params/0-attributes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">attributes</p>
+  <a href="#t:owner_network_rule_params/0-attributes">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Attributes
   </a>
-  Attributes
 </h2>
 <ul><li><p><code class="inline">owner_id</code> - the value of this attribute identifies the Owner for which
 the Network Rule is being defined.  This value doesn't have to be set
@@ -2109,10 +1881,10 @@ provided the <code class="inline">ip_host_range_lower</code> attribute must also
 rules are required to appear in the parameter submission.  All attributes not
 provided will take on a default value which assumes the specific rule has no
 effect.</p><h2 id="t:password_rule_params/0-attributes" class="section-heading">
-  <a href="#t:password_rule_params/0-attributes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">attributes</p>
+  <a href="#t:password_rule_params/0-attributes">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Attributes
   </a>
-  Attributes
 </h2>
 <ul><li><p><code class="inline">password_length</code> - A value of type <a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.IntegerRange.html#t:t/0"><code class="inline">MscmpSystDb.DbTypes.IntegerRange.t/0</code></a>
 describing the password length in terms of the number of characters.  The
@@ -2196,89 +1968,6 @@ recently used for this Access Account and another not recently used password
 must be selected.</p></li></ul>
   </section>
 </section>
-<section class="detail" id="t:password_rules/0">
-
-  <div class="detail-header">
-    <a href="#t:password_rules/0" class="detail-link" title="Link to this type">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature" translate="no">password_rules()</h1>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <div class="specs">
-
-          <pre translate="no"><span class="attribute">@type</span> password_rules() :: %{
-  optional(:access_account_id) =&gt; <a href="#t:access_account_id/0">access_account_id</a>() | nil,
-  optional(:owner_id) =&gt; <a href="../../../../documentation/technical/app_server/mscmp_syst_instance/MscmpSystInstance.Types.html#t:owner_id/0">MscmpSystInstance.Types.owner_id</a>() | nil,
-  optional(:password_length) =&gt; <a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.IntegerRange.html#t:t/0">MscmpSystDb.DbTypes.IntegerRange.t</a>(),
-  optional(:max_age) =&gt; <a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.Interval.html#t:t/0">MscmpSystDb.DbTypes.Interval.t</a>(),
-  optional(:require_upper_case) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>(),
-  optional(:require_lower_case) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>(),
-  optional(:require_numbers) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>(),
-  optional(:require_symbols) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>(),
-  optional(:disallow_recently_used) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>(),
-  optional(:disallow_compromised) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  optional(:require_mfa) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>(),
-  optional(:allowed_mfa_types) =&gt; [<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()]
-}</pre>
-
-      </div>
-
-<p>Defines a generic Password Rule record allowing Password Rules originating
-from different database sources a common representation.</p><p>Password Rules are defined in two different database tables,
-<a href="Msdata.SystGlobalPasswordRules.html"><code class="inline">Msdata.SystGlobalPasswordRules</code></a> and
-<a href="Msdata.SystOwnerPasswordRules.html"><code class="inline">Msdata.SystOwnerPasswordRules</code></a>.  This type defines a
-common representation of Password Rule data for those parts of the system that
-apply Password Rules after the applicable Password Rules have been resolved.</p><h2 id="t:password_rules/0-attributes" class="section-heading">
-  <a href="#t:password_rules/0-attributes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">attributes</p>
-  </a>
-  Attributes
-</h2>
-<ul><li><p><code class="inline">access_account_id</code> - the Access Account for which the effective Password
-Rules has been resolved.</p></li><li><p><code class="inline">owner_id</code> - the Owner record ID of the Owner which owns the Access
-Account.  The Access Account's Owner may have established Password Rules
-which would apply to the Access Account.  A value here does not mean that
-the Owner's rules necessarily are part of the resolved Password Rule, just
-that they would have been considered.</p></li><li><p><code class="inline">password_length</code> - the resolved value of type
-<a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.IntegerRange.html#t:t/0"><code class="inline">MscmpSystDb.DbTypes.IntegerRange.t/0</code></a> describing the password
-length in terms of the number of characters.  The lower bound defines the
-minimum number of characters a password may have and the upper bound is the
-most characters that can be added to password.</p></li><li><p><code class="inline">max_age</code> - the resolved value of type <a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.DbTypes.Interval.html#t:t/0"><code class="inline">MscmpSystDb.DbTypes.Interval.t/0</code></a>
-which, when added to the <code class="inline">last_updated</code> value of the Password Credential
-record, sets the expiration date of the password.  After the password's age
-has exceeded it's max age, the password must be reset prior to finalizing
-authentication. A zero interval value here means that password ages are not
-checked.  The zero interval is the default setting.</p></li><li><p><code class="inline">require_upper_case</code> - the resolved minimum number of upper case
-characters that a valid password must posses.  A setting of zero here
-disables the requirement.</p></li><li><p><code class="inline">require_lower_case</code> - the resolved minimum number of lower case
-characters that a valid password must posses.  A setting of zero here
-disables the requirement.</p></li><li><p><code class="inline">require_numbers</code> - the resolved minimum number of number characters that
-a valid password must posses.  A setting of zero here disables the
-requirement.</p></li><li><p><code class="inline">require_symbols</code> - the resolved minimum number of symbol characters that
-a valid password must posses.  A setting of zero here disables the
-requirement.</p></li><li><p><code class="inline">disallow_recently_used</code> - A positive integer representing the number of
-most recently used passwords to track and prohibit from re-use.  A zero
-setting for this attribute indicates that recently used passwords should not
-be tracked or prohibited.</p></li><li><p><code class="inline">disallow_compromised</code> - A boolean value which, if true, indicates that
-any new password requested by a user be first checked against the Disallowed
-Passwords list and, if found on the list, rejected for use.  When set true,
-the system will also check the password against the Disallowed Password list
-on authentication; if found on the list at authentication time, the user
-will be required to reset their password to something value not otherwise
-disallowed.  If set false the Disallowed Password list is not checked.</p></li><li><p><code class="inline">require_mfa</code> - A boolean value which indicates if multi-factor
-authentication is required for password authentication.  If true MFA is
-required, otherwise MFA is per user preference.  MFA may not be completely
-disabled.</p></li><li><p><code class="inline">allowed_mfa_types</code> - A list of strings identifying the allowed second
-factor methods. Currently only MFA type <code class="inline">credential_types_secondary_totp</code> is
-available.</p></li></ul>
-  </section>
-</section>
 
     </div>
   </section>
@@ -2300,7 +1989,7 @@ available.</p></li></ul>
 
         <p class="built-using">
           Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.29.4) for the
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.30.6) for the
 
             <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 

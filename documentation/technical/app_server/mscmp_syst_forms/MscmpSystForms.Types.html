@@ -4,20 +4,20 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.29.4">
+    <meta name="generator" content="ExDoc v0.30.6">
     <meta name="project" content="mscmp_syst_forms v0.1.0">
 
     <title>MscmpSystForms.Types — mscmp_syst_forms v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-HHVY3JYD.css" />
+    <link rel="stylesheet" href="dist/html-elixir-M3TQBNKO.css" />
 
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-XWGFFSCD.js"></script>
-    <script src="dist/sidebar_items-A6868B84.js"></script>
+    <script src="dist/handlebars.templates-KDPBTEPL.js"></script>
+    <script src="dist/sidebar_items-79A36FF1.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/html-JDI3AVDD.js"></script>
+    <script async src="dist/html-CP2A7WXZ.js"></script>
 
 
   </head>
@@ -80,7 +80,6 @@ mscmp_syst_forms
     </ul>
   </div>
 
-  <div class="gradient"></div>
   <ul id="full-list"></ul>
 </section>
 
@@ -102,14 +101,18 @@ mscmp_syst_forms
 </h1>
 
 
+  <section id="moduledoc">
+<p>Defines the data types, formats, and structures used by <code class="inline">MscmpSysForms</code>
+module.</p>
+  </section>
+
 
   <section id="summary" class="details-list">
     <h1 class="section-heading">
       <a class="hover-link" href="#summary">
         <i class="ri-link-m" aria-hidden="true"></i>
-        <span class="sr-only">Link to this section</span>
+        Summary
       </a>
-      Summary
     </h1>
 <div class="summary-types summary">
   <h2>
@@ -123,27 +126,6 @@ mscmp_syst_forms
       </div>
 
         <div class="summary-synopsis"><p>The identifier type for data binding identifiers.</p></div>
-
-    </div>
-
-    <div class="summary-row">
-      <div class="summary-signature">
-        <a href="#t:component_display_modes/0" translate="no">component_display_modes()</a>
-
-      </div>
-
-        <div class="summary-synopsis"><p>A structure defining the different kinds of display mode data which can be
-communicated to a user interface component.</p></div>
-
-    </div>
-
-    <div class="summary-row">
-      <div class="summary-signature">
-        <a href="#t:component_info/0" translate="no">component_info()</a>
-
-      </div>
-
-        <div class="summary-synopsis"><p>The returned data type of the <a href="MscmpSystForms.html#get_component_info/2"><code class="inline">MscmpSystForms.get_component_info/2</code></a> function.</p></div>
 
     </div>
 
@@ -358,9 +340,8 @@ are interested in responding.</p></div>
     <h1 class="section-heading">
       <a class="hover-link" href="#types">
         <i class="ri-link-m" aria-hidden="true"></i>
-        <span class="sr-only">Link to this section</span>
-      </a>
 Types
+      </a>
     </h1>
     <div class="types-list">
 <section class="detail" id="t:binding_id/0">
@@ -383,74 +364,12 @@ Types
 
       </div>
 
-<p>The identifier type for data binding identifiers.</p><p>Data binding identifiers are used to identify data fields in <a href="https://hexdocs.pm/ecto/3.10.2/Ecto.html"><code class="inline">Ecto</code></a>
+<p>The identifier type for data binding identifiers.</p><p>Data binding identifiers are used to identify data fields in <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.html"><code class="inline">Ecto</code></a>
 Changesets, <code class="inline">t:Phoenix.HTML.form.t/0</code> representations of data, form parameters
 as returned on submission, and in <a href="MscmpSystForms.Types.FormConfig.html#t:t/0"><code class="inline">MscmpSystForms.Types.FormConfig.t/0</code></a>
 form configurations.  All of these representations which are used in different
 contexts will represent the same data and this <code class="inline">binding_id</code> is the name which
 identifies the data across these logical contexts.</p>
-  </section>
-</section>
-<section class="detail" id="t:component_display_modes/0">
-
-  <div class="detail-header">
-    <a href="#t:component_display_modes/0" class="detail-link" title="Link to this type">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature" translate="no">component_display_modes()</h1>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <div class="specs">
-
-          <pre translate="no"><span class="attribute">@type</span> component_display_modes() :: %{
-  optional(:component_mode) =&gt; <a href="#t:component_modes/0">component_modes</a>(),
-  optional(:border_mode) =&gt; <a href="#t:display_modes/0">display_modes</a>(),
-  optional(:text_mode) =&gt; <a href="#t:display_modes/0">display_modes</a>() | [<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()],
-  optional(:label_mode) =&gt; <a href="#t:display_modes/0">display_modes</a>() | [<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()]
-}</pre>
-
-      </div>
-
-<p>A structure defining the different kinds of display mode data which can be
-communicated to a user interface component.</p><p>User interface components can be configured with a variety of display options,
-called &quot;modes&quot;.  Between the functions which generate the effective modes for
-the user interface and the user interface components themselves there must be
-a standard way to communicate and this type defines the structure of that
-communication.</p><p>It is worth noting that the Component will receive its display modes in data
-with this structure.</p>
-  </section>
-</section>
-<section class="detail" id="t:component_info/0">
-
-  <div class="detail-header">
-    <a href="#t:component_info/0" class="detail-link" title="Link to this type">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature" translate="no">component_info()</h1>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <div class="specs">
-
-          <pre translate="no"><span class="attribute">@type</span> component_info() :: %{
-  label: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
-  label_link: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
-  info: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()
-}</pre>
-
-      </div>
-
-<p>The returned data type of the <a href="MscmpSystForms.html#get_component_info/2"><code class="inline">MscmpSystForms.get_component_info/2</code></a> function.</p><p>The type identifies the specific returned textual information describing the
-component and configured in the Form Configurations.</p><p>See <a href="MscmpSystForms.html#c:get_form_config/0"><code class="inline">MscmpSystForms.get_form_config/0</code></a> for more.</p>
   </section>
 </section>
 <section class="detail" id="t:component_modes/0">
@@ -621,7 +540,9 @@ components.)</p>
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@type</span> form_state_components() :: %{required(<a href="#t:form_id/0">form_id</a>()) =&gt; <a href="#t:component_display_modes/0">component_display_modes</a>()}</pre>
+          <pre translate="no"><span class="attribute">@type</span> form_state_components() :: %{
+  required(<a href="#t:form_id/0">form_id</a>()) =&gt; <a href="MscmpSystForms.Types.ComponentDisplayModes.html#t:t/0">MscmpSystForms.Types.ComponentDisplayModes.t</a>()
+}</pre>
 
       </div>
 
@@ -679,8 +600,10 @@ components.)</p>
 <p>The expressed data structure of Form State Feature configurations.</p><p>Each Form State Feature defines several different points of configuration.</p><p>First a <code class="inline">:default</code> set of component configurations which act as a fallback
 when a specific Mode/State combination do not fully address a component's
 configuration themselves.  When the <code class="inline">:default</code> component configuration also
-doesn't address a component, the <a href="#t:component_display_modes/0"><code class="inline">component_display_modes/0</code></a> of last resort
-is used (currently: <code class="inline">%{component_mode: :cleared}</code>).</p><p>Next we define the <code class="inline">:processing_overrides</code> that each component should respond
+doesn't address a component, the
+<a href="MscmpSystForms.Types.ComponentDisplayModes.html#t:t/0"><code class="inline">MscmpSystForms.Types.ComponentDisplayModes.t/0</code></a> of last resort is used
+(currently:
+<code class="inline">%MscmpSystForms.Types.ComponentDisplayModes{component_mode: :cleared}</code>).</p><p>Next we define the <code class="inline">:processing_overrides</code> that each component should respond
 to when active.</p><p>Finally we define the Modes and States for each named Feature.  We expect that
 each Mode will be represented with a key in this map using the Mode's name;
 the value will be a map in the form dictated by <a href="#t:form_state_modes/0"><code class="inline">form_state_modes/0</code></a>.</p><p>See <a href="MscmpSystForms.html#c:get_form_modes/0"><code class="inline">MscmpSystForms.get_form_modes/0</code></a> for more.</p>
@@ -994,9 +917,9 @@ session information stored server side in the database.</p>
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@type</span> socket_or_assigns() ::
-  <a href="https://hexdocs.pm/phoenix/1.7.3/Phoenix.Socket.html#t:t/0">Phoenix.Socket.t</a>()
-  | <a href="https://hexdocs.pm/phoenix_live_view/0.18.18/Phoenix.LiveView.Socket.html#t:t/0">Phoenix.LiveView.Socket.t</a>()
-  | <a href="https://hexdocs.pm/phoenix_live_view/0.18.18/Phoenix.LiveView.Socket.html#t:assigns/0">Phoenix.LiveView.Socket.assigns</a>()</pre>
+  <a href="https://hexdocs.pm/phoenix/1.7.7/Phoenix.Socket.html#t:t/0">Phoenix.Socket.t</a>()
+  | <a href="https://hexdocs.pm/phoenix_live_view/0.19.5/Phoenix.LiveView.Socket.html#t:t/0">Phoenix.LiveView.Socket.t</a>()
+  | <a href="https://hexdocs.pm/phoenix_live_view/0.19.5/Phoenix.LiveView.Socket.html#t:assigns/0">Phoenix.LiveView.Socket.assigns</a>()</pre>
 
       </div>
 
@@ -1028,7 +951,7 @@ test/compile/run time value.</p>
 
         <p class="built-using">
           Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.29.4) for the
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.30.6) for the
 
             <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 

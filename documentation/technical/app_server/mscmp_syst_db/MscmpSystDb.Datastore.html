@@ -4,20 +4,20 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.29.4">
+    <meta name="generator" content="ExDoc v0.30.6">
     <meta name="project" content="mscmp_syst_db v0.1.0">
 
     <title>MscmpSystDb.Datastore — mscmp_syst_db v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-HHVY3JYD.css" />
+    <link rel="stylesheet" href="dist/html-elixir-M3TQBNKO.css" />
 
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-XWGFFSCD.js"></script>
-    <script src="dist/sidebar_items-FA845B90.js"></script>
+    <script src="dist/handlebars.templates-KDPBTEPL.js"></script>
+    <script src="dist/sidebar_items-0BBD5E6C.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/html-JDI3AVDD.js"></script>
+    <script async src="dist/html-CP2A7WXZ.js"></script>
 
 
   </head>
@@ -82,7 +82,6 @@ mscmp_syst_db
     </ul>
   </div>
 
-  <div class="gradient"></div>
   <ul id="full-list"></ul>
 </section>
 
@@ -115,9 +114,8 @@ processes.</p>
     <h1 class="section-heading">
       <a class="hover-link" href="#summary">
         <i class="ri-link-m" aria-hidden="true"></i>
-        <span class="sr-only">Link to this section</span>
+        Summary
       </a>
-      Summary
     </h1>
 <div class="summary-functions summary">
   <h2>
@@ -153,9 +151,8 @@ processes.</p>
     <h1 class="section-heading">
       <a class="hover-link" href="#functions">
         <i class="ri-link-m" aria-hidden="true"></i>
-        <span class="sr-only">Link to this section</span>
-      </a>
 Functions
+      </a>
     </h1>
     <div class="functions-list">
 <section class="detail" id="child_spec/2">
@@ -176,7 +173,7 @@ Functions
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> child_spec(<a href="MscmpSystDb.Types.html#t:datastore_options/0">MscmpSystDb.Types.datastore_options</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) ::
+          <pre translate="no"><span class="attribute">@spec</span> child_spec(<a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0">MscmpSystDb.Types.DatastoreOptions.t</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) ::
   <a href="https://hexdocs.pm/elixir/Supervisor.html#t:child_spec/0">Supervisor.child_spec</a>()</pre>
 
       </div>
@@ -185,14 +182,14 @@ Functions
 attempts to start a process based on the module name alone.  This is because
 there is a required parameter which renders that method of starting a process
 invalid as there's no default value for the parameter (<code class="inline">datastore_options</code>).</p><h2 id="child_spec/2-parameters" class="section-heading">
-  <a href="#child_spec/2-parameters" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">parameters</p>
+  <a href="#child_spec/2-parameters">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Parameters
   </a>
-  Parameters
 </h2>
 <ul><li><p><code class="inline">datastore_options</code> - a required Map of values which describe the
 Datastore and Datastore Context related connection options.  See
-<a href="MscmpSystDb.Types.html#t:datastore_options/0"><code class="inline">MscmpSystDb.Types.datastore_options/0</code></a> for more.</p></li><li><p><code class="inline">opts</code> - a Keyword list of various options accepted or required by the
+<a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0"><code class="inline">MscmpSystDb.Types.DatastoreOptions.t/0</code></a> for more.</p></li><li><p><code class="inline">opts</code> - a Keyword list of various options accepted or required by the
 <a href="https://hexdocs.pm/elixir/DynamicSupervisor.html#start_link/1"><code class="inline">DynamicSupervisor.start_link/1</code></a> function.  Note that we provide some
 default values: <code class="inline">strategy: :one_for_one</code>, <code class="inline">restart: :transient</code>,
 <code class="inline">timeout: 60_000</code>, and the <code class="inline">:name</code> option is defaulted to the
@@ -225,17 +222,17 @@ default values: <code class="inline">strategy: :one_for_one</code>, <code class=
 started and any Datastore Contexts which are identified in the
 <code class="inline">datastore_options</code> are also started and places under the Datastore
 Supervisor.</p><h2 id="start_link/1-options" class="section-heading">
-  <a href="#start_link/1-options" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">options</p>
+  <a href="#start_link/1-options">
+    <i class="ri-link-m" aria-hidden="true"></i>
+    Options
   </a>
-  Options
 </h2>
 <ul><li><p><code class="inline">name</code> - establishes the name of the Datastore Supervisor and accepts any
 name which is valid according to the documentation for <a href="https://hexdocs.pm/elixir/GenServer.html"><code class="inline">GenServer</code></a>.  The
 default value for this parameter is the <code class="inline">datastore_name</code> value found in the
 <code class="inline">datastore_options</code> attribute which configures the Datastore.</p></li><li><p><code class="inline">datastore_options</code> - a required Map of values which describe the
 Datastore and Datastore Context related connection options.  See
-<a href="MscmpSystDb.Types.html#t:datastore_options/0"><code class="inline">MscmpSystDb.Types.datastore_options/0</code></a> for more.</p></li></ul>
+<a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0"><code class="inline">MscmpSystDb.Types.DatastoreOptions.t/0</code></a> for more.</p></li></ul>
   </section>
 </section>
 
@@ -259,7 +256,7 @@ Datastore and Datastore Context related connection options.  See
 
         <p class="built-using">
           Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.29.4) for the
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.30.6) for the
 
             <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 
