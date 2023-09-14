@@ -125,11 +125,13 @@ defmodule MscmpSystForms do
   %{
     <feature>: %{
       default: %{
-        <component_form_id>: %{<default component modes>}
+        <component_form_id>:
+          %MscmpSystForms.Types.ComponentDisplayModes{<default component modes>}
       },
       <mode>: %{
         <state>: %{
-          <component_form_id>: %{<component modes>}
+          <component_form_id>:
+            %MscmpSystForms.Types.ComponentDisplayModes{<component modes>}
         }
       },
       processing_overrides: %{
@@ -191,19 +193,25 @@ defmodule MscmpSystForms do
   %{
     default: %{
       default: %{
-        concrete_config_input: %{component_mode: :visible},
-        concrete_config_submit_button: %{component_mode: :visible}
+        concrete_config_input:
+          %MscmpSystForms.Types.ComponentDisplayModes{component_mode: :visible},
+        concrete_config_submit_button:
+          %MscmpSystForms.Types.ComponentDisplayModes{component_mode: :visible}
       },
       entry: %{
         basic_form_state: %{
-          concrete_config_input: %{component_mode: :entry},
-          concrete_config_submit_button: %{component_mode: :entry}
+          concrete_config_input:
+            %MscmpSystForms.Types.ComponentDisplayModes{component_mode: :entry},
+          concrete_config_submit_button:
+            %MscmpSystForms.Types.ComponentDisplayModes{component_mode: :entry}
         }
       },
       view: %{
         basic_form_state: %{
-          concrete_config_input: %{component_mode: :visible},
-          concrete_config_submit_button: %{component_mode: :visible}
+          concrete_config_input:
+            %MscmpSystForms.Types.ComponentDisplayModes{component_mode: :visible},
+          concrete_config_submit_button:
+            %MscmpSystForms.Types.ComponentDisplayModes{component_mode: :visible}
         }
       },
       processing_overrides: %{
