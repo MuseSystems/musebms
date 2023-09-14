@@ -300,28 +300,3 @@ defmodule MscmpSystPerms.Types do
   """
   @type rights_scope() :: :deny | :same_user | :same_group | :all | :unused
 end
-
-defmodule MscmpSystPerms.Types.PermGrantValue do
-  @moduledoc """
-  A data structure describing what Scope is granted for each Right of a
-  Permission.
-  """
-
-  alias MscmpSystPerms.Types
-
-  defstruct view_scope: :deny, maint_scope: :deny, admin_scope: :deny, ops_scope: :deny
-
-  @typedoc """
-  A data structure describing what Scope is granted for each Right of a
-  Permission.
-
-  See the conceptual documentation at `MscmpSystPerms` for more about the
-  available Rights and Scopes.
-  """
-  @type t :: %__MODULE__{
-          view_scope: Types.rights_scope(),
-          maint_scope: Types.rights_scope(),
-          admin_scope: Types.rights_scope(),
-          ops_scope: Types.rights_scope()
-        }
-end
