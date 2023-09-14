@@ -11,15 +11,23 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule Msform.AuthPasswordReset do
+  @moduledoc """
+  Form/API data used for the user self-service password reset process.
+  """
+
   use Ecto.Schema
   use MscmpSystForms
 
   alias MscmpSystAuthn.Types, as: AuthnTypes
   alias Msform.AuthPasswordReset.Types
 
-  @moduledoc """
-  Form/API data used for the user self-service password reset process.
-  """
+  embedded_schema do
+    field(:access_account_id, :string)
+    field(:identifier, :string)
+    field(:credential, :string, redact: true)
+    field(:new_credential, :string, redact: true)
+    field(:verify_credential, :string, redact: true)
+  end
 
   @type t() ::
           %__MODULE__{
@@ -29,14 +37,6 @@ defmodule Msform.AuthPasswordReset do
             new_credential: String.t() | nil,
             verify_credential: String.t() | nil
           }
-
-  embedded_schema do
-    field(:access_account_id, :string)
-    field(:identifier, :string)
-    field(:credential, :string, redact: true)
-    field(:new_credential, :string, redact: true)
-    field(:verify_credential, :string, redact: true)
-  end
 
   @impl true
   @spec validate_save(

@@ -11,11 +11,11 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule Msform.AuthPasswordReset.Data do
+  @moduledoc false
+
   import Ecto.Changeset
 
   alias Msform.AuthPasswordReset.Types
-
-  @moduledoc false
 
   @spec validate_save(Msform.AuthPasswordReset.t(), Types.parameters()) :: Ecto.Changeset.t()
   def validate_save(original_data, current_data),

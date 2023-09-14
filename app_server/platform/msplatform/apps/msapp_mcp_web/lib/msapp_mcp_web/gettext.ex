@@ -20,5 +20,6 @@ defmodule MsappMcpWeb.Gettext do
 
   See the [Gettext Docs](https://hexdocs.pm/gettext) for detailed usage.
   """
+
   use Gettext, otp_app: :msapp_mcp_web
 end

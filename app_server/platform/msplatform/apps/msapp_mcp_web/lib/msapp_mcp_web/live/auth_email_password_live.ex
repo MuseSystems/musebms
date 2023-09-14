@@ -11,9 +11,9 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MsappMcpWeb.AuthEmailPasswordLive do
-  use MsappMcpWeb, :login_live_view
-
   @moduledoc false
+
+  use MsappMcpWeb, :login_live_view
 
   def mount(_params, session, socket) do
     host_addr =
@@ -56,15 +56,8 @@ defmodule MsappMcpWeb.AuthEmailPasswordLive do
   # once all is said and done the user should be forwarded to their original
   # desired path once they've logged in and reset if so required.
 
-  def handle_info({ref, :login_authenticated}, socket) do
-    Process.demonitor(ref, [:flush])
-
-    redirect_path = socket.assigns[:original_request_path] || ~p"/"
-
-    socket = redirect(socket, to: redirect_path)
-
-    {:noreply, socket}
-  end
+  def handle_info({ref, :login_authenticated}, socket), do: handle_successful_login(ref, socket)
+  def handle_info({ref, {:login_reset, _}}, socket), do: handle_successful_login(ref, socket)
 
   def handle_info({ref, {:login_denied, reason}}, socket) do
     Process.demonitor(ref, [:flush])
@@ -88,4 +81,14 @@ defmodule MsappMcpWeb.AuthEmailPasswordLive do
   end
 
   def handle_info({:DOWN, _, _, _, _}, socket), do: {:noreply, socket}
+
+  defp handle_successful_login(ref, socket) do
+    Process.demonitor(ref, [:flush])
+
+    redirect_path = socket.assigns[:original_request_path] || ~p"/"
+
+    socket = redirect(socket, to: redirect_path)
+
+    {:noreply, socket}
+  end
 end

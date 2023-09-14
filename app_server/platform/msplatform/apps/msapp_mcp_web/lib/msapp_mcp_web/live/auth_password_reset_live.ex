@@ -11,9 +11,9 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MsappMcpWeb.AuthPasswordResetLive do
-  use MsappMcpWeb, :login_live_view
-
   @moduledoc false
+
+  use MsappMcpWeb, :login_live_view
 
   def mount(_params, session, socket) do
     host_addr =

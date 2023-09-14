@@ -26,4 +26,17 @@ defmodule MsappMcp.Types do
   @type form_field_name() :: atom()
 
   @type mssub_mcp_states() :: :platform_bootstrapping | :platform_active
+
+  @type login_failure_reasons() ::
+          :rejected
+          | :rejected_rate_limited
+          | :rejected_validation
+          | :rejected_identity_expired
+          | :rejected_host_check
+          | :rejected_deadline_expired
+
+  @type login_result() ::
+          :login_authenticated
+          | {:login_denied, login_failure_reasons() | nil}
+          | {:login_pending | :login_reset | :platform_error, map()}
 end

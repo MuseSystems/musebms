@@ -1,8 +1,8 @@
 defmodule MsappMcpWeb.Telemetry do
+  @moduledoc false
+
   use Supervisor
   import Telemetry.Metrics
-
-  @moduledoc false
 
   def start_link(arg) do
     Supervisor.start_link(__MODULE__, arg, name: __MODULE__)
