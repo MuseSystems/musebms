@@ -26,6 +26,7 @@ defmodule MscmpSystAuthn.MixProject do
     {:net_address, "~> 0.3.0"},
     {:pathex, "~> 2.0"},
     {:timex, "~> 3.0"},
+    {:jason, "~> 1.0"},
 
     # Muse Systems Business Management System Components
     {:mscmp_syst_utils, path: "../mscmp_syst_utils"},
