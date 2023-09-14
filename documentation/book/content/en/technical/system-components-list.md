@@ -35,18 +35,13 @@ The listing below shows the currently existing Elixir components which make up t
       <a href="https://hexdocs.pm/phoenix" target="_blank">`phoenix`</a>,
       <a href="https://hexdocs.pm/phoenix_ecto" target="_blank">`phoenix_ecto`</a>,
       <a href="https://hexdocs.pm/phoenix_html" target="_blank">`phoenix_html`</a>,
-      <a href="https://hexdocs.pm/phoenix_live_reload" target="_blank">`phoenix_live_reload`</a>,
       <a href="https://hexdocs.pm/phoenix_live_view" target="_blank">`phoenix_live_view`</a>,
-      <a href="https://hexdocs.pm/floki" target="_blank">`floki`</a>,
       <a href="https://hexdocs.pm/phoenix_live_dashboard" target="_blank">`phoenix_live_dashboard`</a>,
-      <a href="https://hexdocs.pm/esbuild" target="_blank">`esbuild`</a>,
-      <a href="https://hexdocs.pm/tailwind" target="_blank">`tailwind`</a>,
       <a href="https://hexdocs.pm/telemetry_metrics" target="_blank">`telemetry_metrics`</a>,
       <a href="https://hexdocs.pm/telemetry_poller" target="_blank">`telemetry_poller`</a>,
       <a href="https://hexdocs.pm/gettext" target="_blank">`gettext`</a>,
       <a href="https://hexdocs.pm/jason" target="_blank">`jason`</a>,
-      <a href="https://hexdocs.pm/plug_cowboy" target="_blank">`plug_cowboy`</a>,
-      <a href="https://hexdocs.pm/ex_doc" target="_blank">`ex_doc`</a>
+      <a href="https://hexdocs.pm/plug_cowboy" target="_blank">`plug_cowboy`</a>
 
   * #### `MsappMcp`
 
@@ -59,6 +54,7 @@ The listing below shows the currently existing Elixir components which make up t
       <a href="#mscmpsysterror">`mscmp_syst_error`</a>,
       <a href="#mscmpsystoptions">`mscmp_syst_options`</a>,
       <a href="#mscmpsystforms">`mscmp_syst_forms`</a>,
+      <a href="#mscmpsystperms">`mscmp_syst_perms`</a>,
       <a href="#mssubmcp">`mssub_mcp`</a>
 
     * __Third Party Dependencies__
@@ -74,11 +70,20 @@ The listing below shows the currently existing Elixir components which make up t
 
       <sup>(<a href="/documentation/technical/app_server/mssub_mcp" target="_blank">API Docs</a>)</sup>
 
-      API for defining a standard for error handling and reporting.
+      The "Master Control Program" subsystem which provides global user authentication and environment/tenant administration for all applications running on the MuseBMS platform.
 
       * __First Party Dependencies__
 
-        (none)
+        <a href="#mscmpsysterror">`mscmp_syst_error`</a>,
+        <a href="#mscmpsystutils">`mscmp_syst_utils`</a>,
+        <a href="#mscmpsystoptions">`mscmp_syst_options`</a>,
+        <a href="#mscmpsystenums">`mscmp_syst_enums`</a>,
+        <a href="#mscmpsystsettings">`mscmp_syst_settings`</a>,
+        <a href="#mscmpsystinstance">`mscmp_syst_instance`</a>,
+        <a href="#mscmpsystauthn">`mscmp_syst_authn`</a>,
+        <a href="#mscmpsystperms">`mscmp_syst_perms`</a>,
+        <a href="#mscmpsystmcp_perms">`mscmp_syst_mcp_perms`</a>,
+        <a href="#mscmpsystsession">`mscmp_syst_session`</a>
 
       * __Third Party Dependencies__
 
@@ -88,11 +93,14 @@ The listing below shows the currently existing Elixir components which make up t
 
       <sup>(<a href="/documentation/technical/app_server/mssub_bms" target="_blank">API Docs</a>)</sup>
 
-      (Undefined)
+      A business logic subsystem implementing the Muse Systems Business Management Systems.  An Msplatform application delivering a complete small to mid-sized business management solution.
 
       * __First Party Dependencies__
 
-        (none)
+        <a href="#mscmpsysterror">`mscmp_syst_error`</a>,
+        <a href="#mscmpsystutils">`mscmp_syst_utils`</a>,
+        <a href="#mscmpsystenums">`mscmp_syst_enums`</a>,
+        <a href="#mscmpsystsettings">`mscmp_syst_settings`</a>
 
       * __Third Party Dependencies__
 
@@ -102,17 +110,33 @@ The listing below shows the currently existing Elixir components which make up t
 
 These Components are listed in "Lower Level Component" to "Higher Level Component" order.  Lower Level Components offer more simple, base level functionality whereas Higher Level Components will offer more complex functionality closer to the final business logic.  Often times Higher Level Components will depend on Lower Level Components.
 
+  * ### `MscmpSystError`
+
+    <sup>(<a href="/documentation/technical/app_server/mscmp_syst_error" target="_blank">API Docs</a>)</sup>
+
+    This module defines a nested structure for reporting errors in contexts where a result should be represented by an error result. By capturing lower level errors and reporting them in a standard way, various application errors, especially non-fatal errors, can be handled as appropriate and logged for later analysis.
+
+    * __First Party Dependencies__
+
+      (none)
+
+    * __Third Party Dependencies__
+
+      (none)
+
   * ### `MscmpSystUtils`
 
     <sup>(<a href="/documentation/technical/app_server/mscmp_syst_utils" target="_blank">API Docs</a>)</sup>
 
     Common utility functions generally useful across components.
 
-  * ### `MscmpSystError`
+    * __First Party Dependencies__
 
-    <sup>(<a href="/documentation/technical/app_server/mscmp_syst_error" target="_blank">API Docs</a>)</sup>
+      (none)
 
-    This module defines a nested structure for reporting errors in contexts where a result should be represented by an error result. By capturing lower level errors and reporting them in a standard way, various application errors, especially non-fatal errors, can be handled as appropriate and logged for later analysis.
+    * __Third Party Dependencies__
+
+      (none)
 
   * ### `MscmpSystLimiter`
 
@@ -144,7 +168,6 @@ These Components are listed in "Lower Level Component" to "Higher Level Componen
 
       <a href="https://hexdocs.pm/ecto_sql" target="_blank">`ecto_sql`</a>,
       <a href="https://hexdocs.pm/ecto" target="_blank">`ecto`</a>,
-      <a href="https://hexdocs.pm/ex_doc" target="_blank">`ex_doc`</a>,
       <a href="https://hexdocs.pm/jason" target="_blank">`jason`</a>,
       <a href="https://hexdocs.pm/postgrex" target="_blank">`postgrex`</a>,
       <a href="https://hexdocs.pm/toml" target="_blank">`toml`</a>,
@@ -177,6 +200,10 @@ These Components are listed in "Lower Level Component" to "Higher Level Componen
       <a href="#mscmpsystutils">`mscmp_syst_utils`</a>,
       <a href="#mscmpsystdb">`mscmp_syst_db`</a>
 
+    * __Third Party Dependencies__
+
+      (none)
+
   * ### `MscmpSystEnums`
 
     <sup>(<a href="/documentation/technical/app_server/mscmp_syst_enums" target="_blank">API Docs</a>)</sup>
@@ -188,6 +215,10 @@ These Components are listed in "Lower Level Component" to "Higher Level Componen
       <a href="#mscmpsysterror">`mscmp_syst_error`</a>,
       <a href="#mscmpsystutils">`mscmp_syst_utils`</a>,
       <a href="#mscmpsystdb">`mscmp_syst_db`</a>
+
+    * __Third Party Dependencies__
+
+      (none)
 
   * ### `MscmpSystInstance`
 
@@ -203,7 +234,11 @@ These Components are listed in "Lower Level Component" to "Higher Level Componen
       <a href="#mscmpsystutils">`mscmp_syst_utils`</a>,
       <a href="#mscmpsystdb">`mscmp_syst_db`</a>,
       <a href="#mscmpsystoptions">`mscmp_syst_options`</a>,
-      <a href="#mscmpsystenums">`mscmp_syst_enums`</a>,
+      <a href="#mscmpsystenums">`mscmp_syst_enums`</a>
+
+    * __Third Party Dependencies__
+
+      (none)
 
   * ### `MscmpSystAuthn`
 
@@ -229,7 +264,8 @@ These Components are listed in "Lower Level Component" to "Higher Level Componen
       <a href="https://hexdocs.pm/nimble_totp" target="_blank">`nimble_totp`</a>,
       <a href="https://hexdocs.pm/net_address" target="_blank">`net_address`</a>,
       <a href="https://hexdocs.pm/pathex" target="_blank">`pathex`</a>,
-      <a href="https://hexdocs.pm/timex" target="_blank">`timex`</a>
+      <a href="https://hexdocs.pm/timex" target="_blank">`timex`</a>,
+      <a href="https://hexdocs.pm/jason" target="_blank">`jason`</a>
 
   * ### `MscmpSystPerms`
 
@@ -245,6 +281,10 @@ These Components are listed in "Lower Level Component" to "Higher Level Componen
       <a href="#mscmpsystutils">`mscmp_syst_utils`</a>,
       <a href="#mscmpsystdb">`mscmp_syst_db`</a>
 
+    * __Third Party Dependencies__
+
+      (none)
+
   * ### `MscmpSystMcpPerms`
 
     <sup>(<a href="/documentation/technical/app_server/mscmp_syst_mcp_perms" target="_blank">API Docs</a>)</sup>
@@ -255,10 +295,13 @@ These Components are listed in "Lower Level Component" to "Higher Level Componen
 
       <a href="#mscmpsysterror">`mscmp_syst_error`</a>,
       <a href="#mscmpsystutils">`mscmp_syst_utils`</a>,
-      <a href="#mscmpsystlimiter">`mscmp_syst_limiter`</a>,
       <a href="#mscmpsystdb">`mscmp_syst_db`</a>,
       <a href="#mscmpsystauthn">`mscmp_syst_authn`</a>,
       <a href="#mscmpsystperms">`mscmp_syst_perms`</a>
+
+    * __Third Party Dependencies__
+
+      (none)
 
   * ### `MscmpSystSession`
 
@@ -271,6 +314,10 @@ These Components are listed in "Lower Level Component" to "Higher Level Componen
       <a href="#mscmpsysterror">`mscmp_syst_error`</a>,
       <a href="#mscmpsystutils">`mscmp_syst_utils`</a>,
       <a href="#mscmpsystdb">`mscmp_syst_db`</a>
+
+    * __Third Party Dependencies__
+
+      (none)
 
   * ### `MscmpSystForms`
 
