@@ -21,13 +21,6 @@ example, an "Accounts Payable" Person representing a vendor might mean that any 
 vendor's Accounts Payable staff may act as the accounts payable agent during a discussion of
 invoicing or payment.
 
-In addition, an Entity which is an individual person will commonly act as their own agent as so
-would also be the "Person" identified with the Entity; the individual person Entity may also
-designate other People to act as agent on their behalf and might even indicate they are not their
-own agent in some contexts.  The key for understanding our Person concept is that we are referring
-to the individuals with whom communications will take place and who will ultimately make business
-decisions.
-
 ## Contact
 
 "Contact", as we use the term here, refers specifically to how a Person is contacted. This can
