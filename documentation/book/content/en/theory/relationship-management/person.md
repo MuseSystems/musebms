@@ -10,16 +10,20 @@ draft = true
 
 weight = 20
 +++
+## General
+
 While it might seem obvious what a "Person" is, we're going to augment that assumable definition a
 bit here.  A Person, for our purposes, is someone who acts as an agent on behalf of an entity; the
 designated contact for any communications regarding some aspect of business that the Entity may
 engage in.
 
+## Person as Functional Designation
+
 A Person will often times be a named individual in the real world, but there will be
 times where a Person represents a role that might be fulfilled by any of a group of people; for
 example, an "Accounts Payable" Person representing a vendor might mean that any one of the
 vendor's Accounts Payable staff may act as the accounts payable agent during a discussion of
-invoicing or payment.
+invoicing or payment.  In such a case the specific individual doesn't matter.
 
 ## Contact
 
