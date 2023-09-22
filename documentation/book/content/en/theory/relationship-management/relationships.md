@@ -2,8 +2,11 @@
 title = "Relationships"
 linkTitle = "Relationships"
 description = """
-Entities, People, and Places will have "Relationships" between them, in fact it is these
-Relationships which is of greater interest from our business systems perspective."""
+Entities, People, and Places will have "Relationships" between them.  It is these Relationships
+which provide us the richest information and carry the most interesting meaning within the subject
+area of Business Relationship Management. The lists of Entities, People, and Places may identify
+with whom we're dealing and where, but the defined Relationships tell us why we care and what we
+should expect."""
 
 draft = true
 

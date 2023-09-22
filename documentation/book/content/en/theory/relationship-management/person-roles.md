@@ -6,7 +6,7 @@ A Person can have various Relationships with both Entities, Places, and even oth
 
 draft = true
 
-weight = 40
+weight = 80
 +++
 
 Person Relationships are different from the Relationships discussed thus far in that they tend to

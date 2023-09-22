@@ -4,7 +4,7 @@ linkTitle = "Person"
 description = """
 A Person is someone who acts as an agent on behalf of an Entity. This may be a real individual
 person in the world or indicate a function, such as "Customer Support", where the actual person
-may vary and specific identity is unimportant."""
+contacted may vary and identifying a specific individual is unimportant."""
 
 draft = true
 
