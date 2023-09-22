@@ -8,7 +8,7 @@ a subordinate Relationship."""
 
 draft = true
 
-weight = 30
+weight = 50
 +++
 Take an example from the Person Relationships section: Sales Relationship/Person.  In this case
 we want to establish Person Relationships that are specific to and only have relevance for the

@@ -2,7 +2,7 @@
 title = "Place"
 linkTitle = "Place"
 description = """
-Places the are retail stores, warehouses, factories, and offices in which the business conducts
+Places are the retail stores, warehouses, factories, and offices in which the business conducts
 its operations."""
 
 draft = true

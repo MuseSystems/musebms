@@ -6,7 +6,7 @@ Places can have varied Relationships with Entities which govern the interactions
 
 draft = true
 
-weight = 20
+weight = 70
 +++
 
 ## Relationship Kinds

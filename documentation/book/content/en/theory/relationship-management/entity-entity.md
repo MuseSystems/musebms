@@ -7,7 +7,7 @@ define how the Entities interact in different contexts."""
 
 draft = true
 
-weight = 10
+weight = 60
 +++
 ## Relationship Kinds
 
