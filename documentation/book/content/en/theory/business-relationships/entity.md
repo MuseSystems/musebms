@@ -16,17 +16,17 @@ a contract and with whom business is transacted.
 
 Ideally, each relevant real world entity only has a single representation as an Entity.  Any
 nuance or multiplicity of roles should be expressible via the Entity's
-"[Relationships](/theory/relationship-management/relationships)".
+[Relationships]({{< ref "relationships" >}}).
 
 ## Individual Person as Entity
 
 An individual, real world person may also be described as an Entity.  When this is the case the
-individual will most often also be a "[Person](/theory/relationship-management/person)" with a
-Relationship to the Entity indicating that the individual acts as their own agent.  Other People
-may be granted Relationships to the Entity so that these others may act as agent on the Entity's
-behalf (lawyers, assistants, family, etc.); it is even possible that the individual represented by
-the Entity does not act as their own agent and therefore isn't recognized as a Person with a
-relationship to the Entity, though this would be rare.
+individual will most often also be a [Person]({{< ref "person" >}}) with a Relationship to the
+Entity indicating that the individual acts as their own agent.  Other People may be granted
+Relationships to the Entity so that these others may act as agent on the Entity's behalf (lawyers,
+assistants, family, etc.); it is even possible that the individual represented by the Entity does
+not act as their own agent and therefore isn't recognized as a Person with a relationship to the
+Entity, though this would be rare.
 
 ## Notes on Perspective
 
