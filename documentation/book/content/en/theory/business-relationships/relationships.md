@@ -8,7 +8,7 @@ area of Business Relationship Management. The lists of Entities, People, and Pla
 with whom we're dealing and where, but Relationships tell us why we care and what we should expect
 for any business transaction."""
 
-draft = true
+draft = false
 
 weight = 40
 +++

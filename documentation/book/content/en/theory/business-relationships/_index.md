@@ -7,7 +7,7 @@ and jurisdictions, and the date and time of transaction consummation.  By descri
 Business Relationships of the parties and places involved in a transaction, we can establish
 terms, rules, and requirements to which business transactions must adhere."""
 
-draft = true
+draft = false
 
 weight = 20
 +++
