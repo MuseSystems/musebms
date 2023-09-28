@@ -8,7 +8,7 @@ is driven purely by application logic and programming concerns.  However for eff
 management systems of the class we are concerned with, we must assume that the data is valuable in
 its own right and carries uses beyond the simple transaction processing logic of the system."""
 
-draft = true
+draft = false
 
 weight = 10
 +++
