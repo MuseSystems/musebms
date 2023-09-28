@@ -1,4 +1,4 @@
-# Muse Systems Business Management System Software License Agreement v1.0
+# Muse Systems Business Management System License Agreement v1.1
 
 ## Acceptance
 
@@ -68,8 +68,8 @@ or nature of the software, under any kind of legal claim.***
 ## Definitions
 
 The **licensor** is the individual or entity offering these
-terms, and the **software** is the software the licensor makes
-available under these terms.
+terms, and the **software** is the software and its documentation
+the licensor makes available under these terms.
 
 **You** refers to the individual or entity agreeing to these
 terms.

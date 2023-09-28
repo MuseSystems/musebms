@@ -1,5 +1,5 @@
 +++
-title = "Muse Systems Business Management System Software License Agreement v1.0"
+title = "Muse Systems Business Management System License Agreement v1.1"
 linkTitle = "License"
 description = "The software license under which the software and associated documentation are licensed."
 draft = false
@@ -7,7 +7,7 @@ draft = false
 weight = 10
 +++
 {{% blocks/section color="light" %}}
-Muse Systems<br>Business Management System<br>Software License Agreement v1.0
+Muse Systems<br>Business Management System<br>License Agreement v1.1
 {.h1 .text-center}
 {{% /blocks/section %}}
 {{% blocks/section color="light" %}}
@@ -79,8 +79,8 @@ or nature of the software, under any kind of legal claim.***
 ## Definitions
 
 The **licensor** is the individual or entity offering these
-terms, and the **software** is the software the licensor makes
-available under these terms.
+terms, and the **software** is the software and its documentation
+the licensor makes available under these terms.
 
 **You** refers to the individual or entity agreeing to these
 terms.
