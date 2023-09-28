@@ -9,6 +9,6 @@ development, but does not offer any sort of usable software at this time.
 
 Development of the MuseBMS is being conducted in plain sight, but currently
 access to the source code and related documentation are only offered on a
-"source available" basis under the terms of the ["Muse Systems Business Management System Software License Agreement v1.0"](LICENSE.md).
+"source available" basis under the terms of the ["Muse Systems Business Management System License Agreement v1.1"](LICENSE.md).
 
 The documentation for the project can be found at ["https://docs.muse.systems"](https://docs.muse.systems)
