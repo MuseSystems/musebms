@@ -24,7 +24,7 @@ Muse Systems Business Management System Documentation
 A conceptual thought model for the design and implementation of business management systems.
 {{% /blocks/feature %}}
 {{% blocks/feature icon="fa-solid fa-book" title="Technical Documentation" url="technical" %}}
-Technical documentation describing the database and application software in technical terms.  Targeted to developers of the software.
+Database and application server technical documentation for developers of the software.
 {{% /blocks/feature %}}
 </span>
 {{% /blocks/section %}}

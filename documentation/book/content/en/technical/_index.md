@@ -1,6 +1,9 @@
 +++
 title = "Technical Documentation"
 linkTitle = "Technical"
+description = """
+Database and application server technical documentation for developers of the software.
+"""
 
 draft = false
 
