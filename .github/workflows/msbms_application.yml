@@ -12,7 +12,7 @@ jobs:
     name: MscmpSystError (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
     strategy:
       matrix:
-        otp: ['26.0']
+        otp: ['26.1']
         elixir: ['1.15']
 
     steps:
@@ -46,7 +46,7 @@ jobs:
     name: MscmpSystOptions (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
     strategy:
       matrix:
-        otp: ['26.0']
+        otp: ['26.1']
         elixir: ['1.15']
 
     steps:
@@ -80,7 +80,7 @@ jobs:
     name: MscmpSystLimiter (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
     strategy:
       matrix:
-        otp: ['26.0']
+        otp: ['26.1']
         elixir: ['1.15']
 
     steps:
@@ -118,7 +118,7 @@ jobs:
     name: MscmpSystDb (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
     strategy:
       matrix:
-        otp: ['26.0']
+        otp: ['26.1']
         elixir: ['1.15']
     services:
       postgres:
@@ -169,7 +169,7 @@ jobs:
     name: MscmpSystSettings (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
     strategy:
       matrix:
-        otp: ['26.0']
+        otp: ['26.1']
         elixir: ['1.15']
     services:
       postgres:
@@ -220,7 +220,7 @@ jobs:
     name: MscmpSystEnums (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
     strategy:
       matrix:
-        otp: ['26.0']
+        otp: ['26.1']
         elixir: ['1.15']
     services:
       postgres:
@@ -271,7 +271,7 @@ jobs:
     name: MscmpSystInstance (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
     strategy:
       matrix:
-        otp: ['26.0']
+        otp: ['26.1']
         elixir: ['1.15']
     services:
       postgres:
@@ -326,7 +326,7 @@ jobs:
     name: MscmpSystAuthn (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
     strategy:
       matrix:
-        otp: ['26.0']
+        otp: ['26.1']
         elixir: ['1.15']
     services:
       postgres:
@@ -381,7 +381,7 @@ jobs:
     name: MscmpSystPerms (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
     strategy:
       matrix:
-        otp: ['26.0']
+        otp: ['26.1']
         elixir: ['1.15']
     services:
       postgres:
@@ -436,7 +436,7 @@ jobs:
     name: MscmpSystMcpPerms (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
     strategy:
       matrix:
-        otp: ['26.0']
+        otp: ['26.1']
         elixir: ['1.15']
     services:
       postgres:
@@ -491,7 +491,7 @@ jobs:
     name: MscmpSystSession (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
     strategy:
       matrix:
-        otp: ['26.0']
+        otp: ['26.1']
         elixir: ['1.15']
     services:
       postgres:
@@ -546,7 +546,7 @@ jobs:
     name: MscmpSystForms (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
     strategy:
       matrix:
-        otp: ['26.0']
+        otp: ['26.1']
         elixir: ['1.15']
 
     steps:
@@ -580,8 +580,8 @@ jobs:
     name: MssubMcp (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
     strategy:
       matrix:
-        otp: ['26.0']
-        elixir: ['1.15.5']
+        otp: ['26.1']
+        elixir: ['1.15']
     services:
       postgres:
         image: postgres
@@ -635,7 +635,7 @@ jobs:
   #   name: MssubBms (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
   #   strategy:
   #     matrix:
-  #       otp: ['26.0']
+  #       otp: ['26.1']
   #       elixir: ['1.15']
   #   services:
   #     postgres:
