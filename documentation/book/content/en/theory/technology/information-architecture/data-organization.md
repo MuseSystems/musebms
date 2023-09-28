@@ -8,7 +8,7 @@ relations required to support the broad functional concerns of the typical busin
 system can be large, this data can be generalized into a relatively small handful of categories of
 data."""
 
-draft = true
+draft = false
 
 weight = 10
 +++
