@@ -1,6 +1,9 @@
 +++
 title = "Business Systems Theory"
 linkTitle = "Theory"
+description = """
+A conceptual thought model for the design and implementation of business management systems.
+"""
 
 draft = false
 

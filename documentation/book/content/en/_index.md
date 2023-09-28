@@ -21,7 +21,7 @@ Muse Systems Business Management System Documentation
 {{% blocks/section color="light" type="row" %}}
 <span class="d-flex flex-row flex-wrap justify-content-evenly">
 {{% blocks/feature icon="fa-solid fa-book" title="Business Systems Theory" url="theory" %}}
-Describes a model of how business systems are implemented.
+A conceptual thought model for the design and implementation of business management systems.
 {{% /blocks/feature %}}
 {{% blocks/feature icon="fa-solid fa-book" title="Technical Documentation" url="technical" %}}
 Technical documentation describing the database and application software in technical terms.  Targeted to developers of the software.
