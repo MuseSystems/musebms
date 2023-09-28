@@ -7,6 +7,8 @@
 \set ON_ERROR_STOP true
 \c postgres
 
+SET SESSION muse.privileged_password TO :'dbadmin_password';
+
 DO
 $BOOTSTRAPDB$
     BEGIN
@@ -32,9 +34,9 @@ $BOOTSTRAPDB$
                        WHERE  rolname = 'ms_syst_privileged')
         THEN
 
-            CREATE ROLE ms_syst_privileged
-                CREATEDB NOINHERIT
-                LOGIN PASSWORD 'muse.syst.dba.testing.password';
+            EXECUTE format(
+                $$CREATE ROLE ms_syst_privileged CREATEDB NOINHERIT LOGIN PASSWORD %1$L;$$,
+                current_setting('muse.privileged_password'));
 
             COMMENT ON ROLE ms_syst_privileged IS
             $DOC$Privileged login account which performs database server administrative actions.  Does not have access to application data and may not perform actions requiring PostgreSQL superuser privileges.$DOC$;
@@ -60,7 +62,7 @@ $BOOTSTRAPDB$
                        WHERE  rolname = 'ms_syst_managable')
         THEN
 
-            CREATE ROLE ms_syst_managable;
+            CREATE ROLE ms_syst_managable ADMIN ms_syst_privileged;
 
             COMMENT ON ROLE ms_syst_managable IS
             $DOC$An unprivileged group role used to indicate which other roles may be automatically managed by the application processes.$DOC$;
