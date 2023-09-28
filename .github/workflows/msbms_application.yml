@@ -581,7 +581,7 @@ jobs:
     strategy:
       matrix:
         otp: ['26.0']
-        elixir: ['1.15']
+        elixir: ['1.15.5']
     services:
       postgres:
         image: postgres
