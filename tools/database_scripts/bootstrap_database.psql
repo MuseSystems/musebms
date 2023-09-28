@@ -35,7 +35,9 @@ $BOOTSTRAPDB$
         THEN
 
             EXECUTE format(
-                $$CREATE ROLE ms_syst_privileged CREATEDB NOINHERIT LOGIN PASSWORD %1$L;$$,
+                'CREATE ROLE ms_syst_privileged '
+                    'CREATEDB NOINHERIT LOGIN '
+                    'PASSWORD %1$L;',
                 current_setting('muse.privileged_password'));
 
             COMMENT ON ROLE ms_syst_privileged IS
@@ -49,7 +51,7 @@ $BOOTSTRAPDB$
                        WHERE  rolname = 'ms_syst_access')
         THEN
 
-            CREATE ROLE ms_syst_access;
+            CREATE ROLE ms_syst_access ADMIN ms_syst_owner;
 
             COMMENT ON ROLE ms_syst_access IS
             $DOC$An unprivileged group role used to control access via pg_hba.conf rules.  All system login roles are members of this role.$DOC$;
@@ -62,7 +64,7 @@ $BOOTSTRAPDB$
                        WHERE  rolname = 'ms_syst_managable')
         THEN
 
-            CREATE ROLE ms_syst_managable ADMIN ms_syst_privileged;
+            CREATE ROLE ms_syst_managable ADMIN ms_syst_owner;
 
             COMMENT ON ROLE ms_syst_managable IS
             $DOC$An unprivileged group role used to indicate which other roles may be automatically managed by the application processes.$DOC$;
