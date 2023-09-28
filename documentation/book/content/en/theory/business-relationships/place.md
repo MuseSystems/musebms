@@ -5,7 +5,7 @@ description = """
 Places are the retail stores, warehouses, factories, and offices in which the business conducts
 its operations."""
 
-draft = true
+draft = false
 
 weight = 30
 +++

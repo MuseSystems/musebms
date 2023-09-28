@@ -5,7 +5,7 @@ description = """
 Entities are the legal entities such as a business’s customers, vendors, employees, partners, etc.
 and who are the parties to transactions."""
 
-draft = true
+draft = false
 
 weight = 10
 +++
