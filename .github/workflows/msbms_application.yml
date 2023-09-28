@@ -122,7 +122,7 @@ jobs:
         elixir: ['1.15']
     services:
       postgres:
-        image: postgres:15
+        image: postgres
         env:
           POSTGRES_USER: testing_dba
           POSTGRES_PASSWORD: testing-dba-password
@@ -173,7 +173,7 @@ jobs:
         elixir: ['1.15']
     services:
       postgres:
-        image: postgres:15
+        image: postgres
         env:
           POSTGRES_USER: testing_dba
           POSTGRES_PASSWORD: testing-dba-password
@@ -224,7 +224,7 @@ jobs:
         elixir: ['1.15']
     services:
       postgres:
-        image: postgres:15
+        image: postgres
         env:
           POSTGRES_USER: testing_dba
           POSTGRES_PASSWORD: testing-dba-password
@@ -275,7 +275,7 @@ jobs:
         elixir: ['1.15']
     services:
       postgres:
-        image: postgres:15
+        image: postgres
         env:
           POSTGRES_USER: testing_dba
           POSTGRES_PASSWORD: testing-dba-password
@@ -330,7 +330,7 @@ jobs:
         elixir: ['1.15']
     services:
       postgres:
-        image: postgres:15
+        image: postgres
         env:
           POSTGRES_USER: testing_dba
           POSTGRES_PASSWORD: testing-dba-password
@@ -385,7 +385,7 @@ jobs:
         elixir: ['1.15']
     services:
       postgres:
-        image: postgres:15
+        image: postgres
         env:
           POSTGRES_USER: testing_dba
           POSTGRES_PASSWORD: testing-dba-password
@@ -440,7 +440,7 @@ jobs:
         elixir: ['1.15']
     services:
       postgres:
-        image: postgres:15
+        image: postgres
         env:
           POSTGRES_USER: testing_dba
           POSTGRES_PASSWORD: testing-dba-password
@@ -495,7 +495,7 @@ jobs:
         elixir: ['1.15']
     services:
       postgres:
-        image: postgres:15
+        image: postgres
         env:
           POSTGRES_USER: testing_dba
           POSTGRES_PASSWORD: testing-dba-password
@@ -584,7 +584,7 @@ jobs:
         elixir: ['1.15']
     services:
       postgres:
-        image: postgres:15
+        image: postgres
         env:
           POSTGRES_USER: testing_dba
           POSTGRES_PASSWORD: testing-dba-password
@@ -639,7 +639,7 @@ jobs:
   #       elixir: ['1.15']
   #   services:
   #     postgres:
-  #       image: postgres:15
+  #       image: postgres
   #       env:
   #         POSTGRES_USER: testing_dba
   #         POSTGRES_PASSWORD: testing-dba-password
