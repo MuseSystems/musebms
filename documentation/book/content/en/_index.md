@@ -22,12 +22,6 @@ Muse Systems Business Management System Documentation
 {{% blocks/feature icon="fa-solid fa-book" title="Business Systems Theory" url="theory" %}}
 Describes a model of how business systems are implemented.
 {{% /blocks/feature %}}
-{{% blocks/feature icon="fa-solid fa-book" title="Planning" url="planning" %}}
-Describes planning for the MuseBMS development project.
-{{% /blocks/feature %}}
-{{% blocks/feature icon="fa-solid fa-book" title="End User Guide" url="user" %}}
-End user documentation for using the system.  Functional requirements will also be captured in this section in the form of documentation prior to the functionality being implemented.
-{{% /blocks/feature %}}
 {{% blocks/feature icon="fa-solid fa-book" title="Technical Documentation" url="technical" %}}
 Technical documentation describing the database and application software in technical terms.  Targeted to developers of the software.
 {{% /blocks/feature %}}
