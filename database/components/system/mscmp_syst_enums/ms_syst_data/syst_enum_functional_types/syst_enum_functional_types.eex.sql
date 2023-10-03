@@ -106,11 +106,11 @@ $DOC$A reference to the owning enumeration of the functional type.$DOC$;
 COMMENT ON
     COLUMN ms_syst_data.syst_enum_functional_types.syst_description IS
 $DOC$A default description of the specific functional type and its use cases within
-the enumeration which is identitied as the parent.$DOC$;
+the enumeration which is identified as the parent.$DOC$;
 
 COMMENT ON
     COLUMN ms_syst_data.syst_enum_functional_types.user_description IS
-$DOC$A custom, user suppplied description of the functional type which will be
+$DOC$A custom, user supplied description of the functional type which will be
 preferred over the syst_description field if set to a not null value.$DOC$;
 
 COMMENT ON
