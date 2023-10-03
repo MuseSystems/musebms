@@ -54,7 +54,7 @@ CREATE TABLE ms_syst_data.syst_enum_items
     ,user_description
         text
     ,sort_order
-        integer
+        smallint
         NOT NULL
     ,syst_options
         jsonb
