@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION ms_data.trig_i_d_syst_groups()
+CREATE OR REPLACE FUNCTION ms_syst.trig_i_d_syst_groups()
 RETURNS trigger AS
 $BODY$
 
@@ -80,12 +80,12 @@ $BODY$
     SECURITY DEFINER
     SET search_path TO ms_syst, pg_temp;
 
-ALTER FUNCTION ms_data.trig_i_d_syst_groups()
+ALTER FUNCTION ms_syst.trig_i_d_syst_groups()
     OWNER TO <%= ms_owner %>;
 
-REVOKE EXECUTE ON FUNCTION ms_data.trig_i_d_syst_groups() FROM public;
-GRANT EXECUTE ON FUNCTION ms_data.trig_i_d_syst_groups() TO <%= ms_owner %>;
+REVOKE EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_groups() FROM public;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_groups() TO <%= ms_owner %>;
 
-COMMENT ON FUNCTION ms_data.trig_i_d_syst_groups() IS
+COMMENT ON FUNCTION ms_syst.trig_i_d_syst_groups() IS
 $DOC$An INSTEAD OF trigger function which applies business rules when using the
 syst_groups API View for DELETE operations.$DOC$;
