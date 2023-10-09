@@ -22,7 +22,7 @@ BEGIN
                 MESSAGE = 'You cannot delete a system defined enumeration using the API Views.',
                 DETAIL = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst'
-                            ,p_proc_name      => 'trig_i_d_syst_enum_itemss'
+                            ,p_proc_name      => 'trig_i_d_syst_enum_items'
                             ,p_exception_name => 'invalid_api_view_call'
                             ,p_errcode        => 'PM008'
                             ,p_param_data     => to_jsonb(old)
