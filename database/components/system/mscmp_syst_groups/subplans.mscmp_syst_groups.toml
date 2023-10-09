@@ -1,0 +1,46 @@
+# File:        subplans.mscmp_syst_groups.toml
+# Location:    musebms/database/components/system/mscmp_syst_groups/subplans.mscmp_syst_groups.toml
+# Project:     Muse Systems Business Management System
+#
+# Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+# This file may include content copyrighted and licensed from third parties.
+#
+# See the LICENSE file in the project root for license terms and conditions.
+# See the NOTICE file in the project root for copyright ownership information.
+#
+# muse.information@musesystems.com :: https://muse.systems
+
+[[build_plan]]
+release              = 1
+version              = 1
+update               = 0
+sponsor              = 820
+sponsor_modification = 0
+load_files = [
+    "components/system/mscmp_syst_groups/ms_syst_data/syst_group_functional_types/syst_group_functional_types.eex.sql",
+    "components/system/mscmp_syst_groups/ms_syst_data/syst_group_types/syst_group_types.eex.sql",
+    "components/system/mscmp_syst_groups/ms_syst_data/syst_group_type_items/trig_b_iu_syst_group_type_items_depth_maint.eex.sql",
+    "components/system/mscmp_syst_groups/ms_syst_data/syst_group_type_items/syst_group_type_items.eex.sql",
+    "components/system/mscmp_syst_groups/ms_syst_data/syst_groups/trig_b_iu_syst_groups_validate_parent_group_type_item.eex.sql",
+    "components/system/mscmp_syst_groups/ms_syst_data/syst_groups/syst_groups.eex.sql",
+
+    "components/system/mscmp_syst_groups/ms_syst/api_views/syst_group_functional_types/trig_i_i_syst_group_functional_types.eex.sql",
+    "components/system/mscmp_syst_groups/ms_syst/api_views/syst_group_functional_types/trig_i_u_syst_group_functional_types.eex.sql",
+    "components/system/mscmp_syst_groups/ms_syst/api_views/syst_group_functional_types/trig_i_d_syst_group_functional_types.eex.sql",
+    "components/system/mscmp_syst_groups/ms_syst/api_views/syst_group_functional_types/syst_group_functional_types.eex.sql",
+
+    "components/system/mscmp_syst_groups/ms_syst/api_views/syst_group_types/trig_i_i_syst_group_types.eex.sql",
+    "components/system/mscmp_syst_groups/ms_syst/api_views/syst_group_types/trig_i_u_syst_group_types.eex.sql",
+    "components/system/mscmp_syst_groups/ms_syst/api_views/syst_group_types/trig_i_d_syst_group_types.eex.sql",
+    "components/system/mscmp_syst_groups/ms_syst/api_views/syst_group_types/syst_group_types.eex.sql",
+
+    "components/system/mscmp_syst_groups/ms_syst/api_views/syst_group_type_items/trig_i_i_syst_group_type_items.eex.sql",
+    "components/system/mscmp_syst_groups/ms_syst/api_views/syst_group_type_items/trig_i_u_syst_group_type_items.eex.sql",
+    "components/system/mscmp_syst_groups/ms_syst/api_views/syst_group_type_items/trig_i_d_syst_group_type_items.eex.sql",
+    "components/system/mscmp_syst_groups/ms_syst/api_views/syst_group_type_items/syst_group_type_items.eex.sql",
+
+    "components/system/mscmp_syst_groups/ms_syst/api_views/syst_groups/trig_i_i_syst_groups.eex.sql",
+    "components/system/mscmp_syst_groups/ms_syst/api_views/syst_groups/trig_i_u_syst_groups.eex.sql",
+    "components/system/mscmp_syst_groups/ms_syst/api_views/syst_groups/trig_i_d_syst_groups.eex.sql",
+    "components/system/mscmp_syst_groups/ms_syst/api_views/syst_groups/syst_groups.eex.sql",
+]
