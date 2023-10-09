@@ -43,6 +43,7 @@ GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_group_type_items() TO <%= ms_app
 GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_group_type_items() TO <%= ms_appusr %>;
 
 -- syst_groups
+
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE ms_syst.syst_groups TO <%= ms_appusr %>;
 
 GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_groups() TO <%= ms_appusr %>;
