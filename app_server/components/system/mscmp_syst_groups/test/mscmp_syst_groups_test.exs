@@ -1,8 +1,8 @@
 defmodule MscmpSystGroupsTest do
-  use ExUnit.Case
+  use GroupsTestCase, async: true
   doctest MscmpSystGroups
 
-  test "greets the world" do
-    assert MscmpSystGroups.hello() == :world
+  test "placeholder" do
+    assert true
   end
 end
