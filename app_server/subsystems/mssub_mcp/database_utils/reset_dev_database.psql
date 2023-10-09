@@ -21,8 +21,9 @@ DROP FUNCTION IF EXISTS ms_syst.drop_role(text);
 DROP SCHEMA IF EXISTS ms_syst;
 
 DROP ROLE IF EXISTS ms_syst_access;
-DROP ROLE IF EXISTS ms_syst_owner;
 DROP ROLE IF EXISTS ms_syst_privileged;
+DROP ROLE IF EXISTS ms_syst_managable;
+DROP ROLE IF EXISTS ms_syst_owner;
 
 DROP ROLE IF EXISTS mssub_mcp_owner;
 DROP ROLE IF EXISTS mssub_mcp_app_access;
