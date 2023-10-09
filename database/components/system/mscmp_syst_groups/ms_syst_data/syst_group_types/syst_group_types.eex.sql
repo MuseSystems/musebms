@@ -28,7 +28,7 @@ CREATE TABLE ms_syst_data.syst_group_types
         uuid
         NOT NULL
         CONSTRAINT syst_group_types_group_functional_type_fk
-            REFERENCES ms_syst_data.syst_group_functional_type ( id )
+            REFERENCES ms_syst_data.syst_group_functional_types ( id )
             ON DELETE CASCADE
     ,syst_defined
         boolean
