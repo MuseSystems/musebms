@@ -29,6 +29,9 @@
             "path": "app_server/components/system/mscmp_syst_enums",
         },
         {
+            "path": "app_server/components/system/mscmp_syst_groups",
+        },
+        {
             "path": "app_server/components/system/mscmp_syst_instance",
         },
         {
