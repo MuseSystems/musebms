@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION ms_syst.trig_i_u_syst_functional_types()
+CREATE OR REPLACE FUNCTION ms_syst.trig_i_u_syst_group_functional_types()
 RETURNS trigger AS
 $BODY$
 
@@ -56,12 +56,12 @@ $BODY$
     SECURITY DEFINER
     SET search_path TO ms_syst, pg_temp;
 
-ALTER FUNCTION ms_syst.trig_i_u_syst_functional_types()
+ALTER FUNCTION ms_syst.trig_i_u_syst_group_functional_types()
     OWNER TO <%= ms_owner %>;
 
-REVOKE EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_functional_types() FROM public;
-GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_functional_types() TO <%= ms_owner %>;
+REVOKE EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_group_functional_types() FROM public;
+GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_group_functional_types() TO <%= ms_owner %>;
 
-COMMENT ON FUNCTION ms_syst.trig_i_u_syst_functional_types() IS
+COMMENT ON FUNCTION ms_syst.trig_i_u_syst_group_functional_types() IS
 $DOC$An INSTEAD OF trigger function which applies business rules when using the
 syst_group_functional_types API View for UPDATE operations.$DOC$;
