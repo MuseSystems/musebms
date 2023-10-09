@@ -24,7 +24,7 @@ BEGIN
                     MESSAGE = 'You may not delete the designated database owner ' ||
                               'context for an Application from the database.',
                     DETAIL = ms_syst_priv.get_exception_details(
-                                 p_proc_schema    => 'ms_syst'
+                                 p_proc_schema    => 'ms_syst_data'
                                 ,p_proc_name      => 'trig_b_iud_syst_application_contexts_validate_owner_context'
                                 ,p_exception_name => 'invalid_duplicate'
                                 ,p_errcode        => 'PM008'
