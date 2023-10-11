@@ -18,10 +18,10 @@ SELECT
   , external_name
   , parent_group_id
   , group_type_item_id
-  , syst_description
-  , user_description
   , syst_defined
   , user_maintainable
+  , syst_description
+  , user_description
   , diag_timestamp_created
   , diag_role_created
   , diag_timestamp_modified
@@ -132,22 +132,6 @@ view unless the record is also marked User Maintainable.  User created records
 may update this column using this API view as required.$DOC$;
 
 COMMENT ON
-    COLUMN ms_syst.syst_groups.syst_description IS
-$DOC$A default description of a specific Group displayable to end users in cases
-where no user supplied description exists.
-
-This column is read only and not maintainable via this API view.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_groups.user_description IS
-$DOC$A user defined description of a specific Group which overrides the
-`syst_description` field.  The override is effective in cases where this column
-is not null.
-
-This column may is user modifiable even when the record is System Defined or not
-marked as User Maintainable.$DOC$;
-
-COMMENT ON
     COLUMN ms_syst.syst_groups.syst_defined IS
 $DOC$If true, this value indicates that the Group was created as an integral part of
 the application and minimally expects to find the root level Group to be
@@ -168,6 +152,22 @@ documentation under all circumstances.  Finally, the value of this column is
 disregarded when the record does not set `syst_defined` true.
 
 This column is read only and not maintainable via this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_groups.syst_description IS
+$DOC$A default description of a specific Group displayable to end users in cases
+where no user supplied description exists.
+
+This column is read only and not maintainable via this API view.$DOC$;
+
+COMMENT ON
+    COLUMN ms_syst.syst_groups.user_description IS
+$DOC$A user defined description of a specific Group which overrides the
+`syst_description` field.  The override is effective in cases where this column
+is not null.
+
+This column may is user modifiable even when the record is System Defined or not
+marked as User Maintainable.$DOC$;
 
 COMMENT ON
     COLUMN ms_syst.syst_groups.diag_timestamp_created IS
