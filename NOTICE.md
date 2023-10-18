@@ -25,9 +25,9 @@ to be sure that their licenses are someplace appropriate.)
 
 ## MscmpSystNetwork
 
-The MscmpSystNetwork component is originally a fork of the
-[net_address](https://github.com/ityonemo/net_address) library by Isaac
-Yonemoto.  The version of `net_address` forked here is version 0.3.0 publicly
+The MscmpSystNetwork Component uses code copied from the
+[`net_address`](https://github.com/ityonemo/net_address) library by Isaac
+Yonemoto.  The version of `net_address` code used here is version 0.3.0 publicly
 licensed under the MIT License:
 
       NetAddress
