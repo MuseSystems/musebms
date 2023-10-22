@@ -52,9 +52,7 @@ defmodule MscmpSystNetwork.Impl.IpV4 do
 
       true ->
         address = addr.address |> to_integer()
-        inverse_mask = get_netmask(addr) |> to_integer() |> bnot() |> band(0xFFFF_FFFF)
-        broadcast_address = address ||| inverse_mask
-
+        broadcast_address = get_highest_address(addr)
         address != broadcast_address
     end
   end
@@ -86,5 +84,11 @@ defmodule MscmpSystNetwork.Impl.IpV4 do
   defp mask(bit_length) do
     <<a, b, c, d>> = <<-1 <<< (32 - bit_length)::32>>
     {a, b, c, d}
+  end
+
+  defp get_highest_address(addr) do
+    address = addr.address |> to_integer()
+    inverse_mask = get_netmask(addr) |> to_integer() |> bnot() |> band(0xFFFF_FFFF)
+    address ||| inverse_mask
   end
 end
