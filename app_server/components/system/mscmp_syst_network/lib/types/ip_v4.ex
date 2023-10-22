@@ -37,5 +37,12 @@ defmodule MscmpSystNetwork.Types.IpV4 do
 
     @spec network?(Types.IpV4.t()) :: boolean()
     def network?(addr_struct), do: Impl.IpV4.network?(addr_struct)
+
+    @spec in_network?(Types.IpV4.t(), Types.IpV4.t()) :: boolean()
+    def in_network?(test_addr, network_addr), do: Impl.IpV4.in_network?(test_addr, network_addr)
+
+    @spec in_range?(Types.IpV4.t(), Types.IpV4.t(), Types.IpV4.t()) :: boolean()
+    def in_range?(test_addr, low_addr, high_addr),
+      do: Impl.IpV4.in_range?(test_addr, low_addr, high_addr)
   end
 end

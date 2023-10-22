@@ -37,5 +37,12 @@ defmodule MscmpSystNetwork.Types.IpV6 do
 
     @spec network?(Types.IpV6.t()) :: boolean()
     def network?(addr_struct), do: Impl.IpV6.network?(addr_struct)
+
+    @spec in_network?(Types.IpV6.t(), Types.IpV6.t()) :: boolean()
+    def in_network?(test_addr, network_addr), do: Impl.IpV6.in_network?(test_addr, network_addr)
+
+    @spec in_range?(Types.IpV6.t(), Types.IpV6.t(), Types.IpV6.t()) :: boolean()
+    def in_range?(test_addr, low_addr, high_addr),
+      do: Impl.IpV6.in_range?(test_addr, low_addr, high_addr)
   end
 end
