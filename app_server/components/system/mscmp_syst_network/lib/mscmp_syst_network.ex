@@ -53,7 +53,7 @@ defmodule MscmpSystNetwork do
       iex> MscmpSystNetwork.parse("172.16.0.0/16")
       {:ok, %MscmpSystNetwork.Types.IpV4{address: {172, 16, 0, 0}, mask: 16}}
 
-      IPv4 Error Example
+    IPv4 Error Example
 
       iex> MscmpSystNetwork.parse("192.618.10.14/32")
       {:error,
@@ -66,18 +66,42 @@ defmodule MscmpSystNetwork do
     IPv6 addresses
 
       iex> MscmpSystNetwork.parse("fd9b:77f8:714d:cabb::1")
-      {:ok, %MscmpSystNetwork.Types.IpV6{address: {64923, 30712, 29005, 51899, 0, 0, 0, 1}, mask: 128}}
+      {
+        :ok,
+        %MscmpSystNetwork.Types.IpV6{
+          address: {64923, 30712, 29005, 51899, 0, 0, 0, 1},
+          mask: 128
+        }
+      }
 
       iex> MscmpSystNetwork.parse("fd9b:77f8:714d:cabb::20/128")
-      {:ok, %MscmpSystNetwork.Types.IpV6{address: {64923, 30712, 29005, 51899, 0, 0, 0, 32}, mask: 128}}
+      {
+        :ok,
+        %MscmpSystNetwork.Types.IpV6{
+          address: {64923, 30712, 29005, 51899, 0, 0, 0, 32},
+          mask: 128
+        }
+      }
 
       iex> MscmpSystNetwork.parse("fd9b:77f8:714d:cabb:0000:0000:ab67:12/64")
-      {:ok, %MscmpSystNetwork.Types.IpV6{address: {64923, 30712, 29005, 51899, 0, 0, 43879, 18}, mask: 64}}
+      {
+        :ok,
+        %MscmpSystNetwork.Types.IpV6{
+          address: {64923, 30712, 29005, 51899, 0, 0, 43879, 18},
+          mask: 64
+        }
+      }
 
       iex> MscmpSystNetwork.parse("fd9b:77f8:714d:cabb::/64")
-      {:ok, %MscmpSystNetwork.Types.IpV6{address: {64923, 30712, 29005, 51899, 0, 0, 0, 0}, mask: 64}}
+      {
+        :ok,
+        %MscmpSystNetwork.Types.IpV6{
+          address: {64923, 30712, 29005, 51899, 0, 0, 0, 0},
+          mask: 64
+        }
+      }
 
-      IPv6 Error Example
+    IPv6 Error Example
 
       iex> MscmpSystNetwork.parse("fd9b:77f8:714d:qqqq::z")
       {:error,
@@ -198,10 +222,18 @@ defmodule MscmpSystNetwork do
 
     IPv6 Addresses
 
-      iex> my_host = %MscmpSystNetwork.Types.IpV6{address: {64923, 30712, 29005, 51899, 0, 0, 0, 1}, mask: 128}
+      iex> my_host =
+      ...>   %MscmpSystNetwork.Types.IpV6{
+      ...>     address: {64923, 30712, 29005, 51899, 0, 0, 0, 1},
+      ...>     mask: 128
+      ...>   }
       iex> MscmpSystNetwork.to_string(my_host)
       "fd9b:77f8:714d:cabb::1/128"
-      iex> my_subnet = %MscmpSystNetwork.Types.IpV6{address: {64923, 30712, 29005, 51899, 0, 0, 43879, 18}, mask: 64}
+      iex> my_subnet =
+      ...>   %MscmpSystNetwork.Types.IpV6{
+      ...>     address: {64923, 30712, 29005, 51899, 0, 0, 43879, 18},
+      ...>     mask: 64
+      ...>   }
       iex> MscmpSystNetwork.to_string(my_subnet)
       "fd9b:77f8:714d:cabb::ab67:12/64"
   """
@@ -344,8 +376,11 @@ defmodule MscmpSystNetwork do
   Evaluates an IP address struct to see if it represents an entire network or
   sub-net rather than a host.
 
-  If the function finds that a sub-net is represented by the struct,
-  the function returns true.  Otherwise false.
+  This function only returns true when the supplied IP address represents only a
+  network or sub-net.  False is returned when the provided IP address struct
+  also contains an identifiable host or is only a host.  False is even returned
+  in cases where the CIDR notation would allow a network to be extracted from
+  the provided IP address struct.
 
   > #### Other Non-address IPs {: .warning}
   >
