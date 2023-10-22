@@ -30,4 +30,10 @@ defprotocol MscmpSystNetwork.Protocol do
 
   @spec network?(Types.addr_structs()) :: boolean()
   def network?(addr_struct)
+
+  @spec in_network?(Types.addr_structs(), Types.addr_structs()) :: boolean()
+  def in_network?(test_addr, network_addr)
+
+  @spec in_range?(Types.addr_structs(), Types.addr_structs(), Types.addr_structs()) :: boolean()
+  def in_range?(test_addr, low_addr, high_addr)
 end

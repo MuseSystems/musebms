@@ -377,4 +377,127 @@ defmodule MscmpSystNetwork do
   """
   @spec network?(Types.addr_structs()) :: boolean()
   defdelegate network?(addr_struct), to: MscmpSystNetwork.Protocol
+
+  @doc section: :protocol_api
+  @doc """
+  Tests to see if an IP host or sub-net is contained by a specific sub-net.
+
+  True is returned when the test address is contained by the given network,
+  otherwise false is returned.  Any error raises an exception.
+
+  ## Parameters
+
+    * `test_addr` - any valid IP address struct.  This struct can represent an
+    individual host or a sub-net.
+
+    * `network_addr` - a valid IP address struct which only represents a
+    network.  Host addresses from which a network can be extracted such as
+    `10.1.1.113/24` will still cause an exception to be raised; only network
+    only addresses such as `10.1.1.0/24` are accepted.  See
+    `MscmpSystNetwork.get_network/1` for extracting a network address from a
+    host address with an identifiable network.
+
+  ## Examples
+
+    IPv4 Examples
+
+      iex> import MscmpSystNetwork, only: [sigil_i: 2]
+      iex> MscmpSystNetwork.in_network?(~i"10.1.1.10", ~i"10.1.0.0/16")
+      true
+      iex> MscmpSystNetwork.in_network?(~i"10.1.1.0/24", ~i"10.1.0.0/16")
+      true
+      iex> MscmpSystNetwork.in_network?(~i"10.1.1.0/24", ~i"10.1.1.0/24")
+      true
+      iex> MscmpSystNetwork.in_network?(~i"10.2.1.1/32", ~i"10.1.0.0/16")
+      false
+
+    IPv6 Examples
+
+      iex> import MscmpSystNetwork, only: [sigil_i: 2]
+      iex> MscmpSystNetwork.in_network?(
+      ...>   ~i"fd9b:77f8:714d:cabb::20/128", ~i"fd9b:77f8:714d:cabb::/64")
+      true
+      iex> MscmpSystNetwork.in_network?(
+      ...>   ~i"fd9b:77f8:714d:cabb:ab67::/68", ~i"fd9b:77f8:714d:cabb::/64")
+      true
+      iex> MscmpSystNetwork.in_network?(
+      ...>   ~i"fd9b:77f8:714d:cabb::/64", ~i"fd9b:77f8:714d:cabb::/64")
+      true
+      iex> MscmpSystNetwork.in_network?(
+      ...>   ~i"fd9b:77f8:714d:caab::20/128", ~i"fd9b:77f8:714d:cabb::/64")
+      false
+
+  """
+  @spec in_network?(Types.addr_structs(), Types.addr_structs()) :: boolean()
+  defdelegate in_network?(test_addr, network_addr), to: MscmpSystNetwork.Protocol
+
+  @doc section: :protocol_api
+  @doc """
+  Tests if an IP address host or sub-net is contained by the given range.
+
+  True is returned when the IP address is contained, otherwise false.  Errors
+  raise exceptions.
+
+  ## Parameters
+
+    * `test_addr` - a valid IP address struct which must be fully contained by
+    the low and high IP addresses to obtain  a true result.
+
+    * `low_addr` - The low address of the range.  If the `low_addr` value is a
+    struct identifying a host, but from which a network could be extracted, it
+    is treated as a host only.  If the struct represents only a network or
+    sub-net, the network IP address itself is treated as the lowest IP address
+    in the range; for example `10.1.0.0/16` will treat `10.1.0.0` as the lowest
+    IP address in the range.
+
+    * `high_addr` - the high address of the range.  If the `high_addr` value is
+    a struct identifying a host, but from which a network could be extracted, it
+    is treated as a host only.  If the struct represents only a network or
+    sub-net, the network's largest possible IP address is considered the high
+    address of the range; for example `10.1.0.0/16` would consider
+    `10.1.255.255` as the highest address in the range.
+
+  The range boundaries are considered inclusive at both extremes.
+
+  ## Examples
+
+    IPv4 Examples
+
+      iex> import MscmpSystNetwork, only: [sigil_i: 2]
+      iex> MscmpSystNetwork.in_range?(~i"10.1.1.10", ~i"10.1.1.1", ~i"10.1.1.15")
+      true
+      iex> MscmpSystNetwork.in_range?(~i"10.1.1.0/24", ~i"10.1.0.0/16", ~i"10.1.2.254")
+      true
+      iex> MscmpSystNetwork.in_range?(~i"10.1.1.0/24", ~i"10.1.1.0/24", ~i"10.1.1.0/24")
+      true
+      iex> MscmpSystNetwork.in_range?(~i"10.3.1.1/32", ~i"10.1.0.0/16", ~i"10.2.0.0/16")
+      false
+
+    IPv6 Examples
+
+      iex> import MscmpSystNetwork, only: [sigil_i: 2]
+      iex> MscmpSystNetwork.in_range?(
+      ...>   ~i"fd9b:77f8:714d:cabb::20",
+      ...>   ~i"fd9b:77f8:714d:cabb::10",
+      ...>   ~i"fd9b:77f8:714d:cabb::30")
+      true
+      iex> MscmpSystNetwork.in_range?(
+      ...>   ~i"fd9b:77f8:714d:cabb:ab67::/68",
+      ...>   ~i"fd9b:77f8:714d:cabb::/64",
+      ...>   ~i"fd9b:77f8:714d:cabd::")
+      true
+      iex> MscmpSystNetwork.in_range?(
+      ...>   ~i"fd9b:77f8:714d:cabb::/64",
+      ...>   ~i"fd9b:77f8:714d:cabb::/64",
+      ...>   ~i"fd9b:77f8:714d:cabb::/64")
+      true
+      iex> MscmpSystNetwork.in_range?(
+      ...>   ~i"fd9b:77f8:714e:caab::20/128",
+      ...>   ~i"fd9b:77f8:714d:caba::/64",
+      ...>   ~i"fd9b:77f8:714d:cabc::/64")
+      false
+
+  """
+  @spec in_range?(Types.addr_structs(), Types.addr_structs(), Types.addr_structs()) :: boolean()
+  defdelegate in_range?(test_addr, low_addr, high_addr), to: MscmpSystNetwork.Protocol
 end

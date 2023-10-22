@@ -54,6 +54,61 @@ defmodule MscmpSystNetwork.Impl.IpV6 do
     (address &&& inverse_mask) == 0
   end
 
+  @spec in_network?(IpV6.t(), IpV6.t()) :: boolean()
+  def in_network?(%IpV6{} = target_addr, %IpV6{} = network_addr) do
+    cond do
+      not network?(network_addr) ->
+        raise MscmpSystError,
+          code: :undefined_error,
+          message: "No identifiable network was provided.",
+          cause: %{parameters: %{target_addr: target_addr, network_addr: network_addr}}
+
+      target_addr.mask < network_addr.mask ->
+        # a larger target_addr network cannot be contained by a smaller
+        # network_addr network.
+        false
+
+      true ->
+        extracted_target =
+          %IpV6{address: target_addr.address, mask: network_addr.mask} |> get_network()
+
+        extracted_network = get_network(network_addr)
+
+        extracted_target === extracted_network
+    end
+  end
+
+  @spec in_range?(IpV6.t(), IpV6.t(), IpV6.t()) :: boolean()
+  def in_range?(%IpV6{} = target_addr, %IpV6{} = low_addr, %IpV6{} = high_addr) do
+    target_is_host = host?(target_addr)
+    high_is_network = network?(high_addr)
+
+    target_hi =
+      if target_is_host do
+        target_addr.address |> to_integer()
+      else
+        get_highest_address(target_addr)
+      end
+
+    target_low =
+      if target_is_host do
+        target_addr.address |> to_integer()
+      else
+        get_network(target_addr) |> to_integer()
+      end
+
+    low_resolved = low_addr.address |> to_integer()
+
+    high_resolved =
+      if high_is_network do
+        get_highest_address(high_addr)
+      else
+        high_addr.address |> to_integer()
+      end
+
+    target_low >= low_resolved and target_hi <= high_resolved
+  end
+
   @spec to_struct(Types.ip6_addr(), 1..128 | nil) :: IpV6.t()
   def to_struct(erlang_addr, mask) when is_ipv6_tuple(erlang_addr),
     do: %IpV6{address: erlang_addr, mask: mask}
@@ -83,5 +138,17 @@ defmodule MscmpSystNetwork.Impl.IpV6 do
       h::unsigned-integer-size(16)>> = <<-1 <<< (128 - bit_length)::128>>
 
     {a, b, c, d, e, f, g, h}
+  end
+
+  defp get_highest_address(addr) do
+    address = addr.address |> to_integer()
+
+    inverse_mask =
+      get_netmask(addr)
+      |> to_integer()
+      |> bnot()
+      |> band(0xFFFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF)
+
+    address ||| inverse_mask
   end
 end
