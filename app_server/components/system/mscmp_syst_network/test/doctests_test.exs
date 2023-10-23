@@ -12,5 +12,9 @@
 
 defmodule DoctestsTest do
   use ExUnit.Case, async: true
+
+  @moduletag :capture_log
+
   doctest MscmpSystNetwork
+  doctest MscmpSystNetwork.Guards
 end
