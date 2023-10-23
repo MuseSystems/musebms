@@ -26,11 +26,11 @@ defmodule MscmpSystDb.MixProject do
     {:jason, "~> 1.0"},
     {:postgrex, "~> 0.10"},
     {:toml, "~> 0.7"},
-    {:net_address, "~> 0.3.0"},
 
     # Muse Systems Business Management System Components
     {:mscmp_syst_error, path: "../mscmp_syst_error"},
-    {:mscmp_syst_utils, path: "../mscmp_syst_utils"}
+    {:mscmp_syst_utils, path: "../mscmp_syst_utils"},
+    {:mscmp_syst_network, path: "../mscmp_syst_network"}
   ]
 
   @dialyzer_opts [
@@ -57,7 +57,8 @@ defmodule MscmpSystDb.MixProject do
         output: "../../../../documentation/technical/app_server/mscmp_syst_db",
         deps: [
           mscmp_syst_error: "../../../../documentation/technical/app_server/mscmp_syst_error",
-          mscmp_syst_utils: "../../../../documentation/technical/app_server/mscmp_syst_utils"
+          mscmp_syst_utils: "../../../../documentation/technical/app_server/mscmp_syst_utils",
+          mscmp_syst_network: "../../../../documentation/technical/app_server/mscmp_syst_network"
         ],
         nest_modules_by_prefix: [MscmpSystDb.DbTypes, MscmpSystDb.Types],
         groups_for_functions: [

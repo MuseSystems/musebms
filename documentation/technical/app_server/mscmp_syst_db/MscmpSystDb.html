@@ -4,20 +4,20 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.30.6">
+    <meta name="generator" content="ExDoc v0.30.9">
     <meta name="project" content="mscmp_syst_db v0.1.0">
 
     <title>MscmpSystDb — mscmp_syst_db v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-M3TQBNKO.css" />
+    <link rel="stylesheet" href="dist/html-elixir-XFYN5IVA.css" />
 
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-KDPBTEPL.js"></script>
+    <script src="dist/handlebars.templates-EPF2X7PV.js"></script>
     <script src="dist/sidebar_items-0BBD5E6C.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/html-CP2A7WXZ.js"></script>
+    <script async src="dist/html-J2ASZTQE.js"></script>
 
 
   </head>
@@ -38,22 +38,22 @@
 
 <div class="main">
 
-<button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
+<button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
   <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
 </button>
 
-<section class="sidebar">
+<nav id="sidebar" class="sidebar">
   <form class="sidebar-search" action="search.html">
+    <label class="search-label">
+      <span class="sr-only">Search documentation of mscmp_syst_db</span>
+      <input name="q" type="text" class="search-input" placeholder="Search..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+    </label>
     <button type="submit" class="search-button" aria-label="Submit Search">
       <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
     </button>
-    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
-      <i class="ri-close-line ri-lg" aria-hidden="true" title="Cancel search"></i>
+    <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+      <i class="ri-close-line ri-lg" title="Cancel search"></i>
     </button>
-    <label class="search-label">
-      <p class="sr-only">Search</p>
-      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
-    </label>
   </form>
 
   <div class="autocomplete">
@@ -71,21 +71,45 @@ mscmp_syst_db
         v0.1.0
       </div>
     </div>
-    <ul class="sidebar-listNav">
-      <li><a id="extras-list-link" href="#full-list">Pages</a></li>
+    <ul id="sidebar-listNav" class="sidebar-listNav" role="tablist">
+      <li>
+        <button id="extras-list-tab-button" role="tab" data-type="extras" aria-controls="extras-tab-panel" aria-selected="true" tabindex="0">
+Pages
+        </button>
+      </li>
 
-        <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+        <li>
+          <button id="modules-list-tab-button" role="tab" data-type="modules" aria-controls="modules-tab-panel" aria-selected="false" tabindex="-1">
+            Modules
+          </button>
+        </li>
 
 
-        <li><a id="tasks-list-link" href="#full-list"><span translate="no">Mix</span> Tasks</a></li>
+        <li>
+          <button id="tasks-list-tab-button" role="tab" data-type="tasks" aria-controls="tasks-tab-panel" aria-selected="false" tabindex="-1">
+            <span translate="no">Mix</span> Tasks
+          </button>
+        </li>
 
     </ul>
   </div>
 
-  <ul id="full-list"></ul>
-</section>
+  <div id="extras-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="extras-list-tab-button">
+    <ul id="extras-full-list" class="full-list"></ul>
+  </div>
 
-<section class="content">
+    <div id="modules-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="modules-list-tab-button" hidden>
+      <ul id="modules-full-list" class="full-list"></ul>
+    </div>
+
+
+    <div id="tasks-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="tasks-list-tab-button" hidden>
+      <ul id="tasks-full-list" class="full-list"></ul>
+    </div>
+
+</nav>
+
+<main class="content">
   <output role="status" id="toast"></output>
   <div class="content-outer">
     <div id="content" class="content-inner">
@@ -113,10 +137,10 @@ Elixir/Phoenix based applications.  As with most choices in software
 architecture and engineering there are trade-offs between the different
 tenancy approaches that you should be well-versed with prior to committing to
 this or any other tenancy model for your applications.</p></blockquote><h2 id="module-concepts" class="section-heading">
-  <a href="#module-concepts">
+  <a href="#module-concepts" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Concepts
   </a>
+  <span class="text">Concepts</span>
 </h2>
 <p>There are several concepts requiring definitions which should be understood
 before continuing.  Most of these concepts relate to runtime concerns though
@@ -174,10 +198,10 @@ might well be workable, it was designed with the idea of kicking the can of a
 difficult and sensitive problem down the road and not as a final solution that
 we'd stand behind.  We do believe this problem is solvable with sufficient
 time and expertise.</p></blockquote><h2 id="module-database-development" class="section-heading">
-  <a href="#module-database-development">
+  <a href="#module-database-development" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Database Development
   </a>
+  <span class="text">Database Development</span>
 </h2>
 <p>Our development model assumes that there are fundamentally two phases of
 development related to the database: <strong><em>Initial/Major Development</em></strong> and
@@ -233,10 +257,10 @@ modification to the database you'll create new a database source file(s) for
 those modifications specifically and they'll get new version numbers which will
 in turn create new migrations when <a href="Mix.Tasks.Builddb.html"><code class="inline">mix builddb</code></a> builds them.  These will then
 be deployed to the database as standard migrations would.</p><h2 id="module-migration-deployments" class="section-heading">
-  <a href="#module-migration-deployments">
+  <a href="#module-migration-deployments" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Migration Deployments
   </a>
+  <span class="text">Migration Deployments</span>
 </h2>
 <p>Once built, migration files are deployed to a database similar to the way
 traditional migration systems perform their deployments: the migrations are
@@ -265,10 +289,10 @@ that different database schemas for different subsystems can be supported by the
 migration system in a single application.  This assumes that a single database
 is of a single type; that type may be any of the available types, but mixing of
 types in a single database is not allowed.</p><h2 id="module-custom-database-types" class="section-heading">
-  <a href="#module-custom-database-types">
+  <a href="#module-custom-database-types" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Custom Database Types
   </a>
+  <span class="text">Custom Database Types</span>
 </h2>
 <p><a href="https://hexdocs.pm/ecto/3.10.3/Ecto.html"><code class="inline">Ecto</code></a>, <code class="inline">EctoSql</code>, and the underlying PostgreSQL library <a href="https://hexdocs.pm/postgrex/0.17.3/Postgrex.html"><code class="inline">Postgrex</code></a> offer decent
 PostgreSQL data type support out of box, but they don't directly map some of the
@@ -276,10 +300,10 @@ database types that can be helpful in business software such as PostgreSQL range
 types, internet address types, and interval types.  To this end we add some
 custom database data types via the modules in the <code class="inline">MscmpSystDb.DbTypes.*</code>
 namespace.</p><h2 id="module-data-access-interface" class="section-heading">
-  <a href="#module-data-access-interface">
+  <a href="#module-data-access-interface" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Data Access Interface
   </a>
+  <span class="text">Data Access Interface</span>
 </h2>
 <p>The <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.html"><code class="inline">Ecto</code></a> library offers a data access and manipulation API via the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html"><code class="inline">Ecto.Repo</code></a>
 module.  We wrap and in some cases extend the majority of that functionality in
@@ -296,8 +320,8 @@ reason to do otherwise.</p>
     <h1 class="section-heading">
       <a class="hover-link" href="#summary">
         <i class="ri-link-m" aria-hidden="true"></i>
-        Summary
       </a>
+      <span class="text">Summary</span>
     </h1>
 <div class="summary-query summary">
   <h2>
@@ -882,8 +906,8 @@ Elixir process where this function is called.</p></div>
     <h1 class="section-heading">
       <a class="hover-link" href="#query">
         <i class="ri-link-m" aria-hidden="true"></i>
-Query
       </a>
+      <span class="text">Query</span>
     </h1>
     <div class="query-list">
 <section class="detail" id="aggregate/4">
@@ -1729,8 +1753,8 @@ function.</p>
     <h1 class="section-heading">
       <a class="hover-link" href="#datastore-management">
         <i class="ri-link-m" aria-hidden="true"></i>
-Datastore Management
       </a>
+      <span class="text">Datastore Management</span>
     </h1>
     <div class="datastore-management-list">
 <section class="detail" id="create_datastore/2">
@@ -1930,8 +1954,8 @@ and contexts, respectively, of the provided Datastore options definition.</p>
     <h1 class="section-heading">
       <a class="hover-link" href="#datastore-migrations">
         <i class="ri-link-m" aria-hidden="true"></i>
-Datastore Migrations
       </a>
+      <span class="text">Datastore Migrations</span>
     </h1>
     <div class="datastore-migrations-list">
 <section class="detail" id="get_datastore_version/2">
@@ -2006,8 +2030,8 @@ recent schema version.</p>
     <h1 class="section-heading">
       <a class="hover-link" href="#runtime">
         <i class="ri-link-m" aria-hidden="true"></i>
-Runtime
       </a>
+      <span class="text">Runtime</span>
     </h1>
     <div class="runtime-list">
 <section class="detail" id="current_datastore_context/0">
@@ -2197,7 +2221,7 @@ Dictionary of the process from which the function call is made.</p>
 
         <p class="built-using">
           Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.30.6) for the
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.30.9) for the
 
             <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 
@@ -2205,7 +2229,7 @@ Dictionary of the process from which the function call is made.</p>
       </footer>
     </div>
   </div>
-</section>
+</main>
 </div>
 
 

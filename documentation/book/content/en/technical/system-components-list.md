@@ -176,7 +176,8 @@ These Components are listed in "Lower Level Component" to "Higher Level Componen
     * __First Party Dependencies__
 
       <a href="#mscmpsysterror">`mscmp_syst_error`</a>,
-      <a href="#mscmpsystutils">`mscmp_syst_utils`</a>
+      <a href="#mscmpsystutils">`mscmp_syst_utils`</a>,
+      <a href="#mscmpsystnetwork">`mscmp_syst_network`</a>
 
     * __Third Party Dependencies__
 
@@ -184,8 +185,7 @@ These Components are listed in "Lower Level Component" to "Higher Level Componen
       <a href="https://hexdocs.pm/ecto" target="_blank">`ecto`</a>,
       <a href="https://hexdocs.pm/jason" target="_blank">`jason`</a>,
       <a href="https://hexdocs.pm/postgrex" target="_blank">`postgrex`</a>,
-      <a href="https://hexdocs.pm/toml" target="_blank">`toml`</a>,
-      <a href="https://hexdocs.pm/net_address" target="_blank">`net_address`</a>
+      <a href="https://hexdocs.pm/toml" target="_blank">`toml`</a>
 
   * ### `MscmpSystOptions`
 
