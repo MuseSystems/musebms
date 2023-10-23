@@ -49,9 +49,19 @@ defmodule MscmpSystNetwork.MixProject do
         name: "MscmpSystNetwork",
         main: "MscmpSystNetwork",
         output: "../../../../documentation/technical/app_server/mscmp_syst_network",
-        groups_for_functions: [],
+        groups_for_functions: [
+          Parsing: &(&1[:section] == :parse_api),
+          "Protocol Functions": &(&1[:section] == :protocol_api)
+        ],
         groups_for_modules: [
-          API: [MscmpSystNetwork]
+          API: [MscmpSystNetwork],
+          Guards: [MscmpSystNetwork.Guards],
+          Protocol: [MscmpSystNetwork.Protocol],
+          "Supporting Types": [
+            MscmpSystNetwork.Types,
+            MscmpSystNetwork.Types.IpV4,
+            MscmpSystNetwork.Types.IpV6
+          ]
         ]
       ]
     ]
