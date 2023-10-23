@@ -120,10 +120,87 @@ defmodule IpV4Test do
 
   test "Can create struct from Erlang IP address and mask" do
     Enum.each(1..1_000_000, fn _ ->
-      {kind, expected_result} = get_random_ip(:any, {15, 70})
+      {_, expected_result} = get_random_ip(:any, {15, 70})
 
       assert expected_result ===
                Impl.IpV4.to_struct(expected_result.address, expected_result.mask)
+    end)
+  end
+
+  #
+  # @spec in_network?(IpV4.t(), IpV4.t()) :: boolean()
+  #
+
+  test "Can test if IP address or network is contained by an identified network" do
+    test_data =
+      [
+        {%IpV4{address: {10, 1, 1, 12}, mask: 32}, %IpV4{address: {10, 1, 1, 0}, mask: 24}, true},
+        {%IpV4{address: {10, 1, 1, 0}, mask: 24}, %IpV4{address: {10, 1, 1, 0}, mask: 24}, true},
+        {%IpV4{address: {10, 1, 2, 12}, mask: 32}, %IpV4{address: {10, 1, 1, 0}, mask: 24},
+         false},
+        {%IpV4{address: {10, 1, 1, 12}, mask: 32}, %IpV4{address: {10, 0, 0, 0}, mask: 8}, true},
+        {%IpV4{address: {10, 1, 1, 12}, mask: 32}, %IpV4{address: {10, 0, 0, 0}, mask: 8}, true},
+        {%IpV4{address: {10, 2, 1, 12}, mask: 32}, %IpV4{address: {10, 0, 0, 0}, mask: 8}, true},
+        {%IpV4{address: {10, 2, 1, 0}, mask: 24}, %IpV4{address: {10, 0, 0, 0}, mask: 8}, true},
+        {%IpV4{address: {10, 0, 0, 0}, mask: 8}, %IpV4{address: {10, 0, 0, 0}, mask: 8}, true},
+        {%IpV4{address: {10, 255, 255, 255}, mask: 8}, %IpV4{address: {10, 0, 0, 0}, mask: 8},
+         true},
+        {%IpV4{address: {11, 0, 0, 0}, mask: 8}, %IpV4{address: {10, 0, 0, 0}, mask: 8}, false}
+      ]
+
+    Enum.each(test_data, fn curr_tuple ->
+      assert elem(curr_tuple, 2) ===
+               Impl.IpV4.in_network?(elem(curr_tuple, 0), elem(curr_tuple, 1))
+    end)
+  end
+
+  #
+  # @spec in_range?(IpV4.t(), IpV4.t(), IpV4.t()) :: boolean()
+  #
+
+  test "Can test if IP address or network is contained by an identified range" do
+    test_data =
+      [
+        {%IpV4{address: {10, 1, 1, 12}, mask: 32}, %IpV4{address: {10, 1, 1, 1}, mask: 32},
+         %IpV4{address: {10, 1, 1, 254}, mask: 32}, true},
+        {%IpV4{address: {10, 1, 2, 12}, mask: 32}, %IpV4{address: {10, 1, 1, 1}, mask: 32},
+         %IpV4{address: {10, 1, 1, 254}, mask: 32}, false},
+        {%IpV4{address: {10, 1, 1, 12}, mask: 32}, %IpV4{address: {10, 1, 1, 0}, mask: 24},
+         %IpV4{address: {10, 1, 1, 0}, mask: 24}, true},
+        {%IpV4{address: {10, 2, 1, 12}, mask: 32}, %IpV4{address: {10, 1, 1, 0}, mask: 24},
+         %IpV4{address: {10, 1, 1, 0}, mask: 24}, false},
+        {%IpV4{address: {10, 1, 1, 0}, mask: 24}, %IpV4{address: {10, 0, 0, 0}, mask: 8},
+         %IpV4{address: {10, 0, 0, 0}, mask: 8}, true},
+        {%IpV4{address: {10, 1, 1, 0}, mask: 24}, %IpV4{address: {10, 1, 1, 0}, mask: 24},
+         %IpV4{address: {10, 1, 1, 0}, mask: 24}, true},
+        {%IpV4{address: {10, 1, 1, 2}, mask: 24}, %IpV4{address: {10, 1, 1, 0}, mask: 24},
+         %IpV4{address: {10, 1, 1, 0}, mask: 24}, true},
+        {%IpV4{address: {10, 2, 1, 2}, mask: 24}, %IpV4{address: {10, 1, 1, 0}, mask: 24},
+         %IpV4{address: {10, 1, 1, 0}, mask: 24}, false},
+        {%IpV4{address: {10, 2, 1, 2}, mask: 24}, %IpV4{address: {10, 0, 0, 0}, mask: 8},
+         %IpV4{address: {11, 0, 0, 0}, mask: 8}, true},
+        {%IpV4{address: {10, 10, 0, 0}, mask: 16}, %IpV4{address: {10, 0, 0, 0}, mask: 8},
+         %IpV4{address: {11, 0, 0, 0}, mask: 8}, true},
+        {%IpV4{address: {12, 10, 0, 0}, mask: 16}, %IpV4{address: {10, 0, 0, 0}, mask: 8},
+         %IpV4{address: {11, 0, 0, 0}, mask: 8}, false},
+        {%IpV4{address: {199, 10, 0, 0}, mask: 16}, %IpV4{address: {192, 168, 0, 0}, mask: 32},
+         %IpV4{address: {201, 0, 0, 0}, mask: 32}, true},
+        {%IpV4{address: {198, 168, 0, 0}, mask: 32}, %IpV4{address: {192, 168, 0, 0}, mask: 32},
+         %IpV4{address: {201, 0, 0, 0}, mask: 32}, true},
+        {%IpV4{address: {201, 0, 0, 0}, mask: 32}, %IpV4{address: {192, 168, 0, 0}, mask: 32},
+         %IpV4{address: {201, 0, 0, 0}, mask: 32}, true},
+        {%IpV4{address: {198, 167, 255, 255}, mask: 32},
+         %IpV4{address: {192, 168, 0, 0}, mask: 32}, %IpV4{address: {201, 0, 0, 0}, mask: 32},
+         true},
+        {%IpV4{address: {201, 0, 0, 1}, mask: 32}, %IpV4{address: {192, 168, 0, 0}, mask: 32},
+         %IpV4{address: {201, 0, 0, 0}, mask: 32}, false},
+        {%IpV4{address: {200, 10, 1, 1}, mask: 16}, %IpV4{address: {192, 168, 0, 0}, mask: 32},
+         %IpV4{address: {201, 0, 0, 0}, mask: 32}, true}
+      ]
+
+    Enum.each(test_data, fn curr_tuple ->
+      assert elem(curr_tuple, 3) ===
+               Impl.IpV4.in_range?(elem(curr_tuple, 0), elem(curr_tuple, 1), elem(curr_tuple, 2))
     end)
   end
 
@@ -132,45 +209,38 @@ defmodule IpV4Test do
   #
 
   defp get_random_ip(:host) do
-    a = :rand.uniform(223)
-    b = :rand.uniform(255) - 1
-    c = :rand.uniform(255) - 1
-    d = :rand.uniform(254)
+    <<a, b, c, d>> = :rand.bytes(4)
     {:host, %IpV4{address: {a, b, c, d}, mask: 32}}
   end
 
   defp get_random_ip(:network) do
-    class = :rand.uniform(3)
+    seed = :rand.bytes(4)
+    <<seed_int::unsigned-integer-size(32)>> = seed
 
-    a = :rand.uniform(223)
-    b = if class == 1, do: 0, else: :rand.uniform(254)
-    c = if class <= 2, do: 0, else: :rand.uniform(254)
+    mask_length = :rand.uniform(31)
 
-    mask =
-      case class do
-        1 -> 8
-        2 -> 16
-        3 -> 24
-      end
+    <<mask::unsigned-integer-size(32)>> = <<-1 <<< (32 - mask_length)::32>>
 
-    {:network, %IpV4{address: {a, b, c, 0}, mask: mask}}
+    <<a, b, c, d>> = <<band(seed_int, mask)::32>>
+
+    {:network, %IpV4{address: {a, b, c, d}, mask: mask_length}}
   end
 
   defp get_random_ip(:broadcast) do
-    class = :rand.uniform(3)
+    seed = :rand.bytes(4)
+    <<seed_int::unsigned-integer-size(32)>> = seed
 
-    a = :rand.uniform(223)
-    b = if class === 1, do: 255, else: :rand.uniform(254)
-    c = if class <= 2, do: 255, else: :rand.uniform(254)
+    mask_length = :rand.uniform(31)
 
-    mask =
-      case class do
-        1 -> 8
-        2 -> 16
-        3 -> 24
-      end
+    <<mask::unsigned-integer-size(32)>> = <<-1 <<< (32 - mask_length)::32>>
 
-    {:broadcast, %IpV4{address: {a, b, c, 255}, mask: mask}}
+    inverse_mask = bnot(mask) |> band(0xFFFF_FFFF)
+
+    broadcast_address = seed_int ||| inverse_mask
+
+    <<a, b, c, d>> = <<broadcast_address::32>>
+
+    {:broadcast, %IpV4{address: {a, b, c, d}, mask: mask_length}}
   end
 
   defp get_random_ip(:any, weights \\ {70, 15}) do
