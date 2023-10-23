@@ -11,6 +11,8 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystNetwork.Impl.Cidr do
+  @moduledoc false
+
   alias MscmpSystNetwork.Types
   alias MscmpSystNetwork.Types.{IpV4, IpV6}
 
