@@ -22,13 +22,13 @@ defmodule MscmpSystNetwork.Guards do
 
   ## Examples
 
-    iex> import MscmpSystNetwork.Guards
-    iex> is_ipv4_tuple({10, 0, 0, 1})
-    true
-    iex> is_ipv4_tuple(:foo)
-    false
-    iex> is_ipv4_tuple({256, 0, 0, 0})
-    false
+      iex> import MscmpSystNetwork.Guards
+      iex> is_ipv4_tuple({10, 0, 0, 1})
+      true
+      iex> is_ipv4_tuple(:foo)
+      false
+      iex> is_ipv4_tuple({256, 0, 0, 0})
+      false
   """
   defguard is_ipv4_tuple(addr)
            when is_tuple(addr) and tuple_size(addr) == 4 and
@@ -41,13 +41,13 @@ defmodule MscmpSystNetwork.Guards do
 
   ## Examples
 
-    iex> import MscmpSystNetwork.Guards
-    iex> is_ipv6_tuple({0, 0, 0, 0, 0, 0, 0, 1})
-    true
-    iex> is_ipv6_tuple(:foo)
-    false
-    iex> is_ipv6_tuple({0x10000, 0, 0, 0, 0, 0, 0, 1})
-    false
+      iex> import MscmpSystNetwork.Guards
+      iex> is_ipv6_tuple({0, 0, 0, 0, 0, 0, 0, 1})
+      true
+      iex> is_ipv6_tuple(:foo)
+      false
+      iex> is_ipv6_tuple({0x10000, 0, 0, 0, 0, 0, 0, 1})
+      false
   """
   defguard is_ipv6_tuple(addr)
            when is_tuple(addr) and tuple_size(addr) == 8 and
