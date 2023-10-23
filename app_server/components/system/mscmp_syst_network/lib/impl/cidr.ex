@@ -23,7 +23,7 @@ defmodule MscmpSystNetwork.Impl.Cidr do
 
   @spec parse!(String.t()) :: Types.addr_structs()
   def parse!(cidr_string) do
-    [addr_str, mask_str] = cidr_string |> String.split("/", parts: 2) |> parse_split()
+    [addr_str, mask_str] = cidr_string |> String.split("/") |> parse_split()
     {:ok, address} = addr_str |> to_charlist() |> :inet.parse_address()
     mask = parse_mask_str(address, mask_str)
     to_ip_struct(address, mask)
