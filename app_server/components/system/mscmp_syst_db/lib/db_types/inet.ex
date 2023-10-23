@@ -81,17 +81,17 @@ defmodule MscmpSystDb.DbTypes.Inet do
 
   @doc """
   Converts a network address represented as a `t:MscmpSystDb.DbTypes.Inet.t/0`
-  value into one represented as either a `t:IP.addr/0` or `t:IP.Subnet.t/0`
-  value.
+  value into one represented as either a `t:MscmpSystNetwork.Types.IpV4.t/0` or
+  `t:MscmpSystNetwork.Types.IpV6.t/0` value.
   """
-  @spec to_net_address(t()) :: IP.addr() | IP.Subnet.t()
+  @spec to_net_address(DbTypes.Inet.t()) :: MscmpSystNetwork.Types.addr_structs()
   defdelegate to_net_address(address_or_network), to: Impl.Inet
 
   @doc """
-  Converts a network address represented either as a `t:IP.addr/0` or
-  `t:IP.Subnet.t/0` value into one represented as a
-  `t:MscmpSystDb.DbTypes.Inet.t/0` value.
+  Converts a network address represented either as a
+  `t:MscmpSystNetwork.Types.IpV4.t/0` or `t:MscmpSystNetwork.Types.IpV6.t/0`
+  value into one represented as a `t:MscmpSystDb.DbTypes.Inet.t/0` value.
   """
-  @spec from_net_address(IP.addr() | IP.Subnet.t()) :: t()
+  @spec from_net_address(MscmpSystNetwork.Types.addr_structs()) :: DbTypes.Inet.t()
   defdelegate from_net_address(address_or_network), to: Impl.Inet
 end

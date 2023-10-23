@@ -13,7 +13,7 @@
 defmodule DbTypesInetTest do
   use ExUnit.Case, async: true
 
-  import IP, only: [sigil_i: 2]
+  import MscmpSystNetwork, only: [sigil_i: 2]
 
   alias MscmpSystDb.DbTypes
 
@@ -33,22 +33,40 @@ defmodule DbTypesInetTest do
              DbTypes.Inet.from_postgrex_inet(%Postgrex.INET{address: {10, 1, 1, 0}, netmask: 24})
   end
 
-  test "Can convert DbTypes.Inet to IP.addr & IP.Subnet" do
-    assert ~i"10.231.231.111" =
+  test "Can convert DbTypes.Inet to MscmpSystNetwork.Types.IpV4" do
+    assert ~i"10.231.231.111" ===
              DbTypes.Inet.to_net_address(%DbTypes.Inet{address: {10, 231, 231, 111}})
 
-    assert ~i"10.231.231.0/24" =
+    assert ~i"10.231.231.0/24" ===
              DbTypes.Inet.to_net_address(%DbTypes.Inet{address: {10, 231, 231, 0}, netmask: 24})
   end
 
-  test "Can convert IP.addr & IP.Subnet to DbTypes.Inet" do
-    assert %DbTypes.Inet{address: {10, 231, 231, 111}} =
+  test "Can convert DbTypes.Inet to MscmpSystNetwork.Types.IpV6" do
+    assert ~i"fd9b:77f8:714d:cabb::20" ===
+             DbTypes.Inet.to_net_address(%DbTypes.Inet{
+               address: {64923, 30712, 29005, 51899, 0, 0, 0, 32}
+             })
+
+    assert ~i"fd9b:77f8:714d:cabb::/64" ===
+             DbTypes.Inet.to_net_address(%DbTypes.Inet{
+               address: {64923, 30712, 29005, 51899, 0, 0, 0, 0},
+               netmask: 64
+             })
+  end
+
+  test "Can convert MscmpSystNetwork.Types.IpV4 to DbTypes.Inet" do
+    assert %DbTypes.Inet{address: {10, 231, 231, 111}} ===
              DbTypes.Inet.from_net_address(~i"10.231.231.111")
 
-    assert %DbTypes.Inet{address: {10, 231, 231, 0}, netmask: 24} =
+    assert %DbTypes.Inet{address: {10, 231, 231, 0}, netmask: 24} ===
              DbTypes.Inet.from_net_address(~i"10.231.231.0/24")
+  end
 
-    assert %DbTypes.Inet{address: {10, 1, 1, 0}, netmask: 24} =
-             DbTypes.Inet.from_net_address(~i"10.1.1.0/24")
+  test "Can convert MscmpSystNetwork.Types.IpV6 to DbTypes.Inet" do
+    assert %DbTypes.Inet{address: {64923, 30712, 29005, 51899, 0, 0, 0, 32}} ===
+             DbTypes.Inet.from_net_address(~i"fd9b:77f8:714d:cabb::20")
+
+    assert %DbTypes.Inet{address: {64923, 30712, 29005, 51899, 0, 0, 0, 0}, netmask: 64} ===
+             DbTypes.Inet.from_net_address(~i"fd9b:77f8:714d:cabb::/64")
   end
 end

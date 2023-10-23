@@ -14,9 +14,7 @@ defmodule MscmpSystDb.DbTypes.Impl.Inet do
   @moduledoc false
 
   alias MscmpSystDb.DbTypes
-
-  require IP
-  require IP.Subnet
+  alias MscmpSystNetwork.Types, as: NetTypes
 
   @spec to_postgrex_inet(DbTypes.Inet.t()) :: Postgrex.INET.t()
   def to_postgrex_inet(%DbTypes.Inet{address: address, netmask: netmask}),
@@ -26,15 +24,23 @@ defmodule MscmpSystDb.DbTypes.Impl.Inet do
   def from_postgrex_inet(%Postgrex.INET{address: address, netmask: netmask}),
     do: %DbTypes.Inet{address: address, netmask: netmask}
 
-  @spec to_net_address(DbTypes.Inet.t()) :: IP.addr() | IP.Subnet.t()
-  def to_net_address(%DbTypes.Inet{address: address, netmask: nil}), do: address
+  @spec to_net_address(DbTypes.Inet.t()) :: MscmpSystNetwork.Types.addr_structs()
+  def to_net_address(%DbTypes.Inet{address: {_, _, _, _} = address, netmask: mask})
+      when (mask >= 0 and mask <= 32) or is_nil(mask),
+      do: %NetTypes.IpV4{address: address, mask: mask || 32}
 
-  def to_net_address(%DbTypes.Inet{address: address, netmask: mask}) when is_integer(mask),
-    do: IP.Subnet.of(address, mask)
+  def to_net_address(%DbTypes.Inet{address: {_, _, _, _, _, _, _, _} = address, netmask: prefix})
+      when (prefix >= 0 and prefix <= 128) or is_nil(prefix),
+      do: %NetTypes.IpV6{address: address, mask: prefix || 128}
 
-  @spec from_net_address(IP.addr() | IP.Subnet.t()) :: DbTypes.Inet.t()
-  def from_net_address(address) when IP.is_ip(address), do: %DbTypes.Inet{address: address}
+  @spec from_net_address(MscmpSystNetwork.Types.addr_structs()) :: DbTypes.Inet.t()
+  def from_net_address(%NetTypes.IpV4{address: address, mask: mask}) do
+    resolved_mask = if mask === 32, do: nil, else: mask
+    %DbTypes.Inet{address: address, netmask: resolved_mask}
+  end
 
-  def from_net_address(subnet) when IP.Subnet.is_subnet(subnet),
-    do: %DbTypes.Inet{address: subnet.routing_prefix, netmask: subnet.bit_length}
+  def from_net_address(%NetTypes.IpV6{address: address, mask: prefix}) do
+    resolved_prefix = if prefix === 128, do: nil, else: prefix
+    %DbTypes.Inet{address: address, netmask: resolved_prefix}
+  end
 end
