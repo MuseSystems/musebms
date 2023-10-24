@@ -23,7 +23,6 @@ defmodule MscmpSystAuthn.MixProject do
     {:ex_doc, "~> 0.20", only: :dev, runtime: false},
     {:argon2_elixir, "~> 3.0"},
     {:nimble_totp, "~> 1.0"},
-    {:net_address, "~> 0.3.0"},
     {:pathex, "~> 2.0"},
     {:timex, "~> 3.0"},
     {:jason, "~> 1.0"},
@@ -31,6 +30,7 @@ defmodule MscmpSystAuthn.MixProject do
     # Muse Systems Business Management System Components
     {:mscmp_syst_utils, path: "../mscmp_syst_utils"},
     {:mscmp_syst_error, path: "../mscmp_syst_error"},
+    {:mscmp_syst_network, path: "../mscmp_syst_network"},
     {:mscmp_syst_limiter, path: "../mscmp_syst_limiter"},
     {:mscmp_syst_db, path: "../mscmp_syst_db"},
     {:mscmp_syst_enums, path: "../mscmp_syst_enums"},
@@ -65,6 +65,7 @@ defmodule MscmpSystAuthn.MixProject do
           mscmp_syst_db: "../../../../documentation/technical/app_server/mscmp_syst_db",
           mscmp_syst_error: "../../../../documentation/technical/app_server/mscmp_syst_error",
           mscmp_syst_utils: "../../../../documentation/technical/app_server/mscmp_syst_utils",
+          mscmp_syst_network: "../../../../documentation/technical/app_server/mscmp_syst_network",
           mscmp_syst_limiter: "../../../../documentation/technical/app_server/mscmp_syst_limiter",
           mscmp_syst_enums: "../../../../documentation/technical/app_server/mscmp_syst_enums",
           mscmp_syst_options: "../../../../documentation/technical/app_server/mscmp_syst_options",

@@ -266,6 +266,7 @@ These Components are listed in "Lower Level Component" to "Higher Level Componen
 
       <a href="#mscmpsysterror">`mscmp_syst_error`</a>,
       <a href="#mscmpsystutils">`mscmp_syst_utils`</a>,
+      <a href="#mscmpsystnetwork">`mscmp_syst_network`</a>,
       <a href="#mscmpsystlimiter">`mscmp_syst_limiter`</a>,
       <a href="#mscmpsystdb">`mscmp_syst_db`</a>,
       <a href="#mscmpsystoptions">`mscmp_syst_options`</a>,
@@ -276,7 +277,6 @@ These Components are listed in "Lower Level Component" to "Higher Level Componen
 
       <a href="https://hexdocs.pm/argon2_elixir" target="_blank">`argon2_elixir`</a>,
       <a href="https://hexdocs.pm/nimble_totp" target="_blank">`nimble_totp`</a>,
-      <a href="https://hexdocs.pm/net_address" target="_blank">`net_address`</a>,
       <a href="https://hexdocs.pm/pathex" target="_blank">`pathex`</a>,
       <a href="https://hexdocs.pm/timex" target="_blank">`timex`</a>,
       <a href="https://hexdocs.pm/jason" target="_blank">`jason`</a>

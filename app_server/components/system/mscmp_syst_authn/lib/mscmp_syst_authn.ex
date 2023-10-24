@@ -16,6 +16,7 @@ defmodule MscmpSystAuthn do
 
   alias MscmpSystAuthn.Impl
   alias MscmpSystAuthn.Types
+  alias MscmpSystNetwork.Types, as: NetTypes
 
   # ==============================================================================================
   # ==============================================================================================
@@ -1210,13 +1211,13 @@ defmodule MscmpSystAuthn do
 
     An allowed host will return a `false` result tuple.
 
-      iex> import IP, only: [sigil_i: 2]
+      iex> import MscmpSystNetwork, only: [sigil_i: 2]
       iex> MscmpSystAuthn.host_disallowed(~i"10.150.150.10")
       {:ok, false}
 
     A disallowed host returns a `true` result tuple.
 
-      iex> import IP, only: [sigil_i: 2]
+      iex> import MscmpSystNetwork, only: [sigil_i: 2]
       iex> MscmpSystAuthn.host_disallowed(~i"10.123.123.5")
       {:ok, true}
   """
@@ -1241,13 +1242,13 @@ defmodule MscmpSystAuthn do
 
     An allowed host will return a `false` value.
 
-      iex> import IP, only: [sigil_i: 2]
+      iex> import MscmpSystNetwork, only: [sigil_i: 2]
       iex> MscmpSystAuthn.host_disallowed?(~i"10.150.150.10")
       false
 
     A disallowed host returns a `true` value.
 
-      iex> import IP, only: [sigil_i: 2]
+      iex> import MscmpSystNetwork, only: [sigil_i: 2]
       iex> MscmpSystAuthn.host_disallowed?(~i"10.123.123.5")
       true
   """
@@ -1276,14 +1277,14 @@ defmodule MscmpSystAuthn do
 
     Adding a new host to the list.
 
-      iex> import IP, only: [sigil_i: 2]
+      iex> import MscmpSystNetwork, only: [sigil_i: 2]
       iex> {:ok, false} = MscmpSystAuthn.host_disallowed(~i"10.123.123.20")
       iex> {:ok, %Msdata.SystDisallowedHosts{}} =
       ...>   MscmpSystAuthn.create_disallowed_host(~i"10.123.123.20")
 
     Attempting to add a host already on the list.
 
-      iex> import IP, only: [sigil_i: 2]
+      iex> import MscmpSystNetwork, only: [sigil_i: 2]
       iex> {:ok, true} = MscmpSystAuthn.host_disallowed(~i"10.123.123.3")
       iex> {:ok, nil} =
       ...>   MscmpSystAuthn.create_disallowed_host(~i"10.123.123.3")
@@ -1305,13 +1306,13 @@ defmodule MscmpSystAuthn do
 
     Retrieving a Disallowed Host record by IP address.
 
-      iex> import IP, only: [sigil_i: 2]
+      iex> import MscmpSystNetwork, only: [sigil_i: 2]
       iex> {:ok, %Msdata.SystDisallowedHosts{}} =
       ...>   MscmpSystAuthn.get_disallowed_host_record_by_host(~i"10.123.123.4")
 
     Attempting to retrieve a record for a host not on the list.
 
-      iex> import IP, only: [sigil_i: 2]
+      iex> import MscmpSystNetwork, only: [sigil_i: 2]
       iex> MscmpSystAuthn.get_disallowed_host_record_by_host(~i"10.125.120.20")
       {:ok, nil}
   """
@@ -1336,13 +1337,13 @@ defmodule MscmpSystAuthn do
 
     Retrieving a Disallowed Host record by IP address.
 
-      iex> import IP, only: [sigil_i: 2]
+      iex> import MscmpSystNetwork, only: [sigil_i: 2]
       iex> %Msdata.SystDisallowedHosts{} =
       ...>   MscmpSystAuthn.get_disallowed_host_record_by_host!(~i"10.123.123.4")
 
     Attempting to retrieve a record for a host not on the list.
 
-      iex> import IP, only: [sigil_i: 2]
+      iex> import MscmpSystNetwork, only: [sigil_i: 2]
       iex> MscmpSystAuthn.get_disallowed_host_record_by_host!(~i"10.125.120.20")
       nil
   """
@@ -1372,7 +1373,7 @@ defmodule MscmpSystAuthn do
 
     Deleting a host that does exist in the list.
 
-      iex> import IP, only: [sigil_i: 2]
+      iex> import MscmpSystNetwork, only: [sigil_i: 2]
       iex> {:ok, true} = MscmpSystAuthn.host_disallowed(~i"10.10.251.1")
       iex> {:ok, :deleted} =
       ...>   MscmpSystAuthn.delete_disallowed_host_addr(~i"10.10.251.1")
@@ -1380,7 +1381,7 @@ defmodule MscmpSystAuthn do
 
     Attempting to delete a host not already on the list.
 
-      iex> import IP, only: [sigil_i: 2]
+      iex> import MscmpSystNetwork, only: [sigil_i: 2]
       iex> {:ok, false} = MscmpSystAuthn.host_disallowed(~i"10.10.251.10")
       iex> {:ok, :not_found} =
       ...>   MscmpSystAuthn.delete_disallowed_host_addr(~i"10.10.251.10")
@@ -1467,7 +1468,7 @@ defmodule MscmpSystAuthn do
 
     Deleting a host by record ID.
 
-      iex> import IP, only: [sigil_i: 2]
+      iex> import MscmpSystNetwork, only: [sigil_i: 2]
       iex> {:ok, target_host_record} =
       ...>   MscmpSystAuthn.get_disallowed_host_record_by_host(~i"10.10.250.4")
       iex> MscmpSystAuthn.delete_disallowed_host(target_host_record.id)
@@ -1475,7 +1476,7 @@ defmodule MscmpSystAuthn do
 
     Deleting a host by record struct.
 
-      iex> import IP, only: [sigil_i: 2]
+      iex> import MscmpSystNetwork, only: [sigil_i: 2]
       iex> {:ok, target_host_record} =
       ...>   MscmpSystAuthn.get_disallowed_host_record_by_host(~i"10.10.250.5")
       iex> MscmpSystAuthn.delete_disallowed_host(target_host_record)
@@ -1483,7 +1484,7 @@ defmodule MscmpSystAuthn do
 
     Deleting a struct for a no longer existent record.
 
-      iex> import IP, only: [sigil_i: 2]
+      iex> import MscmpSystNetwork, only: [sigil_i: 2]
       iex> {:ok, target_host_record} =
       ...>   MscmpSystAuthn.get_disallowed_host_record_by_host(~i"10.10.250.6")
       iex> MscmpSystAuthn.delete_disallowed_host(target_host_record)
@@ -1560,7 +1561,7 @@ defmodule MscmpSystAuthn do
 
     When the host is a member of the Disallowed Hosts lists.
 
-      iex> import IP, only: [sigil_i: 2]
+      iex> import MscmpSystNetwork, only: [sigil_i: 2]
       iex> {:ok,
       ...>   %MscmpSystAuthn.Types.AppliedNetworkRule{
       ...>     functional_type: :deny, network_rule_id: id, precedence: :disallowed
@@ -1572,7 +1573,7 @@ defmodule MscmpSystAuthn do
     When the Host IP Address does not match any explicitly defined rule and the
     implicit rule applies.
 
-      iex> import IP, only: [sigil_i: 2]
+      iex> import MscmpSystNetwork, only: [sigil_i: 2]
       iex> MscmpSystAuthn.get_applied_network_rule(~i"10.124.124.3")
       {:ok,
         %MscmpSystAuthn.Types.AppliedNetworkRule{
@@ -1583,7 +1584,7 @@ defmodule MscmpSystAuthn do
     When a Global Network Rule explicitly allows the Host IP Address to attempt
     authentication.
 
-      iex> import IP, only: [sigil_i: 2]
+      iex> import MscmpSystNetwork, only: [sigil_i: 2]
       iex> {:ok,
       ...>   %MscmpSystAuthn.Types.AppliedNetworkRule{
       ...>     functional_type: :allow, network_rule_id: id, precedence: :global
@@ -1639,7 +1640,7 @@ defmodule MscmpSystAuthn do
 
     When the host is a member of the Disallowed Hosts lists.
 
-      iex> import IP, only: [sigil_i: 2]
+      iex> import MscmpSystNetwork, only: [sigil_i: 2]
       iex> %MscmpSystAuthn.Types.AppliedNetworkRule{
       ...>   functional_type: :deny, network_rule_id: id, precedence: :disallowed
       ...> } = MscmpSystAuthn.get_applied_network_rule!(~i"10.123.123.3")
@@ -1649,7 +1650,7 @@ defmodule MscmpSystAuthn do
     When the Host IP Address does not match any explicitly defined rule and the
     implicit rule applies.
 
-      iex> import IP, only: [sigil_i: 2]
+      iex> import MscmpSystNetwork, only: [sigil_i: 2]
       iex> MscmpSystAuthn.get_applied_network_rule!(~i"10.124.124.3")
       %MscmpSystAuthn.Types.AppliedNetworkRule{
         functional_type: :allow, network_rule_id: nil, precedence: :implied
@@ -1658,7 +1659,7 @@ defmodule MscmpSystAuthn do
     When a Global Network Rule explicitly allows the Host IP Address to attempt
     authentication.
 
-      iex> import IP, only: [sigil_i: 2]
+      iex> import MscmpSystNetwork, only: [sigil_i: 2]
       iex> %MscmpSystAuthn.Types.AppliedNetworkRule{
       ...>   functional_type: :allow, network_rule_id: id, precedence: :global
       ...> } = MscmpSystAuthn.get_applied_network_rule!(~i"10.125.125.3")
@@ -1704,7 +1705,7 @@ defmodule MscmpSystAuthn do
 
     Adding a new "Allow" Global Network Rule for a CIDR network.
 
-      iex> import IP, only: [sigil_i: 2]
+      iex> import MscmpSystNetwork, only: [sigil_i: 2]
       iex> new_global_rule = %{
       ...>   ordering: 20,
       ...>   functional_type: :allow,
@@ -1715,7 +1716,7 @@ defmodule MscmpSystAuthn do
 
     Adding a new "Deny" Global Network Rule for an IP Address range.
 
-      iex> import IP, only: [sigil_i: 2]
+      iex> import MscmpSystNetwork, only: [sigil_i: 2]
       iex> new_global_rule = %{
       ...>   ordering: 21,
       ...>   functional_type: :deny,
@@ -1758,7 +1759,7 @@ defmodule MscmpSystAuthn do
 
     Adding a new "Allow" Owner Network Rule for a CIDR network.
 
-      iex> import IP, only: [sigil_i: 2]
+      iex> import MscmpSystNetwork, only: [sigil_i: 2]
       iex> {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner8")
       iex> new_owner_rule = %{
       ...>   ordering: 1,
@@ -1770,7 +1771,7 @@ defmodule MscmpSystAuthn do
 
     Adding a new "Deny" Owner Network Rule for an IP Address range.
 
-      iex> import IP, only: [sigil_i: 2]
+      iex> import MscmpSystNetwork, only: [sigil_i: 2]
       iex> {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner8")
       iex> new_owner_rule = %{
       ...>   ordering: 2,
@@ -1817,7 +1818,7 @@ defmodule MscmpSystAuthn do
 
     Adding a new "Allow" Instance Network Rule for a CIDR network.
 
-      iex> import IP, only: [sigil_i: 2]
+      iex> import MscmpSystNetwork, only: [sigil_i: 2]
       iex> {:ok, instance_id} =
       ...>   MscmpSystInstance.get_instance_id_by_name("app1_owner8_instance_types_std")
       iex> new_instance_rule = %{
@@ -1830,7 +1831,7 @@ defmodule MscmpSystAuthn do
 
     Adding a new "Deny" Instance Network Rule for an IP Address range.
 
-      iex> import IP, only: [sigil_i: 2]
+      iex> import MscmpSystNetwork, only: [sigil_i: 2]
       iex> {:ok, instance_id} =
       ...>   MscmpSystInstance.get_instance_id_by_name("app1_owner8_instance_types_std")
       iex> new_instance_rule = %{
@@ -2772,7 +2773,7 @@ defmodule MscmpSystAuthn do
   @spec authenticate_email_password(
           Types.account_identifier(),
           Types.credential(),
-          IP.addr(),
+          NetTypes.addr_structs(),
           Keyword.t()
         ) ::
           {:ok, Types.AuthenticationState.t()} | {:error, MscmpSystError.t()}
@@ -2874,7 +2875,7 @@ defmodule MscmpSystAuthn do
   @spec authenticate_validation_token(
           Types.account_identifier(),
           Types.credential(),
-          IP.addr(),
+          NetTypes.addr_structs(),
           Keyword.t()
         ) ::
           {:ok, Types.AuthenticationState.t()} | {:error, MscmpSystError.t()}
@@ -2953,7 +2954,7 @@ defmodule MscmpSystAuthn do
   @spec authenticate_recovery_token(
           Types.account_identifier(),
           Types.credential(),
-          IP.addr(),
+          NetTypes.addr_structs(),
           Keyword.t()
         ) ::
           {:ok, Types.AuthenticationState.t()} | {:error, MscmpSystError.t()}
@@ -3031,7 +3032,7 @@ defmodule MscmpSystAuthn do
   @spec authenticate_api_token(
           Types.account_identifier(),
           Types.credential(),
-          IP.addr(),
+          NetTypes.addr_structs(),
           MscmpSystInstance.Types.instance_id(),
           Keyword.t()
         ) ::

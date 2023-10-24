@@ -17,6 +17,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
   alias MscmpSystAuthn.Types
   alias MscmpSystAuthn.Types.AuthenticationState
   alias MscmpSystDb.DbTypes
+  alias MscmpSystNetwork.Types, as: NetTypes
 
   # TODO: This whole module and approach feels too complex.  The flexibility
   #       built into the authentication flow is helpful in allowing us to
@@ -116,7 +117,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
   @spec authenticate_email_password(
           Types.account_identifier(),
           Types.credential(),
-          IP.addr(),
+          NetTypes.addr_structs(),
           Keyword.t()
         ) ::
           {:ok, AuthenticationState.t()} | {:error, MscmpSystError.t()}
@@ -294,7 +295,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
   @spec authenticate_api_token(
           Types.account_identifier(),
           Types.credential(),
-          IP.addr(),
+          NetTypes.addr_structs(),
           MscmpSystInstance.Types.instance_id(),
           Keyword.t()
         ) ::
@@ -394,7 +395,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
   @spec authenticate_validation_token(
           Types.account_identifier(),
           Types.credential(),
-          IP.addr(),
+          NetTypes.addr_structs(),
           Keyword.t()
         ) ::
           {:ok, AuthenticationState.t()} | {:error, MscmpSystError.t()}
@@ -503,7 +504,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
   @spec authenticate_recovery_token(
           Types.account_identifier(),
           Types.credential(),
-          IP.addr(),
+          NetTypes.addr_structs(),
           Keyword.t()
         ) ::
           {:ok, AuthenticationState.t()} | {:error, MscmpSystError.t()}
@@ -914,7 +915,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
   defp check_host_ban_rate_limit(host_addr, opts) do
     opts = MscmpSystUtils.resolve_options(opts, host_ban_rate_limit: @default_host_ban_rate_limit)
 
-    check_rate_limit(:host_ban, IP.to_string(host_addr), opts[:host_ban_rate_limit])
+    check_rate_limit(:host_ban, MscmpSystNetwork.to_string(host_addr), opts[:host_ban_rate_limit])
   end
 
   defp check_rate_limit(counter_type, target, rate_limit) do
@@ -935,7 +936,7 @@ defmodule MscmpSystAuthn.Impl.ExtendedAuthLogic do
   defp reset_identifier_rate_limit(identifier), do: reset_rate_limit(:identifier, identifier)
 
   defp reset_host_ban_rate_limit(host_addr),
-    do: reset_rate_limit(:host_ban, IP.to_string(host_addr))
+    do: reset_rate_limit(:host_ban, MscmpSystNetwork.to_string(host_addr))
 
   defp reset_rate_limit(counter_type, target),
     do: MscmpSystLimiter.delete_counters(counter_type, target)
