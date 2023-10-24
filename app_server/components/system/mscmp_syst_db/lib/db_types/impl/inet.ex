@@ -13,6 +13,8 @@
 defmodule MscmpSystDb.DbTypes.Impl.Inet do
   @moduledoc false
 
+  import MscmpSystNetwork.Guards, only: [is_ipv4: 1, is_ipv6: 1]
+
   alias MscmpSystDb.DbTypes
   alias MscmpSystNetwork.Types, as: NetTypes
 
@@ -34,13 +36,13 @@ defmodule MscmpSystDb.DbTypes.Impl.Inet do
       do: %NetTypes.IpV6{address: address, mask: prefix || 128}
 
   @spec from_net_address(MscmpSystNetwork.Types.addr_structs()) :: DbTypes.Inet.t()
-  def from_net_address(%NetTypes.IpV4{address: address, mask: mask}) do
-    resolved_mask = if mask === 32, do: nil, else: mask
-    %DbTypes.Inet{address: address, netmask: resolved_mask}
+  def from_net_address(addr) when is_ipv4(addr) do
+    resolved_mask = if addr.mask === 32, do: nil, else: addr.mask
+    %DbTypes.Inet{address: addr.address, netmask: resolved_mask}
   end
 
-  def from_net_address(%NetTypes.IpV6{address: address, mask: prefix}) do
-    resolved_prefix = if prefix === 128, do: nil, else: prefix
-    %DbTypes.Inet{address: address, netmask: resolved_prefix}
+  def from_net_address(addr) when is_ipv6(addr) do
+    resolved_prefix = if addr.mask === 128, do: nil, else: addr.mask
+    %DbTypes.Inet{address: addr.address, netmask: resolved_prefix}
   end
 end
