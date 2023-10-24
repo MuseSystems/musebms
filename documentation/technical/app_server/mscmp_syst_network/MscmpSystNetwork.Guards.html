@@ -4,20 +4,20 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.30.6">
+    <meta name="generator" content="ExDoc v0.30.9">
     <meta name="project" content="mscmp_syst_network v0.1.0">
 
     <title>MscmpSystNetwork.Guards — mscmp_syst_network v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-M3TQBNKO.css" />
+    <link rel="stylesheet" href="dist/html-elixir-XFYN5IVA.css" />
 
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-KDPBTEPL.js"></script>
-    <script src="dist/sidebar_items-94E1A89A.js"></script>
+    <script src="dist/handlebars.templates-EPF2X7PV.js"></script>
+    <script src="dist/sidebar_items-78E65AC3.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/html-CP2A7WXZ.js"></script>
+    <script async src="dist/html-J2ASZTQE.js"></script>
 
 
   </head>
@@ -38,22 +38,22 @@
 
 <div class="main">
 
-<button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
+<button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
   <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
 </button>
 
-<section class="sidebar">
+<nav id="sidebar" class="sidebar">
   <form class="sidebar-search" action="search.html">
+    <label class="search-label">
+      <span class="sr-only">Search documentation of mscmp_syst_network</span>
+      <input name="q" type="text" class="search-input" placeholder="Search..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+    </label>
     <button type="submit" class="search-button" aria-label="Submit Search">
       <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
     </button>
-    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
-      <i class="ri-close-line ri-lg" aria-hidden="true" title="Cancel search"></i>
+    <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+      <i class="ri-close-line ri-lg" title="Cancel search"></i>
     </button>
-    <label class="search-label">
-      <p class="sr-only">Search</p>
-      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
-    </label>
   </form>
 
   <div class="autocomplete">
@@ -71,19 +71,35 @@ mscmp_syst_network
         v0.1.0
       </div>
     </div>
-    <ul class="sidebar-listNav">
-      <li><a id="extras-list-link" href="#full-list">Pages</a></li>
+    <ul id="sidebar-listNav" class="sidebar-listNav" role="tablist">
+      <li>
+        <button id="extras-list-tab-button" role="tab" data-type="extras" aria-controls="extras-tab-panel" aria-selected="true" tabindex="0">
+Pages
+        </button>
+      </li>
 
-        <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+        <li>
+          <button id="modules-list-tab-button" role="tab" data-type="modules" aria-controls="modules-tab-panel" aria-selected="false" tabindex="-1">
+            Modules
+          </button>
+        </li>
 
 
     </ul>
   </div>
 
-  <ul id="full-list"></ul>
-</section>
+  <div id="extras-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="extras-list-tab-button">
+    <ul id="extras-full-list" class="full-list"></ul>
+  </div>
 
-<section class="content">
+    <div id="modules-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="modules-list-tab-button" hidden>
+      <ul id="modules-full-list" class="full-list"></ul>
+    </div>
+
+
+</nav>
+
+<main class="content">
   <output role="status" id="toast"></output>
   <div class="content-outer">
     <div id="content" class="content-inner">
@@ -101,18 +117,68 @@ mscmp_syst_network
 </h1>
 
 
+  <section id="moduledoc">
+<p>Provides guards which can do basic IP address tuple and IP address struct
+validation.</p>
+  </section>
+
 
   <section id="summary" class="details-list">
     <h1 class="section-heading">
       <a class="hover-link" href="#summary">
         <i class="ri-link-m" aria-hidden="true"></i>
-        Summary
       </a>
+      <span class="text">Summary</span>
     </h1>
 <div class="summary-functions summary">
   <h2>
     <a href="#functions">Functions</a>
   </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#is_ip/1" translate="no">is_ip(addr)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>A guard function which returns true when the passed value is either a valid
+<a href="MscmpSystNetwork.Types.IpV4.html#t:t/0"><code class="inline">MscmpSystNetwork.Types.IpV4.t/0</code></a> or <a href="MscmpSystNetwork.Types.IpV6.html#t:t/0"><code class="inline">MscmpSystNetwork.Types.IpV6.t/0</code></a>
+struct.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#is_ip_tuple/1" translate="no">is_ip_tuple(addr)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>A guard function which returns true when a passed value is either an Erlang
+style IPv4 or IPv6 tuple.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#is_ipv4/1" translate="no">is_ipv4(addr)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>A guard function which returns true when the passed value is a valid
+<a href="MscmpSystNetwork.Types.IpV4.html#t:t/0"><code class="inline">MscmpSystNetwork.Types.IpV4.t/0</code></a> value.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#is_ipv4_mask/1" translate="no">is_ipv4_mask(mask)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>A guard function which returns true when the passed value is an integer which
+is a valid IPv4 sub-net mask length.</p></div>
+
+    </div>
 
     <div class="summary-row">
       <div class="summary-signature">
@@ -122,6 +188,28 @@ mscmp_syst_network
 
         <div class="summary-synopsis"><p>A guard function which indicates whether a passed value is an Erlang style
 IPv4 tuple.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#is_ipv6/1" translate="no">is_ipv6(addr)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>A guard function which returns true when the passed value is a valid
+<a href="MscmpSystNetwork.Types.IpV6.html#t:t/0"><code class="inline">MscmpSystNetwork.Types.IpV6.t/0</code></a> value.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#is_ipv6_mask/1" translate="no">is_ipv6_mask(prefix)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>A guard function which returns true when the passed value is an integer which
+is a valid IPv6 sub-net mask length.</p></div>
 
     </div>
 
@@ -145,10 +233,169 @@ IPv6 tuple.</p></div>
     <h1 class="section-heading">
       <a class="hover-link" href="#functions">
         <i class="ri-link-m" aria-hidden="true"></i>
-Functions
       </a>
+      <span class="text">Functions</span>
     </h1>
     <div class="functions-list">
+<section class="detail" id="is_ip/1">
+
+  <div class="detail-header">
+    <a href="#is_ip/1" class="detail-link" title="Link to this macro">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this macro</span>
+    </a>
+    <h1 class="signature" translate="no">is_ip(addr)</h1>
+
+
+      <span class="note">(macro)</span>
+
+  </div>
+
+  <section class="docstring">
+
+<p>A guard function which returns true when the passed value is either a valid
+<a href="MscmpSystNetwork.Types.IpV4.html#t:t/0"><code class="inline">MscmpSystNetwork.Types.IpV4.t/0</code></a> or <a href="MscmpSystNetwork.Types.IpV6.html#t:t/0"><code class="inline">MscmpSystNetwork.Types.IpV6.t/0</code></a>
+struct.</p><h2 id="is_ip/1-examples" class="section-heading">
+  <a href="#is_ip/1-examples" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Examples</span>
+</h2>
+<p>  IPv4 Examples</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork.Guards</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="kn">alias</span><span class="w"> </span><span class="nc">MscmpSystNetwork.Types.IpV4</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">host_addr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="8320520093-1">%</span><span class="nc" data-group-id="8320520093-1">IpV4</span><span class="p" data-group-id="8320520093-1">{</span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8320520093-2">{</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p" data-group-id="8320520093-2">}</span><span class="p">,</span><span class="w"> </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">32</span><span class="p" data-group-id="8320520093-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_ip</span><span class="p" data-group-id="8320520093-3">(</span><span class="n">host_addr</span><span class="p" data-group-id="8320520093-3">)</span><span class="w">
+</span><span class="no">true</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">subnet_addr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="8320520093-4">%</span><span class="nc" data-group-id="8320520093-4">IpV4</span><span class="p" data-group-id="8320520093-4">{</span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8320520093-5">{</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="8320520093-5">}</span><span class="p">,</span><span class="w"> </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p" data-group-id="8320520093-4">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_ip</span><span class="p" data-group-id="8320520093-6">(</span><span class="n">subnet_addr</span><span class="p" data-group-id="8320520093-6">)</span><span class="w">
+</span><span class="no">true</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">bad_addr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="8320520093-7">{</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p" data-group-id="8320520093-7">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_ip</span><span class="p" data-group-id="8320520093-8">(</span><span class="n">bad_addr</span><span class="p" data-group-id="8320520093-8">)</span><span class="w">
+</span><span class="no">false</span></code></pre><p>  IPv6 Examples</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork.Guards</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="kn">alias</span><span class="w"> </span><span class="nc">MscmpSystNetwork.Types.IpV6</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">host_addr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="2379461022-1">%</span><span class="nc" data-group-id="2379461022-1">IpV6</span><span class="p" data-group-id="2379461022-1">{</span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2379461022-2">{</span><span class="mi">64923</span><span class="p">,</span><span class="w"> </span><span class="mi">30712</span><span class="p">,</span><span class="w"> </span><span class="mi">29005</span><span class="p">,</span><span class="w"> </span><span class="mi">51899</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="p" data-group-id="2379461022-2">}</span><span class="p">,</span><span class="w"> </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">128</span><span class="p" data-group-id="2379461022-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_ip</span><span class="p" data-group-id="2379461022-3">(</span><span class="n">host_addr</span><span class="p" data-group-id="2379461022-3">)</span><span class="w">
+</span><span class="no">true</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">subnet_addr</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="2379461022-4">%</span><span class="nc" data-group-id="2379461022-4">IpV6</span><span class="p" data-group-id="2379461022-4">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2379461022-5">{</span><span class="mi">64923</span><span class="p">,</span><span class="w"> </span><span class="mi">30712</span><span class="p">,</span><span class="w"> </span><span class="mi">29005</span><span class="p">,</span><span class="w"> </span><span class="mi">51899</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="2379461022-5">}</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">64</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="2379461022-4">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_ip</span><span class="p" data-group-id="2379461022-6">(</span><span class="n">subnet_addr</span><span class="p" data-group-id="2379461022-6">)</span><span class="w">
+</span><span class="no">true</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">bad_addr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="2379461022-7">{</span><span class="mi">64923</span><span class="p">,</span><span class="w"> </span><span class="mi">30712</span><span class="p">,</span><span class="w"> </span><span class="mi">29005</span><span class="p">,</span><span class="w"> </span><span class="mi">51899</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="p" data-group-id="2379461022-7">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_ip</span><span class="p" data-group-id="2379461022-8">(</span><span class="n">bad_addr</span><span class="p" data-group-id="2379461022-8">)</span><span class="w">
+</span><span class="no">false</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="is_ip_tuple/1">
+
+  <div class="detail-header">
+    <a href="#is_ip_tuple/1" class="detail-link" title="Link to this macro">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this macro</span>
+    </a>
+    <h1 class="signature" translate="no">is_ip_tuple(addr)</h1>
+
+
+      <span class="note">(macro)</span>
+
+  </div>
+
+  <section class="docstring">
+
+<p>A guard function which returns true when a passed value is either an Erlang
+style IPv4 or IPv6 tuple.</p><h2 id="is_ip_tuple/1-examples" class="section-heading">
+  <a href="#is_ip_tuple/1-examples" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Examples</span>
+</h2>
+<p>  IPv4 Examples</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork.Guards</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_ip_tuple</span><span class="p" data-group-id="6647967453-1">(</span><span class="p" data-group-id="6647967453-2">{</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p" data-group-id="6647967453-2">}</span><span class="p" data-group-id="6647967453-1">)</span><span class="w">
+</span><span class="no">true</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_ip_tuple</span><span class="p" data-group-id="6647967453-3">(</span><span class="p" data-group-id="6647967453-4">{</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="6647967453-4">}</span><span class="p" data-group-id="6647967453-3">)</span><span class="w">
+</span><span class="no">true</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_ip_tuple</span><span class="p" data-group-id="6647967453-5">(</span><span class="ss">:foo</span><span class="p" data-group-id="6647967453-5">)</span><span class="w">
+</span><span class="no">false</span></code></pre><p>  IPv6 Examples</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork.Guards</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_ip_tuple</span><span class="p" data-group-id="1193526179-1">(</span><span class="p" data-group-id="1193526179-2">{</span><span class="mi">64923</span><span class="p">,</span><span class="w"> </span><span class="mi">30712</span><span class="p">,</span><span class="w"> </span><span class="mi">29005</span><span class="p">,</span><span class="w"> </span><span class="mi">51899</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="p" data-group-id="1193526179-2">}</span><span class="p" data-group-id="1193526179-1">)</span><span class="w">
+</span><span class="no">true</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_ip_tuple</span><span class="p" data-group-id="1193526179-3">(</span><span class="p" data-group-id="1193526179-4">{</span><span class="mi">64923</span><span class="p">,</span><span class="w"> </span><span class="mi">30712</span><span class="p">,</span><span class="w"> </span><span class="mi">29005</span><span class="p">,</span><span class="w"> </span><span class="mi">51899</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="1193526179-4">}</span><span class="p" data-group-id="1193526179-3">)</span><span class="w">
+</span><span class="no">true</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_ip_tuple</span><span class="p" data-group-id="1193526179-5">(</span><span class="p" data-group-id="1193526179-6">{</span><span class="mh">0x10000</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="1193526179-6">}</span><span class="p" data-group-id="1193526179-5">)</span><span class="w">
+</span><span class="no">false</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="is_ipv4/1">
+
+  <div class="detail-header">
+    <a href="#is_ipv4/1" class="detail-link" title="Link to this macro">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this macro</span>
+    </a>
+    <h1 class="signature" translate="no">is_ipv4(addr)</h1>
+
+
+      <span class="note">(macro)</span>
+
+  </div>
+
+  <section class="docstring">
+
+<p>A guard function which returns true when the passed value is a valid
+<a href="MscmpSystNetwork.Types.IpV4.html#t:t/0"><code class="inline">MscmpSystNetwork.Types.IpV4.t/0</code></a> value.</p><h2 id="is_ipv4/1-examples" class="section-heading">
+  <a href="#is_ipv4/1-examples" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Examples</span>
+</h2>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork.Guards</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="kn">alias</span><span class="w"> </span><span class="nc">MscmpSystNetwork.Types.IpV4</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">host_addr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="5142587951-1">%</span><span class="nc" data-group-id="5142587951-1">IpV4</span><span class="p" data-group-id="5142587951-1">{</span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="5142587951-2">{</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p" data-group-id="5142587951-2">}</span><span class="p">,</span><span class="w"> </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">32</span><span class="p" data-group-id="5142587951-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_ipv4</span><span class="p" data-group-id="5142587951-3">(</span><span class="n">host_addr</span><span class="p" data-group-id="5142587951-3">)</span><span class="w">
+</span><span class="no">true</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">subnet_addr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="5142587951-4">%</span><span class="nc" data-group-id="5142587951-4">IpV4</span><span class="p" data-group-id="5142587951-4">{</span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="5142587951-5">{</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="5142587951-5">}</span><span class="p">,</span><span class="w"> </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p" data-group-id="5142587951-4">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_ipv4</span><span class="p" data-group-id="5142587951-6">(</span><span class="n">subnet_addr</span><span class="p" data-group-id="5142587951-6">)</span><span class="w">
+</span><span class="no">true</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">bad_addr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="5142587951-7">{</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p" data-group-id="5142587951-7">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_ipv4</span><span class="p" data-group-id="5142587951-8">(</span><span class="n">bad_addr</span><span class="p" data-group-id="5142587951-8">)</span><span class="w">
+</span><span class="no">false</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="is_ipv4_mask/1">
+
+  <div class="detail-header">
+    <a href="#is_ipv4_mask/1" class="detail-link" title="Link to this macro">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this macro</span>
+    </a>
+    <h1 class="signature" translate="no">is_ipv4_mask(mask)</h1>
+
+
+      <span class="note">(macro)</span>
+
+  </div>
+
+  <section class="docstring">
+
+<p>A guard function which returns true when the passed value is an integer which
+is a valid IPv4 sub-net mask length.</p><h2 id="is_ipv4_mask/1-examples" class="section-heading">
+  <a href="#is_ipv4_mask/1-examples" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Examples</span>
+</h2>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork.Guards</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_ipv4_mask</span><span class="p" data-group-id="3139626856-1">(</span><span class="mi">24</span><span class="p" data-group-id="3139626856-1">)</span><span class="w">
+</span><span class="no">true</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_ipv4_mask</span><span class="p" data-group-id="3139626856-2">(</span><span class="mi">32</span><span class="p" data-group-id="3139626856-2">)</span><span class="w">
+</span><span class="no">true</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_ipv4_mask</span><span class="p" data-group-id="3139626856-3">(</span><span class="mi">64</span><span class="p" data-group-id="3139626856-3">)</span><span class="w">
+</span><span class="no">false</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_ipv4_mask</span><span class="p" data-group-id="3139626856-4">(</span><span class="ss">:&quot;24&quot;</span><span class="p" data-group-id="3139626856-4">)</span><span class="w">
+</span><span class="no">false</span></code></pre>
+  </section>
+</section>
 <section class="detail" id="is_ipv4_tuple/1">
 
   <div class="detail-header">
@@ -167,17 +414,91 @@ Functions
 
 <p>A guard function which indicates whether a passed value is an Erlang style
 IPv4 tuple.</p><h2 id="is_ipv4_tuple/1-examples" class="section-heading">
-  <a href="#is_ipv4_tuple/1-examples">
+  <a href="#is_ipv4_tuple/1-examples" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Examples
   </a>
+  <span class="text">Examples</span>
 </h2>
 <pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork.Guards</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="n">is_ipv4_tuple</span><span class="p" data-group-id="9265117131-1">(</span><span class="p" data-group-id="9265117131-2">{</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="9265117131-2">}</span><span class="p" data-group-id="9265117131-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_ipv4_tuple</span><span class="p" data-group-id="2986140930-1">(</span><span class="p" data-group-id="2986140930-2">{</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="2986140930-2">}</span><span class="p" data-group-id="2986140930-1">)</span><span class="w">
 </span><span class="no">true</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="n">is_ipv4_tuple</span><span class="p" data-group-id="9265117131-3">(</span><span class="ss">:foo</span><span class="p" data-group-id="9265117131-3">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_ipv4_tuple</span><span class="p" data-group-id="2986140930-3">(</span><span class="ss">:foo</span><span class="p" data-group-id="2986140930-3">)</span><span class="w">
 </span><span class="no">false</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="n">is_ipv4_tuple</span><span class="p" data-group-id="9265117131-4">(</span><span class="p" data-group-id="9265117131-5">{</span><span class="mi">256</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="9265117131-5">}</span><span class="p" data-group-id="9265117131-4">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_ipv4_tuple</span><span class="p" data-group-id="2986140930-4">(</span><span class="p" data-group-id="2986140930-5">{</span><span class="mi">256</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="2986140930-5">}</span><span class="p" data-group-id="2986140930-4">)</span><span class="w">
+</span><span class="no">false</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="is_ipv6/1">
+
+  <div class="detail-header">
+    <a href="#is_ipv6/1" class="detail-link" title="Link to this macro">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this macro</span>
+    </a>
+    <h1 class="signature" translate="no">is_ipv6(addr)</h1>
+
+
+      <span class="note">(macro)</span>
+
+  </div>
+
+  <section class="docstring">
+
+<p>A guard function which returns true when the passed value is a valid
+<a href="MscmpSystNetwork.Types.IpV6.html#t:t/0"><code class="inline">MscmpSystNetwork.Types.IpV6.t/0</code></a> value.</p><h2 id="is_ipv6/1-examples" class="section-heading">
+  <a href="#is_ipv6/1-examples" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Examples</span>
+</h2>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork.Guards</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="kn">alias</span><span class="w"> </span><span class="nc">MscmpSystNetwork.Types.IpV6</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">host_addr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="1516390733-1">%</span><span class="nc" data-group-id="1516390733-1">IpV6</span><span class="p" data-group-id="1516390733-1">{</span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1516390733-2">{</span><span class="mi">64923</span><span class="p">,</span><span class="w"> </span><span class="mi">30712</span><span class="p">,</span><span class="w"> </span><span class="mi">29005</span><span class="p">,</span><span class="w"> </span><span class="mi">51899</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="p" data-group-id="1516390733-2">}</span><span class="p">,</span><span class="w"> </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">128</span><span class="p" data-group-id="1516390733-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_ipv6</span><span class="p" data-group-id="1516390733-3">(</span><span class="n">host_addr</span><span class="p" data-group-id="1516390733-3">)</span><span class="w">
+</span><span class="no">true</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">subnet_addr</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="1516390733-4">%</span><span class="nc" data-group-id="1516390733-4">IpV6</span><span class="p" data-group-id="1516390733-4">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">address</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1516390733-5">{</span><span class="mi">64923</span><span class="p">,</span><span class="w"> </span><span class="mi">30712</span><span class="p">,</span><span class="w"> </span><span class="mi">29005</span><span class="p">,</span><span class="w"> </span><span class="mi">51899</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="1516390733-5">}</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">mask</span><span class="p">:</span><span class="w"> </span><span class="mi">64</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="1516390733-4">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_ipv6</span><span class="p" data-group-id="1516390733-6">(</span><span class="n">subnet_addr</span><span class="p" data-group-id="1516390733-6">)</span><span class="w">
+</span><span class="no">true</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">bad_addr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="1516390733-7">{</span><span class="mi">64923</span><span class="p">,</span><span class="w"> </span><span class="mi">30712</span><span class="p">,</span><span class="w"> </span><span class="mi">29005</span><span class="p">,</span><span class="w"> </span><span class="mi">51899</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="p" data-group-id="1516390733-7">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_ipv6</span><span class="p" data-group-id="1516390733-8">(</span><span class="n">bad_addr</span><span class="p" data-group-id="1516390733-8">)</span><span class="w">
+</span><span class="no">false</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="is_ipv6_mask/1">
+
+  <div class="detail-header">
+    <a href="#is_ipv6_mask/1" class="detail-link" title="Link to this macro">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this macro</span>
+    </a>
+    <h1 class="signature" translate="no">is_ipv6_mask(prefix)</h1>
+
+
+      <span class="note">(macro)</span>
+
+  </div>
+
+  <section class="docstring">
+
+<p>A guard function which returns true when the passed value is an integer which
+is a valid IPv6 sub-net mask length.</p><h2 id="is_ipv6_mask/1-examples" class="section-heading">
+  <a href="#is_ipv6_mask/1-examples" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Examples</span>
+</h2>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork.Guards</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_ipv6_mask</span><span class="p" data-group-id="3248383601-1">(</span><span class="mi">64</span><span class="p" data-group-id="3248383601-1">)</span><span class="w">
+</span><span class="no">true</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_ipv6_mask</span><span class="p" data-group-id="3248383601-2">(</span><span class="mi">128</span><span class="p" data-group-id="3248383601-2">)</span><span class="w">
+</span><span class="no">true</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_ipv6_mask</span><span class="p" data-group-id="3248383601-3">(</span><span class="mi">68</span><span class="p" data-group-id="3248383601-3">)</span><span class="w">
+</span><span class="no">true</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_ipv6_mask</span><span class="p" data-group-id="3248383601-4">(</span><span class="ss">:&quot;68&quot;</span><span class="p" data-group-id="3248383601-4">)</span><span class="w">
 </span><span class="no">false</span></code></pre>
   </section>
 </section>
@@ -199,17 +520,17 @@ IPv4 tuple.</p><h2 id="is_ipv4_tuple/1-examples" class="section-heading">
 
 <p>A guard function which indicates whether a passed value is an Erlang style
 IPv6 tuple.</p><h2 id="is_ipv6_tuple/1-examples" class="section-heading">
-  <a href="#is_ipv6_tuple/1-examples">
+  <a href="#is_ipv6_tuple/1-examples" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Examples
   </a>
+  <span class="text">Examples</span>
 </h2>
 <pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nc">MscmpSystNetwork.Guards</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="n">is_ipv6_tuple</span><span class="p" data-group-id="7483862440-1">(</span><span class="p" data-group-id="7483862440-2">{</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="7483862440-2">}</span><span class="p" data-group-id="7483862440-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_ipv6_tuple</span><span class="p" data-group-id="5800373058-1">(</span><span class="p" data-group-id="5800373058-2">{</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="5800373058-2">}</span><span class="p" data-group-id="5800373058-1">)</span><span class="w">
 </span><span class="no">true</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="n">is_ipv6_tuple</span><span class="p" data-group-id="7483862440-3">(</span><span class="ss">:foo</span><span class="p" data-group-id="7483862440-3">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_ipv6_tuple</span><span class="p" data-group-id="5800373058-3">(</span><span class="ss">:foo</span><span class="p" data-group-id="5800373058-3">)</span><span class="w">
 </span><span class="no">false</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="n">is_ipv6_tuple</span><span class="p" data-group-id="7483862440-4">(</span><span class="p" data-group-id="7483862440-5">{</span><span class="mh">0x10000</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="7483862440-5">}</span><span class="p" data-group-id="7483862440-4">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_ipv6_tuple</span><span class="p" data-group-id="5800373058-4">(</span><span class="p" data-group-id="5800373058-5">{</span><span class="mh">0x10000</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="5800373058-5">}</span><span class="p" data-group-id="5800373058-4">)</span><span class="w">
 </span><span class="no">false</span></code></pre>
   </section>
 </section>
@@ -234,7 +555,7 @@ IPv6 tuple.</p><h2 id="is_ipv6_tuple/1-examples" class="section-heading">
 
         <p class="built-using">
           Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.30.6) for the
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.30.9) for the
 
             <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 
@@ -242,7 +563,7 @@ IPv6 tuple.</p><h2 id="is_ipv6_tuple/1-examples" class="section-heading">
       </footer>
     </div>
   </div>
-</section>
+</main>
 </div>
 
 
