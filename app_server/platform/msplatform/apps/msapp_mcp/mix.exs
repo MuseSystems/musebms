@@ -24,12 +24,13 @@ defmodule MsappMcp.MixProject do
     {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
     {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
     {:ex_doc, "~> 0.20", only: :dev, runtime: false},
-    {:net_address, "~> 0.3.0"},
 
     # Muse Systems Business Management System Components
     {:mscmp_syst_error, path: "../../../../components/system/mscmp_syst_error", override: true},
     {:mscmp_syst_options,
      path: "../../../../components/system/mscmp_syst_options", override: true},
+    {:mscmp_syst_network,
+     path: "../../../../components/system/mscmp_syst_network", override: true},
     {:mscmp_syst_forms, path: "../../../../components/system/mscmp_syst_forms", override: true},
     {:mscmp_syst_perms, path: "../../../../components/system/mscmp_syst_perms", override: true},
     {:mssub_mcp, path: "../../../../subsystems/mssub_mcp", override: true}

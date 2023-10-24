@@ -13,6 +13,8 @@
 defmodule MsappMcp.Impl.Authentication do
   @moduledoc false
 
+  alias MscmpSystNetwork.Types, as: NetTypes
+
   @no_session_auth_statuses [
     :rejected,
     :rejected_rate_limited,
@@ -22,7 +24,12 @@ defmodule MsappMcp.Impl.Authentication do
     :rejected_deadline_expired
   ]
 
-  @spec authenticate(map(), IP.addr(), MscmpSystSession.Types.session_name() | nil, Keyword.t()) ::
+  @spec authenticate(
+          map(),
+          NetTypes.addr_structs(),
+          MscmpSystSession.Types.session_name() | nil,
+          Keyword.t()
+        ) ::
           MsappMcp.Types.login_result()
   def authenticate(%{} = params, host_addr, session_name, opts) do
     opts = MscmpSystUtils.resolve_options(opts, mode: :session)
@@ -91,7 +98,7 @@ defmodule MsappMcp.Impl.Authentication do
 
   defp encode_auth_state_for_json(%{host_address: host_addr} = auth_state)
        when is_tuple(host_addr),
-       do: Map.replace(auth_state, :host_address, IP.to_string(host_addr))
+       do: Map.replace(auth_state, :host_address, MscmpSystNetwork.to_string(host_addr))
 
   defp encode_auth_state_for_json(auth_state), do: auth_state
 

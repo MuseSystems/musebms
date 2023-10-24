@@ -4,6 +4,7 @@ defmodule MsappMcp do
   """
   alias MsappMcp.Impl
   alias MsappMcp.Types
+  alias MscmpSystNetwork.Types, as: NetTypes
 
   @spec launch_bootstrap?() :: boolean()
   defdelegate launch_bootstrap?, to: Impl.Settings
@@ -18,7 +19,12 @@ defmodule MsappMcp do
           {:ok, MssubMcp.Types.tenant_bootstrap_result()} | {:error, MscmpSystError.t()}
   defdelegate process_bootstrap_data(data), to: Impl.McpBootstrap
 
-  @spec authenticate(map(), IP.addr(), MssubMcp.Types.session_name() | nil, Keyword.t()) ::
+  @spec authenticate(
+          map(),
+          NetTypes.addr_structs(),
+          MssubMcp.Types.session_name() | nil,
+          Keyword.t()
+        ) ::
           Types.login_result()
   defdelegate authenticate(params, host_addr, session_name, opts \\ []), to: Impl.Authentication
 
