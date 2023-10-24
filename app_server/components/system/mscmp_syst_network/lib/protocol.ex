@@ -11,6 +11,13 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defprotocol MscmpSystNetwork.Protocol do
+  @moduledoc """
+  Defines the MscmpSystNetwork Protocol which all network protocols must
+  implement.
+
+  Many functions in `MscmpSystNetwork` require that this protocol be implemented
+  to be useful.
+  """
   alias MscmpSystNetwork.Types
 
   @spec to_string(Types.addr_structs()) :: String.t()
