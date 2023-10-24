@@ -14,25 +14,24 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
   @moduledoc false
 
   import Ecto.Query
+  import MscmpSystNetwork.Guards, only: [is_ip: 1]
 
   alias MscmpSystAuthn.Types
   alias MscmpSystDb.DbTypes
 
-  require IP
-  require IP.Subnet
   require Logger
 
   @spec host_disallowed(Types.host_address()) ::
           {:ok, boolean()} | {:error, MscmpSystError.t() | Exception.t()}
-  def host_disallowed(host_addr) when is_tuple(host_addr) do
+  def host_disallowed(host_addr) when is_ip(host_addr) do
     {:ok, host_disallowed?(host_addr)}
   rescue
     error -> {:error, error}
   end
 
   @spec host_disallowed?(Types.host_address()) :: boolean()
-  def host_disallowed?(host_addr) when is_tuple(host_addr) do
-    target_host = %DbTypes.Inet{address: host_addr}
+  def host_disallowed?(host_addr) when is_ip(host_addr) do
+    target_host = DbTypes.Inet.from_net_address(host_addr)
 
     from(dh in Msdata.SystDisallowedHosts, where: dh.host_address == ^target_host)
     |> MscmpSystDb.exists?()
@@ -48,8 +47,8 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
 
   @spec create_disallowed_host(Types.host_address()) ::
           {:ok, Msdata.SystDisallowedHosts.t()} | {:error, MscmpSystError.t()}
-  def create_disallowed_host(host_addr) when is_tuple(host_addr) do
-    target_host = %DbTypes.Inet{address: host_addr}
+  def create_disallowed_host(host_addr) when is_ip(host_addr) do
+    target_host = DbTypes.Inet.from_net_address(host_addr)
 
     Msdata.SystDisallowedHosts.insert_changeset(target_host)
     |> MscmpSystDb.insert!(returning: true)
@@ -68,15 +67,15 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
 
   @spec delete_disallowed_host_addr(Types.host_address()) ::
           {:ok, :deleted | :not_found} | {:error, MscmpSystError.t() | Exception.t()}
-  def delete_disallowed_host_addr(host_addr) when not is_nil(host_addr) do
+  def delete_disallowed_host_addr(host_addr) when is_ip(host_addr) do
     {:ok, delete_disallowed_host_addr!(host_addr)}
   rescue
     error -> {:error, error}
   end
 
   @spec delete_disallowed_host_addr!(Types.host_address()) :: :deleted | :not_found
-  def delete_disallowed_host_addr!(host_addr) when not is_nil(host_addr) do
-    target_host = %DbTypes.Inet{address: host_addr}
+  def delete_disallowed_host_addr!(host_addr) when is_ip(host_addr) do
+    target_host = DbTypes.Inet.from_net_address(host_addr)
 
     from(dh in Msdata.SystDisallowedHosts, where: dh.host_address == ^target_host)
     |> process_disallowed_host_delete()
@@ -170,7 +169,7 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
   @spec get_disallowed_host_record_by_host(Types.host_address()) ::
           {:ok, Msdata.SystDisallowedHosts.t() | nil}
           | {:error, MscmpSystError.t() | Exception.t()}
-  def get_disallowed_host_record_by_host(host_addr) when is_tuple(host_addr) do
+  def get_disallowed_host_record_by_host(host_addr) when is_ip(host_addr) do
     {:ok, get_disallowed_host_record_by_host!(host_addr)}
   rescue
     error -> {:error, error}
@@ -178,8 +177,8 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
 
   @spec get_disallowed_host_record_by_host!(Types.host_address()) ::
           Msdata.SystDisallowedHosts.t() | nil
-  def get_disallowed_host_record_by_host!(host_addr) when is_tuple(host_addr) do
-    target_host = %DbTypes.Inet{address: host_addr}
+  def get_disallowed_host_record_by_host!(host_addr) when is_ip(host_addr) do
+    target_host = DbTypes.Inet.from_net_address(host_addr)
 
     from(dh in Msdata.SystDisallowedHosts, where: dh.host_address == ^target_host)
     |> MscmpSystDb.one()
@@ -199,7 +198,7 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
           MscmpSystInstance.Types.owner_id() | nil
         ) :: {:ok, Types.AppliedNetworkRule.t()} | {:error, MscmpSystError.t() | Exception.t()}
   def get_applied_network_rule(host_addr, instance_id \\ nil, instance_owner_id \\ nil)
-      when is_tuple(host_addr) do
+      when is_ip(host_addr) do
     {:ok, get_applied_network_rule!(host_addr, instance_id, instance_owner_id)}
   rescue
     error -> {:error, error}
@@ -211,8 +210,11 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
           MscmpSystInstance.Types.owner_id() | nil
         ) :: Types.AppliedNetworkRule.t()
   def get_applied_network_rule!(host_addr, instance_id \\ nil, instance_owner_id \\ nil)
-      when is_tuple(host_addr) do
-    target_host = %DbTypes.Inet{address: host_addr} |> DbTypes.Inet.to_postgrex_inet()
+      when is_ip(host_addr) do
+    target_host =
+      host_addr
+      |> DbTypes.Inet.from_net_address()
+      |> DbTypes.Inet.to_postgrex_inet()
 
     target_instance_id =
       case instance_id do
@@ -646,9 +648,8 @@ defmodule MscmpSystAuthn.Impl.NetworkRules do
 
   defp convert_net_address_to_inet(%DbTypes.Inet{} = address), do: address
 
-  defp convert_net_address_to_inet(address)
-       when IP.is_ip(address) or IP.Subnet.is_subnet(address),
-       do: DbTypes.Inet.from_net_address(address)
+  defp convert_net_address_to_inet(address) when is_ip(address),
+    do: DbTypes.Inet.from_net_address(address)
 
   defp convert_net_address_to_inet(_), do: nil
 end

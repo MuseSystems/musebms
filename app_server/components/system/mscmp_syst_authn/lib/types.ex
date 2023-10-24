@@ -556,7 +556,7 @@ defmodule MscmpSystAuthn.Types do
   @typedoc """
   Defines the data type and structure of Host IP Addresses.
   """
-  @type host_address() :: IP.addr()
+  @type host_address() :: MscmpSystNetwork.Types.addr_structs()
 
   @typedoc """
   Establishes the data type of the Identity record ID.

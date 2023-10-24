@@ -14,7 +14,7 @@ defmodule NetworkRulesTest do
   use AuthenticationTestCase, async: true
 
   import Ecto.Query
-  import IP, only: [sigil_i: 2]
+  import MscmpSystNetwork, only: [sigil_i: 2]
 
   alias MscmpSystAuthn.Impl
   alias MscmpSystDb.DbTypes
