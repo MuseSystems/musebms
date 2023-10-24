@@ -26,7 +26,7 @@ defmodule IpV4Test do
 
   test "Can convert IP structs to string" do
     Enum.each(1..1_000_000, fn _ ->
-      {_, addr_struct} = get_random_ip()
+      {_, addr_struct} = TestSupport.get_random_ipv4()
       %IpV4{address: {a, b, c, d}, mask: mask} = addr_struct
 
       expected_result =
@@ -42,7 +42,7 @@ defmodule IpV4Test do
 
   test "Can get network mask from struct" do
     Enum.each(1..1_000_000, fn _ ->
-      {_, addr_struct} = get_random_ip(:any, {33, 33})
+      {_, addr_struct} = TestSupport.get_random_ipv4(:any, {33, 33})
 
       <<a, b, c, d>> = <<-1 <<< (32 - addr_struct.mask)::32>>
       expected_result = {a, b, c, d}
@@ -57,7 +57,7 @@ defmodule IpV4Test do
 
   test "Can get network or nil from struct" do
     Enum.each(1..1_000_000, fn _ ->
-      {kind, addr_struct} = get_random_ip(:any, {15, 70})
+      {kind, addr_struct} = TestSupport.get_random_ipv4(:any, {15, 70})
 
       expected_result =
         if kind !== :host do
@@ -78,7 +78,7 @@ defmodule IpV4Test do
 
   test "Can get host or nil from struct" do
     Enum.each(1..1_000_000, fn _ ->
-      {kind, addr_struct} = get_random_ip()
+      {kind, addr_struct} = TestSupport.get_random_ipv4()
 
       expected_result = if kind === :host, do: addr_struct.address
 
@@ -92,7 +92,7 @@ defmodule IpV4Test do
 
   test "Can test if struct represents a host" do
     Enum.each(1..1_000_000, fn _ ->
-      {kind, addr_struct} = get_random_ip()
+      {kind, addr_struct} = TestSupport.get_random_ipv4()
 
       expected_result = kind === :host
 
@@ -106,7 +106,7 @@ defmodule IpV4Test do
 
   test "Can test if struct represents a subnet" do
     Enum.each(1..1_000_000, fn _ ->
-      {kind, addr_struct} = get_random_ip(:any, {15, 70})
+      {kind, addr_struct} = TestSupport.get_random_ipv4(:any, {15, 70})
 
       expected_result = kind === :network
 
@@ -120,7 +120,7 @@ defmodule IpV4Test do
 
   test "Can create struct from Erlang IP address and mask" do
     Enum.each(1..1_000_000, fn _ ->
-      {_, expected_result} = get_random_ip(:any, {15, 70})
+      {_, expected_result} = TestSupport.get_random_ipv4(:any, {15, 70})
 
       assert expected_result ===
                Impl.IpV4.to_struct(expected_result.address, expected_result.mask)
@@ -203,57 +203,4 @@ defmodule IpV4Test do
                Impl.IpV4.in_range?(elem(curr_tuple, 0), elem(curr_tuple, 1), elem(curr_tuple, 2))
     end)
   end
-
-  #
-  # Private support functions
-  #
-
-  defp get_random_ip(:host) do
-    <<a, b, c, d>> = :rand.bytes(4)
-    {:host, %IpV4{address: {a, b, c, d}, mask: 32}}
-  end
-
-  defp get_random_ip(:network) do
-    seed = :rand.bytes(4)
-    <<seed_int::unsigned-integer-size(32)>> = seed
-
-    mask_length = :rand.uniform(31)
-
-    <<mask::unsigned-integer-size(32)>> = <<-1 <<< (32 - mask_length)::32>>
-
-    <<a, b, c, d>> = <<band(seed_int, mask)::32>>
-
-    {:network, %IpV4{address: {a, b, c, d}, mask: mask_length}}
-  end
-
-  defp get_random_ip(:broadcast) do
-    seed = :rand.bytes(4)
-    <<seed_int::unsigned-integer-size(32)>> = seed
-
-    mask_length = :rand.uniform(31)
-
-    <<mask::unsigned-integer-size(32)>> = <<-1 <<< (32 - mask_length)::32>>
-
-    inverse_mask = bnot(mask) |> band(0xFFFF_FFFF)
-
-    broadcast_address = seed_int ||| inverse_mask
-
-    <<a, b, c, d>> = <<broadcast_address::32>>
-
-    {:broadcast, %IpV4{address: {a, b, c, d}, mask: mask_length}}
-  end
-
-  defp get_random_ip(:any, weights \\ {70, 15}) do
-    h_weight = elem(weights, 0)
-    n_weight = elem(weights, 0) + elem(weights, 1)
-    selector = :rand.uniform(100)
-
-    cond do
-      selector <= h_weight -> get_random_ip(:host)
-      selector <= n_weight -> get_random_ip(:network)
-      true -> get_random_ip(:broadcast)
-    end
-  end
-
-  defp get_random_ip(), do: get_random_ip(:any)
 end
