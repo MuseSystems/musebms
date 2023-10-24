@@ -16,6 +16,7 @@ defmodule MssubMcp.Runtime.AuthnManager do
   use MssubMcp.Macros
 
   alias MscmpSystAuthn.Types, as: AuthnTypes
+  alias MscmpSystNetwork.Types, as: NetTypes
 
   mcp_constants()
 
@@ -630,7 +631,7 @@ defmodule MssubMcp.Runtime.AuthnManager do
   @spec authenticate_email_password(
           AuthnTypes.account_identifier(),
           AuthnTypes.credential(),
-          IP.addr(),
+          NetTypes.addr_structs(),
           Keyword.t()
         ) ::
           {:ok, AuthnTypes.AuthenticationState.t()} | {:error, MscmpSystError.t()}
@@ -647,7 +648,7 @@ defmodule MssubMcp.Runtime.AuthnManager do
   @spec authenticate_validation_token(
           AuthnTypes.account_identifier(),
           AuthnTypes.credential(),
-          IP.addr(),
+          NetTypes.addr_structs(),
           Keyword.t()
         ) ::
           {:ok, AuthnTypes.AuthenticationState.t()} | {:error, MscmpSystError.t()}
@@ -658,7 +659,7 @@ defmodule MssubMcp.Runtime.AuthnManager do
   @spec authenticate_recovery_token(
           AuthnTypes.account_identifier(),
           AuthnTypes.credential(),
-          IP.addr(),
+          NetTypes.addr_structs(),
           Keyword.t()
         ) ::
           {:ok, AuthnTypes.AuthenticationState.t()} | {:error, MscmpSystError.t()}
@@ -669,7 +670,7 @@ defmodule MssubMcp.Runtime.AuthnManager do
   @spec authenticate_api_token(
           AuthnTypes.account_identifier(),
           AuthnTypes.credential(),
-          IP.addr(),
+          NetTypes.addr_structs(),
           MscmpSystInstance.Types.instance_id(),
           Keyword.t()
         ) ::
