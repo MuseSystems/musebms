@@ -32,7 +32,7 @@ defmodule IpV6Test do
     # writing).
 
     Enum.each(1..1_000_000, fn _ ->
-      {_, addr_struct} = get_random_ip()
+      {_, addr_struct} = TestSupport.get_random_ipv6()
 
       expected_result =
         addr_struct.address
@@ -50,7 +50,7 @@ defmodule IpV6Test do
 
   test "Can get network mask from struct" do
     Enum.each(1..1_000_000, fn _ ->
-      {_, addr_struct} = get_random_ip(:any, 50)
+      {_, addr_struct} = TestSupport.get_random_ipv6(:any, 50)
 
       <<a::unsigned-integer-size(16), b::unsigned-integer-size(16), c::unsigned-integer-size(16),
         d::unsigned-integer-size(16), e::unsigned-integer-size(16), f::unsigned-integer-size(16),
@@ -69,7 +69,7 @@ defmodule IpV6Test do
 
   test "Can get network or nil from struct" do
     Enum.each(1..1_000_000, fn _ ->
-      {kind, addr_struct} = get_random_ip(:any, 30)
+      {kind, addr_struct} = TestSupport.get_random_ipv6(:any, 30)
 
       expected_result =
         if kind !== :host do
@@ -103,7 +103,7 @@ defmodule IpV6Test do
 
   test "Can get host or nil from struct" do
     Enum.each(1..1_000_000, fn _ ->
-      {kind, addr_struct} = get_random_ip()
+      {kind, addr_struct} = TestSupport.get_random_ipv6()
 
       expected_result = if kind === :host, do: addr_struct.address
 
@@ -117,7 +117,7 @@ defmodule IpV6Test do
 
   test "Can test if struct represents a host" do
     Enum.each(1..1_000_000, fn _ ->
-      {kind, addr_struct} = get_random_ip()
+      {kind, addr_struct} = TestSupport.get_random_ipv6()
 
       expected_result = kind === :host
 
@@ -131,7 +131,7 @@ defmodule IpV6Test do
 
   test "Can test if struct represents a subnet" do
     Enum.each(1..1_000_000, fn _ ->
-      {kind, addr_struct} = get_random_ip(:any, 30)
+      {kind, addr_struct} = TestSupport.get_random_ipv6(:any, 30)
 
       expected_result = kind === :network
 
@@ -145,7 +145,7 @@ defmodule IpV6Test do
 
   test "Can create struct from Erlang IP address and mask" do
     Enum.each(1..1_000_000, fn _ ->
-      {_, expected_result} = get_random_ip(:any, 30)
+      {_, expected_result} = TestSupport.get_random_ipv6(:any, 30)
 
       assert expected_result ===
                Impl.IpV6.to_struct(expected_result.address, expected_result.mask)
@@ -254,38 +254,4 @@ defmodule IpV6Test do
                Impl.IpV6.in_range?(elem(curr_tuple, 0), elem(curr_tuple, 1), elem(curr_tuple, 2))
     end)
   end
-
-  #
-  # Private support functions
-  #
-
-  defp get_random_ip(:host) do
-    <<a::unsigned-integer-size(16), b::unsigned-integer-size(16), c::unsigned-integer-size(16),
-      d::unsigned-integer-size(16), e::unsigned-integer-size(16), f::unsigned-integer-size(16),
-      g::unsigned-integer-size(16), h::unsigned-integer-size(16)>> = :rand.bytes(16)
-
-    {:host, %IpV6{address: {a, b, c, d, e, f, g, h}, mask: 128}}
-  end
-
-  defp get_random_ip(:network) do
-    seed = :rand.bytes(16)
-    <<seed_int::unsigned-integer-size(128)>> = seed
-
-    # Make our network prefixes a multiple of 4 for readability.
-    prefix = :rand.uniform(31) * 4
-
-    <<mask::unsigned-integer-size(128)>> = <<-1 <<< (128 - prefix)::128>>
-
-    <<a::unsigned-integer-size(16), b::unsigned-integer-size(16), c::unsigned-integer-size(16),
-      d::unsigned-integer-size(16), e::unsigned-integer-size(16), f::unsigned-integer-size(16),
-      g::unsigned-integer-size(16), h::unsigned-integer-size(16)>> = <<band(seed_int, mask)::128>>
-
-    {:network, %IpV6{address: {a, b, c, d, e, f, g, h}, mask: prefix}}
-  end
-
-  defp get_random_ip(:any, h_weight \\ 70) do
-    if :rand.uniform(100) <= h_weight, do: get_random_ip(:host), else: get_random_ip(:network)
-  end
-
-  defp get_random_ip(), do: get_random_ip(:any)
 end
