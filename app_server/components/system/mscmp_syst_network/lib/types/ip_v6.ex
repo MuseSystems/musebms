@@ -11,12 +11,38 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystNetwork.Types.IpV6 do
+  @moduledoc """
+  Represents an IPv6 host or sub-net CIDR address.
+
+  Implements the `MscmpSystNetwork.Protocol`.
+
+  The representation of a host may also written to include an identifiable
+  sub-net as well.  So for example, `fd9b:77f8:714d:cabb::ab67:12/64` represents
+  both a specific host (`fd9b:77f8:714d:cabb::ab67:12`) and a specific sub-net
+  `fd9b:77f8:714d:cabb::ab67:0000/64`.
+  """
+
   alias MscmpSystNetwork.Impl
   alias MscmpSystNetwork.Types
 
   @enforce_keys [:address]
   defstruct address: nil, mask: 128
 
+  @typedoc """
+  Defines an IPv6 address.
+
+  ## Attributes
+
+    * `address` - The IP address of the host or sub-net in
+    `t:MscmpSystNetwork.Types.ip6_addr/0` form.
+
+    * `mask` - the prefix bit length of the IP address.  Valid values are
+    integers between 0 and 128, inclusive.  When defining a new struct and the
+    `mask` is not provided, the resulting struct is assumed to represent a host
+    and the `mask` attribute is defaulted to 128.
+
+  See `MscmpSystNetwork.Types.IpV6` for more.
+  """
   @type t() :: %__MODULE__{address: Types.ip6_addr(), mask: 0..128}
 
   defimpl MscmpSystNetwork.Protocol do

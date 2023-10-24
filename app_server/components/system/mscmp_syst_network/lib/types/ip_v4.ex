@@ -11,12 +11,38 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystNetwork.Types.IpV4 do
+  @moduledoc """
+  Represents an IPv4 host or sub-net CIDR address.
+
+  Implements the `MscmpSystNetwork.Protocol`.
+
+  The representation of a host may also written to include an identifiable
+  sub-net as well.  So for example, `10.1.1.15/24` represents
+  both a specific host (`10.1.1.15`) and a specific sub-net
+  `10.1.1.0/24`.
+  """
+
   alias MscmpSystNetwork.Impl
   alias MscmpSystNetwork.Types
 
   @enforce_keys [:address]
   defstruct address: nil, mask: 32
 
+  @typedoc """
+  Defines an IPv4 address.
+
+  ## Attributes
+
+    * `address` - The IP address of the host or sub-net in
+    `t:MscmpSystNetwork.Types.ip4_addr/0` form.
+
+    * `mask` - the sub-net mask bit length of the IP address.  Valid values are
+    integers between 0 and 32, inclusive.  When defining a new struct and the
+    `mask` is not provided, the resulting struct is assumed to represent a host
+    and the `mask` attribute is defaulted to 32.
+
+  See `MscmpSystNetwork.Types.IpV4` for more.
+  """
   @type t() :: %__MODULE__{address: Types.ip4_addr(), mask: 0..32}
 
   defimpl MscmpSystNetwork.Protocol do
