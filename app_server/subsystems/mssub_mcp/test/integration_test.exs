@@ -14,7 +14,7 @@ defmodule IntegrationTest do
   use ExUnit.Case, async: false
 
   import Ecto.Query
-  import IP, only: [sigil_i: 2]
+  import MscmpSystNetwork, only: [sigil_i: 2]
 
   alias MscmpSystDb.DbTypes
 
