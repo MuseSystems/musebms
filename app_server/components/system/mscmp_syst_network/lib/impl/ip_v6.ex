@@ -114,7 +114,7 @@ defmodule MscmpSystNetwork.Impl.IpV6 do
 
   @spec to_struct(Types.ip6_addr(), 1..128 | nil) :: IpV6.t()
   def to_struct(erlang_addr, mask) when is_ipv6_tuple(erlang_addr),
-    do: %IpV6{address: erlang_addr, mask: mask}
+    do: %IpV6{address: erlang_addr, mask: mask || 128}
 
   defp to_integer({a, b, c, d, e, f, g, h} = ip) when is_ipv6_tuple(ip) do
     <<i::unsigned-integer-size(128)>> =
