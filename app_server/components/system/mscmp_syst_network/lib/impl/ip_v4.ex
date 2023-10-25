@@ -26,10 +26,10 @@ defmodule MscmpSystNetwork.Impl.IpV4 do
     address <> "/" <> mask
   end
 
-  @spec get_netmask(IpV4.t()) :: Types.ip4_addr()
+  @spec get_netmask(IpV4.t()) :: Types.ipv4_addr()
   def get_netmask(addr) when is_ipv4(addr), do: mask(addr.mask)
 
-  @spec get_network(IpV4.t()) :: Types.ip4_addr() | nil
+  @spec get_network(IpV4.t()) :: Types.ipv4_addr() | nil
   def get_network(%IpV4{mask: 32}), do: nil
 
   def get_network(addr) when is_ipv4(addr) do
@@ -39,7 +39,7 @@ defmodule MscmpSystNetwork.Impl.IpV4 do
     band(address, mask) |> from_integer()
   end
 
-  @spec get_host(IpV4.t()) :: Types.ip4_addr() | nil
+  @spec get_host(IpV4.t()) :: Types.ipv4_addr() | nil
   def get_host(addr) when is_ipv4(addr), do: if(host?(addr), do: addr.address, else: nil)
 
   @spec host?(IpV4.t()) :: boolean()
@@ -125,7 +125,7 @@ defmodule MscmpSystNetwork.Impl.IpV4 do
     target_low >= low_resolved and target_hi <= high_resolved
   end
 
-  @spec to_struct(Types.ip4_addr(), 1..32 | nil) :: IpV4.t()
+  @spec to_struct(Types.ipv4_addr(), Types.ipv4_mask() | nil) :: IpV4.t()
   def to_struct(erlang_addr, mask) when is_ipv4_tuple(erlang_addr),
     do: %IpV4{address: erlang_addr, mask: mask || 32}
 

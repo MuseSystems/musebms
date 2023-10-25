@@ -34,7 +34,7 @@ defmodule MscmpSystNetwork.Types.IpV4 do
   ## Attributes
 
     * `address` - The IP address of the host or sub-net in
-    `t:MscmpSystNetwork.Types.ip4_addr/0` form.
+    `t:MscmpSystNetwork.Types.ipv4_addr/0` form.
 
     * `mask` - the sub-net mask bit length of the IP address.  Valid values are
     integers between 0 and 32, inclusive.  When defining a new struct and the
@@ -43,19 +43,19 @@ defmodule MscmpSystNetwork.Types.IpV4 do
 
   See `MscmpSystNetwork.Types.IpV4` for more.
   """
-  @type t() :: %__MODULE__{address: Types.ip4_addr(), mask: 0..32}
+  @type t() :: %__MODULE__{address: Types.ipv4_addr(), mask: Types.ipv4_mask()}
 
   defimpl MscmpSystNetwork.Protocol do
     @spec to_string(Types.IpV4.t()) :: String.t()
     def to_string(addr_struct), do: Impl.IpV4.to_string(addr_struct)
 
-    @spec get_netmask(Types.IpV4.t()) :: Types.ip4_addr()
+    @spec get_netmask(Types.IpV4.t()) :: Types.ipv4_addr()
     def get_netmask(addr_struct), do: Impl.IpV4.get_netmask(addr_struct)
 
-    @spec get_network(Types.IpV4.t()) :: Types.ip4_addr()
+    @spec get_network(Types.IpV4.t()) :: Types.ipv4_addr()
     def get_network(addr_struct), do: Impl.IpV4.get_network(addr_struct)
 
-    @spec get_host(Types.IpV4.t()) :: Types.ip4_addr() | nil
+    @spec get_host(Types.IpV4.t()) :: Types.ipv4_addr() | nil
     def get_host(addr_struct), do: Impl.IpV4.get_host(addr_struct)
 
     @spec host?(Types.IpV4.t()) :: boolean()

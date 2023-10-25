@@ -23,13 +23,16 @@ defprotocol MscmpSystNetwork.Protocol do
   @spec to_string(Types.addr_structs()) :: String.t()
   def to_string(addr_struct)
 
-  @spec get_netmask(Types.addr_structs()) :: Types.addr()
+  @spec get_netmask(Types.IpV4.t()) :: Types.ipv4_addr()
+  @spec get_netmask(Types.IpV6.t()) :: Types.ipv6_addr()
   def get_netmask(addr_struct)
 
-  @spec get_network(Types.addr_structs()) :: Types.addr() | nil
+  @spec get_network(Types.IpV4.t()) :: Types.ipv4_addr() | nil
+  @spec get_network(Types.IpV6.t()) :: Types.ipv6_addr() | nil
   def get_network(addr_struct)
 
-  @spec get_host(Types.addr_structs()) :: Types.addr() | nil
+  @spec get_host(Types.IpV4.t()) :: Types.ipv4_addr() | nil
+  @spec get_host(Types.IpV6.t()) :: Types.ipv6_addr() | nil
   def get_host(addr_struct)
 
   @spec host?(Types.addr_structs()) :: boolean()
@@ -38,9 +41,11 @@ defprotocol MscmpSystNetwork.Protocol do
   @spec network?(Types.addr_structs()) :: boolean()
   def network?(addr_struct)
 
-  @spec in_network?(Types.addr_structs(), Types.addr_structs()) :: boolean()
+  @spec in_network?(Types.IpV4.t(), Types.IpV4.t()) :: boolean()
+  @spec in_network?(Types.IpV6.t(), Types.IpV6.t()) :: boolean()
   def in_network?(test_addr, network_addr)
 
-  @spec in_range?(Types.addr_structs(), Types.addr_structs(), Types.addr_structs()) :: boolean()
+  @spec in_range?(Types.IpV4.t(), Types.IpV4.t(), Types.IpV4.t()) :: boolean()
+  @spec in_range?(Types.IpV6.t(), Types.IpV6.t(), Types.IpV6.t()) :: boolean()
   def in_range?(test_addr, low_addr, high_addr)
 end

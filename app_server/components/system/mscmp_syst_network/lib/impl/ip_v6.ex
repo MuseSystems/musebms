@@ -26,10 +26,10 @@ defmodule MscmpSystNetwork.Impl.IpV6 do
     address <> "/" <> mask
   end
 
-  @spec get_netmask(IpV6.t()) :: Types.ip6_addr()
+  @spec get_netmask(IpV6.t()) :: Types.ipv6_addr()
   def get_netmask(addr) when is_ipv6(addr), do: mask(addr.mask)
 
-  @spec get_network(IpV6.t()) :: Types.ip6_addr() | nil
+  @spec get_network(IpV6.t()) :: Types.ipv6_addr() | nil
   def get_network(%IpV6{mask: 128}), do: nil
 
   def get_network(addr) when is_ipv6(addr) do
@@ -39,7 +39,7 @@ defmodule MscmpSystNetwork.Impl.IpV6 do
     band(address, mask) |> from_integer()
   end
 
-  @spec get_host(IpV6.t()) :: Types.ip6_addr() | nil
+  @spec get_host(IpV6.t()) :: Types.ipv6_addr() | nil
   def get_host(addr) when is_ipv6(addr), do: if(host?(addr), do: addr.address, else: nil)
 
   @spec host?(IpV6.t()) :: boolean()
@@ -112,7 +112,7 @@ defmodule MscmpSystNetwork.Impl.IpV6 do
     target_low >= low_resolved and target_hi <= high_resolved
   end
 
-  @spec to_struct(Types.ip6_addr(), 1..128 | nil) :: IpV6.t()
+  @spec to_struct(Types.ipv6_addr(), Types.ipv6_mask() | nil) :: IpV6.t()
   def to_struct(erlang_addr, mask) when is_ipv6_tuple(erlang_addr),
     do: %IpV6{address: erlang_addr, mask: mask || 128}
 

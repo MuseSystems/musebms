@@ -112,7 +112,7 @@ defmodule MscmpSystNetwork do
        }}
   """
   @spec parse(String.t()) :: {:ok, Types.addr_structs()} | {:error, MscmpSystError.t()}
-  defdelegate parse(addr_string), to: Impl.Cidr
+  defdelegate parse(addr_string), to: Impl.Ip
 
   @doc section: :parse_api
   @doc """
@@ -153,7 +153,7 @@ defmodule MscmpSystNetwork do
       ** (MatchError) no match of right hand side value: {:error, :einval}
   """
   @spec parse!(String.t()) :: Types.addr_structs()
-  defdelegate parse!(addr_string), to: Impl.Cidr
+  defdelegate parse!(addr_string), to: Impl.Ip
 
   @doc section: :parse_api
   @doc """
@@ -196,7 +196,46 @@ defmodule MscmpSystNetwork do
       ** (MatchError) no match of right hand side value: {:error, :einval}
   """
   @spec sigil_i(String.t(), list()) :: Types.addr_structs()
-  defdelegate sigil_i(addr_string, modifiers), to: Impl.Cidr, as: :parse!
+  defdelegate sigil_i(addr_string, modifiers), to: Impl.Ip, as: :parse!
+
+  @doc section: :parse_api
+  @doc """
+  Turns an Erlang `t::inet.ip_address/0` tuple into either a
+  `t:MscmpSystNetwork.Types.IpV4.t/0` or `t:MscmpSystNetwork.Types.IpV6.t/0`
+  struct.
+
+  Raises on error.
+
+  ## Parameters
+
+    * `addr` - a tuple representing either the IPv4 or IPv6 address to be used
+    in constructing the new struct.
+
+    * `mask` - represents either the bit length of the IPv4 sub-net mask or the
+    IPv6 prefix.  This parameter is optional and if not provided or is nil will
+    default to the single host value as appropriate for the `addr` type.
+
+  ## Examples
+
+    IPv4 Examples
+
+      iex> MscmpSystNetwork.to_struct({10, 1, 1, 15})
+      %MscmpSystNetwork.Types.IpV4{address: {10, 1, 1, 15}, mask: 32}
+      iex> MscmpSystNetwork.to_struct({10, 1, 0, 0}, 16)
+      %MscmpSystNetwork.Types.IpV4{address: {10, 1, 0, 0}, mask: 16}
+
+    IPv6 Examples
+
+      iex> MscmpSystNetwork.to_struct({64923, 30712, 29005, 51899, 0, 0, 0, 1})
+      %MscmpSystNetwork.Types.IpV6{address: {64923, 30712, 29005, 51899, 0, 0, 0, 1}, mask: 128}
+      iex> MscmpSystNetwork.to_struct({64923, 30712, 29005, 51899, 0, 0, 0, 0}, 64)
+      %MscmpSystNetwork.Types.IpV6{address: {64923, 30712, 29005, 51899, 0, 0, 0, 0}, mask: 64}
+
+
+  """
+  @spec to_struct(Types.ipv4_addr(), Types.ipv4_mask() | nil) :: Types.IpV4.t()
+  @spec to_struct(Types.ipv6_addr(), Types.ipv6_mask() | nil) :: Types.IpV6.t()
+  defdelegate to_struct(addr, mask \\ nil), to: Impl.Ip
 
   # ==============================================================================================
   #
@@ -244,9 +283,7 @@ defmodule MscmpSystNetwork do
   @doc """
   Retrieves the network masking bits (IPv4 subnet mask or IPv6 prefix).
 
-  Results are returned in the form of an
-  [Erlang `ip_address()`](https://www.erlang.org/doc/man/inet#type-ip_address)
-  tuple.
+  Results are returned in the form of an Erlang `t::inet.ip_address/0` tuple.
 
   ## Examples
 
@@ -266,17 +303,16 @@ defmodule MscmpSystNetwork do
       iex> MscmpSystNetwork.get_netmask(~i"fd9b:77f8:714d:cabb::20/128")
       {65535, 65535, 65535, 65535, 65535, 65535, 65535, 65535}
   """
-  @spec get_netmask(Types.addr_structs()) :: Types.addr()
+  @spec get_netmask(Types.IpV4.t()) :: Types.ipv4_addr()
+  @spec get_netmask(Types.IpV6.t()) :: Types.ipv6_addr()
   defdelegate get_netmask(addr_struct), to: MscmpSystNetwork.Protocol
 
   @doc section: :protocol_api
   @doc """
   Retrieves the network identifying portion of an IP address.
 
-  Results are returned in the form of an
-  [Erlang `ip_address()`](https://www.erlang.org/doc/man/inet#type-ip_address)
-  tuple or `nil` when the address passed to the function represents a single
-  host.
+  Results are returned in the form of an Erlang `t::inet.ip_address/0` tuple or
+  `nil` when the address passed to the function represents a single host.
 
   ## Examples
 
@@ -296,7 +332,8 @@ defmodule MscmpSystNetwork do
       iex> MscmpSystNetwork.get_network(~i"fd9b:77f8:714d:cabb::20/128")
       nil
   """
-  @spec get_network(Types.addr_structs()) :: Types.addr() | nil
+  @spec get_network(Types.IpV4.t()) :: Types.ipv4_addr() | nil
+  @spec get_network(Types.IpV6.t()) :: Types.ipv6_addr() | nil
   defdelegate get_network(addr_struct), to: MscmpSystNetwork.Protocol
 
   @doc section: :protocol_api
@@ -304,10 +341,9 @@ defmodule MscmpSystNetwork do
   Retrieves IP address from IP address structs or `nil` if the struct only
   represents a subnet/prefix.
 
-  Results are returned in the form of an
-  [Erlang `ip_address()`](https://www.erlang.org/doc/man/inet#type-ip_address)
-  tuple or `nil` when the address passed to the function doesn't represent
-  a host address.
+  Results are returned in the form of an Erlang `t::inet.ip_address/0` tuple or
+  `nil` when the address passed to the function doesn't represent a host
+  address.
 
   ## Examples
 
@@ -327,7 +363,8 @@ defmodule MscmpSystNetwork do
       iex> MscmpSystNetwork.get_host(~i"fd9b:77f8:714d:cabb::/64")
       nil
   """
-  @spec get_host(Types.addr_structs()) :: Types.addr() | nil
+  @spec get_host(Types.IpV4.t()) :: Types.ipv4_addr() | nil
+  @spec get_host(Types.IpV6.t()) :: Types.ipv6_addr() | nil
   defdelegate get_host(addr_struct), to: MscmpSystNetwork.Protocol
 
   @doc section: :protocol_api
@@ -463,7 +500,8 @@ defmodule MscmpSystNetwork do
       false
 
   """
-  @spec in_network?(Types.addr_structs(), Types.addr_structs()) :: boolean()
+  @spec in_network?(Types.IpV4.t(), Types.IpV4.t()) :: boolean()
+  @spec in_network?(Types.IpV6.t(), Types.IpV6.t()) :: boolean()
   defdelegate in_network?(test_addr, network_addr), to: MscmpSystNetwork.Protocol
 
   @doc section: :protocol_api
@@ -533,6 +571,7 @@ defmodule MscmpSystNetwork do
       false
 
   """
-  @spec in_range?(Types.addr_structs(), Types.addr_structs(), Types.addr_structs()) :: boolean()
+  @spec in_range?(Types.IpV4.t(), Types.IpV4.t(), Types.IpV4.t()) :: boolean()
+  @spec in_range?(Types.IpV6.t(), Types.IpV6.t(), Types.IpV6.t()) :: boolean()
   defdelegate in_range?(test_addr, low_addr, high_addr), to: MscmpSystNetwork.Protocol
 end
