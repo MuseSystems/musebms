@@ -127,7 +127,7 @@ defmodule MscmpSystNetwork.Impl.IpV4 do
 
   @spec to_struct(Types.ip4_addr(), 1..32 | nil) :: IpV4.t()
   def to_struct(erlang_addr, mask) when is_ipv4_tuple(erlang_addr),
-    do: %IpV4{address: erlang_addr, mask: mask}
+    do: %IpV4{address: erlang_addr, mask: mask || 32}
 
   defp to_integer({a, b, c, d} = ip) when is_ipv4_tuple(ip) do
     <<i::unsigned-integer-size(32)>> = <<a, b, c, d>>
