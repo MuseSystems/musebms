@@ -122,6 +122,11 @@ defmodule MscmpSystNetwork do
   Outside of the possibility of raising an exception, this function works the
   same as `parse/1` in all other ways.
 
+  ## Parameters
+
+    * `addr_string` - Either a simple IP host address or an IP address or IP
+    sub-net in CIDR notation.  Passed as a string.
+
   ## Examples
 
     IPv4 addresses
@@ -164,6 +169,14 @@ defmodule MscmpSystNetwork do
 
   Returns either a `t:MscmpSystNetwork.Types.IpV4.t/0` or
   `t:MscmpSystNetwork.Types.IpV6.t/0` struct.
+
+  ## Parameters
+
+    * `addr_string` - Either a simple IP host address or an IP address or IP
+    sub-net in CIDR notation.  Passed as a string.
+
+    * `modifiers` - Currently there are no modifiers which are to be used with
+    the sigil.  This parameter is currently ignored.
 
   ## Examples
 
@@ -248,6 +261,12 @@ defmodule MscmpSystNetwork do
   Converts an IP address struct implementing the `MscmpSystNetwork.Protocol` to
   its common string representation using CIDR notation.
 
+  ## Parameters
+
+    * `addr_struct` - Either a valid `t:MscmpSystNetwork.Types.IpV4.t/0` or
+    `t:MscmpSystNetwork.Types.IpV6.t/0` struct which is to be converted to a
+    string.
+
   ## Examples
 
     IPv4 Addresses
@@ -285,6 +304,12 @@ defmodule MscmpSystNetwork do
 
   Results are returned in the form of an Erlang `t::inet.ip_address/0` tuple.
 
+  ## Parameters
+
+    * `addr_struct` - Either a valid `t:MscmpSystNetwork.Types.IpV4.t/0` or
+    `t:MscmpSystNetwork.Types.IpV6.t/0` struct from which a network mask
+    should be extracted.
+
   ## Examples
 
     IPv4 Examples
@@ -313,6 +338,12 @@ defmodule MscmpSystNetwork do
 
   Results are returned in the form of an Erlang `t::inet.ip_address/0` tuple or
   `nil` when the address passed to the function represents a single host.
+
+  ## Parameters
+
+    * `addr_struct` - Either a valid `t:MscmpSystNetwork.Types.IpV4.t/0` or
+    `t:MscmpSystNetwork.Types.IpV6.t/0` struct from which a network address
+    should extracted.
 
   ## Examples
 
@@ -344,6 +375,12 @@ defmodule MscmpSystNetwork do
   Results are returned in the form of an Erlang `t::inet.ip_address/0` tuple or
   `nil` when the address passed to the function doesn't represent a host
   address.
+
+  ## Parameters
+
+    * `addr_struct` - Either a valid `t:MscmpSystNetwork.Types.IpV4.t/0` or
+    `t:MscmpSystNetwork.Types.IpV6.t/0` struct from which a host IP address is
+    to be extracted.
 
   ## Examples
 
@@ -387,6 +424,12 @@ defmodule MscmpSystNetwork do
   > Component is authoritative or complete.  Test any special cases specifically
   > for compliance with the area in which you are working.
 
+  ## Parameters
+
+    * `addr_struct` - Either a valid `t:MscmpSystNetwork.Types.IpV4.t/0` or
+    `t:MscmpSystNetwork.Types.IpV6.t/0` struct to test for representing a
+    specific host.
+
   ## Examples
 
     IPv4 Examples
@@ -428,6 +471,12 @@ defmodule MscmpSystNetwork do
   > You should not assume that the IP address business logic in this Component
   > is authoritative or complete.  Test any special cases specifically for
   > compliance with the area in which you are working.
+
+  ## Parameters
+
+    * `addr_struct` - Either a valid `t:MscmpSystNetwork.Types.IpV4.t/0` or
+    `t:MscmpSystNetwork.Types.IpV6.t/0` struct which to test as identifying a
+    network exclusively.
 
   ## Examples
 
