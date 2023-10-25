@@ -150,7 +150,7 @@ These Components are listed in "Lower Level Component" to "Higher Level Componen
 
     * __Third Party Dependencies__
 
-      (none)
+      <a href="https://hexdocs.pm/jason" target="_blank">`jason`</a>
 
   * ### `MscmpSystLimiter`
 

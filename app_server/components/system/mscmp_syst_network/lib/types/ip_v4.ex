@@ -71,4 +71,8 @@ defmodule MscmpSystNetwork.Types.IpV4 do
     def in_range?(test_addr, low_addr, high_addr),
       do: Impl.IpV4.in_range?(test_addr, low_addr, high_addr)
   end
+
+  defimpl Jason.Encoder do
+    def encode(addr, opts), do: Impl.JasonSupport.encode(addr, opts)
+  end
 end
