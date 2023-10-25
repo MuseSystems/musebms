@@ -34,7 +34,7 @@ defmodule MscmpSystNetwork.Types.IpV6 do
   ## Attributes
 
     * `address` - The IP address of the host or sub-net in
-    `t:MscmpSystNetwork.Types.ip6_addr/0` form.
+    `t:MscmpSystNetwork.Types.ipv6_addr/0` form.
 
     * `mask` - the prefix bit length of the IP address.  Valid values are
     integers between 0 and 128, inclusive.  When defining a new struct and the
@@ -43,19 +43,19 @@ defmodule MscmpSystNetwork.Types.IpV6 do
 
   See `MscmpSystNetwork.Types.IpV6` for more.
   """
-  @type t() :: %__MODULE__{address: Types.ip6_addr(), mask: 0..128}
+  @type t() :: %__MODULE__{address: Types.ipv6_addr(), mask: Types.ipv6_mask()}
 
   defimpl MscmpSystNetwork.Protocol do
     @spec to_string(Types.IpV6.t()) :: String.t()
     def to_string(addr_struct), do: Impl.IpV6.to_string(addr_struct)
 
-    @spec get_netmask(Types.IpV6.t()) :: Types.ip6_addr()
+    @spec get_netmask(Types.IpV6.t()) :: Types.ipv6_addr()
     def get_netmask(addr_struct), do: Impl.IpV6.get_netmask(addr_struct)
 
-    @spec get_network(Types.IpV6.t()) :: Types.ip6_addr()
+    @spec get_network(Types.IpV6.t()) :: Types.ipv6_addr()
     def get_network(addr_struct), do: Impl.IpV6.get_network(addr_struct)
 
-    @spec get_host(Types.IpV6.t()) :: Types.ip6_addr() | nil
+    @spec get_host(Types.IpV6.t()) :: Types.ipv6_addr() | nil
     def get_host(addr_struct), do: Impl.IpV6.get_host(addr_struct)
 
     @spec host?(Types.IpV6.t()) :: boolean()

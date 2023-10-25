@@ -11,11 +11,21 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MscmpSystNetwork.Types do
-  @type addr() :: ip4_addr() | ip6_addr()
+  #
+  # Note that the ordering of typespecs here is alphabetical.
+  #
 
-  @type ip4_addr() :: :inet.ip4_address()
-
-  @type ip6_addr() :: :inet.ip6_address()
+  @type addr() :: ipv4_addr() | ipv6_addr()
 
   @type addr_structs() :: MscmpSystNetwork.Types.IpV4.t() | MscmpSystNetwork.Types.IpV6.t()
+
+  @type ipv4_addr() :: :inet.ipv4_address()
+
+  @type ipv4_mask() :: 0..32
+
+  @type ipv6_addr() :: :inet.ipv6_address()
+
+  @type ipv6_mask() :: 0..128
+
+  @type mask() :: ipv4_mask() | ipv6_mask()
 end

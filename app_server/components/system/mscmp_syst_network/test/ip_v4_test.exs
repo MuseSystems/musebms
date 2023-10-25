@@ -37,7 +37,7 @@ defmodule IpV4Test do
   end
 
   #
-  # @spec get_netmask(IpV4.t()) :: Types.ip4_addr()
+  # @spec get_netmask(IpV4.t()) :: Types.ipv4_addr()
   #
 
   test "Can get network mask from struct" do
@@ -52,7 +52,7 @@ defmodule IpV4Test do
   end
 
   #
-  # @spec get_network(IpV4.t()) :: Types.ip4_addr() | nil
+  # @spec get_network(IpV4.t()) :: Types.ipv4_addr() | nil
   #
 
   test "Can get network or nil from struct" do
@@ -73,7 +73,7 @@ defmodule IpV4Test do
   end
 
   #
-  # @spec get_host(IpV4.t()) :: Types.ip4_addr() | nil
+  # @spec get_host(IpV4.t()) :: Types.ipv4_addr() | nil
   #
 
   test "Can get host or nil from struct" do
@@ -115,7 +115,7 @@ defmodule IpV4Test do
   end
 
   #
-  # @spec to_struct(Types.ip4_addr(), 1..32 | nil) :: IpV4.t()
+  # @spec to_struct(Types.ipv4_addr(), Types.ipv4_mask() | nil) :: IpV4.t()
   #
 
   test "Can create struct from Erlang IP address and mask" do

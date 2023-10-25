@@ -1,5 +1,5 @@
-# Source File: cidr_test.exs
-# Location:    musebms/app_server/components/system/mscmp_syst_network/test/cidr_test.exs
+# Source File: ip_test.exs
+# Location:    musebms/app_server/components/system/mscmp_syst_network/test/ip_test.exs
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,12 +10,44 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule CidrTest do
+defmodule IpTest do
   use ExUnit.Case, async: true
 
   alias MscmpSystNetwork.Impl
 
   @moduletag :capture_log
+
+  #
+  # General Testing
+  #
+
+  test "Can convert Erlang tuples to IPv4 network structs" do
+    Enum.each(1..1_000, fn _ ->
+      {_, test_addr} = TestSupport.get_random_ipv4(:network)
+      assert test_addr === Impl.Ip.to_struct(test_addr.address, test_addr.mask)
+    end)
+  end
+
+  test "Can convert Erlang tuples to IPv4 host structs" do
+    Enum.each(1..1_000, fn _ ->
+      {_, test_addr} = TestSupport.get_random_ipv4(:host)
+      assert test_addr === Impl.Ip.to_struct(test_addr.address, nil)
+    end)
+  end
+
+  test "Can convert Erlang tuples to IPv6 network structs" do
+    Enum.each(1..1_000, fn _ ->
+      {_, test_addr} = TestSupport.get_random_ipv6(:network)
+      assert test_addr === Impl.Ip.to_struct(test_addr.address, test_addr.mask)
+    end)
+  end
+
+  test "Can convert Erlang tuples to IPv6 host structs" do
+    Enum.each(1..1_000, fn _ ->
+      {_, test_addr} = TestSupport.get_random_ipv6(:host)
+      assert test_addr === Impl.Ip.to_struct(test_addr.address, nil)
+    end)
+  end
 
   #
   # IpV4 parse! Testing
@@ -26,14 +58,14 @@ defmodule CidrTest do
       {:host, test_addr} = TestSupport.get_random_ipv4(:host)
       test_str = :inet.ntoa(test_addr.address) |> List.to_string()
 
-      assert test_addr === Impl.Cidr.parse!(test_str, nil)
+      assert test_addr === Impl.Ip.parse!(test_str, nil)
     end)
 
     Enum.each(1..500_000, fn _ ->
       {:host, test_addr} = TestSupport.get_random_ipv4(:host)
       test_str = :inet.ntoa(test_addr.address) |> List.to_string()
 
-      assert test_addr === Impl.Cidr.parse!(test_str)
+      assert test_addr === Impl.Ip.parse!(test_str)
     end)
   end
 
@@ -42,14 +74,14 @@ defmodule CidrTest do
       {:host, test_addr} = TestSupport.get_random_ipv4(:host)
       test_str = Impl.IpV4.to_string(test_addr)
 
-      assert test_addr === Impl.Cidr.parse!(test_str, nil)
+      assert test_addr === Impl.Ip.parse!(test_str, nil)
     end)
 
     Enum.each(1..500_000, fn _ ->
       {:host, test_addr} = TestSupport.get_random_ipv4(:host)
       test_str = Impl.IpV4.to_string(test_addr)
 
-      assert test_addr === Impl.Cidr.parse!(test_str)
+      assert test_addr === Impl.Ip.parse!(test_str)
     end)
   end
 
@@ -58,22 +90,22 @@ defmodule CidrTest do
       {:network, test_addr} = TestSupport.get_random_ipv4(:network)
       test_str = Impl.IpV4.to_string(test_addr)
 
-      assert test_addr === Impl.Cidr.parse!(test_str, nil)
+      assert test_addr === Impl.Ip.parse!(test_str, nil)
     end)
 
     Enum.each(1..500_000, fn _ ->
       {:network, test_addr} = TestSupport.get_random_ipv4(:network)
       test_str = Impl.IpV4.to_string(test_addr)
 
-      assert test_addr === Impl.Cidr.parse!(test_str)
+      assert test_addr === Impl.Ip.parse!(test_str)
     end)
   end
 
   test "Cannot parse! invalid IPv4 strings" do
-    assert catch_error(Impl.Cidr.parse!("10.1.1.1.1"))
-    assert catch_error(Impl.Cidr.parse!("10.1.1.1.1/32"))
-    assert catch_error(Impl.Cidr.parse!("10.1.1.1/32/32"))
-    assert catch_error(Impl.Cidr.parse!("10.1.1.1/-32"))
+    assert catch_error(Impl.Ip.parse!("10.1.1.1.1"))
+    assert catch_error(Impl.Ip.parse!("10.1.1.1.1/32"))
+    assert catch_error(Impl.Ip.parse!("10.1.1.1/32/32"))
+    assert catch_error(Impl.Ip.parse!("10.1.1.1/-32"))
   end
 
   #
@@ -85,7 +117,7 @@ defmodule CidrTest do
       {:host, test_addr} = TestSupport.get_random_ipv4(:host)
       test_str = :inet.ntoa(test_addr.address) |> List.to_string()
 
-      assert {:ok, test_addr} === Impl.Cidr.parse(test_str)
+      assert {:ok, test_addr} === Impl.Ip.parse(test_str)
     end)
   end
 
@@ -94,7 +126,7 @@ defmodule CidrTest do
       {:host, test_addr} = TestSupport.get_random_ipv4(:host)
       test_str = Impl.IpV4.to_string(test_addr)
 
-      assert {:ok, test_addr} === Impl.Cidr.parse(test_str)
+      assert {:ok, test_addr} === Impl.Ip.parse(test_str)
     end)
   end
 
@@ -103,15 +135,15 @@ defmodule CidrTest do
       {:network, test_addr} = TestSupport.get_random_ipv4(:network)
       test_str = Impl.IpV4.to_string(test_addr)
 
-      assert {:ok, test_addr} === Impl.Cidr.parse(test_str)
+      assert {:ok, test_addr} === Impl.Ip.parse(test_str)
     end)
   end
 
   test "Cannot parse invalid IPv4 strings" do
-    assert {:error, %MscmpSystError{code: :undefined_error}} = Impl.Cidr.parse("10.1.1.1.1")
-    assert {:error, %MscmpSystError{code: :undefined_error}} = Impl.Cidr.parse("10.1.1.1.1/32")
-    assert {:error, %MscmpSystError{code: :undefined_error}} = Impl.Cidr.parse("10.1.1.1/32/32")
-    assert {:error, %MscmpSystError{code: :undefined_error}} = Impl.Cidr.parse("10.1.1.1/-32")
+    assert {:error, %MscmpSystError{code: :undefined_error}} = Impl.Ip.parse("10.1.1.1.1")
+    assert {:error, %MscmpSystError{code: :undefined_error}} = Impl.Ip.parse("10.1.1.1.1/32")
+    assert {:error, %MscmpSystError{code: :undefined_error}} = Impl.Ip.parse("10.1.1.1/32/32")
+    assert {:error, %MscmpSystError{code: :undefined_error}} = Impl.Ip.parse("10.1.1.1/-32")
   end
 
   #
@@ -123,14 +155,14 @@ defmodule CidrTest do
       {:host, test_addr} = TestSupport.get_random_ipv6(:host)
       test_str = :inet.ntoa(test_addr.address) |> List.to_string()
 
-      assert test_addr === Impl.Cidr.parse!(test_str, nil)
+      assert test_addr === Impl.Ip.parse!(test_str, nil)
     end)
 
     Enum.each(1..500_000, fn _ ->
       {:host, test_addr} = TestSupport.get_random_ipv6(:host)
       test_str = :inet.ntoa(test_addr.address) |> List.to_string()
 
-      assert test_addr === Impl.Cidr.parse!(test_str)
+      assert test_addr === Impl.Ip.parse!(test_str)
     end)
   end
 
@@ -139,14 +171,14 @@ defmodule CidrTest do
       {:host, test_addr} = TestSupport.get_random_ipv6(:host)
       test_str = Impl.IpV6.to_string(test_addr)
 
-      assert test_addr === Impl.Cidr.parse!(test_str, nil)
+      assert test_addr === Impl.Ip.parse!(test_str, nil)
     end)
 
     Enum.each(1..500_000, fn _ ->
       {:host, test_addr} = TestSupport.get_random_ipv6(:host)
       test_str = Impl.IpV6.to_string(test_addr)
 
-      assert test_addr === Impl.Cidr.parse!(test_str)
+      assert test_addr === Impl.Ip.parse!(test_str)
     end)
   end
 
@@ -155,22 +187,22 @@ defmodule CidrTest do
       {:network, test_addr} = TestSupport.get_random_ipv6(:network)
       test_str = Impl.IpV6.to_string(test_addr)
 
-      assert test_addr === Impl.Cidr.parse!(test_str, nil)
+      assert test_addr === Impl.Ip.parse!(test_str, nil)
     end)
 
     Enum.each(1..500_000, fn _ ->
       {:network, test_addr} = TestSupport.get_random_ipv6(:network)
       test_str = Impl.IpV6.to_string(test_addr)
 
-      assert test_addr === Impl.Cidr.parse!(test_str)
+      assert test_addr === Impl.Ip.parse!(test_str)
     end)
   end
 
   test "Cannot parse! invalid IPv6 strings" do
-    assert catch_error(Impl.Cidr.parse!("2001::0010::abcd"))
-    assert catch_error(Impl.Cidr.parse!("2001::0010::abcd/128"))
-    assert catch_error(Impl.Cidr.parse!("2001::0010:abcd/128/128"))
-    assert catch_error(Impl.Cidr.parse!("2001::0010:abcd/-128"))
+    assert catch_error(Impl.Ip.parse!("2001::0010::abcd"))
+    assert catch_error(Impl.Ip.parse!("2001::0010::abcd/128"))
+    assert catch_error(Impl.Ip.parse!("2001::0010:abcd/128/128"))
+    assert catch_error(Impl.Ip.parse!("2001::0010:abcd/-128"))
   end
 
   #
@@ -182,7 +214,7 @@ defmodule CidrTest do
       {:host, test_addr} = TestSupport.get_random_ipv6(:host)
       test_str = :inet.ntoa(test_addr.address) |> List.to_string()
 
-      assert {:ok, test_addr} === Impl.Cidr.parse(test_str)
+      assert {:ok, test_addr} === Impl.Ip.parse(test_str)
     end)
   end
 
@@ -191,7 +223,7 @@ defmodule CidrTest do
       {:host, test_addr} = TestSupport.get_random_ipv6(:host)
       test_str = Impl.IpV6.to_string(test_addr)
 
-      assert {:ok, test_addr} === Impl.Cidr.parse(test_str)
+      assert {:ok, test_addr} === Impl.Ip.parse(test_str)
     end)
   end
 
@@ -200,20 +232,20 @@ defmodule CidrTest do
       {:network, test_addr} = TestSupport.get_random_ipv6(:network)
       test_str = Impl.IpV6.to_string(test_addr)
 
-      assert {:ok, test_addr} === Impl.Cidr.parse(test_str)
+      assert {:ok, test_addr} === Impl.Ip.parse(test_str)
     end)
   end
 
   test "Cannot parse invalid IPv6 strings" do
-    assert {:error, %MscmpSystError{code: :undefined_error}} = Impl.Cidr.parse("2001::0010::abcd")
+    assert {:error, %MscmpSystError{code: :undefined_error}} = Impl.Ip.parse("2001::0010::abcd")
 
     assert {:error, %MscmpSystError{code: :undefined_error}} =
-             Impl.Cidr.parse("2001::0010::abcd/128")
+             Impl.Ip.parse("2001::0010::abcd/128")
 
     assert {:error, %MscmpSystError{code: :undefined_error}} =
-             Impl.Cidr.parse("2001::0010:abcd/128/128")
+             Impl.Ip.parse("2001::0010:abcd/128/128")
 
     assert {:error, %MscmpSystError{code: :undefined_error}} =
-             Impl.Cidr.parse("2001::0010:abcd/-128")
+             Impl.Ip.parse("2001::0010:abcd/-128")
   end
 end
