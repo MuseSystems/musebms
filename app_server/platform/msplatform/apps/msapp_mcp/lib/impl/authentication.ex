@@ -26,11 +26,10 @@ defmodule MsappMcp.Impl.Authentication do
 
   @spec authenticate(
           map(),
-          NetTypes.addr_structs(),
+          NetTypes.addr(),
           MscmpSystSession.Types.session_name() | nil,
           Keyword.t()
-        ) ::
-          MsappMcp.Types.login_result()
+        ) :: MsappMcp.Types.login_result()
   def authenticate(%{} = params, host_addr, session_name, opts) do
     opts = MscmpSystUtils.resolve_options(opts, mode: :session)
 
@@ -42,8 +41,9 @@ defmodule MsappMcp.Impl.Authentication do
 
   defp attempt_authentication(identifier, credential, host_addr) do
     owner_id = MssubMcp.get_setting_value("mcp_owner", :setting_uuid)
+    resolved_host = MscmpSystNetwork.to_struct(host_addr)
 
-    MssubMcp.authenticate_email_password(identifier, credential, host_addr,
+    MssubMcp.authenticate_email_password(identifier, credential, resolved_host,
       owning_owner_id: owner_id,
       instance_id: :bypass
     )
@@ -59,7 +59,7 @@ defmodule MsappMcp.Impl.Authentication do
        do: auth_state
 
   defp maybe_create_db_session(auth_state, session_name, :session) do
-    session_data = %{auth_state: encode_auth_state_for_json(auth_state)}
+    session_data = %{auth_state: auth_state}
 
     session_result = MssubMcp.create_session(session_data, session_name: session_name)
 
@@ -95,12 +95,6 @@ defmodule MsappMcp.Impl.Authentication do
 
   defp get_auth_action(auth_state),
     do: {:platform_error, auth_state}
-
-  defp encode_auth_state_for_json(%{host_address: host_addr} = auth_state)
-       when is_tuple(host_addr),
-       do: Map.replace(auth_state, :host_address, MscmpSystNetwork.to_string(host_addr))
-
-  defp encode_auth_state_for_json(auth_state), do: auth_state
 
   # The session drawn from the DB will be some form of authentication_state()
   # except it will be defined with strings instead of atoms where atoms would
