@@ -1,5 +1,5 @@
 # Source File: guards.ex
-# Location:    musebms/app_server/components/system/mscmp_syst_network/lib/guards.ex
+# Location:    musebms/app_server/components/system/mscmp_syst_network/lib/api/guards.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -91,7 +91,7 @@ defmodule MscmpSystNetwork.Guards do
 
   @doc """
   A guard function which returns true when the passed value is an integer which
-  is a valid IPv4 sub-net mask length.
+  is a valid IPv4 subnet mask length.
 
   ## Examples
 
@@ -109,7 +109,7 @@ defmodule MscmpSystNetwork.Guards do
 
   @doc """
   A guard function which returns true when the passed value is an integer which
-  is a valid IPv6 sub-net mask length.
+  is a valid IPv6 subnet mask length.
 
   ## Examples
 

@@ -17,6 +17,7 @@ defmodule MscmpSystNetwork.Impl.IpV6 do
 
   import MscmpSystNetwork.Guards, only: [is_ipv6: 1, is_ipv6_tuple: 1]
 
+  alias MscmpSystNetwork.Types
   alias MscmpSystNetwork.Types.IpV6
 
   @spec to_string(IpV6.t()) :: String.t()

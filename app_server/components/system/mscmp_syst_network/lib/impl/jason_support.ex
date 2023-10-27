@@ -17,6 +17,16 @@ defmodule MscmpSystNetwork.Impl.JasonSupport do
 
   alias MscmpSystNetwork.Types
 
+  # TODO: :noward_function is too broad an exclusion, but the only one that
+  #       seems to work.  Dialyzer is complaining about :extra_range, but I
+  #       can't find any magic that is either 1) a valid exclusion, 2) actually
+  #       does what is expected.  In all cases either I get an error about
+  #       invalid options in the attribute or the thing that looks like it might
+  #       work, doesn't.  Sigh.  Try and get some guidance: the Erlang and
+  #       Elixir documentation is just wholly inadequate to understand what
+  #       dialyzer wants to hear from me.
+
+  @dialyzer {:nowarn_function, encode: 2}
   @spec encode(Types.addr_structs(), Jason.Encoder.opts()) :: iodata()
   def encode(addr, opts) when is_ip(addr),
     do: addr |> MscmpSystNetwork.to_string() |> Jason.Encode.string(opts)

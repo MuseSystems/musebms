@@ -85,7 +85,7 @@ defmodule IpTest do
     end)
   end
 
-  test "Can parse! IPv4 sub-net address using CIDR notation" do
+  test "Can parse! IPv4 subnet address using CIDR notation" do
     Enum.each(1..500_000, fn _ ->
       {:network, test_addr} = TestSupport.get_random_ipv4(:network)
       test_str = Impl.IpV4.to_string(test_addr)
@@ -130,7 +130,7 @@ defmodule IpTest do
     end)
   end
 
-  test "Can parse IPv4 sub-net address using CIDR notation" do
+  test "Can parse IPv4 subnet address using CIDR notation" do
     Enum.each(1..10, fn _ ->
       {:network, test_addr} = TestSupport.get_random_ipv4(:network)
       test_str = Impl.IpV4.to_string(test_addr)
@@ -182,7 +182,7 @@ defmodule IpTest do
     end)
   end
 
-  test "Can parse! IPv6 sub-net address using CIDR notation" do
+  test "Can parse! IPv6 subnet address using CIDR notation" do
     Enum.each(1..500_000, fn _ ->
       {:network, test_addr} = TestSupport.get_random_ipv6(:network)
       test_str = Impl.IpV6.to_string(test_addr)
@@ -227,7 +227,7 @@ defmodule IpTest do
     end)
   end
 
-  test "Can parse IPv6 sub-net address using CIDR notation" do
+  test "Can parse IPv6 subnet address using CIDR notation" do
     Enum.each(1..10, fn _ ->
       {:network, test_addr} = TestSupport.get_random_ipv6(:network)
       test_str = Impl.IpV6.to_string(test_addr)

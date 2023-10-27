@@ -1,5 +1,5 @@
 # Source File: ip_v4.ex
-# Location:    musebms/app_server/components/system/mscmp_syst_network/lib/types/ip_v4.ex
+# Location:    musebms/app_server/components/system/mscmp_syst_network/lib/api/types/ip_v4.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -12,13 +12,13 @@
 
 defmodule MscmpSystNetwork.Types.IpV4 do
   @moduledoc """
-  Represents an IPv4 host or sub-net CIDR address.
+  Represents an IPv4 host or subnet CIDR address.
 
   Implements the `MscmpSystNetwork.Protocol`.
 
   The representation of a host may also written to include an identifiable
-  sub-net as well.  So for example, `10.1.1.15/24` represents
-  both a specific host (`10.1.1.15`) and a specific sub-net
+  subnet as well.  So for example, `10.1.1.15/24` represents
+  both a specific host (`10.1.1.15`) and a specific subnet
   `10.1.1.0/24`.
   """
 
@@ -33,10 +33,10 @@ defmodule MscmpSystNetwork.Types.IpV4 do
 
   ## Attributes
 
-    * `address` - The IP address of the host or sub-net in
+    * `address` - The IP address of the host or subnet in
     `t:MscmpSystNetwork.Types.ipv4_addr/0` form.
 
-    * `mask` - the sub-net mask bit length of the IP address.  Valid values are
+    * `mask` - the subnet mask bit length of the IP address.  Valid values are
     integers between 0 and 32, inclusive.  When defining a new struct and the
     `mask` is not provided, the resulting struct is assumed to represent a host
     and the `mask` attribute is defaulted to 32.

@@ -8,10 +8,10 @@ IP addresses in Erlang, and by extension Elixir, are expressed as tuples with an
 for each segment of the IP address.  This works well enough, but departs from the standard CIDR
 notation used by most professionals.  In fact, the Erlang/Elixir standard library for dealing with
 IP addresses only deals with addresses and sockets; excluded are representations or utilities for
-dealing with sub-nets.
+dealing with subnets.
 
 This Component aims to make it simpler to work with IP addresses, allowing for CIDR notation
-parsing and for the ability to recognize sub-nets.
+parsing and for the ability to recognize subnets.
 
 > #### Naive IP Address Handling {: .warning}
 >
