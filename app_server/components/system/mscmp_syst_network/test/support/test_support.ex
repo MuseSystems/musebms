@@ -13,9 +13,9 @@
 defmodule TestSupport do
   @moduledoc false
 
-  alias MscmpSystNetwork.Types.{IpV4, IpV6}
-
   import Bitwise
+
+  alias MscmpSystNetwork.Types.{IpV4, IpV6}
 
   def get_random_ipv4(:host) do
     <<a, b, c, d>> = :rand.bytes(4)
@@ -64,7 +64,7 @@ defmodule TestSupport do
     end
   end
 
-  def get_random_ipv4(), do: get_random_ipv4(:any)
+  def get_random_ipv4, do: get_random_ipv4(:any)
 
   def get_random_ipv6(:host) do
     <<a::unsigned-integer-size(16), b::unsigned-integer-size(16), c::unsigned-integer-size(16),
@@ -94,5 +94,5 @@ defmodule TestSupport do
     if :rand.uniform(100) <= h_weight, do: get_random_ipv6(:host), else: get_random_ipv6(:network)
   end
 
-  def get_random_ipv6(), do: get_random_ipv6(:any)
+  def get_random_ipv6, do: get_random_ipv6(:any)
 end

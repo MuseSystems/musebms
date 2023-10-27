@@ -17,6 +17,7 @@ defmodule MscmpSystNetwork.Impl.IpV4 do
 
   import MscmpSystNetwork.Guards, only: [is_ipv4: 1, is_ipv4_tuple: 1]
 
+  alias MscmpSystNetwork.Types
   alias MscmpSystNetwork.Types.IpV4
 
   @spec to_string(IpV4.t()) :: String.t()

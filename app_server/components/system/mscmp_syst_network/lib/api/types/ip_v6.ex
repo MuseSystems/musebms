@@ -1,5 +1,5 @@
 # Source File: ip_v6.ex
-# Location:    musebms/app_server/components/system/mscmp_syst_network/lib/types/ip_v6.ex
+# Location:    musebms/app_server/components/system/mscmp_syst_network/lib/api/types/ip_v6.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -12,13 +12,13 @@
 
 defmodule MscmpSystNetwork.Types.IpV6 do
   @moduledoc """
-  Represents an IPv6 host or sub-net CIDR address.
+  Represents an IPv6 host or subnet CIDR address.
 
   Implements the `MscmpSystNetwork.Protocol`.
 
   The representation of a host may also written to include an identifiable
-  sub-net as well.  So for example, `fd9b:77f8:714d:cabb::ab67:12/64` represents
-  both a specific host (`fd9b:77f8:714d:cabb::ab67:12`) and a specific sub-net
+  subnet as well.  So for example, `fd9b:77f8:714d:cabb::ab67:12/64` represents
+  both a specific host (`fd9b:77f8:714d:cabb::ab67:12`) and a specific subnet
   `fd9b:77f8:714d:cabb::ab67:0000/64`.
   """
 
@@ -33,7 +33,7 @@ defmodule MscmpSystNetwork.Types.IpV6 do
 
   ## Attributes
 
-    * `address` - The IP address of the host or sub-net in
+    * `address` - The IP address of the host or subnet in
     `t:MscmpSystNetwork.Types.ipv6_addr/0` form.
 
     * `mask` - the prefix bit length of the IP address.  Valid values are

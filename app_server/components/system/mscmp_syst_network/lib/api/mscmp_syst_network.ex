@@ -1,3 +1,15 @@
+# Source File: mscmp_syst_network.ex
+# Location:    musebms/app_server/components/system/mscmp_syst_network/lib/api/mscmp_syst_network.ex
+# Project:     Muse Systems Business Management System
+#
+# Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+# This file may include content copyrighted and licensed from third parties.
+#
+# See the LICENSE file in the project root for license terms and conditions.
+# See the NOTICE file in the project root for copyright ownership information.
+#
+# muse.information@musesystems.com :: https://muse.systems
+
 defmodule MscmpSystNetwork do
   @external_resource "README.md"
   @moduledoc Path.join([__DIR__, "..", "..", "README.md"])
@@ -10,7 +22,7 @@ defmodule MscmpSystNetwork do
 
   @doc section: :parse_api
   @doc """
-  Parses common IP address and sub-net text expressions from a string.
+  Parses common IP address and subnet text expressions from a string.
 
   For simple IP addresses, the expected format of the string parameter is the
   common format for such addresses.  For IPv4 addresses, this would be
@@ -18,7 +30,7 @@ defmodule MscmpSystNetwork do
   string uses a textual representation of the address that complies with
   [RFC 5952](https://www.rfc-editor.org/rfc/rfc5952.html).
 
-  For sub-net addresses the expected format in the CIDR addressing style
+  For subnet addresses the expected format in the CIDR addressing style
   appropriate for either IPv4 or IPv6 .
 
   Individual host addresses may also be expressed in CIDR notation.  IPv4 host
@@ -35,7 +47,7 @@ defmodule MscmpSystNetwork do
   ## Parameters
 
     * `addr_string` - Either a simple IP host address or an IP address or IP
-    sub-net in CIDR notation.  Passed as a string.
+    subnet in CIDR notation.  Passed as a string.
 
   ## Examples
 
@@ -116,7 +128,7 @@ defmodule MscmpSystNetwork do
 
   @doc section: :parse_api
   @doc """
-  Parses common IP address and sub-net text expressions from a string, raising
+  Parses common IP address and subnet text expressions from a string, raising
   an exception when there are errors.
 
   Outside of the possibility of raising an exception, this function works the
@@ -125,7 +137,7 @@ defmodule MscmpSystNetwork do
   ## Parameters
 
     * `addr_string` - Either a simple IP host address or an IP address or IP
-    sub-net in CIDR notation.  Passed as a string.
+    subnet in CIDR notation.  Passed as a string.
 
   ## Examples
 
@@ -173,7 +185,7 @@ defmodule MscmpSystNetwork do
   ## Parameters
 
     * `addr_string` - Either a simple IP host address or an IP address or IP
-    sub-net in CIDR notation.  Passed as a string.
+    subnet in CIDR notation.  Passed as a string.
 
     * `modifiers` - Currently there are no modifiers which are to be used with
     the sigil.  This parameter is currently ignored.
@@ -224,7 +236,7 @@ defmodule MscmpSystNetwork do
     * `addr` - a tuple representing either the IPv4 or IPv6 address to be used
     in constructing the new struct.
 
-    * `mask` - represents either the bit length of the IPv4 sub-net mask or the
+    * `mask` - represents either the bit length of the IPv4 subnet mask or the
     IPv6 prefix.  This parameter is optional and if not provided or is nil will
     default to the single host value as appropriate for the `addr` type.
 
@@ -454,10 +466,10 @@ defmodule MscmpSystNetwork do
   @doc section: :protocol_api
   @doc """
   Evaluates an IP address struct to see if it represents an entire network or
-  sub-net rather than a host.
+  subnet rather than a host.
 
   This function only returns true when the supplied IP address represents only a
-  network or sub-net.  False is returned when the provided IP address struct
+  network or subnet.  False is returned when the provided IP address struct
   also contains an identifiable host or is only a host.  False is even returned
   in cases where the CIDR notation would allow a network to be extracted from
   the provided IP address struct.
@@ -501,7 +513,7 @@ defmodule MscmpSystNetwork do
 
   @doc section: :protocol_api
   @doc """
-  Tests to see if an IP host or sub-net is contained by a specific sub-net.
+  Tests to see if an IP host or subnet is contained by a specific subnet.
 
   True is returned when the test address is contained by the given network,
   otherwise false is returned.  Any error raises an exception.
@@ -509,7 +521,7 @@ defmodule MscmpSystNetwork do
   ## Parameters
 
     * `test_addr` - any valid IP address struct.  This struct can represent an
-    individual host or a sub-net.
+    individual host or a subnet.
 
     * `network_addr` - a valid IP address struct which only represents a
     network.  Host addresses from which a network can be extracted such as
@@ -555,7 +567,7 @@ defmodule MscmpSystNetwork do
 
   @doc section: :protocol_api
   @doc """
-  Tests if an IP address host or sub-net is contained by the given range.
+  Tests if an IP address host or subnet is contained by the given range.
 
   True is returned when the IP address is contained, otherwise false.  Errors
   raise exceptions.
@@ -568,14 +580,14 @@ defmodule MscmpSystNetwork do
     * `low_addr` - The low address of the range.  If the `low_addr` value is a
     struct identifying a host, but from which a network could be extracted, it
     is treated as a host only.  If the struct represents only a network or
-    sub-net, the network IP address itself is treated as the lowest IP address
+    subnet, the network IP address itself is treated as the lowest IP address
     in the range; for example `10.1.0.0/16` will treat `10.1.0.0` as the lowest
     IP address in the range.
 
     * `high_addr` - the high address of the range.  If the `high_addr` value is
     a struct identifying a host, but from which a network could be extracted, it
     is treated as a host only.  If the struct represents only a network or
-    sub-net, the network's largest possible IP address is considered the high
+    subnet, the network's largest possible IP address is considered the high
     address of the range; for example `10.1.0.0/16` would consider
     `10.1.255.255` as the highest address in the range.
 

@@ -1,5 +1,5 @@
 # Source File: protocol.ex
-# Location:    musebms/app_server/components/system/mscmp_syst_network/lib/protocol.ex
+# Location:    musebms/app_server/components/system/mscmp_syst_network/lib/api/protocol.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

@@ -10,6 +10,8 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
+# credo:disable-for-this-file Credo.Check.Readability.LargeNumbers
+
 defmodule IpV6Test do
   use ExUnit.Case, async: true
 

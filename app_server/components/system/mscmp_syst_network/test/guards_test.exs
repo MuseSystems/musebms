@@ -10,6 +10,8 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
+# credo:disable-for-this-file Credo.Check.Readability.LargeNumbers
+
 defmodule GuardsTest do
   use ExUnit.Case, async: true
 
@@ -122,7 +124,7 @@ defmodule GuardsTest do
   # defguard is_ipv4_mask(mask) when is_integer(mask) and mask >= 0 and mask <= 32
   #
 
-  test "Can validate or invalidate IPv4 sub-net mask length" do
+  test "Can validate or invalidate IPv4 subnet mask length" do
     Enum.each(1..100, &assert(&1 <= 32 === is_ipv4_mask(&1)))
   end
 
