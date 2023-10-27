@@ -25,6 +25,31 @@ jobs:
             otp-version: ${{matrix.otp}}
             elixir-version: ${{matrix.elixir}}
 
+        - name: Restore PLT cache
+          id: plt_cache
+          uses: actions/cache/restore@v3
+          with:
+            key: |
+              plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
+            restore-keys: |
+              plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-
+            path: |
+              priv/plts
+
+        - name: Create PLTs
+          if: steps.plt_cache.outputs.cache-hit != 'true'
+          run: mix dialyzer --plt
+
+        - name: Save PLT cache
+          id: plt_cache_save
+          uses: actions/cache/save@v3
+          if: steps.plt_cache.outputs.cache-hit != 'true'
+          with:
+            key: |
+              plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
+            path: |
+              priv/plts
+
         - name: Build Mix Dependencies
           run: mix deps.get
           working-directory: ./app_server/components/system/mscmp_syst_error
@@ -38,7 +63,7 @@ jobs:
           working-directory: ./app_server/components/system/mscmp_syst_error
 
         - name: Run Dialyzer
-          run: mix dialyzer
+          run: mix dialyzer --format github
           working-directory: ./app_server/components/system/mscmp_syst_error
 
   mscmp-syst-options:
@@ -59,6 +84,31 @@ jobs:
             otp-version: ${{matrix.otp}}
             elixir-version: ${{matrix.elixir}}
 
+        - name: Restore PLT cache
+          id: plt_cache
+          uses: actions/cache/restore@v3
+          with:
+            key: |
+              plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
+            restore-keys: |
+              plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-
+            path: |
+              priv/plts
+
+        - name: Create PLTs
+          if: steps.plt_cache.outputs.cache-hit != 'true'
+          run: mix dialyzer --plt
+
+        - name: Save PLT cache
+          id: plt_cache_save
+          uses: actions/cache/save@v3
+          if: steps.plt_cache.outputs.cache-hit != 'true'
+          with:
+            key: |
+              plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
+            path: |
+              priv/plts
+
         - name: Build Mix Dependencies
           run: mix deps.get
           working-directory: ./app_server/components/system/mscmp_syst_options
@@ -72,7 +122,7 @@ jobs:
           working-directory: ./app_server/components/system/mscmp_syst_options
 
         - name: Run Dialyzer
-          run: mix dialyzer
+          run: mix dialyzer --format github
           working-directory: ./app_server/components/system/mscmp_syst_options
 
   mscmp-syst-limiter:
@@ -93,6 +143,31 @@ jobs:
             otp-version: ${{matrix.otp}}
             elixir-version: ${{matrix.elixir}}
 
+        - name: Restore PLT cache
+          id: plt_cache
+          uses: actions/cache/restore@v3
+          with:
+            key: |
+              plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
+            restore-keys: |
+              plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-
+            path: |
+              priv/plts
+
+        - name: Create PLTs
+          if: steps.plt_cache.outputs.cache-hit != 'true'
+          run: mix dialyzer --plt
+
+        - name: Save PLT cache
+          id: plt_cache_save
+          uses: actions/cache/save@v3
+          if: steps.plt_cache.outputs.cache-hit != 'true'
+          with:
+            key: |
+              plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
+            path: |
+              priv/plts
+
         - name: Build Mix Dependencies
           run: mix deps.get
           working-directory: ./app_server/components/system/mscmp_syst_limiter
@@ -110,7 +185,7 @@ jobs:
           working-directory: ./app_server/components/system/mscmp_syst_limiter
 
         - name: Run Dialyzer
-          run: mix dialyzer
+          run: mix dialyzer --format github
           working-directory: ./app_server/components/system/mscmp_syst_limiter
 
   mscmp-syst_db:
@@ -145,6 +220,31 @@ jobs:
             otp-version: ${{matrix.otp}}
             elixir-version: ${{matrix.elixir}}
 
+        - name: Restore PLT cache
+          id: plt_cache
+          uses: actions/cache/restore@v3
+          with:
+            key: |
+              plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
+            restore-keys: |
+              plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-
+            path: |
+              priv/plts
+
+        - name: Create PLTs
+          if: steps.plt_cache.outputs.cache-hit != 'true'
+          run: mix dialyzer --plt
+
+        - name: Save PLT cache
+          id: plt_cache_save
+          uses: actions/cache/save@v3
+          if: steps.plt_cache.outputs.cache-hit != 'true'
+          with:
+            key: |
+              plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
+            path: |
+              priv/plts
+
         - name: Initialize Database
           run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
 
@@ -161,7 +261,7 @@ jobs:
           working-directory: ./app_server/components/system/mscmp_syst_db
 
         - name: Run Dialyzer
-          run: mix dialyzer
+          run: mix dialyzer --format github
           working-directory: ./app_server/components/system/mscmp_syst_db
 
   mscmp-syst-settings:
@@ -196,6 +296,31 @@ jobs:
             otp-version: ${{matrix.otp}}
             elixir-version: ${{matrix.elixir}}
 
+        - name: Restore PLT cache
+          id: plt_cache
+          uses: actions/cache/restore@v3
+          with:
+            key: |
+              plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
+            restore-keys: |
+              plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-
+            path: |
+              priv/plts
+
+        - name: Create PLTs
+          if: steps.plt_cache.outputs.cache-hit != 'true'
+          run: mix dialyzer --plt
+
+        - name: Save PLT cache
+          id: plt_cache_save
+          uses: actions/cache/save@v3
+          if: steps.plt_cache.outputs.cache-hit != 'true'
+          with:
+            key: |
+              plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
+            path: |
+              priv/plts
+
         - name: Initialize Database
           run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
 
@@ -212,7 +337,7 @@ jobs:
           working-directory: ./app_server/components/system/mscmp_syst_settings
 
         - name: Run Dialyzer
-          run: mix dialyzer
+          run: mix dialyzer --format github
           working-directory: ./app_server/components/system/mscmp_syst_settings
 
   mscmp-syst-enums:
@@ -247,6 +372,31 @@ jobs:
             otp-version: ${{matrix.otp}}
             elixir-version: ${{matrix.elixir}}
 
+        - name: Restore PLT cache
+          id: plt_cache
+          uses: actions/cache/restore@v3
+          with:
+            key: |
+              plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
+            restore-keys: |
+              plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-
+            path: |
+              priv/plts
+
+        - name: Create PLTs
+          if: steps.plt_cache.outputs.cache-hit != 'true'
+          run: mix dialyzer --plt
+
+        - name: Save PLT cache
+          id: plt_cache_save
+          uses: actions/cache/save@v3
+          if: steps.plt_cache.outputs.cache-hit != 'true'
+          with:
+            key: |
+              plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
+            path: |
+              priv/plts
+
         - name: Initialize Database
           run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
 
@@ -263,7 +413,7 @@ jobs:
           working-directory: ./app_server/components/system/mscmp_syst_enums
 
         - name: Run Dialyzer
-          run: mix dialyzer
+          run: mix dialyzer --format github
           working-directory: ./app_server/components/system/mscmp_syst_enums
 
   mscmp-syst-instance:
@@ -298,6 +448,31 @@ jobs:
             otp-version: ${{matrix.otp}}
             elixir-version: ${{matrix.elixir}}
 
+        - name: Restore PLT cache
+          id: plt_cache
+          uses: actions/cache/restore@v3
+          with:
+            key: |
+              plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
+            restore-keys: |
+              plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-
+            path: |
+              priv/plts
+
+        - name: Create PLTs
+          if: steps.plt_cache.outputs.cache-hit != 'true'
+          run: mix dialyzer --plt
+
+        - name: Save PLT cache
+          id: plt_cache_save
+          uses: actions/cache/save@v3
+          if: steps.plt_cache.outputs.cache-hit != 'true'
+          with:
+            key: |
+              plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
+            path: |
+              priv/plts
+
         - name: Initialize Database
           run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
 
@@ -318,7 +493,7 @@ jobs:
           working-directory: ./app_server/components/system/mscmp_syst_instance
 
         - name: Run Dialyzer
-          run: mix dialyzer
+          run: mix dialyzer --format github
           working-directory: ./app_server/components/system/mscmp_syst_instance
 
   mscmp-syst-authn:
@@ -353,6 +528,31 @@ jobs:
             otp-version: ${{matrix.otp}}
             elixir-version: ${{matrix.elixir}}
 
+        - name: Restore PLT cache
+          id: plt_cache
+          uses: actions/cache/restore@v3
+          with:
+            key: |
+              plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
+            restore-keys: |
+              plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-
+            path: |
+              priv/plts
+
+        - name: Create PLTs
+          if: steps.plt_cache.outputs.cache-hit != 'true'
+          run: mix dialyzer --plt
+
+        - name: Save PLT cache
+          id: plt_cache_save
+          uses: actions/cache/save@v3
+          if: steps.plt_cache.outputs.cache-hit != 'true'
+          with:
+            key: |
+              plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
+            path: |
+              priv/plts
+
         - name: Initialize Database
           run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
 
@@ -373,7 +573,7 @@ jobs:
           working-directory: ./app_server/components/system/mscmp_syst_authn
 
         - name: Run Dialyzer
-          run: mix dialyzer
+          run: mix dialyzer --format github
           working-directory: ./app_server/components/system/mscmp_syst_authn
 
   mscmp-syst-perms:
@@ -408,6 +608,31 @@ jobs:
             otp-version: ${{matrix.otp}}
             elixir-version: ${{matrix.elixir}}
 
+        - name: Restore PLT cache
+          id: plt_cache
+          uses: actions/cache/restore@v3
+          with:
+            key: |
+              plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
+            restore-keys: |
+              plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-
+            path: |
+              priv/plts
+
+        - name: Create PLTs
+          if: steps.plt_cache.outputs.cache-hit != 'true'
+          run: mix dialyzer --plt
+
+        - name: Save PLT cache
+          id: plt_cache_save
+          uses: actions/cache/save@v3
+          if: steps.plt_cache.outputs.cache-hit != 'true'
+          with:
+            key: |
+              plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
+            path: |
+              priv/plts
+
         - name: Initialize Database
           run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
 
@@ -428,7 +653,7 @@ jobs:
           working-directory: ./app_server/components/system/mscmp_syst_perms
 
         - name: Run Dialyzer
-          run: mix dialyzer
+          run: mix dialyzer --format github
           working-directory: ./app_server/components/system/mscmp_syst_perms
 
   mscmp-syst-mcp-perms:
@@ -463,6 +688,31 @@ jobs:
             otp-version: ${{matrix.otp}}
             elixir-version: ${{matrix.elixir}}
 
+        - name: Restore PLT cache
+          id: plt_cache
+          uses: actions/cache/restore@v3
+          with:
+            key: |
+              plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
+            restore-keys: |
+              plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-
+            path: |
+              priv/plts
+
+        - name: Create PLTs
+          if: steps.plt_cache.outputs.cache-hit != 'true'
+          run: mix dialyzer --plt
+
+        - name: Save PLT cache
+          id: plt_cache_save
+          uses: actions/cache/save@v3
+          if: steps.plt_cache.outputs.cache-hit != 'true'
+          with:
+            key: |
+              plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
+            path: |
+              priv/plts
+
         - name: Initialize Database
           run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
 
@@ -483,7 +733,7 @@ jobs:
           working-directory: ./app_server/components/system/mscmp_syst_mcp_perms
 
         - name: Run Dialyzer
-          run: mix dialyzer
+          run: mix dialyzer --format github
           working-directory: ./app_server/components/system/mscmp_syst_mcp_perms
 
   mscmp-syst-session:
@@ -518,6 +768,31 @@ jobs:
             otp-version: ${{matrix.otp}}
             elixir-version: ${{matrix.elixir}}
 
+        - name: Restore PLT cache
+          id: plt_cache
+          uses: actions/cache/restore@v3
+          with:
+            key: |
+              plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
+            restore-keys: |
+              plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-
+            path: |
+              priv/plts
+
+        - name: Create PLTs
+          if: steps.plt_cache.outputs.cache-hit != 'true'
+          run: mix dialyzer --plt
+
+        - name: Save PLT cache
+          id: plt_cache_save
+          uses: actions/cache/save@v3
+          if: steps.plt_cache.outputs.cache-hit != 'true'
+          with:
+            key: |
+              plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
+            path: |
+              priv/plts
+
         - name: Initialize Database
           run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
 
@@ -538,7 +813,7 @@ jobs:
           working-directory: ./app_server/components/system/mscmp_syst_session
 
         - name: Run Dialyzer
-          run: mix dialyzer
+          run: mix dialyzer --format github
           working-directory: ./app_server/components/system/mscmp_syst_session
 
   mscmp-syst-forms:
@@ -559,6 +834,31 @@ jobs:
             otp-version: ${{matrix.otp}}
             elixir-version: ${{matrix.elixir}}
 
+        - name: Restore PLT cache
+          id: plt_cache
+          uses: actions/cache/restore@v3
+          with:
+            key: |
+              plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
+            restore-keys: |
+              plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-
+            path: |
+              priv/plts
+
+        - name: Create PLTs
+          if: steps.plt_cache.outputs.cache-hit != 'true'
+          run: mix dialyzer --plt
+
+        - name: Save PLT cache
+          id: plt_cache_save
+          uses: actions/cache/save@v3
+          if: steps.plt_cache.outputs.cache-hit != 'true'
+          with:
+            key: |
+              plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
+            path: |
+              priv/plts
+
         - name: Build Mix Dependencies
           run: mix deps.get
           working-directory: ./app_server/components/system/mscmp_syst_forms
@@ -572,7 +872,7 @@ jobs:
           working-directory: ./app_server/components/system/mscmp_syst_forms
 
         - name: Run Dialyzer
-          run: mix dialyzer
+          run: mix dialyzer --format github
           working-directory: ./app_server/components/system/mscmp_syst_forms
 
   mssub-mcp:
@@ -607,6 +907,31 @@ jobs:
             otp-version: ${{matrix.otp}}
             elixir-version: ${{matrix.elixir}}
 
+        - name: Restore PLT cache
+          id: plt_cache
+          uses: actions/cache/restore@v3
+          with:
+            key: |
+              plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
+            restore-keys: |
+              plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-
+            path: |
+              priv/plts
+
+        - name: Create PLTs
+          if: steps.plt_cache.outputs.cache-hit != 'true'
+          run: mix dialyzer --plt
+
+        - name: Save PLT cache
+          id: plt_cache_save
+          uses: actions/cache/save@v3
+          if: steps.plt_cache.outputs.cache-hit != 'true'
+          with:
+            key: |
+              plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
+            path: |
+              priv/plts
+
         - name: Initialize Database
           run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
 
@@ -627,7 +952,7 @@ jobs:
           working-directory: ./app_server/subsystems/mssub_mcp
 
         - name: Run Dialyzer
-          run: mix dialyzer
+          run: mix dialyzer --format github
           working-directory: ./app_server/subsystems/mssub_mcp
 
   # mssub-bms:
@@ -661,7 +986,32 @@ jobs:
   #         with:
   #           otp-version: ${{matrix.otp}}
   #           elixir-version: ${{matrix.elixir}}
-
+  #
+  #      - name: Restore PLT cache
+  #        id: plt_cache
+  #        uses: actions/cache/restore@v3
+  #        with:
+  #          key: |
+  #            plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
+  #          restore-keys: |
+  #            plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-
+  #          path: |
+  #            priv/plts
+  #
+  #      - name: Create PLTs
+  #        if: steps.plt_cache.outputs.cache-hit != 'true'
+  #        run: mix dialyzer --plt
+  #
+  #      - name: Save PLT cache
+  #        id: plt_cache_save
+  #        uses: actions/cache/save@v3
+  #        if: steps.plt_cache.outputs.cache-hit != 'true'
+  #        with:
+  #          key: |
+  #            plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
+  #          path: |
+  #            priv/plts
+  #
   #       - name: Initialize Database
   #         run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
 
