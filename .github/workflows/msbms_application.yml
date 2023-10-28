@@ -25,6 +25,18 @@ jobs:
             otp-version: ${{matrix.otp}}
             elixir-version: ${{matrix.elixir}}
 
+        - name: Build Mix Dependencies
+          run: mix deps.get
+          working-directory: ./app_server/components/system/mscmp_syst_error
+
+        - name: Run Tests
+          run: mix test
+          working-directory: ./app_server/components/system/mscmp_syst_error
+
+        - name: Run Credo
+          run: mix credo
+          working-directory: ./app_server/components/system/mscmp_syst_error
+
         - name: Restore PLT cache
           id: plt_cache
           uses: actions/cache/restore@v3
@@ -50,18 +62,6 @@ jobs:
               plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
             path: |
               priv/plts
-
-        - name: Build Mix Dependencies
-          run: mix deps.get
-          working-directory: ./app_server/components/system/mscmp_syst_error
-
-        - name: Run Tests
-          run: mix test
-          working-directory: ./app_server/components/system/mscmp_syst_error
-
-        - name: Run Credo
-          run: mix credo
-          working-directory: ./app_server/components/system/mscmp_syst_error
 
         - name: Run Dialyzer
           run: mix dialyzer --format github
@@ -85,6 +85,18 @@ jobs:
             otp-version: ${{matrix.otp}}
             elixir-version: ${{matrix.elixir}}
 
+        - name: Build Mix Dependencies
+          run: mix deps.get
+          working-directory: ./app_server/components/system/mscmp_syst_utils
+
+        - name: Run Tests
+          run: mix test
+          working-directory: ./app_server/components/system/mscmp_syst_utils
+
+        - name: Run Credo
+          run: mix credo
+          working-directory: ./app_server/components/system/mscmp_syst_utils
+
         - name: Restore PLT cache
           id: plt_cache
           uses: actions/cache/restore@v3
@@ -110,18 +122,6 @@ jobs:
               plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
             path: |
               priv/plts
-
-        - name: Build Mix Dependencies
-          run: mix deps.get
-          working-directory: ./app_server/components/system/mscmp_syst_utils
-
-        - name: Run Tests
-          run: mix test
-          working-directory: ./app_server/components/system/mscmp_syst_utils
-
-        - name: Run Credo
-          run: mix credo
-          working-directory: ./app_server/components/system/mscmp_syst_utils
 
         - name: Run Dialyzer
           run: mix dialyzer --format github
@@ -145,6 +145,18 @@ jobs:
             otp-version: ${{matrix.otp}}
             elixir-version: ${{matrix.elixir}}
 
+        - name: Build Mix Dependencies
+          run: mix deps.get
+          working-directory: ./app_server/components/system/mscmp_syst_network
+
+        - name: Run Tests
+          run: mix test
+          working-directory: ./app_server/components/system/mscmp_syst_network
+
+        - name: Run Credo
+          run: mix credo
+          working-directory: ./app_server/components/system/mscmp_syst_network
+
         - name: Restore PLT cache
           id: plt_cache
           uses: actions/cache/restore@v3
@@ -170,18 +182,6 @@ jobs:
               plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
             path: |
               priv/plts
-
-        - name: Build Mix Dependencies
-          run: mix deps.get
-          working-directory: ./app_server/components/system/mscmp_syst_network
-
-        - name: Run Tests
-          run: mix test
-          working-directory: ./app_server/components/system/mscmp_syst_network
-
-        - name: Run Credo
-          run: mix credo
-          working-directory: ./app_server/components/system/mscmp_syst_network
 
         - name: Run Dialyzer
           run: mix dialyzer --format github
@@ -205,6 +205,18 @@ jobs:
             otp-version: ${{matrix.otp}}
             elixir-version: ${{matrix.elixir}}
 
+        - name: Build Mix Dependencies
+          run: mix deps.get
+          working-directory: ./app_server/components/system/mscmp_syst_options
+
+        - name: Run Tests
+          run: mix test
+          working-directory: ./app_server/components/system/mscmp_syst_options
+
+        - name: Run Credo
+          run: mix credo
+          working-directory: ./app_server/components/system/mscmp_syst_options
+
         - name: Restore PLT cache
           id: plt_cache
           uses: actions/cache/restore@v3
@@ -230,18 +242,6 @@ jobs:
               plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
             path: |
               priv/plts
-
-        - name: Build Mix Dependencies
-          run: mix deps.get
-          working-directory: ./app_server/components/system/mscmp_syst_options
-
-        - name: Run Tests
-          run: mix test
-          working-directory: ./app_server/components/system/mscmp_syst_options
-
-        - name: Run Credo
-          run: mix credo
-          working-directory: ./app_server/components/system/mscmp_syst_options
 
         - name: Run Dialyzer
           run: mix dialyzer --format github
@@ -265,6 +265,22 @@ jobs:
             otp-version: ${{matrix.otp}}
             elixir-version: ${{matrix.elixir}}
 
+        - name: Build Mix Dependencies
+          run: mix deps.get
+          working-directory: ./app_server/components/system/mscmp_syst_limiter
+
+        - name: Run Unit Tests
+          run: mix test
+          working-directory: ./app_server/components/system/mscmp_syst_limiter
+
+        - name: Run Integration Tests
+          run: mix test --only integration
+          working-directory: ./app_server/components/system/mscmp_syst_limiter
+
+        - name: Run Credo
+          run: mix credo
+          working-directory: ./app_server/components/system/mscmp_syst_limiter
+
         - name: Restore PLT cache
           id: plt_cache
           uses: actions/cache/restore@v3
@@ -290,22 +306,6 @@ jobs:
               plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
             path: |
               priv/plts
-
-        - name: Build Mix Dependencies
-          run: mix deps.get
-          working-directory: ./app_server/components/system/mscmp_syst_limiter
-
-        - name: Run Unit Tests
-          run: mix test
-          working-directory: ./app_server/components/system/mscmp_syst_limiter
-
-        - name: Run Integration Tests
-          run: mix test --only integration
-          working-directory: ./app_server/components/system/mscmp_syst_limiter
-
-        - name: Run Credo
-          run: mix credo
-          working-directory: ./app_server/components/system/mscmp_syst_limiter
 
         - name: Run Dialyzer
           run: mix dialyzer --format github
@@ -343,6 +343,21 @@ jobs:
             otp-version: ${{matrix.otp}}
             elixir-version: ${{matrix.elixir}}
 
+        - name: Initialize Database
+          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
+
+        - name: Build Mix Dependencies
+          run: mix deps.get
+          working-directory: ./app_server/components/system/mscmp_syst_db
+
+        - name: Run Tests
+          run: mix test
+          working-directory: ./app_server/components/system/mscmp_syst_db
+
+        - name: Run Credo
+          run: mix credo
+          working-directory: ./app_server/components/system/mscmp_syst_db
+
         - name: Restore PLT cache
           id: plt_cache
           uses: actions/cache/restore@v3
@@ -368,21 +383,6 @@ jobs:
               plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
             path: |
               priv/plts
-
-        - name: Initialize Database
-          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
-
-        - name: Build Mix Dependencies
-          run: mix deps.get
-          working-directory: ./app_server/components/system/mscmp_syst_db
-
-        - name: Run Tests
-          run: mix test
-          working-directory: ./app_server/components/system/mscmp_syst_db
-
-        - name: Run Credo
-          run: mix credo
-          working-directory: ./app_server/components/system/mscmp_syst_db
 
         - name: Run Dialyzer
           run: mix dialyzer --format github
@@ -420,6 +420,21 @@ jobs:
             otp-version: ${{matrix.otp}}
             elixir-version: ${{matrix.elixir}}
 
+        - name: Initialize Database
+          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
+
+        - name: Build Mix Dependencies
+          run: mix deps.get
+          working-directory: ./app_server/components/system/mscmp_syst_settings
+
+        - name: Run Tests
+          run: mix test
+          working-directory: ./app_server/components/system/mscmp_syst_settings
+
+        - name: Run Credo
+          run: mix credo
+          working-directory: ./app_server/components/system/mscmp_syst_settings
+
         - name: Restore PLT cache
           id: plt_cache
           uses: actions/cache/restore@v3
@@ -445,21 +460,6 @@ jobs:
               plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
             path: |
               priv/plts
-
-        - name: Initialize Database
-          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
-
-        - name: Build Mix Dependencies
-          run: mix deps.get
-          working-directory: ./app_server/components/system/mscmp_syst_settings
-
-        - name: Run Tests
-          run: mix test
-          working-directory: ./app_server/components/system/mscmp_syst_settings
-
-        - name: Run Credo
-          run: mix credo
-          working-directory: ./app_server/components/system/mscmp_syst_settings
 
         - name: Run Dialyzer
           run: mix dialyzer --format github
@@ -497,6 +497,21 @@ jobs:
             otp-version: ${{matrix.otp}}
             elixir-version: ${{matrix.elixir}}
 
+        - name: Initialize Database
+          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
+
+        - name: Build Mix Dependencies
+          run: mix deps.get
+          working-directory: ./app_server/components/system/mscmp_syst_enums
+
+        - name: Run Tests
+          run: mix test
+          working-directory: ./app_server/components/system/mscmp_syst_enums
+
+        - name: Run Credo
+          run: mix credo
+          working-directory: ./app_server/components/system/mscmp_syst_enums
+
         - name: Restore PLT cache
           id: plt_cache
           uses: actions/cache/restore@v3
@@ -522,21 +537,6 @@ jobs:
               plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
             path: |
               priv/plts
-
-        - name: Initialize Database
-          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
-
-        - name: Build Mix Dependencies
-          run: mix deps.get
-          working-directory: ./app_server/components/system/mscmp_syst_enums
-
-        - name: Run Tests
-          run: mix test
-          working-directory: ./app_server/components/system/mscmp_syst_enums
-
-        - name: Run Credo
-          run: mix credo
-          working-directory: ./app_server/components/system/mscmp_syst_enums
 
         - name: Run Dialyzer
           run: mix dialyzer --format github
@@ -574,6 +574,25 @@ jobs:
             otp-version: ${{matrix.otp}}
             elixir-version: ${{matrix.elixir}}
 
+        - name: Initialize Database
+          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
+
+        - name: Build Mix Dependencies
+          run: mix deps.get
+          working-directory: ./app_server/components/system/mscmp_syst_instance
+
+        - name: Run Unit Tests
+          run: mix test
+          working-directory: ./app_server/components/system/mscmp_syst_instance
+
+        - name: Run Integration Tests
+          run: mix test --only integration
+          working-directory: ./app_server/components/system/mscmp_syst_instance
+
+        - name: Run Credo
+          run: mix credo
+          working-directory: ./app_server/components/system/mscmp_syst_instance
+
         - name: Restore PLT cache
           id: plt_cache
           uses: actions/cache/restore@v3
@@ -599,25 +618,6 @@ jobs:
               plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
             path: |
               priv/plts
-
-        - name: Initialize Database
-          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
-
-        - name: Build Mix Dependencies
-          run: mix deps.get
-          working-directory: ./app_server/components/system/mscmp_syst_instance
-
-        - name: Run Unit Tests
-          run: mix test
-          working-directory: ./app_server/components/system/mscmp_syst_instance
-
-        - name: Run Integration Tests
-          run: mix test --only integration
-          working-directory: ./app_server/components/system/mscmp_syst_instance
-
-        - name: Run Credo
-          run: mix credo
-          working-directory: ./app_server/components/system/mscmp_syst_instance
 
         - name: Run Dialyzer
           run: mix dialyzer --format github
@@ -655,6 +655,25 @@ jobs:
             otp-version: ${{matrix.otp}}
             elixir-version: ${{matrix.elixir}}
 
+        - name: Initialize Database
+          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
+
+        - name: Build Mix Dependencies
+          run: mix deps.get
+          working-directory: ./app_server/components/system/mscmp_syst_authn
+
+        - name: Run Unit Tests
+          run: mix test
+          working-directory: ./app_server/components/system/mscmp_syst_authn
+
+        - name: Run Integration Tests
+          run: mix test --only integration
+          working-directory: ./app_server/components/system/mscmp_syst_authn
+
+        - name: Run Credo
+          run: mix credo
+          working-directory: ./app_server/components/system/mscmp_syst_authn
+
         - name: Restore PLT cache
           id: plt_cache
           uses: actions/cache/restore@v3
@@ -680,25 +699,6 @@ jobs:
               plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
             path: |
               priv/plts
-
-        - name: Initialize Database
-          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
-
-        - name: Build Mix Dependencies
-          run: mix deps.get
-          working-directory: ./app_server/components/system/mscmp_syst_authn
-
-        - name: Run Unit Tests
-          run: mix test
-          working-directory: ./app_server/components/system/mscmp_syst_authn
-
-        - name: Run Integration Tests
-          run: mix test --only integration
-          working-directory: ./app_server/components/system/mscmp_syst_authn
-
-        - name: Run Credo
-          run: mix credo
-          working-directory: ./app_server/components/system/mscmp_syst_authn
 
         - name: Run Dialyzer
           run: mix dialyzer --format github
@@ -736,6 +736,25 @@ jobs:
             otp-version: ${{matrix.otp}}
             elixir-version: ${{matrix.elixir}}
 
+        - name: Initialize Database
+          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
+
+        - name: Build Mix Dependencies
+          run: mix deps.get
+          working-directory: ./app_server/components/system/mscmp_syst_perms
+
+        - name: Run Unit Tests
+          run: mix test
+          working-directory: ./app_server/components/system/mscmp_syst_perms
+
+        - name: Run Integration Tests
+          run: mix test --only integration
+          working-directory: ./app_server/components/system/mscmp_syst_perms
+
+        - name: Run Credo
+          run: mix credo
+          working-directory: ./app_server/components/system/mscmp_syst_perms
+
         - name: Restore PLT cache
           id: plt_cache
           uses: actions/cache/restore@v3
@@ -761,25 +780,6 @@ jobs:
               plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
             path: |
               priv/plts
-
-        - name: Initialize Database
-          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
-
-        - name: Build Mix Dependencies
-          run: mix deps.get
-          working-directory: ./app_server/components/system/mscmp_syst_perms
-
-        - name: Run Unit Tests
-          run: mix test
-          working-directory: ./app_server/components/system/mscmp_syst_perms
-
-        - name: Run Integration Tests
-          run: mix test --only integration
-          working-directory: ./app_server/components/system/mscmp_syst_perms
-
-        - name: Run Credo
-          run: mix credo
-          working-directory: ./app_server/components/system/mscmp_syst_perms
 
         - name: Run Dialyzer
           run: mix dialyzer --format github
@@ -817,6 +817,25 @@ jobs:
             otp-version: ${{matrix.otp}}
             elixir-version: ${{matrix.elixir}}
 
+        - name: Initialize Database
+          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
+
+        - name: Build Mix Dependencies
+          run: mix deps.get
+          working-directory: ./app_server/components/system/mscmp_syst_mcp_perms
+
+        - name: Run Unit Tests
+          run: mix test
+          working-directory: ./app_server/components/system/mscmp_syst_mcp_perms
+
+        - name: Run Integration Tests
+          run: mix test --only integration
+          working-directory: ./app_server/components/system/mscmp_syst_mcp_perms
+
+        - name: Run Credo
+          run: mix credo
+          working-directory: ./app_server/components/system/mscmp_syst_mcp_perms
+
         - name: Restore PLT cache
           id: plt_cache
           uses: actions/cache/restore@v3
@@ -842,25 +861,6 @@ jobs:
               plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
             path: |
               priv/plts
-
-        - name: Initialize Database
-          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
-
-        - name: Build Mix Dependencies
-          run: mix deps.get
-          working-directory: ./app_server/components/system/mscmp_syst_mcp_perms
-
-        - name: Run Unit Tests
-          run: mix test
-          working-directory: ./app_server/components/system/mscmp_syst_mcp_perms
-
-        - name: Run Integration Tests
-          run: mix test --only integration
-          working-directory: ./app_server/components/system/mscmp_syst_mcp_perms
-
-        - name: Run Credo
-          run: mix credo
-          working-directory: ./app_server/components/system/mscmp_syst_mcp_perms
 
         - name: Run Dialyzer
           run: mix dialyzer --format github
@@ -898,6 +898,25 @@ jobs:
             otp-version: ${{matrix.otp}}
             elixir-version: ${{matrix.elixir}}
 
+        - name: Initialize Database
+          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
+
+        - name: Build Mix Dependencies
+          run: mix deps.get
+          working-directory: ./app_server/components/system/mscmp_syst_session
+
+        - name: Run Unit Tests
+          run: mix test
+          working-directory: ./app_server/components/system/mscmp_syst_session
+
+        - name: Run Integration Tests
+          run: mix test --only integration
+          working-directory: ./app_server/components/system/mscmp_syst_session
+
+        - name: Run Credo
+          run: mix credo
+          working-directory: ./app_server/components/system/mscmp_syst_session
+
         - name: Restore PLT cache
           id: plt_cache
           uses: actions/cache/restore@v3
@@ -923,25 +942,6 @@ jobs:
               plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
             path: |
               priv/plts
-
-        - name: Initialize Database
-          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
-
-        - name: Build Mix Dependencies
-          run: mix deps.get
-          working-directory: ./app_server/components/system/mscmp_syst_session
-
-        - name: Run Unit Tests
-          run: mix test
-          working-directory: ./app_server/components/system/mscmp_syst_session
-
-        - name: Run Integration Tests
-          run: mix test --only integration
-          working-directory: ./app_server/components/system/mscmp_syst_session
-
-        - name: Run Credo
-          run: mix credo
-          working-directory: ./app_server/components/system/mscmp_syst_session
 
         - name: Run Dialyzer
           run: mix dialyzer --format github
@@ -965,6 +965,18 @@ jobs:
             otp-version: ${{matrix.otp}}
             elixir-version: ${{matrix.elixir}}
 
+        - name: Build Mix Dependencies
+          run: mix deps.get
+          working-directory: ./app_server/components/system/mscmp_syst_forms
+
+        - name: Run Tests
+          run: mix test
+          working-directory: ./app_server/components/system/mscmp_syst_forms
+
+        - name: Run Credo
+          run: mix credo
+          working-directory: ./app_server/components/system/mscmp_syst_forms
+
         - name: Restore PLT cache
           id: plt_cache
           uses: actions/cache/restore@v3
@@ -990,18 +1002,6 @@ jobs:
               plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
             path: |
               priv/plts
-
-        - name: Build Mix Dependencies
-          run: mix deps.get
-          working-directory: ./app_server/components/system/mscmp_syst_forms
-
-        - name: Run Tests
-          run: mix test
-          working-directory: ./app_server/components/system/mscmp_syst_forms
-
-        - name: Run Credo
-          run: mix credo
-          working-directory: ./app_server/components/system/mscmp_syst_forms
 
         - name: Run Dialyzer
           run: mix dialyzer --format github
@@ -1039,6 +1039,25 @@ jobs:
             otp-version: ${{matrix.otp}}
             elixir-version: ${{matrix.elixir}}
 
+        - name: Initialize Database
+          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
+
+        - name: Build Mix Dependencies
+          run: mix deps.get
+          working-directory: ./app_server/subsystems/mssub_mcp
+
+        - name: Run Unit Tests
+          run: mix test
+          working-directory: ./app_server/subsystems/mssub_mcp
+
+        - name: Run Integration Tests
+          run: mix test --only integration
+          working-directory: ./app_server/subsystems/mssub_mcp
+
+        - name: Run Credo
+          run: mix credo
+          working-directory: ./app_server/subsystems/mssub_mcp
+
         - name: Restore PLT cache
           id: plt_cache
           uses: actions/cache/restore@v3
@@ -1064,25 +1083,6 @@ jobs:
               plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
             path: |
               priv/plts
-
-        - name: Initialize Database
-          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
-
-        - name: Build Mix Dependencies
-          run: mix deps.get
-          working-directory: ./app_server/subsystems/mssub_mcp
-
-        - name: Run Unit Tests
-          run: mix test
-          working-directory: ./app_server/subsystems/mssub_mcp
-
-        - name: Run Integration Tests
-          run: mix test --only integration
-          working-directory: ./app_server/subsystems/mssub_mcp
-
-        - name: Run Credo
-          run: mix credo
-          working-directory: ./app_server/subsystems/mssub_mcp
 
         - name: Run Dialyzer
           run: mix dialyzer --format github
