@@ -25,6 +25,13 @@ defmodule MscmpSystError.MixProject do
     # Muse Systems Business Management System Components
   ]
 
+  @dialyzer_opts [
+    flags: ["-Wunmatched_returns", :error_handling, :underspecs],
+    plt_add_apps: [:mix],
+    plt_core_path: "priv/plts",
+    plt_file: {:no_warn, "priv/plts/dialyzer.plt"}
+  ]
+
   # ------------------------------------------------------------
 
   def project do
@@ -37,6 +44,7 @@ defmodule MscmpSystError.MixProject do
       deps: @deps,
       build_embedded: in_production,
       start_permanent: in_production,
+      dialyzer: @dialyzer_opts,
       docs: [
         name: "MscmpSystError",
         main: "MscmpSystError",
