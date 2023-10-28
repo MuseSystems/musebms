@@ -124,6 +124,66 @@ jobs:
         - name: Run Dialyzer
           run: mix dialyzer --format github
           working-directory: ./app_server/components/system/mscmp_syst_utils
+
+  mscmp-syst-network:
+    runs-on: ubuntu-latest
+    name: MscmpSystNetwork (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
+    strategy:
+      matrix:
+        otp: ['26.1']
+        elixir: ['1.15']
+
+    steps:
+        - name: Checkout repository code
+          uses: actions/checkout@v3
+
+        - name: Install Elixir
+          uses: erlef/setup-beam@v1
+          with:
+            otp-version: ${{matrix.otp}}
+            elixir-version: ${{matrix.elixir}}
+
+        - name: Restore PLT cache
+          id: plt_cache
+          uses: actions/cache/restore@v3
+          with:
+            key: |
+              plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
+            restore-keys: |
+              plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-
+            path: |
+              priv/plts
+
+        - name: Create PLTs
+          if: steps.plt_cache.outputs.cache-hit != 'true'
+          run: mix dialyzer --plt
+
+        - name: Save PLT cache
+          id: plt_cache_save
+          uses: actions/cache/save@v3
+          if: steps.plt_cache.outputs.cache-hit != 'true'
+          with:
+            key: |
+              plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
+            path: |
+              priv/plts
+
+        - name: Build Mix Dependencies
+          run: mix deps.get
+          working-directory: ./app_server/components/system/mscmp_syst_network
+
+        - name: Run Tests
+          run: mix test
+          working-directory: ./app_server/components/system/mscmp_syst_network
+
+        - name: Run Credo
+          run: mix credo
+          working-directory: ./app_server/components/system/mscmp_syst_network
+
+        - name: Run Dialyzer
+          run: mix dialyzer --format github
+          working-directory: ./app_server/components/system/mscmp_syst_network
+
   mscmp-syst-options:
     runs-on: ubuntu-latest
     name: MscmpSystOptions (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}) CI
