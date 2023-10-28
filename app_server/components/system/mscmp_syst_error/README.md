@@ -1,5 +1,7 @@
 # MscmpSystError - Exception Handling Component
 
+<!-- MDOC !-->
+
 API for defining a standard for error handling and reporting.
 
 This module defines a nested structure for reporting errors in contexts where a result should be
