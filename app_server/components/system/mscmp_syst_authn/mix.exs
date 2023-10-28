@@ -19,7 +19,7 @@ defmodule MscmpSystAuthn.MixProject do
   @deps [
     # Third Party Dependencies
     {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
-    {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
+    {:dialyxir, "~> 1.0", only: [:dev, :test], runtime: false},
     {:ex_doc, "~> 0.20", only: :dev, runtime: false},
     {:argon2_elixir, "~> 3.0"},
     {:nimble_totp, "~> 1.0"},
