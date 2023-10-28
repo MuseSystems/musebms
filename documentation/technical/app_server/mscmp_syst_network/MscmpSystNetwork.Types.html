@@ -13,7 +13,7 @@
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
     <script src="dist/handlebars.templates-EPF2X7PV.js"></script>
-    <script src="dist/sidebar_items-78E65AC3.js"></script>
+    <script src="dist/sidebar_items-43DBF1A0.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -117,6 +117,10 @@ Pages
 </h1>
 
 
+  <section id="moduledoc">
+<p>Basic types in support of the MscmpSystNetwork Component.</p>
+  </section>
+
 
   <section id="summary" class="details-list">
     <h1 class="section-heading">
@@ -136,6 +140,8 @@ Pages
 
       </div>
 
+        <div class="summary-synopsis"><p>The union of Erlang IPv4 and IPv6 address tuple types.</p></div>
+
     </div>
 
     <div class="summary-row">
@@ -144,21 +150,57 @@ Pages
 
       </div>
 
-    </div>
-
-    <div class="summary-row">
-      <div class="summary-signature">
-        <a href="#t:ip4_addr/0" translate="no">ip4_addr()</a>
-
-      </div>
+        <div class="summary-synopsis"><p>The union of MscmpSystNetwork IP address struct types.</p></div>
 
     </div>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:ip6_addr/0" translate="no">ip6_addr()</a>
+        <a href="#t:ipv4_addr/0" translate="no">ipv4_addr()</a>
 
       </div>
+
+        <div class="summary-synopsis"><p>An IPv4 address type in Erlang <a href="https://www.erlang.org/doc/man/inet.html#type-ip4_address"><code class="inline">:inet.ip4_address/0</code></a> format.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:ipv4_mask/0" translate="no">ipv4_mask()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Defines the acceptable subnet mask bit length for IPv4 addresses.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:ipv6_addr/0" translate="no">ipv6_addr()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>An IPv6 address type in Erlang <a href="https://www.erlang.org/doc/man/inet.html#type-ip6_address"><code class="inline">:inet.ip6_address/0</code></a> format.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:ipv6_mask/0" translate="no">ipv6_mask()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Defines the acceptable prefix bit length for IPv6 addresses.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:mask/0" translate="no">mask()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>The union of IPv4 and IPv6 bit length definitions.</p></div>
 
     </div>
 
@@ -191,11 +233,11 @@ Pages
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@type</span> addr() :: <a href="#t:ip4_addr/0">ip4_addr</a>() | <a href="#t:ip6_addr/0">ip6_addr</a>()</pre>
+          <pre translate="no"><span class="attribute">@type</span> addr() :: <a href="#t:ipv4_addr/0">ipv4_addr</a>() | <a href="#t:ipv6_addr/0">ipv6_addr</a>()</pre>
 
       </div>
 
-
+<p>The union of Erlang IPv4 and IPv6 address tuple types.</p>
   </section>
 </section>
 <section class="detail" id="t:addr_structs/0">
@@ -219,17 +261,17 @@ Pages
 
       </div>
 
-
+<p>The union of MscmpSystNetwork IP address struct types.</p>
   </section>
 </section>
-<section class="detail" id="t:ip4_addr/0">
+<section class="detail" id="t:ipv4_addr/0">
 
   <div class="detail-header">
-    <a href="#t:ip4_addr/0" class="detail-link" title="Link to this type">
+    <a href="#t:ipv4_addr/0" class="detail-link" title="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">ip4_addr()</h1>
+    <h1 class="signature" translate="no">ipv4_addr()</h1>
 
 
   </div>
@@ -238,21 +280,21 @@ Pages
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@type</span> ip4_addr() :: <a href="https://www.erlang.org/doc/man/inet.html#type-ip4_address">:inet.ip4_address</a>()</pre>
+          <pre translate="no"><span class="attribute">@type</span> ipv4_addr() :: <a href="https://www.erlang.org/doc/man/inet.html#type-ip4_address">:inet.ip4_address</a>()</pre>
 
       </div>
 
-
+<p>An IPv4 address type in Erlang <a href="https://www.erlang.org/doc/man/inet.html#type-ip4_address"><code class="inline">:inet.ip4_address/0</code></a> format.</p>
   </section>
 </section>
-<section class="detail" id="t:ip6_addr/0">
+<section class="detail" id="t:ipv4_mask/0">
 
   <div class="detail-header">
-    <a href="#t:ip6_addr/0" class="detail-link" title="Link to this type">
+    <a href="#t:ipv4_mask/0" class="detail-link" title="Link to this type">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature" translate="no">ip6_addr()</h1>
+    <h1 class="signature" translate="no">ipv4_mask()</h1>
 
 
   </div>
@@ -261,11 +303,80 @@ Pages
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@type</span> ip6_addr() :: <a href="https://www.erlang.org/doc/man/inet.html#type-ip6_address">:inet.ip6_address</a>()</pre>
+          <pre translate="no"><span class="attribute">@type</span> ipv4_mask() :: 0..32</pre>
 
       </div>
 
+<p>Defines the acceptable subnet mask bit length for IPv4 addresses.</p>
+  </section>
+</section>
+<section class="detail" id="t:ipv6_addr/0">
 
+  <div class="detail-header">
+    <a href="#t:ipv6_addr/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">ipv6_addr()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> ipv6_addr() :: <a href="https://www.erlang.org/doc/man/inet.html#type-ip6_address">:inet.ip6_address</a>()</pre>
+
+      </div>
+
+<p>An IPv6 address type in Erlang <a href="https://www.erlang.org/doc/man/inet.html#type-ip6_address"><code class="inline">:inet.ip6_address/0</code></a> format.</p>
+  </section>
+</section>
+<section class="detail" id="t:ipv6_mask/0">
+
+  <div class="detail-header">
+    <a href="#t:ipv6_mask/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">ipv6_mask()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> ipv6_mask() :: 0..128</pre>
+
+      </div>
+
+<p>Defines the acceptable prefix bit length for IPv6 addresses.</p>
+  </section>
+</section>
+<section class="detail" id="t:mask/0">
+
+  <div class="detail-header">
+    <a href="#t:mask/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">mask()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> mask() :: <a href="#t:ipv4_mask/0">ipv4_mask</a>() | <a href="#t:ipv6_mask/0">ipv6_mask</a>()</pre>
+
+      </div>
+
+<p>The union of IPv4 and IPv6 bit length definitions.</p>
   </section>
 </section>
 

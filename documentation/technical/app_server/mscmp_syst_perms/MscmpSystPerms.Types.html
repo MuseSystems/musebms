@@ -4,20 +4,20 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.30.6">
+    <meta name="generator" content="ExDoc v0.30.9">
     <meta name="project" content="mscmp_syst_perms v0.1.0">
 
     <title>MscmpSystPerms.Types — mscmp_syst_perms v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-M3TQBNKO.css" />
+    <link rel="stylesheet" href="dist/html-elixir-XFYN5IVA.css" />
 
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-KDPBTEPL.js"></script>
-    <script src="dist/sidebar_items-B2377805.js"></script>
+    <script src="dist/handlebars.templates-EPF2X7PV.js"></script>
+    <script src="dist/sidebar_items-FA0400B7.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/html-CP2A7WXZ.js"></script>
+    <script async src="dist/html-J2ASZTQE.js"></script>
 
 
   </head>
@@ -38,22 +38,22 @@
 
 <div class="main">
 
-<button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
+<button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
   <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
 </button>
 
-<section class="sidebar">
+<nav id="sidebar" class="sidebar">
   <form class="sidebar-search" action="search.html">
+    <label class="search-label">
+      <span class="sr-only">Search documentation of mscmp_syst_perms</span>
+      <input name="q" type="text" class="search-input" placeholder="Search..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+    </label>
     <button type="submit" class="search-button" aria-label="Submit Search">
       <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
     </button>
-    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
-      <i class="ri-close-line ri-lg" aria-hidden="true" title="Cancel search"></i>
+    <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+      <i class="ri-close-line ri-lg" title="Cancel search"></i>
     </button>
-    <label class="search-label">
-      <p class="sr-only">Search</p>
-      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
-    </label>
   </form>
 
   <div class="autocomplete">
@@ -71,19 +71,35 @@ mscmp_syst_perms
         v0.1.0
       </div>
     </div>
-    <ul class="sidebar-listNav">
-      <li><a id="extras-list-link" href="#full-list">Pages</a></li>
+    <ul id="sidebar-listNav" class="sidebar-listNav" role="tablist">
+      <li>
+        <button id="extras-list-tab-button" role="tab" data-type="extras" aria-controls="extras-tab-panel" aria-selected="true" tabindex="0">
+Pages
+        </button>
+      </li>
 
-        <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+        <li>
+          <button id="modules-list-tab-button" role="tab" data-type="modules" aria-controls="modules-tab-panel" aria-selected="false" tabindex="-1">
+            Modules
+          </button>
+        </li>
 
 
     </ul>
   </div>
 
-  <ul id="full-list"></ul>
-</section>
+  <div id="extras-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="extras-list-tab-button">
+    <ul id="extras-full-list" class="full-list"></ul>
+  </div>
 
-<section class="content">
+    <div id="modules-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="modules-list-tab-button" hidden>
+      <ul id="modules-full-list" class="full-list"></ul>
+    </div>
+
+
+</nav>
+
+<main class="content">
   <output role="status" id="toast"></output>
   <div class="content-outer">
     <div id="content" class="content-inner">
@@ -110,8 +126,8 @@ mscmp_syst_perms
     <h1 class="section-heading">
       <a class="hover-link" href="#summary">
         <i class="ri-link-m" aria-hidden="true"></i>
-        Summary
       </a>
+      <span class="text">Summary</span>
     </h1>
 <div class="summary-types summary">
   <h2>
@@ -261,8 +277,8 @@ Rights options.</p></div>
     <h1 class="section-heading">
       <a class="hover-link" href="#types">
         <i class="ri-link-m" aria-hidden="true"></i>
-Types
       </a>
+      <span class="text">Types</span>
     </h1>
     <div class="types-list">
 <section class="detail" id="t:perm_functional_type_id/0">
@@ -337,10 +353,10 @@ Types
 <p>A map of user updatable Permission Functional Type attributes.</p><p>While all Permission Functional Type records are considered system defined
 which prevents most data changes, those that effect the display of the record
 to system users are still permitted.</p><h2 id="t:perm_functional_type_params/0-attributes" class="section-heading">
-  <a href="#t:perm_functional_type_params/0-attributes">
+  <a href="#t:perm_functional_type_params/0-attributes" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Attributes
   </a>
+  <span class="text">Attributes</span>
 </h2>
 <ul><li><p><code class="inline">display_name</code> - a record candidate key displayed in user interfaces as
 the name of the record.  This value is required, may not be set <code class="inline">nil</code>, and
@@ -458,10 +474,10 @@ in question.</p>
 
 <p>A map defining the data used in creating or updating Permission records.</p><p>For additional context and documentation of concepts discussed here and below
 see the top level <a href="MscmpSystPerms.html"><code class="inline">MscmpSystPerms</code></a> documentation.</p><h2 id="t:perm_params/0-attributes" class="section-heading">
-  <a href="#t:perm_params/0-attributes">
+  <a href="#t:perm_params/0-attributes" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Attributes
   </a>
+  <span class="text">Attributes</span>
 </h2>
 <ul><li><p><code class="inline">internal_name</code> - a candidate key useful for programmatic references to
 individual records.  This is required data and the value must be unique in
@@ -555,10 +571,10 @@ records.</p><p>Permission Role Grant records are considered either &quot;System 
 &quot;User Defined&quot; based on their parent <a href="Msdata.SystPermRoles.html"><code class="inline">Msdata.SystPermRoles</code></a> record's
 <code class="inline">syst_defined</code> value.  The usage of some attributes described below will
 depend on that parent record definition.</p><h2 id="t:perm_role_grant_params/0-attributes" class="section-heading">
-  <a href="#t:perm_role_grant_params/0-attributes">
+  <a href="#t:perm_role_grant_params/0-attributes" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Attributes
   </a>
+  <span class="text">Attributes</span>
 </h2>
 <ul><li><p><code class="inline">perm_role_id</code> - a <a href="#t:perm_role_id/0"><code class="inline">MscmpSystPerms.Types.perm_role_id/0</code></a> reference to
 this record's parent Permission Role.  On user defined Permission Role Grant
@@ -661,10 +677,10 @@ Role Grant record is considered system defined.</p></li></ul>
 
 <p>A map of attributes describing Permission Role record values for use in record
 creation and update.</p><h2 id="t:perm_role_params/0-attributes" class="section-heading">
-  <a href="#t:perm_role_params/0-attributes">
+  <a href="#t:perm_role_params/0-attributes" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Attributes
   </a>
+  <span class="text">Attributes</span>
 </h2>
 <ul><li><p><code class="inline">internal_name</code> - a record candidate key used to identify the record in
 programmatic contexts.  The Internal Name value is a required data value and
@@ -708,10 +724,10 @@ may updated for system defined Permission Role records.</p></li></ul>
 Rights options.</p><p>Note that any given Permission may support all or only some of these Scopes.
 See the description of any specific Permission to understand which specific
 Scopes it supports.</p><h2 id="t:rights_scope/0-scopes" class="section-heading">
-  <a href="#t:rights_scope/0-scopes">
+  <a href="#t:rights_scope/0-scopes" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Scopes
   </a>
+  <span class="text">Scopes</span>
 </h2>
 <ul><li><p><code class="inline">:deny</code> - in some cases it is desirable to grant some Rights of a
 Permission, but not others.  The <code class="inline">:deny</code> Scope supports not granting all
@@ -749,7 +765,7 @@ for that Right.</p></li></ul>
 
         <p class="built-using">
           Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.30.6) for the
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.30.9) for the
 
             <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 
@@ -757,7 +773,7 @@ for that Right.</p></li></ul>
       </footer>
     </div>
   </div>
-</section>
+</main>
 </div>
 
 

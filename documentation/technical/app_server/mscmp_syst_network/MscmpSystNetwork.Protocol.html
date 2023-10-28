@@ -13,7 +13,7 @@
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
     <script src="dist/handlebars.templates-EPF2X7PV.js"></script>
-    <script src="dist/sidebar_items-78E65AC3.js"></script>
+    <script src="dist/sidebar_items-43DBF1A0.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -280,8 +280,11 @@ to be useful.</p>
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> get_host(<a href="MscmpSystNetwork.Types.html#t:addr_structs/0">MscmpSystNetwork.Types.addr_structs</a>()) ::
-  <a href="MscmpSystNetwork.Types.html#t:addr/0">MscmpSystNetwork.Types.addr</a>() | nil</pre>
+          <pre translate="no"><span class="attribute">@spec</span> get_host(<a href="MscmpSystNetwork.Types.IpV4.html#t:t/0">MscmpSystNetwork.Types.IpV4.t</a>()) ::
+  <a href="MscmpSystNetwork.Types.html#t:ipv4_addr/0">MscmpSystNetwork.Types.ipv4_addr</a>() | nil</pre>
+
+          <pre translate="no"><span class="attribute">@spec</span> get_host(<a href="MscmpSystNetwork.Types.IpV6.html#t:t/0">MscmpSystNetwork.Types.IpV6.t</a>()) ::
+  <a href="MscmpSystNetwork.Types.html#t:ipv6_addr/0">MscmpSystNetwork.Types.ipv6_addr</a>() | nil</pre>
 
       </div>
 
@@ -304,8 +307,11 @@ to be useful.</p>
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> get_netmask(<a href="MscmpSystNetwork.Types.html#t:addr_structs/0">MscmpSystNetwork.Types.addr_structs</a>()) ::
-  <a href="MscmpSystNetwork.Types.html#t:addr/0">MscmpSystNetwork.Types.addr</a>()</pre>
+          <pre translate="no"><span class="attribute">@spec</span> get_netmask(<a href="MscmpSystNetwork.Types.IpV4.html#t:t/0">MscmpSystNetwork.Types.IpV4.t</a>()) ::
+  <a href="MscmpSystNetwork.Types.html#t:ipv4_addr/0">MscmpSystNetwork.Types.ipv4_addr</a>()</pre>
+
+          <pre translate="no"><span class="attribute">@spec</span> get_netmask(<a href="MscmpSystNetwork.Types.IpV6.html#t:t/0">MscmpSystNetwork.Types.IpV6.t</a>()) ::
+  <a href="MscmpSystNetwork.Types.html#t:ipv6_addr/0">MscmpSystNetwork.Types.ipv6_addr</a>()</pre>
 
       </div>
 
@@ -328,8 +334,11 @@ to be useful.</p>
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> get_network(<a href="MscmpSystNetwork.Types.html#t:addr_structs/0">MscmpSystNetwork.Types.addr_structs</a>()) ::
-  <a href="MscmpSystNetwork.Types.html#t:addr/0">MscmpSystNetwork.Types.addr</a>() | nil</pre>
+          <pre translate="no"><span class="attribute">@spec</span> get_network(<a href="MscmpSystNetwork.Types.IpV4.html#t:t/0">MscmpSystNetwork.Types.IpV4.t</a>()) ::
+  <a href="MscmpSystNetwork.Types.html#t:ipv4_addr/0">MscmpSystNetwork.Types.ipv4_addr</a>() | nil</pre>
+
+          <pre translate="no"><span class="attribute">@spec</span> get_network(<a href="MscmpSystNetwork.Types.IpV6.html#t:t/0">MscmpSystNetwork.Types.IpV6.t</a>()) ::
+  <a href="MscmpSystNetwork.Types.html#t:ipv6_addr/0">MscmpSystNetwork.Types.ipv6_addr</a>() | nil</pre>
 
       </div>
 
@@ -375,10 +384,10 @@ to be useful.</p>
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> in_network?(
-  <a href="MscmpSystNetwork.Types.html#t:addr_structs/0">MscmpSystNetwork.Types.addr_structs</a>(),
-  <a href="MscmpSystNetwork.Types.html#t:addr_structs/0">MscmpSystNetwork.Types.addr_structs</a>()
-) ::
+          <pre translate="no"><span class="attribute">@spec</span> in_network?(<a href="MscmpSystNetwork.Types.IpV4.html#t:t/0">MscmpSystNetwork.Types.IpV4.t</a>(), <a href="MscmpSystNetwork.Types.IpV4.html#t:t/0">MscmpSystNetwork.Types.IpV4.t</a>()) ::
+  <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
+
+          <pre translate="no"><span class="attribute">@spec</span> in_network?(<a href="MscmpSystNetwork.Types.IpV6.html#t:t/0">MscmpSystNetwork.Types.IpV6.t</a>(), <a href="MscmpSystNetwork.Types.IpV6.html#t:t/0">MscmpSystNetwork.Types.IpV6.t</a>()) ::
   <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
 
       </div>
@@ -403,9 +412,15 @@ to be useful.</p>
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> in_range?(
-  <a href="MscmpSystNetwork.Types.html#t:addr_structs/0">MscmpSystNetwork.Types.addr_structs</a>(),
-  <a href="MscmpSystNetwork.Types.html#t:addr_structs/0">MscmpSystNetwork.Types.addr_structs</a>(),
-  <a href="MscmpSystNetwork.Types.html#t:addr_structs/0">MscmpSystNetwork.Types.addr_structs</a>()
+  <a href="MscmpSystNetwork.Types.IpV4.html#t:t/0">MscmpSystNetwork.Types.IpV4.t</a>(),
+  <a href="MscmpSystNetwork.Types.IpV4.html#t:t/0">MscmpSystNetwork.Types.IpV4.t</a>(),
+  <a href="MscmpSystNetwork.Types.IpV4.html#t:t/0">MscmpSystNetwork.Types.IpV4.t</a>()
+) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
+
+          <pre translate="no"><span class="attribute">@spec</span> in_range?(
+  <a href="MscmpSystNetwork.Types.IpV6.html#t:t/0">MscmpSystNetwork.Types.IpV6.t</a>(),
+  <a href="MscmpSystNetwork.Types.IpV6.html#t:t/0">MscmpSystNetwork.Types.IpV6.t</a>(),
+  <a href="MscmpSystNetwork.Types.IpV6.html#t:t/0">MscmpSystNetwork.Types.IpV6.t</a>()
 ) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
 
       </div>

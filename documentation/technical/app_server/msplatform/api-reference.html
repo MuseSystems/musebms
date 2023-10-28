@@ -4,20 +4,20 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.29.4">
+    <meta name="generator" content="ExDoc v0.30.9">
     <meta name="project" content="Msplatform v0.1.0">
 
     <title>API Reference — Msplatform v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-HHVY3JYD.css" />
+    <link rel="stylesheet" href="dist/html-elixir-XFYN5IVA.css" />
 
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-XWGFFSCD.js"></script>
-    <script src="dist/sidebar_items-4A6ACAF5.js"></script>
+    <script src="dist/handlebars.templates-EPF2X7PV.js"></script>
+    <script src="dist/sidebar_items-1F57C4CD.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/html-JDI3AVDD.js"></script>
+    <script async src="dist/html-J2ASZTQE.js"></script>
 
 
   </head>
@@ -38,22 +38,22 @@
 
 <div class="main">
 
-<button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
+<button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
   <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
 </button>
 
-<section class="sidebar">
+<nav id="sidebar" class="sidebar">
   <form class="sidebar-search" action="search.html">
+    <label class="search-label">
+      <span class="sr-only">Search documentation of Msplatform</span>
+      <input name="q" type="text" class="search-input" placeholder="Search..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+    </label>
     <button type="submit" class="search-button" aria-label="Submit Search">
       <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
     </button>
-    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
-      <i class="ri-close-line ri-lg" aria-hidden="true" title="Cancel search"></i>
+    <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+      <i class="ri-close-line ri-lg" title="Cancel search"></i>
     </button>
-    <label class="search-label">
-      <p class="sr-only">Search</p>
-      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
-    </label>
   </form>
 
   <div class="autocomplete">
@@ -71,20 +71,35 @@ Msplatform
         v0.1.0
       </div>
     </div>
-    <ul class="sidebar-listNav">
-      <li><a id="extras-list-link" href="#full-list">Pages</a></li>
+    <ul id="sidebar-listNav" class="sidebar-listNav" role="tablist">
+      <li>
+        <button id="extras-list-tab-button" role="tab" data-type="extras" aria-controls="extras-tab-panel" aria-selected="true" tabindex="0">
+Pages
+        </button>
+      </li>
 
-        <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+        <li>
+          <button id="modules-list-tab-button" role="tab" data-type="modules" aria-controls="modules-tab-panel" aria-selected="false" tabindex="-1">
+            Modules
+          </button>
+        </li>
 
 
     </ul>
   </div>
 
-  <div class="gradient"></div>
-  <ul id="full-list"></ul>
-</section>
+  <div id="extras-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="extras-list-tab-button">
+    <ul id="extras-full-list" class="full-list"></ul>
+  </div>
 
-<section class="content">
+    <div id="modules-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="modules-list-tab-button" hidden>
+      <ul id="modules-full-list" class="full-list"></ul>
+    </div>
+
+
+</nav>
+
+<main class="content">
   <output role="status" id="toast"></output>
   <div class="content-outer">
     <div id="content" class="content-inner">
@@ -103,10 +118,10 @@ Msplatform
 
   <section class="details-list">
     <h2 id="modules" class="section-heading">
-  <a href="#modules" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">modules</p>
+  <a href="#modules" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
   </a>
-  Modules
+  <span class="text">Modules</span>
 </h2>
 
     <div class="summary">
@@ -117,13 +132,6 @@ Msplatform
   </div>
 
     <div class="summary-synopsis"><p>MsappMcp API</p></div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="MsappMcp.Runtime.Mailer.html" translate="no">MsappMcp.Runtime.Mailer</a>
-
-  </div>
 
 </div>
 <div class="summary-row">
@@ -187,13 +195,6 @@ as controllers, components, channels, and so on.</p></div>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="MsappMcpWeb.Layouts.html" translate="no">MsappMcpWeb.Layouts</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
     <a href="MsappMcpWeb.PageController.html" translate="no">MsappMcpWeb.PageController</a>
 
   </div>
@@ -215,46 +216,11 @@ as controllers, components, channels, and so on.</p></div>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="MsappMcpWeb.Telemetry.html" translate="no">MsappMcpWeb.Telemetry</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
     <a href="Msform.AuthEmailPassword.html" translate="no">Msform.AuthEmailPassword</a>
 
   </div>
 
     <div class="summary-synopsis"><p>Form/API data used the Email/Password authentication process.</p></div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="Msform.AuthEmailPassword.Actions.html" translate="no">Msform.AuthEmailPassword.Actions</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="Msform.AuthEmailPassword.Data.html" translate="no">Msform.AuthEmailPassword.Data</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="Msform.AuthEmailPassword.Definitions.html" translate="no">Msform.AuthEmailPassword.Definitions</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="Msform.AuthEmailPassword.Types.html" translate="no">Msform.AuthEmailPassword.Types</a>
-
-  </div>
 
 </div>
 <div class="summary-row">
@@ -268,67 +234,11 @@ as controllers, components, channels, and so on.</p></div>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="Msform.AuthPasswordReset.Actions.html" translate="no">Msform.AuthPasswordReset.Actions</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="Msform.AuthPasswordReset.Data.html" translate="no">Msform.AuthPasswordReset.Data</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="Msform.AuthPasswordReset.Definitions.html" translate="no">Msform.AuthPasswordReset.Definitions</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="Msform.AuthPasswordReset.Types.html" translate="no">Msform.AuthPasswordReset.Types</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
     <a href="Msform.McpBootstrap.html" translate="no">Msform.McpBootstrap</a>
 
   </div>
 
     <div class="summary-synopsis"><p>Form data used during the MCP Bootstrapping process.</p></div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="Msform.McpBootstrap.Actions.html" translate="no">Msform.McpBootstrap.Actions</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="Msform.McpBootstrap.Data.html" translate="no">Msform.McpBootstrap.Data</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="Msform.McpBootstrap.Definitions.html" translate="no">Msform.McpBootstrap.Definitions</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="Msform.McpBootstrap.Types.html" translate="no">Msform.McpBootstrap.Types</a>
-
-  </div>
 
 </div>
 
@@ -361,7 +271,7 @@ as controllers, components, channels, and so on.</p></div>
 
         <p class="built-using">
           Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.29.4) for the
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.30.9) for the
 
             <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 
@@ -369,7 +279,7 @@ as controllers, components, channels, and so on.</p></div>
       </footer>
     </div>
   </div>
-</section>
+</main>
 </div>
 
 
