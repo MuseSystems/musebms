@@ -501,7 +501,7 @@ jobs:
           run: mix dialyzer --format github
           working-directory: ${{ env.MSBMS_PRJDIR }}
 
-mscmp_syst_enums:
+  mscmp_syst_enums:
     runs-on: ubuntu-latest
     env:
       MSBMS_PRJDIR: ./app_server/components/system/mscmp_syst_enums
