@@ -18,7 +18,7 @@ jobs:
       matrix:
         otp: ['26.1.2']
         elixir: ['1.15.7']
-    name: ${{ github.job }}-${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}
+    name: ${{ github.job }}-${{ matrix.otp }}-${{ matrix.elixir }}
 
     steps:
         - name: Checkout repository code
