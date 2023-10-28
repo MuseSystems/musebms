@@ -13,7 +13,7 @@
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
     <script src="dist/handlebars.templates-EPF2X7PV.js"></script>
-    <script src="dist/sidebar_items-78E65AC3.js"></script>
+    <script src="dist/sidebar_items-43DBF1A0.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -118,9 +118,9 @@ Pages
 
 
   <section id="moduledoc">
-<p>Represents an IPv6 host or sub-net CIDR address.</p><p>Implements the <a href="MscmpSystNetwork.Protocol.html"><code class="inline">MscmpSystNetwork.Protocol</code></a>.</p><p>The representation of a host may also written to include an identifiable
-sub-net as well.  So for example, <code class="inline">fd9b:77f8:714d:cabb::ab67:12/64</code> represents
-both a specific host (<code class="inline">fd9b:77f8:714d:cabb::ab67:12</code>) and a specific sub-net
+<p>Represents an IPv6 host or subnet CIDR address.</p><p>Implements the <a href="MscmpSystNetwork.Protocol.html"><code class="inline">MscmpSystNetwork.Protocol</code></a>.</p><p>The representation of a host may also written to include an identifiable
+subnet as well.  So for example, <code class="inline">fd9b:77f8:714d:cabb::ab67:12/64</code> represents
+both a specific host (<code class="inline">fd9b:77f8:714d:cabb::ab67:12</code>) and a specific subnet
 <code class="inline">fd9b:77f8:714d:cabb::ab67:0000/64</code>.</p>
   </section>
 
@@ -177,8 +177,8 @@ both a specific host (<code class="inline">fd9b:77f8:714d:cabb::ab67:12</code>) 
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@type</span> t() :: %MscmpSystNetwork.Types.IpV6{
-  address: <a href="MscmpSystNetwork.Types.html#t:ip6_addr/0">MscmpSystNetwork.Types.ip6_addr</a>(),
-  mask: 0..128
+  address: <a href="MscmpSystNetwork.Types.html#t:ipv6_addr/0">MscmpSystNetwork.Types.ipv6_addr</a>(),
+  mask: <a href="MscmpSystNetwork.Types.html#t:ipv6_mask/0">MscmpSystNetwork.Types.ipv6_mask</a>()
 }</pre>
 
       </div>
@@ -189,8 +189,8 @@ both a specific host (<code class="inline">fd9b:77f8:714d:cabb::ab67:12</code>) 
   </a>
   <span class="text">Attributes</span>
 </h2>
-<ul><li><p><code class="inline">address</code> - The IP address of the host or sub-net in
-<a href="MscmpSystNetwork.Types.html#t:ip6_addr/0"><code class="inline">MscmpSystNetwork.Types.ip6_addr/0</code></a> form.</p></li><li><p><code class="inline">mask</code> - the prefix bit length of the IP address.  Valid values are
+<ul><li><p><code class="inline">address</code> - The IP address of the host or subnet in
+<a href="MscmpSystNetwork.Types.html#t:ipv6_addr/0"><code class="inline">MscmpSystNetwork.Types.ipv6_addr/0</code></a> form.</p></li><li><p><code class="inline">mask</code> - the prefix bit length of the IP address.  Valid values are
 integers between 0 and 128, inclusive.  When defining a new struct and the
 <code class="inline">mask</code> is not provided, the resulting struct is assumed to represent a host
 and the <code class="inline">mask</code> attribute is defaulted to 128.</p></li></ul><p>See <a href="MscmpSystNetwork.Types.IpV6.html#content"><code class="inline">MscmpSystNetwork.Types.IpV6</code></a> for more.</p>

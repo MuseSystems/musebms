@@ -4,20 +4,20 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.29.4">
+    <meta name="generator" content="ExDoc v0.30.9">
     <meta name="project" content="Msplatform v0.1.0">
 
     <title>MsappMcp — Msplatform v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-HHVY3JYD.css" />
+    <link rel="stylesheet" href="dist/html-elixir-XFYN5IVA.css" />
 
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-XWGFFSCD.js"></script>
-    <script src="dist/sidebar_items-4A6ACAF5.js"></script>
+    <script src="dist/handlebars.templates-EPF2X7PV.js"></script>
+    <script src="dist/sidebar_items-1F57C4CD.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/html-JDI3AVDD.js"></script>
+    <script async src="dist/html-J2ASZTQE.js"></script>
 
 
   </head>
@@ -38,22 +38,22 @@
 
 <div class="main">
 
-<button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
+<button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
   <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
 </button>
 
-<section class="sidebar">
+<nav id="sidebar" class="sidebar">
   <form class="sidebar-search" action="search.html">
+    <label class="search-label">
+      <span class="sr-only">Search documentation of Msplatform</span>
+      <input name="q" type="text" class="search-input" placeholder="Search..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+    </label>
     <button type="submit" class="search-button" aria-label="Submit Search">
       <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
     </button>
-    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
-      <i class="ri-close-line ri-lg" aria-hidden="true" title="Cancel search"></i>
+    <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+      <i class="ri-close-line ri-lg" title="Cancel search"></i>
     </button>
-    <label class="search-label">
-      <p class="sr-only">Search</p>
-      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
-    </label>
   </form>
 
   <div class="autocomplete">
@@ -71,20 +71,35 @@ Msplatform
         v0.1.0
       </div>
     </div>
-    <ul class="sidebar-listNav">
-      <li><a id="extras-list-link" href="#full-list">Pages</a></li>
+    <ul id="sidebar-listNav" class="sidebar-listNav" role="tablist">
+      <li>
+        <button id="extras-list-tab-button" role="tab" data-type="extras" aria-controls="extras-tab-panel" aria-selected="true" tabindex="0">
+Pages
+        </button>
+      </li>
 
-        <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+        <li>
+          <button id="modules-list-tab-button" role="tab" data-type="modules" aria-controls="modules-tab-panel" aria-selected="false" tabindex="-1">
+            Modules
+          </button>
+        </li>
 
 
     </ul>
   </div>
 
-  <div class="gradient"></div>
-  <ul id="full-list"></ul>
-</section>
+  <div id="extras-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="extras-list-tab-button">
+    <ul id="extras-full-list" class="full-list"></ul>
+  </div>
 
-<section class="content">
+    <div id="modules-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="modules-list-tab-button" hidden>
+      <ul id="modules-full-list" class="full-list"></ul>
+    </div>
+
+
+</nav>
+
+<main class="content">
   <output role="status" id="toast"></output>
   <div class="content-outer">
     <div id="content" class="content-inner">
@@ -111,9 +126,8 @@ Msplatform
     <h1 class="section-heading">
       <a class="hover-link" href="#summary">
         <i class="ri-link-m" aria-hidden="true"></i>
-        <span class="sr-only">Link to this section</span>
       </a>
-      Summary
+      <span class="text">Summary</span>
     </h1>
 <div class="summary-functions summary">
   <h2>
@@ -209,9 +223,8 @@ Msplatform
     <h1 class="section-heading">
       <a class="hover-link" href="#functions">
         <i class="ri-link-m" aria-hidden="true"></i>
-        <span class="sr-only">Link to this section</span>
       </a>
-Functions
+      <span class="text">Functions</span>
     </h1>
     <div class="functions-list">
 <section class="detail" id="authenticate/4">
@@ -234,10 +247,10 @@ Functions
 
           <pre translate="no"><span class="attribute">@spec</span> authenticate(
   <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(),
-  <a href="https://hexdocs.pm/net_address/0.3.0/IP.html#t:addr/0">IP.addr</a>(),
-  <a href="https://hexdocs.pm/mscmp_syst_session/0.1.0/MscmpSystSession.Types.html#t:session_name/0">MscmpSystSession.Types.session_name</a>() | nil,
+  <a href="https://hexdocs.pm/mscmp_syst_network/0.1.0/MscmpSystNetwork.Types.html#t:addr/0">MscmpSystNetwork.Types.addr</a>(),
+  <a href="https://hexdocs.pm/mssub_mcp/0.1.0/MssubMcp.Types.html#t:session_name/0">MssubMcp.Types.session_name</a>() | nil,
   <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
-) :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()</pre>
+) :: <a href="MsappMcp.Types.html#t:login_result/0">MsappMcp.Types.login_result</a>()</pre>
 
       </div>
 
@@ -260,7 +273,7 @@ Functions
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> delete_session(<a href="https://hexdocs.pm/mscmp_syst_session/0.1.0/MscmpSystSession.Types.html#t:session_name/0">MscmpSystSession.Types.session_name</a>()) ::
+          <pre translate="no"><span class="attribute">@spec</span> delete_session(<a href="https://hexdocs.pm/mssub_mcp/0.1.0/MssubMcp.Types.html#t:session_name/0">MssubMcp.Types.session_name</a>()) ::
   :ok | {:ok, :not_found} | {:error, <a href="https://hexdocs.pm/mscmp_syst_error/0.1.0/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
 
       </div>
@@ -370,7 +383,7 @@ Functions
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> process_bootstrap_data(MsappMcp.Types.bootstrap_params()) ::
+          <pre translate="no"><span class="attribute">@spec</span> process_bootstrap_data(<a href="https://hexdocs.pm/mssub_mcp/0.1.0/MssubMcp.Types.html#t:tenant_bootstrap_params/0">MssubMcp.Types.tenant_bootstrap_params</a>()) ::
   {:ok, <a href="https://hexdocs.pm/mssub_mcp/0.1.0/MssubMcp.Types.html#t:tenant_bootstrap_result/0">MssubMcp.Types.tenant_bootstrap_result</a>()} | {:error, <a href="https://hexdocs.pm/mscmp_syst_error/0.1.0/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
 
       </div>
@@ -394,7 +407,7 @@ Functions
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> test_session_authentication(MsappMcp.Types.session_name()) ::
+          <pre translate="no"><span class="attribute">@spec</span> test_session_authentication(<a href="https://hexdocs.pm/mssub_mcp/0.1.0/MssubMcp.Types.html#t:session_name/0">MssubMcp.Types.session_name</a>()) ::
   :session_valid | :session_invalid | {:session_reset, <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()}</pre>
 
       </div>
@@ -423,7 +436,7 @@ Functions
 
         <p class="built-using">
           Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.29.4) for the
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.30.9) for the
 
             <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 
@@ -431,7 +444,7 @@ Functions
       </footer>
     </div>
   </div>
-</section>
+</main>
 </div>
 
 

@@ -4,20 +4,20 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.30.6">
+    <meta name="generator" content="ExDoc v0.30.9">
     <meta name="project" content="mscmp_syst_options v0.1.0">
 
     <title>MscmpSystOptions — mscmp_syst_options v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-M3TQBNKO.css" />
+    <link rel="stylesheet" href="dist/html-elixir-XFYN5IVA.css" />
 
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-KDPBTEPL.js"></script>
+    <script src="dist/handlebars.templates-EPF2X7PV.js"></script>
     <script src="dist/sidebar_items-352BC122.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/html-CP2A7WXZ.js"></script>
+    <script async src="dist/html-J2ASZTQE.js"></script>
 
 
   </head>
@@ -38,22 +38,22 @@
 
 <div class="main">
 
-<button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
+<button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
   <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
 </button>
 
-<section class="sidebar">
+<nav id="sidebar" class="sidebar">
   <form class="sidebar-search" action="search.html">
+    <label class="search-label">
+      <span class="sr-only">Search documentation of mscmp_syst_options</span>
+      <input name="q" type="text" class="search-input" placeholder="Search..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+    </label>
     <button type="submit" class="search-button" aria-label="Submit Search">
       <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
     </button>
-    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
-      <i class="ri-close-line ri-lg" aria-hidden="true" title="Cancel search"></i>
+    <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+      <i class="ri-close-line ri-lg" title="Cancel search"></i>
     </button>
-    <label class="search-label">
-      <p class="sr-only">Search</p>
-      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
-    </label>
   </form>
 
   <div class="autocomplete">
@@ -71,19 +71,35 @@ mscmp_syst_options
         v0.1.0
       </div>
     </div>
-    <ul class="sidebar-listNav">
-      <li><a id="extras-list-link" href="#full-list">Pages</a></li>
+    <ul id="sidebar-listNav" class="sidebar-listNav" role="tablist">
+      <li>
+        <button id="extras-list-tab-button" role="tab" data-type="extras" aria-controls="extras-tab-panel" aria-selected="true" tabindex="0">
+Pages
+        </button>
+      </li>
 
-        <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+        <li>
+          <button id="modules-list-tab-button" role="tab" data-type="modules" aria-controls="modules-tab-panel" aria-selected="false" tabindex="-1">
+            Modules
+          </button>
+        </li>
 
 
     </ul>
   </div>
 
-  <ul id="full-list"></ul>
-</section>
+  <div id="extras-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="extras-list-tab-button">
+    <ul id="extras-full-list" class="full-list"></ul>
+  </div>
 
-<section class="content">
+    <div id="modules-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="modules-list-tab-button" hidden>
+      <ul id="modules-full-list" class="full-list"></ul>
+    </div>
+
+
+</nav>
+
+<main class="content">
   <output role="status" id="toast"></output>
   <div class="content-outer">
     <div id="content" class="content-inner">
@@ -111,8 +127,8 @@ server file system.</p>
     <h1 class="section-heading">
       <a class="hover-link" href="#summary">
         <i class="ri-link-m" aria-hidden="true"></i>
-        Summary
       </a>
+      <span class="text">Summary</span>
     </h1>
 <div class="summary-file-handling summary">
   <h2>
@@ -241,8 +257,8 @@ filtered by the server's supported instance classes.</p></div>
     <h1 class="section-heading">
       <a class="hover-link" href="#file-handling">
         <i class="ri-link-m" aria-hidden="true"></i>
-File Handling
       </a>
+      <span class="text">File Handling</span>
     </h1>
     <div class="file-handling-list">
 <section class="detail" id="get_options/1">
@@ -270,24 +286,24 @@ result tuple.</p><p>If successful a tuple with a first value of <code class="inl
 a map of the options is returned.  When errors are found, a tuple with a first
 value of <code class="inline">:error</code> and second value of the relevant <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html"><code class="inline">MscmpSystError</code></a> exception
 is returned.</p><h2 id="get_options/1-parameters" class="section-heading">
-  <a href="#get_options/1-parameters">
+  <a href="#get_options/1-parameters" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Parameters
   </a>
+  <span class="text">Parameters</span>
 </h2>
 <ul><li><code class="inline">options_file_path</code> - describes where to find the options file in the file
 system.</li></ul><h2 id="get_options/1-examples" class="section-heading">
-  <a href="#get_options/1-examples">
+  <a href="#get_options/1-examples" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Examples
   </a>
+  <span class="text">Examples</span>
 </h2>
-<p>Typical call and return:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_options</span><span class="p" data-group-id="8183582156-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="8183582156-1">)</span><span class="w">
-</span><span class="p" data-group-id="8183582156-2">{</span><span class="w">
+<p>Typical call and return:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_options</span><span class="p" data-group-id="7986276939-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="7986276939-1">)</span><span class="w">
+</span><span class="p" data-group-id="7986276939-2">{</span><span class="w">
   </span><span class="ss">:ok</span><span class="p">,</span><span class="w">
-  </span><span class="p" data-group-id="8183582156-3">%{</span><span class="w">
-    </span><span class="ss">dbserver</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8183582156-4">[</span><span class="w">
-      </span><span class="p" data-group-id="8183582156-5">%{</span><span class="w">
+  </span><span class="p" data-group-id="7986276939-3">%{</span><span class="w">
+    </span><span class="ss">dbserver</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="7986276939-4">[</span><span class="w">
+      </span><span class="p" data-group-id="7986276939-5">%{</span><span class="w">
         </span><span class="ss">db_host</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span><span class="w">
         </span><span class="ss">db_max_instances</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
         </span><span class="ss">db_port</span><span class="p">:</span><span class="w"> </span><span class="mi">5432</span><span class="p">,</span><span class="w">
@@ -297,9 +313,9 @@ system.</li></ul><h2 id="get_options/1-examples" class="section-heading">
         </span><span class="ss">server_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;global_db&quot;</span><span class="p">,</span><span class="w">
         </span><span class="ss">server_salt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sklMRkLXzMQgzqpMpJZPk31Js88su39U/mooAXALhj0=&quot;</span><span class="p">,</span><span class="w">
         </span><span class="ss">start_server_instances</span><span class="p">:</span><span class="w"> </span><span class="no">false</span><span class="p">,</span><span class="w">
-        </span><span class="ss">server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8183582156-6">[</span><span class="p" data-group-id="8183582156-6">]</span><span class="w">
-      </span><span class="p" data-group-id="8183582156-5">}</span><span class="p">,</span><span class="w">
-      </span><span class="p" data-group-id="8183582156-7">%{</span><span class="w">
+        </span><span class="ss">server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="7986276939-6">[</span><span class="p" data-group-id="7986276939-6">]</span><span class="w">
+      </span><span class="p" data-group-id="7986276939-5">}</span><span class="p">,</span><span class="w">
+      </span><span class="p" data-group-id="7986276939-7">%{</span><span class="w">
         </span><span class="ss">db_host</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span><span class="w">
         </span><span class="ss">db_max_instances</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w">
         </span><span class="ss">db_port</span><span class="p">:</span><span class="w"> </span><span class="mi">5432</span><span class="p">,</span><span class="w">
@@ -309,17 +325,17 @@ system.</li></ul><h2 id="get_options/1-examples" class="section-heading">
         </span><span class="ss">server_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;instance_db&quot;</span><span class="p">,</span><span class="w">
         </span><span class="ss">server_salt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;w1OfRx630x7svid8Tk3L9rLL1eEGSm0fq8XcLdveuSs=&quot;</span><span class="p">,</span><span class="w">
         </span><span class="ss">start_server_instances</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-        </span><span class="ss">server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8183582156-8">[</span><span class="s">&quot;primary&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;linked&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;demo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;reserved&quot;</span><span class="p" data-group-id="8183582156-8">]</span><span class="w">
-      </span><span class="p" data-group-id="8183582156-7">}</span><span class="w">
-    </span><span class="p" data-group-id="8183582156-4">]</span><span class="p">,</span><span class="w">
-    </span><span class="ss">available_server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8183582156-9">[</span><span class="s">&quot;primary&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;linked&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;demo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;reserved&quot;</span><span class="p" data-group-id="8183582156-9">]</span><span class="p">,</span><span class="w">
+        </span><span class="ss">server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="7986276939-8">[</span><span class="s">&quot;primary&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;linked&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;demo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;reserved&quot;</span><span class="p" data-group-id="7986276939-8">]</span><span class="w">
+      </span><span class="p" data-group-id="7986276939-7">}</span><span class="w">
+    </span><span class="p" data-group-id="7986276939-4">]</span><span class="p">,</span><span class="w">
+    </span><span class="ss">available_server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="7986276939-9">[</span><span class="s">&quot;primary&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;linked&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;demo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;reserved&quot;</span><span class="p" data-group-id="7986276939-9">]</span><span class="p">,</span><span class="w">
     </span><span class="ss">global_dbserver_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;global_db&quot;</span><span class="p">,</span><span class="w">
     </span><span class="ss">global_db_password</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;(eXI0BU&amp;elq1(mvw&quot;</span><span class="p">,</span><span class="w">
     </span><span class="ss">global_db_pool_size</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
     </span><span class="ss">global_pepper_value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;jTtEdXRExP5YXHeARQ1W66lP6wDc9GyOvhFPvwnHhtc=&quot;</span><span class="w">
-  </span><span class="p" data-group-id="8183582156-3">}</span><span class="w">
-</span><span class="p" data-group-id="8183582156-2">}</span></code></pre><p>Called with bad parameters:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="8871935513-1">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8871935513-2">%</span><span class="nc" data-group-id="8871935513-2">MscmpSystError</span><span class="p" data-group-id="8871935513-2">{</span><span class="p" data-group-id="8871935513-2">}</span><span class="p" data-group-id="8871935513-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_options</span><span class="p" data-group-id="8871935513-3">(</span><span class="s">&quot;./bad_file_name.toml&quot;</span><span class="p" data-group-id="8871935513-3">)</span></code></pre>
+  </span><span class="p" data-group-id="7986276939-3">}</span><span class="w">
+</span><span class="p" data-group-id="7986276939-2">}</span></code></pre><p>Called with bad parameters:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="1162007762-1">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="1162007762-2">%</span><span class="nc" data-group-id="1162007762-2">MscmpSystError</span><span class="p" data-group-id="1162007762-2">{</span><span class="p" data-group-id="1162007762-2">}</span><span class="p" data-group-id="1162007762-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_options</span><span class="p" data-group-id="1162007762-3">(</span><span class="s">&quot;./bad_file_name.toml&quot;</span><span class="p" data-group-id="1162007762-3">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_options!/1">
@@ -344,15 +360,15 @@ system.</li></ul><h2 id="get_options/1-examples" class="section-heading">
 
 <p>Parses and returns the contents of a TOML file at <code class="inline">options_file_path</code> or
 raises.</p><p>The returned options will be in a map equivalent to the TOML file's structure.</p><h2 id="get_options!/1-examples" class="section-heading">
-  <a href="#get_options!/1-examples">
+  <a href="#get_options!/1-examples" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Examples
   </a>
+  <span class="text">Examples</span>
 </h2>
-<p>Typical call and return:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="4461162936-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="4461162936-1">)</span><span class="w">
-</span><span class="p" data-group-id="4461162936-2">%{</span><span class="w">
-  </span><span class="ss">dbserver</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4461162936-3">[</span><span class="w">
-    </span><span class="p" data-group-id="4461162936-4">%{</span><span class="w">
+<p>Typical call and return:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="1543828930-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="1543828930-1">)</span><span class="w">
+</span><span class="p" data-group-id="1543828930-2">%{</span><span class="w">
+  </span><span class="ss">dbserver</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1543828930-3">[</span><span class="w">
+    </span><span class="p" data-group-id="1543828930-4">%{</span><span class="w">
       </span><span class="ss">db_host</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span><span class="w">
       </span><span class="ss">db_max_instances</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
       </span><span class="ss">db_port</span><span class="p">:</span><span class="w"> </span><span class="mi">5432</span><span class="p">,</span><span class="w">
@@ -362,9 +378,9 @@ raises.</p><p>The returned options will be in a map equivalent to the TOML file'
       </span><span class="ss">server_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;global_db&quot;</span><span class="p">,</span><span class="w">
       </span><span class="ss">server_salt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sklMRkLXzMQgzqpMpJZPk31Js88su39U/mooAXALhj0=&quot;</span><span class="p">,</span><span class="w">
       </span><span class="ss">start_server_instances</span><span class="p">:</span><span class="w"> </span><span class="no">false</span><span class="p">,</span><span class="w">
-      </span><span class="ss">server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4461162936-5">[</span><span class="p" data-group-id="4461162936-5">]</span><span class="w">
-    </span><span class="p" data-group-id="4461162936-4">}</span><span class="p">,</span><span class="w">
-    </span><span class="p" data-group-id="4461162936-6">%{</span><span class="w">
+      </span><span class="ss">server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1543828930-5">[</span><span class="p" data-group-id="1543828930-5">]</span><span class="w">
+    </span><span class="p" data-group-id="1543828930-4">}</span><span class="p">,</span><span class="w">
+    </span><span class="p" data-group-id="1543828930-6">%{</span><span class="w">
       </span><span class="ss">db_host</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span><span class="w">
       </span><span class="ss">db_max_instances</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w">
       </span><span class="ss">db_port</span><span class="p">:</span><span class="w"> </span><span class="mi">5432</span><span class="p">,</span><span class="w">
@@ -374,15 +390,15 @@ raises.</p><p>The returned options will be in a map equivalent to the TOML file'
       </span><span class="ss">server_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;instance_db&quot;</span><span class="p">,</span><span class="w">
       </span><span class="ss">server_salt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;w1OfRx630x7svid8Tk3L9rLL1eEGSm0fq8XcLdveuSs=&quot;</span><span class="p">,</span><span class="w">
       </span><span class="ss">start_server_instances</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-      </span><span class="ss">server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4461162936-7">[</span><span class="s">&quot;primary&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;linked&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;demo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;reserved&quot;</span><span class="p" data-group-id="4461162936-7">]</span><span class="w">
-    </span><span class="p" data-group-id="4461162936-6">}</span><span class="w">
-  </span><span class="p" data-group-id="4461162936-3">]</span><span class="p">,</span><span class="w">
-  </span><span class="ss">available_server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4461162936-8">[</span><span class="s">&quot;primary&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;linked&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;demo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;reserved&quot;</span><span class="p" data-group-id="4461162936-8">]</span><span class="p">,</span><span class="w">
+      </span><span class="ss">server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1543828930-7">[</span><span class="s">&quot;primary&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;linked&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;demo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;reserved&quot;</span><span class="p" data-group-id="1543828930-7">]</span><span class="w">
+    </span><span class="p" data-group-id="1543828930-6">}</span><span class="w">
+  </span><span class="p" data-group-id="1543828930-3">]</span><span class="p">,</span><span class="w">
+  </span><span class="ss">available_server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1543828930-8">[</span><span class="s">&quot;primary&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;linked&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;demo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;reserved&quot;</span><span class="p" data-group-id="1543828930-8">]</span><span class="p">,</span><span class="w">
   </span><span class="ss">global_dbserver_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;global_db&quot;</span><span class="p">,</span><span class="w">
   </span><span class="ss">global_db_password</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;(eXI0BU&amp;elq1(mvw&quot;</span><span class="p">,</span><span class="w">
   </span><span class="ss">global_db_pool_size</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
   </span><span class="ss">global_pepper_value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;jTtEdXRExP5YXHeARQ1W66lP6wDc9GyOvhFPvwnHhtc=&quot;</span><span class="w">
-</span><span class="p" data-group-id="4461162936-2">}</span></code></pre><p>Called with bad parameters:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="7387491593-1">(</span><span class="s">&quot;./bad_file_name.toml&quot;</span><span class="p" data-group-id="7387491593-1">)</span><span class="w">
+</span><span class="p" data-group-id="1543828930-2">}</span></code></pre><p>Called with bad parameters:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="3327603142-1">(</span><span class="s">&quot;./bad_file_name.toml&quot;</span><span class="p" data-group-id="3327603142-1">)</span><span class="w">
 </span><span class="gt">** (MscmpSystError) Problem reading options file &#39;./bad_file_name.toml&#39;.</span></code></pre>
   </section>
 </section>
@@ -394,8 +410,8 @@ raises.</p><p>The returned options will be in a map equivalent to the TOML file'
     <h1 class="section-heading">
       <a class="hover-link" href="#parsing">
         <i class="ri-link-m" aria-hidden="true"></i>
-Parsing
       </a>
+      <span class="text">Parsing</span>
     </h1>
     <div class="parsing-list">
 <section class="detail" id="get_dbserver_by_name/2">
@@ -419,20 +435,20 @@ Parsing
       </div>
 
 <p>Returns the database server definition which corresponds to the provided name.</p><h2 id="get_dbserver_by_name/2-parameters" class="section-heading">
-  <a href="#get_dbserver_by_name/2-parameters">
+  <a href="#get_dbserver_by_name/2-parameters" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Parameters
   </a>
+  <span class="text">Parameters</span>
 </h2>
 <ul><li><p><code class="inline">options</code> - the options file data as read by <a href="#get_options/1"><code class="inline">get_options/1</code></a>.</p></li><li><p><code class="inline">dbserver_name</code> - the name of the database server to look up.</p></li></ul><h2 id="get_dbserver_by_name/2-examples" class="section-heading">
-  <a href="#get_dbserver_by_name/2-examples">
+  <a href="#get_dbserver_by_name/2-examples" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Examples
   </a>
+  <span class="text">Examples</span>
 </h2>
-<p>Typical call for database server:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="9772503961-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="9772503961-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_dbserver_by_name</span><span class="p" data-group-id="9772503961-2">(</span><span class="n">config_options</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;instance_db&quot;</span><span class="p" data-group-id="9772503961-2">)</span><span class="w">
-</span><span class="p" data-group-id="9772503961-3">%</span><span class="nc" data-group-id="9772503961-3">MscmpSystDb.Types.DbServer</span><span class="p" data-group-id="9772503961-3">{</span><span class="w">
+<p>Typical call for database server:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="8748577541-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="8748577541-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_dbserver_by_name</span><span class="p" data-group-id="8748577541-2">(</span><span class="n">config_options</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;instance_db&quot;</span><span class="p" data-group-id="8748577541-2">)</span><span class="w">
+</span><span class="p" data-group-id="8748577541-3">%</span><span class="nc" data-group-id="8748577541-3">MscmpSystDb.Types.DbServer</span><span class="p" data-group-id="8748577541-3">{</span><span class="w">
   </span><span class="ss">db_host</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span><span class="w">
   </span><span class="ss">db_max_instances</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w">
   </span><span class="ss">db_port</span><span class="p">:</span><span class="w"> </span><span class="mi">5432</span><span class="p">,</span><span class="w">
@@ -442,9 +458,9 @@ Parsing
   </span><span class="ss">server_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;instance_db&quot;</span><span class="p">,</span><span class="w">
   </span><span class="ss">server_salt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;w1OfRx630x7svid8Tk3L9rLL1eEGSm0fq8XcLdveuSs=&quot;</span><span class="p">,</span><span class="w">
   </span><span class="ss">start_server_instances</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-  </span><span class="ss">server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9772503961-4">[</span><span class="s">&quot;primary&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;linked&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;demo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;reserved&quot;</span><span class="p" data-group-id="9772503961-4">]</span><span class="w">
-</span><span class="p" data-group-id="9772503961-3">}</span></code></pre><p>Result in case of bad server name:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="4020616488-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="4020616488-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_dbserver_by_name</span><span class="p" data-group-id="4020616488-2">(</span><span class="n">config_options</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;non_existent_db&quot;</span><span class="p" data-group-id="4020616488-2">)</span><span class="w">
+  </span><span class="ss">server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8748577541-4">[</span><span class="s">&quot;primary&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;linked&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;demo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;reserved&quot;</span><span class="p" data-group-id="8748577541-4">]</span><span class="w">
+</span><span class="p" data-group-id="8748577541-3">}</span></code></pre><p>Result in case of bad server name:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="3923772978-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="3923772978-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_dbserver_by_name</span><span class="p" data-group-id="3923772978-2">(</span><span class="n">config_options</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;non_existent_db&quot;</span><span class="p" data-group-id="3923772978-2">)</span><span class="w">
 </span><span class="no">nil</span></code></pre>
   </section>
 </section>
@@ -473,19 +489,19 @@ global database.</p><blockquote><h4 class="warning">Note</h4><p>While this value
 global database roles to the database server, it nonetheless should be
 treated with care inside of the application as should the underlying options
 file which persists this value.</p></blockquote><h2 id="get_global_db_password/1-parameters" class="section-heading">
-  <a href="#get_global_db_password/1-parameters">
+  <a href="#get_global_db_password/1-parameters" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Parameters
   </a>
+  <span class="text">Parameters</span>
 </h2>
 <ul><li><code class="inline">options</code> - the options file data as read by <a href="#get_options/1"><code class="inline">get_options/1</code></a>.</li></ul><h2 id="get_global_db_password/1-examples" class="section-heading">
-  <a href="#get_global_db_password/1-examples">
+  <a href="#get_global_db_password/1-examples" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Examples
   </a>
+  <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="6330466800-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="6330466800-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_global_db_password</span><span class="p" data-group-id="6330466800-2">(</span><span class="n">config_options</span><span class="p" data-group-id="6330466800-2">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="3846175603-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="3846175603-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_global_db_password</span><span class="p" data-group-id="3846175603-2">(</span><span class="n">config_options</span><span class="p" data-group-id="3846175603-2">)</span><span class="w">
 </span><span class="s">&quot;(eXI0BU&amp;elq1(mvw&quot;</span></code></pre>
   </section>
 </section>
@@ -511,19 +527,19 @@ file which persists this value.</p></blockquote><h2 id="get_global_db_password/1
 
 <p>Returns the number of connections to the global database that should be
 established on application startup.</p><h2 id="get_global_db_pool_size/1-parameters" class="section-heading">
-  <a href="#get_global_db_pool_size/1-parameters">
+  <a href="#get_global_db_pool_size/1-parameters" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Parameters
   </a>
+  <span class="text">Parameters</span>
 </h2>
 <ul><li><code class="inline">options</code> - the options file data as read by <a href="#get_options/1"><code class="inline">get_options/1</code></a>.</li></ul><h2 id="get_global_db_pool_size/1-examples" class="section-heading">
-  <a href="#get_global_db_pool_size/1-examples">
+  <a href="#get_global_db_pool_size/1-examples" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Examples
   </a>
+  <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="6533171387-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="6533171387-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_global_db_pool_size</span><span class="p" data-group-id="6533171387-2">(</span><span class="n">config_options</span><span class="p" data-group-id="6533171387-2">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="0099785581-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="0099785581-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_global_db_pool_size</span><span class="p" data-group-id="0099785581-2">(</span><span class="n">config_options</span><span class="p" data-group-id="0099785581-2">)</span><span class="w">
 </span><span class="mi">10</span></code></pre>
   </section>
 </section>
@@ -549,20 +565,20 @@ established on application startup.</p><h2 id="get_global_db_pool_size/1-paramet
 
 <p>Returns the <a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.Types.DbServer.html#t:t/0"><code class="inline">MscmpSystDb.Types.DbServer.t/0</code></a> data for the database
 server designated as hosting the global database.</p><h2 id="get_global_dbserver/1-parameters" class="section-heading">
-  <a href="#get_global_dbserver/1-parameters">
+  <a href="#get_global_dbserver/1-parameters" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Parameters
   </a>
+  <span class="text">Parameters</span>
 </h2>
 <ul><li><code class="inline">options</code> - the options file data as read by <a href="#get_options/1"><code class="inline">get_options/1</code></a>.</li></ul><h2 id="get_global_dbserver/1-examples" class="section-heading">
-  <a href="#get_global_dbserver/1-examples">
+  <a href="#get_global_dbserver/1-examples" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Examples
   </a>
+  <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="9408484981-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="9408484981-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="9408484981-2">%</span><span class="nc" data-group-id="9408484981-2">MscmpSystDb.Types.DbServer</span><span class="p" data-group-id="9408484981-2">{</span><span class="ss">server_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;global_db&quot;</span><span class="p" data-group-id="9408484981-2">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="w">  </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_global_dbserver</span><span class="p" data-group-id="9408484981-3">(</span><span class="n">config_options</span><span class="p" data-group-id="9408484981-3">)</span></code></pre>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="8925556423-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="8925556423-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="8925556423-2">%</span><span class="nc" data-group-id="8925556423-2">MscmpSystDb.Types.DbServer</span><span class="p" data-group-id="8925556423-2">{</span><span class="ss">server_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;global_db&quot;</span><span class="p" data-group-id="8925556423-2">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="w">  </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_global_dbserver</span><span class="p" data-group-id="8925556423-3">(</span><span class="n">config_options</span><span class="p" data-group-id="8925556423-3">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_global_dbserver_name/1">
@@ -586,19 +602,19 @@ server designated as hosting the global database.</p><h2 id="get_global_dbserver
       </div>
 
 <p>Returns the name of the database server which hosts the global database.</p><h2 id="get_global_dbserver_name/1-parameters" class="section-heading">
-  <a href="#get_global_dbserver_name/1-parameters">
+  <a href="#get_global_dbserver_name/1-parameters" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Parameters
   </a>
+  <span class="text">Parameters</span>
 </h2>
 <ul><li><code class="inline">options</code> - the options file data as read by <a href="#get_options/1"><code class="inline">get_options/1</code></a>.</li></ul><h2 id="get_global_dbserver_name/1-examples" class="section-heading">
-  <a href="#get_global_dbserver_name/1-examples">
+  <a href="#get_global_dbserver_name/1-examples" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Examples
   </a>
+  <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="4843950738-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="4843950738-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_global_dbserver_name</span><span class="p" data-group-id="4843950738-2">(</span><span class="n">config_options</span><span class="p" data-group-id="4843950738-2">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="7514737888-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="7514737888-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_global_dbserver_name</span><span class="p" data-group-id="7514737888-2">(</span><span class="n">config_options</span><span class="p" data-group-id="7514737888-2">)</span><span class="w">
 </span><span class="s">&quot;global_db&quot;</span></code></pre>
   </section>
 </section>
@@ -628,19 +644,19 @@ approach we're currently taking with automatic account creation is better
 than no effort for security, but probably not by much.  In other words, this
 is not an example for how to build a robust security system, but should do
 until there's actual public deployment of the application.</p></blockquote><h2 id="get_global_pepper_value/1-parameters" class="section-heading">
-  <a href="#get_global_pepper_value/1-parameters">
+  <a href="#get_global_pepper_value/1-parameters" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Parameters
   </a>
+  <span class="text">Parameters</span>
 </h2>
 <ul><li><code class="inline">options</code> - the options file data as read by <a href="#get_options/1"><code class="inline">get_options/1</code></a>.</li></ul><h2 id="get_global_pepper_value/1-examples" class="section-heading">
-  <a href="#get_global_pepper_value/1-examples">
+  <a href="#get_global_pepper_value/1-examples" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Examples
   </a>
+  <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="1952716240-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="1952716240-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_global_pepper_value</span><span class="p" data-group-id="1952716240-2">(</span><span class="n">config_options</span><span class="p" data-group-id="1952716240-2">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="6216561925-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="6216561925-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_global_pepper_value</span><span class="p" data-group-id="6216561925-2">(</span><span class="n">config_options</span><span class="p" data-group-id="6216561925-2">)</span><span class="w">
 </span><span class="s">&quot;jTtEdXRExP5YXHeARQ1W66lP6wDc9GyOvhFPvwnHhtc=&quot;</span></code></pre>
   </section>
 </section>
@@ -665,20 +681,20 @@ until there's actual public deployment of the application.</p></blockquote><h2 i
       </div>
 
 <p>Returns the list of available server pools configured in the options file.</p><h2 id="list_available_server_pools/1-parameters" class="section-heading">
-  <a href="#list_available_server_pools/1-parameters">
+  <a href="#list_available_server_pools/1-parameters" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Parameters
   </a>
+  <span class="text">Parameters</span>
 </h2>
 <ul><li><code class="inline">options</code> - the options file data as read by <a href="#get_options/1"><code class="inline">get_options/1</code></a>.</li></ul><h2 id="list_available_server_pools/1-examples" class="section-heading">
-  <a href="#list_available_server_pools/1-examples">
+  <a href="#list_available_server_pools/1-examples" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Examples
   </a>
+  <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="0229760198-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="0229760198-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">list_available_server_pools</span><span class="p" data-group-id="0229760198-2">(</span><span class="n">config_options</span><span class="p" data-group-id="0229760198-2">)</span><span class="w">
-</span><span class="p" data-group-id="0229760198-3">[</span><span class="s">&quot;primary&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;linked&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;demo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;reserved&quot;</span><span class="p" data-group-id="0229760198-3">]</span></code></pre>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="1813978934-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="1813978934-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">list_available_server_pools</span><span class="p" data-group-id="1813978934-2">(</span><span class="n">config_options</span><span class="p" data-group-id="1813978934-2">)</span><span class="w">
+</span><span class="p" data-group-id="1813978934-3">[</span><span class="s">&quot;primary&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;linked&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;demo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;reserved&quot;</span><span class="p" data-group-id="1813978934-3">]</span></code></pre>
   </section>
 </section>
 <section class="detail" id="list_dbservers/2">
@@ -707,10 +723,10 @@ until there's actual public deployment of the application.</p></blockquote><h2 i
 
 <p>Extracts the list of configured dbservers in the options file, optionally
 filtered by the server's supported instance classes.</p><h2 id="list_dbservers/2-parameters" class="section-heading">
-  <a href="#list_dbservers/2-parameters">
+  <a href="#list_dbservers/2-parameters" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Parameters
   </a>
+  <span class="text">Parameters</span>
 </h2>
 <ul><li><p><code class="inline">options</code> - the options file data as read by <a href="#get_options/1"><code class="inline">get_options/1</code></a>.</p></li><li><p><code class="inline">filters</code> - a list one or more instance class values with with to filter
 the database servers list.  The valid instance classes are: &quot;primary&quot;,
@@ -718,15 +734,15 @@ the database servers list.  The valid instance classes are: &quot;primary&quot;,
 all database servers, including those that have no supported instance
 classes (this is common for global database host servers).  The <code class="inline">filters</code>
 values defaults to the empty list if not explicitly provided.</p></li></ul><h2 id="list_dbservers/2-examples" class="section-heading">
-  <a href="#list_dbservers/2-examples">
+  <a href="#list_dbservers/2-examples" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Examples
   </a>
+  <span class="text">Examples</span>
 </h2>
-<p>Calling without filters:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="8045097914-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="8045097914-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="8045097914-2">[</span><span class="bp">_</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="bp">_</span><span class="p" data-group-id="8045097914-2">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">list_dbservers</span><span class="p" data-group-id="8045097914-3">(</span><span class="n">config_options</span><span class="p" data-group-id="8045097914-3">)</span><span class="w">
-</span><span class="p" data-group-id="8045097914-4">[</span><span class="w">
-  </span><span class="p" data-group-id="8045097914-5">%</span><span class="nc" data-group-id="8045097914-5">MscmpSystDb.Types.DbServer</span><span class="p" data-group-id="8045097914-5">{</span><span class="w">
+<p>Calling without filters:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="5904687110-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="5904687110-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="5904687110-2">[</span><span class="bp">_</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="bp">_</span><span class="p" data-group-id="5904687110-2">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">list_dbservers</span><span class="p" data-group-id="5904687110-3">(</span><span class="n">config_options</span><span class="p" data-group-id="5904687110-3">)</span><span class="w">
+</span><span class="p" data-group-id="5904687110-4">[</span><span class="w">
+  </span><span class="p" data-group-id="5904687110-5">%</span><span class="nc" data-group-id="5904687110-5">MscmpSystDb.Types.DbServer</span><span class="p" data-group-id="5904687110-5">{</span><span class="w">
     </span><span class="ss">db_host</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span><span class="w">
     </span><span class="ss">db_max_instances</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
     </span><span class="ss">db_port</span><span class="p">:</span><span class="w"> </span><span class="mi">5432</span><span class="p">,</span><span class="w">
@@ -736,9 +752,9 @@ values defaults to the empty list if not explicitly provided.</p></li></ul><h2 i
     </span><span class="ss">server_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;global_db&quot;</span><span class="p">,</span><span class="w">
     </span><span class="ss">server_salt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sklMRkLXzMQgzqpMpJZPk31Js88su39U/mooAXALhj0=&quot;</span><span class="p">,</span><span class="w">
     </span><span class="ss">start_server_instances</span><span class="p">:</span><span class="w"> </span><span class="no">false</span><span class="p">,</span><span class="w">
-    </span><span class="ss">server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8045097914-6">[</span><span class="p" data-group-id="8045097914-6">]</span><span class="w">
-  </span><span class="p" data-group-id="8045097914-5">}</span><span class="p">,</span><span class="w">
-  </span><span class="p" data-group-id="8045097914-7">%</span><span class="nc" data-group-id="8045097914-7">MscmpSystDb.Types.DbServer</span><span class="p" data-group-id="8045097914-7">{</span><span class="w">
+    </span><span class="ss">server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="5904687110-6">[</span><span class="p" data-group-id="5904687110-6">]</span><span class="w">
+  </span><span class="p" data-group-id="5904687110-5">}</span><span class="p">,</span><span class="w">
+  </span><span class="p" data-group-id="5904687110-7">%</span><span class="nc" data-group-id="5904687110-7">MscmpSystDb.Types.DbServer</span><span class="p" data-group-id="5904687110-7">{</span><span class="w">
     </span><span class="ss">db_host</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span><span class="w">
     </span><span class="ss">db_max_instances</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w">
     </span><span class="ss">db_port</span><span class="p">:</span><span class="w"> </span><span class="mi">5432</span><span class="p">,</span><span class="w">
@@ -748,12 +764,12 @@ values defaults to the empty list if not explicitly provided.</p></li></ul><h2 i
     </span><span class="ss">server_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;instance_db&quot;</span><span class="p">,</span><span class="w">
     </span><span class="ss">server_salt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;w1OfRx630x7svid8Tk3L9rLL1eEGSm0fq8XcLdveuSs=&quot;</span><span class="p">,</span><span class="w">
     </span><span class="ss">start_server_instances</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-    </span><span class="ss">server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8045097914-8">[</span><span class="s">&quot;primary&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;linked&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;demo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;reserved&quot;</span><span class="p" data-group-id="8045097914-8">]</span><span class="w">
-  </span><span class="p" data-group-id="8045097914-7">}</span><span class="w">
-</span><span class="p" data-group-id="8045097914-4">]</span></code></pre><p>Calling with filters:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="8284920990-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="8284920990-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="8284920990-2">[</span><span class="bp">_</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="bp">_</span><span class="p" data-group-id="8284920990-2">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">list_dbservers</span><span class="p" data-group-id="8284920990-3">(</span><span class="n">config_options</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8284920990-4">[</span><span class="s">&quot;primary&quot;</span><span class="p" data-group-id="8284920990-4">]</span><span class="p" data-group-id="8284920990-3">)</span><span class="w">
-</span><span class="p" data-group-id="8284920990-5">[</span><span class="w">
-  </span><span class="p" data-group-id="8284920990-6">%</span><span class="nc" data-group-id="8284920990-6">MscmpSystDb.Types.DbServer</span><span class="p" data-group-id="8284920990-6">{</span><span class="w">
+    </span><span class="ss">server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="5904687110-8">[</span><span class="s">&quot;primary&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;linked&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;demo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;reserved&quot;</span><span class="p" data-group-id="5904687110-8">]</span><span class="w">
+  </span><span class="p" data-group-id="5904687110-7">}</span><span class="w">
+</span><span class="p" data-group-id="5904687110-4">]</span></code></pre><p>Calling with filters:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">config_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">get_options!</span><span class="p" data-group-id="0740643970-1">(</span><span class="s">&quot;./testing_options.toml&quot;</span><span class="p" data-group-id="0740643970-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="0740643970-2">[</span><span class="bp">_</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="bp">_</span><span class="p" data-group-id="0740643970-2">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystOptions</span><span class="o">.</span><span class="n">list_dbservers</span><span class="p" data-group-id="0740643970-3">(</span><span class="n">config_options</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="0740643970-4">[</span><span class="s">&quot;primary&quot;</span><span class="p" data-group-id="0740643970-4">]</span><span class="p" data-group-id="0740643970-3">)</span><span class="w">
+</span><span class="p" data-group-id="0740643970-5">[</span><span class="w">
+  </span><span class="p" data-group-id="0740643970-6">%</span><span class="nc" data-group-id="0740643970-6">MscmpSystDb.Types.DbServer</span><span class="p" data-group-id="0740643970-6">{</span><span class="w">
     </span><span class="ss">db_host</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span><span class="w">
     </span><span class="ss">db_max_instances</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w">
     </span><span class="ss">db_port</span><span class="p">:</span><span class="w"> </span><span class="mi">5432</span><span class="p">,</span><span class="w">
@@ -763,9 +779,9 @@ values defaults to the empty list if not explicitly provided.</p></li></ul><h2 i
     </span><span class="ss">server_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;instance_db&quot;</span><span class="p">,</span><span class="w">
     </span><span class="ss">server_salt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;w1OfRx630x7svid8Tk3L9rLL1eEGSm0fq8XcLdveuSs=&quot;</span><span class="p">,</span><span class="w">
     </span><span class="ss">start_server_instances</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
-    </span><span class="ss">server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8284920990-7">[</span><span class="s">&quot;primary&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;linked&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;demo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;reserved&quot;</span><span class="p" data-group-id="8284920990-7">]</span><span class="w">
-  </span><span class="p" data-group-id="8284920990-6">}</span><span class="w">
-</span><span class="p" data-group-id="8284920990-5">]</span></code></pre>
+    </span><span class="ss">server_pools</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="0740643970-7">[</span><span class="s">&quot;primary&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;linked&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;demo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;reserved&quot;</span><span class="p" data-group-id="0740643970-7">]</span><span class="w">
+  </span><span class="p" data-group-id="0740643970-6">}</span><span class="w">
+</span><span class="p" data-group-id="0740643970-5">]</span></code></pre>
   </section>
 </section>
 
@@ -789,7 +805,7 @@ values defaults to the empty list if not explicitly provided.</p></li></ul><h2 i
 
         <p class="built-using">
           Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.30.6) for the
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.30.9) for the
 
             <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 
@@ -797,7 +813,7 @@ values defaults to the empty list if not explicitly provided.</p></li></ul><h2 i
       </footer>
     </div>
   </div>
-</section>
+</main>
 </div>
 
 

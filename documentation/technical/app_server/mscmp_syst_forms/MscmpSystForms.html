@@ -4,20 +4,20 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.30.6">
+    <meta name="generator" content="ExDoc v0.30.9">
     <meta name="project" content="mscmp_syst_forms v0.1.0">
 
     <title>MscmpSystForms — mscmp_syst_forms v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-M3TQBNKO.css" />
+    <link rel="stylesheet" href="dist/html-elixir-XFYN5IVA.css" />
 
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-KDPBTEPL.js"></script>
+    <script src="dist/handlebars.templates-EPF2X7PV.js"></script>
     <script src="dist/sidebar_items-79A36FF1.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/html-CP2A7WXZ.js"></script>
+    <script async src="dist/html-J2ASZTQE.js"></script>
 
 
   </head>
@@ -38,22 +38,22 @@
 
 <div class="main">
 
-<button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
+<button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
   <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
 </button>
 
-<section class="sidebar">
+<nav id="sidebar" class="sidebar">
   <form class="sidebar-search" action="search.html">
+    <label class="search-label">
+      <span class="sr-only">Search documentation of mscmp_syst_forms</span>
+      <input name="q" type="text" class="search-input" placeholder="Search..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+    </label>
     <button type="submit" class="search-button" aria-label="Submit Search">
       <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
     </button>
-    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
-      <i class="ri-close-line ri-lg" aria-hidden="true" title="Cancel search"></i>
+    <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+      <i class="ri-close-line ri-lg" title="Cancel search"></i>
     </button>
-    <label class="search-label">
-      <p class="sr-only">Search</p>
-      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
-    </label>
   </form>
 
   <div class="autocomplete">
@@ -71,19 +71,35 @@ mscmp_syst_forms
         v0.1.0
       </div>
     </div>
-    <ul class="sidebar-listNav">
-      <li><a id="extras-list-link" href="#full-list">Pages</a></li>
+    <ul id="sidebar-listNav" class="sidebar-listNav" role="tablist">
+      <li>
+        <button id="extras-list-tab-button" role="tab" data-type="extras" aria-controls="extras-tab-panel" aria-selected="true" tabindex="0">
+Pages
+        </button>
+      </li>
 
-        <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+        <li>
+          <button id="modules-list-tab-button" role="tab" data-type="modules" aria-controls="modules-tab-panel" aria-selected="false" tabindex="-1">
+            Modules
+          </button>
+        </li>
 
 
     </ul>
   </div>
 
-  <ul id="full-list"></ul>
-</section>
+  <div id="extras-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="extras-list-tab-button">
+    <ul id="extras-full-list" class="full-list"></ul>
+  </div>
 
-<section class="content">
+    <div id="modules-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="modules-list-tab-button" hidden>
+      <ul id="modules-full-list" class="full-list"></ul>
+    </div>
+
+
+</nav>
+
+<main class="content">
   <output role="status" id="toast"></output>
   <div class="content-outer">
     <div id="content" class="content-inner">
@@ -107,10 +123,10 @@ application user interface forms in support of business systems development.</p>
 module:</p><ul><li><a href="#update_button_state/3"><code class="inline">update_button_state/3</code></a></li><li><a href="#start_processing_override/2"><code class="inline">start_processing_override/2</code></a></li><li><a href="#finish_processing_override/2"><code class="inline">finish_processing_override/2</code></a></li><li><a href="#update_display_data/3"><code class="inline">update_display_data/3</code></a></li><li><code class="inline">get_component_info/1</code></li></ul><p>Documentation for these functions is available in the module and they are
 simply delegates to the same functions (give or take some arity) in
 <a href="MscmpSystForms.html#content"><code class="inline">MscmpSystForms</code></a>.</p></blockquote><h2 id="module-foundational-ideas" class="section-heading">
-  <a href="#module-foundational-ideas">
+  <a href="#module-foundational-ideas" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Foundational Ideas
   </a>
+  <span class="text">Foundational Ideas</span>
 </h2>
 <p>At the heart of our methodology and support are several key ideas presented
 here.</p><blockquote><h4 class="neutral">On &quot;Forms&quot;</h4><p>One thing to be mindful of as you read this section and the documentation
@@ -171,7 +187,7 @@ can pass this directly to the data validation functions (<a href="https://hexdoc
 based) as needed.</p><p>The current data includes all form data regardless of the user's permissions
 to view or edit that data.</p></li><li><p><strong>Display Data</strong></p><p>A representation of the data for the purposes of display to the user in the
 form.  The data values in Display Data are the same as those in Current Data
-except they are filtered by the user's permissions for data visibility.</p><p>Display Data is stored in the view's assigns as a <a href="https://hexdocs.pm/phoenix_html/3.3.2/Phoenix.HTML.Form.html#t:t/0"><code class="inline">Phoenix.HTML.Form.t/0</code></a>
+except they are filtered by the user's permissions for data visibility.</p><p>Display Data is stored in the view's assigns as a <a href="https://hexdocs.pm/phoenix_html/3.3.3/Phoenix.HTML.Form.html#t:t/0"><code class="inline">Phoenix.HTML.Form.t/0</code></a>
 struct so that it can be accessed directly by the LiveView for rendering.</p></li></ul><h4>Working with Phoenix</h4><p>The most common use case for <a href="MscmpSystForms.html#content"><code class="inline">MscmpSystForms</code></a> is for facilitating Phoenix based
 web and external API user interface development.  To understand how
 <a href="MscmpSystForms.html#content"><code class="inline">MscmpSystForms</code></a> fits into the Phoenix development model it's important to
@@ -186,10 +202,10 @@ interface and wiring that user interface to the actual business/domain logic
 written elsewhere.  In the process some elements which by convention has certain
 roles within typical Phoenix application development are repurposed to serve our
 needs better.</p><h2 id="module-developing-forms" class="section-heading">
-  <a href="#module-developing-forms">
+  <a href="#module-developing-forms" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Developing Forms
   </a>
+  <span class="text">Developing Forms</span>
 </h2>
 <p>With our Foundational Ideas having been discussed, we now move on to looking how
 this translates into form development.</p><h4>Source Organization &amp; File Roles</h4><p>Starting with a standard Phoenix application, to which <a href="MscmpSystForms.html#content"><code class="inline">MscmpSystForms</code></a> has been
@@ -222,7 +238,7 @@ entries important to understanding the <a href="MscmpSystForms.html#content"><co
 Other files and directories which are standard for Phoenix development and
 which would be present but unaltered under our model have been excluded from
 the example listings.</p></blockquote><ul><li><p><strong>my_app_web</strong></p><p>In the <code class="inline">my_app_web</code> example listing the path <code class="inline">my_app_web/lib/my_app_web/live</code>
-is the standard Phoenix pathing for <a href="https://hexdocs.pm/phoenix_live_view/0.19.5/Phoenix.LiveView.html"><code class="inline">Phoenix.LiveView</code></a> pages.  While we do
+is the standard Phoenix pathing for <a href="https://hexdocs.pm/phoenix_live_view/0.20.1/Phoenix.LiveView.html"><code class="inline">Phoenix.LiveView</code></a> pages.  While we do
 make some assumption changes to Phoenix standard practices in regard to what
 gets done in this directory, those changes are minor and really a matter of
 convention.</p><h4>Files</h4><ul><li><p><code class="inline">my_form_live.html.heex</code></p><p>this file is a typical Phoenix LiveView <code class="inline">Heex</code> file.  The only difference
@@ -277,8 +293,8 @@ help documenting that structure.</p></li></ul></li></ul>
     <h1 class="section-heading">
       <a class="hover-link" href="#summary">
         <i class="ri-link-m" aria-hidden="true"></i>
-        Summary
       </a>
+      <span class="text">Summary</span>
     </h1>
 <div class="summary-form-generation summary">
   <h2>
@@ -342,7 +358,7 @@ user interface rendering.</p></div>
 
       </div>
 
-        <div class="summary-synopsis"><p>Converts a form data Changeset into a <a href="https://hexdocs.pm/phoenix_html/3.3.2/Phoenix.HTML.Form.html#t:t/0"><code class="inline">Phoenix.HTML.Form.t/0</code></a> struct after
+        <div class="summary-synopsis"><p>Converts a form data Changeset into a <a href="https://hexdocs.pm/phoenix_html/3.3.3/Phoenix.HTML.Form.html#t:t/0"><code class="inline">Phoenix.HTML.Form.t/0</code></a> struct after
 having applied the current user's data visibility permissions.</p></div>
 
     </div>
@@ -462,7 +478,7 @@ component should take when a given form state is specified.</p></div>
       </div>
 
         <div class="summary-synopsis"><p>An initialization sequence run during the connected, second call to
-<a href="https://hexdocs.pm/phoenix_live_view/0.19.5/Phoenix.LiveView.html#c:mount/3"><code class="inline">Phoenix.LiveView.mount/3</code></a>.</p></div>
+<a href="https://hexdocs.pm/phoenix_live_view/0.20.1/Phoenix.LiveView.html#c:mount/3"><code class="inline">Phoenix.LiveView.mount/3</code></a>.</p></div>
 
     </div>
 
@@ -508,8 +524,8 @@ given set of data is sufficient for simply saving to the database.</p></div>
     <h1 class="section-heading">
       <a class="hover-link" href="#form-generation">
         <i class="ri-link-m" aria-hidden="true"></i>
-Form Generation
       </a>
+      <span class="text">Form Generation</span>
     </h1>
     <div class="form-generation-list">
 <section class="detail" id="get_component_info/2">
@@ -540,10 +556,10 @@ Form Generation
 field values from the Form Configuration for the identified component.</p><p>This is a convenience function which accepts either a <code class="inline">form_id</code> value or
 a <code class="inline">binding_id</code> value and returns the textual information for the
 component if found by the passed identifier.</p><h2 id="get_component_info/2-parameters" class="section-heading">
-  <a href="#get_component_info/2-parameters">
+  <a href="#get_component_info/2-parameters" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Parameters
   </a>
+  <span class="text">Parameters</span>
 </h2>
 <ul><li><p><code class="inline">module</code> - the name of the form module implementing the
 <a href="#c:get_form_config/0"><code class="inline">MscmpSystForms.get_form_config/0</code></a> callback with which form configuration
@@ -589,10 +605,10 @@ values of the user interface components and the values are
 rendering requirements of the components.  Typically this map is merged into
 the assigns of the form so that components can retrieve the configurations at
 render time.</p><h2 id="get_render_configs/5-parameters" class="section-heading">
-  <a href="#get_render_configs/5-parameters">
+  <a href="#get_render_configs/5-parameters" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Parameters
   </a>
+  <span class="text">Parameters</span>
 </h2>
 <ul><li><p><code class="inline">module</code> - the name of the <a href="MscmpSystForms.html#content"><code class="inline">MscmpSystForms</code></a> implementing module which
 backs the form.</p></li><li><p><code class="inline">feature</code> - the Form State Feature to reference when building Component
@@ -641,10 +657,10 @@ to be available.</p><p>In addition to adding the Standard Assign Attributes, thi
 process the Form Configurations (<a href="#c:get_form_config/0"><code class="inline">MscmpSystForms.get_form_config/0</code></a>) using
 the Form State parameters (<code class="inline">feature</code>, <code class="inline">mode</code>, and <code class="inline">state</code>) and the current
 user's permissions (<code class="inline">user_perms</code>)</p><h2 id="init_assigns/8-standard-assign-attributes" class="section-heading">
-  <a href="#init_assigns/8-standard-assign-attributes">
+  <a href="#init_assigns/8-standard-assign-attributes" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Standard Assign Attributes:
   </a>
+  <span class="text">Standard Assign Attributes:</span>
 </h2>
 <ul><li><p><code class="inline">msrd_instance_id</code> - the identifier for any single instance of a running
 form.  This supports the use case where a user logged into a single session
@@ -676,7 +692,7 @@ backing data without regard to the current user's data visibility
 permissions.</p></li><li><p><code class="inline">msrd_display_data</code> - the data used to fill user interface form elements.
 This data is the same as the <code class="inline">msrd_current_data</code> except that values which
 are disallowed by the user data visibility permissions are excluded and the
-data is represented as a <a href="https://hexdocs.pm/phoenix_html/3.3.2/Phoenix.HTML.Form.html#t:t/0"><code class="inline">Phoenix.HTML.Form.t/0</code></a> value.</p></li><li><p><code class="inline">msrd_feature</code> - the currently prevailing form state feature.  The
+data is represented as a <a href="https://hexdocs.pm/phoenix_html/3.3.3/Phoenix.HTML.Form.html#t:t/0"><code class="inline">Phoenix.HTML.Form.t/0</code></a> value.</p></li><li><p><code class="inline">msrd_feature</code> - the currently prevailing form state feature.  The
 &quot;feature&quot; is the highest level determinant of form state, which determines
 how some form user interface components present themselves or allow for
 interactivity.  Typical examples of how the <code class="inline">msrd_feature</code> of a form might
@@ -712,10 +728,10 @@ This list is maintained using the
 This is a map conforming to the <code class="inline">t:MscmpSystPerms.perm_grants/0</code> type.  The
 permission grants are used as a filter for determining what the user may see
 in terms of data and do in terms of form functionality.</p></li></ul><h2 id="init_assigns/8-parameters" class="section-heading">
-  <a href="#init_assigns/8-parameters">
+  <a href="#init_assigns/8-parameters" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Parameters
   </a>
+  <span class="text">Parameters</span>
 </h2>
 <ul><li><p><code class="inline">socket_or_assigns</code> - the socket or assigns for the current view.</p></li><li><p><code class="inline">session_name</code> - the name of the session.  This value is usually set in
 prior to the view being called and is part of the parameters passed to the
@@ -796,8 +812,8 @@ which require a Component Configuration rebuild be performed prior to calling
     <h1 class="section-heading">
       <a class="hover-link" href="#form-data-management">
         <i class="ri-link-m" aria-hidden="true"></i>
-Form Data Management
       </a>
+      <span class="text">Form Data Management</span>
     </h1>
     <div class="form-data-management-list">
 <section class="detail" id="to_form/3">
@@ -819,33 +835,33 @@ Form Data Management
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> to_form(<a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>(), <a href="https://hexdocs.pm/mscmp_syst_perms/0.1.0/MscmpSystPerms.Types.html#t:perm_grants/0">MscmpSystPerms.Types.perm_grants</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) ::
-  <a href="https://hexdocs.pm/phoenix_html/3.3.2/Phoenix.HTML.Form.html#t:t/0">Phoenix.HTML.Form.t</a>()</pre>
+  <a href="https://hexdocs.pm/phoenix_html/3.3.3/Phoenix.HTML.Form.html#t:t/0">Phoenix.HTML.Form.t</a>()</pre>
 
       </div>
 
-<p>Converts a form data Changeset into a <a href="https://hexdocs.pm/phoenix_html/3.3.2/Phoenix.HTML.Form.html#t:t/0"><code class="inline">Phoenix.HTML.Form.t/0</code></a> struct after
+<p>Converts a form data Changeset into a <a href="https://hexdocs.pm/phoenix_html/3.3.3/Phoenix.HTML.Form.html#t:t/0"><code class="inline">Phoenix.HTML.Form.t/0</code></a> struct after
 having applied the current user's data visibility permissions.</p><p>Once the current form's data has been validated it must be turned into a form
 that can be rendered.  This function basically wraps the <a href="https://hexdocs.pm/phoenix_ecto/4.4.2/Phoenix.Ecto.html"><code class="inline">Phoenix.Ecto</code></a>
-implementation of the <a href="https://hexdocs.pm/phoenix_html/3.3.2/Phoenix.HTML.FormData.html#to_form/2"><code class="inline">Phoenix.HTML.FormData.to_form/2</code></a> function so that we
+implementation of the <a href="https://hexdocs.pm/phoenix_html/3.3.3/Phoenix.HTML.FormData.html#to_form/2"><code class="inline">Phoenix.HTML.FormData.to_form/2</code></a> function so that we
 can apply user data visibility permission to the data prior to the conversion
-of that data into a renderable <a href="https://hexdocs.pm/phoenix_html/3.3.2/Phoenix.HTML.Form.html#t:t/0"><code class="inline">Phoenix.HTML.Form.t/0</code></a> struct.</p><h2 id="to_form/3-parameters" class="section-heading">
-  <a href="#to_form/3-parameters">
+of that data into a renderable <a href="https://hexdocs.pm/phoenix_html/3.3.3/Phoenix.HTML.Form.html#t:t/0"><code class="inline">Phoenix.HTML.Form.t/0</code></a> struct.</p><h2 id="to_form/3-parameters" class="section-heading">
+  <a href="#to_form/3-parameters" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Parameters
   </a>
+  <span class="text">Parameters</span>
 </h2>
 <ul><li><p><code class="inline">changeset</code> - an <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Changeset.html#t:t/0"><code class="inline">Ecto.Changeset.t/0</code></a> struct representing the validated
 data with which to build the form.  Typically this Changeset will be
 generated either by <a href="#c:validate_save/2"><code class="inline">validate_save/2</code></a> or <a href="#c:validate_post/2"><code class="inline">validate_post/2</code></a>.</p></li><li><p><code class="inline">perms</code> - the current user's permission grants as recorded in the Standard
 Assign Attribute <code class="inline">msrd_user_perms</code>.  See <a href="#init_assigns/8"><code class="inline">init_assigns/8</code></a> for more.</p></li><li><p><code class="inline">opts</code> - while not typically used, there are optional parameters which are
-passed to the <a href="https://hexdocs.pm/phoenix_html/3.3.2/Phoenix.HTML.FormData.html#to_form/2"><code class="inline">Phoenix.HTML.FormData.to_form/2</code></a> function.  The available
-options are documented at <a href="https://hexdocs.pm/phoenix_html/3.3.2/Phoenix.HTML.Form.html#form_for/4"><code class="inline">Phoenix.HTML.Form.form_for/4</code></a>.  The options here
+passed to the <a href="https://hexdocs.pm/phoenix_html/3.3.3/Phoenix.HTML.FormData.html#to_form/2"><code class="inline">Phoenix.HTML.FormData.to_form/2</code></a> function.  The available
+options are documented at <a href="https://hexdocs.pm/phoenix_html/3.3.3/Phoenix.HTML.Form.html#form_for/4"><code class="inline">Phoenix.HTML.Form.form_for/4</code></a>.  The options here
 have slightly different names to avoid naming collisions.</p><ul><li><p><code class="inline">component_id</code> - the same as the <code class="inline">id</code> option of
-<a href="https://hexdocs.pm/phoenix_html/3.3.2/Phoenix.HTML.Form.html#form_for/4"><code class="inline">Phoenix.HTML.Form.form_for/4</code></a>.</p></li><li><p><code class="inline">component_method</code> - the same as the <code class="inline">method</code> option of
-<a href="https://hexdocs.pm/phoenix_html/3.3.2/Phoenix.HTML.Form.html#form_for/4"><code class="inline">Phoenix.HTML.Form.form_for/4</code></a>.</p></li><li><p><code class="inline">component_multipart</code> - the same as the <code class="inline">multipart</code> option of
-<a href="https://hexdocs.pm/phoenix_html/3.3.2/Phoenix.HTML.Form.html#form_for/4"><code class="inline">Phoenix.HTML.Form.form_for/4</code></a>.</p></li><li><p><code class="inline">component_csrf_token</code> - the same as the <code class="inline">csrf_token</code> option of
-<a href="https://hexdocs.pm/phoenix_html/3.3.2/Phoenix.HTML.Form.html#form_for/4"><code class="inline">Phoenix.HTML.Form.form_for/4</code></a>.</p></li><li><p><code class="inline">component_errors</code> - the same as the <code class="inline">errors</code> option of
-<a href="https://hexdocs.pm/phoenix_html/3.3.2/Phoenix.HTML.Form.html#form_for/4"><code class="inline">Phoenix.HTML.Form.form_for/4</code></a>.</p></li></ul></li></ul>
+<a href="https://hexdocs.pm/phoenix_html/3.3.3/Phoenix.HTML.Form.html#form_for/4"><code class="inline">Phoenix.HTML.Form.form_for/4</code></a>.</p></li><li><p><code class="inline">component_method</code> - the same as the <code class="inline">method</code> option of
+<a href="https://hexdocs.pm/phoenix_html/3.3.3/Phoenix.HTML.Form.html#form_for/4"><code class="inline">Phoenix.HTML.Form.form_for/4</code></a>.</p></li><li><p><code class="inline">component_multipart</code> - the same as the <code class="inline">multipart</code> option of
+<a href="https://hexdocs.pm/phoenix_html/3.3.3/Phoenix.HTML.Form.html#form_for/4"><code class="inline">Phoenix.HTML.Form.form_for/4</code></a>.</p></li><li><p><code class="inline">component_csrf_token</code> - the same as the <code class="inline">csrf_token</code> option of
+<a href="https://hexdocs.pm/phoenix_html/3.3.3/Phoenix.HTML.Form.html#form_for/4"><code class="inline">Phoenix.HTML.Form.form_for/4</code></a>.</p></li><li><p><code class="inline">component_errors</code> - the same as the <code class="inline">errors</code> option of
+<a href="https://hexdocs.pm/phoenix_html/3.3.3/Phoenix.HTML.Form.html#form_for/4"><code class="inline">Phoenix.HTML.Form.form_for/4</code></a>.</p></li></ul></li></ul>
   </section>
 </section>
 <section class="detail" id="update_display_data/3">
@@ -869,7 +885,7 @@ have slightly different names to avoid naming collisions.</p><ul><li><p><code cl
           <pre translate="no"><span class="attribute">@spec</span> update_display_data(
   <a href="MscmpSystForms.Types.html#t:socket_or_assigns/0">MscmpSystForms.Types.socket_or_assigns</a>(),
   <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>()
-  | <a href="https://hexdocs.pm/phoenix_html/3.3.2/Phoenix.HTML.Form.html#t:t/0">Phoenix.HTML.Form.t</a>()
+  | <a href="https://hexdocs.pm/phoenix_html/3.3.3/Phoenix.HTML.Form.html#t:t/0">Phoenix.HTML.Form.t</a>()
   | <a href="MscmpSystForms.Types.html#t:data_validation_types/0">MscmpSystForms.Types.data_validation_types</a>(),
   <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()
 ) :: <a href="MscmpSystForms.Types.html#t:socket_or_assigns/0">MscmpSystForms.Types.socket_or_assigns</a>()</pre>
@@ -879,23 +895,23 @@ have slightly different names to avoid naming collisions.</p><ul><li><p><code cl
 <p>Updates the display form data with new values.</p><p>The display data of the form, which represents the form's backing data
 after the application of effective user permissions to purge values that
 the user is not entitled to see, is set using this function.  The data is
-stored in the view's assigns as a <a href="https://hexdocs.pm/phoenix_html/3.3.2/Phoenix.HTML.Form.html#t:t/0"><code class="inline">Phoenix.HTML.Form.t/0</code></a> value which is
+stored in the view's assigns as a <a href="https://hexdocs.pm/phoenix_html/3.3.3/Phoenix.HTML.Form.html#t:t/0"><code class="inline">Phoenix.HTML.Form.t/0</code></a> value which is
 then passed to the view for rendering.</p><h2 id="update_display_data/3-parameters" class="section-heading">
-  <a href="#update_display_data/3-parameters">
+  <a href="#update_display_data/3-parameters" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Parameters
   </a>
+  <span class="text">Parameters</span>
 </h2>
 <ul><li><p><code class="inline">socket_or_assigns</code> - the socket or assigns for the current view.</p></li><li><p><code class="inline">display_data</code> - this option contains either the new display data to set
 and with which to update the form or indicates the kind of data validation
 to perform on the assigns stored data (<code class="inline">msrd_original_data</code> &amp;
 <code class="inline">msrd_current_data</code>; see <a href="#init_assigns/8"><code class="inline">MscmpSystForms.init_assigns/8</code></a> for more).</p><p>  One method for setting the display data is to pass this option to the
   function using actual data.  This data can take the form of either a
-  <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Changeset.html#t:t/0"><code class="inline">Ecto.Changeset.t/0</code></a> value or a <a href="https://hexdocs.pm/phoenix_html/3.3.2/Phoenix.HTML.Form.html#t:t/0"><code class="inline">Phoenix.HTML.Form.t/0</code></a> value. If a
+  <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Changeset.html#t:t/0"><code class="inline">Ecto.Changeset.t/0</code></a> value or a <a href="https://hexdocs.pm/phoenix_html/3.3.3/Phoenix.HTML.Form.html#t:t/0"><code class="inline">Phoenix.HTML.Form.t/0</code></a> value. If a
   Changeset is passed, the function will automatically process it into a
-  <a href="https://hexdocs.pm/phoenix_html/3.3.2/Phoenix.HTML.Form.html#t:t/0"><code class="inline">Phoenix.HTML.Form.t/0</code></a> struct, applying the permissions currently set
+  <a href="https://hexdocs.pm/phoenix_html/3.3.3/Phoenix.HTML.Form.html#t:t/0"><code class="inline">Phoenix.HTML.Form.t/0</code></a> struct, applying the permissions currently set
   in the <code class="inline">msrd_user_perms</code> Standard Assigns Attribute to filter the data.
-  If the value to be passed in this option is a <a href="https://hexdocs.pm/phoenix_html/3.3.2/Phoenix.HTML.Form.html#t:t/0"><code class="inline">Phoenix.HTML.Form.t/0</code></a>
+  If the value to be passed in this option is a <a href="https://hexdocs.pm/phoenix_html/3.3.3/Phoenix.HTML.Form.html#t:t/0"><code class="inline">Phoenix.HTML.Form.t/0</code></a>
   value, the struct should have been generated using
   <a href="#to_form/3"><code class="inline">MscmpSystForms.to_form/3</code></a> so that the user data visibility permissions
   will have been allied.</p><p>  The second method is to pass <code class="inline">display_data</code> as a value referencing a
@@ -905,7 +921,7 @@ to perform on the assigns stored data (<code class="inline">msrd_original_data</
   validated using the standard validation functions
   (<a href="#c:validate_save/2"><code class="inline">MscmpSystForms.validate_save/2</code></a> and
   <a href="#c:validate_post/2"><code class="inline">MscmpSystForms.validate_post/2</code></a>) and then processed into a
-  <a href="https://hexdocs.pm/phoenix_html/3.3.2/Phoenix.HTML.Form.html#t:t/0"><code class="inline">Phoenix.HTML.Form.t/0</code></a> value to save as the new <code class="inline">msrd_display_data</code>
+  <a href="https://hexdocs.pm/phoenix_html/3.3.3/Phoenix.HTML.Form.html#t:t/0"><code class="inline">Phoenix.HTML.Form.t/0</code></a> value to save as the new <code class="inline">msrd_display_data</code>
   value.  Either of the validation types will result in the application of
   user data visibility permissions per the <code class="inline">msrd_user_perms</code> Standard
   Assigns Attribute.</p></li><li><p><code class="inline">opts</code> - this function defines some optionally required parameters
@@ -931,8 +947,8 @@ assigns for <a href="MscmpSystForms.html#content"><code class="inline">MscmpSyst
     <h1 class="section-heading">
       <a class="hover-link" href="#state-management">
         <i class="ri-link-m" aria-hidden="true"></i>
-State Management
       </a>
+      <span class="text">State Management</span>
     </h1>
     <div class="state-management-list">
 <section class="detail" id="finish_processing_override/2">
@@ -962,10 +978,10 @@ State Management
 completed its processing, this function is used to remove it from the list so
 that any user interface components that are watching for the operation to be
 active can resume their normal behavior.</p><h2 id="finish_processing_override/2-parameters" class="section-heading">
-  <a href="#finish_processing_override/2-parameters">
+  <a href="#finish_processing_override/2-parameters" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Parameters
   </a>
+  <span class="text">Parameters</span>
 </h2>
 <ul><li><p><code class="inline">socket_or_assigns</code> - the socket or assigns for the current view.</p></li><li><p><code class="inline">override</code> - the name of the processing override to remove from the active
 process overrides list.</p></li></ul>
@@ -997,10 +1013,10 @@ process overrides list.</p></li></ul>
 <p>A convenience function which sets the Form State State value on the
 appropriate Standard Assign Attribute.</p><p>This allows only updating the Form State State value of the form, leaving the
 Form State Feature and Mode values unchanged.</p><p>See <a href="#set_form_state/4"><code class="inline">set_form_state/4</code></a> for more information and caveats.</p><h2 id="set_form_state/2-parameters" class="section-heading">
-  <a href="#set_form_state/2-parameters">
+  <a href="#set_form_state/2-parameters" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Parameters
   </a>
+  <span class="text">Parameters</span>
 </h2>
 <ul><li><p><code class="inline">socket_or_assigns</code> - the socket or assigns for the current view.</p></li><li><p><code class="inline">state</code> - the new Form State State to set for the form.</p></li></ul>
   </section>
@@ -1032,10 +1048,10 @@ Form State Feature and Mode values unchanged.</p><p>See <a href="#set_form_state
 <p>A convenience function which sets the Form State Mode and State values on the
 appropriate Standard Assign Attributes.</p><p>This allows only updating the Form State Mode and State values of the form,
 leaving the Form State Feature value unchanged.</p><p>See <a href="#set_form_state/4"><code class="inline">set_form_state/4</code></a> for more information and caveats.</p><h2 id="set_form_state/3-parameters" class="section-heading">
-  <a href="#set_form_state/3-parameters">
+  <a href="#set_form_state/3-parameters" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Parameters
   </a>
+  <span class="text">Parameters</span>
 </h2>
 <ul><li><p><code class="inline">socket_or_assigns</code> - the socket or assigns for the current view.</p></li><li><p><code class="inline">mode</code> - the new Form State Mode to set for the form.</p></li><li><p><code class="inline">state</code> - the new Form State State to set for the form.</p></li></ul>
   </section>
@@ -1067,10 +1083,10 @@ leaving the Form State Feature value unchanged.</p><p>See <a href="#set_form_sta
 
 <p>A convenience function which sets the Form State Feature, Mode, and State
 values on the appropriate Standard Assign Attributes.</p><blockquote><h3 id="set_form_state/4-note" class="neutral section-heading">
-  <a href="#set_form_state/4-note">
+  <a href="#set_form_state/4-note" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Note
   </a>
+  <span class="text">Note</span>
 </h3>
 <p>Using this function does not result in the regeneration of Component
 Configurations.  This is not done to avoid regenerating Component
@@ -1078,10 +1094,10 @@ Configurations multiple times unnecessarily.</p><p>You must explicitly regenerat
 by this function to be rendered correctly.  This is typically done by
 calling <a href="#rebuild_component_assigns/1"><code class="inline">rebuild_component_assigns/1</code></a> some time after this function has
 been called.</p></blockquote><p>For more see <a href="#init_assigns/8"><code class="inline">MscmpSystForms.init_assigns/8</code></a>.</p><h2 id="set_form_state/4-parameters" class="section-heading">
-  <a href="#set_form_state/4-parameters">
+  <a href="#set_form_state/4-parameters" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Parameters
   </a>
+  <span class="text">Parameters</span>
 </h2>
 <ul><li><p><code class="inline">socket_or_assigns</code> - the socket or assigns for the current view.</p></li><li><p><code class="inline">feature</code> - the new Form State Feature to set for the form.</p></li><li><p><code class="inline">mode</code> - the new Form State Mode to set for the form.</p></li><li><p><code class="inline">state</code> - the new Form State State to set for the form.</p></li></ul>
   </section>
@@ -1114,10 +1130,10 @@ interactivity when certain, possibly long running, processes are underway.
 This function adds the value of the <code class="inline">override</code> parameter to the active
 processes list allowing components interest in that processing state to
 respond accordingly.</p><h2 id="start_processing_override/2-parameters" class="section-heading">
-  <a href="#start_processing_override/2-parameters">
+  <a href="#start_processing_override/2-parameters" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Parameters
   </a>
+  <span class="text">Parameters</span>
 </h2>
 <ul><li><p><code class="inline">socket_or_assigns</code> - the socket or assigns for the current view.</p></li><li><p><code class="inline">override</code> - the name of the processing override to activate.</p></li></ul>
   </section>
@@ -1151,10 +1167,10 @@ components.</p><p>Validated buttons exist in one of three states defined by
 <a href="MscmpSystForms.Types.html#t:msvalidated_button_states/0"><code class="inline">MscmpSystForms.Types.msvalidated_button_states/0</code></a>.  This function will
 set the state of the validated button identified by the <code class="inline">form_id</code>
 parameters to the state identified by the <code class="inline">button_state</code> parameters.</p><h2 id="update_button_state/3-parameters" class="section-heading">
-  <a href="#update_button_state/3-parameters">
+  <a href="#update_button_state/3-parameters" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Parameters
   </a>
+  <span class="text">Parameters</span>
 </h2>
 <ul><li><p><code class="inline">socket_or_assigns</code> - the socket or assigns for the current view.</p></li><li><p><code class="inline">form_id</code> - the identifier of the component to update.  See
 <a href="#c:get_form_config/0"><code class="inline">MscmpSystForms.get_form_config/0</code></a> for more about form configuration
@@ -1172,8 +1188,8 @@ this purpose.</p></li></ul>
     <h1 class="section-heading">
       <a class="hover-link" href="#callbacks">
         <i class="ri-link-m" aria-hidden="true"></i>
-Callbacks
       </a>
+      <span class="text">Callbacks</span>
     </h1>
     <div class="callbacks-list">
 <section class="detail" id="c:get_form_config/0">
@@ -1213,31 +1229,31 @@ in the configuration.  This will often times result in the data returned by
 this function being hierarchical and resembling the layout structure of the
 rendered form even though there is no requirement that the structure of these
 configurations are related to the rendered layout in any way.</p><h2 id="c:get_form_config/0-examples" class="section-heading">
-  <a href="#c:get_form_config/0-examples">
+  <a href="#c:get_form_config/0-examples" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Examples
   </a>
+  <span class="text">Examples</span>
 </h2>
-<p>Consider the following example configuration:</p><pre><code class="makeup elixir" translate="no"><span class="kd">def</span><span class="w"> </span><span class="nf">get_form_config</span><span class="w"> </span><span class="k" data-group-id="2276325783-1">do</span><span class="w">
-  </span><span class="p" data-group-id="2276325783-2">[</span><span class="w">
-    </span><span class="p" data-group-id="2276325783-3">%</span><span class="nc" data-group-id="2276325783-3">FormConfig</span><span class="p" data-group-id="2276325783-3">{</span><span class="w">
+<p>Consider the following example configuration:</p><pre><code class="makeup elixir" translate="no"><span class="kd">def</span><span class="w"> </span><span class="nf">get_form_config</span><span class="w"> </span><span class="k" data-group-id="5235889079-1">do</span><span class="w">
+  </span><span class="p" data-group-id="5235889079-2">[</span><span class="w">
+    </span><span class="p" data-group-id="5235889079-3">%</span><span class="nc" data-group-id="5235889079-3">FormConfig</span><span class="p" data-group-id="5235889079-3">{</span><span class="w">
       </span><span class="ss">permission</span><span class="p">:</span><span class="w"> </span><span class="ss">:form_access_permission</span><span class="p">,</span><span class="w">
       </span><span class="ss">label</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Virtual FormConfig&quot;</span><span class="p">,</span><span class="w">
-      </span><span class="ss">children</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2276325783-4">[</span><span class="w">
-        </span><span class="p" data-group-id="2276325783-5">%</span><span class="nc" data-group-id="2276325783-5">FormConfig</span><span class="p" data-group-id="2276325783-5">{</span><span class="w">
+      </span><span class="ss">children</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="5235889079-4">[</span><span class="w">
+        </span><span class="p" data-group-id="5235889079-5">%</span><span class="nc" data-group-id="5235889079-5">FormConfig</span><span class="p" data-group-id="5235889079-5">{</span><span class="w">
           </span><span class="ss">form_id</span><span class="p">:</span><span class="w"> </span><span class="ss">:concrete_config_input</span><span class="p">,</span><span class="w">
           </span><span class="ss">binding_id</span><span class="p">:</span><span class="w"> </span><span class="ss">:data_field_input</span><span class="p">,</span><span class="w">
           </span><span class="ss">label</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Example Input Field&quot;</span><span class="p">,</span><span class="w">
-        </span><span class="p" data-group-id="2276325783-5">}</span><span class="p">,</span><span class="w">
-        </span><span class="p" data-group-id="2276325783-6">%</span><span class="nc" data-group-id="2276325783-6">FormConfig</span><span class="p" data-group-id="2276325783-6">{</span><span class="w">
+        </span><span class="p" data-group-id="5235889079-5">}</span><span class="p">,</span><span class="w">
+        </span><span class="p" data-group-id="5235889079-6">%</span><span class="nc" data-group-id="5235889079-6">FormConfig</span><span class="p" data-group-id="5235889079-6">{</span><span class="w">
           </span><span class="ss">form_id</span><span class="p">:</span><span class="w"> </span><span class="ss">:concrete_config_submit_button</span><span class="p">,</span><span class="w">
           </span><span class="ss">label</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Submit&quot;</span><span class="p">,</span><span class="w">
           </span><span class="ss">button_state</span><span class="p">:</span><span class="w"> </span><span class="ss">:message</span><span class="w">
-        </span><span class="p" data-group-id="2276325783-6">}</span><span class="w">
-      </span><span class="p" data-group-id="2276325783-4">]</span><span class="w">
-    </span><span class="p" data-group-id="2276325783-3">}</span><span class="w">
-  </span><span class="p" data-group-id="2276325783-2">]</span><span class="w">
-</span><span class="k" data-group-id="2276325783-1">end</span></code></pre><p>At the top level we have a virtual or abstract <code class="inline">FormConfig</code> value; we know
+        </span><span class="p" data-group-id="5235889079-6">}</span><span class="w">
+      </span><span class="p" data-group-id="5235889079-4">]</span><span class="w">
+    </span><span class="p" data-group-id="5235889079-3">}</span><span class="w">
+  </span><span class="p" data-group-id="5235889079-2">]</span><span class="w">
+</span><span class="k" data-group-id="5235889079-1">end</span></code></pre><p>At the top level we have a virtual or abstract <code class="inline">FormConfig</code> value; we know
 it's virtual because it defines no <code class="inline">form_id</code> value.  This top level value
 exists so that its children can inherit its permission value and its defined
 display modes (see <a href="#c:get_form_modes/0"><code class="inline">MscmpSystForms.get_form_modes/0</code></a>).</p><p>This doesn't mean that the returned configuration represents all elements in
@@ -1246,27 +1262,27 @@ correspond to any rendered form element at all (that would require a <code class
 value being defined).  The overall structure and the virtual element exist to
 purely support the inheritance of configuration and state related values.</p><p>While with the structure in the example above, we can take advantage of
 inherited values, we can selectively override those values as needed.
-Consider this revision of the first example:</p><pre><code class="makeup elixir" translate="no"><span class="kd">def</span><span class="w"> </span><span class="nf">get_form_config</span><span class="w"> </span><span class="k" data-group-id="7938769394-1">do</span><span class="w">
-  </span><span class="p" data-group-id="7938769394-2">[</span><span class="w">
-    </span><span class="p" data-group-id="7938769394-3">%</span><span class="nc" data-group-id="7938769394-3">FormConfig</span><span class="p" data-group-id="7938769394-3">{</span><span class="w">
+Consider this revision of the first example:</p><pre><code class="makeup elixir" translate="no"><span class="kd">def</span><span class="w"> </span><span class="nf">get_form_config</span><span class="w"> </span><span class="k" data-group-id="1316814851-1">do</span><span class="w">
+  </span><span class="p" data-group-id="1316814851-2">[</span><span class="w">
+    </span><span class="p" data-group-id="1316814851-3">%</span><span class="nc" data-group-id="1316814851-3">FormConfig</span><span class="p" data-group-id="1316814851-3">{</span><span class="w">
       </span><span class="ss">permission</span><span class="p">:</span><span class="w"> </span><span class="ss">:form_access_permission</span><span class="p">,</span><span class="w">
       </span><span class="ss">label</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Virtual FormConfig&quot;</span><span class="p">,</span><span class="w">
-      </span><span class="ss">children</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="7938769394-4">[</span><span class="w">
-        </span><span class="p" data-group-id="7938769394-5">%</span><span class="nc" data-group-id="7938769394-5">FormConfig</span><span class="p" data-group-id="7938769394-5">{</span><span class="w">
+      </span><span class="ss">children</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1316814851-4">[</span><span class="w">
+        </span><span class="p" data-group-id="1316814851-5">%</span><span class="nc" data-group-id="1316814851-5">FormConfig</span><span class="p" data-group-id="1316814851-5">{</span><span class="w">
           </span><span class="ss">form_id</span><span class="p">:</span><span class="w"> </span><span class="ss">:concrete_config_input</span><span class="p">,</span><span class="w">
           </span><span class="ss">binding_id</span><span class="p">:</span><span class="w"> </span><span class="ss">:data_field_input</span><span class="p">,</span><span class="w">
           </span><span class="ss">label</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Example Input Field&quot;</span><span class="p">,</span><span class="w">
-        </span><span class="p" data-group-id="7938769394-5">}</span><span class="p">,</span><span class="w">
-        </span><span class="p" data-group-id="7938769394-6">%</span><span class="nc" data-group-id="7938769394-6">FormConfig</span><span class="p" data-group-id="7938769394-6">{</span><span class="w">
+        </span><span class="p" data-group-id="1316814851-5">}</span><span class="p">,</span><span class="w">
+        </span><span class="p" data-group-id="1316814851-6">%</span><span class="nc" data-group-id="1316814851-6">FormConfig</span><span class="p" data-group-id="1316814851-6">{</span><span class="w">
           </span><span class="ss">form_id</span><span class="p">:</span><span class="w"> </span><span class="ss">:concrete_config_submit_button</span><span class="p">,</span><span class="w">
           </span><span class="ss">permission</span><span class="p">:</span><span class="w"> </span><span class="ss">:form_submit_permission</span><span class="p">,</span><span class="w">
           </span><span class="ss">label</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Submit&quot;</span><span class="p">,</span><span class="w">
           </span><span class="ss">button_state</span><span class="p">:</span><span class="w"> </span><span class="ss">:message</span><span class="w">
-        </span><span class="p" data-group-id="7938769394-6">}</span><span class="w">
-      </span><span class="p" data-group-id="7938769394-4">]</span><span class="w">
-    </span><span class="p" data-group-id="7938769394-3">}</span><span class="w">
-  </span><span class="p" data-group-id="7938769394-2">]</span><span class="w">
-</span><span class="k" data-group-id="7938769394-1">end</span></code></pre><p>In the revised example, we don't inherit the the <code class="inline">:form_access_permission</code>
+        </span><span class="p" data-group-id="1316814851-6">}</span><span class="w">
+      </span><span class="p" data-group-id="1316814851-4">]</span><span class="w">
+    </span><span class="p" data-group-id="1316814851-3">}</span><span class="w">
+  </span><span class="p" data-group-id="1316814851-2">]</span><span class="w">
+</span><span class="k" data-group-id="1316814851-1">end</span></code></pre><p>In the revised example, we don't inherit the the <code class="inline">:form_access_permission</code>
 value of the parent in <code class="inline">:concrete_config_submit_button</code> any longer, but now
 check the <code class="inline">:form_submit_permission</code> permission instead.  The
 <code class="inline">:concrete_config_submit_button</code> will continue to inherit other values from
@@ -1298,33 +1314,33 @@ component should take when a given form state is specified.</p><p>The map return
 Form State <code class="inline">feature</code> is at the top level,  the Form State <code class="inline">mode</code> taking the
 next level, and the Form State <code class="inline">State</code> being nested under <code class="inline">mode</code>.  In this
 way each defined <code class="inline">feature</code> can have one or more <code class="inline">mode</code> entries and each <code class="inline">mode</code>
-entry can have one or more <code class="inline">state</code> entries.</p><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="8710833282-1">%{</span><span class="w">
-  </span><span class="o">&lt;</span><span class="n">feature</span><span class="ss">&gt;</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8710833282-2">%{</span><span class="w">
-    </span><span class="ss">default</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8710833282-3">%{</span><span class="w">
+entry can have one or more <code class="inline">state</code> entries.</p><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="9764373096-1">%{</span><span class="w">
+  </span><span class="o">&lt;</span><span class="n">feature</span><span class="ss">&gt;</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9764373096-2">%{</span><span class="w">
+    </span><span class="ss">default</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9764373096-3">%{</span><span class="w">
       </span><span class="o">&lt;</span><span class="n">component_form_id</span><span class="ss">&gt;</span><span class="p">:</span><span class="w">
-        </span><span class="p" data-group-id="8710833282-4">%</span><span class="nc" data-group-id="8710833282-4">MscmpSystForms.Types.ComponentDisplayModes</span><span class="p" data-group-id="8710833282-4">{</span><span class="o">&lt;</span><span class="n">default</span><span class="w"> </span><span class="n">component</span><span class="w"> </span><span class="n">modes</span><span class="o">&gt;</span><span class="p" data-group-id="8710833282-4">}</span><span class="w">
-    </span><span class="p" data-group-id="8710833282-3">}</span><span class="p">,</span><span class="w">
-    </span><span class="o">&lt;</span><span class="n">mode</span><span class="ss">&gt;</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8710833282-5">%{</span><span class="w">
-      </span><span class="o">&lt;</span><span class="n">state</span><span class="ss">&gt;</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8710833282-6">%{</span><span class="w">
+        </span><span class="p" data-group-id="9764373096-4">%</span><span class="nc" data-group-id="9764373096-4">MscmpSystForms.Types.ComponentDisplayModes</span><span class="p" data-group-id="9764373096-4">{</span><span class="o">&lt;</span><span class="n">default</span><span class="w"> </span><span class="n">component</span><span class="w"> </span><span class="n">modes</span><span class="o">&gt;</span><span class="p" data-group-id="9764373096-4">}</span><span class="w">
+    </span><span class="p" data-group-id="9764373096-3">}</span><span class="p">,</span><span class="w">
+    </span><span class="o">&lt;</span><span class="n">mode</span><span class="ss">&gt;</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9764373096-5">%{</span><span class="w">
+      </span><span class="o">&lt;</span><span class="n">state</span><span class="ss">&gt;</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9764373096-6">%{</span><span class="w">
         </span><span class="o">&lt;</span><span class="n">component_form_id</span><span class="ss">&gt;</span><span class="p">:</span><span class="w">
-          </span><span class="p" data-group-id="8710833282-7">%</span><span class="nc" data-group-id="8710833282-7">MscmpSystForms.Types.ComponentDisplayModes</span><span class="p" data-group-id="8710833282-7">{</span><span class="o">&lt;</span><span class="n">component</span><span class="w"> </span><span class="n">modes</span><span class="o">&gt;</span><span class="p" data-group-id="8710833282-7">}</span><span class="w">
-      </span><span class="p" data-group-id="8710833282-6">}</span><span class="w">
-    </span><span class="p" data-group-id="8710833282-5">}</span><span class="p">,</span><span class="w">
-    </span><span class="ss">processing_overrides</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8710833282-8">%{</span><span class="w">
-      </span><span class="o">&lt;</span><span class="n">component_form_id</span><span class="ss">&gt;</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8710833282-9">[</span><span class="o">&lt;</span><span class="n">processing</span><span class="w"> </span><span class="n">override</span><span class="w"> </span><span class="n">name</span><span class="o">&gt;</span><span class="p" data-group-id="8710833282-9">]</span><span class="w">
-    </span><span class="p" data-group-id="8710833282-8">}</span><span class="w">
-  </span><span class="p" data-group-id="8710833282-2">}</span><span class="w">
-</span><span class="p" data-group-id="8710833282-1">}</span></code></pre><h2 id="c:get_form_modes/0-mode-structure-rules-considerations" class="section-heading">
-  <a href="#c:get_form_modes/0-mode-structure-rules-considerations">
+          </span><span class="p" data-group-id="9764373096-7">%</span><span class="nc" data-group-id="9764373096-7">MscmpSystForms.Types.ComponentDisplayModes</span><span class="p" data-group-id="9764373096-7">{</span><span class="o">&lt;</span><span class="n">component</span><span class="w"> </span><span class="n">modes</span><span class="o">&gt;</span><span class="p" data-group-id="9764373096-7">}</span><span class="w">
+      </span><span class="p" data-group-id="9764373096-6">}</span><span class="w">
+    </span><span class="p" data-group-id="9764373096-5">}</span><span class="p">,</span><span class="w">
+    </span><span class="ss">processing_overrides</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9764373096-8">%{</span><span class="w">
+      </span><span class="o">&lt;</span><span class="n">component_form_id</span><span class="ss">&gt;</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9764373096-9">[</span><span class="o">&lt;</span><span class="n">processing</span><span class="w"> </span><span class="n">override</span><span class="w"> </span><span class="n">name</span><span class="o">&gt;</span><span class="p" data-group-id="9764373096-9">]</span><span class="w">
+    </span><span class="p" data-group-id="9764373096-8">}</span><span class="w">
+  </span><span class="p" data-group-id="9764373096-2">}</span><span class="w">
+</span><span class="p" data-group-id="9764373096-1">}</span></code></pre><h2 id="c:get_form_modes/0-mode-structure-rules-considerations" class="section-heading">
+  <a href="#c:get_form_modes/0-mode-structure-rules-considerations" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Mode Structure Rules &amp; Considerations
   </a>
+  <span class="text">Mode Structure Rules &amp; Considerations</span>
 </h2>
 <h3 id="c:get_form_modes/0-feature-level-map" class="section-heading">
-  <a href="#c:get_form_modes/0-feature-level-map">
+  <a href="#c:get_form_modes/0-feature-level-map" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Feature Level Map
   </a>
+  <span class="text">Feature Level Map</span>
 </h3>
 <p>The Feature level of the map will accept one or more Feature entries where the
 key for each entry is the name
@@ -1338,19 +1354,19 @@ for a given component.</p></li><li><p>a <code class="inline">:processing_overrid
 various form components should respond to.</p></li><li><p>one or more &quot;modes&quot; where the key is the Mode name
 (<a href="MscmpSystForms.Types.html#t:form_state_mode_name/0"><code class="inline">MscmpSystForms.Types.form_state_mode_name/0</code></a>) and the value is a map of
 Form State States which define the various states supported by that Mode.</p></li></ul><h3 id="c:get_form_modes/0-mode-level-map" class="section-heading">
-  <a href="#c:get_form_modes/0-mode-level-map">
+  <a href="#c:get_form_modes/0-mode-level-map" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Mode Level Map
   </a>
+  <span class="text">Mode Level Map</span>
 </h3>
 <p>The Mode level is expressed as a key/value map where the keys are Form State
 &quot;State&quot; names (<a href="MscmpSystForms.Types.html#t:form_state_state_name/0"><code class="inline">MscmpSystForms.Types.form_state_state_name/0</code></a>) and the
 values of those keys are the State level maps.  There are no additional
 entries or default values.</p><h3 id="c:get_form_modes/0-state-level-map" class="section-heading">
-  <a href="#c:get_form_modes/0-state-level-map">
+  <a href="#c:get_form_modes/0-state-level-map" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    State Level Map
   </a>
+  <span class="text">State Level Map</span>
 </h3>
 <p>The State level is a simple key/value map where keys are Form State State
 Names (<a href="MscmpSystForms.Types.html#t:form_state_state_name/0"><code class="inline">MscmpSystForms.Types.form_state_state_name/0</code></a>) and the values are
@@ -1358,44 +1374,44 @@ maps of component Form IDs (<a href="MscmpSystForms.Types.html#t:form_id/0"><cod
 with their configured component modes
 (<a href="MscmpSystForms.Types.ComponentDisplayModes.html#t:t/0"><code class="inline">MscmpSystForms.Types.ComponentDisplayModes.t/0</code></a>) for that given
 Feature/Mode/State combination.</p><h2 id="c:get_form_modes/0-examples" class="section-heading">
-  <a href="#c:get_form_modes/0-examples">
+  <a href="#c:get_form_modes/0-examples" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Examples
   </a>
+  <span class="text">Examples</span>
 </h2>
 <p>Different form elements may take on different display properties as the state
 of the form evolves over time with changes in data or in response to user
 interactions.  This function returns a nested map structure which, based on
-the examples from <a href="#c:get_form_config/0"><code class="inline">get_form_config/0</code></a>, might look like:</p><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="9362420633-1">%{</span><span class="w">
-  </span><span class="ss">default</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9362420633-2">%{</span><span class="w">
-    </span><span class="ss">default</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9362420633-3">%{</span><span class="w">
+the examples from <a href="#c:get_form_config/0"><code class="inline">get_form_config/0</code></a>, might look like:</p><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="8101866415-1">%{</span><span class="w">
+  </span><span class="ss">default</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8101866415-2">%{</span><span class="w">
+    </span><span class="ss">default</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8101866415-3">%{</span><span class="w">
       </span><span class="ss">concrete_config_input</span><span class="p">:</span><span class="w">
-        </span><span class="p" data-group-id="9362420633-4">%</span><span class="nc" data-group-id="9362420633-4">MscmpSystForms.Types.ComponentDisplayModes</span><span class="p" data-group-id="9362420633-4">{</span><span class="ss">component_mode</span><span class="p">:</span><span class="w"> </span><span class="ss">:visible</span><span class="p" data-group-id="9362420633-4">}</span><span class="p">,</span><span class="w">
+        </span><span class="p" data-group-id="8101866415-4">%</span><span class="nc" data-group-id="8101866415-4">MscmpSystForms.Types.ComponentDisplayModes</span><span class="p" data-group-id="8101866415-4">{</span><span class="ss">component_mode</span><span class="p">:</span><span class="w"> </span><span class="ss">:visible</span><span class="p" data-group-id="8101866415-4">}</span><span class="p">,</span><span class="w">
       </span><span class="ss">concrete_config_submit_button</span><span class="p">:</span><span class="w">
-        </span><span class="p" data-group-id="9362420633-5">%</span><span class="nc" data-group-id="9362420633-5">MscmpSystForms.Types.ComponentDisplayModes</span><span class="p" data-group-id="9362420633-5">{</span><span class="ss">component_mode</span><span class="p">:</span><span class="w"> </span><span class="ss">:visible</span><span class="p" data-group-id="9362420633-5">}</span><span class="w">
-    </span><span class="p" data-group-id="9362420633-3">}</span><span class="p">,</span><span class="w">
-    </span><span class="ss">entry</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9362420633-6">%{</span><span class="w">
-      </span><span class="ss">basic_form_state</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9362420633-7">%{</span><span class="w">
+        </span><span class="p" data-group-id="8101866415-5">%</span><span class="nc" data-group-id="8101866415-5">MscmpSystForms.Types.ComponentDisplayModes</span><span class="p" data-group-id="8101866415-5">{</span><span class="ss">component_mode</span><span class="p">:</span><span class="w"> </span><span class="ss">:visible</span><span class="p" data-group-id="8101866415-5">}</span><span class="w">
+    </span><span class="p" data-group-id="8101866415-3">}</span><span class="p">,</span><span class="w">
+    </span><span class="ss">entry</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8101866415-6">%{</span><span class="w">
+      </span><span class="ss">basic_form_state</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8101866415-7">%{</span><span class="w">
         </span><span class="ss">concrete_config_input</span><span class="p">:</span><span class="w">
-          </span><span class="p" data-group-id="9362420633-8">%</span><span class="nc" data-group-id="9362420633-8">MscmpSystForms.Types.ComponentDisplayModes</span><span class="p" data-group-id="9362420633-8">{</span><span class="ss">component_mode</span><span class="p">:</span><span class="w"> </span><span class="ss">:entry</span><span class="p" data-group-id="9362420633-8">}</span><span class="p">,</span><span class="w">
+          </span><span class="p" data-group-id="8101866415-8">%</span><span class="nc" data-group-id="8101866415-8">MscmpSystForms.Types.ComponentDisplayModes</span><span class="p" data-group-id="8101866415-8">{</span><span class="ss">component_mode</span><span class="p">:</span><span class="w"> </span><span class="ss">:entry</span><span class="p" data-group-id="8101866415-8">}</span><span class="p">,</span><span class="w">
         </span><span class="ss">concrete_config_submit_button</span><span class="p">:</span><span class="w">
-          </span><span class="p" data-group-id="9362420633-9">%</span><span class="nc" data-group-id="9362420633-9">MscmpSystForms.Types.ComponentDisplayModes</span><span class="p" data-group-id="9362420633-9">{</span><span class="ss">component_mode</span><span class="p">:</span><span class="w"> </span><span class="ss">:entry</span><span class="p" data-group-id="9362420633-9">}</span><span class="w">
-      </span><span class="p" data-group-id="9362420633-7">}</span><span class="w">
-    </span><span class="p" data-group-id="9362420633-6">}</span><span class="p">,</span><span class="w">
-    </span><span class="ss">view</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9362420633-10">%{</span><span class="w">
-      </span><span class="ss">basic_form_state</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9362420633-11">%{</span><span class="w">
+          </span><span class="p" data-group-id="8101866415-9">%</span><span class="nc" data-group-id="8101866415-9">MscmpSystForms.Types.ComponentDisplayModes</span><span class="p" data-group-id="8101866415-9">{</span><span class="ss">component_mode</span><span class="p">:</span><span class="w"> </span><span class="ss">:entry</span><span class="p" data-group-id="8101866415-9">}</span><span class="w">
+      </span><span class="p" data-group-id="8101866415-7">}</span><span class="w">
+    </span><span class="p" data-group-id="8101866415-6">}</span><span class="p">,</span><span class="w">
+    </span><span class="ss">view</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8101866415-10">%{</span><span class="w">
+      </span><span class="ss">basic_form_state</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8101866415-11">%{</span><span class="w">
         </span><span class="ss">concrete_config_input</span><span class="p">:</span><span class="w">
-          </span><span class="p" data-group-id="9362420633-12">%</span><span class="nc" data-group-id="9362420633-12">MscmpSystForms.Types.ComponentDisplayModes</span><span class="p" data-group-id="9362420633-12">{</span><span class="ss">component_mode</span><span class="p">:</span><span class="w"> </span><span class="ss">:visible</span><span class="p" data-group-id="9362420633-12">}</span><span class="p">,</span><span class="w">
+          </span><span class="p" data-group-id="8101866415-12">%</span><span class="nc" data-group-id="8101866415-12">MscmpSystForms.Types.ComponentDisplayModes</span><span class="p" data-group-id="8101866415-12">{</span><span class="ss">component_mode</span><span class="p">:</span><span class="w"> </span><span class="ss">:visible</span><span class="p" data-group-id="8101866415-12">}</span><span class="p">,</span><span class="w">
         </span><span class="ss">concrete_config_submit_button</span><span class="p">:</span><span class="w">
-          </span><span class="p" data-group-id="9362420633-13">%</span><span class="nc" data-group-id="9362420633-13">MscmpSystForms.Types.ComponentDisplayModes</span><span class="p" data-group-id="9362420633-13">{</span><span class="ss">component_mode</span><span class="p">:</span><span class="w"> </span><span class="ss">:visible</span><span class="p" data-group-id="9362420633-13">}</span><span class="w">
-      </span><span class="p" data-group-id="9362420633-11">}</span><span class="w">
-    </span><span class="p" data-group-id="9362420633-10">}</span><span class="p">,</span><span class="w">
-    </span><span class="ss">processing_overrides</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9362420633-14">%{</span><span class="w">
-      </span><span class="ss">concrete_config_input</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9362420633-15">[</span><span class="ss">:process_underway</span><span class="p" data-group-id="9362420633-15">]</span><span class="w">
-      </span><span class="ss">concrete_config_submit_button</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9362420633-16">[</span><span class="ss">:process_underway</span><span class="p" data-group-id="9362420633-16">]</span><span class="w">
-    </span><span class="p" data-group-id="9362420633-14">}</span><span class="w">
-  </span><span class="p" data-group-id="9362420633-2">}</span><span class="w">
-</span><span class="p" data-group-id="9362420633-1">}</span></code></pre>
+          </span><span class="p" data-group-id="8101866415-13">%</span><span class="nc" data-group-id="8101866415-13">MscmpSystForms.Types.ComponentDisplayModes</span><span class="p" data-group-id="8101866415-13">{</span><span class="ss">component_mode</span><span class="p">:</span><span class="w"> </span><span class="ss">:visible</span><span class="p" data-group-id="8101866415-13">}</span><span class="w">
+      </span><span class="p" data-group-id="8101866415-11">}</span><span class="w">
+    </span><span class="p" data-group-id="8101866415-10">}</span><span class="p">,</span><span class="w">
+    </span><span class="ss">processing_overrides</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8101866415-14">%{</span><span class="w">
+      </span><span class="ss">concrete_config_input</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8101866415-15">[</span><span class="ss">:process_underway</span><span class="p" data-group-id="8101866415-15">]</span><span class="w">
+      </span><span class="ss">concrete_config_submit_button</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8101866415-16">[</span><span class="ss">:process_underway</span><span class="p" data-group-id="8101866415-16">]</span><span class="w">
+    </span><span class="p" data-group-id="8101866415-14">}</span><span class="w">
+  </span><span class="p" data-group-id="8101866415-2">}</span><span class="w">
+</span><span class="p" data-group-id="8101866415-1">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="c:postconnect_init/1">
@@ -1416,20 +1432,20 @@ the examples from <a href="#c:get_form_config/0"><code class="inline">get_form_c
 
           <pre translate="no"><span class="attribute">@callback</span> postconnect_init(
   socket_or_assigns ::
-    <a href="https://hexdocs.pm/phoenix_live_view/0.19.5/Phoenix.LiveView.Socket.html#t:t/0">Phoenix.LiveView.Socket.t</a>() | <a href="https://hexdocs.pm/phoenix_live_view/0.19.5/Phoenix.LiveView.Socket.html#t:assigns/0">Phoenix.LiveView.Socket.assigns</a>()
-) :: <a href="https://hexdocs.pm/phoenix_live_view/0.19.5/Phoenix.LiveView.Socket.html#t:t/0">Phoenix.LiveView.Socket.t</a>() | <a href="https://hexdocs.pm/phoenix_live_view/0.19.5/Phoenix.LiveView.Socket.html#t:assigns/0">Phoenix.LiveView.Socket.assigns</a>()</pre>
+    <a href="https://hexdocs.pm/phoenix_live_view/0.20.1/Phoenix.LiveView.Socket.html#t:t/0">Phoenix.LiveView.Socket.t</a>() | <a href="https://hexdocs.pm/phoenix_live_view/0.20.1/Phoenix.LiveView.Socket.html#t:assigns/0">Phoenix.LiveView.Socket.assigns</a>()
+) :: <a href="https://hexdocs.pm/phoenix_live_view/0.20.1/Phoenix.LiveView.Socket.html#t:t/0">Phoenix.LiveView.Socket.t</a>() | <a href="https://hexdocs.pm/phoenix_live_view/0.20.1/Phoenix.LiveView.Socket.html#t:assigns/0">Phoenix.LiveView.Socket.assigns</a>()</pre>
 
       </div>
 
 <p>An initialization sequence run during the connected, second call to
-<a href="https://hexdocs.pm/phoenix_live_view/0.19.5/Phoenix.LiveView.html#c:mount/3"><code class="inline">Phoenix.LiveView.mount/3</code></a>.</p><p>This function currently doesn't have any specific or well defined &quot;typical use
+<a href="https://hexdocs.pm/phoenix_live_view/0.20.1/Phoenix.LiveView.html#c:mount/3"><code class="inline">Phoenix.LiveView.mount/3</code></a>.</p><p>This function currently doesn't have any specific or well defined &quot;typical use
 cases&quot; as does <code class="inline">preconnect_init/6</code>.</p><p>It is assumed that any required data or configurations were initially set
 using <code class="inline">preconnect_init/6</code> and are available in the socket assigns passed to
-<a href="https://hexdocs.pm/phoenix_live_view/0.19.5/Phoenix.LiveView.html#c:mount/3"><code class="inline">Phoenix.LiveView.mount/3</code></a>.</p><h2 id="c:postconnect_init/1-parameters" class="section-heading">
-  <a href="#c:postconnect_init/1-parameters">
+<a href="https://hexdocs.pm/phoenix_live_view/0.20.1/Phoenix.LiveView.html#c:mount/3"><code class="inline">Phoenix.LiveView.mount/3</code></a>.</p><h2 id="c:postconnect_init/1-parameters" class="section-heading">
+  <a href="#c:postconnect_init/1-parameters" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Parameters
   </a>
+  <span class="text">Parameters</span>
 </h2>
 <ul><li><code class="inline">socket_or_assigns</code> - the socket or assigns for the current view.</li></ul>
   </section>
@@ -1452,29 +1468,29 @@ using <code class="inline">preconnect_init/6</code> and are available in the soc
 
           <pre translate="no"><span class="attribute">@callback</span> preconnect_init(
   socket_or_assigns ::
-    <a href="https://hexdocs.pm/phoenix_live_view/0.19.5/Phoenix.LiveView.Socket.html#t:t/0">Phoenix.LiveView.Socket.t</a>() | <a href="https://hexdocs.pm/phoenix_live_view/0.19.5/Phoenix.LiveView.Socket.html#t:assigns/0">Phoenix.LiveView.Socket.assigns</a>(),
+    <a href="https://hexdocs.pm/phoenix_live_view/0.20.1/Phoenix.LiveView.Socket.html#t:t/0">Phoenix.LiveView.Socket.t</a>() | <a href="https://hexdocs.pm/phoenix_live_view/0.20.1/Phoenix.LiveView.Socket.html#t:assigns/0">Phoenix.LiveView.Socket.assigns</a>(),
   session_name :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">binary</a>(),
   feature :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>(),
   mode :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>(),
   state :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>(),
   opts :: <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>() | [] | nil
-) :: <a href="https://hexdocs.pm/phoenix_live_view/0.19.5/Phoenix.LiveView.Socket.html#t:t/0">Phoenix.LiveView.Socket.t</a>() | <a href="https://hexdocs.pm/phoenix_live_view/0.19.5/Phoenix.LiveView.Socket.html#t:assigns/0">Phoenix.LiveView.Socket.assigns</a>()</pre>
+) :: <a href="https://hexdocs.pm/phoenix_live_view/0.20.1/Phoenix.LiveView.Socket.html#t:t/0">Phoenix.LiveView.Socket.t</a>() | <a href="https://hexdocs.pm/phoenix_live_view/0.20.1/Phoenix.LiveView.Socket.html#t:assigns/0">Phoenix.LiveView.Socket.assigns</a>()</pre>
 
       </div>
 
 <p>An initialization sequence run during first, static mount process.</p><p>This callback is intended to define a function called in the first, static
-<a href="https://hexdocs.pm/phoenix_live_view/0.19.5/Phoenix.LiveView.html#c:mount/3"><code class="inline">Phoenix.LiveView.mount/3</code></a>.  While <a href="#c:preconnect_init/6"><code class="inline">preconnect_init/6</code></a> can encapsulate any
+<a href="https://hexdocs.pm/phoenix_live_view/0.20.1/Phoenix.LiveView.html#c:mount/3"><code class="inline">Phoenix.LiveView.mount/3</code></a>.  While <a href="#c:preconnect_init/6"><code class="inline">preconnect_init/6</code></a> can encapsulate any
 logic necessary during this phase of initialization, we would typically see
-the following activities handled:</p><ul><li><p>The capture of socket values passed to <a href="https://hexdocs.pm/phoenix_live_view/0.19.5/Phoenix.LiveView.html#c:mount/3"><code class="inline">Phoenix.LiveView.mount/3</code></a>,
+the following activities handled:</p><ul><li><p>The capture of socket values passed to <a href="https://hexdocs.pm/phoenix_live_view/0.20.1/Phoenix.LiveView.html#c:mount/3"><code class="inline">Phoenix.LiveView.mount/3</code></a>,
 such as <code class="inline">session_name</code> in preparation for calling <a href="#init_assigns/8"><code class="inline">init_assigns/8</code></a>.</p></li><li><p>The resolution of user permissions required by the form.</p></li><li><p>The loading of backing data from the database for the view or maintenance
 of existing data, or defaulted data in the case of new record creation.</p></li><li><p>Initialization of the Standard Assign Attributes using <a href="#init_assigns/8"><code class="inline">init_assigns/8</code></a>.</p></li></ul><p>Naturally, while these would be typical activities to perform in
 <a href="#c:preconnect_init/6"><code class="inline">preconnect_init/6</code></a>, they are not required not is this callback limited to
 running these functions.  Truly, whatever makes sense for the form to process
 during this stage of the form life-cycle is acceptable.</p><h2 id="c:preconnect_init/6-parameters" class="section-heading">
-  <a href="#c:preconnect_init/6-parameters">
+  <a href="#c:preconnect_init/6-parameters" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Parameters
   </a>
+  <span class="text">Parameters</span>
 </h2>
 <ul><li><p><code class="inline">socket_or_assigns</code> - the socket or assigns for the current view.</p></li><li><p><code class="inline">session_name</code> - the name of the session.  This value is usually set in
 prior to the view being called and is part of the parameters passed to the
@@ -1515,10 +1531,10 @@ transaction.</p><p>This function serves to validate that a form's data fully mee
 requirements of a complete business transaction.  In cases where
 less-than-ready works in progress should be saveable, the <a href="#c:validate_save/2"><code class="inline">validate_save/2</code></a>
 function should be called instead.</p><h2 id="c:validate_post/2-parameters" class="section-heading">
-  <a href="#c:validate_post/2-parameters">
+  <a href="#c:validate_post/2-parameters" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Parameters
   </a>
+  <span class="text">Parameters</span>
 </h2>
 <ul><li><p><code class="inline">original_data</code> - a representation of the starting data using the
 <a href="MscmpSystForms.html#content"><code class="inline">MscmpSystForms</code></a> implementing struct backing the form.  Setting this value
@@ -1562,10 +1578,10 @@ state.  In these cases, it's best to write the main validate logic in the
 <a href="#c:validate_post/2"><code class="inline">validate_post/2</code></a> function and simply delegate this function to that one;
 raising an exception in this function is also an option to force the correct
 call.</p><h2 id="c:validate_save/2-parameters" class="section-heading">
-  <a href="#c:validate_save/2-parameters">
+  <a href="#c:validate_save/2-parameters" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
-    Parameters
   </a>
+  <span class="text">Parameters</span>
 </h2>
 <ul><li><p><code class="inline">original_data</code> - a representation of the starting data using the
 <a href="MscmpSystForms.html#content"><code class="inline">MscmpSystForms</code></a> implementing struct backing the form.  Setting this value
@@ -1594,7 +1610,7 @@ to be validated during the creation of the Changeset.</p></li></ul>
 
         <p class="built-using">
           Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.30.6) for the
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.30.9) for the
 
             <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 
@@ -1602,7 +1618,7 @@ to be validated during the creation of the Changeset.</p></li></ul>
       </footer>
     </div>
   </div>
-</section>
+</main>
 </div>
 
 
