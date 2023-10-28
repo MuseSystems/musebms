@@ -11,6 +11,7 @@ env:
 
 jobs:
   mscmp-syst-error:
+    name: mscmp-syst-error-${{ matrix.otp }}-${{ matrix.elixir }}
     runs-on: ubuntu-latest
     env:
       MSBMS_PRJDIR: ./app_server/components/system/mscmp_syst_error
@@ -18,7 +19,6 @@ jobs:
       matrix:
         otp: ['26.1.2']
         elixir: ['1.15.7']
-    name: ${{ github.job }}-${{ matrix.otp }}-${{ matrix.elixir }}
 
     steps:
         - name: Checkout repository code
