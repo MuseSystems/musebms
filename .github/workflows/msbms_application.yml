@@ -40,6 +40,7 @@ jobs:
         - name: Restore PLT cache
           id: plt_cache
           uses: actions/cache/restore@v3
+          working-directory: ./app_server/components/system/mscmp_syst_error
           with:
             key: |
               plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
@@ -57,6 +58,7 @@ jobs:
           id: plt_cache_save
           uses: actions/cache/save@v3
           if: steps.plt_cache.outputs.cache-hit != 'true'
+          working-directory: ./app_server/components/system/mscmp_syst_error
           with:
             key: |
               plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
