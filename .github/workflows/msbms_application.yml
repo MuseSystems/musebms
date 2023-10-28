@@ -68,8 +68,7 @@ jobs:
             key: |
               plt-${{ env.MSBMS_JOBNAME }}
             path: |
-              priv/plts
-          working-directory: ${{ env.MSBMS_PRJDIR }}
+              ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
 
         - name: Run Dialyzer
           run: mix dialyzer --format github
