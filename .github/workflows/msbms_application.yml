@@ -39,6 +39,7 @@ jobs:
         - name: Create PLTs
           if: steps.plt_cache.outputs.cache-hit != 'true'
           run: mix dialyzer --plt
+          working-directory: ./app_server/components/system/mscmp_syst_error
 
         - name: Save PLT cache
           id: plt_cache_save
@@ -98,6 +99,7 @@ jobs:
         - name: Create PLTs
           if: steps.plt_cache.outputs.cache-hit != 'true'
           run: mix dialyzer --plt
+          working-directory: ./app_server/components/system/mscmp_syst_utils
 
         - name: Save PLT cache
           id: plt_cache_save
@@ -157,6 +159,7 @@ jobs:
         - name: Create PLTs
           if: steps.plt_cache.outputs.cache-hit != 'true'
           run: mix dialyzer --plt
+          working-directory: ./app_server/components/system/mscmp_syst_network
 
         - name: Save PLT cache
           id: plt_cache_save
@@ -216,6 +219,7 @@ jobs:
         - name: Create PLTs
           if: steps.plt_cache.outputs.cache-hit != 'true'
           run: mix dialyzer --plt
+          working-directory: ./app_server/components/system/mscmp_syst_options
 
         - name: Save PLT cache
           id: plt_cache_save
@@ -275,6 +279,7 @@ jobs:
         - name: Create PLTs
           if: steps.plt_cache.outputs.cache-hit != 'true'
           run: mix dialyzer --plt
+          working-directory: ./app_server/components/system/mscmp_syst_limiter
 
         - name: Save PLT cache
           id: plt_cache_save
@@ -352,6 +357,7 @@ jobs:
         - name: Create PLTs
           if: steps.plt_cache.outputs.cache-hit != 'true'
           run: mix dialyzer --plt
+          working-directory: ./app_server/components/system/mscmp_syst_db
 
         - name: Save PLT cache
           id: plt_cache_save
@@ -428,6 +434,7 @@ jobs:
         - name: Create PLTs
           if: steps.plt_cache.outputs.cache-hit != 'true'
           run: mix dialyzer --plt
+          working-directory: ./app_server/components/system/mscmp_syst_settings
 
         - name: Save PLT cache
           id: plt_cache_save
@@ -504,6 +511,7 @@ jobs:
         - name: Create PLTs
           if: steps.plt_cache.outputs.cache-hit != 'true'
           run: mix dialyzer --plt
+          working-directory: ./app_server/components/system/mscmp_syst_enums
 
         - name: Save PLT cache
           id: plt_cache_save
@@ -580,6 +588,7 @@ jobs:
         - name: Create PLTs
           if: steps.plt_cache.outputs.cache-hit != 'true'
           run: mix dialyzer --plt
+          working-directory: ./app_server/components/system/mscmp_syst_instance
 
         - name: Save PLT cache
           id: plt_cache_save
@@ -660,6 +669,7 @@ jobs:
         - name: Create PLTs
           if: steps.plt_cache.outputs.cache-hit != 'true'
           run: mix dialyzer --plt
+          working-directory: ./app_server/components/system/mscmp_syst_authn
 
         - name: Save PLT cache
           id: plt_cache_save
@@ -740,6 +750,7 @@ jobs:
         - name: Create PLTs
           if: steps.plt_cache.outputs.cache-hit != 'true'
           run: mix dialyzer --plt
+          working-directory: ./app_server/components/system/mscmp_syst_perms
 
         - name: Save PLT cache
           id: plt_cache_save
@@ -820,6 +831,7 @@ jobs:
         - name: Create PLTs
           if: steps.plt_cache.outputs.cache-hit != 'true'
           run: mix dialyzer --plt
+          working-directory: ./app_server/components/system/mscmp_syst_mcp_perms
 
         - name: Save PLT cache
           id: plt_cache_save
@@ -900,6 +912,7 @@ jobs:
         - name: Create PLTs
           if: steps.plt_cache.outputs.cache-hit != 'true'
           run: mix dialyzer --plt
+          working-directory: ./app_server/components/system/mscmp_syst_session
 
         - name: Save PLT cache
           id: plt_cache_save
@@ -966,6 +979,7 @@ jobs:
         - name: Create PLTs
           if: steps.plt_cache.outputs.cache-hit != 'true'
           run: mix dialyzer --plt
+          working-directory: ./app_server/components/system/mscmp_syst_forms
 
         - name: Save PLT cache
           id: plt_cache_save
@@ -1039,6 +1053,7 @@ jobs:
         - name: Create PLTs
           if: steps.plt_cache.outputs.cache-hit != 'true'
           run: mix dialyzer --plt
+          working-directory: ./app_server/subsystems/mssub_mcp
 
         - name: Save PLT cache
           id: plt_cache_save
