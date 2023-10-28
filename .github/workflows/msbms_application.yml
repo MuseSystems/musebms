@@ -11,10 +11,10 @@ env:
 
 jobs:
   mscmp_syst_error:
-    name: mscmp_syst_error-${{ matrix.otp }}-${{ matrix.elixir }}
     runs-on: ubuntu-latest
     env:
       MSBMS_PRJDIR: ./app_server/components/system/mscmp_syst_error
+      MSBMS_JOBNAME: mscmp_syst_error-${{ matrix.otp }}-${{ matrix.elixir }}
     strategy:
       matrix:
         otp: ['26.1.2']
@@ -47,9 +47,9 @@ jobs:
           uses: actions/cache/restore@v3
           with:
             key: |
-              plt-${{ job.name }}
+              plt-${{ env.MSBMS_JOBNAME }}
             restore-keys: |
-              plt-${{ job.name }}
+              plt-${{ env.MSBMS_JOBNAME }}
             path: |
               priv/plts
 
@@ -66,9 +66,10 @@ jobs:
           if: steps.plt_cache.outputs.cache-hit != 'true'
           with:
             key: |
-              plt-${{ job.name }}
+              plt-${{ env.MSBMS_JOBNAME }}
             path: |
               priv/plts
+          working-directory: ${{ env.MSBMS_PRJDIR }}
 
         - name: Run Dialyzer
           run: mix dialyzer --format github
