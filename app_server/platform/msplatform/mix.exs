@@ -20,7 +20,7 @@ defmodule Msplatform.MixProject do
     # Third Party Dependencies
     {:phoenix_live_view, "~> 0.19"},
     {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
-    {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
+    {:dialyxir, "~> 1.0", only: [:dev, :test], runtime: false},
     {:ex_doc, "~> 0.20", only: :dev, runtime: false}
   ]
 

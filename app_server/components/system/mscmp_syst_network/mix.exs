@@ -19,7 +19,7 @@ defmodule MscmpSystNetwork.MixProject do
   @deps [
     # Third Party Dependencies
     {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
-    {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
+    {:dialyxir, "~> 1.0", only: [:dev, :test], runtime: false},
     {:ex_doc, "~> 0.20", only: :dev, runtime: false},
     {:jason, "~> 1.0"},
 

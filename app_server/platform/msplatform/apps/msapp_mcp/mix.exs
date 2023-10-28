@@ -22,7 +22,7 @@ defmodule MsappMcp.MixProject do
     {:swoosh, "~> 1.3"},
     {:finch, "~> 0.13"},
     {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
-    {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
+    {:dialyxir, "~> 1.0", only: [:dev, :test], runtime: false},
     {:ex_doc, "~> 0.20", only: :dev, runtime: false},
 
     # Muse Systems Business Management System Components
