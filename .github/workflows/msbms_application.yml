@@ -75,1098 +75,1098 @@ jobs:
           run: mix dialyzer --format github
           working-directory: ${{ env.MSBMS_PRJDIR }}
 
-  mscmp_syst_utils:
-    runs-on: ubuntu-latest
-    env:
-      MSBMS_PRJDIR: ./app_server/components/system/mscmp_syst_utils
-      MSBMS_JOBNAME: mscmp_syst_utils-${{ matrix.otp }}-${{ matrix.elixir }}
-
-    strategy:
-      matrix:
-        otp: ['26.1.2']
-        elixir: ['1.15.7']
-
-    steps:
-        - name: Checkout repository code
-          uses: actions/checkout@v3
-
-        - name: Install Elixir
-          uses: erlef/setup-beam@v1
-          with:
-            otp-version: ${{ matrix.otp }}
-            elixir-version: ${{ matrix.elixir }}
-
-        - name: Build Mix Dependencies
-          run: mix deps.get
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Run Tests
-          run: mix test
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Run Credo
-          run: mix credo
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Restore PLT cache
-          id: plt_cache
-          uses: actions/cache/restore@v3
-          with:
-            key: |
-              plt-${{ env.MSBMS_JOBNAME }}
-            restore-keys: |
-              plt-${{ env.MSBMS_JOBNAME }}
-            path: |
-              ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
-
-        - name: Create PLTs
-          if: steps.plt_cache.outputs.cache-hit != 'true'
-          run: |
-            mkdir -p priv/plts
-            mix dialyzer --plt
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Save PLT cache
-          id: plt_cache_save
-          uses: actions/cache/save@v3
-          if: steps.plt_cache.outputs.cache-hit != 'true'
-          with:
-            key: |
-              plt-${{ env.MSBMS_JOBNAME }}
-            path: |
-              ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
-
-        - name: Run Dialyzer
-          run: mix dialyzer --format github
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-  mscmp_syst_network:
-    runs-on: ubuntu-latest
-    env:
-      MSBMS_PRJDIR: ./app_server/components/system/mscmp_syst_network
-      MSBMS_JOBNAME: mscmp_syst_network-${{ matrix.otp }}-${{ matrix.elixir }}
-
-    strategy:
-      matrix:
-        otp: ['26.1.2']
-        elixir: ['1.15.7']
-
-    steps:
-        - name: Checkout repository code
-          uses: actions/checkout@v3
-
-        - name: Install Elixir
-          uses: erlef/setup-beam@v1
-          with:
-            otp-version: ${{ matrix.otp }}
-            elixir-version: ${{ matrix.elixir }}
-
-        - name: Build Mix Dependencies
-          run: mix deps.get
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Run Tests
-          run: mix test
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Run Credo
-          run: mix credo
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Restore PLT cache
-          id: plt_cache
-          uses: actions/cache/restore@v3
-          with:
-            key: |
-              plt-${{ env.MSBMS_JOBNAME }}
-            restore-keys: |
-              plt-${{ env.MSBMS_JOBNAME }}
-            path: |
-              ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
-
-        - name: Create PLTs
-          if: steps.plt_cache.outputs.cache-hit != 'true'
-          run: |
-            mkdir -p priv/plts
-            mix dialyzer --plt
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Save PLT cache
-          id: plt_cache_save
-          uses: actions/cache/save@v3
-          if: steps.plt_cache.outputs.cache-hit != 'true'
-          with:
-            key: |
-              plt-${{ env.MSBMS_JOBNAME }}
-            path: |
-              ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
-
-        - name: Run Dialyzer
-          run: mix dialyzer --format github
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-  mscmp_syst_limiter:
-    runs-on: ubuntu-latest
-    env:
-      MSBMS_PRJDIR: ./app_server/components/system/mscmp_syst_limiter
-      MSBMS_JOBNAME: mscmp_syst_limiter-${{ matrix.otp }}-${{ matrix.elixir }}
-
-    strategy:
-      matrix:
-        otp: ['26.1.2']
-        elixir: ['1.15.7']
-
-    steps:
-        - name: Checkout repository code
-          uses: actions/checkout@v3
-
-        - name: Install Elixir
-          uses: erlef/setup-beam@v1
-          with:
-            otp-version: ${{ matrix.otp }}
-            elixir-version: ${{ matrix.elixir }}
-
-        - name: Build Mix Dependencies
-          run: mix deps.get
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Run Tests
-          run: mix test
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Run Credo
-          run: mix credo
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Restore PLT cache
-          id: plt_cache
-          uses: actions/cache/restore@v3
-          with:
-            key: |
-              plt-${{ env.MSBMS_JOBNAME }}
-            restore-keys: |
-              plt-${{ env.MSBMS_JOBNAME }}
-            path: |
-              ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
-
-        - name: Create PLTs
-          if: steps.plt_cache.outputs.cache-hit != 'true'
-          run: |
-            mkdir -p priv/plts
-            mix dialyzer --plt
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Save PLT cache
-          id: plt_cache_save
-          uses: actions/cache/save@v3
-          if: steps.plt_cache.outputs.cache-hit != 'true'
-          with:
-            key: |
-              plt-${{ env.MSBMS_JOBNAME }}
-            path: |
-              ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
-
-        - name: Run Dialyzer
-          run: mix dialyzer --format github
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-  mscmp_syst_options:
-    runs-on: ubuntu-latest
-    env:
-      MSBMS_PRJDIR: ./app_server/components/system/mscmp_syst_options
-      MSBMS_JOBNAME: mscmp_syst_options-${{ matrix.otp }}-${{ matrix.elixir }}
-
-    strategy:
-      matrix:
-        otp: ['26.1.2']
-        elixir: ['1.15.7']
-
-    steps:
-        - name: Checkout repository code
-          uses: actions/checkout@v3
-
-        - name: Install Elixir
-          uses: erlef/setup-beam@v1
-          with:
-            otp-version: ${{ matrix.otp }}
-            elixir-version: ${{ matrix.elixir }}
-
-        - name: Build Mix Dependencies
-          run: mix deps.get
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Run Tests
-          run: mix test
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Run Credo
-          run: mix credo
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Restore PLT cache
-          id: plt_cache
-          uses: actions/cache/restore@v3
-          with:
-            key: |
-              plt-${{ env.MSBMS_JOBNAME }}
-            restore-keys: |
-              plt-${{ env.MSBMS_JOBNAME }}
-            path: |
-              ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
-
-        - name: Create PLTs
-          if: steps.plt_cache.outputs.cache-hit != 'true'
-          run: |
-            mkdir -p priv/plts
-            mix dialyzer --plt
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Save PLT cache
-          id: plt_cache_save
-          uses: actions/cache/save@v3
-          if: steps.plt_cache.outputs.cache-hit != 'true'
-          with:
-            key: |
-              plt-${{ env.MSBMS_JOBNAME }}
-            path: |
-              ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
-
-        - name: Run Dialyzer
-          run: mix dialyzer --format github
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-  mscmp_syst_db:
-    runs-on: ubuntu-latest
-    env:
-      MSBMS_PRJDIR: ./app_server/components/system/mscmp_syst_db
-      MSBMS_JOBNAME: mscmp_syst_db-${{ matrix.otp }}-${{ matrix.elixir }}
-
-    strategy:
-      matrix:
-        otp: ['26.1.2']
-        elixir: ['1.15.7']
-
-    services:
-      postgres:
-        image: postgres
-        env:
-          POSTGRES_USER: testing_dba
-          POSTGRES_PASSWORD: testing-dba-password
-          POSTGRES_PORT: 5432
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
-    steps:
-        - name: Checkout repository code
-          uses: actions/checkout@v3
-
-        - name: Install Elixir
-          uses: erlef/setup-beam@v1
-          with:
-            otp-version: ${{ matrix.otp }}
-            elixir-version: ${{ matrix.elixir }}
-
-        - name: Initialize Database
-          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
-
-        - name: Build Mix Dependencies
-          run: mix deps.get
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Run Tests
-          run: mix test
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Run Credo
-          run: mix credo
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Restore PLT cache
-          id: plt_cache
-          uses: actions/cache/restore@v3
-          with:
-            key: |
-              plt-${{ env.MSBMS_JOBNAME }}
-            restore-keys: |
-              plt-${{ env.MSBMS_JOBNAME }}
-            path: |
-              ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
-
-        - name: Create PLTs
-          if: steps.plt_cache.outputs.cache-hit != 'true'
-          run: |
-            mkdir -p priv/plts
-            mix dialyzer --plt
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Save PLT cache
-          id: plt_cache_save
-          uses: actions/cache/save@v3
-          if: steps.plt_cache.outputs.cache-hit != 'true'
-          with:
-            key: |
-              plt-${{ env.MSBMS_JOBNAME }}
-            path: |
-              ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
-
-        - name: Run Dialyzer
-          run: mix dialyzer --format github
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-    mscmp_syst_settings:
-    runs-on: ubuntu-latest
-    env:
-      MSBMS_PRJDIR: ./app_server/components/system/mscmp_syst_settings
-      MSBMS_JOBNAME: mscmp_syst_settings-${{ matrix.otp }}-${{ matrix.elixir }}
-
-    strategy:
-      matrix:
-        otp: ['26.1.2']
-        elixir: ['1.15.7']
-
-    services:
-      postgres:
-        image: postgres
-        env:
-          POSTGRES_USER: testing_dba
-          POSTGRES_PASSWORD: testing-dba-password
-          POSTGRES_PORT: 5432
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
-    steps:
-        - name: Checkout repository code
-          uses: actions/checkout@v3
-
-        - name: Install Elixir
-          uses: erlef/setup-beam@v1
-          with:
-            otp-version: ${{ matrix.otp }}
-            elixir-version: ${{ matrix.elixir }}
-
-        - name: Initialize Database
-          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
-
-        - name: Build Mix Dependencies
-          run: mix deps.get
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Run Tests
-          run: mix test
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Run Credo
-          run: mix credo
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Restore PLT cache
-          id: plt_cache
-          uses: actions/cache/restore@v3
-          with:
-            key: |
-              plt-${{ env.MSBMS_JOBNAME }}
-            restore-keys: |
-              plt-${{ env.MSBMS_JOBNAME }}
-            path: |
-              ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
-
-        - name: Create PLTs
-          if: steps.plt_cache.outputs.cache-hit != 'true'
-          run: |
-            mkdir -p priv/plts
-            mix dialyzer --plt
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Save PLT cache
-          id: plt_cache_save
-          uses: actions/cache/save@v3
-          if: steps.plt_cache.outputs.cache-hit != 'true'
-          with:
-            key: |
-              plt-${{ env.MSBMS_JOBNAME }}
-            path: |
-              ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
-
-        - name: Run Dialyzer
-          run: mix dialyzer --format github
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-  mscmp_syst_enums:
-    runs-on: ubuntu-latest
-    env:
-      MSBMS_PRJDIR: ./app_server/components/system/mscmp_syst_enums
-      MSBMS_JOBNAME: mscmp_syst_enums-${{ matrix.otp }}-${{ matrix.elixir }}
-
-    strategy:
-      matrix:
-        otp: ['26.1.2']
-        elixir: ['1.15.7']
-
-    services:
-      postgres:
-        image: postgres
-        env:
-          POSTGRES_USER: testing_dba
-          POSTGRES_PASSWORD: testing-dba-password
-          POSTGRES_PORT: 5432
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
-    steps:
-        - name: Checkout repository code
-          uses: actions/checkout@v3
-
-        - name: Install Elixir
-          uses: erlef/setup-beam@v1
-          with:
-            otp-version: ${{ matrix.otp }}
-            elixir-version: ${{ matrix.elixir }}
-
-        - name: Initialize Database
-          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
-
-        - name: Build Mix Dependencies
-          run: mix deps.get
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Run Tests
-          run: mix test
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Run Credo
-          run: mix credo
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Restore PLT cache
-          id: plt_cache
-          uses: actions/cache/restore@v3
-          with:
-            key: |
-              plt-${{ env.MSBMS_JOBNAME }}
-            restore-keys: |
-              plt-${{ env.MSBMS_JOBNAME }}
-            path: |
-              ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
-
-        - name: Create PLTs
-          if: steps.plt_cache.outputs.cache-hit != 'true'
-          run: |
-            mkdir -p priv/plts
-            mix dialyzer --plt
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Save PLT cache
-          id: plt_cache_save
-          uses: actions/cache/save@v3
-          if: steps.plt_cache.outputs.cache-hit != 'true'
-          with:
-            key: |
-              plt-${{ env.MSBMS_JOBNAME }}
-            path: |
-              ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
-
-        - name: Run Dialyzer
-          run: mix dialyzer --format github
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-  mscmp_syst_instance:
-    runs-on: ubuntu-latest
-    env:
-      MSBMS_PRJDIR: ./app_server/components/system/mscmp_syst_instance
-      MSBMS_JOBNAME: mscmp_syst_instance-${{ matrix.otp }}-${{ matrix.elixir }}
-
-    strategy:
-      matrix:
-        otp: ['26.1.2']
-        elixir: ['1.15.7']
-
-    services:
-      postgres:
-        image: postgres
-        env:
-          POSTGRES_USER: testing_dba
-          POSTGRES_PASSWORD: testing-dba-password
-          POSTGRES_PORT: 5432
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
-    steps:
-        - name: Checkout repository code
-          uses: actions/checkout@v3
-
-        - name: Install Elixir
-          uses: erlef/setup-beam@v1
-          with:
-            otp-version: ${{ matrix.otp }}
-            elixir-version: ${{ matrix.elixir }}
-
-        - name: Initialize Database
-          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
-
-        - name: Build Mix Dependencies
-          run: mix deps.get
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Run Unit Tests
-          run: mix test
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Run Integration Tests
-          run: mix test --only integration
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Run Credo
-          run: mix credo
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Restore PLT cache
-          id: plt_cache
-          uses: actions/cache/restore@v3
-          with:
-            key: |
-              plt-${{ env.MSBMS_JOBNAME }}
-            restore-keys: |
-              plt-${{ env.MSBMS_JOBNAME }}
-            path: |
-              ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
-
-        - name: Create PLTs
-          if: steps.plt_cache.outputs.cache-hit != 'true'
-          run: |
-            mkdir -p priv/plts
-            mix dialyzer --plt
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Save PLT cache
-          id: plt_cache_save
-          uses: actions/cache/save@v3
-          if: steps.plt_cache.outputs.cache-hit != 'true'
-          with:
-            key: |
-              plt-${{ env.MSBMS_JOBNAME }}
-            path: |
-              ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
-
-        - name: Run Dialyzer
-          run: mix dialyzer --format github
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-  mscmp_syst_authn:
-    runs-on: ubuntu-latest
-    env:
-      MSBMS_PRJDIR: ./app_server/components/system/mscmp_syst_authn
-      MSBMS_JOBNAME: mscmp_syst_authn-${{ matrix.otp }}-${{ matrix.elixir }}
-
-    strategy:
-      matrix:
-        otp: ['26.1.2']
-        elixir: ['1.15.7']
-
-    services:
-      postgres:
-        image: postgres
-        env:
-          POSTGRES_USER: testing_dba
-          POSTGRES_PASSWORD: testing-dba-password
-          POSTGRES_PORT: 5432
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
-    steps:
-        - name: Checkout repository code
-          uses: actions/checkout@v3
-
-        - name: Install Elixir
-          uses: erlef/setup-beam@v1
-          with:
-            otp-version: ${{ matrix.otp }}
-            elixir-version: ${{ matrix.elixir }}
-
-        - name: Initialize Database
-          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
-
-        - name: Build Mix Dependencies
-          run: mix deps.get
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Run Unit Tests
-          run: mix test
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Run Integration Tests
-          run: mix test --only integration
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Run Credo
-          run: mix credo
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Restore PLT cache
-          id: plt_cache
-          uses: actions/cache/restore@v3
-          with:
-            key: |
-              plt-${{ env.MSBMS_JOBNAME }}
-            restore-keys: |
-              plt-${{ env.MSBMS_JOBNAME }}
-            path: |
-              ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
-
-        - name: Create PLTs
-          if: steps.plt_cache.outputs.cache-hit != 'true'
-          run: |
-            mkdir -p priv/plts
-            mix dialyzer --plt
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Save PLT cache
-          id: plt_cache_save
-          uses: actions/cache/save@v3
-          if: steps.plt_cache.outputs.cache-hit != 'true'
-          with:
-            key: |
-              plt-${{ env.MSBMS_JOBNAME }}
-            path: |
-              ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
-
-        - name: Run Dialyzer
-          run: mix dialyzer --format github
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-  mscmp_syst_perms:
-    runs-on: ubuntu-latest
-    env:
-      MSBMS_PRJDIR: ./app_server/components/system/mscmp_syst_perms
-      MSBMS_JOBNAME: mscmp_syst_perms-${{ matrix.otp }}-${{ matrix.elixir }}
-
-    strategy:
-      matrix:
-        otp: ['26.1.2']
-        elixir: ['1.15.7']
-
-    services:
-      postgres:
-        image: postgres
-        env:
-          POSTGRES_USER: testing_dba
-          POSTGRES_PASSWORD: testing-dba-password
-          POSTGRES_PORT: 5432
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
-    steps:
-        - name: Checkout repository code
-          uses: actions/checkout@v3
-
-        - name: Install Elixir
-          uses: erlef/setup-beam@v1
-          with:
-            otp-version: ${{ matrix.otp }}
-            elixir-version: ${{ matrix.elixir }}
-
-        - name: Initialize Database
-          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
-
-        - name: Build Mix Dependencies
-          run: mix deps.get
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Run Unit Tests
-          run: mix test
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Run Integration Tests
-          run: mix test --only integration
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Run Credo
-          run: mix credo
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Restore PLT cache
-          id: plt_cache
-          uses: actions/cache/restore@v3
-          with:
-            key: |
-              plt-${{ env.MSBMS_JOBNAME }}
-            restore-keys: |
-              plt-${{ env.MSBMS_JOBNAME }}
-            path: |
-              ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
-
-        - name: Create PLTs
-          if: steps.plt_cache.outputs.cache-hit != 'true'
-          run: |
-            mkdir -p priv/plts
-            mix dialyzer --plt
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Save PLT cache
-          id: plt_cache_save
-          uses: actions/cache/save@v3
-          if: steps.plt_cache.outputs.cache-hit != 'true'
-          with:
-            key: |
-              plt-${{ env.MSBMS_JOBNAME }}
-            path: |
-              ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
-
-        - name: Run Dialyzer
-          run: mix dialyzer --format github
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-  mscmp_syst_mcp_perms:
-    runs-on: ubuntu-latest
-    env:
-      MSBMS_PRJDIR: ./app_server/components/system/mscmp_syst_mcp_perms
-      MSBMS_JOBNAME: mscmp_syst_mcp_perms-${{ matrix.otp }}-${{ matrix.elixir }}
-
-    strategy:
-      matrix:
-        otp: ['26.1.2']
-        elixir: ['1.15.7']
-
-    services:
-      postgres:
-        image: postgres
-        env:
-          POSTGRES_USER: testing_dba
-          POSTGRES_PASSWORD: testing-dba-password
-          POSTGRES_PORT: 5432
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
-    steps:
-        - name: Checkout repository code
-          uses: actions/checkout@v3
-
-        - name: Install Elixir
-          uses: erlef/setup-beam@v1
-          with:
-            otp-version: ${{ matrix.otp }}
-            elixir-version: ${{ matrix.elixir }}
-
-        - name: Initialize Database
-          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
-
-        - name: Build Mix Dependencies
-          run: mix deps.get
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Run Unit Tests
-          run: mix test
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Run Integration Tests
-          run: mix test --only integration
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Run Credo
-          run: mix credo
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Restore PLT cache
-          id: plt_cache
-          uses: actions/cache/restore@v3
-          with:
-            key: |
-              plt-${{ env.MSBMS_JOBNAME }}
-            restore-keys: |
-              plt-${{ env.MSBMS_JOBNAME }}
-            path: |
-              ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
-
-        - name: Create PLTs
-          if: steps.plt_cache.outputs.cache-hit != 'true'
-          run: |
-            mkdir -p priv/plts
-            mix dialyzer --plt
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Save PLT cache
-          id: plt_cache_save
-          uses: actions/cache/save@v3
-          if: steps.plt_cache.outputs.cache-hit != 'true'
-          with:
-            key: |
-              plt-${{ env.MSBMS_JOBNAME }}
-            path: |
-              ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
-
-        - name: Run Dialyzer
-          run: mix dialyzer --format github
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-  mscmp_syst_session:
-    runs-on: ubuntu-latest
-    env:
-      MSBMS_PRJDIR: ./app_server/components/system/mscmp_syst_session
-      MSBMS_JOBNAME: mscmp_syst_session-${{ matrix.otp }}-${{ matrix.elixir }}
-
-    strategy:
-      matrix:
-        otp: ['26.1.2']
-        elixir: ['1.15.7']
-
-    services:
-      postgres:
-        image: postgres
-        env:
-          POSTGRES_USER: testing_dba
-          POSTGRES_PASSWORD: testing-dba-password
-          POSTGRES_PORT: 5432
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
-    steps:
-        - name: Checkout repository code
-          uses: actions/checkout@v3
-
-        - name: Install Elixir
-          uses: erlef/setup-beam@v1
-          with:
-            otp-version: ${{ matrix.otp }}
-            elixir-version: ${{ matrix.elixir }}
-
-        - name: Initialize Database
-          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
-
-        - name: Build Mix Dependencies
-          run: mix deps.get
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Run Unit Tests
-          run: mix test
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Run Integration Tests
-          run: mix test --only integration
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Run Credo
-          run: mix credo
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Restore PLT cache
-          id: plt_cache
-          uses: actions/cache/restore@v3
-          with:
-            key: |
-              plt-${{ env.MSBMS_JOBNAME }}
-            restore-keys: |
-              plt-${{ env.MSBMS_JOBNAME }}
-            path: |
-              ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
-
-        - name: Create PLTs
-          if: steps.plt_cache.outputs.cache-hit != 'true'
-          run: |
-            mkdir -p priv/plts
-            mix dialyzer --plt
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Save PLT cache
-          id: plt_cache_save
-          uses: actions/cache/save@v3
-          if: steps.plt_cache.outputs.cache-hit != 'true'
-          with:
-            key: |
-              plt-${{ env.MSBMS_JOBNAME }}
-            path: |
-              ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
-
-        - name: Run Dialyzer
-          run: mix dialyzer --format github
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-   mscmp_syst_forms:
-    runs-on: ubuntu-latest
-    env:
-      MSBMS_PRJDIR: ./app_server/components/system/mscmp_syst_forms
-      MSBMS_JOBNAME: mscmp_syst_forms-${{ matrix.otp }}-${{ matrix.elixir }}
-
-    strategy:
-      matrix:
-        otp: ['26.1.2']
-        elixir: ['1.15.7']
-
-    steps:
-        - name: Checkout repository code
-          uses: actions/checkout@v3
-
-        - name: Install Elixir
-          uses: erlef/setup-beam@v1
-          with:
-            otp-version: ${{ matrix.otp }}
-            elixir-version: ${{ matrix.elixir }}
-
-        - name: Build Mix Dependencies
-          run: mix deps.get
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Run Tests
-          run: mix test
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Run Credo
-          run: mix credo
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Restore PLT cache
-          id: plt_cache
-          uses: actions/cache/restore@v3
-          with:
-            key: |
-              plt-${{ env.MSBMS_JOBNAME }}
-            restore-keys: |
-              plt-${{ env.MSBMS_JOBNAME }}
-            path: |
-              ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
-
-        - name: Create PLTs
-          if: steps.plt_cache.outputs.cache-hit != 'true'
-          run: |
-            mkdir -p priv/plts
-            mix dialyzer --plt
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Save PLT cache
-          id: plt_cache_save
-          uses: actions/cache/save@v3
-          if: steps.plt_cache.outputs.cache-hit != 'true'
-          with:
-            key: |
-              plt-${{ env.MSBMS_JOBNAME }}
-            path: |
-              ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
-
-        - name: Run Dialyzer
-          run: mix dialyzer --format github
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-  mssub_mcp:
-    runs-on: ubuntu-latest
-    env:
-      MSBMS_PRJDIR: ./app_server/subsystems/mssub_mcp
-      MSBMS_JOBNAME: mssub_mcp-${{ matrix.otp }}-${{ matrix.elixir }}
-
-    strategy:
-      matrix:
-        otp: ['26.1.2']
-        elixir: ['1.15.7']
-
-    services:
-      postgres:
-        image: postgres
-        env:
-          POSTGRES_USER: testing_dba
-          POSTGRES_PASSWORD: testing-dba-password
-          POSTGRES_PORT: 5432
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
-    steps:
-        - name: Checkout repository code
-          uses: actions/checkout@v3
-
-        - name: Install Elixir
-          uses: erlef/setup-beam@v1
-          with:
-            otp-version: ${{ matrix.otp }}
-            elixir-version: ${{ matrix.elixir }}
-
-        - name: Initialize Database
-          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
-
-        - name: Build Mix Dependencies
-          run: mix deps.get
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Run Unit Tests
-          run: mix test
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Run Integration Tests
-          run: mix test --only integration
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Run Credo
-          run: mix credo
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Restore PLT cache
-          id: plt_cache
-          uses: actions/cache/restore@v3
-          with:
-            key: |
-              plt-${{ env.MSBMS_JOBNAME }}
-            restore-keys: |
-              plt-${{ env.MSBMS_JOBNAME }}
-            path: |
-              ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
-
-        - name: Create PLTs
-          if: steps.plt_cache.outputs.cache-hit != 'true'
-          run: |
-            mkdir -p priv/plts
-            mix dialyzer --plt
-          working-directory: ${{ env.MSBMS_PRJDIR }}
-
-        - name: Save PLT cache
-          id: plt_cache_save
-          uses: actions/cache/save@v3
-          if: steps.plt_cache.outputs.cache-hit != 'true'
-          with:
-            key: |
-              plt-${{ env.MSBMS_JOBNAME }}
-            path: |
-              ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
-
-        - name: Run Dialyzer
-          run: mix dialyzer --format github
-          working-directory: ${{ env.MSBMS_PRJDIR }}
+  # mscmp_syst_utils:
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     MSBMS_PRJDIR: ./app_server/components/system/mscmp_syst_utils
+  #     MSBMS_JOBNAME: mscmp_syst_utils-${{ matrix.otp }}-${{ matrix.elixir }}
+
+  #   strategy:
+  #     matrix:
+  #       otp: ['26.1.2']
+  #       elixir: ['1.15.7']
+
+  #   steps:
+  #       - name: Checkout repository code
+  #         uses: actions/checkout@v3
+
+  #       - name: Install Elixir
+  #         uses: erlef/setup-beam@v1
+  #         with:
+  #           otp-version: ${{ matrix.otp }}
+  #           elixir-version: ${{ matrix.elixir }}
+
+  #       - name: Build Mix Dependencies
+  #         run: mix deps.get
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Run Tests
+  #         run: mix test
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Run Credo
+  #         run: mix credo
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Restore PLT cache
+  #         id: plt_cache
+  #         uses: actions/cache/restore@v3
+  #         with:
+  #           key: |
+  #             plt-${{ env.MSBMS_JOBNAME }}
+  #           restore-keys: |
+  #             plt-${{ env.MSBMS_JOBNAME }}
+  #           path: |
+  #             ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
+
+  #       - name: Create PLTs
+  #         if: steps.plt_cache.outputs.cache-hit != 'true'
+  #         run: |
+  #           mkdir -p priv/plts
+  #           mix dialyzer --plt
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Save PLT cache
+  #         id: plt_cache_save
+  #         uses: actions/cache/save@v3
+  #         if: steps.plt_cache.outputs.cache-hit != 'true'
+  #         with:
+  #           key: |
+  #             plt-${{ env.MSBMS_JOBNAME }}
+  #           path: |
+  #             ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
+
+  #       - name: Run Dialyzer
+  #         run: mix dialyzer --format github
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  # mscmp_syst_network:
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     MSBMS_PRJDIR: ./app_server/components/system/mscmp_syst_network
+  #     MSBMS_JOBNAME: mscmp_syst_network-${{ matrix.otp }}-${{ matrix.elixir }}
+
+  #   strategy:
+  #     matrix:
+  #       otp: ['26.1.2']
+  #       elixir: ['1.15.7']
+
+  #   steps:
+  #       - name: Checkout repository code
+  #         uses: actions/checkout@v3
+
+  #       - name: Install Elixir
+  #         uses: erlef/setup-beam@v1
+  #         with:
+  #           otp-version: ${{ matrix.otp }}
+  #           elixir-version: ${{ matrix.elixir }}
+
+  #       - name: Build Mix Dependencies
+  #         run: mix deps.get
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Run Tests
+  #         run: mix test
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Run Credo
+  #         run: mix credo
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Restore PLT cache
+  #         id: plt_cache
+  #         uses: actions/cache/restore@v3
+  #         with:
+  #           key: |
+  #             plt-${{ env.MSBMS_JOBNAME }}
+  #           restore-keys: |
+  #             plt-${{ env.MSBMS_JOBNAME }}
+  #           path: |
+  #             ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
+
+  #       - name: Create PLTs
+  #         if: steps.plt_cache.outputs.cache-hit != 'true'
+  #         run: |
+  #           mkdir -p priv/plts
+  #           mix dialyzer --plt
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Save PLT cache
+  #         id: plt_cache_save
+  #         uses: actions/cache/save@v3
+  #         if: steps.plt_cache.outputs.cache-hit != 'true'
+  #         with:
+  #           key: |
+  #             plt-${{ env.MSBMS_JOBNAME }}
+  #           path: |
+  #             ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
+
+  #       - name: Run Dialyzer
+  #         run: mix dialyzer --format github
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  # mscmp_syst_limiter:
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     MSBMS_PRJDIR: ./app_server/components/system/mscmp_syst_limiter
+  #     MSBMS_JOBNAME: mscmp_syst_limiter-${{ matrix.otp }}-${{ matrix.elixir }}
+
+  #   strategy:
+  #     matrix:
+  #       otp: ['26.1.2']
+  #       elixir: ['1.15.7']
+
+  #   steps:
+  #       - name: Checkout repository code
+  #         uses: actions/checkout@v3
+
+  #       - name: Install Elixir
+  #         uses: erlef/setup-beam@v1
+  #         with:
+  #           otp-version: ${{ matrix.otp }}
+  #           elixir-version: ${{ matrix.elixir }}
+
+  #       - name: Build Mix Dependencies
+  #         run: mix deps.get
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Run Tests
+  #         run: mix test
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Run Credo
+  #         run: mix credo
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Restore PLT cache
+  #         id: plt_cache
+  #         uses: actions/cache/restore@v3
+  #         with:
+  #           key: |
+  #             plt-${{ env.MSBMS_JOBNAME }}
+  #           restore-keys: |
+  #             plt-${{ env.MSBMS_JOBNAME }}
+  #           path: |
+  #             ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
+
+  #       - name: Create PLTs
+  #         if: steps.plt_cache.outputs.cache-hit != 'true'
+  #         run: |
+  #           mkdir -p priv/plts
+  #           mix dialyzer --plt
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Save PLT cache
+  #         id: plt_cache_save
+  #         uses: actions/cache/save@v3
+  #         if: steps.plt_cache.outputs.cache-hit != 'true'
+  #         with:
+  #           key: |
+  #             plt-${{ env.MSBMS_JOBNAME }}
+  #           path: |
+  #             ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
+
+  #       - name: Run Dialyzer
+  #         run: mix dialyzer --format github
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  # mscmp_syst_options:
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     MSBMS_PRJDIR: ./app_server/components/system/mscmp_syst_options
+  #     MSBMS_JOBNAME: mscmp_syst_options-${{ matrix.otp }}-${{ matrix.elixir }}
+
+  #   strategy:
+  #     matrix:
+  #       otp: ['26.1.2']
+  #       elixir: ['1.15.7']
+
+  #   steps:
+  #       - name: Checkout repository code
+  #         uses: actions/checkout@v3
+
+  #       - name: Install Elixir
+  #         uses: erlef/setup-beam@v1
+  #         with:
+  #           otp-version: ${{ matrix.otp }}
+  #           elixir-version: ${{ matrix.elixir }}
+
+  #       - name: Build Mix Dependencies
+  #         run: mix deps.get
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Run Tests
+  #         run: mix test
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Run Credo
+  #         run: mix credo
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Restore PLT cache
+  #         id: plt_cache
+  #         uses: actions/cache/restore@v3
+  #         with:
+  #           key: |
+  #             plt-${{ env.MSBMS_JOBNAME }}
+  #           restore-keys: |
+  #             plt-${{ env.MSBMS_JOBNAME }}
+  #           path: |
+  #             ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
+
+  #       - name: Create PLTs
+  #         if: steps.plt_cache.outputs.cache-hit != 'true'
+  #         run: |
+  #           mkdir -p priv/plts
+  #           mix dialyzer --plt
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Save PLT cache
+  #         id: plt_cache_save
+  #         uses: actions/cache/save@v3
+  #         if: steps.plt_cache.outputs.cache-hit != 'true'
+  #         with:
+  #           key: |
+  #             plt-${{ env.MSBMS_JOBNAME }}
+  #           path: |
+  #             ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
+
+  #       - name: Run Dialyzer
+  #         run: mix dialyzer --format github
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  # mscmp_syst_db:
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     MSBMS_PRJDIR: ./app_server/components/system/mscmp_syst_db
+  #     MSBMS_JOBNAME: mscmp_syst_db-${{ matrix.otp }}-${{ matrix.elixir }}
+
+  #   strategy:
+  #     matrix:
+  #       otp: ['26.1.2']
+  #       elixir: ['1.15.7']
+
+  #   services:
+  #     postgres:
+  #       image: postgres
+  #       env:
+  #         POSTGRES_USER: testing_dba
+  #         POSTGRES_PASSWORD: testing-dba-password
+  #         POSTGRES_PORT: 5432
+  #       ports:
+  #         - 5432:5432
+  #       options: >-
+  #         --health-cmd pg_isready
+  #         --health-interval 10s
+  #         --health-timeout 5s
+  #         --health-retries 5
+
+  #   steps:
+  #       - name: Checkout repository code
+  #         uses: actions/checkout@v3
+
+  #       - name: Install Elixir
+  #         uses: erlef/setup-beam@v1
+  #         with:
+  #           otp-version: ${{ matrix.otp }}
+  #           elixir-version: ${{ matrix.elixir }}
+
+  #       - name: Initialize Database
+  #         run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
+
+  #       - name: Build Mix Dependencies
+  #         run: mix deps.get
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Run Tests
+  #         run: mix test
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Run Credo
+  #         run: mix credo
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Restore PLT cache
+  #         id: plt_cache
+  #         uses: actions/cache/restore@v3
+  #         with:
+  #           key: |
+  #             plt-${{ env.MSBMS_JOBNAME }}
+  #           restore-keys: |
+  #             plt-${{ env.MSBMS_JOBNAME }}
+  #           path: |
+  #             ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
+
+  #       - name: Create PLTs
+  #         if: steps.plt_cache.outputs.cache-hit != 'true'
+  #         run: |
+  #           mkdir -p priv/plts
+  #           mix dialyzer --plt
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Save PLT cache
+  #         id: plt_cache_save
+  #         uses: actions/cache/save@v3
+  #         if: steps.plt_cache.outputs.cache-hit != 'true'
+  #         with:
+  #           key: |
+  #             plt-${{ env.MSBMS_JOBNAME }}
+  #           path: |
+  #             ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
+
+  #       - name: Run Dialyzer
+  #         run: mix dialyzer --format github
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #   mscmp_syst_settings:
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     MSBMS_PRJDIR: ./app_server/components/system/mscmp_syst_settings
+  #     MSBMS_JOBNAME: mscmp_syst_settings-${{ matrix.otp }}-${{ matrix.elixir }}
+
+  #   strategy:
+  #     matrix:
+  #       otp: ['26.1.2']
+  #       elixir: ['1.15.7']
+
+  #   services:
+  #     postgres:
+  #       image: postgres
+  #       env:
+  #         POSTGRES_USER: testing_dba
+  #         POSTGRES_PASSWORD: testing-dba-password
+  #         POSTGRES_PORT: 5432
+  #       ports:
+  #         - 5432:5432
+  #       options: >-
+  #         --health-cmd pg_isready
+  #         --health-interval 10s
+  #         --health-timeout 5s
+  #         --health-retries 5
+
+  #   steps:
+  #       - name: Checkout repository code
+  #         uses: actions/checkout@v3
+
+  #       - name: Install Elixir
+  #         uses: erlef/setup-beam@v1
+  #         with:
+  #           otp-version: ${{ matrix.otp }}
+  #           elixir-version: ${{ matrix.elixir }}
+
+  #       - name: Initialize Database
+  #         run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
+
+  #       - name: Build Mix Dependencies
+  #         run: mix deps.get
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Run Tests
+  #         run: mix test
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Run Credo
+  #         run: mix credo
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Restore PLT cache
+  #         id: plt_cache
+  #         uses: actions/cache/restore@v3
+  #         with:
+  #           key: |
+  #             plt-${{ env.MSBMS_JOBNAME }}
+  #           restore-keys: |
+  #             plt-${{ env.MSBMS_JOBNAME }}
+  #           path: |
+  #             ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
+
+  #       - name: Create PLTs
+  #         if: steps.plt_cache.outputs.cache-hit != 'true'
+  #         run: |
+  #           mkdir -p priv/plts
+  #           mix dialyzer --plt
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Save PLT cache
+  #         id: plt_cache_save
+  #         uses: actions/cache/save@v3
+  #         if: steps.plt_cache.outputs.cache-hit != 'true'
+  #         with:
+  #           key: |
+  #             plt-${{ env.MSBMS_JOBNAME }}
+  #           path: |
+  #             ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
+
+  #       - name: Run Dialyzer
+  #         run: mix dialyzer --format github
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  # mscmp_syst_enums:
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     MSBMS_PRJDIR: ./app_server/components/system/mscmp_syst_enums
+  #     MSBMS_JOBNAME: mscmp_syst_enums-${{ matrix.otp }}-${{ matrix.elixir }}
+
+  #   strategy:
+  #     matrix:
+  #       otp: ['26.1.2']
+  #       elixir: ['1.15.7']
+
+  #   services:
+  #     postgres:
+  #       image: postgres
+  #       env:
+  #         POSTGRES_USER: testing_dba
+  #         POSTGRES_PASSWORD: testing-dba-password
+  #         POSTGRES_PORT: 5432
+  #       ports:
+  #         - 5432:5432
+  #       options: >-
+  #         --health-cmd pg_isready
+  #         --health-interval 10s
+  #         --health-timeout 5s
+  #         --health-retries 5
+
+  #   steps:
+  #       - name: Checkout repository code
+  #         uses: actions/checkout@v3
+
+  #       - name: Install Elixir
+  #         uses: erlef/setup-beam@v1
+  #         with:
+  #           otp-version: ${{ matrix.otp }}
+  #           elixir-version: ${{ matrix.elixir }}
+
+  #       - name: Initialize Database
+  #         run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
+
+  #       - name: Build Mix Dependencies
+  #         run: mix deps.get
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Run Tests
+  #         run: mix test
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Run Credo
+  #         run: mix credo
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Restore PLT cache
+  #         id: plt_cache
+  #         uses: actions/cache/restore@v3
+  #         with:
+  #           key: |
+  #             plt-${{ env.MSBMS_JOBNAME }}
+  #           restore-keys: |
+  #             plt-${{ env.MSBMS_JOBNAME }}
+  #           path: |
+  #             ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
+
+  #       - name: Create PLTs
+  #         if: steps.plt_cache.outputs.cache-hit != 'true'
+  #         run: |
+  #           mkdir -p priv/plts
+  #           mix dialyzer --plt
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Save PLT cache
+  #         id: plt_cache_save
+  #         uses: actions/cache/save@v3
+  #         if: steps.plt_cache.outputs.cache-hit != 'true'
+  #         with:
+  #           key: |
+  #             plt-${{ env.MSBMS_JOBNAME }}
+  #           path: |
+  #             ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
+
+  #       - name: Run Dialyzer
+  #         run: mix dialyzer --format github
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  # mscmp_syst_instance:
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     MSBMS_PRJDIR: ./app_server/components/system/mscmp_syst_instance
+  #     MSBMS_JOBNAME: mscmp_syst_instance-${{ matrix.otp }}-${{ matrix.elixir }}
+
+  #   strategy:
+  #     matrix:
+  #       otp: ['26.1.2']
+  #       elixir: ['1.15.7']
+
+  #   services:
+  #     postgres:
+  #       image: postgres
+  #       env:
+  #         POSTGRES_USER: testing_dba
+  #         POSTGRES_PASSWORD: testing-dba-password
+  #         POSTGRES_PORT: 5432
+  #       ports:
+  #         - 5432:5432
+  #       options: >-
+  #         --health-cmd pg_isready
+  #         --health-interval 10s
+  #         --health-timeout 5s
+  #         --health-retries 5
+
+  #   steps:
+  #       - name: Checkout repository code
+  #         uses: actions/checkout@v3
+
+  #       - name: Install Elixir
+  #         uses: erlef/setup-beam@v1
+  #         with:
+  #           otp-version: ${{ matrix.otp }}
+  #           elixir-version: ${{ matrix.elixir }}
+
+  #       - name: Initialize Database
+  #         run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
+
+  #       - name: Build Mix Dependencies
+  #         run: mix deps.get
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Run Unit Tests
+  #         run: mix test
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Run Integration Tests
+  #         run: mix test --only integration
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Run Credo
+  #         run: mix credo
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Restore PLT cache
+  #         id: plt_cache
+  #         uses: actions/cache/restore@v3
+  #         with:
+  #           key: |
+  #             plt-${{ env.MSBMS_JOBNAME }}
+  #           restore-keys: |
+  #             plt-${{ env.MSBMS_JOBNAME }}
+  #           path: |
+  #             ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
+
+  #       - name: Create PLTs
+  #         if: steps.plt_cache.outputs.cache-hit != 'true'
+  #         run: |
+  #           mkdir -p priv/plts
+  #           mix dialyzer --plt
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Save PLT cache
+  #         id: plt_cache_save
+  #         uses: actions/cache/save@v3
+  #         if: steps.plt_cache.outputs.cache-hit != 'true'
+  #         with:
+  #           key: |
+  #             plt-${{ env.MSBMS_JOBNAME }}
+  #           path: |
+  #             ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
+
+  #       - name: Run Dialyzer
+  #         run: mix dialyzer --format github
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  # mscmp_syst_authn:
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     MSBMS_PRJDIR: ./app_server/components/system/mscmp_syst_authn
+  #     MSBMS_JOBNAME: mscmp_syst_authn-${{ matrix.otp }}-${{ matrix.elixir }}
+
+  #   strategy:
+  #     matrix:
+  #       otp: ['26.1.2']
+  #       elixir: ['1.15.7']
+
+  #   services:
+  #     postgres:
+  #       image: postgres
+  #       env:
+  #         POSTGRES_USER: testing_dba
+  #         POSTGRES_PASSWORD: testing-dba-password
+  #         POSTGRES_PORT: 5432
+  #       ports:
+  #         - 5432:5432
+  #       options: >-
+  #         --health-cmd pg_isready
+  #         --health-interval 10s
+  #         --health-timeout 5s
+  #         --health-retries 5
+
+  #   steps:
+  #       - name: Checkout repository code
+  #         uses: actions/checkout@v3
+
+  #       - name: Install Elixir
+  #         uses: erlef/setup-beam@v1
+  #         with:
+  #           otp-version: ${{ matrix.otp }}
+  #           elixir-version: ${{ matrix.elixir }}
+
+  #       - name: Initialize Database
+  #         run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
+
+  #       - name: Build Mix Dependencies
+  #         run: mix deps.get
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Run Unit Tests
+  #         run: mix test
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Run Integration Tests
+  #         run: mix test --only integration
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Run Credo
+  #         run: mix credo
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Restore PLT cache
+  #         id: plt_cache
+  #         uses: actions/cache/restore@v3
+  #         with:
+  #           key: |
+  #             plt-${{ env.MSBMS_JOBNAME }}
+  #           restore-keys: |
+  #             plt-${{ env.MSBMS_JOBNAME }}
+  #           path: |
+  #             ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
+
+  #       - name: Create PLTs
+  #         if: steps.plt_cache.outputs.cache-hit != 'true'
+  #         run: |
+  #           mkdir -p priv/plts
+  #           mix dialyzer --plt
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Save PLT cache
+  #         id: plt_cache_save
+  #         uses: actions/cache/save@v3
+  #         if: steps.plt_cache.outputs.cache-hit != 'true'
+  #         with:
+  #           key: |
+  #             plt-${{ env.MSBMS_JOBNAME }}
+  #           path: |
+  #             ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
+
+  #       - name: Run Dialyzer
+  #         run: mix dialyzer --format github
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  # mscmp_syst_perms:
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     MSBMS_PRJDIR: ./app_server/components/system/mscmp_syst_perms
+  #     MSBMS_JOBNAME: mscmp_syst_perms-${{ matrix.otp }}-${{ matrix.elixir }}
+
+  #   strategy:
+  #     matrix:
+  #       otp: ['26.1.2']
+  #       elixir: ['1.15.7']
+
+  #   services:
+  #     postgres:
+  #       image: postgres
+  #       env:
+  #         POSTGRES_USER: testing_dba
+  #         POSTGRES_PASSWORD: testing-dba-password
+  #         POSTGRES_PORT: 5432
+  #       ports:
+  #         - 5432:5432
+  #       options: >-
+  #         --health-cmd pg_isready
+  #         --health-interval 10s
+  #         --health-timeout 5s
+  #         --health-retries 5
+
+  #   steps:
+  #       - name: Checkout repository code
+  #         uses: actions/checkout@v3
+
+  #       - name: Install Elixir
+  #         uses: erlef/setup-beam@v1
+  #         with:
+  #           otp-version: ${{ matrix.otp }}
+  #           elixir-version: ${{ matrix.elixir }}
+
+  #       - name: Initialize Database
+  #         run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
+
+  #       - name: Build Mix Dependencies
+  #         run: mix deps.get
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Run Unit Tests
+  #         run: mix test
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Run Integration Tests
+  #         run: mix test --only integration
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Run Credo
+  #         run: mix credo
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Restore PLT cache
+  #         id: plt_cache
+  #         uses: actions/cache/restore@v3
+  #         with:
+  #           key: |
+  #             plt-${{ env.MSBMS_JOBNAME }}
+  #           restore-keys: |
+  #             plt-${{ env.MSBMS_JOBNAME }}
+  #           path: |
+  #             ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
+
+  #       - name: Create PLTs
+  #         if: steps.plt_cache.outputs.cache-hit != 'true'
+  #         run: |
+  #           mkdir -p priv/plts
+  #           mix dialyzer --plt
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Save PLT cache
+  #         id: plt_cache_save
+  #         uses: actions/cache/save@v3
+  #         if: steps.plt_cache.outputs.cache-hit != 'true'
+  #         with:
+  #           key: |
+  #             plt-${{ env.MSBMS_JOBNAME }}
+  #           path: |
+  #             ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
+
+  #       - name: Run Dialyzer
+  #         run: mix dialyzer --format github
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  # mscmp_syst_mcp_perms:
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     MSBMS_PRJDIR: ./app_server/components/system/mscmp_syst_mcp_perms
+  #     MSBMS_JOBNAME: mscmp_syst_mcp_perms-${{ matrix.otp }}-${{ matrix.elixir }}
+
+  #   strategy:
+  #     matrix:
+  #       otp: ['26.1.2']
+  #       elixir: ['1.15.7']
+
+  #   services:
+  #     postgres:
+  #       image: postgres
+  #       env:
+  #         POSTGRES_USER: testing_dba
+  #         POSTGRES_PASSWORD: testing-dba-password
+  #         POSTGRES_PORT: 5432
+  #       ports:
+  #         - 5432:5432
+  #       options: >-
+  #         --health-cmd pg_isready
+  #         --health-interval 10s
+  #         --health-timeout 5s
+  #         --health-retries 5
+
+  #   steps:
+  #       - name: Checkout repository code
+  #         uses: actions/checkout@v3
+
+  #       - name: Install Elixir
+  #         uses: erlef/setup-beam@v1
+  #         with:
+  #           otp-version: ${{ matrix.otp }}
+  #           elixir-version: ${{ matrix.elixir }}
+
+  #       - name: Initialize Database
+  #         run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
+
+  #       - name: Build Mix Dependencies
+  #         run: mix deps.get
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Run Unit Tests
+  #         run: mix test
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Run Integration Tests
+  #         run: mix test --only integration
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Run Credo
+  #         run: mix credo
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Restore PLT cache
+  #         id: plt_cache
+  #         uses: actions/cache/restore@v3
+  #         with:
+  #           key: |
+  #             plt-${{ env.MSBMS_JOBNAME }}
+  #           restore-keys: |
+  #             plt-${{ env.MSBMS_JOBNAME }}
+  #           path: |
+  #             ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
+
+  #       - name: Create PLTs
+  #         if: steps.plt_cache.outputs.cache-hit != 'true'
+  #         run: |
+  #           mkdir -p priv/plts
+  #           mix dialyzer --plt
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Save PLT cache
+  #         id: plt_cache_save
+  #         uses: actions/cache/save@v3
+  #         if: steps.plt_cache.outputs.cache-hit != 'true'
+  #         with:
+  #           key: |
+  #             plt-${{ env.MSBMS_JOBNAME }}
+  #           path: |
+  #             ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
+
+  #       - name: Run Dialyzer
+  #         run: mix dialyzer --format github
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  # mscmp_syst_session:
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     MSBMS_PRJDIR: ./app_server/components/system/mscmp_syst_session
+  #     MSBMS_JOBNAME: mscmp_syst_session-${{ matrix.otp }}-${{ matrix.elixir }}
+
+  #   strategy:
+  #     matrix:
+  #       otp: ['26.1.2']
+  #       elixir: ['1.15.7']
+
+  #   services:
+  #     postgres:
+  #       image: postgres
+  #       env:
+  #         POSTGRES_USER: testing_dba
+  #         POSTGRES_PASSWORD: testing-dba-password
+  #         POSTGRES_PORT: 5432
+  #       ports:
+  #         - 5432:5432
+  #       options: >-
+  #         --health-cmd pg_isready
+  #         --health-interval 10s
+  #         --health-timeout 5s
+  #         --health-retries 5
+
+  #   steps:
+  #       - name: Checkout repository code
+  #         uses: actions/checkout@v3
+
+  #       - name: Install Elixir
+  #         uses: erlef/setup-beam@v1
+  #         with:
+  #           otp-version: ${{ matrix.otp }}
+  #           elixir-version: ${{ matrix.elixir }}
+
+  #       - name: Initialize Database
+  #         run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
+
+  #       - name: Build Mix Dependencies
+  #         run: mix deps.get
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Run Unit Tests
+  #         run: mix test
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Run Integration Tests
+  #         run: mix test --only integration
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Run Credo
+  #         run: mix credo
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Restore PLT cache
+  #         id: plt_cache
+  #         uses: actions/cache/restore@v3
+  #         with:
+  #           key: |
+  #             plt-${{ env.MSBMS_JOBNAME }}
+  #           restore-keys: |
+  #             plt-${{ env.MSBMS_JOBNAME }}
+  #           path: |
+  #             ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
+
+  #       - name: Create PLTs
+  #         if: steps.plt_cache.outputs.cache-hit != 'true'
+  #         run: |
+  #           mkdir -p priv/plts
+  #           mix dialyzer --plt
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Save PLT cache
+  #         id: plt_cache_save
+  #         uses: actions/cache/save@v3
+  #         if: steps.plt_cache.outputs.cache-hit != 'true'
+  #         with:
+  #           key: |
+  #             plt-${{ env.MSBMS_JOBNAME }}
+  #           path: |
+  #             ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
+
+  #       - name: Run Dialyzer
+  #         run: mix dialyzer --format github
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #  mscmp_syst_forms:
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     MSBMS_PRJDIR: ./app_server/components/system/mscmp_syst_forms
+  #     MSBMS_JOBNAME: mscmp_syst_forms-${{ matrix.otp }}-${{ matrix.elixir }}
+
+  #   strategy:
+  #     matrix:
+  #       otp: ['26.1.2']
+  #       elixir: ['1.15.7']
+
+  #   steps:
+  #       - name: Checkout repository code
+  #         uses: actions/checkout@v3
+
+  #       - name: Install Elixir
+  #         uses: erlef/setup-beam@v1
+  #         with:
+  #           otp-version: ${{ matrix.otp }}
+  #           elixir-version: ${{ matrix.elixir }}
+
+  #       - name: Build Mix Dependencies
+  #         run: mix deps.get
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Run Tests
+  #         run: mix test
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Run Credo
+  #         run: mix credo
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Restore PLT cache
+  #         id: plt_cache
+  #         uses: actions/cache/restore@v3
+  #         with:
+  #           key: |
+  #             plt-${{ env.MSBMS_JOBNAME }}
+  #           restore-keys: |
+  #             plt-${{ env.MSBMS_JOBNAME }}
+  #           path: |
+  #             ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
+
+  #       - name: Create PLTs
+  #         if: steps.plt_cache.outputs.cache-hit != 'true'
+  #         run: |
+  #           mkdir -p priv/plts
+  #           mix dialyzer --plt
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Save PLT cache
+  #         id: plt_cache_save
+  #         uses: actions/cache/save@v3
+  #         if: steps.plt_cache.outputs.cache-hit != 'true'
+  #         with:
+  #           key: |
+  #             plt-${{ env.MSBMS_JOBNAME }}
+  #           path: |
+  #             ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
+
+  #       - name: Run Dialyzer
+  #         run: mix dialyzer --format github
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  # mssub_mcp:
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     MSBMS_PRJDIR: ./app_server/subsystems/mssub_mcp
+  #     MSBMS_JOBNAME: mssub_mcp-${{ matrix.otp }}-${{ matrix.elixir }}
+
+  #   strategy:
+  #     matrix:
+  #       otp: ['26.1.2']
+  #       elixir: ['1.15.7']
+
+  #   services:
+  #     postgres:
+  #       image: postgres
+  #       env:
+  #         POSTGRES_USER: testing_dba
+  #         POSTGRES_PASSWORD: testing-dba-password
+  #         POSTGRES_PORT: 5432
+  #       ports:
+  #         - 5432:5432
+  #       options: >-
+  #         --health-cmd pg_isready
+  #         --health-interval 10s
+  #         --health-timeout 5s
+  #         --health-retries 5
+
+  #   steps:
+  #       - name: Checkout repository code
+  #         uses: actions/checkout@v3
+
+  #       - name: Install Elixir
+  #         uses: erlef/setup-beam@v1
+  #         with:
+  #           otp-version: ${{ matrix.otp }}
+  #           elixir-version: ${{ matrix.elixir }}
+
+  #       - name: Initialize Database
+  #         run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
+
+  #       - name: Build Mix Dependencies
+  #         run: mix deps.get
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Run Unit Tests
+  #         run: mix test
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Run Integration Tests
+  #         run: mix test --only integration
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Run Credo
+  #         run: mix credo
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Restore PLT cache
+  #         id: plt_cache
+  #         uses: actions/cache/restore@v3
+  #         with:
+  #           key: |
+  #             plt-${{ env.MSBMS_JOBNAME }}
+  #           restore-keys: |
+  #             plt-${{ env.MSBMS_JOBNAME }}
+  #           path: |
+  #             ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
+
+  #       - name: Create PLTs
+  #         if: steps.plt_cache.outputs.cache-hit != 'true'
+  #         run: |
+  #           mkdir -p priv/plts
+  #           mix dialyzer --plt
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
+
+  #       - name: Save PLT cache
+  #         id: plt_cache_save
+  #         uses: actions/cache/save@v3
+  #         if: steps.plt_cache.outputs.cache-hit != 'true'
+  #         with:
+  #           key: |
+  #             plt-${{ env.MSBMS_JOBNAME }}
+  #           path: |
+  #             ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
+
+  #       - name: Run Dialyzer
+  #         run: mix dialyzer --format github
+  #         working-directory: ${{ env.MSBMS_PRJDIR }}
