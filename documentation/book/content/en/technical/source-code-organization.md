@@ -25,6 +25,7 @@ The MuseBMS source and documentation are managed using a single <a href="https:/
 │   │       ├── mscmp_syst_instance
 │   │       ├── mscmp_syst_limiter
 │   │       ├── mscmp_syst_mcp_perms
+│   │       ├── mscmp_syst_network
 │   │       ├── mscmp_syst_options
 │   │       ├── mscmp_syst_perms
 │   │       ├── mscmp_syst_session
