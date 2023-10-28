@@ -51,7 +51,7 @@ jobs:
             restore-keys: |
               plt-${{ env.MSBMS_JOBNAME }}
             path: |
-              priv/plts
+              ${{format('{0}/priv/plts', env.MSBMS_PRJDIR)}}
 
         - name: Create PLTs
           if: steps.plt_cache.outputs.cache-hit != 'true'
