@@ -27,3 +27,6 @@ mscmp_syst_perms-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+
+# Ignore our PLT directory since those aren't versioned
+priv/plts
