@@ -27,3 +27,6 @@ erl_crash.dump
 
 # Ignore our working Mnesia directory.
 /.mnesia/
+
+# Ignore our PLT directory since those aren't versioned
+priv/plts

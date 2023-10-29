@@ -30,3 +30,6 @@ mscmp_syst_athn-*.tar
 
 # Ignore our working Mnesia directory.
 /.mnesia/
+
+# Ignore our PLT directory since those aren't versioned
+priv/plts
