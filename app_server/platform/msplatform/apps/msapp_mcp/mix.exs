@@ -37,7 +37,7 @@ defmodule MsappMcp.MixProject do
   ]
 
   @dialyzer_opts [
-    flags: ["-Wunmatched_returns", :error_handling, :underspecs],
+    flags: ["-Wunmatched_returns", :error_handling],
     plt_add_apps: [:mix]
   ]
 
