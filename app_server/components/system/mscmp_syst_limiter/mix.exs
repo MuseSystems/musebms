@@ -30,7 +30,7 @@ defmodule MscmpSystLimiter.MixProject do
 
   @dialyzer_opts [
     flags: ["-Wunmatched_returns", :error_handling, :underspecs],
-    plt_add_apps: [:mix, :hammer]
+    plt_add_apps: [:mix, :hammer, :ex_unit]
   ]
 
   # ------------------------------------------------------------

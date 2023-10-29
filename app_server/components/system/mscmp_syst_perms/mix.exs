@@ -30,7 +30,7 @@ defmodule MscmpSystPerms.MixProject do
 
   @dialyzer_opts [
     flags: ["-Wunmatched_returns", :error_handling, :underspecs],
-    plt_add_apps: [:mix]
+    plt_add_apps: [:mix, :ex_unit]
   ]
 
   # ------------------------------------------------------------

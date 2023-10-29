@@ -28,6 +28,11 @@ defmodule MscmpSystOptions.MixProject do
     {:mscmp_syst_db, path: "../mscmp_syst_db"}
   ]
 
+  @dialyzer_opts [
+    flags: ["-Wunmatched_returns", :error_handling, :underspecs],
+    plt_add_apps: [:mix, :ex_unit]
+  ]
+
   # ------------------------------------------------------------
 
   def project do
@@ -40,6 +45,7 @@ defmodule MscmpSystOptions.MixProject do
       deps: @deps,
       build_embedded: in_production,
       start_permanent: in_production,
+      dialyzer: @dialyzer_opts,
       docs: [
         name: "MscmpSystOptions",
         main: "MscmpSystOptions",
