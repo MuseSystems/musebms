@@ -23,7 +23,7 @@ defmodule SettingsTestCase do
   end
 
   setup do
-    MscmpSystSettings.put_settings_service(:settings_instance)
+    _ = MscmpSystSettings.put_settings_service(:settings_instance)
     :ok
   end
 end
