@@ -23,7 +23,7 @@ defmodule InstanceMgrTestCase do
   end
 
   setup do
-    MscmpSystEnums.put_enums_service(:instance_mgr)
+    _ = MscmpSystEnums.put_enums_service(:instance_mgr)
     :ok
   end
 end

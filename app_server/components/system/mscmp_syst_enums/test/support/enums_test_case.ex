@@ -23,7 +23,7 @@ defmodule EnumsTestCase do
   end
 
   setup do
-    MscmpSystEnums.put_enums_service(:enums_instance)
+    _ = MscmpSystEnums.put_enums_service(:enums_instance)
     :ok
   end
 end
