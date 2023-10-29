@@ -151,7 +151,10 @@ defmodule MscmpSystOptions do
       iex> MscmpSystOptions.get_global_dbserver_name(config_options)
       "global_db"
   """
-  @spec get_global_dbserver_name(map()) :: String.t()
+  @spec get_global_dbserver_name(%{
+          required(:global_dbserver_name) => String.t(),
+          optional(any()) => any()
+        }) :: String.t()
   defdelegate get_global_dbserver_name(options), to: OptionsParser
 
   @doc section: :options_parsing
@@ -194,7 +197,10 @@ defmodule MscmpSystOptions do
       iex> MscmpSystOptions.get_global_db_password(config_options)
       "(eXI0BU&elq1(mvw"
   """
-  @spec get_global_db_password(map()) :: String.t()
+  @spec get_global_db_password(%{
+          required(:global_db_password) => String.t(),
+          optional(any()) => any()
+        }) :: String.t()
   defdelegate get_global_db_password(options), to: OptionsParser
 
   @doc section: :options_parsing
@@ -212,7 +218,10 @@ defmodule MscmpSystOptions do
       iex> MscmpSystOptions.get_global_db_pool_size(config_options)
       10
   """
-  @spec get_global_db_pool_size(map()) :: non_neg_integer()
+  @spec get_global_db_pool_size(%{
+          required(:global_db_pool_size) => String.t(),
+          optional(any()) => any()
+        }) :: non_neg_integer()
   defdelegate get_global_db_pool_size(options), to: OptionsParser
 
   @doc section: :options_parsing
@@ -237,7 +246,10 @@ defmodule MscmpSystOptions do
       iex> MscmpSystOptions.get_global_pepper_value(config_options)
       "jTtEdXRExP5YXHeARQ1W66lP6wDc9GyOvhFPvwnHhtc="
   """
-  @spec get_global_pepper_value(map()) :: binary()
+  @spec get_global_pepper_value(%{
+          required(:global_pepper_value) => String.t(),
+          optional(any()) => any()
+        }) :: binary()
   defdelegate get_global_pepper_value(options), to: OptionsParser
 
   @doc section: :options_parsing
@@ -325,8 +337,10 @@ defmodule MscmpSystOptions do
       ]
 
   """
-  @spec list_dbservers(map(), list(Types.server_pool())) ::
-          list(MscmpSystDb.Types.DbServer.t())
+  @spec list_dbservers(
+          %{required(:dbserver) => map(), optional(any()) => any()},
+          list(Types.server_pool())
+        ) :: list(MscmpSystDb.Types.DbServer.t())
   defdelegate list_dbservers(options, filters \\ []), to: OptionsParser
 
   @doc section: :options_parsing

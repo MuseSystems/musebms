@@ -22,7 +22,10 @@ defmodule MscmpSystOptions.Impl.OptionsParser do
   #
   ######
 
-  @spec get_global_dbserver_name(map()) :: String.t()
+  @spec get_global_dbserver_name(%{
+          required(:global_dbserver_name) => String.t(),
+          optional(any()) => any()
+        }) :: String.t()
   def get_global_dbserver_name(options) when is_map(options), do: options.global_dbserver_name
 
   @spec get_global_dbserver(map()) :: MscmpSystDb.Types.DbServer.t()
@@ -31,13 +34,22 @@ defmodule MscmpSystOptions.Impl.OptionsParser do
     |> dbserver_map_to_struct()
   end
 
-  @spec get_global_db_password(map()) :: String.t()
+  @spec get_global_db_password(%{
+          required(:global_db_password) => String.t(),
+          optional(any()) => any()
+        }) :: String.t()
   def get_global_db_password(%{} = options), do: options.global_db_password
 
-  @spec get_global_db_pool_size(map()) :: non_neg_integer()
+  @spec get_global_db_pool_size(%{
+          required(:global_db_pool_size) => String.t(),
+          optional(any()) => any()
+        }) :: non_neg_integer()
   def get_global_db_pool_size(%{} = options), do: options.global_db_pool_size
 
-  @spec get_global_pepper_value(map()) :: binary()
+  @spec get_global_pepper_value(%{
+          required(:global_pepper_value) => String.t(),
+          optional(any()) => any()
+        }) :: binary()
   def get_global_pepper_value(options) when is_map(options), do: options.global_pepper_value
 
   @spec get_dbserver_by_name(map(), String.t()) :: MscmpSystDb.Types.DbServer.t()
@@ -49,7 +61,10 @@ defmodule MscmpSystOptions.Impl.OptionsParser do
   @spec list_available_server_pools(map()) :: list(Types.server_pool())
   def list_available_server_pools(options), do: options[:available_server_pools]
 
-  @spec list_dbservers(map(), list(Types.server_pool())) :: list(MscmpSystDb.Types.DbServer.t())
+  @spec list_dbservers(
+          %{required(:dbserver) => map(), optional(any()) => any()},
+          list(Types.server_pool())
+        ) :: list(MscmpSystDb.Types.DbServer.t())
   def list_dbservers(options, filters) when is_map(options),
     do: maybe_filter_dbservers_by_server_pool(options.dbserver, filters)
 
