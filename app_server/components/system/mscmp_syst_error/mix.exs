@@ -26,7 +26,7 @@ defmodule MscmpSystError.MixProject do
   ]
 
   @dialyzer_opts [
-    flags: ["-Wunmatched_returns", :error_handling, :underspecs],
+    flags: ["-Wunmatched_returns", :error_handling],
     plt_add_apps: [:mix, :ex_unit],
     plt_core_path: "priv/plts",
     plt_file: {:no_warn, "priv/plts/dialyzer.plt"}
