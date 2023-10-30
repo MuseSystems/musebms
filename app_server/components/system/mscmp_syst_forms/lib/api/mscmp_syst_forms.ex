@@ -477,9 +477,9 @@ defmodule MscmpSystForms do
     `MscmpSystForms.finish_processing_override/2` functions.
 
     * `msrd_user_perms` - The relevant permission grants of the current user.
-    This is a map conforming to the `t:MscmpSystPerms.perm_grants/0` type.  The
-    permission grants are used as a filter for determining what the user may see
-    in terms of data and do in terms of form functionality.
+    This is a map conforming to the `t:MscmpSystPerms.Types.perm_grants/0` type.
+    The permission grants are used as a filter for determining what the user may
+    see in terms of data and do in terms of form functionality.
 
   ## Parameters
 
