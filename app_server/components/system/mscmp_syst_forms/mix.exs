@@ -60,7 +60,8 @@ defmodule MscmpSystForms.MixProject do
         deps: [
           mscmp_syst_utils: "../../../../documentation/technical/app_server/mscmp_syst_utils",
           mscmp_syst_error: "../../../../documentation/technical/app_server/mscmp_syst_error",
-          mscmp_syst_db: "../../../../documentation/technical/app_server/mscmp_syst_db"
+          mscmp_syst_db: "../../../../documentation/technical/app_server/mscmp_syst_db",
+          mscmp_syst_perms: "../../../../documentation/technical/app_server/mscmp_syst_perms"
         ],
         groups_for_functions: [
           Containers: &(&1[:section] == :container_components),
