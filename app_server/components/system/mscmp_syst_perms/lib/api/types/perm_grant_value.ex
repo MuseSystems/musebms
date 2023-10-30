@@ -1,5 +1,5 @@
 # Source File: perm_grant_value.ex
-# Location:    musebms/app_server/components/system/mscmp_syst_perms/lib/types/perm_grant_value.ex
+# Location:    musebms/app_server/components/system/mscmp_syst_perms/lib/api/types/perm_grant_value.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
