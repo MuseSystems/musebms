@@ -197,13 +197,16 @@ my_app_web
 
 my_app
 └── lib
-    └── msform
-        ├── my_form
-        │   ├── actions.ex
-        │   ├── data.ex
-        │   ├── definitions.ex
-        │   └── types.ex
-        └── my_form.ex
+    ├── api
+    │   └── msform
+    │       └── my_form.ex
+    └── impl
+        └── msform
+            └── my_form
+                ├── actions.ex
+                ├── data.ex
+                └── definitions.ex
+
 ```
 > #### Note {: .neutral}
 >
@@ -257,56 +260,61 @@ my_app
 
   #### Sub-directories & Files
 
-    * `msform`
+    * `api/msform`
 
-      This directory holds source files and sub-directories for defining form
-      data, defining the abstract configuration of form components, and includes
-      our form controller logic which calls our externally defined business
-      logic in response to user interactions.
+      This directory holds the source files which define the API to the form
+      which is used by the form logic defined in `my_app_web`.
 
       For each form, we define a single Elixir source file named after the name
-      of the form it exists to support.  We also create a sub-directory also
-      named after the form.
+      of the form it exists to support.
 
-    * `msform/my_form.ex`
+    * `api/msform/my_form.ex`
 
       This Elixir source file defines a single module in the `Msform` namespace
       which implements the `MscmpSystForms` behavior (typically with
       `use MscmpSystForms`).  This module also defines a struct of the form's
       backing data using `Ecto.Schema.embedded_schema/1` so that we can use the
-      fully data mapping and validation capability of both Ecto and Phoenix
+      full data mapping and validation capability of both Ecto and Phoenix
       forms.
 
       Finally this module also defines an API for the form which includes the
-      implementation of the `MscmpSystForms` Behaviour callbacks and functions
-      to expose other controller-like logic as appropriate to the forms specific
-      needs.  Note that the API is typically delegating to specific source files
-      and internal modules written in the `msform/my_form/*.ex` files.
+      `defdelegate` calls for the `MscmpSystForms` Behaviour callbacks and
+      functions to expose other controller-like logic as appropriate to the
+      forms specific needs.  Note that the API is typically delegating to
+      specific source files and internal modules written in the
+      `impl/msform/my_form/*.ex` files.
 
-    * `msform/my_form/actions.ex`
+      Public facing types for the form are also defined in this file. Usually
+      this will contain the definition of `t()` for the embedded schema and the
+      a type `parameters` for use in typespecs associated with Changeset
+      processing.  Since functions like `Ecto.Changeset.cast/4` require their
+      'params' argument to be represented as a map and since we know the
+      possible valid structures of the map we can define a typespec to help
+      documenting that structure.
+
+    * `impl/msform`
+
+      This directory holds the implementations of form related business logic.
+      The source files defining the business logic for each form is kept in a
+      sub-directory named after the form's name.  This logic is broken out into
+      topically oriented source files (`actions.ex`, `data.ex`, and
+      `definitions.ex`) as described below.
+
+    * `impl/msform/my_form/actions.ex`
 
       This source file typically defines a single module for the form
       implementing the controller-like actions which are initiated from the
       user interface or other sources the form should respond to (e.g. PubSub
       messages).
 
-    * `msform/my_form/data.ex`
+    * `impl/msform/my_form/data.ex`
 
       Typically defines a single module containing functions which implement
       form data validation via Changeset processing.
 
-    * `msform/my_form/definitions.ex`
+    * `impl/msform/my_form/definitions.ex`
 
       This file contains a single module directed at resolving a form's
       "Definitional Concerns".  In this module we find the implementation of the
       `c:MscmpSystForms.get_form_config/0` and
       `c:MscmpSystForms.get_form_modes/0` functions.
-
-    * `msform/my_form/types.ex`
-
-      A module to define/document form specific typespecs.  Usually this will
-      at least contain a type `parameters` for use in typespecs associated with
-      Changeset processing.  Since functions like `Ecto.Changeset.cast/4`
-      require their 'params' argument to be represented as a map and since we
-      know the possible valid structures of the map we can define a typespec to
-      help documenting that structure.
