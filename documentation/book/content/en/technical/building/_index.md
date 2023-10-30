@@ -4,7 +4,7 @@ linkTitle = "Build Processes"
 description = "Overview of building various pieces of our application including application releases and documentation."
 draft = false
 
-weight = 40
+weight = 50
 +++
 
 There are several project artifacts which are subject to a build process prior
