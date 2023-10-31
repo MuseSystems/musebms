@@ -1,5 +1,5 @@
-# Source File: types.ex
-# Location:    musebms/app_server/components/system/mscmp_syst_groups/lib/types.ex
+# Source File: mscmp_syst_groups.ex
+# Location:    musebms/app_server/components/system/mscmp_syst_groups/lib/api/mscmp_syst_groups.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,12 +10,5 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule MscmpSystGroups.Types do
-  @type group_functional_type_name() :: String.t()
-
-  @type group_name() :: String.t()
-
-  @type group_type_item_name() :: String.t()
-
-  @type group_type_name() :: String.t()
+defmodule MscmpSystGroups do
 end
