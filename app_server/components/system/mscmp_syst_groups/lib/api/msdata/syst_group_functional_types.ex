@@ -1,5 +1,5 @@
 # Source File: syst_group_functional_types.ex
-# Location:    musebms/app_server/components/system/mscmp_syst_groups/lib/msdata/syst_group_functional_types.ex
+# Location:    musebms/app_server/components/system/mscmp_syst_groups/lib/api/msdata/syst_group_functional_types.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

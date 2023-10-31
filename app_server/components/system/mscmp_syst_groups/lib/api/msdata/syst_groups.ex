@@ -1,5 +1,5 @@
-# Source File: syst_group_types.ex
-# Location:    musebms/app_server/components/system/mscmp_syst_groups/lib/msdata/syst_group_types.ex
+# Source File: syst_groups.ex
+# Location:    musebms/app_server/components/system/mscmp_syst_groups/lib/api/msdata/syst_groups.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,11 +10,10 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule Msdata.SystGroupTypes do
+defmodule Msdata.SystGroups do
   @moduledoc """
-  Definition of Group Types which allow for both system and user defined types
-  of groups which are associated with specific areas of application
-  functionality (via Group Functional Type assignment).
+  Defines individual system and user defined Groups with are used for
+  organization throughout the application.
 
   Defined in `MscmpSystGroups`.
   """
@@ -25,9 +24,10 @@ defmodule Msdata.SystGroupTypes do
 
   @schema_prefix "ms_syst"
 
-  schema "syst_group_types" do
+  schema "syst_groups" do
     field(:internal_name, :string)
     field(:display_name, :string)
+    field(:external_name, :string)
     field(:syst_defined, :boolean)
     field(:user_maintainable, :boolean)
     field(:syst_description, :string)
@@ -40,18 +40,21 @@ defmodule Msdata.SystGroupTypes do
     field(:diag_row_version, :integer)
     field(:diag_update_count, :integer, load_in_query: false)
 
-    belongs_to(:functional_type, Msdata.SystGroupFunctionalTypes)
+    belongs_to(:parent_group, Msdata.SystGroups)
+    belongs_to(:group_type_item, Msdata.SystGroupTypeItems)
 
-    has_many(:group_type_items, Msdata.SystGroupTypeItems, foreign_key: :group_type_id)
+    has_many(:child_groups, Msdata.SystGroups, foreign_key: :parent_group_id)
   end
 
   @type t() ::
           %__MODULE__{
             __meta__: Ecto.Schema.Metadata.t(),
             id: Ecto.UUID.t() | nil,
-            internal_name: Types.group_functional_type_name() | nil,
+            internal_name: Types.group_name() | nil,
             display_name: String.t() | nil,
-            functional_type_id: Ecto.UUID.t() | nil,
+            external_name: String.t() | nil,
+            parent_group_id: Ecto.UUID.t() | nil,
+            group_type_item_id: Ecto.UUID.t() | nil,
             syst_defined: boolean() | nil,
             user_maintainable: boolean() | nil,
             syst_description: String.t() | nil,

@@ -1,5 +1,5 @@
-# Source File: syst_groups.ex
-# Location:    musebms/app_server/components/system/mscmp_syst_groups/lib/msdata/syst_groups.ex
+# Source File: syst_group_type_items.ex
+# Location:    musebms/app_server/components/system/mscmp_syst_groups/lib/api/msdata/syst_group_type_items.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,10 +10,11 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule Msdata.SystGroups do
+defmodule Msdata.SystGroupTypeItems do
   @moduledoc """
-  Defines individual system and user defined Groups with are used for
-  organization throughout the application.
+  Defines the hierarchy levels of a referenced Group Type.  Groups of the
+  specific Group Type are expected to conform to the hierarchy created by these
+  records.
 
   Defined in `MscmpSystGroups`.
   """
@@ -24,14 +25,11 @@ defmodule Msdata.SystGroups do
 
   @schema_prefix "ms_syst"
 
-  schema "syst_groups" do
+  schema "syst_group_type_items" do
     field(:internal_name, :string)
     field(:display_name, :string)
     field(:external_name, :string)
-    field(:syst_defined, :boolean)
-    field(:user_maintainable, :boolean)
-    field(:syst_description, :string)
-    field(:user_description, :string)
+    field(:hierarchy_depth, :integer)
     field(:diag_timestamp_created, :utc_datetime)
     field(:diag_role_created, :string, load_in_query: false)
     field(:diag_timestamp_modified, :utc_datetime)
@@ -40,25 +38,20 @@ defmodule Msdata.SystGroups do
     field(:diag_row_version, :integer)
     field(:diag_update_count, :integer, load_in_query: false)
 
-    belongs_to(:parent_group, Msdata.SystGroups)
-    belongs_to(:group_type_item, Msdata.SystGroupTypeItems)
+    belongs_to(:group_type, Msdata.SystGroupTypes)
 
-    has_many(:child_groups, Msdata.SystGroups, foreign_key: :parent_group_id)
+    has_many(:groups, Msdata.SystGroups, foreign_key: :group_type_item_id)
   end
 
   @type t() ::
           %__MODULE__{
             __meta__: Ecto.Schema.Metadata.t(),
             id: Ecto.UUID.t() | nil,
-            internal_name: Types.group_name() | nil,
+            internal_name: Types.group_type_item_name() | nil,
             display_name: String.t() | nil,
             external_name: String.t() | nil,
-            parent_group_id: Ecto.UUID.t() | nil,
-            group_type_item_id: Ecto.UUID.t() | nil,
-            syst_defined: boolean() | nil,
-            user_maintainable: boolean() | nil,
-            syst_description: String.t() | nil,
-            user_description: String.t() | nil,
+            group_type_id: Ecto.UUID.t() | nil,
+            hierarchy_depth: integer() | nil,
             diag_timestamp_created: DateTime.t() | nil,
             diag_role_created: String.t() | nil,
             diag_timestamp_modified: DateTime.t() | nil,
