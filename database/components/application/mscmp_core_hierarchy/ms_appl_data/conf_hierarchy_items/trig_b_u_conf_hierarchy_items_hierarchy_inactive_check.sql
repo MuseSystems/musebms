@@ -19,7 +19,7 @@ BEGIN
     IF
         (new.hierarchy_depth != old.hierarchy_depth
                 OR new.required != old.required
-                OR new.allow_node_refs != old.allow_node_refs)
+                OR new.allow_leaf_nodes != old.allow_leaf_nodes)
                 AND ( SELECT eft.internal_name = 'hierarchy_states_active'
                       FROM
                           ms_appl_data.conf_hierarchies ch

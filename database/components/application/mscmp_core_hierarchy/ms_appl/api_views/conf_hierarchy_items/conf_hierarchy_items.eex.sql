@@ -19,7 +19,7 @@ SELECT
   , hierarchy_id
   , hierarchy_depth
   , required
-  , allow_node_refs
+  , allow_leaf_nodes
   , diag_timestamp_created
   , diag_role_created
   , diag_timestamp_modified
@@ -144,23 +144,25 @@ value may be updated with the understanding that all records meet previously
 described consistency rules prior to the Hierarchy being set to an active state.$DOC$;
 
 COMMENT ON
-    COLUMN ms_appl.conf_hierarchy_items.allow_node_refs IS
+    COLUMN ms_appl.conf_hierarchy_items.allow_leaf_nodes IS
 $DOC$Indicates to implementing Components that this Hierarchy Item level can be
-associated with "nodes". Nodes are not defined in the mscmp_core_hierarchy
-Component, but are rather defined by Hierarchy implementing Components.  An
-example of a node would be an application menu implementing Component defining
-references/links to specific application functionality which are then displayed
-associated to branches of a tree structure (menu/sub-menu/etc.)  The links are
-nodes and the branchs of the menu are representations of the Hierarchy Items.
+associated with "Leaf Nodes". Leaf Nodes are not defined in the
+mscmp_core_hierarchy Component, but are rather defined by Hierarchy implementing
+Components.  Leaf Nodes are the records which the Branch Nodes/Hierarchy
+definition are organizing.  An example of a Leaf Node would be an application
+menu implementing Component defining references/links to specific application
+functionality which are then displayed associated to branches of a tree
+structure (menu/sub-menu/ etc.)  The links are Leaf Nodes and the branches of
+the menu are Branch Nodes: representations of the Hierarchy Items.
 
 If this value is true, it means this Hierarchy Item record may be associated
-directly with nodes.  If false, nodes must be associated with other levels of
-the Hierarchy.
+directly with Leaf Nodes.  If false, Leaf Nodes must be associated with other
+levels of the Hierarchy.
 
-The bottom/lowest level Hierarchy Item must always be marked as
-allow_node_refs true.  Higher than the lowest Hierarchy Item level may
-arbitrarily allow or disallow node associations as the implementing Component
-sees fit.
+The bottom/lowest level required Hierarchy Item must always be marked as
+`allow_leaf_nodes` true.  Higher than the lowest required Hierarchy Item level
+may arbitrarily allow or disallow Leaf Node associations as the implementing
+Component sees fit.
 
 This API view allows the initial value of this field to be set on insert.  If
 the Hierarchy is unused and set to an `inactive` state, the value of this column

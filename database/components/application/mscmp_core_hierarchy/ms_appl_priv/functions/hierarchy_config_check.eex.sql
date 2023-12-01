@@ -41,6 +41,7 @@ BEGIN
     -- items between the highest and lowest level required item are also
     -- required.  This also indirectly tests that structured hierarchies have at
     -- least one defined Hierarchy Item record association.
+
     IF
         p_hierarchy.structured AND
             coalesce( ( SELECT NOT bool_and( required )
@@ -59,10 +60,12 @@ BEGIN
         var_errors := var_errors || 'structured_invalid_required_items'::text;
     END IF;
 
-    -- Ensure that bottom level required hierarchy item allows node references.
+    -- Ensure that bottom level required hierarchy item allows leaf node
+    -- references.
+
     IF
         p_hierarchy.structured
-                AND ( SELECT NOT allow_node_refs
+                AND ( SELECT NOT allow_leaf_nodes
                       FROM ms_appl_data.conf_hierarchy_items
                       WHERE
                             hierarchy_id = p_hierarchy.id
@@ -70,7 +73,7 @@ BEGIN
                       ORDER BY hierarchy_depth DESC
                       LIMIT 1 )
     THEN
-        var_errors := var_errors || 'structured_invalid_allow_node_refs'::text;
+        var_errors := var_errors || 'structured_invalid_allow_leaf_nodes'::text;
     END IF;
 
     RETURN var_errors;

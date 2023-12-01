@@ -47,11 +47,11 @@ BEGIN
 
     UPDATE ms_appl_data.conf_hierarchy_items
     SET
-        internal_name         = new.internal_name
-      , display_name          = new.display_name
-      , external_name         = new.external_name
-      , required              = new.required
-      , allow_node_refs = new.allow_node_refs
+        internal_name    = new.internal_name
+      , display_name     = new.display_name
+      , external_name    = new.external_name
+      , required         = new.required
+      , allow_leaf_nodes = new.allow_leaf_nodes
     WHERE id = new.id
     RETURNING * INTO new;
 
