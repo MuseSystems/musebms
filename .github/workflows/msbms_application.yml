@@ -584,11 +584,11 @@ jobs:
           run: mix dialyzer
           working-directory: ${{ env.MSBMS_PRJDIR }}
 
-  mscmp_core_groups:
+  mscmp_core_hierarchy:
     runs-on: ubuntu-latest
     env:
-      MSBMS_PRJDIR: ./app_server/components/application/mscmp_core_groups
-      MSBMS_JOBNAME: mscmp_core_groups-${{ matrix.otp }}-${{ matrix.elixir }}
+      MSBMS_PRJDIR: ./app_server/components/application/mscmp_core_hierarchy
+      MSBMS_JOBNAME: mscmp_core_hierarchy-${{ matrix.otp }}-${{ matrix.elixir }}
 
     strategy:
       matrix:
