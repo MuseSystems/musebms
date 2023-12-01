@@ -52,7 +52,7 @@ BEGIN
         , hierarchy_id
         , hierarchy_depth
         , required
-        , allow_node_refs)
+        , allow_leaf_nodes)
     VALUES
         ( new.internal_name
         , new.display_name
@@ -60,7 +60,7 @@ BEGIN
         , new.hierarchy_id
         , new.hierarchy_depth
         , new.required
-        , new.allow_node_refs)
+        , new.allow_leaf_nodes)
     RETURNING * INTO new;
 
     RETURN new;

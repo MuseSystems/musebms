@@ -73,7 +73,7 @@ BEGIN
                     "external_name": "Example 01",
                     "hierarchy_depth": 1,
                     "required": true,
-                    "allow_node_refs": false
+                    "allow_leaf_nodes": false
                   },
                   {
                     "internal_name": "hierarchy_item_example_02",
@@ -81,7 +81,7 @@ BEGIN
                     "external_name": "Example 02",
                     "hierarchy_depth": 2,
                     "required": true,
-                    "allow_node_refs": false
+                    "allow_leaf_nodes": false
                   },
                   {
                     "internal_name": "hierarchy_item_example_03",
@@ -89,7 +89,7 @@ BEGIN
                     "external_name": "Example 03",
                     "hierarchy_depth": 3,
                     "required": true,
-                    "allow_node_refs": true
+                    "allow_leaf_nodes": true
                   }
                 ]
               }
@@ -129,7 +129,7 @@ BEGIN
                     "external_name": "Test 01/01",
                     "hierarchy_depth": 1,
                     "required": true,
-                    "allow_node_refs": false
+                    "allow_leaf_nodes": false
                   },
                   {
                     "internal_name": "hierarchy_item_test_01_02",
@@ -137,7 +137,7 @@ BEGIN
                     "external_name": "Test 01/02",
                     "hierarchy_depth": 2,
                     "required": true,
-                    "allow_node_refs": false
+                    "allow_leaf_nodes": false
                   },
                   {
                     "internal_name": "hierarchy_item_test_01_03",
@@ -145,7 +145,7 @@ BEGIN
                     "external_name": "Test 01/03",
                     "hierarchy_depth": 3,
                     "required": true,
-                    "allow_node_refs": true
+                    "allow_leaf_nodes": true
                   }
                 ]
               }
@@ -185,7 +185,7 @@ BEGIN
                     "external_name": "Test 02/01",
                     "hierarchy_depth": 1,
                     "required": true,
-                    "allow_node_refs": true
+                    "allow_leaf_nodes": true
                   },
                   {
                     "internal_name": "hierarchy_item_test_02_02",
@@ -193,7 +193,7 @@ BEGIN
                     "external_name": "Test 02/02",
                     "hierarchy_depth": 2,
                     "required": false,
-                    "allow_node_refs": false
+                    "allow_leaf_nodes": false
                   },
                   {
                     "internal_name": "hierarchy_item_test_02_03",
@@ -201,7 +201,7 @@ BEGIN
                     "external_name": "Test 02/03",
                     "hierarchy_depth": 3,
                     "required": false,
-                    "allow_node_refs": true
+                    "allow_leaf_nodes": true
                   }
                 ]
               }
@@ -362,7 +362,7 @@ BEGIN
                       , hi ->> 'external_name'               AS external_name
                       , (hi ->> 'hierarchy_depth')::smallint AS hierarchy_depth
                       , (hi ->> 'required')::boolean         AS required
-                      , (hi ->> 'allow_node_refs')::boolean  AS allow_node_refs
+                      , (hi ->> 'allow_leaf_nodes')::boolean  AS allow_leaf_nodes
                     FROM jsonb_array_elements( var_hierarchy.hierarchy_items ) hi
                 LOOP
                     INSERT INTO ms_appl_data.conf_hierarchy_items
@@ -372,7 +372,7 @@ BEGIN
                         ,hierarchy_id
                         ,hierarchy_depth
                         ,required
-                        ,allow_node_refs)
+                        ,allow_leaf_nodes)
                     VALUES
                     (var_hierarchy_item.internal_name
                     ,var_hierarchy_item.display_name
@@ -380,7 +380,7 @@ BEGIN
                     ,var_hierarchy_id
                     ,var_hierarchy_item.hierarchy_depth
                     ,var_hierarchy_item.required
-                    ,var_hierarchy_item.allow_node_refs);
+                    ,var_hierarchy_item.allow_leaf_nodes);
 
                 END LOOP hierarchy_items_loops;
 
