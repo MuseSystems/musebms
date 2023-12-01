@@ -5,12 +5,13 @@
 --
 
 CREATE OR REPLACE FUNCTION
-    ms_syst_priv.get_exception_details(p_proc_schema    text
-                                         ,p_proc_name      text
-                                         ,p_exception_name text
-                                         ,p_errcode        text
-                                         ,p_param_data     jsonb
-                                         ,p_context_data   jsonb)
+    ms_syst_priv.get_exception_details(
+        p_proc_schema    text,
+        p_proc_name      text,
+        p_exception_name text,
+        p_errcode        text,
+        p_param_data     jsonb,
+        p_context_data   jsonb )
 RETURNS text AS
 $BODY$
 
@@ -42,40 +43,46 @@ $BODY$
 $BODY$
 LANGUAGE sql VOLATILE;
 
-ALTER FUNCTION ms_syst_priv.get_exception_details(p_proc_schema    text
-                                                    ,p_proc_name      text
-                                                    ,p_exception_name text
-                                                    ,p_errcode        text
-                                                    ,p_param_data     jsonb
-                                                    ,p_context_data   jsonb)
+ALTER FUNCTION
+    ms_syst_priv.get_exception_details(
+        p_proc_schema    text,
+        p_proc_name      text,
+        p_exception_name text,
+        p_errcode        text,
+        p_param_data     jsonb,
+        p_context_data   jsonb )
     OWNER TO <%= ms_owner %>;
 
 REVOKE EXECUTE ON FUNCTION
-    ms_syst_priv.get_exception_details(p_proc_schema    text
-                                          ,p_proc_name      text
-                                          ,p_exception_name text
-                                          ,p_errcode        text
-                                          ,p_param_data     jsonb
-                                          ,p_context_data   jsonb)
+    ms_syst_priv.get_exception_details(
+        p_proc_schema    text,
+        p_proc_name      text,
+        p_exception_name text,
+        p_errcode        text,
+        p_param_data     jsonb,
+        p_context_data   jsonb )
     FROM public;
 
 GRANT EXECUTE ON FUNCTION
-    ms_syst_priv.get_exception_details( p_proc_schema    text
-                                          ,p_proc_name      text
-                                          ,p_exception_name text
-                                          ,p_errcode        text
-                                          ,p_param_data     jsonb
-                                          ,p_context_data   jsonb)
+    ms_syst_priv.get_exception_details(
+        p_proc_schema    text,
+        p_proc_name      text,
+        p_exception_name text,
+        p_errcode        text,
+        p_param_data     jsonb,
+        p_context_data   jsonb )
     TO <%= ms_owner %>;
 
 
 COMMENT ON FUNCTION
-    ms_syst_priv.get_exception_details(p_proc_schema    text
-                                          ,p_proc_name      text
-                                          ,p_exception_name text
-                                          ,p_errcode        text
-                                          ,p_param_data     jsonb
-                                          ,p_context_data   jsonb) IS
+    ms_syst_priv.get_exception_details(
+        p_proc_schema    text,
+        p_proc_name      text,
+        p_exception_name text,
+        p_errcode        text,
+        p_param_data     jsonb,
+        p_context_data   jsonb )
+    IS
 $DOC$Returns exception details based on the passed parameters represented as a pretty-printed JSON
 object.  The returned value is intended to standardize the details related to RAISEd exceptions and
 be suitable for use in setting the RAISE DETAILS variable. $DOC$;
