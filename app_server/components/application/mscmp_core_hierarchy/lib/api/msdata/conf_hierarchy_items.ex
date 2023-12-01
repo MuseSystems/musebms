@@ -33,6 +33,8 @@ defmodule Msdata.ConfHierarchyItems do
             external_name: String.t() | nil,
             hierarchy_id: Types.hierarchy_id() | nil,
             hierarchy_depth: integer() | nil,
+            required: boolean() | nil,
+            allow_leaf_nodes: boolean() | nil,
             diag_timestamp_created: DateTime.t() | nil,
             diag_role_created: String.t() | nil,
             diag_timestamp_modified: DateTime.t() | nil,
@@ -49,6 +51,8 @@ defmodule Msdata.ConfHierarchyItems do
     field(:display_name, :string)
     field(:external_name, :string)
     field(:hierarchy_depth, :integer)
+    field(:required, :boolean)
+    field(:allow_leaf_nodes, :boolean)
     field(:diag_timestamp_created, :utc_datetime)
     field(:diag_role_created, :string, load_in_query: false)
     field(:diag_timestamp_modified, :utc_datetime)

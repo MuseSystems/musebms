@@ -32,6 +32,7 @@ defmodule Msdata.ConfHierarchies do
             hierarchy_type_id: Types.hierarchy_type_id() | nil,
             syst_defined: boolean() | nil,
             user_maintainable: boolean() | nil,
+            structured: boolean() | nil,
             syst_description: String.t() | nil,
             user_description: String.t() | nil,
             diag_timestamp_created: DateTime.t() | nil,
@@ -50,6 +51,7 @@ defmodule Msdata.ConfHierarchies do
     field(:display_name, :string)
     field(:syst_defined, :boolean)
     field(:user_maintainable, :boolean)
+    field(:structured, :boolean)
     field(:syst_description, :string)
     field(:user_description, :string)
     field(:diag_timestamp_created, :utc_datetime)
