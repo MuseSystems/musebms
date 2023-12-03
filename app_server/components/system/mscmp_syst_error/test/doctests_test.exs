@@ -1,5 +1,5 @@
-# Source File: test_helper.exs
-# Location:    musebms/app_server/components/system/mscmp_syst_error/test/test_helper.exs
+# Source File: doctests_test.exs
+# Location:    musebms/app_server/components/system/mscmp_syst_error/test/doctests_test.exs
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,15 +10,7 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-_ =
-  if ExUnit.configuration() |> Keyword.get(:include) |> Enum.member?(:integration) do
-    ExUnit.configure(seed: 0)
-    :integration_testing
-  else
-    ExUnit.configure(exclude: [:integration])
-    :unit_testing
-  end
-
-Logger.configure(level: :info)
-
-ExUnit.start()
+defmodule DoctestsTest do
+  use ExUnit.Case, async: true
+  doctest MscmpSystError
+end

@@ -1,5 +1,5 @@
-# Source File: impl_mscmp_error_test.exs
-# Location:    musebms/components/system/mscmp_syst_error/test/impl_mscmp_error_test.exs
+# Source File: integration_test.exs
+# Location:    musebms/app_server/components/system/mscmp_syst_error/test/integration_test.exs
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,10 +10,11 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule MscmpSystError.ImplMscmpErrorTest do
-  use ExUnit.Case
+defmodule IntegrationTest do
+  use ExUnit.Case, async: false
 
-  alias MscmpSystError.Impl.MscmpError
+  @moduletag :integration
+  @moduletag :capture_log
 
   test "Get root cause from error data" do
     test_err = %MscmpSystError{
@@ -30,10 +31,10 @@ defmodule MscmpSystError.ImplMscmpErrorTest do
       }
     }
 
-    root_err = MscmpError.get_root_cause(test_err)
+    root_err = MscmpSystError.get_root_cause(test_err)
 
     assert %MscmpSystError{message: "Root error message"} = root_err
 
-    assert {:error, "test error"} = MscmpError.get_root_cause({:error, "test error"})
+    assert {:error, "test error"} = MscmpSystError.get_root_cause({:error, "test error"})
   end
 end
