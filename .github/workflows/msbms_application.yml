@@ -35,8 +35,16 @@ jobs:
           run: mix deps.get
           working-directory: ${{ env.MSBMS_PRJDIR }}
 
-        - name: Run Tests
+        - name: Run Unit Tests
           run: mix test
+          working-directory: ${{ env.MSBMS_PRJDIR }}
+
+        - name: Run Integration Tests
+          run: mix test --only integration
+          working-directory: ${{ env.MSBMS_PRJDIR }}
+
+        - name: Run Documentations Tests
+          run: mix test --only doctest
           working-directory: ${{ env.MSBMS_PRJDIR }}
 
         - name: Run Credo

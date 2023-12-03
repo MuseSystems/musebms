@@ -11,12 +11,17 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 _ =
-  if ExUnit.configuration() |> Keyword.get(:include) |> Enum.member?(:integration) do
-    ExUnit.configure(seed: 0)
-    :integration_testing
-  else
-    ExUnit.configure(exclude: [:integration])
-    :unit_testing
+  cond do
+    ExUnit.configuration() |> Keyword.get(:include) |> Enum.member?(:integration) ->
+      ExUnit.configure(seed: 0)
+      :integration_testing
+
+    ExUnit.configuration() |> Keyword.get(:include) |> Enum.member?(:doctest) ->
+      :doc_testing
+
+    true ->
+      ExUnit.configure(exclude: [:integration, :doctest])
+      :unit_testing
   end
 
 Logger.configure(level: :info)
