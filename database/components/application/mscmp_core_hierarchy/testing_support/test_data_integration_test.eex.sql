@@ -1,5 +1,5 @@
--- File:        test_data_unit_test.eex.sql
--- Location:    musebms/database/components/application/mscmp_core_hierarchy/testing_support/test_data_unit_test.eex.sql
+-- File:        test_data_integration_test.eex.sql
+-- Location:    musebms/database/components/application/mscmp_core_hierarchy/testing_support/test_data_integration_test.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -11,7 +11,7 @@
 -- muse.information@musesystems.com :: https://muse.systems
 
 DO
-$HIERARCHY_TESTING_INIT$
+$HIERACHY_TESTING_INIT$
 DECLARE
     var_data              jsonb;
     var_hierachy_states   record;
@@ -40,151 +40,7 @@ BEGIN
         ( SELECT id FROM ms_syst_data.syst_enums WHERE internal_name = 'hierarchy_types' );
 
     var_data := $TEST_DATA_DEFINITIONS$
-    [
-      {
-        "internal_name": "hierarchy_types_test_01",
-        "display_name": "Hierarchy Types / Test 01",
-        "external_name": "Test 01",
-        "syst_description": "Hierarchy Type Functional Type Test 01.",
-        "enum_items": [
-          {
-            "internal_name": "hierarchy_types_sysdef_test_01",
-            "display_name": "Hierarchy Type / Test 01",
-            "external_name": "Test 01",
-            "enum_default": false,
-            "functional_type_default": false,
-            "syst_defined": true,
-            "user_maintainable": false,
-            "syst_description": "Hierarchy Type Enum Item Test 01.",
-            "syst_options": {},
-            "hierarchies": [
-              {
-                "internal_name": "hierarchy_test_01",
-                "display_name": "Hierarchy / Test 01",
-                "syst_defined": true,
-                "user_maintainable":  false,
-                "syst_description": "Hierarchy Test 01",
-                "user_description": null,
-                "structured": true,
-                "hierarchy_items": [
-                  {
-                    "internal_name": "hierarchy_item_test_01_01",
-                    "display_name": "Hierarchy Item / Test 01/01",
-                    "external_name": "Test 01/01",
-                    "hierarchy_depth": 1,
-                    "required": true,
-                    "allow_leaf_nodes": false
-                  },
-                  {
-                    "internal_name": "hierarchy_item_test_01_02",
-                    "display_name": "Hierarchy Item / Test 01/02",
-                    "external_name": "Test 01/02",
-                    "hierarchy_depth": 2,
-                    "required": true,
-                    "allow_leaf_nodes": false
-                  },
-                  {
-                    "internal_name": "hierarchy_item_test_01_03",
-                    "display_name": "Hierarchy Item / Test 01/03",
-                    "external_name": "Test 01/03",
-                    "hierarchy_depth": 3,
-                    "required": true,
-                    "allow_leaf_nodes": true
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "internal_name": "hierarchy_types_test_02",
-        "display_name": "Hierarchy Types / Test 02",
-        "external_name": "Test 02",
-        "syst_description": "Hierarchy Type Functional Type Test 02",
-        "enum_items": [
-          {
-            "internal_name": "hierarchy_types_sysdef_test_02",
-            "display_name": "Hierarchy Type / Test 02",
-            "external_name": "Test 02",
-            "enum_default": false,
-            "functional_type_default": false,
-            "syst_defined": true,
-            "user_maintainable": false,
-            "syst_description": "Hierarchy Type Enum Item Test 02.",
-            "syst_options": {},
-            "hierarchies": [
-              {
-                "internal_name": "hierarchy_test_02",
-                "display_name": "Hierarchy / Test 02",
-                "syst_defined": true,
-                "user_maintainable":  false,
-                "syst_description": "Hierarchy Test 02",
-                "user_description": null,
-                "structured": true,
-                "hierarchy_items": [
-                  {
-                    "internal_name": "hierarchy_item_test_02_01",
-                    "display_name": "Hierarchy Item / Test 02/01",
-                    "external_name": "Test 02/01",
-                    "hierarchy_depth": 1,
-                    "required": true,
-                    "allow_leaf_nodes": true
-                  },
-                  {
-                    "internal_name": "hierarchy_item_test_02_02",
-                    "display_name": "Hierarchy Item / Test 02/02",
-                    "external_name": "Test 02/02",
-                    "hierarchy_depth": 2,
-                    "required": false,
-                    "allow_leaf_nodes": false
-                  },
-                  {
-                    "internal_name": "hierarchy_item_test_02_03",
-                    "display_name": "Hierarchy Item / Test 02/03",
-                    "external_name": "Test 02/03",
-                    "hierarchy_depth": 3,
-                    "required": false,
-                    "allow_leaf_nodes": true
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "internal_name": "hierarchy_types_test_03",
-        "display_name": "Hierarchy Types / Test 03",
-        "external_name": "Test 03",
-        "syst_description": "Hierarchy Type Functional Type Test 03",
-        "enum_items": [
-          {
-            "internal_name": "hierarchy_types_sysdef_test_03",
-            "display_name": "Hierarchy Type / Test 03",
-            "external_name": "Test 03",
-            "enum_default": false,
-            "functional_type_default": false,
-            "syst_defined": true,
-            "user_maintainable": false,
-            "syst_description": "Hierarchy Type Enum Item Test 03.",
-            "syst_options": {},
-            "hierarchies": [
-              {
-                "internal_name": "hierarchy_test_03",
-                "display_name": "Hierarchy / Test 03",
-                "syst_defined": true,
-                "user_maintainable":  false,
-                "syst_description": "Hierarchy Test 03",
-                "user_description": null,
-                "structured": false,
-                "hierarchy_items": []
-              }
-            ]
-          }
-        ]
-      }
-    ]
+    []
     $TEST_DATA_DEFINITIONS$;
 
     SELECT INTO var_hierachy_states
@@ -339,4 +195,4 @@ BEGIN
     END LOOP enum_functional_types_loop;
 
 END;
-$HIERARCHY_TESTING_INIT$;
+$HIERACHY_TESTING_INIT$;

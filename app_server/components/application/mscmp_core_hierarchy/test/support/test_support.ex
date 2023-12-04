@@ -66,14 +66,17 @@ defmodule TestSupport do
   }
 
   @migration_test_source_root_dir "../../../../database"
-  @migration_test_datastore_type "mscmp_core_hierarchy_unit_test"
+  @migration_unit_test_ds_type "mscmp_core_hierarchy_unit_test"
+  @migration_integration_test_ds_type "mscmp_core_hierarchy_integration_test"
+  @migration_doc_test_ds_type "mscmp_core_hierarchy_doc_test"
 
   @datastore_context_name :hierachy_app_context
 
-  def setup_testing_database do
-    :ok = build_migrations()
+  def setup_testing_database(test_kind) do
+    :ok = build_migrations(test_kind)
 
     datastore_options = @datastore_options
+    datastore_type = get_datastore_type(test_kind)
 
     database_owner = Enum.find(datastore_options.contexts, &(&1.database_owner_context == true))
 
@@ -82,7 +85,7 @@ defmodule TestSupport do
     {:ok, _} =
       MscmpSystDb.upgrade_datastore(
         datastore_options,
-        @migration_test_datastore_type,
+        datastore_type,
         ms_owner: database_owner.database_role,
         ms_appusr: "mscmp_core_hierarchy_app_user"
       )
@@ -90,19 +93,26 @@ defmodule TestSupport do
     {:ok, _, _} = MscmpSystDb.start_datastore(datastore_options)
   end
 
-  def cleanup_testing_database do
+  def cleanup_testing_database(test_kind) do
+    datastore_type = get_datastore_type(test_kind)
     datastore_options = @datastore_options
+
     :ok = MscmpSystDb.stop_datastore(datastore_options)
     :ok = MscmpSystDb.drop_datastore(datastore_options)
-    File.rm_rf!(Path.join(["priv/database", @migration_test_datastore_type]))
+
+    File.rm_rf!(Path.join(["priv/database", datastore_type]))
   end
 
   def get_testing_datastore_context_id, do: @datastore_context_name
 
-  defp build_migrations do
+  defp get_datastore_type(:unit_testing), do: @migration_unit_test_ds_type
+  defp get_datastore_type(:integration_testing), do: @migration_integration_test_ds_type
+  defp get_datastore_type(:doc_testing), do: @migration_doc_test_ds_type
+
+  defp build_migrations(test_kind) do
     Builddb.run([
       "-t",
-      @migration_test_datastore_type,
+      get_datastore_type(test_kind),
       "-c",
       "-s",
       @migration_test_source_root_dir

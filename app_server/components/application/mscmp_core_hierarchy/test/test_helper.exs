@@ -10,7 +10,21 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-TestSupport.setup_testing_database()
+test_kind =
+  cond do
+    ExUnit.configuration() |> Keyword.get(:include) |> Enum.member?(:integration) ->
+      ExUnit.configure(seed: 0)
+      :integration_testing
+
+    ExUnit.configuration() |> Keyword.get(:include) |> Enum.member?(:doctest) ->
+      :doc_testing
+
+    true ->
+      ExUnit.configure(exclude: [:integration, :doctest])
+      :unit_testing
+  end
+
+TestSupport.setup_testing_database(test_kind)
 
 MscmpSystDb.put_datastore_context(TestSupport.get_testing_datastore_context_id())
 
@@ -36,5 +50,5 @@ ExUnit.start()
 DynamicSupervisor.start_child(MscmpCoreHierarchy.TestingSupervisor, enum_service_spec)
 
 ExUnit.after_suite(fn _suite_result ->
-  TestSupport.cleanup_testing_database()
+  TestSupport.cleanup_testing_database(test_kind)
 end)
