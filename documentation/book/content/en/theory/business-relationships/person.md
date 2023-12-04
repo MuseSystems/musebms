@@ -23,7 +23,8 @@ A Person will often times be a named individual in the real world, but there wil
 times where a Person represents a role that might be fulfilled by any of a group of people; for
 example, an "Accounts Payable" Person representing a vendor might mean that any one of the
 vendor's Accounts Payable staff may act as the accounts payable agent during a discussion of
-invoicing or payment.  In such a case the specific individual doesn't matter.
+invoicing or payment.  In such a case the specific individual doesn't matter, but still has all
+the previously discussed traits of a "Person".
 
 ## Contact
 
