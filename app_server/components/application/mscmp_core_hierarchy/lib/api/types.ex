@@ -27,7 +27,13 @@ defmodule MscmpCoreHierarchy.Types do
 
   @type hierarchy_name() :: String.t()
 
+  @type hierarchy_state_functional_types :: :hierarchy_states_active | :hierarch_states_inactive
+
+  @type hierarchy_state_id() :: MscmpSystEnums.Types.enum_item_id()
+
+  @type hierarchy_state_name() :: MscmpSystEnums.Types.enum_item_name()
+
   @type hierarchy_type_id() :: MscmpSystEnums.Types.enum_item_id()
 
-  @type hierarchy_type_name() :: String.t()
+  @type hierarchy_type_name() :: MscmpSystEnums.Types.enum_item_name()
 end
