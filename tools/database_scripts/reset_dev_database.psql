@@ -6,7 +6,10 @@
 \set ON_ERROR_STOP true
 \c postgres
 
-DROP DATABASE IF EXISTS msmcp;
+DROP DATABASE IF EXISTS ms_dev_database;
+
+DROP ROLE IF EXISTS ms_dev_app_user;
+DROP ROLE IF EXISTS ms_dev_owner;
 
 DROP FUNCTION IF EXISTS ms_syst.create_login_role(text, text, text);
 DROP FUNCTION IF EXISTS ms_syst.create_nonlogin_role(text, text);
