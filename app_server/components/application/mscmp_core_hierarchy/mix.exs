@@ -54,12 +54,15 @@ defmodule MscmpCoreHierarchy.MixProject do
         name: "MscmpCoreHierarchy",
         main: "MscmpCoreHierarchy",
         output: "../../../../documentation/technical/app_server/mscmp_core_hierarchy",
-        groups_for_functions: [],
-        nest_modules_by_prefix: [Msdata],
+        groups_for_functions: [
+          Hierarchies: &(&1[:section] == :hierarchy_data),
+          "Enumeration Access": &(&1[:section] == :enumerations_data)
+        ],
+        nest_modules_by_prefix: [Msdata, MscmpCoreHierarchy.Types],
         groups_for_modules: [
           API: [MscmpCoreHierarchy],
-          Data: [],
-          "Supporting Types": []
+          Data: [Msdata.ConfHierarchies, Msdata.ConfHierarchyItems],
+          "Supporting Types": [MscmpCoreHierarchy.Types]
         ],
         deps: [
           mscmp_syst_db: "../../../../documentation/technical/app_server/mscmp_syst_db",
