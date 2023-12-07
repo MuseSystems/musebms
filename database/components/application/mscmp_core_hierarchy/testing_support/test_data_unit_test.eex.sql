@@ -57,6 +57,7 @@ BEGIN
             "user_maintainable": false,
             "syst_description": "Hierarchy Type Enum Item Test 01.",
             "syst_options": {},
+            "sort_order": 3,
             "hierarchies": [
               {
                 "internal_name": "hierarchy_test_01",
@@ -113,6 +114,7 @@ BEGIN
             "user_maintainable": false,
             "syst_description": "Hierarchy Type Enum Item Test 02.",
             "syst_options": {},
+            "sort_order": 2,
             "hierarchies": [
               {
                 "internal_name": "hierarchy_test_02",
@@ -169,6 +171,7 @@ BEGIN
             "user_maintainable": false,
             "syst_description": "Hierarchy Type Enum Item Test 03.",
             "syst_options": {},
+            "sort_order": 1,
             "hierarchies": [
               {
                 "internal_name": "hierarchy_test_03",
@@ -233,6 +236,7 @@ BEGIN
               , (ei ->> 'user_maintainable')::boolean       AS user_maintainable
               , ei ->> 'syst_description'                   AS syst_description
               , ei -> 'syst_options'                        AS syst_options
+              , (ei ->> 'sort_order')::smallint             AS sort_order
               , ei -> 'hierarchies'                         AS hierarchies
             FROM jsonb_array_elements( var_enum_func_type.enum_items ) ei
 
@@ -248,7 +252,8 @@ BEGIN
                 , syst_defined
                 , user_maintainable
                 , syst_description
-                , syst_options )
+                , syst_options
+                , sort_order )
             VALUES
                 ( var_enum_item.internal_name
                 , var_enum_item.display_name
@@ -260,7 +265,8 @@ BEGIN
                 , var_enum_item.syst_defined
                 , var_enum_item.user_maintainable
                 , var_enum_item.syst_description
-                , var_enum_item.syst_options )
+                , var_enum_item.syst_options
+                , var_enum_item.sort_order )
             RETURNING id INTO var_enum_item_id;
 
             << hierarchies_loop >>

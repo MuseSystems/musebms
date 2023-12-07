@@ -48,7 +48,7 @@ BEGIN
         "syst_description": "An example Enum Hierarchy Type Functional Type.",
         "enum_items": [
           {
-            "internal_name": "hierarchy_types_sysdef_example",
+            "internal_name": "hierarchy_type_example",
             "display_name": "Hierarchy Type / Example",
             "external_name": "Example",
             "enum_default": false,
