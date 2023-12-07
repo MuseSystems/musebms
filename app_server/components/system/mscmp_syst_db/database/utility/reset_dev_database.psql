@@ -10,16 +10,7 @@
 DROP DATABASE IF EXISTS ms_test_type_one;
 DROP DATABASE IF EXISTS ms_test_type_four;
 
-DROP FUNCTION IF EXISTS ms_syst.create_login_role(text, text, text);
-DROP FUNCTION IF EXISTS ms_syst.create_nonlogin_role(text, text);
-DROP FUNCTION IF EXISTS ms_syst.drop_role(text);
-
-DROP SCHEMA IF EXISTS ms_syst;
-
-DROP ROLE IF EXISTS ms_syst_access;
-DROP ROLE IF EXISTS ms_syst_privileged;
-DROP ROLE IF EXISTS ms_syst_managable;
-DROP ROLE IF EXISTS ms_syst_owner;
+\ir ../../../../../../tools/database_scripts/reset_dev_database.psql
 
 DROP ROLE IF EXISTS ms_type_one_role_01;
 DROP ROLE IF EXISTS ms_type_one_role_02;
