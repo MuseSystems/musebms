@@ -1,5 +1,5 @@
-# Source File: mscmp_core_hierarchy_test.exs
-# Location:    musebms/app_server/components/application/mscmp_core_hierarchy/test/mscmp_core_hierarchy_test.exs
+# Source File: integration_test.exs
+# Location:    musebms/app_server/components/application/mscmp_core_hierarchy/test/integration_test.exs
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,9 +10,11 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule MscmpCoreHierarchyTest do
-  use HierarchyTestCase, async: true
-  doctest MscmpCoreHierarchy
+defmodule IntegrationTest do
+  use HierarchyTestCase, async: false
+
+  @moduletag :integration
+  @moduletag :capture_log
 
   test "placeholder" do
     assert true
