@@ -1,0 +1,48 @@
+# File:        subplans.mscmp_syst_hierarchy.toml
+# Location:    musebms/database/components/system/mscmp_syst_hierarchy/subplans.mscmp_syst_hierarchy.toml
+# Project:     Muse Systems Business Management System
+#
+# Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+# This file may include content copyrighted and licensed from third parties.
+#
+# See the LICENSE file in the project root for license terms and conditions.
+# See the NOTICE file in the project root for copyright ownership information.
+#
+# muse.information@musesystems.com :: https://muse.systems
+
+[[build_plan]]
+release              = 1
+version              = 1
+update               = 0
+sponsor              = 820
+sponsor_modification = 0
+load_files = [
+    "components/system/mscmp_syst_hierarchy/seed_data/enum_hierarchy_types.eex.sql",
+    "components/system/mscmp_syst_hierarchy/seed_data/enum_hierarchy_states.eex.sql",
+
+    "components/system/mscmp_syst_hierarchy/ms_syst_data/syst_hierarchies/trig_b_i_syst_hierarchies_validate_inactive.eex.sql",
+    "components/system/mscmp_syst_hierarchy/ms_syst_data/syst_hierarchies/trig_b_u_syst_hierarchies_validate_state_change.eex.sql",
+    "components/system/mscmp_syst_hierarchy/ms_syst_data/syst_hierarchies/trig_b_u_syst_hierarchies_validate_structured.eex.sql",
+    "components/system/mscmp_syst_hierarchy/ms_syst_data/syst_hierarchies/trig_b_d_syst_hierarchies_validate_prereqs.eex.sql",
+    "components/system/mscmp_syst_hierarchy/ms_syst_data/syst_hierarchies/syst_hierarchies.eex.sql",
+
+    "components/system/mscmp_syst_hierarchy/ms_syst_data/syst_hierarchy_items/trig_b_i_syst_hierarchy_items_hierarchy_prereqs.eex.sql",
+    "components/system/mscmp_syst_hierarchy/ms_syst_data/syst_hierarchy_items/trig_b_iu_syst_hierarchy_items_depth_maint.eex.sql",
+    "components/system/mscmp_syst_hierarchy/ms_syst_data/syst_hierarchy_items/trig_b_u_syst_hierarchy_items_hierarchy_inactive_check.sql",
+    "components/system/mscmp_syst_hierarchy/ms_syst_data/syst_hierarchy_items/trig_b_d_syst_hierarchy_items_hierarchy_inactive_check.eex.sql",
+    "components/system/mscmp_syst_hierarchy/ms_syst_data/syst_hierarchy_items/syst_hierarchy_items.eex.sql",
+
+    "components/system/mscmp_syst_hierarchy/ms_syst_priv/functions/hierarchy_config_check.eex.sql",
+    "components/system/mscmp_syst_hierarchy/ms_syst_priv/functions/is_hierarchy_config_valid.eex.sql",
+    "components/system/mscmp_syst_hierarchy/ms_syst_priv/functions/is_hierarchy_record_referenced.eex.sql",
+
+    "components/system/mscmp_syst_hierarchy/ms_syst/api_views/syst_hierarchies/trig_i_i_syst_hierarchies.eex.sql",
+    "components/system/mscmp_syst_hierarchy/ms_syst/api_views/syst_hierarchies/trig_i_u_syst_hierarchies.eex.sql",
+    "components/system/mscmp_syst_hierarchy/ms_syst/api_views/syst_hierarchies/trig_i_d_syst_hierarchies.eex.sql",
+    "components/system/mscmp_syst_hierarchy/ms_syst/api_views/syst_hierarchies/syst_hierarchies.eex.sql",
+
+    "components/system/mscmp_syst_hierarchy/ms_syst/api_views/syst_hierarchy_items/trig_i_i_syst_hierarchy_items.eex.sql",
+    "components/system/mscmp_syst_hierarchy/ms_syst/api_views/syst_hierarchy_items/trig_i_u_syst_hierarchy_items.eex.sql",
+    "components/system/mscmp_syst_hierarchy/ms_syst/api_views/syst_hierarchy_items/trig_i_d_syst_hierarchy_items.eex.sql",
+    "components/system/mscmp_syst_hierarchy/ms_syst/api_views/syst_hierarchy_items/syst_hierarchy_items.eex.sql",
+]

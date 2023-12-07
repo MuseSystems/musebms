@@ -29,7 +29,7 @@
             "path": "app_server/components/system/mscmp_syst_enums",
         },
         {
-            "path": "app_server/components/application/mscmp_core_hierarchy",
+            "path": "app_server/components/system/mscmp_syst_hierarchy",
         },
         {
             "path": "app_server/components/system/mscmp_syst_instance",
