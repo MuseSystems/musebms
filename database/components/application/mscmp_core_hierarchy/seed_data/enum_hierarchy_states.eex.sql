@@ -49,7 +49,7 @@ PERFORM
               "functional_type_default": true,
               "syst_defined": true,
               "user_maintainable": false,
-              "syst_description": "The hierarchy is active and is considered active.  A hierarchy can only be made active if all child records defining the hierarchy structure are self-consistent and valid.  If a hierarchy record is referenced by a record in a hierarchy implementation, the hierarchy may not be made inactive.",
+              "syst_description": "The hierarchy is valid and considered active.  A hierarchy can only be made active if all child records defining the hierarchy structure are self-consistent and valid.  If a hierarchy record is referenced by a record in a hierarchy implementation, the hierarchy may not be made inactive.",
               "syst_options": {}
             },
             {
