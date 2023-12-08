@@ -1,5 +1,5 @@
 # Source File: dev_support.ex
-# Location:    musebms/app_server/components/system/mscmp_syst_menu/dev_support/dev_support.ex
+# Location:    musebms/app_server/components/system/mscmp_syst_navigation/dev_support/dev_support.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -15,7 +15,7 @@ defmodule DevSupport do
   alias MscmpSystDb.Types.{DatastoreContext, DatastoreOptions, DbServer}
 
   @migration_test_source_root_dir "../../../../database"
-  @migration_unit_test_ds_type "mscmp_syst_menu_unit_test"
+  @migration_unit_test_ds_type "mscmp_syst_navigation_unit_test"
 
   @datastore_context_name :dev_app_database
 

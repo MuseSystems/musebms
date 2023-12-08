@@ -1,5 +1,5 @@
 # Source File: test_helper.exs
-# Location:    musebms/app_server/components/system/mscmp_syst_menu/test/test_helper.exs
+# Location:    musebms/app_server/components/system/mscmp_syst_navigation/test/test_helper.exs
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -29,13 +29,13 @@ TestSupport.setup_testing_database(test_kind)
 MscmpSystDb.put_datastore_context(TestSupport.get_testing_datastore_context_id())
 
 children = [
-  {DynamicSupervisor, strategy: :one_for_one, name: MscmpSystMenu.TestingSupervisor}
+  {DynamicSupervisor, strategy: :one_for_one, name: MscmpSystNavigation.TestingSupervisor}
 ]
 
 Supervisor.start_link(children, strategy: :one_for_one)
 
 enum_service_spec = %{
-  id: MscmpSystMenuTestingEnumService,
+  id: MscmpSystNavigationTestingEnumService,
   start: {
     MscmpSystEnums,
     :start_link,
@@ -47,7 +47,7 @@ Logger.configure(level: :info)
 
 ExUnit.start()
 
-DynamicSupervisor.start_child(MscmpSystMenu.TestingSupervisor, enum_service_spec)
+DynamicSupervisor.start_child(MscmpSystNavigation.TestingSupervisor, enum_service_spec)
 
 ExUnit.after_suite(fn _suite_result ->
   TestSupport.cleanup_testing_database(test_kind)

@@ -1,5 +1,5 @@
 # Source File: mix.exs
-# Location:    musebms/app_server/components/system/mscmp_syst_menu/mix.exs
+# Location:    musebms/app_server/components/system/mscmp_syst_navigation/mix.exs
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,10 +10,10 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule MscmpSystMenu.MixProject do
+defmodule MscmpSystNavigation.MixProject do
   use Mix.Project
 
-  @name :mscmp_syst_menu
+  @name :mscmp_syst_navigation
   @version "0.1.0"
 
   @deps [
@@ -26,8 +26,7 @@ defmodule MscmpSystMenu.MixProject do
     {:mscmp_syst_error, path: "../mscmp_syst_error"},
     {:mscmp_syst_utils, path: "../mscmp_syst_utils"},
     {:mscmp_syst_db, path: "../mscmp_syst_db"},
-    {:mscmp_syst_enums, path: "../mscmp_syst_enums"},
-    {:mscmp_syst_hierarchy, path: "../mscmp_syst_hierarchy"}
+    {:mscmp_syst_enums, path: "../mscmp_syst_enums"}
   ]
 
   @dialyzer_opts [
@@ -52,23 +51,21 @@ defmodule MscmpSystMenu.MixProject do
       dialyzer: @dialyzer_opts,
       elixirc_paths: elixirc_paths(Mix.env()),
       docs: [
-        name: "MscmpSystMenu",
-        main: "MscmpSystMenu",
-        output: "../../../../documentation/technical/app_server/mscmp_syst_menu",
+        name: "MscmpSystNavigation",
+        main: "MscmpSystNavigation",
+        output: "../../../../documentation/technical/app_server/mscmp_syst_navigation",
         groups_for_functions: [],
-        nest_modules_by_prefix: [Msdata, MscmpSystMenu.Types],
+        nest_modules_by_prefix: [Msdata, MscmpSystNavigation.Types],
         groups_for_modules: [
-          API: [MscmpSystMenu],
+          API: [MscmpSystNavigation],
           Data: [],
-          "Supporting Types": [MscmpSystMenu.Types]
+          "Supporting Types": [MscmpSystNavigation.Types]
         ],
         deps: [
           mscmp_syst_db: "../../../../documentation/technical/app_server/mscmp_syst_db",
           mscmp_syst_enums: "../../../../documentation/technical/app_server/mscmp_syst_enums",
           mscmp_syst_error: "../../../../documentation/technical/app_server/mscmp_syst_error",
-          mscmp_syst_utils: "../../../../documentation/technical/app_server/mscmp_syst_utils",
-          mscmp_syst_hierarchy:
-            "../../../../documentation/technical/app_server/mscmp_syst_hierarchy"
+          mscmp_syst_utils: "../../../../documentation/technical/app_server/mscmp_syst_utils"
         ]
       ]
     ]

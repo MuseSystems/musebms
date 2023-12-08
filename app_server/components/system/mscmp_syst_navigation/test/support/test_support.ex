@@ -1,5 +1,5 @@
 # Source File: test_support.ex
-# Location:    musebms/app_server/components/system/mscmp_syst_menu/test/support/test_support.ex
+# Location:    musebms/app_server/components/system/mscmp_syst_navigation/test/support/test_support.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -27,14 +27,14 @@ defmodule TestSupport do
   alias MscmpSystDb.Types.{DatastoreContext, DatastoreOptions, DbServer}
 
   @datastore_options %DatastoreOptions{
-    database_name: "mscmp_syst_menu",
-    datastore_code: "mscmp_syst_menu.testing.code",
-    datastore_name: :mscmp_syst_menu,
+    database_name: "mscmp_syst_navigation",
+    datastore_code: "mscmp_syst_navigation.testing.code",
+    datastore_name: :mscmp_syst_navigation,
     contexts: [
       %DatastoreContext{
         context_name: nil,
-        description: "MscmpSystMenu Testing Owner",
-        database_role: "mscmp_syst_menu_owner",
+        description: "MscmpSystNavigation Testing Owner",
+        database_role: "mscmp_syst_navigation_owner",
         database_password: nil,
         starting_pool_size: 0,
         start_context: false,
@@ -43,9 +43,9 @@ defmodule TestSupport do
       },
       %DatastoreContext{
         context_name: :hierachy_app_context,
-        description: "MscmpSystMenu Testing App User",
-        database_role: "mscmp_syst_menu_app_user",
-        database_password: "mscmp_syst_menu.testing.code.app.user",
+        description: "MscmpSystNavigation Testing App User",
+        database_role: "mscmp_syst_navigation_app_user",
+        database_password: "mscmp_syst_navigation.testing.code.app.user",
         starting_pool_size: 20,
         start_context: true,
         login_context: true
@@ -59,16 +59,16 @@ defmodule TestSupport do
       db_port: 5432,
       db_show_sensitive: true,
       db_max_instances: 1,
-      server_salt: "mscmp_syst_menu.testing.code.test.salt",
+      server_salt: "mscmp_syst_navigation.testing.code.test.salt",
       dbadmin_password: "muse.syst.dba.testing.password",
       dbadmin_pool_size: 1
     }
   }
 
   @migration_test_source_root_dir "../../../../database"
-  @migration_unit_test_ds_type "mscmp_syst_menu_unit_test"
-  @migration_integration_test_ds_type "mscmp_syst_menu_integration_test"
-  @migration_doc_test_ds_type "mscmp_syst_menu_doc_test"
+  @migration_unit_test_ds_type "mscmp_syst_navigation_unit_test"
+  @migration_integration_test_ds_type "mscmp_syst_navigation_integration_test"
+  @migration_doc_test_ds_type "mscmp_syst_navigation_doc_test"
 
   @datastore_context_name :hierachy_app_context
 
@@ -87,7 +87,7 @@ defmodule TestSupport do
         datastore_options,
         datastore_type,
         ms_owner: database_owner.database_role,
-        ms_appusr: "mscmp_syst_menu_app_user"
+        ms_appusr: "mscmp_syst_navigation_app_user"
       )
 
     {:ok, _, _} = MscmpSystDb.start_datastore(datastore_options)

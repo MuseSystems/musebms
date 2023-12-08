@@ -7,11 +7,11 @@
 \set ON_ERROR_STOP true
 \c postgres
 
-DROP DATABASE IF EXISTS mscmp_syst_menu;
+DROP DATABASE IF EXISTS mscmp_syst_navigation;
 
 \ir ../../../../../tools/database_scripts/reset_dev_database.psql
 
-DROP ROLE IF EXISTS mscmp_syst_menu_owner;
-DROP ROLE IF EXISTS mscmp_syst_menu_app_user;
+DROP ROLE IF EXISTS mscmp_syst_navigation_owner;
+DROP ROLE IF EXISTS mscmp_syst_navigation_app_user;
 
 \ir ../../../../../tools/database_scripts/bootstrap_database.psql
