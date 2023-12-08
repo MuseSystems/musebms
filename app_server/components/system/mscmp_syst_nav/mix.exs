@@ -1,5 +1,5 @@
 # Source File: mix.exs
-# Location:    musebms/app_server/components/system/mscmp_syst_navigation/mix.exs
+# Location:    musebms/app_server/components/system/mscmp_syst_nav/mix.exs
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,10 +10,10 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule MscmpSystNavigation.MixProject do
+defmodule MscmpSystNav.MixProject do
   use Mix.Project
 
-  @name :mscmp_syst_navigation
+  @name :mscmp_syst_nav
   @version "0.1.0"
 
   @deps [
@@ -51,15 +51,15 @@ defmodule MscmpSystNavigation.MixProject do
       dialyzer: @dialyzer_opts,
       elixirc_paths: elixirc_paths(Mix.env()),
       docs: [
-        name: "MscmpSystNavigation",
-        main: "MscmpSystNavigation",
-        output: "../../../../documentation/technical/app_server/mscmp_syst_navigation",
+        name: "MscmpSystNav",
+        main: "MscmpSystNav",
+        output: "../../../../documentation/technical/app_server/mscmp_syst_nav",
         groups_for_functions: [],
-        nest_modules_by_prefix: [Msdata, MscmpSystNavigation.Types],
+        nest_modules_by_prefix: [Msdata, MscmpSystNav.Types],
         groups_for_modules: [
-          API: [MscmpSystNavigation],
+          API: [MscmpSystNav],
           Data: [],
-          "Supporting Types": [MscmpSystNavigation.Types]
+          "Supporting Types": [MscmpSystNav.Types]
         ],
         deps: [
           mscmp_syst_db: "../../../../documentation/technical/app_server/mscmp_syst_db",

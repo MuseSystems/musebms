@@ -1,5 +1,5 @@
 -- File:        syst_menu_items.eex.sql
--- Location:    musebms/database/components/system/mscmp_syst_navigation/ms_syst_data/syst_menu_items/syst_menu_items.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_nav/ms_syst_data/syst_menu_items/syst_menu_items.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems

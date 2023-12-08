@@ -1,5 +1,5 @@
 # Source File: doctests_test.exs
-# Location:    musebms/app_server/components/system/mscmp_syst_navigation/test/doctests_test.exs
+# Location:    musebms/app_server/components/system/mscmp_syst_nav/test/doctests_test.exs
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -11,10 +11,10 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule DoctestsTest do
-  use MenuTestCase, async: true
+  use NavTestCase, async: true
 
   @moduletag :doctest
   @moduletag :capture_log
 
-  doctest MscmpSystNavigation
+  doctest MscmpSystNav
 end
