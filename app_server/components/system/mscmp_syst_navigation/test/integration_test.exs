@@ -1,5 +1,5 @@
 # Source File: integration_test.exs
-# Location:    musebms/app_server/components/system/mscmp_syst_menu/test/integration_test.exs
+# Location:    musebms/app_server/components/system/mscmp_syst_navigation/test/integration_test.exs
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
