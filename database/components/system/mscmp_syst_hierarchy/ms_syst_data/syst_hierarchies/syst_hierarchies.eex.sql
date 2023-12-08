@@ -35,7 +35,6 @@ CREATE TABLE ms_syst_data.syst_hierarchies
         NOT NULL
         CONSTRAINT syst_hierarchies_hierarchy_state_fk
             REFERENCES ms_syst_data.syst_enum_items ( id )
-            ON DELETE CASCADE
     ,syst_defined
         boolean
         NOT NULL DEFAULT FALSE
