@@ -1,4 +1,4 @@
-# MscmpSystNavigation
+# MscmpSystNav
 
 <!-- MDOC !-->
 

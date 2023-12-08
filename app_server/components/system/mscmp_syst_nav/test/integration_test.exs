@@ -1,5 +1,5 @@
-# Source File: menu_test_case.ex
-# Location:    musebms/app_server/components/system/mscmp_syst_navigation/test/support/menu_test_case.ex
+# Source File: integration_test.exs
+# Location:    musebms/app_server/components/system/mscmp_syst_nav/test/integration_test.exs
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,20 +10,13 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule MenuTestCase do
-  @moduledoc false
+defmodule IntegrationTest do
+  use NavTestCase, async: false
 
-  use ExUnit.CaseTemplate
+  @moduletag :integration
+  @moduletag :capture_log
 
-  setup do
-    [
-      datastore_context:
-        MscmpSystDb.put_datastore_context(TestSupport.get_testing_datastore_context_id())
-    ]
-  end
-
-  setup do
-    _ = MscmpSystEnums.put_enums_service(:menu)
-    :ok
+  test "placeholder" do
+    assert true
   end
 end

@@ -1,5 +1,5 @@
-# Source File: integration_test.exs
-# Location:    musebms/app_server/components/system/mscmp_syst_navigation/test/integration_test.exs
+# Source File: mscmp_syst_nav.ex
+# Location:    musebms/app_server/components/system/mscmp_syst_nav/lib/api/mscmp_syst_nav.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,13 +10,13 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule IntegrationTest do
-  use MenuTestCase, async: false
+defmodule MscmpSystNav do
+  @external_resource "README.md"
+  @moduledoc Path.join([__DIR__, "..", "..", "README.md"])
+             |> File.read!()
+             |> String.split("<!-- MDOC !-->")
+             |> Enum.fetch!(1)
 
-  @moduletag :integration
-  @moduletag :capture_log
-
-  test "placeholder" do
-    assert true
-  end
+  alias MscmpSystNav.Impl
+  alias MscmpSystNav.Types
 end

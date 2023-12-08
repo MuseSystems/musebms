@@ -675,11 +675,11 @@ jobs:
           run: mix dialyzer
           working-directory: ${{ env.MSBMS_PRJDIR }}
 
-mscmp_syst_navigation:
+mscmp_syst_nav:
     runs-on: ubuntu-latest
     env:
-      MSBMS_PRJDIR: ./app_server/components/system/mscmp_syst_navigation
-      MSBMS_JOBNAME: mscmp_syst_navigation-${{ matrix.otp }}-${{ matrix.elixir }}
+      MSBMS_PRJDIR: ./app_server/components/system/mscmp_syst_nav
+      MSBMS_JOBNAME: mscmp_syst_nav-${{ matrix.otp }}-${{ matrix.elixir }}
 
     strategy:
       matrix:

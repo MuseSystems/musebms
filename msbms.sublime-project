@@ -32,7 +32,7 @@
             "path": "app_server/components/system/mscmp_syst_hierarchy",
         },
         {
-            "path": "app_server/components/system/mscmp_syst_navigation",
+            "path": "app_server/components/system/mscmp_syst_nav",
         },
         {
             "path": "app_server/components/system/mscmp_syst_instance",
