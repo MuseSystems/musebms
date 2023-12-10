@@ -41,8 +41,7 @@ CREATE TABLE ms_syst_data.syst_menu_items
         smallint
         NOT NULL
     ,CONSTRAINT syst_menu_items_sort_ordering_udx
-        UNIQUE( menu_id, parent_menu_item_id, sort_order )
-        NULLS NOT DISTINCT ( parent_menu_item_id )
+        UNIQUE NULLS NOT DISTINCT ( menu_id, parent_menu_item_id, sort_order )
     ,submenu_menu_id
         uuid
         CONSTRAINT syst_menu_items_submenu_menu_fk
