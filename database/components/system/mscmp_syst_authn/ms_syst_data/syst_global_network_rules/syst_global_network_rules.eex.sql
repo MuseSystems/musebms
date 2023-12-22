@@ -14,7 +14,7 @@ CREATE TABLE ms_syst_data.syst_global_network_rules
 (
      id
         uuid
-        NOT NULL DEFAULT uuid_generate_v1( )
+        NOT NULL DEFAULT uuid_generate_v7( )
         CONSTRAINT syst_global_network_rules_pk PRIMARY KEY
     ,ordering
         integer

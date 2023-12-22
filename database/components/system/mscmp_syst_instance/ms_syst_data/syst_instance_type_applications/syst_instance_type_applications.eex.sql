@@ -14,7 +14,7 @@ CREATE TABLE ms_syst_data.syst_instance_type_applications
 (
      id
         uuid
-        NOT NULL DEFAULT uuid_generate_v1( )
+        NOT NULL DEFAULT uuid_generate_v7( )
         CONSTRAINT syst_instance_type_applications_pk PRIMARY KEY
     ,instance_type_id
         uuid

@@ -14,7 +14,7 @@ CREATE TABLE ms_syst_data.syst_disallowed_hosts
 (
      id
         uuid
-        NOT NULL DEFAULT uuid_generate_v1( )
+        NOT NULL DEFAULT uuid_generate_v7( )
         CONSTRAINT syst_disallowed_hosts_pk PRIMARY KEY
     ,host_address
         inet

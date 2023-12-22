@@ -12,7 +12,7 @@
 -- muse.information@musesystems.com  :: https://muse.systems
 CREATE TABLE ms_test.test_type_three
 (
-     id                      uuid        DEFAULT uuid_generate_v1( ) NOT NULL
+     id                      uuid        DEFAULT uuid_generate_v7( ) NOT NULL
         CONSTRAINT test_type_three_pk PRIMARY KEY
     ,test_value              text                                    NOT NULL
 );

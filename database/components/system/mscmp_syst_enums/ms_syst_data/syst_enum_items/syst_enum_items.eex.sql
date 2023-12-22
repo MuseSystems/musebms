@@ -14,7 +14,7 @@ CREATE TABLE ms_syst_data.syst_enum_items
 (
      id
         uuid
-        NOT NULL DEFAULT uuid_generate_v1( )
+        NOT NULL DEFAULT uuid_generate_v7( )
         CONSTRAINT syst_enum_items_pk PRIMARY KEY
     ,internal_name
         text COLLATE ms_syst_priv.variant_insensitive

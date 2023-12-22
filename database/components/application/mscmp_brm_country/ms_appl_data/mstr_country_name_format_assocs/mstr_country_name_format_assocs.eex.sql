@@ -14,7 +14,7 @@ CREATE TABLE ms_appl_data.mstr_country_name_format_assocs
 (
      id
         uuid
-        NOT NULL DEFAULT uuid_generate_v1( )
+        NOT NULL DEFAULT uuid_generate_v7( )
         CONSTRAINT mstr_country_name_format_assocs_pk PRIMARY KEY
     ,country_id
         uuid

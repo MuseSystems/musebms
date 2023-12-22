@@ -14,7 +14,7 @@ CREATE TABLE ms_appl_data.mstr_entity_person_roles
 (
      id
         uuid
-        NOT NULL DEFAULT uuid_generate_v1( )
+        NOT NULL DEFAULT uuid_generate_v7( )
         CONSTRAINT mstr_entity_person_roles_pk PRIMARY KEY
     ,person_id
         uuid

@@ -14,7 +14,7 @@ CREATE TABLE ms_syst_data.syst_interaction_logs
 (
      id
         uuid
-        NOT NULL DEFAULT uuid_generate_v1( )
+        NOT NULL DEFAULT uuid_generate_v7( )
         CONSTRAINT syst_interaction_logs_pk PRIMARY KEY
     ,interaction_timestamp
         timestamptz

@@ -14,7 +14,7 @@ CREATE TABLE ms_appl_data.mstr_entity_staff_entities
 (
      id
         uuid
-        NOT NULL DEFAULT uuid_generate_v1( )
+        NOT NULL DEFAULT uuid_generate_v7( )
         CONSTRAINT mstr_entity_staff_entities_pk PRIMARY KEY
     ,entity_id
         uuid

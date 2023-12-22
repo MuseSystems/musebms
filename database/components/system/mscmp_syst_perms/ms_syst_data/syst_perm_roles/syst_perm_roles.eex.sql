@@ -14,7 +14,7 @@ CREATE TABLE ms_syst_data.syst_perm_roles
 (
      id
         uuid
-        NOT NULL DEFAULT uuid_generate_v1( )
+        NOT NULL DEFAULT uuid_generate_v7( )
         CONSTRAINT syst_perm_roles_pk PRIMARY KEY
     ,internal_name
         text

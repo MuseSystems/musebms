@@ -14,7 +14,7 @@ CREATE TABLE ms_appl_data.mstr_contacts
 (
      id
         uuid
-        NOT NULL DEFAULT uuid_generate_v1( )
+        NOT NULL DEFAULT uuid_generate_v7( )
         CONSTRAINT mstr_contacts_pk PRIMARY KEY
     ,internal_name
         text

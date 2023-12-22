@@ -14,7 +14,7 @@ CREATE TABLE ms_syst_data.syst_complex_formats
 (
      id
         uuid
-        NOT NULL DEFAULT uuid_generate_v1( )
+        NOT NULL DEFAULT uuid_generate_v7( )
         CONSTRAINT syst_complex_formats_pk PRIMARY KEY
     ,internal_name
         text
