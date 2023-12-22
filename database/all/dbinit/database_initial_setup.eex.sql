@@ -31,7 +31,16 @@ $SCRIPT$
 BEGIN
 
     CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-    CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+    CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
+    -- Temporary UUIDv7 extension
+    --
+    -- !!!!! Do not release to production !!!!!
+    --
+    -- TODO: Remove from code at PostgreSQL 17 release.  PostgreSQL 17 is
+    --       expected to have UUIDv7 support.
+
+    CREATE EXTENSION IF NOT EXISTS pg_uuidv7;
 
     REVOKE ALL ON SCHEMA public FROM public;
 END;

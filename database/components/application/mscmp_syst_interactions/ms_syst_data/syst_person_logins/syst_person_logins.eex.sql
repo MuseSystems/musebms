@@ -14,7 +14,7 @@ CREATE TABLE ms_syst_data.syst_person_logins
 (
      id
         uuid
-        NOT NULL DEFAULT uuid_generate_v1( )
+        NOT NULL DEFAULT uuid_generate_v7( )
         CONSTRAINT syst_person_logins_pk PRIMARY KEY
     ,person_id
         uuid

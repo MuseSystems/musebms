@@ -17,7 +17,7 @@ CREATE SCHEMA ms_test AUTHORIZATION <%= ms_owner %>;
 
 CREATE TABLE ms_test.common
 (
-     id                      uuid        DEFAULT uuid_generate_v1( ) NOT NULL
+     id                      uuid        DEFAULT uuid_generate_v7( ) NOT NULL
         CONSTRAINT common_pk PRIMARY KEY
     ,test_value              text                                    NOT NULL
 );

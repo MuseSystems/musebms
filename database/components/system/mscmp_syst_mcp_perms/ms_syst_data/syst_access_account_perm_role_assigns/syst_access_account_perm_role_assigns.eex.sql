@@ -14,7 +14,7 @@ CREATE TABLE ms_syst_data.syst_access_account_perm_role_assigns
 (
      id
         uuid
-        NOT NULL DEFAULT uuid_generate_v1( )
+        NOT NULL DEFAULT uuid_generate_v7( )
         CONSTRAINT syst_access_account_perm_role_assigns_pk PRIMARY KEY
     ,access_account_id
         uuid

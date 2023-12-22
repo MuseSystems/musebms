@@ -18,7 +18,7 @@ GRANT ALL PRIVILEGES ON SCHEMA ms_test TO ms_type_four_role_01;
 
 CREATE TABLE ms_test.common
 (
-     id                      uuid        DEFAULT uuid_generate_v1( ) NOT NULL
+     id                      uuid        DEFAULT uuid_generate_v7( ) NOT NULL
         CONSTRAINT common_pk PRIMARY KEY
     ,test_value              text                                    NOT NULL
 );

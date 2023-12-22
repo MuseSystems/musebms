@@ -14,7 +14,7 @@ CREATE TABLE ms_syst_data.syst_owner_password_rules
 (
      id
         uuid
-        NOT NULL DEFAULT uuid_generate_v1( )
+        NOT NULL DEFAULT uuid_generate_v7( )
         CONSTRAINT syst_owner_password_rules_pk PRIMARY KEY
     ,owner_id
         uuid
