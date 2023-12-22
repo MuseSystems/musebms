@@ -19,9 +19,25 @@ sponsor_modification = 0
 load_files = [
     "all/dbinit/database_initial_setup.eex.sql",
     "all/dbinit/ms_syst_schemata.eex.sql",
+
     "all/ms_syst_priv/collations/variant_insensitive.eex.sql",
+
     "all/ms_syst_priv/functions/get_exception_details.eex.sql",
+
     "all/ms_syst_priv/trigger_functions/trig_b_iu_set_diagnostic_columns.eex.sql",
+
+    "all/ms_syst_priv/types/comments_config_table_column.eex.sql",
+    "all/ms_syst_priv/types/comments_config_table.eex.sql",
+    "all/ms_syst_priv/functions/generate_comments_table_column.eex.sql",
+    "all/ms_syst_priv/functions/generate_comments_table_common_columns.eex.sql",
+    "all/ms_syst_priv/functions/generate_comments_table.eex.sql",
+
+    "all/ms_syst_priv/types/comments_apiview_update_modes.eex.sql",
+    "all/ms_syst_priv/types/comments_config_apiview_column.eex.sql",
+    "all/ms_syst_priv/types/comments_config_apiview.eex.sql",
+    "all/ms_syst_priv/functions/generate_comments_apiview_column.eex.sql",
+    "all/ms_syst_priv/functions/generate_comments_apiview_common_columns.eex.sql",
+    "all/ms_syst_priv/functions/generate_comments_apiview.eex.sql",
 
     "all/ms_syst_priv/functions/nonstandard_encode.eex.sql",
     "all/ms_syst_priv/functions/nonstandard_decode.eex.sql",
