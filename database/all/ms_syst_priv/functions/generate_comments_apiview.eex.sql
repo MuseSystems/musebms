@@ -61,36 +61,36 @@ BEGIN
     var_working_config.user_records :=
         coalesce( p_comments_config.user_records, TRUE );
 
-    var_working_config.user_record_insert :=
+    var_working_config.user_insert :=
         var_working_config.user_records AND
-        coalesce( p_comments_config.user_record_insert, TRUE );
+        coalesce( p_comments_config.user_insert, TRUE );
 
-    var_working_config.user_record_select :=
+    var_working_config.user_select :=
         var_working_config.user_records AND
-        coalesce( p_comments_config.user_record_select, TRUE );
+        coalesce( p_comments_config.user_select, TRUE );
 
-    var_working_config.user_record_update :=
+    var_working_config.user_update :=
         var_working_config.user_records AND
-        coalesce( p_comments_config.user_record_update, TRUE );
+        coalesce( p_comments_config.user_update, TRUE );
 
-    var_working_config.user_record_delete :=
+    var_working_config.user_delete :=
         var_working_config.user_records AND
-        coalesce( p_comments_config.user_record_delete, TRUE );
+        coalesce( p_comments_config.user_delete, TRUE );
 
     var_working_config.syst_records :=
         coalesce( p_comments_config.syst_records, FALSE );
 
-    var_working_config.syst_record_select :=
+    var_working_config.syst_select :=
         var_working_config.syst_records AND
-        coalesce( p_comments_config.syst_record_select, TRUE );
+        coalesce( p_comments_config.syst_select, TRUE );
 
-    var_working_config.syst_record_update :=
+    var_working_config.syst_update :=
         var_working_config.syst_records AND
-        coalesce( p_comments_config.syst_record_update, FALSE );
+        coalesce( p_comments_config.syst_update, FALSE );
 
-    var_working_config.syst_record_delete :=
+    var_working_config.syst_delete :=
         var_working_config.syst_records AND
-        coalesce( p_comments_config.syst_record_delete, FALSE );
+        coalesce( p_comments_config.syst_delete, FALSE );
 
     var_working_config.generate_common :=
         CASE
@@ -126,20 +126,20 @@ BEGIN
         var_resolved_view_sops :=
             E'#### System Defined Record Supported Operations\n\n' ||
                 CASE
-                    WHEN var_working_config.syst_record_select THEN
+                    WHEN var_working_config.syst_select THEN
                         E'  * `SELECT`\n'
                     ELSE
                         ''
                 END ||
                 CASE
-                    WHEN var_working_config.syst_record_update THEN
+                    WHEN var_working_config.syst_update THEN
                         E'  * `UPDATE` - See column comments for applicable' ||
                             E' restrictions.\n'
                     ELSE
                         ''
                 END ||
                 CASE
-                    WHEN var_working_config.syst_record_delete THEN
+                    WHEN var_working_config.syst_delete THEN
                         E'  * `DELETE` - Only user maintainable records.\n'
                     ELSE
                         ''
@@ -152,25 +152,25 @@ BEGIN
         var_resolved_view_uops :=
             E'#### User Defined Record Supported Operations\n\n' ||
                 CASE
-                    WHEN var_working_config.user_record_insert THEN
+                    WHEN var_working_config.user_insert THEN
                         E'  * `INSERT`\n'
                     ELSE
                         ''
                 END ||
                 CASE
-                    WHEN var_working_config.user_record_select THEN
+                    WHEN var_working_config.user_select THEN
                         E'  * `SELECT`\n'
                     ELSE
                         ''
                 END ||
                 CASE
-                    WHEN var_working_config.user_record_update THEN
+                    WHEN var_working_config.user_update THEN
                         E'  * `UPDATE`\n'
                     ELSE
                         ''
                 END ||
                 CASE
-                    WHEN var_working_config.user_record_delete THEN
+                    WHEN var_working_config.user_delete THEN
                         E'  * `DELETE`\n'
                     ELSE
                         ''

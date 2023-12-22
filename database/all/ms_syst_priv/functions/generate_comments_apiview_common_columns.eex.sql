@@ -163,17 +163,17 @@ and passed directly to either `ms_syst_priv.generate_comments_apiview` or
     API View to apply common column comments, find which columns may be present,
     etc.  Only the fields of the value below are used by this function:
 
-      * `view_schema`        - (required)
-      * `view_name`          - (required)
-      * `table_schema`       - (required)
-      * `table_name`         - (required)
-      * `user_records`       - (optional)
-      * `user_record_insert` - (optional)
-      * `user_record_select` - (optional)
-      * `user_record_update` - (optional)
-      * `syst_records`       - (optional)
-      * `syst_record_select` - (optional)
-      * `syst_record_update` - (optional)
+      * `view_schema`  - (required)
+      * `view_name`    - (required)
+      * `table_schema` - (required)
+      * `table_name`   - (required)
+      * `user_records` - (optional)
+      * `user_insert`  - (optional)
+      * `user_select`  - (optional)
+      * `user_update`  - (optional)
+      * `syst_records` - (optional)
+      * `syst_select`  - (optional)
+      * `syst_update`  - (optional)
 
     Any fields passed as `NULL` will assume their default values.  See the
     database type documentation for more information, including to find any
