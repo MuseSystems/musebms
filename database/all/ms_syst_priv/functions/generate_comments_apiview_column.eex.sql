@@ -43,36 +43,36 @@ BEGIN
     var_defaulted_view.user_records :=
         coalesce( p_view_config.user_records, TRUE );
 
-    var_defaulted_view.user_record_insert :=
+    var_defaulted_view.user_insert :=
         var_defaulted_view.user_records AND
-        coalesce( p_view_config.user_record_insert, TRUE );
+        coalesce( p_view_config.user_insert, TRUE );
 
-    var_defaulted_view.user_record_select :=
+    var_defaulted_view.user_select :=
         var_defaulted_view.user_records AND
-        coalesce( p_view_config.user_record_select, TRUE );
+        coalesce( p_view_config.user_select, TRUE );
 
-    var_defaulted_view.user_record_update :=
+    var_defaulted_view.user_update :=
         var_defaulted_view.user_records AND
-        coalesce( p_view_config.user_record_update, TRUE );
+        coalesce( p_view_config.user_update, TRUE );
 
-    var_defaulted_view.user_record_delete :=
+    var_defaulted_view.user_delete :=
         var_defaulted_view.user_records AND
-        coalesce( p_view_config.user_record_delete, TRUE );
+        coalesce( p_view_config.user_delete, TRUE );
 
     var_defaulted_view.syst_records :=
         coalesce( p_view_config.syst_records, FALSE );
 
-    var_defaulted_view.syst_record_select :=
+    var_defaulted_view.syst_select :=
         var_defaulted_view.syst_records AND
-        coalesce( p_view_config.syst_record_select, TRUE );
+        coalesce( p_view_config.syst_select, TRUE );
 
-    var_defaulted_view.syst_record_update :=
+    var_defaulted_view.syst_update :=
         var_defaulted_view.syst_records AND
-        coalesce( p_view_config.syst_record_update, FALSE );
+        coalesce( p_view_config.syst_update, FALSE );
 
-    var_defaulted_view.syst_record_delete :=
+    var_defaulted_view.syst_delete :=
         var_defaulted_view.syst_records AND
-        coalesce( p_view_config.syst_record_delete, FALSE );
+        coalesce( p_view_config.syst_delete, FALSE );
 
     var_defaulted_column.required :=
         coalesce( p_column_config.required, FALSE );
@@ -85,17 +85,17 @@ BEGIN
 
     var_defaulted_column.user_insert :=
         var_defaulted_view.user_records AND
-        var_defaulted_view.user_record_insert AND
+        var_defaulted_view.user_insert AND
         coalesce( p_column_config.user_insert, TRUE );
 
     var_defaulted_column.user_select :=
         var_defaulted_view.user_records AND
-        var_defaulted_view.user_record_select AND
+        var_defaulted_view.user_select AND
         coalesce( p_column_config.user_select, TRUE );
 
     var_defaulted_column.user_update :=
         var_defaulted_view.user_records AND
-        var_defaulted_view.user_record_update AND
+        var_defaulted_view.user_update AND
         coalesce( p_column_config.user_update, TRUE );
 
     var_defaulted_column.syst_select :=
@@ -106,7 +106,7 @@ BEGIN
         CASE
             WHEN
                 var_defaulted_view.syst_records AND
-                var_defaulted_view.syst_record_update
+                var_defaulted_view.syst_update
             THEN
                 coalesce( p_column_config.syst_update_mode, 'never' )
             ELSE
@@ -263,17 +263,17 @@ behavior may be overridden in the passed comment configuration.
     generation.  This value is required, though only the following fields are
     used:
 
-      * `view_schema`        - (required)
-      * `view_name`          - (required)
-      * `table_schema`       - (optional)
-      * `table_name`         - (optional)
-      * `user_records`       - (optional)
-      * `user_record_insert` - (optional)
-      * `user_record_select` - (optional)
-      * `user_record_update` - (optional)
-      * `syst_records`       - (optional)
-      * `syst_record_select` - (optional)
-      * `syst_record_update` - (optional)
+      * `view_schema`  - (required)
+      * `view_name`    - (required)
+      * `table_schema` - (optional)
+      * `table_name`   - (optional)
+      * `user_records` - (optional)
+      * `user_insert`  - (optional)
+      * `user_select`  - (optional)
+      * `user_update`  - (optional)
+      * `syst_records` - (optional)
+      * `syst_select`  - (optional)
+      * `syst_update`  - (optional)
 
     Any fields passed as `NULL` will assume their default values.  See the
     database type documentation for more information, including to find any

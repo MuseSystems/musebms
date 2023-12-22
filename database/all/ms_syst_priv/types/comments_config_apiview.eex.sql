@@ -19,14 +19,14 @@ CREATE TYPE ms_syst_priv.comments_config_apiview AS
     , override_description text
     , supplemental         text
     , user_records         boolean
-    , user_record_insert   boolean
-    , user_record_select   boolean
-    , user_record_update   boolean
-    , user_record_delete   boolean
+    , user_insert          boolean
+    , user_select          boolean
+    , user_update          boolean
+    , user_delete          boolean
     , syst_records         boolean
-    , syst_record_select   boolean
-    , syst_record_update   boolean
-    , syst_record_delete   boolean
+    , syst_select          boolean
+    , syst_update          boolean
+    , syst_delete          boolean
     , generate_common      boolean
     , columns              ms_syst_priv.comments_config_apiview_column[]
 );
@@ -91,25 +91,25 @@ normal course of performing business operations.  This value is optional and
 defaults to `TRUE` if not provided.
 $DOC$;
 
-COMMENT ON COLUMN ms_syst_priv.comments_config_apiview.user_record_insert IS
+COMMENT ON COLUMN ms_syst_priv.comments_config_apiview.user_insert IS
 $DOC$A boolean value which indicates if the API View allows for `INSERT` operations
 to create new user defined data.  This value is not required and defaults to
 `TRUE` if not provided.
 $DOC$;
 
-COMMENT ON COLUMN ms_syst_priv.comments_config_apiview.user_record_select IS
+COMMENT ON COLUMN ms_syst_priv.comments_config_apiview.user_select IS
 $DOC$A boolean value which indicates if the API View may be used to read existing
 user defined data.  This value is not required and defaults to `TRUE` if not
 provided.
 $DOC$;
 
-COMMENT ON COLUMN ms_syst_priv.comments_config_apiview.user_record_update IS
+COMMENT ON COLUMN ms_syst_priv.comments_config_apiview.user_update IS
 $DOC$A boolean value which indicates if the API View may be used to update existing
 user defined data.  This value is not required and defaults to `TRUE` if not
 provided.
 $DOC$;
 
-COMMENT ON COLUMN ms_syst_priv.comments_config_apiview.user_record_delete IS
+COMMENT ON COLUMN ms_syst_priv.comments_config_apiview.user_delete IS
 $DOC$A boolean value which indicates if the API View may be used to delete existing
 user defined data.  This value is not required and defaults to `TRUE` if not
 provided.
@@ -123,20 +123,20 @@ support or restricts user maintenance activities.  This value is not required
 and defaults to `FALSE` if not provided.
 $DOC$;
 
-COMMENT ON COLUMN ms_syst_priv.comments_config_apiview.syst_record_select IS
+COMMENT ON COLUMN ms_syst_priv.comments_config_apiview.syst_select IS
 $DOC$A boolean value which indicates if the API View may be used to read existing
 system defined data.  This value is not required and defaults to `TRUE` if not
 provided.
 $DOC$;
 
-COMMENT ON COLUMN ms_syst_priv.comments_config_apiview.syst_record_update IS
+COMMENT ON COLUMN ms_syst_priv.comments_config_apiview.syst_update IS
 $DOC$A boolean value which indicates if the API View may be used to update system
 defined data.  Typically each column of a system defined record will specify if
 it is updatable and under what conditions.  This value is not required and
 defaults to `FALSE` if not provided.
 $DOC$;
 
-COMMENT ON COLUMN ms_syst_priv.comments_config_apiview.syst_record_delete IS
+COMMENT ON COLUMN ms_syst_priv.comments_config_apiview.syst_delete IS
 $DOC$A boolean value which indicates if the API View may be used to delete system
 defined data.  Typically this would be system defined child data or records of
 some system defined master relation.  This value is not required and defaults to
