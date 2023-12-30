@@ -150,13 +150,23 @@ defmodule Mix.Tasks.Builddb do
   @default_src "database"
   @default_dst "priv/database"
 
+  @switches [
+    source: :string,
+    destination: :string,
+    type: :string,
+    clean: :boolean
+  ]
+
+  @aliases [
+    s: :source,
+    d: :destination,
+    t: :type,
+    c: :clean
+  ]
+
   @spec run([binary()]) :: :ok
   def run(args) do
-    with {opts_cli, _, _} <-
-           OptionParser.parse(args,
-             aliases: [s: :source, d: :destination, t: :type, c: :clean],
-             strict: [source: :string, destination: :string, type: :string, clean: :boolean]
-           ),
+    with {opts_cli, _, _} <- OptionParser.parse(args, aliases: @aliases, strict: @switches),
          {:ok, migrations_created} <- call_build_migrations(opts_cli) do
       migrations_created
       |> Enum.sort()
