@@ -15,6 +15,7 @@ defmodule MscmpSystDb do
   @moduledoc File.read!(Path.join([__DIR__, "..", "..", "README.md"]))
 
   alias MscmpSystDb.Impl.Dba
+  alias MscmpSystDb.Impl.DevSupport
   alias MscmpSystDb.Impl.Privileged
   alias MscmpSystDb.Runtime.Datastore
   alias MscmpSystDb.Types
@@ -296,6 +297,128 @@ defmodule MscmpSystDb do
   """
   @spec current_datastore_context :: atom() | pid()
   defdelegate current_datastore_context(), to: Datastore
+
+  @doc section: :development_support
+  @doc """
+  Retrieves a populated DatastoreOptions struct which can be used to facilitate
+  database involving development activities.
+
+  The DatastoreOptions will set all important values and identify two Datastore
+  Contexts: the standard non-login, "owner" Context which will own the database
+  objects and a single login Context which would be typically of an application
+  context for accessing the database.
+
+  >#### Security Note {: .warning}
+  >
+  > The DatastoreOptions produced by this function are intended for use only in
+  > support of software development activities in highly controlled environments
+  > where real, user data is not at risk of being compromised.  The values
+  > included in function effectively bypass a number of the security measures
+  > and assumptions in order to facilitate developer convenience.
+
+  Currently this function does not support scenarios where more login Contexts
+  may be useful.
+
+  ## Parameters
+
+    * `opts` - an optional parameter consisting of type `t:Keyword.t/0`
+      containing values which will override the function supplied defaults.  The
+      available options are:
+
+      * `database_name` - a binary value indicating a name for the database to
+        use.  The default database name is `ms_devsupport_database`.
+
+      * `datastore_code` - a binary value providing a Datastore level salting
+        value used in different hashing operations.  The default value is
+        "musesystems.publicly.known.insecure.devsupport.code"
+
+      * `datastore_name` - a name for use by the application to identify a given
+        Datastore.  This value will often time be the same as the
+        `database_name` value.  This value is converted to an atom.  The default
+        value is `ms_devsupport_database`.
+
+      * `description_prefix` - a binary value which is prefixed to the
+        descriptions of the created database contexts and which appear in the
+        database role descriptions.  The default value is "Muse Systems
+        DevSupport".
+
+      * `database_role_prefix` - a binary value which is prefixed to the
+        names of the database roles created to back the Datastore Contexts.
+        The default value is `ms_devsupport`.
+
+      * `context_name` - a binary value which provides a unique context name for
+        the login Context identified by this function.  This value is converted
+        to an atom by this function.  The default value is
+        `ms_devsupport_context`.
+
+      * `database_password` - a binary value which is the database password that
+        the login Datastore Context uses to log into the database.  The default
+        value is "musesystems.publicly.known.insecure.devsupport.apppassword".
+
+      * `starting_pool_size` - the number of database connections the login
+        Context will establish from the application.  The default value is 5.
+
+      * `db_host` - a string indicating the host address of the database server.
+        This can be an IP address or resolvable DNS entry.  The default value is
+        `127.0.0.1`.
+
+      * `db_port` - an integer indicating the TCP port on which to contact the
+        database server.  The default value is the standard PostgreSQL port
+        number `5432`.
+
+      * `server_salt` - a binary value providing a Datastore level salting
+        value used in different hashing operations.  The default value is
+        "musesystems.publicly.known.insecure.devsupport.salt"
+
+      * `dbadmin_password` - a binary value for the standard
+        `ms_syst_privileged` database role account created via the database
+        bootstrapping script.  The default value is
+        "musesystems.publicly.known.insecure.devsupport.password".
+
+      * `dbadmin_pool_size` - the number of database connections which will be
+        opened to support DBA or Privileged operations.  The default value is
+        `1`.
+  """
+  @spec get_datastore_options(Keyword.t()) :: DatastoreOptions.t()
+  defdelegate get_datastore_options(opts \\ []), to: DevSupport
+
+  @doc section: :development_support
+  @doc """
+  Creates a Datastore, related Datastore Contexts, and processes migrations for
+  the identified type in support of development related activities.
+
+  This is a simplified and condensed version of the full process of database
+  creation.
+
+  ## Parameters
+
+    * `datastore_options` - a required `t:MscmpSystDb.Types.DatastoreOptions.t/0`
+      value which defines the Datastore and Datastore Contexts to use when
+      creating the database.  Typically this will be generated by
+      `get_datastore_options/1`, but any valid
+      `t:MscmpSystDb.Types.DatastoreOptions.t/0` value will work.
+
+    * `datastore_type` - a required string value which indicates the Datastore
+      Type to load.
+  """
+  @spec load_database(DatastoreOptions.t(), String.t()) ::
+          {:ok, [String.t()]} | {:error, MscmpSystError.t()}
+  defdelegate load_database(datastore_options, datastore_type), to: DevSupport
+
+  @doc section: :development_support
+  @doc """
+  Drops a Datastore previously created by the `load_database/2` function in
+  support of development related activities.
+
+  This function ensures that the Datastore is stopped and then drops it.
+
+  ## Parameters
+
+    * `datastore_options` - a required `t:MscmpSystDb.Types.DatastoreOptions.t/0`
+      value which defines the Datastore and Datastore Contexts to drop.
+  """
+  @spec drop_database(DatastoreOptions.t()) :: :ok
+  defdelegate drop_database(datastore_options), to: DevSupport
 
   @doc section: :query
   @doc """

@@ -8,7 +8,7 @@
     <meta name="project" content="mscmp_syst_db v0.1.0">
 
 
-    <title>MscmpSystDb.Types.DatastoreOptions — mscmp_syst_db v0.1.0</title>
+    <title>mix dropdb — mscmp_syst_db v0.1.0</title>
     <link rel="stylesheet" href="dist/html-elixir-3ZLIM5JF.css" />
 
 
@@ -22,7 +22,7 @@
 
 
   </head>
-  <body data-type="modules" class="page-module">
+  <body data-type="tasks" class="page-task">
     <script>
 
       try {
@@ -124,15 +124,54 @@ Pages
 
 <h1>
 
-  <span translate="no">MscmpSystDb.Types.DatastoreOptions</span> 
+  <span translate="no">mix dropdb</span> 
   <small class="app-vsn" translate="no">(mscmp_syst_db v0.1.0)</small>
 
 </h1>
 
 
   <section id="moduledoc">
-<p>A struct defining the connection parameters to use to connect to a Datastore
-backing database.</p>
+<p>Drops a previously loaded development supporting Datastore.</p><p>This command takes a number of options many of which match <a href="Mix.Tasks.Loaddb.html"><code class="inline">Mix.Tasks.Loaddb</code></a>.
+Insofar as they have corresponding options, the options used with this Mix
+task should have values which match the command used to create the Datastore;
+failing to do this could cause the drop operation to fail or fail partially.</p><blockquote><h4 class="warning">Usage Note</h4><p>There is nothing stopping you from using this command from dropping any
+Datastore in the system and technically it should work.  But the only
+supported use of this command is for dropping development supporting
+databases originally loaded with the <a href="Mix.Tasks.Loaddb.html"><code class="inline">Mix.Tasks.Loaddb</code></a> task.  Any other use
+is at your own risk.</p></blockquote><p>Note that all options other than <code class="inline">--type</code> have default values which match the
+corresponding default values in <code class="inline">Mix.Task.Loaddb</code>.</p><h2 id="module-options" class="section-heading">
+  <a href="#module-options" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Options</span>
+</h2>
+<ul><li><p><code class="inline">--ds-name</code> - The Datastore Name used to identify the Datastore in the
+application.  Specifically references parts of the supervisory system
+which manage the Datastore Contexts.  This is an optional string
+value which defaults to &quot;ms_devsupport_database&quot;.</p></li><li><p><code class="inline">--db-host</code> - The IP address or resolvable host name of the database
+server which hosts the Datastore to drop.  This is an optional string
+value which defaults to &quot;127.0.0.1&quot;.</p></li><li><p><code class="inline">--db-port</code> - The TCP port on which the database server is listening for
+connections.  This is an optional integer value which defaults to <code class="inline">5432</code>.</p></li><li><p><code class="inline">--db-name</code> - The name of the database which backs the Datastore on the
+database server.  Often times this will be the same as the Datastore
+Name, but not necessarily so.  This is an optional string value which
+defaults to &quot;ms_devsupport_database&quot;.</p></li><li><p><code class="inline">--db-role-prefix</code>- a string value which is used to prefix the owner and
+login Context database role names created by the <a href="Mix.Tasks.Loaddb.html"><code class="inline">Mix.Tasks.Loaddb</code></a> mix
+task.  This value is optional and defaults to &quot;ms_devsupport&quot;.</p></li><li><p><code class="inline">--context-name</code> - the name by which the login Context can be found
+withing the application.  This is an optional string value which defaults
+to &quot;ms_devsupport_context&quot;.</p></li><li><p><code class="inline">--dbadmin-pwd</code> - the password of the <code class="inline">ms_syst_privileged</code> database role
+on the target database.  This is an optional string value which defaults
+to &quot;musesystems.publicly.known.insecure.devsupport.password&quot;.</p></li><li><p><code class="inline">--clean-all</code> - if this switch is set, this task will delete all Datastore
+migration files created for the Component, including those that might not
+be related to the Datastore being dropped.  This is done by simply
+deleting the path directory provided in the <code class="inline">--destination</code> option.  This
+switch will supersede the <code class="inline">--clean</code> option if both switches are set.</p></li><li><p><code class="inline">--clean</code> or <code class="inline">-c</code> - deletes any Datastore migrations built for the
+Datastore type identified by the <code class="inline">--type</code> switch.  This switch is
+superseded by the <code class="inline">--clean-all</code> option.</p></li><li><p><code class="inline">--type</code> or <code class="inline">-t</code> - identifies the type of Datastore to clean when using
+the <code class="inline">--clean</code> option.  This option becomes required if the <code class="inline">--clean</code>
+switch is set.</p></li><li><p><code class="inline">--destination</code> or <code class="inline">-d</code> - establishes the path in which Datastore
+migrations were built.  This option is only used if either the
+<code class="inline">--clean-all</code> or <code class="inline">--clean</code> options are also set.  This is an optional
+value which defaults to &quot;priv/database&quot;.</p></li></ul>
   </section>
 
 
@@ -143,19 +182,18 @@ backing database.</p>
       </a>
       <span class="text">Summary</span>
     </h1>
-<div class="summary-types summary">
+<div class="summary-functions summary">
   <h2>
-    <a href="#types">Types</a>
+    <a href="#functions">Functions</a>
   </h2>
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#t:t/0" translate="no">t()</a>
+        <a href="#run/1" translate="no">run(args)</a>
 
       </div>
 
-        <div class="summary-synopsis"><p>A struct defining the connection parameters to use to connect to a Datastore
-backing database.</p></div>
+        <div class="summary-synopsis"><p>Callback implementation for <a href="https://hexdocs.pm/mix/Mix.Task.html#c:run/1"><code class="inline">Mix.Task.run/1</code></a>.</p></div>
 
     </div>
 
@@ -164,22 +202,22 @@ backing database.</p></div>
   </section>
 
 
-  <section id="types" class="details-list">
+  <section id="functions" class="details-list">
     <h1 class="section-heading">
-      <a class="hover-link" href="#types">
+      <a class="hover-link" href="#functions">
         <i class="ri-link-m" aria-hidden="true"></i>
       </a>
-      <span class="text">Types</span>
+      <span class="text">Functions</span>
     </h1>
-    <div class="types-list">
-<section class="detail" id="t:t/0">
+    <div class="functions-list">
+<section class="detail" id="run/1">
 
   <div class="detail-header">
-    <a href="#t:t/0" class="detail-link" title="Link to this type">
+    <a href="#run/1" class="detail-link" title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
+      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">t()</h1>
+    <h1 class="signature" translate="no">run(args)</h1>
 
 
   </div>
@@ -188,34 +226,11 @@ backing database.</p></div>
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@type</span> t() :: %MscmpSystDb.Types.DatastoreOptions{
-  contexts: [<a href="MscmpSystDb.Types.DatastoreContext.html#t:t/0">MscmpSystDb.Types.DatastoreContext.t</a>()] | [],
-  database_name: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
-  datastore_code: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil,
-  datastore_name: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>() | nil,
-  db_server: <a href="MscmpSystDb.Types.DbServer.html#t:t/0">MscmpSystDb.Types.DbServer.t</a>()
-}</pre>
+          <pre translate="no"><span class="attribute">@spec</span> run([<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">binary</a>()]) :: :ok</pre>
 
       </div>
 
-<p>A struct defining the connection parameters to use to connect to a Datastore
-backing database.</p><h2 id="t:t/0-attributes" class="section-heading">
-  <a href="#t:t/0-attributes" class="hover-link">
-    <i class="ri-link-m" aria-hidden="true"></i>
-  </a>
-  <span class="text">Attributes</span>
-</h2>
-<ul><li><p><code class="inline">:database_name</code> - The name of the database in the database server to
-which the connection will be made.  Often times this value will be the
-same as the String.t() form of the <code class="inline">:datastore_name</code> value.</p></li><li><p><code class="inline">:datastore_code</code> - Defines a Datastore specific salting value for use in
-certain security and cryptographic related functions.</p></li><li><p><code class="inline">:datastore_name</code> - A name for use by the application to identify a given
-Datastore.  This value will often time be the same as the <code class="inline">:database_name</code>
-value, except as an atom() rather than a String.t().</p></li><li><p><code class="inline">:contexts</code> - A list of available Datastore Context values defining which
-contexts are available for this Datastore.  See
-<a href="MscmpSystDb.Types.DatastoreContext.html#t:t/0"><code class="inline">MscmpSystDb.Types.DatastoreContext.t/0</code></a> for more information concerning
-the values of each entry in the list.</p></li><li><p><code class="inline">:db_server</code> - The database server information for the server where the
-Datastore database resides.  See 't:MscmpSystDb.Types.DbServer.t/0' for
-additional details.</p></li></ul>
+<p>Callback implementation for <a href="https://hexdocs.pm/mix/Mix.Task.html#c:run/1"><code class="inline">Mix.Task.run/1</code></a>.</p>
   </section>
 </section>
 
