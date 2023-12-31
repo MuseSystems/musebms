@@ -4,20 +4,21 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.30.9">
+    <meta name="generator" content="ExDoc v0.31.0">
     <meta name="project" content="mscmp_syst_db v0.1.0">
 
+
     <title>MscmpSystDb — mscmp_syst_db v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-XFYN5IVA.css" />
+    <link rel="stylesheet" href="dist/html-elixir-3ZLIM5JF.css" />
 
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-EPF2X7PV.js"></script>
-    <script src="dist/sidebar_items-0BBD5E6C.js"></script>
+    <script src="dist/handlebars.templates-43PMFBC7.js"></script>
+    <script src="dist/sidebar_items-33709BAE.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/html-J2ASZTQE.js"></script>
+    <script async src="dist/html-CILPWI2Q.js"></script>
 
 
   </head>
@@ -43,32 +44,17 @@
 </button>
 
 <nav id="sidebar" class="sidebar">
-  <form class="sidebar-search" action="search.html">
-    <label class="search-label">
-      <span class="sr-only">Search documentation of mscmp_syst_db</span>
-      <input name="q" type="text" class="search-input" placeholder="Search..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
-    </label>
-    <button type="submit" class="search-button" aria-label="Submit Search">
-      <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
-    </button>
-    <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
-      <i class="ri-close-line ri-lg" title="Cancel search"></i>
-    </button>
-  </form>
-
-  <div class="autocomplete">
-    <div class="autocomplete-results">
-    </div>
-  </div>
 
   <div class="sidebar-header">
+    <div class="sidebar-projectInfo">
 
-    <div class="sidebar-projectDetails">
-      <a href="MscmpSystDb.html" class="sidebar-projectName" translate="no">
+      <div>
+        <a href="MscmpSystDb.html" class="sidebar-projectName" translate="no">
 mscmp_syst_db
-      </a>
-      <div class="sidebar-projectVersion" translate="no">
-        v0.1.0
+        </a>
+        <div class="sidebar-projectVersion" translate="no">
+          v0.1.0
+        </div>
       </div>
     </div>
     <ul id="sidebar-listNav" class="sidebar-listNav" role="tablist">
@@ -113,13 +99,30 @@ Pages
   <output role="status" id="toast"></output>
   <div class="content-outer">
     <div id="content" class="content-inner">
+      <div class="top-search">
+        <div class="search-settings">
+          <form class="search-bar" action="search.html">
+            <label class="search-label">
+              <span class="sr-only">Search documentation of mscmp_syst_db</span>
+              <input name="q" type="text" class="search-input" placeholder="Search Documentation (press /)" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+            </label>
+            <button type="submit" class="search-button" aria-label="Submit Search">
+              <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
+            </button>
+            <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+              <i class="ri-close-line ri-lg" title="Cancel search"></i>
+            </button>
+          </form>
+          <button class="icon-settings display-settings">
+            <i class="ri-settings-3-line"></i>
+            <span class="sr-only">Settings</span>
+          </button>
+        </div>
+      </div>
+      <div class="autocomplete">
+      </div>
 
 <h1>
-<button class="icon-action display-settings">
-  <i class="ri-settings-3-line"></i>
-  <span class="sr-only">Settings</span>
-</button>
-
 
   <span translate="no">MscmpSystDb</span> 
   <small class="app-vsn" translate="no">(mscmp_syst_db v0.1.0)</small>
@@ -129,7 +132,7 @@ Pages
 
   <section id="moduledoc">
 <h1>MscmpSystDb - Database Migrations, Connectivity, and Querying</h1><p>A database management Component for developing and managing database-per-tenant
-oriented systems.  To achieve this we wrap and extend the popular <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.html"><code class="inline">Ecto</code></a> and
+oriented systems.  To achieve this we wrap and extend the popular <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.html"><code class="inline">Ecto</code></a> and
 <code class="inline">EctoSql</code> libraries with a specialized templated (<a href="https://hexdocs.pm/eex/EEx.html"><code class="inline">EEx</code></a>) migrations system and add
 additional, opinionated abstractions encapsulating the tenant model as it
 relates to development, data access, and runtime concerns.</p><blockquote><h4 class="warning">Important</h4><p>&quot;Database-per-tenant&quot; is not the typical tenancy implementation pattern for
@@ -185,7 +188,7 @@ their use will be rare.  Naturally, there is no requirement for Non-Login
 Datastore Contexts to be defined for any Datastore.</p></li></ul><p>Finally, when we access the database from the application we'll always be doing
 so identifying one of our Login Datastore Contexts.  This is done using
 <a href="#put_datastore_context/1"><code class="inline">MscmpSystDb.put_datastore_context/1</code></a> which behind the scenes is using the
-<a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html"><code class="inline">Ecto.Repo</code></a> dynamic repository features (<a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:put_dynamic_repo/1"><code class="inline">Ecto.Repo.put_dynamic_repo/1</code></a>).
+<a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html"><code class="inline">Ecto.Repo</code></a> dynamic repository features (<a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:put_dynamic_repo/1"><code class="inline">Ecto.Repo.put_dynamic_repo/1</code></a>).
 Note that there is no default Ecto Repo, dynamic or otherwise, defined in the
 system.  Any attempts to access a Datastore Context without having established
 the current Datastore Context for the process will cause the process to crash.</p><blockquote><h4 class="warning">Warning!</h4><p>Datastore Contexts are created and destroyed by the application using the API
@@ -294,7 +297,7 @@ types in a single database is not allowed.</p><h2 id="module-custom-database-typ
   </a>
   <span class="text">Custom Database Types</span>
 </h2>
-<p><a href="https://hexdocs.pm/ecto/3.10.3/Ecto.html"><code class="inline">Ecto</code></a>, <code class="inline">EctoSql</code>, and the underlying PostgreSQL library <a href="https://hexdocs.pm/postgrex/0.17.3/Postgrex.html"><code class="inline">Postgrex</code></a> offer decent
+<p><a href="https://hexdocs.pm/ecto/3.11.1/Ecto.html"><code class="inline">Ecto</code></a>, <code class="inline">EctoSql</code>, and the underlying PostgreSQL library <a href="https://hexdocs.pm/postgrex/0.17.4/Postgrex.html"><code class="inline">Postgrex</code></a> offer decent
 PostgreSQL data type support out of box, but they don't directly map some of the
 database types that can be helpful in business software such as PostgreSQL range
 types, internet address types, and interval types.  To this end we add some
@@ -305,12 +308,12 @@ namespace.</p><h2 id="module-data-access-interface" class="section-heading">
   </a>
   <span class="text">Data Access Interface</span>
 </h2>
-<p>The <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.html"><code class="inline">Ecto</code></a> library offers a data access and manipulation API via the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html"><code class="inline">Ecto.Repo</code></a>
+<p>The <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.html"><code class="inline">Ecto</code></a> library offers a data access and manipulation API via the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html"><code class="inline">Ecto.Repo</code></a>
 module.  We wrap and in some cases extend the majority of that functionality in
 this Component as documented in the <a href="#query">Query section</a>.  As a rule of
 thumb, you want to call on this module for such needs even if the same can be
-achieved with the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.html"><code class="inline">Ecto</code></a> library.  This recommendation is not meant to suggest
-that you shouldn't use the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Query.html"><code class="inline">Ecto.Query</code></a> related DSL or methods for constructing
+achieved with the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.html"><code class="inline">Ecto</code></a> library.  This recommendation is not meant to suggest
+that you shouldn't use the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Query.html"><code class="inline">Ecto.Query</code></a> related DSL or methods for constructing
 queries; using the Ecto Query DSL is, in fact, recommended absent compelling
 reason to do otherwise.</p>
   </section>
@@ -334,7 +337,7 @@ reason to do otherwise.</p>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:aggregate/4"><code class="inline">Ecto.Repo.aggregate/4</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:aggregate/4"><code class="inline">Ecto.Repo.aggregate/4</code></a>
 function.</p></div>
 
     </div>
@@ -345,7 +348,7 @@ function.</p></div>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:all/2"><code class="inline">Ecto.Repo.all/2</code></a> function.</p></div>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:all/2"><code class="inline">Ecto.Repo.all/2</code></a> function.</p></div>
 
     </div>
 
@@ -355,7 +358,7 @@ function.</p></div>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:delete/2"><code class="inline">Ecto.Repo.delete/2</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:delete/2"><code class="inline">Ecto.Repo.delete/2</code></a>
 function.</p></div>
 
     </div>
@@ -366,7 +369,7 @@ function.</p></div>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:delete!/2"><code class="inline">Ecto.Repo.delete!/2</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:delete!/2"><code class="inline">Ecto.Repo.delete!/2</code></a>
 function.</p></div>
 
     </div>
@@ -377,7 +380,7 @@ function.</p></div>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:delete_all/2"><code class="inline">Ecto.Repo.delete_all/2</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:delete_all/2"><code class="inline">Ecto.Repo.delete_all/2</code></a>
 function.</p></div>
 
     </div>
@@ -388,7 +391,7 @@ function.</p></div>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:exists?/2"><code class="inline">Ecto.Repo.exists?/2</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:exists?/2"><code class="inline">Ecto.Repo.exists?/2</code></a>
 function.</p></div>
 
     </div>
@@ -399,7 +402,7 @@ function.</p></div>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:get/3"><code class="inline">Ecto.Repo.get/3</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:get/3"><code class="inline">Ecto.Repo.get/3</code></a>
 function.</p></div>
 
     </div>
@@ -410,7 +413,7 @@ function.</p></div>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:get!/3"><code class="inline">Ecto.Repo.get!/3</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:get!/3"><code class="inline">Ecto.Repo.get!/3</code></a>
 function.</p></div>
 
     </div>
@@ -421,7 +424,7 @@ function.</p></div>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:get_by/3"><code class="inline">Ecto.Repo.get_by/3</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:get_by/3"><code class="inline">Ecto.Repo.get_by/3</code></a>
 function.</p></div>
 
     </div>
@@ -432,7 +435,7 @@ function.</p></div>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:get_by!/3"><code class="inline">Ecto.Repo.get_by!/3</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:get_by!/3"><code class="inline">Ecto.Repo.get_by!/3</code></a>
 function.</p></div>
 
     </div>
@@ -443,7 +446,7 @@ function.</p></div>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:in_transaction?/0"><code class="inline">Ecto.Repo.in_transaction?/0</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:in_transaction?/0"><code class="inline">Ecto.Repo.in_transaction?/0</code></a>
 function.</p></div>
 
     </div>
@@ -454,7 +457,7 @@ function.</p></div>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:insert/2"><code class="inline">Ecto.Repo.insert/2</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:insert/2"><code class="inline">Ecto.Repo.insert/2</code></a>
 function.</p></div>
 
     </div>
@@ -465,7 +468,7 @@ function.</p></div>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:insert!/2"><code class="inline">Ecto.Repo.insert!/2</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:insert!/2"><code class="inline">Ecto.Repo.insert!/2</code></a>
 function.</p></div>
 
     </div>
@@ -476,7 +479,7 @@ function.</p></div>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:insert_all/3"><code class="inline">Ecto.Repo.insert_all/3</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:insert_all/3"><code class="inline">Ecto.Repo.insert_all/3</code></a>
 function.</p></div>
 
     </div>
@@ -487,7 +490,7 @@ function.</p></div>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:insert_or_update/2"><code class="inline">Ecto.Repo.insert_or_update/2</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:insert_or_update/2"><code class="inline">Ecto.Repo.insert_or_update/2</code></a>
 function.</p></div>
 
     </div>
@@ -498,7 +501,7 @@ function.</p></div>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:insert_or_update!/2"><code class="inline">Ecto.Repo.insert_or_update!/2</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:insert_or_update!/2"><code class="inline">Ecto.Repo.insert_or_update!/2</code></a>
 function.</p></div>
 
     </div>
@@ -509,7 +512,7 @@ function.</p></div>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:load/2"><code class="inline">Ecto.Repo.load/2</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:load/2"><code class="inline">Ecto.Repo.load/2</code></a>
 function.</p></div>
 
     </div>
@@ -520,7 +523,7 @@ function.</p></div>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:one/2"><code class="inline">Ecto.Repo.one/2</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:one/2"><code class="inline">Ecto.Repo.one/2</code></a>
 function.</p></div>
 
     </div>
@@ -531,7 +534,7 @@ function.</p></div>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:one!/2"><code class="inline">Ecto.Repo.one!/2</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:one!/2"><code class="inline">Ecto.Repo.one!/2</code></a>
 function.</p></div>
 
     </div>
@@ -542,7 +545,7 @@ function.</p></div>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:preload/3"><code class="inline">Ecto.Repo.preload/3</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:preload/3"><code class="inline">Ecto.Repo.preload/3</code></a>
 function.</p></div>
 
     </div>
@@ -553,7 +556,7 @@ function.</p></div>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:prepare_query/3"><code class="inline">Ecto.Repo.prepare_query/3</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:prepare_query/3"><code class="inline">Ecto.Repo.prepare_query/3</code></a>
 function.</p></div>
 
     </div>
@@ -654,7 +657,7 @@ function.</p></div>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:reload/2"><code class="inline">Ecto.Repo.reload/2</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:reload/2"><code class="inline">Ecto.Repo.reload/2</code></a>
 function.</p></div>
 
     </div>
@@ -665,7 +668,7 @@ function.</p></div>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:reload!/2"><code class="inline">Ecto.Repo.reload!/2</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:reload!/2"><code class="inline">Ecto.Repo.reload!/2</code></a>
 function.</p></div>
 
     </div>
@@ -676,7 +679,7 @@ function.</p></div>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:rollback/1"><code class="inline">Ecto.Repo.rollback/1</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:rollback/1"><code class="inline">Ecto.Repo.rollback/1</code></a>
 function.</p></div>
 
     </div>
@@ -687,7 +690,7 @@ function.</p></div>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:stream/2"><code class="inline">Ecto.Repo.stream/2</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:stream/2"><code class="inline">Ecto.Repo.stream/2</code></a>
 function.</p></div>
 
     </div>
@@ -698,7 +701,7 @@ function.</p></div>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:transaction/2"><code class="inline">Ecto.Repo.transaction/2</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:transaction/2"><code class="inline">Ecto.Repo.transaction/2</code></a>
 function.</p></div>
 
     </div>
@@ -709,7 +712,7 @@ function.</p></div>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:update/2"><code class="inline">Ecto.Repo.update/2</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:update/2"><code class="inline">Ecto.Repo.update/2</code></a>
 function.</p></div>
 
     </div>
@@ -720,7 +723,7 @@ function.</p></div>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:update!/2"><code class="inline">Ecto.Repo.update!/2</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:update!/2"><code class="inline">Ecto.Repo.update!/2</code></a>
 function.</p></div>
 
     </div>
@@ -731,7 +734,7 @@ function.</p></div>
 
       </div>
 
-        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:update_all/3"><code class="inline">Ecto.Repo.update_all/3</code></a>
+        <div class="summary-synopsis"><p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:update_all/3"><code class="inline">Ecto.Repo.update_all/3</code></a>
 function.</p></div>
 
     </div>
@@ -898,6 +901,45 @@ Elixir process where this function is called.</p></div>
     </div>
 
 </div>
+<div class="summary-development-support summary">
+  <h2>
+    <a href="#development-support">Development Support</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#drop_database/1" translate="no">drop_database(datastore_options)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Drops a Datastore previously created by the <a href="#load_database/2"><code class="inline">load_database/2</code></a> function in
+support of development related activities.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_datastore_options/1" translate="no">get_datastore_options(opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Retrieves a populated DatastoreOptions struct which can be used to facilitate
+database involving development activities.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#load_database/2" translate="no">load_database(datastore_options, datastore_type)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Creates a Datastore, related Datastore Contexts, and processes migrations for
+the identified type in support of development related activities.</p></div>
+
+    </div>
+
+</div>
 
   </section>
 
@@ -926,7 +968,7 @@ Elixir process where this function is called.</p></div>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:aggregate/4"><code class="inline">Ecto.Repo.aggregate/4</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:aggregate/4"><code class="inline">Ecto.Repo.aggregate/4</code></a>
 function.</p>
   </section>
 </section>
@@ -948,11 +990,11 @@ function.</p>
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> all(<a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Queryable.html#t:t/0">Ecto.Queryable.t</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: [<a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Schema.html#t:t/0">Ecto.Schema.t</a>()]</pre>
+          <pre translate="no"><span class="attribute">@spec</span> all(<a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Queryable.html#t:t/0">Ecto.Queryable.t</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: [<a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Schema.html#t:t/0">Ecto.Schema.t</a>()]</pre>
 
       </div>
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:all/2"><code class="inline">Ecto.Repo.all/2</code></a> function.</p>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:all/2"><code class="inline">Ecto.Repo.all/2</code></a> function.</p>
   </section>
 </section>
 <section class="detail" id="delete/2">
@@ -971,7 +1013,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:delete/2"><code class="inline">Ecto.Repo.delete/2</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:delete/2"><code class="inline">Ecto.Repo.delete/2</code></a>
 function.</p>
   </section>
 </section>
@@ -991,7 +1033,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:delete!/2"><code class="inline">Ecto.Repo.delete!/2</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:delete!/2"><code class="inline">Ecto.Repo.delete!/2</code></a>
 function.</p>
   </section>
 </section>
@@ -1011,7 +1053,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:delete_all/2"><code class="inline">Ecto.Repo.delete_all/2</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:delete_all/2"><code class="inline">Ecto.Repo.delete_all/2</code></a>
 function.</p>
   </section>
 </section>
@@ -1031,7 +1073,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:exists?/2"><code class="inline">Ecto.Repo.exists?/2</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:exists?/2"><code class="inline">Ecto.Repo.exists?/2</code></a>
 function.</p>
   </section>
 </section>
@@ -1051,7 +1093,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:get/3"><code class="inline">Ecto.Repo.get/3</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:get/3"><code class="inline">Ecto.Repo.get/3</code></a>
 function.</p>
   </section>
 </section>
@@ -1071,7 +1113,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:get!/3"><code class="inline">Ecto.Repo.get!/3</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:get!/3"><code class="inline">Ecto.Repo.get!/3</code></a>
 function.</p>
   </section>
 </section>
@@ -1091,7 +1133,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:get_by/3"><code class="inline">Ecto.Repo.get_by/3</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:get_by/3"><code class="inline">Ecto.Repo.get_by/3</code></a>
 function.</p>
   </section>
 </section>
@@ -1111,7 +1153,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:get_by!/3"><code class="inline">Ecto.Repo.get_by!/3</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:get_by!/3"><code class="inline">Ecto.Repo.get_by!/3</code></a>
 function.</p>
   </section>
 </section>
@@ -1129,7 +1171,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:in_transaction?/0"><code class="inline">Ecto.Repo.in_transaction?/0</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:in_transaction?/0"><code class="inline">Ecto.Repo.in_transaction?/0</code></a>
 function.</p>
   </section>
 </section>
@@ -1149,7 +1191,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:insert/2"><code class="inline">Ecto.Repo.insert/2</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:insert/2"><code class="inline">Ecto.Repo.insert/2</code></a>
 function.</p>
   </section>
 </section>
@@ -1169,7 +1211,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:insert!/2"><code class="inline">Ecto.Repo.insert!/2</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:insert!/2"><code class="inline">Ecto.Repo.insert!/2</code></a>
 function.</p>
   </section>
 </section>
@@ -1189,7 +1231,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:insert_all/3"><code class="inline">Ecto.Repo.insert_all/3</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:insert_all/3"><code class="inline">Ecto.Repo.insert_all/3</code></a>
 function.</p>
   </section>
 </section>
@@ -1209,7 +1251,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:insert_or_update/2"><code class="inline">Ecto.Repo.insert_or_update/2</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:insert_or_update/2"><code class="inline">Ecto.Repo.insert_or_update/2</code></a>
 function.</p>
   </section>
 </section>
@@ -1229,7 +1271,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:insert_or_update!/2"><code class="inline">Ecto.Repo.insert_or_update!/2</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:insert_or_update!/2"><code class="inline">Ecto.Repo.insert_or_update!/2</code></a>
 function.</p>
   </section>
 </section>
@@ -1247,7 +1289,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:load/2"><code class="inline">Ecto.Repo.load/2</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:load/2"><code class="inline">Ecto.Repo.load/2</code></a>
 function.</p>
   </section>
 </section>
@@ -1267,7 +1309,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:one/2"><code class="inline">Ecto.Repo.one/2</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:one/2"><code class="inline">Ecto.Repo.one/2</code></a>
 function.</p>
   </section>
 </section>
@@ -1287,7 +1329,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:one!/2"><code class="inline">Ecto.Repo.one!/2</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:one!/2"><code class="inline">Ecto.Repo.one!/2</code></a>
 function.</p>
   </section>
 </section>
@@ -1307,7 +1349,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:preload/3"><code class="inline">Ecto.Repo.preload/3</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:preload/3"><code class="inline">Ecto.Repo.preload/3</code></a>
 function.</p>
   </section>
 </section>
@@ -1327,7 +1369,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:prepare_query/3"><code class="inline">Ecto.Repo.prepare_query/3</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:prepare_query/3"><code class="inline">Ecto.Repo.prepare_query/3</code></a>
 function.</p>
   </section>
 </section>
@@ -1594,7 +1636,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:reload/2"><code class="inline">Ecto.Repo.reload/2</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:reload/2"><code class="inline">Ecto.Repo.reload/2</code></a>
 function.</p>
   </section>
 </section>
@@ -1614,7 +1656,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:reload!/2"><code class="inline">Ecto.Repo.reload!/2</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:reload!/2"><code class="inline">Ecto.Repo.reload!/2</code></a>
 function.</p>
   </section>
 </section>
@@ -1632,7 +1674,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:rollback/1"><code class="inline">Ecto.Repo.rollback/1</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:rollback/1"><code class="inline">Ecto.Repo.rollback/1</code></a>
 function.</p>
   </section>
 </section>
@@ -1652,7 +1694,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:stream/2"><code class="inline">Ecto.Repo.stream/2</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:stream/2"><code class="inline">Ecto.Repo.stream/2</code></a>
 function.</p>
   </section>
 </section>
@@ -1675,13 +1717,13 @@ function.</p>
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> transaction(
-  (... -&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) | <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Multi.html#t:t/0">Ecto.Multi.t</a>(),
+  (... -&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) | <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Multi.html#t:t/0">Ecto.Multi.t</a>(),
   <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">keyword</a>()
 ) :: {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()} | {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
 
       </div>
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:transaction/2"><code class="inline">Ecto.Repo.transaction/2</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:transaction/2"><code class="inline">Ecto.Repo.transaction/2</code></a>
 function.</p>
   </section>
 </section>
@@ -1701,7 +1743,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:update/2"><code class="inline">Ecto.Repo.update/2</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:update/2"><code class="inline">Ecto.Repo.update/2</code></a>
 function.</p>
   </section>
 </section>
@@ -1721,7 +1763,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:update!/2"><code class="inline">Ecto.Repo.update!/2</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:update!/2"><code class="inline">Ecto.Repo.update!/2</code></a>
 function.</p>
   </section>
 </section>
@@ -1741,7 +1783,7 @@ function.</p>
 
   <section class="docstring">
 
-<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#c:update_all/3"><code class="inline">Ecto.Repo.update_all/3</code></a>
+<p>A convenience function that currently wraps the <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#c:update_all/3"><code class="inline">Ecto.Repo.update_all/3</code></a>
 function.</p>
   </section>
 </section>
@@ -2074,7 +2116,7 @@ context, unless no context has been established.</p>
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> put_datastore_context(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>() | <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Repo.html#t:t/0">Ecto.Repo.t</a>() | <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Adapter.html#t:adapter_meta/0">Ecto.Adapter.adapter_meta</a>()) ::
+          <pre translate="no"><span class="attribute">@spec</span> put_datastore_context(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>() | <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Repo.html#t:t/0">Ecto.Repo.t</a>() | <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Adapter.html#t:adapter_meta/0">Ecto.Adapter.adapter_meta</a>()) ::
   <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>() | <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()</pre>
 
       </div>
@@ -2204,6 +2246,156 @@ Dictionary of the process from which the function call is made.</p>
     </div>
   </section>
 
+  <section id="development-support" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#development-support">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Development Support</span>
+    </h1>
+    <div class="development-support-list">
+<section class="detail" id="drop_database/1">
+
+  <div class="detail-header">
+    <a href="#drop_database/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">drop_database(datastore_options)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> drop_database(<a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0">MscmpSystDb.Types.DatastoreOptions.t</a>()) :: :ok</pre>
+
+      </div>
+
+<p>Drops a Datastore previously created by the <a href="#load_database/2"><code class="inline">load_database/2</code></a> function in
+support of development related activities.</p><p>This function ensures that the Datastore is stopped and then drops it.</p><h2 id="drop_database/1-parameters" class="section-heading">
+  <a href="#drop_database/1-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><code class="inline">datastore_options</code> - a required <a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0"><code class="inline">MscmpSystDb.Types.DatastoreOptions.t/0</code></a>
+value which defines the Datastore and Datastore Contexts to drop.</li></ul>
+  </section>
+</section>
+<section class="detail" id="get_datastore_options/1">
+
+    <span id="get_datastore_options/0"></span>
+
+  <div class="detail-header">
+    <a href="#get_datastore_options/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_datastore_options(opts \\ [])</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_datastore_options(<a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: <a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0">MscmpSystDb.Types.DatastoreOptions.t</a>()</pre>
+
+      </div>
+
+<p>Retrieves a populated DatastoreOptions struct which can be used to facilitate
+database involving development activities.</p><p>The DatastoreOptions will set all important values and identify two Datastore
+Contexts: the standard non-login, &quot;owner&quot; Context which will own the database
+objects and a single login Context which would be typically of an application
+context for accessing the database.</p><blockquote><h4 class="warning">Security Note</h4><p>The DatastoreOptions produced by this function are intended for use only in
+support of software development activities in highly controlled environments
+where real, user data is not at risk of being compromised.  The values
+included in function effectively bypass a number of the security measures
+and assumptions in order to facilitate developer convenience.</p></blockquote><p>Currently this function does not support scenarios where more login Contexts
+may be useful.</p><h2 id="get_datastore_options/1-parameters" class="section-heading">
+  <a href="#get_datastore_options/1-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><p><code class="inline">opts</code> - an optional parameter consisting of type <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0"><code class="inline">Keyword.t/0</code></a>
+containing values which will override the function supplied defaults.  The
+available options are:</p><ul><li><p><code class="inline">database_name</code> - a binary value indicating a name for the database to
+use.  The default database name is <code class="inline">ms_devsupport_database</code>.</p></li><li><p><code class="inline">datastore_code</code> - a binary value providing a Datastore level salting
+value used in different hashing operations.  The default value is
+&quot;musesystems.publicly.known.insecure.devsupport.code&quot;</p></li><li><p><code class="inline">datastore_name</code> - a name for use by the application to identify a given
+Datastore.  This value will often time be the same as the
+<code class="inline">database_name</code> value.  This value is converted to an atom.  The default
+value is <code class="inline">ms_devsupport_database</code>.</p></li><li><p><code class="inline">description_prefix</code> - a binary value which is prefixed to the
+descriptions of the created database contexts and which appear in the
+database role descriptions.  The default value is &quot;Muse Systems
+DevSupport&quot;.</p></li><li><p><code class="inline">database_role_prefix</code> - a binary value which is prefixed to the
+names of the database roles created to back the Datastore Contexts.
+The default value is <code class="inline">ms_devsupport</code>.</p></li><li><p><code class="inline">context_name</code> - a binary value which provides a unique context name for
+the login Context identified by this function.  This value is converted
+to an atom by this function.  The default value is
+<code class="inline">ms_devsupport_context</code>.</p></li><li><p><code class="inline">database_password</code> - a binary value which is the database password that
+the login Datastore Context uses to log into the database.  The default
+value is &quot;musesystems.publicly.known.insecure.devsupport.apppassword&quot;.</p></li><li><p><code class="inline">starting_pool_size</code> - the number of database connections the login
+Context will establish from the application.  The default value is 5.</p></li><li><p><code class="inline">db_host</code> - a string indicating the host address of the database server.
+This can be an IP address or resolvable DNS entry.  The default value is
+<code class="inline">127.0.0.1</code>.</p></li><li><p><code class="inline">db_port</code> - an integer indicating the TCP port on which to contact the
+database server.  The default value is the standard PostgreSQL port
+number <code class="inline">5432</code>.</p></li><li><p><code class="inline">server_salt</code> - a binary value providing a Datastore level salting
+value used in different hashing operations.  The default value is
+&quot;musesystems.publicly.known.insecure.devsupport.salt&quot;</p></li><li><p><code class="inline">dbadmin_password</code> - a binary value for the standard
+<code class="inline">ms_syst_privileged</code> database role account created via the database
+bootstrapping script.  The default value is
+&quot;musesystems.publicly.known.insecure.devsupport.password&quot;.</p></li><li><p><code class="inline">dbadmin_pool_size</code> - the number of database connections which will be
+opened to support DBA or Privileged operations.  The default value is
+<code class="inline">1</code>.</p></li></ul></li></ul>
+  </section>
+</section>
+<section class="detail" id="load_database/2">
+
+  <div class="detail-header">
+    <a href="#load_database/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">load_database(datastore_options, datastore_type)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> load_database(<a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0">MscmpSystDb.Types.DatastoreOptions.t</a>(), <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()) ::
+  {:ok, [<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()]} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Creates a Datastore, related Datastore Contexts, and processes migrations for
+the identified type in support of development related activities.</p><p>This is a simplified and condensed version of the full process of database
+creation.</p><h2 id="load_database/2-parameters" class="section-heading">
+  <a href="#load_database/2-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><p><code class="inline">datastore_options</code> - a required <a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0"><code class="inline">MscmpSystDb.Types.DatastoreOptions.t/0</code></a>
+value which defines the Datastore and Datastore Contexts to use when
+creating the database.  Typically this will be generated by
+<a href="#get_datastore_options/1"><code class="inline">get_datastore_options/1</code></a>, but any valid
+<a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0"><code class="inline">MscmpSystDb.Types.DatastoreOptions.t/0</code></a> value will work.</p></li><li><p><code class="inline">datastore_type</code> - a required string value which indicates the Datastore
+Type to load.</p></li></ul>
+  </section>
+</section>
+
+    </div>
+  </section>
+
       <footer class="footer">
         <p>
 
@@ -2221,7 +2413,7 @@ Dictionary of the process from which the function call is made.</p>
 
         <p class="built-using">
           Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.30.9) for the
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.31.0) for the
 
             <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 
