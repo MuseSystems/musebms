@@ -17,6 +17,9 @@ $BODY$
 -- muse.information@musesystems.com :: https://muse.systems
 
 DECLARE
+    var_table regclass :=
+        (p_view_config.table_schema || '.' || p_view_config.table_name)::regclass;
+
     var_columns jsonb := $API_VIEW_COMMON_COLUMNS$
     [
       {
@@ -116,7 +119,13 @@ BEGIN
                 jsonb_populate_record(
                     NULL::ms_syst_priv.comments_config_apiview_column, c ) )
     FROM
-        jsonb_array_elements( var_columns ) c;
+        jsonb_array_elements( var_columns ) c
+            JOIN pg_attribute pa
+                ON c ->> 'column_name' = pa.attname::text
+    WHERE
+          pa.attrelid = var_table
+      AND pa.attnum > 0
+      AND NOT pa.attisdropped;
 
 END;
 $BODY$
