@@ -14,7 +14,7 @@
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
     <script src="dist/handlebars.templates-43PMFBC7.js"></script>
-    <script src="dist/sidebar_items-33709BAE.js"></script>
+    <script src="dist/sidebar_items-C2BF5A02.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -923,8 +923,52 @@ support of development related activities.</p></div>
 
       </div>
 
-        <div class="summary-synopsis"><p>Retrieves a populated DatastoreOptions struct which can be used to facilitate
-database involving development activities.</p></div>
+        <div class="summary-synopsis"><p>Retrieves a populated <a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0"><code class="inline">MscmpSystDb.Types.DatastoreOptions.t/0</code></a> struct which
+can be used to facilitate database involving development activities.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_devsupport_context_name/0" translate="no">get_devsupport_context_name()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Retrieves the name of the login Datastore Context typically used in
+development support.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_devsupport_datastore_options/1" translate="no">get_devsupport_datastore_options(opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Retrieves a populated <a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0"><code class="inline">MscmpSystDb.Types.DatastoreOptions.t/0</code></a> struct with
+defaults appropriate for interactive development support.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_testsupport_context_name/0" translate="no">get_testsupport_context_name()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Retrieves the name of the login Datastore Context typically used in
+testing support.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_testsupport_datastore_options/1" translate="no">get_testsupport_datastore_options(opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Retrieves a populated <a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0"><code class="inline">MscmpSystDb.Types.DatastoreOptions.t/0</code></a> struct with
+defaults appropriate for setting up test script database services.</p></div>
 
     </div>
 
@@ -2275,7 +2319,9 @@ Dictionary of the process from which the function call is made.</p>
       </div>
 
 <p>Drops a Datastore previously created by the <a href="#load_database/2"><code class="inline">load_database/2</code></a> function in
-support of development related activities.</p><p>This function ensures that the Datastore is stopped and then drops it.</p><h2 id="drop_database/1-parameters" class="section-heading">
+support of development related activities.</p><blockquote><h4 class="warning">Security Note</h4><p>This operation is specifically intended to support development and testing
+activities and should not be used in code which runs in production
+environments.</p></blockquote><p>This function ensures that the Datastore is stopped and then drops it.</p><h2 id="drop_database/1-parameters" class="section-heading">
   <a href="#drop_database/1-parameters" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
   </a>
@@ -2307,8 +2353,8 @@ value which defines the Datastore and Datastore Contexts to drop.</li></ul>
 
       </div>
 
-<p>Retrieves a populated DatastoreOptions struct which can be used to facilitate
-database involving development activities.</p><p>The DatastoreOptions will set all important values and identify two Datastore
+<p>Retrieves a populated <a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0"><code class="inline">MscmpSystDb.Types.DatastoreOptions.t/0</code></a> struct which
+can be used to facilitate database involving development activities.</p><p>The DatastoreOptions will set all important values and identify two Datastore
 Contexts: the standard non-login, &quot;owner&quot; Context which will own the database
 objects and a single login Context which would be typically of an application
 context for accessing the database.</p><blockquote><h4 class="warning">Security Note</h4><p>The DatastoreOptions produced by this function are intended for use only in
@@ -2355,6 +2401,158 @@ opened to support DBA or Privileged operations.  The default value is
 <code class="inline">1</code>.</p></li></ul></li></ul>
   </section>
 </section>
+<section class="detail" id="get_devsupport_context_name/0">
+
+  <div class="detail-header">
+    <a href="#get_devsupport_context_name/0" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_devsupport_context_name()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_devsupport_context_name() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()</pre>
+
+      </div>
+
+<p>Retrieves the name of the login Datastore Context typically used in
+development support.</p><p>This is a way to retrieve the standard development support name for use with
+functions such as <a href="#put_datastore_context/1"><code class="inline">put_datastore_context/1</code></a></p>
+  </section>
+</section>
+<section class="detail" id="get_devsupport_datastore_options/1">
+
+    <span id="get_devsupport_datastore_options/0"></span>
+
+  <div class="detail-header">
+    <a href="#get_devsupport_datastore_options/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_devsupport_datastore_options(opts \\ [])</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_devsupport_datastore_options(<a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) ::
+  <a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0">MscmpSystDb.Types.DatastoreOptions.t</a>()</pre>
+
+      </div>
+
+<p>Retrieves a populated <a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0"><code class="inline">MscmpSystDb.Types.DatastoreOptions.t/0</code></a> struct with
+defaults appropriate for interactive development support.</p><p>Currently this function is simply an alias for <a href="#get_datastore_options/1"><code class="inline">get_datastore_options/1</code></a>.  All
+documentation for that function applies to this function.</p><h2 id="get_devsupport_datastore_options/1-parameters" class="section-heading">
+  <a href="#get_devsupport_datastore_options/1-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><code class="inline">opts</code> - an optional parameter consisting of type <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0"><code class="inline">Keyword.t/0</code></a>
+containing values which will override the function supplied defaults.  The
+available options are the same as those for <a href="#get_datastore_options/1"><code class="inline">get_datastore_options/1</code></a></li></ul>
+  </section>
+</section>
+<section class="detail" id="get_testsupport_context_name/0">
+
+  <div class="detail-header">
+    <a href="#get_testsupport_context_name/0" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_testsupport_context_name()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_testsupport_context_name() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()</pre>
+
+      </div>
+
+<p>Retrieves the name of the login Datastore Context typically used in
+testing support.</p><p>This is a way to retrieve the standard testing support name for use with
+functions such as <a href="#put_datastore_context/1"><code class="inline">put_datastore_context/1</code></a></p>
+  </section>
+</section>
+<section class="detail" id="get_testsupport_datastore_options/1">
+
+    <span id="get_testsupport_datastore_options/0"></span>
+
+  <div class="detail-header">
+    <a href="#get_testsupport_datastore_options/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_testsupport_datastore_options(opts \\ [])</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_testsupport_datastore_options(<a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) ::
+  <a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0">MscmpSystDb.Types.DatastoreOptions.t</a>()</pre>
+
+      </div>
+
+<p>Retrieves a populated <a href="MscmpSystDb.Types.DatastoreOptions.html#t:t/0"><code class="inline">MscmpSystDb.Types.DatastoreOptions.t/0</code></a> struct with
+defaults appropriate for setting up test script database services.</p><p>This function calls <a href="#get_datastore_options/1"><code class="inline">get_datastore_options/1</code></a> with alternate defaults suitable
+for running test scripts independently from database environments targeted to
+interactive development.  Documentation for that function will largely apply
+for this function, except as specifically contradicted here.</p><h2 id="get_testsupport_datastore_options/1-parameters" class="section-heading">
+  <a href="#get_testsupport_datastore_options/1-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><p><code class="inline">opts</code> - an optional parameter consisting of type <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0"><code class="inline">Keyword.t/0</code></a>
+containing values which will override the function supplied defaults.  The
+available options are:</p><ul><li><p><code class="inline">database_name</code> - a binary value indicating a name for the database to
+use.  The default database name is <code class="inline">ms_testsupport_database</code>.</p></li><li><p><code class="inline">datastore_code</code> - a binary value providing a Datastore level salting
+value used in different hashing operations.  The default value is
+&quot;musesystems.publicly.known.insecure.testsupport.code&quot;</p></li><li><p><code class="inline">datastore_name</code> - a name for use by the application to identify a given
+Datastore.  This value will often time be the same as the
+<code class="inline">database_name</code> value.  This value is converted to an atom.  The default
+value is <code class="inline">ms_testsupport_database</code>.</p></li><li><p><code class="inline">description_prefix</code> - a binary value which is prefixed to the
+descriptions of the created database contexts and which appear in the
+database role descriptions.  The default value is &quot;Muse Systems
+TestSupport&quot;.</p></li><li><p><code class="inline">database_role_prefix</code> - a binary value which is prefixed to the
+names of the database roles created to back the Datastore Contexts.
+The default value is <code class="inline">ms_testsupport</code>.</p></li><li><p><code class="inline">context_name</code> - a binary value which provides a unique context name for
+the login Context identified by this function.  This value is converted
+to an atom by this function.  The default value is
+<code class="inline">ms_testsupport_context</code>.</p></li><li><p><code class="inline">database_password</code> - a binary value which is the database password that
+the login Datastore Context uses to log into the database.  The default
+value is &quot;musesystems.publicly.known.insecure.testsupport.apppassword&quot;.</p></li><li><p><code class="inline">starting_pool_size</code> - the number of database connections the login
+Context will establish from the application.  The default value is 5.</p></li><li><p><code class="inline">db_host</code> - a string indicating the host address of the database server.
+This can be an IP address or resolvable DNS entry.  The default value is
+<code class="inline">127.0.0.1</code>.</p></li><li><p><code class="inline">db_port</code> - an integer indicating the TCP port on which to contact the
+database server.  The default value is the standard PostgreSQL port
+number <code class="inline">5432</code>.</p></li><li><p><code class="inline">server_salt</code> - a binary value providing a Datastore level salting
+value used in different hashing operations.  The default value is
+&quot;musesystems.publicly.known.insecure.testsupport.salt&quot;</p></li><li><p><code class="inline">dbadmin_password</code> - a binary value for the standard
+<code class="inline">ms_syst_privileged</code> database role account created via the database
+bootstrapping script.  The default value is
+&quot;musesystems.publicly.known.insecure.devsupport.password&quot;.</p></li><li><p><code class="inline">dbadmin_pool_size</code> - the number of database connections which will be
+opened to support DBA or Privileged operations.  The default value is
+<code class="inline">1</code>.</p></li></ul></li></ul>
+  </section>
+</section>
 <section class="detail" id="load_database/2">
 
   <div class="detail-header">
@@ -2377,7 +2575,9 @@ opened to support DBA or Privileged operations.  The default value is
       </div>
 
 <p>Creates a Datastore, related Datastore Contexts, and processes migrations for
-the identified type in support of development related activities.</p><p>This is a simplified and condensed version of the full process of database
+the identified type in support of development related activities.</p><blockquote><h4 class="warning">Security Note</h4><p>This operation is specifically intended to support development and testing
+activities and should not be used in code which runs in production
+environments.</p></blockquote><p>This is a simplified and condensed version of the full process of database
 creation.</p><h2 id="load_database/2-parameters" class="section-heading">
   <a href="#load_database/2-parameters" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
