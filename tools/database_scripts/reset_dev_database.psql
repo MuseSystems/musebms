@@ -18,18 +18,6 @@
 \set ON_ERROR_STOP true
 \c postgres
 
-DROP DATABASE IF EXISTS ms_dev_database;
+\ir drop_devtest_db_objects.psql
 
-DROP ROLE IF EXISTS ms_dev_app_user;
-DROP ROLE IF EXISTS ms_dev_owner;
-
-DROP FUNCTION IF EXISTS ms_syst.create_login_role(text, text, text);
-DROP FUNCTION IF EXISTS ms_syst.create_nonlogin_role(text, text);
-DROP FUNCTION IF EXISTS ms_syst.drop_role(text);
-
-DROP SCHEMA IF EXISTS ms_syst;
-
-DROP ROLE IF EXISTS ms_syst_access;
-DROP ROLE IF EXISTS ms_syst_privileged;
-DROP ROLE IF EXISTS ms_syst_managable;
-DROP ROLE IF EXISTS ms_syst_owner;
+\ir bootstrap_database.psql

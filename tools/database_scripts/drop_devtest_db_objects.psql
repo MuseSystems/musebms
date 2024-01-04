@@ -1,0 +1,40 @@
+-- File:        drop_devtest_db_objects.psql
+-- Location:    musebms/tools/database_scripts/drop_devtest_db_objects.psql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+-- Note that this script currently exists to support CI testing
+-- A more robust script should be produced to walk users though
+-- the initial setup of the starting database objects.
+--
+-- Do not use this script to setup a production environment.
+\set ON_ERROR_STOP true
+\c postgres
+
+DROP DATABASE IF EXISTS ms_devsupport_database;
+
+DROP ROLE IF EXISTS ms_devsupport_context;
+DROP ROLE IF EXISTS ms_devsupport_owner;
+
+DROP DATABASE IF EXISTS ms_testsupport_database;
+
+DROP ROLE IF EXISTS ms_testsupport_context;
+DROP ROLE IF EXISTS ms_testsupport_owner;
+
+DROP FUNCTION IF EXISTS ms_syst.create_login_role(text, text, text);
+DROP FUNCTION IF EXISTS ms_syst.create_nonlogin_role(text, text);
+DROP FUNCTION IF EXISTS ms_syst.drop_role(text);
+
+DROP SCHEMA IF EXISTS ms_syst;
+
+DROP ROLE IF EXISTS ms_syst_access;
+DROP ROLE IF EXISTS ms_syst_privileged;
+DROP ROLE IF EXISTS ms_syst_managable;
+DROP ROLE IF EXISTS ms_syst_owner;
