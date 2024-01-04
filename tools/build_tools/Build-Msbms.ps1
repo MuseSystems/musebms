@@ -49,7 +49,7 @@ $do_clean_ls = $CleanLs -or $CleanAll -or $All -or $do_deps_update
 $do_clean_plt = $CleanPlt -or $CleanAll -or $All -or $do_deps_update
 $do_clean_build = $CleanBuild -or $CleanAll -or $All -or $do_deps_update
 $do_clean_deps = $CleanDeps -or $CleanAll -or $All -or $do_deps_update
-$do_deps_get = $DepsGet -or $All -or $do_deps_update
+$do_deps_get = $DepsGet -or $CleanAll -or $All -or $do_deps_update
 $do_docs_elixir = $DocsElixir -or $DocsAll -or $All -or $AllUpdate
 $do_docs_db = $DocsDb -or $DocsAll -or $All -or $AllUpdate
 
