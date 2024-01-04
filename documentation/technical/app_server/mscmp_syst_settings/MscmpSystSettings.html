@@ -4,20 +4,21 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.30.9">
+    <meta name="generator" content="ExDoc v0.31.0">
     <meta name="project" content="mscmp_syst_settings v0.1.0">
 
+
     <title>MscmpSystSettings — mscmp_syst_settings v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-XFYN5IVA.css" />
+    <link rel="stylesheet" href="dist/html-elixir-3ZLIM5JF.css" />
 
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-EPF2X7PV.js"></script>
-    <script src="dist/sidebar_items-4F79D316.js"></script>
+    <script src="dist/handlebars.templates-43PMFBC7.js"></script>
+    <script src="dist/sidebar_items-20914712.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/html-J2ASZTQE.js"></script>
+    <script async src="dist/html-CILPWI2Q.js"></script>
 
 
   </head>
@@ -43,32 +44,17 @@
 </button>
 
 <nav id="sidebar" class="sidebar">
-  <form class="sidebar-search" action="search.html">
-    <label class="search-label">
-      <span class="sr-only">Search documentation of mscmp_syst_settings</span>
-      <input name="q" type="text" class="search-input" placeholder="Search..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
-    </label>
-    <button type="submit" class="search-button" aria-label="Submit Search">
-      <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
-    </button>
-    <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
-      <i class="ri-close-line ri-lg" title="Cancel search"></i>
-    </button>
-  </form>
-
-  <div class="autocomplete">
-    <div class="autocomplete-results">
-    </div>
-  </div>
 
   <div class="sidebar-header">
+    <div class="sidebar-projectInfo">
 
-    <div class="sidebar-projectDetails">
-      <a href="MscmpSystSettings.html" class="sidebar-projectName" translate="no">
+      <div>
+        <a href="MscmpSystSettings.html" class="sidebar-projectName" translate="no">
 mscmp_syst_settings
-      </a>
-      <div class="sidebar-projectVersion" translate="no">
-        v0.1.0
+        </a>
+        <div class="sidebar-projectVersion" translate="no">
+          v0.1.0
+        </div>
       </div>
     </div>
     <ul id="sidebar-listNav" class="sidebar-listNav" role="tablist">
@@ -103,13 +89,30 @@ Pages
   <output role="status" id="toast"></output>
   <div class="content-outer">
     <div id="content" class="content-inner">
+      <div class="top-search">
+        <div class="search-settings">
+          <form class="search-bar" action="search.html">
+            <label class="search-label">
+              <span class="sr-only">Search documentation of mscmp_syst_settings</span>
+              <input name="q" type="text" class="search-input" placeholder="Search Documentation (press /)" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+            </label>
+            <button type="submit" class="search-button" aria-label="Submit Search">
+              <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
+            </button>
+            <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+              <i class="ri-close-line ri-lg" title="Cancel search"></i>
+            </button>
+          </form>
+          <button class="icon-settings display-settings">
+            <i class="ri-settings-3-line"></i>
+            <span class="sr-only">Settings</span>
+          </button>
+        </div>
+      </div>
+      <div class="autocomplete">
+      </div>
 
 <h1>
-<button class="icon-action display-settings">
-  <i class="ri-settings-3-line"></i>
-  <span class="sr-only">Settings</span>
-</button>
-
 
   <span translate="no">MscmpSystSettings</span> 
   <small class="app-vsn" translate="no">(mscmp_syst_settings v0.1.0)</small>
@@ -274,6 +277,65 @@ set.</p></div>
     </div>
 
 </div>
+<div class="summary-development-support summary">
+  <h2>
+    <a href="#development-support">Development Support</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_devsupport_service_name/0" translate="no">get_devsupport_service_name()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Retrieves the Settings Service Name typically used to support development.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_testsupport_service_name/0" translate="no">get_testsupport_service_name()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Retrieves the Settings Service Name typically used to support testing.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#start_devsupport_services/1" translate="no">start_devsupport_services(opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Starts a Settings Service instance for the purposes of supporting interactive
+development activities.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#start_support_services/1" translate="no">start_support_services(opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Starts a Settings Service instance for the purposes of supporting interactive
+development or testing activities.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#start_testsupport_services/1" translate="no">start_testsupport_services(opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Starts a Settings Service instance for the purposes of supporting testing
+activities.</p></div>
+
+    </div>
+
+</div>
 
   </section>
 
@@ -329,13 +391,13 @@ permitted here, but not required.</p></li></ul><h2 id="create_setting/1-examples
   </a>
   <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">new_setting</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="7671524795-1">%{</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">new_setting</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="2117205812-1">%{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;create_example_setting&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">display_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Create Example Setting&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">user_description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;An example of setting creation.&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">setting_integer</span><span class="p">:</span><span class="w"> </span><span class="mi">9876</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="7671524795-1">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">create_setting</span><span class="p" data-group-id="7671524795-2">(</span><span class="n">new_setting</span><span class="p" data-group-id="7671524795-2">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="2117205812-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">create_setting</span><span class="p" data-group-id="2117205812-2">(</span><span class="n">new_setting</span><span class="p" data-group-id="2117205812-2">)</span><span class="w">
 </span><span class="ss">:ok</span></code></pre>
   </section>
 </section>
@@ -373,7 +435,7 @@ Trying to do so will result in a error being raised.</p><h2 id="delete_setting/1
   </a>
   <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">delete_setting</span><span class="p" data-group-id="9620164342-1">(</span><span class="s">&quot;delete_example_setting&quot;</span><span class="p" data-group-id="9620164342-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">delete_setting</span><span class="p" data-group-id="2690082857-1">(</span><span class="s">&quot;delete_example_setting&quot;</span><span class="p" data-group-id="2690082857-1">)</span><span class="w">
 </span><span class="ss">:ok</span></code></pre>
   </section>
 </section>
@@ -412,15 +474,15 @@ Trying to do so will result in a error being raised.</p><h2 id="delete_setting/1
   </a>
   <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">get_setting_value</span><span class="p" data-group-id="4032022630-1">(</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">get_setting_value</span><span class="p" data-group-id="6424045847-1">(</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="s">&quot;get_example_setting&quot;</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:setting_decimal_range</span><span class="p" data-group-id="4032022630-1">)</span><span class="w">
-</span><span class="p" data-group-id="4032022630-2">%</span><span class="nc" data-group-id="4032022630-2">MscmpSystDb.DbTypes.DecimalRange</span><span class="p" data-group-id="4032022630-2">{</span><span class="w">
-  </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="nc">Decimal</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="4032022630-3">(</span><span class="s">&quot;1.1&quot;</span><span class="p" data-group-id="4032022630-3">)</span><span class="p">,</span><span class="w">
-  </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="nc">Decimal</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="4032022630-4">(</span><span class="s">&quot;99.99&quot;</span><span class="p" data-group-id="4032022630-4">)</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:setting_decimal_range</span><span class="p" data-group-id="6424045847-1">)</span><span class="w">
+</span><span class="p" data-group-id="6424045847-2">%</span><span class="nc" data-group-id="6424045847-2">MscmpSystDb.DbTypes.DecimalRange</span><span class="p" data-group-id="6424045847-2">{</span><span class="w">
+  </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="nc">Decimal</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="6424045847-3">(</span><span class="s">&quot;1.1&quot;</span><span class="p" data-group-id="6424045847-3">)</span><span class="p">,</span><span class="w">
+  </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="nc">Decimal</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="6424045847-4">(</span><span class="s">&quot;99.99&quot;</span><span class="p" data-group-id="6424045847-4">)</span><span class="p">,</span><span class="w">
   </span><span class="ss">lower_inclusive</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
   </span><span class="ss">upper_inclusive</span><span class="p">:</span><span class="w"> </span><span class="no">false</span><span class="w">
-</span><span class="p" data-group-id="4032022630-2">}</span></code></pre>
+</span><span class="p" data-group-id="6424045847-2">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_setting_values/1">
@@ -457,7 +519,7 @@ Trying to do so will result in a error being raised.</p><h2 id="delete_setting/1
   </a>
   <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">get_setting_values</span><span class="p" data-group-id="3364664424-1">(</span><span class="s">&quot;get_example_setting&quot;</span><span class="p" data-group-id="3364664424-1">)</span></code></pre>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">get_setting_values</span><span class="p" data-group-id="0914086747-1">(</span><span class="s">&quot;get_example_setting&quot;</span><span class="p" data-group-id="0914086747-1">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="list_all_settings/0">
@@ -487,7 +549,7 @@ descriptions, etc.</p><h2 id="list_all_settings/0-examples" class="section-headi
   </a>
   <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">list_all_settings</span><span class="p" data-group-id="3454607873-1">(</span><span class="p" data-group-id="3454607873-1">)</span></code></pre>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">list_all_settings</span><span class="p" data-group-id="8778933432-1">(</span><span class="p" data-group-id="8778933432-1">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="set_setting_value/3">
@@ -529,10 +591,10 @@ error will be raised.</p></li></ul><h2 id="set_setting_value/3-examples" class="
   </a>
   <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">set_setting_value</span><span class="p" data-group-id="1977772644-1">(</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">set_setting_value</span><span class="p" data-group-id="1453803352-1">(</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="s">&quot;set_example_setting&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:setting_decimal</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">Decimal</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="1977772644-2">(</span><span class="s">&quot;1029.3847&quot;</span><span class="p" data-group-id="1977772644-2">)</span><span class="p" data-group-id="1977772644-1">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">Decimal</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="1453803352-2">(</span><span class="s">&quot;1029.3847&quot;</span><span class="p" data-group-id="1453803352-2">)</span><span class="p" data-group-id="1453803352-1">)</span><span class="w">
 </span><span class="ss">:ok</span></code></pre>
   </section>
 </section>
@@ -577,19 +639,19 @@ value, and/or updates to the <code class="inline">user_description</code> value.
   </a>
   <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">update_values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="9580648375-1">%{</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">update_values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="2991894379-1">%{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">user_description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;An example of updating the user description.&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">setting_integer</span><span class="p">:</span><span class="w"> </span><span class="mi">6758</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">setting_date_range</span><span class="p">:</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="p" data-group-id="9580648375-2">%</span><span class="nc" data-group-id="9580648375-2">MscmpSystDb.DbTypes.DateRange</span><span class="p" data-group-id="9580648375-2">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="p" data-group-id="2991894379-2">%</span><span class="nc" data-group-id="2991894379-2">MscmpSystDb.DbTypes.DateRange</span><span class="p" data-group-id="2991894379-2">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">       </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="ld">~D[2022-04-01]</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">       </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="ld">~D[2022-04-12]</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">       </span><span class="ss">upper_inclusive</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="p" data-group-id="9580648375-2">}</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="9580648375-1">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">set_setting_values</span><span class="p" data-group-id="9580648375-3">(</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="p" data-group-id="2991894379-2">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="2991894379-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">set_setting_values</span><span class="p" data-group-id="2991894379-3">(</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="s">&quot;set_example_setting&quot;</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="n">update_values</span><span class="p" data-group-id="9580648375-3">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="n">update_values</span><span class="p" data-group-id="2991894379-3">)</span><span class="w">
 </span><span class="ss">:ok</span></code></pre>
   </section>
 </section>
@@ -632,8 +694,8 @@ set.</p><h2 id="get_settings_service/0-examples" class="section-heading">
   </a>
   <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">get_settings_service</span><span class="p" data-group-id="7831716758-1">(</span><span class="p" data-group-id="7831716758-1">)</span><span class="w">
-</span><span class="ss">:settings_instance</span></code></pre>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">get_settings_service</span><span class="p" data-group-id="5249828790-1">(</span><span class="p" data-group-id="5249828790-1">)</span><span class="w">
+</span><span class="ss">:settings_test_service</span></code></pre>
   </section>
 </section>
 <section class="detail" id="put_settings_service/1">
@@ -679,7 +741,7 @@ the process.</li></ul><h2 id="put_settings_service/1-examples" class="section-he
   </a>
   <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">put_settings_service</span><span class="p" data-group-id="8475758976-1">(</span><span class="ss">:settings_instance</span><span class="p" data-group-id="8475758976-1">)</span></code></pre>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">put_settings_service</span><span class="p" data-group-id="9048311190-1">(</span><span class="ss">:settings_test_service</span><span class="p" data-group-id="9048311190-1">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="refresh_from_database/0">
@@ -710,7 +772,7 @@ datastore context provided to <a href="#start_link/1"><code class="inline">start
   </a>
   <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">refresh_from_database</span><span class="p" data-group-id="8413841487-1">(</span><span class="p" data-group-id="8413841487-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">refresh_from_database</span><span class="p" data-group-id="7980465045-1">(</span><span class="p" data-group-id="7980465045-1">)</span><span class="w">
 </span><span class="ss">:ok</span></code></pre>
   </section>
 </section>
@@ -775,8 +837,195 @@ modifying database data.</p>
   </a>
   <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="o">&gt;</span><span class="w"> </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">terminate_settings_service</span><span class="p" data-group-id="3386532096-1">(</span><span class="p" data-group-id="3386532096-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="o">&gt;</span><span class="w"> </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">terminate_settings_service</span><span class="p" data-group-id="4861855414-1">(</span><span class="p" data-group-id="4861855414-1">)</span><span class="w">
 </span><span class="ss">:ok</span></code></pre>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+  <section id="development-support" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#development-support">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Development Support</span>
+    </h1>
+    <div class="development-support-list">
+<section class="detail" id="get_devsupport_service_name/0">
+
+  <div class="detail-header">
+    <a href="#get_devsupport_service_name/0" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_devsupport_service_name()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_devsupport_service_name() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()</pre>
+
+      </div>
+
+<p>Retrieves the Settings Service Name typically used to support development.</p><p>This is a way to retrieve the standard development support name for use with
+functions such as <a href="#put_settings_service/1"><code class="inline">put_settings_service/1</code></a></p>
+  </section>
+</section>
+<section class="detail" id="get_testsupport_service_name/0">
+
+  <div class="detail-header">
+    <a href="#get_testsupport_service_name/0" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_testsupport_service_name()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_testsupport_service_name() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()</pre>
+
+      </div>
+
+<p>Retrieves the Settings Service Name typically used to support testing.</p><p>This is a way to retrieve the standard testing support name for use with
+functions such as <a href="#put_settings_service/1"><code class="inline">put_settings_service/1</code></a></p>
+  </section>
+</section>
+<section class="detail" id="start_devsupport_services/1">
+
+    <span id="start_devsupport_services/0"></span>
+
+  <div class="detail-header">
+    <a href="#start_devsupport_services/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">start_devsupport_services(opts \\ [])</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> start_devsupport_services(<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">keyword</a>()) ::
+  :ignore | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()} | {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()} | {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+<p>Starts a Settings Service instance for the purposes of supporting interactive
+development activities.</p><blockquote><h4 class="warning">Not for Production</h4><p>This operation is specifically intended to support development and should
+not be used by code which runs in production environments.</p></blockquote><p>Currently this function simply redirects to <a href="#start_support_services/1"><code class="inline">start_support_services/1</code></a>.</p><h2 id="start_devsupport_services/1-parameters" class="section-heading">
+  <a href="#start_devsupport_services/1-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><code class="inline">opts</code> - a <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0"><code class="inline">Keyword.t/0</code></a> list of optional parameters which can override
+default values for service parameters.  The available options and their
+defaults are the same as <a href="#start_support_services/1"><code class="inline">start_support_services/1</code></a>.</li></ul>
+  </section>
+</section>
+<section class="detail" id="start_support_services/1">
+
+    <span id="start_support_services/0"></span>
+
+  <div class="detail-header">
+    <a href="#start_support_services/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">start_support_services(opts \\ [])</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> start_support_services(<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">keyword</a>()) ::
+  :ignore | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()} | {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()} | {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+<p>Starts a Settings Service instance for the purposes of supporting interactive
+development or testing activities.</p><blockquote><h4 class="warning">Not for Production</h4><p>This operation is specifically intended to support development and testing
+activities and should not be used by code which runs in production
+environments.</p></blockquote><h2 id="start_support_services/1-parameters" class="section-heading">
+  <a href="#start_support_services/1-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><p><code class="inline">opts</code> - a <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0"><code class="inline">Keyword.t/0</code></a> list of optional parameters which can override
+default values for service parameters.  The available options are:</p><ul><li><p><code class="inline">childspec_id</code> - the ID value used in defining a Child Specification for
+the service. This is an atom value which defaults to
+<a href="MscmpSystSettings.html#content"><code class="inline">MscmpSystSettings</code></a>.</p></li><li><p><code class="inline">supervisor_name</code> - the name of the <a href="https://hexdocs.pm/elixir/DynamicSupervisor.html"><code class="inline">DynamicSupervisor</code></a> which will
+will supervise the Settings Service.  This is an atom value which
+defaults to <code class="inline">MscmpSystSettings.DevSupportSupervisor</code>.</p></li><li><p><code class="inline">service_name</code> - the name of the Settings Service instance.  This is the
+value by which the specific Settings Service may be set using functions
+such as <a href="#put_settings_service/1"><code class="inline">put_settings_service/1</code></a>.  This is an atom value which defaults
+to the value returned by <a href="#get_devsupport_service_name/0"><code class="inline">get_devsupport_service_name/0</code></a>.</p></li><li><p><code class="inline">datastore_context</code> - the name of the login Datastore Context which can
+access the database storage backing the Settings Service.  This is an
+atom value which defaults to the value returned by
+<a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.html#get_devsupport_context_name/0"><code class="inline">MscmpSystDb.get_devsupport_context_name/0</code></a>.</p></li></ul></li></ul>
+  </section>
+</section>
+<section class="detail" id="start_testsupport_services/1">
+
+    <span id="start_testsupport_services/0"></span>
+
+  <div class="detail-header">
+    <a href="#start_testsupport_services/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">start_testsupport_services(opts \\ [])</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> start_testsupport_services(<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">keyword</a>()) ::
+  :ignore | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()} | {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()} | {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+<p>Starts a Settings Service instance for the purposes of supporting testing
+activities.</p><blockquote><h4 class="warning">Not for Production</h4><p>This operation is specifically intended to support testing activities and
+should not be used by code which runs in production environments.</p></blockquote><h2 id="start_testsupport_services/1-parameters" class="section-heading">
+  <a href="#start_testsupport_services/1-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><p><code class="inline">opts</code> - a <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0"><code class="inline">Keyword.t/0</code></a> list of optional parameters which can override
+default values for service parameters.  The available options are:</p><ul><li><p><code class="inline">childspec_id</code> - the ID value used in defining a Child Specification for
+the service. This is an atom value which defaults to
+<a href="MscmpSystSettings.html#content"><code class="inline">MscmpSystSettings</code></a>.</p></li><li><p><code class="inline">supervisor_name</code> - the name of the <a href="https://hexdocs.pm/elixir/DynamicSupervisor.html"><code class="inline">DynamicSupervisor</code></a> which will
+will supervise the Settings Service.  This is an atom value which
+defaults to <code class="inline">MscmpSystSettings.TestSupportSupervisor</code>.</p></li><li><p><code class="inline">service_name</code> - the name of the Settings Service instance.  This is the
+value by which the specific Settings Service may be set using functions
+such as <a href="#put_settings_service/1"><code class="inline">put_settings_service/1</code></a>.  This is an atom value which defaults
+to the value returned by <a href="#get_testsupport_service_name/0"><code class="inline">get_testsupport_service_name/0</code></a>.</p></li><li><p><code class="inline">datastore_context</code> - the name of the login Datastore Context which can
+access the database storage backing the Settings Service.  This is an
+atom value which defaults to the value returned by
+<a href="../../../../documentation/technical/app_server/mscmp_syst_db/MscmpSystDb.html#get_testsupport_context_name/0"><code class="inline">MscmpSystDb.get_testsupport_context_name/0</code></a>.</p></li></ul></li></ul>
   </section>
 </section>
 
@@ -800,7 +1049,7 @@ modifying database data.</p>
 
         <p class="built-using">
           Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.30.9) for the
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.31.0) for the
 
             <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 

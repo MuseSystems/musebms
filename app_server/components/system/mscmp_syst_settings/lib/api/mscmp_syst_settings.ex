@@ -15,6 +15,7 @@ defmodule MscmpSystSettings do
   @moduledoc File.read!(Path.join([__DIR__, "..", "..", "README.md"]))
 
   alias MscmpSystSettings.Impl.Settings
+  alias MscmpSystSettings.Runtime.DevSupport
   alias MscmpSystSettings.Runtime.ProcessUtils
 
   @doc section: :service_management
@@ -65,7 +66,7 @@ defmodule MscmpSystSettings do
 
   ## Examples
 
-      iex> MscmpSystSettings.put_settings_service(:settings_instance)
+      iex> MscmpSystSettings.put_settings_service(:settings_test_service)
   """
   @spec put_settings_service(MscmpSystSettings.Types.service_name() | nil) ::
           MscmpSystSettings.Types.service_name() | nil
@@ -79,7 +80,7 @@ defmodule MscmpSystSettings do
   ## Examples
 
       iex> MscmpSystSettings.get_settings_service()
-      :settings_instance
+      :settings_test_service
   """
   @spec get_settings_service() :: MscmpSystSettings.Types.service_name() | nil
   defdelegate get_settings_service(), to: ProcessUtils
@@ -318,4 +319,121 @@ defmodule MscmpSystSettings do
   def terminate_settings_service do
     GenServer.stop(ProcessUtils.get_settings_service(), :normal)
   end
+
+  @doc section: :development_support
+  @doc """
+  Starts a Settings Service instance for the purposes of supporting interactive
+  development or testing activities.
+
+  >#### Not for Production {: .warning}
+  >
+  > This operation is specifically intended to support development and testing
+  > activities and should not be used by code which runs in production
+  > environments.
+
+  ## Parameters
+
+    * `opts` - a `t:Keyword.t/0` list of optional parameters which can override
+      default values for service parameters.  The available options are:
+
+      * `childspec_id` - the ID value used in defining a Child Specification for
+        the service. This is an atom value which defaults to
+        `MscmpSystSettings`.
+
+      * `supervisor_name` - the name of the `DynamicSupervisor` which will
+        will supervise the Settings Service.  This is an atom value which
+        defaults to `MscmpSystSettings.DevSupportSupervisor`.
+
+      * `service_name` - the name of the Settings Service instance.  This is the
+        value by which the specific Settings Service may be set using functions
+        such as `put_settings_service/1`.  This is an atom value which defaults
+        to the value returned by `get_devsupport_service_name/0`.
+
+      * `datastore_context` - the name of the login Datastore Context which can
+        access the database storage backing the Settings Service.  This is an
+        atom value which defaults to the value returned by
+        `MscmpSystDb.get_devsupport_context_name/0`.
+  """
+  @spec start_support_services(keyword()) ::
+          :ignore | {:error, any()} | {:ok, pid()} | {:ok, pid(), any()}
+  defdelegate start_support_services(opts \\ []), to: DevSupport
+
+  @doc section: :development_support
+  @doc """
+  Starts a Settings Service instance for the purposes of supporting interactive
+  development activities.
+
+  >#### Not for Production {: .warning}
+  >
+  > This operation is specifically intended to support development and should
+  > not be used by code which runs in production environments.
+
+  Currently this function simply redirects to `start_support_services/1`.
+
+  ## Parameters
+
+    * `opts` - a `t:Keyword.t/0` list of optional parameters which can override
+      default values for service parameters.  The available options and their
+      defaults are the same as `start_support_services/1`.
+  """
+  @spec start_devsupport_services(keyword()) ::
+          :ignore | {:error, any()} | {:ok, pid()} | {:ok, pid(), any()}
+  defdelegate start_devsupport_services(opts \\ []), to: DevSupport, as: :start_support_services
+
+  @doc section: :development_support
+  @doc """
+  Starts a Settings Service instance for the purposes of supporting testing
+  activities.
+
+  >#### Not for Production {: .warning}
+  >
+  > This operation is specifically intended to support testing activities and
+  > should not be used by code which runs in production environments.
+
+  ## Parameters
+
+    * `opts` - a `t:Keyword.t/0` list of optional parameters which can override
+      default values for service parameters.  The available options are:
+
+      * `childspec_id` - the ID value used in defining a Child Specification for
+        the service. This is an atom value which defaults to
+        `MscmpSystSettings`.
+
+      * `supervisor_name` - the name of the `DynamicSupervisor` which will
+        will supervise the Settings Service.  This is an atom value which
+        defaults to `MscmpSystSettings.TestSupportSupervisor`.
+
+      * `service_name` - the name of the Settings Service instance.  This is the
+        value by which the specific Settings Service may be set using functions
+        such as `put_settings_service/1`.  This is an atom value which defaults
+        to the value returned by `get_testsupport_service_name/0`.
+
+      * `datastore_context` - the name of the login Datastore Context which can
+        access the database storage backing the Settings Service.  This is an
+        atom value which defaults to the value returned by
+        `MscmpSystDb.get_testsupport_context_name/0`.
+  """
+  @spec start_testsupport_services(keyword()) ::
+          :ignore | {:error, any()} | {:ok, pid()} | {:ok, pid(), any()}
+  defdelegate start_testsupport_services(opts \\ []), to: DevSupport
+
+  @doc section: :development_support
+  @doc """
+  Retrieves the Settings Service Name typically used to support development.
+
+  This is a way to retrieve the standard development support name for use with
+  functions such as `put_settings_service/1`
+  """
+  @spec get_devsupport_service_name() :: atom()
+  defdelegate get_devsupport_service_name, to: DevSupport
+
+  @doc section: :development_support
+  @doc """
+  Retrieves the Settings Service Name typically used to support testing.
+
+  This is a way to retrieve the standard testing support name for use with
+  functions such as `put_settings_service/1`
+  """
+  @spec get_testsupport_service_name() :: atom()
+  defdelegate get_testsupport_service_name, to: DevSupport
 end
