@@ -1,5 +1,5 @@
 # Source File: dev_support.ex
-# Location:    musebms/app_server/components/system/mscmp_syst_db/lib/impl/dev_support.ex
+# Location:    musebms/app_server/components/system/mscmp_syst_db/lib/runtime/dev_support.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,10 +10,16 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule MscmpSystDb.Impl.DevSupport do
+defmodule MscmpSystDb.Runtime.DevSupport do
   @moduledoc false
 
   alias MscmpSystDb.Types.{DatastoreContext, DatastoreOptions, DbServer}
+
+  @spec get_devsupport_context_name() :: atom()
+  def get_devsupport_context_name, do: :ms_devsupport_context
+
+  @spec get_testsupport_context_name() :: atom()
+  def get_testsupport_context_name, do: :ms_testsupport_context
 
   @spec get_datastore_options(Keyword.t()) :: DatastoreOptions.t()
   def get_datastore_options(opts) do
@@ -24,7 +30,7 @@ defmodule MscmpSystDb.Impl.DevSupport do
         datastore_name: :ms_devsupport_database,
         description_prefix: "Muse Systems DevSupport",
         database_role_prefix: "ms_devsupport",
-        context_name: :ms_devsupport_context,
+        context_name: get_devsupport_context_name(),
         database_password: "musesystems.publicly.known.insecure.devsupport.apppassword",
         starting_pool_size: 5,
         db_host: "127.0.0.1",
@@ -72,6 +78,24 @@ defmodule MscmpSystDb.Impl.DevSupport do
         dbadmin_pool_size: opts[:dbadmin_pool_size]
       }
     }
+  end
+
+  @spec get_testsupport_datastore_options(Keyword.t()) :: DatastoreOptions.t()
+  def get_testsupport_datastore_options(opts) do
+    opts =
+      MscmpSystUtils.resolve_options(opts,
+        database_name: "ms_testsupport_database",
+        datastore_code: "musesystems.publicly.known.insecure.testsupport.code",
+        datastore_name: :ms_testsupport_database,
+        description_prefix: "Muse Systems TestSupport",
+        database_role_prefix: "ms_testsupport",
+        context_name: get_testsupport_context_name(),
+        database_password: "musesystems.publicly.known.insecure.testsupport.apppassword",
+        server_salt: "musesystems.publicly.known.insecure.testsupport.salt",
+        dbadmin_password: "musesystems.publicly.known.insecure.devsupport.password"
+      )
+
+    _ = get_datastore_options(opts)
   end
 
   @spec load_database(DatastoreOptions.t(), String.t()) ::

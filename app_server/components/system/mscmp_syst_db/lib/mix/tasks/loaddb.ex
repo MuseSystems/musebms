@@ -104,7 +104,7 @@ defmodule Mix.Tasks.Loaddb do
 
   use Mix.Task
 
-  alias MscmpSystDb.Impl
+  alias MscmpSystDb.Runtime.DevSupport
 
   @requirements ["app.start"]
 
@@ -144,7 +144,7 @@ defmodule Mix.Tasks.Loaddb do
 
     datastore_options = get_datastore_options(opts_cli)
 
-    {:ok, _} = Impl.DevSupport.load_database(datastore_options, opts_cli[:type])
+    {:ok, _} = DevSupport.load_database(datastore_options, opts_cli[:type])
 
     :ok
   end
@@ -153,10 +153,10 @@ defmodule Mix.Tasks.Loaddb do
     opts = [
       database_name: opts_cli[:db_name],
       datastore_code: opts_cli[:ds_code],
-      datastore_name: String.to_atom(opts_cli[:ds_name]),
+      datastore_name: string_to_atom(opts_cli[:ds_name]),
       description_prefix: opts_cli[:desc_prefix],
       database_role_prefix: opts_cli[:db_role_prefix],
-      context_name: String.to_atom(opts_cli[:context_name]),
+      context_name: string_to_atom(opts_cli[:context_name]),
       database_password: opts_cli[:context_pwd],
       starting_pool_size: opts_cli[:context_pool],
       db_host: opts_cli[:db_host],
@@ -166,6 +166,9 @@ defmodule Mix.Tasks.Loaddb do
       dbadmin_pool_size: opts_cli[:dbadmin_pool]
     ]
 
-    Impl.DevSupport.get_datastore_options(opts)
+    DevSupport.get_datastore_options(opts)
   end
+
+  defp string_to_atom(nil), do: nil
+  defp string_to_atom(value) when is_binary(value), do: String.to_atom(value)
 end
