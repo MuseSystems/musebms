@@ -13,29 +13,26 @@
 #  This testing presumes that the database schema is tested separately and is
 #  correct here.
 
-TestSupport.setup_testing_database()
+test_kind =
+  cond do
+    ExUnit.configuration() |> Keyword.get(:include) |> Enum.member?(:integration) ->
+      ExUnit.configure(seed: 0)
+      :integration_testing
 
-MscmpSystDb.put_datastore_context(TestSupport.get_testing_datastore_context_id())
+    ExUnit.configuration() |> Keyword.get(:include) |> Enum.member?(:doctest) ->
+      :doc_testing
 
-settings_service_spec = %{
-  id: MscmpSystSettingsTestingService,
-  start: {
-    MscmpSystSettings,
-    :start_link,
-    [{:settings_instance, TestSupport.get_testing_datastore_context_id()}]
-  }
-}
+    true ->
+      ExUnit.configure(exclude: [:integration, :doctest])
+      :unit_testing
+  end
 
-children = [
-  {DynamicSupervisor, strategy: :one_for_one, name: MscmpSystSettings.TestingSupervisor}
-]
+TestSupport.setup_testing_database(test_kind)
 
-Supervisor.start_link(children, strategy: :one_for_one)
-Logger.configure(level: :info)
-ExUnit.start()
+MscmpSystDb.put_datastore_context(:ms_testsupport_context)
 
-DynamicSupervisor.start_child(MscmpSystSettings.TestingSupervisor, settings_service_spec)
+MscmpSystSettings.start_testsupport_services()
 
 ExUnit.after_suite(fn _suite_result ->
-  TestSupport.cleanup_testing_database()
+  TestSupport.cleanup_testing_database(test_kind)
 end)

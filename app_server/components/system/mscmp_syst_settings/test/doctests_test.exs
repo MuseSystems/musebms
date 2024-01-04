@@ -13,6 +13,7 @@
 defmodule DoctestsTest do
   use SettingsTestCase, async: true
 
+  @moduletag :doctest
   @moduletag :capture_log
 
   doctest MscmpSystSettings, except: [terminate_settings_service: 1]
