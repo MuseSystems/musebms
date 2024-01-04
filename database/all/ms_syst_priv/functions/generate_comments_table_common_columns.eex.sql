@@ -160,8 +160,13 @@ BEGIN
                         NULL::text
                   END
                 --general_usage
-                , E'This column is system maintained and should be ' ||
-                    E'considered read only in normal\noperations.'
+                , CASE
+                    WHEN pa.attname IN ('external_name', 'user_description') THEN
+                        NULL
+                    ELSE
+                        E'This column is system maintained and should be ' ||
+                        E'considered read only in normal\noperations.'
+                  END
                 --func_type_name
                 , NULL::text
                 --func_type_text
