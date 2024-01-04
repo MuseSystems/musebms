@@ -88,7 +88,7 @@ defmodule Mix.Tasks.Dropdb do
 
   use Mix.Task
 
-  alias MscmpSystDb.Impl
+  alias MscmpSystDb.Runtime.DevSupport
 
   @requirements ["app.start"]
 
@@ -128,7 +128,7 @@ defmodule Mix.Tasks.Dropdb do
 
     datastore_options = get_datastore_options(opts_cli)
 
-    :ok = Impl.DevSupport.drop_database(datastore_options)
+    :ok = DevSupport.drop_database(datastore_options)
   end
 
   defp get_datastore_options(opts_cli) do
@@ -142,6 +142,6 @@ defmodule Mix.Tasks.Dropdb do
       dbadmin_password: opts_cli[:dbadmin_pwd]
     ]
 
-    Impl.DevSupport.get_datastore_options(opts)
+    DevSupport.get_datastore_options(opts)
   end
 end

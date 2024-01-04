@@ -15,7 +15,7 @@ defmodule MscmpSystDb do
   @moduledoc File.read!(Path.join([__DIR__, "..", "..", "README.md"]))
 
   alias MscmpSystDb.Impl.Dba
-  alias MscmpSystDb.Impl.DevSupport
+  alias MscmpSystDb.Runtime.DevSupport
   alias MscmpSystDb.Impl.Privileged
   alias MscmpSystDb.Runtime.Datastore
   alias MscmpSystDb.Types
@@ -298,10 +298,21 @@ defmodule MscmpSystDb do
   @spec current_datastore_context :: atom() | pid()
   defdelegate current_datastore_context(), to: Datastore
 
+  # Ideally the `:development_support` functions wouldn't be compiled when the
+  # `Mix.env()` environment isn't `:dev` or `:test`., but because dependencies
+  # are always compiled as `:prod` we can't achieve that at present.
+  #
+  # While having `:develoment_support` functions compiled in production doesn't
+  # specifically hurt our designed functionality, it does arguably increase the
+  # attack surface of the Component... something we should strive to minimize.
+  #
+  # TODO: Figure out a better way to do this without exposing these functions in
+  #       a production supporting build of the system.
+
   @doc section: :development_support
   @doc """
-  Retrieves a populated DatastoreOptions struct which can be used to facilitate
-  database involving development activities.
+  Retrieves a populated `t:MscmpSystDb.Types.DatastoreOptions.t/0` struct which
+  can be used to facilitate database involving development activities.
 
   The DatastoreOptions will set all important values and identify two Datastore
   Contexts: the standard non-login, "owner" Context which will own the database
@@ -384,8 +395,106 @@ defmodule MscmpSystDb do
 
   @doc section: :development_support
   @doc """
+  Retrieves a populated `t:MscmpSystDb.Types.DatastoreOptions.t/0` struct with
+  defaults appropriate for interactive development support.
+
+  Currently this function is simply an alias for `get_datastore_options/1`.  All
+  documentation for that function applies to this function.
+
+  ## Parameters
+
+    * `opts` - an optional parameter consisting of type `t:Keyword.t/0`
+      containing values which will override the function supplied defaults.  The
+      available options are the same as those for `get_datastore_options/1`
+  """
+  @spec get_devsupport_datastore_options(Keyword.t()) :: DatastoreOptions.t()
+  defdelegate get_devsupport_datastore_options(opts \\ []),
+    to: DevSupport,
+    as: :get_datastore_options
+
+  @doc section: :development_support
+  @doc """
+  Retrieves a populated `t:MscmpSystDb.Types.DatastoreOptions.t/0` struct with
+  defaults appropriate for setting up test script database services.
+
+  This function calls `get_datastore_options/1` with alternate defaults suitable
+  for running test scripts independently from database environments targeted to
+  interactive development.  Documentation for that function will largely apply
+  for this function, except as specifically contradicted here.
+
+  ## Parameters
+
+    * `opts` - an optional parameter consisting of type `t:Keyword.t/0`
+      containing values which will override the function supplied defaults.  The
+      available options are:
+
+      * `database_name` - a binary value indicating a name for the database to
+        use.  The default database name is `ms_testsupport_database`.
+
+      * `datastore_code` - a binary value providing a Datastore level salting
+        value used in different hashing operations.  The default value is
+        "musesystems.publicly.known.insecure.testsupport.code"
+
+      * `datastore_name` - a name for use by the application to identify a given
+        Datastore.  This value will often time be the same as the
+        `database_name` value.  This value is converted to an atom.  The default
+        value is `ms_testsupport_database`.
+
+      * `description_prefix` - a binary value which is prefixed to the
+        descriptions of the created database contexts and which appear in the
+        database role descriptions.  The default value is "Muse Systems
+        TestSupport".
+
+      * `database_role_prefix` - a binary value which is prefixed to the
+        names of the database roles created to back the Datastore Contexts.
+        The default value is `ms_testsupport`.
+
+      * `context_name` - a binary value which provides a unique context name for
+        the login Context identified by this function.  This value is converted
+        to an atom by this function.  The default value is
+        `ms_testsupport_context`.
+
+      * `database_password` - a binary value which is the database password that
+        the login Datastore Context uses to log into the database.  The default
+        value is "musesystems.publicly.known.insecure.testsupport.apppassword".
+
+      * `starting_pool_size` - the number of database connections the login
+        Context will establish from the application.  The default value is 5.
+
+      * `db_host` - a string indicating the host address of the database server.
+        This can be an IP address or resolvable DNS entry.  The default value is
+        `127.0.0.1`.
+
+      * `db_port` - an integer indicating the TCP port on which to contact the
+        database server.  The default value is the standard PostgreSQL port
+        number `5432`.
+
+      * `server_salt` - a binary value providing a Datastore level salting
+        value used in different hashing operations.  The default value is
+        "musesystems.publicly.known.insecure.testsupport.salt"
+
+      * `dbadmin_password` - a binary value for the standard
+        `ms_syst_privileged` database role account created via the database
+        bootstrapping script.  The default value is
+        "musesystems.publicly.known.insecure.devsupport.password".
+
+      * `dbadmin_pool_size` - the number of database connections which will be
+        opened to support DBA or Privileged operations.  The default value is
+        `1`.
+  """
+  @spec get_testsupport_datastore_options(Keyword.t()) :: DatastoreOptions.t()
+  defdelegate get_testsupport_datastore_options(opts \\ []), to: DevSupport
+
+  @doc section: :development_support
+  @doc """
   Creates a Datastore, related Datastore Contexts, and processes migrations for
   the identified type in support of development related activities.
+
+  >#### Security Note {: .warning}
+  >
+  > This operation is specifically intended to support development and testing
+  > activities and should not be used in code which runs in production
+  > environments.
 
   This is a simplified and condensed version of the full process of database
   creation.
@@ -410,6 +519,12 @@ defmodule MscmpSystDb do
   Drops a Datastore previously created by the `load_database/2` function in
   support of development related activities.
 
+  >#### Security Note {: .warning}
+  >
+  > This operation is specifically intended to support development and testing
+  > activities and should not be used in code which runs in production
+  > environments.
+
   This function ensures that the Datastore is stopped and then drops it.
 
   ## Parameters
@@ -419,6 +534,28 @@ defmodule MscmpSystDb do
   """
   @spec drop_database(DatastoreOptions.t()) :: :ok
   defdelegate drop_database(datastore_options), to: DevSupport
+
+  @doc section: :development_support
+  @doc """
+  Retrieves the name of the login Datastore Context typically used in
+  development support.
+
+  This is a way to retrieve the standard development support name for use with
+  functions such as `put_datastore_context/1`
+  """
+  @spec get_devsupport_context_name() :: atom()
+  defdelegate get_devsupport_context_name, to: DevSupport
+
+  @doc section: :development_support
+  @doc """
+  Retrieves the name of the login Datastore Context typically used in
+  testing support.
+
+  This is a way to retrieve the standard testing support name for use with
+  functions such as `put_datastore_context/1`
+  """
+  @spec get_testsupport_context_name() :: atom()
+  defdelegate get_testsupport_context_name, to: DevSupport
 
   @doc section: :query
   @doc """
