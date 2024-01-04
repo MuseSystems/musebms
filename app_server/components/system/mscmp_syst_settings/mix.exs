@@ -60,7 +60,8 @@ defmodule MscmpSystSettings.MixProject do
         ],
         groups_for_functions: [
           Settings: &(&1[:section] == :settings_data),
-          Runtime: &(&1[:section] == :service_management)
+          Runtime: &(&1[:section] == :service_management),
+          "Development Support": &(&1[:section] == :development_support)
         ],
         nest_modules_by_prefix: [Msdata],
         groups_for_modules: [
