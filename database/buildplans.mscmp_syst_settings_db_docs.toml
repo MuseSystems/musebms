@@ -1,5 +1,5 @@
-# File:        buildplans.mscmp_syst_settings_unit_test.toml
-# Location:    musebms/database/buildplans.mscmp_syst_settings_unit_test.toml
+# File:        buildplans.mscmp_syst_settings_db_docs.toml
+# Location:    musebms/database/buildplans.mscmp_syst_settings_db_docs.toml
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -25,15 +25,4 @@ sponsor_modification = 0
 load_files = [
     {type = "plan", file = "all/subplans.common_init.toml"},
     {type = "plan", file = "components/system/mscmp_syst_settings/subplans.mscmp_syst_settings.toml"}
-]
-
-[[build_plan]]
-release              = 1
-version              = 1
-update               = 0
-sponsor              = 821
-sponsor_modification = 0
-load_files = [
-    "components/system/mscmp_syst_settings/testing_support/test_privileges.eex.sql",
-    "components/system/mscmp_syst_settings/testing_support/test_data_unit_test.eex.sql",
 ]

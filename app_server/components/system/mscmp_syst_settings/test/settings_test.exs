@@ -13,6 +13,7 @@
 defmodule SettingsTest do
   use SettingsTestCase, async: true
 
+  @moduletag :unit
   @moduletag :capture_log
 
   test "Create/Delete User Defined Settings" do
@@ -82,13 +83,23 @@ defmodule SettingsTest do
     assert :ok = MscmpSystSettings.create_setting(success_setting)
 
     assert %Msdata.SystSettings{internal_name: "test_success_setting"} =
-             :ets.lookup_element(:settings_instance, "test_success_setting", 2)
+             :ets.lookup_element(
+               MscmpSystSettings.get_testsupport_service_name(),
+               "test_success_setting",
+               2
+             )
 
     assert {:error, %MscmpSystError{}} = MscmpSystSettings.create_setting(success_setting)
 
     assert :ok = MscmpSystSettings.delete_setting(success_setting.internal_name)
 
-    assert catch_error(:ets.lookup_element(:settings_instance, "test_success_setting", 2))
+    assert catch_error(
+             :ets.lookup_element(
+               MscmpSystSettings.get_testsupport_service_name(),
+               "test_success_setting",
+               2
+             )
+           )
 
     assert {:error, %MscmpSystError{}} = MscmpSystSettings.create_setting(short_desc_setting)
 

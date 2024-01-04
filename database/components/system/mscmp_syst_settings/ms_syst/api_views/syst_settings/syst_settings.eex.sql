@@ -58,166 +58,103 @@ CREATE TRIGGER a50_trig_i_d_syst_settings
     INSTEAD OF DELETE ON ms_syst.syst_settings
     FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_d_syst_settings();
 
-COMMENT ON
-    VIEW ms_syst.syst_settings IS
-$DOC$Configuration data which establishes application behaviors, defaults, and
-provides a reference center to interested application functionality.
+DO
+$DOCUMENTATION$
+DECLARE
+    var_view_config ms_syst_priv.comments_config_apiview;
 
-This API View allows the application to read and maintain the data according to
-well defined application business rules.  Using this API view for updates to
-data is the preferred method of data maintenance in the course of normal usage.
+    var_setting_flag            ms_syst_priv.comments_config_apiview_column;
+    var_setting_integer         ms_syst_priv.comments_config_apiview_column;
+    var_setting_integer_range   ms_syst_priv.comments_config_apiview_column;
+    var_setting_decimal         ms_syst_priv.comments_config_apiview_column;
+    var_setting_decimal_range   ms_syst_priv.comments_config_apiview_column;
+    var_setting_interval        ms_syst_priv.comments_config_apiview_column;
+    var_setting_date            ms_syst_priv.comments_config_apiview_column;
+    var_setting_date_range      ms_syst_priv.comments_config_apiview_column;
+    var_setting_time            ms_syst_priv.comments_config_apiview_column;
+    var_setting_timestamp       ms_syst_priv.comments_config_apiview_column;
+    var_setting_timestamp_range ms_syst_priv.comments_config_apiview_column;
+    var_setting_json            ms_syst_priv.comments_config_apiview_column;
+    var_setting_text            ms_syst_priv.comments_config_apiview_column;
+    var_setting_uuid            ms_syst_priv.comments_config_apiview_column;
+    var_setting_blob            ms_syst_priv.comments_config_apiview_column;
 
-Only user maintainable values may be maintained via this API.  System created or
-maintained data is not maintainable via this view.  Attempts at invalid data
-maintenance via this API may result in the invalid changes being ignored or may
-raise an exception.$DOC$;
+BEGIN
 
-COMMENT ON
-    COLUMN ms_syst.syst_settings.id IS
-$DOC$The record's primary key.  The definitive identifier of the record in the
-system.
+    var_view_config.table_schema := 'ms_syst_data';
+    var_view_config.table_name   := 'syst_settings';
+    var_view_config.view_schema  := 'ms_syst';
+    var_view_config.view_name    := 'syst_settings';
+    var_view_config.syst_records := TRUE;
+    var_view_config.syst_update  := TRUE;
+    var_view_config.syst_delete  := FALSE;
 
-Note that this column may not be updated via this API View.$DOC$;
+    var_setting_flag.column_name := 'setting_flag';
+    var_setting_flag.syst_update_mode := 'always';
 
-COMMENT ON
-    COLUMN ms_syst.syst_settings.internal_name IS
-$DOC$A candidate key useful for programmatic references to individual records.$DOC$;
+    var_setting_integer.column_name := 'setting_integer';
+    var_setting_integer.syst_update_mode := 'always';
 
-COMMENT ON
-    COLUMN ms_syst.syst_settings.display_name IS
-$DOC$A friendly name and candidate key for the record suitable for use in user
-interfaces.$DOC$;
+    var_setting_integer_range.column_name := 'setting_integer_range';
+    var_setting_integer_range.syst_update_mode := 'always';
 
-COMMENT ON
-    COLUMN ms_syst.syst_settings.syst_defined IS
-$DOC$When true, indicates that the setting was created as part of the system and is
-expected to exist.  If false, the setting is user created and maintained.
+    var_setting_decimal.column_name := 'setting_decimal';
+    var_setting_decimal.syst_update_mode := 'always';
 
-Note that this column may not be updated via this API View.$DOC$;
+    var_setting_decimal_range.column_name := 'setting_decimal_range';
+    var_setting_decimal_range.syst_update_mode := 'always';
 
-COMMENT ON
-    COLUMN ms_syst.syst_settings.syst_description IS
-$DOC$A text describing the meaning and use of the specific record.
+    var_setting_interval.column_name := 'setting_interval';
+    var_setting_interval.syst_update_mode := 'always';
 
-Note that this column may not be updated via this API View.$DOC$;
+    var_setting_date.column_name := 'setting_date';
+    var_setting_date.syst_update_mode := 'always';
 
-COMMENT ON
-    COLUMN ms_syst.syst_settings.user_description IS
-$DOC$A user customizable override of the system description text.  When the value in
-this column is not NULL, this text will be displayed to users in preference to
-the description found in syst_description.$DOC$;
+    var_setting_date_range.column_name := 'setting_date_range';
+    var_setting_date_range.syst_update_mode := 'always';
 
-COMMENT ON
-    COLUMN ms_syst.syst_settings.setting_flag IS
-$DOC$A boolean configuration point.$DOC$;
+    var_setting_time.column_name := 'setting_time';
+    var_setting_time.syst_update_mode := 'always';
 
-COMMENT ON
-    COLUMN ms_syst.syst_settings.setting_integer IS
-$DOC$An integer configuration point$DOC$;
+    var_setting_timestamp.column_name := 'setting_timestamp';
+    var_setting_timestamp.syst_update_mode := 'always';
 
-COMMENT ON
-    COLUMN ms_syst.syst_settings.setting_integer_range IS
-$DOC$An integer range configuration point.$DOC$;
+    var_setting_timestamp_range.column_name := 'setting_timestamp_range';
+    var_setting_timestamp_range.syst_update_mode := 'always';
 
-COMMENT ON
-    COLUMN ms_syst.syst_settings.setting_decimal IS
-$DOC$An decimal configuration point (not floating point).$DOC$;
+    var_setting_json.column_name := 'setting_json';
+    var_setting_json.syst_update_mode := 'always';
 
-COMMENT ON
-    COLUMN ms_syst.syst_settings.setting_decimal_range IS
-$DOC$A decimal range configuration point.$DOC$;
+    var_setting_text.column_name := 'setting_text';
+    var_setting_text.syst_update_mode := 'always';
 
-COMMENT ON
-    COLUMN ms_syst.syst_settings.setting_interval IS
-$DOC$An interval configuration point.$DOC$;
+    var_setting_uuid.column_name := 'setting_uuid';
+    var_setting_uuid.syst_update_mode := 'always';
 
-COMMENT ON
-    COLUMN ms_syst.syst_settings.setting_date IS
-$DOC$A date configuation point.$DOC$;
+    var_setting_blob.column_name := 'setting_blob';
+    var_setting_blob.syst_update_mode := 'always';
 
-COMMENT ON
-    COLUMN ms_syst.syst_settings.setting_date_range IS
-$DOC$A date range configuration point.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst.syst_settings.setting_time IS
-$DOC$A time configuration point (without time zone).$DOC$;
+    var_view_config.columns :=
+        ARRAY [
+              var_setting_flag
+            , var_setting_integer
+            , var_setting_integer_range
+            , var_setting_decimal
+            , var_setting_decimal_range
+            , var_setting_interval
+            , var_setting_date
+            , var_setting_date_range
+            , var_setting_time
+            , var_setting_timestamp
+            , var_setting_timestamp_range
+            , var_setting_json
+            , var_setting_text
+            , var_setting_uuid
+            , var_setting_blob
+            ]::ms_syst_priv.comments_config_apiview_column[];
 
-COMMENT ON
-    COLUMN ms_syst.syst_settings.setting_timestamp IS
-$DOC$A full datetime configuration point including time zone.$DOC$;
+    PERFORM ms_syst_priv.generate_comments_apiview( var_view_config );
 
-COMMENT ON
-    COLUMN ms_syst.syst_settings.setting_timestamp_range IS
-$DOC$A range of timestamps with time zone configuration points.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_settings.setting_json IS
-$DOC$A JSON configuration point.  Note that duplicate keys at the same level are not
-allowed.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_settings.setting_text IS
-$DOC$A text configuration point.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_settings.setting_uuid IS
-$DOC$A UUID configuration point.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_settings.setting_blob IS
-$DOC$A binary configuration point.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_settings.diag_timestamp_created IS
-$DOC$The database server date/time when the transaction which created the record
-started.
-
-Note that this column may not be updated via this API View.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_settings.diag_role_created IS
-$DOC$The database role which created the record.
-
-Note that this column may not be updated via this API View.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_settings.diag_timestamp_modified IS
-$DOC$The database server date/time when the transaction which modified the record
-started.  This field will be the same as diag_timestamp_created for inserted
-records.
-
-Note that this column may not be updated via this API View.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_settings.diag_wallclock_modified IS
-$DOC$The database server date/time at the moment the record was actually modified.
-For long running transactions this time may be significantly later than the
-value of diag_timestamp_modified.
-
-Note that this column may not be updated via this API View.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_settings.diag_role_modified IS
-$DOC$The database role which modified the record.
-
-Note that this column may not be updated via this API View.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_settings.diag_row_version IS
-$DOC$The current version of the row.  The value here indicates how many actual
-data changes have been made to the row.  If an update of the row leaves all data
-fields the same, disregarding the updates to the diag_* columns, the row version
-is not updated, nor are any updates made to the other diag_* columns other than
-diag_update_count.
-
-Note that this column may not be updated via this API View.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_settings.diag_update_count IS
-$DOC$Records the number of times the record has been updated regardless as to if
-the update actually changed any data.  In this way needless or redundant record
-updates can be found.  This row starts at 0 and therefore may be the same as the
-diag_row_version - 1.
-
-Note that this column may not be updated via this API View.$DOC$;
+END;
+$DOCUMENTATION$;
