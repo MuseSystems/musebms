@@ -54,7 +54,7 @@ that any submitted values are unique in the database.  If `TRUE`, the
 expectation is that all values presented are unique and any duplicated values
 will result in an exception.  If `FALSE` then duplicated values are expected to
 be accepted by the API View.
-$DOC;
+$DOC$;
 
 COMMENT ON COLUMN ms_syst_priv.comments_config_apiview_column.default_value IS
 $DOC$A string value containing the default value which is set by the API View if no
