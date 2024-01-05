@@ -13,6 +13,7 @@
 defmodule EnumItemsTest do
   use EnumsTestCase, async: true
 
+  @moduletag :unit
   @moduletag :capture_log
 
   test "Get Enum Items" do

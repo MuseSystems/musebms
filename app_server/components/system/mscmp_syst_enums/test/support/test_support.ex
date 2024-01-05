@@ -24,85 +24,38 @@ defmodule TestSupport do
   ########################
 
   alias Mix.Tasks.Builddb
-  alias MscmpSystDb.Types.{DatastoreContext, DatastoreOptions, DbServer}
-
-  @datastore_options %DatastoreOptions{
-    database_name: "mscmp_syst_enums",
-    datastore_code: "mscmp_syst_enums.testing.code",
-    datastore_name: :mscmp_syst_enums,
-    contexts: [
-      %DatastoreContext{
-        context_name: nil,
-        description: "MscmpSystEnums Testing Owner",
-        database_role: "mscmp_syst_enums_owner",
-        database_password: nil,
-        starting_pool_size: 0,
-        start_context: false,
-        login_context: false,
-        database_owner_context: true
-      },
-      %DatastoreContext{
-        context_name: :enums_app_context,
-        description: "MscmpSystEnums Testing App User",
-        database_role: "mscmp_syst_enums_app_user",
-        database_password: "mscmp_syst_enums.testing.code.app.user",
-        starting_pool_size: 20,
-        start_context: true,
-        login_context: true
-      }
-    ],
-    db_server: %DbServer{
-      server_name: "test_server",
-      start_server_instances: true,
-      server_pools: [],
-      db_host: "127.0.0.1",
-      db_port: 5432,
-      db_show_sensitive: true,
-      db_max_instances: 1,
-      server_salt: "mscmp_syst_enums.testing.code.test.salt",
-      dbadmin_password: "muse.syst.dba.testing.password",
-      dbadmin_pool_size: 1
-    }
-  }
 
   @migration_test_source_root_dir "../../../../database"
-  @migration_test_datastore_type "mscmp_syst_enums_unit_test"
+  @migration_unit_test_ds_type "mscmp_syst_enums_unit_test"
+  @migration_integration_test_ds_type "mscmp_syst_enums_integration_test"
+  @migration_doc_test_ds_type "mscmp_syst_enums_doc_test"
 
-  @datastore_context_name :enums_app_context
+  def setup_testing_database(test_kind) do
+    datastore_options = MscmpSystDb.get_testsupport_datastore_options()
 
-  def setup_testing_database do
-    :ok = build_migrations()
+    :ok = build_migrations(test_kind)
 
-    datastore_options = @datastore_options
-
-    database_owner = Enum.find(datastore_options.contexts, &(&1.database_owner_context == true))
-
-    {:ok, :ready, _} = MscmpSystDb.create_datastore(datastore_options)
-
-    {:ok, _} =
-      MscmpSystDb.upgrade_datastore(
-        datastore_options,
-        @migration_test_datastore_type,
-        ms_owner: database_owner.database_role,
-        ms_appusr: "mscmp_syst_enums_app_user"
-      )
+    {:ok, _} = MscmpSystDb.load_database(datastore_options, get_datastore_type(test_kind))
 
     {:ok, _, _} = MscmpSystDb.start_datastore(datastore_options)
   end
 
-  def cleanup_testing_database do
-    datastore_options = @datastore_options
-    :ok = MscmpSystDb.stop_datastore(datastore_options)
-    :ok = MscmpSystDb.drop_datastore(datastore_options)
-    File.rm_rf!(Path.join(["priv/database", @migration_test_datastore_type]))
+  def cleanup_testing_database(test_kind) do
+    datastore_options = MscmpSystDb.get_testsupport_datastore_options()
+
+    :ok = MscmpSystDb.drop_database(datastore_options)
+
+    _ = File.rm_rf!(Path.join(["priv", "database", get_datastore_type(test_kind)]))
   end
 
-  def get_testing_datastore_context_id, do: @datastore_context_name
+  defp get_datastore_type(:unit_testing), do: @migration_unit_test_ds_type
+  defp get_datastore_type(:integration_testing), do: @migration_integration_test_ds_type
+  defp get_datastore_type(:doc_testing), do: @migration_doc_test_ds_type
 
-  defp build_migrations do
+  defp build_migrations(test_kind) do
     Builddb.run([
       "-t",
-      @migration_test_datastore_type,
+      get_datastore_type(test_kind),
       "-c",
       "-s",
       @migration_test_source_root_dir

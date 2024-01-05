@@ -13,6 +13,7 @@
 defmodule FunctionalTypesTest do
   use EnumsTestCase, async: true
 
+  @moduletag :unit
   @moduletag :capture_log
 
   test "Get Enum Functional Types" do
