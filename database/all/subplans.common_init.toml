@@ -20,6 +20,8 @@ load_files = [
     "all/dbinit/database_initial_setup.eex.sql",
     "all/dbinit/ms_syst_schemata.eex.sql",
 
+    "all/misc/database_license_comment.eex.sql",
+
     "all/ms_syst_priv/collations/variant_insensitive.eex.sql",
 
     "all/ms_syst_priv/functions/get_exception_details.eex.sql",
