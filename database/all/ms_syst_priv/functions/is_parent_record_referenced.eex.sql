@@ -37,22 +37,16 @@ BEGIN
                 DETAIL = ms_syst_priv.get_exception_details(
                              p_proc_schema    => 'ms_syst_priv'
                             ,p_proc_name      => 'is_parent_record_referenced'
-                            ,p_exception_name => 'invalid_call'
+                            ,p_exception_name => 'invalid_parameter'
                             ,p_errcode        => 'PM008'
                             ,p_param_data     =>
                                 jsonb_build_object(
-                                     'p_table_schema',     p_table_schema
-                                    ,'p_table_name',       p_table_name
-                                    ,'p_parent_record_id', p_parent_record_id )
-                            ,p_context_data   =>
-                                jsonb_build_object(
-                                     'tg_op',         tg_op
-                                    ,'tg_when',       tg_when
-                                    ,'tg_schema',     tg_table_schema
-                                    ,'tg_table_name', tg_table_name)),
-                ERRCODE = 'PM008',
-                SCHEMA = tg_table_schema,
-                TABLE = tg_table_name;
+                                     'p_table_schema',       p_table_schema
+                                    ,'p_table_name',         p_table_name
+                                    ,'p_parent_record_id',   p_parent_record_id
+                                    ,'p_excluded_relations', p_excluded_relations)
+                            ,p_context_data   => null),
+                ERRCODE = 'PM008';
     END IF;
 
     << referencing_relations_loop >>
