@@ -11,3 +11,5 @@
 -- muse.information@musesystems.com :: https://muse.systems
 
 GRANT USAGE ON SCHEMA ms_syst TO <%= ms_appusr %>;
+
+GRANT USAGE ON SCHEMA ms_appl TO <%= ms_appusr %>;
