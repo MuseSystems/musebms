@@ -22,7 +22,7 @@ defmodule MscmpSystEnums.MixProject do
     {:dialyxir, "~> 1.0", only: [:dev, :test], runtime: false},
     {:ex_doc, "~> 0.20", only: :dev, runtime: false},
 
-    # Muse Systems Business Management System Components
+    # Muse Systems First Party Dependencies
     {:mscmp_syst_error, path: "../mscmp_syst_error"},
     {:mscmp_syst_utils, path: "../mscmp_syst_utils"},
     {:mscmp_syst_db, path: "../mscmp_syst_db"}
@@ -62,7 +62,8 @@ defmodule MscmpSystEnums.MixProject do
           Enumerations: &(&1[:section] == :enum_data),
           "Enumeration Functional Types": &(&1[:section] == :enum_functional_type_data),
           "Enumeration items": &(&1[:section] == :enum_item_data),
-          Runtime: &(&1[:section] == :service_management)
+          Runtime: &(&1[:section] == :service_management),
+          "Development Support": &(&1[:section] == :development_support)
         ],
         nest_modules_by_prefix: [Msdata],
         groups_for_modules: [

@@ -4,20 +4,21 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.30.9">
+    <meta name="generator" content="ExDoc v0.31.0">
     <meta name="project" content="mscmp_syst_enums v0.1.0">
 
+
     <title>MscmpSystEnums — mscmp_syst_enums v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-XFYN5IVA.css" />
+    <link rel="stylesheet" href="dist/html-elixir-3ZLIM5JF.css" />
 
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-EPF2X7PV.js"></script>
-    <script src="dist/sidebar_items-7487593D.js"></script>
+    <script src="dist/handlebars.templates-43PMFBC7.js"></script>
+    <script src="dist/sidebar_items-FAAB792D.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/html-J2ASZTQE.js"></script>
+    <script async src="dist/html-CILPWI2Q.js"></script>
 
 
   </head>
@@ -43,32 +44,17 @@
 </button>
 
 <nav id="sidebar" class="sidebar">
-  <form class="sidebar-search" action="search.html">
-    <label class="search-label">
-      <span class="sr-only">Search documentation of mscmp_syst_enums</span>
-      <input name="q" type="text" class="search-input" placeholder="Search..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
-    </label>
-    <button type="submit" class="search-button" aria-label="Submit Search">
-      <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
-    </button>
-    <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
-      <i class="ri-close-line ri-lg" title="Cancel search"></i>
-    </button>
-  </form>
-
-  <div class="autocomplete">
-    <div class="autocomplete-results">
-    </div>
-  </div>
 
   <div class="sidebar-header">
+    <div class="sidebar-projectInfo">
 
-    <div class="sidebar-projectDetails">
-      <a href="MscmpSystEnums.html" class="sidebar-projectName" translate="no">
+      <div>
+        <a href="MscmpSystEnums.html" class="sidebar-projectName" translate="no">
 mscmp_syst_enums
-      </a>
-      <div class="sidebar-projectVersion" translate="no">
-        v0.1.0
+        </a>
+        <div class="sidebar-projectVersion" translate="no">
+          v0.1.0
+        </div>
       </div>
     </div>
     <ul id="sidebar-listNav" class="sidebar-listNav" role="tablist">
@@ -103,13 +89,30 @@ Pages
   <output role="status" id="toast"></output>
   <div class="content-outer">
     <div id="content" class="content-inner">
+      <div class="top-search">
+        <div class="search-settings">
+          <form class="search-bar" action="search.html">
+            <label class="search-label">
+              <span class="sr-only">Search documentation of mscmp_syst_enums</span>
+              <input name="q" type="text" class="search-input" placeholder="Search Documentation (press /)" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+            </label>
+            <button type="submit" class="search-button" aria-label="Submit Search">
+              <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
+            </button>
+            <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+              <i class="ri-close-line ri-lg" title="Cancel search"></i>
+            </button>
+          </form>
+          <button class="icon-settings display-settings">
+            <i class="ri-settings-3-line"></i>
+            <span class="sr-only">Settings</span>
+          </button>
+        </div>
+      </div>
+      <div class="autocomplete">
+      </div>
 
 <h1>
-<button class="icon-action display-settings">
-  <i class="ri-settings-3-line"></i>
-  <span class="sr-only">Settings</span>
-</button>
-
 
   <span translate="no">MscmpSystEnums</span> 
   <small class="app-vsn" translate="no">(mscmp_syst_enums v0.1.0)</small>
@@ -394,6 +397,65 @@ been set.</p></div>
     </div>
 
 </div>
+<div class="summary-development-support summary">
+  <h2>
+    <a href="#development-support">Development Support</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_devsupport_service_name/0" translate="no">get_devsupport_service_name()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Retrieves the Enumerations Service Name typically used to support development.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_testsupport_service_name/0" translate="no">get_testsupport_service_name()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Retrieves the Enumerations Service Name typically used to support testing.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#start_devsupport_services/1" translate="no">start_devsupport_services(opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Starts a Enumerations Service instance for the purposes of supporting
+interactive development activities.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#start_support_services/1" translate="no">start_support_services(opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Starts a Enumerations Service instance for the purposes of supporting interactive
+development or testing activities.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#start_testsupport_services/1" translate="no">start_testsupport_services(opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Starts a Enumerations Service instance for the purposes of supporting testing
+activities.</p></div>
+
+    </div>
+
+</div>
 
   </section>
 
@@ -449,20 +511,20 @@ available and required attributes.</li></ul><h2 id="create_enum/1-examples" clas
   <span class="text">Examples</span>
 </h2>
 <pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">example_enumeration</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="9430661160-1">%{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="9618511898-1">%{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example_create_enum&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="ss">display_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Create Example Enum&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="ss">user_description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Demonstrate enumeration creation.&quot;</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="ss">functional_types</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9430661160-2">[</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">       </span><span class="p" data-group-id="9430661160-3">%{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="ss">functional_types</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9618511898-2">[</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">       </span><span class="p" data-group-id="9618511898-3">%{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">         </span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example_create_enum_functional_type&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">         </span><span class="ss">display_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Create Example Enum / Functional Type&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">         </span><span class="ss">external_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Functional Type&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">         </span><span class="ss">user_description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Demonstrate Functional Type Creation&quot;</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">       </span><span class="p" data-group-id="9430661160-3">}</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="p" data-group-id="9430661160-2">]</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="ss">enum_items</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9430661160-4">[</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">       </span><span class="p" data-group-id="9430661160-5">%{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">       </span><span class="p" data-group-id="9618511898-3">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="p" data-group-id="9618511898-2">]</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="ss">enum_items</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9618511898-4">[</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">       </span><span class="p" data-group-id="9618511898-5">%{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">         </span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example_create_enum_item&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">         </span><span class="ss">display_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Create Example Enum / Enum Item&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">         </span><span class="ss">external_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Enum Item&quot;</span><span class="p">,</span><span class="w">
@@ -470,10 +532,10 @@ available and required attributes.</li></ul><h2 id="create_enum/1-examples" clas
 </span><span class="gp unselectable">...&gt; </span><span class="w">         </span><span class="ss">enum_default</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">         </span><span class="ss">functional_type_default</span><span class="p">:</span><span class="w"> </span><span class="no">false</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">         </span><span class="ss">functional_type_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example_create_enum_functional_type&quot;</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">       </span><span class="p" data-group-id="9430661160-5">}</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="p" data-group-id="9430661160-4">]</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">   </span><span class="p" data-group-id="9430661160-1">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">create_enum</span><span class="p" data-group-id="9430661160-6">(</span><span class="n">example_enumeration</span><span class="p" data-group-id="9430661160-6">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">       </span><span class="p" data-group-id="9618511898-5">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="p" data-group-id="9618511898-4">]</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">   </span><span class="p" data-group-id="9618511898-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">create_enum</span><span class="p" data-group-id="9618511898-6">(</span><span class="n">example_enumeration</span><span class="p" data-group-id="9618511898-6">)</span><span class="w">
 </span><span class="ss">:ok</span></code></pre>
   </section>
 </section>
@@ -541,7 +603,7 @@ enumeration that has been referenced in other application data records.</p><h2 i
   </a>
   <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">get_enum_syst_defined</span><span class="p" data-group-id="2356670250-1">(</span><span class="s">&quot;example_enumeration&quot;</span><span class="p" data-group-id="2356670250-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">get_enum_syst_defined</span><span class="p" data-group-id="1452482456-1">(</span><span class="s">&quot;example_enumeration&quot;</span><span class="p" data-group-id="1452482456-1">)</span><span class="w">
 </span><span class="no">false</span></code></pre>
   </section>
 </section>
@@ -579,7 +641,7 @@ maintainable.</li></ul><h2 id="get_enum_user_maintainable/1-examples" class="sec
   </a>
   <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">get_enum_user_maintainable</span><span class="p" data-group-id="2474593907-1">(</span><span class="w"> </span><span class="s">&quot;example_enumeration&quot;</span><span class="p" data-group-id="2474593907-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">get_enum_user_maintainable</span><span class="p" data-group-id="6294941970-1">(</span><span class="w"> </span><span class="s">&quot;example_enumeration&quot;</span><span class="p" data-group-id="6294941970-1">)</span><span class="w">
 </span><span class="no">true</span></code></pre>
   </section>
 </section>
@@ -618,7 +680,7 @@ including the <code class="inline">enum_items</code> association populated as we
   </a>
   <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">get_enum_values</span><span class="p" data-group-id="3567586067-1">(</span><span class="s">&quot;example_enumeration&quot;</span><span class="p" data-group-id="3567586067-1">)</span></code></pre>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">get_enum_values</span><span class="p" data-group-id="3058021680-1">(</span><span class="s">&quot;example_enumeration&quot;</span><span class="p" data-group-id="3058021680-1">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="list_all_enums/0">
@@ -809,12 +871,12 @@ belongs.</p></li><li><p><code class="inline">enum_item_id</code> - the record ID
   </a>
   <span class="text">Example</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">example_enum_item</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">get_enum_item_by_name</span><span class="p" data-group-id="1150979205-1">(</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">example_enum_item</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">get_enum_item_by_name</span><span class="p" data-group-id="1273596073-1">(</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="s">&quot;example_enumeration&quot;</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="s">&quot;example_enum_item_one&quot;</span><span class="p" data-group-id="1150979205-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">get_functional_type_by_enum_item_id</span><span class="p" data-group-id="1150979205-2">(</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="s">&quot;example_enum_item_one&quot;</span><span class="p" data-group-id="1273596073-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">get_functional_type_by_enum_item_id</span><span class="p" data-group-id="1273596073-2">(</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="s">&quot;example_enumeration&quot;</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="n">example_enum_item</span><span class="o">.</span><span class="n">id</span><span class="p" data-group-id="1150979205-2">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="n">example_enum_item</span><span class="o">.</span><span class="n">id</span><span class="p" data-group-id="1273596073-2">)</span><span class="w">
 </span><span class="s">&quot;example_enum_func_type_1&quot;</span></code></pre>
   </section>
 </section>
@@ -1017,18 +1079,18 @@ than the entire enumeration.</li></ul></li></ul><h2 id="get_default_enum_item/2-
   </a>
   <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="7324462005-1">%</span><span class="nc" data-group-id="7324462005-1">Msdata.SystEnumItems</span><span class="p" data-group-id="7324462005-1">{</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="0345700892-1">%</span><span class="nc" data-group-id="0345700892-1">Msdata.SystEnumItems</span><span class="p" data-group-id="0345700892-1">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example_enum_item_two&quot;</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="7324462005-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">get_default_enum_item</span><span class="p" data-group-id="7324462005-2">(</span><span class="s">&quot;example_enumeration&quot;</span><span class="p" data-group-id="7324462005-2">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="0345700892-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">get_default_enum_item</span><span class="p" data-group-id="0345700892-2">(</span><span class="s">&quot;example_enumeration&quot;</span><span class="p" data-group-id="0345700892-2">)</span><span class="w">
 
-</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="7324462005-3">%</span><span class="nc" data-group-id="7324462005-3">Msdata.SystEnumItems</span><span class="p" data-group-id="7324462005-3">{</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="0345700892-3">%</span><span class="nc" data-group-id="0345700892-3">Msdata.SystEnumItems</span><span class="p" data-group-id="0345700892-3">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example_enum_item_one&quot;</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="7324462005-3">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">get_default_enum_item</span><span class="p" data-group-id="7324462005-4">(</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="0345700892-3">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">get_default_enum_item</span><span class="p" data-group-id="0345700892-4">(</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="s">&quot;example_enumeration&quot;</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="p" data-group-id="7324462005-5">[</span><span class="ss">functional_type_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example_enum_func_type_1&quot;</span><span class="p" data-group-id="7324462005-5">]</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="7324462005-4">)</span></code></pre>
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="p" data-group-id="0345700892-5">[</span><span class="ss">functional_type_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example_enum_func_type_1&quot;</span><span class="p" data-group-id="0345700892-5">]</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="0345700892-4">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_enum_item_by_id/2">
@@ -1047,7 +1109,7 @@ than the entire enumeration.</li></ul></li></ul><h2 id="get_default_enum_item/2-
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> get_enum_item_by_id(<a href="MscmpSystEnums.Types.html#t:enum_name/0">MscmpSystEnums.Types.enum_name</a>(), <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()) ::
+          <pre translate="no"><span class="attribute">@spec</span> get_enum_item_by_id(<a href="MscmpSystEnums.Types.html#t:enum_name/0">MscmpSystEnums.Types.enum_name</a>(), <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>()) ::
   <a href="Msdata.SystEnumItems.html#t:t/0">Msdata.SystEnumItems.t</a>() | nil</pre>
 
       </div>
@@ -1102,13 +1164,13 @@ Enumeration Item record.</p></li><li><p><code class="inline">enum_item_name</cod
   </a>
   <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="4739429157-1">%</span><span class="nc" data-group-id="4739429157-1">Msdata.SystEnumItems</span><span class="p" data-group-id="4739429157-1">{</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="1535269437-1">%</span><span class="nc" data-group-id="1535269437-1">Msdata.SystEnumItems</span><span class="p" data-group-id="1535269437-1">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example_enum_item_one&quot;</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="4739429157-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">get_enum_item_by_name</span><span class="p" data-group-id="4739429157-2">(</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="1535269437-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">get_enum_item_by_name</span><span class="p" data-group-id="1535269437-2">(</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="s">&quot;example_enumeration&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="s">&quot;example_enum_item_one&quot;</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="4739429157-2">)</span></code></pre>
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="1535269437-2">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="list_enum_items/1">
@@ -1245,8 +1307,8 @@ been set.</p><h2 id="get_enums_service/0-examples" class="section-heading">
   </a>
   <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">get_enums_service</span><span class="p" data-group-id="7642738662-1">(</span><span class="p" data-group-id="7642738662-1">)</span><span class="w">
-</span><span class="ss">:enums_instance</span></code></pre>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">get_enums_service</span><span class="p" data-group-id="3042545504-1">(</span><span class="p" data-group-id="3042545504-1">)</span><span class="w">
+</span><span class="ss">:enums_test_service</span></code></pre>
   </section>
 </section>
 <section class="detail" id="put_enums_service/1">
@@ -1292,7 +1354,7 @@ the process.</li></ul><h2 id="put_enums_service/1-examples" class="section-headi
   </a>
   <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">put_enums_service</span><span class="p" data-group-id="5378886879-1">(</span><span class="ss">:enums_instance</span><span class="p" data-group-id="5378886879-1">)</span></code></pre>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystEnums</span><span class="o">.</span><span class="n">put_enums_service</span><span class="p" data-group-id="8718240345-1">(</span><span class="ss">:enums_test_service</span><span class="p" data-group-id="8718240345-1">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="start_link/1">
@@ -1334,6 +1396,193 @@ modifying database data.</p>
     </div>
   </section>
 
+  <section id="development-support" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#development-support">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Development Support</span>
+    </h1>
+    <div class="development-support-list">
+<section class="detail" id="get_devsupport_service_name/0">
+
+  <div class="detail-header">
+    <a href="#get_devsupport_service_name/0" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_devsupport_service_name()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_devsupport_service_name() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()</pre>
+
+      </div>
+
+<p>Retrieves the Enumerations Service Name typically used to support development.</p><p>This is a way to retrieve the standard development support name for use with
+functions such as <a href="#put_enums_service/1"><code class="inline">put_enums_service/1</code></a></p>
+  </section>
+</section>
+<section class="detail" id="get_testsupport_service_name/0">
+
+  <div class="detail-header">
+    <a href="#get_testsupport_service_name/0" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_testsupport_service_name()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_testsupport_service_name() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()</pre>
+
+      </div>
+
+<p>Retrieves the Enumerations Service Name typically used to support testing.</p><p>This is a way to retrieve the standard testing support name for use with
+functions such as <a href="#put_enums_service/1"><code class="inline">put_enums_service/1</code></a></p>
+  </section>
+</section>
+<section class="detail" id="start_devsupport_services/1">
+
+    <span id="start_devsupport_services/0"></span>
+
+  <div class="detail-header">
+    <a href="#start_devsupport_services/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">start_devsupport_services(opts \\ [])</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> start_devsupport_services(<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">keyword</a>()) ::
+  :ignore | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()} | {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()} | {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+<p>Starts a Enumerations Service instance for the purposes of supporting
+interactive development activities.</p><blockquote><h4 class="warning">Not for Production</h4><p>This operation is specifically intended to support development and should
+not be used by code which runs in production environments.</p></blockquote><p>Currently this function simply redirects to <a href="#start_support_services/1"><code class="inline">start_support_services/1</code></a>.</p><h2 id="start_devsupport_services/1-parameters" class="section-heading">
+  <a href="#start_devsupport_services/1-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><code class="inline">opts</code> - a <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0"><code class="inline">Keyword.t/0</code></a> list of optional parameters which can override
+default values for service parameters.  The available options and their
+defaults are the same as <a href="#start_support_services/1"><code class="inline">start_support_services/1</code></a>.</li></ul>
+  </section>
+</section>
+<section class="detail" id="start_support_services/1">
+
+    <span id="start_support_services/0"></span>
+
+  <div class="detail-header">
+    <a href="#start_support_services/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">start_support_services(opts \\ [])</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> start_support_services(<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">keyword</a>()) ::
+  :ignore | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()} | {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()} | {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+<p>Starts a Enumerations Service instance for the purposes of supporting interactive
+development or testing activities.</p><blockquote><h4 class="warning">Not for Production</h4><p>This operation is specifically intended to support development and testing
+activities and should not be used by code which runs in production
+environments.</p></blockquote><h2 id="start_support_services/1-parameters" class="section-heading">
+  <a href="#start_support_services/1-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><p><code class="inline">opts</code> - a <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0"><code class="inline">Keyword.t/0</code></a> list of optional parameters which can override
+default values for service parameters.  The available options are:</p><ul><li><p><code class="inline">childspec_id</code> - the ID value used in defining a Child Specification for
+the service. This is an atom value which defaults to
+<a href="MscmpSystEnums.html#content"><code class="inline">MscmpSystEnums</code></a>.</p></li><li><p><code class="inline">supervisor_name</code> - the name of the <a href="https://hexdocs.pm/elixir/DynamicSupervisor.html"><code class="inline">DynamicSupervisor</code></a> which will
+will supervise the Enumerations Service.  This is an atom value which
+defaults to <code class="inline">MscmpSystEnums.DevSupportSupervisor</code>.</p></li><li><p><code class="inline">service_name</code> - the name of the Enumerations Service instance.  This is the
+value by which the specific Enumerations Service may be set using functions
+such as <a href="#put_enums_service/1"><code class="inline">put_enums_service/1</code></a>.  This is an atom value which defaults
+to the value returned by <a href="#get_devsupport_service_name/0"><code class="inline">get_devsupport_service_name/0</code></a>.</p></li><li><p><code class="inline">datastore_context</code> - the name of the login Datastore Context which can
+access the database storage backing the Enumerations Service.  This is an
+atom value which defaults to the value returned by
+<a href="https://hexdocs.pm/mscmp_syst_db/0.1.0/MscmpSystDb.html#get_devsupport_context_name/0"><code class="inline">MscmpSystDb.get_devsupport_context_name/0</code></a>.</p></li></ul></li></ul>
+  </section>
+</section>
+<section class="detail" id="start_testsupport_services/1">
+
+    <span id="start_testsupport_services/0"></span>
+
+  <div class="detail-header">
+    <a href="#start_testsupport_services/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">start_testsupport_services(opts \\ [])</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> start_testsupport_services(<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">keyword</a>()) ::
+  :ignore | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()} | {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()} | {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+
+      </div>
+
+<p>Starts a Enumerations Service instance for the purposes of supporting testing
+activities.</p><blockquote><h4 class="warning">Not for Production</h4><p>This operation is specifically intended to support testing activities and
+should not be used by code which runs in production environments.</p></blockquote><h2 id="start_testsupport_services/1-parameters" class="section-heading">
+  <a href="#start_testsupport_services/1-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><p><code class="inline">opts</code> - a <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0"><code class="inline">Keyword.t/0</code></a> list of optional parameters which can override
+default values for service parameters.  The available options are:</p><ul><li><p><code class="inline">childspec_id</code> - the ID value used in defining a Child Specification for
+the service. This is an atom value which defaults to
+<a href="MscmpSystEnums.html#content"><code class="inline">MscmpSystEnums</code></a>.</p></li><li><p><code class="inline">supervisor_name</code> - the name of the <a href="https://hexdocs.pm/elixir/DynamicSupervisor.html"><code class="inline">DynamicSupervisor</code></a> which will
+will supervise the Enumerations Service.  This is an atom value which
+defaults to <code class="inline">MscmpSystEnums.TestSupportSupervisor</code>.</p></li><li><p><code class="inline">service_name</code> - the name of the Enumerations Service instance.  This is
+the value by which the specific Enumerations Service may be set using
+functions such as <a href="#put_enums_service/1"><code class="inline">put_enums_service/1</code></a>.  This is an atom value which
+defaults to the value returned by <a href="#get_testsupport_service_name/0"><code class="inline">get_testsupport_service_name/0</code></a>.</p></li><li><p><code class="inline">datastore_context</code> - the name of the login Datastore Context which can
+access the database storage backing the Enumerations Service.  This is
+an atom value which defaults to the value returned by
+<a href="https://hexdocs.pm/mscmp_syst_db/0.1.0/MscmpSystDb.html#get_testsupport_context_name/0"><code class="inline">MscmpSystDb.get_testsupport_context_name/0</code></a>.</p></li></ul></li></ul>
+  </section>
+</section>
+
+    </div>
+  </section>
+
       <footer class="footer">
         <p>
 
@@ -1351,7 +1600,7 @@ modifying database data.</p>
 
         <p class="built-using">
           Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.30.9) for the
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.31.0) for the
 
             <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 

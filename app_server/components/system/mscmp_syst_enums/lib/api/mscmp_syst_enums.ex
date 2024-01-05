@@ -16,6 +16,7 @@ defmodule MscmpSystEnums do
 
   alias MscmpSystEnums.Impl
   alias MscmpSystEnums.Runtime
+  alias MscmpSystEnums.Runtime.DevSupport
   alias MscmpSystEnums.Types
 
   @doc section: :service_management
@@ -66,7 +67,7 @@ defmodule MscmpSystEnums do
 
   ## Examples
 
-      iex> MscmpSystEnums.put_enums_service(:enums_instance)
+      iex> MscmpSystEnums.put_enums_service(:enums_test_service)
   """
   @spec put_enums_service(Types.service_name() | nil) :: Types.service_name() | nil
   defdelegate put_enums_service(service_name), to: Runtime.ProcessUtils
@@ -78,7 +79,7 @@ defmodule MscmpSystEnums do
 
   ## Examples
       iex> MscmpSystEnums.get_enums_service()
-      :enums_instance
+      :enums_test_service
   """
   @spec get_enums_service() :: Types.service_name() | nil
   defdelegate get_enums_service(), to: Runtime.ProcessUtils
@@ -593,4 +594,121 @@ defmodule MscmpSystEnums do
       {:delete_enum_item, enum_name, enum_item_name}
     )
   end
+
+  @doc section: :development_support
+  @doc """
+  Starts a Enumerations Service instance for the purposes of supporting interactive
+  development or testing activities.
+
+  >#### Not for Production {: .warning}
+  >
+  > This operation is specifically intended to support development and testing
+  > activities and should not be used by code which runs in production
+  > environments.
+
+  ## Parameters
+
+    * `opts` - a `t:Keyword.t/0` list of optional parameters which can override
+      default values for service parameters.  The available options are:
+
+      * `childspec_id` - the ID value used in defining a Child Specification for
+        the service. This is an atom value which defaults to
+        `MscmpSystEnums`.
+
+      * `supervisor_name` - the name of the `DynamicSupervisor` which will
+        will supervise the Enumerations Service.  This is an atom value which
+        defaults to `MscmpSystEnums.DevSupportSupervisor`.
+
+      * `service_name` - the name of the Enumerations Service instance.  This is the
+        value by which the specific Enumerations Service may be set using functions
+        such as `put_enums_service/1`.  This is an atom value which defaults
+        to the value returned by `get_devsupport_service_name/0`.
+
+      * `datastore_context` - the name of the login Datastore Context which can
+        access the database storage backing the Enumerations Service.  This is an
+        atom value which defaults to the value returned by
+        `MscmpSystDb.get_devsupport_context_name/0`.
+  """
+  @spec start_support_services(keyword()) ::
+          :ignore | {:error, any()} | {:ok, pid()} | {:ok, pid(), any()}
+  defdelegate start_support_services(opts \\ []), to: DevSupport
+
+  @doc section: :development_support
+  @doc """
+  Starts a Enumerations Service instance for the purposes of supporting
+  interactive development activities.
+
+  >#### Not for Production {: .warning}
+  >
+  > This operation is specifically intended to support development and should
+  > not be used by code which runs in production environments.
+
+  Currently this function simply redirects to `start_support_services/1`.
+
+  ## Parameters
+
+    * `opts` - a `t:Keyword.t/0` list of optional parameters which can override
+      default values for service parameters.  The available options and their
+      defaults are the same as `start_support_services/1`.
+  """
+  @spec start_devsupport_services(keyword()) ::
+          :ignore | {:error, any()} | {:ok, pid()} | {:ok, pid(), any()}
+  defdelegate start_devsupport_services(opts \\ []), to: DevSupport, as: :start_support_services
+
+  @doc section: :development_support
+  @doc """
+  Starts a Enumerations Service instance for the purposes of supporting testing
+  activities.
+
+  >#### Not for Production {: .warning}
+  >
+  > This operation is specifically intended to support testing activities and
+  > should not be used by code which runs in production environments.
+
+  ## Parameters
+
+    * `opts` - a `t:Keyword.t/0` list of optional parameters which can override
+      default values for service parameters.  The available options are:
+
+      * `childspec_id` - the ID value used in defining a Child Specification for
+        the service. This is an atom value which defaults to
+        `MscmpSystEnums`.
+
+      * `supervisor_name` - the name of the `DynamicSupervisor` which will
+        will supervise the Enumerations Service.  This is an atom value which
+        defaults to `MscmpSystEnums.TestSupportSupervisor`.
+
+      * `service_name` - the name of the Enumerations Service instance.  This is
+        the value by which the specific Enumerations Service may be set using
+        functions such as `put_enums_service/1`.  This is an atom value which
+        defaults to the value returned by `get_testsupport_service_name/0`.
+
+      * `datastore_context` - the name of the login Datastore Context which can
+        access the database storage backing the Enumerations Service.  This is
+        an atom value which defaults to the value returned by
+        `MscmpSystDb.get_testsupport_context_name/0`.
+  """
+  @spec start_testsupport_services(keyword()) ::
+          :ignore | {:error, any()} | {:ok, pid()} | {:ok, pid(), any()}
+  defdelegate start_testsupport_services(opts \\ []), to: DevSupport
+
+  @doc section: :development_support
+  @doc """
+  Retrieves the Enumerations Service Name typically used to support development.
+
+  This is a way to retrieve the standard development support name for use with
+  functions such as `put_enums_service/1`
+  """
+  @spec get_devsupport_service_name() :: atom()
+  defdelegate get_devsupport_service_name, to: DevSupport
+
+  @doc section: :development_support
+  @doc """
+  Retrieves the Enumerations Service Name typically used to support testing.
+
+  This is a way to retrieve the standard testing support name for use with
+  functions such as `put_enums_service/1`
+  """
+  @spec get_testsupport_service_name() :: atom()
+  defdelegate get_testsupport_service_name, to: DevSupport
 end

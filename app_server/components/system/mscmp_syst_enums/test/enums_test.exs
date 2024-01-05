@@ -13,6 +13,7 @@
 defmodule EnumsTest do
   use EnumsTestCase, async: true
 
+  @moduletag :unit
   @moduletag :capture_log
 
   test "Get Enum Values" do
@@ -36,8 +37,7 @@ defmodule EnumsTest do
              [
                "test_syst_enum_one",
                "test_syst_enum_two",
-               "test_syst_enum_three",
-               "example_enumeration"
+               "test_syst_enum_three"
              ]
              |> Enum.reduce(true, fn name, acc -> name in all_enum_internal_names and acc end)
   end

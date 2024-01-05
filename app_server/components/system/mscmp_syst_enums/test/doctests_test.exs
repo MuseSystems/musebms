@@ -13,6 +13,7 @@
 defmodule DoctestsTest do
   use EnumsTestCase, async: true
 
+  @moduletag :doctest
   @moduletag :capture_log
 
   doctest MscmpSystEnums
