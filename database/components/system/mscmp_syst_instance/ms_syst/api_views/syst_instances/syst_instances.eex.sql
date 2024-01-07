@@ -48,140 +48,77 @@ CREATE TRIGGER a50_trig_i_d_syst_instances
     INSTEAD OF DELETE ON ms_syst.syst_instances
     FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_d_syst_instances();
 
-COMMENT ON
-    VIEW ms_syst.syst_instances IS
-$DOC$Defines known application instances and provides their configuration settings.
+DO
+$DOCUMENTATION$
+DECLARE
+    -- View
+    var_view_config ms_syst_priv.comments_config_apiview;
 
-This API View allows the application to read and maintain the data according to
-well defined application business rules.  Using this API view for updates to
-data is the preferred method of data maintenance in the course of normal usage.
+    -- View Columns
+    var_application_id     ms_syst_priv.comments_config_apiview_column;
+    var_instance_type_id   ms_syst_priv.comments_config_apiview_column;
+    var_instance_state_id  ms_syst_priv.comments_config_apiview_column;
+    var_owner_id           ms_syst_priv.comments_config_apiview_column;
+    var_owning_instance_id ms_syst_priv.comments_config_apiview_column;
+    var_dbserver_name      ms_syst_priv.comments_config_apiview_column;
+    var_instance_code      ms_syst_priv.comments_config_apiview_column;
+    var_instance_options   ms_syst_priv.comments_config_apiview_column;
 
-Only user maintainable values may be maintained via this API.  System created or
-maintained data is not maintainable via this view.  Attempts at invalid data
-maintenance via this API may result in the invalid changes being ignored or may
-raise an exception.$DOC$;
+BEGIN
 
-COMMENT ON
-    COLUMN ms_syst.syst_instances.id IS
-$DOC$The record's primary key.  The definitive identifier of the record in the
-system.
+    --
+    -- API View Config
+    --
 
-This value may not be updated via this API view.$DOC$;
+    var_view_config.table_schema := 'ms_syst_data';
+    var_view_config.table_name   := 'syst_instances';
+    var_view_config.view_schema  := 'ms_syst';
+    var_view_config.view_name    := 'syst_instances';
 
-COMMENT ON
-    COLUMN ms_syst.syst_instances.internal_name IS
-$DOC$A candidate key useful for programmatic references to individual records.$DOC$;
+    --
+    -- Column Configs
+    --
 
-COMMENT ON
-    COLUMN ms_syst.syst_instances.display_name IS
-$DOC$A friendly name and candidate key for the record, suitable for use in user
-interactions$DOC$;
+    var_application_id.column_name := 'application_id';
+    var_application_id.required    := TRUE;
+    var_application_id.user_update := FALSE;
 
-COMMENT ON
-    COLUMN ms_syst.syst_instances.application_id IS
-$DOC$Indicates an instance of which application is being described by the record.
+    var_instance_type_id.column_name := 'instance_type_id';
+    var_instance_type_id.required    := TRUE;
+    var_instance_type_id.user_update := FALSE;
 
-Once set, this value may may not be updated via this API view later.$DOC$;
+    var_instance_state_id.column_name := 'instance_state_id';
+    var_instance_state_id.required    := TRUE;
 
-COMMENT ON
-    COLUMN ms_syst.syst_instances.instance_type_id IS
-$DOC$Indicates the type of the instance.  This can designate instances as being
-production or non-production, or make other functional differences between
-instances created for different reasons based on the assigned instance type.$DOC$;
+    var_owner_id.column_name := 'owner_id';
+    var_owner_id.required    := TRUE;
+    var_owner_id.user_update := FALSE;
 
-COMMENT ON
-    COLUMN ms_syst.syst_instances.instance_state_id IS
-$DOC$Establishes the current life-cycle state of the instance record.  This can
-determine functionality such as if the instance is usable, visible, or if it may
-be purged from the database completely.$DOC$;
+    var_owning_instance_id.column_name      := 'owning_instance_id';
+    var_owning_instance_id.required         := TRUE;
+    var_owning_instance_id.user_update      := FALSE;
 
-COMMENT ON
-    COLUMN ms_syst.syst_instances.owner_id IS
-$DOC$Identifies the owner of the instance.  The owner is the entity which
-commissioned the instance and is the "user" of the instance.  Owners have
-nominal management rights over their instances, such as which access accounts
-and which credential types are allowed to be used to authenticate to the owner's
-instances.
+    var_dbserver_name.column_name      := 'dbserver_name';
+    var_dbserver_name.required         := TRUE;
 
-Once set, this value may not be updated via this API view.$DOC$;
+    var_instance_code.column_name      := 'instance_code';
+    var_instance_code.required         := TRUE;
 
-COMMENT ON
-    COLUMN ms_syst.syst_instances.owning_instance_id IS
-$DOC$In some cases, an instance is considered subordinate to another instance.  For
-example, consider a production environment and a related sandbox environment.
-The existence of the sandbox doesn't have real meaning without being associated
-with some sort of production instance where the real work is performed.  This
-kind of association becomes clearer in SaaS environments where a primary
-instance is contracted for, but other supporting instances, such as a sandbox,
-should follow certain account related actions of the primary.
+    var_instance_options.column_name      := 'instance_options';
 
-Once set, this value may not be updated via this API view.$DOC$;
+    var_view_config.columns :=
+        ARRAY [
+              var_application_id
+            , var_instance_type_id
+            , var_instance_state_id
+            , var_owner_id
+            , var_owning_instance_id
+            , var_dbserver_name
+            , var_instance_code
+            , var_instance_options
+            ]::ms_syst_priv.comments_config_apiview_column[];
 
-COMMENT ON
-    COLUMN ms_syst.syst_instances.dbserver_name IS
-$DOC$Identifies on which database server the instance is hosted. If empty, no
-server has been assigned and the instance is unstartable.$DOC$;
+    PERFORM ms_syst_priv.generate_comments_apiview( var_view_config );
 
-COMMENT ON
-    COLUMN ms_syst.syst_instances.instance_code IS
-$DOC$This is a random sequence of bytes intended for use in certain algorithmic
-credential generation.  Note that losing this value may prevent the Instance
-from being started due to bad credentials; there may be other consequences as
-well.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_instances.instance_options IS
-$DOC$A key/value store of values which define application or instance specific
-options.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_instances.diag_timestamp_created IS
-$DOC$The database server date/time when the transaction which created the record
-started.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_instances.diag_role_created IS
-$DOC$The database role which created the record.
-
-This value is read only from this API view.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_instances.diag_timestamp_modified IS
-$DOC$The database server date/time when the transaction which modified the record
-started.  This field will be the same as diag_timestamp_created for inserted
-records.
-
-This value is read only from this API view.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_instances.diag_wallclock_modified IS
-$DOC$The database server date/time at the moment the record was actually modified.
-For long running transactions this time may be significantly later than the
-value of diag_timestamp_modified.
-
-This value is read only from this API view.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_instances.diag_role_modified IS
-$DOC$The database role which modified the record.
-
-This value is read only from this API view.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_instances.diag_row_version IS
-$DOC$The current version of the row.  The value here indicates how many actual
-data changes have been made to the row.  If an update of the row leaves all data
-fields the same, disregarding the updates to the diag_* columns, the row version
-is not updated, nor are any updates made to the other diag_* columns other than
-diag_update_count.
-
-This value is read only from this API view.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_instances.diag_update_count IS
-$DOC$Records the number of times the record has been updated regardless as to if
-the update actually changed any data.  In this way needless or redundant record
-updates can be found.  This row starts at 0 and therefore may be the same as the
-diag_row_version - 1.
-
-This value is read only from this API view.$DOC$;
+END;
+$DOCUMENTATION$;

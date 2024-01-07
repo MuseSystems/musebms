@@ -76,67 +76,56 @@ CREATE TRIGGER b50_trig_a_i_syst_instance_type_apps_create_inst_type_contexts
     FOR EACH ROW
         EXECUTE PROCEDURE ms_syst_data.trig_a_i_syst_instance_type_apps_create_inst_type_contexts();
 
-COMMENT ON
-    TABLE ms_syst_data.syst_instance_type_applications IS
-$DOC$A many-to-many relation indicating which Instance Types are usable for each
-Application.
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Table
+    var_comments_config ms_syst_priv.comments_config_table;
 
-Note that creating ms_syst_data.syst_application_contexts records prior to
+    -- Columns
+    var_instance_type_id ms_syst_priv.comments_config_table_column;
+    var_application_id   ms_syst_priv.comments_config_table_column;
+
+BEGIN
+
+    --
+    -- Table Config
+    --
+
+    var_comments_config.table_schema := 'ms_syst_data';
+    var_comments_config.table_name   := 'syst_instance_type_applications';
+
+    var_comments_config.description :=
+$DOC$A many-to-many relation indicating which Instance Types are usable for each
+Application.$DOC$;
+
+    var_comments_config.general_usage :=
+$DOC$Note that creating ms_syst_data.syst_application_contexts records prior to
 inserting an Instance Type/Application association into this table is
 recommended as default Instance Type Context records can be created
 automatically on INSERT into this table so long as the supporting data is
 available.  After insert here, manipulations of what Contexts Applications
 require must be handled manually.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_instance_type_applications.id IS
-$DOC$The record's primary key.  The definitive identifier of the record in the
-system.$DOC$;
+    --
+    -- Column Configs
+    --
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_instance_type_applications.instance_type_id IS
+    var_instance_type_id.column_name := 'instance_type_id';
+    var_instance_type_id.description :=
 $DOC$A reference to the Instance Type being associated to an Application.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_instance_type_applications.application_id IS
+    var_application_id.column_name := 'application_id';
+    var_application_id.description :=
 $DOC$A reference to the Application being associated with the Instance Type.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_instance_type_applications.diag_timestamp_created IS
-$DOC$The database server date/time when the transaction which created the record
-started.$DOC$;
+    var_comments_config.columns :=
+        ARRAY [
+              var_instance_type_id
+            , var_application_id
+            ]::ms_syst_priv.comments_config_table_column[];
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_instance_type_applications.diag_role_created IS
-$DOC$The database role which created the record.$DOC$;
+    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_instance_type_applications.diag_timestamp_modified IS
-$DOC$The database server date/time when the transaction which modified the record
-started.  This field will be the same as diag_timestamp_created for inserted
-records.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_instance_type_applications.diag_wallclock_modified IS
-$DOC$The database server date/time at the moment the record was actually modified.
-For long running transactions this time may be significantly later than the
-value of diag_timestamp_modified.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_instance_type_applications.diag_role_modified IS
-$DOC$The database role which modified the record.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_instance_type_applications.diag_row_version IS
-$DOC$The current version of the row.  The value here indicates how many actual
-data changes have been made to the row.  If an update of the row leaves all data
-fields the same, disregarding the updates to the diag_* columns, the row version
-is not updated, nor are any updates made to the other diag_* columns other than
-diag_update_count.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_instance_type_applications.diag_update_count IS
-$DOC$Records the number of times the record has been updated regardless as to if
-the update actually changed any data.  In this way needless or redundant record
-updates can be found.  This row starts at 0 and therefore may be the same as the
-diag_row_version - 1.$DOC$;
+END;
+$DOCUMENTATION$;

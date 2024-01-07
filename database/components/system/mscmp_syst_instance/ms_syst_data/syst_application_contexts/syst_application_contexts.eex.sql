@@ -89,100 +89,90 @@ CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
     BEFORE INSERT OR UPDATE ON ms_syst_data.syst_application_contexts
     FOR EACH ROW EXECUTE PROCEDURE ms_syst_priv.trig_b_iu_set_diagnostic_columns();
 
-COMMENT ON
-    TABLE ms_syst_data.syst_application_contexts IS
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Table
+    var_comments_config ms_syst_priv.comments_config_table;
+
+    -- Columns
+    var_application_id         ms_syst_priv.comments_config_table_column;
+    var_description            ms_syst_priv.comments_config_table_column;
+    var_start_context          ms_syst_priv.comments_config_table_column;
+    var_login_context          ms_syst_priv.comments_config_table_column;
+    var_database_owner_context ms_syst_priv.comments_config_table_column;
+
+BEGIN
+
+    --
+    -- Table Config
+    --
+    var_comments_config.table_schema := 'ms_syst_data';
+    var_comments_config.table_name   := 'syst_application_contexts';
+
+    var_comments_config.description :=
 $DOC$Applications are written with certain security and connection
 characteristics in mind which correlate to database roles used by the
 application for establishing connections.  This table defines the datastore
 contexts the application is expecting so that Instance records can be validated
 against the expectations.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_application_contexts.id IS
-$DOC$The record's primary key.  The definitive identifier of the record in the
-system.$DOC$;
+    --
+    -- Column Configs
+    --
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_application_contexts.internal_name IS
-$DOC$A candidate key useful for programmatic references to individual records.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_application_contexts.display_name IS
-$DOC$A friendly name and candidate key for the record, suitable for use in user
-interactions$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_application_contexts.application_id IS
+    var_application_id.column_name := 'application_id';
+    var_application_id.description :=
 $DOC$References the ms_syst_data.syst_applications record which owns the
 context.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_application_contexts.start_context IS
+    var_description.column_name := 'description';
+    var_description.description :=
+$DOC$A user visible description of the application context, its role in the
+application, uses, and any other helpful text.$DOC$;
+
+    var_start_context.column_name := 'start_context';
+    var_start_context.description :=
 $DOC$Indicates whether or not the system should start the context for any Instances
-of the application.  If true, any Instance of the Application will start its
+of the application.$DOC$;
+    var_start_context.general_usage :=
+$DOC$If true, any Instance of the Application will start its
 associated context so long as it is enabled at the Instance level.  If false,
 the context is disabled for all Instances in the Application regardless of their
 individual settings.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_application_contexts.login_context IS
+    var_login_context.column_name := 'login_context';
+    var_login_context.description :=
 $DOC$Indicates whether or not the Application Context is used for making
-connections to the database.  If true, each associated Instance Context is
+connections to the database.$DOC$;
+    var_login_context.general_usage :=
+$DOC$If true, each associated Instance Context is
 created as a role in the database with the LOGIN privilege; if false, the
 role is created in the database as a NOLOGIN role.  Most often non-login
 Application Contexts are created to serve as the database role owning database
 objects.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_application_contexts.database_owner_context IS
+    var_database_owner_context.column_name := 'database_owner_context';
+    var_database_owner_context.description :=
 $DOC$Indicates if the Application Context represents the database role used for object
-ownership.  If true, the Application Context does represent the ownership role
+ownership.$DOC$;
+    var_database_owner_context.general_usage :=
+$DOC$If true, the Application Context does represent the ownership role
 and should also be defined as a login_context = FALSE context.  If false, the
 role is not used for database object ownership.  Note that there should only
 ever be one Application Context defined as database_owner_context = TRUE for any
 one Application.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_application_contexts.description IS
-$DOC$A user visible description of the application context, its role in the
-application, uses, and any other helpful text.$DOC$;
+    var_comments_config.columns :=
+        ARRAY [
+             var_application_id
+            ,var_description
+            ,var_start_context
+            ,var_login_context
+            ,var_database_owner_context
+            ]::ms_syst_priv.comments_config_table_column[];
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_application_contexts.diag_timestamp_created IS
-$DOC$The database server date/time when the transaction which created the record
-started.$DOC$;
+    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_application_contexts.diag_role_created IS
-$DOC$The database role which created the record.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_application_contexts.diag_timestamp_modified IS
-$DOC$The database server date/time when the transaction which modified the record
-started.  This field will be the same as diag_timestamp_created for inserted
-records.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_application_contexts.diag_wallclock_modified IS
-$DOC$The database server date/time at the moment the record was actually modified.
-For long running transactions this time may be significantly later than the
-value of diag_timestamp_modified.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_application_contexts.diag_role_modified IS
-$DOC$The database role which modified the record.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_application_contexts.diag_row_version IS
-$DOC$The current version of the row.  The value here indicates how many actual
-data changes have been made to the row.  If an update of the row leaves all data
-fields the same, disregarding the updates to the diag_* columns, the row version
-is not updated, nor are any updates made to the other diag_* columns other than
-diag_update_count.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_application_contexts.diag_update_count IS
-$DOC$Records the number of times the record has been updated regardless as to if
-the update actually changed any data.  In this way needless or redundant record
-updates can be found.  This row starts at 0 and therefore may be the same as the
-diag_row_version - 1.$DOC$;
+END;
+$DOCUMENTATION$;

@@ -32,7 +32,7 @@ defmodule IntegrationTest do
         db_show_sensitive: true,
         db_max_instances: 0,
         server_salt: :crypto.strong_rand_bytes(16),
-        dbadmin_password: "muse.syst.dba.testing.password",
+        dbadmin_password: "musesystems.publicly.known.insecure.devsupport.password",
         dbadmin_pool_size: 1
       }
     ]

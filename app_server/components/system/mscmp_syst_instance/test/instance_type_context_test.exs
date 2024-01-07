@@ -15,6 +15,9 @@ defmodule InstanceTypeContextTest do
 
   import Ecto.Query
 
+  @moduletag :unit
+  @moduletag :capture_log
+
   test "Can Update Instance Type Context" do
     instance_type_context =
       from(

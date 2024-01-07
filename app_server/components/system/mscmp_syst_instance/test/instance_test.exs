@@ -15,6 +15,9 @@ defmodule InstanceTest do
 
   import Ecto.Query
 
+  @moduletag :unit
+  @moduletag :capture_log
+
   test "Can Retrieve Instance Record by Internal Name" do
     instance_record =
       from(i in Msdata.SystInstances, limit: 1)

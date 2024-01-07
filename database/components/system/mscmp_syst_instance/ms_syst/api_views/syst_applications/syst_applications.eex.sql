@@ -41,13 +41,22 @@ CREATE TRIGGER a50_trig_i_d_syst_applications
     INSTEAD OF DELETE ON ms_syst.syst_applications
     FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_d_syst_applications();
 
-COMMENT ON
-    VIEW ms_syst.syst_applications IS
-$DOC$Describes the known applications which are managed by the global database and
-authentication infrastructure.
+DO
+$DOCUMENTATION$
+DECLARE
+    -- View
+    var_view_config ms_syst_priv.comments_config_apiview;
 
-This API View allows the application to read and maintain data according to well defined
-application business rules.
+BEGIN
 
-Attempts at invalid data maintenance via this API may result in the invalid
-changes being ignored or may raise an exception.$DOC$;
+    var_view_config.table_schema := 'ms_syst_data';
+    var_view_config.table_name   := 'syst_applications';
+    var_view_config.view_schema  := 'ms_syst';
+    var_view_config.view_name    := 'syst_applications';
+    var_view_config.user_delete  := FALSE;
+    var_view_config.syst_records := TRUE;
+
+    PERFORM ms_syst_priv.generate_comments_apiview( var_view_config );
+
+END;
+$DOCUMENTATION$;

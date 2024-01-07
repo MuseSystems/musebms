@@ -15,6 +15,9 @@ defmodule ApplicationContextTest do
 
   alias MscmpSystInstance.Impl
 
+  @moduletag :unit
+  @moduletag :capture_log
+
   test "Can create an Application Context record" do
     owner_context_params = %{
       internal_name: "app3_owner",

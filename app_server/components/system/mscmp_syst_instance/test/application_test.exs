@@ -17,6 +17,9 @@ defmodule ApplicationTest do
 
   alias MscmpSystInstance.Impl
 
+  @moduletag :unit
+  @moduletag :capture_log
+
   test "Can retrieve Application ID by Internal Name" do
     target_app_name = "app1"
 

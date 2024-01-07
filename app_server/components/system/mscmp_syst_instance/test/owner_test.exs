@@ -17,6 +17,9 @@ defmodule OwnerTest do
 
   alias MscmpSystInstance.Impl
 
+  @moduletag :unit
+  @moduletag :capture_log
+
   # TODO: Historically, unit testing was performed using the public API calls.
   #       while unit testing the public API helps to ensure the bare essentials
   #       are tested, it's not the final approach we've settled on.  Unit tests
