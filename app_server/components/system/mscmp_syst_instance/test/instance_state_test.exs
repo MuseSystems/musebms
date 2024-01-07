@@ -13,6 +13,9 @@
 defmodule InstanceStateTest do
   use InstanceMgrTestCase, async: true
 
+  @moduletag :unit
+  @moduletag :capture_log
+
   test "Can retrieve system default Instance State" do
     assert %Msdata.SystEnumItems{internal_name: "instance_states_sysdef_uninitialized"} =
              MscmpSystInstance.get_instance_state_default()

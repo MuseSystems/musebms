@@ -14,17 +14,24 @@
 #  for module testing purposes.
 
 test_kind =
-  if ExUnit.configuration() |> Keyword.get(:include) |> Enum.member?(:integration) do
-    ExUnit.configure(seed: 0)
-    :integration_testing
-  else
-    ExUnit.configure(exclude: [:integration])
-    :unit_testing
+  cond do
+    ExUnit.configuration() |> Keyword.get(:include) |> Enum.member?(:integration) ->
+      ExUnit.configure(seed: 0)
+      :integration_testing
+
+    ExUnit.configuration() |> Keyword.get(:include) |> Enum.member?(:doctest) ->
+      :doc_testing
+
+    true ->
+      ExUnit.configure(exclude: [:integration, :doctest])
+      :unit_testing
   end
 
 TestSupport.setup_testing_database(test_kind)
 
-MscmpSystDb.put_datastore_context(TestSupport.get_testing_datastore_context_id())
+MscmpSystDb.put_datastore_context(MscmpSystDb.get_testsupport_context_name())
+
+MscmpSystEnums.start_testsupport_services()
 
 children = [
   {DynamicSupervisor, strategy: :one_for_one, name: MscmpSystInstance.TestingSupervisor}
@@ -35,21 +42,11 @@ Logger.configure(level: :info)
 
 ExUnit.start()
 
-enum_service_spec = %{
-  id: TestingEnumService,
-  start: {
-    MscmpSystEnums,
-    :start_link,
-    [{:instance_mgr, TestSupport.get_testing_datastore_context_id()}]
-  }
-}
-
 instance_service_spec = %{
   id: TestingInstanceServices,
   start: {MscmpSystInstance, :start_link, []}
 }
 
-DynamicSupervisor.start_child(MscmpSystInstance.TestingSupervisor, enum_service_spec)
 DynamicSupervisor.start_child(MscmpSystInstance.TestingSupervisor, instance_service_spec)
 
 ExUnit.after_suite(fn _suite_result ->

@@ -15,6 +15,9 @@ defmodule InstanceTypeApplicationTest do
 
   import Ecto.Query
 
+  @moduletag :unit
+  @moduletag :capture_log
+
   test "Can Create Instance Type Application" do
     # The test data setup should not set up any instance type application
     # records for the "instance_types_std" instance type.

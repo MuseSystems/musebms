@@ -45,19 +45,67 @@ CREATE TRIGGER a50_trig_i_d_syst_application_contexts
     INSTEAD OF DELETE ON ms_syst.syst_application_contexts
     FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_d_syst_application_contexts();
 
-COMMENT ON
-    VIEW ms_syst.syst_application_contexts IS
-$DOC$Applications are written with certain security and connection
-characteristics in mind which correlate to database roles used by the
-application for establishing connections.  This table defines the datastore
-contexts the application is expecting so that Instance records can be validated
-against the expectations.
+DO
+$DOCUMENTATION$
+DECLARE
+    -- View
+    var_view_config ms_syst_priv.comments_config_apiview;
 
-This API View allows the application to read and maintain the data according to
-well defined application business rules.  Using this API view for updates to
-data is the preferred method of data maintenance in the course of normal usage.
+    -- View Columns
+    var_application_id         ms_syst_priv.comments_config_apiview_column;
+    var_description            ms_syst_priv.comments_config_apiview_column;
+    var_start_context          ms_syst_priv.comments_config_apiview_column;
+    var_login_context          ms_syst_priv.comments_config_apiview_column;
+    var_database_owner_context ms_syst_priv.comments_config_apiview_column;
 
-Only user maintainable values may be maintained via this API.  System created or
-maintained data is not maintainable via this view.  Attempts at invalid data
-maintenance via this API may result in the invalid changes being ignored or may
-raise an exception.$DOC$;
+BEGIN
+
+    --
+    -- API View Config
+    --
+
+    var_view_config.table_schema := 'ms_syst_data';
+    var_view_config.table_name   := 'syst_application_contexts';
+    var_view_config.view_schema  := 'ms_syst';
+    var_view_config.view_name    := 'syst_application_contexts';
+    var_view_config.syst_records := TRUE;
+    var_view_config.syst_update  := TRUE;
+    var_view_config.syst_delete  := TRUE;
+
+    --
+    -- Column Configs
+    --
+
+    var_application_id.column_name := 'application_id';
+    var_application_id.required    := TRUE;
+    var_application_id.user_update := FALSE;
+
+    var_description.column_name      := 'description';
+    var_description.required         := TRUE;
+    var_description.syst_update_mode := 'always';
+
+    var_start_context.column_name      := 'start_context';
+    var_start_context.required         := TRUE;
+    var_start_context.syst_update_mode := 'always';
+
+    var_login_context.column_name := 'login_context';
+    var_login_context.required    := TRUE;
+    var_login_context.user_update := FALSE;
+
+    var_database_owner_context.column_name := 'database_owner_context';
+    var_database_owner_context.required    := TRUE;
+    var_database_owner_context.user_update := FALSE;
+
+    var_view_config.columns :=
+        ARRAY [
+             var_application_id
+            ,var_description
+            ,var_start_context
+            ,var_login_context
+            ,var_database_owner_context
+        ]::ms_syst_priv.comments_config_apiview_column[];
+
+    PERFORM ms_syst_priv.generate_comments_apiview( var_view_config );
+
+END;
+$DOCUMENTATION$;

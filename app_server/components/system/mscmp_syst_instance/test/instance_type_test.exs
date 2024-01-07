@@ -13,6 +13,9 @@
 defmodule InstanceTypeTest do
   use InstanceMgrTestCase, async: true
 
+  @moduletag :unit
+  @moduletag :capture_log
+
   test "Can Create Instance Type" do
     create_params = %{
       internal_name: "instance_type_create",

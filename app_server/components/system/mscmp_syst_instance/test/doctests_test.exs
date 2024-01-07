@@ -13,9 +13,12 @@
 defmodule DoctestsTest do
   use InstanceMgrTestCase, async: true
 
+  @moduletag :doctest
+  @moduletag :capture_log
+
   setup_all do
-    _ = MscmpSystDb.put_datastore_context(TestSupport.get_testing_datastore_context_id())
-    MscmpSystEnums.put_enums_service(:instance_mgr)
+    _ = MscmpSystDb.put_datastore_context(MscmpSystDb.get_testsupport_context_name())
+    MscmpSystEnums.put_enums_service(MscmpSystEnums.get_testsupport_service_name())
 
     :ok
   end
