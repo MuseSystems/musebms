@@ -26,7 +26,8 @@ DECLARE
         "column_name": "id",
         "unique_values": true,
         "default_value": "Automatically Generated",
-        "user_insert": false
+        "user_insert": false,
+        "user_update": false
       },
       {
         "column_name": "internal_name",
