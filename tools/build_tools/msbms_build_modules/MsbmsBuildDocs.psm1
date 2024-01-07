@@ -108,7 +108,8 @@ function Build-DbDocs {
         -db "${current_component}" `
         -host 127.0.0.1 `
         -port 5432 `
-        -schemas "ms_appl,ms_appl_data,ms_appl_priv,ms_syst,ms_syst_data,ms_syst_db,ms_syst_priv,ms_user,ms_user_data,ms_user_priv" `
+        -all `
+        -schemaSpec "ms_.+" `
         -norows `
         -imageformat svg `
         -nopages `
