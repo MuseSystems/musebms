@@ -17,6 +17,7 @@ defmodule PermRoleTest do
 
   alias MscmpSystPerms.Impl
 
+  @moduletag :unit
   @moduletag :capture_log
 
   test "Can create new Perm Role" do

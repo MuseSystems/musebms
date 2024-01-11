@@ -44,133 +44,77 @@ CREATE TRIGGER a50_trig_i_d_syst_perm_role_grants
     INSTEAD OF DELETE ON ms_syst.syst_perm_role_grants
     FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_d_syst_perm_role_grants();
 
-COMMENT ON
-    VIEW ms_syst.syst_perm_role_grants IS
-$DOC$Establishes the individual permissions which are granted by the given permission
-role.
+DO
+$DOCUMENTATION$
+DECLARE
+    -- View
+    var_view_config ms_syst_priv.comments_config_apiview;
 
-Note that the absence of an explicit permission grant to a role is an implicit
-denial of that permission.
+    -- View Columns
+    var_perm_role_id ms_syst_priv.comments_config_apiview_column;
+    var_perm_id      ms_syst_priv.comments_config_apiview_column;
+    var_view_scope   ms_syst_priv.comments_config_apiview_column;
+    var_maint_scope  ms_syst_priv.comments_config_apiview_column;
+    var_admin_scope  ms_syst_priv.comments_config_apiview_column;
+    var_ops_scope    ms_syst_priv.comments_config_apiview_column;
 
-This API View allows the application to read and maintain the data according to
-well defined application business rules.  Using this API view for updates to
-data is the preferred method of data maintenance in the course of normal usage.
+BEGIN
 
-Only user maintainable values may be maintained via this API.  System created or
-maintained data is not maintainable via this view.  Attempts at invalid data
-maintenance via this API may result in the invalid changes being ignored or may
-raise an exception.$DOC$;
+    --
+    -- API View Config
+    --
 
-COMMENT ON
-    COLUMN ms_syst.syst_perm_role_grants.id IS
-$DOC$The record's primary key.  The definitive identifier of the record in the
-system.$DOC$;
+    var_view_config.table_schema := 'ms_syst_data';
+    var_view_config.table_name   := 'syst_perm_role_grants';
+    var_view_config.view_schema  := 'ms_syst';
+    var_view_config.view_name    := 'syst_perm_role_grants';
+    var_view_config.user_delete  := TRUE;
+    var_view_config.syst_records := TRUE;
 
-COMMENT ON
-    COLUMN ms_syst.syst_perm_role_grants.perm_role_id IS
-$DOC$Identifies the role to which the permission grant is being made.  This
-value is a reference to a syst_perm_roles record which is considered the parent
-of this record.
+    --
+    -- Column Configs
+    --
 
-This value is set at record creation time and may not be updated later via this
-API view.$DOC$;
+    var_perm_role_id.column_name      := 'perm_role_id';
+    var_perm_role_id.required         := TRUE;
+    var_perm_role_id.default_value    := '( No Default Value )';
+    var_perm_role_id.user_update      := FALSE;
+    var_perm_role_id.supplemental     :=
+$DOC$This column is part of a composite key.  The combined values of `perm_role_id`
+and `perm_id` must be unique; `NULL` values, where allowed, are not considered
+distinct for this uniqueness check.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst.syst_perm_role_grants.perm_id IS
-$DOC$The permission being granted by the role.
+    var_perm_id.column_name      := 'perm_id';
+    var_perm_id.required         := TRUE;
+    var_perm_id.user_update      := FALSE;
+    var_perm_id.supplemental     :=
+$DOC$This column is part of a composite key.  The combined values of `perm_role_id`
+and `perm_id` must be unique; `NULL` values, where allowed, are not considered
+distinct for this uniqueness check.$DOC$;
 
-This value is set at record creation time and may not be updated later via this
-API view.$DOC$;
+    var_view_scope.column_name      := 'view_scope';
+    var_view_scope.required         := TRUE;
 
-COMMENT ON
-    COLUMN ms_syst.syst_perm_role_grants.view_scope IS
-$DOC$Assigns the Scope of the Permission's View Right being granted by the Role.
+    var_maint_scope.column_name      := 'maint_scope';
+    var_maint_scope.required         := TRUE;
 
-The valid Scope options are defined by the Permission record.
+    var_admin_scope.column_name      := 'admin_scope';
+    var_admin_scope.required         := TRUE;
 
-If the parent Permission Role record is a system defined record, this value may
-not be changed using this API view.$DOC$;
+    var_ops_scope.column_name      := 'ops_scope';
+    var_ops_scope.required         := TRUE;
 
-COMMENT ON
-    COLUMN ms_syst.syst_perm_role_grants.maint_scope IS
-$DOC$Assigns the Scope of the Permission's Maintenance Right being granted by the
-Role.
+    var_view_config.columns :=
+        ARRAY [
+              var_perm_role_id
+            , var_perm_id
+            , var_view_scope
+            , var_maint_scope
+            , var_admin_scope
+            , var_ops_scope
+            ]::ms_syst_priv.comments_config_apiview_column[];
 
-The valid Scope options are defined by the Permission record.
+    PERFORM ms_syst_priv.generate_comments_apiview( var_view_config );
 
-If the parent Permission Role record is a system defined record, this value may
-not be changed using this API view.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_perm_role_grants.admin_scope IS
-$DOC$Assigns the Scope of the Permission's Data Administration Right being granted by
-the Role.
-
-The valid Scope options are defined by the Permission record.
-
-If the parent Permission Role record is a system defined record, this value may
-not be changed using this API view.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_perm_role_grants.ops_scope IS
-$DOC$Assigns the Scope of the Permission's Operations Right being granted by the
-Role.
-
-The valid Scope options are defined by the Permission record.
-
-If the parent Permission Role record is a system defined record, this value may
-not be changed using this API view.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_perm_role_grants.diag_timestamp_created IS
-$DOC$The database server date/time when the transaction which created the record
-started.
-
-This value is system maintained and is read only via this API view.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_perm_role_grants.diag_role_created IS
-$DOC$The database role which created the record.
-
-This value is system maintained and is read only via this API view.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_perm_role_grants.diag_timestamp_modified IS
-$DOC$The database server date/time when the transaction which modified the record
-started.  This field will be the same as diag_timestamp_created for inserted
-records.
-
-This value is system maintained and is read only via this API view.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_perm_role_grants.diag_wallclock_modified IS
-$DOC$The database server date/time at the moment the record was actually modified.
-For long running transactions this time may be significantly later than the
-value of diag_timestamp_modified.
-
-This value is system maintained and is read only via this API view.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_perm_role_grants.diag_role_modified IS
-$DOC$The database role which modified the record.
-
-This value is system maintained and is read only via this API view.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_perm_role_grants.diag_row_version IS
-$DOC$The current version of the row.  The value here indicates how many actual
-data changes have been made to the row.  If an update of the row leaves all data
-fields the same, disregarding the updates to the diag_* columns, the row version
-is not updated, nor are any updates made to the other diag_* columns other than
-diag_update_count.
-
-This value is system maintained and is read only via this API view.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_perm_role_grants.diag_update_count IS
-$DOC$Records the number of times the record has been updated regardless as to if
-the update actually changed any data.  In this way needless or redundant record
-updates can be found.  This row starts at 0 and therefore may be the same as the
-diag_row_version - 1.
-
-This value is system maintained and is read only via this API view.$DOC$;
+END;
+$DOCUMENTATION$;

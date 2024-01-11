@@ -48,155 +48,62 @@ CREATE TRIGGER a50_trig_i_d_syst_perms
     INSTEAD OF DELETE ON ms_syst.syst_perms
     FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_d_syst_perms();
 
-COMMENT ON
-    VIEW ms_syst.syst_perms IS
-$DOC$Defines the available system and application permissions which can be
-assigned to users.  For a more detailed description see the table comment for
-ms_syst_data.syst_perms.
+DO
+$DOCUMENTATION$
+DECLARE
+    -- View
+    var_view_config ms_syst_priv.comments_config_apiview;
 
-This API View allows the application to read and maintain the data according to
-well defined application business rules.  Using this API view for updates to
-data is the preferred method of data maintenance in the course of normal usage.
+    -- View Columns
+    var_perm_functional_type_id ms_syst_priv.comments_config_apiview_column;
+    var_view_scope_options      ms_syst_priv.comments_config_apiview_column;
+    var_maint_scope_options     ms_syst_priv.comments_config_apiview_column;
+    var_admin_scope_options     ms_syst_priv.comments_config_apiview_column;
+    var_ops_scope_options       ms_syst_priv.comments_config_apiview_column;
+    
+BEGIN
+    
+    --
+    -- API View Config
+    --
 
-Only user maintainable values may be maintained via this API.  System created or
-maintained data is not maintainable via this view.  Attempts at invalid data
-maintenance via this API may result in the invalid changes being ignored or may
-raise an exception.$DOC$;
+    var_view_config.table_schema := 'ms_syst_data';
+    var_view_config.table_name   := 'syst_perms';
+    var_view_config.view_schema  := 'ms_syst';
+    var_view_config.view_name    := 'syst_perms';
+    var_view_config.syst_records := TRUE;
+    var_view_config.syst_update  := TRUE;
+    
+    --
+    -- Column Configs
+    --
+    
+    var_perm_functional_type_id.column_name := 'perm_functional_type_id';
+    var_perm_functional_type_id.required    := TRUE;
+    var_perm_functional_type_id.user_update := FALSE;
 
-COMMENT ON
-    COLUMN ms_syst.syst_perms.id IS
-$DOC$The record's primary key.  The definitive identifier of the record in the
-system.$DOC$;
+    var_view_scope_options.column_name := 'view_scope_options';
+    var_view_scope_options.required    := TRUE;
 
-COMMENT ON
-    COLUMN ms_syst.syst_perms.internal_name IS
-$DOC$A candidate key useful for programmatic references to individual records.
+    var_maint_scope_options.column_name := 'maint_scope_options';
+    var_maint_scope_options.required    := TRUE;
 
-Updates to this value are only acceptable if the record's syst_defined value is
-set 'false'.$DOC$;
+    var_admin_scope_options.column_name := 'admin_scope_options';
+    var_admin_scope_options.required    := TRUE;
 
-COMMENT ON
-    COLUMN ms_syst.syst_perms.display_name IS
-$DOC$A friendly name and candidate key for the record, suitable for use in user
-interactions.$DOC$;
+    var_ops_scope_options.column_name := 'ops_scope_options';
+    var_ops_scope_options.required    := TRUE;
 
-COMMENT ON
-    COLUMN ms_syst.syst_perms.perm_functional_type_id IS
-$DOC$Assigns the Permission to a specific Permission Functional Type.
+    var_view_config.columns :=
+        ARRAY [
+              var_perm_functional_type_id
+            , var_view_scope_options
+            , var_maint_scope_options
+            , var_admin_scope_options
+            , var_ops_scope_options
+            ]::ms_syst_priv.comments_config_apiview_column[];
 
-Permissions may only be granted in Permission Roles of the same Permission
-Functional Type.
+    PERFORM ms_syst_priv.generate_comments_apiview( var_view_config );
 
-This value can only be set at record INSERT time using this API view.$DOC$;
-
-COMMENT ON
-     COLUMN ms_syst.syst_perms.syst_defined IS
-$DOC$If true, indicates that the permission was created by the system or system
-installation process.  A false value indicates that the record was user created.
-
-This value is system maintained and read only via this API.$DOC$;
-
-COMMENT ON
-     COLUMN ms_syst.syst_perms.syst_description IS
-$DOC$A system default description describing the permission and its uses in the
-system.
-
-This value is a system defined, read only value.$DOC$;
-
-COMMENT ON
-     COLUMN ms_syst.syst_perms.user_description IS
-$DOC$A custom user defined description which overrides the syst_description value
-where it would otherwise be used.  If this column is set NULL the
-syst_description value will be used.
-
-This field is intended to accommodate end user defined descriptions and is
-maintainable via this view.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_perms.view_scope_options IS
-$DOC$If applicable, enumerates the available Scopes of viewable data offered by the
-permission.  If not applicable the only option will be 'unused'.
-
-If the Permission is system defined, the data in this column is not maintainable
-via this API view.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_perms.maint_scope_options IS
-$DOC$If applicable, enumerates the available Scopes of maintainable data offered by
-the permission.  Maintenance in this context refers to changing existing data.
-If not applicable the only option will be 'unused'.
-
-If the Permission is system defined, the data in this column is not maintainable
-via this API view.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_perms.admin_scope_options IS
-$DOC$If applicable, enumerates the available Scopes of data administration offered
-by the permission.  Administration in this context refers to creating or
-deleting records.  If not applicable the only option will be 'unused'.
-
-If the Permission is system defined, the data in this column is not maintainable
-via this API view.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_perms.ops_scope_options IS
-$DOC$If applicable, enumerates the available Scopes of a given operation or
-processing capability offered by the permission.  If not applicable the only
-option will be 'unused'.
-
-If the Permission is system defined, the data in this column is not maintainable
-via this API view.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_perms.diag_timestamp_created IS
-$DOC$The database server date/time when the transaction which created the record
-started.
-
-This value is system maintained and is read only via this API view.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_perms.diag_role_created IS
-$DOC$The database role which created the record.
-
-This value is system maintained and is read only via this API view.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_perms.diag_timestamp_modified IS
-$DOC$The database server date/time when the transaction which modified the record
-started.  This field will be the same as diag_timestamp_created for inserted
-records.
-
-This value is system maintained and is read only via this API view.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_perms.diag_wallclock_modified IS
-$DOC$The database server date/time at the moment the record was actually modified.
-For long running transactions this time may be significantly later than the
-value of diag_timestamp_modified.
-
-This value is system maintained and is read only via this API view.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_perms.diag_role_modified IS
-$DOC$The database role which modified the record.
-
-This value is system maintained and is read only via this API view.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_perms.diag_row_version IS
-$DOC$The current version of the row.  The value here indicates how many actual
-data changes have been made to the row.  If an update of the row leaves all data
-fields the same, disregarding the updates to the diag_* columns, the row version
-is not updated, nor are any updates made to the other diag_* columns other than
-diag_update_count.
-
-This value is system maintained and is read only via this API view.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_perms.diag_update_count IS
-$DOC$Records the number of times the record has been updated regardless as to if
-the update actually changed any data.  In this way needless or redundant record
-updates can be found.  This row starts at 0 and therefore may be the same as the
-diag_row_version - 1.
-
-This value is system maintained and is read only via this API view.$DOC$;
+END;
+$DOCUMENTATION$;

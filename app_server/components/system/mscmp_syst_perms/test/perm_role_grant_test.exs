@@ -17,6 +17,7 @@ defmodule PermRoleGrantTest do
 
   alias MscmpSystPerms.Impl
 
+  @moduletag :unit
   @moduletag :capture_log
 
   test "Can create new Perm Role Grant" do
@@ -170,7 +171,7 @@ defmodule PermRoleGrantTest do
       )
       |> MscmpSystDb.one!()
 
-    bad_perm_id = from(p in Msdata.SystPerms, where: p.internal_name == 'perm_4', select: p.id)
+    bad_perm_id = from(p in Msdata.SystPerms, where: p.internal_name == ~c"perm_4", select: p.id)
 
     update_params_1 = %{perm_id: bad_perm_id}
 
@@ -180,7 +181,7 @@ defmodule PermRoleGrantTest do
     assert perm_updated_grant.perm_id == grant.perm_id
 
     bad_perm_role_id =
-      from(p in Msdata.SystPermRoles, where: p.internal_name == 'perm_role_4', select: p.id)
+      from(p in Msdata.SystPermRoles, where: p.internal_name == ~c"perm_role_4", select: p.id)
 
     update_params_2 = %{perm_role_id: bad_perm_role_id}
 

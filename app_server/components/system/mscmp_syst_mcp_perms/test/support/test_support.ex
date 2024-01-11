@@ -62,7 +62,7 @@ defmodule TestSupport do
       db_max_instances: 1,
       server_pools: [],
       server_salt: "mscmp_syst_mcp_perms.testing.code.test.salt",
-      dbadmin_password: "muse.syst.dba.testing.password",
+      dbadmin_password: "musesystems.publicly.known.insecure.devsupport.password",
       dbadmin_pool_size: 1
     }
   }
