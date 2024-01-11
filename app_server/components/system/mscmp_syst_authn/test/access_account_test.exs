@@ -15,6 +15,7 @@ defmodule AccessAccountTest do
 
   alias MscmpSystAuthn.Impl
 
+  @moduletag :unit
   @moduletag :capture_log
 
   # TODO: Historically, unit testing was performed using the public API calls.

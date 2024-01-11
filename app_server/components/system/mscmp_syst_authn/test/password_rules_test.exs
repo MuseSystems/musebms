@@ -19,6 +19,7 @@ defmodule PasswordRulesTest do
 
   alias MscmpSystDb.DbTypes
 
+  @moduletag :unit
   @moduletag :capture_log
 
   test "Can load PostgreSQL formatted Disallowed Password List" do

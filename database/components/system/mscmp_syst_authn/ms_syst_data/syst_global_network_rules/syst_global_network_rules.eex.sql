@@ -19,7 +19,8 @@ CREATE TABLE ms_syst_data.syst_global_network_rules
     ,ordering
         integer
         NOT NULL
-        CONSTRAINT syst_global_network_rules_ordering_udx UNIQUE DEFERRABLE INITIALLY DEFERRED
+        CONSTRAINT syst_global_network_rules_ordering_udx
+            UNIQUE DEFERRABLE INITIALLY DEFERRED
     ,functional_type
         text
         NOT NULL
@@ -78,102 +79,106 @@ CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
     BEFORE INSERT OR UPDATE ON ms_syst_data.syst_global_network_rules
     FOR EACH ROW EXECUTE PROCEDURE ms_syst_priv.trig_b_iu_set_diagnostic_columns();
 
-COMMENT ON
-    TABLE ms_syst_data.syst_global_network_rules IS
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Table
+    var_comments_config ms_syst_priv.comments_config_table;
+
+    -- Columns
+    var_ordering            ms_syst_priv.comments_config_table_column;
+    var_functional_type     ms_syst_priv.comments_config_table_column;
+    var_ip_host_or_network  ms_syst_priv.comments_config_table_column;
+    var_ip_host_range_lower ms_syst_priv.comments_config_table_column;
+    var_ip_host_range_upper ms_syst_priv.comments_config_table_column;
+
+BEGIN
+
+    --
+    -- Table Config
+    --
+
+    var_comments_config.table_schema := 'ms_syst_data';
+    var_comments_config.table_name   := 'syst_global_network_rules';
+
+    var_comments_config.description :=
 $DOC$Defines firewall-like rules that are global in scope indicating which IP
 addresses are allowed to attempt authentication and which are not.  This also
 includes the concept of global defaults applied to new Owner IP address rules.
 These rules are applied in their defined ordering prior to all other rule sets.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_global_network_rules.id IS
-$DOC$The record's primary key.  The definitive identifier of the record in the
-system.$DOC$;
+    --
+    -- Column Configs
+    --
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_global_network_rules.ordering IS
+    var_ordering.column_name := 'ordering';
+    var_ordering.description :=
 $DOC$Defines the order in which IP rules are applied.  Lower values are applied
-prior to higher values.
+prior to higher values.$DOC$;
+    var_ordering.general_usage :=
+$DOC$All records are ordered using unique ordering values within each owner value.
+When a new Owner Network Rule is inserted with the ordering value of an
+existing Owner Network Rule record for the same Owner, the system will assume
+the new record should be "inserted before" the existing record.  Therefore the
+existing record will be reordered behind the new record by incrementing the
+existing record's ordering value by one.  This reordering process happens
+recursively until there are no ordering value conflicts for any of an Owner's
+Network Rule records.$DOC$;
 
-When a new record is inserted with an existing ordering value, it is treated as
-"insert before" the existing record and the existing record's ordering is
-increased by one; this reordering process is recursive until there are no more
-ordering value conflicts.$DOC$;
+    var_functional_type.column_name := 'functional_type';
+    var_functional_type.description :=
+$DOC$Indicates how the system will interpret the IP address rule.
+$DOC$;
+    var_functional_type.general_usage :=
+$DOC$The valid functional types are:
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_global_network_rules.functional_type IS
-$DOC$Indicates how the system will interpret the IP address rule.  The valid
-functional types are:
+  * `allow` - the rule is explicitly allowing an IP address, network, or range
+    of IP addresses to continue in the authentication process.
 
-    * `allow` - the rule is explicitly allowing an IP address, network, or
-    range of IP addresses to continue in the authentication process.
+  * `deny` - the rule is explicitly rejecting an IP address, network, or range
+    of IP addresses from the authentication process.$DOC$;
 
-    * `deny` - the rule is explicitly rejecting an IP address, network, or
-    range of IP addresses from the authentication process.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_global_network_rules.ip_host_or_network IS
+    var_ip_host_or_network.column_name := 'ip_host_or_network';
+    var_ip_host_or_network.description :=
 $DOC$An IPv4 or IPv6 IP address or network block expressed using standard CIDR
-notation.
+notation.$DOC$;
 
-If this value is given you should not provide an IP host address range in the
+    var_ip_host_or_network.general_usage :=
+$DOC$If this value is given you should not provide an IP host address range in the
 ip_host_range_lower/ip_host_range_upper columns.  Providing range column values
 when this column is not null will result in a consistency check failure.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_global_network_rules.ip_host_range_lower IS
+    var_ip_host_range_lower.column_name := 'ip_host_range_lower';
+    var_ip_host_range_lower.description :=
 $DOC$An IPv4 or IPv6 IP host address which is the lower bound (inclusive) of a
-range of IP addresses.
+range of IP addresses.$DOC$;
 
-If the value in this column is not null a value must also be provided for the
+    var_ip_host_range_lower.general_usage :=
+$DOC$If the value in this column is not null a value must also be provided for the
 ip_host_range_upper column.  Both ip_host_range_lower and ip_host_range_upper
 must be of the same IP family (IPv4 or IPv6).$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_global_network_rules.ip_host_range_upper IS
+    var_ip_host_range_upper.column_name := 'ip_host_range_upper';
+    var_ip_host_range_upper.description :=
 $DOC$An IPv4 or IPv6 IP host address which is the upper bound (inclusive) of a
-range of IP addresses.
+range of IP addresses.$DOC$;
 
-If the value in this column is not null a value must also be provided for the
+    var_ip_host_range_upper.general_usage :=
+$DOC$If the value in this column is not null a value must also be provided for the
 ip_host_range_lower column.  Both ip_host_range_lower and ip_host_range_upper
 must be of the same IP family (IPv4 or IPv6).$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_global_network_rules.diag_timestamp_created IS
-$DOC$The database server date/time when the transaction which created the record
-started.$DOC$;
+    var_comments_config.columns :=
+        ARRAY [
+              var_ordering
+            , var_functional_type
+            , var_ip_host_or_network
+            , var_ip_host_range_lower
+            , var_ip_host_range_upper
+            ]::ms_syst_priv.comments_config_table_column[];
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_global_network_rules.diag_role_created IS
-$DOC$The database role which created the record.$DOC$;
+    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_global_network_rules.diag_timestamp_modified IS
-$DOC$The database server date/time when the transaction which modified the record
-started.  This field will be the same as diag_timestamp_created for inserted
-records.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_global_network_rules.diag_wallclock_modified IS
-$DOC$The database server date/time at the moment the record was actually modified.
-For long running transactions this time may be significantly later than the
-value of diag_timestamp_modified.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_global_network_rules.diag_role_modified IS
-$DOC$The database role which modified the record.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_global_network_rules.diag_row_version IS
-$DOC$The current version of the row.  The value here indicates how many actual
-data changes have been made to the row.  If an update of the row leaves all data
-fields the same, disregarding the updates to the diag_* columns, the row version
-is not updated, nor are any updates made to the other diag_* columns other than
-diag_update_count.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_global_network_rules.diag_update_count IS
-$DOC$Records the number of times the record has been updated regardless as to if
-the update actually changed any data.  In this way needless or redundant record
-updates can be found.  This row starts at 0 and therefore may be the same as the
-diag_row_version - 1.$DOC$;
+END;
+$DOCUMENTATION$;

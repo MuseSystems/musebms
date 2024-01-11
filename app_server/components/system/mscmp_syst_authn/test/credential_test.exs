@@ -15,6 +15,7 @@ defmodule CredentialTest do
 
   alias MscmpSystAuthn.Impl
 
+  @moduletag :unit
   @moduletag :capture_log
 
   test "Can retrieve Credential Type by Internal Name" do

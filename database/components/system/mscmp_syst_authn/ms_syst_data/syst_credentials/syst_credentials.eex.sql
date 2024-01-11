@@ -90,96 +90,99 @@ CREATE CONSTRAINT TRIGGER b50_trig_a_d_syst_credentials_delete_identity
     FOR EACH ROW WHEN ( old.credential_for_identity_id IS NOT NULL)
     EXECUTE PROCEDURE ms_syst_data.trig_a_d_syst_credentials_delete_identity();
 
-COMMENT ON
-    TABLE ms_syst_data.syst_credentials IS
-$DOC$Hosts the credentials by which a user or external system will prove its identity.
-Note that not all credential types are available for authentication with all
-identity types.$DOC$;
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Table
+    var_comments_config ms_syst_priv.comments_config_table;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_credentials.id IS
-$DOC$The record's primary key.  The definitive identifier of the record in the
-system.$DOC$;
+    -- Columns
+    var_access_account_id          ms_syst_priv.comments_config_table_column;
+    var_credential_type_id         ms_syst_priv.comments_config_table_column;
+    var_credential_for_identity_id ms_syst_priv.comments_config_table_column;
+    var_credential_data            ms_syst_priv.comments_config_table_column;
+    var_last_updated               ms_syst_priv.comments_config_table_column;
+    var_force_reset                ms_syst_priv.comments_config_table_column;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_credentials.access_account_id IS
-$DOC$The access account for which the credential is to be used.$DOC$;
+BEGIN
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_credentials.credential_type_id IS
-$DOC$The kind of credential that the record represents.  Note that the behavior and
-use cases of the credential may have specific processing and handling
-requirements based on the functional type of the credential type.$DOC$;
+    --
+    -- Table Config
+    --
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_credentials.credential_for_identity_id IS
-$DOC$When an access account identity is created for either identity validation or
-access account recovery, a single use identity is created as well as a single
-use credential.  In this specific case, the one time use credential and the one
-time use identity are linked.  This is especially important in recovery
+    var_comments_config.table_schema := 'ms_syst_data';
+    var_comments_config.table_name   := 'syst_credentials';
+
+    var_comments_config.description :=
+$DOC$Hosts the Credentials by which a user or external system will prove its
+Identity.$DOC$;
+    var_comments_config.general_usage :=
+$DOC$Note that not all Credential types are available for authentication with all
+Identity types.$DOC$;
+
+    --
+    -- Column Configs
+    --
+
+    var_access_account_id.column_name := 'access_account_id';
+    var_access_account_id.description :=
+$DOC$The Access Account for which the Credential is to be used.$DOC$;
+
+    var_credential_type_id.column_name := 'credential_type_id';
+    var_credential_type_id.description :=
+$DOC$The kind of Credential that the record represents.$DOC$;
+    var_credential_type_id.general_usage :=
+$DOC$Note that the behavior and use cases of the Credential may have specific
+processing and handling requirements based on the Functional Type of the
+Credential ype.$DOC$;
+
+    var_credential_for_identity_id.column_name := 'credential_for_identity_id';
+    var_credential_for_identity_id.description :=
+$DOC$When an Access Account Identity is created for either Identity Validation or
+Access Account recovery, a single use Identity is created as well as a single
+use Credential.  In this specific case, the one time use Credential and the one
+time use Identity are linked.  This is especially important in recovery
 scenarios to ensure that only the correct recovery communication can recover the
-account.  This field identifies the which identity is associated with the
-credential.
+account.  This field identifies the which Identity is associated with the
+Credential.
 
-For regular use identities, there are no special credential requirements that
+For regular use Identities, there are no special Credential requirements that
 would be needed to for a link and the value in this column should be null.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_credentials.credential_data IS
-$DOC$The actual data which supports verifying the presented identity in relation to
-the access account.$DOC$;
+    var_credential_data.column_name := 'credential_data';
+    var_credential_data.description :=
+$DOC$The actual data which supports verifying the presented Identity in relation to
+the Access Account.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_credentials.last_updated IS
-$DOC$For credential types where rules regarding updating may apply, such as common
-passwords, this column indicates when the credential was last updated (timestamp
-of last password change, for example).   This field is explicitly not for dating
-trivial or administrative changes which don't actually materially change the
-credential data; please consult the appropriate diagnostic fields for those use
-cases.$DOC$;
+    var_last_updated.column_name := 'last_updated';
+    var_last_updated.description :=
+$DOC$For Credential types where rules regarding updating may apply, such as common
+passwords, this column indicates when the Credential was last updated (timestamp
+of last password change, for example).$DOC$;
+    var_last_updated.general_usage :=
+$DOC$This field is explicitly not for dating trivial or administrative changes
+which don't actually materially change the Credential data; please consult the
+appropriate diagnostic fields for those use cases.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_credentials.force_reset IS
-$DOC$Indicates whether or not certain credential types, such as passwords, must be
-updated.  When NOT NULL, the user must update their credential on the next
-login; when NULL updating the credential is not being administratively forced.$DOC$;
+    var_force_reset.column_name := 'force_reset';
+    var_force_reset.description :=
+$DOC$Indicates whether or not certain Credential types, such as passwords, must be
+updated.$DOC$;
+    var_force_reset.general_usage :=
+$DOC$When `NOT NULL`, the user must update their Credential on the next login; when
+`NULL` updating the Credential is not being administratively forced.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_credentials.diag_timestamp_created IS
-$DOC$The database server date/time when the transaction which created the record
-started.$DOC$;
+    var_comments_config.columns :=
+        ARRAY [
+              var_access_account_id
+            , var_credential_type_id
+            , var_credential_for_identity_id
+            , var_credential_data
+            , var_last_updated
+            , var_force_reset
+            ]::ms_syst_priv.comments_config_table_column[];
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_credentials.diag_role_created IS
-$DOC$The database role which created the record.$DOC$;
+    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_credentials.diag_timestamp_modified IS
-$DOC$The database server date/time when the transaction which modified the record
-started.  This field will be the same as diag_timestamp_created for inserted
-records.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_credentials.diag_wallclock_modified IS
-$DOC$The database server date/time at the moment the record was actually modified.
-For long running transactions this time may be significantly later than the
-value of diag_timestamp_modified.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_credentials.diag_role_modified IS
-$DOC$The database role which modified the record.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_credentials.diag_row_version IS
-$DOC$The current version of the row.  The value here indicates how many actual
-data changes have been made to the row.  If an update of the row leaves all data
-fields the same, disregarding the updates to the diag_* columns, the row version
-is not updated, nor are any updates made to the other diag_* columns other than
-diag_update_count.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_credentials.diag_update_count IS
-$DOC$Records the number of times the record has been updated regardless as to if
-the update actually changed any data.  In this way needless or redundant record
-updates can be found.  This row starts at 0 and therefore may be the same as the
-diag_row_version - 1.$DOC$;
+END;
+$DOCUMENTATION$;

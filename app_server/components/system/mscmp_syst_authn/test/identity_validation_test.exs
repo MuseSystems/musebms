@@ -24,6 +24,7 @@ defmodule IdentityValidationTest do
 
   alias MscmpSystDb.DbTypes
 
+  @moduletag :unit
   @moduletag :capture_log
 
   test "Request Identity Validation by target Identity ID" do

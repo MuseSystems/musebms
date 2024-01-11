@@ -24,6 +24,7 @@ defmodule IdentityRecoveryTest do
 
   alias MscmpSystDb.DbTypes
 
+  @moduletag :unit
   @moduletag :capture_log
 
   test "Can successfully Request Identity Recovery" do

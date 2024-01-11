@@ -22,6 +22,7 @@ defmodule IdentityApiTokenTest do
 
   alias MscmpSystAuthn.Impl
 
+  @moduletag :unit
   @moduletag :capture_log
 
   test "Can create API Token Identity" do

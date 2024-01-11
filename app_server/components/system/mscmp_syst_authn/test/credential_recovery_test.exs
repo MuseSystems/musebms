@@ -22,6 +22,7 @@ defmodule CredentialRecoveryTest do
 
   alias MscmpSystAuthn.Impl
 
+  @moduletag :unit
   @moduletag :capture_log
 
   test "Can confirm Recovery Credential" do

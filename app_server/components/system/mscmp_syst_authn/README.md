@@ -62,10 +62,11 @@ using an identifier known to the Access Account holder.  There are different
 identifiers and methods of identification depending on the specific
 authentication use case being supported.
 
-Identifiers are unique to the Owner/Access Account combination.  All Unowned
-Access Accounts are considered as an Owner group for this purpose.  This means
-that the Owner of an Access Account must be known at authentication time since
-an identifier may be duplicated between different Owners.
+Identifiers of the same Identifier Type are unique to the Owner/Access Account
+combination.  All Unowned Access Accounts are considered as being in the same
+Owner group for this purpose.  This means that the Owner of an Access Account
+must be known at authentication time since an identifier may be duplicated
+between different Owners.
 
 The supported basic Identity Types used for regular authentication are:
 

@@ -90,105 +90,6 @@ CREATE CONSTRAINT TRIGGER a50_trig_a_u_identity_types_enum_item_check
             ms_syst_priv.trig_a_iu_enum_item_check(
                 'identity_types', 'identity_type_id');
 
-COMMENT ON
-    TABLE ms_syst_data.syst_identities IS
-$DOC$The identities with which access accounts are identified to the system.  The
-most common example of an identity would be a user name such as an email
-address.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_identities.id IS
-$DOC$The record's primary key.  The definitive identifier of the record in the
-system.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_identities.access_account_id IS
-$DOC$The ID of the access account to be identified the identifier record.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_identities.identity_type_id IS
-$DOC$The kind of identifier being described by the record.  Note that this value
-influences the kind of credentials that can be used to complete the
-authentication process.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_identities.account_identifier IS
-$DOC$The actual identifier which identifies a user or system to the system.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_identities.validated IS
-$DOC$The timestamp at which the identity was validated for use.  Depending on the
-requirements of the identity functional type, the timestamp here may be set as
-the time of the identity creation or it may set when the access account holder
-actually makes a formal verification.  A null value here indicates that the
-identity is not validated by the access account holder and is not able to be
-used for authentication to the system.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_identities.validates_identity_id IS
-$DOC$Each identity requiring validation will require its own validation.  Since
-validation requests are also single use identities, we need to know which
-permanent identifier is being validate.  This column points to the identifier
-that is being validated.  When the current identifier is not being used for
-validation, this field is null.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_identities.validation_requested IS
-$DOC$The timestamp on which the validation request was issued to the access account
-holder.  This value will be null if the identity did not require validation.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_identities.identity_expires IS
-$DOC$The timestamp at which the identity record expires.  For validation and
-recovery identities this would be the time of validation/recovery request
-expiration.  For perpetual identity types, this value will be NULL.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_identities.external_name IS
-$DOC$An optional external identifier for use in user displays and similar scenarios.
-This value is not unique and not suitable for anything more than informal record
-identification by the user.  Some identity types may record a default value
-automatically in this column.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_identities.diag_timestamp_created IS
-$DOC$The database server date/time when the transaction which created the record
-started.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_identities.diag_role_created IS
-$DOC$The database role which created the record.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_identities.diag_timestamp_modified IS
-$DOC$The database server date/time when the transaction which modified the record
-started.  This field will be the same as diag_timestamp_created for inserted
-records.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_identities.diag_wallclock_modified IS
-$DOC$The database server date/time at the moment the record was actually modified.
-For long running transactions this time may be significantly later than the
-value of diag_timestamp_modified.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_identities.diag_role_modified IS
-$DOC$The database role which modified the record.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_identities.diag_row_version IS
-$DOC$The current version of the row.  The value here indicates how many actual
-data changes have been made to the row.  If an update of the row leaves all data
-fields the same, disregarding the updates to the diag_* columns, the row version
-is not updated, nor are any updates made to the other diag_* columns other than
-diag_update_count.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_identities.diag_update_count IS
-$DOC$Records the number of times the record has been updated regardless as to if
-the update actually changed any data.  In this way needless or redundant record
-updates can be found.  This row starts at 0 and therefore may be the same as the
-diag_row_version - 1.$DOC$;
 
 CREATE INDEX syst_identities_account_type_identifier_idx
     ON ms_syst_data.syst_identities USING btree
@@ -196,3 +97,106 @@ CREATE INDEX syst_identities_account_type_identifier_idx
 
 CREATE INDEX syst_identities_access_account_idx
     ON ms_syst_data.syst_identities USING btree ( access_account_id );
+
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Table
+    var_comments_config ms_syst_priv.comments_config_table;
+
+    -- Columns
+    var_access_account_id     ms_syst_priv.comments_config_table_column;
+    var_identity_type_id      ms_syst_priv.comments_config_table_column;
+    var_account_identifier    ms_syst_priv.comments_config_table_column;
+    var_validated             ms_syst_priv.comments_config_table_column;
+    var_validates_identity_id ms_syst_priv.comments_config_table_column;
+    var_validation_requested  ms_syst_priv.comments_config_table_column;
+    var_identity_expires      ms_syst_priv.comments_config_table_column;
+
+BEGIN
+
+    --
+    -- Table Config
+    --
+
+    var_comments_config.table_schema := 'ms_syst_data';
+    var_comments_config.table_name   := 'syst_identities';
+
+    var_comments_config.description :=
+$DOC$The identities with which access accounts are identified to the system.  The
+most common example of an identity would be a user name such as an email
+address.$DOC$;
+
+    --
+    -- Column Configs
+    --
+
+    var_access_account_id.column_name := 'access_account_id';
+    var_access_account_id.description :=
+$DOC$The ID of the access account to be identified the identifier record.$DOC$;
+
+    var_identity_type_id.column_name := 'identity_type_id';
+    var_identity_type_id.description :=
+$DOC$The kind of identifier being described by the record.$DOC$;
+    var_identity_type_id.general_usage :=
+$DOC$Note that this value influences the kind of credentials that can be used to
+complete the authentication process.$DOC$;
+
+    var_account_identifier.column_name   := 'account_identifier';
+    var_account_identifier.description   :=
+$DOC$The actual Identifier which identifies a user or system to the system.$DOC$;
+    var_account_identifier.general_usage :=
+$DOC$Identifiers of the same Identifier Type are unique to the Owner/Access
+Account combination. All Unowned Access Accounts are considered as being in the
+same Owner group for this purpose.$DOC$;
+
+    var_validated.column_name := 'validated';
+    var_validated.description :=
+$DOC$The timestamp at which the identity was validated for use.$DOC$;
+    var_validated.general_usage :=
+$DOC$  Depending on the requirements of the identity functional type, the timestamp
+here may be set as the time of the identity creation or it may set when the
+access account holder actually makes a formal verification.  A null value here
+indicates that the identity is not validated by the access account holder and is
+not able to be used for authentication to the system.$DOC$;
+
+    var_validates_identity_id.column_name := 'validates_identity_id';
+    var_validates_identity_id.description :=
+$DOC$Each identity requiring validation will require its own validation.$DOC$;
+    var_validates_identity_id.general_usage :=
+$DOC$Since validation requests are also single use identities, we need to know which
+permanent identifier is being validate.  This column points to the identifier
+that is being validated.  When the current identifier is not being used for
+validation, this field is null.$DOC$;
+
+    var_validation_requested.column_name := 'validation_requested';
+    var_validation_requested.description :=
+$DOC$The timestamp on which the validation request was issued to the access account
+holder.$DOC$;
+    var_validation_requested.general_usage :=
+        $DOC$This value will be null if the identity did not require validation.$DOC$;
+
+
+    var_identity_expires.column_name := 'identity_expires';
+    var_identity_expires.description :=
+$DOC$The timestamp at which the identity record expires.$DOC$;
+    var_identity_expires.general_usage :=
+$DOC$For validation and recovery identities this would be the time of
+validation/recovery request expiration.  For perpetual identity types, this
+value will be NULL.$DOC$;
+
+    var_comments_config.columns :=
+        ARRAY [
+              var_access_account_id
+            , var_identity_type_id
+            , var_account_identifier
+            , var_validated
+            , var_validates_identity_id
+            , var_validation_requested
+            , var_identity_expires
+            ]::ms_syst_priv.comments_config_table_column[];
+
+    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+
+END;
+$DOCUMENTATION$;
