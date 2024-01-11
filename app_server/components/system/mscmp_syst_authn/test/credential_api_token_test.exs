@@ -22,6 +22,7 @@ defmodule CredentialApiTokenTest do
 
   alias MscmpSystAuthn.Impl
 
+  @moduletag :unit
   @moduletag :capture_log
 
   test "Can Confirm API Token Credential" do

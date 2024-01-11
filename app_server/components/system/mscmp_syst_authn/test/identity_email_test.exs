@@ -22,6 +22,7 @@ defmodule IdentityEmailTest do
 
   alias MscmpSystAuthn.Impl
 
+  @moduletag :unit
   @moduletag :capture_log
 
   test "Can validate Email Address format" do

@@ -15,6 +15,7 @@ defmodule HashTest do
 
   alias MscmpSystAuthn.Impl
 
+  @moduletag :unit
   @moduletag :capture_log
 
   test "Can Create and Verify a Credential Hash" do

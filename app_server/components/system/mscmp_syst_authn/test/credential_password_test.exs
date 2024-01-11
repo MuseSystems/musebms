@@ -22,6 +22,7 @@ defmodule CredentialPasswordTest do
 
   alias MscmpSystAuthn.Impl
 
+  @moduletag :unit
   @moduletag :capture_log
 
   test "Can test Credential by Access Account ID" do

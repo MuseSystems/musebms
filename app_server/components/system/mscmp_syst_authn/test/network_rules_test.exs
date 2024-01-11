@@ -19,6 +19,7 @@ defmodule NetworkRulesTest do
   alias MscmpSystAuthn.Impl
   alias MscmpSystDb.DbTypes
 
+  @moduletag :unit
   @moduletag :capture_log
 
   test "Can determine if host is disallowed or not" do

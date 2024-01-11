@@ -23,15 +23,45 @@ CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
     BEFORE INSERT OR UPDATE ON ms_syst_data.syst_disallowed_passwords
     FOR EACH ROW EXECUTE PROCEDURE ms_syst_priv.trig_b_iu_set_diagnostic_columns();
 
-COMMENT ON
-    TABLE ms_syst_data.syst_disallowed_passwords IS
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Table
+    var_comments_config ms_syst_priv.comments_config_table;
+
+    -- Columns
+    var_password_hash ms_syst_priv.comments_config_table_column;
+
+BEGIN
+
+    --
+    -- Table Config
+    --
+
+    var_comments_config.table_schema    := 'ms_syst_data';
+    var_comments_config.table_name      := 'syst_disallowed_passwords';
+    var_comments_config.generate_common := FALSE;
+
+    var_comments_config.description :=
 $DOC$A list of hashed passwords which are disallowed for use in the system when the
 password rule to disallow common/known compromised passwords is enabled.
 Currently the expectation is that common passwords will be stored as sha1
 hashes.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_disallowed_passwords.password_hash IS
+    --
+    -- Column Configs
+    --
+
+    var_password_hash.column_name := 'password_hash';
+    var_password_hash.description :=
 $DOC$The SHA1 hash of the disallowed password.  The reason for using SHA1 here is
 that it is compatible with the "Have I Been Pwned" data and API products.  We
 also get some reasonable obscuring of possibly private data.$DOC$;
+
+    var_comments_config.columns :=
+        ARRAY [ var_password_hash ]::ms_syst_priv.comments_config_table_column[];
+
+    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+
+END;
+$DOCUMENTATION$;

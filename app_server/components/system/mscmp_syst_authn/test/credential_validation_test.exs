@@ -22,6 +22,7 @@ defmodule CredentialValidationTest do
 
   alias MscmpSystAuthn.Impl
 
+  @moduletag :unit
   @moduletag :capture_log
 
   test "Can Confirm Validation Credential" do

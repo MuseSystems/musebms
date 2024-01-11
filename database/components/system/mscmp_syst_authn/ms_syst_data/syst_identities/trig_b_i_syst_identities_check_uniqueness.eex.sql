@@ -15,10 +15,7 @@ $BODY$
 -- muse.information@musesystems.com  :: https://muse.systems
 
 BEGIN
-    -- TODO: This trigger may be replaced by a unique index once PostgreSQL 15
-    --       becomes our standard.  That version will allow the option to treat
-    --       null values as a single value rather than each null distinct from
-    --       all others, which matches our resolution scope definition here.
+
     IF
         exists( SELECT
                     TRUE

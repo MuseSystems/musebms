@@ -44,122 +44,68 @@ CREATE TRIGGER a50_trig_i_d_syst_access_account_instance_assocs
     INSTEAD OF DELETE ON ms_syst.syst_access_account_instance_assocs
     FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_d_syst_access_account_instance_assocs();
 
-COMMENT ON
-    VIEW ms_syst.syst_access_account_instance_assocs IS
-$DOC$Associates access accounts with the instances for which they are allowed to
-authenticate to.  Note that being able to authenticate to an instance is not the
-same as having authorized rights within the instance; authorization is handled
-by the instance directly.
+DO
+$DOCUMENTATION$
+DECLARE
+    -- View
+    var_view_config ms_syst_priv.comments_config_apiview;
 
-This API View allows the application to read and maintain the data according to
-well defined application business rules.  Using this API view for updates to
-data is the preferred method of data maintenance in the course of normal usage.
+    -- View Columns
+    var_access_account_id   ms_syst_priv.comments_config_apiview_column;
+    var_instance_id         ms_syst_priv.comments_config_apiview_column;
+    var_access_granted      ms_syst_priv.comments_config_apiview_column;
+    var_invitation_issued   ms_syst_priv.comments_config_apiview_column;
+    var_invitation_expires  ms_syst_priv.comments_config_apiview_column;
+    var_invitation_declined ms_syst_priv.comments_config_apiview_column;
 
-Only user maintainable values may be maintained via this API.  System created or
-maintained data is not maintainable via this view.  Attempts at invalid data
-maintenance via this API may result in the invalid changes being ignored or may
-raise an exception.$DOC$;
+BEGIN
 
-COMMENT ON
-    COLUMN ms_syst.syst_access_account_instance_assocs.id IS
-$DOC$The record's primary key.  The definitive identifier of the record in the
-system.
+    --
+    -- API View Config
+    --
 
-This value is read only from this API view.$DOC$;
+    var_view_config.table_schema := 'ms_syst_data';
+    var_view_config.table_name   := 'syst_access_account_instance_assocs';
+    var_view_config.view_schema  := 'ms_syst';
+    var_view_config.view_name    := 'syst_access_account_instance_assocs';
 
-COMMENT ON
-    COLUMN ms_syst.syst_access_account_instance_assocs.access_account_id IS
-$DOC$The access account which is being granted authentication rights to the given
-instance.
+    --
+    -- Column Configs
+    --
 
-This value may only be set on INSERT via this API view.  UPDATEs to this value
-are not allowed after record creation.$DOC$;
+    var_access_account_id.column_name      := 'access_account_id';
+    var_access_account_id.required         := TRUE;
+    var_access_account_id.user_update      := FALSE;
+    var_access_account_id.supplemental     :=
+$DOC$This column is part of a composite key along with column `instance_id`.  The
+combined values of `access_account_id` and `instance_id` must be unique.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst.syst_access_account_instance_assocs.instance_id IS
-$DOC$The identity of the instance to which authentication rights is being granted.
+    var_instance_id.column_name      := 'instance_id';
+    var_instance_id.required         := TRUE;
+    var_instance_id.user_update      := FALSE;
+    var_instance_id.supplemental     :=
+$DOC$This column is part of a composite key along with column `access_account_id`.
+The combined values of `access_account_id` and `instance_id` must be unique.$DOC$;
 
-This value may only be set on INSERT via this API view.  UPDATEs to this value
-are not allowed after record creation.$DOC$;
+    var_access_granted.column_name      := 'access_granted';
 
-COMMENT ON
-    COLUMN ms_syst.syst_access_account_instance_assocs.access_granted IS
-$DOC$The timestamp at which access to the instance was granted and active.  If
-the access did not require the access invitation process, this value will
-typically reflect the creation timestamp of the record.  If the invitation was
-required, it will reflect the time when the access account holder actually
-accepted the invitation to access the instance.$DOC$;
+    var_invitation_issued.column_name      := 'invitation_issued';
 
-COMMENT ON
-    COLUMN ms_syst.syst_access_account_instance_assocs.invitation_issued IS
-$DOC$When inviting unowned, independent access accounts such as might be used by an
-external bookkeeper, the grant of access by the instance owner is
-not immediately effective but must also be approved by the access account holder
-being granted access.  The timestamp in this column indicates when the
-invitation to connect to the instance was issued.
+    var_invitation_expires.column_name      := 'invitation_expires';
 
-If the value in this column is null, the assumption is that no invitation was
-required to grant the access to the access account.$DOC$;
+    var_invitation_declined.column_name      := 'invitation_declined';
 
-COMMENT ON
-    COLUMN ms_syst.syst_access_account_instance_assocs.invitation_expires IS
-$DOC$The timestamp at which the invitation to access a given instance expires.$DOC$;
+    var_view_config.columns :=
+        ARRAY [
+              var_access_account_id
+            , var_instance_id
+            , var_access_granted
+            , var_invitation_issued
+            , var_invitation_expires
+            , var_invitation_declined
+            ]::ms_syst_priv.comments_config_apiview_column[];
 
-COMMENT ON
-    COLUMN ms_syst.syst_access_account_instance_assocs.invitation_declined IS
-$DOC$The timestamp at which the access account holder explicitly declined the
-invitation to access the given instance.$DOC$;
+    PERFORM ms_syst_priv.generate_comments_apiview( var_view_config );
 
-COMMENT ON
-    COLUMN ms_syst.syst_access_account_instance_assocs.diag_timestamp_created IS
-$DOC$The database server date/time when the transaction which created the record
-started.
-
-This value is read only from this API view.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_access_account_instance_assocs.diag_role_created IS
-$DOC$The database role which created the record.
-
-This value is read only from this API view.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_access_account_instance_assocs.diag_timestamp_modified IS
-$DOC$The database server date/time when the transaction which modified the record
-started.  This field will be the same as diag_timestamp_created for inserted
-records.
-
-This value is read only from this API view.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_access_account_instance_assocs.diag_wallclock_modified IS
-$DOC$The database server date/time at the moment the record was actually modified.
-For long running transactions this time may be significantly later than the
-value of diag_timestamp_modified.
-
-This value is read only from this API view.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_access_account_instance_assocs.diag_role_modified IS
-$DOC$The database role which modified the record.
-
-This value is read only from this API view.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_access_account_instance_assocs.diag_row_version IS
-$DOC$The current version of the row.  The value here indicates how many actual
-data changes have been made to the row.  If an update of the row leaves all data
-fields the same, disregarding the updates to the diag_* columns, the row version
-is not updated, nor are any updates made to the other diag_* columns other than
-diag_update_count.
-
-This value is read only from this API view.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_access_account_instance_assocs.diag_update_count IS
-$DOC$Records the number of times the record has been updated regardless as to if
-the update actually changed any data.  In this way needless or redundant record
-updates can be found.  This row starts at 0 and therefore may be the same as the
-diag_row_version - 1.
-
-This value is read only from this API view.$DOC$;
+END;
+$DOCUMENTATION$;

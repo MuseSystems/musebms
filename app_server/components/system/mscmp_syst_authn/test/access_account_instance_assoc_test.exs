@@ -15,6 +15,7 @@ defmodule AccessAccountInstanceAssocTest do
 
   import Ecto.Query
 
+  @moduletag :unit
   @moduletag :capture_log
 
   test "Can invite Access Account to Instance Immediate Acceptance once" do

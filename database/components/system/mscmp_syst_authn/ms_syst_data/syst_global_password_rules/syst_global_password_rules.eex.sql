@@ -76,121 +76,132 @@ CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
     BEFORE INSERT OR UPDATE ON ms_syst_data.syst_global_password_rules
     FOR EACH ROW EXECUTE PROCEDURE ms_syst_priv.trig_b_iu_set_diagnostic_columns();
 
-COMMENT ON
-    TABLE ms_syst_data.syst_global_password_rules IS
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Table
+    var_comments_config ms_syst_priv.comments_config_table;
+
+    -- Columns
+    var_password_length        ms_syst_priv.comments_config_table_column;
+    var_max_age                ms_syst_priv.comments_config_table_column;
+    var_require_upper_case     ms_syst_priv.comments_config_table_column;
+    var_require_lower_case     ms_syst_priv.comments_config_table_column;
+    var_require_numbers        ms_syst_priv.comments_config_table_column;
+    var_require_symbols        ms_syst_priv.comments_config_table_column;
+    var_disallow_recently_used ms_syst_priv.comments_config_table_column;
+    var_disallow_compromised   ms_syst_priv.comments_config_table_column;
+    var_require_mfa            ms_syst_priv.comments_config_table_column;
+    var_allowed_mfa_types      ms_syst_priv.comments_config_table_column;
+
+BEGIN
+
+    --
+    -- Table Config
+    --
+
+    var_comments_config.table_schema := 'ms_syst_data';
+    var_comments_config.table_name   := 'syst_global_password_rules';
+
+    var_comments_config.description :=
 $DOC$Establishes a minimum standard for password credential complexity globally.
 Individual Owners may define more restrictive complexity requirements for their
 own accounts and instances, but may not weaken those defined globally.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_global_password_rules.id IS
-$DOC$The record's primary key.  The definitive identifier of the record in the
-system.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_global_password_rules.password_length IS
+    --
+    -- Column Configs
+    --
+    var_password_length.column_name := 'password_length';
+    var_password_length.description :=
 $DOC$An integer range of acceptable password lengths with the lower bound
 representing the minimum length and the upper bound representing the maximum
-password length.   Length is determined on a per character basis, not a per
-byte basis.
-
-A zero or negative value on either bound indicates that the bound check is
+password length.$DOC$;
+        var_password_length.general_usage :=
+$DOC$A zero or negative value on either bound indicates that the bound check is
 disabled.  Note that disabling a bound may still result in a bounds check using
-the application defined default for the bound.$DOC$;
+the application defined default for the bound.
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_global_password_rules.max_age IS
+Length is determined on a per character basis, not a per byte basis.$DOC$;
+
+    var_max_age.column_name := 'max_age';
+    var_max_age.description :=
 $DOC$An interval indicating the maximum allowed age of a password.  Any password
 older than this interval will typically result in the user being forced to
 update their password prior to being allowed access to other functionality. The
-specific user workflow will depend on the implementation details of application.
+specific user workflow will depend on the implementation details of application.$DOC$;
+    var_max_age.general_usage :=
+$DOC$An interval of 0 time disables the check and passwords may be of any age.$DOC$;
 
-An interval of 0 time disables the check and passwords may be of any age.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_global_password_rules.require_upper_case IS
+    var_require_upper_case.column_name := 'require_upper_case';
+    var_require_upper_case.description :=
 $DOC$Establishes the minimum number of upper case characters that are required to be
-present in the password.  Setting this value to 0 disables the requirement for
-upper case characters.$DOC$;
+present in the password.$DOC$;
+    var_require_upper_case.general_usage :=
+$DOC$Setting this value to 0 disables the requirement for upper case characters.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_global_password_rules.require_lower_case IS
+    var_require_lower_case.column_name := 'require_lower_case';
+    var_require_lower_case.description :=
 $DOC$Establishes the minimum number of lower case characters that are required to be
-present in the password.  Setting this value to 0 disables the requirement for
-lower case characters.$DOC$;
+present in the password.$DOC$;
+    var_require_lower_case.description :=
+$DOC$Setting this value to 0 disables the requirement for lower case characters.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_global_password_rules.require_numbers IS
+    var_require_numbers.column_name := 'require_numbers';
+    var_require_numbers.description :=
 $DOC$Establishes the minimum number of numeric characters that are required to be
-present in the password.  Setting this value to 0 disables the requirement for
-numeric characters.$DOC$;
+present in the password.$DOC$;
+    var_require_numbers.general_usage :=
+$DOC$Setting this value to 0 disables the requirement for numeric characters.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_global_password_rules.require_symbols IS
+    var_require_symbols.column_name := 'require_symbols';
+    var_require_symbols.description :=
 $DOC$Establishes the minimum number of non-alphanumeric characters that are required
-to be present in the password.  Setting this value to 0 disables the requirement
-for non-alphanumeric characters.$DOC$;
+to be present in the password.$DOC$;
+    var_require_symbols.general_usage :=
+$DOC$Setting this value to 0 disables the requirement for non-alphanumeric
+characters.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_global_password_rules.disallow_recently_used IS
+    var_disallow_recently_used.column_name := 'disallow_recently_used';
+    var_disallow_recently_used.description :=
 $DOC$When passwords are changed, this value determines how many prior passwords
-should be checked in order to prevent password re-use.  Setting this value to
-zero or a negative number will disable the recently used password check.$DOC$;
+should be checked in order to prevent password re-use.$DOC$;
+    var_disallow_recently_used.general_usage :=
+$DOC$Setting this value to zero or a negative number will disable the recently used
+password check.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_global_password_rules.disallow_compromised IS
+    var_disallow_compromised.column_name := 'disallow_compromised';
+    var_disallow_compromised.description :=
 $DOC$When true new passwords submitted through the change password process will be
 checked against a list of common passwords and passwords known to have been
-compromised and disallow their use as password credentials in the system.
-
-When false submitted passwords are not checked as being common or against known
+compromised and disallow their use as password credentials in the system.$DOC$;
+        var_disallow_compromised.general_usage :=
+$DOC$When false submitted passwords are not checked as being common or against known
 compromised passwords; such passwords would therefore be usable in the system.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_global_password_rules.require_mfa IS
+    var_require_mfa.column_name := 'require_mfa';
+    var_require_mfa.description :=
 $DOC$When true, an approved multi-factor authentication method must be used in
 addition to the password credential.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_global_password_rules.allowed_mfa_types IS
+    var_allowed_mfa_types.column_name := 'allowed_mfa_types';
+    var_allowed_mfa_types.description :=
 $DOC$A array of the approved multi-factor authentication methods.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_global_password_rules.diag_timestamp_created IS
-$DOC$The database server date/time when the transaction which created the record
-started.$DOC$;
+    var_comments_config.columns :=
+        ARRAY [
+              var_password_length
+            , var_max_age
+            , var_require_upper_case
+            , var_require_lower_case
+            , var_require_numbers
+            , var_require_symbols
+            , var_disallow_recently_used
+            , var_disallow_compromised
+            , var_require_mfa
+            , var_allowed_mfa_types
+            ]::ms_syst_priv.comments_config_table_column[];
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_global_password_rules.diag_role_created IS
-$DOC$The database role which created the record.$DOC$;
+    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_global_password_rules.diag_timestamp_modified IS
-$DOC$The database server date/time when the transaction which modified the record
-started.  This field will be the same as diag_timestamp_created for inserted
-records.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_global_password_rules.diag_wallclock_modified IS
-$DOC$The database server date/time at the moment the record was actually modified.
-For long running transactions this time may be significantly later than the
-value of diag_timestamp_modified.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_global_password_rules.diag_role_modified IS
-$DOC$The database role which modified the record.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_global_password_rules.diag_row_version IS
-$DOC$The current version of the row.  The value here indicates how many actual
-data changes have been made to the row.  If an update of the row leaves all data
-fields the same, disregarding the updates to the diag_* columns, the row version
-is not updated, nor are any updates made to the other diag_* columns other than
-diag_update_count.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_global_password_rules.diag_update_count IS
-$DOC$Records the number of times the record has been updated regardless as to if
-the update actually changed any data.  In this way needless or redundant record
-updates can be found.  This row starts at 0 and therefore may be the same as the
-diag_row_version - 1.$DOC$;
+END;
+$DOCUMENTATION$;

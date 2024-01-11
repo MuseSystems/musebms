@@ -29,18 +29,45 @@ CREATE TRIGGER a50_trig_i_d_syst_disallowed_passwords
     INSTEAD OF DELETE ON ms_syst.syst_disallowed_passwords
     FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_d_syst_disallowed_passwords();
 
-COMMENT ON
-    VIEW ms_syst.syst_disallowed_passwords IS
-$DOC$A list of hashed passwords which are disallowed for use in the system when the
-password rule to disallow common/known compromised passwords is enabled.
-Currently the expectation is that common passwords will be stored as sha1
-hashes.
+DO
+$DOCUMENTATION$
+DECLARE
+    -- View
+    var_view_config ms_syst_priv.comments_config_apiview;
 
-This API View allows the application to read and maintain the data according to
-well defined application business rules.  Using this API view for updates to
-data is the preferred method of data maintenance in the course of normal usage.
+    -- View Columns
+    var_password_hash ms_syst_priv.comments_config_apiview_column;
 
-Only user maintainable values may be maintained via this API.  System created or
-maintained data is not maintainable via this view.  Attempts at invalid data
-maintenance via this API may result in the invalid changes being ignored or may
-raise an exception.$DOC$;
+BEGIN
+
+    --
+    -- API View Config
+    --
+
+    var_view_config.table_schema    := 'ms_syst_data';
+    var_view_config.table_name      := 'syst_disallowed_passwords';
+    var_view_config.view_schema     := 'ms_syst';
+    var_view_config.view_name       := 'syst_disallowed_passwords';
+    var_view_config.user_update     := FALSE;
+    var_view_config.generate_common := FALSE;
+
+    --
+    -- Column Configs
+    --
+
+    var_password_hash.column_name      := 'password_hash';
+    var_password_hash.required         := TRUE;
+    var_password_hash.unique_values    := TRUE;
+    var_password_hash.supplemental     :=
+$DOC$Attempting to `INSERT` a duplicate disallowed password using this API View
+will simply result in the inserted record being silently ignored in favor of the
+existing record.$DOC$;
+
+
+    var_view_config.columns :=
+        ARRAY [ var_password_hash ]::ms_syst_priv.comments_config_apiview_column[];
+
+    PERFORM ms_syst_priv.generate_comments_apiview( var_view_config );
+
+END;
+$DOCUMENTATION$;

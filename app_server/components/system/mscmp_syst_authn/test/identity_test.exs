@@ -20,6 +20,7 @@ defmodule IdentityTest do
 
   alias MscmpSystAuthn.Impl
 
+  @moduletag :unit
   @moduletag :capture_log
 
   test "Can retrieve Identity Type by Internal Name" do

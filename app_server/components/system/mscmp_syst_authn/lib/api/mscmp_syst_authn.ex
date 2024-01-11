@@ -1760,7 +1760,7 @@ defmodule MscmpSystAuthn do
     Adding a new "Allow" Owner Network Rule for a CIDR network.
 
       iex> import MscmpSystNetwork, only: [sigil_i: 2]
-      iex> {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner8")
+      iex> {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner1")
       iex> new_owner_rule = %{
       ...>   ordering: 1,
       ...>   functional_type: :allow,
@@ -1772,7 +1772,7 @@ defmodule MscmpSystAuthn do
     Adding a new "Deny" Owner Network Rule for an IP Address range.
 
       iex> import MscmpSystNetwork, only: [sigil_i: 2]
-      iex> {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner8")
+      iex> {:ok, owner_id} = MscmpSystInstance.get_owner_id_by_name("owner1")
       iex> new_owner_rule = %{
       ...>   ordering: 2,
       ...>   functional_type: :deny,
@@ -1820,7 +1820,7 @@ defmodule MscmpSystAuthn do
 
       iex> import MscmpSystNetwork, only: [sigil_i: 2]
       iex> {:ok, instance_id} =
-      ...>   MscmpSystInstance.get_instance_id_by_name("app1_owner8_instance_types_std")
+      ...>   MscmpSystInstance.get_instance_id_by_name("app1_owner1_instance_types_std")
       iex> new_instance_rule = %{
       ...>   ordering: 1,
       ...>   functional_type: :allow,
@@ -1833,7 +1833,7 @@ defmodule MscmpSystAuthn do
 
       iex> import MscmpSystNetwork, only: [sigil_i: 2]
       iex> {:ok, instance_id} =
-      ...>   MscmpSystInstance.get_instance_id_by_name("app1_owner8_instance_types_std")
+      ...>   MscmpSystInstance.get_instance_id_by_name("app1_owner1_instance_types_std")
       iex> new_instance_rule = %{
       ...>   ordering: 2,
       ...>   functional_type: :deny,
