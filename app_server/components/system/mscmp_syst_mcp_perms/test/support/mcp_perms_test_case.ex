@@ -18,7 +18,7 @@ defmodule McpPermsTestCase do
   setup do
     [
       datastore_context:
-        MscmpSystDb.put_datastore_context(TestSupport.get_testing_datastore_context_id())
+        MscmpSystDb.put_datastore_context(MscmpSystDb.get_testsupport_context_name())
     ]
   end
 end

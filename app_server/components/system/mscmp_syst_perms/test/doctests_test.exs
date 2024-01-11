@@ -13,5 +13,8 @@
 defmodule DoctestsTest do
   use PermsTestCase, async: true
 
+  @moduletag :doctest
+  @moduletag :capture_log
+
   doctest MscmpSystPerms
 end

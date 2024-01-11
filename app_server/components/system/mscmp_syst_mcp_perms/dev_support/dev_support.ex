@@ -19,17 +19,17 @@ defmodule DevSupport do
   @migration_unit_test_ds_type "mscmp_syst_mcp_perms_unit_test"
   @migration_integration_test_ds_type "mscmp_syst_mcp_perms_integration_test"
 
-  @datastore_context_name :dev_app_database
+  @datastore_context_name :ms_devsupport_context
 
   @datastore_options %DatastoreOptions{
-    database_name: "ms_dev_database",
-    datastore_code: "ms.dev.code",
-    datastore_name: :ms_dev_database,
+    database_name: "ms_devsupport_database",
+    datastore_code: "musesystems.publicly.known.insecure.devsupport.code",
+    datastore_name: :ms_devsupport_database,
     contexts: [
       %DatastoreContext{
         context_name: nil,
-        description: "Muse Systems Development Owner",
-        database_role: "ms_dev_owner",
+        description: "Muse Systems DevSupport Owner",
+        database_role: "ms_devsupport_owner",
         database_password: nil,
         starting_pool_size: 0,
         start_context: false,
@@ -38,24 +38,24 @@ defmodule DevSupport do
       },
       %DatastoreContext{
         context_name: @datastore_context_name,
-        description: "Muse Systems Development App User",
-        database_role: "ms_dev_app_user",
-        database_password: "ms.dev.code.app.user",
+        description: "Muse Systems DevSupport App User",
+        database_role: "ms_devsupport_context",
+        database_password: "musesystems.publicly.known.insecure.devsupport.apppassword",
         starting_pool_size: 20,
         start_context: true,
         login_context: true
       }
     ],
     db_server: %DbServer{
-      server_name: "dev_server",
+      server_name: "devsupport_server",
       start_server_instances: true,
       db_host: "127.0.0.1",
       db_port: 5432,
       db_show_sensitive: true,
       db_max_instances: 1,
       server_pools: [],
-      server_salt: "ms.dev.code.test.salt",
-      dbadmin_password: "muse.syst.dba.testing.password",
+      server_salt: "musesystems.publicly.known.insecure.devsupport.salt",
+      dbadmin_password: "musesystems.publicly.known.insecure.devsupport.password",
       dbadmin_pool_size: 1
     }
   }
@@ -92,7 +92,7 @@ defmodule DevSupport do
         datastore_options,
         datastore_type,
         ms_owner: database_owner.database_role,
-        ms_appusr: "ms_dev_app_user"
+        ms_appusr: "ms_devsupport_context"
       )
 
     {:ok, _, _} = MscmpSystDb.start_datastore(datastore_options)
@@ -103,7 +103,7 @@ defmodule DevSupport do
 
     :ok = MscmpSystDb.stop_datastore(datastore_options)
     :ok = MscmpSystDb.drop_datastore(datastore_options)
-    File.rm_rf!(Path.join(["priv/database"]))
+    File.rm_rf!(Path.join(["priv", "database"]))
   end
 
   defp get_datastore_type(:unit_testing), do: @migration_unit_test_ds_type

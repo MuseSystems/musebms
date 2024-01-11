@@ -86,90 +86,86 @@ CREATE CONSTRAINT TRIGGER c50_trig_a_iu_syst_perm_role_grants_related_data_check
     FOR EACH ROW EXECUTE PROCEDURE
         ms_syst_data.trig_a_iu_syst_perm_role_grants_related_data_checks();
 
-COMMENT ON
-    TABLE ms_syst_data.syst_perm_role_grants IS
-$DOC$Establishes the individual permissions which are granted by the given permission
-role.
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Table
+    var_comments_config ms_syst_priv.comments_config_table;
 
-Note that the absence of an explicit permission grant to a role is an implicit
+    -- Columns
+    var_perm_role_id ms_syst_priv.comments_config_table_column;
+    var_perm_id      ms_syst_priv.comments_config_table_column;
+    var_view_scope   ms_syst_priv.comments_config_table_column;
+    var_maint_scope  ms_syst_priv.comments_config_table_column;
+    var_admin_scope  ms_syst_priv.comments_config_table_column;
+    var_ops_scope    ms_syst_priv.comments_config_table_column;
+
+BEGIN
+
+    --
+    -- Table Config
+    --
+
+    var_comments_config.table_schema := 'ms_syst_data';
+    var_comments_config.table_name   := 'syst_perm_role_grants';
+
+    var_comments_config.description :=
+$DOC$Establishes the individual permissions which are granted by the given permission
+role.$DOC$;
+    var_comments_config.general_usage :=
+$DOC$Note that the absence of an explicit permission grant to a role is an implicit
 denial of that permission.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_perm_role_grants.id IS
-$DOC$The record's primary key.  The definitive identifier of the record in the
-system.$DOC$;
+    --
+    -- Column Configs
+    --
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_perm_role_grants.perm_role_id IS
+    var_perm_role_id.column_name := 'perm_role_id';
+    var_perm_role_id.description :=
 $DOC$Identifies the role to which the permission grant is being made.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_perm_role_grants.perm_id IS
+    var_perm_id.column_name := 'perm_id';
+    var_perm_id.description :=
 $DOC$The permission being granted by the role.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_perm_role_grants.view_scope IS
-$DOC$Assigns the Scope of the Permission's View Right being granted by the Role.
+    var_view_scope.column_name := 'view_scope';
+    var_view_scope.description :=
+$DOC$Assigns the Scope of the Permission's View Right being granted by the Role.$DOC$;
+    var_view_scope.general_usage :=
+$DOC$The valid Scope options are defined by the Permission record.$DOC$;
 
-The valid Scope options are defined by the Permission record.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_perm_role_grants.maint_scope IS
+    var_maint_scope.column_name := 'maint_scope';
+    var_maint_scope.description :=
 $DOC$Assigns the Scope of the Permission's Maintenance Right being granted by the
-Role.
+Role.$DOC$;
+    var_maint_scope.general_usage :=
+$DOC$The valid Scope options are defined by the Permission record.$DOC$;
 
-The valid Scope options are defined by the Permission record.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_perm_role_grants.admin_scope IS
+    var_admin_scope.column_name := 'admin_scope';
+    var_admin_scope.description :=
 $DOC$Assigns the Scope of the Permission's Data Administration Right being granted by
-the Role.
+the Role.$DOC$;
+    var_admin_scope.general_usage :=
+$DOC$The valid Scope options are defined by the Permission record.$DOC$;
 
-The valid Scope options are defined by the Permission record.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_perm_role_grants.ops_scope IS
+    var_ops_scope.column_name := 'ops_scope';
+    var_ops_scope.description :=
 $DOC$Assigns the Scope of the Permission's Operations Right being granted by the
-Role.
+Role.$DOC$;
+    var_ops_scope.general_usage :=
+$DOC$The valid Scope options are defined by the Permission record.$DOC$;
 
-The valid Scope options are defined by the Permission record.$DOC$;
+    var_comments_config.columns :=
+        ARRAY [
+              var_perm_role_id
+            , var_perm_id
+            , var_view_scope
+            , var_maint_scope
+            , var_admin_scope
+            , var_ops_scope
+            ]::ms_syst_priv.comments_config_table_column[];
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_perm_role_grants.diag_timestamp_created IS
-$DOC$The database server date/time when the transaction which created the record
-started.$DOC$;
+    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_perm_role_grants.diag_role_created IS
-$DOC$The database role which created the record.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_perm_role_grants.diag_timestamp_modified IS
-$DOC$The database server date/time when the transaction which modified the record
-started.  This field will be the same as diag_timestamp_created for inserted
-records.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_perm_role_grants.diag_wallclock_modified IS
-$DOC$The database server date/time at the moment the record was actually modified.
-For long running transactions this time may be significantly later than the
-value of diag_timestamp_modified.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_perm_role_grants.diag_role_modified IS
-$DOC$The database role which modified the record.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_perm_role_grants.diag_row_version IS
-$DOC$The current version of the row.  The value here indicates how many actual
-data changes have been made to the row.  If an update of the row leaves all data
-fields the same, disregarding the updates to the diag_* columns, the row version
-is not updated, nor are any updates made to the other diag_* columns other than
-diag_update_count.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_perm_role_grants.diag_update_count IS
-$DOC$Records the number of times the record has been updated regardless as to if
-the update actually changed any data.  In this way needless or redundant record
-updates can be found.  This row starts at 0 and therefore may be the same as the
-diag_row_version - 1.$DOC$;
+END;
+$DOCUMENTATION$;

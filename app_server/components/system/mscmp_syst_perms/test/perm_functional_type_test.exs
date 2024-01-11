@@ -17,6 +17,7 @@ defmodule PermFunctionalTypeTest do
 
   alias MscmpSystPerms.Impl
 
+  @moduletag :unit
   @moduletag :capture_log
 
   test "Can update maintainable fields" do
