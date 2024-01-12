@@ -17,6 +17,7 @@ defmodule DbSessionTest do
 
   alias MscmpSystSession.Impl
 
+  @moduletag :unit
   @moduletag :capture_log
 
   test "Can generate Session Name" do

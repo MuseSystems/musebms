@@ -13,5 +13,8 @@
 defmodule DoctestsTest do
   use SessionTestCase, async: true
 
+  @moduletag :doctest
+  @moduletag :capture_log
+
   doctest MscmpSystSession
 end
