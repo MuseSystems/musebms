@@ -61,7 +61,7 @@ record is considered a "User Defined" record which is maintained by user actions
 in the application.$DOC$;
 
     var_user_maintainable text :=
-$DOC$If a record is system defined (see the `syst_defined` column`), there may be
+$DOC$If a record is system defined (see the `syst_defined` column), there may be
 some user data maintenance operations permitted in some cases.  If the value of
 this column for a record is `TRUE` and the record is also "System Defined", then
 permitted user maintenance operations are available for the record.  If the
