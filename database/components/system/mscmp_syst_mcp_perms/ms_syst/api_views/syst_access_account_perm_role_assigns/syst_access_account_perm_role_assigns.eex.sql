@@ -40,69 +40,51 @@ CREATE TRIGGER a50_trig_i_d_syst_access_account_perm_role_assigns
     INSTEAD OF DELETE ON ms_syst.syst_access_account_perm_role_assigns
     FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_d_syst_access_account_perm_role_assigns();
 
-COMMENT ON
-    VIEW ms_syst.syst_access_account_perm_role_assigns IS
-$DOC$Assigns Permission Roles to Access Accounts providing an MCP authentication
-mechanism.
+DO
+$DOCUMENTATION$
+DECLARE
+    -- View
+    var_view_config ms_syst_priv.comments_config_apiview;
 
-This API View allows the application to read and maintain the data according to
-well defined application business rules.  Using this API view for updates to
-data is the preferred method of data maintenance in the course of normal usage.
+    -- View Columns
+    var_access_account_id ms_syst_priv.comments_config_apiview_column;
+    var_perm_role_id      ms_syst_priv.comments_config_apiview_column;
 
-Only user maintainable values may be maintained via this API.  System created or
-maintained data is not maintainable via this view.  Attempts at invalid data
-maintenance via this API may result in the invalid changes being ignored or may
-raise an exception.$DOC$;
+BEGIN
 
-COMMENT ON
-    COLUMN ms_syst.syst_access_account_perm_role_assigns.id IS
-$DOC$The record's primary key.  The definitive identifier of the record in the
-system.$DOC$;
+    --
+    -- API View Config
+    --
 
-COMMENT ON
-    COLUMN ms_syst.syst_access_account_perm_role_assigns.access_account_id IS
-$DOC$References the Access Account to which the Permission Role is being assigned.$DOC$;
+    var_view_config.table_schema := 'ms_syst_data';
+    var_view_config.table_name   := 'syst_access_account_perm_role_assigns';
+    var_view_config.view_schema  := 'ms_syst';
+    var_view_config.view_name    := 'syst_access_account_perm_role_assigns';
+    var_view_config.user_update  := FALSE;
 
-COMMENT ON
-    COLUMN ms_syst.syst_access_account_perm_role_assigns.perm_role_id IS
-$DOC$A reference to the Permission Role being assigned to the Access Account.$DOC$;
+    --
+    -- Column Configs
+    --
 
-COMMENT ON
-    COLUMN ms_syst.syst_access_account_perm_role_assigns.diag_timestamp_created IS
-$DOC$The database server date/time when the transaction which created the record
-started.$DOC$;
+    var_access_account_id.column_name  := 'access_account_id';
+    var_access_account_id.required     := TRUE;
+    var_access_account_id.supplemental :=
+$DOC$This column is part of a composite key.  The combined values of
+`access_account_id` and `perm_role_id` must be unique.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst.syst_access_account_perm_role_assigns.diag_role_created IS
-$DOC$The database role which created the record.$DOC$;
+    var_perm_role_id.column_name  := 'perm_role_id';
+    var_perm_role_id.required     := TRUE;
+    var_perm_role_id.supplemental :=
+$DOC$This column is part of a composite key.  The combined values of
+`access_account_id` and `perm_role_id` must be unique.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst.syst_access_account_perm_role_assigns.diag_timestamp_modified IS
-$DOC$The database server date/time when the transaction which modified the record
-started.  This field will be the same as diag_timestamp_created for inserted
-records.$DOC$;
+    var_view_config.columns :=
+        ARRAY [
+              var_access_account_id
+            , var_perm_role_id
+            ]::ms_syst_priv.comments_config_apiview_column[];
 
-COMMENT ON
-    COLUMN ms_syst.syst_access_account_perm_role_assigns.diag_wallclock_modified IS
-$DOC$The database server date/time at the moment the record was actually modified.
-For long running transactions this time may be significantly later than the
-value of diag_timestamp_modified.$DOC$;
+    PERFORM ms_syst_priv.generate_comments_apiview( var_view_config );
 
-COMMENT ON
-    COLUMN ms_syst.syst_access_account_perm_role_assigns.diag_role_modified IS
-$DOC$The database role which modified the record.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_access_account_perm_role_assigns.diag_row_version IS
-$DOC$The current version of the row.  The value here indicates how many actual
-data changes have been made to the row.  If an update of the row leaves all data
-fields the same, disregarding the updates to the diag_* columns, the row version
-is not updated, nor are any updates made to the other diag_* columns other than
-diag_update_count.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst.syst_access_account_perm_role_assigns.diag_update_count IS
-$DOC$Records the number of times the record has been updated regardless as to if
-the update actually changed any data.  In this way needless or redundant record
-updates can be found.  This row starts at 0 and therefore may be the same as the
-diag_row_version - 1.$DOC$;
+END;
+$DOCUMENTATION$;
