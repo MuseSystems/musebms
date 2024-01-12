@@ -11,26 +11,22 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 test_kind =
-  if ExUnit.configuration() |> Keyword.get(:include) |> Enum.member?(:integration) do
-    ExUnit.configure(seed: 0)
-    :integration_testing
-  else
-    ExUnit.configure(exclude: [:integration])
-    :unit_testing
+  cond do
+    ExUnit.configuration() |> Keyword.get(:include) |> Enum.member?(:integration) ->
+      ExUnit.configure(seed: 0)
+      :integration_testing
+
+    ExUnit.configuration() |> Keyword.get(:include) |> Enum.member?(:doctest) ->
+      :doc_testing
+
+    true ->
+      ExUnit.configure(exclude: [:integration, :doctest])
+      :unit_testing
   end
 
 TestSupport.setup_testing_database(test_kind)
 
-MscmpSystDb.put_datastore_context(TestSupport.get_testing_datastore_context_id())
-
-children = [
-  {DynamicSupervisor, strategy: :one_for_one, name: MscmpSystSession.TestingSupervisor}
-]
-
-Supervisor.start_link(children, strategy: :one_for_one)
-Logger.configure(level: :info)
-
-ExUnit.start()
+MscmpSystDb.put_datastore_context(MscmpSystDb.get_testsupport_context_name())
 
 ExUnit.after_suite(fn _suite_result ->
   TestSupport.cleanup_testing_database(test_kind)
