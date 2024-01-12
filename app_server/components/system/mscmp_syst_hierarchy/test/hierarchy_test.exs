@@ -17,6 +17,7 @@ defmodule HierarchyTest do
 
   alias MscmpSystHierarchy.Impl
 
+  @moduletag :unit
   @moduletag :capture_log
 
   @hierarchy_types [
