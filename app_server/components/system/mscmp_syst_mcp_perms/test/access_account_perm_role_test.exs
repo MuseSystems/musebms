@@ -17,6 +17,7 @@ defmodule AccessAccountPermRoleTest do
 
   alias MscmpSystMcpPerms.Impl
 
+  @moduletag :unit
   @moduletag :capture_log
 
   test "Grant Access Account Permission Role" do
