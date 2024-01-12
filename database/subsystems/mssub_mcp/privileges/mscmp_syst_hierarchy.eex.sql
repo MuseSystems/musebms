@@ -1,5 +1,5 @@
--- File:        test_privileges.eex.sql
--- Location:    musebms/database/components/system/mscmp_syst_hierarchy/testing_support/test_privileges.eex.sql
+-- File:        mscmp_syst_hierarchy.eex.sql
+-- Location:    musebms/database/subsystems/mssub_mcp/privileges/mscmp_syst_hierarchy.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -9,8 +9,6 @@
 -- See the NOTICE file in the project root for copyright ownership information.
 --
 -- muse.information@musesystems.com :: https://muse.systems
-
-GRANT USAGE ON SCHEMA ms_appl TO <%= ms_appusr %>;
 
 -- syst_hierarchies
 

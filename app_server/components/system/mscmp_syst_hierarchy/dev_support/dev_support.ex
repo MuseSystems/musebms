@@ -12,113 +12,45 @@
 
 defmodule DevSupport do
   alias Mix.Tasks.Builddb
-  alias MscmpSystDb.Types.{DatastoreContext, DatastoreOptions, DbServer}
 
   @migration_test_source_root_dir "../../../../database"
   @migration_unit_test_ds_type "mscmp_syst_hierarchy_unit_test"
-
-  @datastore_context_name :dev_app_database
-
-  @datastore_options %DatastoreOptions{
-    database_name: "ms_dev_database",
-    datastore_code: "ms.dev.code",
-    datastore_name: :ms_dev_database,
-    contexts: [
-      %DatastoreContext{
-        context_name: nil,
-        description: "Muse Systems Development Owner",
-        database_role: "ms_dev_owner",
-        database_password: nil,
-        starting_pool_size: 0,
-        start_context: false,
-        login_context: false,
-        database_owner_context: true
-      },
-      %DatastoreContext{
-        context_name: @datastore_context_name,
-        description: "Muse Systems Development App User",
-        database_role: "ms_dev_app_user",
-        database_password: "ms.dev.code.app.user",
-        starting_pool_size: 20,
-        start_context: true,
-        login_context: true
-      }
-    ],
-    db_server: %DbServer{
-      server_name: "dev_server",
-      start_server_instances: true,
-      db_host: "127.0.0.1",
-      db_port: 5432,
-      db_show_sensitive: true,
-      db_max_instances: 1,
-      server_pools: [],
-      server_salt: "ms.dev.code.test.salt",
-      dbadmin_password: "muse.syst.dba.testing.password",
-      dbadmin_pool_size: 1
-    }
-  }
+  @migration_integration_test_ds_type "mscmp_syst_hierarchy_integration_test"
+  @migration_doc_test_ds_type "mscmp_syst_hierarchy_doc_test"
 
   def start_dev_environment(db_kind \\ :unit_testing) do
     _ = setup_database(db_kind)
 
-    _ = MscmpSystDb.put_datastore_context(get_datastore_context_id())
+    _ = MscmpSystDb.put_datastore_context(MscmpSystDb.get_devsupport_context_name())
 
-    enum_service_spec = %{
-      id: MscmpDevEnumService,
-      start: {
-        MscmpSystEnums,
-        :start_link,
-        [{:ms_dev_enum_service, get_datastore_context_id()}]
-      }
-    }
+    MscmpSystEnums.start_devsupport_services()
 
-    children = [
-      {DynamicSupervisor, strategy: :one_for_one, name: Mscmp.DevSupervisor}
-    ]
-
-    _ = Supervisor.start_link(children, strategy: :one_for_one)
-    Logger.configure(level: :info)
-
-    _ = DynamicSupervisor.start_child(Mscmp.DevSupervisor, enum_service_spec)
-
-    _ = MscmpSystDb.put_datastore_context(get_datastore_context_id())
-    _ = MscmpSystEnums.put_enums_service(:ms_dev_enum_service)
+    _ = MscmpSystEnums.put_enums_service(MscmpSystEnums.get_devsupport_service_name())
   end
 
   def stop_dev_environment(), do: cleanup_database()
 
-  def get_datastore_context_id, do: @datastore_context_name
-
   defp setup_database(db_kind) do
+    datastore_options = MscmpSystDb.get_devsupport_datastore_options()
+
     :ok = build_migrations(db_kind)
 
-    datastore_options = @datastore_options
-    datastore_type = get_datastore_type(db_kind)
-
-    database_owner = Enum.find(datastore_options.contexts, &(&1.database_owner_context == true))
-
-    {:ok, :ready, _} = MscmpSystDb.create_datastore(datastore_options)
-
-    {:ok, _} =
-      MscmpSystDb.upgrade_datastore(
-        datastore_options,
-        datastore_type,
-        ms_owner: database_owner.database_role,
-        ms_appusr: "ms_dev_app_user"
-      )
+    {:ok, _} = MscmpSystDb.load_database(datastore_options, get_datastore_type(db_kind))
 
     {:ok, _, _} = MscmpSystDb.start_datastore(datastore_options)
   end
 
-  defp cleanup_database() do
-    datastore_options = @datastore_options
+  defp cleanup_database(db_kind \\ :unit_testing) do
+    datastore_options = MscmpSystDb.get_devsupport_datastore_options()
 
-    :ok = MscmpSystDb.stop_datastore(datastore_options)
-    :ok = MscmpSystDb.drop_datastore(datastore_options)
-    File.rm_rf!(Path.join(["priv/database"]))
+    :ok = MscmpSystDb.drop_database(datastore_options)
+
+    _ = File.rm_rf!(Path.join(["priv", "database", get_datastore_type(db_kind)]))
   end
 
   defp get_datastore_type(:unit_testing), do: @migration_unit_test_ds_type
+  defp get_datastore_type(:integration_testing), do: @migration_integration_test_ds_type
+  defp get_datastore_type(:doc_testing), do: @migration_doc_test_ds_type
 
   defp build_migrations(db_kind) do
     Builddb.run([

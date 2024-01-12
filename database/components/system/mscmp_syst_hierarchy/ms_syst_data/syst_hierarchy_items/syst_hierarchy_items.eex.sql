@@ -100,55 +100,62 @@ CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
     BEFORE INSERT OR UPDATE ON ms_syst_data.syst_hierarchy_items
     FOR EACH ROW EXECUTE PROCEDURE ms_syst_priv.trig_b_iu_set_diagnostic_columns();
 
-COMMENT ON
-    TABLE ms_syst_data.syst_hierarchy_items IS
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Table
+    var_comments_config ms_syst_priv.comments_config_table;
+
+    -- Columns
+    var_hierarchy_id     ms_syst_priv.comments_config_table_column;
+    var_hierarchy_depth  ms_syst_priv.comments_config_table_column;
+    var_required         ms_syst_priv.comments_config_table_column;
+    var_allow_leaf_nodes ms_syst_priv.comments_config_table_column;
+
+BEGIN
+
+    --
+    -- Table Config
+    --
+
+    var_comments_config.table_schema := 'ms_syst_data';
+    var_comments_config.table_name   := 'syst_hierarchy_items';
+
+    var_comments_config.description :=
 $DOC$Hierarchy Item records represent a level in the hierarchy of their parent
-Hierarchy. Each Hierarchy Item record is individually sequenced in its group via
-the `hierarchy_depth` column.
+Hierarchy.$DOC$;
+    var_comments_config.general_usage :=
+$DOC$Each Hierarchy Item record is individually sequenced in its group via the
+`hierarchy_depth` column.
 
 Note that once the Hierarchy is active and in use by Hierarchy implementing
 Components, most changes to the Hierarchy Item records will not be allowed to
 ensure the consistency of currently used data.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_hierarchy_items.id IS
-$DOC$The record's primary key.  The definitive identifier of the record in the
-system.$DOC$;
+    --
+    -- Column Configs
+    --
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_hierarchy_items.internal_name IS
-$DOC$A candidate key useful for programmatic references to individual records.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_hierarchy_items.display_name IS
-$DOC$A friendly name and candidate key for the record, suitable for use in user
-interactions$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_hierarchy_items.external_name IS
-$DOC$A non-unique/non-key value used to display to users and external parties where
-uniqueness is less of a concern than specific end user presentation.$DOC$;
-
-COMMENT ON
-    COLUMN  ms_syst_data.syst_hierarchy_items.hierarchy_id IS
+    var_hierarchy_id.column_name := 'hierarchy_id';
+    var_hierarchy_id.description :=
 $DOC$Identifies the Hierarchy to which the record belongs.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_hierarchy_items.required IS
+    var_required.column_name := 'required';
+    var_required.description :=
 $DOC$Indicates if the Hierarchy Item level must be represented by a record in the
 implementing data, or if the Hierarchy Item level represents an optional level.
 If true, the Hierarchy Item level must be represented by a record in the data of
 the implementing Component for that data to be considered valid.  If false,
 the Hierarchy Item level is considered optional and the data of the implementing
 Component may omit the Hierarchy Item level in its data without the data being
-considered invalid.
-
-The highest/root Hierarchy Item level must always be required.  If lower levels
+considered invalid.$DOC$;
+    var_required.general_usage :=
+$DOC$The highest/root Hierarchy Item level must always be required.  If lower levels
 of the Hierarchy are required, all parents to the lowest required Hierarchy Item
 level must also be marked as required true.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_hierarchy_items.allow_leaf_nodes IS
+    var_allow_leaf_nodes.column_name := 'allow_leaf_nodes';
+    var_allow_leaf_nodes.description :=
 $DOC$Indicates to implementing Components that this Hierarchy Item level can be
 associated with "Leaf Nodes". Leaf Nodes are not defined in the
 mscmp_syst_hierarchy Component, but are rather defined by Hierarchy implementing
@@ -157,9 +164,9 @@ definition are organizing.  An example of a Leaf Node would be an application
 menu implementing Component defining references/links to specific application
 functionality which are then displayed associated to branches of a tree
 structure (menu/sub-menu/ etc.)  The links are Leaf Nodes and the branches of
-the menu are Branch Nodes: representations of the Hierarchy Items.
-
-If this value is true, it means this Hierarchy Item record may be associated
+the menu are Branch Nodes: representations of the Hierarchy Items.$DOC$;
+    var_allow_leaf_nodes.general_usage :=
+$DOC$If this value is true, it means this Hierarchy Item record may be associated
 directly with Leaf Nodes.  If false, Leaf Nodes must be associated with other
 levels of the Hierarchy.
 
@@ -168,13 +175,13 @@ The bottom/lowest level required Hierarchy Item must always be marked as
 may arbitrarily allow or disallow Leaf Node associations as the implementing
 Component sees fit.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_hierarchy_items.hierarchy_depth IS
+    var_hierarchy_depth.column_name := 'hierarchy_depth';
+    var_hierarchy_depth.description :=
 $DOC$Indicates the at what level in the hierarchy this Group Type Item sits
 relative to the other items in the Group Type.  Records with relatively
-higher values are deeper or lower in the hierarchy.
-
-When a value for this column is not provided at insert time, the record is
+higher values are deeper or lower in the hierarchy.$DOC$;
+    var_hierarchy_depth.general_usage :=
+$DOC$When a value for this column is not provided at insert time, the record is
 assigned the next hierarchy depth value relative to the existing records.  When
 a record is inserted with a set hierarchy_depth value and that value pre-exists
 for the same Group Type as the new record, the insert is treated as a "insert
@@ -183,45 +190,19 @@ next hierarchy value; existing Group Type Item records are continued to be
 updated until the last record is assigned a non-conflicting hierarchy_depth
 value.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_hierarchy_items.diag_timestamp_created IS
-$DOC$The database server date/time when the transaction which created the record
-started.$DOC$;
+    var_comments_config.columns :=
+        ARRAY [
+              var_hierarchy_id
+            , var_hierarchy_depth
+            , var_required
+            , var_allow_leaf_nodes
+            ]::ms_syst_priv.comments_config_table_column[];
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_hierarchy_items.diag_role_created IS
-$DOC$The database role which created the record.$DOC$;
+    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_hierarchy_items.diag_timestamp_modified IS
-$DOC$The database server date/time when the transaction which modified the record
-started.  This field will be the same as diag_timestamp_created for inserted
-records.$DOC$;
+END;
+$DOCUMENTATION$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_hierarchy_items.diag_wallclock_modified IS
-$DOC$The database server date/time at the moment the record was actually modified.
-For long running transactions this time may be significantly later than the
-value of diag_timestamp_modified.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_hierarchy_items.diag_role_modified IS
-$DOC$The database role which modified the record.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_hierarchy_items.diag_row_version IS
-$DOC$The current version of the row.  The value here indicates how many actual
-data changes have been made to the row.  If an update of the row leaves all data
-fields the same, disregarding the updates to the diag_* columns, the row version
-is not updated, nor are any updates made to the other diag_* columns other than
-diag_update_count.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_hierarchy_items.diag_update_count IS
-$DOC$Records the number of times the record has been updated regardless as to if
-the update actually changed any data.  In this way needless or redundant record
-updates can be found.  This row starts at 0 and therefore may be the same as the
-diag_row_version - 1.$DOC$;
 
 COMMENT ON
     CONSTRAINT syst_hierarchy_items_depth_udx
