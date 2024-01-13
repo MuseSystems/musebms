@@ -74,7 +74,7 @@ db_host                        = "127.0.0.1"
 # The port on which the database server is listening
 db_port                        = 5432
 
-# If true, senstive information, such as username/password may be shown in
+# If true, sensitive information, such as username/password may be shown in
 # some application logs or error displays
 db_show_sensitive              = true
 
@@ -89,7 +89,7 @@ server_salt                  = "sklMRkLXzMQgzqpMpJZPk31Js88su39U/mooAXALhj0="
 # The database password used by the system for the connecting the
 # ms_syst_privileged database user account on this database server.  This
 # password must be at least 32 bytes long.
-dbadmin_password               = "muse.syst.dba.testing.password"
+dbadmin_password               = "musesystems.publicly.known.insecure.devsupport.password"
 
 # The number of pooled database connections to create for the dbadmin repo.
 # This value should normally be quite low.

@@ -62,7 +62,7 @@ db_host                        = "127.0.0.1"
 # The port on which the database server is listening
 db_port                        = 5432
 
-# If true, senstive information, such as username/password may be shown in
+# If true, sensitive information, such as username/password may be shown in
 # some application logs or error displays
 db_show_sensitive              = false
 
@@ -106,7 +106,7 @@ db_host                        = "127.0.0.1"
 # The port on which the database server is listening
 db_port                        = 5432
 
-# If true, senstive information, such as username/password may be shown in
+# If true, sensitive information, such as username/password may be shown in
 # some application logs or error displays
 db_show_sensitive              = false
 
@@ -150,7 +150,7 @@ db_host                        = "127.0.0.1"
 # The port on which the database server is listening
 db_port                        = 5432
 
-# If true, senstive information, such as username/password may be shown in
+# If true, sensitive information, such as username/password may be shown in
 # some application logs or error displays
 db_show_sensitive              = false
 

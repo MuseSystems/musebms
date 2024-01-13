@@ -372,7 +372,7 @@ jobs:
             elixir-version: ${{ matrix.elixir }}
 
         - name: Initialize Database
-          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
+          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='musesystems.publicly.known.insecure.devsupport.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
 
         - name: Build Mix Dependencies
           run: mix deps.get
@@ -455,7 +455,7 @@ jobs:
             elixir-version: ${{ matrix.elixir }}
 
         - name: Initialize Database
-          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
+          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='musesystems.publicly.known.insecure.devsupport.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
 
         - name: Build Mix Dependencies
           run: mix deps.get
@@ -538,7 +538,7 @@ jobs:
             elixir-version: ${{ matrix.elixir }}
 
         - name: Initialize Database
-          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
+          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='musesystems.publicly.known.insecure.devsupport.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
 
         - name: Build Mix Dependencies
           run: mix deps.get
@@ -621,7 +621,7 @@ jobs:
             elixir-version: ${{ matrix.elixir }}
 
         - name: Initialize Database
-          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
+          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='musesystems.publicly.known.insecure.devsupport.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
 
         - name: Build Mix Dependencies
           run: mix deps.get
@@ -712,7 +712,7 @@ mscmp_syst_nav:
             elixir-version: ${{ matrix.elixir }}
 
         - name: Initialize Database
-          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
+          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='musesystems.publicly.known.insecure.devsupport.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
 
         - name: Build Mix Dependencies
           run: mix deps.get
@@ -803,7 +803,7 @@ mscmp_syst_nav:
             elixir-version: ${{ matrix.elixir }}
 
         - name: Initialize Database
-          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
+          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='musesystems.publicly.known.insecure.devsupport.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
 
         - name: Build Mix Dependencies
           run: mix deps.get
@@ -890,7 +890,7 @@ mscmp_syst_nav:
             elixir-version: ${{ matrix.elixir }}
 
         - name: Initialize Database
-          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
+          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='musesystems.publicly.known.insecure.devsupport.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
 
         - name: Build Mix Dependencies
           run: mix deps.get
@@ -977,7 +977,7 @@ mscmp_syst_nav:
             elixir-version: ${{ matrix.elixir }}
 
         - name: Initialize Database
-          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
+          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='musesystems.publicly.known.insecure.devsupport.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
 
         - name: Build Mix Dependencies
           run: mix deps.get
@@ -1064,7 +1064,7 @@ mscmp_syst_nav:
             elixir-version: ${{ matrix.elixir }}
 
         - name: Initialize Database
-          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
+          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='musesystems.publicly.known.insecure.devsupport.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
 
         - name: Build Mix Dependencies
           run: mix deps.get
@@ -1151,7 +1151,7 @@ mscmp_syst_nav:
             elixir-version: ${{ matrix.elixir }}
 
         - name: Initialize Database
-          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
+          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='musesystems.publicly.known.insecure.devsupport.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
 
         - name: Build Mix Dependencies
           run: mix deps.get
@@ -1303,7 +1303,7 @@ mscmp_syst_nav:
             elixir-version: ${{ matrix.elixir }}
 
         - name: Initialize Database
-          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='muse.syst.dba.testing.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
+          run: psql -f tools/database_scripts/bootstrap_database.psql --set dbadmin_password='musesystems.publicly.known.insecure.devsupport.password' postgresql://testing_dba:testing-dba-password@localhost:5432/postgres
 
         - name: Build Mix Dependencies
           run: mix deps.get
