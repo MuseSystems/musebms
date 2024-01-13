@@ -29,7 +29,7 @@ test_kind =
 
 TestSupport.setup_testing_database(test_kind)
 
-MscmpSystDb.put_datastore_context(:ms_testsupport_context)
+MscmpSystDb.put_datastore_context(MscmpSystDb.get_testsupport_context_name())
 
 MscmpSystSettings.start_testsupport_services()
 
