@@ -32,6 +32,7 @@ defmodule TestSupport do
   @migration_test_source_root_dir "../../../database"
   @migration_unit_test_ds_type "mssub_mcp_unit_test"
   @migration_integration_test_ds_type "mssub_mcp_integration_test"
+  @migration_doc_test_ds_type "mssub_mcp_doc_test"
 
   def setup_testing_database(test_kind, startup_options) do
     :ok = build_migrations(test_kind)
