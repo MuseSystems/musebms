@@ -13,50 +13,40 @@
 defmodule DevSupport do
   alias Mix.Tasks.Builddb
 
-  use MssubMcp.Macros
-
   @migration_test_source_root_dir "../../../database"
   @migration_unit_test_ds_type "mssub_mcp_unit_test"
   @migration_integration_test_ds_type "mssub_mcp_integration_test"
-
-  mcp_constants()
+  @migration_doc_test_ds_type "mssub_mcp_doc_test"
 
   def start_dev_environment(db_kind \\ :unit_testing) do
-    :ok = build_migrations(db_kind)
+    _ = setup_database(db_kind)
 
-    startup_options = MscmpSystOptions.get_options!("test_startup_options.toml")
-
-    :ignore =
-      MssubMcp.Updater.start_link(
-        startup_options: startup_options,
-        datastore_type: get_datastore_type(db_kind)
-      )
-
-    Supervisor.start_link([{MssubMcp.Supervisor, startup_options: startup_options}],
-      strategy: :one_for_one,
-      name: DevSupport.Supervisor
-    )
+    _ = MscmpSystDb.put_datastore_context(MscmpSystDb.get_devsupport_context_name())
   end
 
-  def stop_dev_environment(db_kind \\ :unit_testing), do: cleanup_database(db_kind)
+  def stop_dev_environment(), do: cleanup_database()
+
+  defp setup_database(db_kind) do
+    datastore_options = MscmpSystDb.get_devsupport_datastore_options()
+
+    :ok = build_migrations(db_kind)
+
+    {:ok, _} = MscmpSystDb.load_database(datastore_options, get_datastore_type(db_kind))
+
+    {:ok, _, _} = MscmpSystDb.start_datastore(datastore_options)
+  end
+
+  defp cleanup_database(db_kind \\ :unit_testing) do
+    datastore_options = MscmpSystDb.get_devsupport_datastore_options()
+
+    :ok = MscmpSystDb.drop_database(datastore_options)
+
+    _ = File.rm_rf!(Path.join(["priv", "database", get_datastore_type(db_kind)]))
+  end
 
   defp get_datastore_type(:unit_testing), do: @migration_unit_test_ds_type
   defp get_datastore_type(:integration_testing), do: @migration_integration_test_ds_type
-
-  def cleanup_database(db_kind) do
-    datastore_type = get_datastore_type(db_kind)
-
-    Supervisor.stop(DevSupport.Supervisor)
-
-    startup_options = MscmpSystOptions.get_options!("test_startup_options.toml")
-
-    datastore_options = MssubMcp.Runtime.Options.get_datastore_options(startup_options, [])
-
-    :ok = MscmpSystDb.stop_datastore(datastore_options)
-    :ok = MscmpSystDb.drop_datastore(datastore_options)
-
-    File.rm_rf!(Path.join(["priv/database", datastore_type]))
-  end
+  defp get_datastore_type(:doc_testing), do: @migration_doc_test_ds_type
 
   defp build_migrations(db_kind) do
     Builddb.run([
