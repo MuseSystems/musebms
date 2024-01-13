@@ -41,7 +41,7 @@ CREATE TABLE ms_syst_data.syst_menu_items
         smallint
         NOT NULL
     ,CONSTRAINT syst_menu_items_sort_ordering_udx
-        UNIQUE NULLS NOT DISTINCT ( menu_id, parent_menu_item_id, sort_order )
+            UNIQUE NULLS NOT DISTINCT ( menu_id, parent_menu_item_id, sort_order )
     ,submenu_menu_id
         uuid
         CONSTRAINT syst_menu_items_submenu_menu_fk
@@ -85,54 +85,48 @@ CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
     BEFORE INSERT OR UPDATE ON ms_syst_data.syst_menu_items
     FOR EACH ROW EXECUTE PROCEDURE ms_syst_priv.trig_b_iu_set_diagnostic_columns();
 
-COMMENT ON
-    TABLE ms_syst_data.syst_menu_items IS
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Table
+    var_comments_config ms_syst_priv.comments_config_table;
+
+    -- Columns
+    var_menu_id             ms_syst_priv.comments_config_table_column;
+    var_parent_menu_item_id ms_syst_priv.comments_config_table_column;
+    var_sort_order          ms_syst_priv.comments_config_table_column;
+    var_submenu_menu_id     ms_syst_priv.comments_config_table_column;
+    var_action_id           ms_syst_priv.comments_config_table_column;
+
+BEGIN
+
+    --
+    -- Table Config
+    --
+
+    var_comments_config.table_schema := 'ms_syst_data';
+    var_comments_config.table_name   := 'syst_menu_items';
+
+    var_comments_config.description :=
 $DOC$Individual menu entries which can serve as actionable menu items, grouping
 items, references to other menus to include recursively, or any appropriate
 combination thereof.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_menu_items.id IS
-$DOC$The record's primary key.  The definitive identifier of the record in the
-system.$DOC$;
+    --
+    -- Column Configs
+    --
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_menu_items.internal_name IS
-$DOC$A candidate key useful for programmatic references to individual records.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_menu_items.display_name IS
-$DOC$A friendly name and candidate key for the record, suitable for use in user
-interactions.
-
-Please note that if this Menu Item record is also associated with either a Menu
-(`submenu_menu_id`) or a Menu Action (`action_id`) then the value of this
-column will be superseded by corresponding values of those records in most user
-facing presentations.  In cases where associations of both a Menu and Menu
-Action exist, the precedence texts is: Menu, Menu Action.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_menu_items.external_name IS
-$DOC$A non-unique/non-key value used to display to users and external parties where
-uniqueness is less of a concern than specific end user presentation.
-
-Please note that if this Menu Item record is also associated with either a Menu
-(`submenu_menu_id`) or a Menu Action (`action_id`) then the value of this
-column will be superseded by corresponding values of those records in most user
-facing presentations.  In cases where associations of both a Menu and Menu
-Action exist, the precedence texts is: Menu, Menu Action.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_menu_items.menu_id IS
+    var_menu_id.column_name := 'menu_id';
+    var_menu_id.description :=
 $DOC$Identifies the Menu to which the menu item belongs.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_menu_items.parent_menu_item_id IS
+    var_parent_menu_item_id.column_name := 'parent_menu_item_id';
+    var_parent_menu_item_id.description :=
 $DOC$References the current Menu Item's parent Menu Item record.  If the current Menu
 Item record is at the root of the Menu, this value will be `NULL`.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_menu_items.sort_order IS
+    var_sort_order.column_name := 'sort_order';
+    var_sort_order.description :=
 $DOC$Establishes the current Menu Item's sorting order relative to sibling Menu Item
 records$DOC$;
 
@@ -141,12 +135,12 @@ COMMENT ON
 $DOC$Enforces that sorting of sibling Menu Item records is unambiguous and
 deterministic.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_menu_items.submenu_menu_id IS
+    var_submenu_menu_id.column_name := 'submenu_menu_id';
+    var_submenu_menu_id.description :=
 $DOC$When not null, indicates that the Menu Item record imports an independently
-defined Menu.
-
-An attempt to associate a Menu which recursively references the current Menu
+defined Menu.$DOC$;
+    var_submenu_menu_id.general_usage :=
+$DOC$An attempt to associate a Menu which recursively references the current Menu
 Item's parent Menu will result in an exception being raised and the transaction
 attempting to make the association will be rolled back.
 
@@ -154,74 +148,25 @@ Note that the referenced Menu's descriptive texts and naming will supersede the
 naming specified directly by this record or the text of any associated Menu
 Action referenced in the `action_id` column.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_menu_items.action_id IS
+    var_action_id.column_name := 'action_id';
+    var_action_id.description :=
 $DOC$Associates a specific action to be invoked when the Menu Item that the
-record represents is "selected".
-
-Note that the referenced Menu Action's texts will supersede the Menu Item texts
-in any user facing situations, though if the Menu Item is also associated with a
+record represents is "selected".$DOC$;
+    var_action_id.general_usage :=
+$DOC$Note that the referenced Action's texts will supersede the Menu Item texts in
+any user facing situations, though if the Menu Item is also associated with a
 Menu (`submenu_menu_id`), the Menu's text will prevail.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_menu_items.syst_description IS
-$DOC$A system default description describing the Menu Item and its uses in the
-system.
+    var_comments_config.columns :=
+        ARRAY [
+              var_menu_id
+            , var_parent_menu_item_id
+            , var_sort_order
+            , var_submenu_menu_id
+            , var_action_id
+            ]::ms_syst_priv.comments_config_table_column[];
 
-Please note that if this Menu Item record is also associated with either a Menu
-(`submenu_menu_id`) or a Menu Action (`action_id`) then the value of this
-column will be superseded by corresponding values of those records in most user
-facing presentations.  In cases where associations of both a Menu and Menu
-Action exist, the precedence texts is: Menu, Menu Action.$DOC$;
+    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_menu_items.user_description IS
-$DOC$A custom, user defined description which overrides the syst_description value
-where it would otherwise be used.  If this column is set NULL the
-syst_description value will be used.
-
-Please note that if this Menu Item record is also associated with either a Menu
-(`submenu_menu_id`) or a Menu Action (`action_id`) then the value of this
-column will be superseded by corresponding values of those records in most user
-facing presentations.  In cases where associations of both a Menu and Menu
-Action exist, the precedence texts is: Menu, Menu Action.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_menu_items.diag_timestamp_created IS
-$DOC$The database server date/time when the transaction which created the record
-started.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_menu_items.diag_role_created IS
-$DOC$The database role which created the record.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_menu_items.diag_timestamp_modified IS
-$DOC$The database server date/time when the transaction which modified the record
-started.  This field will be the same as diag_timestamp_created for inserted
-records.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_menu_items.diag_wallclock_modified IS
-$DOC$The database server date/time at the moment the record was actually modified.
-For long running transactions this time may be significantly later than the
-value of diag_timestamp_modified.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_menu_items.diag_role_modified IS
-$DOC$The database role which modified the record.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_menu_items.diag_row_version IS
-$DOC$The current version of the row.  The value here indicates how many actual
-data changes have been made to the row.  If an update of the row leaves all data
-fields the same, disregarding the updates to the diag_* columns, the row version
-is not updated, nor are any updates made to the other diag_* columns other than
-diag_update_count.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_menu_items.diag_update_count IS
-$DOC$Records the number of times the record has been updated regardless as to if
-the update actually changed any data.  In this way needless or redundant record
-updates can be found.  This row starts at 0 and therefore may be the same as the
-diag_row_version - 1.$DOC$;
+END;
+$DOCUMENTATION$;

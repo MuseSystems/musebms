@@ -18,12 +18,12 @@ defmodule NavTestCase do
   setup do
     [
       datastore_context:
-        MscmpSystDb.put_datastore_context(TestSupport.get_testing_datastore_context_id())
+        MscmpSystDb.put_datastore_context(MscmpSystDb.get_testsupport_context_name())
     ]
   end
 
   setup do
-    _ = MscmpSystEnums.put_enums_service(:nav)
+    _ = MscmpSystEnums.put_enums_service(MscmpSystEnums.get_testsupport_service_name())
     :ok
   end
 end
