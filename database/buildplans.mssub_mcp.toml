@@ -75,4 +75,18 @@ load_files = [
 
     {type = "plan", file = "components/system/mscmp_syst_session/subplans.mscmp_syst_session.toml"},
     "subsystems/mssub_mcp/privileges/mscmp_syst_session.eex.sql",
+
+    #
+    # MscmpSystHierarchy
+    #
+
+    {type = "plan", file = "components/system/mscmp_syst_hierarchy/subplans.mscmp_syst_hierarchy.toml"},
+    "subsystems/mssub_mcp/privileges/mscmp_syst_hierarchy.eex.sql",
+
+    #
+    # MscmpSystNav
+    #
+
+    {type = "plan", file = "components/system/mscmp_syst_nav/subplans.mscmp_syst_nav.toml"},
+    "subsystems/mssub_mcp/privileges/mscmp_syst_nav.eex.sql",
 ]
