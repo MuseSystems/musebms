@@ -15,6 +15,8 @@ defmodule DevSupport do
 
   @migration_test_source_root_dir "../../../../database"
   @migration_unit_test_ds_type "mscmp_syst_enums_unit_test"
+  @migration_integration_test_ds_type "mscmp_syst_enums_integration_test"
+  @migration_doc_test_ds_type "mscmp_syst_enums_doc_test"
 
   def start_dev_environment(db_kind \\ :unit_testing) do
     _ = setup_database(db_kind)
@@ -38,12 +40,12 @@ defmodule DevSupport do
     {:ok, _, _} = MscmpSystDb.start_datastore(datastore_options)
   end
 
-  defp cleanup_database() do
+  defp cleanup_database(db_kind \\ :unit_testing) do
     datastore_options = MscmpSystDb.get_devsupport_datastore_options()
 
     :ok = MscmpSystDb.drop_database(datastore_options)
 
-    _ = File.rm_rf!(Path.join(["priv", "database", @migration_unit_test_ds_type]))
+    _ = File.rm_rf!(Path.join(["priv", "database", get_datastore_type(db_kind)]))
   end
 
   defp get_datastore_type(:unit_testing), do: @migration_unit_test_ds_type
