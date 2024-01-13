@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.31.1">
+    <meta name="project" content="mscmp_syst_hierarchy v0.1.0">
+
+
+    <title>MscmpSystHierarchy — mscmp_syst_hierarchy v0.1.0</title>
+    <link rel="stylesheet" href="dist/html-elixir-FM2CSD74.css" />
+
+
+    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
+    <script src="dist/handlebars.templates-43PMFBC7.js"></script>
+    <script src="dist/sidebar_items-ECAE399E.js"></script>
+
+      <script src="docs_config.js"></script>
+
+    <script async src="dist/html-L4O5OK2K.js"></script>
+
+
+  </head>
+  <body data-type="modules" class="page-module">
+    <script>
+
+      try {
+        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
+
+        if (settings.theme === 'dark' ||
+           ((settings.theme === 'system' || settings.theme == null) &&
+             window.matchMedia('(prefers-color-scheme: dark)').matches)
+           ) {
+          document.body.classList.add('dark')
+        }
+      } catch (error) { }
+    </script>
+
+<div class="main">
+
+<button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<div class="background-layer"></div>
+
+<nav id="sidebar" class="sidebar">
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectInfo">
+
+      <div>
+        <a href="MscmpSystHierarchy.html" class="sidebar-projectName" translate="no">
+mscmp_syst_hierarchy
+        </a>
+        <div class="sidebar-projectVersion" translate="no">
+          v0.1.0
+        </div>
+      </div>
+    </div>
+    <ul id="sidebar-listNav" class="sidebar-listNav" role="tablist">
+      <li>
+        <button id="extras-list-tab-button" role="tab" data-type="extras" aria-controls="extras-tab-panel" aria-selected="true" tabindex="0">
+Pages
+        </button>
+      </li>
+
+        <li>
+          <button id="modules-list-tab-button" role="tab" data-type="modules" aria-controls="modules-tab-panel" aria-selected="false" tabindex="-1">
+            Modules
+          </button>
+        </li>
+
+
+    </ul>
+  </div>
+
+  <div id="extras-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="extras-list-tab-button">
+    <ul id="extras-full-list" class="full-list"></ul>
+  </div>
+
+    <div id="modules-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="modules-list-tab-button" hidden>
+      <ul id="modules-full-list" class="full-list"></ul>
+    </div>
+
+
+</nav>
+
+<main class="content">
+  <output role="status" id="toast"></output>
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+      <div class="top-search">
+        <div class="search-settings">
+          <form class="search-bar" action="search.html">
+            <label class="search-label">
+              <span class="sr-only">Search documentation of mscmp_syst_hierarchy</span>
+              <input name="q" type="text" class="search-input" placeholder="Search Documentation (press /)" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+            </label>
+            <button type="submit" class="search-button" aria-label="Submit Search">
+              <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
+            </button>
+            <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+              <i class="ri-close-line ri-lg" title="Cancel search"></i>
+            </button>
+          </form>
+          <div class="autocomplete">
+          </div>
+          <button class="icon-settings display-settings">
+            <i class="ri-settings-3-line"></i>
+            <span class="sr-only">Settings</span>
+          </button>
+        </div>
+
+      </div>
+
+<h1>
+
+  <span translate="no">MscmpSystHierarchy</span> 
+  <small class="app-vsn" translate="no">(mscmp_syst_hierarchy v0.1.0)</small>
+
+</h1>
+
+
+  <section id="moduledoc">
+<p>API providing a baseline methodology for defining Hierarchies and validating
+that implementations of those Hierarchies are valid.</p><p>The Hierarchy features supported by this Component are:</p><ul><li><p>Providing a Hierarchy definition with which implementations can be
+validated.</p></li><li><p>Support for optionally validated Hierarchies (&quot;structured&quot; vs.
+&quot;unstructured&quot;).</p></li><li><p>Support of optional Hierarchy levels.</p></li><li><p>Specification of which Hierarchy levels may be associated with &quot;Leaf Nodes&quot;;
+for example a Hierarchy defining an application menu structure may allow for
+levels which only define menu item groupings or may be associated directly
+with actionable application menu items where the menu items are &quot;Leaf Nodes&quot;.</p></li><li><p>Protection of in-use Hierarchy definitions to ensure Hierarchy
+implementation operational consistency.</p></li></ul><blockquote><h4 class="warning">Important Note</h4><p>While this Component makes certain guarantees about ensuring valid and
+consistent Hierarchy configurations, full consistency depends on Hierarchy
+implementing Components honoring the MscmpSystHierarchy guarantees.  To point,
+Hierarchy implementations must implement database foreign keys to the
+Hierarchy defining tables and ensures their own data structures are able to be
+validated against the defined Hierarchies.</p></blockquote><h2 id="module-concepts" class="section-heading">
+  <a href="#module-concepts" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Concepts</span>
+</h2>
+<p>There are a handful of conceptual ideas that you should be familiar with prior
+to working with this Component or one of the Hierarchy implementing Components.</p><h4>Hierarchy</h4><p>There are two different, but related, meanings assigned to the term &quot;Hierarchy&quot;
+in this Component.</p><p>In the first instance a Hierarchy is a configuration which establishes a pre-
+defined structure for data which can be represented in a tree-like structure.
+In this sense of the word we mean the totality of the records which define a
+distinct Hierarchy.  This is the more generic and conceptual sense of the word
+and it will be the intended meaning in most contexts.</p><p>The second meaning of Hierarchy is a more technically focused term referring
+specifically to the Hierarchy &quot;header record&quot; as opposed to the Hierarchy Item
+records which are the &quot;detail records&quot; defining the levels of the Hierarchy.
+This second meaning will be meant more often when dealing with database and
+specific technical related concerns, including the specific configuration
+options which define the Hierarchy as a whole.</p><p>Hierarchies may be &quot;structured&quot; or &quot;unstructured&quot;.  Structured Hierarchies
+define specific levels of hierarchy which are required to some degree of
+Hierarchy implementing Component data.  Unstructured Hierarchies aren't really
+Hierarchies at all, but allow implementing Components to optionally allow both
+structured and unstructured data without forcing special technical
+accommodations for the unstructured data.</p><h4>Hierarchy Types</h4><p>Hierarchies are assigned to a specific Hierarchy Type.  The Hierarchy Type
+establishes the area of system functionality to which the Hierarchy sensibly
+applies.  For example, a Hierarchy of &quot;Type Menu&quot; may define and be sensible to
+use in with application functions that define the application's user interface
+menus whereas a Hierarchy of &quot;Type Product Category&quot; would best be applied to
+Hierarchies which define product categorization structures.</p><h4>Hierarchy Items</h4><p>As mentioned above, Hierarchy Items specify the behaviors of the individual
+levels of hierarchy contained by the Hierarchy.  This includes the configuration
+points which are applicable to individual levels of the Hierarchy.  Hierarchy
+Item records are children of the Hierarchy records.</p><p>Hierarchy Items are required to be defined for all structured Hierarchies.
+Conversely, Hierarchy Items are prohibited in the context of unstructured
+Hierarchies.</p><h4>Hierarchy Implementing Components</h4><p>As mentioned above, <a href="MscmpSystHierarchy.html#content"><code class="inline">MscmpSystHierarchy</code></a> doesn't store or define the actual
+final data to which the Hierarchy is applied.  This is the responsibility of
+other, specialized Components which conform to <a href="MscmpSystHierarchy.html#content"><code class="inline">MscmpSystHierarchy</code></a>
+implementation expectations.</p>
+  </section>
+
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Summary</span>
+    </h1>
+<div class="summary-hierarchies summary">
+  <h2>
+    <a href="#hierarchies">Hierarchies</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_hierarchy_id_by_name/1" translate="no">get_hierarchy_id_by_name(hierarchy_name)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Returns the record ID of the Hierarchy as identified by its Internal Name.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_hierarchy_id_by_name!/1" translate="no">get_hierarchy_id_by_name!(hierarchy_name)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Returns the record ID of the Hierarchy as identified by its Internal Name,
+raising exceptions on error.</p></div>
+
+    </div>
+
+</div>
+<div class="summary-enumeration-access summary">
+  <h2>
+    <a href="#enumeration-access">Enumeration Access</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_hierarchy_state_by_name/1" translate="no">get_hierarchy_state_by_name(state_name)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Returns the Hierarchy State record for the given Hierarchy State Internal
+Name.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_hierarchy_state_default/1" translate="no">get_hierarchy_state_default(functional_type \\ nil)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Returns the default Hierarchy State record.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_hierarchy_state_default_id/1" translate="no">get_hierarchy_state_default_id(functional_type \\ nil)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Returns the default Hierarchy State record ID value.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_hierarchy_state_id_by_name/1" translate="no">get_hierarchy_state_id_by_name(state_name)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Returns the Hierarchy State ID for the given Hierarchy State Internal Name.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_hierarchy_type_by_name/1" translate="no">get_hierarchy_type_by_name(type_name)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Returns the Hierarchy Type record for the given Hierarchy Type Internal Name.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_hierarchy_type_id_by_name/1" translate="no">get_hierarchy_type_id_by_name(type_name)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Returns the ID value of a Hierarchy Type record as identified by the Hierarchy
+Type's Internal Name.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#list_hierarchy_types/1" translate="no">list_hierarchy_types(opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Lists the available Hierarchy Types, optionally sorted by the predefined sort
+order; doesn't raise exceptions on error.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#list_hierarchy_types!/1" translate="no">list_hierarchy_types!(opts \\ [])</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Lists the available Hierarchy Types, optionally sorted by the predefined sort
+order.</p></div>
+
+    </div>
+
+</div>
+
+  </section>
+
+
+  <section id="hierarchies" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#hierarchies">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Hierarchies</span>
+    </h1>
+    <div class="hierarchies-list">
+<section class="detail" id="get_hierarchy_id_by_name/1">
+
+  <div class="detail-header">
+    <a href="#get_hierarchy_id_by_name/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_hierarchy_id_by_name(hierarchy_name)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_hierarchy_id_by_name(<a href="MscmpSystHierarchy.Types.html#t:hierarchy_name/0">MscmpSystHierarchy.Types.hierarchy_name</a>()) ::
+  {:ok, <a href="MscmpSystHierarchy.Types.html#t:hierarchy_id/0">MscmpSystHierarchy.Types.hierarchy_id</a>()} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Returns the record ID of the Hierarchy as identified by its Internal Name.</p><p>On successful execution the Hierarchy record ID value is returned via a
+success tuple in the form <code class="inline">{:ok, &lt;Hierarchy ID&gt;}</code>.  If an error is encountered
+or the requested record does not exist an error tuple in the form
+<code class="inline">{:error, %MscmpSystError{}}</code> is returned instead.</p><h2 id="get_hierarchy_id_by_name/1-parameters" class="section-heading">
+  <a href="#get_hierarchy_id_by_name/1-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><code class="inline">hierarchy_name</code> - the Internal Name of the desired Hierarchy record.</li></ul><h2 id="get_hierarchy_id_by_name/1-examples" class="section-heading">
+  <a href="#get_hierarchy_id_by_name/1-examples" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Examples</span>
+</h2>
+<p>Normal call successfully returning a Hierarchy record ID value.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="7436590606-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">hierarchy_id</span><span class="p" data-group-id="7436590606-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystHierarchy</span><span class="o">.</span><span class="n">get_hierarchy_id_by_name</span><span class="p" data-group-id="7436590606-2">(</span><span class="s">&quot;hierarchy_example&quot;</span><span class="p" data-group-id="7436590606-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_binary</span><span class="p" data-group-id="7436590606-3">(</span><span class="n">hierarchy_id</span><span class="p" data-group-id="7436590606-3">)</span><span class="w">
+</span><span class="no">true</span></code></pre><p>A failing call due to requesting a non-existent Hierarchy record.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="6506718395-1">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="6506718395-2">%</span><span class="nc" data-group-id="6506718395-2">MscmpSystError</span><span class="p" data-group-id="6506718395-2">{</span><span class="p" data-group-id="6506718395-2">}</span><span class="p" data-group-id="6506718395-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystHierarchy</span><span class="o">.</span><span class="n">get_hierarchy_id_by_name</span><span class="p" data-group-id="6506718395-3">(</span><span class="s">&quot;nonexistent_hierarchy&quot;</span><span class="p" data-group-id="6506718395-3">)</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="get_hierarchy_id_by_name!/1">
+
+  <div class="detail-header">
+    <a href="#get_hierarchy_id_by_name!/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_hierarchy_id_by_name!(hierarchy_name)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_hierarchy_id_by_name!(<a href="MscmpSystHierarchy.Types.html#t:hierarchy_name/0">MscmpSystHierarchy.Types.hierarchy_name</a>()) ::
+  <a href="MscmpSystHierarchy.Types.html#t:hierarchy_id/0">MscmpSystHierarchy.Types.hierarchy_id</a>()</pre>
+
+      </div>
+
+<p>Returns the record ID of the Hierarchy as identified by its Internal Name,
+raising exceptions on error.</p><p>If the Hierarchy is not found or if some other error is encountered an
+exception is raised.</p><h2 id="get_hierarchy_id_by_name!/1-parameters" class="section-heading">
+  <a href="#get_hierarchy_id_by_name!/1-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><code class="inline">hierarchy_name</code> - the Internal Name of the desired Hierarchy record.</li></ul><h2 id="get_hierarchy_id_by_name!/1-examples" class="section-heading">
+  <a href="#get_hierarchy_id_by_name!/1-examples" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Examples</span>
+</h2>
+<p>Normal call successfully returning a Hierarchy record ID value.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">hierarchy_id</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystHierarchy</span><span class="o">.</span><span class="n">get_hierarchy_id_by_name!</span><span class="p" data-group-id="2421203454-1">(</span><span class="s">&quot;hierarchy_example&quot;</span><span class="p" data-group-id="2421203454-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_binary</span><span class="p" data-group-id="2421203454-2">(</span><span class="n">hierarchy_id</span><span class="p" data-group-id="2421203454-2">)</span><span class="w">
+</span><span class="no">true</span></code></pre>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+  <section id="enumeration-access" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#enumeration-access">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Enumeration Access</span>
+    </h1>
+    <div class="enumeration-access-list">
+<section class="detail" id="get_hierarchy_state_by_name/1">
+
+  <div class="detail-header">
+    <a href="#get_hierarchy_state_by_name/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_hierarchy_state_by_name(state_name)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_hierarchy_state_by_name(<a href="MscmpSystHierarchy.Types.html#t:hierarchy_state_name/0">MscmpSystHierarchy.Types.hierarchy_state_name</a>()) ::
+  <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/Msdata.SystEnumItems.html#t:t/0">Msdata.SystEnumItems.t</a>() | nil</pre>
+
+      </div>
+
+<p>Returns the Hierarchy State record for the given Hierarchy State Internal
+Name.</p><p>If the requested Hierarchy State record does not exist <code class="inline">nil</code> is returned
+instead.  Any errors cause an exception to be raised.</p><p>Hierarchy States are currently implemented using the <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.html"><code class="inline">MscmpSystEnums</code></a>
+Component.</p><h2 id="get_hierarchy_state_by_name/1-parameters" class="section-heading">
+  <a href="#get_hierarchy_state_by_name/1-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><code class="inline">state_name</code> - the Internal Name of the desired Hierarchy State to
+retrieve.  This parameter is required.</li></ul><h2 id="get_hierarchy_state_by_name/1-examples" class="section-heading">
+  <a href="#get_hierarchy_state_by_name/1-examples" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Examples</span>
+</h2>
+<p>Requesting an existing Hierarchy State:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="3846527832-1">%</span><span class="nc" data-group-id="3846527832-1">Msdata.SystEnumItems</span><span class="p" data-group-id="3846527832-1">{</span><span class="p" data-group-id="3846527832-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystHierarchy</span><span class="o">.</span><span class="n">get_hierarchy_state_by_name</span><span class="p" data-group-id="3846527832-2">(</span><span class="s">&quot;hierarchy_states_sysdef_active&quot;</span><span class="p" data-group-id="3846527832-2">)</span></code></pre><p>Requesting a non-existent Hierarchy State:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystHierarchy</span><span class="o">.</span><span class="n">get_hierarchy_state_by_name</span><span class="p" data-group-id="8161102796-1">(</span><span class="s">&quot;nonexistent_state&quot;</span><span class="p" data-group-id="8161102796-1">)</span><span class="w">
+</span><span class="no">nil</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="get_hierarchy_state_default/1">
+
+    <span id="get_hierarchy_state_default/0"></span>
+
+  <div class="detail-header">
+    <a href="#get_hierarchy_state_default/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_hierarchy_state_default(functional_type \\ nil)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_hierarchy_state_default(
+  <a href="MscmpSystHierarchy.Types.html#t:hierarchy_state_functional_types/0">MscmpSystHierarchy.Types.hierarchy_state_functional_types</a>()
+  | nil
+) ::
+  <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/Msdata.SystEnumItems.html#t:t/0">Msdata.SystEnumItems.t</a>()</pre>
+
+      </div>
+
+<p>Returns the default Hierarchy State record.</p><p>Optionally, this function can also return the default Hierarchy State for a
+specified Hierarchy State Functional Type.</p><p>Any errors encountered will cause an exception to be raised.</p><h2 id="get_hierarchy_state_default/1-parameters" class="section-heading">
+  <a href="#get_hierarchy_state_default/1-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><code class="inline">functional_type</code> - an optional parameter specifying which Hierarchy State
+Functional Type's default record should be returned.  If this parameter is
+<code class="inline">nil</code> (the parameter default), the default Hierarchy State overall will be
+returned.</li></ul><h2 id="get_hierarchy_state_default/1-examples" class="section-heading">
+  <a href="#get_hierarchy_state_default/1-examples" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Examples</span>
+</h2>
+<p>Return the overall default Hierarchy State.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="2823600007-1">%</span><span class="nc" data-group-id="2823600007-1">Msdata.SystEnumItems</span><span class="p" data-group-id="2823600007-1">{</span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;hierarchy_states_sysdef_inactive&quot;</span><span class="p" data-group-id="2823600007-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystHierarchy</span><span class="o">.</span><span class="n">get_hierarchy_state_default</span><span class="p" data-group-id="2823600007-2">(</span><span class="p" data-group-id="2823600007-2">)</span></code></pre><p>Return the default Hierarchy State for the &quot;active&quot; Functional Type.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="1562979215-1">%</span><span class="nc" data-group-id="1562979215-1">Msdata.SystEnumItems</span><span class="p" data-group-id="1562979215-1">{</span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;hierarchy_states_sysdef_active&quot;</span><span class="p" data-group-id="1562979215-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystHierarchy</span><span class="o">.</span><span class="n">get_hierarchy_state_default</span><span class="p" data-group-id="1562979215-2">(</span><span class="ss">:hierarchy_states_active</span><span class="p" data-group-id="1562979215-2">)</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="get_hierarchy_state_default_id/1">
+
+    <span id="get_hierarchy_state_default_id/0"></span>
+
+  <div class="detail-header">
+    <a href="#get_hierarchy_state_default_id/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_hierarchy_state_default_id(functional_type \\ nil)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_hierarchy_state_default_id(
+  <a href="MscmpSystHierarchy.Types.html#t:hierarchy_state_functional_types/0">MscmpSystHierarchy.Types.hierarchy_state_functional_types</a>()
+  | nil
+) ::
+  <a href="MscmpSystHierarchy.Types.html#t:hierarchy_state_id/0">MscmpSystHierarchy.Types.hierarchy_state_id</a>()</pre>
+
+      </div>
+
+<p>Returns the default Hierarchy State record ID value.</p><p>Optionally, this function can also return the ID value of the default
+Hierarchy State for a specified Hierarchy State Functional Type.</p><p>Any errors encountered will cause an exception to be raised.</p><h2 id="get_hierarchy_state_default_id/1-parameters" class="section-heading">
+  <a href="#get_hierarchy_state_default_id/1-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><code class="inline">functional_type</code> - an optional parameter specifying which Hierarchy State
+Functional Type's default record ID should be returned.  If this parameter
+is <code class="inline">nil</code> (the parameter default), the default Hierarchy State overall will
+be returned.</li></ul><h2 id="get_hierarchy_state_default_id/1-examples" class="section-heading">
+  <a href="#get_hierarchy_state_default_id/1-examples" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Examples</span>
+</h2>
+<p>Return the overall default Hierarchy State.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">state_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystHierarchy</span><span class="o">.</span><span class="n">get_hierarchy_state_default_id</span><span class="p" data-group-id="4822854306-1">(</span><span class="p" data-group-id="4822854306-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_binary</span><span class="p" data-group-id="4822854306-2">(</span><span class="n">state_id</span><span class="p" data-group-id="4822854306-2">)</span><span class="w">
+</span><span class="no">true</span></code></pre><p>Return the default Hierarchy State for the &quot;active&quot; Functional Type.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">state_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">MscmpSystHierarchy</span><span class="o">.</span><span class="n">get_hierarchy_state_default_id</span><span class="p" data-group-id="7791929684-1">(</span><span class="ss">:hierarchy_states_active</span><span class="p" data-group-id="7791929684-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_binary</span><span class="p" data-group-id="7791929684-2">(</span><span class="n">state_id</span><span class="p" data-group-id="7791929684-2">)</span><span class="w">
+</span><span class="no">true</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="get_hierarchy_state_id_by_name/1">
+
+  <div class="detail-header">
+    <a href="#get_hierarchy_state_id_by_name/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_hierarchy_state_id_by_name(state_name)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_hierarchy_state_id_by_name(<a href="MscmpSystHierarchy.Types.html#t:hierarchy_state_name/0">MscmpSystHierarchy.Types.hierarchy_state_name</a>()) ::
+  <a href="MscmpSystHierarchy.Types.html#t:hierarchy_state_id/0">MscmpSystHierarchy.Types.hierarchy_state_id</a>() | nil</pre>
+
+      </div>
+
+<p>Returns the Hierarchy State ID for the given Hierarchy State Internal Name.</p><p>If the requested Hierarchy State record does not exist <code class="inline">nil</code> is returned
+instead.  Any errors cause an exception to be raised.</p><p>Hierarchy States are currently implemented using the <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.html"><code class="inline">MscmpSystEnums</code></a>
+Component.</p><h2 id="get_hierarchy_state_id_by_name/1-parameters" class="section-heading">
+  <a href="#get_hierarchy_state_id_by_name/1-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><code class="inline">state_name</code> - the Internal Name of the desired Hierarchy State ID to
+retrieve.  This parameter is required.</li></ul><h2 id="get_hierarchy_state_id_by_name/1-examples" class="section-heading">
+  <a href="#get_hierarchy_state_id_by_name/1-examples" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Examples</span>
+</h2>
+<p>Requesting an existing Hierarchy State:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">state_id</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystHierarchy</span><span class="o">.</span><span class="n">get_hierarchy_state_id_by_name</span><span class="p" data-group-id="3828587294-1">(</span><span class="s">&quot;hierarchy_states_sysdef_inactive&quot;</span><span class="p" data-group-id="3828587294-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_binary</span><span class="p" data-group-id="3828587294-2">(</span><span class="n">state_id</span><span class="p" data-group-id="3828587294-2">)</span></code></pre><p>Requesting a non-existent Hierarchy State:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystHierarchy</span><span class="o">.</span><span class="n">get_hierarchy_state_id_by_name</span><span class="p" data-group-id="0791970372-1">(</span><span class="s">&quot;nonexistent_state&quot;</span><span class="p" data-group-id="0791970372-1">)</span><span class="w">
+</span><span class="no">nil</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="get_hierarchy_type_by_name/1">
+
+  <div class="detail-header">
+    <a href="#get_hierarchy_type_by_name/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_hierarchy_type_by_name(type_name)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_hierarchy_type_by_name(<a href="MscmpSystHierarchy.Types.html#t:hierarchy_type_name/0">MscmpSystHierarchy.Types.hierarchy_type_name</a>()) ::
+  <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/Msdata.SystEnumItems.html#t:t/0">Msdata.SystEnumItems.t</a>() | nil</pre>
+
+      </div>
+
+<p>Returns the Hierarchy Type record for the given Hierarchy Type Internal Name.</p><p>If the requested Hierarchy Type record does not exist <code class="inline">nil</code> is returned
+instead.  Any errors cause an exception to be raised.</p><p>Hierarchy Types are currently implemented using the <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.html"><code class="inline">MscmpSystEnums</code></a>
+Component.</p><h2 id="get_hierarchy_type_by_name/1-parameters" class="section-heading">
+  <a href="#get_hierarchy_type_by_name/1-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><code class="inline">type_name</code> - the Internal Name of the desired Hierarchy Type to retrieve.
+This parameter is required.</li></ul><h2 id="get_hierarchy_type_by_name/1-examples" class="section-heading">
+  <a href="#get_hierarchy_type_by_name/1-examples" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Examples</span>
+</h2>
+<p>Requesting an existing Hierarchy Type:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="6705652784-1">%</span><span class="nc" data-group-id="6705652784-1">Msdata.SystEnumItems</span><span class="p" data-group-id="6705652784-1">{</span><span class="p" data-group-id="6705652784-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystHierarchy</span><span class="o">.</span><span class="n">get_hierarchy_type_by_name</span><span class="p" data-group-id="6705652784-2">(</span><span class="s">&quot;hierarchy_type_example&quot;</span><span class="p" data-group-id="6705652784-2">)</span></code></pre><p>Requesting a non-existent Hierarchy Type:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystHierarchy</span><span class="o">.</span><span class="n">get_hierarchy_type_by_name</span><span class="p" data-group-id="3023714562-1">(</span><span class="s">&quot;nonexistent_type&quot;</span><span class="p" data-group-id="3023714562-1">)</span><span class="w">
+</span><span class="no">nil</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="get_hierarchy_type_id_by_name/1">
+
+  <div class="detail-header">
+    <a href="#get_hierarchy_type_id_by_name/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_hierarchy_type_id_by_name(type_name)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> get_hierarchy_type_id_by_name(<a href="MscmpSystHierarchy.Types.html#t:hierarchy_type_name/0">MscmpSystHierarchy.Types.hierarchy_type_name</a>()) ::
+  <a href="MscmpSystHierarchy.Types.html#t:hierarchy_type_id/0">MscmpSystHierarchy.Types.hierarchy_type_id</a>() | nil</pre>
+
+      </div>
+
+<p>Returns the ID value of a Hierarchy Type record as identified by the Hierarchy
+Type's Internal Name.</p><p>If the requested Hierarchy Type record does not exist <code class="inline">nil</code> is returned
+instead.  Any errors cause an exception to be raised.</p><p>Hierarchy Types are currently implemented using the <a href="../../../../documentation/technical/app_server/mscmp_syst_enums/MscmpSystEnums.html"><code class="inline">MscmpSystEnums</code></a>
+Component.</p><h2 id="get_hierarchy_type_id_by_name/1-parameters" class="section-heading">
+  <a href="#get_hierarchy_type_id_by_name/1-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><code class="inline">type_name</code> - the Internal Name of the desired Hierarchy Type ID to
+retrieve.  This parameter is required.</li></ul><h2 id="get_hierarchy_type_id_by_name/1-examples" class="section-heading">
+  <a href="#get_hierarchy_type_id_by_name/1-examples" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Examples</span>
+</h2>
+<p>Requesting an existing Hierarchy Type:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">id_value</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystHierarchy</span><span class="o">.</span><span class="n">get_hierarchy_type_id_by_name</span><span class="p" data-group-id="1662336887-1">(</span><span class="s">&quot;hierarchy_type_example&quot;</span><span class="p" data-group-id="1662336887-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">is_binary</span><span class="p" data-group-id="1662336887-2">(</span><span class="n">id_value</span><span class="p" data-group-id="1662336887-2">)</span><span class="w">
+</span><span class="no">true</span></code></pre><p>Requesting a non-existent Hierarchy Type:</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystHierarchy</span><span class="o">.</span><span class="n">get_hierarchy_type_id_by_name</span><span class="p" data-group-id="6002653258-1">(</span><span class="s">&quot;nonexistent_type&quot;</span><span class="p" data-group-id="6002653258-1">)</span><span class="w">
+</span><span class="no">nil</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="list_hierarchy_types/1">
+
+    <span id="list_hierarchy_types/0"></span>
+
+  <div class="detail-header">
+    <a href="#list_hierarchy_types/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">list_hierarchy_types(opts \\ [])</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> list_hierarchy_types(<a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) ::
+  {:ok, [<a href="../../../../documentation/technical/app_server/mscmp_syst_enums/Msdata.SystEnumItems.html#t:t/0">Msdata.SystEnumItems.t</a>()]} | {:error, <a href="../../../../documentation/technical/app_server/mscmp_syst_error/MscmpSystError.html#t:t/0">MscmpSystError.t</a>()}</pre>
+
+      </div>
+
+<p>Lists the available Hierarchy Types, optionally sorted by the predefined sort
+order; doesn't raise exceptions on error.</p><p>Returns a list of Hierarchy Type records using a result tuple. If the request
+runs without error, a success tuple in the form of <code class="inline">{:ok, &lt;list&gt;}</code> is returned
+while an error condition will return an error tuple in the form of
+<code class="inline">{:error, &lt;error&gt;}</code>.</p><h2 id="list_hierarchy_types/1-parameters" class="section-heading">
+  <a href="#list_hierarchy_types/1-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><p><code class="inline">opts</code> - A Keyword List of optional parameters.  The available options
+are:</p><ul><li><code class="inline">sorted</code> - a boolean value indicating whether or not the list should be
+sorted according to the predefined <code class="inline">sort_order</code> values of the individual
+Hierarchy Type records.  The default value of this option is <code class="inline">true</code>.</li></ul></li></ul><h2 id="list_hierarchy_types/1-examples" class="section-heading">
+  <a href="#list_hierarchy_types/1-examples" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Examples</span>
+</h2>
+<p>Retrieving the list of Hierarchy Types using the default options.  Note that
+in the example there is only one available Hierarchy Type defined in the
+system.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="7254069642-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7254069642-2">[</span><span class="p" data-group-id="7254069642-3">%</span><span class="nc" data-group-id="7254069642-3">Msdata.SystEnumItems</span><span class="p" data-group-id="7254069642-3">{</span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;hierarchy_type_example&quot;</span><span class="p" data-group-id="7254069642-3">}</span><span class="p" data-group-id="7254069642-2">]</span><span class="p" data-group-id="7254069642-1">}</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystHierarchy</span><span class="o">.</span><span class="n">list_hierarchy_types</span><span class="p" data-group-id="7254069642-4">(</span><span class="p" data-group-id="7254069642-4">)</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="list_hierarchy_types!/1">
+
+    <span id="list_hierarchy_types!/0"></span>
+
+  <div class="detail-header">
+    <a href="#list_hierarchy_types!/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">list_hierarchy_types!(opts \\ [])</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@spec</span> list_hierarchy_types!(<a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) :: [<a href="../../../../documentation/technical/app_server/mscmp_syst_enums/Msdata.SystEnumItems.html#t:t/0">Msdata.SystEnumItems.t</a>()]</pre>
+
+      </div>
+
+<p>Lists the available Hierarchy Types, optionally sorted by the predefined sort
+order.</p><p>Returns a list of Hierarchy Type records.  Raises an exception on errors.</p><h2 id="list_hierarchy_types!/1-parameters" class="section-heading">
+  <a href="#list_hierarchy_types!/1-parameters" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Parameters</span>
+</h2>
+<ul><li><p><code class="inline">opts</code> - A Keyword List of optional parameters.  The available options
+are:</p><ul><li><code class="inline">sorted</code> - a boolean value indicating whether or not the list should be
+sorted according to the predefined <code class="inline">sort_order</code> values of the individual
+Hierarchy Type records.  The default value of this option is <code class="inline">true</code>.</li></ul></li></ul><h2 id="list_hierarchy_types!/1-examples" class="section-heading">
+  <a href="#list_hierarchy_types!/1-examples" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Examples</span>
+</h2>
+<p>Retrieving the list of Hierarchy Types using the default options.  Note that
+in the example there is only one available Hierarchy Type defined in the
+system.</p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="9924135349-1">[</span><span class="p" data-group-id="9924135349-2">%</span><span class="nc" data-group-id="9924135349-2">Msdata.SystEnumItems</span><span class="p" data-group-id="9924135349-2">{</span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;hierarchy_type_example&quot;</span><span class="p" data-group-id="9924135349-2">}</span><span class="p" data-group-id="9924135349-1">]</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">MscmpSystHierarchy</span><span class="o">.</span><span class="n">list_hierarchy_types!</span><span class="p" data-group-id="9924135349-3">(</span><span class="p" data-group-id="9924135349-3">)</span></code></pre>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+      <footer class="footer">
+        <p>
+
+          <span class="line">
+            <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+              Search HexDocs
+            </button>
+
+              <a href="mscmp_syst_hierarchy.epub" title="ePub version">
+                Download ePub version
+              </a>
+
+          </span>
+        </p>
+
+        <p class="built-using">
+          Built using
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.31.1) for the
+
+            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+        </p>
+      </footer>
+    </div>
+  </div>
+</main>
+</div>
+
+
+  </body>
+</html>

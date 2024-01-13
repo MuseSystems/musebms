@@ -4,20 +4,21 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.30.9">
+    <meta name="generator" content="ExDoc v0.31.1">
     <meta name="project" content="Msplatform v0.1.0">
 
+
     <title>MsappMcpWeb.Endpoint — Msplatform v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-XFYN5IVA.css" />
+    <link rel="stylesheet" href="dist/html-elixir-FM2CSD74.css" />
 
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-EPF2X7PV.js"></script>
-    <script src="dist/sidebar_items-1F57C4CD.js"></script>
+    <script src="dist/handlebars.templates-43PMFBC7.js"></script>
+    <script src="dist/sidebar_items-F6DA035D.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/html-J2ASZTQE.js"></script>
+    <script async src="dist/html-L4O5OK2K.js"></script>
 
 
   </head>
@@ -38,37 +39,24 @@
 
 <div class="main">
 
-<button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
+<button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
   <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
 </button>
 
-<nav id="sidebar" class="sidebar">
-  <form class="sidebar-search" action="search.html">
-    <label class="search-label">
-      <span class="sr-only">Search documentation of Msplatform</span>
-      <input name="q" type="text" class="search-input" placeholder="Search..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
-    </label>
-    <button type="submit" class="search-button" aria-label="Submit Search">
-      <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
-    </button>
-    <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
-      <i class="ri-close-line ri-lg" title="Cancel search"></i>
-    </button>
-  </form>
+<div class="background-layer"></div>
 
-  <div class="autocomplete">
-    <div class="autocomplete-results">
-    </div>
-  </div>
+<nav id="sidebar" class="sidebar">
 
   <div class="sidebar-header">
+    <div class="sidebar-projectInfo">
 
-    <div class="sidebar-projectDetails">
-      <a href="api-reference.html" class="sidebar-projectName" translate="no">
+      <div>
+        <a href="api-reference.html" class="sidebar-projectName" translate="no">
 Msplatform
-      </a>
-      <div class="sidebar-projectVersion" translate="no">
-        v0.1.0
+        </a>
+        <div class="sidebar-projectVersion" translate="no">
+          v0.1.0
+        </div>
       </div>
     </div>
     <ul id="sidebar-listNav" class="sidebar-listNav" role="tablist">
@@ -103,13 +91,31 @@ Pages
   <output role="status" id="toast"></output>
   <div class="content-outer">
     <div id="content" class="content-inner">
+      <div class="top-search">
+        <div class="search-settings">
+          <form class="search-bar" action="search.html">
+            <label class="search-label">
+              <span class="sr-only">Search documentation of Msplatform</span>
+              <input name="q" type="text" class="search-input" placeholder="Search Documentation (press /)" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+            </label>
+            <button type="submit" class="search-button" aria-label="Submit Search">
+              <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
+            </button>
+            <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+              <i class="ri-close-line ri-lg" title="Cancel search"></i>
+            </button>
+          </form>
+          <div class="autocomplete">
+          </div>
+          <button class="icon-settings display-settings">
+            <i class="ri-settings-3-line"></i>
+            <span class="sr-only">Settings</span>
+          </button>
+        </div>
+
+      </div>
 
 <h1>
-<button class="icon-action display-settings">
-  <i class="ri-settings-3-line"></i>
-  <span class="sr-only">Settings</span>
-</button>
-
 
   <span translate="no">MsappMcpWeb.Endpoint</span> 
   <small class="app-vsn" translate="no">(Msplatform v0.1.0)</small>
@@ -136,7 +142,7 @@ Pages
 
       </div>
 
-        <div class="summary-synopsis"><p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.7.9/Phoenix.Endpoint.html#c:broadcast/3"><code class="inline">Phoenix.Endpoint.broadcast/3</code></a>.</p></div>
+        <div class="summary-synopsis"><p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.7.10/Phoenix.Endpoint.html#c:broadcast/3"><code class="inline">Phoenix.Endpoint.broadcast/3</code></a>.</p></div>
 
     </div>
 
@@ -146,7 +152,7 @@ Pages
 
       </div>
 
-        <div class="summary-synopsis"><p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.7.9/Phoenix.Endpoint.html#c:broadcast!/3"><code class="inline">Phoenix.Endpoint.broadcast!/3</code></a>.</p></div>
+        <div class="summary-synopsis"><p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.7.10/Phoenix.Endpoint.html#c:broadcast!/3"><code class="inline">Phoenix.Endpoint.broadcast!/3</code></a>.</p></div>
 
     </div>
 
@@ -156,7 +162,7 @@ Pages
 
       </div>
 
-        <div class="summary-synopsis"><p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.7.9/Phoenix.Endpoint.html#c:broadcast_from/4"><code class="inline">Phoenix.Endpoint.broadcast_from/4</code></a>.</p></div>
+        <div class="summary-synopsis"><p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.7.10/Phoenix.Endpoint.html#c:broadcast_from/4"><code class="inline">Phoenix.Endpoint.broadcast_from/4</code></a>.</p></div>
 
     </div>
 
@@ -166,7 +172,7 @@ Pages
 
       </div>
 
-        <div class="summary-synopsis"><p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.7.9/Phoenix.Endpoint.html#c:broadcast_from!/4"><code class="inline">Phoenix.Endpoint.broadcast_from!/4</code></a>.</p></div>
+        <div class="summary-synopsis"><p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.7.10/Phoenix.Endpoint.html#c:broadcast_from!/4"><code class="inline">Phoenix.Endpoint.broadcast_from!/4</code></a>.</p></div>
 
     </div>
 
@@ -176,7 +182,7 @@ Pages
 
       </div>
 
-        <div class="summary-synopsis"><p>Callback implementation for <a href="https://hexdocs.pm/plug/1.15.1/Plug.html#c:call/2"><code class="inline">Plug.call/2</code></a>.</p></div>
+        <div class="summary-synopsis"><p>Callback implementation for <a href="https://hexdocs.pm/plug/1.15.2/Plug.html#c:call/2"><code class="inline">Plug.call/2</code></a>.</p></div>
 
     </div>
 
@@ -227,7 +233,7 @@ under a supervision tree.</p></div>
 
       </div>
 
-        <div class="summary-synopsis"><p>Callback implementation for <a href="https://hexdocs.pm/plug/1.15.1/Plug.html#c:init/1"><code class="inline">Plug.init/1</code></a>.</p></div>
+        <div class="summary-synopsis"><p>Callback implementation for <a href="https://hexdocs.pm/plug/1.15.2/Plug.html#c:init/1"><code class="inline">Plug.init/1</code></a>.</p></div>
 
     </div>
 
@@ -237,7 +243,7 @@ under a supervision tree.</p></div>
 
       </div>
 
-        <div class="summary-synopsis"><p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.7.9/Phoenix.Endpoint.html#c:local_broadcast/3"><code class="inline">Phoenix.Endpoint.local_broadcast/3</code></a>.</p></div>
+        <div class="summary-synopsis"><p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.7.10/Phoenix.Endpoint.html#c:local_broadcast/3"><code class="inline">Phoenix.Endpoint.local_broadcast/3</code></a>.</p></div>
 
     </div>
 
@@ -247,7 +253,7 @@ under a supervision tree.</p></div>
 
       </div>
 
-        <div class="summary-synopsis"><p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.7.9/Phoenix.Endpoint.html#c:local_broadcast_from/4"><code class="inline">Phoenix.Endpoint.local_broadcast_from/4</code></a>.</p></div>
+        <div class="summary-synopsis"><p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.7.10/Phoenix.Endpoint.html#c:local_broadcast_from/4"><code class="inline">Phoenix.Endpoint.local_broadcast_from/4</code></a>.</p></div>
 
     </div>
 
@@ -268,6 +274,16 @@ under a supervision tree.</p></div>
       </div>
 
         <div class="summary-synopsis"><p>Generates the script name.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#server_info/1" translate="no">server_info(scheme)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Returns the address and port that the server is running on</p></div>
 
     </div>
 
@@ -339,7 +355,7 @@ and the second item being the <code class="inline">static_integrity</code>.</p><
 
       </div>
 
-        <div class="summary-synopsis"><p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.7.9/Phoenix.Endpoint.html#c:subscribe/2"><code class="inline">Phoenix.Endpoint.subscribe/2</code></a>.</p></div>
+        <div class="summary-synopsis"><p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.7.10/Phoenix.Endpoint.html#c:subscribe/2"><code class="inline">Phoenix.Endpoint.subscribe/2</code></a>.</p></div>
 
     </div>
 
@@ -349,7 +365,7 @@ and the second item being the <code class="inline">static_integrity</code>.</p><
 
       </div>
 
-        <div class="summary-synopsis"><p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.7.9/Phoenix.Endpoint.html#c:unsubscribe/1"><code class="inline">Phoenix.Endpoint.unsubscribe/1</code></a>.</p></div>
+        <div class="summary-synopsis"><p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.7.10/Phoenix.Endpoint.html#c:unsubscribe/1"><code class="inline">Phoenix.Endpoint.unsubscribe/1</code></a>.</p></div>
 
     </div>
 
@@ -390,7 +406,7 @@ and the second item being the <code class="inline">static_integrity</code>.</p><
 
   <section class="docstring">
 
-<p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.7.9/Phoenix.Endpoint.html#c:broadcast/3"><code class="inline">Phoenix.Endpoint.broadcast/3</code></a>.</p>
+<p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.7.10/Phoenix.Endpoint.html#c:broadcast/3"><code class="inline">Phoenix.Endpoint.broadcast/3</code></a>.</p>
   </section>
 </section>
 <section class="detail" id="broadcast!/3">
@@ -407,7 +423,7 @@ and the second item being the <code class="inline">static_integrity</code>.</p><
 
   <section class="docstring">
 
-<p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.7.9/Phoenix.Endpoint.html#c:broadcast!/3"><code class="inline">Phoenix.Endpoint.broadcast!/3</code></a>.</p>
+<p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.7.10/Phoenix.Endpoint.html#c:broadcast!/3"><code class="inline">Phoenix.Endpoint.broadcast!/3</code></a>.</p>
   </section>
 </section>
 <section class="detail" id="broadcast_from/4">
@@ -424,7 +440,7 @@ and the second item being the <code class="inline">static_integrity</code>.</p><
 
   <section class="docstring">
 
-<p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.7.9/Phoenix.Endpoint.html#c:broadcast_from/4"><code class="inline">Phoenix.Endpoint.broadcast_from/4</code></a>.</p>
+<p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.7.10/Phoenix.Endpoint.html#c:broadcast_from/4"><code class="inline">Phoenix.Endpoint.broadcast_from/4</code></a>.</p>
   </section>
 </section>
 <section class="detail" id="broadcast_from!/4">
@@ -441,7 +457,7 @@ and the second item being the <code class="inline">static_integrity</code>.</p><
 
   <section class="docstring">
 
-<p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.7.9/Phoenix.Endpoint.html#c:broadcast_from!/4"><code class="inline">Phoenix.Endpoint.broadcast_from!/4</code></a>.</p>
+<p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.7.10/Phoenix.Endpoint.html#c:broadcast_from!/4"><code class="inline">Phoenix.Endpoint.broadcast_from!/4</code></a>.</p>
   </section>
 </section>
 <section class="detail" id="call/2">
@@ -458,7 +474,7 @@ and the second item being the <code class="inline">static_integrity</code>.</p><
 
   <section class="docstring">
 
-<p>Callback implementation for <a href="https://hexdocs.pm/plug/1.15.1/Plug.html#c:call/2"><code class="inline">Plug.call/2</code></a>.</p>
+<p>Callback implementation for <a href="https://hexdocs.pm/plug/1.15.2/Plug.html#c:call/2"><code class="inline">Plug.call/2</code></a>.</p>
   </section>
 </section>
 <section class="detail" id="child_spec/1">
@@ -546,7 +562,7 @@ under a supervision tree.</p>
 
   <section class="docstring">
 
-<p>Callback implementation for <a href="https://hexdocs.pm/plug/1.15.1/Plug.html#c:init/1"><code class="inline">Plug.init/1</code></a>.</p>
+<p>Callback implementation for <a href="https://hexdocs.pm/plug/1.15.2/Plug.html#c:init/1"><code class="inline">Plug.init/1</code></a>.</p>
   </section>
 </section>
 <section class="detail" id="local_broadcast/3">
@@ -563,7 +579,7 @@ under a supervision tree.</p>
 
   <section class="docstring">
 
-<p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.7.9/Phoenix.Endpoint.html#c:local_broadcast/3"><code class="inline">Phoenix.Endpoint.local_broadcast/3</code></a>.</p>
+<p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.7.10/Phoenix.Endpoint.html#c:local_broadcast/3"><code class="inline">Phoenix.Endpoint.local_broadcast/3</code></a>.</p>
   </section>
 </section>
 <section class="detail" id="local_broadcast_from/4">
@@ -580,7 +596,7 @@ under a supervision tree.</p>
 
   <section class="docstring">
 
-<p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.7.9/Phoenix.Endpoint.html#c:local_broadcast_from/4"><code class="inline">Phoenix.Endpoint.local_broadcast_from/4</code></a>.</p>
+<p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.7.10/Phoenix.Endpoint.html#c:local_broadcast_from/4"><code class="inline">Phoenix.Endpoint.local_broadcast_from/4</code></a>.</p>
   </section>
 </section>
 <section class="detail" id="path/1">
@@ -615,6 +631,23 @@ under a supervision tree.</p>
   <section class="docstring">
 
 <p>Generates the script name.</p>
+  </section>
+</section>
+<section class="detail" id="server_info/1">
+
+  <div class="detail-header">
+    <a href="#server_info/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">server_info(scheme)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>Returns the address and port that the server is running on</p>
   </section>
 </section>
 <section class="detail" id="start_link/1">
@@ -742,7 +775,7 @@ URL helpers.</p>
 
   <section class="docstring">
 
-<p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.7.9/Phoenix.Endpoint.html#c:subscribe/2"><code class="inline">Phoenix.Endpoint.subscribe/2</code></a>.</p>
+<p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.7.10/Phoenix.Endpoint.html#c:subscribe/2"><code class="inline">Phoenix.Endpoint.subscribe/2</code></a>.</p>
   </section>
 </section>
 <section class="detail" id="unsubscribe/1">
@@ -759,7 +792,7 @@ URL helpers.</p>
 
   <section class="docstring">
 
-<p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.7.9/Phoenix.Endpoint.html#c:unsubscribe/1"><code class="inline">Phoenix.Endpoint.unsubscribe/1</code></a>.</p>
+<p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.7.10/Phoenix.Endpoint.html#c:unsubscribe/1"><code class="inline">Phoenix.Endpoint.unsubscribe/1</code></a>.</p>
   </section>
 </section>
 <section class="detail" id="url/0">
@@ -800,7 +833,7 @@ URL helpers.</p>
 
         <p class="built-using">
           Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.30.9) for the
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.31.1) for the
 
             <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 
