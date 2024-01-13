@@ -26,28 +26,9 @@ test_kind =
 
 TestSupport.setup_testing_database(test_kind)
 
-MscmpSystDb.put_datastore_context(TestSupport.get_testing_datastore_context_id())
+MscmpSystDb.put_datastore_context(MscmpSystDb.get_testsupport_context_name())
 
-children = [
-  {DynamicSupervisor, strategy: :one_for_one, name: MscmpSystNav.TestingSupervisor}
-]
-
-Supervisor.start_link(children, strategy: :one_for_one)
-
-enum_service_spec = %{
-  id: MscmpSystNavTestingEnumService,
-  start: {
-    MscmpSystEnums,
-    :start_link,
-    [{:nav, TestSupport.get_testing_datastore_context_id()}]
-  }
-}
-
-Logger.configure(level: :info)
-
-ExUnit.start()
-
-DynamicSupervisor.start_child(MscmpSystNav.TestingSupervisor, enum_service_spec)
+MscmpSystEnums.start_testsupport_services()
 
 ExUnit.after_suite(fn _suite_result ->
   TestSupport.cleanup_testing_database(test_kind)
