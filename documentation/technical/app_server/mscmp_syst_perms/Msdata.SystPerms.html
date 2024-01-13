@@ -4,20 +4,21 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.30.9">
+    <meta name="generator" content="ExDoc v0.31.1">
     <meta name="project" content="mscmp_syst_perms v0.1.0">
 
+
     <title>Msdata.SystPerms — mscmp_syst_perms v0.1.0</title>
-    <link rel="stylesheet" href="dist/html-elixir-XFYN5IVA.css" />
+    <link rel="stylesheet" href="dist/html-elixir-FM2CSD74.css" />
 
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
-    <script src="dist/handlebars.templates-EPF2X7PV.js"></script>
-    <script src="dist/sidebar_items-B2377805.js"></script>
+    <script src="dist/handlebars.templates-43PMFBC7.js"></script>
+    <script src="dist/sidebar_items-6781E958.js"></script>
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/html-J2ASZTQE.js"></script>
+    <script async src="dist/html-L4O5OK2K.js"></script>
 
 
   </head>
@@ -38,37 +39,24 @@
 
 <div class="main">
 
-<button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
+<button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
   <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
 </button>
 
-<nav id="sidebar" class="sidebar">
-  <form class="sidebar-search" action="search.html">
-    <label class="search-label">
-      <span class="sr-only">Search documentation of mscmp_syst_perms</span>
-      <input name="q" type="text" class="search-input" placeholder="Search..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
-    </label>
-    <button type="submit" class="search-button" aria-label="Submit Search">
-      <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
-    </button>
-    <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
-      <i class="ri-close-line ri-lg" title="Cancel search"></i>
-    </button>
-  </form>
+<div class="background-layer"></div>
 
-  <div class="autocomplete">
-    <div class="autocomplete-results">
-    </div>
-  </div>
+<nav id="sidebar" class="sidebar">
 
   <div class="sidebar-header">
+    <div class="sidebar-projectInfo">
 
-    <div class="sidebar-projectDetails">
-      <a href="MscmpSystPerms.html" class="sidebar-projectName" translate="no">
+      <div>
+        <a href="MscmpSystPerms.html" class="sidebar-projectName" translate="no">
 mscmp_syst_perms
-      </a>
-      <div class="sidebar-projectVersion" translate="no">
-        v0.1.0
+        </a>
+        <div class="sidebar-projectVersion" translate="no">
+          v0.1.0
+        </div>
       </div>
     </div>
     <ul id="sidebar-listNav" class="sidebar-listNav" role="tablist">
@@ -103,13 +91,31 @@ Pages
   <output role="status" id="toast"></output>
   <div class="content-outer">
     <div id="content" class="content-inner">
+      <div class="top-search">
+        <div class="search-settings">
+          <form class="search-bar" action="search.html">
+            <label class="search-label">
+              <span class="sr-only">Search documentation of mscmp_syst_perms</span>
+              <input name="q" type="text" class="search-input" placeholder="Search Documentation (press /)" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+            </label>
+            <button type="submit" class="search-button" aria-label="Submit Search">
+              <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
+            </button>
+            <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+              <i class="ri-close-line ri-lg" title="Cancel search"></i>
+            </button>
+          </form>
+          <div class="autocomplete">
+          </div>
+          <button class="icon-settings display-settings">
+            <i class="ri-settings-3-line"></i>
+            <span class="sr-only">Settings</span>
+          </button>
+        </div>
+
+      </div>
 
 <h1>
-<button class="icon-action display-settings">
-  <i class="ri-settings-3-line"></i>
-  <span class="sr-only">Settings</span>
-</button>
-
 
   <span translate="no">Msdata.SystPerms</span> 
   <small class="app-vsn" translate="no">(mscmp_syst_perms v0.1.0)</small>
@@ -198,7 +204,7 @@ Pages
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@type</span> t() :: %Msdata.SystPerms{
-  __meta__: <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Schema.Metadata.html#t:t/0">Ecto.Schema.Metadata.t</a>(),
+  __meta__: <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Schema.Metadata.html#t:t/0">Ecto.Schema.Metadata.t</a>(),
   admin_scope_options: [<a href="MscmpSystPerms.Types.html#t:rights_scope/0">MscmpSystPerms.Types.rights_scope</a>()] | nil,
   diag_role_created: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil,
   diag_role_modified: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil,
@@ -208,7 +214,7 @@ Pages
   diag_update_count: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>() | nil,
   diag_wallclock_modified: <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0">DateTime.t</a>() | nil,
   display_name: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil,
-  id: <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>() | nil,
+  id: <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.UUID.html#t:t/0">Ecto.UUID.t</a>() | nil,
   internal_name: <a href="MscmpSystPerms.Types.html#t:perm_name/0">MscmpSystPerms.Types.perm_name</a>() | nil,
   maint_scope_options: [<a href="MscmpSystPerms.Types.html#t:rights_scope/0">MscmpSystPerms.Types.rights_scope</a>()] | nil,
   ops_scope_options: [<a href="MscmpSystPerms.Types.html#t:rights_scope/0">MscmpSystPerms.Types.rights_scope</a>()] | nil,
@@ -257,7 +263,7 @@ Pages
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> insert_changeset(<a href="MscmpSystPerms.Types.html#t:perm_params/0">MscmpSystPerms.Types.perm_params</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) ::
-  <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>()</pre>
+  <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>()</pre>
 
       </div>
 
@@ -283,7 +289,7 @@ Pages
       <div class="specs">
 
           <pre translate="no"><span class="attribute">@spec</span> update_changeset(<a href="#t:t/0">t</a>(), <a href="MscmpSystPerms.Types.html#t:perm_params/0">MscmpSystPerms.Types.perm_params</a>(), <a href="https://hexdocs.pm/elixir/Keyword.html#t:t/0">Keyword.t</a>()) ::
-  <a href="https://hexdocs.pm/ecto/3.10.3/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>()</pre>
+  <a href="https://hexdocs.pm/ecto/3.11.1/Ecto.Changeset.html#t:t/0">Ecto.Changeset.t</a>()</pre>
 
       </div>
 
@@ -311,7 +317,7 @@ Pages
 
         <p class="built-using">
           Built using
-          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.30.9) for the
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.31.1) for the
 
             <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
 
