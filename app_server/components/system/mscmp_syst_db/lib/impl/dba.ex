@@ -490,13 +490,13 @@ defmodule MscmpSystDb.Impl.Dba do
       {:error, exception} ->
         raise MscmpSystError,
           code: :database_error,
-          message: "Failure dropping datastore database.",
+          message: "Failure dropping Datastore database.",
           cause: exception
 
       other ->
         raise MscmpSystError,
           code: :database_error,
-          message: "Failure dropping datastore database.",
+          message: "Failure dropping Datastore database.",
           cause: other
     end
   end
