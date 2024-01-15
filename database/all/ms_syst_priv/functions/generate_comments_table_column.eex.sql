@@ -30,16 +30,14 @@ DECLARE
 
 BEGIN
 
-    var_resolved_description :=
-        E'#### Data Table Column `' || p_comments_config.column_name || E'`\n\n' ||
-        p_comments_config.description;
+    var_resolved_description := p_comments_config.description;
 
     var_resolved_general_usage :=
-        E'#### General Usage\n\n' ||
+        E'**General Usage**\n\n' ||
             p_comments_config.general_usage;
 
     var_resolved_func_type :=
-        E'#### Functional Type Reference\n\n' ||
+        E'**Functional Type Reference**\n\n' ||
             CASE
                 WHEN p_comments_config.func_type_text IS NOT NULL THEN
                     p_comments_config.func_type_text
@@ -53,7 +51,7 @@ BEGIN
             END;
 
     var_resolved_life_cycle :=
-        E'#### Life-Cycle State Reference\n\n' ||
+        E'**Life-Cycle State Reference**\n\n' ||
             CASE
                 WHEN p_comments_config.state_text IS NOT NULL THEN
                     p_comments_config.state_text
@@ -67,11 +65,11 @@ BEGIN
             END;
 
     var_resolved_constraint :=
-        E'#### Constraint Reference\n\n' ||
+        E'**Constraint Reference**\n\n' ||
             p_comments_config.constraints;
 
     var_resolved_direct_usage :=
-        E'#### Direct Usage\n\n' ||
+        E'**Direct Usage**\n\n' ||
             p_comments_config.direct_usage;
 
     var_comment :=

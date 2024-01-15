@@ -32,9 +32,7 @@ CREATE TYPE ms_syst_priv.comments_config_apiview AS
 );
 
 COMMENT ON TYPE ms_syst_priv.comments_config_apiview IS
-$DOC$#### Private Type `ms_syst_priv.comments_config_apiview`
-
-Provides a standardized data structure for defining API View column
+$DOC$Provides a standardized data structure for defining API View column
 documentation.
 
 Values of this type are typically used with the

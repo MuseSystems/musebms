@@ -114,17 +114,13 @@ BEGIN
         END;
 
     var_resolved_col_desc :=
-        E'#### API View Column `' || p_column_config.column_name || E'`\n\n' ||
         coalesce(
             p_column_config.override_description,
             ( SELECT
-                  regexp_replace(
-                      regexp_substr(
-                          pd.description,
-                          '^(?:(?!\n#### Direct Usage).)*',
-                          1, 1 ),
-                      '^#### Data Table Column.*?\n\n',
-                      '' )
+                  regexp_substr(
+                      pd.description,
+                      '^(?:(?!\n\*\*Direct Usage\*\*).)*',
+                      1, 1 )
               FROM
                   pg_catalog.pg_attribute pa
                       LEFT JOIN pg_catalog.pg_description pd
@@ -139,7 +135,7 @@ BEGIN
             '( Source column is not documented. )' );
 
     var_resolved_col_reqs :=
-        E'#### Data Requirements\n\n  * Required?:               ' ||
+        E'**Data Requirements**\n\n  * Required?:               ' ||
         var_defaulted_column.required ||
         E'\n  * Unique Values Required?: ' ||
         var_defaulted_column.unique_values ||
@@ -149,7 +145,7 @@ BEGIN
     IF var_defaulted_view.syst_records THEN
 
         var_resolved_col_sops :=
-            E'#### System Defined Record Supported Operations\n\n' ||
+            E'**System Defined Record Supported Operations**\n\n' ||
                 CASE
                     WHEN var_defaulted_column.syst_select THEN
                         E'  * `SELECT`\n'
@@ -173,7 +169,7 @@ BEGIN
     IF var_defaulted_view.user_records THEN
 
         var_resolved_col_uops :=
-            E'#### User Defined Record Supported Operations\n\n' ||
+            E'**User Defined Record Supported Operations**\n\n' ||
                 CASE
                     WHEN var_defaulted_column.user_insert THEN
                         E'  * `INSERT`\n'
@@ -196,7 +192,7 @@ BEGIN
     END IF;
 
     var_resolved_col_supp :=
-        E'#### Supplemental Notes\n\n' ||
+        E'**Supplemental Notes**\n\n' ||
         p_column_config.supplemental;
 
     var_column_comment :=
@@ -217,7 +213,7 @@ BEGIN
 
 END;
 $BODY$
-LANGUAGE plpgsql VOLATILE;
+LANGUAGE plpgsql;
 
 ALTER FUNCTION
     ms_syst_priv.generate_comments_apiview_column(
@@ -242,7 +238,7 @@ COMMENT ON FUNCTION
         p_view_config   ms_syst_priv.comments_config_apiview,
         p_column_config ms_syst_priv.comments_config_apiview_column)
     IS
-$DOC$#### Private Function `ms_syst_priv.generate_comments_apiview_column`
+$DOC$**Private Function `ms_syst_priv.generate_comments_apiview_column`
 
 Generates API View Column comments based on the passed comment configurations.
 
@@ -252,7 +248,7 @@ extract descriptive texts from the Data Table Column comments so that these
 descriptions don't need to be duplicated manually for the API View; this
 behavior may be overridden in the passed comment configuration.
 
-#### Parameters
+**Parameters
 
   * `p_view_config`
 
