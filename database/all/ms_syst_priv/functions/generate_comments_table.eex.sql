@@ -17,7 +17,7 @@ $BODY$
 -- muse.information@musesystems.com :: https://muse.systems
 
 DECLARE
-    var_table           regclass;
+
     var_resolved_description text;
     var_resolved_general_use text;
     var_resolved_constraints text;
@@ -26,22 +26,17 @@ DECLARE
     var_comment text;
 
 BEGIN
-    var_table :=
-        (p_comments_config.table_schema || '.' ||
-            p_comments_config.table_name)::regclass;
 
-    var_resolved_description :=
-        E'#### Data Table `' || var_table::text || E'`\n\n' ||
-        p_comments_config.description;
+    var_resolved_description := p_comments_config.description;
 
     var_resolved_general_use :=
-        E'#### General Usage\n\n' || p_comments_config.general_usage;
+        E'**General Usage**\n\n' || p_comments_config.general_usage;
 
     var_resolved_constraints :=
-        E'#### Constraint Notes\n\n' || p_comments_config.constraints;
+        E'**Constraint Notes**\n\n' || p_comments_config.constraints;
 
     var_resolved_direct_use :=
-        E'#### Direct Usage\n\n' || p_comments_config.direct_usage;
+        E'**Direct Usage**\n\n' || p_comments_config.direct_usage;
 
     var_comment :=
             CASE
@@ -106,8 +101,9 @@ $DOC$#### Private Function `ms_syst_priv.generate_comments_table`
 Generates table comments, and optionally associated column comments, in a
 standardized format.
 
-The comments themselves are defined using a JSON containing the table
-documentation and comment related configurations.
+The comments themselves are defined using an object of type
+`ms_syst_priv.comment_configs_table` which in turn is used as the parameter of
+this function.
 
 #### Parameters
 

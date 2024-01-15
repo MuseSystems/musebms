@@ -26,9 +26,7 @@ CREATE TYPE ms_syst_priv.comments_config_apiview_column AS
 );
 
 COMMENT ON TYPE ms_syst_priv.comments_config_apiview_column IS
-$DOC$#### Private Enum `ms_syst_priv.comments_config_apiview_column`
-
-Provides a standardized data structure for defining API View column
+$DOC$Provides a standardized data structure for defining API View column
 documentation.
 
 Values of this type are typically used with the

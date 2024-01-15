@@ -14,9 +14,7 @@ CREATE TYPE ms_syst_priv.comments_apiview_update_modes AS ENUM
     ('always', 'maint', 'never');
 
 COMMENT ON TYPE ms_syst_priv.comments_apiview_update_modes IS
-$DOC$#### Private Enum `ms_syst_priv.comments_apiview_update_modes`
-
-Establishes the available values for the API View Column update modes for system
+$DOC$Establishes the available values for the API View Column update modes for system
 defined data.
 
 #### Available Values

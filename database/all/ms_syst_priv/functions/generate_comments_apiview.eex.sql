@@ -104,16 +104,13 @@ BEGIN
         END;
 
     var_resolved_view_desc :=
-        '#### Public API View `' || var_dst_view::text || E'`\n\n' ||
             coalesce(
                 p_comments_config.override_description,
                 ( SELECT
-                      regexp_replace(
-                          regexp_substr(
-                              pd.description,
-                              '^(?:(?!\n#### Direct Usage).)*', 1, 1 ),
-                          '^#### Data Table.*?\n\n',
-                          '' )
+                      regexp_substr(
+                          pd.description,
+                          '^(?:(?!\n\*\*Direct Usage\*\*).)*',
+                          1, 1 )
                   FROM pg_catalog.pg_description pd
                   WHERE
                         pd.objoid = var_src_table
@@ -124,7 +121,7 @@ BEGIN
     IF var_working_config.syst_records THEN
 
         var_resolved_view_sops :=
-            E'#### System Defined Record Supported Operations\n\n' ||
+            E'**System Defined Record Supported Operations**\n\n' ||
                 CASE
                     WHEN var_working_config.syst_select THEN
                         E'  * `SELECT`\n'
@@ -150,7 +147,7 @@ BEGIN
     IF var_working_config.user_records THEN
 
         var_resolved_view_uops :=
-            E'#### User Defined Record Supported Operations\n\n' ||
+            E'**User Defined Record Supported Operations**\n\n' ||
                 CASE
                     WHEN var_working_config.user_insert THEN
                         E'  * `INSERT`\n'
@@ -179,7 +176,7 @@ BEGIN
     END IF;
 
     var_resolved_view_supp :=
-        E'#### Supplemental Notes\n\n' ||
+        E'**Supplemental Notes**\n\n' ||
         p_comments_config.supplemental;
 
     var_view_comment :=

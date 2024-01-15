@@ -23,9 +23,7 @@ CREATE TYPE ms_syst_priv.comments_config_table AS
 );
 
 COMMENT ON TYPE ms_syst_priv.comments_config_table IS
-$DOC$#### Private Type `ms_syst_priv.comments_config_table`
-
-Provides a standardized data structure for defining table documentation.
+$DOC$Provides a standardized data structure for defining table documentation.
 
 Values of this type are typically used with the
 `ms_syst_priv.generate_commons_table` function.  Column comments for this type
