@@ -20,6 +20,7 @@ $BODY$
 DECLARE
 
     var_working_config       ms_syst_priv.comments_config_function;
+    var_resolved_trigger     text := '';
     var_resolved_description text;
     var_resolved_params      text := '';
     var_resolved_general_use text;
@@ -50,14 +51,77 @@ BEGIN
     var_working_config.description     :=
         coalesce( p_comments_config.description, '( Routine Not Yet Documented )' );
 
-    var_working_config.general_usage   := p_comments_config.general_usage;
-    var_working_config.params          :=
+    var_working_config.general_usage    := p_comments_config.general_usage;
+    var_working_config.trigger_function :=
+        coalesce( p_comments_config.trigger_function, false );
+
+    var_working_config.trigger_timing :=
+        coalesce( p_comments_config.trigger_timing, '{}'::text[] );
+
+    var_working_config.trigger_ops :=
+        coalesce( p_comments_config.trigger_ops, '{}'::text[] );
+
+    var_working_config.params         :=
         coalesce(
             p_comments_config.params,
             '{}'::ms_syst_priv.comments_config_function_param[]
         );
 
     var_resolved_description := var_working_config.description;
+
+    << trigger_block >>
+    DECLARE
+        var_timings text[ ] := '{}'::text[ ];
+        var_ops     text[ ] := '{}'::text[ ];
+
+    BEGIN
+        IF var_working_config.trigger_function THEN
+
+            -- Timings
+
+            IF 'b' = ANY( var_working_config.trigger_timing ) THEN
+                var_timings := var_timings || '`BEFORE`'::text;
+            END IF;
+
+            IF 'a' = ANY( var_working_config.trigger_timing ) THEN
+                var_timings := var_timings || '`AFTER`'::text;
+            END IF;
+
+            IF 'i' = ANY( var_working_config.trigger_timing ) THEN
+                var_timings := var_timings || '`INSTEAD OF`'::text;
+            END IF;
+
+            IF array_length( var_timings, 1) = 0 THEN
+                var_timings := var_timings || '(Not Yet Documented)'::text;
+            END IF;
+
+            -- Operations
+
+            IF 'i' = ANY( var_working_config.trigger_ops ) THEN
+                var_ops := var_ops || '`INSERT`'::text;
+            END IF;
+
+            IF 'u' = ANY( var_working_config.trigger_ops ) THEN
+                var_ops := var_ops || '`UPDATE`'::text;
+            END IF;
+
+            IF 'd' = ANY( var_working_config.trigger_ops ) THEN
+                var_ops := var_ops || '`DELETE`'::text;
+            END IF;
+
+            IF array_length( var_ops, 1) = 0 THEN
+                var_ops := var_ops || '(Not Yet Documented)'::text;
+            END IF;
+
+            var_resolved_trigger :=
+                E'**Trigger Function Details**:\n\n' ||
+                E'  * **Supported Timing**: ' ||
+                array_to_string(var_timings, ', ') || E'\n\n' ||
+                E'  * **Supported Operations**: ' ||
+                array_to_string(var_ops, ', ');
+
+        END IF;
+    END trigger_block;
 
     var_resolved_general_use :=
         E'**General Usage**\n\n' || var_working_config.general_usage;
@@ -83,7 +147,7 @@ BEGIN
 
         var_resolved_params :=
             var_resolved_params ||
-                '  * **`' || var_curr_param.param_name || E'`**\n\n' ||
+                '  * **`' || var_curr_param.param_name || E'`** :: ' ||
                 '    **Required?** ' ||
                 CASE WHEN var_curr_param.required THEN 'True' ELSE 'False' END ||
                 '; **Default**: ' || var_curr_param.default_value || E'\n\n' ||
@@ -104,9 +168,10 @@ BEGIN
 
     var_comment :=
         regexp_replace(
-            coalesce(var_resolved_description, '') || E'\n\n' ||
-            coalesce(var_resolved_params, '') || E'\n\n' ||
-            coalesce(var_resolved_general_use, '') || E'\n\n',
+            coalesce( var_resolved_description || E'\n\n', '' )  ||
+            coalesce( var_resolved_trigger || E'\n\n', '' ) ||
+            coalesce( var_resolved_params || E'\n\n', '' )  ||
+            coalesce( var_resolved_general_use || E'\n\n', '' ),
             '[\n\r\f\u000B\u0085\u2028\u2029]{3,}',
             E'\n\n' );
 
@@ -156,10 +221,10 @@ BEGIN
     var_comments_config.function_name   := 'generate_comments_function';
 
     var_comments_config.description :=
-$DOC$Generates "routine" comments for functions, procedures, and trigger functions.$DOC$;
+$DOC$Generates comments for functions, procedures, and trigger functions.$DOC$;
 
     var_comments_config.general_usage :=
-$DOC$If the default value of a documented function is longer than ~60 characters, it
+$DOC$If the default value of a documented function is longer than ~40 characters, it
 may be better to set the `default_value` to refer to the "General Usage" section
 and then explain the default value there. This due to line-length issues in the
 resulting formatted comments.$DOC$;
