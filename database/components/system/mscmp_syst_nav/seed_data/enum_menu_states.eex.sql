@@ -14,7 +14,7 @@ DO
 $INIT_ENUM$
 BEGIN
 
-PERFORM
+CALL
     ms_syst_priv.initialize_enum(
         p_enum_def => $INIT_ENUM_MENU_STATES$
         {

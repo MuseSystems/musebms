@@ -1,5 +1,5 @@
-CREATE OR REPLACE FUNCTION ms_syst_priv.initialize_enum(p_enum_def jsonb)
-RETURNS void AS
+CREATE OR REPLACE PROCEDURE ms_syst_priv.initialize_enum(p_enum_def jsonb)
+AS
 $BODY$
 
 -- File:        initialize_enum.eex.sql
@@ -112,16 +112,16 @@ BEGIN
 
 END;
 $BODY$
-LANGUAGE plpgsql VOLATILE;
+LANGUAGE plpgsql;
 
-ALTER FUNCTION ms_syst_priv.initialize_enum(p_enum_def jsonb)
+ALTER PROCEDURE ms_syst_priv.initialize_enum(p_enum_def jsonb)
     OWNER TO <%= ms_owner %>;
 
-REVOKE EXECUTE ON FUNCTION ms_syst_priv.initialize_enum(p_enum_def jsonb) FROM public;
-GRANT EXECUTE ON FUNCTION ms_syst_priv.initialize_enum(p_enum_def jsonb) TO <%= ms_owner %>;
+REVOKE EXECUTE ON PROCEDURE ms_syst_priv.initialize_enum(p_enum_def jsonb) FROM public;
+GRANT EXECUTE ON PROCEDURE ms_syst_priv.initialize_enum(p_enum_def jsonb) TO <%= ms_owner %>;
 
 
-COMMENT ON FUNCTION ms_syst_priv.initialize_enum(p_enum_def jsonb) IS
+COMMENT ON PROCEDURE ms_syst_priv.initialize_enum(p_enum_def jsonb) IS
 $DOC$Based on a specially formatted JSON object passed as a parameter, this function
 will create a new enumeration along with its optional functional types and
 starting value records.$DOC$;
