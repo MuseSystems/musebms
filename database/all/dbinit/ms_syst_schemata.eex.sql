@@ -16,9 +16,9 @@ CREATE SCHEMA IF NOT EXISTS ms_syst
 REVOKE USAGE ON SCHEMA ms_syst FROM PUBLIC;
 
 COMMENT ON SCHEMA ms_syst IS
-$DOC$Public API for system operations.  The important distinction is that business
-data is not stored here. This schema contains procedures, functions, and views
-suitable for calling outside of the application or via user customizations.$DOC$;
+$DOC$Public API for system management oriented data access and operations. This
+schema contains procedures, functions, and views suitable for access by
+applications and integration tools.$DOC$;
 
 CREATE SCHEMA IF NOT EXISTS ms_syst_priv
     AUTHORIZATION <%= ms_owner %>;
@@ -26,10 +26,13 @@ CREATE SCHEMA IF NOT EXISTS ms_syst_priv
 REVOKE USAGE ON SCHEMA ms_syst_priv FROM PUBLIC;
 
 COMMENT ON SCHEMA ms_syst_priv IS
-$DOC$Internal, private system operations.  These functions are developed not for the
-purpose of general access, but contain primitives and other internal booking-
-keeping functions.  These functions should not be called directly outside of the
-packaged application.$DOC$;
+$DOC$Internal system management logic for use by Muse Systems developers.
+
+**All member objects of this schema are considered "private".**
+
+Direct usage of this schema or its member objects is not supported.  Please
+consider using features from `ms_syst` Public API schema or other Public APIs
+as appropriate.$DOC$;
 
 CREATE SCHEMA IF NOT EXISTS ms_syst_data
     AUTHORIZATION <%= ms_owner %>;
@@ -37,6 +40,10 @@ CREATE SCHEMA IF NOT EXISTS ms_syst_data
 REVOKE USAGE ON SCHEMA ms_syst_data FROM PUBLIC;
 
 COMMENT ON SCHEMA ms_syst_data IS
-$DOC$Schema container for system operations related data tables and application
-defined types.  The data in this schema is not related to user business data,
-but rather facilitates the operation of the application as a software system.$DOC$;
+$DOC$Internal system management data for use by Muse Systems developers.
+
+**All member objects of this schema are considered "private".**
+
+Direct usage of this schema or its member objects is not supported.  Please
+consider using features from `ms_syst` Public API schema or other Public APIs
+as appropriate.$DOC$;
