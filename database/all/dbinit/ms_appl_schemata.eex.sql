@@ -16,10 +16,9 @@ CREATE SCHEMA IF NOT EXISTS ms_appl
 REVOKE USAGE ON SCHEMA ms_appl FROM PUBLIC;
 
 COMMENT ON SCHEMA ms_appl IS
-$DOC$Public API for business data/logic operations.  The important distinction is
-that data is not stored here. This schema contains procedures, functions, and
-views suitable for calling outside of the application or via user
-customizations.$DOC$;
+$DOC$Public API for application business data access and logic operations.  This
+schema contains procedures, functions, and views suitable for access by
+applications and integration tools.$DOC$;
 
 CREATE SCHEMA IF NOT EXISTS ms_appl_priv
     AUTHORIZATION <%= ms_owner %>;
@@ -27,10 +26,14 @@ CREATE SCHEMA IF NOT EXISTS ms_appl_priv
 REVOKE USAGE ON SCHEMA ms_appl_priv FROM PUBLIC;
 
 COMMENT ON SCHEMA ms_appl_priv IS
-$DOC$Internal, private business logic operations.  These functions are developed not
-for the purpose of general access, but contain primitives and other internal
-booking-keeping functions.  These functions should not be called directly
-outside of the packaged application.$DOC$;
+$DOC$Internal application business logic for use by Muse Systems developers.
+
+**All member objects of this schema are considered "private".**
+
+Direct usage of this schema or its member objects is not supported.  Please
+consider using features from `ms_appl` Public API schema or other Public APIs
+as appropriate.
+$DOC$;
 
 CREATE SCHEMA IF NOT EXISTS ms_appl_data
     AUTHORIZATION <%= ms_owner %>;
@@ -38,5 +41,10 @@ CREATE SCHEMA IF NOT EXISTS ms_appl_data
 REVOKE USAGE ON SCHEMA ms_appl_data FROM PUBLIC;
 
 COMMENT ON SCHEMA ms_appl_data IS
-$DOC$Schema container principally for business related data tables and application
-defined types.$DOC$;
+$DOC$Internal application business data for use by Muse Systems developers.
+
+**All member objects of this schema are considered "private".**
+
+Direct usage of this schema or its member objects is not supported.  Please
+consider using features from `ms_appl` Public API schema or other Public APIs
+as appropriate.$DOC$;
