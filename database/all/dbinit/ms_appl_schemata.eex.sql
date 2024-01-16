@@ -16,8 +16,9 @@ CREATE SCHEMA IF NOT EXISTS ms_appl
 REVOKE USAGE ON SCHEMA ms_appl FROM PUBLIC;
 
 COMMENT ON SCHEMA ms_appl IS
-$DOC$Public API for application business data access and logic operations.  This
-schema contains procedures, functions, and views suitable for access by
+$DOC$Public API for application business data access and logic operations.
+
+This schema contains procedures, functions, and views suitable for access by
 applications and integration tools.$DOC$;
 
 CREATE SCHEMA IF NOT EXISTS ms_appl_priv

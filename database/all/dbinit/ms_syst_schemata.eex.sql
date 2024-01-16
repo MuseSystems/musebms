@@ -16,8 +16,9 @@ CREATE SCHEMA IF NOT EXISTS ms_syst
 REVOKE USAGE ON SCHEMA ms_syst FROM PUBLIC;
 
 COMMENT ON SCHEMA ms_syst IS
-$DOC$Public API for system management oriented data access and operations. This
-schema contains procedures, functions, and views suitable for access by
+$DOC$Public API for system management oriented data access and operations.
+
+This schema contains procedures, functions, and views suitable for access by
 applications and integration tools.$DOC$;
 
 CREATE SCHEMA IF NOT EXISTS ms_syst_priv
