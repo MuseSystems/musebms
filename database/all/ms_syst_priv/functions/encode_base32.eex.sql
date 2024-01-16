@@ -26,6 +26,45 @@ ALTER FUNCTION ms_syst_priv.encode_base32(p_value bigint)
 REVOKE EXECUTE ON FUNCTION ms_syst_priv.encode_base32(p_value bigint) FROM public;
 GRANT EXECUTE ON FUNCTION ms_syst_priv.encode_base32(p_value bigint) TO <%= ms_owner %>;
 
-COMMENT ON FUNCTION ms_syst_priv.encode_base32(p_value bigint) IS
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Function
+    var_comments_config ms_syst_priv.comments_config_function;
+
+    -- Parameters
+    var_p_value ms_syst_priv.comments_config_function_param;
+
+BEGIN
+
+    --
+    -- Function Config
+    --
+
+    var_comments_config.function_schema := 'ms_syst_priv';
+    var_comments_config.function_name   := 'encode_base32';
+
+    var_comments_config.description :=
 $DOC$Encodes a big integer value into Base32 representation.  The representation here
 is that designed by Douglas Crockford (https://www.crockford.com/base32.html).$DOC$;
+
+    var_comments_config.general_usage :=
+$DOC$$DOC$;
+
+    --
+    -- Parameter Configs
+    --
+
+    var_p_value.param_name := 'p_value';
+
+    var_p_value.description :=
+$DOC$The value to encode as a Crockford Base32 value.$DOC$;
+
+
+    var_comments_config.params :=
+        ARRAY [ var_p_value ]::ms_syst_priv.comments_config_function_param[];
+
+    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+
+END;
+$DOCUMENTATION$;

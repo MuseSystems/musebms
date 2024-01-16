@@ -114,16 +114,32 @@ GRANT EXECUTE ON FUNCTION
         p_excluded_relations regclass[] )
     TO <%= ms_owner %>;
 
-COMMENT ON FUNCTION
-    ms_syst_priv.is_parent_record_referenced(
-        p_table_schema       text,
-        p_table_name         text,
-        p_parent_record_id   uuid,
-        p_excluded_relations regclass[] )
-    IS
-$DOC$Tests if a specific parent record is referenced in a foreign key relationship.
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Function
+    var_comments_config ms_syst_priv.comments_config_function;
 
-The parent table is identified by the `p_table_schema` and `p_table_name`
+    -- Parameters
+    var_p_table_schema       ms_syst_priv.comments_config_function_param;
+    var_p_table_name         ms_syst_priv.comments_config_function_param;
+    var_p_parent_record_id   ms_syst_priv.comments_config_function_param;
+    var_p_excluded_relations ms_syst_priv.comments_config_function_param;
+
+BEGIN
+
+    --
+    -- Function Config
+    --
+
+    var_comments_config.function_schema := 'ms_syst_priv';
+    var_comments_config.function_name   := 'is_parent_record_referenced';
+
+    var_comments_config.description :=
+$DOC$Tests if a specific parent record is referenced in a foreign key relationship.$DOC$;
+
+    var_comments_config.general_usage :=
+$DOC$The parent table is identified by the `p_table_schema` and `p_table_name`
 parameters and the specific record is identified using the `p_parent_record_id`
 parameter.  The `p_parent_record_id` is expected to be the `id` column value of
 the parent relation.
@@ -145,3 +161,40 @@ and/or the child relations contain many records, this function may not perform
 well, especially in cases where there are no references to the given parent
 record.  Finally, if any of the parameter values are `NULL`, the function will
 return `NULL`.$DOC$;
+
+    --
+    -- Parameter Configs
+    --
+
+    var_p_table_schema.param_name := 'p_table_schema';
+    var_p_table_schema.description :=
+$DOC$The name of the schema which hosts the parent table.$DOC$;
+
+    var_p_table_name.param_name := 'p_table_name';
+    var_p_table_name.description :=
+$DOC$The name of the parent table.$DOC$;
+
+    var_p_parent_record_id.param_name := 'p_parent_record_id';
+    var_p_parent_record_id.description :=
+$DOC$The ID value of the parent record which will be searched for in the child
+tables.$DOC$;
+
+    var_p_excluded_relations.param_name := 'p_excluded_relations';
+    var_p_excluded_relations.required := FALSE;
+    var_p_excluded_relations.default_value := 'No excluded relations';
+    var_p_excluded_relations.description :=
+$DOC$An optional array of child table `regclass`es which should not be searched.$DOC$;
+
+
+    var_comments_config.params :=
+        ARRAY [
+              var_p_table_schema
+            , var_p_table_name
+            , var_p_parent_record_id
+            , var_p_excluded_relations
+            ]::ms_syst_priv.comments_config_function_param[];
+
+    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+
+END;
+$DOCUMENTATION$;

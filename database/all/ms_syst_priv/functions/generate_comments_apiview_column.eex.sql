@@ -233,51 +233,77 @@ GRANT EXECUTE ON FUNCTION
         p_column_config ms_syst_priv.comments_config_apiview_column)
     TO <%= ms_owner %>;
 
-COMMENT ON FUNCTION
-    ms_syst_priv.generate_comments_apiview_column(
-        p_view_config   ms_syst_priv.comments_config_apiview,
-        p_column_config ms_syst_priv.comments_config_apiview_column)
-    IS
-$DOC$**Private Function `ms_syst_priv.generate_comments_apiview_column`
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Function
+    var_comments_config ms_syst_priv.comments_config_function;
 
-Generates API View Column comments based on the passed comment configurations.
+    -- Parameters
+    var_p_view_config   ms_syst_priv.comments_config_function_param;
+    var_p_column_config ms_syst_priv.comments_config_function_param;
 
-While optional, if the targeted API View Column is identified as being closely
+BEGIN
+
+    --
+    -- Function Config
+    --
+
+    var_comments_config.function_schema := 'ms_syst_priv';
+    var_comments_config.function_name   := 'generate_comments_apiview_column';
+
+    var_comments_config.description :=
+$DOC$Generates API View Column comments based on the passed comment configurations.$DOC$;
+
+    var_comments_config.general_usage :=
+$DOC$While optional, if the targeted API View Column is identified as being closely
 related to an underlying Data Table Column, this function will attempt to
 extract descriptive texts from the Data Table Column comments so that these
 descriptions don't need to be duplicated manually for the API View; this
-behavior may be overridden in the passed comment configuration.
+behavior may be overridden in the passed comment configuration.$DOC$;
 
-**Parameters
+    --
+    -- Parameter Configs
+    --
 
-  * `p_view_config`
+    var_p_view_config.param_name := 'p_view_config';
+    var_p_view_config.description :=
+$DOC$A value of type `ms_syst_priv.comments_config_apiview` which contains view
+level configuration information such as identification of the view,
+associated Data Table identification, available record modes (system defined
+& user defined), and similar concerns which can influence column comment
+generation.  This value is required, though only the following fields are
+used:
 
-    A value of type `ms_syst_priv.comments_config_apiview` which contains view
-    level configuration information such as identification of the view,
-    associated Data Table identification, available record modes (system defined
-    & user defined), and similar concerns which can influence column comment
-    generation.  This value is required, though only the following fields are
-    used:
+  * `view_schema`  - (required)
+  * `view_name`    - (required)
+  * `table_schema` - (optional)
+  * `table_name`   - (optional)
+  * `user_records` - (optional)
+  * `user_insert`  - (optional)
+  * `user_select`  - (optional)
+  * `user_update`  - (optional)
+  * `syst_records` - (optional)
+  * `syst_select`  - (optional)
+  * `syst_update`  - (optional)
 
-      * `view_schema`  - (required)
-      * `view_name`    - (required)
-      * `table_schema` - (optional)
-      * `table_name`   - (optional)
-      * `user_records` - (optional)
-      * `user_insert`  - (optional)
-      * `user_select`  - (optional)
-      * `user_update`  - (optional)
-      * `syst_records` - (optional)
-      * `syst_select`  - (optional)
-      * `syst_update`  - (optional)
+Any fields passed as `NULL` will assume their default values.  See the
+database type documentation for more information, including to find any
+defined field level default values.$DOC$;
 
-    Any fields passed as `NULL` will assume their default values.  See the
-    database type documentation for more information, including to find any
-    defined field level default values.
+    var_p_column_config.param_name := 'p_column_config';
+    var_p_column_config.description :=
+$DOC$A value of type `ms_syst_priv.comments_config_apiview_column` which
+configures the comments to generate for the identified API View Column. See
+the database type documenation for more information.$DOC$;
 
-  * `p_column_config`
+    var_comments_config.params :=
+        ARRAY [
+              var_p_view_config
+            , var_p_column_config
+            ]::ms_syst_priv.comments_config_function_param[];
 
-    A value of type `ms_syst_priv.comments_config_apiview_column` which
-    configures the comments to generate for the identified API View Column. See
-    the database type documenation for more information.
-$DOC$;
+    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+
+END;
+$DOCUMENTATION$;

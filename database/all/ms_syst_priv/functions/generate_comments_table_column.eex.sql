@@ -123,32 +123,62 @@ GRANT EXECUTE ON FUNCTION
         p_comments_config ms_syst_priv.comments_config_table_column)
     TO <%= ms_owner %>;
 
-COMMENT ON FUNCTION
-    ms_syst_priv.generate_comments_table_column(
-        p_table_schema    text,
-        p_table_name      text,
-        p_comments_config ms_syst_priv.comments_config_table_column)
-    IS
-$DOC$#### Private Function `ms_syst_priv.generate_comments_table_column`
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Function
+    var_comments_config ms_syst_priv.comments_config_function;
 
-Generates table column comments in a standardized format.
+    -- Parameters
+    var_p_table_schema    ms_syst_priv.comments_config_function_param;
+    var_p_table_name      ms_syst_priv.comments_config_function_param;
+    var_p_comments_config ms_syst_priv.comments_config_function_param;
+
+BEGIN
+
+    --
+    -- Function Config
+    --
+
+    var_comments_config.function_schema := 'ms_syst_priv';
+    var_comments_config.function_name   := 'generate_comments_table_column';
+
+    var_comments_config.description :=
+$DOC$Generates table column comments in a standardized format.
 
 The comments themselves are defined using a configuration type containing the
-column documentation and comment related configurations.
+column documentation and comment related configurations.$DOC$;
 
-#### Parameters
+    var_comments_config.general_usage :=
+$DOC$$DOC$;
 
-  * `p_table_schema`
+    --
+    -- Parameter Configs
+    --
 
-    The database schema where the column is defined.
+    var_p_table_schema.param_name := 'p_table_schema';
+    var_p_table_schema.description :=
+$DOC$The database schema where the column is defined.$DOC$;
 
-  * `p_table_name`
+    var_p_table_name.param_name := 'p_table_name';
+    var_p_table_name.description :=
+$DOC$The database table where the column is defined.$DOC$;
 
-    The database table where the column is defined.
+    var_p_comments_config.param_name := 'p_comments_config';
+    var_p_comments_config.description :=
+$DOC$A value of type `ms_syst_priv.comments_config_table_column` which describes
+the required and optional attributes for generating the column's comments.
+See the comments for that database type for detailed information.$DOC$;
 
-  * `p_comments_config`
 
-    A value of type `ms_syst_priv.comments_config_table_column` which describes
-    the required and optional attributes for generating the column's comments.
-    See the comments for that database type for detailed information.
-$DOC$;
+    var_comments_config.params :=
+        ARRAY [
+              var_p_table_schema
+            , var_p_table_name
+            , var_p_comments_config
+            ]::ms_syst_priv.comments_config_function_param[];
+
+    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+
+END;
+$DOCUMENTATION$;

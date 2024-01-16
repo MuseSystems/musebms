@@ -68,7 +68,55 @@ GRANT EXECUTE ON FUNCTION
     ms_syst_priv.nonstandard_decode(p_base integer, p_tokens text, p_value text)
     TO <%= ms_owner %>;
 
-COMMENT ON
-    FUNCTION ms_syst_priv.nonstandard_decode(p_base integer, p_tokens text, p_value text) IS
-$DOC$Performs a decode operation, similar to the standard decode function, but for
-non-standard decoding schemes, such as Base32 or Base36.$DOC$;
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Function
+    var_comments_config ms_syst_priv.comments_config_function;
+
+    -- Parameters
+    var_p_base   ms_syst_priv.comments_config_function_param;
+    var_p_tokens ms_syst_priv.comments_config_function_param;
+    var_p_value  ms_syst_priv.comments_config_function_param;
+BEGIN
+
+    --
+    -- Function Config
+    --
+
+    var_comments_config.function_schema := 'ms_syst_priv';
+    var_comments_config.function_name   := 'nonstandard_decode';
+
+    var_comments_config.description :=
+$DOC$Performs a decode to decimal operation, similar to the standard decode function,
+but for non-standard decoding schemes such as Base32 or Base36.$DOC$;
+
+    --
+    -- Parameter Configs
+    --
+
+    var_p_base.param_name := 'p_base';
+    var_p_base.description :=
+$DOC$The number base that the value has been encoded in.  For example, Base36
+the `p_base` value is `36`.$DOC$;
+
+    var_p_tokens.param_name := 'p_tokens';
+    var_p_tokens.description :=
+$DOC$The tokens used in representing the numbering scheme.  The count of
+characters passed in this parameter should match the `p_base` parameter.$DOC$;
+
+    var_p_value.param_name := 'p_value';
+    var_p_value.description :=
+$DOC$The encoded value to convert to decimal.$DOC$;
+
+    var_comments_config.params :=
+        ARRAY [
+              var_p_base
+            , var_p_tokens
+            , var_p_value
+            ]::ms_syst_priv.comments_config_function_param[];
+
+    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+
+END;
+$DOCUMENTATION$;

@@ -219,19 +219,56 @@ GRANT EXECUTE ON FUNCTION
         p_table_name   text)
     TO <%= ms_owner %>;
 
-COMMENT ON FUNCTION
-    ms_syst_priv.generate_comments_table_common_columns(
-        p_table_schema text,
-        p_table_name   text)
-    IS
-$DOC$#### Private Function `ms_syst_priv.generate_comments_table_common_columns`
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Function
+    var_comments_config ms_syst_priv.comments_config_function;
 
-Provides boilerplate column comment configurations for columns which are common
+    -- Parameters
+    var_p_table_schema ms_syst_priv.comments_config_function_param;
+    var_p_table_name   ms_syst_priv.comments_config_function_param;
+BEGIN
+
+    --
+    -- Function Config
+    --
+
+    var_comments_config.function_schema := 'ms_syst_priv';
+    var_comments_config.function_name   := 'generate_comments_table_common_columns';
+
+    var_comments_config.description :=
+$DOC$Provides boilerplate column comment configurations for columns which are common
 to many columns and applies these comment configurations to any table columns
-which are found to be in the set of common columns.
+which are found to be in the set of common columns.$DOC$;
 
-Note that if there are customizations or overrides desired when documenting
+    var_comments_config.general_usage :=
+$DOC$Note that if there are customizations or overrides desired when documenting
 these common columns for a given table, such overrides should appear in the
 columns list passed to `ms_syst_priv.generate_comments_table`, directly by
 calling `ms_syst_priv.generate_comments_table_column`, or by simply commenting
 on the desired column directly.$DOC$;
+
+    --
+    -- Parameter Configs
+    --
+
+    var_p_table_schema.param_name := 'p_table_schema';
+    var_p_table_schema.description :=
+$DOC$The name of the schema which hosts the table.$DOC$;
+
+    var_p_table_name.param_name := 'p_table_name';
+    var_p_table_name.description :=
+$DOC$The name of the table for which common column comments should be added.$DOC$;
+
+
+    var_comments_config.params :=
+        ARRAY [
+              var_p_table_schema
+            , var_p_table_name
+            ]::ms_syst_priv.comments_config_function_param[];
+
+    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+
+END;
+$DOCUMENTATION$;

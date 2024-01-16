@@ -232,13 +232,26 @@ GRANT EXECUTE ON FUNCTION
         p_comments_config ms_syst_priv.comments_config_apiview)
     TO <%= ms_owner %>;
 
-COMMENT ON FUNCTION
-    ms_syst_priv.generate_comments_apiview(
-        p_comments_config ms_syst_priv.comments_config_apiview)
-    IS
-$DOC$#### Private Function `ms_syst_priv.generate_comments_apiview`
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Function
+    var_comments_config ms_syst_priv.comments_config_function;
 
-Generates API View comments as well as comments for any requested columns.
+    -- Parameters
+    var_p_comments_config ms_syst_priv.comments_config_function_param;
+
+BEGIN
+
+    --
+    -- Function Config
+    --
+
+    var_comments_config.function_schema := 'ms_syst_priv';
+    var_comments_config.function_name   := 'generate_comments_apiview';
+
+    var_comments_config.description :=
+$DOC$Generates API View comments as well as comments for any requested columns.
 
 API Views are typically closely associated with specific Data Tables.  While
 this function does not require Data Table to API View parity of columns, types,
@@ -246,13 +259,23 @@ etc. it does assume that a substantial amount of Data Table to API View parity
 exists.  Given this, the descriptive texts of the API View and its columns are
 extracted from the Data Table comments and applied to the API View.  Additional
 information that is specific for the API View is then added using the
-configurations passed in the `p_comments_config` parameter.
+configurations passed in the `p_comments_config` parameter.$DOC$;
 
-#### Parameters:
+    --
+    -- Parameter Configs
+    --
 
-  * `p_comments_config`
+    var_p_comments_config.param_name := 'p_comments_config';
+    var_p_comments_config.description :=
+$DOC$A `ms_syst_priv.comments_config_apiview` value which provides the configuration
+and texts from which to generate the API View documentation.  See the
+documentation of that database type for more information.$DOC$;
 
-    A `ms_syst_priv.comments_config_apiview` value which provides the
-    configuration and texts from which to generate the API View documentation.
-    See the documentation of that database type for more information.
-$DOC$;
+
+    var_comments_config.params :=
+        ARRAY [ var_p_comments_config ]::ms_syst_priv.comments_config_function_param[];
+
+    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+
+END;
+$DOCUMENTATION$;

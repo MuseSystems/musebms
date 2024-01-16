@@ -93,23 +93,48 @@ GRANT EXECUTE ON FUNCTION
         p_comments_config ms_syst_priv.comments_config_table)
     TO <%= ms_owner %>;
 
-COMMENT ON FUNCTION
-    ms_syst_priv.generate_comments_table(
-        p_comments_config ms_syst_priv.comments_config_table) IS
-$DOC$#### Private Function `ms_syst_priv.generate_comments_table`
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Function
+    var_comments_config ms_syst_priv.comments_config_function;
 
-Generates table comments, and optionally associated column comments, in a
-standardized format.
+    -- Parameters
+    var_p_comments_config ms_syst_priv.comments_config_function_param;
 
-The comments themselves are defined using an object of type
+BEGIN
+
+    --
+    -- Function Config
+    --
+
+    var_comments_config.function_schema := 'ms_syst_priv';
+    var_comments_config.function_name   := 'generate_comments_table';
+
+    var_comments_config.description :=
+$DOC$Generates table comments, and optionally associated column comments, in a
+standardized format.$DOC$;
+
+    var_comments_config.general_usage :=
+$DOC$The comments themselves are defined using an object of type
 `ms_syst_priv.comment_configs_table` which in turn is used as the parameter of
-this function.
+this function.$DOC$;
 
-#### Parameters
+    --
+    -- Parameter Configs
+    --
 
-  * `p_comments_config`
+    var_p_comments_config.param_name := 'p_comments_config';
+    var_p_comments_config.description :=
+$DOC$A value of type `ms_syst_priv.comments_config_table` which describes the
+required and optional attributes for generating the column's comments.  See
+the comments for that database type for detailed information.$DOC$;
 
-    A value of type `ms_syst_priv.comments_config_table` which describes the
-    required and optional attributes for generating the column's comments.  See
-    the comments for that database type for detailed information.
-$DOC$;
+
+    var_comments_config.params :=
+        ARRAY [ var_p_comments_config ]::ms_syst_priv.comments_config_function_param[];
+
+    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+
+END;
+$DOCUMENTATION$;

@@ -39,6 +39,54 @@ REVOKE EXECUTE ON FUNCTION
 GRANT EXECUTE ON FUNCTION
     ms_syst_priv.get_random_string(p_length integer, p_tokens text) TO <%= ms_owner %>;
 
-COMMENT ON FUNCTION ms_syst_priv.get_random_string(p_length integer, p_tokens text) IS
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Function
+    var_comments_config ms_syst_priv.comments_config_function;
+
+    -- Parameters
+    var_p_length ms_syst_priv.comments_config_function_param;
+    var_p_tokens ms_syst_priv.comments_config_function_param;
+
+BEGIN
+
+    --
+    -- Function Config
+    --
+
+    var_comments_config.function_schema := 'ms_syst_priv';
+    var_comments_config.function_name   := 'get_random_string';
+
+    var_comments_config.description :=
 $DOC$Returns a random text string, by default consisting of alpha-numeric symbols, of
-the requested length. Arbitrary characters may be provided my the caller.$DOC$;
+the requested length.
+
+An arbitrary set of characters from which to draw the random string may be
+provided my the caller.$DOC$;
+
+    --
+    -- Parameter Configs
+    --
+
+    var_p_length.param_name := 'p_length';
+    var_p_length.description :=
+$DOC$The number of random characters to return.$DOC$;
+
+    var_p_tokens.param_name := 'p_tokens';
+    var_p_tokens.required := FALSE;
+    var_p_tokens.default_value := '`0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ`';
+    var_p_tokens.description :=
+$DOC$An option alternate set of characters to use in the generation.$DOC$;
+
+
+    var_comments_config.params :=
+        ARRAY [
+              var_p_length
+            , var_p_tokens
+            ]::ms_syst_priv.comments_config_function_param[];
+
+    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+
+END;
+$DOCUMENTATION$;
