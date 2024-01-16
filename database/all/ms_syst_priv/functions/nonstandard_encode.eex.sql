@@ -58,7 +58,62 @@ GRANT EXECUTE ON FUNCTION
     ms_syst_priv.nonstandard_encode(p_base integer, p_tokens text, p_value bigint)
     TO <%= ms_owner %>;
 
-COMMENT ON
-    FUNCTION ms_syst_priv.nonstandard_encode(p_base integer, p_tokens text, p_value bigint) IS
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Function
+    var_comments_config ms_syst_priv.comments_config_function;
+
+    -- Parameters
+    var_p_base   ms_syst_priv.comments_config_function_param;
+    var_p_tokens ms_syst_priv.comments_config_function_param;
+    var_p_value  ms_syst_priv.comments_config_function_param;
+BEGIN
+
+    --
+    -- Function Config
+    --
+
+    var_comments_config.function_schema := 'ms_syst_priv';
+    var_comments_config.function_name   := 'nonstandard_encode';
+
+    var_comments_config.trigger_function := FALSE;
+    var_comments_config.trigger_timing   := ARRAY [ ]::text[ ];
+    var_comments_config.trigger_ops      := ARRAY [ ]::text[ ];
+
+    var_comments_config.description :=
 $DOC$Performs an encode operation, similar to the standard encode function, but for
-non-standard encoding schemes, such as Base32 or Base36.$DOC$;
+non-standard encoding schemes such as Base32 or Base36.$DOC$;
+
+    var_comments_config.general_usage :=
+$DOC$$DOC$;
+
+    --
+    -- Parameter Configs
+    --
+
+    var_p_base.param_name := 'p_base';
+    var_p_base.description :=
+$DOC$The number base that the encoding system is expecting.  For example, Base36
+the `p_base` value is `36`.$DOC$;
+
+    var_p_tokens.param_name := 'p_tokens';
+    var_p_tokens.description :=
+$DOC$The tokens to use in representing the numbering scheme.  The count of
+characters passed in this parameter should match the `p_base` parameter.$DOC$;
+
+    var_p_value.param_name := 'p_value';
+    var_p_value.description :=
+$DOC$The decimal value to encode in the requested base.$DOC$;
+
+    var_comments_config.params :=
+        ARRAY [
+              var_p_base
+            , var_p_tokens
+            , var_p_value
+            ]::ms_syst_priv.comments_config_function_param[];
+
+    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+
+END;
+$DOCUMENTATION$;

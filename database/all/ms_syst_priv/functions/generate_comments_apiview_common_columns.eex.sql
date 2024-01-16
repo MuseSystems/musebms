@@ -147,48 +147,72 @@ GRANT EXECUTE ON FUNCTION
         p_view_config ms_syst_priv.comments_config_apiview )
     TO <%= ms_owner %>;
 
-COMMENT ON FUNCTION
-    ms_syst_priv.generate_comments_apiview_common_columns(
-        p_view_config ms_syst_priv.comments_config_apiview )
-    IS
-$DOC$#### Private Function `ms_syst_priv.generate_comments_apiview_common_columns`
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Function
+    var_comments_config ms_syst_priv.comments_config_function;
+    
+    -- Parameters
+    var_p_view_config ms_syst_priv.comments_config_function_param;
 
-Provides boilerplate API View Column comment configurations and generates the
+BEGIN
+    
+    --
+    -- Function Config
+    --
+    
+    var_comments_config.function_schema := 'ms_syst_priv';
+    var_comments_config.function_name   := 'generate_comments_apiview_common_columns';
+
+    var_comments_config.description :=
+$DOC$Provides boilerplate API View Column comment configurations and generates the
 comments for columns which appear in many places across the applications and
-where standardized descriptions are likely to apply.
+where standardized descriptions are likely to apply.$DOC$;
 
-This function expects that a there is a closely associated Data Table defined.
+    var_comments_config.general_usage :=
+$DOC$This function expects that a there is a closely associated Data Table defined.
 The Data Table columns provide the descriptive texts for the related API View
 columns.  If the API View is not closely associated with an underlying Data
 Table, common columns should be configured manually as regular API View Columns
 and passed directly to either `ms_syst_priv.generate_comments_apiview` or
-`ms_syst_priv.generate_comments_apiview_column` as appropriate.
+`ms_syst_priv.generate_comments_apiview_column` as appropriate.$DOC$;
+    
+    --
+    -- Parameter Configs
+    -- 
 
-#### Parameters
+    var_p_view_config.param_name := 'p_view_config';
+    var_p_view_config.description :=
+$DOC$A required value of type `ms_syst_priv.comments_config_apiview`.  This value
+provides the basic comments configuration data used to determine to which
+API View to apply common column comments, find which columns may be present,
+etc.  Only the fields of the value below are used by this function:
 
-  * `p_view_config`
+  * `view_schema`  - (required)
+  * `view_name`    - (required)
+  * `table_schema` - (required)
+  * `table_name`   - (required)
+  * `user_records` - (optional)
+  * `user_insert`  - (optional)
+  * `user_select`  - (optional)
+  * `user_update`  - (optional)
+  * `syst_records` - (optional)
+  * `syst_select`  - (optional)
+  * `syst_update`  - (optional)
 
-    A required value of type `ms_syst_priv.comments_config_apiview`.  This value
-    provides the basic comments configuration data used to determine to which
-    API View to apply common column comments, find which columns may be present,
-    etc.  Only the fields of the value below are used by this function:
+Any fields passed as `NULL` will assume their default values.  See the
+database type documentation for more information, including to find any
+defined field level default values.  Failing to provide a `table_schema` and
+`table_name` will not raise an exception, but may produce unsatisfactory
+results.  In cases where the API View is not strongly associated with a Data
+Table, common columns should be documentend manually.$DOC$;
 
-      * `view_schema`  - (required)
-      * `view_name`    - (required)
-      * `table_schema` - (required)
-      * `table_name`   - (required)
-      * `user_records` - (optional)
-      * `user_insert`  - (optional)
-      * `user_select`  - (optional)
-      * `user_update`  - (optional)
-      * `syst_records` - (optional)
-      * `syst_select`  - (optional)
-      * `syst_update`  - (optional)
 
-    Any fields passed as `NULL` will assume their default values.  See the
-    database type documentation for more information, including to find any
-    defined field level default values.  Failing to provide a `table_schema` and
-    `table_name` will not raise an exception, but may produce unsatisfactory
-    results.  In cases where the API View is not strongly associated with a Data
-    Table, common columns should be documentend manually.
-  $DOC$;
+    var_comments_config.params :=
+        ARRAY [ var_p_view_config ]::ms_syst_priv.comments_config_function_param[];
+
+    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+
+END;
+$DOCUMENTATION$;

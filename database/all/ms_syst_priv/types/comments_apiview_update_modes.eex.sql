@@ -17,7 +17,7 @@ COMMENT ON TYPE ms_syst_priv.comments_apiview_update_modes IS
 $DOC$Establishes the available values for the API View Column update modes for system
 defined data.
 
-#### Available Values
+**Enumeration Values**
 
   * `always` - indicates that the column is always updatable for system defined
     data, even if the data is not marked "user maintainable".

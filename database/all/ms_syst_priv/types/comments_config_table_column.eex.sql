@@ -26,6 +26,8 @@ CREATE TYPE ms_syst_priv.comments_config_table_column AS
 COMMENT ON TYPE ms_syst_priv.comments_config_table_column IS
 $DOC$Provides a standardized data structure for defining table column documentation.
 
+**General Usage**
+
 Values of this type are typically used with the
 `ms_syst_priv.generate_comments_table_column` function.  Column comments for
 this type assume usage with that function when describing values, constraints,

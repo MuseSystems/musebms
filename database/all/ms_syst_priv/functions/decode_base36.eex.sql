@@ -35,5 +35,39 @@ ALTER FUNCTION ms_syst_priv.decode_base36(p_value text)
 REVOKE EXECUTE ON FUNCTION ms_syst_priv.decode_base36(p_value text) FROM public;
 GRANT EXECUTE ON FUNCTION ms_syst_priv.decode_base36(p_value text) TO <%= ms_owner %>;
 
-COMMENT ON FUNCTION ms_syst_priv.decode_base36(p_value text) IS
-$DOC$Decodes integers represented in Base36 notation.$DOC$;
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Function
+    var_comments_config ms_syst_priv.comments_config_function;
+
+    -- Parameters
+    var_p_value ms_syst_priv.comments_config_function_param;
+
+BEGIN
+
+    --
+    -- Function Config
+    --
+
+    var_comments_config.function_schema := 'ms_syst_priv';
+    var_comments_config.function_name   := 'decode_base36';
+
+    var_comments_config.description :=
+$DOC$Decodes integers represented in Base36 notation back to decimal form.$DOC$;
+
+    --
+    -- Parameter Configs
+    --
+
+    var_p_value.param_name := 'p_value';
+    var_p_value.description :=
+$DOC$The Base36 value to decode to decimal.$DOC$;
+
+    var_comments_config.params :=
+        ARRAY [ var_p_value ]::ms_syst_priv.comments_config_function_param[];
+
+    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+
+END;
+$DOCUMENTATION$;

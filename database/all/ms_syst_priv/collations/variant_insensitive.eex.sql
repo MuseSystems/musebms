@@ -19,8 +19,12 @@ CREATE COLLATION ms_syst_priv.variant_insensitive (
 COMMENT ON
     COLLATION ms_syst_priv.variant_insensitive IS
 $DOC$A collation which ignores upper/lower case and certain other types of base
-character variants (i.e. e = é).  Mostly this will be used for internal_name
-columns.  Please note that there are performance implications and cross system
-consistency implications when using this collation.$DOC$;
+character variants (i.e. e = é).
+
+**General Usage**
+
+Mostly this will be used for internal_name columns.  Please note that there are
+performance implications and cross system consistency implications when using
+this collation.$DOC$;
 
 ALTER COLLATION ms_syst_priv.variant_insensitive OWNER TO <%= ms_owner %>;

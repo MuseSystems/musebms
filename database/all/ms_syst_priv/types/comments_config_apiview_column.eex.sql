@@ -29,6 +29,8 @@ COMMENT ON TYPE ms_syst_priv.comments_config_apiview_column IS
 $DOC$Provides a standardized data structure for defining API View column
 documentation.
 
+**General Usage**
+
 Values of this type are typically used with the
 `ms_syst_priv.generate_comments_apiview` function.  Column comments for this
 type assume usage with that function when describing values, constraints, and

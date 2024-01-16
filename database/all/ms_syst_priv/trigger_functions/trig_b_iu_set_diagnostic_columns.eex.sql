@@ -134,10 +134,54 @@ ALTER FUNCTION ms_syst_priv.trig_b_iu_set_diagnostic_columns()
 REVOKE EXECUTE ON FUNCTION ms_syst_priv.trig_b_iu_set_diagnostic_columns() FROM public;
 GRANT EXECUTE ON FUNCTION ms_syst_priv.trig_b_iu_set_diagnostic_columns() TO <%= ms_owner %>;
 
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Function
+    var_comments_config ms_syst_priv.comments_config_function;
 
-COMMENT ON FUNCTION ms_syst_priv.trig_b_iu_set_diagnostic_columns() IS
+BEGIN
+
+    --
+    -- Function Config
+    --
+
+    var_comments_config.function_schema := 'ms_syst_priv';
+    var_comments_config.function_name   := 'trig_b_iu_set_diagnostic_columns';
+
+    var_comments_config.trigger_function := TRUE;
+    var_comments_config.trigger_timing   := ARRAY [ 'b' ]::text[ ];
+    var_comments_config.trigger_ops      := ARRAY [ 'i', 'u' ]::text[ ];
+
+    var_comments_config.description :=
 $DOC$Automatically maintains the common table diagnostic columns whenever data is
-inserted or updated.  For UPDATE transactions, the trigger will determine if
-there are 'real data changes', meaning any fields other than the common
-diagnostic columns being changed by the transaction.  If not, only the
-diag_update_count column will be updated.$DOC$;
+inserted or updated.$DOC$;
+
+    var_comments_config.general_usage :=
+$DOC$For `UPDATE` transactions, the trigger will determine if there are 'real data
+changes', meaning any fields other than the common diagnostic columns being
+changed by the transaction.  If not, only the `diag_update_count` column will be
+updated.
+
+To use this trigger, the targeted table must have the following columns / types
+defined:
+
+  * `diag_timestamp_created` / `timestamptz`
+
+  * `diag_role_created` / `text`
+
+  * `diag_timestamp_modified` / `timestamptz`
+
+  * `diag_wallclock_modified` / `timestamptz`
+
+  * `diag_role_modified` / `text`
+
+  * `diag_row_version` / `bigint`
+
+  * `diag_update_count` / `bigint`
+$DOC$;
+
+    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+
+END;
+$DOCUMENTATION$;
