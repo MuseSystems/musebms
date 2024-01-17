@@ -27,6 +27,7 @@ load_files = [
     "all/ms_syst_priv/types/comments_config_function_param.eex.sql",
     "all/ms_syst_priv/types/comments_config_function.eex.sql",
     "all/ms_syst_priv/functions/generate_comments_function.eex.sql",
+    "all/ms_syst_priv/functions/generate_comments_copy_function.eex.sql",
 
     "all/ms_syst_priv/functions/get_exception_details.eex.sql",
 
