@@ -85,9 +85,6 @@ BEGIN
 $DOC$Performs an encode operation, similar to the standard encode function, but for
 non-standard encoding schemes such as Base32 or Base36.$DOC$;
 
-    var_comments_config.general_usage :=
-$DOC$$DOC$;
-
     --
     -- Parameter Configs
     --
