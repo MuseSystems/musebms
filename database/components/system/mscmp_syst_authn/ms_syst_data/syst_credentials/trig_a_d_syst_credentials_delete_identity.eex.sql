@@ -38,7 +38,26 @@ ALTER FUNCTION ms_syst_data.trig_a_d_syst_credentials_delete_identity()
 REVOKE EXECUTE ON FUNCTION ms_syst_data.trig_a_d_syst_credentials_delete_identity() FROM public;
 GRANT EXECUTE ON FUNCTION ms_syst_data.trig_a_d_syst_credentials_delete_identity() TO <%= ms_owner %>;
 
-COMMENT ON FUNCTION ms_syst_data.trig_a_d_syst_credentials_delete_identity() IS
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Function
+    var_comments_config ms_syst_priv.comments_config_function;
+
+BEGIN
+
+    --
+    -- Function Config
+    --
+
+    var_comments_config.function_schema := 'ms_syst_data';
+    var_comments_config.function_name   := 'trig_a_d_syst_credentials_delete_identity';
+
+    var_comments_config.trigger_function := TRUE;
+    var_comments_config.trigger_timing   := ARRAY [ 'a' ]::text[ ];
+    var_comments_config.trigger_ops      := ARRAY [ 'd' ]::text[ ];
+
+    var_comments_config.description :=
 $DOC$Deletes the syst_identities record associated with a newly deleted
 syst_credentials record.
 
@@ -50,3 +69,9 @@ existing identity and credential records and simply generate a new pair.
 Deleting identity records achieves this goal via the constraint on the
 credential_for_identity_id definition (ON DELETE CASCADE), but deleting a
 credential has no automatic deletion feature thus this trigger.$DOC$;
+
+
+    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+
+END;
+$DOCUMENTATION$;
