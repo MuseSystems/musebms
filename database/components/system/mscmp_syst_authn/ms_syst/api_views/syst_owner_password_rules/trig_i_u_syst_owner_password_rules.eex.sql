@@ -68,6 +68,30 @@ ALTER FUNCTION ms_syst.trig_i_u_syst_owner_password_rules()
 REVOKE EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_owner_password_rules() FROM public;
 GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_owner_password_rules() TO <%= ms_owner %>;
 
-COMMENT ON FUNCTION ms_syst.trig_i_u_syst_owner_password_rules() IS
-$DOC$An INSTEAD OF trigger function which applies business rules when using the
-syst_owner_password_rules API View for UPDATE operations.$DOC$;
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Function
+    var_comments_config ms_syst_priv.comments_config_function;
+
+BEGIN
+
+    --
+    -- Function Config
+    --
+
+    var_comments_config.function_schema := 'ms_syst';
+    var_comments_config.function_name   := 'trig_i_u_syst_owner_password_rules';
+
+    var_comments_config.trigger_function := TRUE;
+    var_comments_config.trigger_timing   := ARRAY [ 'i' ]::text[ ];
+    var_comments_config.trigger_ops      := ARRAY [ 'u' ]::text[ ];
+
+    var_comments_config.description :=
+$DOC$Processes incoming API View requests according to globally applicable business
+rules and data validation requirements.$DOC$;
+
+    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+
+END;
+$DOCUMENTATION$;

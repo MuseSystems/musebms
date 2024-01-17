@@ -70,8 +70,32 @@ ALTER FUNCTION ms_syst_data.trig_b_i_syst_identities_validate_uniqueness()
 REVOKE EXECUTE ON FUNCTION ms_syst_data.trig_b_i_syst_identities_validate_uniqueness() FROM public;
 GRANT EXECUTE ON FUNCTION ms_syst_data.trig_b_i_syst_identities_validate_uniqueness() TO <%= ms_owner %>;
 
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Function
+    var_comments_config ms_syst_priv.comments_config_function;
 
-COMMENT ON FUNCTION ms_syst_data.trig_b_i_syst_identities_validate_uniqueness() IS
+
+BEGIN
+
+    --
+    -- Function Config
+    --
+
+    var_comments_config.function_schema := 'ms_syst_data';
+    var_comments_config.function_name   := 'trig_b_i_syst_identities_validate_uniqueness';
+
+    var_comments_config.trigger_function := TRUE;
+    var_comments_config.trigger_timing   := ARRAY [ 'b' ]::text[ ];
+    var_comments_config.trigger_ops      := ARRAY [ 'i' ]::text[ ];
+
+    var_comments_config.description :=
 $DOC$Provides a check that each ms_syst_data.syst_identities.account_identifier
 value is unique for each owner's access accounts or unique amongst unowned
 access accounts.$DOC$;
+
+    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+
+END;
+$DOCUMENTATION$;

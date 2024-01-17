@@ -33,6 +33,30 @@ ALTER FUNCTION ms_syst.trig_i_d_syst_credentials()
 REVOKE EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_credentials() FROM public;
 GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_credentials() TO <%= ms_owner %>;
 
-COMMENT ON FUNCTION ms_syst.trig_i_d_syst_credentials() IS
-$DOC$An INSTEAD OF trigger function which applies business rules when using the
-syst_credentials API View for DELETE operations.$DOC$;
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Function
+    var_comments_config ms_syst_priv.comments_config_function;
+
+BEGIN
+
+    --
+    -- Function Config
+    --
+
+    var_comments_config.function_schema := 'ms_syst';
+    var_comments_config.function_name   := 'trig_i_d_syst_credentials';
+
+    var_comments_config.trigger_function := TRUE;
+    var_comments_config.trigger_timing   := ARRAY [ 'i' ]::text[ ];
+    var_comments_config.trigger_ops      := ARRAY [ 'd' ]::text[ ];
+
+    var_comments_config.description :=
+$DOC$Processes incoming API View requests according to globally applicable business
+rules and data validation requirements.$DOC$;
+
+    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+
+END;
+$DOCUMENTATION$;
