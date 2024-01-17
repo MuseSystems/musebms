@@ -124,7 +124,8 @@ BEGIN
     END trigger_block;
 
     var_resolved_general_use :=
-        E'**General Usage**\n\n' || var_working_config.general_usage;
+        E'**General Usage**\n\n' ||
+        nullif( var_working_config.general_usage, '' );
 
     << parameter_loop >>
     FOR var_curr_param IN
