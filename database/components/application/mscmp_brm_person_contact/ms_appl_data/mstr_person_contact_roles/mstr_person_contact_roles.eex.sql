@@ -79,70 +79,66 @@ CREATE CONSTRAINT TRIGGER a50_trig_a_u_person_contact_roles_enum_item_check
             ms_syst_priv.trig_a_iu_enum_item_check(
                 'person_contact_roles', 'person_contact_role_id');
 
-COMMENT ON
-    TABLE ms_appl_data.mstr_person_contact_roles IS
-$DOC$Associates individual persons with their contact data and includes an indication $DOC$;
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Table
+    var_comments_config ms_syst_priv.comments_config_table;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_person_contact_roles.id IS
-$DOC$The record's primary key.  The definitive identifier of the record in the
-system.$DOC$;
+    -- Columns
+    var_person_id              ms_syst_priv.comments_config_table_column;
+    var_person_contact_role_id ms_syst_priv.comments_config_table_column;
+    var_place_id               ms_syst_priv.comments_config_table_column;
+    var_contact_id             ms_syst_priv.comments_config_table_column;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_person_contact_roles.person_id IS
-$DOC$Identifies the person which has the relationship to the contact information.$DOC$;
+BEGIN
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_person_contact_roles.person_contact_role_id IS
-$DOC$Indicates a specific use or purpose for the identified contact information.$DOC$;
+    --
+    -- Table Config
+    --
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_person_contact_roles.place_id IS
-$DOC$This is an optional value indicating whether the given contact information is
-associated with a place.  If so, the place will appear here.  This value will be
-null if not.$DOC$;
+    var_comments_config.table_schema := 'ms_appl_data';
+    var_comments_config.table_name   := 'mstr_person_contact_roles';
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_person_contact_roles.contact_id IS
-$DOC$A reference to the contact information which serves the given role for the given
-person.$DOC$;
+    var_comments_config.description :=
+$DOC$Establishes the Roles that Contact records serve in relation to the given
+Person.$DOC$;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_person_contact_roles.diag_timestamp_created IS
-$DOC$The database server date/time when the transaction which created the record
-started.$DOC$;
+    --
+    -- Column Configs
+    --
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_person_contact_roles.diag_role_created IS
-$DOC$The database role which created the record.$DOC$;
+    var_person_id.column_name := 'person_id';
+    var_person_id.description :=
+$DOC$Identifies the Person which has the relationship to the Contact information.$DOC$;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_person_contact_roles.diag_timestamp_modified IS
-$DOC$The database server date/time when the transaction which modified the record
-started.  This field will be the same as diag_timestamp_created for inserted
-records.$DOC$;
+    var_person_contact_role_id.column_name := 'person_contact_role_id';
+    var_person_contact_role_id.description :=
+$DOC$Indicates a specific use or purpose for the identified Contact information.$DOC$;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_person_contact_roles.diag_wallclock_modified IS
-$DOC$The database server date/time at the moment the record was actually modified.
-For long running transactions this time may be significantly later than the
-value of diag_timestamp_modified.$DOC$;
+    var_place_id.column_name := 'place_id';
+    var_place_id.description :=
+$DOC$This is an optional value indicating whether the given Contact information is
+associated with a known Place.$DOC$;
+    var_place_id.general_usage :=
+$DOC$If the Contact information is associated with a specific Place, a reference to
+the Place record ID will appear here.  Otherwise the value will be `NULL`.$DOC$;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_person_contact_roles.diag_role_modified IS
-$DOC$The database role which modified the record.$DOC$;
+    var_contact_id.column_name := 'contact_id';
+    var_contact_id.description :=
+$DOC$A reference to the Contact record which serves the given Role for the given
+Person.$DOC$;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_person_contact_roles.diag_row_version IS
-$DOC$The current version of the row.  The value here indicates how many actual
-data changes have been made to the row.  If an update of the row leaves all data
-fields the same, disregarding the updates to the diag_* columns, the row version
-is not updated, nor are any updates made to the other diag_* columns other than
-diag_update_count.$DOC$;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_person_contact_roles.diag_update_count IS
-$DOC$Records the number of times the record has been updated regardless as to if
-the update actually changed any data.  In this way needless or redundant record
-updates can be found.  This row starts at 0 and therefore may be the same as the
-diag_row_version - 1.$DOC$;
+    var_comments_config.columns :=
+        ARRAY [
+              var_person_id
+            , var_person_contact_role_id
+            , var_place_id
+            , var_contact_id
+            ]::ms_syst_priv.comments_config_table_column[];
+
+    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+
+END;
+$DOCUMENTATION$;
