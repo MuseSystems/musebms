@@ -56,5 +56,32 @@ ALTER FUNCTION ms_syst_data.trig_a_i_syst_instances_create_instance_contexts()
 REVOKE EXECUTE ON FUNCTION ms_syst_data.trig_a_i_syst_instances_create_instance_contexts() FROM public;
 GRANT EXECUTE ON FUNCTION ms_syst_data.trig_a_i_syst_instances_create_instance_contexts() TO <%= ms_owner %>;
 
-COMMENT ON FUNCTION ms_syst_data.trig_a_i_syst_instances_create_instance_contexts() IS
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Function
+    var_comments_config ms_syst_priv.comments_config_function;
+
+BEGIN
+
+    --
+    -- Function Config
+    --
+
+    var_comments_config.function_schema := 'ms_syst_data';
+    var_comments_config.function_name   := 'trig_a_i_syst_instances_create_instance_contexts';
+
+    var_comments_config.trigger_function := TRUE;
+    var_comments_config.trigger_timing   := ARRAY [ 'a' ]::text[ ];
+    var_comments_config.trigger_ops      := ARRAY [ 'i' ]::text[ ];
+
+    var_comments_config.description :=
 $DOC$Creates Instance Context records based on existing Application Contexts and Instance Type Contexts.$DOC$;
+
+    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+
+END;
+$DOCUMENTATION$;
+
+COMMENT ON FUNCTION ms_syst_data.trig_a_i_syst_instances_create_instance_contexts() IS
+$DOC$$DOC$;
