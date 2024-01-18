@@ -48,12 +48,69 @@ GRANT EXECUTE ON FUNCTION
         p_command         text,
         p_command_aliases text[] ) TO <%= ms_owner %>;
 
-COMMENT ON FUNCTION
-    ms_syst_priv.generate_command_tsvector(
-        p_config          regconfig,
-        p_command         text,
-        p_command_aliases text[] ) IS
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Function
+    var_comments_config ms_syst_priv.comments_config_function;
+
+    -- Parameters
+    var_p_config          ms_syst_priv.comments_config_function_param;
+    var_p_command         ms_syst_priv.comments_config_function_param;
+    var_p_command_aliases ms_syst_priv.comments_config_function_param;
+BEGIN
+
+    --
+    -- Function Config
+    --
+
+    var_comments_config.function_schema := 'ms_syst_priv';
+    var_comments_config.function_name   := 'generate_command_tsvector';
+
+    var_comments_config.description :=
 $DOC$Generates a tsvector value for relations which implement the "searchable
 command" pattern.  Searchable commands are typically searched for the purpose of
-performing user interface autocomplete operations.  Searches prioritize the
-primary Command text over any defined aliases which may exist.$DOC$;
+performing user interface autocomplete operations.$DOC$;
+
+    var_comments_config.general_usage :=
+$DOC$This function is expected to be used in table definitions by generated columns
+containing `tsvector` values.
+
+Searches prioritize the primary Command text over any defined aliases which may
+exist.$DOC$;
+
+    --
+    -- Parameter Configs
+    --
+
+    var_p_config.param_name := 'p_config';
+    var_p_config.required := TRUE;
+    var_p_config.description :=
+$DOC$The name of the PostgreSQL text search configuration to apply to the generation
+of `tsvector` values by this function.
+
+See [the PostgreSQL documentation](https://www.postgresql.org/docs/current/textsearch-intro.html#TEXTSEARCH-INTRO-CONFIGURATIONS)
+for more.$DOC$;
+
+    var_p_command.param_name := 'p_command';
+    var_p_command.description :=
+$DOC$The primary Action Group or Action Command which receives priority in full text
+navigation related searches.$DOC$;
+
+    var_p_command_aliases.param_name := 'p_command_aliases';
+    var_p_command_aliases.required := TRUE;
+    var_p_command_aliases.description :=
+$DOC$The Command Alias of the Action Group or Action which serve as secondary lookups
+for the navigation related text search.$DOC$;
+
+    var_comments_config.params :=
+        ARRAY [
+              var_p_config
+            , var_p_command
+            , var_p_command_aliases
+            ]::ms_syst_priv.comments_config_function_param[];
+
+    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+
+END;
+$DOCUMENTATION$;
