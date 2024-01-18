@@ -90,74 +90,67 @@ CREATE CONSTRAINT TRIGGER a50_trig_a_u_interface_types_enum_item_check
 CREATE INDEX syst_interaction_logs_interaction_timestamp_idx
     ON ms_syst_data.syst_interaction_logs USING brin (interaction_timestamp);
 
-COMMENT ON
-    TABLE ms_syst_data.syst_interaction_logs IS
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Table
+    var_comments_config ms_syst_priv.comments_config_table;
+
+    -- Columns
+    var_interaction_timestamp ms_syst_priv.comments_config_table_column;
+    var_interaction_type_id   ms_syst_priv.comments_config_table_column;
+    var_interface_type_id     ms_syst_priv.comments_config_table_column;
+    var_data                  ms_syst_priv.comments_config_table_column;
+
+BEGIN
+
+    --
+    -- Table Config
+    --
+
+    var_comments_config.table_schema := 'ms_syst_data';
+    var_comments_config.table_name   := 'syst_interaction_logs';
+
+    var_comments_config.description :=
 $DOC$Records interactions to drive both system functionality and to provide usage
 telemetry.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_interaction_logs.id IS
-$DOC$The record's primary key.  The definitive identifier of the record in the
-system.$DOC$;
+    --
+    -- Column Configs
+    --
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_interaction_logs.interaction_timestamp IS
+    var_interaction_timestamp.column_name := 'interaction_timestamp';
+    var_interaction_timestamp.description :=
 $DOC$The nominal time at which the event being recorded is considered to have
 happened.  This is the database transaction start time specifically.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_interaction_logs.interaction_type_id IS
+    var_interaction_type_id.column_name := 'interaction_type_id';
+    var_interaction_type_id.description :=
 $DOC$The kind of interaction being recorded.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_interaction_logs.interface_type_id IS
+    var_interface_type_id.column_name := 'interface_type_id';
+    var_interface_type_id.description :=
 $DOC$The origin entry point into the application and from which the activity was
 initiated.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_interaction_logs.data IS
+    var_data.column_name := 'data';
+    var_data.description :=
 $DOC$Optional document style data which may more completely elaborate on the activity
 being recorded.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_interaction_logs.diag_timestamp_created IS
-$DOC$The database server date/time when the transaction which created the record
-started.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_interaction_logs.diag_role_created IS
-$DOC$The database role which created the record.$DOC$;
+    var_comments_config.columns :=
+        ARRAY [
+              var_interaction_timestamp
+            , var_interaction_type_id
+            , var_interface_type_id
+            , var_data
+            ]::ms_syst_priv.comments_config_table_column[];
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_interaction_logs.diag_timestamp_modified IS
-$DOC$The database server date/time when the transaction which modified the record
-started.  This field will be the same as diag_timestamp_created for inserted
-records.$DOC$;
+    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_interaction_logs.diag_wallclock_modified IS
-$DOC$The database server date/time at the moment the record was actually modified.
-For long running transactions this time may be significantly later than the
-value of diag_timestamp_modified.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_interaction_logs.diag_role_modified IS
-$DOC$The database role which modified the record.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_interaction_logs.diag_row_version IS
-$DOC$The current version of the row.  The value here indicates how many actual
-data changes have been made to the row.  If an update of the row leaves all data
-fields the same, disregarding the updates to the diag_* columns, the row version
-is not updated, nor are any updates made to the other diag_* columns other than
-diag_update_count.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_interaction_logs.diag_update_count IS
-$DOC$Records the number of times the record has been updated regardless as to if
-the update actually changed any data.  In this way needless or redundant record
-updates can be found.  This row starts at 0 and therefore may be the same as the
-diag_row_version - 1.$DOC$;
+END;
+$DOCUMENTATION$;
 
 COMMENT ON
     INDEX ms_syst_data.syst_interaction_logs_interaction_timestamp_idx IS
