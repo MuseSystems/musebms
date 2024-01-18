@@ -66,8 +66,62 @@ ALTER FUNCTION ms_syst_priv.trig_a_iu_enum_item_check()
 REVOKE EXECUTE ON FUNCTION ms_syst_priv.trig_a_iu_enum_item_check() FROM public;
 GRANT EXECUTE ON FUNCTION ms_syst_priv.trig_a_iu_enum_item_check() TO <%= ms_owner %>;
 
-COMMENT ON FUNCTION ms_syst_priv.trig_a_iu_enum_item_check() IS
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Function
+    var_comments_config ms_syst_priv.comments_config_function;
+
+    -- Parameters
+    var_tg_argv0 ms_syst_priv.comments_config_function_param;
+    var_tg_argv1 ms_syst_priv.comments_config_function_param;
+
+BEGIN
+
+    --
+    -- Function Config
+    --
+
+    var_comments_config.function_schema := 'ms_syst_priv';
+    var_comments_config.function_name   := 'trig_a_iu_enum_item_check';
+
+    var_comments_config.trigger_function := TRUE;
+    var_comments_config.trigger_timing   := ARRAY [ 'a' ]::text[ ];
+    var_comments_config.trigger_ops      := ARRAY [ 'i', 'u' ]::text[ ];
+
+    var_comments_config.description :=
 $DOC$A constraint trigger function to provide foreign key like validation of columns
-which reference syst_enum_items.  This relationship requires the additional
-check that only values from the desired enumeration are used in assigning to
-records.$DOC$;
+which reference syst_enum_items.$DOC$;
+
+    var_comments_config.general_usage :=
+$DOC$This relationship requires the additional check that only values from the
+desired enumeration are used in assigning to records.$DOC$;
+
+    --
+    -- Parameter Configs
+    --
+
+    var_tg_argv0.param_name := 'tg_argv[0]';
+    var_tg_argv0.required := TRUE;
+    var_tg_argv0.description :=
+$DOC$The name of the enumeration to validate against.
+
+This value will be the `ms_syst_data.syst_enums.internal_name` value which
+identified the enumeration.$DOC$;
+
+    var_tg_argv1.param_name := 'tg_argv[1]';
+    var_tg_argv1.required := TRUE;
+    var_tg_argv1.description :=
+$DOC$The name of the foreign key column in the host table which references
+`ms_syst_data.syst_enum_items` records.$DOC$;
+
+    var_comments_config.params :=
+        ARRAY [
+              var_tg_argv0
+            , var_tg_argv1
+            ]::ms_syst_priv.comments_config_function_param[];
+
+    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+
+END;
+$DOCUMENTATION$;

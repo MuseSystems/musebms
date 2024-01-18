@@ -58,8 +58,46 @@ ALTER FUNCTION ms_syst_data.trig_b_iu_syst_enum_items_validate_functional_types(
 REVOKE EXECUTE ON FUNCTION ms_syst_data.trig_b_iu_syst_enum_items_validate_functional_types() FROM public;
 GRANT EXECUTE ON FUNCTION ms_syst_data.trig_b_iu_syst_enum_items_validate_functional_types() TO <%= ms_owner %>;
 
-COMMENT ON FUNCTION ms_syst_data.trig_b_iu_syst_enum_items_validate_functional_types() IS
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Function
+    var_comments_config ms_syst_priv.comments_config_function;
+
+    -- Parameters
+
+BEGIN
+
+    --
+    -- Function Config
+    --
+
+    var_comments_config.function_schema := 'ms_syst_data';
+    var_comments_config.function_name   := 'trig_b_iu_syst_enum_items_validate_functional_types';
+
+    var_comments_config.trigger_function := TRUE;
+    var_comments_config.trigger_timing   := ARRAY [ 'b' ]::text[ ];
+    var_comments_config.trigger_ops      := ARRAY [ 'i', 'u' ]::text[ ];
+
+    var_comments_config.description :=
 $DOC$Ensures that if the parent syst_enums record has syst_enum_functional_types
 records defined, a syst_enum_items record will reference one of those
-functional types.  Note that this trigger function is intended to be use by
+functional types.$DOC$;
+
+    var_comments_config.general_usage :=
+$DOC$Note that this trigger function is intended to be use by
 constraint triggers.$DOC$;
+
+    --
+    -- Parameter Configs
+    --
+
+
+
+    var_comments_config.params :=
+        ARRAY [ ]::ms_syst_priv.comments_config_function_param[];
+
+    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+
+END;
+$DOCUMENTATION$;
