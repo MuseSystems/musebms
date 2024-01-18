@@ -174,6 +174,9 @@ associated metadata such as specialized data fields, mapping of the specialized
 fields to standard representation for data maintenance, display, printing, and
 integration.$DOC$;
 
+    var_contact_notes.column_name := 'contact_notes';
+    var_contact_notes.description :=
+$DOC$Optional user provided notes related to the Contact record.$DOC$;
 
     var_comments_config.columns :=
         ARRAY [
