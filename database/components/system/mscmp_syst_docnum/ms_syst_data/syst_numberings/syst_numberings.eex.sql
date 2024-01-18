@@ -29,11 +29,6 @@ CREATE TABLE ms_syst_data.syst_numberings
         NOT NULL
     ,user_description
         text
-    ,feature_id
-        uuid
-        NOT NULL
-        CONSTRAINT syst_numberings_feature_fk
-            REFERENCES ms_syst_data.syst_feature_map (id)
     ,syst_defined
         boolean
         NOT NULL DEFAULT FALSE
@@ -76,9 +71,6 @@ DECLARE
     -- Table
     var_comments_config ms_syst_priv.comments_config_table;
 
-    -- Columns
-    var_feature_id ms_syst_priv.comments_config_table_column;
-
 BEGIN
 
     --
@@ -91,20 +83,6 @@ BEGIN
     var_comments_config.description :=
 $DOC$Records the available numbering sequences in the system.  These may be system
 created or user created.$DOC$;
-
-    --
-    -- Column Configs
-    --
-
-    var_feature_id.column_name := 'feature_id';
-    var_feature_id.description :=
-$DOC$A reference to the specific feature of which the numbering is considered to be
-part.  This reference is chiefly used to determine where in the configuration
-options the numbering should appear.$DOC$;
-
-
-    var_comments_config.columns :=
-        ARRAY [ var_feature_id ]::ms_syst_priv.comments_config_table_column[];
 
     PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
 
