@@ -53,15 +53,30 @@ GRANT EXECUTE ON FUNCTION
         p_excluded_relations regclass[] )
     TO <%= ms_owner %>;
 
-COMMENT ON FUNCTION
-    ms_syst_priv.is_hierarchy_record_referenced(
-        p_parent_record_id   uuid,
-        p_excluded_relations regclass[] )
-    IS
-$DOC$Tests if the identified Hierarchy record is referenced by a Hierarchy
-implementing Component's data.
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Function
+    var_comments_config ms_syst_priv.comments_config_function;
 
-Returns `TRUE` if the record is referenced, `FALSE` otherwise.  A referenced
+    -- Parameters
+    var_p_parent_record_id   ms_syst_priv.comments_config_function_param;
+    var_p_excluded_relations ms_syst_priv.comments_config_function_param;
+BEGIN
+
+    --
+    -- Function Config
+    --
+
+    var_comments_config.function_schema := 'ms_syst_priv';
+    var_comments_config.function_name   := 'is_hierarchy_record_referenced';
+
+    var_comments_config.description :=
+$DOC$Tests if the identified Hierarchy record is referenced by a Hierarchy
+implementing Component's data.$DOC$;
+
+    var_comments_config.general_usage :=
+$DOC$Returns `TRUE` if the record is referenced, `FALSE` otherwise.  A referenced
 record is an indication that a Hierarchy is in active use and should be
 prohibited from reconfiguring changes.
 
@@ -69,3 +84,30 @@ If allowed to default, the `p_excluded_relations` parameter excludes the
 `ms_syst_data.syst_hierarchy_items` relation.  If you specify a
 `p_excluded_relations` value for this parameter, no such default assumptions are
 made and only the relations you specify are excluded.$DOC$;
+
+    --
+    -- Parameter Configs
+    --
+
+    var_p_parent_record_id.param_name := 'p_parent_record_id';
+    var_p_parent_record_id.description :=
+$DOC$The record ID to search for in the child tables which may reference the value.$DOC$;
+
+    var_p_excluded_relations.param_name := 'p_excluded_relations';
+    var_p_excluded_relations.required := FALSE;
+    var_p_excluded_relations.default_value :=
+$DOC$`'{}'::regclass[]`$DOC$;
+    var_p_excluded_relations.description :=
+$DOC$An array of regclasses to exclude from the search for the `p_parent_record_id`
+value.$DOC$;
+
+    var_comments_config.params :=
+        ARRAY [
+              var_p_parent_record_id
+            , var_p_excluded_relations
+            ]::ms_syst_priv.comments_config_function_param[];
+
+    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+
+END;
+$DOCUMENTATION$;

@@ -43,9 +43,12 @@ COMMENT ON FUNCTION
     ms_syst_priv.is_hierarchy_config_valid(p_hierarchy ms_syst_data.syst_hierarchies)
     IS
 $DOC$Validates that a Hierarchy record and its associated Hierarchy Item records are
-consistent and ready for use by Hierarchy implementing Components.  Returns
-`TRUE` if Hierarchy is valid and may be set to an "active" state; returns false
-otherwise.$DOC$;
+consistent and ready for use by Hierarchy implementing Components.
+
+**General Usage**
+
+Returns `TRUE` if Hierarchy is valid and may be set to an "active" state;
+returns false otherwise.$DOC$;
 
 /************************************************************************************************
 
@@ -89,6 +92,9 @@ COMMENT ON FUNCTION
     ms_syst_priv.is_hierarchy_config_valid(p_hierarchy_id uuid)
     IS
 $DOC$Validates that a Hierarchy record and its associated Hierarchy Item records are
-consistent and ready for use by Hierarchy implementing Components.  Returns
-`TRUE` if Hierarchy is valid and may be set to an "active" state; returns false
-otherwise.$DOC$;
+consistent and ready for use by Hierarchy implementing Components.
+
+**General Usage**
+
+Returns `TRUE` if Hierarchy is valid and may be set to an "active" state;
+returns false otherwise.$DOC$;

@@ -114,12 +114,37 @@ ALTER FUNCTION ms_syst_data.trig_b_u_syst_hierarchies_validate_state_change()
 REVOKE EXECUTE ON FUNCTION ms_syst_data.trig_b_u_syst_hierarchies_validate_state_change() FROM public;
 GRANT EXECUTE ON FUNCTION ms_syst_data.trig_b_u_syst_hierarchies_validate_state_change() TO <%= ms_owner %>;
 
-COMMENT ON FUNCTION ms_syst_data.trig_b_u_syst_hierarchies_validate_state_change() IS
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Function
+    var_comments_config ms_syst_priv.comments_config_function;
+
+BEGIN
+
+    --
+    -- Function Config
+    --
+
+    var_comments_config.function_schema := 'ms_syst_data';
+    var_comments_config.function_name   := 'trig_b_u_syst_hierarchies_validate_state_change';
+
+    var_comments_config.trigger_function := TRUE;
+    var_comments_config.trigger_timing   := ARRAY [ 'b' ]::text[ ];
+    var_comments_config.trigger_ops      := ARRAY [ 'u' ]::text[ ];
+
+    var_comments_config.description :=
 $DOC$Checks that a Hierarchy record's state may be changed while ensuring that
 such a change doesn't allow for data inconsistencies with either of the
-Hierarchy or the data of Hierarchy implementing Components.
+Hierarchy or the data of Hierarchy implementing Components.$DOC$;
 
-Setting the Hierarchy to an "active" state requires that the Hierarchy and its
+    var_comments_config.general_usage :=
+$DOC$Setting the Hierarchy to an "active" state requires that the Hierarchy and its
 associated Hierarchy Items are complete and fully self-consistent.  For the
 "inactive" check, the Hierarchy may not be in use which is defined as being
 referenced in the data of Hierarchy implementing Components.$DOC$;
+
+    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+
+END;
+$DOCUMENTATION$;

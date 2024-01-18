@@ -52,11 +52,31 @@ ALTER FUNCTION ms_syst_data.trig_b_iu_syst_hierarchy_items_depth_maint()
 REVOKE EXECUTE ON FUNCTION ms_syst_data.trig_b_iu_syst_hierarchy_items_depth_maint() FROM public;
 GRANT EXECUTE ON FUNCTION ms_syst_data.trig_b_iu_syst_hierarchy_items_depth_maint() TO <%= ms_owner %>;
 
-COMMENT ON FUNCTION ms_syst_data.trig_b_iu_syst_hierarchy_items_depth_maint() IS
-$DOC$Manages the `hierarchy_depth` column value.  Depending on the passed data, this
-trigger will perform different actions.
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Function
+    var_comments_config ms_syst_priv.comments_config_function;
 
-When a new Hierarchy Item record is inserted without specifying a
+BEGIN
+
+    --
+    -- Function Config
+    --
+
+    var_comments_config.function_schema := 'ms_syst_data';
+    var_comments_config.function_name   := 'trig_b_iu_syst_hierarchy_items_depth_maint';
+
+    var_comments_config.trigger_function := TRUE;
+    var_comments_config.trigger_timing   := ARRAY [ 'b' ]::text[ ];
+    var_comments_config.trigger_ops      := ARRAY [ 'i', 'u' ]::text[ ];
+
+    var_comments_config.description :=
+$DOC$Manages the `hierarchy_depth` column value.  Depending on the passed data, this
+trigger will perform different actions.$DOC$;
+
+    var_comments_config.general_usage :=
+$DOC$When a new Hierarchy Item record is inserted without specifying a
 `hierarchy_depth` value, this trigger will assign it the next highest
 `hierarchy_depth` value based on the existing Hierarchy Item records assigned
 to the Hierarchy, or 1 if there are no existing Hierarchy Item records
@@ -80,3 +100,8 @@ an update would leave a gap, we do not try to renumber the `hierarchy_depth`
 values meaning that the `hierarchy_depth` sequence within any Hierarchy may
 indeed include gaps: we only attempt to keep overall ordering consistent and we
 do not attempt to achieve a gapless numbering scheme.$DOC$;
+
+    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+
+END;
+$DOCUMENTATION$;

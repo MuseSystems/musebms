@@ -101,6 +101,8 @@ $DOC$Checks a number of validity conditions which a Hierarchy and associated
 Hierarchy Item records must meet prior to the Hierarchy being set to an "active"
 state.
 
+**General Usage**
+
 The function returns an array of text values indicating which of the validity
 checks failed.  If no checks failed and the Hierarchy is valid, the returned
 array will be empty.$DOC$;

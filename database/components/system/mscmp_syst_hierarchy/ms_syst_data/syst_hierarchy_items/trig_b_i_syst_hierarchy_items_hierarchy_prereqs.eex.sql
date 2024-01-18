@@ -97,6 +97,30 @@ ALTER FUNCTION ms_syst_data.trig_b_i_syst_hierarchy_items_hierarchy_prereqs()
 REVOKE EXECUTE ON FUNCTION ms_syst_data.trig_b_i_syst_hierarchy_items_hierarchy_prereqs() FROM public;
 GRANT EXECUTE ON FUNCTION ms_syst_data.trig_b_i_syst_hierarchy_items_hierarchy_prereqs() TO <%= ms_owner %>;
 
-COMMENT ON FUNCTION ms_syst_data.trig_b_i_syst_hierarchy_items_hierarchy_prereqs() IS
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Function
+    var_comments_config ms_syst_priv.comments_config_function;
+
+BEGIN
+
+    --
+    -- Function Config
+    --
+
+    var_comments_config.function_schema := 'ms_syst_data';
+    var_comments_config.function_name   := 'trig_b_i_syst_hierarchy_items_hierarchy_prereqs';
+
+    var_comments_config.trigger_function := TRUE;
+    var_comments_config.trigger_timing   := ARRAY [ 'b' ]::text[ ];
+    var_comments_config.trigger_ops      := ARRAY [ 'i' ]::text[ ];
+
+    var_comments_config.description :=
 $DOC$Validates that the Hierarchy conditions of being in an "inactive" state and
 that the Hierarchy is a "structured" Hierarchy are true.$DOC$;
+
+    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+
+END;
+$DOCUMENTATION$;
