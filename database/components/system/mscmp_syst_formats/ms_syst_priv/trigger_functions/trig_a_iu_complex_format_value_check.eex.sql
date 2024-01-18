@@ -82,7 +82,7 @@ BEGIN
     --
 
     var_comments_config.function_schema := 'ms_syst_priv';
-    var_comments_config.function_name   := 'comments_config_function';
+    var_comments_config.function_name   := 'trig_a_iu_complex_format_value_check';
 
     var_comments_config.trigger_function := TRUE;
     var_comments_config.trigger_timing   := ARRAY [ 'a' ]::text[ ];
