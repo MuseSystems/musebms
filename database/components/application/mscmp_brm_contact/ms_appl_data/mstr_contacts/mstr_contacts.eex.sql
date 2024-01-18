@@ -103,104 +103,88 @@ CREATE CONSTRAINT TRIGGER a50_trig_a_u_contact_states_enum_item_check
             ms_syst_priv.trig_a_iu_enum_item_check(
                 'contact_states', 'contact_state_id');
 
-COMMENT ON
-    TABLE ms_appl_data.mstr_contacts IS
-$DOC$Represents a single method of contact for a person, entity, place, or other
-contextually relevant association.
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Table
+    var_comments_config ms_syst_priv.comments_config_table;
 
-Note that there is a weakness in this part of the schema design in that contact
+    -- Columns
+    var_owning_entity_id ms_syst_priv.comments_config_table_column;
+    var_contact_type_id  ms_syst_priv.comments_config_table_column;
+    var_contact_state_id ms_syst_priv.comments_config_table_column;
+    var_contact_data     ms_syst_priv.comments_config_table_column;
+    var_contact_notes    ms_syst_priv.comments_config_table_column;
+
+BEGIN
+
+    --
+    -- Table Config
+    --
+
+    var_comments_config.table_schema := 'ms_appl_data';
+    var_comments_config.table_name   := 'mstr_contacts';
+
+    var_comments_config.description :=
+$DOC$Represents a single method of contact for a person, entity, place, or other
+contextually relevant association.$DOC$;
+
+    var_comments_config.general_usage :=
+$DOC$Note that there is a weakness in this part of the schema design in that contact
 information doesn't make sense outside of assignment to a person, facility, or
 entity, but such assignment is indirect through role assignments.  This means it
 is conceivable that records in this table could become orphaned.  At this stage,
 however, it doesn't seem worth it to denormalize the data to record the direct
 association.$DOC$;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_contacts.id IS
-$DOC$The record's primary key.  The definitive identifier of the record in the
-system.$DOC$;
+    --
+    -- Column Configs
+    --
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_contacts.internal_name IS
-$DOC$ A candidate key useful for programmatic references to individual records.$DOC$;
+    var_owning_entity_id.column_name := 'owning_entity_id';
+    var_owning_entity_id.description :=
+$DOC$Indicates the entity which is the owner or "controlling".$DOC$;
+    var_owning_entity_id.general_usage :=
+$DOC$There are a couple of ways this can be used.  The first case is illustrated by
+the example of a managed entity and an staffing entity that is an individual.
+The owning entity in this case will be the managed entity for contacts such as
+the details of the person's office address, phone, and email addresses that is
+used in carrying out their duties as staff.  The second case is where the entity
+is in a selling, purchasing, or banking relationship with the managed entity.
+In this case the owning entity is the entity with which the managed entity has a
+relationship since a customer, vendor, or bank determines their own contact
+details.$DOC$;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_contacts.display_name IS
-$DOC$A friendly name and candidate key for the record, suitable for use in user
-interactions$DOC$;
-
-COMMENT ON
-    COLUMN ms_appl_data.mstr_contacts.owning_entity_id IS
-$DOC$Indicates the entity which is the owner or "controlling".   There are a couple
-of ways this can be used.  The first case is illustrated by the example of a
-managed entity and an staffing entity that is an individual.  The owning entity
-in this case will be the managed entity for contacts such as the details of the
-person's office address, phone, and email addresses that is used in carrying out
-their duties as staff.  The second case is where the entity is in a selling,
-purchasing, or banking relationship with the managed entity.  In this case the
-owning entity is the entity with which the managed entity has a relationship
-since a customer, vendor, or bank determines their own contact details.$DOC$;
-
-COMMENT ON
-    COLUMN ms_appl_data.mstr_contacts.external_name IS
-$DOC$A non-unique/non-key value used to display to users and external parties where
-uniqueness is less of a concern than specific end user presentation.$DOC$;
-
-COMMENT ON
-    COLUMN ms_appl_data.mstr_contacts.contact_state_id IS
+    var_contact_state_id.column_name := 'contact_state_id';
+    var_contact_state_id.description :=
 $DOC$Establishes the current life-cycle state of the contact record, such as
 whether the record is active or not.$DOC$;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_contacts.contact_type_id IS
+    var_contact_type_id.column_name := 'contact_type_id';
+    var_contact_type_id.description :=
 $DOC$Indicates the type of the contact record.  Contact records store inforamtion of
 varying types such as phone numbers, physical addresses, email addresses, etc.
 The value in this column establishes which kind of contact data is being stored
 and indicates the data processing rules to apply.$DOC$;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_contacts.contact_data IS
+    var_contact_data.column_name := 'contact_data';
+    var_contact_data.description :=
 $DOC$Contains the actual contact data being stored by the record as well as
 associated metadata such as specialized data fields, mapping of the specialized
 fields to standard representation for data maintenance, display, printing, and
 integration.$DOC$;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_contacts.diag_timestamp_created IS
-$DOC$The database server date/time when the transaction which created the record
-started.$DOC$;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_contacts.diag_role_created IS
-$DOC$The database role which created the record.$DOC$;
+    var_comments_config.columns :=
+        ARRAY [
+              var_owning_entity_id
+            , var_contact_type_id
+            , var_contact_state_id
+            , var_contact_data
+            , var_contact_notes
+            ]::ms_syst_priv.comments_config_table_column[];
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_contacts.diag_timestamp_modified IS
-$DOC$The database server date/time when the transaction which modified the record
-started.  This field will be the same as diag_timestamp_created for inserted
-records.$DOC$;
+    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_contacts.diag_wallclock_modified IS
-$DOC$The database server date/time at the moment the record was actually modified.
-For long running transactions this time may be significantly later than the
-value of diag_timestamp_modified.$DOC$;
-
-COMMENT ON
-    COLUMN ms_appl_data.mstr_contacts.diag_role_modified IS
-$DOC$The database role which modified the record.$DOC$;
-
-COMMENT ON
-    COLUMN ms_appl_data.mstr_contacts.diag_row_version IS
-$DOC$The current version of the row.  The value here indicates how many actual
-data changes have been made to the row.  If an update of the row leaves all data
-fields the same, disregarding the updates to the diag_* columns, the row version
-is not updated, nor are any updates made to the other diag_* columns other than
-diag_update_count.$DOC$;
-
-COMMENT ON
-    COLUMN ms_appl_data.mstr_contacts.diag_update_count IS
-$DOC$Records the number of times the record has been updated regardless as to if
-the update actually changed any data.  In this way needless or redundant record
-updates can be found.  This row starts at 0 and therefore may be the same as the
-diag_row_version - 1.$DOC$;
+END;
+$DOCUMENTATION$;
