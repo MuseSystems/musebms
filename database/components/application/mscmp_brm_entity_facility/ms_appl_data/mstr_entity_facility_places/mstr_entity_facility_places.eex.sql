@@ -58,60 +58,49 @@ CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
     BEFORE INSERT OR UPDATE ON ms_appl_data.mstr_entity_facility_places
     FOR EACH ROW EXECUTE PROCEDURE ms_syst_priv.trig_b_iu_set_diagnostic_columns();
 
-COMMENT ON
-    TABLE ms_appl_data.mstr_entity_facility_places IS
-$DOC$Identifies a Place as being both a place of work for staff and a place where non-inventory, physical assets may be
-held for the associated Entity.$DOC$;
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Table
+    var_comments_config ms_syst_priv.comments_config_table;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_facility_places.id IS
-$DOC$The record's primary key.  The definitive identifier of the record in the
-system.$DOC$;
+    -- Columns
+    var_place_id         ms_syst_priv.comments_config_table_column;
+    var_owning_entity_id ms_syst_priv.comments_config_table_column;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_facility_places.place_id IS
-$DOC$Identifies the place which has a workplace relationship with the owning entity.$DOC$;
+BEGIN
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_facility_places.owning_entity_id IS
-$DOC$Establishes the entity which uses the place as a workplace.$DOC$;
+    --
+    -- Table Config
+    --
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_facility_places.diag_timestamp_created IS
-$DOC$The database server date/time when the transaction which created the record
-started.$DOC$;
+    var_comments_config.table_schema := 'ms_appl_data';
+    var_comments_config.table_name   := 'mstr_entity_facility_places';
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_facility_places.diag_role_created IS
-$DOC$The database role which created the record.$DOC$;
+    var_comments_config.description :=
+$DOC$Identifies a Place as being both a place of work for staff and a place where
+non-inventory, physical assets belonging to the associated Entity may be held.$DOC$;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_facility_places.diag_timestamp_modified IS
-$DOC$The database server date/time when the transaction which modified the record
-started.  This field will be the same as diag_timestamp_created for inserted
-records.$DOC$;
+    --
+    -- Column Configs
+    --
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_facility_places.diag_wallclock_modified IS
-$DOC$The database server date/time at the moment the record was actually modified.
-For long running transactions this time may be significantly later than the
-value of diag_timestamp_modified.$DOC$;
+    var_place_id.column_name := 'place_id';
+    var_place_id.description :=
+$DOC$Identifies the Place which has a workplace relationship with the Owning Entity.$DOC$;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_facility_places.diag_role_modified IS
-$DOC$The database role which modified the record.$DOC$;
+    var_owning_entity_id.column_name := 'owning_entity_id';
+    var_owning_entity_id.description :=
+$DOC$Establishes the Entity which uses the Place as a workplace.$DOC$;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_facility_places.diag_row_version IS
-$DOC$The current version of the row.  The value here indicates how many actual
-data changes have been made to the row.  If an update of the row leaves all data
-fields the same, disregarding the updates to the diag_* columns, the row version
-is not updated, nor are any updates made to the other diag_* columns other than
-diag_update_count.$DOC$;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_facility_places.diag_update_count IS
-$DOC$Records the number of times the record has been updated regardless as to if
-the update actually changed any data.  In this way needless or redundant record
-updates can be found.  This row starts at 0 and therefore may be the same as the
-diag_row_version - 1.$DOC$;
+    var_comments_config.columns :=
+        ARRAY [
+              var_place_id
+            , var_owning_entity_id
+            ]::ms_syst_priv.comments_config_table_column[];
+
+    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+
+END;
+$DOCUMENTATION$;
