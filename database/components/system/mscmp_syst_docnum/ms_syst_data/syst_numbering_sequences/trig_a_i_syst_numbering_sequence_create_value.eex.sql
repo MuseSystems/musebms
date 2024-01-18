@@ -36,9 +36,36 @@ ALTER FUNCTION ms_syst_data.trig_a_i_syst_numbering_sequence_create_value()
 REVOKE EXECUTE ON FUNCTION ms_syst_data.trig_a_i_syst_numbering_sequence_create_value() FROM public;
 GRANT EXECUTE ON FUNCTION ms_syst_data.trig_a_i_syst_numbering_sequence_create_value() TO <%= ms_owner %>;
 
-COMMENT ON FUNCTION ms_syst_data.trig_a_i_syst_numbering_sequence_create_value() IS
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Function
+    var_comments_config ms_syst_priv.comments_config_function;
+
+BEGIN
+
+    --
+    -- Function Config
+    --
+
+    var_comments_config.function_schema := 'ms_syst_data';
+    var_comments_config.function_name   := 'trig_a_i_syst_numbering_sequence_create_value';
+
+    var_comments_config.trigger_function := TRUE;
+    var_comments_config.trigger_timing   := ARRAY [ 'a' ]::text[ ];
+    var_comments_config.trigger_ops      := ARRAY [ 'i' ]::text[ ];
+
+    var_comments_config.description :=
 $DOC$Automatically creates a ms_syst_data.syst_numbering_sequence_values record
 based on the configuration of the sequence in the syst_numbering_sequences
-record.  If a sequence is incrementing, the minimum value is used set as the
+record.$DOC$;
+
+    var_comments_config.general_usage :=
+$DOC$If a sequence is incrementing, the minimum value is used set as the
 next value; if the sequence is decrementing, the maximum value is used to set
 the starting value.$DOC$;
+
+    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+
+END;
+$DOCUMENTATION$;
