@@ -81,34 +81,45 @@ CREATE TRIGGER a50_trig_a_i_syst_numbering_sequence_create_value
     AFTER INSERT ON ms_syst_data.syst_numbering_sequences
     FOR EACH ROW EXECUTE PROCEDURE ms_syst_data.trig_a_i_syst_numbering_sequence_create_value();
 
-COMMENT ON
-    TABLE ms_syst_data.syst_numbering_sequences IS
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Table
+    var_comments_config ms_syst_priv.comments_config_table;
+
+    -- Columns
+    var_globally_assignable ms_syst_priv.comments_config_table_column;
+    var_allowed_value_range ms_syst_priv.comments_config_table_column;
+    var_value_increment     ms_syst_priv.comments_config_table_column;
+    var_style_type          ms_syst_priv.comments_config_table_column;
+    var_cycle_policy        ms_syst_priv.comments_config_table_column;
+
+BEGIN
+
+    --
+    -- Table Config
+    --
+
+    var_comments_config.table_schema := 'ms_syst_data';
+    var_comments_config.table_name   := 'syst_numbering_sequences';
+
+    var_comments_config.description :=
 $DOC$For numbering segments which are driven by a numbering sequence, this record
 defines the configuration settings which influence behavior the behavior of the
 sequence.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_numbering_sequences.id IS
-$DOC$The record's primary key.  The definitive identifier of the record in the
-system.$DOC$;
+    --
+    -- Column Configs
+    --
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_numbering_sequences.internal_name IS
-$DOC$A candidate key useful for programmatic references to individual records.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_numbering_sequences.display_name IS
-$DOC$A friendly name and candidate key for the record, suitable for use in user
-interactions$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_numbering_sequences.globally_assignable IS
+    var_globally_assignable.column_name := 'globally_assignable';
+    var_globally_assignable.description :=
 $DOC$If true, the numbering sequence may be used by more than one segment or more
 than one numbering configuration.  If false, the sequence backs a single,
 specific numbering segment.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_numbering_sequences.allowed_value_range IS
+    var_allowed_value_range.column_name := 'allowed_value_range';
+    var_allowed_value_range.description :=
 $DOC$The range of valid values that the sequence may dispense.  By default the
 valid range is 1 to 9223372036854775806, though the range may be defined for any
 values between -9223372036854775807 and 9223372036854775806, +/- 1 of the
@@ -119,33 +130,39 @@ or the maximum allowed value +1; the cycle or exception will happen when a
 request would be answered with an out-of-range value, not at the time the last
 value allowed by the range was consumed.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_numbering_sequences.value_increment IS
+    var_value_increment.column_name := 'value_increment';
+    var_value_increment.description :=
 $DOC$The value by which the number is incremented or decremented when a request for
 a numbering sequence value is made.  This value must be set to a non-zero value.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_numbering_sequences.style_type IS
+    var_style_type.column_name := 'style_type';
+    var_style_type.description :=
 $DOC$Indicates the presentation style of the value.  Supported style types are:
 
-    *  base10:            Typical decimal numeric formatting.
+  *  `base10`
 
-    *  base36:            A representation of the value using digits 0-9 & A-Z.
+     Typical decimal numeric formatting.
 
-    *  obfuscated_base36: Same as base36 except the number places are mixed in
-                          order to obscure the sequence nature of the underlying
-                          numbering scheme.  This scheme works best when the
-                          allowed_value_range is set to generate numbers with
-                          sufficient size to create 6 or more base36 digits.
+  *  `base36`
 
-    *  alpha_base26:      Number values are represented only as alphabetic
-                          values (A-Z).  This numbering system is base26 and
-                          so does achieve some value compression as compared to
-                          base10/decimal.
+     A representation of the value using digits 0-9 & A-Z.
+
+  *  `obfuscated_base36`
+
+     Same as base36 except the number places are mixed in order to obscure the
+     sequence nature of the underlying numbering scheme.  This scheme works best
+     when the allowed_value_range is set to generate numbers with sufficient
+     size to create 6 or more base36 digits.
+
+  *  `alpha_base26`
+
+     Number values are represented only as alphabetic values (A-Z).  This
+     numbering system is base26 and so does achieve some value compression as
+     compared to base10/decimal.
 $DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_numbering_sequences.cycle_policy IS
+    var_cycle_policy.column_name := 'cycle_policy';
+    var_cycle_policy.description :=
 $DOC$Indicates what the correct course of action is once a numbering sequence has
 reached the limit of its allowed_value_range.  The acceptable values for ths
 column are:
@@ -155,42 +172,17 @@ column are:
 
     *  error: Raise an exception and cease to produce values from the sequence.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_numbering_sequences.diag_timestamp_created IS
-$DOC$The database server date/time when the transaction which created the record
-started.$DOC$;
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_numbering_sequences.diag_role_created IS
-$DOC$The database role which created the record.$DOC$;
+    var_comments_config.columns :=
+        ARRAY [
+              var_globally_assignable
+            , var_allowed_value_range
+            , var_value_increment
+            , var_style_type
+            , var_cycle_policy
+            ]::ms_syst_priv.comments_config_table_column[];
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_numbering_sequences.diag_timestamp_modified IS
-$DOC$The database server date/time when the transaction which modified the record
-started.  This field will be the same as diag_timestamp_created for inserted
-records.$DOC$;
+    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
 
-COMMENT ON
-    COLUMN ms_syst_data.syst_numbering_sequences.diag_wallclock_modified IS
-$DOC$The database server date/time at the moment the record was actually modified.
-For long running transactions this time may be significantly later than the
-value of diag_timestamp_modified.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_numbering_sequences.diag_role_modified IS
-$DOC$The database role which modified the record.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_numbering_sequences.diag_row_version IS
-$DOC$The current version of the row.  The value here indicates how many actual
-data changes have been made to the row.  If an update of the row leaves all data
-fields the same, disregarding the updates to the diag_* columns, the row version
-is not updated, nor are any updates made to the other diag_* columns other than
-diag_update_count.$DOC$;
-
-COMMENT ON
-    COLUMN ms_syst_data.syst_numbering_sequences.diag_update_count IS
-$DOC$Records the number of times the record has been updated regardless as to if
-the update actually changed any data.  In this way needless or redundant record
-updates can be found.  This row starts at 0 and therefore may be the same as the
-diag_row_version - 1.$DOC$;
+END;
+$DOCUMENTATION$;

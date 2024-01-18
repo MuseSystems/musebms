@@ -71,11 +71,54 @@ REVOKE EXECUTE ON FUNCTION
 GRANT EXECUTE ON FUNCTION
     ms_syst_priv.set_next_sequence_values( uuid,  bigint ) TO <%= ms_owner %>;
 
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Function
+    var_comments_config ms_syst_priv.comments_config_function;
 
+    -- Parameters
+    var_p_numbering_sequence_id ms_syst_priv.comments_config_function_param;
+    var_p_new_value             ms_syst_priv.comments_config_function_param;
+BEGIN
 
-COMMENT ON FUNCTION
-    ms_syst_priv.set_next_sequence_values( uuid, bigint ) IS
-$DOC$Set the value of a numbering sequence.  Using this function ensures that the
-targeted new value is within the acceptable ranges of the sequence.  Note that
-this function is only needed when setting the value to an entirely new value and
+    --
+    -- Function Config
+    --
+
+    var_comments_config.function_schema := 'ms_syst_priv';
+    var_comments_config.function_name   := 'set_next_sequence_values';
+
+    var_comments_config.description :=
+$DOC$Set the value of a numbering sequence.$DOC$;
+
+    var_comments_config.general_usage :=
+$DOC$Using this function ensures that the targeted new value is within the acceptable
+ranges of the sequence.
+
+This function is only needed when setting the value to an entirely new value and
 it is not needed after a value has been retrieved from the numbering sequence.$DOC$;
+
+    --
+    -- Parameter Configs
+    --
+
+    var_p_numbering_sequence_id.param_name := 'p_numbering_sequence_id';
+    var_p_numbering_sequence_id.description :=
+$DOC$The record ID of the targeted numbering sequence which is to be set.$DOC$;
+
+    var_p_new_value.param_name := 'p_new_value';
+    var_p_new_value.description :=
+$DOC$The new value to which the requested numbering sequence should be set.$DOC$;
+
+
+    var_comments_config.params :=
+        ARRAY [
+              var_p_numbering_sequence_id
+            , var_p_new_value
+            ]::ms_syst_priv.comments_config_function_param[];
+
+    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+
+END;
+$DOCUMENTATION$;

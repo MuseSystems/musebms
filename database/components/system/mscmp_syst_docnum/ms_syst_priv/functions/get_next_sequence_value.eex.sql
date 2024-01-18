@@ -111,16 +111,65 @@ $BODY$
 LANGUAGE plpgsql VOLATILE;
 
 ALTER FUNCTION
-    ms_syst_priv.get_next_sequence_value( uuid ) OWNER TO <%= ms_owner %>;
+    ms_syst_priv.get_next_sequence_value( p_numbering_sequence_id uuid )
+    OWNER TO <%= ms_owner %>;
 
 REVOKE EXECUTE ON FUNCTION
-    ms_syst_priv.get_next_sequence_value( uuid ) FROM public;
+    ms_syst_priv.get_next_sequence_value( p_numbering_sequence_id uuid )
+    FROM public;
 GRANT EXECUTE ON FUNCTION
-    ms_syst_priv.get_next_sequence_value( uuid ) TO <%= ms_owner %>;
+    ms_syst_priv.get_next_sequence_value( p_numbering_sequence_id uuid )
+    TO <%= ms_owner %>;
 
-COMMENT ON FUNCTION
-    ms_syst_priv.get_next_sequence_value( uuid ) IS
-$DOC$Returns the next value for the requested numbering sequence.
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Function
+    var_comments_config ms_syst_priv.comments_config_function;
 
-If the sequence has exhausted all values in the allowed range of values, this
-function will $DOC$;
+    -- Parameters
+    var_p_numbering_sequence_id ms_syst_priv.comments_config_function_param;
+
+BEGIN
+
+    --
+    -- Function Config
+    --
+
+    var_comments_config.function_schema := 'ms_syst_priv';
+    var_comments_config.function_name   := 'get_next_sequence_value';
+
+    var_comments_config.description :=
+$DOC$Returns the next value for the requested numbering sequence.$DOC$;
+
+    var_comments_config.general_usage :=
+$DOC$If the sequence has exhausted all values in the allowed range of values, this
+function will either cycle or error depending on the value of the prevailing
+`ms_syst_data.syst_numbering_sequences.cycle_policy` column value.  The cycle
+policy option values are:
+
+  * `cycle`
+
+    The numbering sequence will reset to the start of the sequence, effectively
+    rolling over.
+
+  * `error`
+
+    An exception is raised whenever an attempt is made to get a value from the
+    numbering sequence.$DOC$;
+
+    --
+    -- Parameter Configs
+    --
+
+    var_p_numbering_sequence_id.param_name := 'p_numbering_sequence_id';
+    var_p_numbering_sequence_id.description :=
+$DOC$The record ID of the numbering sequence from which to draw the next value.$DOC$;
+
+    var_comments_config.params :=
+        ARRAY [ var_p_numbering_sequence_id ]::ms_syst_priv.comments_config_function_param[];
+
+    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+
+END;
+$DOCUMENTATION$;
