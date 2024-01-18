@@ -60,65 +60,55 @@ CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
     BEFORE INSERT OR UPDATE ON ms_appl_data.mstr_entity_selling_entities
     FOR EACH ROW EXECUTE PROCEDURE ms_syst_priv.trig_b_iu_set_diagnostic_columns();
 
-COMMENT ON
-    TABLE ms_appl_data.mstr_entity_selling_entities IS
-$DOC$Establishes a customer relationship between an owning entity and its customer
-entity.  This record, or its children, will define sales and receivables
-behavior when the transaction entity is the owning entity.$DOC$;
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Table
+    var_comments_config ms_syst_priv.comments_config_table;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_selling_entities.id IS
-$DOC$The record's primary key.  The definitive identifier of the record in the
-system.$DOC$;
+    -- Columns
+    var_entity_id        ms_syst_priv.comments_config_table_column;
+    var_owning_entity_id ms_syst_priv.comments_config_table_column;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_selling_entities.entity_id IS
-$DOC$Identifies for which entity customer details are being defined.  The terms
-in this record define the customer behavior for the entity defined by this
-field.$DOC$;
+BEGIN
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_selling_entities.owning_entity_id IS
-$DOC$Identifies the entity that will use the customer terms when processing
-selling and receivables transactions with the entity identified in the
-entity_id field.$DOC$;
+    --
+    -- Table Config
+    --
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_selling_entities.diag_timestamp_created IS
-$DOC$The database server date/time when the transaction which created the record
-started.$DOC$;
+    var_comments_config.table_schema := 'ms_appl_data';
+    var_comments_config.table_name   := 'mstr_entity_selling_entities';
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_selling_entities.diag_role_created IS
-$DOC$The database role which created the record.$DOC$;
+    var_comments_config.description :=
+$DOC$Establishes a customer relationship between an Owning Entity and a customer
+Entity.$DOC$;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_selling_entities.diag_timestamp_modified IS
-$DOC$The database server date/time when the transaction which modified the record
-started.  This field will be the same as diag_timestamp_created for inserted
-records.$DOC$;
+    var_comments_config.general_usage :=
+$DOC$This record, or its children, will define sales behavior when the
+transaction Entity is the Owning Entity.$DOC$;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_selling_entities.diag_wallclock_modified IS
-$DOC$The database server date/time at the moment the record was actually modified.
-For long running transactions this time may be significantly later than the
-value of diag_timestamp_modified.$DOC$;
+    --
+    -- Column Configs
+    --
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_selling_entities.diag_role_modified IS
-$DOC$The database role which modified the record.$DOC$;
+    var_entity_id.column_name := 'entity_id';
+    var_entity_id.description :=
+$DOC$Identifies the Entity which will act as the Customer in the selling
+relationship.$DOC$;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_selling_entities.diag_row_version IS
-$DOC$The current version of the row.  The value here indicates how many actual
-data changes have been made to the row.  If an update of the row leaves all data
-fields the same, disregarding the updates to the diag_* columns, the row version
-is not updated, nor are any updates made to the other diag_* columns other than
-diag_update_count.$DOC$;
+    var_owning_entity_id.column_name := 'owning_entity_id';
+    var_owning_entity_id.description :=
+$DOC$Identifies the Owning Entity which has a selling relationship with the
+Customer Entity.$DOC$;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_selling_entities.diag_update_count IS
-$DOC$Records the number of times the record has been updated regardless as to if
-the update actually changed any data.  In this way needless or redundant record
-updates can be found.  This row starts at 0 and therefore may be the same as the
-diag_row_version - 1.$DOC$;
+
+    var_comments_config.columns :=
+        ARRAY [
+              var_entity_id
+            , var_owning_entity_id
+            ]::ms_syst_priv.comments_config_table_column[];
+
+    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+
+END;
+$DOCUMENTATION$;
