@@ -49,5 +49,31 @@ ALTER FUNCTION ms_syst_data.trig_b_iu_syst_perm_role_grants_default_scopes()
 REVOKE EXECUTE ON FUNCTION ms_syst_data.trig_b_iu_syst_perm_role_grants_default_scopes() FROM public;
 GRANT EXECUTE ON FUNCTION ms_syst_data.trig_b_iu_syst_perm_role_grants_default_scopes() TO <%= ms_owner %>;
 
-COMMENT ON FUNCTION ms_syst_data.trig_b_iu_syst_perm_role_grants_default_scopes() IS
-$DOC$This function is not yet documented.$DOC$;
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Function
+    var_comments_config ms_syst_priv.comments_config_function;
+
+BEGIN
+
+    --
+    -- Function Config
+    --
+
+    var_comments_config.function_schema := 'ms_syst_data';
+    var_comments_config.function_name   := 'trig_b_iu_syst_perm_role_grants_default_scopes';
+
+    var_comments_config.trigger_function := TRUE;
+    var_comments_config.trigger_timing   := ARRAY [ 'b' ]::text[ ];
+    var_comments_config.trigger_ops      := ARRAY [ 'i', 'u' ]::text[ ];
+
+    var_comments_config.description :=
+$DOC$This trigger will assign default Permmission Scope values based on the
+definition of the permission defined in Permissions' `ms_syst_data.syst_perms`
+record.$DOC$;
+
+    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+
+END;
+$DOCUMENTATION$;

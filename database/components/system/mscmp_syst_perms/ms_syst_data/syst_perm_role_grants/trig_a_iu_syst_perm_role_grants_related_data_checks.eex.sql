@@ -142,8 +142,30 @@ ALTER FUNCTION ms_syst_data.trig_a_iu_syst_perm_role_grants_related_data_checks(
 REVOKE EXECUTE ON FUNCTION ms_syst_data.trig_a_iu_syst_perm_role_grants_related_data_checks() FROM public;
 GRANT EXECUTE ON FUNCTION ms_syst_data.trig_a_iu_syst_perm_role_grants_related_data_checks() TO <%= ms_owner %>;
 
-COMMENT ON FUNCTION ms_syst_data.trig_a_iu_syst_perm_role_grants_related_data_checks() IS
-$DOC$Checks that Permission Role Grant records are consistent with their defining
-parent records.
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Function
+    var_comments_config ms_syst_priv.comments_config_function;
 
-This trigger $DOC$;
+BEGIN
+
+    --
+    -- Function Config
+    --
+
+    var_comments_config.function_schema := 'ms_syst_data';
+    var_comments_config.function_name   := 'trig_a_iu_syst_perm_role_grants_related_data_checks';
+
+    var_comments_config.trigger_function := TRUE;
+    var_comments_config.trigger_timing   := ARRAY [ 'a' ]::text[ ];
+    var_comments_config.trigger_ops      := ARRAY [ 'i', 'u' ]::text[ ];
+
+    var_comments_config.description :=
+$DOC$Checks that Permission Role Grant records are consistent with their defining
+parent records.$DOC$;
+
+    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+
+END;
+$DOCUMENTATION$;

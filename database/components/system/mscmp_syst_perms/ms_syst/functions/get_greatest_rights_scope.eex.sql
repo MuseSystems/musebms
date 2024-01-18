@@ -28,8 +28,17 @@ ALTER FUNCTION ms_syst.get_greatest_rights_scope(p_scopes text[])
 REVOKE EXECUTE ON FUNCTION ms_syst.get_greatest_rights_scope(p_scopes text[]) FROM public;
 GRANT EXECUTE ON FUNCTION ms_syst.get_greatest_rights_scope(p_scopes text[]) TO <%= ms_owner %>;
 
-COMMENT ON FUNCTION ms_syst.get_greatest_rights_scope(p_scopes text[]) IS
-$DOC$Given an array of Permission Right Scopes, returns the most expansive scope
-found in the array.
+DO
+$DOCUMENTATION$
+BEGIN
 
-If the array is NULL the returned value is 'deny'.$DOC$;
+    PERFORM
+        ms_syst_priv.generate_comments_copy_function(
+            p_source_schema => 'ms_syst_priv',
+            p_source_name   => 'get_greatest_rights_scope',
+            p_target_schema => 'ms_syst',
+            p_target_name   => 'get_greatest_rights_scope'
+        );
+
+END;
+$DOCUMENTATION$;
