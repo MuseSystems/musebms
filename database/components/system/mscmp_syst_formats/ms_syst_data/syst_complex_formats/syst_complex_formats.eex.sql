@@ -29,11 +29,6 @@ CREATE TABLE ms_syst_data.syst_complex_formats
         NOT NULL
     ,user_description
         text
-    ,feature_id
-        uuid
-        NOT NULL
-        CONSTRAINT syst_complex_formats_feature_fk
-            REFERENCES ms_syst_data.syst_feature_map (id)
     ,syst_defined
         boolean
         NOT NULL DEFAULT FALSE
@@ -78,9 +73,6 @@ DECLARE
     -- Table
     var_comments_config ms_syst_priv.comments_config_table;
 
-    -- Columns
-    var_feature_id ms_syst_priv.comments_config_table_column;
-
 BEGIN
 
     --
@@ -98,21 +90,6 @@ Complex data types may include concepts such as street addresses, personal
 names, and phone numbers; in each of these cases there are typically multiple
 fields, but internationally there is no consistent definition of what fields are
 available and how they should be ordered or arranged.$DOC$;
-
-    --
-    -- Column Configs
-    --
-
-    var_feature_id.column_name := 'feature_id';
-    var_feature_id.description :=
-$DOC$A reference to the specific feature of which the format is considered to be
-part.
-
-This reference is chiefly used to determine where in the configuration options
-the format should appear.$DOC$;
-
-    var_comments_config.columns :=
-        ARRAY [ var_feature_id ]::ms_syst_priv.comments_config_table_column[];
 
     PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
 
