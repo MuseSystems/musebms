@@ -96,74 +96,60 @@ CREATE CONSTRAINT TRIGGER a50_trig_a_u_place_types_enum_item_check
             ms_syst_priv.trig_a_iu_enum_item_check(
                 'place_types', 'place_type_id');
 
-COMMENT ON
-    TABLE ms_appl_data.mstr_places IS
-$DOC$places are system representations of real world buildings, such as office
-buildings, warehouses, factories, or sales centers.  Note that a place may be
-associated with multiple addresses which can be assigned roles for different
-purposes.$DOC$;
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Table
+    var_comments_config ms_syst_priv.comments_config_table;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_places.id IS
-$DOC$The record's primary key.  The definitive identifier of the record in the
-system.$DOC$;
+    -- Columns
+    var_owning_entity_id ms_syst_priv.comments_config_table_column;
+    var_place_type_id    ms_syst_priv.comments_config_table_column;
+    var_place_state_id   ms_syst_priv.comments_config_table_column;
 
-COMMENT ON
-    COLUMN   ms_appl_data.mstr_places.owning_entity_id IS
-$DOC$Indicates which managing entity owns the place record for the purposes of
-default visibility and access.  Any place record owned by the global entity is
-by default visible and usable by any managed entity.$DOC$;
+BEGIN
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_places.internal_name IS
-$DOC$A candidate key useful for programmatic references to individual records.$DOC$;
+    --
+    -- Table Config
+    --
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_places.display_name IS
-$DOC$A friendly name and candidate key for the record, suitable for use in user
-interfaces.$DOC$;
+    var_comments_config.table_schema := 'ms_appl_data';
+    var_comments_config.table_name   := 'mstr_places';
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_places.external_name IS
-$DOC$A friendly name for externally facing uses such as in communications with the
-place.  Note that this is not a key value and has no UNIQUE enforcement.$DOC$;
+    var_comments_config.description :=
+$DOC$Places are the retail stores, warehouses, factories, and offices in which
+businesses conduct their operations.  This is not synonymous with "address" as a
+place may have multiple, different addresses for different purposes.$DOC$;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_places.diag_timestamp_created IS
-$DOC$The database server date/time when the transaction which created the record
-started.$DOC$;
+    --
+    -- Column Configs
+    --
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_places.diag_role_created IS
-$DOC$The database role which created the record.$DOC$;
+    var_owning_entity_id.column_name := 'owning_entity_id';
+    var_owning_entity_id.description :=
+$DOC$Indicates which Managing Entity owns the Place record for the purposes of
+default visibility and access.$DOC$;
+    var_owning_entity_id.general_usage :=
+$DOC$Any Place record owned by the Global Entity is by default visible and usable by
+any Managed Entity.$DOC$;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_places.diag_timestamp_modified IS
-$DOC$The database server date/time when the transaction which modified the record
-started.  This field will be the same as diag_timestamp_created for inserted
-records.$DOC$;
+    var_place_type_id.column_name := 'place_type_id';
+    var_place_type_id.description :=
+$DOC$Defines the kind of Place the record represents.  Different types of Places may
+offer different functional abilities and limitations.$DOC$;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_places.diag_wallclock_modified IS
-$DOC$The database server date/time at the moment the record was actually modified.
-For long running transactions this time may be significantly later than the
-value of diag_timestamp_modified.$DOC$;
+    var_place_state_id.column_name := 'place_state_id';
+    var_place_state_id.description :=
+$DOC$Establishes where in the record life-cycle that the record current sits.$DOC$;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_places.diag_role_modified IS
-$DOC$The database role which modified the record.$DOC$;
+    var_comments_config.columns :=
+        ARRAY [
+              var_owning_entity_id
+            , var_place_type_id
+            , var_place_state_id
+            ]::ms_syst_priv.comments_config_table_column[];
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_places.diag_row_version IS
-$DOC$The current version of the row.  The value here indicates how many actual
-data changes have been made to the row.  If an update of the row leaves all data
-fields the same, disregarding the updates to the diag_* columns, the row version
-is not updated, nor are any updates made to the other diag_* columns other than
-diag_update_count.$DOC$;
+    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_places.diag_update_count IS
-$DOC$Records the number of times the record has been updated regardless as to if
-the update actually changed any data.  In this way needless or redundant record
-updates can be found.  This row starts at 0 and therefore may be the same as the
-diag_row_version - 1.$DOC$;
+END;
+$DOCUMENTATION$;
