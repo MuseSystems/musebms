@@ -16,11 +16,6 @@ CREATE TABLE ms_appl_data.mstr_persons
         uuid
         NOT NULL DEFAULT uuid_generate_v7( )
         CONSTRAINT mstr_persons_pk PRIMARY KEY
-    ,owning_entity_id
-        uuid
-        NOT NULL
-        CONSTRAINT mstr_persons_entities_fk
-            REFERENCES ms_appl_data.mstr_entities (id)
     ,internal_name
         text
         NOT NULL
@@ -31,6 +26,11 @@ CREATE TABLE ms_appl_data.mstr_persons
     ,external_name
         text
         NOT NULL
+    ,owning_entity_id
+        uuid
+        NOT NULL
+        CONSTRAINT mstr_persons_entities_fk
+            REFERENCES ms_appl_data.mstr_entities ( id )
     ,formatted_name
         jsonb
         NOT NULL DEFAULT '{}'::jsonb
@@ -38,11 +38,11 @@ CREATE TABLE ms_appl_data.mstr_persons
         uuid
         NOT NULL
         CONSTRAINT mstr_persons_person_types_fk
-            REFERENCES ms_syst_data.syst_enum_items (id)
+            REFERENCES ms_syst_data.syst_enum_items ( id )
     ,person_state_id
         uuid
         CONSTRAINT mstr_persons_person_states_fk
-            REFERENCES ms_syst_data.syst_enum_items (id)
+            REFERENCES ms_syst_data.syst_enum_items ( id )
     ,diag_timestamp_created
         timestamptz
         NOT NULL DEFAULT now( )
@@ -99,79 +99,70 @@ CREATE CONSTRAINT TRIGGER a50_trig_a_u_person_states_enum_item_check
             ms_syst_priv.trig_a_iu_enum_item_check(
                 'person_states', 'person_state_id');
 
-COMMENT ON
-    TABLE ms_appl_data.mstr_persons IS
-$DOC$Represents real people in the world.  Ideally, there is one record in this table
-for each person the various entities interact with.$DOC$;
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Table
+    var_comments_config ms_syst_priv.comments_config_table;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_persons.id IS
-$DOC$The record's primary key.  The definitive identifier of the record in the
-system.$DOC$;
+    -- Columns
+    var_owning_entity_id  ms_syst_priv.comments_config_table_column;
+    var_formatted_name    ms_syst_priv.comments_config_table_column;
+    var_person_type_id    ms_syst_priv.comments_config_table_column;
 
-COMMENT ON
-    COLUMN   ms_appl_data.mstr_persons.owning_entity_id IS
-$DOC$Indicates which managing entity owns the person record for the purposes of
-default visibility and access.  Any person record owned by the global entity is
-by default visible and usable by any managed entity.$DOC$;
+BEGIN
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_persons.internal_name IS
-$DOC$A candidate key useful for programmatic references to individual records.$DOC$;
+    --
+    -- Table Config
+    --
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_persons.display_name IS
-$DOC$A friendly name and candidate key for the record, suitable for use in user
-interfaces.$DOC$;
+    var_comments_config.table_schema := 'ms_appl_data';
+    var_comments_config.table_name   := 'mstr_persons';
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_persons.external_name IS
-$DOC$A friendly name for externally facing uses such as in communications with the
-person.  Note that this is not a key value and has no UNIQUE enforcement.$DOC$;
+    var_comments_config.description :=
+$DOC$A Person is someone who acts as an agent on behalf of an Entity. This may be a
+real individual person in the world or indicate a function, such as “Customer
+Support”, where the actual person contacted may vary and identifying a specific
+individual is unimportant.$DOC$;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_persons.formatted_name IS
+    --
+    -- Column Configs
+    --
+
+    var_owning_entity_id.column_name := 'owning_entity_id';
+    var_owning_entity_id.description :=
+$DOC$Indicates which Managing Entity owns the Person record for the purposes of
+default visibility and access.$DOC$;
+    var_owning_entity_id.general_usage :=
+$DOC$Any Person record owned by the Global Entity is by default visible and usable by
+any Managed Entity.$DOC$;
+
+    var_formatted_name.column_name := 'formatted_name';
+    var_formatted_name.description :=
 $DOC$Contains a jsonb object describing the naming fields, field layout, and the
 actual values of the user's name.  Note that the format will normally have
-originated from the ms_appl_data.syst_name_formats table, but reflects the
+originated from the `ms_appl_data.syst_name_formats` table, but reflects the
 name formatting configuration at the time of capture.$DOC$;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_persons.diag_timestamp_created IS
-$DOC$The database server date/time when the transaction which created the record
-started.$DOC$;
+    var_person_type_id.column_name := 'person_type_id';
+    var_person_type_id.description :=
+$DOC$The "kind" of Person being represented by the record.  Specifically if the
+record represents an actual individual person or a function such as "clerk".$DOC$;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_persons.diag_role_created IS
-$DOC$The database role which created the record.$DOC$;
+    var_person_state_id.column_name := 'person_state_id';
+    var_person_state_id.description :=
+$DOC$Indicates in which Person life-cycle state the record current sits.  This can
+include designating the record as active or inactive.$DOC$;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_persons.diag_timestamp_modified IS
-$DOC$The database server date/time when the transaction which modified the record
-started.  This field will be the same as diag_timestamp_created for inserted
-records.$DOC$;
+    var_comments_config.columns :=
+        ARRAY [
+              var_owning_entity_id
+            , var_formatted_name
+            , var_person_type_id
+            , var_person_state_id
+            ]::ms_syst_priv.comments_config_table_column[];
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_persons.diag_wallclock_modified IS
-$DOC$The database server date/time at the moment the record was actually modified.
-For long running transactions this time may be significantly later than the
-value of diag_timestamp_modified.$DOC$;
+    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_persons.diag_role_modified IS
-$DOC$The database role which modified the record.$DOC$;
-
-COMMENT ON
-    COLUMN ms_appl_data.mstr_persons.diag_row_version IS
-$DOC$The current version of the row.  The value here indicates how many actual
-data changes have been made to the row.  If an update of the row leaves all data
-fields the same, disregarding the updates to the diag_* columns, the row version
-is not updated, nor are any updates made to the other diag_* columns other than
-diag_update_count.$DOC$;
-
-COMMENT ON
-    COLUMN ms_appl_data.mstr_persons.diag_update_count IS
-$DOC$Records the number of times the record has been updated regardless as to if
-the update actually changed any data.  In this way needless or redundant record
-updates can be found.  This row starts at 0 and therefore may be the same as the
-diag_row_version - 1.$DOC$;
+END;
+$DOCUMENTATION$;
