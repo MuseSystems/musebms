@@ -61,14 +61,39 @@ ALTER FUNCTION ms_syst_data.trig_b_i_syst_enum_functional_type_validate_new_allo
 REVOKE EXECUTE ON FUNCTION ms_syst_data.trig_b_i_syst_enum_functional_type_validate_new_allowed() FROM public;
 GRANT EXECUTE ON FUNCTION ms_syst_data.trig_b_i_syst_enum_functional_type_validate_new_allowed() TO <%= ms_owner %>;
 
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Function
+    var_comments_config ms_syst_priv.comments_config_function;
 
-COMMENT ON FUNCTION ms_syst_data.trig_b_i_syst_enum_functional_type_validate_new_allowed() IS
+BEGIN
+
+    --
+    -- Function Config
+    --
+
+    var_comments_config.function_schema := 'ms_syst_data';
+    var_comments_config.function_name   := 'trig_b_i_syst_enum_functional_type_validate_new_allowed';
+
+    var_comments_config.trigger_function := TRUE;
+    var_comments_config.trigger_timing   := ARRAY [ 'b' ]::text[ ];
+    var_comments_config.trigger_ops      := ARRAY [ 'i' ]::text[ ];
+
+    var_comments_config.description :=
 $DOC$Checks to see if this is the first functional type being added for the
-enumeration and, if so, that no syst_enum_items records already exist.  Adding a
-first functional type for an enumeration which already has defined enumeration
-items implies that the enumeration items must be assigned a functional type in
-the same operation to keep data consistency.  In practice, this would be
-difficult since there would almost certainly have to be multiple functional
-types available in order to avoid making bogus assignments; it would be much
-more difficult to manage such a process as compared to simply disallowing the
-scenario.$DOC$;
+enumeration and, if so, that no syst_enum_items records already exist.$DOC$;
+
+    var_comments_config.general_usage :=
+$DOC$Adding a first functional type for an enumeration which already has defined
+enumeration items implies that the enumeration items must be assigned a
+functional type in the same operation to keep data consistency.  In practice,
+this would be difficult since there would almost certainly have to be multiple
+functional types available in order to avoid making bogus assignments; it would
+be much more difficult to manage such a process as compared to simply
+disallowing the scenario.$DOC$;
+
+    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+
+END;
+$DOCUMENTATION$;

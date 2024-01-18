@@ -80,10 +80,30 @@ ALTER FUNCTION ms_syst.trig_i_u_syst_enum_functional_types()
 
 REVOKE EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_enum_functional_types() FROM public;
 
-COMMENT ON FUNCTION ms_syst.trig_i_u_syst_enum_functional_types() IS
-$DOC$An INSTEAD OF trigger function which applies business rules when using the
-syst_enum_functional_types API View for UPDATE operations.
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Function
+    var_comments_config ms_syst_priv.comments_config_function;
 
-Note that the parent ms_syst_data.syst_enums.syst_defined determines whether
-or not child ms_syst_data.syst_enum_functional_types records are considered
-system defined.$DOC$;
+BEGIN
+
+    --
+    -- Function Config
+    --
+
+    var_comments_config.function_schema := 'ms_syst';
+    var_comments_config.function_name   := 'trig_i_u_syst_enum_functional_types';
+
+    var_comments_config.trigger_function := TRUE;
+    var_comments_config.trigger_timing   := ARRAY [ 'i' ]::text[ ];
+    var_comments_config.trigger_ops      := ARRAY [ 'u' ]::text[ ];
+
+    var_comments_config.description :=
+$DOC$Processes incoming API View requests according to globally applicable business
+rules and data validation requirements.$DOC$;
+
+    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+
+END;
+$DOCUMENTATION$;
