@@ -77,69 +77,62 @@ CREATE CONSTRAINT TRIGGER a50_trig_a_u_entity_person_roles_enum_item_check
             ms_syst_priv.trig_a_iu_enum_item_check(
                 'entity_person_roles', 'entity_person_role_id');
 
-COMMENT ON
-    TABLE ms_appl_data.mstr_entity_person_roles IS
-$DOC$Establishes the relationship between individual persons and and entity.  Note
-that for now a simple table with the entity, person, and the role assigned is
-sufficient for expressing the relationship, though in future it may be
-appropriate to have specific relationship tables like entity/entity relationships
-should the relationships not be containable in a single attribute describing the
-role.$DOC$;
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Table
+    var_comments_config ms_syst_priv.comments_config_table;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_person_roles.id IS
-$DOC$The record's primary key.  The definitive identifier of the record in the
-system.$DOC$;
+    -- Columns
+    var_person_id             ms_syst_priv.comments_config_table_column;
+    var_entity_id             ms_syst_priv.comments_config_table_column;
+    var_entity_person_role_id ms_syst_priv.comments_config_table_column;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_person_roles.person_id IS
-$DOC$The person that is being assigned a role with the entity.$DOC$;
+BEGIN
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_person_roles.entity_id IS
-$DOC$The entity with which the identified person has a role.  In many regards,
-this field identifies the owner of the record.$DOC$;
+    --
+    -- Table Config
+    --
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_person_roles.entity_person_role_id IS
-$DOC$Identifies the role being assigned to the person for the identified entity.$DOC$;
+    var_comments_config.table_schema := 'ms_appl_data';
+    var_comments_config.table_name   := 'mstr_entity_person_roles';
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_person_roles.diag_timestamp_created IS
-$DOC$The database server date/time when the transaction which created the record
-started.$DOC$;
+    var_comments_config.description :=
+$DOC$Establishes the relationship between individual persons and and entity.$DOC$;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_person_roles.diag_role_created IS
-$DOC$The database role which created the record.$DOC$;
+    var_comments_config.general_usage :=
+$DOC$Note that for now a simple table with the Entity, Person, and the Role assigned
+is sufficient for expressing the relationship, though in future it may be
+appropriate to have specific relationship tables like Entity/Entity
+relationships should the relationships not be containable in a single attribute
+describing the Role.$DOC$;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_person_roles.diag_timestamp_modified IS
-$DOC$The database server date/time when the transaction which modified the record
-started.  This field will be the same as diag_timestamp_created for inserted
-records.$DOC$;
+    --
+    -- Column Configs
+    --
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_person_roles.diag_wallclock_modified IS
-$DOC$The database server date/time at the moment the record was actually modified.
-For long running transactions this time may be significantly later than the
-value of diag_timestamp_modified.$DOC$;
+    var_person_id.column_name := 'person_id';
+    var_person_id.description :=
+$DOC$The Person that is being assigned a Role with the Entity.$DOC$;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_person_roles.diag_role_modified IS
-$DOC$The database role which modified the record.$DOC$;
+    var_entity_id.column_name := 'entity_id';
+    var_entity_id.description :=
+$DOC$The Entity with which the identified Person has a Role.  In many regards,
+this field identifies the Owner of the record.$DOC$;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_person_roles.diag_row_version IS
-$DOC$The current version of the row.  The value here indicates how many actual
-data changes have been made to the row.  If an update of the row leaves all data
-fields the same, disregarding the updates to the diag_* columns, the row version
-is not updated, nor are any updates made to the other diag_* columns other than
-diag_update_count.$DOC$;
+    var_entity_person_role_id.column_name := 'entity_person_role_id';
+    var_entity_person_role_id.description :=
+$DOC$Identifies the Role being assigned to the Person for the identified Entity.$DOC$;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_person_roles.diag_update_count IS
-$DOC$Records the number of times the record has been updated regardless as to if
-the update actually changed any data.  In this way needless or redundant record
-updates can be found.  This row starts at 0 and therefore may be the same as the
-diag_row_version - 1.$DOC$;
+
+    var_comments_config.columns :=
+        ARRAY [
+              var_person_id
+            , var_entity_id
+            , var_entity_person_role_id
+            ]::ms_syst_priv.comments_config_table_column[];
+
+    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
+
+END;
+$DOCUMENTATION$;
