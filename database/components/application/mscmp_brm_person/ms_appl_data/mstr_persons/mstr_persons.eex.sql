@@ -43,6 +43,10 @@ CREATE TABLE ms_appl_data.mstr_persons
         uuid
         CONSTRAINT mstr_persons_person_states_fk
             REFERENCES ms_syst_data.syst_enum_items ( id )
+    ,access_account_id
+        uuid
+        CONSTRAINT mstr_persons_access_account_udx
+            UNIQUE NULLS DISTINCT
     ,diag_timestamp_created
         timestamptz
         NOT NULL DEFAULT now( )
@@ -109,6 +113,8 @@ DECLARE
     var_owning_entity_id  ms_syst_priv.comments_config_table_column;
     var_formatted_name    ms_syst_priv.comments_config_table_column;
     var_person_type_id    ms_syst_priv.comments_config_table_column;
+    var_person_state_id   ms_syst_priv.comments_config_table_column;
+    var_access_account_id ms_syst_priv.comments_config_table_column;
 
 BEGIN
 
@@ -154,12 +160,28 @@ record represents an actual individual person or a function such as "clerk".$DOC
 $DOC$Indicates in which Person life-cycle state the record current sits.  This can
 include designating the record as active or inactive.$DOC$;
 
+    var_access_account_id.column_name := 'access_account_id';
+    var_access_account_id.description :=
+$DOC$An optional association with a global Access Account, used for authentication
+to the application by users.$DOC$;
+
+    var_access_account_id.constraints :=
+$DOC$An Access Account can only be associated with a single Person record and as
+such must be unique in this table.
+
+The reference to the `ms_syst_data.syst_access_accounts` table is a
+cross-database reference and therefore cannot be enforced using conventional
+database referential integrity constraints.  The application developer,
+therefore, is responsible for ensuring that values in this table actually match
+valid `ms_syst_data.syst_access_accounts` records.$DOC$;
+
     var_comments_config.columns :=
         ARRAY [
               var_owning_entity_id
             , var_formatted_name
             , var_person_type_id
             , var_person_state_id
+            , var_access_account_id
             ]::ms_syst_priv.comments_config_table_column[];
 
     PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
