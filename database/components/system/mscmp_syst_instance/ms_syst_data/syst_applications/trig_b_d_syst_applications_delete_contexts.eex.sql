@@ -36,7 +36,31 @@ ALTER FUNCTION ms_syst_data.trig_b_d_syst_applications_delete_contexts()
 REVOKE EXECUTE ON FUNCTION ms_syst_data.trig_b_d_syst_applications_delete_contexts() FROM public;
 GRANT EXECUTE ON FUNCTION ms_syst_data.trig_b_d_syst_applications_delete_contexts() TO <%= ms_owner %>;
 
-COMMENT ON FUNCTION ms_syst_data.trig_b_d_syst_applications_delete_contexts() IS
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Function
+    var_comments_config ms_syst_priv.comments_config_function;
+
+BEGIN
+
+    --
+    -- Function Config
+    --
+
+    var_comments_config.function_schema := 'ms_syst_data';
+    var_comments_config.function_name   := 'trig_b_d_syst_applications_delete_contexts';
+
+    var_comments_config.trigger_function := TRUE;
+    var_comments_config.trigger_timing   := ARRAY [ 'b' ]::text[ ];
+    var_comments_config.trigger_ops      := ARRAY [ 'd' ]::text[ ];
+
+    var_comments_config.description :=
 $DOC$Deletes the Application Contexts prior to deleting the Application record
 itself.  This is needed because the trigger preventing datastore context owner
 contexts to be deleted must be disabled prior to the delete.$DOC$;
+
+    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+
+END;
+$DOCUMENTATION$;

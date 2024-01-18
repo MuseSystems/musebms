@@ -144,6 +144,29 @@ ALTER FUNCTION ms_syst_data.trig_b_iud_syst_application_contexts_validate_owner_
 REVOKE EXECUTE ON FUNCTION ms_syst_data.trig_b_iud_syst_application_contexts_validate_owner_context() FROM public;
 GRANT EXECUTE ON FUNCTION ms_syst_data.trig_b_iud_syst_application_contexts_validate_owner_context() TO <%= ms_owner %>;
 
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Function
+    var_comments_config ms_syst_priv.comments_config_function;
 
-COMMENT ON FUNCTION ms_syst_data.trig_b_iud_syst_application_contexts_validate_owner_context() IS
-$DOC$Validates database_owner_context values based on the pre-existing state of the database $DOC$;
+BEGIN
+
+    --
+    -- Function Config
+    --
+
+    var_comments_config.function_schema := 'ms_syst_data';
+    var_comments_config.function_name   := 'trig_b_iud_syst_application_contexts_validate_owner_context';
+
+    var_comments_config.trigger_function := TRUE;
+    var_comments_config.trigger_timing   := ARRAY [ 'b' ]::text[ ];
+    var_comments_config.trigger_ops      := ARRAY [ 'i', 'u', 'd' ]::text[ ];
+
+    var_comments_config.description :=
+$DOC$Validates database_owner_context values based on the pre-existing state of the database.$DOC$;
+
+    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+
+END;
+$DOCUMENTATION$;
