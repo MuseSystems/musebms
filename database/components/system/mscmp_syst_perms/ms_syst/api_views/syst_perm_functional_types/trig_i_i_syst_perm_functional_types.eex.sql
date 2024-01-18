@@ -49,6 +49,30 @@ ALTER FUNCTION ms_syst.trig_i_i_syst_perm_functional_types()
 REVOKE EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_perm_functional_types() FROM public;
 GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_perm_functional_types() TO <%= ms_owner %>;
 
-COMMENT ON FUNCTION ms_syst.trig_i_i_syst_perm_functional_types() IS
-$DOC$An INSTEAD OF trigger function which applies business rules when using the
-syst_perm_functional_types API View for INSERT operations.$DOC$;
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Function
+    var_comments_config ms_syst_priv.comments_config_function;
+
+BEGIN
+
+    --
+    -- Function Config
+    --
+
+    var_comments_config.function_schema := 'ms_syst';
+    var_comments_config.function_name   := 'trig_i_i_syst_perm_functional_types';
+
+    var_comments_config.trigger_function := TRUE;
+    var_comments_config.trigger_timing   := ARRAY [ 'i' ]::text[ ];
+    var_comments_config.trigger_ops      := ARRAY [ 'i' ]::text[ ];
+
+    var_comments_config.description :=
+$DOC$Processes incoming API View requests according to globally applicable business
+rules and data validation requirements.$DOC$;
+
+    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+
+END;
+$DOCUMENTATION$;
