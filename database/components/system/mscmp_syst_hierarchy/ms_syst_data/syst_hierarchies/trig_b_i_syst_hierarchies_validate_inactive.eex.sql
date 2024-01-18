@@ -59,7 +59,33 @@ ALTER FUNCTION ms_syst_data.trig_b_i_syst_hierarchies_validate_inactive()
 REVOKE EXECUTE ON FUNCTION ms_syst_data.trig_b_i_syst_hierarchies_validate_inactive() FROM public;
 GRANT EXECUTE ON FUNCTION ms_syst_data.trig_b_i_syst_hierarchies_validate_inactive() TO <%= ms_owner %>;
 
-COMMENT ON FUNCTION ms_syst_data.trig_b_i_syst_hierarchies_validate_inactive() IS
-$DOC$Prevents Hierarchy records from being inserted in an already "active" state.
-Hierarchy records should be inserted "inactive" and then later made "active"
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Function
+    var_comments_config ms_syst_priv.comments_config_function;
+
+BEGIN
+    
+    --
+    -- Function Config
+    --
+    
+    var_comments_config.function_schema := 'ms_syst_data';
+    var_comments_config.function_name   := 'trig_b_i_syst_hierarchies_validate_inactive';
+    
+    var_comments_config.trigger_function := FALSE;
+    var_comments_config.trigger_timing   := ARRAY [ 'b' ]::text[ ];
+    var_comments_config.trigger_ops      := ARRAY [ 'i' ]::text[ ];
+
+    var_comments_config.description :=
+$DOC$Prevents Hierarchy records from being inserted in an already "active" state.$DOC$;
+
+    var_comments_config.general_usage :=
+$DOC$Hierarchy records should be inserted "inactive" and then later made "active"
 once the record and its associate Hierarchy Item records are complete and valid.$DOC$;
+
+    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+
+END;
+$DOCUMENTATION$;

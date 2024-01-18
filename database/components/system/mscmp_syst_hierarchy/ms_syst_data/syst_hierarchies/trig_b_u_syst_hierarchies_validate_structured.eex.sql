@@ -97,7 +97,31 @@ ALTER FUNCTION ms_syst_data.trig_b_u_syst_hierarchies_validate_structured()
 REVOKE EXECUTE ON FUNCTION ms_syst_data.trig_b_u_syst_hierarchies_validate_structured() FROM public;
 GRANT EXECUTE ON FUNCTION ms_syst_data.trig_b_u_syst_hierarchies_validate_structured() TO <%= ms_owner %>;
 
-COMMENT ON FUNCTION ms_syst_data.trig_b_u_syst_hierarchies_validate_structured() IS
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Function
+    var_comments_config ms_syst_priv.comments_config_function;
+
+BEGIN
+
+    --
+    -- Function Config
+    --
+
+    var_comments_config.function_schema := 'ms_syst_data';
+    var_comments_config.function_name   := 'trig_b_u_syst_hierarchies_validate_structured';
+
+    var_comments_config.trigger_function := TRUE;
+    var_comments_config.trigger_timing   := ARRAY [ 'b' ]::text[ ];
+    var_comments_config.trigger_ops      := ARRAY [ 'u' ]::text[ ];
+
+    var_comments_config.description :=
 $DOC$A trigger function which ensures that changing a hierarchy between being
 "structured" and "unstructured" is only possible when the Hierarchy record is
 in an "inactive" state.$DOC$;
+
+    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+
+END;
+$DOCUMENTATION$;

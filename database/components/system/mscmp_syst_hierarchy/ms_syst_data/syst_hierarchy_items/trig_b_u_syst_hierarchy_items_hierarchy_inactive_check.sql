@@ -68,6 +68,30 @@ ALTER FUNCTION ms_syst_data.trig_b_u_syst_hierarchy_items_hierarchy_inactive_che
 REVOKE EXECUTE ON FUNCTION ms_syst_data.trig_b_u_syst_hierarchy_items_hierarchy_inactive_check() FROM public;
 GRANT EXECUTE ON FUNCTION ms_syst_data.trig_b_u_syst_hierarchy_items_hierarchy_inactive_check() TO <%= ms_owner %>;
 
-COMMENT ON FUNCTION ms_syst_data.trig_b_u_syst_hierarchy_items_hierarchy_inactive_check() IS
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Function
+    var_comments_config ms_syst_priv.comments_config_function;
+
+BEGIN
+
+    --
+    -- Function Config
+    --
+
+    var_comments_config.function_schema := 'ms_syst_data';
+    var_comments_config.function_name   := 'trig_b_u_syst_hierarchy_items_hierarchy_inactive_check';
+
+    var_comments_config.trigger_function := TRUE;
+    var_comments_config.trigger_timing   := ARRAY [ 'b' ]::text[ ];
+    var_comments_config.trigger_ops      := ARRAY [ 'u' ]::text[ ];
+
+    var_comments_config.description :=
 $DOC$Ensures that, if a functionally significant column is changed during an update
 operation, that the parent Hierarchy record is set to an "inactive" state.$DOC$;
+
+    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+
+END;
+$DOCUMENTATION$;

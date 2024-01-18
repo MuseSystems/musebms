@@ -52,9 +52,35 @@ ALTER FUNCTION ms_syst_data.trig_b_d_syst_hierarchies_validate_prereqs()
 REVOKE EXECUTE ON FUNCTION ms_syst_data.trig_b_d_syst_hierarchies_validate_prereqs() FROM public;
 GRANT EXECUTE ON FUNCTION ms_syst_data.trig_b_d_syst_hierarchies_validate_prereqs() TO <%= ms_owner %>;
 
-COMMENT ON FUNCTION ms_syst_data.trig_b_d_syst_hierarchies_validate_prereqs() IS
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Function
+    var_comments_config ms_syst_priv.comments_config_function;
+
+BEGIN
+
+    --
+    -- Function Config
+    --
+
+    var_comments_config.function_schema := 'ms_syst_data';
+    var_comments_config.function_name   := 'trig_b_d_syst_hierarchies_validate_prereqs';
+
+    var_comments_config.trigger_function := TRUE;
+    var_comments_config.trigger_timing   := ARRAY [ 'b' ]::text[ ];
+    var_comments_config.trigger_ops      := ARRAY [ 'd' ]::text[ ];
+
+    var_comments_config.description :=
 $DOC$Validates that a Hierarchy is no longer referenced by the data of Hierarchy
-implementing Components prior to allowing that Hierarchy being deleted.  Note
-that references from associated Hierarchy Item records do not count as
+implementing Components prior to allowing that Hierarchy being deleted.$DOC$;
+
+    var_comments_config.general_usage :=
+$DOC$Note that references from associated Hierarchy Item records do not count as
 "references" and that deleting their parent Hierarchy record will cascade to the
 Hierarchy Item records.$DOC$;
+
+    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+
+END;
+$DOCUMENTATION$;
