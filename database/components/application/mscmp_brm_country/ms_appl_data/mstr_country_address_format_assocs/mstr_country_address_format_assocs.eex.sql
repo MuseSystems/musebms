@@ -73,66 +73,55 @@ CREATE CONSTRAINT TRIGGER a50_trig_a_u_complex_format_value_check
             ms_syst_priv.trig_a_iu_complex_format_value_check(
                 'address_formats', 'address_format_id');
 
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Table
+    var_comments_config ms_syst_priv.comments_config_table;
 
-COMMENT ON
-    TABLE ms_appl_data.mstr_country_address_format_assocs IS
+    -- Columns
+    var_country_id             ms_syst_priv.comments_config_table_column;
+    var_address_format_id      ms_syst_priv.comments_config_table_column;
+    var_is_default_for_country ms_syst_priv.comments_config_table_column;
+
+BEGIN
+
+    --
+    -- Table Config
+    --
+
+    var_comments_config.table_schema := 'ms_appl_data';
+    var_comments_config.table_name   := 'mstr_country_address_format_assocs';
+
+    var_comments_config.description :=
 $DOC$Establishes relationships between address format records and country records and
 allows recognizing an address format as the default format for the country.$DOC$;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_country_address_format_assocs.id IS
-$DOC$The record's primary key.  The definitive identifier of the record in the
-system.$DOC$;
+    --
+    -- Column Configs
+    --
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_country_address_format_assocs.country_id IS
+    var_country_id.column_name := 'country_id';
+    var_country_id.description :=
 $DOC$Identifies the country with with the address format is being associated.$DOC$;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_country_address_format_assocs.address_format_id IS
+    var_address_format_id.column_name := 'address_format_id';
+    var_address_format_id.description :=
 $DOC$Identifies the address format which is to be associated with the country.$DOC$;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_country_address_format_assocs.is_default_for_country IS
+    var_is_default_for_country.column_name := 'is_default_for_country';
+    var_is_default_for_country.description :=
 $DOC$If true, this format should be used as the default format for the country. There
 should only ever be one default for any one country_id.$DOC$;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_country_address_format_assocs.diag_timestamp_created IS
-$DOC$The database server date/time when the transaction which created the record
-started.$DOC$;
+    var_comments_config.columns :=
+        ARRAY [
+              var_country_id
+            , var_address_format_id
+            , var_is_default_for_country
+            ]::ms_syst_priv.comments_config_table_column[];
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_country_address_format_assocs.diag_role_created IS
-$DOC$The database role which created the record.$DOC$;
+    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_country_address_format_assocs.diag_timestamp_modified IS
-$DOC$The database server date/time when the transaction which modified the record
-started.  This field will be the same as diag_timestamp_created for inserted
-records.$DOC$;
-
-COMMENT ON
-    COLUMN ms_appl_data.mstr_country_address_format_assocs.diag_wallclock_modified IS
-$DOC$The database server date/time at the moment the record was actually modified.
-For long running transactions this time may be significantly later than the
-value of diag_timestamp_modified.$DOC$;
-
-COMMENT ON
-    COLUMN ms_appl_data.mstr_country_address_format_assocs.diag_role_modified IS
-$DOC$The database role which modified the record.$DOC$;
-
-COMMENT ON
-    COLUMN ms_appl_data.mstr_country_address_format_assocs.diag_row_version IS
-$DOC$The current version of the row.  The value here indicates how many actual
-data changes have been made to the row.  If an update of the row leaves all data
-fields the same, disregarding the updates to the diag_* columns, the row version
-is not updated, nor are any updates made to the other diag_* columns other than
-diag_update_count.$DOC$;
-
-COMMENT ON
-    COLUMN ms_appl_data.mstr_country_address_format_assocs.diag_update_count IS
-$DOC$Records the number of times the record has been updated regardless as to if
-the update actually changed any data.  In this way needless or redundant record
-updates can be found.  This row starts at 0 and therefore may be the same as the
-diag_row_version - 1.$DOC$;
+END;
+$DOCUMENTATION$;
