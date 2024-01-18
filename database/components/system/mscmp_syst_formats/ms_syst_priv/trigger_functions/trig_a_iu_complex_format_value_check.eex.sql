@@ -65,8 +65,61 @@ ALTER FUNCTION ms_syst_priv.trig_a_iu_complex_format_value_check()
 REVOKE EXECUTE ON FUNCTION ms_syst_priv.trig_a_iu_complex_format_value_check() FROM public;
 GRANT EXECUTE ON FUNCTION ms_syst_priv.trig_a_iu_complex_format_value_check() TO <%= ms_owner %>;
 
-COMMENT ON FUNCTION ms_syst_priv.trig_a_iu_complex_format_value_check() IS
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Function
+    var_comments_config ms_syst_priv.comments_config_function;
+
+    -- Parameters
+    var_tg_argv0 ms_syst_priv.comments_config_function_param;
+    var_tg_argv1 ms_syst_priv.comments_config_function_param;
+
+BEGIN
+
+    --
+    -- Function Config
+    --
+
+    var_comments_config.function_schema := 'ms_syst_priv';
+    var_comments_config.function_name   := 'comments_config_function';
+
+    var_comments_config.trigger_function := TRUE;
+    var_comments_config.trigger_timing   := ARRAY [ 'a' ]::text[ ];
+    var_comments_config.trigger_ops      := ARRAY [ 'i', 'u' ]::text[ ];
+
+    var_comments_config.description :=
 $DOC$A constraint trigger function to provide foreign key like validation of columns
 which reference syst_complex_format_values.  This relationship requires the
 additional check so that only values from the desired format are used in
 assigning to records.$DOC$;
+
+    var_comments_config.general_usage :=
+$DOC$$DOC$;
+
+    --
+    -- Parameter Configs
+    --
+
+    var_tg_argv0.param_name := 'tg_argv[0]';
+    var_tg_argv0.description :=
+$DOC$The `ms_syst_data.syst_complex_formats.internal_name` value which identifies the
+Complex Format to use.$DOC$;
+
+    var_tg_argv1.param_name := 'tg_argv[1]';
+    var_tg_argv1.description :=
+$DOC$The column name which contains the record ID of the specific format to be used.
+
+This value is validated as being a member of the of the Complex Format
+identified in `tg_argv[0]`.$DOC$;
+
+    var_comments_config.params :=
+        ARRAY [
+              var_tg_argv0
+            , var_tg_argv1
+            ]::ms_syst_priv.comments_config_function_param[];
+
+    PERFORM ms_syst_priv.generate_comments_function( var_comments_config );
+
+END;
+$DOCUMENTATION$;
