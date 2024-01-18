@@ -70,89 +70,87 @@ CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
     BEFORE INSERT OR UPDATE ON ms_appl_data.mstr_entity_inventory_places
     FOR EACH ROW EXECUTE PROCEDURE ms_syst_priv.trig_b_iu_set_diagnostic_columns();
 
-COMMENT ON
-    TABLE ms_appl_data.mstr_entity_inventory_places IS
-$DOC$Establishes one or more inventory relationships between a managed entity and a
+DO
+$DOCUMENTATION$
+DECLARE
+    -- Table
+    var_comments_config ms_syst_priv.comments_config_table;
+
+    -- Columns
+    var_place_id                    ms_syst_priv.comments_config_table_column;
+    var_owning_entity_id            ms_syst_priv.comments_config_table_column;
+    var_receives_external_inventory ms_syst_priv.comments_config_table_column;
+    var_fulfills_external_inventory ms_syst_priv.comments_config_table_column;
+    var_receives_internal_inventory ms_syst_priv.comments_config_table_column;
+    var_fulfills_internal_inventory ms_syst_priv.comments_config_table_column;
+
+
+BEGIN
+
+    --
+    -- Table Config
+    --
+
+    var_comments_config.table_schema := 'ms_appl_data';
+    var_comments_config.table_name   := 'mstr_entity_inventory_places';
+
+    var_comments_config.description :=
+$DOC$Establishes one or more Inventory Relationships between an Owning Entity and a
+Place.$DOC$;
+
+    --
+    -- Column Configs
+    --
+
+    var_place_id.column_name := 'place_id';
+    var_place_id.description :=
+$DOC$Identifies the place that will have an Inventory Relationship with the Owning
+Entity.$DOC$;
+
+    var_owning_entity_id.column_name := 'owning_entity_id';
+    var_owning_entity_id.description :=
+$DOC$Establishes the Entity which has an Inventory Relationship to the identified
 place.$DOC$;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_inventory_places.id IS
-$DOC$The record's primary key.  The definitive identifier of the record in the
-system.$DOC$;
-
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_inventory_places.place_id IS
-$DOC$Identifies the place that will have an inventory relationship with the owning
-entity.$DOC$;
-
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_inventory_places.owning_entity_id IS
-$DOC$Establishes the entity which has an inventory relationship to the identified
-place.$DOC$;
-
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_inventory_places.receives_external_inventory IS
+    var_receives_external_inventory.column_name := 'receives_external_inventory';
+    var_receives_external_inventory.description :=
 $DOC$If true, this inventory may receive inventory shipments from third parties such
 as might originate from purchase order transactions.  If false, this inventory
 may not receive inventory from external third parties.$DOC$;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_inventory_places.fulfills_external_inventory IS
+    var_fulfills_external_inventory.column_name := 'fulfills_external_inventory';
+    var_fulfills_external_inventory.description :=
 $DOC$If true, inventory units may be fulfilled from this place, for this entity. If
 false, this inventory may not participate as a source of fulfillment to third
 parties.$DOC$;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_inventory_places.receives_internal_inventory IS
+    var_receives_internal_inventory.column_name := 'receives_internal_inventory';
+    var_receives_internal_inventory.description :=
 $DOC$If true, inventory units may be received into this inventory from other
 inventories managed by the system.  If false, other managed inventories will not
 be valid sources to replenish stocks in this inventory.  Transferred inventory
 would be an example of a transaction requiring the inventory to allow the
 processing of internal receipts.$DOC$;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_inventory_places.fulfills_internal_inventory IS
+    var_fulfills_internal_inventory.column_name := 'fulfills_internal_inventory';
+    var_fulfills_internal_inventory.description :=
 $DOC$If true, inventory units may be fulfilled from this managed inventory to another
 inventory managed by the system. If false, the inventory may not serve as the
 source of inventory units to other managed inventories.  Transferring inventory
 out is an example of a transaction requiring this internal fulfillment ability.$DOC$;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_inventory_places.diag_timestamp_created IS
-$DOC$The database server date/time when the transaction which created the record
-started.$DOC$;
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_inventory_places.diag_role_created IS
-$DOC$The database role which created the record.$DOC$;
+    var_comments_config.columns :=
+        ARRAY [
+              var_place_id
+            , var_owning_entity_id
+            , var_receives_external_inventory
+            , var_fulfills_external_inventory
+            , var_receives_internal_inventory
+            , var_fulfills_internal_inventory
+            ]::ms_syst_priv.comments_config_table_column[];
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_inventory_places.diag_timestamp_modified IS
-$DOC$The database server date/time when the transaction which modified the record
-started.  This field will be the same as diag_timestamp_created for inserted
-records.$DOC$;
+    PERFORM ms_syst_priv.generate_comments_table( var_comments_config );
 
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_inventory_places.diag_wallclock_modified IS
-$DOC$The database server date/time at the moment the record was actually modified.
-For long running transactions this time may be significantly later than the
-value of diag_timestamp_modified.$DOC$;
-
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_inventory_places.diag_role_modified IS
-$DOC$The database role which modified the record.$DOC$;
-
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_inventory_places.diag_row_version IS
-$DOC$The current version of the row.  The value here indicates how many actual
-data changes have been made to the row.  If an update of the row leaves all data
-fields the same, disregarding the updates to the diag_* columns, the row version
-is not updated, nor are any updates made to the other diag_* columns other than
-diag_update_count.$DOC$;
-
-COMMENT ON
-    COLUMN ms_appl_data.mstr_entity_inventory_places.diag_update_count IS
-$DOC$Records the number of times the record has been updated regardless as to if
-the update actually changed any data.  In this way needless or redundant record
-updates can be found.  This row starts at 0 and therefore may be the same as the
-diag_row_version - 1.$DOC$;
+END;
+$DOCUMENTATION$;
