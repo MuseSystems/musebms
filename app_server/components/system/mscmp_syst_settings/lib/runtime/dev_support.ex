@@ -37,7 +37,7 @@ defmodule MscmpSystSettings.Runtime.DevSupport do
 
     children = [{DynamicSupervisor, strategy: :one_for_one, name: opts[:supervisor_name]}]
 
-    Supervisor.start_link(children, strategy: :one_for_one)
+    {:ok, _} = Supervisor.start_link(children, strategy: :one_for_one)
     Logger.configure(level: :info)
     ExUnit.start()
 
