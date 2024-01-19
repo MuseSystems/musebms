@@ -116,15 +116,16 @@ defmodule Mix.Tasks.Dropdb do
   def run(args) do
     {opts_cli, _, _} = OptionParser.parse(args, aliases: @aliases, strict: @switches)
 
-    cond do
-      Keyword.get(opts_cli, :clean_all, false) === true ->
-        File.rm_rf!(opts_cli[:destination] || Path.join(["priv", "database"]))
+    _ =
+      cond do
+        Keyword.get(opts_cli, :clean_all, false) === true ->
+          File.rm_rf!(opts_cli[:destination] || Path.join(["priv", "database"]))
 
-      Keyword.get(opts_cli, :clean, false) === true ->
-        ["priv", "database", opts_cli[:type]]
-        |> Path.join()
-        |> File.rm_rf!()
-    end
+        Keyword.get(opts_cli, :clean, false) === true ->
+          ["priv", "database", opts_cli[:type]]
+          |> Path.join()
+          |> File.rm_rf!()
+      end
 
     datastore_options = get_datastore_options(opts_cli)
 
