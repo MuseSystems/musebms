@@ -23,7 +23,19 @@ $INIT_DATASTORE$
         -- TODO: Remove from code at PostgreSQL 17 release.  PostgreSQL 17 is
         --       expected to have UUIDv7 support.
 
-        CREATE EXTENSION IF NOT EXISTS pg_uuidv7;
+        IF
+            exists( SELECT TRUE
+                    FROM pg_available_extensions
+                    WHERE name = 'pg_uuidv7' )
+        THEN
+            CREATE EXTENSION IF NOT EXISTS pg_uuidv7;
+        ELSE
+            CREATE OR REPLACE FUNCTION public.uuid_generate_v7( )
+                RETURNS uuid AS
+            $BODY$ SELECT PUBLIC.uuid_generate_v1mc();
+                $BODY$
+                LANGUAGE sql;
+        END IF;
 
         CREATE SCHEMA IF NOT EXISTS <%= migrations_schema %>
         AUTHORIZATION <%= ms_owner %>;
