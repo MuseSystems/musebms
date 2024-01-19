@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>mscmp_syst_mcp_perms.ms_syst_priv</title>
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
+        <!-- Bootstrap 3.3.5 -->
+        <link rel="stylesheet" href="../bower/admin-lte/bootstrap/css/bootstrap.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="../bower/font-awesome/css/font-awesome.min.css">
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="../bower/ionicons/css/ionicons.min.css">
+        <!-- DataTables -->
+        <link rel="stylesheet" href="../bower/datatables.net-bs/css/dataTables.bootstrap.min.css">
+        <link rel="stylesheet" href="../bower/datatables.net-buttons-bs/css/buttons.bootstrap.min.css">
+        <!-- Code Mirror -->
+        <link rel="stylesheet" href="../bower/codemirror/codemirror.css">
+        <!-- Fonts -->
+        <link href='../fonts/indieflower/indie-flower.css' rel='stylesheet' type='text/css'>
+        <link href='../fonts/source-sans-pro/source-sans-pro.css' rel='stylesheet' type='text/css'>
+
+        <!-- Theme style -->
+        <link rel="stylesheet" href="../bower/admin-lte/dist/css/AdminLTE.min.css">
+        <!-- Salvattore -->
+        <link rel="stylesheet" href="../bower/salvattore/salvattore.css">
+        <!-- AdminLTE Skins. Choose a skin from the css/skins
+           folder instead of downloading all of them to reduce the load. -->
+        <link rel="stylesheet" href="../bower/admin-lte/dist/css/skins/_all-skins.min.css">
+        <!-- SchemaSpy -->
+        <link rel="stylesheet" href="../schemaSpy.css">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="../bower/html5shiv/html5shiv.min.js"></script>
+        <script src="../bower/respond/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+    <body class="hold-transition skin-blue layout-top-nav">
+        <div class="wrapper">
+            <header class="main-header">
+                <nav class="navbar navbar-static-top">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <a href="../../index.html" class="navbar-brand"><b>mscmp_syst_mcp_perms</b></a><span class="navbar-brand" style="padding-left: 0">.ms_syst_priv</span>
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
+                        </div>
+
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+                            <ul class="nav navbar-nav">
+                                <li><a href="../index.html">Tables <span class="sr-only">(current)</span></a></li>
+                                <li><a href="../columns.html" title="All of the columns in the schema">Columns</a></li>
+                                <li><a href="../constraints.html" title="Useful for diagnosing error messages that just give constraint name or number">Constraints</a></li>
+                                <li><a href="../relationships.html" title="Diagram of table relationships">Relationships</a></li>
+                                <li><a href="../orphans.html" title="View of tables with neither parents nor children">Orphan&nbsp;Tables</a></li>
+                                <li><a href="../anomalies.html" title="Things that might not be quite right">Anomalies</a></li>
+                                <li><a href="../routines.html" title="Procedures and functions">Routines</a></li>
+                            </ul>
+                        </div>
+                        <!-- /.navbar-collapse -->
+                        <!-- Navbar Right Menu -->
+                    </div>
+                    <!-- /.container-fluid -->
+                </nav>
+            </header>
+            <!-- Main content -->
+            <!-- Full Width Column -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <h1>generate_comments_table_common_columns(p_table_schema text, p_table_name text)</h1><br />
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <i class="fa fa-file-text-o"></i>
+                            <h3 id="Description" class="box-title">Description</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body clearfix">
+                            <p><p>Provides boilerplate column comment configurations for columns which are common to many columns and applies these comment configurations to any table columns which are found to be in the set of common columns.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><strong><code>p_table_schema</code></strong> ::     <strong>Required?</strong> True; <strong>Default</strong>: ( No Default )</p>
+<p>The name of the schema which hosts the table.</p>
+</li>
+<li>
+<p><strong><code>p_table_name</code></strong> ::     <strong>Required?</strong> True; <strong>Default</strong>: ( No Default )</p>
+<p>The name of the table for which common column comments should be added.</p>
+</li>
+</ul>
+<p><strong>General Usage</strong></p>
+<p>Note that if there are customizations or overrides desired when documenting these common columns for a given table, such overrides should appear in the columns list passed to <code>ms_syst_priv.generate_comments_table</code>, directly by calling <code>ms_syst_priv.generate_comments_table_column</code>, or by simply commenting on the desired column directly.</p></p>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                </section>
+                <!-- Main content -->
+                <section class="content">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                            <h3 id="Columns" class="box-title">Parameters</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <table id="standard_table" class="table table-bordered table-striped dataTable" role="grid">
+                                <thead align='left'>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Type</th>
+                                    <th>Mode</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>p_table_schema</td>
+                                    <td>text</td>
+                                    <td>IN</td>
+                                </tr>
+                                <tr>
+                                    <td>p_table_name</td>
+                                    <td>text</td>
+                                    <td>IN</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <i class="fa fa-file-code-o"></i>
+                            <h3 id="RoutineDefinition" class="box-title">Definition</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <textarea id="sql-script-codemirror" name="sql-script-codemirror" rows="" style="display: none;">-- File:        generate_comments_table_common_columns.eex.sql&#10;-- Location:    musebms/database/all/ms_syst_priv/functions/generate_comments_table_common_columns.eex.sql&#10;-- Project:     Muse Systems Business Management System&#10;--&#10;-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems&#10;-- This file may include content copyrighted and licensed from third parties.&#10;--&#10;-- See the LICENSE file in the project root for license terms and conditions.&#10;-- See the NOTICE file in the project root for copyright ownership information.&#10;--&#10;-- muse.information@musesystems.com :: https://muse.systems&#10;&#10;DECLARE&#10;    var_table regclass :&#61; ( p_table_schema || &#39;.&#39; || p_table_name )::regclass;&#10;&#10;    var_common_col_names text[] :&#61;&#10;        ARRAY [&#10;              &#39;id&#39;&#10;            , &#39;internal_name&#39;&#10;            , &#39;display_name&#39;&#10;            , &#39;external_name&#39;&#10;            , &#39;syst_defined&#39;&#10;            , &#39;user_maintainable&#39;&#10;            , &#39;syst_description&#39;&#10;            , &#39;user_description&#39;&#10;            , &#39;diag_timestamp_created&#39;&#10;            , &#39;diag_role_created&#39;&#10;            , &#39;diag_timestamp_modified&#39;&#10;            , &#39;diag_wallclock_modified&#39;&#10;            , &#39;diag_role_modified&#39;&#10;            , &#39;diag_row_version&#39;&#10;            , &#39;diag_update_count&#39;]::text[];&#10;&#10;    var_id text :&#61;&#10;$DOC$The record&#39;s primary key.  The definitive identifier of the record in the&#10;system.$DOC$;&#10;&#10;    var_internal_name text :&#61;&#10;$DOC$A candidate key useful for programmatic references to individual records.$DOC$;&#10;&#10;    var_display_name text :&#61;&#10;$DOC$A friendly name and candidate key for the record, suitable for use in user&#10;interactions$DOC$;&#10;&#10;    var_external_name text :&#61;&#10;$DOC$A non-unique/non-key value used to display to users and external parties where&#10;uniqueness is less of a concern than specific end user presentation.$DOC$;&#10;&#10;    var_syst_defined text :&#61;&#10;$DOC$Values of &#96;TRUE&#96; in this column indicate that the record is considered a&#10;&quot;System Defined&quot; record, a record which is created and primarily maintained by&#10;the system using automated processes.  A value of &#96;FALSE&#96; indicates that the&#10;record is considered a &quot;User Defined&quot; record which is maintained by user actions&#10;in the application.$DOC$;&#10;&#10;    var_user_maintainable text :&#61;&#10;$DOC$If a record is system defined (see the &#96;syst_defined&#96; column), there may be&#10;some user data maintenance operations permitted in some cases.  If the value of&#10;this column for a record is &#96;TRUE&#96; and the record is also &quot;System Defined&quot;, then&#10;permitted user maintenance operations are available for the record.  If the&#10;record is system defined and the value of this column is &#96;FALSE&#96;, no user&#10;maintenance is allowed.  If the record is not system defined, the value in this&#10;column will have no meaning or effect; user defined records may set this value&#10;&#96;TRUE&#96; as a simple information point indicating that the record is user&#10;maintainable.$DOC$;&#10;&#10;    var_syst_description text :&#61;&#10;$DOC$A system defined description indicating the purpose and use cases of a given&#10;record.  Text defined in this column is system maintained and should not be&#10;changed under normal circumstances.$DOC$;&#10;&#10;    var_user_description text :&#61;&#10;$DOC$An optional user defined description of the record and its use cases.  If this&#10;value is not &#96;NULL&#96;, the value will override any &#96;syst_description&#96; defined text&#10;in application user interfaces and other presentations.$DOC$;&#10;&#10;    var_diag_timestamp_created text :&#61;&#10;$DOC$The database server date/time when the transaction which created the record&#10;started.$DOC$;&#10;&#10;    var_diag_role_created text :&#61;&#10;$DOC$The database role which created the record.$DOC$;&#10;&#10;    var_diag_timestamp_modified text :&#61;&#10;$DOC$The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records.$DOC$;&#10;&#10;    var_diag_wallclock_modified text :&#61;&#10;$DOC$The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified.$DOC$;&#10;&#10;    var_diag_role_modified text :&#61;&#10;$DOC$The database role which modified the record.$DOC$;&#10;&#10;    var_diag_row_version text :&#61;&#10;$DOC$The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count.$DOC$;&#10;&#10;    var_diag_update_count text :&#61;&#10;$DOC$Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1.$DOC$;&#10;&#10;BEGIN&#10;&#10;    PERFORM&#10;        ms_syst_priv.generate_comments_table_column(&#10;            p_table_schema &#61;&gt; p_table_schema,&#10;            p_table_name &#61;&gt; p_table_name,&#10;            p_comments_config &#61;&gt;&#10;                (&#10;                --column_name&#10;                  pa.attname&#10;                --description&#10;                , CASE&#10;                    WHEN pa.attname &#61; &#39;id&#39; THEN&#10;                        var_id&#10;                    WHEN pa.attname &#61; &#39;internal_name&#39; THEN&#10;                        var_internal_name&#10;                    WHEN pa.attname &#61; &#39;display_name&#39; THEN&#10;                        var_display_name&#10;                    WHEN pa.attname &#61; &#39;external_name&#39; THEN&#10;                        var_external_name&#10;                    WHEN pa.attname &#61; &#39;syst_defined&#39; THEN&#10;                        var_syst_defined&#10;                    WHEN pa.attname &#61; &#39;user_maintainable&#39; THEN&#10;                        var_user_maintainable&#10;                    WHEN pa.attname &#61; &#39;syst_description&#39; THEN&#10;                        var_syst_description&#10;                    WHEN pa.attname &#61; &#39;user_description&#39; THEN&#10;                        var_user_description&#10;                    WHEN pa.attname &#61; &#39;diag_timestamp_created&#39; THEN&#10;                        var_diag_timestamp_created&#10;                    WHEN pa.attname &#61; &#39;diag_role_created&#39; THEN&#10;                        var_diag_role_created&#10;                    WHEN pa.attname &#61; &#39;diag_timestamp_modified&#39; THEN&#10;                        var_diag_timestamp_modified&#10;                    WHEN pa.attname &#61; &#39;diag_wallclock_modified&#39; THEN&#10;                        var_diag_wallclock_modified&#10;                    WHEN pa.attname &#61; &#39;diag_role_modified&#39; THEN&#10;                        var_diag_role_modified&#10;                    WHEN pa.attname &#61; &#39;diag_row_version&#39; THEN&#10;                        var_diag_row_version&#10;                    WHEN pa.attname &#61; &#39;diag_update_count&#39; THEN&#10;                        var_diag_update_count&#10;                    ELSE&#10;                        NULL::text&#10;                  END&#10;                --general_usage&#10;                , CASE&#10;                    WHEN pa.attname IN (&#39;external_name&#39;, &#39;user_description&#39;) THEN&#10;                        NULL&#10;                    ELSE&#10;                        E&#39;This column is system maintained and should be &#39; ||&#10;                        E&#39;considered read only in normal\noperations.&#39;&#10;                  END&#10;                --func_type_name&#10;                , NULL::text&#10;                --func_type_text&#10;                , NULL::text&#10;                --state_name&#10;                , NULL::text&#10;                --state_text&#10;                , NULL::text&#10;                --constraints&#10;                , NULL::text&#10;                --direct_usage&#10;                , CASE&#10;                    WHEN pa.attname &#61; &#39;diag_row_version&#39; THEN&#10;                        E&#39;This column is frequently used by by application &#39; ||&#10;                        E&#39;logic to resolve the &quot;dirty\nwrite&quot; issues which &#39; ||&#10;                        E&#39;can arise from concurrent data changes.  As such &#39; ||&#10;                        E&#39;any\nadministrative override of automatic system &#39; ||&#10;                        E&#39;maintenance of this value should\nconsider the &#39; ||&#10;                        E&#39;ramifications on application function.&#39;&#10;                    ELSE&#10;                        NULL::text&#10;                  END)::ms_syst_priv.comments_config_table_column&#10;        )&#10;    FROM pg_attribute pa&#10;    WHERE&#10;          pa.attrelid &#61; var_table&#10;      AND pa.attnum &gt; 0&#10;      AND pa.attname::text &#61; ANY (var_common_col_names)&#10;      AND NOT pa.attisdropped;&#10;&#10;END;</textarea>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <!-- /.content-wrapper -->
+            <footer class="main-footer">
+                <div>
+                    <div class="pull-right hidden-xs">
+                        <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
+                        <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
+                    </div>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.2.4</a></strong>
+                </div>
+                <!-- /.container -->
+            </footer>
+        </div>
+        <!-- ./wrapper -->
+
+        <!-- jQuery 2.2.3 -->
+        <script src="../bower/admin-lte/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script src="../bower/admin-lte/plugins/jQueryUI/jquery-ui.min.js"></script>
+        <!-- Bootstrap 3.3.5 -->
+        <script src="../bower/admin-lte/bootstrap/js/bootstrap.min.js"></script>
+        <!-- DataTables -->
+        <script src="../bower/datatables.net/jquery.dataTables.min.js"></script>
+        <script src="../bower/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+        <script src="../bower/datatables.net-buttons/dataTables.buttons.min.js"></script>
+        <script src="../bower/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+        <script src="../bower/datatables.net-buttons/buttons.html5.min.js"></script>
+        <script src="../bower/datatables.net-buttons/buttons.print.min.js"></script>
+        <script src="../bower/datatables.net-buttons/buttons.colVis.min.js"></script>
+        <!-- SheetJS -->
+        <script src="../bower/js-xlsx/xlsx.full.min.js"></script>
+        <!-- pdfmake -->
+        <script src="../bower/pdfmake/pdfmake.min.js"></script>
+        <script src="../bower/pdfmake/vfs_fonts.js"></script>
+        <!-- SlimScroll -->
+        <script src="../bower/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+        <!-- FastClick -->
+        <script src="../bower/admin-lte/plugins/fastclick/fastclick.js"></script>
+        <!-- Salvattore -->
+        <script src="../bower/salvattore/salvattore.min.js"></script>
+        <!-- AnchorJS -->
+        <script src="../bower/anchor-js/anchor.min.js"></script>
+        <!-- CodeMirror -->
+        <script src="../bower/codemirror/codemirror.js"></script>
+        <script src="../bower/codemirror/sql.js"></script>
+        <!-- AdminLTE App -->
+        <script src="../bower/admin-lte/dist/js/app.min.js"></script>
+        <script src="routine.js"></script>
+        <script src="../schemaSpy.js"></script>
+    </body>
+</html>

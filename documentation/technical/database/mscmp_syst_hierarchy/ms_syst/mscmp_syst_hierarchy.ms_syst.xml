@@ -1,0 +1,1122 @@
+<?xml version="1.0" encoding="UTF-8"?><database name="mscmp_syst_hierarchy" schema="ms_syst" type="PostgreSQL - 16.1 (Ubuntu 16.1-1.pgdg22.04+1)">
+   <tables>
+      <table name="syst_enum_functional_types" numRows="0" remarks="For those Enumerations requiring Functional Type designation, this table defines&#10;the available types and persists related metadata.  Note that not all&#10;Enumerations require Functional Types.&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;  * `DELETE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - See column comments for applicable restrictions." schema="ms_syst" type="VIEW" viewSql=" SELECT seft.id,&#10;    seft.internal_name,&#10;    seft.display_name,&#10;    seft.external_name,&#10;    se.syst_defined,&#10;    seft.enum_id,&#10;    seft.syst_description,&#10;    seft.user_description,&#10;    seft.diag_timestamp_created,&#10;    seft.diag_role_created,&#10;    seft.diag_timestamp_modified,&#10;    seft.diag_wallclock_modified,&#10;    seft.diag_role_modified,&#10;    seft.diag_row_version,&#10;    seft.diag_update_count&#10;   FROM (ms_syst_data.syst_enum_functional_types seft&#10;     JOIN ms_syst_data.syst_enums se ON ((se.id = seft.enum_id)));">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="true" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: true&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="true" remarks="A candidate key useful for programmatic references to individual records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: true&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="display_name" nullable="true" remarks="A friendly name and candidate key for the record, suitable for use in user&#10;interactions&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: true&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - Only user maintainable records." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="external_name" nullable="true" remarks="A non-unique/non-key value used to display to users and external parties where&#10;uniqueness is less of a concern than specific end user presentation.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - Only user maintainable records." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="syst_defined" nullable="true" remarks="If true, this value indicates that the functional type is considered to be&#10;system defined and a part of the application.&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**Supplemental Notes**&#10;&#10;This column is not part of the Functional Type underlying data and is a&#10;reflection of the Functional Type's parent enumeration since the parent&#10;determines if the functional type is  considered system defined.  If false, the&#10;assumption is that the Functional Type ` is user defined and supports custom&#10;user functionality.&#10;&#10;See the documentation for ms_syst.syst_enums.syst_defined for a more complete&#10;complete description." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="enum_id" nullable="true" remarks="A reference to the owning Enumeration of the functional type.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="syst_description" nullable="true" remarks="A system defined description indicating the purpose and use cases of a given&#10;record.  Text defined in this column is system maintained and should not be&#10;changed under normal circumstances.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="user_description" nullable="true" remarks="An optional user defined description of the record and its use cases.  If this&#10;value is not `NULL`, the value will override any `syst_description` defined text&#10;in application user interfaces and other presentations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - Always updatable, even when not otherwise user maintainable." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="8" name="diag_timestamp_created" nullable="true" remarks="The database server date/time when the transaction which created the record&#10;started.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="diag_role_created" nullable="true" remarks="The database role which created the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="10" name="diag_timestamp_modified" nullable="true" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="11" name="diag_wallclock_modified" nullable="true" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="diag_role_modified" nullable="true" remarks="The database role which modified the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="13" name="diag_row_version" nullable="true" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="14" name="diag_update_count" nullable="true" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="19" type="int8" typeCode="-5"/>
+      </table>
+      <table name="syst_enum_items" numRows="0" remarks="The list of values provided by an Enumeration as well as related behavioral and&#10;informational metadata.&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;  * `DELETE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - See column comments for applicable restrictions." schema="ms_syst" type="VIEW" viewSql=" SELECT id,&#10;    internal_name,&#10;    display_name,&#10;    external_name,&#10;    enum_id,&#10;    functional_type_id,&#10;    enum_default,&#10;    functional_type_default,&#10;    syst_defined,&#10;    user_maintainable,&#10;    syst_description,&#10;    user_description,&#10;    sort_order,&#10;    syst_options,&#10;    user_options,&#10;    diag_timestamp_created,&#10;    diag_role_created,&#10;    diag_timestamp_modified,&#10;    diag_wallclock_modified,&#10;    diag_role_modified,&#10;    diag_row_version,&#10;    diag_update_count&#10;   FROM ms_syst_data.syst_enum_items;">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="true" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: true&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="true" remarks="A candidate key useful for programmatic references to individual records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: true&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="display_name" nullable="true" remarks="A friendly name and candidate key for the record, suitable for use in user&#10;interactions&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: true&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - Only user maintainable records." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="external_name" nullable="true" remarks="A non-unique/non-key value used to display to users and external parties where&#10;uniqueness is less of a concern than specific end user presentation.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - Only user maintainable records." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="enum_id" nullable="true" remarks="The enumeration record with which the value is associated.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="functional_type_id" nullable="true" remarks="If the enumeration requires a functional type, this column references the&#10;functional type associated with the enumeration value record.&#10;&#10;**General Usage**&#10;&#10;Note that not all enumerations require functional types.  If&#10;syst_enum_functional_types records exist for an enumeration, then this column&#10;will be required for any values of that enumeration; if there are no functional&#10;types defined for an enumeration, the this column must remain NULL.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="enum_default" nullable="true" remarks="If true, indicates that this value is the default selection from all values&#10;defined for the enumerations.&#10;&#10;**General Usage**&#10;&#10;Note that if a record is inserted or updated in this table with enum_default set&#10;true, and another record already exists for the enumeration with its&#10;enum_default set true, the newly inserted/updated record will take precedence&#10;and the value record previously set to be default will have its enum_default&#10;setting set to false.&#10;&#10;If false then the value record has no special significance relative to&#10;defaulting.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           `FALSE`&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - Only user maintainable records." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="functional_type_default" nullable="true" remarks="If true, the value record is the default selection for any of a specific&#10;fucntional type.  This is helpful in situations where a progression of state is&#10;automatically processed by the system and the state is represented by an&#10;enumeration.&#10;&#10;**General Usage**&#10;&#10;Note that if a record is inserted or updated in this table with its&#10;functional_type_default set true, and another record already exists for the&#10;enumeration/functional type combination with its functional_type_default set&#10;true, the newly inserted/updated record will take precedence and the value&#10;record previously set to be default will have its functional_type_default&#10;setting set to false.&#10;&#10;In cases where there are no functional types, this value should simply remain&#10;false.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           `FALSE`&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - Only user maintainable records." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="syst_defined" nullable="true" remarks="Values of `TRUE` in this column indicate that the record is considered a&#10;&quot;System Defined&quot; record, a record which is created and primarily maintained by&#10;the system using automated processes.  A value of `FALSE` indicates that the&#10;record is considered a &quot;User Defined&quot; record which is maintained by user actions&#10;in the application.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           `FALSE`&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="user_maintainable" nullable="true" remarks="If a record is system defined (see the `syst_defined` column), there may be&#10;some user data maintenance operations permitted in some cases.  If the value of&#10;this column for a record is `TRUE` and the record is also &quot;System Defined&quot;, then&#10;permitted user maintenance operations are available for the record.  If the&#10;record is system defined and the value of this column is `FALSE`, no user&#10;maintenance is allowed.  If the record is not system defined, the value in this&#10;column will have no meaning or effect; user defined records may set this value&#10;`TRUE` as a simple information point indicating that the record is user&#10;maintainable.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           `TRUE`&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="syst_description" nullable="true" remarks="A system defined description indicating the purpose and use cases of a given&#10;record.  Text defined in this column is system maintained and should not be&#10;changed under normal circumstances.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="user_description" nullable="true" remarks="An optional user defined description of the record and its use cases.  If this&#10;value is not `NULL`, the value will override any `syst_description` defined text&#10;in application user interfaces and other presentations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - Always updatable, even when not otherwise user maintainable." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="sort_order" nullable="true" remarks="Indicates the sort ordering of the particular value record with the lowest value&#10;sorting first.&#10;&#10;**General Usage**&#10;&#10;When a value record for an enumeration is inserted or updated and this&#10;column is being set to a value which equals another enumeration value record for&#10;the same enumeration, the system assumes that the new record is being set to&#10;precede the existing record and it will be set to sort after the newly&#10;inserted/updated enumeration value.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - Only user maintainable records." size="5" type="int2" typeCode="5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="13" name="syst_options" nullable="true" remarks="Extended options and metadata which describe the behavior and meaning of the&#10;specific value within the enumeration.&#10;&#10;**General Usage**&#10;&#10;The owning syst_enums record's default_syst_options column will indicate&#10;what syst_options are required or available and establishes default values for&#10;them.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="jsonb" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="14" name="user_options" nullable="true" remarks="Extended user defined options, similar to syst_options, but for the purpose of&#10;driving custom functionality.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - Always updatable, even when not otherwise user maintainable." size="2147483647" type="jsonb" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="15" name="diag_timestamp_created" nullable="true" remarks="The database server date/time when the transaction which created the record&#10;started.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="16" name="diag_role_created" nullable="true" remarks="The database role which created the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="17" name="diag_timestamp_modified" nullable="true" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="18" name="diag_wallclock_modified" nullable="true" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="19" name="diag_role_modified" nullable="true" remarks="The database role which modified the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="20" name="diag_row_version" nullable="true" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="21" name="diag_update_count" nullable="true" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="19" type="int8" typeCode="-5"/>
+      </table>
+      <table name="syst_enums" numRows="0" remarks="Enumerates the enumerations known to the system along with additional metadata&#10;useful in applying them appropriately.&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;  * `DELETE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - See column comments for applicable restrictions." schema="ms_syst" type="VIEW" viewSql=" SELECT id,&#10;    internal_name,&#10;    display_name,&#10;    syst_description,&#10;    user_description,&#10;    syst_defined,&#10;    user_maintainable,&#10;    default_syst_options,&#10;    default_user_options,&#10;    diag_timestamp_created,&#10;    diag_role_created,&#10;    diag_timestamp_modified,&#10;    diag_wallclock_modified,&#10;    diag_role_modified,&#10;    diag_row_version,&#10;    diag_update_count&#10;   FROM ms_syst_data.syst_enums;">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="true" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: true&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="true" remarks="A candidate key useful for programmatic references to individual records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: true&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="display_name" nullable="true" remarks="A friendly name and candidate key for the record, suitable for use in user&#10;interactions&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: true&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - Only user maintainable records." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="syst_description" nullable="true" remarks="A system defined description indicating the purpose and use cases of a given&#10;record.  Text defined in this column is system maintained and should not be&#10;changed under normal circumstances.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="user_description" nullable="true" remarks="An optional user defined description of the record and its use cases.  If this&#10;value is not `NULL`, the value will override any `syst_description` defined text&#10;in application user interfaces and other presentations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - Always updatable, even when not otherwise user maintainable." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="syst_defined" nullable="true" remarks="Values of `TRUE` in this column indicate that the record is considered a&#10;&quot;System Defined&quot; record, a record which is created and primarily maintained by&#10;the system using automated processes.  A value of `FALSE` indicates that the&#10;record is considered a &quot;User Defined&quot; record which is maintained by user actions&#10;in the application.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           `FALSE`&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="user_maintainable" nullable="true" remarks="If a record is system defined (see the `syst_defined` column), there may be&#10;some user data maintenance operations permitted in some cases.  If the value of&#10;this column for a record is `TRUE` and the record is also &quot;System Defined&quot;, then&#10;permitted user maintenance operations are available for the record.  If the&#10;record is system defined and the value of this column is `FALSE`, no user&#10;maintenance is allowed.  If the record is not system defined, the value in this&#10;column will have no meaning or effect; user defined records may set this value&#10;`TRUE` as a simple information point indicating that the record is user&#10;maintainable.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           `TRUE`&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="default_syst_options" nullable="true" remarks="Establishes the expected extended system options along with default values if&#10;applicable.&#10;&#10;**General Usage**&#10;&#10;Note that this setting is used to both validate and set defaults in the&#10;`syst_enum_items.syst_options` column.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="jsonb" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="default_user_options" nullable="true" remarks="Allows a user to set the definition of syst_enum_items.user_options values and&#10;provide defaults for those values if appropriate.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="jsonb" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="9" name="diag_timestamp_created" nullable="true" remarks="The database server date/time when the transaction which created the record&#10;started.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="diag_role_created" nullable="true" remarks="The database role which created the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="11" name="diag_timestamp_modified" nullable="true" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="12" name="diag_wallclock_modified" nullable="true" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="13" name="diag_role_modified" nullable="true" remarks="The database role which modified the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="14" name="diag_row_version" nullable="true" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="15" name="diag_update_count" nullable="true" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="19" type="int8" typeCode="-5"/>
+      </table>
+      <table name="syst_hierarchies" numRows="0" remarks="Establishes a hierarchical template for parent/child relationships to&#10;follow. The `hierarchies` relation creates a type of hierarchy which is linked&#10;to a specific feature or functional area of the application via a record's&#10;`hierarchy_type_id` reference. Hierarchies is also the parent relation of&#10;Hierarchy Items relation (`ms_syst_data.syst_hierarchy_items`)&#10;records where each Hierarchy Items record represents a level of the&#10;hierarchy.&#10;&#10;**General Usage**&#10;&#10;Note that once the Hierarchy is active and in use by Hierarchy implementing&#10;Components, most changes to the Hierarchy records will not be allowed to ensure&#10;the consistency of currently used data.&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;  * `DELETE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - See column comments for applicable restrictions." schema="ms_syst" type="VIEW" viewSql=" SELECT id,&#10;    internal_name,&#10;    display_name,&#10;    hierarchy_type_id,&#10;    hierarchy_state_id,&#10;    syst_defined,&#10;    user_maintainable,&#10;    structured,&#10;    syst_description,&#10;    user_description,&#10;    diag_timestamp_created,&#10;    diag_role_created,&#10;    diag_timestamp_modified,&#10;    diag_wallclock_modified,&#10;    diag_role_modified,&#10;    diag_row_version,&#10;    diag_update_count&#10;   FROM ms_syst_data.syst_hierarchies;">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="true" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: true&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="true" remarks="A candidate key useful for programmatic references to individual records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: true&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="display_name" nullable="true" remarks="A friendly name and candidate key for the record, suitable for use in user&#10;interactions&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: true&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - Only user maintainable records." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="hierarchy_type_id" nullable="true" remarks="A reference indicating in which specific functional area or with which feature&#10;of the application the Hierarchy is associated with.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="hierarchy_state_id" nullable="true" remarks="A reference indicating at which point in the Hierarchy life-cycle the record&#10;sits.&#10;&#10;**General Usage**&#10;&#10;The record may only be set in an `active` state if the record and any associated&#10;Hierarchy Item records are in a consistent, valid state.  Similarly, the record&#10;may only be set to an `inactive` state if the Hierarchy record is not in use,&#10;which is defined as the record being referenced by an Hierarchy implementing&#10;Component's records.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="syst_defined" nullable="true" remarks="Values of `TRUE` in this column indicate that the record is considered a&#10;&quot;System Defined&quot; record, a record which is created and primarily maintained by&#10;the system using automated processes.  A value of `FALSE` indicates that the&#10;record is considered a &quot;User Defined&quot; record which is maintained by user actions&#10;in the application.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           `FALSE`&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="user_maintainable" nullable="true" remarks="If a record is system defined (see the `syst_defined` column), there may be&#10;some user data maintenance operations permitted in some cases.  If the value of&#10;this column for a record is `TRUE` and the record is also &quot;System Defined&quot;, then&#10;permitted user maintenance operations are available for the record.  If the&#10;record is system defined and the value of this column is `FALSE`, no user&#10;maintenance is allowed.  If the record is not system defined, the value in this&#10;column will have no meaning or effect; user defined records may set this value&#10;`TRUE` as a simple information point indicating that the record is user&#10;maintainable.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           `TRUE`&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="structured" nullable="true" remarks="A flag indicating whether or not the Hierarchy actually defines a structure, or&#10;if the any implementations allow fully ad hoc structuring within the&#10;implementing Component.&#10;&#10;**General Usage**&#10;&#10;This configuration exists for cases where a Component implements Hierarchy&#10;functionality, but can also operate while bypassing any hierarchy checks at all;&#10;this way we can still require a Hierarchy record reference in the implementation&#10;while allowing the Hierarchy definition itself be the configuration point for&#10;determining whether or not hierarchical structure is required.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="syst_description" nullable="true" remarks="A system defined description indicating the purpose and use cases of a given&#10;record.  Text defined in this column is system maintained and should not be&#10;changed under normal circumstances.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="user_description" nullable="true" remarks="An optional user defined description of the record and its use cases.  If this&#10;value is not `NULL`, the value will override any `syst_description` defined text&#10;in application user interfaces and other presentations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - Always updatable, even when not otherwise user maintainable." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="10" name="diag_timestamp_created" nullable="true" remarks="The database server date/time when the transaction which created the record&#10;started.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="diag_role_created" nullable="true" remarks="The database role which created the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="12" name="diag_timestamp_modified" nullable="true" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="13" name="diag_wallclock_modified" nullable="true" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="14" name="diag_role_modified" nullable="true" remarks="The database role which modified the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="15" name="diag_row_version" nullable="true" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="16" name="diag_update_count" nullable="true" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="19" type="int8" typeCode="-5"/>
+      </table>
+      <table name="syst_hierarchy_items" numRows="0" remarks="Hierarchy Item records represent a level in the hierarchy of their parent&#10;Hierarchy.&#10;&#10;**General Usage**&#10;&#10;Each Hierarchy Item record is individually sequenced in its group via the&#10;`hierarchy_depth` column.&#10;&#10;Note that once the Hierarchy is active and in use by Hierarchy implementing&#10;Components, most changes to the Hierarchy Item records will not be allowed to&#10;ensure the consistency of currently used data.&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;  * `DELETE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - See column comments for applicable restrictions.&#10;  * `DELETE` - Only user maintainable records.&#10;&#10;**Supplemental Notes**&#10;&#10;Once the Hierarchy is active and in use by Hierarchy implementing Components,&#10;most changes to the Hierarchy Item records will not be allowed to ensure the&#10;consistency of currently used data.  Also for data consistency reasons, using&#10;this API view imposes the fundamental restriction that Hierarchy Item&#10;hierarchies can only be constructed top down and deconstructed bottom up.&#10;Updates are limited to allowing some naming updates, but not updates in&#10;hierarchy changes." schema="ms_syst" type="VIEW" viewSql=" SELECT id,&#10;    internal_name,&#10;    display_name,&#10;    external_name,&#10;    hierarchy_id,&#10;    hierarchy_depth,&#10;    required,&#10;    allow_leaf_nodes,&#10;    diag_timestamp_created,&#10;    diag_role_created,&#10;    diag_timestamp_modified,&#10;    diag_wallclock_modified,&#10;    diag_role_modified,&#10;    diag_row_version,&#10;    diag_update_count&#10;   FROM ms_syst_data.syst_hierarchy_items;">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="true" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: true&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="true" remarks="A candidate key useful for programmatic references to individual records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: true&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="display_name" nullable="true" remarks="A friendly name and candidate key for the record, suitable for use in user&#10;interactions&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: true&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - Only user maintainable records." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="external_name" nullable="true" remarks="A non-unique/non-key value used to display to users and external parties where&#10;uniqueness is less of a concern than specific end user presentation.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - Only user maintainable records." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="hierarchy_id" nullable="true" remarks="Identifies the Hierarchy to which the record belongs.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="hierarchy_depth" nullable="true" remarks="Indicates the at what level in the hierarchy this Group Type Item sits&#10;relative to the other items in the Group Type.  Records with relatively&#10;higher values are deeper or lower in the hierarchy.&#10;&#10;**General Usage**&#10;&#10;When a value for this column is not provided at insert time, the record is&#10;assigned the next hierarchy depth value relative to the existing records.  When&#10;a record is inserted with a set hierarchy_depth value and that value pre-exists&#10;for the same Group Type as the new record, the insert is treated as a &quot;insert&#10;above&quot; operation, with the existing conflicting record being updated to have the&#10;next hierarchy value; existing Group Type Item records are continued to be&#10;updated until the last record is assigned a non-conflicting hierarchy_depth&#10;value.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="5" type="int2" typeCode="5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="required" nullable="true" remarks="Indicates if the Hierarchy Item level must be represented by a record in the&#10;implementing data, or if the Hierarchy Item level represents an optional level.&#10;If true, the Hierarchy Item level must be represented by a record in the data of&#10;the implementing Component for that data to be considered valid.  If false,&#10;the Hierarchy Item level is considered optional and the data of the implementing&#10;Component may omit the Hierarchy Item level in its data without the data being&#10;considered invalid.&#10;&#10;**General Usage**&#10;&#10;The highest/root Hierarchy Item level must always be required.  If lower levels&#10;of the Hierarchy are required, all parents to the lowest required Hierarchy Item&#10;level must also be marked as required true.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - Only user maintainable records." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="allow_leaf_nodes" nullable="true" remarks="Indicates to implementing Components that this Hierarchy Item level can be&#10;associated with &quot;Leaf Nodes&quot;. Leaf Nodes are not defined in the&#10;mscmp_syst_hierarchy Component, but are rather defined by Hierarchy implementing&#10;Components.  Leaf Nodes are the records which the Branch Nodes/Hierarchy&#10;definition are organizing.  An example of a Leaf Node would be an application&#10;menu implementing Component defining references/links to specific application&#10;functionality which are then displayed associated to branches of a tree&#10;structure (menu/sub-menu/ etc.)  The links are Leaf Nodes and the branches of&#10;the menu are Branch Nodes: representations of the Hierarchy Items.&#10;&#10;**General Usage**&#10;&#10;If this value is true, it means this Hierarchy Item record may be associated&#10;directly with Leaf Nodes.  If false, Leaf Nodes must be associated with other&#10;levels of the Hierarchy.&#10;&#10;The bottom/lowest level required Hierarchy Item must always be marked as&#10;`allow_leaf_nodes` true.  Higher than the lowest required Hierarchy Item level&#10;may arbitrarily allow or disallow Leaf Node associations as the implementing&#10;Component sees fit.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - Only user maintainable records." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="8" name="diag_timestamp_created" nullable="true" remarks="The database server date/time when the transaction which created the record&#10;started.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="diag_role_created" nullable="true" remarks="The database role which created the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="10" name="diag_timestamp_modified" nullable="true" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="11" name="diag_wallclock_modified" nullable="true" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="diag_role_modified" nullable="true" remarks="The database role which modified the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="13" name="diag_row_version" nullable="true" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="14" name="diag_update_count" nullable="true" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="19" type="int8" typeCode="-5"/>
+      </table>
+   </tables>
+   <routines>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_d_syst_enum_functional_types()" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[Processes incoming API View requests according to globally applicable business
+rules and data validation requirements.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `INSTEAD OF`
+
+  * **Supported Operations**: `DELETE`]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_i_d_syst_enum_functional_types.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_enums/ms_syst/api_views/syst_enum_functional_types/trig_i_d_syst_enum_functional_types.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com  :: https://muse.systems
+
+BEGIN
+
+    IF old.syst_defined THEN
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'You cannot delete a system defined enumeration ' ||
+                          'functional type using the API Views.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst'
+                            ,p_proc_name      => 'trig_i_d_syst_enum_functional_types'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(old)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+    END IF;
+
+    DELETE
+    FROM ms_syst_data.syst_enum_functional_types
+    WHERE id = old.id
+    RETURNING INTO old
+          id
+        , internal_name
+        , display_name
+        , external_name
+        , old.syst_defined
+        , enum_id
+        , syst_description
+        , user_description
+        , diag_timestamp_created
+        , diag_role_created
+        , diag_timestamp_modified
+        , diag_wallclock_modified
+        , diag_role_modified
+        , diag_row_version
+        , diag_update_count ;
+
+    RETURN old;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_d_syst_enum_items()" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[Processes incoming API View requests according to globally applicable business
+rules and data validation requirements.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `INSTEAD OF`
+
+  * **Supported Operations**: `DELETE`]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_i_d_syst_enum_items.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_enums/ms_syst/api_views/syst_enum_items/trig_i_d_syst_enum_items.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com  :: https://muse.systems
+
+BEGIN
+
+    IF old.syst_defined THEN
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'You cannot delete a system defined enumeration using the API Views.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst'
+                            ,p_proc_name      => 'trig_i_d_syst_enum_items'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(old)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+    END IF;
+
+    DELETE FROM ms_syst_data.syst_enum_items WHERE id = old.id RETURNING * INTO old;
+
+    RETURN old;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_d_syst_enums()" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[Processes incoming API View requests according to globally applicable business
+rules and data validation requirements.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `INSTEAD OF`
+
+  * **Supported Operations**: `DELETE`]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_i_d_syst_enums.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_enums/ms_syst/api_views/syst_enums/trig_i_d_syst_enums.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com  :: https://muse.systems
+
+BEGIN
+
+    IF old.syst_defined THEN
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'You cannot delete a system defined enumeration using the API Views.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst'
+                            ,p_proc_name      => 'trig_i_d_syst_enums'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(old)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+    END IF;
+
+    DELETE FROM ms_syst_data.syst_enums WHERE id = old.id RETURNING * INTO old;
+
+    RETURN old;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_d_syst_hierarchies()" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[Processes incoming API View requests according to globally applicable business
+rules and data validation requirements.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `INSTEAD OF`
+
+  * **Supported Operations**: `DELETE`]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_i_d_syst_hierarchies.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_hierarchy/ms_syst/api_views/syst_hierarchies/trig_i_d_syst_hierarchies.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    IF old.syst_defined THEN
+
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'You cannot delete a system defined Hierarchy using the API Views.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_appl'
+                            ,p_proc_name      => 'trig_i_d_syst_hierarchies'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(old)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+
+    END IF;
+
+    DELETE FROM ms_syst_data.syst_hierarchies WHERE id = old.id RETURNING * INTO old;
+
+    RETURN old;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_d_syst_hierarchy_items()" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[Processes incoming API View requests according to globally applicable business
+rules and data validation requirements.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `INSTEAD OF`
+
+  * **Supported Operations**: `DELETE`]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_i_d_syst_hierarchy_items.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_hierarchy/ms_syst/api_views/syst_hierarchy_items/trig_i_d_syst_hierarchy_items.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    IF
+        ( SELECT syst_defined AND NOT user_maintainable
+          FROM ms_syst_data.syst_hierarchies
+          WHERE id = old.hierarchy_id )
+    THEN
+
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'You cannot delete a non-user maintainable system ' ||
+                          'defined Hierarchy Item using the API Views.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_appl'
+                            ,p_proc_name      => 'trig_i_d_syst_hierarchy_items'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(old)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+
+    END IF;
+
+    IF
+        ( SELECT count( 1 ) > 1 AND max( hierarchy_depth ) > old.hierarchy_depth
+          FROM ms_syst_data.syst_hierarchy_items
+          WHERE hierarchy_id = old.hierarchy_id )
+    THEN
+
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'You may only delete the Hierarchy Item record ' ||
+                          'representing the lowest level of the hierarchy ' ||
+                          'using this API view.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_appl'
+                            ,p_proc_name      => 'trig_i_d_syst_hierarchy_items'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(old)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+
+    END IF;
+
+    DELETE FROM ms_syst_data.syst_hierarchy_items WHERE id = old.id RETURNING * INTO OLD;
+
+    RETURN old;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_i_syst_enum_functional_types()" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[Processes incoming API View requests according to globally applicable business
+rules and data validation requirements.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `INSTEAD OF`
+
+  * **Supported Operations**: `INSERT`]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_i_i_syst_enum_functional_types.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_enums/ms_syst/api_views/syst_enum_functional_types/trig_i_i_syst_enum_functional_types.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com  :: https://muse.systems
+
+DECLARE
+    var_syst_defined boolean;
+BEGIN
+    SELECT syst_defined INTO var_syst_defined
+    FROM ms_syst_data.syst_enums
+    WHERE id = new.enum_id;
+
+    IF var_syst_defined THEN
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'The functional type creation for the requested ' ||
+                          'enumeration is invalid.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst'
+                            ,p_proc_name      => 'trig_i_i_syst_enum_functional_types'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(new)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+    END IF;
+
+    INSERT INTO ms_syst_data.syst_enum_functional_types
+        (  internal_name
+         , display_name
+         , external_name
+         , enum_id
+         , syst_description
+         , user_description)
+    VALUES
+        (  new.internal_name
+         , new.display_name
+         , new.external_name
+         , new.enum_id
+         , '(System Description Not Available)'
+         , new.user_description)
+    RETURNING INTO new
+          id
+        , internal_name
+        , display_name
+        , external_name
+        , var_syst_defined
+        , enum_id
+        , syst_description
+        , user_description
+        , diag_timestamp_created
+        , diag_role_created
+        , diag_timestamp_modified
+        , diag_wallclock_modified
+        , diag_role_modified
+        , diag_row_version
+        , diag_update_count ;
+
+    RETURN new;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_i_syst_enum_items()" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[Processes incoming API View requests according to globally applicable business
+rules and data validation requirements.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `INSTEAD OF`
+
+  * **Supported Operations**: `INSERT`]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_i_i_syst_enum_items.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_enums/ms_syst/api_views/syst_enum_items/trig_i_i_syst_enum_items.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com  :: https://muse.systems
+
+BEGIN
+
+    IF
+        exists( SELECT TRUE
+                FROM ms_syst_data.syst_enums
+                WHERE id = new.enum_id AND syst_defined AND NOT user_maintainable)
+    THEN
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'You may not add new enumeration items for system defined ' ||
+                          'enumerations that are not marked user maintainable.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst'
+                            ,p_proc_name      => 'trig_i_i_syst_enum_items'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(new)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+    END IF;
+
+    INSERT INTO ms_syst_data.syst_enum_items
+        ( internal_name
+        , display_name
+        , external_name
+        , enum_id
+        , functional_type_id
+        , enum_default
+        , functional_type_default
+        , syst_defined
+        , user_maintainable
+        , syst_description
+        , user_description
+        , sort_order
+        , user_options )
+    VALUES
+        ( new.internal_name
+        , new.display_name
+        , new.external_name
+        , new.enum_id
+        , new.functional_type_id
+        , new.enum_default
+        , new.functional_type_default
+        , FALSE
+        , TRUE
+        , '(System Description Not Available)'
+        , new.user_description
+        , new.sort_order
+        , new.user_options )
+    RETURNING * INTO new;
+
+    RETURN new;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_i_syst_enums()" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[Processes incoming API View requests according to globally applicable business
+rules and data validation requirements.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `INSTEAD OF`
+
+  * **Supported Operations**: `INSERT`]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_i_i_syst_enums.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_enums/ms_syst/api_views/syst_enums/trig_i_i_syst_enums.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com  :: https://muse.systems
+
+BEGIN
+
+    INSERT INTO ms_syst_data.syst_enums
+        ( internal_name
+        , display_name
+        , syst_description
+        , user_description
+        , syst_defined
+        , user_maintainable
+        , default_user_options )
+    VALUES
+        ( new.internal_name
+        , new.display_name
+        , '(System Description Not Available)'
+        , new.user_description
+        , FALSE
+        , TRUE
+        , new.default_user_options )
+    RETURNING * INTO new;
+
+    RETURN new;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_i_syst_hierarchies()" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[Processes incoming API View requests according to globally applicable business
+rules and data validation requirements.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `INSTEAD OF`
+
+  * **Supported Operations**: `INSERT`]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_i_i_syst_hierarchies.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_hierarchy/ms_syst/api_views/syst_hierarchies/trig_i_i_syst_hierarchies.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    INSERT INTO ms_syst_data.syst_hierarchies
+        ( internal_name
+        , display_name
+        , hierarchy_type_id
+        , hierarchy_state_id
+        , syst_defined
+        , user_maintainable
+        , structured
+        , syst_description
+        , user_description )
+    VALUES
+        ( new.internal_name
+        , new.display_name
+        , new.hierarchy_type_id
+        , new.hierachy_state_id
+        , FALSE
+        , TRUE
+        , coalesce(new.structured, TRUE)
+        , '(System Description Not Available)'
+        , new.user_description )
+    RETURNING * INTO new;
+
+    RETURN new;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_i_syst_hierarchy_items()" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[Processes incoming API View requests according to globally applicable business
+rules and data validation requirements.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `INSTEAD OF`
+
+  * **Supported Operations**: `INSERT`]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_i_i_syst_hierarchy_items.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_hierarchy/ms_syst/api_views/syst_hierarchy_items/trig_i_i_syst_hierarchy_items.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    IF
+        ( SELECT syst_defined AND NOT user_maintainable
+          FROM ms_syst_data.syst_hierarchies
+          WHERE id = new.hierarchy_id )
+    THEN
+
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'You cannot insert a Hierarchy Item record that ' ||
+                          'is a child of a system defined, non-user maintainable ' ||
+                          'Hierarchy.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_appl'
+                            ,p_proc_name      => 'trig_i_i_syst_hierarchy_items'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(new)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+
+    END IF;
+
+    INSERT INTO ms_syst_data.syst_hierarchy_items
+        ( internal_name
+        , display_name
+        , external_name
+        , hierarchy_id
+        , hierarchy_depth
+        , required
+        , allow_leaf_nodes)
+    VALUES
+        ( new.internal_name
+        , new.display_name
+        , new.external_name
+        , new.hierarchy_id
+        , new.hierarchy_depth
+        , new.required
+        , new.allow_leaf_nodes)
+    RETURNING * INTO new;
+
+    RETURN new;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_u_syst_enum_functional_types()" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[Processes incoming API View requests according to globally applicable business
+rules and data validation requirements.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `INSTEAD OF`
+
+  * **Supported Operations**: `UPDATE`]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_i_u_syst_enum_functional_types.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_enums/ms_syst/api_views/syst_enum_functional_types/trig_i_u_syst_enum_functional_types.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com  :: https://muse.systems
+
+BEGIN
+    IF
+        (old.syst_defined AND old.internal_name != new.internal_name) OR
+        old.enum_id != new.enum_id
+    THEN
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'The requested data update included changes to fields disallowed ' ||
+                          'by the business rules of the API View.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst'
+                            ,p_proc_name      => 'trig_i_u_syst_enum_functional_types'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(new)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+    END IF;
+
+    UPDATE ms_syst_data.syst_enum_functional_types
+    SET
+        internal_name    = new.internal_name
+      , display_name     = new.display_name
+      , external_name    = new.external_name
+      , user_description = new.user_description
+    WHERE id = new.id
+    RETURNING INTO new
+          id
+        , internal_name
+        , display_name
+        , external_name
+        , old.syst_defined
+        , enum_id
+        , syst_description
+        , user_description
+        , diag_timestamp_created
+        , diag_role_created
+        , diag_timestamp_modified
+        , diag_wallclock_modified
+        , diag_role_modified
+        , diag_row_version
+        , diag_update_count ;
+
+    RAISE WARNING '======>>>>>>> New Func. Type: %', to_jsonb(new);
+
+    RETURN new;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_u_syst_enum_items()" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[Processes incoming API View requests according to globally applicable business
+rules and data validation requirements.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `INSTEAD OF`
+
+  * **Supported Operations**: `UPDATE`]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_i_u_syst_enum_items.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_enums/ms_syst/api_views/syst_enum_items/trig_i_u_syst_enum_items.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com  :: https://muse.systems
+
+BEGIN
+
+    IF
+        old.syst_defined AND
+        (new.internal_name != old.internal_name OR
+         new.functional_type_id != old.functional_type_id)
+    THEN
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'The requested data update included changes to fields disallowed ' ||
+                          'by the business rules of the API View.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst'
+                            ,p_proc_name      => 'trig_i_u_syst_enum_items'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(new)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+    END IF;
+
+    UPDATE ms_syst_data.syst_enum_items
+    SET
+        internal_name           = new.internal_name
+      , display_name            = new.display_name
+      , external_name           = new.external_name
+      , functional_type_id      = new.functional_type_id
+      , enum_default            = new.enum_default
+      , functional_type_default = new.functional_type_default
+      , user_description        = new.user_description
+      , sort_order              = new.sort_order
+      , user_options            = new.user_options
+    WHERE id = new.id
+    RETURNING * INTO new;
+
+    RETURN new;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_u_syst_enums()" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[Processes incoming API View requests according to globally applicable business 
+ rules and data validation requirements.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `INSTEAD OF`
+
+  * **Supported Operations**: `UPDATE`]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_i_u_syst_enums.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_enums/ms_syst/api_views/syst_enums/trig_i_u_syst_enums.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com  :: https://muse.systems
+
+BEGIN
+
+    IF old.syst_defined AND new.internal_name != old.internal_name THEN
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'The requested data update included changes to fields disallowed ' ||
+                          'by the business rules of the API View.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst'
+                            ,p_proc_name      => 'trig_i_u_syst_enums'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(new)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+    END IF;
+
+    UPDATE ms_syst_data.syst_enums SET
+          internal_name        = new.internal_name
+        , display_name         = new.display_name
+        , user_description     = new.user_description
+        , default_user_options = new.default_user_options
+    WHERE id = new.id
+    RETURNING * INTO new;
+
+    RETURN new;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_u_syst_hierarchies()" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[Processes incoming API View requests according to globally applicable business
+rules and data validation requirements.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `INSTEAD OF`
+
+  * **Supported Operations**: `UPDATE`]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_i_u_syst_hierarchies.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_hierarchy/ms_syst/api_views/syst_hierarchies/trig_i_u_syst_hierarchies.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    IF
+        ( old.syst_defined AND
+            ( new.internal_name      != old.internal_name       OR
+              new.display_name       != old.display_name        OR
+              new.hierarchy_state_id != old.hierarchy_state_id  OR
+              new.structured         != old.structured ) )
+        OR
+            new.hierarchy_type_id != old.hierarchy_type_id
+    THEN
+
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'The requested data update included changes to fields disallowed ' ||
+                          'by the business rules of the API View.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_appl'
+                            ,p_proc_name      => 'trig_i_u_syst_hierarchies'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => jsonb_build_object('new', new, 'old', old)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+
+    END IF;
+
+    UPDATE ms_syst_data.syst_hierarchies
+    SET
+        internal_name      = new.internal_name
+      , display_name       = new.display_name
+      , hierarchy_state_id = new.hierarchy_state_id
+      , structured         = new.structured
+      , user_description   = new.user_description
+    WHERE id = new.id
+    RETURNING * INTO new;
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_u_syst_hierarchy_items()" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[Processes incoming API View requests according to globally applicable business
+rules and data validation requirements.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `INSTEAD OF`
+
+  * **Supported Operations**: `UPDATE`]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_i_u_syst_hierarchy_items.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_hierarchy/ms_syst/api_views/syst_hierarchy_items/trig_i_u_syst_hierarchy_items.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    IF
+        ( SELECT syst_defined AND NOT user_maintainable
+          FROM ms_syst_data.syst_hierarchies
+          WHERE id = new.hierarchy_id )
+    THEN
+
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'You cannot update a Hierarchy Item record that ' ||
+                          'is a child of a system defined, non-user maintainable ' ||
+                          'Hierarchy.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_appl'
+                            ,p_proc_name      => 'trig_i_u_syst_hierarchy_items'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => jsonb_build_object('new', new, 'old', old)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+
+    END IF;
+
+    UPDATE ms_syst_data.syst_hierarchy_items
+    SET
+        internal_name    = new.internal_name
+      , display_name     = new.display_name
+      , external_name    = new.external_name
+      , required         = new.required
+      , allow_leaf_nodes = new.allow_leaf_nodes
+    WHERE id = new.id
+    RETURNING * INTO new;
+
+    RETURN new;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+   </routines>
+</database>

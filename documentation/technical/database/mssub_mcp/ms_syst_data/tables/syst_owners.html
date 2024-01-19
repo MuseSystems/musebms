@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>syst_owners - mssub_mcp Database</title>
+        <title>syst_owners - mssub_mcp.ms_syst_data</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../../index.html" class="navbar-brand"><b>mssub_mcp</b> Database</a>
+                            <a href="../../index.html" class="navbar-brand"><b>mssub_mcp</b></a><span class="navbar-brand" style="padding-left: 0">.ms_syst_data</span>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -73,7 +73,7 @@
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
-                    <h1>syst_owners</h1><p><span id="recordNumber">-1</span> rows</p><br />
+                    <h1>syst_owners</h1><br />
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <i class="fa fa-file-text-o"></i>
@@ -84,8 +84,7 @@
                             </div>
                         </div><!-- /.box-header -->
                         <div class="box-body clearfix">
-                            <p>Identifies instance owners.  Instance owners are typically the clients which<br />
-have commissioned the use of an application instance.</p>
+                            <p>Identifies instance owners.  Instance owners are typically the clients which have commissioned the use of an application instance.</p>
                         </div><!-- /.box-body -->
                     </div>
                 </section>
@@ -101,7 +100,13 @@ have commissioned the use of an application instance.</p>
                             </div>
                         </div>
                         <div class="box-body">
-                            <table id="standard_table" class="table table-bordered table-striped dataTable" role="grid">
+                            <table
+                                    id="standard_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="10"
+                                    data-length-change="false">
                                 <thead align='left'>
                                 <tr>
                                     <th>Column</th>
@@ -122,24 +127,28 @@ have commissioned the use of an application instance.</p>
                                     <td>2147483647</td>
                                     <td title=''></td>
                                     <td title=''></td>
-                                    <td>uuid_generate_v1()</td>
+                                    <td>uuid_generate_v7()</td>
                                     <td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
                                                 <td title="syst_access_accounts.owning_owner_id references syst_owners.id via syst_access_accounts_owners_fk"><a href='syst_access_accounts.html'>syst_access_accounts</a><span class='relatedKey'>.owning_owner_id</span></td>
-                                                <td class="constraint detail">syst_access_accounts_owners_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
+                                                <td class="constraint detail">syst_access_accounts_owners_fk</td>
+                                                <td class="constraint detail"><span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
                                             </tr>
                                             <tr>
                                                 <td title="syst_instances.owner_id references syst_owners.id via syst_instances_owners_fk"><a href='syst_instances.html'>syst_instances</a><span class='relatedKey'>.owner_id</span></td>
-                                                <td class="constraint detail">syst_instances_owners_fk<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">syst_instances_owners_fk</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                             <tr>
                                                 <td title="syst_owner_network_rules.owner_id references syst_owners.id via syst_owner_network_rules_owner_fk"><a href='syst_owner_network_rules.html'>syst_owner_network_rules</a><span class='relatedKey'>.owner_id</span></td>
-                                                <td class="constraint detail">syst_owner_network_rules_owner_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
+                                                <td class="constraint detail">syst_owner_network_rules_owner_fk</td>
+                                                <td class="constraint detail"><span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
                                             </tr>
                                             <tr>
                                                 <td title="syst_owner_password_rules.owner_id references syst_owners.id via syst_owner_password_rules_owner_fk"><a href='syst_owner_password_rules.html'>syst_owner_password_rules</a><span class='relatedKey'>.owner_id</span></td>
-                                                <td class="constraint detail">syst_owner_password_rules_owner_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
+                                                <td class="constraint detail">syst_owner_password_rules_owner_fk</td>
+                                                <td class="constraint detail"><span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -147,8 +156,9 @@ have commissioned the use of an application instance.</p>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The record&rsquo;s primary key.  The definitive identifier of the record in the<br />
-system.</p></td>
+                                    <td><p>The record&rsquo;s primary key.  The definitive identifier of the record in the system.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td class='indexedColumn' title='Indexed'><i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i><span id="internal_name">internal_name</span></td>
@@ -165,7 +175,9 @@ system.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>A candidate key useful for programmatic references to individual records.</p></td>
+                                    <td><p>A candidate key useful for programmatic references to individual records.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td class='indexedColumn' title='Indexed'><i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i><span id="display_name">display_name</span></td>
@@ -182,8 +194,9 @@ system.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>A friendly name and candidate key for the record, suitable for use in user<br />
-interactions</p></td>
+                                    <td><p>A friendly name and candidate key for the record, suitable for use in user interactions</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="owner_state_id">owner_state_id</span></td>
@@ -200,11 +213,12 @@ interactions</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
                                                 <td title="syst_owners.owner_state_id references syst_enum_items.id via syst_owner_owner_states_fk"><a href='syst_enum_items.html'>syst_enum_items</a><span class='relatedKey'>.id</span></td>
-                                                <td class="constraint detail">syst_owner_owner_states_fk<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">syst_owner_owner_states_fk</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>Establishes the current life-cycle state in which Instance Owner record currently resides.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_timestamp_created">diag_timestamp_created</span></td>
@@ -221,8 +235,9 @@ interactions</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The database server date/time when the transaction which created the record<br />
-started.</p></td>
+                                    <td><p>The database server date/time when the transaction which created the record started.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_role_created">diag_role_created</span></td>
@@ -239,7 +254,9 @@ started.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The database role which created the record.</p></td>
+                                    <td><p>The database role which created the record.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_timestamp_modified">diag_timestamp_modified</span></td>
@@ -256,9 +273,9 @@ started.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The database server date/time when the transaction which modified the record<br />
-started.  This field will be the same as diag_timestamp_created for inserted<br />
-records.</p></td>
+                                    <td><p>The database server date/time when the transaction which modified the record started.  This field will be the same as diag_timestamp_created for inserted records.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_wallclock_modified">diag_wallclock_modified</span></td>
@@ -275,9 +292,9 @@ records.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The database server date/time at the moment the record was actually modified.<br />
-For long running transactions this time may be significantly later than the<br />
-value of diag_timestamp_modified.</p></td>
+                                    <td><p>The database server date/time at the moment the record was actually modified. For long running transactions this time may be significantly later than the value of diag_timestamp_modified.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_role_modified">diag_role_modified</span></td>
@@ -294,7 +311,9 @@ value of diag_timestamp_modified.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The database role which modified the record.</p></td>
+                                    <td><p>The database role which modified the record.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_row_version">diag_row_version</span></td>
@@ -311,11 +330,11 @@ value of diag_timestamp_modified.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The current version of the row.  The value here indicates how many actual<br />
-data changes have been made to the row.  If an update of the row leaves all data<br />
-fields the same, disregarding the updates to the diag_* columns, the row version<br />
-is not updated, nor are any updates made to the other diag_* columns other than<br />
-diag_update_count.</p></td>
+                                    <td><p>The current version of the row.  The value here indicates how many actual data changes have been made to the row.  If an update of the row leaves all data fields the same, disregarding the updates to the diag_* columns, the row version is not updated, nor are any updates made to the other diag_* columns other than diag_update_count.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p>
+<p><strong>Direct Usage</strong></p>
+<p>This column is frequently used by by application logic to resolve the &ldquo;dirty write&rdquo; issues which can arise from concurrent data changes.  As such any administrative override of automatic system maintenance of this value should consider the ramifications on application function.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_update_count">diag_update_count</span></td>
@@ -332,10 +351,9 @@ diag_update_count.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>Records the number of times the record has been updated regardless as to if<br />
-the update actually changed any data.  In this way needless or redundant record<br />
-updates can be found.  This row starts at 0 and therefore may be the same as the<br />
-diag_row_version - 1.</p></td>
+                                    <td><p>Records the number of times the record has been updated regardless as to if the update actually changed any data.  In this way needless or redundant record updates can be found.  This row starts at 0 and therefore may be the same as the diag_row_version - 1.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -351,7 +369,13 @@ diag_row_version - 1.</p></td>
                             </div>
                         </div>
                         <div class="box-body">
-                            <table id="indexes_table" class="table table-bordered table-striped dataTable" role="grid">
+                            <table
+                                    id="indexes_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="10"
+                                    data-length-change="false">
                                 <thead>
                                 <tr>
                                     <th>Constraint Name</th>
@@ -401,37 +425,12 @@ diag_row_version - 1.</p></td>
                                 </ul>
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
-                                        <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="syst_access_accounts.html" target="_top" title="syst_access_accounts" alt="" coords="745,5,999,211">
-<area shape="rect" id="node2" href="syst_enum_items.html" target="_top" title="syst_enum_items" alt="" coords="5,557,260,792">
-<area shape="rect" id="node3" href="syst_owners.html" target="_top" title="syst_owners" alt="" coords="304,327,688,719">
-<area shape="rect" id="node4" href="syst_instances.html" target="_top" title="syst_instances" alt="" coords="745,585,999,908">
-<area shape="rect" id="node5" href="syst_owner_network_rules.html" target="_top" title="syst_owner_network_rules" alt="" coords="738,228,1006,404">
-<area shape="rect" id="node6" href="syst_owner_password_rules.html" target="_top" title="syst_owner_password_rules" alt="" coords="732,421,1012,568">
-</map>
-                                        <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/syst_owners.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
+                                        
+                                        <a name='diagram'><object type="image/svg+xml" id="oneDegreeImg" data="../diagrams/tables/syst_owners.1degree.svg" class="diagram" border="0" align="left"></object></a>
                                     </div>
                                     <div class="chart tab-pane " id="twodegreesDegreeImg-chart" style="position: relative; overflow-x:auto;">
-                                        <map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
-<area shape="rect" id="node1" href="syst_access_account_instance_assocs.html" target="_top" title="syst_access_account_instance_assocs" alt="" coords="1627,543,1981,631">
-<area shape="rect" id="node2" href="syst_access_accounts.html" target="_top" title="syst_access_accounts" alt="" coords="1293,439,1548,645">
-<area shape="rect" id="node3" href="syst_instances.html" target="_top" title="syst_instances" alt="" coords="1293,662,1548,985">
-<area shape="rect" id="node5" href="syst_enum_items.html" target="_top" title="syst_enum_items" alt="" coords="540,642,795,877">
-<area shape="rect" id="node6" href="syst_owners.html" target="_top" title="syst_owners" alt="" coords="839,273,1223,665">
-<area shape="rect" id="node14" href="syst_applications.html" target="_top" title="syst_applications" alt="" coords="929,754,1132,842">
-<area shape="rect" id="node4" href="syst_access_account_perm_role_assigns.html" target="_top" title="syst_access_account_perm_role_assigns" alt="" coords="1619,290,1989,378">
-<area shape="rect" id="node9" href="syst_enum_functional_types.html" target="_top" title="syst_enum_functional_types" alt="" coords="215,783,496,871">
-<area shape="rect" id="node10" href="syst_enums.html" target="_top" title="syst_enums" alt="" coords="5,747,171,835">
-<area shape="rect" id="node7" href="syst_credentials.html" target="_top" title="syst_credentials" alt="" coords="2033,115,2228,203">
-<area shape="rect" id="node8" href="syst_identities.html" target="_top" title="syst_identities" alt="" coords="1713,115,1895,203">
-<area shape="rect" id="node11" href="syst_instance_contexts.html" target="_top" title="syst_instance_contexts" alt="" coords="1681,765,1927,853">
-<area shape="rect" id="node12" href="syst_instance_network_rules.html" target="_top" title="syst_instance_network_rules" alt="" coords="1662,659,1946,747">
-<area shape="rect" id="node13" href="syst_instance_type_applications.html" target="_top" title="syst_instance_type_applications" alt="" coords="1267,1002,1575,1090">
-<area shape="rect" id="node15" href="syst_owner_network_rules.html" target="_top" title="syst_owner_network_rules" alt="" coords="1287,246,1555,422">
-<area shape="rect" id="node16" href="syst_owner_password_rules.html" target="_top" title="syst_owner_password_rules" alt="" coords="1281,82,1561,229">
-<area shape="rect" id="node17" href="syst_password_history.html" target="_top" title="syst_password_history" alt="" coords="1683,395,1925,483">
-</map>
-                                        <a name='diagram'><img id="twodegreesDegreeImg" src="../diagrams/tables/syst_owners.2degrees.png" usemap="#twoDegreesRelationshipsDiagram" class="diagram" border="0" align="left"></a>
+                                        
+                                        <a name='diagram'><object type="image/svg+xml" id="twodegreesDegreeImg" data="../diagrams/tables/syst_owners.2degrees.svg" class="diagram" border="0" align="left"></object></a>
                                     </div>
                                 </div>
                             </div>
@@ -440,7 +439,7 @@ diag_row_version - 1.</p></td>
                 </section>
                 <script>
                     var config = {
-                        pagination: true
+                        pagination: false
                     }
                 </script>
             </div>
@@ -451,7 +450,7 @@ diag_row_version - 1.</p></td>
                         <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
                         <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
                     </div>
-                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.1.0</a></strong>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.2.4</a></strong>
                 </div>
                 <!-- /.container -->
             </footer>

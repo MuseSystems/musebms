@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>mscmp_syst_perms.ms_syst_data</title>
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
+        <!-- Bootstrap 3.3.5 -->
+        <link rel="stylesheet" href="bower/admin-lte/bootstrap/css/bootstrap.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="bower/font-awesome/css/font-awesome.min.css">
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="bower/ionicons/css/ionicons.min.css">
+        <!-- DataTables -->
+        <link rel="stylesheet" href="bower/datatables.net-bs/css/dataTables.bootstrap.min.css">
+        <link rel="stylesheet" href="bower/datatables.net-buttons-bs/css/buttons.bootstrap.min.css">
+        <!-- Code Mirror -->
+        <link rel="stylesheet" href="bower/codemirror/codemirror.css">
+        <!-- Fonts -->
+        <link href='fonts/indieflower/indie-flower.css' rel='stylesheet' type='text/css'>
+        <link href='fonts/source-sans-pro/source-sans-pro.css' rel='stylesheet' type='text/css'>
+
+        <!-- Theme style -->
+        <link rel="stylesheet" href="bower/admin-lte/dist/css/AdminLTE.min.css">
+        <!-- Salvattore -->
+        <link rel="stylesheet" href="bower/salvattore/salvattore.css">
+        <!-- AdminLTE Skins. Choose a skin from the css/skins
+           folder instead of downloading all of them to reduce the load. -->
+        <link rel="stylesheet" href="bower/admin-lte/dist/css/skins/_all-skins.min.css">
+        <!-- SchemaSpy -->
+        <link rel="stylesheet" href="schemaSpy.css">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="bower/html5shiv/html5shiv.min.js"></script>
+        <script src="bower/respond/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+    <body class="hold-transition skin-blue layout-top-nav">
+        <div class="wrapper">
+            <header class="main-header">
+                <nav class="navbar navbar-static-top">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <a href="../index.html" class="navbar-brand"><b>mscmp_syst_perms</b></a><span class="navbar-brand" style="padding-left: 0">.ms_syst_data</span>
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
+                        </div>
+
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+                            <ul class="nav navbar-nav">
+                                <li><a href="index.html">Tables <span class="sr-only">(current)</span></a></li>
+                                <li><a href="columns.html" title="All of the columns in the schema">Columns</a></li>
+                                <li><a href="constraints.html" title="Useful for diagnosing error messages that just give constraint name or number">Constraints</a></li>
+                                <li><a href="relationships.html" title="Diagram of table relationships">Relationships</a></li>
+                                <li><a href="orphans.html" title="View of tables with neither parents nor children">Orphan&nbsp;Tables</a></li>
+                                <li><a href="anomalies.html" title="Things that might not be quite right">Anomalies</a></li>
+                                <li><a href="routines.html" title="Procedures and functions">Routines</a></li>
+                            </ul>
+                        </div>
+                        <!-- /.navbar-collapse -->
+                        <!-- Navbar Right Menu -->
+                    </div>
+                    <!-- /.container-fluid -->
+                </nav>
+            </header>
+            <!-- Main content -->
+            <!-- Full Width Column -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <h1>Columns</h1>
+                </section>
+                <!-- Main content -->
+                <section class="content">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                            <h3 class="box-title">Columns</h3>
+                        </div>
+                        <div class="box-body">
+                            <table
+                                    id="column_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="50"
+                                    data-length-change="false">
+                                <thead align='left'>
+                                    <tr>
+                                        <th>Table</th>
+                                        <th>Type</th>
+                                        <th>Column</th>
+                                        <th>Type</th>
+                                        <th>Size</th>
+                                        <th title='Are nulls allowed?'>Nullable</th>
+                                        <th title='Is column automatically updated?'>Auto</th>
+                                        <th title='Default value'>Default</th>
+                                        <th title='Comments' class="toggle"><span>Comments</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+                <script>
+                    var tableData = [
+    {
+        "tableName": "syst_perm_role_grants",
+        "tableFileName": "syst_perm_role_grants",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_timestamp_created",
+        "type": "timestamptz",
+        "length": 35,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "now()",
+        "comments": "<p>The database server date/time when the transaction which created the record started.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_perm_role_grants",
+        "tableFileName": "syst_perm_role_grants",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_role_created",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>The database role which created the record.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_perms",
+        "tableFileName": "syst_perms",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_role_created",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>The database role which created the record.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_perm_functional_types",
+        "tableFileName": "syst_perm_functional_types",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'><\/i>internal_name",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>A candidate key useful for programmatic references to individual records.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_perms",
+        "tableFileName": "syst_perms",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id",
+        "type": "uuid",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "uuid_generate_v7()",
+        "comments": "<p>The record&rsquo;s primary key.  The definitive identifier of the record in the system.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_perms",
+        "tableFileName": "syst_perms",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "admin_scope_options",
+        "type": "_text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "ARRAY['unused'::text]",
+        "comments": "<p>If applicable, enumerates the available Scopes of data administration offered by the permission.  Administration in this context refers to creating or deleting records.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>If not applicable the only option will be &lsquo;unused&rsquo;.<\/p>"
+    },
+    {
+        "tableName": "syst_perm_functional_types",
+        "tableFileName": "syst_perm_functional_types",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'><\/i>display_name",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>A friendly name and candidate key for the record, suitable for use in user interactions<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_perm_roles",
+        "tableFileName": "syst_perm_roles",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "syst_description",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>A system defined description indicating the purpose and use cases of a given record.  Text defined in this column is system maintained and should not be changed under normal circumstances.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_perm_role_grants",
+        "tableFileName": "syst_perm_role_grants",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "admin_scope",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Assigns the Scope of the Permission&rsquo;s Data Administration Right being granted by the Role.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>The valid Scope options are defined by the Permission record.<\/p>"
+    },
+    {
+        "tableName": "syst_perm_roles",
+        "tableFileName": "syst_perm_roles",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>perm_functional_type_id",
+        "type": "uuid",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Assigns the Permission Role to a specific Permission Functional Type.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>Only Permissions with the same Permission Functional Type may be granted by the Permission Role.<\/p>"
+    },
+    {
+        "tableName": "syst_perm_role_grants",
+        "tableFileName": "syst_perm_role_grants",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_wallclock_modified",
+        "type": "timestamptz",
+        "length": 35,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "clock_timestamp()",
+        "comments": "<p>The database server date/time at the moment the record was actually modified. For long running transactions this time may be significantly later than the value of diag_timestamp_modified.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_perm_functional_types",
+        "tableFileName": "syst_perm_functional_types",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "user_description",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>An optional user defined description of the record and its use cases.  If this value is not <code>NULL<\/code>, the value will override any <code>syst_description<\/code> defined text in application user interfaces and other presentations.<\/p>"
+    },
+    {
+        "tableName": "syst_perms",
+        "tableFileName": "syst_perms",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_row_version",
+        "type": "int8",
+        "length": 19,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "1",
+        "comments": "<p>The current version of the row.  The value here indicates how many actual data changes have been made to the row.  If an update of the row leaves all data fields the same, disregarding the updates to the diag_* columns, the row version is not updated, nor are any updates made to the other diag_* columns other than diag_update_count.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>\n<p><strong>Direct Usage<\/strong><\/p>\n<p>This column is frequently used by by application logic to resolve the &ldquo;dirty write&rdquo; issues which can arise from concurrent data changes.  As such any administrative override of automatic system maintenance of this value should consider the ramifications on application function.<\/p>"
+    },
+    {
+        "tableName": "syst_perm_roles",
+        "tableFileName": "syst_perm_roles",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_timestamp_modified",
+        "type": "timestamptz",
+        "length": 35,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "now()",
+        "comments": "<p>The database server date/time when the transaction which modified the record started.  This field will be the same as diag_timestamp_created for inserted records.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_perms",
+        "tableFileName": "syst_perms",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_update_count",
+        "type": "int8",
+        "length": 19,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "0",
+        "comments": "<p>Records the number of times the record has been updated regardless as to if the update actually changed any data.  In this way needless or redundant record updates can be found.  This row starts at 0 and therefore may be the same as the diag_row_version - 1.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_perm_roles",
+        "tableFileName": "syst_perm_roles",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'><\/i>display_name",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>A friendly name and candidate key for the record, suitable for use in user interactions<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_perm_role_grants",
+        "tableFileName": "syst_perm_role_grants",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_row_version",
+        "type": "int8",
+        "length": 19,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "1",
+        "comments": "<p>The current version of the row.  The value here indicates how many actual data changes have been made to the row.  If an update of the row leaves all data fields the same, disregarding the updates to the diag_* columns, the row version is not updated, nor are any updates made to the other diag_* columns other than diag_update_count.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>\n<p><strong>Direct Usage<\/strong><\/p>\n<p>This column is frequently used by by application logic to resolve the &ldquo;dirty write&rdquo; issues which can arise from concurrent data changes.  As such any administrative override of automatic system maintenance of this value should consider the ramifications on application function.<\/p>"
+    },
+    {
+        "tableName": "syst_perm_role_grants",
+        "tableFileName": "syst_perm_role_grants",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>perm_id",
+        "type": "uuid",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>The permission being granted by the role.<\/p>"
+    },
+    {
+        "tableName": "syst_perm_roles",
+        "tableFileName": "syst_perm_roles",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_update_count",
+        "type": "int8",
+        "length": 19,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "0",
+        "comments": "<p>Records the number of times the record has been updated regardless as to if the update actually changed any data.  In this way needless or redundant record updates can be found.  This row starts at 0 and therefore may be the same as the diag_row_version - 1.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_perms",
+        "tableFileName": "syst_perms",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>perm_functional_type_id",
+        "type": "uuid",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Assigns the Permission to a specific Permission Functional Type.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>Permissions may only be granted in Permission Roles of the same Permission Functional Type.<\/p>"
+    },
+    {
+        "tableName": "syst_perm_functional_types",
+        "tableFileName": "syst_perm_functional_types",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_update_count",
+        "type": "int8",
+        "length": 19,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "0",
+        "comments": "<p>Records the number of times the record has been updated regardless as to if the update actually changed any data.  In this way needless or redundant record updates can be found.  This row starts at 0 and therefore may be the same as the diag_row_version - 1.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_perms",
+        "tableFileName": "syst_perms",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_timestamp_created",
+        "type": "timestamptz",
+        "length": 35,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "now()",
+        "comments": "<p>The database server date/time when the transaction which created the record started.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_perm_functional_types",
+        "tableFileName": "syst_perm_functional_types",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_role_created",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>The database role which created the record.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_perm_role_grants",
+        "tableFileName": "syst_perm_role_grants",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "maint_scope",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Assigns the Scope of the Permission&rsquo;s Maintenance Right being granted by the Role.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>The valid Scope options are defined by the Permission record.<\/p>"
+    },
+    {
+        "tableName": "syst_perm_functional_types",
+        "tableFileName": "syst_perm_functional_types",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "syst_description",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>A system defined description indicating the purpose and use cases of a given record.  Text defined in this column is system maintained and should not be changed under normal circumstances.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_perm_roles",
+        "tableFileName": "syst_perm_roles",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'><\/i>internal_name",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>A candidate key useful for programmatic references to individual records.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_perm_roles",
+        "tableFileName": "syst_perm_roles",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_row_version",
+        "type": "int8",
+        "length": 19,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "1",
+        "comments": "<p>The current version of the row.  The value here indicates how many actual data changes have been made to the row.  If an update of the row leaves all data fields the same, disregarding the updates to the diag_* columns, the row version is not updated, nor are any updates made to the other diag_* columns other than diag_update_count.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>\n<p><strong>Direct Usage<\/strong><\/p>\n<p>This column is frequently used by by application logic to resolve the &ldquo;dirty write&rdquo; issues which can arise from concurrent data changes.  As such any administrative override of automatic system maintenance of this value should consider the ramifications on application function.<\/p>"
+    },
+    {
+        "tableName": "syst_perm_roles",
+        "tableFileName": "syst_perm_roles",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "user_description",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>An optional user defined description of the record and its use cases.  If this value is not <code>NULL<\/code>, the value will override any <code>syst_description<\/code> defined text in application user interfaces and other presentations.<\/p>"
+    },
+    {
+        "tableName": "syst_perms",
+        "tableFileName": "syst_perms",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "maint_scope_options",
+        "type": "_text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "ARRAY['unused'::text]",
+        "comments": "<p>If applicable, enumerates the available Scopes of maintainable data offered by the permission.  Maintenance in this context refers to changing existing data.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>If not applicable the only option will be &lsquo;unused&rsquo;.<\/p>"
+    },
+    {
+        "tableName": "syst_perm_role_grants",
+        "tableFileName": "syst_perm_role_grants",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "ops_scope",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Assigns the Scope of the Permission&rsquo;s Operations Right being granted by the Role.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>The valid Scope options are defined by the Permission record.<\/p>"
+    },
+    {
+        "tableName": "syst_perm_functional_types",
+        "tableFileName": "syst_perm_functional_types",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_row_version",
+        "type": "int8",
+        "length": 19,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "1",
+        "comments": "<p>The current version of the row.  The value here indicates how many actual data changes have been made to the row.  If an update of the row leaves all data fields the same, disregarding the updates to the diag_* columns, the row version is not updated, nor are any updates made to the other diag_* columns other than diag_update_count.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>\n<p><strong>Direct Usage<\/strong><\/p>\n<p>This column is frequently used by by application logic to resolve the &ldquo;dirty write&rdquo; issues which can arise from concurrent data changes.  As such any administrative override of automatic system maintenance of this value should consider the ramifications on application function.<\/p>"
+    },
+    {
+        "tableName": "syst_perms",
+        "tableFileName": "syst_perms",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "syst_description",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>A system defined description indicating the purpose and use cases of a given record.  Text defined in this column is system maintained and should not be changed under normal circumstances.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_perms",
+        "tableFileName": "syst_perms",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "user_description",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>An optional user defined description of the record and its use cases.  If this value is not <code>NULL<\/code>, the value will override any <code>syst_description<\/code> defined text in application user interfaces and other presentations.<\/p>"
+    },
+    {
+        "tableName": "syst_perm_roles",
+        "tableFileName": "syst_perm_roles",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id",
+        "type": "uuid",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "uuid_generate_v7()",
+        "comments": "<p>The record&rsquo;s primary key.  The definitive identifier of the record in the system.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_perms",
+        "tableFileName": "syst_perms",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "ops_scope_options",
+        "type": "_text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "ARRAY['unused'::text]",
+        "comments": "<p>If applicable, enumerates the available Scopes of a given operation or processing capability offered by the permission.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>If not applicable the only option will be &lsquo;unused&rsquo;.<\/p>"
+    },
+    {
+        "tableName": "syst_perm_role_grants",
+        "tableFileName": "syst_perm_role_grants",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "view_scope",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Assigns the Scope of the Permission&rsquo;s View Right being granted by the Role.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>The valid Scope options are defined by the Permission record.<\/p>"
+    },
+    {
+        "tableName": "syst_perm_roles",
+        "tableFileName": "syst_perm_roles",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_role_modified",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>The database role which modified the record.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_perm_functional_types",
+        "tableFileName": "syst_perm_functional_types",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_timestamp_created",
+        "type": "timestamptz",
+        "length": 35,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "now()",
+        "comments": "<p>The database server date/time when the transaction which created the record started.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_perm_roles",
+        "tableFileName": "syst_perm_roles",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_role_created",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>The database role which created the record.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_perm_functional_types",
+        "tableFileName": "syst_perm_functional_types",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_timestamp_modified",
+        "type": "timestamptz",
+        "length": 35,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "now()",
+        "comments": "<p>The database server date/time when the transaction which modified the record started.  This field will be the same as diag_timestamp_created for inserted records.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_perm_functional_types",
+        "tableFileName": "syst_perm_functional_types",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_wallclock_modified",
+        "type": "timestamptz",
+        "length": 35,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "clock_timestamp()",
+        "comments": "<p>The database server date/time at the moment the record was actually modified. For long running transactions this time may be significantly later than the value of diag_timestamp_modified.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_perms",
+        "tableFileName": "syst_perms",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'><\/i>display_name",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>A friendly name and candidate key for the record, suitable for use in user interactions<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_perm_roles",
+        "tableFileName": "syst_perm_roles",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_wallclock_modified",
+        "type": "timestamptz",
+        "length": 35,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "clock_timestamp()",
+        "comments": "<p>The database server date/time at the moment the record was actually modified. For long running transactions this time may be significantly later than the value of diag_timestamp_modified.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_perms",
+        "tableFileName": "syst_perms",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "view_scope_options",
+        "type": "_text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "ARRAY['unused'::text]",
+        "comments": "<p>If applicable, enumerates the available Scopes of viewable data offered by the permission.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>If not applicable the only option will be &lsquo;unused&rsquo;.<\/p>"
+    },
+    {
+        "tableName": "syst_perm_roles",
+        "tableFileName": "syst_perm_roles",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_timestamp_created",
+        "type": "timestamptz",
+        "length": 35,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "now()",
+        "comments": "<p>The database server date/time when the transaction which created the record started.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_perm_role_grants",
+        "tableFileName": "syst_perm_role_grants",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_role_modified",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>The database role which modified the record.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_perms",
+        "tableFileName": "syst_perms",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'><\/i>internal_name",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>A candidate key useful for programmatic references to individual records.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_perms",
+        "tableFileName": "syst_perms",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_wallclock_modified",
+        "type": "timestamptz",
+        "length": 35,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "clock_timestamp()",
+        "comments": "<p>The database server date/time at the moment the record was actually modified. For long running transactions this time may be significantly later than the value of diag_timestamp_modified.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_perm_functional_types",
+        "tableFileName": "syst_perm_functional_types",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_role_modified",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>The database role which modified the record.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_perm_role_grants",
+        "tableFileName": "syst_perm_role_grants",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_update_count",
+        "type": "int8",
+        "length": 19,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "0",
+        "comments": "<p>Records the number of times the record has been updated regardless as to if the update actually changed any data.  In this way needless or redundant record updates can be found.  This row starts at 0 and therefore may be the same as the diag_row_version - 1.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_perms",
+        "tableFileName": "syst_perms",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_timestamp_modified",
+        "type": "timestamptz",
+        "length": 35,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "now()",
+        "comments": "<p>The database server date/time when the transaction which modified the record started.  This field will be the same as diag_timestamp_created for inserted records.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_perms",
+        "tableFileName": "syst_perms",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_role_modified",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>The database role which modified the record.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_perms",
+        "tableFileName": "syst_perms",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "syst_defined",
+        "type": "bool",
+        "length": 1,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "false",
+        "comments": "<p>Values of <code>TRUE<\/code> in this column indicate that the record is considered a &ldquo;System Defined&rdquo; record, a record which is created and primarily maintained by the system using automated processes.  A value of <code>FALSE<\/code> indicates that the record is considered a &ldquo;User Defined&rdquo; record which is maintained by user actions in the application.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_perm_role_grants",
+        "tableFileName": "syst_perm_role_grants",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_timestamp_modified",
+        "type": "timestamptz",
+        "length": 35,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "now()",
+        "comments": "<p>The database server date/time when the transaction which modified the record started.  This field will be the same as diag_timestamp_created for inserted records.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_perm_functional_types",
+        "tableFileName": "syst_perm_functional_types",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id",
+        "type": "uuid",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "uuid_generate_v7()",
+        "comments": "<p>The record&rsquo;s primary key.  The definitive identifier of the record in the system.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_perm_role_grants",
+        "tableFileName": "syst_perm_role_grants",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id",
+        "type": "uuid",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "uuid_generate_v7()",
+        "comments": "<p>The record&rsquo;s primary key.  The definitive identifier of the record in the system.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_perm_role_grants",
+        "tableFileName": "syst_perm_role_grants",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>perm_role_id",
+        "type": "uuid",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Identifies the role to which the permission grant is being made.<\/p>"
+    },
+    {
+        "tableName": "syst_perm_roles",
+        "tableFileName": "syst_perm_roles",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "syst_defined",
+        "type": "bool",
+        "length": 1,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "false",
+        "comments": "<p>Values of <code>TRUE<\/code> in this column indicate that the record is considered a &ldquo;System Defined&rdquo; record, a record which is created and primarily maintained by the system using automated processes.  A value of <code>FALSE<\/code> indicates that the record is considered a &ldquo;User Defined&rdquo; record which is maintained by user actions in the application.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    }
+];
+                    var config = {
+                        pagination: false
+                    };
+                </script>
+            </div>
+            <!-- /.content-wrapper -->
+            <footer class="main-footer">
+                <div>
+                    <div class="pull-right hidden-xs">
+                        <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
+                        <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
+                    </div>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.2.4</a></strong>
+                </div>
+                <!-- /.container -->
+            </footer>
+        </div>
+        <!-- ./wrapper -->
+
+        <!-- jQuery 2.2.3 -->
+        <script src="bower/admin-lte/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script src="bower/admin-lte/plugins/jQueryUI/jquery-ui.min.js"></script>
+        <!-- Bootstrap 3.3.5 -->
+        <script src="bower/admin-lte/bootstrap/js/bootstrap.min.js"></script>
+        <!-- DataTables -->
+        <script src="bower/datatables.net/jquery.dataTables.min.js"></script>
+        <script src="bower/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+        <script src="bower/datatables.net-buttons/dataTables.buttons.min.js"></script>
+        <script src="bower/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+        <script src="bower/datatables.net-buttons/buttons.html5.min.js"></script>
+        <script src="bower/datatables.net-buttons/buttons.print.min.js"></script>
+        <script src="bower/datatables.net-buttons/buttons.colVis.min.js"></script>
+        <!-- SheetJS -->
+        <script src="bower/js-xlsx/xlsx.full.min.js"></script>
+        <!-- pdfmake -->
+        <script src="bower/pdfmake/pdfmake.min.js"></script>
+        <script src="bower/pdfmake/vfs_fonts.js"></script>
+        <!-- SlimScroll -->
+        <script src="bower/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+        <!-- FastClick -->
+        <script src="bower/admin-lte/plugins/fastclick/fastclick.js"></script>
+        <!-- Salvattore -->
+        <script src="bower/salvattore/salvattore.min.js"></script>
+        <!-- AnchorJS -->
+        <script src="bower/anchor-js/anchor.min.js"></script>
+        <!-- CodeMirror -->
+        <script src="bower/codemirror/codemirror.js"></script>
+        <script src="bower/codemirror/sql.js"></script>
+        <!-- AdminLTE App -->
+        <script src="bower/admin-lte/dist/js/app.min.js"></script>
+        <script src="column.js"></script>
+        <script src="schemaSpy.js"></script>
+    </body>
+</html>

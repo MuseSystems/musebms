@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>mssub_mcp Database</title>
+        <title>mssub_mcp.ms_syst_data</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../index.html" class="navbar-brand"><b>mssub_mcp</b> Database</a>
+                            <a href="../index.html" class="navbar-brand"><b>mssub_mcp</b></a><span class="navbar-brand" style="padding-left: 0">.ms_syst_data</span>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -83,7 +83,13 @@
                             <h3 class="box-title">Routines</h3>
                         </div>
                         <div class="box-body">
-                            <table id="routine_table" class="table table-bordered table-striped dataTable" role="grid">
+                            <table
+                                    id="routine_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="50"
+                                    data-length-change="false">
                                 <thead align='left'>
                                     <tr>
                                         <th>Name</th>
@@ -96,6 +102,424 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <tr>
+                                        <td><a href="routines/trig_a_i_syst_instances_create__bb0b350e.html">trig_a_i_syst_instances_create_instance_contexts()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_a_i_syst_instance_type_app_fef500c3.html">trig_a_i_syst_instance_type_apps_create_inst_type_contexts()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>When a new association between an Application and an Instance Type is made by inserting a record into this table, Instance Type Contexts are automatically created by this function based on the Application Context records defined at the time of INSERT into this table.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>AFTER</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code></p>
+</li>
+</ul>
+<p><strong>General Usage</strong></p>
+<p>The default default_db_pool_size value is 0.</p>
+<p>After the fact changes to Contexts must be managed manually.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_a_iu_syst_instance_network_bdfbe883.html">trig_a_iu_syst_instance_network_rule_ordering()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Ensures that the ordering of network rules is maintained and that ordering values are not duplicated.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>AFTER</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code>, <code>UPDATE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_b_u_syst_hierarchies_valid_9d1d0441.html">trig_b_u_syst_hierarchies_validate_structured()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>A trigger function which ensures that changing a hierarchy between being &ldquo;structured&rdquo; and &ldquo;unstructured&rdquo; is only possible when the Hierarchy record is in an &ldquo;inactive&rdquo; state.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>BEFORE</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>UPDATE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_b_u_syst_hierarchy_items_hi_7f19296.html">trig_b_u_syst_hierarchy_items_hierarchy_inactive_check()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Ensures that, if a functionally significant column is changed during an update operation, that the parent Hierarchy record is set to an &ldquo;inactive&rdquo; state.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>BEFORE</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>UPDATE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_a_iu_syst_global_network_r_a20fa711.html">trig_a_iu_syst_global_network_rule_ordering()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Ensures that the ordering of network rules is maintained and that ordering values are not duplicated.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>AFTER</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code>, <code>UPDATE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_b_iu_syst_hierarchy_items__a945d912.html">trig_b_iu_syst_hierarchy_items_depth_maint()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Manages the <code>hierarchy_depth</code> column value.  Depending on the passed data, this trigger will perform different actions.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>BEFORE</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code>, <code>UPDATE</code></p>
+</li>
+</ul>
+<p><strong>General Usage</strong></p>
+<p>When a new Hierarchy Item record is inserted without specifying a <code>hierarchy_depth</code> value, this trigger will assign it the next highest <code>hierarchy_depth</code> value based on the existing Hierarchy Item records assigned to the Hierarchy, or 1 if there are no existing Hierarchy Item records assigned to the Hierarchy.</p>
+<p>When a new Hierarchy Item record is inserted specifying an explicit <code>hierarchy_depth</code> value, we assume that insertion is done with knowing intent and we will not change the inserted value in this trigger.  <code>hierarchy_depth</code> values must be unique for any members of a single Hierarchy.  In the case where the inserted record&rsquo;s explicit <code>hierarchy_depth</code> value does not collide with a pre-existing value, we simply take that value as-is.  When there is a collision, we take an &ldquo;insert before&rdquo; approach: the pre-existing record with which the new record collides has its <code>hierarchy_depth</code> value increased by 1; if this updated value in turn collides with another pre-existing record in the Hierarchy, we update this next record by incrementing its value by 1.  This continues until all collisions in the Hierarchy are resolved to be unique.</p>
+<p>Updated records follow the same patterns as inserted records, except that we do not expect that the update will attempt to NULL the <code>hierarchy_depth</code> value.  If an update would leave a gap, we do not try to renumber the <code>hierarchy_depth</code> values meaning that the <code>hierarchy_depth</code> sequence within any Hierarchy may indeed include gaps: we only attempt to keep overall ordering consistent and we do not attempt to achieve a gapless numbering scheme.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_b_d_syst_hierarchy_items_hi_fce5885.html">trig_b_d_syst_hierarchy_items_hierarchy_inactive_check()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Verifies that the parent Hierarchy is in an &ldquo;inactive&rdquo; prior to allowing deletion of the Hierarchy Item record.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>BEFORE</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>DELETE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_b_i_syst_enum_functional_t_73801c26.html">trig_b_i_syst_enum_functional_type_validate_new_allowed()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Checks to see if this is the first functional type being added for the enumeration and, if so, that no syst_enum_items records already exist.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>BEFORE</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code></p>
+</li>
+</ul>
+<p><strong>General Usage</strong></p>
+<p>Adding a first functional type for an enumeration which already has defined enumeration items implies that the enumeration items must be assigned a functional type in the same operation to keep data consistency.  In practice, this would be difficult since there would almost certainly have to be multiple functional types available in order to avoid making bogus assignments; it would be much more difficult to manage such a process as compared to simply disallowing the scenario.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_a_iu_syst_perm_role_grants_17f3a785.html">trig_a_iu_syst_perm_role_grants_related_data_checks()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Checks that Permission Role Grant records are consistent with their defining parent records.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>AFTER</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code>, <code>UPDATE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_b_i_syst_hierarchy_items_h_4e835704.html">trig_b_i_syst_hierarchy_items_hierarchy_prereqs()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Validates that the Hierarchy conditions of being in an &ldquo;inactive&rdquo; state and that the Hierarchy is a &ldquo;structured&rdquo; Hierarchy are true.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>BEFORE</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_b_i_syst_enum_items_mainta_968e0347.html">trig_b_i_syst_enum_items_maintain_sort_order()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>For INSERTed records with a null sort_order value, this trigger will assign a default value assuming the new record should be inserted at the end of the sort.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>BEFORE</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code></p>
+</li>
+</ul>
+<p><strong>General Usage</strong></p>
+<p>If the inserted record was already assigned a sort_order value, the inserted value is respected.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_b_i_syst_hierarchies_valid_ecbee927.html">trig_b_i_syst_hierarchies_validate_inactive()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Prevents Hierarchy records from being inserted in an already &ldquo;active&rdquo; state.</p>
+<p><strong>General Usage</strong></p>
+<p>Hierarchy records should be inserted &ldquo;inactive&rdquo; and then later made &ldquo;active&rdquo; once the record and its associate Hierarchy Item records are complete and valid.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_a_d_syst_credentials_delet_33aa6834.html">trig_a_d_syst_credentials_delete_identity()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Deletes the syst_identities record associated with a newly deleted syst_credentials record.</p>
+<p>For those credential types that expect a relationship to syst_identities via the syst_credentials.credential_for_identity_id column, the specific identifier and credential data are closely related and updates to one or the other makes no sense.  The correct process for updating such a pair is to delete both of the existing identity and credential records and simply generate a new pair. Deleting identity records achieves this goal via the constraint on the credential_for_identity_id definition (ON DELETE CASCADE), but deleting a credential has no automatic deletion feature thus this trigger.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>AFTER</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>DELETE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_b_d_syst_applications_dele_a1d325fa.html">trig_b_d_syst_applications_delete_contexts()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Deletes the Application Contexts prior to deleting the Application record itself.  This is needed because the trigger preventing datastore context owner contexts to be deleted must be disabled prior to the delete.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>BEFORE</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>DELETE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_b_iud_syst_application_con_e5c4f676.html">trig_b_iud_syst_application_contexts_validate_owner_context()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Validates database_owner_context values based on the pre-existing state of the database.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>BEFORE</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_b_iu_syst_enum_items_valid_57e90baf.html">trig_b_iu_syst_enum_items_validate_functional_types()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Ensures that if the parent syst_enums record has syst_enum_functional_types records defined, a syst_enum_items record will reference one of those functional types.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>BEFORE</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code>, <code>UPDATE</code></p>
+</li>
+</ul>
+<p><strong>General Usage</strong></p>
+<p>Note that this trigger function is intended to be use by constraint triggers.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_a_iu_syst_enum_items_maint_7b8e072b.html">trig_a_iu_syst_enum_items_maintain_sort_order()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Automatically maintains the sort order of syst_enum_item records in cases where sort ordering collides with existing syst_enum_items records for the same enum_id.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>AFTER</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code>, <code>UPDATE</code></p>
+</li>
+</ul>
+<p><strong>General Usage</strong></p>
+<p>On insert or update when the new sort_order value matches that of an existing record for the enumeration, the system will sort the match record after the new/updated record. This will cascade for all syst_enum_items records matching the enum_id until the last one is updated.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_a_iu_syst_owner_network_ru_39f54bd5.html">trig_a_iu_syst_owner_network_rule_ordering()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Ensures that the ordering of network rules is maintained and that ordering values are not duplicated.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>AFTER</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code>, <code>UPDATE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_b_iu_syst_perm_role_grants_d54620e7.html">trig_b_iu_syst_perm_role_grants_default_scopes()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>This trigger will assign default Permmission Scope values based on the definition of the permission defined in Permissions&rsquo; <code>ms_syst_data.syst_perms</code> record.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>BEFORE</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code>, <code>UPDATE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_b_u_syst_hierarchies_valida_c35ab0e.html">trig_b_u_syst_hierarchies_validate_state_change()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Checks that a Hierarchy record&rsquo;s state may be changed while ensuring that such a change doesn&rsquo;t allow for data inconsistencies with either of the Hierarchy or the data of Hierarchy implementing Components.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>BEFORE</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>UPDATE</code></p>
+</li>
+</ul>
+<p><strong>General Usage</strong></p>
+<p>Setting the Hierarchy to an &ldquo;active&rdquo; state requires that the Hierarchy and its associated Hierarchy Items are complete and fully self-consistent.  For the &ldquo;inactive&rdquo; check, the Hierarchy may not be in use which is defined as being referenced in the data of Hierarchy implementing Components.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_b_d_syst_hierarchies_valid_36df6859.html">trig_b_d_syst_hierarchies_validate_prereqs()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Validates that a Hierarchy is no longer referenced by the data of Hierarchy implementing Components prior to allowing that Hierarchy being deleted.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>BEFORE</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>DELETE</code></p>
+</li>
+</ul>
+<p><strong>General Usage</strong></p>
+<p>Note that references from associated Hierarchy Item records do not count as &ldquo;references&rdquo; and that deleting their parent Hierarchy record will cascade to the Hierarchy Item records.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_b_i_syst_identities_valida_d7d99a71.html">trig_b_i_syst_identities_validate_uniqueness()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Provides a check that each ms_syst_data.syst_identities.account_identifier value is unique for each owner&rsquo;s access accounts or unique amongst unowned access accounts.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>BEFORE</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code></p>
+</li>
+</ul></td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -103,7 +527,7 @@
                 </section>
                 <script>
                     var config = {
-                        pagination: true
+                        pagination: false
                     }
                 </script>
             </div>
@@ -114,7 +538,7 @@
                         <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
                         <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
                     </div>
-                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.1.0</a></strong>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.2.4</a></strong>
                 </div>
                 <!-- /.container -->
             </footer>

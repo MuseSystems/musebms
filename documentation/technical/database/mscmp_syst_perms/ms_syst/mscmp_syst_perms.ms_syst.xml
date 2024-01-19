@@ -1,0 +1,799 @@
+<?xml version="1.0" encoding="UTF-8"?><database name="mscmp_syst_perms" schema="ms_syst" type="PostgreSQL - 16.1 (Ubuntu 16.1-1.pgdg22.04+1)">
+   <tables>
+      <table name="syst_perm_functional_types" numRows="0" remarks="Defines application specific areas of applicability to which Permissions and&#10;Permission Roles are assigned.&#10;&#10;When an application defines varying areas of business controls, Permission&#10;Functional Types can be used to group Permissions into their specific areas and&#10;limit usage and role assignment by area.  Consider an application which supports&#10;multiple warehouses containing inventory.  The application may define globally&#10;applicable Permissions such as the ability to log into the application, but may&#10;allow employees to be granted varying degrees of Permission to each individual&#10;warehouse's inventory management features.  In this case there would be &quot;Global&quot;&#10;Permission Functional Type containing the log in Permission and a &quot;Warehouse&quot;&#10;Permission Functional Type for those Permissions and Permission Roles which can&#10;vary warehouse by warehouse.&#10;&#10;**General Usage**&#10;&#10;Both Permissions and Permission Roles must share a Permission Functional Type&#10;since the Permission Functional Type establishes the context of applicability&#10;for both.&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - See column comments for applicable restrictions." schema="ms_syst" type="VIEW" viewSql=" SELECT id,&#10;    internal_name,&#10;    display_name,&#10;    syst_description,&#10;    user_description,&#10;    diag_timestamp_created,&#10;    diag_role_created,&#10;    diag_timestamp_modified,&#10;    diag_wallclock_modified,&#10;    diag_role_modified,&#10;    diag_row_version,&#10;    diag_update_count&#10;   FROM ms_syst_data.syst_perm_functional_types;">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="true" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: true&#10;  * Default Value:           Automatically Generated&#10;&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="true" remarks="A candidate key useful for programmatic references to individual records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: true&#10;  * Default Value:           ( No Default Value )&#10;&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="display_name" nullable="true" remarks="A friendly name and candidate key for the record, suitable for use in user&#10;interactions&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: true&#10;  * Default Value:           ( No Default Value )&#10;&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - Only user maintainable records." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="syst_description" nullable="true" remarks="A system defined description indicating the purpose and use cases of a given&#10;record.  Text defined in this column is system maintained and should not be&#10;changed under normal circumstances.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="user_description" nullable="true" remarks="An optional user defined description of the record and its use cases.  If this&#10;value is not `NULL`, the value will override any `syst_description` defined text&#10;in application user interfaces and other presentations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - Always updatable, even when not otherwise user maintainable." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="5" name="diag_timestamp_created" nullable="true" remarks="The database server date/time when the transaction which created the record&#10;started.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="diag_role_created" nullable="true" remarks="The database role which created the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="7" name="diag_timestamp_modified" nullable="true" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="8" name="diag_wallclock_modified" nullable="true" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="diag_role_modified" nullable="true" remarks="The database role which modified the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="diag_row_version" nullable="true" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="diag_update_count" nullable="true" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="19" type="int8" typeCode="-5"/>
+      </table>
+      <table name="syst_perm_role_grants" numRows="0" remarks="Establishes the individual permissions which are granted by the given permission&#10;role.&#10;&#10;**General Usage**&#10;&#10;Note that the absence of an explicit permission grant to a role is an implicit&#10;denial of that permission.&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;  * `DELETE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" schema="ms_syst" type="VIEW" viewSql=" SELECT id,&#10;    perm_role_id,&#10;    perm_id,&#10;    view_scope,&#10;    maint_scope,&#10;    admin_scope,&#10;    ops_scope,&#10;    diag_timestamp_created,&#10;    diag_role_created,&#10;    diag_timestamp_modified,&#10;    diag_wallclock_modified,&#10;    diag_role_modified,&#10;    diag_row_version,&#10;    diag_update_count&#10;   FROM ms_syst_data.syst_perm_role_grants;">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="true" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: true&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="perm_role_id" nullable="true" remarks="Identifies the role to which the permission grant is being made.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**Supplemental Notes**&#10;&#10;This column is part of a composite key.  The combined values of `perm_role_id`&#10;and `perm_id` must be unique; `NULL` values, where allowed, are not considered&#10;distinct for this uniqueness check." size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="perm_id" nullable="true" remarks="The permission being granted by the role.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**Supplemental Notes**&#10;&#10;This column is part of a composite key.  The combined values of `perm_role_id`&#10;and `perm_id` must be unique; `NULL` values, where allowed, are not considered&#10;distinct for this uniqueness check." size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="view_scope" nullable="true" remarks="Assigns the Scope of the Permission's View Right being granted by the Role.&#10;&#10;**General Usage**&#10;&#10;The valid Scope options are defined by the Permission record.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="maint_scope" nullable="true" remarks="Assigns the Scope of the Permission's Maintenance Right being granted by the&#10;Role.&#10;&#10;**General Usage**&#10;&#10;The valid Scope options are defined by the Permission record.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="admin_scope" nullable="true" remarks="Assigns the Scope of the Permission's Data Administration Right being granted by&#10;the Role.&#10;&#10;**General Usage**&#10;&#10;The valid Scope options are defined by the Permission record.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="ops_scope" nullable="true" remarks="Assigns the Scope of the Permission's Operations Right being granted by the&#10;Role.&#10;&#10;**General Usage**&#10;&#10;The valid Scope options are defined by the Permission record.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="7" name="diag_timestamp_created" nullable="true" remarks="The database server date/time when the transaction which created the record&#10;started.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="diag_role_created" nullable="true" remarks="The database role which created the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="9" name="diag_timestamp_modified" nullable="true" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="10" name="diag_wallclock_modified" nullable="true" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="diag_role_modified" nullable="true" remarks="The database role which modified the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="diag_row_version" nullable="true" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="13" name="diag_update_count" nullable="true" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="19" type="int8" typeCode="-5"/>
+      </table>
+      <table name="syst_perm_roles" numRows="0" remarks="Defines collections of permissions which are then assignable to users.&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;  * `DELETE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - See column comments for applicable restrictions." schema="ms_syst" type="VIEW" viewSql=" SELECT id,&#10;    internal_name,&#10;    display_name,&#10;    perm_functional_type_id,&#10;    syst_defined,&#10;    syst_description,&#10;    user_description,&#10;    diag_timestamp_created,&#10;    diag_role_created,&#10;    diag_timestamp_modified,&#10;    diag_wallclock_modified,&#10;    diag_role_modified,&#10;    diag_row_version,&#10;    diag_update_count&#10;   FROM ms_syst_data.syst_perm_roles;">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="true" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: true&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="true" remarks="A candidate key useful for programmatic references to individual records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: true&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="display_name" nullable="true" remarks="A friendly name and candidate key for the record, suitable for use in user&#10;interactions&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: true&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - Only user maintainable records." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="perm_functional_type_id" nullable="true" remarks="Assigns the Permission Role to a specific Permission Functional Type.&#10;&#10;**General Usage**&#10;&#10;Only Permissions with the same Permission Functional Type may be granted by the&#10;Permission Role.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="syst_defined" nullable="true" remarks="Values of `TRUE` in this column indicate that the record is considered a&#10;&quot;System Defined&quot; record, a record which is created and primarily maintained by&#10;the system using automated processes.  A value of `FALSE` indicates that the&#10;record is considered a &quot;User Defined&quot; record which is maintained by user actions&#10;in the application.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           `FALSE`&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="syst_description" nullable="true" remarks="A system defined description indicating the purpose and use cases of a given&#10;record.  Text defined in this column is system maintained and should not be&#10;changed under normal circumstances.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="user_description" nullable="true" remarks="An optional user defined description of the record and its use cases.  If this&#10;value is not `NULL`, the value will override any `syst_description` defined text&#10;in application user interfaces and other presentations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - Always updatable, even when not otherwise user maintainable." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="7" name="diag_timestamp_created" nullable="true" remarks="The database server date/time when the transaction which created the record&#10;started.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="diag_role_created" nullable="true" remarks="The database role which created the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="9" name="diag_timestamp_modified" nullable="true" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="10" name="diag_wallclock_modified" nullable="true" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="diag_role_modified" nullable="true" remarks="The database role which modified the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="diag_row_version" nullable="true" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="13" name="diag_update_count" nullable="true" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="19" type="int8" typeCode="-5"/>
+      </table>
+      <table name="syst_perms" numRows="0" remarks="Defines the available system and application permissions which can be assigned&#10;to users.&#10;&#10;The Permission is divided into the following concepts:&#10;&#10;  1. The Permission record itself defines a subject for which application&#10;     security and control concerns exist.&#10;&#10;  2. Each Permission is made up of standard Rights.  These Rights are:&#10;&#10;      * View - the ability to view data.&#10;&#10;      * Maintenance - the ability to change or process existing data.&#10;&#10;      * Administration - the ability to create or destroy data.&#10;&#10;      * Operations - the ability to perform certain operations or processes.&#10;&#10;  3. The Right for each Permission is assigned a Scope of applicability which&#10;     can limit or extend the grant of a Right.  Each Right of the Permission may&#10;     define which Scopes it supports out of the following possibilities:&#10;&#10;     * Unused - The Right does not exist in any meaningful way for the&#10;       Permission.&#10;&#10;     * Deny - The Right is not granted by the Permission grant; this is&#10;       typically used in cases where other Rights may be granted, for example&#10;       permitting a user to see a value (View Right), but not to Maintain or&#10;       perform data Admin tasks (Maint &amp; Admin Rights).&#10;&#10;     * Same User - The Right grant is limited in Scope to those records which&#10;       are in some way designated as belonging to the specific user exercising&#10;       the Right.  Ownership designation will be defined by those functions&#10;       where a Permission is checked.&#10;&#10;     * Same Group - The Right grant is limited in Scope to those records which&#10;       are in some way designated as belonging to a specific group or groups and&#10;       to which the user belongs in some way.  Ownership designation will be&#10;       defined by those functions where a Permission is checked.&#10;&#10;     * All - The Right grant is not limited in Scope and all records which are&#10;       subject to the Permission are available to the user.&#10;&#10;Permissions are assigned to Permission Roles which are in turn granted to&#10;individual users. If a Permission is not assigned to a Permission Role, then&#10;the assumption is that the Permission Role's users are denied all rights granted&#10;by the unassigned Permission.&#10;&#10;Some Permissions may be dependent on the grants of other more fundamental&#10;Permissions. For example, a user may be granted only View Rights to the sales&#10;order form, but also granted Maintenance Rights to sales pricing data. In such&#10;a case the sales order Rights would dictate that the user does not have the&#10;ability to maintain sales pricing in the sales order context.&#10;&#10;Specific details of applicability and the determination of Scope boundaries will&#10;vary by each specific scenario. Consult individual Permission documentation for&#10;specific understanding of how determinations of access are made.&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;  * `DELETE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - See column comments for applicable restrictions." schema="ms_syst" type="VIEW" viewSql=" SELECT id,&#10;    internal_name,&#10;    display_name,&#10;    perm_functional_type_id,&#10;    syst_defined,&#10;    syst_description,&#10;    user_description,&#10;    view_scope_options,&#10;    maint_scope_options,&#10;    admin_scope_options,&#10;    ops_scope_options,&#10;    diag_timestamp_created,&#10;    diag_role_created,&#10;    diag_timestamp_modified,&#10;    diag_wallclock_modified,&#10;    diag_role_modified,&#10;    diag_row_version,&#10;    diag_update_count&#10;   FROM ms_syst_data.syst_perms;">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="true" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: true&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="true" remarks="A candidate key useful for programmatic references to individual records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: true&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="display_name" nullable="true" remarks="A friendly name and candidate key for the record, suitable for use in user&#10;interactions&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: true&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - Only user maintainable records." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="perm_functional_type_id" nullable="true" remarks="Assigns the Permission to a specific Permission Functional Type.&#10;&#10;**General Usage**&#10;&#10;Permissions may only be granted in Permission Roles of the same Permission&#10;Functional Type.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="syst_defined" nullable="true" remarks="Values of `TRUE` in this column indicate that the record is considered a&#10;&quot;System Defined&quot; record, a record which is created and primarily maintained by&#10;the system using automated processes.  A value of `FALSE` indicates that the&#10;record is considered a &quot;User Defined&quot; record which is maintained by user actions&#10;in the application.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           `FALSE`&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="syst_description" nullable="true" remarks="A system defined description indicating the purpose and use cases of a given&#10;record.  Text defined in this column is system maintained and should not be&#10;changed under normal circumstances.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="user_description" nullable="true" remarks="An optional user defined description of the record and its use cases.  If this&#10;value is not `NULL`, the value will override any `syst_description` defined text&#10;in application user interfaces and other presentations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - Always updatable, even when not otherwise user maintainable." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="view_scope_options" nullable="true" remarks="If applicable, enumerates the available Scopes of viewable data offered by the&#10;permission.&#10;&#10;**General Usage**&#10;&#10;If not applicable the only option will be 'unused'.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="_text" typeCode="2003"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="maint_scope_options" nullable="true" remarks="If applicable, enumerates the available Scopes of maintainable data offered by&#10;the permission.  Maintenance in this context refers to changing existing data.&#10;&#10;**General Usage**&#10;&#10;If not applicable the only option will be 'unused'.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="_text" typeCode="2003"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="admin_scope_options" nullable="true" remarks="If applicable, enumerates the available Scopes of data administration offered&#10;by the permission.  Administration in this context refers to creating or&#10;deleting records.&#10;&#10;**General Usage**&#10;&#10;If not applicable the only option will be 'unused'.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="_text" typeCode="2003"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="ops_scope_options" nullable="true" remarks="If applicable, enumerates the available Scopes of a given operation or&#10;processing capability offered by the permission.&#10;&#10;**General Usage**&#10;&#10;If not applicable the only option will be 'unused'.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="_text" typeCode="2003"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="11" name="diag_timestamp_created" nullable="true" remarks="The database server date/time when the transaction which created the record&#10;started.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="diag_role_created" nullable="true" remarks="The database role which created the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="13" name="diag_timestamp_modified" nullable="true" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="14" name="diag_wallclock_modified" nullable="true" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="15" name="diag_role_modified" nullable="true" remarks="The database role which modified the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="16" name="diag_row_version" nullable="true" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="17" name="diag_update_count" nullable="true" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="19" type="int8" typeCode="-5"/>
+      </table>
+   </tables>
+   <routines>
+      <routine dataAccess="MODIFIES" deterministic="true" name="get_greatest_rights_scope(p_scopes text[] DEFAULT NULL::text[])" returnType="text" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[Given an array of Permission Right Scopes, returns the most expansive scope
+found in the array.
+
+**Parameters**
+
+  * **`p_scopes`** ::     **Required?** True; **Default**: ( No Default )
+
+    The array of permission scopes to test.
+
+**General Usage**
+
+If the array is NULL the returned value is 'deny'.]]></comment>
+         <definition language="sql"><![CDATA[-- File:        get_greatest_rights_scope.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_perms/ms_syst/functions/get_greatest_rights_scope.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+    SELECT ms_syst_priv.get_greatest_rights_scope(p_scopes);]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_scopes" type="text[]"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_d_syst_perm_functional_types()" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[Processes incoming API View requests according to globally applicable business
+rules and data validation requirements.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `INSTEAD OF`
+
+  * **Supported Operations**: `DELETE`]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_i_d_syst_perm_functional_types.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_perms/ms_syst/api_views/syst_perm_functional_types/trig_i_d_syst_perm_functional_types.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    RAISE EXCEPTION
+        USING
+            MESSAGE = 'You may not delete Permission Functional Type records ' ||
+                      'using this API view.',
+            DETAIL = ms_syst_priv.get_exception_details(
+                         p_proc_schema    => 'ms_syst'
+                        ,p_proc_name      => 'trig_i_d_syst_perm_functional_types'
+                        ,p_exception_name => 'invalid_api_view_call'
+                        ,p_errcode        => 'PM008'
+                        ,p_param_data     => to_jsonb(new)
+                        ,p_context_data   =>
+                            jsonb_build_object(
+                                 'tg_op',         tg_op
+                                ,'tg_when',       tg_when
+                                ,'tg_schema',     tg_table_schema
+                                ,'tg_table_name', tg_table_name)),
+            ERRCODE = 'PM008',
+            SCHEMA = tg_table_schema,
+            TABLE = tg_table_name;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_d_syst_perm_role_grants()" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[Processes incoming API View requests according to globally applicable business
+rules and data validation requirements.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `INSTEAD OF`
+
+  * **Supported Operations**: `DELETE`]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_i_d_syst_perm_role_grants.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_perms/ms_syst/api_views/syst_perm_role_grants/trig_i_d_syst_perm_role_grants.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    IF
+        ( SELECT syst_defined
+          FROM ms_syst_data.syst_perm_roles
+          WHERE id = old.perm_role_id )
+    THEN
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'You cannot delete a system defined permission role ' ||
+                          'grant using the API Views.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst'
+                            ,p_proc_name      => 'trig_i_d_syst_perm_role_grants'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(old)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+    END IF;
+
+    DELETE FROM ms_syst_data.syst_perm_role_grants WHERE id = old.id RETURNING * INTO old;
+
+    RETURN old;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_d_syst_perm_roles()" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[Processes incoming API View requests according to globally applicable business
+rules and data validation requirements.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `INSTEAD OF`
+
+  * **Supported Operations**: `DELETE`]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_i_d_syst_perm_roles.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_perms/ms_syst/api_views/syst_perm_roles/trig_i_d_syst_perm_roles.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    IF old.syst_defined THEN
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'You cannot delete a system defined permission role ' ||
+                          'using the API Views.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst'
+                            ,p_proc_name      => 'trig_i_d_syst_perm_roles'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(old)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+    END IF;
+
+    DELETE FROM ms_syst_data.syst_perm_roles WHERE id = old.id RETURNING * INTO old;
+
+    RETURN old;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_d_syst_perms()" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[Processes incoming API View requests according to globally applicable business
+rules and data validation requirements.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `INSTEAD OF`
+
+  * **Supported Operations**: `DELETE`]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_i_d_syst_perms.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_perms/ms_syst/api_views/syst_perms/trig_i_d_syst_perms.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    IF old.syst_defined THEN
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'You cannot delete a system defined permission using the API Views.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst'
+                            ,p_proc_name      => 'trig_i_d_syst_perms'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(old)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+    END IF;
+
+    DELETE FROM ms_syst_data.syst_perms WHERE id = old.id RETURNING * INTO old;
+
+    RETURN old;
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_i_syst_perm_functional_types()" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[Processes incoming API View requests according to globally applicable business
+rules and data validation requirements.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `INSTEAD OF`
+
+  * **Supported Operations**: `INSERT`]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_i_i_syst_perm_functional_types.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_perms/ms_syst/api_views/syst_perm_functional_types/trig_i_i_syst_perm_functional_types.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    RAISE EXCEPTION
+        USING
+            MESSAGE = 'You may not create new Permission Functional Type ' ||
+                      'records using this API view.',
+            DETAIL = ms_syst_priv.get_exception_details(
+                         p_proc_schema    => 'ms_syst'
+                        ,p_proc_name      => 'trig_i_i_syst_perm_functional_types'
+                        ,p_exception_name => 'invalid_api_view_call'
+                        ,p_errcode        => 'PM008'
+                        ,p_param_data     => to_jsonb(new)
+                        ,p_context_data   =>
+                            jsonb_build_object(
+                                 'tg_op',         tg_op
+                                ,'tg_when',       tg_when
+                                ,'tg_schema',     tg_table_schema
+                                ,'tg_table_name', tg_table_name)),
+            ERRCODE = 'PM008',
+            SCHEMA = tg_table_schema,
+            TABLE = tg_table_name;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_i_syst_perm_role_grants()" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[Processes incoming API View requests according to globally applicable business
+rules and data validation requirements.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `INSTEAD OF`
+
+  * **Supported Operations**: `INSERT`]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_i_i_syst_perm_role_grants.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_perms/ms_syst/api_views/syst_perm_role_grants/trig_i_i_syst_perm_role_grants.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    IF
+        ( SELECT syst_defined
+          FROM ms_syst_data.syst_perm_roles
+          WHERE id = new.perm_role_id )
+    THEN
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'You may not create new permission role grant ' ||
+                          'records for system defined permission roles ' ||
+                          'using this API view.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst'
+                            ,p_proc_name      => 'trig_i_i_syst_perm_role_grants'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(new)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+    END IF;
+
+    INSERT INTO ms_syst_data.syst_perm_role_grants
+        ( perm_role_id
+        , perm_id
+        , view_scope
+        , maint_scope
+        , admin_scope
+        , ops_scope )
+    VALUES
+        ( new.perm_role_id
+        , new.perm_id
+        , new.view_scope
+        , new.maint_scope
+        , new.admin_scope
+        , new.ops_scope )
+    RETURNING * INTO new;
+
+    RETURN new;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_i_syst_perm_roles()" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[Processes incoming API View requests according to globally applicable business
+rules and data validation requirements.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `INSTEAD OF`
+
+  * **Supported Operations**: `INSERT`]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_i_i_syst_perm_roles.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_perms/ms_syst/api_views/syst_perm_roles/trig_i_i_syst_perm_roles.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    INSERT INTO ms_syst_data.syst_perm_roles
+        ( internal_name
+        , display_name
+        , perm_functional_type_id
+        , syst_defined
+        , syst_description
+        , user_description )
+    VALUES
+        ( new.internal_name
+        , new.display_name
+        , new.perm_functional_type_id
+        , FALSE
+        , '(System Description Not Available)'
+        , new.user_description )
+    RETURNING * INTO new;
+
+    RETURN new;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_i_syst_perms()" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[Processes incoming API View requests according to globally applicable business
+rules and data validation requirements.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `INSTEAD OF`
+
+  * **Supported Operations**: `INSERT`]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_i_i_syst_perms.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_perms/ms_syst/api_views/syst_perms/trig_i_i_syst_perms.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    INSERT INTO ms_syst_data.syst_perms
+        ( internal_name
+        , display_name
+        , perm_functional_type_id
+        , syst_defined
+        , syst_description
+        , user_description
+        , view_scope_options
+        , maint_scope_options
+        , admin_scope_options
+        , ops_scope_options )
+    VALUES
+        ( new.internal_name
+        , new.display_name
+        , new.perm_functional_type_id
+        , FALSE
+        , '(System Description Not Available)'
+        , new.user_description
+        , coalesce(new.view_scope_options, array['unused'])
+        , coalesce(new.maint_scope_options, array['unused'])
+        , coalesce(new.admin_scope_options, array['unused'])
+        , coalesce(new.ops_scope_options, array['unused']) )
+    RETURNING * INTO new;
+
+    RETURN new;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_u_syst_perm_functional_types()" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[Processes incoming API View requests according to globally applicable business
+rules and data validation requirements.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `INSTEAD OF`
+
+  * **Supported Operations**: `UPDATE`]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_i_u_syst_perm_functional_types.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_perms/ms_syst/api_views/syst_perm_functional_types/trig_i_u_syst_perm_functional_types.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    IF new.internal_name != old.internal_name THEN
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'The requested data update included changes to fields disallowed ' ||
+                          'by the business rules of the API View.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst'
+                            ,p_proc_name      => 'trig_i_u_syst_perm_functional_types'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(new)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+    END IF;
+
+    UPDATE ms_syst_data.syst_perm_functional_types
+    SET
+        display_name     = new.display_name
+      , user_description = new.user_description
+    WHERE id = new.id
+    RETURNING * INTO new;
+
+    RETURN new;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_u_syst_perm_role_grants()" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[Processes incoming API View requests according to globally applicable business
+rules and data validation requirements.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `INSTEAD OF`
+
+  * **Supported Operations**: `UPDATE`]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_i_u_syst_perm_role_grants.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_perms/ms_syst/api_views/syst_perm_role_grants/trig_i_u_syst_perm_role_grants.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    IF
+        ( SELECT syst_defined
+          FROM ms_syst_data.syst_perm_roles
+          WHERE id = new.perm_role_id ) OR
+        new.perm_role_id != old.perm_role_id OR
+        new.perm_id != old.perm_id
+    THEN
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'The requested data update included changes to fields disallowed ' ||
+                          'by the business rules of the API View.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst'
+                            ,p_proc_name      => 'trig_i_u_syst_perm_role_grants'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(new)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+    END IF;
+
+    UPDATE ms_syst_data.syst_perm_role_grants
+    SET
+        view_scope  = new.view_scope
+      , maint_scope = new.maint_scope
+      , admin_scope = new.admin_scope
+      , ops_scope   = new.ops_scope
+    WHERE id = new.id
+    RETURNING * INTO new;
+
+    RETURN new;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_u_syst_perm_roles()" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[Processes incoming API View requests according to globally applicable business
+rules and data validation requirements.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `INSTEAD OF`
+
+  * **Supported Operations**: `UPDATE`]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_i_u_syst_perm_roles.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_perms/ms_syst/api_views/syst_perm_roles/trig_i_u_syst_perm_roles.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    IF
+        (old.syst_defined AND
+        new.internal_name != old.internal_name) OR
+        new.syst_defined != old.syst_defined OR
+        new.perm_functional_type_id != old.perm_functional_type_id
+    THEN
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'The requested data update included changes to fields disallowed ' ||
+                          'by the business rules of the API View.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst'
+                            ,p_proc_name      => 'trig_i_u_syst_perm_roles'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(new)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+    END IF;
+
+    UPDATE ms_syst_data.syst_perm_roles
+    SET
+        internal_name    = new.internal_name
+      , display_name     = new.display_name
+      , user_description = new.user_description
+    WHERE id = new.id
+    RETURNING * INTO new;
+
+    RETURN new;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_u_syst_perms()" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[Processes incoming API View requests according to globally applicable business
+rules and data validation requirements.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `INSTEAD OF`
+
+  * **Supported Operations**: `UPDATE`]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_i_u_syst_perms.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_perms/ms_syst/api_views/syst_perms/trig_i_u_syst_perms.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    IF
+        (old.syst_defined AND
+            (new.internal_name != old.internal_name OR
+             new.view_scope_options != old.view_scope_options OR
+             new.maint_scope_options != old.maint_scope_options OR
+             new.admin_scope_options != old.admin_scope_options OR
+             new.ops_scope_options != old.ops_scope_options )) OR
+        new.syst_defined != old.syst_defined OR
+        new.perm_functional_type_id != old.perm_functional_type_id
+    THEN
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'The requested data update included changes to fields disallowed ' ||
+                          'by the business rules of the API View.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst'
+                            ,p_proc_name      => 'trig_i_u_syst_perms'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(new)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+    END IF;
+
+    UPDATE ms_syst_data.syst_perms
+    SET
+        internal_name       = new.internal_name
+      , display_name        = new.display_name
+      , user_description    = new.user_description
+      , view_scope_options  = new.view_scope_options
+      , maint_scope_options = new.maint_scope_options
+      , admin_scope_options = new.admin_scope_options
+      , ops_scope_options   = new.ops_scope_options
+    WHERE id = new.id
+    RETURNING * INTO new;
+
+    RETURN new;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+   </routines>
+</database>

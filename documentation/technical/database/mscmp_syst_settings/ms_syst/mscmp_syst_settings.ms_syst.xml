@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?><database name="mscmp_syst_settings" schema="ms_syst" type="PostgreSQL - 16.1 (Ubuntu 16.1-1.pgdg22.04+1)">
+   <tables>
+      <table name="syst_settings" numRows="0" remarks="Configuration data which establishes application behaviors, defaults, and&#10;provides a reference center to interested application functionality.&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;  * `DELETE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - See column comments for applicable restrictions." schema="ms_syst" type="VIEW" viewSql=" SELECT id,&#10;    internal_name,&#10;    display_name,&#10;    syst_defined,&#10;    syst_description,&#10;    user_description,&#10;    setting_flag,&#10;    setting_integer,&#10;    setting_integer_range,&#10;    setting_decimal,&#10;    setting_decimal_range,&#10;    setting_interval,&#10;    setting_date,&#10;    setting_date_range,&#10;    setting_time,&#10;    setting_timestamp,&#10;    setting_timestamp_range,&#10;    setting_json,&#10;    setting_text,&#10;    setting_uuid,&#10;    setting_blob,&#10;    diag_timestamp_created,&#10;    diag_role_created,&#10;    diag_timestamp_modified,&#10;    diag_wallclock_modified,&#10;    diag_role_modified,&#10;    diag_row_version,&#10;    diag_update_count&#10;   FROM ms_syst_data.syst_settings;">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="true" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: true&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="true" remarks="A candidate key useful for programmatic references to individual records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: true&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="display_name" nullable="true" remarks="A friendly name and candidate key for the record, suitable for use in user&#10;interactions&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               true&#10;  * Unique Values Required?: true&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - Only user maintainable records." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="syst_defined" nullable="true" remarks="Values of `TRUE` in this column indicate that the record is considered a&#10;&quot;System Defined&quot; record, a record which is created and primarily maintained by&#10;the system using automated processes.  A value of `FALSE` indicates that the&#10;record is considered a &quot;User Defined&quot; record which is maintained by user actions&#10;in the application.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           `FALSE`&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="syst_description" nullable="true" remarks="A system defined description indicating the purpose and use cases of a given&#10;record.  Text defined in this column is system maintained and should not be&#10;changed under normal circumstances.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="user_description" nullable="true" remarks="An optional user defined description of the record and its use cases.  If this&#10;value is not `NULL`, the value will override any `syst_description` defined text&#10;in application user interfaces and other presentations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - Always updatable, even when not otherwise user maintainable." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="setting_flag" nullable="true" remarks="A boolean configuration point.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - Always updatable, even when not otherwise user maintainable." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="setting_integer" nullable="true" remarks="An integer configuration point&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - Always updatable, even when not otherwise user maintainable." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="setting_integer_range" nullable="true" remarks="An integer range configuration point.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - Always updatable, even when not otherwise user maintainable." size="2147483647" type="int8range" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="setting_decimal" nullable="true" remarks="An decimal configuration point (not floating point).&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - Always updatable, even when not otherwise user maintainable." size="0" type="numeric" typeCode="2"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="setting_decimal_range" nullable="true" remarks="A decimal range configuration point.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - Always updatable, even when not otherwise user maintainable." size="2147483647" type="numrange" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="11" name="setting_interval" nullable="true" remarks="An interval configuration point.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - Always updatable, even when not otherwise user maintainable." size="49" type="interval" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="setting_date" nullable="true" remarks="A date configuation point.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - Always updatable, even when not otherwise user maintainable." size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="13" name="setting_date_range" nullable="true" remarks="A date range configuration point.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - Always updatable, even when not otherwise user maintainable." size="2147483647" type="daterange" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="14" name="setting_time" nullable="true" remarks="A time configuration point (without time zone).&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - Always updatable, even when not otherwise user maintainable." size="15" type="time" typeCode="92"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="15" name="setting_timestamp" nullable="true" remarks="A full datetime configuration point including time zone.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - Always updatable, even when not otherwise user maintainable." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="16" name="setting_timestamp_range" nullable="true" remarks="A range of timestamps with time zone configuration points.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - Always updatable, even when not otherwise user maintainable." size="2147483647" type="tstzrange" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="17" name="setting_json" nullable="true" remarks="A JSON configuration point.  Note that duplicate keys at the same level are not&#10;allowed.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - Always updatable, even when not otherwise user maintainable." size="2147483647" type="jsonb" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="18" name="setting_text" nullable="true" remarks="A text configuration point.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - Always updatable, even when not otherwise user maintainable." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="19" name="setting_uuid" nullable="true" remarks="A UUID configuration point.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - Always updatable, even when not otherwise user maintainable." size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="20" name="setting_blob" nullable="true" remarks="A binary configuration point.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           ( No Default Value )&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `INSERT`&#10;  * `SELECT`&#10;  * `UPDATE`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;  * `UPDATE` - Always updatable, even when not otherwise user maintainable." size="2147483647" type="bytea" typeCode="-2"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="21" name="diag_timestamp_created" nullable="true" remarks="The database server date/time when the transaction which created the record&#10;started.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="22" name="diag_role_created" nullable="true" remarks="The database role which created the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="23" name="diag_timestamp_modified" nullable="true" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="24" name="diag_wallclock_modified" nullable="true" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="25" name="diag_role_modified" nullable="true" remarks="The database role which modified the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="26" name="diag_row_version" nullable="true" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="27" name="diag_update_count" nullable="true" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Data Requirements**&#10;&#10;  * Required?:               false&#10;  * Unique Values Required?: false&#10;  * Default Value:           Automatically Generated&#10;&#10;**User Defined Record Supported Operations**&#10;&#10;  * `SELECT`&#10;&#10;**System Defined Record Supported Operations**&#10;&#10;  * `SELECT`" size="19" type="int8" typeCode="-5"/>
+      </table>
+   </tables>
+   <routines>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_d_syst_settings()" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[Processes incoming API View requests according to globally applicable business
+rules and data validation requirements.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `INSTEAD OF`
+
+  * **Supported Operations**: `DELETE`]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_i_d_syst_settings.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_settings/ms_syst/api_views/syst_settings/trig_i_d_syst_settings.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com  :: https://muse.systems
+
+BEGIN
+
+    IF old.syst_defined THEN
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'You cannot delete a system defined setting using the API Views.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst'
+                            ,p_proc_name      => 'trig_i_d_syst_settings'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(old)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+    END IF;
+
+    DELETE FROM ms_syst_data.syst_settings WHERE id = old.id RETURNING * INTO old;
+
+    RETURN old;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_i_syst_settings()" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[Processes incoming API View requests according to globally applicable business 
+rules and data validation requirements.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `INSTEAD OF`
+
+  * **Supported Operations**: `INSERT`]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_i_i_syst_settings.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_settings/ms_syst/api_views/syst_settings/trig_i_i_syst_settings.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com  :: https://muse.systems
+
+BEGIN
+
+    INSERT INTO ms_syst_data.syst_settings
+        ( internal_name
+        , display_name
+        , syst_defined
+        , syst_description
+        , user_description
+        , setting_flag
+        , setting_integer
+        , setting_integer_range
+        , setting_decimal
+        , setting_decimal_range
+        , setting_interval
+        , setting_date
+        , setting_date_range
+        , setting_time
+        , setting_timestamp
+        , setting_timestamp_range
+        , setting_json
+        , setting_text
+        , setting_uuid
+        , setting_blob )
+    VALUES
+        ( new.internal_name
+        , new.display_name
+        , FALSE
+        , '(System Description Not Available)'
+        , new.user_description
+        , new.setting_flag
+        , new.setting_integer
+        , new.setting_integer_range
+        , new.setting_decimal
+        , new.setting_decimal_range
+        , new.setting_interval
+        , new.setting_date
+        , new.setting_date_range
+        , new.setting_time
+        , new.setting_timestamp
+        , new.setting_timestamp_range
+        , new.setting_json
+        , new.setting_text
+        , new.setting_uuid
+        , new.setting_blob )
+    RETURNING * INTO new;
+
+    RETURN new;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_i_u_syst_settings()" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[Processes incoming API View requests according to globally applicable business
+rules and data validation requirements.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `INSTEAD OF`
+
+  * **Supported Operations**: `UPDATE`]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_i_u_syst_settings.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_settings/ms_syst/api_views/syst_settings/trig_i_u_syst_settings.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com  :: https://muse.systems
+
+BEGIN
+
+    IF old.syst_defined AND new.internal_name != old.internal_name THEN
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'The requested data update included changes to fields disallowed ' ||
+                          'by the business rules of the API View.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst'
+                            ,p_proc_name      => 'trig_i_u_syst_settings'
+                            ,p_exception_name => 'invalid_api_view_call'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     => to_jsonb(new)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+    END IF;
+
+    UPDATE ms_syst_data.syst_settings SET
+          internal_name           = new.internal_name
+        , display_name            = new.display_name
+        , user_description        = new.user_description
+        , setting_flag            = new.setting_flag
+        , setting_integer         = new.setting_integer
+        , setting_integer_range   = new.setting_integer_range
+        , setting_decimal         = new.setting_decimal
+        , setting_decimal_range   = new.setting_decimal_range
+        , setting_interval        = new.setting_interval
+        , setting_date            = new.setting_date
+        , setting_date_range      = new.setting_date_range
+        , setting_time            = new.setting_time
+        , setting_timestamp       = new.setting_timestamp
+        , setting_timestamp_range = new.setting_timestamp_range
+        , setting_json            = new.setting_json
+        , setting_text            = new.setting_text
+        , setting_uuid            = new.setting_uuid
+        , setting_blob            = new.setting_blob
+    WHERE id = new.id
+    RETURNING * INTO new;
+
+    RETURN new;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+   </routines>
+</database>

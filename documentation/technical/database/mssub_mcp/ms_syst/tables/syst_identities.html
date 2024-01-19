@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>syst_identities - mssub_mcp Database</title>
+        <title>syst_identities - mssub_mcp.ms_syst</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../../index.html" class="navbar-brand"><b>mssub_mcp</b> Database</a>
+                            <a href="../../index.html" class="navbar-brand"><b>mssub_mcp</b></a><span class="navbar-brand" style="padding-left: 0">.ms_syst</span>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -73,7 +73,7 @@
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
-                    <h1>syst_identities</h1><p><span id="recordNumber">0</span> rows</p><br />
+                    <h1>syst_identities</h1><br />
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <i class="fa fa-file-text-o"></i>
@@ -84,16 +84,14 @@
                             </div>
                         </div><!-- /.box-header -->
                         <div class="box-body clearfix">
-                            <p>The identities with which access accounts are identified to the system.  The<br />
-most common example of an identity would be a user name such as an email<br />
-address.</p>
-<p>This API View allows the application to read and maintain the data according to<br />
-well defined application business rules.  Using this API view for updates to<br />
-data is the preferred method of data maintenance in the course of normal usage.</p>
-<p>Only user maintainable values may be maintained via this API.  System created or<br />
-maintained data is not maintainable via this view.  Attempts at invalid data<br />
-maintenance via this API may result in the invalid changes being ignored or may<br />
-raise an exception.</p>
+                            <p>The identities with which access accounts are identified to the system.  The most common example of an identity would be a user name such as an email address.</p>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code></li>
+<li><code>DELETE</code></li>
+</ul>
                         </div><!-- /.box-body -->
                     </div>
                 </section>
@@ -109,7 +107,13 @@ raise an exception.</p>
                             </div>
                         </div>
                         <div class="box-body">
-                            <table id="standard_table" class="table table-bordered table-striped dataTable" role="grid">
+                            <table
+                                    id="standard_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="10"
+                                    data-length-change="false">
                                 <thead align='left'>
                                 <tr>
                                     <th>Column</th>
@@ -139,9 +143,19 @@ raise an exception.</p>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The record&rsquo;s primary key.  The definitive identifier of the record in the<br />
-system.</p>
-<p>This value is read only from this API view.</p></td>
+                                    <td><p>The record&rsquo;s primary key.  The definitive identifier of the record in the system.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               false</li>
+<li>Unique Values Required?: true</li>
+<li>Default Value:           Automatically Generated</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul></td>
                                 </tr>
                                 <tr>
                                     <td><span id="access_account_id">access_account_id</span></td>
@@ -159,8 +173,17 @@ system.</p>
                                         </table>
                                     </td>
                                     <td><p>The ID of the access account to be identified the identifier record.</p>
-<p>This value may only be set on INSERT via this API view.  UPDATEs to this value<br />
-are not allowed after record creation.</p></td>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               true</li>
+<li>Unique Values Required?: false</li>
+<li>Default Value:           ( No Default Value )</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+</ul></td>
                                 </tr>
                                 <tr>
                                     <td><span id="identity_type_id">identity_type_id</span></td>
@@ -177,11 +200,20 @@ are not allowed after record creation.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The kind of identifier being described by the record.  Note that this value<br />
-influences the kind of credentials that can be used to complete the<br />
-authentication process.</p>
-<p>This value may only be set on INSERT via this API view.  UPDATEs to this value<br />
-are not allowed after record creation.</p></td>
+                                    <td><p>The kind of identifier being described by the record.</p>
+<p><strong>General Usage</strong></p>
+<p>Note that this value influences the kind of credentials that can be used to complete the authentication process.</p>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               true</li>
+<li>Unique Values Required?: false</li>
+<li>Default Value:           ( No Default Value )</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+</ul></td>
                                 </tr>
                                 <tr>
                                     <td><span id="account_identifier">account_identifier</span></td>
@@ -198,9 +230,20 @@ are not allowed after record creation.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The actual identifier which identifies a user or system to the system.</p>
-<p>This value may only be set on INSERT via this API view.  UPDATEs to this value<br />
-are not allowed after record creation.</p></td>
+                                    <td><p>The actual Identifier which identifies a user or system to the system.</p>
+<p><strong>General Usage</strong></p>
+<p>Identifiers of the same Identifier Type are unique to the Owner/Access Account combination. All Unowned Access Accounts are considered as being in the same Owner group for this purpose.</p>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               true</li>
+<li>Unique Values Required?: false</li>
+<li>Default Value:           ( No Default Value )</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+</ul></td>
                                 </tr>
                                 <tr>
                                     <td><span id="validated">validated</span></td>
@@ -217,12 +260,21 @@ are not allowed after record creation.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The timestamp at which the identity was validated for use.  Depending on the<br />
-requirements of the identity functional type, the timestamp here may be set as<br />
-the time of the identity creation or it may set when the access account holder<br />
-actually makes a formal verification.  A null value here indicates that the<br />
-identity is not validated by the access account holder and is not able to be<br />
-used for authentication to the system.</p></td>
+                                    <td><p>The timestamp at which the identity was validated for use.</p>
+<p><strong>General Usage</strong></p>
+<p>Depending on the requirements of the identity functional type, the timestamp here may be set as the time of the identity creation or it may set when the access account holder actually makes a formal verification.  A null value here indicates that the identity is not validated by the access account holder and is not able to be used for authentication to the system.</p>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               false</li>
+<li>Unique Values Required?: false</li>
+<li>Default Value:           ( No Default Value )</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code></li>
+</ul></td>
                                 </tr>
                                 <tr>
                                     <td><span id="validates_identity_id">validates_identity_id</span></td>
@@ -239,13 +291,20 @@ used for authentication to the system.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>Each identity requiring validation will require its own validation.  Since<br />
-validation requests are also single use identities, we need to know which<br />
-permanent identifier is being validate.  This column points to the identifier<br />
-that is being validated.  When the current identifier is not being used for<br />
-validation, this field is null.</p>
-<p>This value may only be set on INSERT via this API view.  UPDATEs to this value<br />
-are not allowed after record creation.</p></td>
+                                    <td><p>Each identity requiring validation will require its own validation.</p>
+<p><strong>General Usage</strong></p>
+<p>Since validation requests are also single use identities, we need to know which permanent identifier is being validate.  This column points to the identifier that is being validated.  When the current identifier is not being used for validation, this field is null.</p>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               false</li>
+<li>Unique Values Required?: true</li>
+<li>Default Value:           ( No Default Value )</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+</ul></td>
                                 </tr>
                                 <tr>
                                     <td><span id="validation_requested">validation_requested</span></td>
@@ -262,8 +321,21 @@ are not allowed after record creation.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The timestamp on which the validation request was issued to the access account<br />
-holder.  This value will be null if the identity did not require validation.</p></td>
+                                    <td><p>The timestamp on which the validation request was issued to the access account holder.</p>
+<p><strong>General Usage</strong></p>
+<p>This value will be null if the identity did not require validation.</p>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               false</li>
+<li>Unique Values Required?: false</li>
+<li>Default Value:           ( No Default Value )</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code></li>
+</ul></td>
                                 </tr>
                                 <tr>
                                     <td><span id="identity_expires">identity_expires</span></td>
@@ -280,9 +352,21 @@ holder.  This value will be null if the identity did not require validation.</p>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The timestamp at which the identity record expires.  For validation and<br />
-recovery identities this would be the time of validation/recovery request<br />
-expiration.  For perpetual identity types, this value will be NULL.</p></td>
+                                    <td><p>The timestamp at which the identity record expires.</p>
+<p><strong>General Usage</strong></p>
+<p>For validation and recovery identities this would be the time of validation/recovery request expiration.  For perpetual identity types, this value will be NULL.</p>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               false</li>
+<li>Unique Values Required?: false</li>
+<li>Default Value:           ( No Default Value )</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code></li>
+</ul></td>
                                 </tr>
                                 <tr>
                                     <td><span id="external_name">external_name</span></td>
@@ -299,10 +383,19 @@ expiration.  For perpetual identity types, this value will be NULL.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>An optional external identifier for use in user displays and similar scenarios.<br />
-This value is not unique and not suitable for anything more than informal record<br />
-identification by the user.  Some identity types may record a default value<br />
-automatically in this column.</p></td>
+                                    <td><p>A non-unique/non-key value used to display to users and external parties where uniqueness is less of a concern than specific end user presentation.</p>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               true</li>
+<li>Unique Values Required?: false</li>
+<li>Default Value:           ( No Default Value )</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code></li>
+</ul></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_timestamp_created">diag_timestamp_created</span></td>
@@ -319,9 +412,19 @@ automatically in this column.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The database server date/time when the transaction which created the record<br />
-started.</p>
-<p>This value is read only from this API view.</p></td>
+                                    <td><p>The database server date/time when the transaction which created the record started.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               false</li>
+<li>Unique Values Required?: false</li>
+<li>Default Value:           Automatically Generated</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_role_created">diag_role_created</span></td>
@@ -339,7 +442,18 @@ started.</p>
                                         </table>
                                     </td>
                                     <td><p>The database role which created the record.</p>
-<p>This value is read only from this API view.</p></td>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               false</li>
+<li>Unique Values Required?: false</li>
+<li>Default Value:           Automatically Generated</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_timestamp_modified">diag_timestamp_modified</span></td>
@@ -356,10 +470,19 @@ started.</p>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The database server date/time when the transaction which modified the record<br />
-started.  This field will be the same as diag_timestamp_created for inserted<br />
-records.</p>
-<p>This value is read only from this API view.</p></td>
+                                    <td><p>The database server date/time when the transaction which modified the record started.  This field will be the same as diag_timestamp_created for inserted records.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               false</li>
+<li>Unique Values Required?: false</li>
+<li>Default Value:           Automatically Generated</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_wallclock_modified">diag_wallclock_modified</span></td>
@@ -376,10 +499,19 @@ records.</p>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The database server date/time at the moment the record was actually modified.<br />
-For long running transactions this time may be significantly later than the<br />
-value of diag_timestamp_modified.</p>
-<p>This value is read only from this API view.</p></td>
+                                    <td><p>The database server date/time at the moment the record was actually modified. For long running transactions this time may be significantly later than the value of diag_timestamp_modified.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               false</li>
+<li>Unique Values Required?: false</li>
+<li>Default Value:           Automatically Generated</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_role_modified">diag_role_modified</span></td>
@@ -397,7 +529,18 @@ value of diag_timestamp_modified.</p>
                                         </table>
                                     </td>
                                     <td><p>The database role which modified the record.</p>
-<p>This value is read only from this API view.</p></td>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               false</li>
+<li>Unique Values Required?: false</li>
+<li>Default Value:           Automatically Generated</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_row_version">diag_row_version</span></td>
@@ -414,12 +557,19 @@ value of diag_timestamp_modified.</p>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The current version of the row.  The value here indicates how many actual<br />
-data changes have been made to the row.  If an update of the row leaves all data<br />
-fields the same, disregarding the updates to the diag_* columns, the row version<br />
-is not updated, nor are any updates made to the other diag_* columns other than<br />
-diag_update_count.</p>
-<p>This value is read only from this API view.</p></td>
+                                    <td><p>The current version of the row.  The value here indicates how many actual data changes have been made to the row.  If an update of the row leaves all data fields the same, disregarding the updates to the diag_* columns, the row version is not updated, nor are any updates made to the other diag_* columns other than diag_update_count.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               false</li>
+<li>Unique Values Required?: false</li>
+<li>Default Value:           Automatically Generated</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_update_count">diag_update_count</span></td>
@@ -436,15 +586,47 @@ diag_update_count.</p>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>Records the number of times the record has been updated regardless as to if<br />
-the update actually changed any data.  In this way needless or redundant record<br />
-updates can be found.  This row starts at 0 and therefore may be the same as the<br />
-diag_row_version - 1.</p>
-<p>This value is read only from this API view.</p></td>
+                                    <td><p>Records the number of times the record has been updated regardless as to if the update actually changed any data.  In this way needless or redundant record updates can be found.  This row starts at 0 and therefore may be the same as the diag_row_version - 1.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               false</li>
+<li>Unique Values Required?: false</li>
+<li>Default Value:           Automatically Generated</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul></td>
                                 </tr>
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <i class="fa fa-code-fork"></i>
+                            <h3 id="Relationships" class="box-title">Relationships</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <div class="nav-tabs-custom"><!-- Tabs within a box -->
+                                <h5>Close relationships within degrees of separation</h5>
+                                <ul class="nav nav-tabs pull-left ui-sortable-handle">
+                                    <li class="active"><a href="#oneDegreeImg-chart" data-toggle="tab" aria-expanded="true">One</a></li>
+                                </ul>
+                                <div class="tab-content no-padding">
+                                    <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
+                                        
+                                        <a name='diagram'><object type="image/svg+xml" id="oneDegreeImg" data="../diagrams/tables/syst_identities.1degree.svg" class="diagram" border="0" align="left"></object></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- /.box-body -->
                     </div>
                     <div class="box box-primary">
                         <div class="box-header with-border">
@@ -456,7 +638,7 @@ diag_row_version - 1.</p>
                             </div>
                         </div>
                         <div class="box-body">
-                            <textarea id="sql-script-codemirror" name="sql-script-codemirror" rows="" style="display: none;">SELECT syst_identities.id,&#10;    syst_identities.access_account_id,&#10;    syst_identities.identity_type_id,&#10;    syst_identities.account_identifier,&#10;    syst_identities.validated,&#10;    syst_identities.validates_identity_id,&#10;    syst_identities.validation_requested,&#10;    syst_identities.identity_expires,&#10;    syst_identities.external_name,&#10;    syst_identities.diag_timestamp_created,&#10;    syst_identities.diag_role_created,&#10;    syst_identities.diag_timestamp_modified,&#10;    syst_identities.diag_wallclock_modified,&#10;    syst_identities.diag_role_modified,&#10;    syst_identities.diag_row_version,&#10;    syst_identities.diag_update_count&#10;   FROM ms_syst_data.syst_identities;</textarea>
+                            <textarea id="sql-script-codemirror" name="sql-script-codemirror" rows="" style="display: none;">SELECT id,&#10;    access_account_id,&#10;    identity_type_id,&#10;    account_identifier,&#10;    validated,&#10;    validates_identity_id,&#10;    validation_requested,&#10;    identity_expires,&#10;    external_name,&#10;    diag_timestamp_created,&#10;    diag_role_created,&#10;    diag_timestamp_modified,&#10;    diag_wallclock_modified,&#10;    diag_role_modified,&#10;    diag_row_version,&#10;    diag_update_count&#10;   FROM ms_syst_data.syst_identities;</textarea>
                             <div style="padding-top: 5px;"><hr></div>
                             <div class="box box-solid">
                                 <div class="box-header with-border">
@@ -466,7 +648,6 @@ diag_row_version - 1.</p>
                                 <!-- /.box-header -->
                                 <div class="box-body">
                                     <ul class="list-unstyled">
-                                        <li><a href="syst_identities.html">syst_identities</a></li>
                                     </ul>
                                 </div><!-- /.box-body -->
                             </div>
@@ -475,7 +656,7 @@ diag_row_version - 1.</p>
                 </section>
                 <script>
                     var config = {
-                        pagination: true
+                        pagination: false
                     }
                 </script>
             </div>
@@ -486,7 +667,7 @@ diag_row_version - 1.</p>
                         <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
                         <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
                     </div>
-                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.1.0</a></strong>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.2.4</a></strong>
                 </div>
                 <!-- /.container -->
             </footer>

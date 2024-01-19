@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>mssub_mcp Database</title>
+        <title>mssub_mcp.ms_syst</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../index.html" class="navbar-brand"><b>mssub_mcp</b> Database</a>
+                            <a href="../index.html" class="navbar-brand"><b>mssub_mcp</b></a><span class="navbar-brand" style="padding-left: 0">.ms_syst</span>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -77,8 +77,8 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="callout callout-info">
-                                <h4>SchemaSpy Analysis of mssub_mcp</h4>
-                                <p>Generated on Wed Aug 30 13:14 PDT 2023</p>
+                                <h4>SchemaSpy Analysis of mssub_mcp.ms_syst</h4>
+                                <p>Generated on Fri Jan 19 05:41 PST 2024</p>
                             </div>
                         </div>
                     </div>
@@ -106,7 +106,7 @@
                                 <span class="info-box-icon bg-teal"><i class="fa fa-table"></i></span>
                                 <div class="info-box-content">
                                     <span class="info-box-text">VIEWS</span>
-                                    <span class="info-box-number">30</span>
+                                    <span class="info-box-number">35</span>
                                 </div>
                                 <!-- /.info-box-content -->
                             </div>
@@ -118,7 +118,7 @@
                                 <span class="info-box-icon bg-green"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></span>
                                 <div class="info-box-content">
                                     <span class="info-box-text">COLUMNS</span>
-                                    <span class="info-box-number">418</span>
+                                    <span class="info-box-number">510</span>
                                 </div>
                                 <!-- /.info-box-content -->
                             </div>
@@ -154,7 +154,7 @@
                                 <span class="info-box-icon bg-navy"><i class="fa fa-file-code-o" aria-hidden="true"></i></span>
                                 <div class="info-box-content">
                                     <span class="info-box-text">Routines</span>
-                                    <span class="info-box-number">0</span>
+                                    <span class="info-box-number">95</span>
                                 </div>
                                 <!-- /.info-box-content -->
                             </div>
@@ -168,7 +168,21 @@
                             <span class="label label-primary pull-right"><i class="fa fa-cog fa-2x"></i></span>
                         </div><!-- /.box-header -->
                         <div class="box-body">
-                            <p>Database Type: PostgreSQL - 15.4 (Ubuntu 15.4-1.pgdg23.04+1)</p>
+                            <p>Database Type: PostgreSQL - 16.1 (Ubuntu 16.1-1.pgdg22.04+1)</p>
+                        </div><!-- /.box-body -->
+                    </div>
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Catalog mssub_mcp</h3>
+                            <span class="label label-primary pull-right"><i class="fa fa-cog fa-2x"></i></span>
+                        </div><!-- /.box-header -->
+                        <div class="box-body">
+                            <p> <p><strong>Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems</strong></p>
+<p>This database software and documentation is licensed to you under the terms of the <a href="https://docs.muse.systems/license/">Muse Systems Business Management System License Agreement v1.1</a> or other written, superseding license that you have obtained from Muse Systems.</p>
+<p>Only Muse Systems may license this software to you.  Your continued use of this software indicates your agreement to abide by the applicable license terms.</p>
+<p>This database may include content copyrighted by and licensed from third parties.</p>
+<p>Please see the license or contact us for more information.</p>
+<p><a href="mailto:muse.information@musesystems.com">muse.information@musesystems.com</a> :: <a href="https://muse.systems">https://muse.systems</a></p> </p>
                         </div><!-- /.box-body -->
                     </div>
                     <div class="box box-primary">
@@ -177,9 +191,8 @@
                             <span class="label label-primary pull-right"><i class="fa fa-cog fa-2x"></i></span>
                         </div><!-- /.box-header -->
                         <div class="box-body">
-                            <p> <p>Public API for system operations.  The important distinction is that business<br />
-data is not stored here. This schema contains procedures, functions, and views<br />
-suitable for calling outside of the application or via user customizations.</p> </p>
+                            <p> <p>Public API for system management oriented data access and operations.</p>
+<p>This schema contains procedures, functions, and views suitable for access by applications and integration tools.</p> </p>
                         </div><!-- /.box-body -->
                     </div>
                     <div class="box box-primary">
@@ -188,14 +201,19 @@ suitable for calling outside of the application or via user customizations.</p> 
                             <span class="label label-primary pull-right"><i class="fa fa-database fa-2x"></i></span>
                         </div><!-- /.box-header -->
                         <div class="box-body">
-                            <table id="database_objects" class="table table-bordered table-striped dataTable" role="grid">
+                            <table
+                                    id="database_objects"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="50"
+                                    data-length-change="false">
                                 <thead>
                                     <tr>
                                         <th valign="bottom">Table / View</th>
                                         <th align="right" valign="bottom">Children</th>
                                         <th align="right" valign="bottom">Parents</th>
                                         <th align="right" valign="bottom">Columns</th>
-                                        <th align="right" valign="bottom">Rows</th>
                                         <th align="right" valign="bottom">Type</th>
                                         <th class="toggle">Comments</th>
                                     </tr>
@@ -206,556 +224,656 @@ suitable for calling outside of the application or via user customizations.</p> 
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">13</td>
-                                        <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">View</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Contains the known login accounts which are used solely for the purpose of<br />
-authentication of users.  Authorization is handled on a per-instance basis<br />
-within the application.</p>
-<p>This API View allows the application to read and maintain the data according to<br />
-well defined application business rules.  Using this API view for updates to<br />
-data is the preferred method of data maintenance in the course of normal usage.</p>
-<p>Only user maintainable values may be maintained via this API.  System created or<br />
-maintained data is not maintainable via this view.  Attempts at invalid data<br />
-maintenance via this API may result in the invalid changes being ignored or may<br />
-raise an exception.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Contains the known login accounts which are used solely for the purpose of authentication of users.  Authorization is handled on a per-Instance basis within the application.</p>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code></li>
+<li><code>DELETE</code></li>
+</ul></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/syst_enum_items.html">syst_enum_items</a></td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">22</td>
-                                        <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">View</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>The list of values provided by an enumeration as well as related behavioral and<br />
-informational metadata.</p>
-<p>This API View allows the application to read and maintain the data according to<br />
-well defined application business rules.  Using this API view for updates to<br />
-data is the preferred method of data maintenance in the course of normal usage.</p>
-<p>Only user maintainable values may be maintained via this API.  System created or<br />
-maintained data is not maintainable via this view.  Attempts at invalid data<br />
-maintenance via this API may result in the invalid changes being ignored or may<br />
-raise an exception.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>The list of values provided by an Enumeration as well as related behavioral and informational metadata.</p>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code></li>
+<li><code>DELETE</code></li>
+</ul>
+<p><strong>System Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code> - See column comments for applicable restrictions.</li>
+</ul></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/syst_perm_functional_types.html">syst_perm_functional_types</a></td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">12</td>
-                                        <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">View</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Defines application specific areas of applicability to which Permissions and<br />
-Permission Roles are assigned.</p>
-<p>When an application defines varying areas of business controls, Permission<br />
-Functional Types can be used to group Permissions into their specific areas and<br />
-limit usage and role assignment by area.  Consider an application which supports<br />
-multiple warehouses containing inventory.  The application may define globally<br />
-applicable Permissions such as the ability to log into the application, but may<br />
-allow employees to be granted varying degrees of Permission to each individual<br />
-warehouse&rsquo;s inventory management features.  In this case there would be &ldquo;Global&rdquo;<br />
-Permission Functional Type containing the log in Permission and a &ldquo;Warehouse&rdquo;<br />
-Permission Functional Type for those Permissions and Permission Roles which can<br />
-vary warehouse by warehouse.</p>
-<p>Both Permissions and Permission Roles must share a Permission Functional Type<br />
-since the Permission Functional Type establishes the context of applicability<br />
-for both.</p>
-<p>This API View allows the application to read and maintain the data according to<br />
-well defined application business rules.  Using this API view for updates to<br />
-data is the preferred method of data maintenance in the course of normal usage.</p>
-<p>Only user maintainable values may be maintained via this API.  System created or<br />
-maintained data is not maintainable via this view.  Attempts at invalid data<br />
-maintenance via this API may result in the invalid changes being ignored or may<br />
-raise an exception.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Defines application specific areas of applicability to which Permissions and Permission Roles are assigned.</p>
+<p>When an application defines varying areas of business controls, Permission Functional Types can be used to group Permissions into their specific areas and limit usage and role assignment by area.  Consider an application which supports multiple warehouses containing inventory.  The application may define globally applicable Permissions such as the ability to log into the application, but may allow employees to be granted varying degrees of Permission to each individual warehouse&rsquo;s inventory management features.  In this case there would be &ldquo;Global&rdquo; Permission Functional Type containing the log in Permission and a &ldquo;Warehouse&rdquo; Permission Functional Type for those Permissions and Permission Roles which can vary warehouse by warehouse.</p>
+<p><strong>General Usage</strong></p>
+<p>Both Permissions and Permission Roles must share a Permission Functional Type since the Permission Functional Type establishes the context of applicability for both.</p>
+<p><strong>System Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code> - See column comments for applicable restrictions.</li>
+</ul></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/syst_instance_contexts.html">syst_instance_contexts</a></td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">14</td>
-                                        <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">View</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Instance specific settings which determine how each Instance connects to the<br />
-defined Application Contexts.</p>
-<p>This API View allows the application to read and maintain the data according to<br />
-well defined application business rules.  Using this API view for updates to<br />
-data is the preferred method of data maintenance in the course of normal usage.</p>
-<p>Only user maintainable values may be maintained via this API.  System created or<br />
-maintained data is not maintainable via this view.  Attempts at invalid data<br />
-maintenance via this API may result in the invalid changes being ignored or may<br />
-raise an exception.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Instance specific settings which determine how each Instance connects to the defined Application Contexts.</p>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code></li>
+</ul></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/syst_instances.html">syst_instances</a></td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">18</td>
-                                        <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">View</td>
                                         <td class="comment detail" style="display: table-cell;"><p>Defines known application instances and provides their configuration settings.</p>
-<p>This API View allows the application to read and maintain the data according to<br />
-well defined application business rules.  Using this API view for updates to<br />
-data is the preferred method of data maintenance in the course of normal usage.</p>
-<p>Only user maintainable values may be maintained via this API.  System created or<br />
-maintained data is not maintainable via this view.  Attempts at invalid data<br />
-maintenance via this API may result in the invalid changes being ignored or may<br />
-raise an exception.</p></td>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code></li>
+<li><code>DELETE</code></li>
+</ul></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/syst_owner_password_rules.html">syst_owner_password_rules</a></td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">19</td>
-                                        <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">View</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Defines the password credential complexity standard for a given Owner.  While<br />
-Owners may define stricter standards than the global password credential<br />
-complexity standard, looser standards than the global will not have any effect<br />
-and the global standard will be used instead.</p>
-<p>This API View allows the application to read and maintain the data according to<br />
-well defined application business rules.  Using this API view for updates to<br />
-data is the preferred method of data maintenance in the course of normal usage.</p>
-<p>Only user maintainable values may be maintained via this API.  System created or<br />
-maintained data is not maintainable via this view.  Attempts at invalid data<br />
-maintenance via this API may result in the invalid changes being ignored or may<br />
-raise an exception.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Defines the password credential complexity standard for a given Owner.  While Owners may define stricter standards than the global password credential complexity standard, looser standards than the global will not have any effect and the global standard will be used instead.</p>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code></li>
+<li><code>DELETE</code></li>
+</ul></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/syst_hierarchy_items.html">syst_hierarchy_items</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">15</td>
+                                        <td class="detail" align="right">View</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Hierarchy Item records represent a level in the hierarchy of their parent Hierarchy.</p>
+<p><strong>General Usage</strong></p>
+<p>Each Hierarchy Item record is individually sequenced in its group via the <code>hierarchy_depth</code> column.</p>
+<p>Note that once the Hierarchy is active and in use by Hierarchy implementing Components, most changes to the Hierarchy Item records will not be allowed to ensure the consistency of currently used data.</p>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code></li>
+<li><code>DELETE</code></li>
+</ul>
+<p><strong>System Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code> - See column comments for applicable restrictions.</li>
+<li><code>DELETE</code> - Only user maintainable records.</li>
+</ul>
+<p><strong>Supplemental Notes</strong></p>
+<p>Once the Hierarchy is active and in use by Hierarchy implementing Components, most changes to the Hierarchy Item records will not be allowed to ensure the consistency of currently used data.  Also for data consistency reasons, using this API view imposes the fundamental restriction that Hierarchy Item hierarchies can only be constructed top down and deconstructed bottom up. Updates are limited to allowing some naming updates, but not updates in hierarchy changes.</p></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/syst_instance_network_rules.html">syst_instance_network_rules</a></td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">15</td>
-                                        <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">View</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Defines firewall-like rules that are global in scope indicating which IP<br />
-addresses are allowed to attempt authentication and which are not.  This also<br />
-includes the concept of global defaults applied to new Instance IP address<br />
-rules. These rules are applied in their defined ordering after all other rule<br />
-sets.</p>
-<p>This API View allows the application to read and maintain the data according to<br />
-well defined application business rules.  Using this API view for updates to<br />
-data is the preferred method of data maintenance in the course of normal usage.</p>
-<p>Only user maintainable values may be maintained via this API.  System created or<br />
-maintained data is not maintainable via this view.  Attempts at invalid data<br />
-maintenance via this API may result in the invalid changes being ignored or may<br />
-raise an exception.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Defines firewall-like rules, scoped to specific instances, indicating which IP addresses are allowed to attempt authentication and which are not.  These rules are applied in their defined order after all global_network_rules and owner_network_rules.</p>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code></li>
+<li><code>DELETE</code></li>
+</ul></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/syst_enums.html">syst_enums</a></td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">16</td>
-                                        <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">View</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Enumerates the enumerations known to the system along with additional metadata<br />
-useful in applying them appropriately.</p>
-<p>This API View allows the application to read and maintain the data according to<br />
-well defined application business rules.  Using this API view for updates to<br />
-data is the preferred method of data maintenance in the course of normal usage.</p>
-<p>Only user maintainable values may be maintained via this API.  System created or<br />
-maintained data is not maintainable via this view.  Attempts at invalid data<br />
-maintenance via this API may result in the invalid changes being ignored or may<br />
-raise an exception.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Enumerates the enumerations known to the system along with additional metadata useful in applying them appropriately.</p>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code></li>
+<li><code>DELETE</code></li>
+</ul>
+<p><strong>System Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code> - See column comments for applicable restrictions.</li>
+</ul></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/syst_identities.html">syst_identities</a></td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">16</td>
-                                        <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">View</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>The identities with which access accounts are identified to the system.  The<br />
-most common example of an identity would be a user name such as an email<br />
-address.</p>
-<p>This API View allows the application to read and maintain the data according to<br />
-well defined application business rules.  Using this API view for updates to<br />
-data is the preferred method of data maintenance in the course of normal usage.</p>
-<p>Only user maintainable values may be maintained via this API.  System created or<br />
-maintained data is not maintainable via this view.  Attempts at invalid data<br />
-maintenance via this API may result in the invalid changes being ignored or may<br />
-raise an exception.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>The identities with which access accounts are identified to the system.  The most common example of an identity would be a user name such as an email address.</p>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code></li>
+<li><code>DELETE</code></li>
+</ul></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/syst_settings.html">syst_settings</a></td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">28</td>
-                                        <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">View</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Configuration data which establishes application behaviors, defaults, and<br />
-provides a reference center to interested application functionality.</p>
-<p>This API View allows the application to read and maintain the data according to<br />
-well defined application business rules.  Using this API view for updates to<br />
-data is the preferred method of data maintenance in the course of normal usage.</p>
-<p>Only user maintainable values may be maintained via this API.  System created or<br />
-maintained data is not maintainable via this view.  Attempts at invalid data<br />
-maintenance via this API may result in the invalid changes being ignored or may<br />
-raise an exception.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Configuration data which establishes application behaviors, defaults, and provides a reference center to interested application functionality.</p>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code></li>
+<li><code>DELETE</code></li>
+</ul>
+<p><strong>System Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code> - See column comments for applicable restrictions.</li>
+</ul></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/syst_sessions.html">syst_sessions</a></td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">11</td>
-                                        <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">View</td>
                                         <td class="comment detail" style="display: table-cell;"><p>Database persistence of user interface related session data.</p>
-<p>This API View allows the application to read and maintain the data according to<br />
-well defined application business rules.  Using this API view for updates to<br />
-data is the preferred method of data maintenance in the course of normal usage.</p>
-<p>Only user maintainable values may be maintained via this API.  System created or<br />
-maintained data is not maintainable via this view.  Attempts at invalid data<br />
-maintenance via this API may result in the invalid changes being ignored or may<br />
-raise an exception.</p></td>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code></li>
+<li><code>DELETE</code></li>
+</ul></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/syst_hierarchies.html">syst_hierarchies</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">17</td>
+                                        <td class="detail" align="right">View</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Establishes a hierarchical template for parent/child relationships to follow. The <code>hierarchies</code> relation creates a type of hierarchy which is linked to a specific feature or functional area of the application via a record&rsquo;s <code>hierarchy_type_id</code> reference. Hierarchies is also the parent relation of Hierarchy Items relation (<code>ms_syst_data.syst_hierarchy_items</code>) records where each Hierarchy Items record represents a level of the hierarchy.</p>
+<p><strong>General Usage</strong></p>
+<p>Note that once the Hierarchy is active and in use by Hierarchy implementing Components, most changes to the Hierarchy records will not be allowed to ensure the consistency of currently used data.</p>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code></li>
+<li><code>DELETE</code></li>
+</ul>
+<p><strong>System Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code> - See column comments for applicable restrictions.</li>
+</ul></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/syst_disallowed_passwords.html">syst_disallowed_passwords</a></td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">1</td>
-                                        <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">View</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>A list of hashed passwords which are disallowed for use in the system when the<br />
-password rule to disallow common/known compromised passwords is enabled.<br />
-Currently the expectation is that common passwords will be stored as sha1<br />
-hashes.</p>
-<p>This API View allows the application to read and maintain the data according to<br />
-well defined application business rules.  Using this API view for updates to<br />
-data is the preferred method of data maintenance in the course of normal usage.</p>
-<p>Only user maintainable values may be maintained via this API.  System created or<br />
-maintained data is not maintainable via this view.  Attempts at invalid data<br />
-maintenance via this API may result in the invalid changes being ignored or may<br />
-raise an exception.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>A list of hashed passwords which are disallowed for use in the system when the password rule to disallow common/known compromised passwords is enabled. Currently the expectation is that common passwords will be stored as sha1 hashes.</p>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+<li><code>DELETE</code></li>
+</ul></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/syst_applications.html">syst_applications</a></td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">11</td>
-                                        <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">View</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Describes the known applications which are managed by the global database and<br />
-authentication infrastructure.</p>
-<p>This API View allows the application to read and maintain data according to well defined<br />
-application business rules.</p>
-<p>Attempts at invalid data maintenance via this API may result in the invalid<br />
-changes being ignored or may raise an exception.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Describes the known applications which is managed by the global database and authentication infrastructure.</p>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code></li>
+</ul>
+<p><strong>System Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/syst_credentials.html">syst_credentials</a></td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">14</td>
-                                        <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">View</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Hosts the credentials by which a user or external system will prove its identity.<br />
-Note that not all credential types are available for authentication with all<br />
-identity types.</p>
-<p>This API View allows the application to read and maintain the data according to<br />
-well defined application business rules.  Using this API view for updates to<br />
-data is the preferred method of data maintenance in the course of normal usage.</p>
-<p>Only user maintainable values may be maintained via this API.  System created or<br />
-maintained data is not maintainable via this view.  Attempts at invalid data<br />
-maintenance via this API may result in the invalid changes being ignored or may<br />
-raise an exception.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Hosts the Credentials by which a user or external system will prove its Identity.</p>
+<p><strong>General Usage</strong></p>
+<p>Note that not all Credential types are available for authentication with all Identity types.</p>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code></li>
+<li><code>DELETE</code></li>
+</ul></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/syst_enum_functional_types.html">syst_enum_functional_types</a></td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">15</td>
-                                        <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">View</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>For those enumerations requiring functional type designation, this table defines<br />
-the available types and persists related metadata.  Note that not all<br />
-enumerations require functional types.</p>
-<p>This API View allows the application to read and maintain the data according to<br />
-well defined application business rules.  Using this API view for updates to<br />
-data is the preferred method of data maintenance in the course of normal usage.</p>
-<p>Only user maintainable values may be maintained via this API.  System created or<br />
-maintained data is not maintainable via this view.  Attempts at invalid data<br />
-maintenance via this API may result in the invalid changes being ignored or may<br />
-raise an exception.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>For those Enumerations requiring Functional Type designation, this table defines the available types and persists related metadata.  Note that not all Enumerations require Functional Types.</p>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code></li>
+<li><code>DELETE</code></li>
+</ul>
+<p><strong>System Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code> - See column comments for applicable restrictions.</li>
+</ul></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/syst_actions.html">syst_actions</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">18</td>
+                                        <td class="detail" align="right">View</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Defines actions which may be taken when a Menu Item is &ldquo;selected&rdquo; or the defined Command is entered by a user.</p>
+<p><strong>General Usage</strong></p>
+<p>The null/not null state of this column must match the null/not null state of the <code>command</code> column.</p>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code></li>
+<li><code>DELETE</code></li>
+</ul>
+<p><strong>System Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code> - See column comments for applicable restrictions.</li>
+</ul></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/syst_perms.html">syst_perms</a></td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">18</td>
-                                        <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">View</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Defines the available system and application permissions which can be<br />
-assigned to users.  For a more detailed description see the table comment for<br />
-ms_syst_data.syst_perms.</p>
-<p>This API View allows the application to read and maintain the data according to<br />
-well defined application business rules.  Using this API view for updates to<br />
-data is the preferred method of data maintenance in the course of normal usage.</p>
-<p>Only user maintainable values may be maintained via this API.  System created or<br />
-maintained data is not maintainable via this view.  Attempts at invalid data<br />
-maintenance via this API may result in the invalid changes being ignored or may<br />
-raise an exception.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Defines the available system and application permissions which can be assigned to users.</p>
+<p>The Permission is divided into the following concepts:</p>
+<ol>
+<li>
+<p>The Permission record itself defines a subject for which application security and control concerns exist.</p>
+</li>
+<li>
+<p>Each Permission is made up of standard Rights.  These Rights are:</p>
+<ul>
+<li>
+<p>View - the ability to view data.</p>
+</li>
+<li>
+<p>Maintenance - the ability to change or process existing data.</p>
+</li>
+<li>
+<p>Administration - the ability to create or destroy data.</p>
+</li>
+<li>
+<p>Operations - the ability to perform certain operations or processes.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>The Right for each Permission is assigned a Scope of applicability which can limit or extend the grant of a Right.  Each Right of the Permission may define which Scopes it supports out of the following possibilities:</p>
+<ul>
+<li>
+<p>Unused - The Right does not exist in any meaningful way for the Permission.</p>
+</li>
+<li>
+<p>Deny - The Right is not granted by the Permission grant; this is typically used in cases where other Rights may be granted, for example permitting a user to see a value (View Right), but not to Maintain or perform data Admin tasks (Maint &amp; Admin Rights).</p>
+</li>
+<li>
+<p>Same User - The Right grant is limited in Scope to those records which are in some way designated as belonging to the specific user exercising the Right.  Ownership designation will be defined by those functions where a Permission is checked.</p>
+</li>
+<li>
+<p>Same Group - The Right grant is limited in Scope to those records which are in some way designated as belonging to a specific group or groups and to which the user belongs in some way.  Ownership designation will be defined by those functions where a Permission is checked.</p>
+</li>
+<li>
+<p>All - The Right grant is not limited in Scope and all records which are subject to the Permission are available to the user.</p>
+</li>
+</ul>
+</li>
+</ol>
+<p>Permissions are assigned to Permission Roles which are in turn granted to individual users. If a Permission is not assigned to a Permission Role, then the assumption is that the Permission Role&rsquo;s users are denied all rights granted by the unassigned Permission.</p>
+<p>Some Permissions may be dependent on the grants of other more fundamental Permissions. For example, a user may be granted only View Rights to the sales order form, but also granted Maintenance Rights to sales pricing data. In such a case the sales order Rights would dictate that the user does not have the ability to maintain sales pricing in the sales order context.</p>
+<p>Specific details of applicability and the determination of Scope boundaries will vary by each specific scenario. Consult individual Permission documentation for specific understanding of how determinations of access are made.</p>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code></li>
+<li><code>DELETE</code></li>
+</ul>
+<p><strong>System Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code> - See column comments for applicable restrictions.</li>
+</ul></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/syst_disallowed_hosts.html">syst_disallowed_hosts</a></td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">9</td>
-                                        <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">View</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>A listing of IP addresses which are not allowed to attempt authentication.  This<br />
-registry differs from the syst_*_network_rules tables in that IP addresses here<br />
-are registered as the result of automatic system heuristics whereas the network<br />
-rules are direct expressions of system administrator intent.  The timing between<br />
-these two mechanisms is also different in that records in this table are<br />
-evaluated prior to an authentication attempt and most network rules are<br />
-processed in the authentication attempt sequence.</p>
-<p>This API View allows the application to read and maintain the data according to<br />
-well defined application business rules.  Using this API view for updates to<br />
-data is the preferred method of data maintenance in the course of normal usage.</p>
-<p>Only user maintainable values may be maintained via this API.  System created or<br />
-maintained data is not maintainable via this view.  Attempts at invalid data<br />
-maintenance via this API may result in the invalid changes being ignored or may<br />
-raise an exception.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>A simple listing of &ldquo;banned&rdquo; IP address which are not allowed to authenticate their users to the system.  This registry differs from the syst_*_network_rules tables in that IP addresses here are registered as the result of automatic system heuristics whereas the network rules are direct expressions of system administrator intent.  The timing between these two mechanisms is also different in that records in this table are evaluated prior to an authentication attempt and most network rules are processed in the authentication attempt sequence.</p>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+<li><code>DELETE</code></li>
+</ul></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/syst_instance_type_contexts.html">syst_instance_type_contexts</a></td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">11</td>
-                                        <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">View</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Establishes Instance Type defaults for each of an Application&rsquo;s defined<br />
-datastore contexts.  In practice, these records are used in the creation of<br />
-Instance Context records, but do not establish a direct relationship; records in<br />
-this table simply inform us what Instance Contexts should exist and give us<br />
-default values to use in their creation.</p>
-<p>This API View allows the application to read and maintain the data according to<br />
-well defined application business rules.  Using this API view for updates to<br />
-data is the preferred method of data maintenance in the course of normal usage.</p>
-<p>Only user maintainable values may be maintained via this API.  System created or<br />
-maintained data is not maintainable via this view.  Attempts at invalid data<br />
-maintenance via this API may result in the invalid changes being ignored or may<br />
-raise an exception.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Establishes Instance Type defaults for each of an Application&rsquo;s defined datastore contexts.</p>
+<p><strong>General Usage</strong></p>
+<p>In practice, these records are used in the creation of Instance Context records, but do not establish a direct relationship; records in this table simply inform us what Instance Contexts should exist and give us default values to use in their creation.</p>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code></li>
+</ul></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/syst_access_account_instance_assocs.html">syst_access_account_instance_assocs</a></td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">14</td>
-                                        <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">View</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Associates access accounts with the instances for which they are allowed to<br />
-authenticate to.  Note that being able to authenticate to an instance is not the<br />
-same as having authorized rights within the instance; authorization is handled<br />
-by the instance directly.</p>
-<p>This API View allows the application to read and maintain the data according to<br />
-well defined application business rules.  Using this API view for updates to<br />
-data is the preferred method of data maintenance in the course of normal usage.</p>
-<p>Only user maintainable values may be maintained via this API.  System created or<br />
-maintained data is not maintainable via this view.  Attempts at invalid data<br />
-maintenance via this API may result in the invalid changes being ignored or may<br />
-raise an exception.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Associates access accounts with the instances for which they are allowed to authenticate to.  Note that being able to authenticate to an instance is not the same as having authorized rights within the instance; authorization is handled by the instance directly.</p>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code></li>
+<li><code>DELETE</code></li>
+</ul></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/syst_perm_role_grants.html">syst_perm_role_grants</a></td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">14</td>
-                                        <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">View</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Establishes the individual permissions which are granted by the given permission<br />
-role.</p>
-<p>Note that the absence of an explicit permission grant to a role is an implicit<br />
-denial of that permission.</p>
-<p>This API View allows the application to read and maintain the data according to<br />
-well defined application business rules.  Using this API view for updates to<br />
-data is the preferred method of data maintenance in the course of normal usage.</p>
-<p>Only user maintainable values may be maintained via this API.  System created or<br />
-maintained data is not maintainable via this view.  Attempts at invalid data<br />
-maintenance via this API may result in the invalid changes being ignored or may<br />
-raise an exception.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Establishes the individual permissions which are granted by the given permission role.</p>
+<p><strong>General Usage</strong></p>
+<p>Note that the absence of an explicit permission grant to a role is an implicit denial of that permission.</p>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code></li>
+<li><code>DELETE</code></li>
+</ul>
+<p><strong>System Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/syst_perm_roles.html">syst_perm_roles</a></td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">14</td>
-                                        <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">View</td>
                                         <td class="comment detail" style="display: table-cell;"><p>Defines collections of permissions which are then assignable to users.</p>
-<p>This API View allows the application to read and maintain the data according to<br />
-well defined application business rules.  Using this API view for updates to<br />
-data is the preferred method of data maintenance in the course of normal usage.</p>
-<p>Only user maintainable values may be maintained via this API.  System created or<br />
-maintained data is not maintainable via this view.  Attempts at invalid data<br />
-maintenance via this API may result in the invalid changes being ignored or may<br />
-raise an exception.</p></td>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code></li>
+<li><code>DELETE</code></li>
+</ul>
+<p><strong>System Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code> - See column comments for applicable restrictions.</li>
+</ul></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
-                                        <td class="detail"><a href="tables/syst_feature_setting_assigns.html">syst_feature_setting_assigns</a></td>
+                                        <td class="detail"><a href="tables/syst_action_groups.html">syst_action_groups</a></td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">10</td>
-                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">19</td>
                                         <td class="detail" align="right">View</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>A join table which allows application settings to be associated with various<br />
-application features.  This is a many-to-many relationship.  The expectation is<br />
-that this association will be used in organizing certain configuration or<br />
-permissioning displays into a tree-like structure.</p>
-<p>This API View allows the application to read and maintain the data according to<br />
-well defined application business rules.  Using this API view for updates to<br />
-data is the preferred method of data maintenance in the course of normal usage.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Defines groups of actions which can be associated with an invoking primary command.</p>
+<p>There are two fundamental roles fulfilled by the Action Group.  The first of these is a simple organizing role related to child Action records (<code>ms_syst_data.syst_actions</code>); there is little functional purpose to this first role aside from user interface categorization.</p>
+<p>The second fundamental role establishes the Primary Command component of a user commandline interaction model.  The Primary Commands defined by Action Groups express the general action a user wishes to take: &ldquo;new&rdquo;, &ldquo;open&rdquo;, &ldquo;display&rdquo; are examples of such generalized actions.  These generalized actions in turn can then be specialized using a secondary Command (defined by Actions) to a specific system function: &ldquo;new purchase order&rdquo;, &ldquo;new sales order&rdquo;, &ldquo;open sales order&rdquo;, &ldquo;display report&rdquo; are examples showing how the generalized commands (Action Group) are tied to specific Action commands (Actions).</p>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code></li>
+<li><code>DELETE</code></li>
+</ul>
+<p><strong>System Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code> - See column comments for applicable restrictions.</li>
+</ul></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/syst_access_account_perm_role_assigns.html">syst_access_account_perm_role_assigns</a></td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">10</td>
-                                        <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">View</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Assigns Permission Roles to Access Accounts providing an MCP authentication<br />
-mechanism.</p>
-<p>This API View allows the application to read and maintain the data according to<br />
-well defined application business rules.  Using this API view for updates to<br />
-data is the preferred method of data maintenance in the course of normal usage.</p>
-<p>Only user maintainable values may be maintained via this API.  System created or<br />
-maintained data is not maintainable via this view.  Attempts at invalid data<br />
-maintenance via this API may result in the invalid changes being ignored or may<br />
-raise an exception.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Assigns Permission Roles to Access Accounts providing an MCP authentication mechanism.</p>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+<li><code>DELETE</code></li>
+</ul></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/syst_owner_network_rules.html">syst_owner_network_rules</a></td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">15</td>
-                                        <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">View</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Defines firewall-like rules that are global in scope indicating which IP<br />
-addresses are allowed to attempt authentication and which are not.  This also<br />
-includes the concept of global defaults applied to new Owner IP address rules.<br />
-These rules are applied in their defined ordering after the global_network_rules<br />
-and before the instance_network_rules.</p>
-<p>This API View allows the application to read and maintain the data according to<br />
-well defined application business rules.  Using this API view for updates to<br />
-data is the preferred method of data maintenance in the course of normal usage.</p>
-<p>Only user maintainable values may be maintained via this API.  System created or<br />
-maintained data is not maintainable via this view.  Attempts at invalid data<br />
-maintenance via this API may result in the invalid changes being ignored or may<br />
-raise an exception.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Defines firewall-like rules, scoped to specific owners, indicating which IP addresses are allowed to attempt authentication and which are not.  These rules are applied in their defined order after all global_network_rules and before all instance_network_rules.</p>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code></li>
+<li><code>DELETE</code></li>
+</ul></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/syst_global_network_rules.html">syst_global_network_rules</a></td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">14</td>
-                                        <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">View</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Defines firewall-like rules that are global in scope indicating which IP<br />
-addresses are allowed to attempt authentication and which are not.  This also<br />
-includes the concept of global defaults applied to new Owner IP address rules.</p>
-<p>This API View allows the application to read and maintain the data according to<br />
-well defined application business rules.  Using this API view for updates to<br />
-data is the preferred method of data maintenance in the course of normal usage.</p>
-<p>Only user maintainable values may be maintained via this API.  System created or<br />
-maintained data is not maintainable via this view.  Attempts at invalid data<br />
-maintenance via this API may result in the invalid changes being ignored or may<br />
-raise an exception.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Defines firewall-like rules that are global in scope indicating which IP addresses are allowed to attempt authentication and which are not.  This also includes the concept of global defaults applied to new Owner IP address rules. These rules are applied in their defined ordering prior to all other rule sets.</p>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code></li>
+<li><code>DELETE</code></li>
+</ul></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/syst_global_password_rules.html">syst_global_password_rules</a></td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">18</td>
-                                        <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">View</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Establishes a minimum standard for password credential complexity globally.<br />
-Individual Owners may define more restrictive complexity requirements for their<br />
-own accounts and instances, but may not weaken those defined globally.</p>
-<p>This API View allows the application to read and maintain the data according to<br />
-well defined application business rules.  Using this API view for updates to<br />
-data is the preferred method of data maintenance in the course of normal usage.</p>
-<p>Only user maintainable values may be maintained via this API.  System created or<br />
-maintained data is not maintainable via this view.  Attempts at invalid data<br />
-maintenance via this API may result in the invalid changes being ignored or may<br />
-raise an exception.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Establishes a minimum standard for password credential complexity globally. Individual Owners may define more restrictive complexity requirements for their own accounts and instances, but may not weaken those defined globally.</p>
+<p><strong>System Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code> - See column comments for applicable restrictions.</li>
+</ul></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/syst_owners.html">syst_owners</a></td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">11</td>
-                                        <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">View</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Identifies instance owners.  Instance owners are typically the clients which<br />
-have commissioned the use of an application instance.</p>
-<p>This API View allows the application to read and maintain the data according to<br />
-well defined application business rules.  Using this API view for updates to<br />
-data is the preferred method of data maintenance in the course of normal usage.</p>
-<p>Only user maintainable values may be maintained via this API.  System created or<br />
-maintained data is not maintainable via this view.  Attempts at invalid data<br />
-maintenance via this API may result in the invalid changes being ignored or may<br />
-raise an exception.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Identifies instance owners.  Instance owners are typically the clients which have commissioned the use of an application instance.</p>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code></li>
+<li><code>DELETE</code></li>
+</ul></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/syst_menu_items.html">syst_menu_items</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">18</td>
+                                        <td class="detail" align="right">View</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Individual menu entries which can serve as actionable menu items, grouping items, references to other menus to include recursively, or any appropriate combination thereof.</p>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code></li>
+<li><code>DELETE</code></li>
+</ul>
+<p><strong>System Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code> - See column comments for applicable restrictions.</li>
+<li><code>DELETE</code> - Only user maintainable records.</li>
+</ul></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/syst_password_history.html">syst_password_history</a></td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">10</td>
-                                        <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">View</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Keeps the history of access account prior passwords for enforcing the reuse<br />
-password rule.</p>
-<p>This API View allows the application to read and maintain the data according to<br />
-well defined application business rules.  Using this API view for updates to<br />
-data is the preferred method of data maintenance in the course of normal usage.</p>
-<p>Only user maintainable values may be maintained via this API.  System created or<br />
-maintained data is not maintainable via this view.  Attempts at invalid data<br />
-maintenance via this API may result in the invalid changes being ignored or may<br />
-raise an exception.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Keeps the history of access account prior passwords for enforcing the reuse password rule.</p>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+<li><code>DELETE</code></li>
+</ul></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/syst_application_contexts.html">syst_application_contexts</a></td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">15</td>
-                                        <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">View</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Applications are written with certain security and connection<br />
-characteristics in mind which correlate to database roles used by the<br />
-application for establishing connections.  This table defines the datastore<br />
-contexts the application is expecting so that Instance records can be validated<br />
-against the expectations.</p>
-<p>This API View allows the application to read and maintain the data according to<br />
-well defined application business rules.  Using this API view for updates to<br />
-data is the preferred method of data maintenance in the course of normal usage.</p>
-<p>Only user maintainable values may be maintained via this API.  System created or<br />
-maintained data is not maintainable via this view.  Attempts at invalid data<br />
-maintenance via this API may result in the invalid changes being ignored or may<br />
-raise an exception.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Applications are written with certain security and connection characteristics in mind which correlate to database roles used by the application for establishing connections.  This table defines the datastore contexts the application is expecting so that Instance records can be validated against the expectations.</p>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code></li>
+<li><code>DELETE</code></li>
+</ul>
+<p><strong>System Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code> - See column comments for applicable restrictions.</li>
+<li><code>DELETE</code> - Only user maintainable records.</li>
+</ul></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/syst_instance_type_applications.html">syst_instance_type_applications</a></td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">10</td>
-                                        <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">View</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>A many-to-many relation indicating which Instance Types are usable for each<br />
-Application.</p>
-<p>Note that creating ms_syst_data.syst_application_contexts records prior to<br />
-inserting an Instance Type/Application association into this table is<br />
-recommended as default Instance Type Context records can be created<br />
-automatically on INSERT into this table so long as the supporting data is<br />
-available.  After insert here, manipulations of what Contexts Applications<br />
-require must be handled manually.</p>
-<p>Also note that this API view only allows for INSERT or DELETE operations to be<br />
-performed on the data.  UPDATE operations are not valid and will cause an<br />
-exception to be raised.</p>
-<p>This API View allows the application to create and read the data according to<br />
-well defined application business rules.  Using this API view for updates to<br />
-data is the preferred method of data maintenance in the course of normal usage.</p>
-<p>Only user maintainable values may be maintained via this API.  System created or<br />
-maintained data is not maintainable via this view.  Attempts at invalid data<br />
-maintenance via this API may result in the invalid changes being ignored or may<br />
-raise an exception.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>A many-to-many relation indicating which Instance Types are usable for each Application.</p>
+<p><strong>General Usage</strong></p>
+<p>Note that creating ms_syst_data.syst_application_contexts records prior to inserting an Instance Type/Application association into this table is recommended as default Instance Type Context records can be created automatically on INSERT into this table so long as the supporting data is available.  After insert here, manipulations of what Contexts Applications require must be handled manually.</p>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+<li><code>DELETE</code></li>
+</ul></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/syst_menus.html">syst_menus</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">15</td>
+                                        <td class="detail" align="right">View</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Establishes user configurable menu and navigation definitions for use in the User Interfaces of the application.</p>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code></li>
+<li><code>DELETE</code></li>
+</ul>
+<p><strong>System Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code> - See column comments for applicable restrictions.</li>
+<li><code>DELETE</code> - Only user maintainable records.</li>
+</ul></td>
                                     </tr>
                             </table>
                         </div>
@@ -764,7 +882,7 @@ raise an exception.</p></td>
                 <!-- /.content -->
                 <script>
                     var config = {
-                        pagination: true
+                        pagination: false
                     }
                 </script>
             </div>
@@ -775,7 +893,7 @@ raise an exception.</p></td>
                         <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
                         <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
                     </div>
-                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.1.0</a></strong>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.2.4</a></strong>
                 </div>
                 <!-- /.container -->
             </footer>
