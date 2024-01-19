@@ -1,0 +1,825 @@
+<?xml version="1.0" encoding="UTF-8"?><database name="mscmp_syst_instance" schema="ms_syst_data" type="PostgreSQL - 16.1 (Ubuntu 16.1-1.pgdg22.04+1)">
+   <tables>
+      <table name="syst_application_contexts" remarks="Applications are written with certain security and connection&#10;characteristics in mind which correlate to database roles used by the&#10;application for establishing connections.  This table defines the datastore&#10;contexts the application is expecting so that Instance records can be validated&#10;against the expectations." schema="ms_syst_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">
+            <child column="application_context_id" foreignKey="syst_instance_contexts_application_contexts_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_instance_contexts"/>
+            <child column="application_context_id" foreignKey="syst_instance_type_contexts_application_contexts_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_instance_type_contexts"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="false" remarks="A candidate key useful for programmatic references to individual records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="display_name" nullable="false" remarks="A friendly name and candidate key for the record, suitable for use in user&#10;interactions&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="application_id" nullable="false" remarks="References the ms_syst_data.syst_applications record which owns the&#10;context." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="syst_application_contexts_applications_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_applications"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="description" nullable="false" remarks="A user visible description of the application context, its role in the&#10;application, uses, and any other helpful text." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="5" name="start_context" nullable="false" remarks="Indicates whether or not the system should start the context for any Instances&#10;of the application.&#10;&#10;**General Usage**&#10;&#10;If true, any Instance of the Application will start its&#10;associated context so long as it is enabled at the Instance level.  If false,&#10;the context is disabled for all Instances in the Application regardless of their&#10;individual settings." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="6" name="login_context" nullable="false" remarks="Indicates whether or not the Application Context is used for making&#10;connections to the database.&#10;&#10;**General Usage**&#10;&#10;If true, each associated Instance Context is&#10;created as a role in the database with the LOGIN privilege; if false, the&#10;role is created in the database as a NOLOGIN role.  Most often non-login&#10;Application Contexts are created to serve as the database role owning database&#10;objects." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="7" name="database_owner_context" nullable="false" remarks="Indicates if the Application Context represents the database role used for object&#10;ownership.&#10;&#10;**General Usage**&#10;&#10;If true, the Application Context does represent the ownership role&#10;and should also be defined as a login_context = FALSE context.  If false, the&#10;role is not used for database object ownership.  Note that there should only&#10;ever be one Application Context defined as database_owner_context = TRUE for any&#10;one Application." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="8" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="diag_role_created" nullable="true" remarks="The database role which created the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="10" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="11" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="diag_role_modified" nullable="true" remarks="The database role which modified the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="13" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Direct Usage**&#10;&#10;This column is frequently used by by application logic to resolve the &quot;dirty&#10;write&quot; issues which can arise from concurrent data changes.  As such any&#10;administrative override of automatic system maintenance of this value should&#10;consider the ramifications on application function." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="14" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="syst_application_contexts_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="syst_application_contexts_display_name_udx" unique="true">
+            <column ascending="true" name="display_name"/>
+         </index>
+         <index name="syst_application_contexts_internal_name_udx" unique="true">
+            <column ascending="true" name="internal_name"/>
+         </index>
+      </table>
+      <table name="syst_applications" remarks="Describes the known applications which is managed by the global database and&#10;authentication infrastructure." schema="ms_syst_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">
+            <child column="application_id" foreignKey="syst_application_contexts_applications_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_application_contexts"/>
+            <child column="application_id" foreignKey="syst_instance_type_applications_applications_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_instance_type_applications"/>
+            <child column="application_id" foreignKey="syst_instances_applications_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_instances"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="false" remarks="A candidate key useful for programmatic references to individual records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="display_name" nullable="false" remarks="A friendly name and candidate key for the record, suitable for use in user&#10;interactions&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="syst_description" nullable="false" remarks="A system defined description indicating the purpose and use cases of a given&#10;record.  Text defined in this column is system maintained and should not be&#10;changed under normal circumstances.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="4" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="diag_role_created" nullable="false" remarks="The database role which created the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="6" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="7" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="diag_role_modified" nullable="false" remarks="The database role which modified the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="9" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Direct Usage**&#10;&#10;This column is frequently used by by application logic to resolve the &quot;dirty&#10;write&quot; issues which can arise from concurrent data changes.  As such any&#10;administrative override of automatic system maintenance of this value should&#10;consider the ramifications on application function." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="10" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="syst_applications_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="syst_applications_display_name_udx" unique="true">
+            <column ascending="true" name="display_name"/>
+         </index>
+         <index name="syst_applications_internal_name_udx" unique="true">
+            <column ascending="true" name="internal_name"/>
+         </index>
+      </table>
+      <table name="syst_enum_functional_types" remarks="For those Enumerations requiring Functional Type designation, this table defines&#10;the available types and persists related metadata.  Note that not all&#10;Enumerations require Functional Types." schema="ms_syst_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">
+            <child column="functional_type_id" foreignKey="syst_enum_items_enum_functional_type_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_enum_items"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="false" remarks="A candidate key useful for programmatic references to individual records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="display_name" nullable="false" remarks="A friendly name and candidate key for the record, suitable for use in user&#10;interactions&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="external_name" nullable="false" remarks="A non-unique/non-key value used to display to users and external parties where&#10;uniqueness is less of a concern than specific end user presentation." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="enum_id" nullable="false" remarks="A reference to the owning Enumeration of the functional type." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="syst_enum_functional_types_enum_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_enums"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="syst_description" nullable="false" remarks="A system defined description indicating the purpose and use cases of a given&#10;record.  Text defined in this column is system maintained and should not be&#10;changed under normal circumstances.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="user_description" nullable="true" remarks="An optional user defined description of the record and its use cases.  If this&#10;value is not `NULL`, the value will override any `syst_description` defined text&#10;in application user interfaces and other presentations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="7" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="diag_role_created" nullable="false" remarks="The database role which created the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="9" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="10" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="diag_role_modified" nullable="false" remarks="The database role which modified the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="12" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Direct Usage**&#10;&#10;This column is frequently used by by application logic to resolve the &quot;dirty&#10;write&quot; issues which can arise from concurrent data changes.  As such any&#10;administrative override of automatic system maintenance of this value should&#10;consider the ramifications on application function." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="13" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="syst_enum_functional_types_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="syst_enum_functional_types_display_name_udx" unique="true">
+            <column ascending="true" name="display_name"/>
+         </index>
+         <index name="syst_enum_functional_types_internal_name_udx" unique="true">
+            <column ascending="true" name="internal_name"/>
+         </index>
+      </table>
+      <table name="syst_enum_items" remarks="The list of values provided by an Enumeration as well as related behavioral and&#10;informational metadata." schema="ms_syst_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">
+            <child column="instance_type_id" foreignKey="syst_instance_type_applications_instance_types_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_instance_type_applications"/>
+            <child column="instance_state_id" foreignKey="syst_instances_enum_instance_state_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_instances"/>
+            <child column="instance_type_id" foreignKey="syst_instances_enum_instance_type_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_instances"/>
+            <child column="owner_state_id" foreignKey="syst_owner_owner_states_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_owners"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="false" remarks="A candidate key useful for programmatic references to individual records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="display_name" nullable="false" remarks="A friendly name and candidate key for the record, suitable for use in user&#10;interactions&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="external_name" nullable="false" remarks="A non-unique/non-key value used to display to users and external parties where&#10;uniqueness is less of a concern than specific end user presentation." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="enum_id" nullable="false" remarks="The enumeration record with which the value is associated." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="syst_enum_items_enum_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_enums"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="functional_type_id" nullable="true" remarks="If the enumeration requires a functional type, this column references the&#10;functional type associated with the enumeration value record.&#10;&#10;**General Usage**&#10;&#10;Note that not all enumerations require functional types.  If&#10;syst_enum_functional_types records exist for an enumeration, then this column&#10;will be required for any values of that enumeration; if there are no functional&#10;types defined for an enumeration, the this column must remain NULL." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="syst_enum_items_enum_functional_type_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_enum_functional_types"/>
+         </column>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="6" name="enum_default" nullable="false" remarks="If true, indicates that this value is the default selection from all values&#10;defined for the enumerations.&#10;&#10;**General Usage**&#10;&#10;Note that if a record is inserted or updated in this table with enum_default set&#10;true, and another record already exists for the enumeration with its&#10;enum_default set true, the newly inserted/updated record will take precedence&#10;and the value record previously set to be default will have its enum_default&#10;setting set to false.&#10;&#10;If false then the value record has no special significance relative to&#10;defaulting." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="7" name="functional_type_default" nullable="false" remarks="If true, the value record is the default selection for any of a specific&#10;fucntional type.  This is helpful in situations where a progression of state is&#10;automatically processed by the system and the state is represented by an&#10;enumeration.&#10;&#10;**General Usage**&#10;&#10;Note that if a record is inserted or updated in this table with its&#10;functional_type_default set true, and another record already exists for the&#10;enumeration/functional type combination with its functional_type_default set&#10;true, the newly inserted/updated record will take precedence and the value&#10;record previously set to be default will have its functional_type_default&#10;setting set to false.&#10;&#10;In cases where there are no functional types, this value should simply remain&#10;false." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="8" name="syst_defined" nullable="false" remarks="Values of `TRUE` in this column indicate that the record is considered a&#10;&quot;System Defined&quot; record, a record which is created and primarily maintained by&#10;the system using automated processes.  A value of `FALSE` indicates that the&#10;record is considered a &quot;User Defined&quot; record which is maintained by user actions&#10;in the application.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="true" digits="0" id="9" name="user_maintainable" nullable="false" remarks="If a record is system defined (see the `syst_defined` column), there may be&#10;some user data maintenance operations permitted in some cases.  If the value of&#10;this column for a record is `TRUE` and the record is also &quot;System Defined&quot;, then&#10;permitted user maintenance operations are available for the record.  If the&#10;record is system defined and the value of this column is `FALSE`, no user&#10;maintenance is allowed.  If the record is not system defined, the value in this&#10;column will have no meaning or effect; user defined records may set this value&#10;`TRUE` as a simple information point indicating that the record is user&#10;maintainable.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="syst_description" nullable="false" remarks="A system defined description indicating the purpose and use cases of a given&#10;record.  Text defined in this column is system maintained and should not be&#10;changed under normal circumstances.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="user_description" nullable="true" remarks="An optional user defined description of the record and its use cases.  If this&#10;value is not `NULL`, the value will override any `syst_description` defined text&#10;in application user interfaces and other presentations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="sort_order" nullable="false" remarks="Indicates the sort ordering of the particular value record with the lowest value&#10;sorting first.&#10;&#10;**General Usage**&#10;&#10;When a value record for an enumeration is inserted or updated and this&#10;column is being set to a value which equals another enumeration value record for&#10;the same enumeration, the system assumes that the new record is being set to&#10;precede the existing record and it will be set to sort after the newly&#10;inserted/updated enumeration value." size="5" type="int2" typeCode="5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="13" name="syst_options" nullable="true" remarks="Extended options and metadata which describe the behavior and meaning of the&#10;specific value within the enumeration.&#10;&#10;**General Usage**&#10;&#10;The owning syst_enums record's default_syst_options column will indicate&#10;what syst_options are required or available and establishes default values for&#10;them." size="2147483647" type="jsonb" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="14" name="user_options" nullable="true" remarks="Extended user defined options, similar to syst_options, but for the purpose of&#10;driving custom functionality." size="2147483647" type="jsonb" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="15" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="16" name="diag_role_created" nullable="false" remarks="The database role which created the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="17" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="18" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="19" name="diag_role_modified" nullable="false" remarks="The database role which modified the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="20" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Direct Usage**&#10;&#10;This column is frequently used by by application logic to resolve the &quot;dirty&#10;write&quot; issues which can arise from concurrent data changes.  As such any&#10;administrative override of automatic system maintenance of this value should&#10;consider the ramifications on application function." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="21" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="syst_enum_items_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="syst_enum_items_display_name_udx" unique="true">
+            <column ascending="true" name="display_name"/>
+         </index>
+         <index name="syst_enum_items_internal_name_udx" unique="true">
+            <column ascending="true" name="internal_name"/>
+         </index>
+      </table>
+      <table name="syst_enums" remarks="Enumerates the enumerations known to the system along with additional metadata&#10;useful in applying them appropriately." schema="ms_syst_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">
+            <child column="enum_id" foreignKey="syst_enum_functional_types_enum_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_enum_functional_types"/>
+            <child column="enum_id" foreignKey="syst_enum_items_enum_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_enum_items"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="false" remarks="A candidate key useful for programmatic references to individual records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="display_name" nullable="false" remarks="A friendly name and candidate key for the record, suitable for use in user&#10;interactions&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="syst_description" nullable="false" remarks="A system defined description indicating the purpose and use cases of a given&#10;record.  Text defined in this column is system maintained and should not be&#10;changed under normal circumstances.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="user_description" nullable="true" remarks="An optional user defined description of the record and its use cases.  If this&#10;value is not `NULL`, the value will override any `syst_description` defined text&#10;in application user interfaces and other presentations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="5" name="syst_defined" nullable="false" remarks="Values of `TRUE` in this column indicate that the record is considered a&#10;&quot;System Defined&quot; record, a record which is created and primarily maintained by&#10;the system using automated processes.  A value of `FALSE` indicates that the&#10;record is considered a &quot;User Defined&quot; record which is maintained by user actions&#10;in the application.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="true" digits="0" id="6" name="user_maintainable" nullable="false" remarks="If a record is system defined (see the `syst_defined` column), there may be&#10;some user data maintenance operations permitted in some cases.  If the value of&#10;this column for a record is `TRUE` and the record is also &quot;System Defined&quot;, then&#10;permitted user maintenance operations are available for the record.  If the&#10;record is system defined and the value of this column is `FALSE`, no user&#10;maintenance is allowed.  If the record is not system defined, the value in this&#10;column will have no meaning or effect; user defined records may set this value&#10;`TRUE` as a simple information point indicating that the record is user&#10;maintainable.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="default_syst_options" nullable="true" remarks="Establishes the expected extended system options along with default values if&#10;applicable.&#10;&#10;**General Usage**&#10;&#10;Note that this setting is used to both validate and set defaults in the&#10;`syst_enum_items.syst_options` column." size="2147483647" type="jsonb" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="default_user_options" nullable="true" remarks="Allows a user to set the definition of syst_enum_items.user_options values and&#10;provide defaults for those values if appropriate." size="2147483647" type="jsonb" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="9" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="diag_role_created" nullable="false" remarks="The database role which created the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="11" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="12" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="13" name="diag_role_modified" nullable="false" remarks="The database role which modified the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="14" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Direct Usage**&#10;&#10;This column is frequently used by by application logic to resolve the &quot;dirty&#10;write&quot; issues which can arise from concurrent data changes.  As such any&#10;administrative override of automatic system maintenance of this value should&#10;consider the ramifications on application function." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="15" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="syst_enums_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="syst_enums_display_name_udx" unique="true">
+            <column ascending="true" name="display_name"/>
+         </index>
+         <index name="syst_enums_internal_name_udx" unique="true">
+            <column ascending="true" name="internal_name"/>
+         </index>
+      </table>
+      <table name="syst_instance_contexts" remarks="Instance specific settings which determine how each Instance connects to the&#10;defined Application Contexts." schema="ms_syst_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="false" remarks="A candidate key useful for programmatic references to individual records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="instance_id" nullable="false" remarks="Identifies the parent Instance for which Instance Contexts are being defined." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="syst_instance_contexts_instances_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_instances"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="application_context_id" nullable="false" remarks="Identifies the Application Context which is being defined for the Instance." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="syst_instance_contexts_application_contexts_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_application_contexts"/>
+         </column>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="4" name="start_context" nullable="false" remarks="Indicates whether the Instance Context should be started on Instance start.&#10;&#10;**General Usage**&#10;&#10;If true, indicates that the Instance Context should be started, so long as the&#10;Application Context record is also set to allow context starting.  If false, the&#10;Instance Context not be started, even if the related Application Context is set&#10;to allow context starts." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="5" name="db_pool_size" nullable="false" remarks="If the Application Context is a login datastore context, this value establishes&#10;how many database connections to open on behalf of this Instance Context." size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="context_code" nullable="false" remarks="An Instance Context specific series of bytes which are used in algorithmic&#10;credential generation." size="2147483647" type="bytea" typeCode="-2"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="7" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="diag_role_created" nullable="true" remarks="The database role which created the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="9" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="10" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="diag_role_modified" nullable="true" remarks="The database role which modified the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="12" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Direct Usage**&#10;&#10;This column is frequently used by by application logic to resolve the &quot;dirty&#10;write&quot; issues which can arise from concurrent data changes.  As such any&#10;administrative override of automatic system maintenance of this value should&#10;consider the ramifications on application function." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="13" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="syst_instance_contexts_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="syst_instance_contexts_internal_name_udx" unique="true">
+            <column ascending="true" name="internal_name"/>
+         </index>
+         <checkConstraint constraint="((db_pool_size &gt;= 0))" name="syst_instance_contexts_db_pool_size_chk"/>
+      </table>
+      <table name="syst_instance_type_applications" remarks="A many-to-many relation indicating which Instance Types are usable for each&#10;Application.&#10;&#10;**General Usage**&#10;&#10;Note that creating ms_syst_data.syst_application_contexts records prior to&#10;inserting an Instance Type/Application association into this table is&#10;recommended as default Instance Type Context records can be created&#10;automatically on INSERT into this table so long as the supporting data is&#10;available.  After insert here, manipulations of what Contexts Applications&#10;require must be handled manually." schema="ms_syst_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">
+            <child column="instance_type_application_id" foreignKey="syst_instance_type_contexts_inst_type_app_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_instance_type_contexts"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="instance_type_id" nullable="false" remarks="A reference to the Instance Type being associated to an Application." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="syst_instance_type_applications_instance_types_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_enum_items"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="application_id" nullable="false" remarks="A reference to the Application being associated with the Instance Type." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="syst_instance_type_applications_applications_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_applications"/>
+         </column>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="3" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="diag_role_created" nullable="true" remarks="The database role which created the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="5" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="6" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="diag_role_modified" nullable="true" remarks="The database role which modified the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="8" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Direct Usage**&#10;&#10;This column is frequently used by by application logic to resolve the &quot;dirty&#10;write&quot; issues which can arise from concurrent data changes.  As such any&#10;administrative override of automatic system maintenance of this value should&#10;consider the ramifications on application function." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="9" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="syst_instance_type_applications_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="syst_instance_type_applications_instance_type_applications_udx" unique="true">
+            <column ascending="true" name="instance_type_id"/>
+            <column ascending="true" name="application_id"/>
+         </index>
+      </table>
+      <table name="syst_instance_type_contexts" remarks="Establishes Instance Type defaults for each of an Application's defined&#10;datastore contexts.&#10;&#10;**General Usage**&#10;&#10;In practice, these records are used in the creation of Instance Context records,&#10;but do not establish a direct relationship; records in this table simply inform&#10;us what Instance Contexts should exist and give us default values to use in&#10;their creation." schema="ms_syst_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="instance_type_application_id" nullable="false" remarks="The Instance Type/Application association to which the context definition&#10;belongs." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="syst_instance_type_contexts_inst_type_app_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_instance_type_applications"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="application_context_id" nullable="false" remarks="The Application Context which is being represented in the Instance Type." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="syst_instance_type_contexts_application_contexts_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_application_contexts"/>
+         </column>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="3" name="default_db_pool_size" nullable="false" remarks="A default pool size which is assigned to new Instances of the Instance Type&#10;unless the creator of the Instance specifies a different value." size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="4" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="diag_role_created" nullable="true" remarks="The database role which created the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="6" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="7" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="diag_role_modified" nullable="true" remarks="The database role which modified the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="9" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Direct Usage**&#10;&#10;This column is frequently used by by application logic to resolve the &quot;dirty&#10;write&quot; issues which can arise from concurrent data changes.  As such any&#10;administrative override of automatic system maintenance of this value should&#10;consider the ramifications on application function." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="10" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="syst_instance_type_contexts_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="syst_instance_type_contexts_instance_types_applications_udx" unique="true">
+            <column ascending="true" name="instance_type_application_id"/>
+            <column ascending="true" name="application_context_id"/>
+         </index>
+         <checkConstraint constraint="((default_db_pool_size &gt;= 0))" name="syst_instance_type_contexts_default_db_pool_size_chk"/>
+      </table>
+      <table name="syst_instances" remarks="Defines known application instances and provides their configuration settings." schema="ms_syst_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">
+            <child column="instance_id" foreignKey="syst_instance_contexts_instances_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_instance_contexts"/>
+            <child column="owning_instance_id" foreignKey="syst_instances_owning_instance_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_instances"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="false" remarks="A candidate key useful for programmatic references to individual records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="display_name" nullable="false" remarks="A friendly name and candidate key for the record, suitable for use in user&#10;interactions&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="application_id" nullable="false" remarks="Indicates an instance of which application is being described by the record." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="syst_instances_applications_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_applications"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="instance_type_id" nullable="false" remarks="Indicates the type of the instance.  This can designate instances as being&#10;production or non-production, or make other functional differences between&#10;instances created for different reasons based on the assigned instance type." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="syst_instances_enum_instance_type_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_enum_items"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="instance_state_id" nullable="false" remarks="Establishes the current life-cycle state of the instance record.  This can&#10;determine functionality such as if the instance is usable, visible, or if it may&#10;be purged from the database completely." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="syst_instances_enum_instance_state_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_enum_items"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="owner_id" nullable="false" remarks="Identifies the owner of the instance.  The owner is the entity which&#10;commissioned the instance and is the &quot;user&quot; of the instance.  Owners have&#10;nominal management rights over their instances, such as which access accounts&#10;and which credential types are allowed to be used to authenticate to the owner's&#10;instances." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="syst_instances_owners_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_owners"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="owning_instance_id" nullable="true" remarks="In some cases, an instance is considered subordinate to another instance.  For&#10;example, consider a production environment and a related sandbox environment.&#10;The existence of the sandbox doesn't have real meaning without being associated&#10;with some sort of production instance where the real work is performed.  This&#10;kind of association becomes clearer in SaaS environments where a primary&#10;instance is contracted for, but other supporting instances, such as a sandbox,&#10;should follow certain account related actions of the primary." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="syst_instances_owning_instance_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_instances"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="dbserver_name" nullable="true" remarks="Identifies on which database server the instance is hosted. If empty, no&#10;server has been assigned and the instance is unstartable." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="instance_code" nullable="false" remarks="This is a random sequence of bytes intended for use in certain algorithmic&#10;credential generation routines.&#10;&#10;**General Usage**&#10;&#10;Note that losing this value may prevent the Instance from being started due to&#10;bad credentials; there may be other consequences as well." size="2147483647" type="bytea" typeCode="-2"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="instance_options" nullable="true" remarks="A key/value store of values which define application or instance specific&#10;options." size="2147483647" type="jsonb" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="11" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="diag_role_created" nullable="false" remarks="The database role which created the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="13" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="14" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="15" name="diag_role_modified" nullable="false" remarks="The database role which modified the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="16" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Direct Usage**&#10;&#10;This column is frequently used by by application logic to resolve the &quot;dirty&#10;write&quot; issues which can arise from concurrent data changes.  As such any&#10;administrative override of automatic system maintenance of this value should&#10;consider the ramifications on application function." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="17" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="syst_instances_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="syst_instances_display_name_udx" unique="true">
+            <column ascending="true" name="display_name"/>
+         </index>
+         <index name="syst_instances_internal_name_udx" unique="true">
+            <column ascending="true" name="internal_name"/>
+         </index>
+         <checkConstraint constraint="(((owning_instance_id IS NULL) OR (owning_instance_id &lt;&gt; id)))" name="syst_instances_self_ownership_chk"/>
+      </table>
+      <table name="syst_owners" remarks="Identifies instance owners.  Instance owners are typically the clients which&#10;have commissioned the use of an application instance." schema="ms_syst_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">
+            <child column="owner_id" foreignKey="syst_instances_owners_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_instances"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="false" remarks="A candidate key useful for programmatic references to individual records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="display_name" nullable="false" remarks="A friendly name and candidate key for the record, suitable for use in user&#10;interactions&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="owner_state_id" nullable="false" remarks="Establishes the current life-cycle state in which Instance Owner record&#10;currently resides." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="syst_owner_owner_states_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_enum_items"/>
+         </column>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="4" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="diag_role_created" nullable="false" remarks="The database role which created the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="6" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="7" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="diag_role_modified" nullable="false" remarks="The database role which modified the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="9" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Direct Usage**&#10;&#10;This column is frequently used by by application logic to resolve the &quot;dirty&#10;write&quot; issues which can arise from concurrent data changes.  As such any&#10;administrative override of automatic system maintenance of this value should&#10;consider the ramifications on application function." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="10" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="syst_owners_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="syst_owners_display_name_udx" unique="true">
+            <column ascending="true" name="display_name"/>
+         </index>
+         <index name="syst_owners_internal_name_udx" unique="true">
+            <column ascending="true" name="internal_name"/>
+         </index>
+      </table>
+   </tables>
+   <routines>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_a_i_syst_instance_type_apps_create_inst_type_contexts()" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[When a new association between an Application and an Instance Type is made by
+inserting a record into this table, Instance Type Contexts are automatically
+created by this function based on the Application Context records defined at the
+time of INSERT into this table.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `AFTER`
+
+  * **Supported Operations**: `INSERT`
+
+**General Usage**
+
+The default default_db_pool_size value is 0.
+
+After the fact changes to Contexts must be managed manually.]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_a_i_syst_instance_type_apps_create_inst_type_contexts.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_instance/ms_syst_data/syst_instance_type_applications/trig_a_i_syst_instance_type_apps_create_inst_type_contexts.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com  :: https://muse.systems
+
+BEGIN
+
+    INSERT INTO ms_syst_data.syst_instance_type_contexts
+        ( instance_type_application_id, application_context_id, default_db_pool_size )
+    SELECT
+        new.id
+      , id
+      , 0
+    FROM ms_syst_data.syst_application_contexts
+    WHERE application_id = new.application_id;
+
+    RETURN new;
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_a_i_syst_instances_create_instance_contexts()" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_a_i_syst_instances_create_instance_contexts.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_instance/ms_syst_data/syst_instances/trig_a_i_syst_instances_create_instance_contexts.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com  :: https://muse.systems
+
+BEGIN
+
+    INSERT INTO ms_syst_data.syst_instance_contexts
+        ( internal_name
+        , instance_id
+        , application_context_id
+        , start_context
+        , db_pool_size
+        , context_code )
+    SELECT
+        new.internal_name || '_' || sac.internal_name
+      , new.id
+      , sac.id
+      , sac.login_context
+      , sitc.default_db_pool_size
+      , public.gen_random_bytes( 16 )
+    FROM
+        ms_syst_data.syst_owners so,
+        ms_syst_data.syst_application_contexts sac
+            JOIN ms_syst_data.syst_instance_type_contexts sitc
+                ON sitc.application_context_id = sac.id
+            JOIN ms_syst_data.syst_applications sa
+                ON sa.id = sac.application_id
+            JOIN ms_syst_data.syst_instance_type_applications sita
+                ON sita.id = sitc.instance_type_application_id
+    WHERE
+          so.id = new.owner_id
+      AND sita.instance_type_id = new.instance_type_id
+      AND sa.id = new.application_id;
+
+    RETURN new;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_a_iu_syst_enum_items_maintain_sort_order()" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Automatically maintains the sort order of syst_enum_item records in cases where
+sort ordering collides with existing syst_enum_items records for the same
+enum_id.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `AFTER`
+
+  * **Supported Operations**: `INSERT`, `UPDATE`
+
+**General Usage**
+
+On insert or update when the new sort_order value matches that of an existing
+record for the enumeration, the system will sort the match record after the
+new/updated record. This will cascade for all syst_enum_items records matching
+the enum_id until the last one is updated.]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_a_iu_syst_enum_items_maintain_sort_order.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_enums/ms_syst_data/syst_enum_items/trig_a_iu_syst_enum_items_maintain_sort_order.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com  :: https://muse.systems
+
+BEGIN
+
+    UPDATE ms_syst_data.syst_enum_items
+    SET sort_order = sort_order + 1
+    WHERE enum_id = new.enum_id AND sort_order = new.sort_order AND id != new.id;
+
+    RETURN NULL;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_b_d_syst_applications_delete_contexts()" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Deletes the Application Contexts prior to deleting the Application record
+itself.  This is needed because the trigger preventing datastore context owner
+contexts to be deleted must be disabled prior to the delete.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `BEFORE`
+
+  * **Supported Operations**: `DELETE`]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_b_d_syst_applications_delete_contexts.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_instance/ms_syst_data/syst_applications/trig_b_d_syst_applications_delete_contexts.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com  :: https://muse.systems
+
+BEGIN
+
+    ALTER TABLE ms_syst_data.syst_application_contexts
+        DISABLE TRIGGER c50_trig_b_d_syst_application_contexts_validate_owner_context;
+
+    DELETE FROM ms_syst_data.syst_application_contexts WHERE application_id = old.id;
+
+    ALTER TABLE ms_syst_data.syst_application_contexts
+        ENABLE TRIGGER c50_trig_b_d_syst_application_contexts_validate_owner_context;
+
+    RETURN old;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_b_i_syst_enum_functional_type_validate_new_allowed()" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Checks to see if this is the first functional type being added for the
+enumeration and, if so, that no syst_enum_items records already exist.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `BEFORE`
+
+  * **Supported Operations**: `INSERT`
+
+**General Usage**
+
+Adding a first functional type for an enumeration which already has defined
+enumeration items implies that the enumeration items must be assigned a
+functional type in the same operation to keep data consistency.  In practice,
+this would be difficult since there would almost certainly have to be multiple
+functional types available in order to avoid making bogus assignments; it would
+be much more difficult to manage such a process as compared to simply
+disallowing the scenario.]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_b_i_syst_enum_functional_type_validate_new_allowed.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_enums/ms_syst_data/syst_enum_functional_types/trig_b_i_syst_enum_functional_type_validate_new_allowed.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com  :: https://muse.systems
+
+BEGIN
+
+    IF
+        NOT EXISTS(SELECT TRUE
+                    FROM ms_syst_data.syst_enum_functional_types
+                    WHERE enum_id = new.enum_id) AND
+        EXISTS(
+                SELECT TRUE
+                FROM ms_syst_data.syst_enum_items
+                WHERE enum_id = new.enum_id
+            )
+    THEN
+
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'You cannot add a functional type requirement after enumeration item ' ||
+                          'records have already been defined.',
+                DETAIL  = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst_data'
+                            ,p_proc_name      => 'trig_b_i_syst_enum_functional_type_validate_new_allowed'
+                            ,p_exception_name => 'invalid_functional_type'
+                            ,p_errcode        => 'PM003'
+                            ,p_param_data     => to_jsonb(new)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM003',
+                SCHEMA  = tg_table_schema,
+                TABLE   = tg_table_name;
+
+    END IF;
+
+    RETURN new;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_b_i_syst_enum_items_maintain_sort_order()" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[For INSERTed records with a null sort_order value, this trigger will assign a
+default value assuming the new record should be inserted at the end of the sort.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `BEFORE`
+
+  * **Supported Operations**: `INSERT`
+
+**General Usage**
+
+If the inserted record was already assigned a sort_order value, the inserted
+value is respected.]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_b_i_syst_enum_items_maintain_sort_order.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_enums/ms_syst_data/syst_enum_items/trig_b_i_syst_enum_items_maintain_sort_order.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com  :: https://muse.systems
+
+BEGIN
+
+    new.sort_order :=
+        coalesce(
+            new.sort_order,
+            ( SELECT max( sort_order ) + 1
+              FROM ms_syst_data.syst_enum_items
+              WHERE enum_id = new.enum_id ),
+            1 );
+
+    RETURN new;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_b_iu_syst_enum_items_validate_functional_types()" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Ensures that if the parent syst_enums record has syst_enum_functional_types
+records defined, a syst_enum_items record will reference one of those
+functional types.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `BEFORE`
+
+  * **Supported Operations**: `INSERT`, `UPDATE`
+
+**General Usage**
+
+Note that this trigger function is intended to be use by
+constraint triggers.]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_b_iu_syst_enum_items_validate_functional_types.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_enums/ms_syst_data/syst_enum_items/trig_b_iu_syst_enum_items_validate_functional_types.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com  :: https://muse.systems
+
+BEGIN
+
+    IF
+        EXISTS( SELECT TRUE
+                FROM ms_syst_data.syst_enum_functional_types seft
+                WHERE   seft.enum_id = new.enum_id) AND
+        NOT EXISTS( SELECT TRUE
+                    FROM ms_syst_data.syst_enum_functional_types seft
+                    WHERE   seft.id = new.functional_type_id
+                        AND seft.enum_id = new.enum_id)
+    THEN
+
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'The enumeration requires a valid functional type to be specified.',
+                DETAIL  = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst_data'
+                            ,p_proc_name      => 'trig_b_iu_syst_enum_items_validate_functional_types'
+                            ,p_exception_name => 'invalid_functional_type'
+                            ,p_errcode        => 'PM003'
+                            ,p_param_data     => to_jsonb(new)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM003',
+                SCHEMA  = tg_table_schema,
+                TABLE   = tg_table_name;
+
+    END IF;
+
+    RETURN new;
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_b_iud_syst_application_contexts_validate_owner_context()" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Validates database_owner_context values based on the pre-existing state of the database.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `BEFORE`
+
+  * **Supported Operations**: `INSERT`, `UPDATE`, `DELETE`]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_b_iud_syst_application_contexts_validate_owner_context.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_instance/ms_syst_data/syst_application_contexts/trig_b_iud_syst_application_contexts_validate_owner_context.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com  :: https://muse.systems
+
+BEGIN
+
+    IF tg_op = 'DELETE' THEN
+
+        IF old.database_owner_context THEN
+            RAISE EXCEPTION
+                USING
+                    MESSAGE = 'You may not delete the designated database owner ' ||
+                              'context for an Application from the database.',
+                    DETAIL = ms_syst_priv.get_exception_details(
+                                 p_proc_schema    => 'ms_syst_data'
+                                ,p_proc_name      => 'trig_b_iud_syst_application_contexts_validate_owner_context'
+                                ,p_exception_name => 'invalid_duplicate'
+                                ,p_errcode        => 'PM008'
+                                ,p_param_data     => to_jsonb(new)
+                                ,p_context_data   =>
+                                    jsonb_build_object(
+                                         'tg_op',         tg_op
+                                        ,'tg_when',       tg_when
+                                        ,'tg_schema',     tg_table_schema
+                                        ,'tg_table_name', tg_table_name)),
+                    ERRCODE = 'PM008',
+                    SCHEMA = tg_table_schema,
+                    TABLE = tg_table_name;
+        END IF;
+
+        RETURN old;
+
+    END IF;
+
+    IF tg_op = 'UPDATE' THEN
+
+        IF
+            new.database_owner_context != old.database_owner_context
+        THEN
+            RAISE EXCEPTION
+                USING
+                    MESSAGE = 'The database owner context designation may ' ||
+                              'only be set on INSERT.',
+                    DETAIL = ms_syst_priv.get_exception_details(
+                                 p_proc_schema    => 'ms_syst'
+                                ,p_proc_name      => 'trig_b_iud_syst_application_contexts_validate_owner_context'
+                                ,p_exception_name => 'invalid_duplicate'
+                                ,p_errcode        => 'PM008'
+                                ,p_param_data     => to_jsonb(new)
+                                ,p_context_data   =>
+                                    jsonb_build_object(
+                                         'tg_op',         tg_op
+                                        ,'tg_when',       tg_when
+                                        ,'tg_schema',     tg_table_schema
+                                        ,'tg_table_name', tg_table_name)),
+                    ERRCODE = 'PM008',
+                    SCHEMA = tg_table_schema,
+                    TABLE = tg_table_name;
+        END IF;
+
+    END IF;
+
+    IF tg_op IN ('INSERT', 'UPDATE') THEN
+
+        -- There may only be one database owner context for any one application.
+        IF
+            new.database_owner_context AND
+            exists( SELECT
+                        TRUE
+                    FROM ms_syst_data.syst_application_contexts sac
+                    WHERE
+                          sac.application_id = new.application_id
+                      AND sac.id != new.id
+                      AND sac.database_owner_context)
+        THEN
+            RAISE EXCEPTION
+                USING
+                    MESSAGE = 'Each Application may only have one Application Context ' ||
+                              'defined as being the database owner.',
+                    DETAIL = ms_syst_priv.get_exception_details(
+                                 p_proc_schema    => 'ms_syst'
+                                ,p_proc_name      => 'trig_b_iud_syst_application_contexts_validate_owner_context'
+                                ,p_exception_name => 'invalid_duplicate'
+                                ,p_errcode        => 'PM008'
+                                ,p_param_data     => to_jsonb(new)
+                                ,p_context_data   =>
+                                    jsonb_build_object(
+                                         'tg_op',         tg_op
+                                        ,'tg_when',       tg_when
+                                        ,'tg_schema',     tg_table_schema
+                                        ,'tg_table_name', tg_table_name)),
+                    ERRCODE = 'PM008',
+                    SCHEMA = tg_table_schema,
+                    TABLE = tg_table_name;
+        END IF;
+
+        -- Database context owners may not be login contexts nor may they be
+        -- started
+        IF new.database_owner_context AND (new.login_context OR new.start_context) THEN
+            RAISE EXCEPTION
+                USING
+                    MESSAGE = 'A database owner context may not be a login ' ||
+                              'context nor may it be started.',
+                    DETAIL = ms_syst_priv.get_exception_details(
+                                 p_proc_schema    => 'ms_syst'
+                                ,p_proc_name      => 'trig_b_iud_syst_application_contexts_validate_owner_context'
+                                ,p_exception_name => 'invalid_duplicate'
+                                ,p_errcode        => 'PM008'
+                                ,p_param_data     => to_jsonb(new)
+                                ,p_context_data   =>
+                                    jsonb_build_object(
+                                         'tg_op',         tg_op
+                                        ,'tg_when',       tg_when
+                                        ,'tg_schema',     tg_table_schema
+                                        ,'tg_table_name', tg_table_name)),
+                    ERRCODE = 'PM008',
+                    SCHEMA = tg_table_schema,
+                    TABLE = tg_table_name;
+        END IF;
+
+        RETURN new;
+
+    END IF;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+   </routines>
+</database>

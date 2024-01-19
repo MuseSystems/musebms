@@ -14,7 +14,7 @@
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
     <script src="dist/handlebars.templates-43PMFBC7.js"></script>
-    <script src="dist/sidebar_items-E19275D0.js"></script>
+    <script src="dist/sidebar_items-20914712.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -124,7 +124,7 @@ Pages
 
 
   <section id="moduledoc">
-<h1>MscmpSystSettings - User Configuration Management</h1><p>A user options configuration management service.</p><p>The Settings Service provides caching and management functions for user
+<p>A user options configuration management service.</p><p>The Settings Service provides caching and management functions for user
 configurable options which govern how the application operates.  Multiple
 Settings Service instances may be in operation depending on the needs of the
 application; for example, in the case of multi-tenancy, each tenant will have
@@ -394,13 +394,13 @@ permitted here, but not required.</p></li></ul><h2 id="create_setting/1-examples
   </a>
   <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">new_setting</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="0854186757-1">%{</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">new_setting</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="6070059373-1">%{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">internal_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;create_example_setting&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">display_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Create Example Setting&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">user_description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;An example of setting creation.&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">setting_integer</span><span class="p">:</span><span class="w"> </span><span class="mi">9876</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="0854186757-1">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">create_setting</span><span class="p" data-group-id="0854186757-2">(</span><span class="n">new_setting</span><span class="p" data-group-id="0854186757-2">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="6070059373-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">create_setting</span><span class="p" data-group-id="6070059373-2">(</span><span class="n">new_setting</span><span class="p" data-group-id="6070059373-2">)</span><span class="w">
 </span><span class="ss">:ok</span></code></pre>
   </section>
 </section>
@@ -438,7 +438,7 @@ Trying to do so will result in a error being raised.</p><h2 id="delete_setting/1
   </a>
   <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">delete_setting</span><span class="p" data-group-id="5319266451-1">(</span><span class="s">&quot;delete_example_setting&quot;</span><span class="p" data-group-id="5319266451-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">delete_setting</span><span class="p" data-group-id="6001736877-1">(</span><span class="s">&quot;delete_example_setting&quot;</span><span class="p" data-group-id="6001736877-1">)</span><span class="w">
 </span><span class="ss">:ok</span></code></pre>
   </section>
 </section>
@@ -477,15 +477,15 @@ Trying to do so will result in a error being raised.</p><h2 id="delete_setting/1
   </a>
   <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">get_setting_value</span><span class="p" data-group-id="3155231030-1">(</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">get_setting_value</span><span class="p" data-group-id="4387382845-1">(</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="s">&quot;get_example_setting&quot;</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:setting_decimal_range</span><span class="p" data-group-id="3155231030-1">)</span><span class="w">
-</span><span class="p" data-group-id="3155231030-2">%</span><span class="nc" data-group-id="3155231030-2">MscmpSystDb.DbTypes.DecimalRange</span><span class="p" data-group-id="3155231030-2">{</span><span class="w">
-  </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="nc">Decimal</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="3155231030-3">(</span><span class="s">&quot;1.1&quot;</span><span class="p" data-group-id="3155231030-3">)</span><span class="p">,</span><span class="w">
-  </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="nc">Decimal</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="3155231030-4">(</span><span class="s">&quot;99.99&quot;</span><span class="p" data-group-id="3155231030-4">)</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:setting_decimal_range</span><span class="p" data-group-id="4387382845-1">)</span><span class="w">
+</span><span class="p" data-group-id="4387382845-2">%</span><span class="nc" data-group-id="4387382845-2">MscmpSystDb.DbTypes.DecimalRange</span><span class="p" data-group-id="4387382845-2">{</span><span class="w">
+  </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="nc">Decimal</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="4387382845-3">(</span><span class="s">&quot;1.1&quot;</span><span class="p" data-group-id="4387382845-3">)</span><span class="p">,</span><span class="w">
+  </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="nc">Decimal</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="4387382845-4">(</span><span class="s">&quot;99.99&quot;</span><span class="p" data-group-id="4387382845-4">)</span><span class="p">,</span><span class="w">
   </span><span class="ss">lower_inclusive</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="p">,</span><span class="w">
   </span><span class="ss">upper_inclusive</span><span class="p">:</span><span class="w"> </span><span class="no">false</span><span class="w">
-</span><span class="p" data-group-id="3155231030-2">}</span></code></pre>
+</span><span class="p" data-group-id="4387382845-2">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="get_setting_values/1">
@@ -522,7 +522,7 @@ Trying to do so will result in a error being raised.</p><h2 id="delete_setting/1
   </a>
   <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">get_setting_values</span><span class="p" data-group-id="7839195805-1">(</span><span class="s">&quot;get_example_setting&quot;</span><span class="p" data-group-id="7839195805-1">)</span></code></pre>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">get_setting_values</span><span class="p" data-group-id="1598801172-1">(</span><span class="s">&quot;get_example_setting&quot;</span><span class="p" data-group-id="1598801172-1">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="list_all_settings/0">
@@ -552,7 +552,7 @@ descriptions, etc.</p><h2 id="list_all_settings/0-examples" class="section-headi
   </a>
   <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">list_all_settings</span><span class="p" data-group-id="6588040025-1">(</span><span class="p" data-group-id="6588040025-1">)</span></code></pre>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">list_all_settings</span><span class="p" data-group-id="7419486054-1">(</span><span class="p" data-group-id="7419486054-1">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="set_setting_value/3">
@@ -594,10 +594,10 @@ error will be raised.</p></li></ul><h2 id="set_setting_value/3-examples" class="
   </a>
   <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">set_setting_value</span><span class="p" data-group-id="8855930682-1">(</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">set_setting_value</span><span class="p" data-group-id="3987058108-1">(</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="s">&quot;set_example_setting&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">:setting_decimal</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">Decimal</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="8855930682-2">(</span><span class="s">&quot;1029.3847&quot;</span><span class="p" data-group-id="8855930682-2">)</span><span class="p" data-group-id="8855930682-1">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="nc">Decimal</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="3987058108-2">(</span><span class="s">&quot;1029.3847&quot;</span><span class="p" data-group-id="3987058108-2">)</span><span class="p" data-group-id="3987058108-1">)</span><span class="w">
 </span><span class="ss">:ok</span></code></pre>
   </section>
 </section>
@@ -642,19 +642,19 @@ value, and/or updates to the <code class="inline">user_description</code> value.
   </a>
   <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">update_values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="6962732471-1">%{</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="n">update_values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="7846385779-1">%{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">user_description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;An example of updating the user description.&quot;</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">setting_integer</span><span class="p">:</span><span class="w"> </span><span class="mi">6758</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">setting_date_range</span><span class="p">:</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="p" data-group-id="6962732471-2">%</span><span class="nc" data-group-id="6962732471-2">MscmpSystDb.DbTypes.DateRange</span><span class="p" data-group-id="6962732471-2">{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="p" data-group-id="7846385779-2">%</span><span class="nc" data-group-id="7846385779-2">MscmpSystDb.DbTypes.DateRange</span><span class="p" data-group-id="7846385779-2">{</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">       </span><span class="ss">lower</span><span class="p">:</span><span class="w"> </span><span class="ld">~D[2022-04-01]</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">       </span><span class="ss">upper</span><span class="p">:</span><span class="w"> </span><span class="ld">~D[2022-04-12]</span><span class="p">,</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">       </span><span class="ss">upper_inclusive</span><span class="p">:</span><span class="w"> </span><span class="no">true</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="p" data-group-id="6962732471-2">}</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="6962732471-1">}</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">set_setting_values</span><span class="p" data-group-id="6962732471-3">(</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">     </span><span class="p" data-group-id="7846385779-2">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="7846385779-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">set_setting_values</span><span class="p" data-group-id="7846385779-3">(</span><span class="w">
 </span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="s">&quot;set_example_setting&quot;</span><span class="p">,</span><span class="w">
-</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="n">update_values</span><span class="p" data-group-id="6962732471-3">)</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="n">update_values</span><span class="p" data-group-id="7846385779-3">)</span><span class="w">
 </span><span class="ss">:ok</span></code></pre>
   </section>
 </section>
@@ -697,7 +697,7 @@ set.</p><h2 id="get_settings_service/0-examples" class="section-heading">
   </a>
   <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">get_settings_service</span><span class="p" data-group-id="7210466804-1">(</span><span class="p" data-group-id="7210466804-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">get_settings_service</span><span class="p" data-group-id="7147818483-1">(</span><span class="p" data-group-id="7147818483-1">)</span><span class="w">
 </span><span class="ss">:settings_test_service</span></code></pre>
   </section>
 </section>
@@ -744,7 +744,7 @@ the process.</li></ul><h2 id="put_settings_service/1-examples" class="section-he
   </a>
   <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">put_settings_service</span><span class="p" data-group-id="2374829507-1">(</span><span class="ss">:settings_test_service</span><span class="p" data-group-id="2374829507-1">)</span></code></pre>
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">put_settings_service</span><span class="p" data-group-id="5982426345-1">(</span><span class="ss">:settings_test_service</span><span class="p" data-group-id="5982426345-1">)</span></code></pre>
   </section>
 </section>
 <section class="detail" id="refresh_from_database/0">
@@ -775,7 +775,7 @@ datastore context provided to <a href="#start_link/1"><code class="inline">start
   </a>
   <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">refresh_from_database</span><span class="p" data-group-id="2284123583-1">(</span><span class="p" data-group-id="2284123583-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">refresh_from_database</span><span class="p" data-group-id="2996926766-1">(</span><span class="p" data-group-id="2996926766-1">)</span><span class="w">
 </span><span class="ss">:ok</span></code></pre>
   </section>
 </section>
@@ -840,7 +840,7 @@ modifying database data.</p>
   </a>
   <span class="text">Examples</span>
 </h2>
-<pre><code class="makeup elixir" translate="no"><span class="o">&gt;</span><span class="w"> </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">terminate_settings_service</span><span class="p" data-group-id="9154226914-1">(</span><span class="p" data-group-id="9154226914-1">)</span><span class="w">
+<pre><code class="makeup elixir" translate="no"><span class="o">&gt;</span><span class="w"> </span><span class="nc">MscmpSystSettings</span><span class="o">.</span><span class="n">terminate_settings_service</span><span class="p" data-group-id="9309039261-1">(</span><span class="p" data-group-id="9309039261-1">)</span><span class="w">
 </span><span class="ss">:ok</span></code></pre>
   </section>
 </section>

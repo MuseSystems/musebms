@@ -1,0 +1,1875 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>mscmp_syst_nav.ms_syst_data</title>
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
+        <!-- Bootstrap 3.3.5 -->
+        <link rel="stylesheet" href="bower/admin-lte/bootstrap/css/bootstrap.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="bower/font-awesome/css/font-awesome.min.css">
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="bower/ionicons/css/ionicons.min.css">
+        <!-- DataTables -->
+        <link rel="stylesheet" href="bower/datatables.net-bs/css/dataTables.bootstrap.min.css">
+        <link rel="stylesheet" href="bower/datatables.net-buttons-bs/css/buttons.bootstrap.min.css">
+        <!-- Code Mirror -->
+        <link rel="stylesheet" href="bower/codemirror/codemirror.css">
+        <!-- Fonts -->
+        <link href='fonts/indieflower/indie-flower.css' rel='stylesheet' type='text/css'>
+        <link href='fonts/source-sans-pro/source-sans-pro.css' rel='stylesheet' type='text/css'>
+
+        <!-- Theme style -->
+        <link rel="stylesheet" href="bower/admin-lte/dist/css/AdminLTE.min.css">
+        <!-- Salvattore -->
+        <link rel="stylesheet" href="bower/salvattore/salvattore.css">
+        <!-- AdminLTE Skins. Choose a skin from the css/skins
+           folder instead of downloading all of them to reduce the load. -->
+        <link rel="stylesheet" href="bower/admin-lte/dist/css/skins/_all-skins.min.css">
+        <!-- SchemaSpy -->
+        <link rel="stylesheet" href="schemaSpy.css">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="bower/html5shiv/html5shiv.min.js"></script>
+        <script src="bower/respond/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+    <body class="hold-transition skin-blue layout-top-nav">
+        <div class="wrapper">
+            <header class="main-header">
+                <nav class="navbar navbar-static-top">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <a href="../index.html" class="navbar-brand"><b>mscmp_syst_nav</b></a><span class="navbar-brand" style="padding-left: 0">.ms_syst_data</span>
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
+                        </div>
+
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+                            <ul class="nav navbar-nav">
+                                <li><a href="index.html">Tables <span class="sr-only">(current)</span></a></li>
+                                <li><a href="columns.html" title="All of the columns in the schema">Columns</a></li>
+                                <li><a href="constraints.html" title="Useful for diagnosing error messages that just give constraint name or number">Constraints</a></li>
+                                <li><a href="relationships.html" title="Diagram of table relationships">Relationships</a></li>
+                                <li><a href="orphans.html" title="View of tables with neither parents nor children">Orphan&nbsp;Tables</a></li>
+                                <li><a href="anomalies.html" title="Things that might not be quite right">Anomalies</a></li>
+                                <li><a href="routines.html" title="Procedures and functions">Routines</a></li>
+                            </ul>
+                        </div>
+                        <!-- /.navbar-collapse -->
+                        <!-- Navbar Right Menu -->
+                    </div>
+                    <!-- /.container-fluid -->
+                </nav>
+            </header>
+            <!-- Main content -->
+            <!-- Full Width Column -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <h1>Columns</h1>
+                </section>
+                <!-- Main content -->
+                <section class="content">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                            <h3 class="box-title">Columns</h3>
+                        </div>
+                        <div class="box-body">
+                            <table
+                                    id="column_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="50"
+                                    data-length-change="false">
+                                <thead align='left'>
+                                    <tr>
+                                        <th>Table</th>
+                                        <th>Type</th>
+                                        <th>Column</th>
+                                        <th>Type</th>
+                                        <th>Size</th>
+                                        <th title='Are nulls allowed?'>Nullable</th>
+                                        <th title='Is column automatically updated?'>Auto</th>
+                                        <th title='Default value'>Default</th>
+                                        <th title='Comments' class="toggle"><span>Comments</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+                <script>
+                    var tableData = [
+    {
+        "tableName": "syst_enum_items",
+        "tableFileName": "syst_enum_items",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'><\/i>internal_name",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>A candidate key useful for programmatic references to individual records.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_menus",
+        "tableFileName": "syst_menus",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_role_modified",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>The database role which modified the record.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_enums",
+        "tableFileName": "syst_enums",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_role_created",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>The database role which created the record.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_enum_functional_types",
+        "tableFileName": "syst_enum_functional_types",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id",
+        "type": "uuid",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "uuid_generate_v7()",
+        "comments": "<p>The record&rsquo;s primary key.  The definitive identifier of the record in the system.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_action_groups",
+        "tableFileName": "syst_action_groups",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "user_description",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>An optional user defined description of the record and its use cases.  If this value is not <code>NULL<\/code>, the value will override any <code>syst_description<\/code> defined text in application user interfaces and other presentations.<\/p>"
+    },
+    {
+        "tableName": "syst_menus",
+        "tableFileName": "syst_menus",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>menu_state_id",
+        "type": "uuid",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Indicates at which life-cycle stage the record exists.  Functionally, this breaks down into &ldquo;active&rdquo; and &ldquo;inactive&rdquo; states.<\/p>"
+    },
+    {
+        "tableName": "syst_action_groups",
+        "tableFileName": "syst_action_groups",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id",
+        "type": "uuid",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "uuid_generate_v7()",
+        "comments": "<p>The record&rsquo;s primary key.  The definitive identifier of the record in the system.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_actions",
+        "tableFileName": "syst_actions",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_role_modified",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>The database role which modified the record.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_actions",
+        "tableFileName": "syst_actions",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>action_group_id",
+        "type": "uuid",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>If the Action belongs to an Action Group, this column defines the owning Action Group.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>If the Action is to be accessible via Command entry, it must define a parent Action Group.  If the Action is not accessible via Commands, this value should be left <code>NULL<\/code>.<\/p>"
+    },
+    {
+        "tableName": "syst_action_groups",
+        "tableFileName": "syst_action_groups",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'><\/i>command_search",
+        "type": "tsvector",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "ms_syst_priv.generate_command_tsvector(p_config => command_config, p_command => command, p_command_aliases => command_aliases)",
+        "comments": "<p>A generated column containing the PostgreSQL tsvector value used when resolving an Action Group Command.  Being a generated column, the system will automatically update this column when its source columns are updated.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>Being a generated column, the system will automatically update this column when its source columns are updated.  The null/not null state of this column will match the null/not null state of the <code>command<\/code> column.<\/p>"
+    },
+    {
+        "tableName": "syst_menu_items",
+        "tableFileName": "syst_menu_items",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'><\/i>internal_name",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>A candidate key useful for programmatic references to individual records.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_menu_items",
+        "tableFileName": "syst_menu_items",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_role_modified",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>The database role which modified the record.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_enum_items",
+        "tableFileName": "syst_enum_items",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_wallclock_modified",
+        "type": "timestamptz",
+        "length": 35,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "clock_timestamp()",
+        "comments": "<p>The database server date/time at the moment the record was actually modified. For long running transactions this time may be significantly later than the value of diag_timestamp_modified.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_action_groups",
+        "tableFileName": "syst_action_groups",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_wallclock_modified",
+        "type": "timestamptz",
+        "length": 35,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "clock_timestamp()",
+        "comments": "<p>The database server date/time at the moment the record was actually modified. For long running transactions this time may be significantly later than the value of diag_timestamp_modified.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_actions",
+        "tableFileName": "syst_actions",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'><\/i>internal_name",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>A candidate key useful for programmatic references to individual records.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_enums",
+        "tableFileName": "syst_enums",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "syst_description",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>A system defined description indicating the purpose and use cases of a given record.  Text defined in this column is system maintained and should not be changed under normal circumstances.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_menus",
+        "tableFileName": "syst_menus",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_update_count",
+        "type": "int8",
+        "length": 19,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "0",
+        "comments": "<p>Records the number of times the record has been updated regardless as to if the update actually changed any data.  In this way needless or redundant record updates can be found.  This row starts at 0 and therefore may be the same as the diag_row_version - 1.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_action_groups",
+        "tableFileName": "syst_action_groups",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_timestamp_modified",
+        "type": "timestamptz",
+        "length": 35,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "now()",
+        "comments": "<p>The database server date/time when the transaction which modified the record started.  This field will be the same as diag_timestamp_created for inserted records.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_menus",
+        "tableFileName": "syst_menus",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'><\/i>internal_name",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>A candidate key useful for programmatic references to individual records.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_actions",
+        "tableFileName": "syst_actions",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_role_created",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>The database role which created the record.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_menu_items",
+        "tableFileName": "syst_menu_items",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_update_count",
+        "type": "int8",
+        "length": 19,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "0",
+        "comments": "<p>Records the number of times the record has been updated regardless as to if the update actually changed any data.  In this way needless or redundant record updates can be found.  This row starts at 0 and therefore may be the same as the diag_row_version - 1.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_enums",
+        "tableFileName": "syst_enums",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_timestamp_modified",
+        "type": "timestamptz",
+        "length": 35,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "now()",
+        "comments": "<p>The database server date/time when the transaction which modified the record started.  This field will be the same as diag_timestamp_created for inserted records.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_menu_items",
+        "tableFileName": "syst_menu_items",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_row_version",
+        "type": "int8",
+        "length": 19,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "1",
+        "comments": "<p>The current version of the row.  The value here indicates how many actual data changes have been made to the row.  If an update of the row leaves all data fields the same, disregarding the updates to the diag_* columns, the row version is not updated, nor are any updates made to the other diag_* columns other than diag_update_count.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>\n<p><strong>Direct Usage<\/strong><\/p>\n<p>This column is frequently used by by application logic to resolve the &ldquo;dirty write&rdquo; issues which can arise from concurrent data changes.  As such any administrative override of automatic system maintenance of this value should consider the ramifications on application function.<\/p>"
+    },
+    {
+        "tableName": "syst_enum_items",
+        "tableFileName": "syst_enum_items",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "syst_description",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>A system defined description indicating the purpose and use cases of a given record.  Text defined in this column is system maintained and should not be changed under normal circumstances.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_action_groups",
+        "tableFileName": "syst_action_groups",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "syst_description",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>A system defined description indicating the purpose and use cases of a given record.  Text defined in this column is system maintained and should not be changed under normal circumstances.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_actions",
+        "tableFileName": "syst_actions",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'><\/i>command_search",
+        "type": "tsvector",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "ms_syst_priv.generate_command_tsvector(p_config => command_config, p_command => command, p_command_aliases => command_aliases)",
+        "comments": "<p>A generated column containing the PostgreSQL tsvector value used when resolving an Action Command.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>The null/not null state of this column must match the null/not null state of the <code>command<\/code> column.<\/p>"
+    },
+    {
+        "tableName": "syst_menu_items",
+        "tableFileName": "syst_menu_items",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_role_created",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>The database role which created the record.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_actions",
+        "tableFileName": "syst_actions",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_timestamp_created",
+        "type": "timestamptz",
+        "length": 35,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "now()",
+        "comments": "<p>The database server date/time when the transaction which created the record started.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_enum_items",
+        "tableFileName": "syst_enum_items",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "external_name",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>A non-unique/non-key value used to display to users and external parties where uniqueness is less of a concern than specific end user presentation.<\/p>"
+    },
+    {
+        "tableName": "syst_menus",
+        "tableFileName": "syst_menus",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "syst_description",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>A system defined description indicating the purpose and use cases of a given record.  Text defined in this column is system maintained and should not be changed under normal circumstances.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_enums",
+        "tableFileName": "syst_enums",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "syst_defined",
+        "type": "bool",
+        "length": 1,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "false",
+        "comments": "<p>Values of <code>TRUE<\/code> in this column indicate that the record is considered a &ldquo;System Defined&rdquo; record, a record which is created and primarily maintained by the system using automated processes.  A value of <code>FALSE<\/code> indicates that the record is considered a &ldquo;User Defined&rdquo; record which is maintained by user actions in the application.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_enums",
+        "tableFileName": "syst_enums",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "default_user_options",
+        "type": "jsonb",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Allows a user to set the definition of syst_enum_items.user_options values and provide defaults for those values if appropriate.<\/p>"
+    },
+    {
+        "tableName": "syst_enum_functional_types",
+        "tableFileName": "syst_enum_functional_types",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_update_count",
+        "type": "int8",
+        "length": 19,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "0",
+        "comments": "<p>Records the number of times the record has been updated regardless as to if the update actually changed any data.  In this way needless or redundant record updates can be found.  This row starts at 0 and therefore may be the same as the diag_row_version - 1.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_menu_items",
+        "tableFileName": "syst_menu_items",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>submenu_menu_id",
+        "type": "uuid",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>When not null, indicates that the Menu Item record imports an independently defined Menu.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>An attempt to associate a Menu which recursively references the current Menu Item&rsquo;s parent Menu will result in an exception being raised and the transaction attempting to make the association will be rolled back.<\/p>\n<p>Note that the referenced Menu&rsquo;s descriptive texts and naming will supersede the naming specified directly by this record or the text of any associated Menu Action referenced in the <code>action_id<\/code> column.<\/p>"
+    },
+    {
+        "tableName": "syst_enum_items",
+        "tableFileName": "syst_enum_items",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "enum_default",
+        "type": "bool",
+        "length": 1,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "false",
+        "comments": "<p>If true, indicates that this value is the default selection from all values defined for the enumerations.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>Note that if a record is inserted or updated in this table with enum_default set true, and another record already exists for the enumeration with its enum_default set true, the newly inserted/updated record will take precedence and the value record previously set to be default will have its enum_default setting set to false.<\/p>\n<p>If false then the value record has no special significance relative to defaulting.<\/p>"
+    },
+    {
+        "tableName": "syst_enum_functional_types",
+        "tableFileName": "syst_enum_functional_types",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "syst_description",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>A system defined description indicating the purpose and use cases of a given record.  Text defined in this column is system maintained and should not be changed under normal circumstances.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_enum_functional_types",
+        "tableFileName": "syst_enum_functional_types",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'><\/i>internal_name",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>A candidate key useful for programmatic references to individual records.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_menus",
+        "tableFileName": "syst_menus",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "user_description",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>An optional user defined description of the record and its use cases.  If this value is not <code>NULL<\/code>, the value will override any <code>syst_description<\/code> defined text in application user interfaces and other presentations.<\/p>"
+    },
+    {
+        "tableName": "syst_action_groups",
+        "tableFileName": "syst_action_groups",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "command_aliases",
+        "type": "_text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>An array of strings which designate alternate, possibly non-unique values which may be used in addition to the <code>command<\/code> value in identifying the record.  In searched results, <code>command_aliases<\/code> received a reduced priority vs. <code>command<\/code> values.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>The null/not null state of this column must match the null/not null state of the <code>command<\/code> column.<\/p>"
+    },
+    {
+        "tableName": "syst_action_groups",
+        "tableFileName": "syst_action_groups",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_role_modified",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>The database role which modified the record.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_enum_functional_types",
+        "tableFileName": "syst_enum_functional_types",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "external_name",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>A non-unique/non-key value used to display to users and external parties where uniqueness is less of a concern than specific end user presentation.<\/p>"
+    },
+    {
+        "tableName": "syst_enum_items",
+        "tableFileName": "syst_enum_items",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "user_options",
+        "type": "jsonb",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Extended user defined options, similar to syst_options, but for the purpose of driving custom functionality.<\/p>"
+    },
+    {
+        "tableName": "syst_enums",
+        "tableFileName": "syst_enums",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id",
+        "type": "uuid",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "uuid_generate_v7()",
+        "comments": "<p>The record&rsquo;s primary key.  The definitive identifier of the record in the system.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_menus",
+        "tableFileName": "syst_menus",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "syst_defined",
+        "type": "bool",
+        "length": 1,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "false",
+        "comments": "<p>Values of <code>TRUE<\/code> in this column indicate that the record is considered a &ldquo;System Defined&rdquo; record, a record which is created and primarily maintained by the system using automated processes.  A value of <code>FALSE<\/code> indicates that the record is considered a &ldquo;User Defined&rdquo; record which is maintained by user actions in the application.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_enum_items",
+        "tableFileName": "syst_enum_items",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id",
+        "type": "uuid",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "uuid_generate_v7()",
+        "comments": "<p>The record&rsquo;s primary key.  The definitive identifier of the record in the system.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_actions",
+        "tableFileName": "syst_actions",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "external_name",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>A non-unique/non-key value used to display to users and external parties where uniqueness is less of a concern than specific end user presentation.<\/p>"
+    },
+    {
+        "tableName": "syst_enums",
+        "tableFileName": "syst_enums",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "user_maintainable",
+        "type": "bool",
+        "length": 1,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "true",
+        "comments": "<p>If a record is system defined (see the <code>syst_defined<\/code> column), there may be some user data maintenance operations permitted in some cases.  If the value of this column for a record is <code>TRUE<\/code> and the record is also &ldquo;System Defined&rdquo;, then permitted user maintenance operations are available for the record.  If the record is system defined and the value of this column is <code>FALSE<\/code>, no user maintenance is allowed.  If the record is not system defined, the value in this column will have no meaning or effect; user defined records may set this value <code>TRUE<\/code> as a simple information point indicating that the record is user maintainable.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_menus",
+        "tableFileName": "syst_menus",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id",
+        "type": "uuid",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "uuid_generate_v7()",
+        "comments": "<p>The record&rsquo;s primary key.  The definitive identifier of the record in the system.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_menus",
+        "tableFileName": "syst_menus",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_row_version",
+        "type": "int8",
+        "length": 19,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "1",
+        "comments": "<p>The current version of the row.  The value here indicates how many actual data changes have been made to the row.  If an update of the row leaves all data fields the same, disregarding the updates to the diag_* columns, the row version is not updated, nor are any updates made to the other diag_* columns other than diag_update_count.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>\n<p><strong>Direct Usage<\/strong><\/p>\n<p>This column is frequently used by by application logic to resolve the &ldquo;dirty write&rdquo; issues which can arise from concurrent data changes.  As such any administrative override of automatic system maintenance of this value should consider the ramifications on application function.<\/p>"
+    },
+    {
+        "tableName": "syst_menu_items",
+        "tableFileName": "syst_menu_items",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_timestamp_modified",
+        "type": "timestamptz",
+        "length": 35,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "now()",
+        "comments": "<p>The database server date/time when the transaction which modified the record started.  This field will be the same as diag_timestamp_created for inserted records.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_enum_items",
+        "tableFileName": "syst_enum_items",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_role_created",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>The database role which created the record.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_menu_items",
+        "tableFileName": "syst_menu_items",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'><\/i>display_name",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>A friendly name and candidate key for the record, suitable for use in user interactions<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_enum_functional_types",
+        "tableFileName": "syst_enum_functional_types",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "user_description",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>An optional user defined description of the record and its use cases.  If this value is not <code>NULL<\/code>, the value will override any <code>syst_description<\/code> defined text in application user interfaces and other presentations.<\/p>"
+    },
+    {
+        "tableName": "syst_enum_functional_types",
+        "tableFileName": "syst_enum_functional_types",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>enum_id",
+        "type": "uuid",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>A reference to the owning Enumeration of the functional type.<\/p>"
+    },
+    {
+        "tableName": "syst_enums",
+        "tableFileName": "syst_enums",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_role_modified",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>The database role which modified the record.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_enum_functional_types",
+        "tableFileName": "syst_enum_functional_types",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_timestamp_created",
+        "type": "timestamptz",
+        "length": 35,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "now()",
+        "comments": "<p>The database server date/time when the transaction which created the record started.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_action_groups",
+        "tableFileName": "syst_action_groups",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_role_created",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>The database role which created the record.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_enum_items",
+        "tableFileName": "syst_enum_items",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "user_description",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>An optional user defined description of the record and its use cases.  If this value is not <code>NULL<\/code>, the value will override any <code>syst_description<\/code> defined text in application user interfaces and other presentations.<\/p>"
+    },
+    {
+        "tableName": "syst_enum_functional_types",
+        "tableFileName": "syst_enum_functional_types",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_role_modified",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>The database role which modified the record.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_menus",
+        "tableFileName": "syst_menus",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_role_created",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>The database role which created the record.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_enums",
+        "tableFileName": "syst_enums",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'><\/i>internal_name",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>A candidate key useful for programmatic references to individual records.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_action_groups",
+        "tableFileName": "syst_action_groups",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "command_config",
+        "type": "regconfig",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Establishes the PostgresSQL text search configuration to use when parsing the Command strings.  The primary use of this column is to set the value of the generated column <code>command_search<\/code>, though establishing the appropriate configuration for use with the record may be useful elsewhere.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>The null/not null state of this column must match the null/not null state of the <code>command<\/code> column.<\/p>"
+    },
+    {
+        "tableName": "syst_menu_items",
+        "tableFileName": "syst_menu_items",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>action_id",
+        "type": "uuid",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Associates a specific action to be invoked when the Menu Item that the record represents is &ldquo;selected&rdquo;.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>Note that the referenced Action&rsquo;s texts will supersede the Menu Item texts in any user facing situations, though if the Menu Item is also associated with a Menu (<code>submenu_menu_id<\/code>), the Menu&rsquo;s text will prevail.<\/p>"
+    },
+    {
+        "tableName": "syst_enum_functional_types",
+        "tableFileName": "syst_enum_functional_types",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'><\/i>display_name",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>A friendly name and candidate key for the record, suitable for use in user interactions<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_enum_items",
+        "tableFileName": "syst_enum_items",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "syst_options",
+        "type": "jsonb",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Extended options and metadata which describe the behavior and meaning of the specific value within the enumeration.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>The owning syst_enums record&rsquo;s default_syst_options column will indicate what syst_options are required or available and establishes default values for them.<\/p>"
+    },
+    {
+        "tableName": "syst_enum_functional_types",
+        "tableFileName": "syst_enum_functional_types",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_timestamp_modified",
+        "type": "timestamptz",
+        "length": 35,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "now()",
+        "comments": "<p>The database server date/time when the transaction which modified the record started.  This field will be the same as diag_timestamp_created for inserted records.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_enums",
+        "tableFileName": "syst_enums",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "user_description",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>An optional user defined description of the record and its use cases.  If this value is not <code>NULL<\/code>, the value will override any <code>syst_description<\/code> defined text in application user interfaces and other presentations.<\/p>"
+    },
+    {
+        "tableName": "syst_menu_items",
+        "tableFileName": "syst_menu_items",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'><\/i>sort_order",
+        "type": "int2",
+        "length": 5,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Establishes the current Menu Item&rsquo;s sorting order relative to sibling Menu Item records<\/p>"
+    },
+    {
+        "tableName": "syst_action_groups",
+        "tableFileName": "syst_action_groups",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_timestamp_created",
+        "type": "timestamptz",
+        "length": 35,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "now()",
+        "comments": "<p>The database server date/time when the transaction which created the record started.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_menus",
+        "tableFileName": "syst_menus",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_timestamp_created",
+        "type": "timestamptz",
+        "length": 35,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "now()",
+        "comments": "<p>The database server date/time when the transaction which created the record started.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_enum_items",
+        "tableFileName": "syst_enum_items",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "user_maintainable",
+        "type": "bool",
+        "length": 1,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "true",
+        "comments": "<p>If a record is system defined (see the <code>syst_defined<\/code> column), there may be some user data maintenance operations permitted in some cases.  If the value of this column for a record is <code>TRUE<\/code> and the record is also &ldquo;System Defined&rdquo;, then permitted user maintenance operations are available for the record.  If the record is system defined and the value of this column is <code>FALSE<\/code>, no user maintenance is allowed.  If the record is not system defined, the value in this column will have no meaning or effect; user defined records may set this value <code>TRUE<\/code> as a simple information point indicating that the record is user maintainable.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_enum_items",
+        "tableFileName": "syst_enum_items",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_role_modified",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>The database role which modified the record.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_actions",
+        "tableFileName": "syst_actions",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "user_description",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>An optional user defined description of the record and its use cases.  If this value is not <code>NULL<\/code>, the value will override any <code>syst_description<\/code> defined text in application user interfaces and other presentations.<\/p>"
+    },
+    {
+        "tableName": "syst_menu_items",
+        "tableFileName": "syst_menu_items",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "syst_description",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>A system defined description indicating the purpose and use cases of a given record.  Text defined in this column is system maintained and should not be changed under normal circumstances.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_enum_items",
+        "tableFileName": "syst_enum_items",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>functional_type_id",
+        "type": "uuid",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>If the enumeration requires a functional type, this column references the functional type associated with the enumeration value record.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>Note that not all enumerations require functional types.  If syst_enum_functional_types records exist for an enumeration, then this column will be required for any values of that enumeration; if there are no functional types defined for an enumeration, the this column must remain NULL.<\/p>"
+    },
+    {
+        "tableName": "syst_enum_items",
+        "tableFileName": "syst_enum_items",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_timestamp_modified",
+        "type": "timestamptz",
+        "length": 35,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "now()",
+        "comments": "<p>The database server date/time when the transaction which modified the record started.  This field will be the same as diag_timestamp_created for inserted records.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_action_groups",
+        "tableFileName": "syst_action_groups",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'><\/i>command",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Provides the primary text &ldquo;Command&rdquo; used for identifying the Action Group.<\/p>\n<p>Commands associated with Action Groups are used for commandline-like input by application users to specify a class of action.  For example, the Command &ldquo;new&rdquo; may designate a class of Actions which all deal with record or transaction creation; secondary Commands at the Action level would delineate which specific creation action to take.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>When the value of this column is <code>NULL<\/code>, the Action Group is not searchable or available to the user using command line interfaces.  Such Action Groups exist to organize Actions which are only accessible via menu interfaces (or similar). Note that if this value is <code>NULL<\/code> other <code>command_*<\/code> columns must also be <code>NULL<\/code>.<\/p>\n<p><code>command<\/code> designated Commands have priority over similar &ldquo;Command Aliases&rdquo; defined in the <code>command_aliases<\/code> column.<\/p>"
+    },
+    {
+        "tableName": "syst_action_groups",
+        "tableFileName": "syst_action_groups",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'><\/i>display_name",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>A friendly name and candidate key for the record, suitable for use in user interactions<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_enums",
+        "tableFileName": "syst_enums",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_timestamp_created",
+        "type": "timestamptz",
+        "length": 35,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "now()",
+        "comments": "<p>The database server date/time when the transaction which created the record started.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_enum_items",
+        "tableFileName": "syst_enum_items",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "syst_defined",
+        "type": "bool",
+        "length": 1,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "false",
+        "comments": "<p>Values of <code>TRUE<\/code> in this column indicate that the record is considered a &ldquo;System Defined&rdquo; record, a record which is created and primarily maintained by the system using automated processes.  A value of <code>FALSE<\/code> indicates that the record is considered a &ldquo;User Defined&rdquo; record which is maintained by user actions in the application.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_actions",
+        "tableFileName": "syst_actions",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_update_count",
+        "type": "int8",
+        "length": 19,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "0",
+        "comments": "<p>Records the number of times the record has been updated regardless as to if the update actually changed any data.  In this way needless or redundant record updates can be found.  This row starts at 0 and therefore may be the same as the diag_row_version - 1.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_menu_items",
+        "tableFileName": "syst_menu_items",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "external_name",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>A non-unique/non-key value used to display to users and external parties where uniqueness is less of a concern than specific end user presentation.<\/p>"
+    },
+    {
+        "tableName": "syst_enum_functional_types",
+        "tableFileName": "syst_enum_functional_types",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_row_version",
+        "type": "int8",
+        "length": 19,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "1",
+        "comments": "<p>The current version of the row.  The value here indicates how many actual data changes have been made to the row.  If an update of the row leaves all data fields the same, disregarding the updates to the diag_* columns, the row version is not updated, nor are any updates made to the other diag_* columns other than diag_update_count.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>\n<p><strong>Direct Usage<\/strong><\/p>\n<p>This column is frequently used by by application logic to resolve the &ldquo;dirty write&rdquo; issues which can arise from concurrent data changes.  As such any administrative override of automatic system maintenance of this value should consider the ramifications on application function.<\/p>"
+    },
+    {
+        "tableName": "syst_action_groups",
+        "tableFileName": "syst_action_groups",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'><\/i>internal_name",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>A candidate key useful for programmatic references to individual records.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_enums",
+        "tableFileName": "syst_enums",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_wallclock_modified",
+        "type": "timestamptz",
+        "length": 35,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "clock_timestamp()",
+        "comments": "<p>The database server date/time at the moment the record was actually modified. For long running transactions this time may be significantly later than the value of diag_timestamp_modified.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_menu_items",
+        "tableFileName": "syst_menu_items",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_wallclock_modified",
+        "type": "timestamptz",
+        "length": 35,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "clock_timestamp()",
+        "comments": "<p>The database server date/time at the moment the record was actually modified. For long running transactions this time may be significantly later than the value of diag_timestamp_modified.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_action_groups",
+        "tableFileName": "syst_action_groups",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "syst_defined",
+        "type": "bool",
+        "length": 1,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "false",
+        "comments": "<p>Values of <code>TRUE<\/code> in this column indicate that the record is considered a &ldquo;System Defined&rdquo; record, a record which is created and primarily maintained by the system using automated processes.  A value of <code>FALSE<\/code> indicates that the record is considered a &ldquo;User Defined&rdquo; record which is maintained by user actions in the application.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_enum_items",
+        "tableFileName": "syst_enum_items",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_update_count",
+        "type": "int8",
+        "length": 19,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "0",
+        "comments": "<p>Records the number of times the record has been updated regardless as to if the update actually changed any data.  In this way needless or redundant record updates can be found.  This row starts at 0 and therefore may be the same as the diag_row_version - 1.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_menu_items",
+        "tableFileName": "syst_menu_items",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>menu_id",
+        "type": "uuid",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Identifies the Menu to which the menu item belongs.<\/p>"
+    },
+    {
+        "tableName": "syst_menus",
+        "tableFileName": "syst_menus",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'><\/i>display_name",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>A friendly name and candidate key for the record, suitable for use in user interactions<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_enums",
+        "tableFileName": "syst_enums",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'><\/i>display_name",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>A friendly name and candidate key for the record, suitable for use in user interactions<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_enum_items",
+        "tableFileName": "syst_enum_items",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>enum_id",
+        "type": "uuid",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>The enumeration record with which the value is associated.<\/p>"
+    },
+    {
+        "tableName": "syst_menus",
+        "tableFileName": "syst_menus",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "user_maintainable",
+        "type": "bool",
+        "length": 1,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "true",
+        "comments": "<p>If a record is system defined (see the <code>syst_defined<\/code> column), there may be some user data maintenance operations permitted in some cases.  If the value of this column for a record is <code>TRUE<\/code> and the record is also &ldquo;System Defined&rdquo;, then permitted user maintenance operations are available for the record.  If the record is system defined and the value of this column is <code>FALSE<\/code>, no user maintenance is allowed.  If the record is not system defined, the value in this column will have no meaning or effect; user defined records may set this value <code>TRUE<\/code> as a simple information point indicating that the record is user maintainable.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_menu_items",
+        "tableFileName": "syst_menu_items",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "user_description",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>An optional user defined description of the record and its use cases.  If this value is not <code>NULL<\/code>, the value will override any <code>syst_description<\/code> defined text in application user interfaces and other presentations.<\/p>"
+    },
+    {
+        "tableName": "syst_actions",
+        "tableFileName": "syst_actions",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_wallclock_modified",
+        "type": "timestamptz",
+        "length": 35,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "clock_timestamp()",
+        "comments": "<p>The database server date/time at the moment the record was actually modified. For long running transactions this time may be significantly later than the value of diag_timestamp_modified.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_enums",
+        "tableFileName": "syst_enums",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "default_syst_options",
+        "type": "jsonb",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Establishes the expected extended system options along with default values if applicable.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>Note that this setting is used to both validate and set defaults in the <code>syst_enum_items.syst_options<\/code> column.<\/p>"
+    },
+    {
+        "tableName": "syst_actions",
+        "tableFileName": "syst_actions",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_timestamp_modified",
+        "type": "timestamptz",
+        "length": 35,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "now()",
+        "comments": "<p>The database server date/time when the transaction which modified the record started.  This field will be the same as diag_timestamp_created for inserted records.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_enum_functional_types",
+        "tableFileName": "syst_enum_functional_types",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_role_created",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>The database role which created the record.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_enum_functional_types",
+        "tableFileName": "syst_enum_functional_types",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_wallclock_modified",
+        "type": "timestamptz",
+        "length": 35,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "clock_timestamp()",
+        "comments": "<p>The database server date/time at the moment the record was actually modified. For long running transactions this time may be significantly later than the value of diag_timestamp_modified.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_enums",
+        "tableFileName": "syst_enums",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_row_version",
+        "type": "int8",
+        "length": 19,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "1",
+        "comments": "<p>The current version of the row.  The value here indicates how many actual data changes have been made to the row.  If an update of the row leaves all data fields the same, disregarding the updates to the diag_* columns, the row version is not updated, nor are any updates made to the other diag_* columns other than diag_update_count.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>\n<p><strong>Direct Usage<\/strong><\/p>\n<p>This column is frequently used by by application logic to resolve the &ldquo;dirty write&rdquo; issues which can arise from concurrent data changes.  As such any administrative override of automatic system maintenance of this value should consider the ramifications on application function.<\/p>"
+    },
+    {
+        "tableName": "syst_enum_items",
+        "tableFileName": "syst_enum_items",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'><\/i>display_name",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>A friendly name and candidate key for the record, suitable for use in user interactions<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_enums",
+        "tableFileName": "syst_enums",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_update_count",
+        "type": "int8",
+        "length": 19,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "0",
+        "comments": "<p>Records the number of times the record has been updated regardless as to if the update actually changed any data.  In this way needless or redundant record updates can be found.  This row starts at 0 and therefore may be the same as the diag_row_version - 1.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_menus",
+        "tableFileName": "syst_menus",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_wallclock_modified",
+        "type": "timestamptz",
+        "length": 35,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "clock_timestamp()",
+        "comments": "<p>The database server date/time at the moment the record was actually modified. For long running transactions this time may be significantly later than the value of diag_timestamp_modified.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_action_groups",
+        "tableFileName": "syst_action_groups",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_update_count",
+        "type": "int8",
+        "length": 19,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "0",
+        "comments": "<p>Records the number of times the record has been updated regardless as to if the update actually changed any data.  In this way needless or redundant record updates can be found.  This row starts at 0 and therefore may be the same as the diag_row_version - 1.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_menu_items",
+        "tableFileName": "syst_menu_items",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_timestamp_created",
+        "type": "timestamptz",
+        "length": 35,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "now()",
+        "comments": "<p>The database server date/time when the transaction which created the record started.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_enum_items",
+        "tableFileName": "syst_enum_items",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "functional_type_default",
+        "type": "bool",
+        "length": 1,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "false",
+        "comments": "<p>If true, the value record is the default selection for any of a specific fucntional type.  This is helpful in situations where a progression of state is automatically processed by the system and the state is represented by an enumeration.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>Note that if a record is inserted or updated in this table with its functional_type_default set true, and another record already exists for the enumeration/functional type combination with its functional_type_default set true, the newly inserted/updated record will take precedence and the value record previously set to be default will have its functional_type_default setting set to false.<\/p>\n<p>In cases where there are no functional types, this value should simply remain false.<\/p>"
+    },
+    {
+        "tableName": "syst_menus",
+        "tableFileName": "syst_menus",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_timestamp_modified",
+        "type": "timestamptz",
+        "length": 35,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "now()",
+        "comments": "<p>The database server date/time when the transaction which modified the record started.  This field will be the same as diag_timestamp_created for inserted records.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_action_groups",
+        "tableFileName": "syst_action_groups",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "external_name",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>A non-unique/non-key value used to display to users and external parties where uniqueness is less of a concern than specific end user presentation.<\/p>"
+    },
+    {
+        "tableName": "syst_actions",
+        "tableFileName": "syst_actions",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_row_version",
+        "type": "int8",
+        "length": 19,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "1",
+        "comments": "<p>The current version of the row.  The value here indicates how many actual data changes have been made to the row.  If an update of the row leaves all data fields the same, disregarding the updates to the diag_* columns, the row version is not updated, nor are any updates made to the other diag_* columns other than diag_update_count.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>\n<p><strong>Direct Usage<\/strong><\/p>\n<p>This column is frequently used by by application logic to resolve the &ldquo;dirty write&rdquo; issues which can arise from concurrent data changes.  As such any administrative override of automatic system maintenance of this value should consider the ramifications on application function.<\/p>"
+    },
+    {
+        "tableName": "syst_actions",
+        "tableFileName": "syst_actions",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'><\/i>display_name",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>A friendly name and candidate key for the record, suitable for use in user interactions<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_actions",
+        "tableFileName": "syst_actions",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id",
+        "type": "uuid",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "uuid_generate_v7()",
+        "comments": "<p>The record&rsquo;s primary key.  The definitive identifier of the record in the system.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_menu_items",
+        "tableFileName": "syst_menu_items",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id",
+        "type": "uuid",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "uuid_generate_v7()",
+        "comments": "<p>The record&rsquo;s primary key.  The definitive identifier of the record in the system.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_actions",
+        "tableFileName": "syst_actions",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "command_config",
+        "type": "regconfig",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Establishes the PostgresSQL text search configuration to use when parsing the Command strings.  The primary use of this column is to set the value of the generated column <code>command_search<\/code>, though establishing the appropriate configuration for use with the record may be useful elsewhere.<\/p>"
+    },
+    {
+        "tableName": "syst_menu_items",
+        "tableFileName": "syst_menu_items",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>parent_menu_item_id",
+        "type": "uuid",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>References the current Menu Item&rsquo;s parent Menu Item record.  If the current Menu Item record is at the root of the Menu, this value will be <code>NULL<\/code>.<\/p>"
+    },
+    {
+        "tableName": "syst_enum_items",
+        "tableFileName": "syst_enum_items",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "sort_order",
+        "type": "int2",
+        "length": 5,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Indicates the sort ordering of the particular value record with the lowest value sorting first.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>When a value record for an enumeration is inserted or updated and this column is being set to a value which equals another enumeration value record for the same enumeration, the system assumes that the new record is being set to precede the existing record and it will be set to sort after the newly inserted/updated enumeration value.<\/p>"
+    },
+    {
+        "tableName": "syst_action_groups",
+        "tableFileName": "syst_action_groups",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "user_maintainable",
+        "type": "bool",
+        "length": 1,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "true",
+        "comments": "<p>If a record is system defined (see the <code>syst_defined<\/code> column), there may be some user data maintenance operations permitted in some cases.  If the value of this column for a record is <code>TRUE<\/code> and the record is also &ldquo;System Defined&rdquo;, then permitted user maintenance operations are available for the record.  If the record is system defined and the value of this column is <code>FALSE<\/code>, no user maintenance is allowed.  If the record is not system defined, the value in this column will have no meaning or effect; user defined records may set this value <code>TRUE<\/code> as a simple information point indicating that the record is user maintainable.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_enum_items",
+        "tableFileName": "syst_enum_items",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_timestamp_created",
+        "type": "timestamptz",
+        "length": 35,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "now()",
+        "comments": "<p>The database server date/time when the transaction which created the record started.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_actions",
+        "tableFileName": "syst_actions",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'><\/i>command",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Provides the primary text &ldquo;Command&rdquo; used for identifying the Action.<\/p>\n<p>Commands associated with Actions are used for commandline-like input by application users to select the specific action to take assuming the Action Group has been resolved..  For example, the Command &ldquo;po&rdquo;, when taken from the Action Group identified with Command &ldquo;new&rdquo;, could indicate that the user wishes to create a new purchase order.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>When the value of this column is <code>NULL<\/code>, the Action is not searchable or available to the user using command line interfaces.  Such Actions exist if they are only invokable from menus or similar, non-commandline user interfaces. Note that if this value is <code>NULL<\/code> other <code>command_*<\/code> columns must also be <code>NULL<\/code>.<\/p>\n<p><code>command<\/code> designated Commands have priority over similar &ldquo;Command Aliases&rdquo; defined in the <code>command_aliases<\/code> column.<\/p>"
+    },
+    {
+        "tableName": "syst_actions",
+        "tableFileName": "syst_actions",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "syst_description",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>A system defined description indicating the purpose and use cases of a given record.  Text defined in this column is system maintained and should not be changed under normal circumstances.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>"
+    },
+    {
+        "tableName": "syst_actions",
+        "tableFileName": "syst_actions",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "command_aliases",
+        "type": "_text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>An array of strings which designate alternate, possibly non-unique values which may be used in addition to the <code>command<\/code> value in identifying the record.  In searched results, <code>command_aliases<\/code> received a reduced priority vs. <code>command<\/code> values.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>The null/not null state of this column must match the null/not null state of the <code>command<\/code> column.<\/p>"
+    },
+    {
+        "tableName": "syst_enum_items",
+        "tableFileName": "syst_enum_items",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_row_version",
+        "type": "int8",
+        "length": 19,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "1",
+        "comments": "<p>The current version of the row.  The value here indicates how many actual data changes have been made to the row.  If an update of the row leaves all data fields the same, disregarding the updates to the diag_* columns, the row version is not updated, nor are any updates made to the other diag_* columns other than diag_update_count.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>\n<p><strong>Direct Usage<\/strong><\/p>\n<p>This column is frequently used by by application logic to resolve the &ldquo;dirty write&rdquo; issues which can arise from concurrent data changes.  As such any administrative override of automatic system maintenance of this value should consider the ramifications on application function.<\/p>"
+    },
+    {
+        "tableName": "syst_action_groups",
+        "tableFileName": "syst_action_groups",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diag_row_version",
+        "type": "int8",
+        "length": 19,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "1",
+        "comments": "<p>The current version of the row.  The value here indicates how many actual data changes have been made to the row.  If an update of the row leaves all data fields the same, disregarding the updates to the diag_* columns, the row version is not updated, nor are any updates made to the other diag_* columns other than diag_update_count.<\/p>\n<p><strong>General Usage<\/strong><\/p>\n<p>This column is system maintained and should be considered read only in normal operations.<\/p>\n<p><strong>Direct Usage<\/strong><\/p>\n<p>This column is frequently used by by application logic to resolve the &ldquo;dirty write&rdquo; issues which can arise from concurrent data changes.  As such any administrative override of automatic system maintenance of this value should consider the ramifications on application function.<\/p>"
+    }
+];
+                    var config = {
+                        pagination: false
+                    };
+                </script>
+            </div>
+            <!-- /.content-wrapper -->
+            <footer class="main-footer">
+                <div>
+                    <div class="pull-right hidden-xs">
+                        <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
+                        <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
+                    </div>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.2.4</a></strong>
+                </div>
+                <!-- /.container -->
+            </footer>
+        </div>
+        <!-- ./wrapper -->
+
+        <!-- jQuery 2.2.3 -->
+        <script src="bower/admin-lte/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script src="bower/admin-lte/plugins/jQueryUI/jquery-ui.min.js"></script>
+        <!-- Bootstrap 3.3.5 -->
+        <script src="bower/admin-lte/bootstrap/js/bootstrap.min.js"></script>
+        <!-- DataTables -->
+        <script src="bower/datatables.net/jquery.dataTables.min.js"></script>
+        <script src="bower/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+        <script src="bower/datatables.net-buttons/dataTables.buttons.min.js"></script>
+        <script src="bower/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+        <script src="bower/datatables.net-buttons/buttons.html5.min.js"></script>
+        <script src="bower/datatables.net-buttons/buttons.print.min.js"></script>
+        <script src="bower/datatables.net-buttons/buttons.colVis.min.js"></script>
+        <!-- SheetJS -->
+        <script src="bower/js-xlsx/xlsx.full.min.js"></script>
+        <!-- pdfmake -->
+        <script src="bower/pdfmake/pdfmake.min.js"></script>
+        <script src="bower/pdfmake/vfs_fonts.js"></script>
+        <!-- SlimScroll -->
+        <script src="bower/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+        <!-- FastClick -->
+        <script src="bower/admin-lte/plugins/fastclick/fastclick.js"></script>
+        <!-- Salvattore -->
+        <script src="bower/salvattore/salvattore.min.js"></script>
+        <!-- AnchorJS -->
+        <script src="bower/anchor-js/anchor.min.js"></script>
+        <!-- CodeMirror -->
+        <script src="bower/codemirror/codemirror.js"></script>
+        <script src="bower/codemirror/sql.js"></script>
+        <!-- AdminLTE App -->
+        <script src="bower/admin-lte/dist/js/app.min.js"></script>
+        <script src="column.js"></script>
+        <script src="schemaSpy.js"></script>
+    </body>
+</html>

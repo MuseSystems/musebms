@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>syst_access_accounts - mssub_mcp Database</title>
+        <title>syst_access_accounts - mssub_mcp.ms_syst_data</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../../index.html" class="navbar-brand"><b>mssub_mcp</b> Database</a>
+                            <a href="../../index.html" class="navbar-brand"><b>mssub_mcp</b></a><span class="navbar-brand" style="padding-left: 0">.ms_syst_data</span>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -73,7 +73,7 @@
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
-                    <h1>syst_access_accounts</h1><p><span id="recordNumber">-1</span> rows</p><br />
+                    <h1>syst_access_accounts</h1><br />
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <i class="fa fa-file-text-o"></i>
@@ -84,9 +84,7 @@
                             </div>
                         </div><!-- /.box-header -->
                         <div class="box-body clearfix">
-                            <p>Contains the known login accounts which are used solely for the purpose of<br />
-authentication of users.  Authorization is handled on a per-instance basis<br />
-within the application.</p>
+                            <p>Contains the known login accounts which are used solely for the purpose of authentication of users.  Authorization is handled on a per-Instance basis within the application.</p>
                         </div><!-- /.box-body -->
                     </div>
                 </section>
@@ -102,7 +100,13 @@ within the application.</p>
                             </div>
                         </div>
                         <div class="box-body">
-                            <table id="standard_table" class="table table-bordered table-striped dataTable" role="grid">
+                            <table
+                                    id="standard_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="10"
+                                    data-length-change="false">
                                 <thead align='left'>
                                 <tr>
                                     <th>Column</th>
@@ -123,28 +127,33 @@ within the application.</p>
                                     <td>2147483647</td>
                                     <td title=''></td>
                                     <td title=''></td>
-                                    <td>uuid_generate_v1()</td>
+                                    <td>uuid_generate_v7()</td>
                                     <td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
                                                 <td title="syst_access_account_instance_assocs.access_account_id references syst_access_accounts.id via syst_access_account_instance_assocs_access_accounts_fk"><a href='syst_access_account_instance_assocs.html'>syst_access_account_instance_assocs</a><span class='relatedKey'>.access_account_id</span></td>
-                                                <td class="constraint detail">syst_access_account_instance_assocs_access_accounts_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
+                                                <td class="constraint detail">syst_access_account_instance_assocs_access_accounts_fk</td>
+                                                <td class="constraint detail"><span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
                                             </tr>
                                             <tr>
                                                 <td title="syst_access_account_perm_role_assigns.access_account_id references syst_access_accounts.id via syst_access_account_perm_role_assigns_access_account_fk"><a href='syst_access_account_perm_role_assigns.html'>syst_access_account_perm_role_assigns</a><span class='relatedKey'>.access_account_id</span></td>
-                                                <td class="constraint detail">syst_access_account_perm_role_assigns_access_account_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
+                                                <td class="constraint detail">syst_access_account_perm_role_assigns_access_account_fk</td>
+                                                <td class="constraint detail"><span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
                                             </tr>
                                             <tr>
                                                 <td title="syst_credentials.access_account_id references syst_access_accounts.id via syst_credentials_access_accounts_fk"><a href='syst_credentials.html'>syst_credentials</a><span class='relatedKey'>.access_account_id</span></td>
-                                                <td class="constraint detail">syst_credentials_access_accounts_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
+                                                <td class="constraint detail">syst_credentials_access_accounts_fk</td>
+                                                <td class="constraint detail"><span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
                                             </tr>
                                             <tr>
                                                 <td title="syst_identities.access_account_id references syst_access_accounts.id via syst_identities_access_accounts_fk"><a href='syst_identities.html'>syst_identities</a><span class='relatedKey'>.access_account_id</span></td>
-                                                <td class="constraint detail">syst_identities_access_accounts_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
+                                                <td class="constraint detail">syst_identities_access_accounts_fk</td>
+                                                <td class="constraint detail"><span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
                                             </tr>
                                             <tr>
                                                 <td title="syst_password_history.access_account_id references syst_access_accounts.id via syst_password_history_access_account_fk"><a href='syst_password_history.html'>syst_password_history</a><span class='relatedKey'>.access_account_id</span></td>
-                                                <td class="constraint detail">syst_password_history_access_account_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
+                                                <td class="constraint detail">syst_password_history_access_account_fk</td>
+                                                <td class="constraint detail"><span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -152,8 +161,9 @@ within the application.</p>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The record&rsquo;s primary key.  The definitive identifier of the record in the<br />
-system.</p></td>
+                                    <td><p>The record&rsquo;s primary key.  The definitive identifier of the record in the system.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td class='indexedColumn' title='Indexed'><i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i><span id="internal_name">internal_name</span></td>
@@ -170,7 +180,9 @@ system.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>A candidate key useful for programmatic references to individual records.</p></td>
+                                    <td><p>A candidate key useful for programmatic references to individual records.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="external_name">external_name</span></td>
@@ -187,8 +199,7 @@ system.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>Provides a user visible name for display purposes only.  This field is not<br />
-unique and may not be used as a key.</p></td>
+                                    <td><p>A non-unique/non-key value used to display to users and external parties where uniqueness is less of a concern than specific end user presentation.</p></td>
                                 </tr>
                                 <tr>
                                     <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="owning_owner_id">owning_owner_id</span></td>
@@ -205,15 +216,14 @@ unique and may not be used as a key.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
                                                 <td title="syst_access_accounts.owning_owner_id references syst_owners.id via syst_access_accounts_owners_fk"><a href='syst_owners.html'>syst_owners</a><span class='relatedKey'>.id</span></td>
-                                                <td class="constraint detail">syst_access_accounts_owners_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
+                                                <td class="constraint detail">syst_access_accounts_owners_fk</td>
+                                                <td class="constraint detail"><span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
                                             </tr>
                                         </table>
                                     </td>
-                                    <td><p>Associates the access account with a specific owner.  This allows for access<br />
-accounts which are identified and managed exclusively by a given owner.</p>
-<p>When this field is NULL, the assumption is that it&rsquo;s an independent access<br />
-account.  An independent access account may be used, for example, by third party<br />
-accountants that need to access the instances of different owners.</p></td>
+                                    <td><p>Associates the Access Account with a specific Owner.  This allows for access accounts which are identified and managed exclusively by a given Owner.</p>
+<p><strong>General Usage</strong></p>
+<p>When this field is NULL, the assumption is that it&rsquo;s an independent access account.  An independent Access Account may be used, for example, by third party accountants that need to access the Instances of different Owners.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="allow_global_logins">allow_global_logins</span></td>
@@ -230,25 +240,11 @@ accountants that need to access the instances of different owners.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>When true, allows an access account to log into the system without having<br />
-an owner or instance specified in the login process.  This use case supports<br />
-access accounts which are independently managed, such as might be the case for<br />
-external bookkeepers.  When false, the access account is more tightly bound to a<br />
-specific owner and so only a specific owner and instances should be evaluated at<br />
-login time.</p>
-<p>The need for this distinction arises when considering logins for access account<br />
-holders such as customers or vendors.  In these cases access to the owner&rsquo;s<br />
-environment should appear to be unique, but they may use the same identifier as<br />
-used for a different, but unrelated, owner.  In this case you have multiple<br />
-access accounts with possibly the same identifier; to resolve the conflict, it<br />
-is required therefore to know which owner or instance the access accounts holder<br />
-is trying to access.  In the allow global case we can just ask the account<br />
-holder but in the disallow global case we need to know it in advance.</p>
-<p>Another way to think about global logins is in relation to user interface.  A<br />
-global login interface may present the user with a choice of instance owners and<br />
-then their instances whereas the non-global login user must go directly to the<br />
-login interface for a specific owner (be that URL or other client-side specific<br />
-identification.)</p></td>
+                                    <td><p>Indicates whether or not an Access Account may be used to login outside of the context of a specific Owner or Instance.  This use case supports Access Accounts which are independently managed, such as might be the case for external bookkeepers.</p>
+<p>The need for this distinction arises when considering logins for Access Account holders such as customers or vendors.  In these cases access to the Owner&rsquo;s environment should appear to be unique, but they may use the same identifier as used for a different, but unrelated, Owner.  In this case you have multiple Access Accounts with possibly the same identifier; to resolve the conflict, it is required therefore to know which Owner or Instance the Access Accounts holder is trying to access.  In the allow global case we can just ask the account holder but in the disallow global case we need to know it in advance.</p>
+<p>Another way to think about global logins is in relation to user interface.  A global login interface may present the user with a choice of Instance Owners and then their Instances whereas the non-global login user must go directly to the login interface for a specific Owner (be that URL or other client-side specific identification.)</p>
+<p><strong>General Usage</strong></p>
+<p>When true, allows an Access Account to log into the system without having an Owner or Instance specified in the login process.  When false, the Access Account is more tightly bound to a specific Owner and so only a specific Owner and Instances should be evaluated at login time.</p></td>
                                 </tr>
                                 <tr>
                                     <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="access_account_state_id">access_account_state_id</span></td>
@@ -265,11 +261,12 @@ identification.)</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
                                                 <td title="syst_access_accounts.access_account_state_id references syst_enum_items.id via syst_access_accounts_access_account_states_fk"><a href='syst_enum_items.html'>syst_enum_items</a><span class='relatedKey'>.id</span></td>
-                                                <td class="constraint detail">syst_access_accounts_access_account_states_fk<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">syst_access_accounts_access_account_states_fk</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
                                     </td>
-                                    <td><p>The current life-cycle state of the access account.</p></td>
+                                    <td><p>The current life-cycle state of the Access Account.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_timestamp_created">diag_timestamp_created</span></td>
@@ -286,8 +283,9 @@ identification.)</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The database server date/time when the transaction which created the record<br />
-started.</p></td>
+                                    <td><p>The database server date/time when the transaction which created the record started.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_role_created">diag_role_created</span></td>
@@ -304,7 +302,9 @@ started.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The database role which created the record.</p></td>
+                                    <td><p>The database role which created the record.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_timestamp_modified">diag_timestamp_modified</span></td>
@@ -321,9 +321,9 @@ started.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The database server date/time when the transaction which modified the record<br />
-started.  This field will be the same as diag_timestamp_created for inserted<br />
-records.</p></td>
+                                    <td><p>The database server date/time when the transaction which modified the record started.  This field will be the same as diag_timestamp_created for inserted records.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_wallclock_modified">diag_wallclock_modified</span></td>
@@ -340,9 +340,9 @@ records.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The database server date/time at the moment the record was actually modified.<br />
-For long running transactions this time may be significantly later than the<br />
-value of diag_timestamp_modified.</p></td>
+                                    <td><p>The database server date/time at the moment the record was actually modified. For long running transactions this time may be significantly later than the value of diag_timestamp_modified.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_role_modified">diag_role_modified</span></td>
@@ -359,7 +359,9 @@ value of diag_timestamp_modified.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The database role which modified the record.</p></td>
+                                    <td><p>The database role which modified the record.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_row_version">diag_row_version</span></td>
@@ -376,11 +378,11 @@ value of diag_timestamp_modified.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The current version of the row.  The value here indicates how many actual<br />
-data changes have been made to the row.  If an update of the row leaves all data<br />
-fields the same, disregarding the updates to the diag_* columns, the row version<br />
-is not updated, nor are any updates made to the other diag_* columns other than<br />
-diag_update_count.</p></td>
+                                    <td><p>The current version of the row.  The value here indicates how many actual data changes have been made to the row.  If an update of the row leaves all data fields the same, disregarding the updates to the diag_* columns, the row version is not updated, nor are any updates made to the other diag_* columns other than diag_update_count.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p>
+<p><strong>Direct Usage</strong></p>
+<p>This column is frequently used by by application logic to resolve the &ldquo;dirty write&rdquo; issues which can arise from concurrent data changes.  As such any administrative override of automatic system maintenance of this value should consider the ramifications on application function.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_update_count">diag_update_count</span></td>
@@ -397,10 +399,9 @@ diag_update_count.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>Records the number of times the record has been updated regardless as to if<br />
-the update actually changed any data.  In this way needless or redundant record<br />
-updates can be found.  This row starts at 0 and therefore may be the same as the<br />
-diag_row_version - 1.</p></td>
+                                    <td><p>Records the number of times the record has been updated regardless as to if the update actually changed any data.  In this way needless or redundant record updates can be found.  This row starts at 0 and therefore may be the same as the diag_row_version - 1.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -416,7 +417,13 @@ diag_row_version - 1.</p></td>
                             </div>
                         </div>
                         <div class="box-body">
-                            <table id="indexes_table" class="table table-bordered table-striped dataTable" role="grid">
+                            <table
+                                    id="indexes_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="10"
+                                    data-length-change="false">
                                 <thead>
                                 <tr>
                                     <th>Constraint Name</th>
@@ -460,37 +467,12 @@ diag_row_version - 1.</p></td>
                                 </ul>
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
-                                        <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="syst_access_account_instance_assocs.html" target="_top" title="syst_access_account_instance_assocs" alt="" coords="1039,256,1393,432">
-<area shape="rect" id="node2" href="syst_access_accounts.html" target="_top" title="syst_access_accounts" alt="" coords="603,174,987,625">
-<area shape="rect" id="node4" href="syst_enum_items.html" target="_top" title="syst_enum_items" alt="" coords="5,556,260,790">
-<area shape="rect" id="node5" href="syst_owners.html" target="_top" title="syst_owners" alt="" coords="304,296,559,501">
-<area shape="rect" id="node3" href="syst_access_account_perm_role_assigns.html" target="_top" title="syst_access_account_perm_role_assigns" alt="" coords="1031,449,1401,625">
-<area shape="rect" id="node6" href="syst_credentials.html" target="_top" title="syst_credentials" alt="" coords="1445,544,1700,749">
-<area shape="rect" id="node7" href="syst_identities.html" target="_top" title="syst_identities" alt="" coords="1089,678,1343,913">
-<area shape="rect" id="node8" href="syst_password_history.html" target="_top" title="syst_password_history" alt="" coords="1089,92,1343,238">
-</map>
-                                        <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/syst_access_accounts.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
+                                        
+                                        <a name='diagram'><object type="image/svg+xml" id="oneDegreeImg" data="../diagrams/tables/syst_access_accounts.1degree.svg" class="diagram" border="0" align="left"></object></a>
                                     </div>
                                     <div class="chart tab-pane " id="twodegreesDegreeImg-chart" style="position: relative; overflow-x:auto;">
-                                        <map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
-<area shape="rect" id="node1" href="syst_access_account_instance_assocs.html" target="_top" title="syst_access_account_instance_assocs" alt="" coords="1627,313,1981,489">
-<area shape="rect" id="node2" href="syst_access_accounts.html" target="_top" title="syst_access_accounts" alt="" coords="1191,5,1575,456">
-<area shape="rect" id="node3" href="syst_instances.html" target="_top" title="syst_instances" alt="" coords="1290,684,1475,772">
-<area shape="rect" id="node6" href="syst_enum_items.html" target="_top" title="syst_enum_items" alt="" coords="540,724,795,959">
-<area shape="rect" id="node7" href="syst_owners.html" target="_top" title="syst_owners" alt="" coords="865,533,1120,739">
-<area shape="rect" id="node4" href="syst_access_account_perm_role_assigns.html" target="_top" title="syst_access_account_perm_role_assigns" alt="" coords="1619,636,1989,812">
-<area shape="rect" id="node5" href="syst_perm_roles.html" target="_top" title="syst_perm_roles" alt="" coords="1284,789,1481,877">
-<area shape="rect" id="node10" href="syst_enum_functional_types.html" target="_top" title="syst_enum_functional_types" alt="" coords="215,865,496,953">
-<area shape="rect" id="node11" href="syst_enums.html" target="_top" title="syst_enums" alt="" coords="5,829,171,917">
-<area shape="rect" id="node8" href="syst_credentials.html" target="_top" title="syst_credentials" alt="" coords="2033,796,2288,1001">
-<area shape="rect" id="node9" href="syst_identities.html" target="_top" title="syst_identities" alt="" coords="1677,931,1931,1165">
-<area shape="rect" id="node12" href="syst_instance_type_applications.html" target="_top" title="syst_instance_type_applications" alt="" coords="839,967,1147,1055">
-<area shape="rect" id="node13" href="syst_owner_network_rules.html" target="_top" title="syst_owner_network_rules" alt="" coords="1249,579,1517,667">
-<area shape="rect" id="node14" href="syst_owner_password_rules.html" target="_top" title="syst_owner_password_rules" alt="" coords="1243,473,1523,561">
-<area shape="rect" id="node15" href="syst_password_history.html" target="_top" title="syst_password_history" alt="" coords="1677,84,1931,231">
-</map>
-                                        <a name='diagram'><img id="twodegreesDegreeImg" src="../diagrams/tables/syst_access_accounts.2degrees.png" usemap="#twoDegreesRelationshipsDiagram" class="diagram" border="0" align="left"></a>
+                                        
+                                        <a name='diagram'><object type="image/svg+xml" id="twodegreesDegreeImg" data="../diagrams/tables/syst_access_accounts.2degrees.svg" class="diagram" border="0" align="left"></object></a>
                                     </div>
                                 </div>
                             </div>
@@ -499,7 +481,7 @@ diag_row_version - 1.</p></td>
                 </section>
                 <script>
                     var config = {
-                        pagination: true
+                        pagination: false
                     }
                 </script>
             </div>
@@ -510,7 +492,7 @@ diag_row_version - 1.</p></td>
                         <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
                         <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
                     </div>
-                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.1.0</a></strong>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.2.4</a></strong>
                 </div>
                 <!-- /.container -->
             </footer>

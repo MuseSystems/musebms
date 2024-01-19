@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>syst_complex_format_values - msbms_dev Database</title>
+        <title>syst_complex_format_values - mssub_bms.ms_syst_data</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../../index.html" class="navbar-brand"><b>msbms_dev</b> Database</a>
+                            <a href="../../index.html" class="navbar-brand"><b>mssub_bms</b></a><span class="navbar-brand" style="padding-left: 0">.ms_syst_data</span>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -73,7 +73,7 @@
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
-                    <h1>syst_complex_format_values</h1><p><span id="recordNumber">0</span> rows</p><br />
+                    <h1>syst_complex_format_values</h1><br />
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <i class="fa fa-file-text-o"></i>
@@ -84,8 +84,7 @@
                             </div>
                         </div><!-- /.box-header -->
                         <div class="box-body clearfix">
-                            <p>The list of values provided by an enumeration as well as related behavioral and<br />
-informational metadata.</p>
+                            <p>The list of values provided by an enumeration as well as related behavioral and informational metadata.</p>
                         </div><!-- /.box-body -->
                     </div>
                 </section>
@@ -101,7 +100,13 @@ informational metadata.</p>
                             </div>
                         </div>
                         <div class="box-body">
-                            <table id="standard_table" class="table table-bordered table-striped dataTable" role="grid">
+                            <table
+                                    id="standard_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="10"
+                                    data-length-change="false">
                                 <thead align='left'>
                                 <tr>
                                     <th>Column</th>
@@ -122,20 +127,23 @@ informational metadata.</p>
                                     <td>2147483647</td>
                                     <td title=''></td>
                                     <td title=''></td>
-                                    <td>uuid_generate_v1()</td>
+                                    <td>uuid_generate_v7()</td>
                                     <td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
                                                 <td title="mstr_country_address_format_assocs.address_format_id references syst_complex_format_values.id via mstr_country_address_format_assocs_address_formats_fk"><a href='../../ms_appl_data/tables/mstr_country_address_format_assocs.html'>mstr_country_address_format_assocs</a><span class='relatedKey'>.address_format_id</span></td>
-                                                <td class="constraint detail">mstr_country_address_format_assocs_address_formats_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
+                                                <td class="constraint detail">mstr_country_address_format_assocs_address_formats_fk</td>
+                                                <td class="constraint detail"><span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
                                             </tr>
                                             <tr>
                                                 <td title="mstr_country_name_format_assocs.name_format_id references syst_complex_format_values.id via mstr_country_name_format_assocs_name_formats_fk"><a href='../../ms_appl_data/tables/mstr_country_name_format_assocs.html'>mstr_country_name_format_assocs</a><span class='relatedKey'>.name_format_id</span></td>
-                                                <td class="constraint detail">mstr_country_name_format_assocs_name_formats_fk<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">mstr_country_name_format_assocs_name_formats_fk</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                             <tr>
                                                 <td title="mstr_country_phone_format_assocs.phone_format_id references syst_complex_format_values.id via mstr_country_phone_format_assocs_phone_formats_fk"><a href='../../ms_appl_data/tables/mstr_country_phone_format_assocs.html'>mstr_country_phone_format_assocs</a><span class='relatedKey'>.phone_format_id</span></td>
-                                                <td class="constraint detail">mstr_country_phone_format_assocs_phone_formats_fk<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">mstr_country_phone_format_assocs_phone_formats_fk</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -143,8 +151,9 @@ informational metadata.</p>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The record&rsquo;s primary key.  The definitive identifier of the record in the<br />
-system.</p></td>
+                                    <td><p>The record&rsquo;s primary key.  The definitive identifier of the record in the system.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td class='indexedColumn' title='Indexed'><i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i><span id="internal_name">internal_name</span></td>
@@ -161,7 +170,9 @@ system.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>A candidate key useful for programmatic references to individual records.</p></td>
+                                    <td><p>A candidate key useful for programmatic references to individual records.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td class='indexedColumn' title='Indexed'><i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i><span id="display_name">display_name</span></td>
@@ -178,8 +189,9 @@ system.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>A friendly name and candidate key for the record, suitable for use in user<br />
-interactions</p></td>
+                                    <td><p>A friendly name and candidate key for the record, suitable for use in user interactions</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="external_name">external_name</span></td>
@@ -196,8 +208,7 @@ interactions</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>A non-unique/non-key value used to display to users and external parties where<br />
-uniqueness is less of a concern than specific end user presentation.</p></td>
+                                    <td><p>A non-unique/non-key value used to display to users and external parties where uniqueness is less of a concern than specific end user presentation.</p></td>
                                 </tr>
                                 <tr>
                                     <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="complex_format_id">complex_format_id</span></td>
@@ -214,7 +225,8 @@ uniqueness is less of a concern than specific end user presentation.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
                                                 <td title="syst_complex_format_values.complex_format_id references syst_complex_formats.id via syst_complex_format_values_complex_format_fk"><a href='syst_complex_formats.html'>syst_complex_formats</a><span class='relatedKey'>.id</span></td>
-                                                <td class="constraint detail">syst_complex_format_values_complex_format_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
+                                                <td class="constraint detail">syst_complex_format_values_complex_format_fk</td>
+                                                <td class="constraint detail"><span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -235,14 +247,8 @@ uniqueness is less of a concern than specific end user presentation.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>If true, indicates that this value is the default selection from all values<br />
-defined for the enumerations.  If false then the value record has no special<br />
-significance relative to defaulting.</p>
-<p>Note that if a record is inserted or updated in this table with enum_default set<br />
-true, and another record already exists for the enumeration with its<br />
-enum_default set true, the newly inserted/updated record will take precedence<br />
-and the value record previously set to be default will have its enum_default<br />
-setting set to false.</p></td>
+                                    <td><p>If true, indicates that this value is the default selection from all values defined for the enumerations.  If false then the value record has no special significance relative to defaulting.</p>
+<p>Note that if a record is inserted or updated in this table with enum_default set true, and another record already exists for the enumeration with its enum_default set true, the newly inserted/updated record will take precedence and the value record previously set to be default will have its enum_default setting set to false.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="syst_defined">syst_defined</span></td>
@@ -259,8 +265,9 @@ setting set to false.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>If true, indicates that the value was created by the system or system<br />
-installation process.  A false value indicates that the record was user created.</p></td>
+                                    <td><p>Values of <code>TRUE</code> in this column indicate that the record is considered a &ldquo;System Defined&rdquo; record, a record which is created and primarily maintained by the system using automated processes.  A value of <code>FALSE</code> indicates that the record is considered a &ldquo;User Defined&rdquo; record which is maintained by user actions in the application.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="user_maintainable">user_maintainable</span></td>
@@ -277,11 +284,9 @@ installation process.  A false value indicates that the record was user created.
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>If true, the user may maintain the value including setting user_options or<br />
-even setting the record inactive/deleting it.  If false, the value record is<br />
-required by the system for correct operation.  The user_description and<br />
-user_options columns are always available for user maintenance regardless of<br />
-this setting.</p></td>
+                                    <td><p>If a record is system defined (see the <code>syst_defined</code> column), there may be some user data maintenance operations permitted in some cases.  If the value of this column for a record is <code>TRUE</code> and the record is also &ldquo;System Defined&rdquo;, then permitted user maintenance operations are available for the record.  If the record is system defined and the value of this column is <code>FALSE</code>, no user maintenance is allowed.  If the record is not system defined, the value in this column will have no meaning or effect; user defined records may set this value <code>TRUE</code> as a simple information point indicating that the record is user maintainable.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="syst_description">syst_description</span></td>
@@ -298,8 +303,9 @@ this setting.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>A system default description describing the value and its use cases within the<br />
-enumeration.</p></td>
+                                    <td><p>A system defined description indicating the purpose and use cases of a given record.  Text defined in this column is system maintained and should not be changed under normal circumstances.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="user_description">user_description</span></td>
@@ -316,9 +322,7 @@ enumeration.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>A custom user defined description which overrides the syst_description value<br />
-where it would otherwise be used.  If this column is set NULL the<br />
-syst_description value will be used.</p></td>
+                                    <td><p>An optional user defined description of the record and its use cases.  If this value is not <code>NULL</code>, the value will override any <code>syst_description</code> defined text in application user interfaces and other presentations.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="sort_order">sort_order</span></td>
@@ -335,12 +339,7 @@ syst_description value will be used.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>Indicates the sort ordering of the particular value record with the lowest value<br />
-sorting first.  When a value record for an enumeration is inserted or updated<br />
-and this column is being set to a value which equals another enumeration value<br />
-record for the same enumeration, the system assumes that the new record is<br />
-being set to precede the existing record and it will be set to sort after the<br />
-newly inserted/updated enumeration value.</p></td>
+                                    <td><p>Indicates the sort ordering of the particular value record with the lowest value sorting first.  When a value record for an enumeration is inserted or updated and this column is being set to a value which equals another enumeration value record for the same enumeration, the system assumes that the new record is being set to precede the existing record and it will be set to sort after the newly inserted/updated enumeration value.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="syst_data">syst_data</span></td>
@@ -357,9 +356,7 @@ newly inserted/updated enumeration value.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>For the system expected data definition this column identifies the individual<br />
-fields that make up the complex format type along with the expected type and<br />
-other expected metadata for each field.</p></td>
+                                    <td><p>For the system expected data definition this column identifies the individual fields that make up the complex format type along with the expected type and other expected metadata for each field.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="syst_form">syst_form</span></td>
@@ -376,8 +373,7 @@ other expected metadata for each field.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>Describes how the individual data fields of the complex format are<br />
-presented in user interfaces and printed documents.</p></td>
+                                    <td><p>Describes how the individual data fields of the complex format are presented in user interfaces and printed documents.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="user_data">user_data</span></td>
@@ -394,10 +390,7 @@ presented in user interfaces and printed documents.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>Allows for custom user data fields to be defined in place of the system provided<br />
-data in syst_data.  Note that when this column is not null, it replaces the<br />
-system definition: it does not augment it.  This means that any system expected<br />
-data fields should also appear in the user data.</p></td>
+                                    <td><p>Allows for custom user data fields to be defined in place of the system provided data in syst_data.  Note that when this column is not null, it replaces the system definition: it does not augment it.  This means that any system expected data fields should also appear in the user data.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="user_form">user_form</span></td>
@@ -414,10 +407,7 @@ data fields should also appear in the user data.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>Allows for custom user layout of the format data fields in user interfaces and<br />
-other user presentations.  Note that when this column is not null, it replaces<br />
-the system definition and so any system expected layout elements should also<br />
-be accounted for in this user layout.</p></td>
+                                    <td><p>Allows for custom user layout of the format data fields in user interfaces and other user presentations.  Note that when this column is not null, it replaces the system definition and so any system expected layout elements should also be accounted for in this user layout.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_timestamp_created">diag_timestamp_created</span></td>
@@ -434,8 +424,9 @@ be accounted for in this user layout.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The database server date/time when the transaction which created the record<br />
-started.</p></td>
+                                    <td><p>The database server date/time when the transaction which created the record started.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_role_created">diag_role_created</span></td>
@@ -452,7 +443,9 @@ started.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The database role which created the record.</p></td>
+                                    <td><p>The database role which created the record.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_timestamp_modified">diag_timestamp_modified</span></td>
@@ -469,9 +462,9 @@ started.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The database server date/time when the transaction which modified the record<br />
-started.  This field will be the same as diag_timestamp_created for inserted<br />
-records.</p></td>
+                                    <td><p>The database server date/time when the transaction which modified the record started.  This field will be the same as diag_timestamp_created for inserted records.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_wallclock_modified">diag_wallclock_modified</span></td>
@@ -488,9 +481,9 @@ records.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The database server date/time at the moment the record was actually modified.<br />
-For long running transactions this time may be significantly later than the<br />
-value of diag_timestamp_modified.</p></td>
+                                    <td><p>The database server date/time at the moment the record was actually modified. For long running transactions this time may be significantly later than the value of diag_timestamp_modified.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_role_modified">diag_role_modified</span></td>
@@ -507,7 +500,9 @@ value of diag_timestamp_modified.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The database role which modified the record.</p></td>
+                                    <td><p>The database role which modified the record.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_row_version">diag_row_version</span></td>
@@ -524,11 +519,11 @@ value of diag_timestamp_modified.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The current version of the row.  The value here indicates how many actual<br />
-data changes have been made to the row.  If an update of the row leaves all data<br />
-fields the same, disregarding the updates to the diag_* columns, the row version<br />
-is not updated, nor are any updates made to the other diag_* columns other than<br />
-diag_update_count.</p></td>
+                                    <td><p>The current version of the row.  The value here indicates how many actual data changes have been made to the row.  If an update of the row leaves all data fields the same, disregarding the updates to the diag_* columns, the row version is not updated, nor are any updates made to the other diag_* columns other than diag_update_count.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p>
+<p><strong>Direct Usage</strong></p>
+<p>This column is frequently used by by application logic to resolve the &ldquo;dirty write&rdquo; issues which can arise from concurrent data changes.  As such any administrative override of automatic system maintenance of this value should consider the ramifications on application function.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_update_count">diag_update_count</span></td>
@@ -545,10 +540,9 @@ diag_update_count.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>Records the number of times the record has been updated regardless as to if<br />
-the update actually changed any data.  In this way needless or redundant record<br />
-updates can be found.  This row starts at 0 and therefore may be the same as the<br />
-diag_row_version - 1.</p></td>
+                                    <td><p>Records the number of times the record has been updated regardless as to if the update actually changed any data.  In this way needless or redundant record updates can be found.  This row starts at 0 and therefore may be the same as the diag_row_version - 1.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -564,7 +558,13 @@ diag_row_version - 1.</p></td>
                             </div>
                         </div>
                         <div class="box-body">
-                            <table id="indexes_table" class="table table-bordered table-striped dataTable" role="grid">
+                            <table
+                                    id="indexes_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="10"
+                                    data-length-change="false">
                                 <thead>
                                 <tr>
                                     <th>Constraint Name</th>
@@ -610,29 +610,11 @@ diag_row_version - 1.</p></td>
                                 <h5>Close relationships within degrees of separation</h5>
                                 <ul class="nav nav-tabs pull-left ui-sortable-handle">
                                     <li class="active"><a href="#oneDegreeImg-chart" data-toggle="tab" aria-expanded="true">One</a></li>
-                                    <li class=""><a href="#twodegreesDegreeImg-chart" data-toggle="tab" aria-expanded="true">Two degrees</a></li>
                                 </ul>
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
-                                        <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="../ms_appl_data/tables/mstr_country_address_format_assocs.html" target="_top" title="ms_appl_data.mstr_country_address_format_assocs" alt="" coords="832,5,1343,123">
-<area shape="rect" id="node2" href="syst_complex_format_values.html" target="_top" title="syst_complex_format_values" alt="" coords="329,137,788,852">
-<area shape="rect" id="node5" href="syst_complex_formats.html" target="_top" title="syst_complex_formats" alt="" coords="5,257,285,463">
-<area shape="rect" id="node3" href="../ms_appl_data/tables/mstr_country_name_format_assocs.html" target="_top" title="ms_appl_data.mstr_country_name_format_assocs" alt="" coords="842,140,1333,257">
-<area shape="rect" id="node4" href="../ms_appl_data/tables/mstr_country_phone_format_assocs.html" target="_top" title="ms_appl_data.mstr_country_phone_format_assocs" alt="" coords="839,275,1335,392">
-</map>
-                                        <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/syst_complex_format_values.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
-                                    </div>
-                                    <div class="chart tab-pane " id="twodegreesDegreeImg-chart" style="position: relative; overflow-x:auto;">
-                                        <map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
-<area shape="rect" id="node1" href="../ms_appl_data/tables/mstr_country_address_format_assocs.html" target="_top" title="ms_appl_data.mstr_country_address_format_assocs" alt="" coords="1111,5,1621,123">
-<area shape="rect" id="node2" href="syst_complex_format_values.html" target="_top" title="syst_complex_format_values" alt="" coords="608,137,1067,852">
-<area shape="rect" id="node5" href="syst_complex_formats.html" target="_top" title="syst_complex_formats" alt="" coords="284,257,564,463">
-<area shape="rect" id="node3" href="../ms_appl_data/tables/mstr_country_name_format_assocs.html" target="_top" title="ms_appl_data.mstr_country_name_format_assocs" alt="" coords="1121,140,1611,257">
-<area shape="rect" id="node4" href="../ms_appl_data/tables/mstr_country_phone_format_assocs.html" target="_top" title="ms_appl_data.mstr_country_phone_format_assocs" alt="" coords="1118,275,1614,392">
-<area shape="rect" id="node6" href="syst_feature_map.html" target="_top" title="syst_feature_map" alt="" coords="5,348,240,436">
-</map>
-                                        <a name='diagram'><img id="twodegreesDegreeImg" src="../diagrams/tables/syst_complex_format_values.2degrees.png" usemap="#twoDegreesRelationshipsDiagram" class="diagram" border="0" align="left"></a>
+                                        
+                                        <a name='diagram'><object type="image/svg+xml" id="oneDegreeImg" data="../diagrams/tables/syst_complex_format_values.1degree.svg" class="diagram" border="0" align="left"></object></a>
                                     </div>
                                 </div>
                             </div>
@@ -641,7 +623,7 @@ diag_row_version - 1.</p></td>
                 </section>
                 <script>
                     var config = {
-                        pagination: true
+                        pagination: false
                     }
                 </script>
             </div>
@@ -652,7 +634,7 @@ diag_row_version - 1.</p></td>
                         <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
                         <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
                     </div>
-                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.1.0</a></strong>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.2.4</a></strong>
                 </div>
                 <!-- /.container -->
             </footer>

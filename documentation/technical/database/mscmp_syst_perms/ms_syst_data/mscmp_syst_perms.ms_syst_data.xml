@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?><database name="mscmp_syst_perms" schema="ms_syst_data" type="PostgreSQL - 16.1 (Ubuntu 16.1-1.pgdg22.04+1)">
+   <tables>
+      <table name="syst_perm_functional_types" remarks="Defines application specific areas of applicability to which Permissions and&#10;Permission Roles are assigned.&#10;&#10;When an application defines varying areas of business controls, Permission&#10;Functional Types can be used to group Permissions into their specific areas and&#10;limit usage and role assignment by area.  Consider an application which supports&#10;multiple warehouses containing inventory.  The application may define globally&#10;applicable Permissions such as the ability to log into the application, but may&#10;allow employees to be granted varying degrees of Permission to each individual&#10;warehouse's inventory management features.  In this case there would be &quot;Global&quot;&#10;Permission Functional Type containing the log in Permission and a &quot;Warehouse&quot;&#10;Permission Functional Type for those Permissions and Permission Roles which can&#10;vary warehouse by warehouse.&#10;&#10;**General Usage**&#10;&#10;Both Permissions and Permission Roles must share a Permission Functional Type&#10;since the Permission Functional Type establishes the context of applicability&#10;for both." schema="ms_syst_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">
+            <child column="perm_functional_type_id" foreignKey="syst_perm_roles_perm_functional_type_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_perm_roles"/>
+            <child column="perm_functional_type_id" foreignKey="syst_perms_perm_functional_type_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_perms"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="false" remarks="A candidate key useful for programmatic references to individual records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="display_name" nullable="false" remarks="A friendly name and candidate key for the record, suitable for use in user&#10;interactions&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="syst_description" nullable="false" remarks="A system defined description indicating the purpose and use cases of a given&#10;record.  Text defined in this column is system maintained and should not be&#10;changed under normal circumstances.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="user_description" nullable="true" remarks="An optional user defined description of the record and its use cases.  If this&#10;value is not `NULL`, the value will override any `syst_description` defined text&#10;in application user interfaces and other presentations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="5" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="diag_role_created" nullable="true" remarks="The database role which created the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="7" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="8" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="diag_role_modified" nullable="true" remarks="The database role which modified the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="10" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Direct Usage**&#10;&#10;This column is frequently used by by application logic to resolve the &quot;dirty&#10;write&quot; issues which can arise from concurrent data changes.  As such any&#10;administrative override of automatic system maintenance of this value should&#10;consider the ramifications on application function." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="11" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="syst_perm_functional_types_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="syst_perm_functional_types_display_name_udx" unique="true">
+            <column ascending="true" name="display_name"/>
+         </index>
+         <index name="syst_perm_functional_types_internal_name_udx" unique="true">
+            <column ascending="true" name="internal_name"/>
+         </index>
+      </table>
+      <table name="syst_perm_role_grants" remarks="Establishes the individual permissions which are granted by the given permission&#10;role.&#10;&#10;**General Usage**&#10;&#10;Note that the absence of an explicit permission grant to a role is an implicit&#10;denial of that permission." schema="ms_syst_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="perm_role_id" nullable="false" remarks="Identifies the role to which the permission grant is being made." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="syst_perm_role_grants_perm_role_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_perm_roles"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="perm_id" nullable="false" remarks="The permission being granted by the role." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="syst_perm_role_grants_perm_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_perms"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="view_scope" nullable="false" remarks="Assigns the Scope of the Permission's View Right being granted by the Role.&#10;&#10;**General Usage**&#10;&#10;The valid Scope options are defined by the Permission record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="maint_scope" nullable="false" remarks="Assigns the Scope of the Permission's Maintenance Right being granted by the&#10;Role.&#10;&#10;**General Usage**&#10;&#10;The valid Scope options are defined by the Permission record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="admin_scope" nullable="false" remarks="Assigns the Scope of the Permission's Data Administration Right being granted by&#10;the Role.&#10;&#10;**General Usage**&#10;&#10;The valid Scope options are defined by the Permission record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="ops_scope" nullable="false" remarks="Assigns the Scope of the Permission's Operations Right being granted by the&#10;Role.&#10;&#10;**General Usage**&#10;&#10;The valid Scope options are defined by the Permission record." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="7" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="diag_role_created" nullable="true" remarks="The database role which created the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="9" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="10" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="diag_role_modified" nullable="true" remarks="The database role which modified the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="12" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Direct Usage**&#10;&#10;This column is frequently used by by application logic to resolve the &quot;dirty&#10;write&quot; issues which can arise from concurrent data changes.  As such any&#10;administrative override of automatic system maintenance of this value should&#10;consider the ramifications on application function." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="13" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="syst_perm_role_grants_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="syst_perm_role_grants_perm_perm_role_udx" unique="true">
+            <column ascending="true" name="perm_role_id"/>
+            <column ascending="true" name="perm_id"/>
+         </index>
+      </table>
+      <table name="syst_perm_roles" remarks="Defines collections of permissions which are then assignable to users." schema="ms_syst_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">
+            <child column="perm_role_id" foreignKey="syst_perm_role_grants_perm_role_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_perm_role_grants"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="false" remarks="A candidate key useful for programmatic references to individual records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="display_name" nullable="false" remarks="A friendly name and candidate key for the record, suitable for use in user&#10;interactions&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="perm_functional_type_id" nullable="false" remarks="Assigns the Permission Role to a specific Permission Functional Type.&#10;&#10;**General Usage**&#10;&#10;Only Permissions with the same Permission Functional Type may be granted by the&#10;Permission Role." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="syst_perm_roles_perm_functional_type_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_perm_functional_types"/>
+         </column>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="4" name="syst_defined" nullable="false" remarks="Values of `TRUE` in this column indicate that the record is considered a&#10;&quot;System Defined&quot; record, a record which is created and primarily maintained by&#10;the system using automated processes.  A value of `FALSE` indicates that the&#10;record is considered a &quot;User Defined&quot; record which is maintained by user actions&#10;in the application.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="syst_description" nullable="false" remarks="A system defined description indicating the purpose and use cases of a given&#10;record.  Text defined in this column is system maintained and should not be&#10;changed under normal circumstances.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="user_description" nullable="true" remarks="An optional user defined description of the record and its use cases.  If this&#10;value is not `NULL`, the value will override any `syst_description` defined text&#10;in application user interfaces and other presentations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="7" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="diag_role_created" nullable="true" remarks="The database role which created the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="9" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="10" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="diag_role_modified" nullable="true" remarks="The database role which modified the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="12" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Direct Usage**&#10;&#10;This column is frequently used by by application logic to resolve the &quot;dirty&#10;write&quot; issues which can arise from concurrent data changes.  As such any&#10;administrative override of automatic system maintenance of this value should&#10;consider the ramifications on application function." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="13" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="syst_perm_roles_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="syst_perm_roles_display_name_udx" unique="true">
+            <column ascending="true" name="display_name"/>
+         </index>
+         <index name="syst_perm_roles_internal_name_udx" unique="true">
+            <column ascending="true" name="internal_name"/>
+         </index>
+      </table>
+      <table name="syst_perms" remarks="Defines the available system and application permissions which can be assigned&#10;to users.&#10;&#10;The Permission is divided into the following concepts:&#10;&#10;  1. The Permission record itself defines a subject for which application&#10;     security and control concerns exist.&#10;&#10;  2. Each Permission is made up of standard Rights.  These Rights are:&#10;&#10;      * View - the ability to view data.&#10;&#10;      * Maintenance - the ability to change or process existing data.&#10;&#10;      * Administration - the ability to create or destroy data.&#10;&#10;      * Operations - the ability to perform certain operations or processes.&#10;&#10;  3. The Right for each Permission is assigned a Scope of applicability which&#10;     can limit or extend the grant of a Right.  Each Right of the Permission may&#10;     define which Scopes it supports out of the following possibilities:&#10;&#10;     * Unused - The Right does not exist in any meaningful way for the&#10;       Permission.&#10;&#10;     * Deny - The Right is not granted by the Permission grant; this is&#10;       typically used in cases where other Rights may be granted, for example&#10;       permitting a user to see a value (View Right), but not to Maintain or&#10;       perform data Admin tasks (Maint &amp; Admin Rights).&#10;&#10;     * Same User - The Right grant is limited in Scope to those records which&#10;       are in some way designated as belonging to the specific user exercising&#10;       the Right.  Ownership designation will be defined by those functions&#10;       where a Permission is checked.&#10;&#10;     * Same Group - The Right grant is limited in Scope to those records which&#10;       are in some way designated as belonging to a specific group or groups and&#10;       to which the user belongs in some way.  Ownership designation will be&#10;       defined by those functions where a Permission is checked.&#10;&#10;     * All - The Right grant is not limited in Scope and all records which are&#10;       subject to the Permission are available to the user.&#10;&#10;Permissions are assigned to Permission Roles which are in turn granted to&#10;individual users. If a Permission is not assigned to a Permission Role, then&#10;the assumption is that the Permission Role's users are denied all rights granted&#10;by the unassigned Permission.&#10;&#10;Some Permissions may be dependent on the grants of other more fundamental&#10;Permissions. For example, a user may be granted only View Rights to the sales&#10;order form, but also granted Maintenance Rights to sales pricing data. In such&#10;a case the sales order Rights would dictate that the user does not have the&#10;ability to maintain sales pricing in the sales order context.&#10;&#10;Specific details of applicability and the determination of Scope boundaries will&#10;vary by each specific scenario. Consult individual Permission documentation for&#10;specific understanding of how determinations of access are made." schema="ms_syst_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">
+            <child column="perm_id" foreignKey="syst_perm_role_grants_perm_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_perm_role_grants"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="false" remarks="A candidate key useful for programmatic references to individual records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="display_name" nullable="false" remarks="A friendly name and candidate key for the record, suitable for use in user&#10;interactions&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="perm_functional_type_id" nullable="false" remarks="Assigns the Permission to a specific Permission Functional Type.&#10;&#10;**General Usage**&#10;&#10;Permissions may only be granted in Permission Roles of the same Permission&#10;Functional Type." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="syst_perms_perm_functional_type_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_perm_functional_types"/>
+         </column>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="4" name="syst_defined" nullable="false" remarks="Values of `TRUE` in this column indicate that the record is considered a&#10;&quot;System Defined&quot; record, a record which is created and primarily maintained by&#10;the system using automated processes.  A value of `FALSE` indicates that the&#10;record is considered a &quot;User Defined&quot; record which is maintained by user actions&#10;in the application.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="syst_description" nullable="false" remarks="A system defined description indicating the purpose and use cases of a given&#10;record.  Text defined in this column is system maintained and should not be&#10;changed under normal circumstances.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="user_description" nullable="true" remarks="An optional user defined description of the record and its use cases.  If this&#10;value is not `NULL`, the value will override any `syst_description` defined text&#10;in application user interfaces and other presentations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="ARRAY['unused'::text]" digits="0" id="7" name="view_scope_options" nullable="false" remarks="If applicable, enumerates the available Scopes of viewable data offered by the&#10;permission.&#10;&#10;**General Usage**&#10;&#10;If not applicable the only option will be 'unused'." size="2147483647" type="_text" typeCode="2003"/>
+         <column autoUpdated="false" defaultValue="ARRAY['unused'::text]" digits="0" id="8" name="maint_scope_options" nullable="false" remarks="If applicable, enumerates the available Scopes of maintainable data offered by&#10;the permission.  Maintenance in this context refers to changing existing data.&#10;&#10;**General Usage**&#10;&#10;If not applicable the only option will be 'unused'." size="2147483647" type="_text" typeCode="2003"/>
+         <column autoUpdated="false" defaultValue="ARRAY['unused'::text]" digits="0" id="9" name="admin_scope_options" nullable="false" remarks="If applicable, enumerates the available Scopes of data administration offered&#10;by the permission.  Administration in this context refers to creating or&#10;deleting records.&#10;&#10;**General Usage**&#10;&#10;If not applicable the only option will be 'unused'." size="2147483647" type="_text" typeCode="2003"/>
+         <column autoUpdated="false" defaultValue="ARRAY['unused'::text]" digits="0" id="10" name="ops_scope_options" nullable="false" remarks="If applicable, enumerates the available Scopes of a given operation or&#10;processing capability offered by the permission.&#10;&#10;**General Usage**&#10;&#10;If not applicable the only option will be 'unused'." size="2147483647" type="_text" typeCode="2003"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="11" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="diag_role_created" nullable="true" remarks="The database role which created the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="13" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="14" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="15" name="diag_role_modified" nullable="true" remarks="The database role which modified the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="16" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Direct Usage**&#10;&#10;This column is frequently used by by application logic to resolve the &quot;dirty&#10;write&quot; issues which can arise from concurrent data changes.  As such any&#10;administrative override of automatic system maintenance of this value should&#10;consider the ramifications on application function." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="17" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="syst_perms_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="syst_perms_display_name_udx" unique="true">
+            <column ascending="true" name="display_name"/>
+         </index>
+         <index name="syst_perms_internal_name_udx" unique="true">
+            <column ascending="true" name="internal_name"/>
+         </index>
+         <checkConstraint constraint="(((cardinality(admin_scope_options) &gt; 0) AND (admin_scope_options &lt;@ ARRAY['unused'::text, 'deny'::text, 'same_user'::text, 'same_group'::text, 'all'::text])))" name="syst_perms_admin_scope_options_chk"/>
+         <checkConstraint constraint="(((cardinality(maint_scope_options) &gt; 0) AND (maint_scope_options &lt;@ ARRAY['unused'::text, 'deny'::text, 'same_user'::text, 'same_group'::text, 'all'::text])))" name="syst_perms_maint_scope_options_chk"/>
+         <checkConstraint constraint="(((cardinality(ops_scope_options) &gt; 0) AND (ops_scope_options &lt;@ ARRAY['unused'::text, 'deny'::text, 'same_user'::text, 'same_group'::text, 'all'::text])))" name="syst_perms_ops_scope_options_chk"/>
+         <checkConstraint constraint="(((cardinality(view_scope_options) &gt; 0) AND (view_scope_options &lt;@ ARRAY['unused'::text, 'deny'::text, 'same_user'::text, 'same_group'::text, 'all'::text])))" name="syst_perms_view_scope_options_chk"/>
+      </table>
+   </tables>
+   <routines>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_a_iu_syst_perm_role_grants_related_data_checks()" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Checks that Permission Role Grant records are consistent with their defining
+parent records.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `AFTER`
+
+  * **Supported Operations**: `INSERT`, `UPDATE`]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_a_iu_syst_perm_role_grants_related_data_checks.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_perms/ms_syst_data/syst_perm_role_grants/trig_a_iu_syst_perm_role_grants_related_data_checks.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+DECLARE
+    var_context_data record;
+    var_errors       text[] := ARRAY []::text[];
+
+BEGIN
+
+    SELECT INTO STRICT var_context_data
+        sp.view_scope_options
+      , sp.maint_scope_options
+      , sp.admin_scope_options
+      , sp.ops_scope_options
+      , sp.perm_functional_type_id                              AS perm_perm_functional_type_id
+      , spr.perm_functional_type_id                             AS perm_role_perm_functional_type_id
+      , NOT new.view_scope = ANY (sp.view_scope_options)        AS view_scope_invalid
+      , NOT new.maint_scope = ANY (sp.maint_scope_options)      AS maint_scope_invalid
+      , NOT new.admin_scope = ANY (sp.admin_scope_options)      AS admin_scope_invalid
+      , NOT new.ops_scope = ANY (sp.ops_scope_options)          AS ops_scope_invalid
+      , spr.perm_functional_type_id != sp.perm_functional_type_id AS perm_functional_type_invalid
+    FROM
+        ms_syst_data.syst_perms sp
+      , ms_syst_data.syst_perm_roles spr
+    WHERE sp.id = new.perm_id AND spr.id = new.perm_role_id;
+
+    --
+    -- Functional Type Check
+    --
+
+    IF var_context_data.perm_functional_type_invalid THEN
+
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'This record may only grant Permissions of the same ' ||
+                          'Permission Functional Type that is assigned to the ' ||
+                          'Permission Role which owns this record.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst'
+                            ,p_proc_name      => 'trig_a_iu_syst_perm_role_grants_related_data_checks'
+                            ,p_exception_name => 'invalid_data'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     =>
+                                jsonb_build_object(
+                                     'syst_perms_perm_functional_type_id'
+                                    , var_context_data.perm_perm_functional_type_id
+                                    ,'syst_perm_roles_perm_functional_type_id'
+                                    ,var_context_data.perm_role_perm_functional_type_id )
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+
+    END IF;
+
+    --
+    -- Rights Scoping Checks
+    --
+
+    IF var_context_data.view_scope_invalid THEN
+            var_errors :=
+                var_errors ||
+                'The assigned View Right Scope is not valid for this Permission.'::text;
+    END IF;
+
+    IF var_context_data.maint_scope_invalid THEN
+            var_errors :=
+                var_errors ||
+                'The assigned Maintenance Right Scope is not valid for this Permission.'::text;
+    END IF;
+
+    IF var_context_data.admin_scope_invalid THEN
+            var_errors :=
+                var_errors ||
+                'The assigned Administration Right Scope is not valid for this Permission.'::text;
+    END IF;
+
+    IF var_context_data.ops_scope_invalid THEN
+            var_errors :=
+                var_errors ||
+                'The assigned Operations Right Scope is not valid for this Permission.'::text;
+    END IF;
+
+
+    IF array_length(var_errors, 1) > 0 THEN
+
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'Invalid Scopes for Permission Rights provided.',
+                DETAIL = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst'
+                            ,p_proc_name      => 'trig_a_iu_syst_perm_role_grants_related_data_checks'
+                            ,p_exception_name => 'invalid_data'
+                            ,p_errcode        => 'PM008'
+                            ,p_param_data     =>
+                                jsonb_build_object(
+                                     'error_scopes',        var_errors
+                                    ,'view_scope_options',  var_context_data.view_scope_options
+                                    ,'maint_scope_options', var_context_data.maint_scope_options
+                                    ,'admin_scope_options', var_context_data.admin_scope_options
+                                    ,'ops_scope_options',   var_context_data.ops_scope_options
+                                    ,'parameters',          new )
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM008',
+                SCHEMA = tg_table_schema,
+                TABLE = tg_table_name;
+
+    END IF;
+
+    RETURN new;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_b_iu_syst_perm_role_grants_default_scopes()" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[This trigger will assign default Permmission Scope values based on the
+definition of the permission defined in Permissions' `ms_syst_data.syst_perms`
+record.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `BEFORE`
+
+  * **Supported Operations**: `INSERT`, `UPDATE`]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_b_iu_syst_perm_role_grants_default_scopes.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_perms/ms_syst_data/syst_perm_role_grants/trig_b_iu_syst_perm_role_grants_default_scopes.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+DECLARE
+    var_perm ms_syst_data.syst_perms;
+
+BEGIN
+
+    SELECT * INTO STRICT var_perm FROM ms_syst_data.syst_perms WHERE id = new.perm_id;
+
+    IF new.view_scope IS NULL THEN
+        new.view_scope = var_perm.view_scope_options[1];
+    END IF;
+
+    IF new.maint_scope IS NULL THEN
+        new.maint_scope = var_perm.maint_scope_options[1];
+    END IF;
+
+    IF new.admin_scope IS NULL THEN
+        new.admin_scope = var_perm.admin_scope_options[1];
+    END IF;
+
+    IF new.ops_scope IS NULL THEN
+        new.ops_scope = var_perm.ops_scope_options[1];
+    END IF;
+
+    RETURN new;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+   </routines>
+</database>

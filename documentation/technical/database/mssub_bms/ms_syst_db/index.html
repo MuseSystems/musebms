@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>msbms_dev Database</title>
+        <title>mssub_bms.ms_syst_db</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../index.html" class="navbar-brand"><b>msbms_dev</b> Database</a>
+                            <a href="../index.html" class="navbar-brand"><b>mssub_bms</b></a><span class="navbar-brand" style="padding-left: 0">.ms_syst_db</span>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -77,12 +77,12 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="callout callout-info">
-                                <h4>SchemaSpy Analysis of msbms_dev</h4>
-                                <p>Generated on Thu Nov 17 14:49 PST 2022</p>
+                                <h4>SchemaSpy Analysis of mssub_bms.ms_syst_db</h4>
+                                <p>Generated on Fri Jan 19 05:41 PST 2024</p>
                             </div>
                         </div>
                     </div>
-                    <a href="msbms_dev.ms_syst_db.xml" title="XML Representation">XML Representation</a><br />
+                    <a href="mssub_bms.ms_syst_db.xml" title="XML Representation">XML Representation</a><br />
                     <a href="insertionOrder.txt" title="Useful for loading data into a database">Insertion Order</a>
                     <a href="deletionOrder.txt" title="Useful for purging data from a database">Deletion Order</a>
                 </section>
@@ -94,7 +94,7 @@
                                 <span class="info-box-icon bg-aqua"><i class="fa fa-table"></i></span>
                                 <div class="info-box-content">
                                     <span class="info-box-text">TABLES</span>
-                                    <span class="info-box-number">0</span>
+                                    <span class="info-box-number">1</span>
                                 </div>
                                 <!-- /.info-box-content -->
                             </div>
@@ -118,7 +118,7 @@
                                 <span class="info-box-icon bg-green"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></span>
                                 <div class="info-box-content">
                                     <span class="info-box-text">COLUMNS</span>
-                                    <span class="info-box-number">0</span>
+                                    <span class="info-box-number">14</span>
                                 </div>
                                 <!-- /.info-box-content -->
                             </div>
@@ -154,7 +154,7 @@
                                 <span class="info-box-icon bg-navy"><i class="fa fa-file-code-o" aria-hidden="true"></i></span>
                                 <div class="info-box-content">
                                     <span class="info-box-text">Routines</span>
-                                    <span class="info-box-number">0</span>
+                                    <span class="info-box-number">2</span>
                                 </div>
                                 <!-- /.info-box-content -->
                             </div>
@@ -168,7 +168,32 @@
                             <span class="label label-primary pull-right"><i class="fa fa-cog fa-2x"></i></span>
                         </div><!-- /.box-header -->
                         <div class="box-body">
-                            <p>Database Type: PostgreSQL - 15.1 (Ubuntu 15.1-1.pgdg22.04+1)</p>
+                            <p>Database Type: PostgreSQL - 16.1 (Ubuntu 16.1-1.pgdg22.04+1)</p>
+                        </div><!-- /.box-body -->
+                    </div>
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Catalog mssub_bms</h3>
+                            <span class="label label-primary pull-right"><i class="fa fa-cog fa-2x"></i></span>
+                        </div><!-- /.box-header -->
+                        <div class="box-body">
+                            <p> <p><strong>Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems</strong></p>
+<p>This database software and documentation is licensed to you under the terms of the <a href="https://docs.muse.systems/license/">Muse Systems Business Management System License Agreement v1.1</a> or other written, superseding license that you have obtained from Muse Systems.</p>
+<p>Only Muse Systems may license this software to you.  Your continued use of this software indicates your agreement to abide by the applicable license terms.</p>
+<p>This database may include content copyrighted by and licensed from third parties.</p>
+<p>Please see the license or contact us for more information.</p>
+<p><a href="mailto:muse.information@musesystems.com">muse.information@musesystems.com</a> :: <a href="https://muse.systems">https://muse.systems</a></p> </p>
+                        </div><!-- /.box-body -->
+                    </div>
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Schema ms_syst_db</h3>
+                            <span class="label label-primary pull-right"><i class="fa fa-cog fa-2x"></i></span>
+                        </div><!-- /.box-header -->
+                        <div class="box-body">
+                            <p> <p>Datastore migrations management schema.</p>
+<p><strong>All member objects of this schema are considered &ldquo;private&rdquo;.</strong></p>
+<p>Direct usage of this schema or its member objects is not supported.</p> </p>
                         </div><!-- /.box-body -->
                     </div>
                     <div class="box box-primary">
@@ -177,19 +202,35 @@
                             <span class="label label-primary pull-right"><i class="fa fa-database fa-2x"></i></span>
                         </div><!-- /.box-header -->
                         <div class="box-body">
-                            <table id="database_objects" class="table table-bordered table-striped dataTable" role="grid">
+                            <table
+                                    id="database_objects"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="50"
+                                    data-length-change="false">
                                 <thead>
                                     <tr>
                                         <th valign="bottom">Table / View</th>
                                         <th align="right" valign="bottom">Children</th>
                                         <th align="right" valign="bottom">Parents</th>
                                         <th align="right" valign="bottom">Columns</th>
-                                        <th align="right" valign="bottom">Rows</th>
                                         <th align="right" valign="bottom">Type</th>
                                         <th class="toggle">Comments</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/migrations.html">migrations</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">14</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Records which database updates have been applied to the system.</p>
+<p><strong>General Usage</strong></p>
+<p>Available database migrations are stored in a file system directory where individual files are named starting with the version number taking a fixed number of numeric digits.  In the simple case, the migration process will get a sorted listing of available migrations from the migrations file system directory and compare the version of the file with the minimum version number not already checked against the maximum version applied to the database according to this table.  If the file version is greater, the migration is applied to the database, otherwise the file is skipped and the version checking process repeats until there are no more migration files to evaluate.</p>
+<p>Finally, during the migration process, the ms_syst_db.migrations record is created once the corresponding migration file has been successfully applied to the database.  Both the migration file and the ms_syst_db.migrations record should be processed in the same database transaction.</p></td>
+                                    </tr>
                             </table>
                         </div>
                     </div><!-- /.box-body -->
@@ -197,7 +238,7 @@
                 <!-- /.content -->
                 <script>
                     var config = {
-                        pagination: true
+                        pagination: false
                     }
                 </script>
             </div>
@@ -208,7 +249,7 @@
                         <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
                         <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
                     </div>
-                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.1.0</a></strong>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.2.4</a></strong>
                 </div>
                 <!-- /.container -->
             </footer>

@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>syst_enums - msbms_dev Database</title>
+        <title>syst_enums - mssub_bms.ms_syst</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../../index.html" class="navbar-brand"><b>msbms_dev</b> Database</a>
+                            <a href="../../index.html" class="navbar-brand"><b>mssub_bms</b></a><span class="navbar-brand" style="padding-left: 0">.ms_syst</span>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -73,7 +73,7 @@
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
-                    <h1>syst_enums</h1><p><span id="recordNumber">0</span> rows</p><br />
+                    <h1>syst_enums</h1><br />
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <i class="fa fa-file-text-o"></i>
@@ -84,15 +84,19 @@
                             </div>
                         </div><!-- /.box-header -->
                         <div class="box-body clearfix">
-                            <p>Enumerates the enumerations known to the system along with additional metadata<br />
-useful in applying them appropriately.</p>
-<p>This API View allows the application to read and maintain the data according to<br />
-well defined application business rules.  Using this API view for updates to<br />
-data is the preferred method of data maintenance in the course of normal usage.</p>
-<p>Only user maintainable values may be maintained via this API.  System created or<br />
-maintained data is not maintainable via this view.  Attempts at invalid data<br />
-maintenance via this API may result in the invalid changes being ignored or may<br />
-raise an exception.</p>
+                            <p>Enumerates the enumerations known to the system along with additional metadata useful in applying them appropriately.</p>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code></li>
+<li><code>DELETE</code></li>
+</ul>
+<p><strong>System Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code> - See column comments for applicable restrictions.</li>
+</ul>
                         </div><!-- /.box-body -->
                     </div>
                 </section>
@@ -108,7 +112,13 @@ raise an exception.</p>
                             </div>
                         </div>
                         <div class="box-body">
-                            <table id="standard_table" class="table table-bordered table-striped dataTable" role="grid">
+                            <table
+                                    id="standard_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="10"
+                                    data-length-change="false">
                                 <thead align='left'>
                                 <tr>
                                     <th>Column</th>
@@ -138,9 +148,23 @@ raise an exception.</p>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The record&rsquo;s primary key.  The definitive identifier of the record in the<br />
-system.</p>
-<p>Note that this column may not be updated via this API View.</p></td>
+                                    <td><p>The record&rsquo;s primary key.  The definitive identifier of the record in the system.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               false</li>
+<li>Unique Values Required?: true</li>
+<li>Default Value:           Automatically Generated</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul>
+<p><strong>System Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul></td>
                                 </tr>
                                 <tr>
                                     <td><span id="internal_name">internal_name</span></td>
@@ -157,7 +181,25 @@ system.</p>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>A candidate key useful for programmatic references to individual records.</p></td>
+                                    <td><p>A candidate key useful for programmatic references to individual records.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               true</li>
+<li>Unique Values Required?: true</li>
+<li>Default Value:           ( No Default Value )</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code></li>
+</ul>
+<p><strong>System Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul></td>
                                 </tr>
                                 <tr>
                                     <td><span id="display_name">display_name</span></td>
@@ -174,8 +216,26 @@ system.</p>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>A friendly name and candidate key for the record, suitable for use in user<br />
-interactions</p></td>
+                                    <td><p>A friendly name and candidate key for the record, suitable for use in user interactions</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               true</li>
+<li>Unique Values Required?: true</li>
+<li>Default Value:           ( No Default Value )</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code></li>
+</ul>
+<p><strong>System Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code> - Only user maintainable records.</li>
+</ul></td>
                                 </tr>
                                 <tr>
                                     <td><span id="syst_description">syst_description</span></td>
@@ -192,10 +252,23 @@ interactions</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>A default description of the enumeration which might include details such as how<br />
-the enumeration is used and what kind of functionality might be impacted by<br />
-choosing specific enumeration values.</p>
-<p>Note that this column may not be updated via this API View.</p></td>
+                                    <td><p>A system defined description indicating the purpose and use cases of a given record.  Text defined in this column is system maintained and should not be changed under normal circumstances.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               false</li>
+<li>Unique Values Required?: false</li>
+<li>Default Value:           ( No Default Value )</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul>
+<p><strong>System Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul></td>
                                 </tr>
                                 <tr>
                                     <td><span id="user_description">user_description</span></td>
@@ -212,8 +285,24 @@ choosing specific enumeration values.</p>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>A user defined description of the enumeration to support custom user<br />
-documentation of the purpose and function of the enumeration.</p></td>
+                                    <td><p>An optional user defined description of the record and its use cases.  If this value is not <code>NULL</code>, the value will override any <code>syst_description</code> defined text in application user interfaces and other presentations.</p>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               false</li>
+<li>Unique Values Required?: false</li>
+<li>Default Value:           ( No Default Value )</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code></li>
+</ul>
+<p><strong>System Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code> - Always updatable, even when not otherwise user maintainable.</li>
+</ul></td>
                                 </tr>
                                 <tr>
                                     <td><span id="syst_defined">syst_defined</span></td>
@@ -230,12 +319,23 @@ documentation of the purpose and function of the enumeration.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>If true, this value indicates that the enumeration is considered part of the<br />
-application.  Often times, system enumerations are manageable by users, but the<br />
-existence of the enumeration in the system is assumed to exist by the<br />
-application.  If false, the assumption is that the enumeration was created by<br />
-users and supports custom user functionality.</p>
-<p>Note that this column may not be updated via this API View.</p></td>
+                                    <td><p>Values of <code>TRUE</code> in this column indicate that the record is considered a &ldquo;System Defined&rdquo; record, a record which is created and primarily maintained by the system using automated processes.  A value of <code>FALSE</code> indicates that the record is considered a &ldquo;User Defined&rdquo; record which is maintained by user actions in the application.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               false</li>
+<li>Unique Values Required?: false</li>
+<li>Default Value:           <code>FALSE</code></li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul>
+<p><strong>System Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul></td>
                                 </tr>
                                 <tr>
                                     <td><span id="user_maintainable">user_maintainable</span></td>
@@ -252,12 +352,23 @@ users and supports custom user functionality.</p>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>When true, this column indicates that the enumeration is user maintainable;<br />
-this might include the ability to add, edit, or remove enumeration values.  When<br />
-false, the enumeration is strictly system managed for any functional purpose.<br />
-Note that the value of this column doesn&rsquo;t effect the ability to set a<br />
-user_description value; the ability to set custom descriptions is always<br />
-available for any properly authorized user.</p></td>
+                                    <td><p>If a record is system defined (see the <code>syst_defined</code> column), there may be some user data maintenance operations permitted in some cases.  If the value of this column for a record is <code>TRUE</code> and the record is also &ldquo;System Defined&rdquo;, then permitted user maintenance operations are available for the record.  If the record is system defined and the value of this column is <code>FALSE</code>, no user maintenance is allowed.  If the record is not system defined, the value in this column will have no meaning or effect; user defined records may set this value <code>TRUE</code> as a simple information point indicating that the record is user maintainable.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               false</li>
+<li>Unique Values Required?: false</li>
+<li>Default Value:           <code>TRUE</code></li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul>
+<p><strong>System Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul></td>
                                 </tr>
                                 <tr>
                                     <td><span id="default_syst_options">default_syst_options</span></td>
@@ -274,10 +385,23 @@ available for any properly authorized user.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>Establishes the expected extended system options along with default values if<br />
-applicable.  Note that this setting is used to both validate<br />
-and set defaults in the syst_enum_items.syst_options column.</p>
-<p>Note that this column may not be updated via this API View.</p></td>
+                                    <td><p>Establishes the expected extended system options along with default values if applicable.</p>
+<p><strong>General Usage</strong></p>
+<p>Note that this setting is used to both validate and set defaults in the <code>syst_enum_items.syst_options</code> column.</p>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               false</li>
+<li>Unique Values Required?: false</li>
+<li>Default Value:           ( No Default Value )</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul>
+<p><strong>System Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul></td>
                                 </tr>
                                 <tr>
                                     <td><span id="default_user_options">default_user_options</span></td>
@@ -294,8 +418,23 @@ and set defaults in the syst_enum_items.syst_options column.</p>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>Allows a user to set the definition of syst_enum_items.user_options values and<br />
-provide defaults for those values if appropriate.</p></td>
+                                    <td><p>Allows a user to set the definition of syst_enum_items.user_options values and provide defaults for those values if appropriate.</p>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               false</li>
+<li>Unique Values Required?: false</li>
+<li>Default Value:           ( No Default Value )</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>INSERT</code></li>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code></li>
+</ul>
+<p><strong>System Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_timestamp_created">diag_timestamp_created</span></td>
@@ -312,9 +451,23 @@ provide defaults for those values if appropriate.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The database server date/time when the transaction which created the record<br />
-started.</p>
-<p>Note that this column may not be updated via this API View.</p></td>
+                                    <td><p>The database server date/time when the transaction which created the record started.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               false</li>
+<li>Unique Values Required?: false</li>
+<li>Default Value:           Automatically Generated</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul>
+<p><strong>System Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_role_created">diag_role_created</span></td>
@@ -332,7 +485,22 @@ started.</p>
                                         </table>
                                     </td>
                                     <td><p>The database role which created the record.</p>
-<p>Note that this column may not be updated via this API View.</p></td>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               false</li>
+<li>Unique Values Required?: false</li>
+<li>Default Value:           Automatically Generated</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul>
+<p><strong>System Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_timestamp_modified">diag_timestamp_modified</span></td>
@@ -349,10 +517,23 @@ started.</p>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The database server date/time when the transaction which modified the record<br />
-started.  This field will be the same as diag_timestamp_created for inserted<br />
-records.</p>
-<p>Note that this column may not be updated via this API View.</p></td>
+                                    <td><p>The database server date/time when the transaction which modified the record started.  This field will be the same as diag_timestamp_created for inserted records.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               false</li>
+<li>Unique Values Required?: false</li>
+<li>Default Value:           Automatically Generated</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul>
+<p><strong>System Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_wallclock_modified">diag_wallclock_modified</span></td>
@@ -369,10 +550,23 @@ records.</p>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The database server date/time at the moment the record was actually modified.<br />
-For long running transactions this time may be significantly later than the<br />
-value of diag_timestamp_modified.</p>
-<p>Note that this column may not be updated via this API View.</p></td>
+                                    <td><p>The database server date/time at the moment the record was actually modified. For long running transactions this time may be significantly later than the value of diag_timestamp_modified.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               false</li>
+<li>Unique Values Required?: false</li>
+<li>Default Value:           Automatically Generated</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul>
+<p><strong>System Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_role_modified">diag_role_modified</span></td>
@@ -390,7 +584,22 @@ value of diag_timestamp_modified.</p>
                                         </table>
                                     </td>
                                     <td><p>The database role which modified the record.</p>
-<p>Note that this column may not be updated via this API View.</p></td>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               false</li>
+<li>Unique Values Required?: false</li>
+<li>Default Value:           Automatically Generated</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul>
+<p><strong>System Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_row_version">diag_row_version</span></td>
@@ -407,12 +616,23 @@ value of diag_timestamp_modified.</p>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The current version of the row.  The value here indicates how many actual<br />
-data changes have been made to the row.  If an update of the row leaves all data<br />
-fields the same, disregarding the updates to the diag_* columns, the row version<br />
-is not updated, nor are any updates made to the other diag_* columns other than<br />
-diag_update_count.</p>
-<p>Note that this column may not be updated via this API View.</p></td>
+                                    <td><p>The current version of the row.  The value here indicates how many actual data changes have been made to the row.  If an update of the row leaves all data fields the same, disregarding the updates to the diag_* columns, the row version is not updated, nor are any updates made to the other diag_* columns other than diag_update_count.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               false</li>
+<li>Unique Values Required?: false</li>
+<li>Default Value:           Automatically Generated</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul>
+<p><strong>System Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_update_count">diag_update_count</span></td>
@@ -429,15 +649,51 @@ diag_update_count.</p>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>Records the number of times the record has been updated regardless as to if<br />
-the update actually changed any data.  In this way needless or redundant record<br />
-updates can be found.  This row starts at 0 and therefore may be the same as the<br />
-diag_row_version - 1.</p>
-<p>Note that this column may not be updated via this API View.</p></td>
+                                    <td><p>Records the number of times the record has been updated regardless as to if the update actually changed any data.  In this way needless or redundant record updates can be found.  This row starts at 0 and therefore may be the same as the diag_row_version - 1.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               false</li>
+<li>Unique Values Required?: false</li>
+<li>Default Value:           Automatically Generated</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul>
+<p><strong>System Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul></td>
                                 </tr>
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <i class="fa fa-code-fork"></i>
+                            <h3 id="Relationships" class="box-title">Relationships</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <div class="nav-tabs-custom"><!-- Tabs within a box -->
+                                <h5>Close relationships within degrees of separation</h5>
+                                <ul class="nav nav-tabs pull-left ui-sortable-handle">
+                                    <li class="active"><a href="#oneDegreeImg-chart" data-toggle="tab" aria-expanded="true">One</a></li>
+                                </ul>
+                                <div class="tab-content no-padding">
+                                    <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
+                                        
+                                        <a name='diagram'><object type="image/svg+xml" id="oneDegreeImg" data="../diagrams/tables/syst_enums.1degree.svg" class="diagram" border="0" align="left"></object></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- /.box-body -->
                     </div>
                     <div class="box box-primary">
                         <div class="box-header with-border">
@@ -449,7 +705,7 @@ diag_row_version - 1.</p>
                             </div>
                         </div>
                         <div class="box-body">
-                            <textarea id="sql-script-codemirror" name="sql-script-codemirror" rows="" style="display: none;">SELECT syst_enums.id,&#10;    syst_enums.internal_name,&#10;    syst_enums.display_name,&#10;    syst_enums.syst_description,&#10;    syst_enums.user_description,&#10;    syst_enums.syst_defined,&#10;    syst_enums.user_maintainable,&#10;    syst_enums.default_syst_options,&#10;    syst_enums.default_user_options,&#10;    syst_enums.diag_timestamp_created,&#10;    syst_enums.diag_role_created,&#10;    syst_enums.diag_timestamp_modified,&#10;    syst_enums.diag_wallclock_modified,&#10;    syst_enums.diag_role_modified,&#10;    syst_enums.diag_row_version,&#10;    syst_enums.diag_update_count&#10;   FROM ms_syst_data.syst_enums;</textarea>
+                            <textarea id="sql-script-codemirror" name="sql-script-codemirror" rows="" style="display: none;">SELECT id,&#10;    internal_name,&#10;    display_name,&#10;    syst_description,&#10;    user_description,&#10;    syst_defined,&#10;    user_maintainable,&#10;    default_syst_options,&#10;    default_user_options,&#10;    diag_timestamp_created,&#10;    diag_role_created,&#10;    diag_timestamp_modified,&#10;    diag_wallclock_modified,&#10;    diag_role_modified,&#10;    diag_row_version,&#10;    diag_update_count&#10;   FROM ms_syst_data.syst_enums;</textarea>
                             <div style="padding-top: 5px;"><hr></div>
                             <div class="box box-solid">
                                 <div class="box-header with-border">
@@ -459,7 +715,6 @@ diag_row_version - 1.</p>
                                 <!-- /.box-header -->
                                 <div class="box-body">
                                     <ul class="list-unstyled">
-                                        <li><a href="syst_enums.html">syst_enums</a></li>
                                     </ul>
                                 </div><!-- /.box-body -->
                             </div>
@@ -468,7 +723,7 @@ diag_row_version - 1.</p>
                 </section>
                 <script>
                     var config = {
-                        pagination: true
+                        pagination: false
                     }
                 </script>
             </div>
@@ -479,7 +734,7 @@ diag_row_version - 1.</p>
                         <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
                         <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
                     </div>
-                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.1.0</a></strong>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.2.4</a></strong>
                 </div>
                 <!-- /.container -->
             </footer>

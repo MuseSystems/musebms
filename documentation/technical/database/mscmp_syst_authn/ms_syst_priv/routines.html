@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>mscmp_syst_authn.ms_syst_priv</title>
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
+        <!-- Bootstrap 3.3.5 -->
+        <link rel="stylesheet" href="bower/admin-lte/bootstrap/css/bootstrap.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="bower/font-awesome/css/font-awesome.min.css">
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="bower/ionicons/css/ionicons.min.css">
+        <!-- DataTables -->
+        <link rel="stylesheet" href="bower/datatables.net-bs/css/dataTables.bootstrap.min.css">
+        <link rel="stylesheet" href="bower/datatables.net-buttons-bs/css/buttons.bootstrap.min.css">
+        <!-- Code Mirror -->
+        <link rel="stylesheet" href="bower/codemirror/codemirror.css">
+        <!-- Fonts -->
+        <link href='fonts/indieflower/indie-flower.css' rel='stylesheet' type='text/css'>
+        <link href='fonts/source-sans-pro/source-sans-pro.css' rel='stylesheet' type='text/css'>
+
+        <!-- Theme style -->
+        <link rel="stylesheet" href="bower/admin-lte/dist/css/AdminLTE.min.css">
+        <!-- Salvattore -->
+        <link rel="stylesheet" href="bower/salvattore/salvattore.css">
+        <!-- AdminLTE Skins. Choose a skin from the css/skins
+           folder instead of downloading all of them to reduce the load. -->
+        <link rel="stylesheet" href="bower/admin-lte/dist/css/skins/_all-skins.min.css">
+        <!-- SchemaSpy -->
+        <link rel="stylesheet" href="schemaSpy.css">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="bower/html5shiv/html5shiv.min.js"></script>
+        <script src="bower/respond/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+    <body class="hold-transition skin-blue layout-top-nav">
+        <div class="wrapper">
+            <header class="main-header">
+                <nav class="navbar navbar-static-top">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <a href="../index.html" class="navbar-brand"><b>mscmp_syst_authn</b></a><span class="navbar-brand" style="padding-left: 0">.ms_syst_priv</span>
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
+                        </div>
+
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+                            <ul class="nav navbar-nav">
+                                <li><a href="index.html">Tables <span class="sr-only">(current)</span></a></li>
+                                <li><a href="columns.html" title="All of the columns in the schema">Columns</a></li>
+                                <li><a href="constraints.html" title="Useful for diagnosing error messages that just give constraint name or number">Constraints</a></li>
+                                <li><a href="relationships.html" title="Diagram of table relationships">Relationships</a></li>
+                                <li><a href="orphans.html" title="View of tables with neither parents nor children">Orphan&nbsp;Tables</a></li>
+                                <li><a href="anomalies.html" title="Things that might not be quite right">Anomalies</a></li>
+                                <li><a href="routines.html" title="Procedures and functions">Routines</a></li>
+                            </ul>
+                        </div>
+                        <!-- /.navbar-collapse -->
+                        <!-- Navbar Right Menu -->
+                    </div>
+                    <!-- /.container-fluid -->
+                </nav>
+            </header>
+            <!-- Main content -->
+            <!-- Full Width Column -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <h1>Routines</h1>
+                </section>
+                <!-- Main content -->
+                <section class="content">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <i class="fa fa-file-code-o" aria-hidden="true"></i>
+                            <h3 class="box-title">Routines</h3>
+                        </div>
+                        <div class="box-body">
+                            <table
+                                    id="routine_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="50"
+                                    data-length-change="false">
+                                <thead align='left'>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Language</th>
+                                        <th>Deterministic</th>
+                                        <th>Return Type</th>
+                                        <th>Security Restriction</th>
+                                        <th title='Comments' class="toggle"><span>Comments</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><a href="routines/generate_comments_table_column__eca7efe8.html">generate_comments_table_column(p_table_schema text, p_table_name text, p_comments_config ms_syst_priv.comments_config_table_column)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>void</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Generates table column comments in a standardized format.</p>
+<p>The comments themselves are defined using a configuration type containing the column documentation and comment related configurations.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><strong><code>p_table_schema</code></strong> ::     <strong>Required?</strong> True; <strong>Default</strong>: ( No Default )</p>
+<p>The database schema where the column is defined.</p>
+</li>
+<li>
+<p><strong><code>p_table_name</code></strong> ::     <strong>Required?</strong> True; <strong>Default</strong>: ( No Default )</p>
+<p>The database table where the column is defined.</p>
+</li>
+<li>
+<p><strong><code>p_comments_config</code></strong> ::     <strong>Required?</strong> True; <strong>Default</strong>: ( No Default )</p>
+<p>A value of type <code>ms_syst_priv.comments_config_table_column</code> which describes the required and optional attributes for generating the column&rsquo;s comments. See the comments for that database type for detailed information.</p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/generate_comments_apiview_colum_a108e90a.html">generate_comments_apiview_column(p_view_config ms_syst_priv.comments_config_apiview, p_column_config ms_syst_priv.comments_config_apiview_column)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>void</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Generates API View Column comments based on the passed comment configurations.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><strong><code>p_view_config</code></strong> ::     <strong>Required?</strong> True; <strong>Default</strong>: ( No Default )</p>
+<p>A value of type <code>ms_syst_priv.comments_config_apiview</code> which contains view level configuration information such as identification of the view, associated Data Table identification, available record modes (system defined &amp; user defined), and similar concerns which can influence column comment generation.  This value is required, though only the following fields are used:</p>
+<ul>
+<li><code>view_schema</code>  - (required)</li>
+<li><code>view_name</code>    - (required)</li>
+<li><code>table_schema</code> - (optional)</li>
+<li><code>table_name</code>   - (optional)</li>
+<li><code>user_records</code> - (optional)</li>
+<li><code>user_insert</code>  - (optional)</li>
+<li><code>user_select</code>  - (optional)</li>
+<li><code>user_update</code>  - (optional)</li>
+<li><code>syst_records</code> - (optional)</li>
+<li><code>syst_select</code>  - (optional)</li>
+<li><code>syst_update</code>  - (optional)</li>
+</ul>
+<p>Any fields passed as <code>NULL</code> will assume their default values.  See the database type documentation for more information, including to find any defined field level default values.</p>
+</li>
+<li>
+<p><strong><code>p_column_config</code></strong> ::     <strong>Required?</strong> True; <strong>Default</strong>: ( No Default )</p>
+<p>A value of type <code>ms_syst_priv.comments_config_apiview_column</code> which configures the comments to generate for the identified API View Column. See the database type documenation for more information.</p>
+</li>
+</ul>
+<p><strong>General Usage</strong></p>
+<p>While optional, if the targeted API View Column is identified as being closely related to an underlying Data Table Column, this function will attempt to extract descriptive texts from the Data Table Column comments so that these descriptions don&rsquo;t need to be duplicated manually for the API View; this behavior may be overridden in the passed comment configuration.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/initialize_enum_IN_p_enum_def_j_9b887f36.html">initialize_enum(IN p_enum_def jsonb)</a></td>
+                                        <td>PROCEDURE</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td></td>
+                                        <td>INVOKER</td>
+                                        <td><p>Based on a specially formatted JSON object passed as a parameter, this function will create a new enumeration along with its optional functional types and starting value records.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/nonstandard_decode_p_base_integ_2bdd62dd.html">nonstandard_decode(p_base integer, p_tokens text, p_value text)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>true</td>
+                                        <td>bigint</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Performs a decode to decimal operation, similar to the standard decode function, but for non-standard decoding schemes such as Base32 or Base36.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><strong><code>p_base</code></strong> ::     <strong>Required?</strong> True; <strong>Default</strong>: ( No Default )</p>
+<p>The number base that the value has been encoded in.  For example, Base36 the <code>p_base</code> value is <code>36</code>.</p>
+</li>
+<li>
+<p><strong><code>p_tokens</code></strong> ::     <strong>Required?</strong> True; <strong>Default</strong>: ( No Default )</p>
+<p>The tokens used in representing the numbering scheme.  The count of characters passed in this parameter should match the <code>p_base</code> parameter.</p>
+</li>
+<li>
+<p><strong><code>p_value</code></strong> ::     <strong>Required?</strong> True; <strong>Default</strong>: ( No Default )</p>
+<p>The encoded value to convert to decimal.</p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/get_applied_network_rule_p_host_ee623192.html">get_applied_network_rule(p_host_addr inet, p_instance_id uuid DEFAULT NULL::uuid, p_instance_owner_id uuid DEFAULT NULL::uuid)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>TABLE(precedence text, network_rule_id uuid, functional_type text, ip_host_or_network inet, ip_host_range_lower inet, ip_host_range_upper inet)</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Applies all of the applicable network rules for a host and returns the governing record for the identified host.</p>
+<p>The returned rule is chosen by identifying which rules apply to the host based on the provided Instance related parameters and then limiting the return to the rule with the highest precedence.  Currently the precedence is defined as:</p>
+<ol>
+<li>
+<p>Disallowed Hosts: Globally disallowed or &ldquo;banned&rdquo; hosts are always checked first and no later rule can override the denial.  Only removing the host from the syst_disallowed_hosts table can reverse this denial.</p>
+</li>
+<li>
+<p>Global Rules: These are rules applied to all Instances without exception.</p>
+</li>
+<li>
+<p>Instance Rules: Rules defined by Instance Owners and are the most granular rule level available (p_instance_id).</p>
+</li>
+<li>
+<p>Instance Owner Rules: Applied to all Instances owned by the identified Owner (p_instance_owner_id).</p>
+</li>
+<li>
+<p>Global Implied Default Rule: When no explicitly defined network has been found for a host this rule will apply implicitly.  The current rule grants access from any host.</p>
+</li>
+</ol>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><strong><code>p_host_addr</code></strong> ::     <strong>Required?</strong> True; <strong>Default</strong>: ( No Default )</p>
+<p>The host IP address for which to retrieve a network rule to apply.</p>
+</li>
+<li>
+<p><strong><code>p_instance_id</code></strong> ::     <strong>Required?</strong> False; <strong>Default</strong>: <code>NULL</code></p>
+<p>The record <code>id</code> of the Instance that the host is attempting to access.</p>
+<p>Note that <code>NULL</code> is a valid value subject to the conditions in the function description.</p>
+</li>
+<li>
+<p><strong><code>p_instance_owner_id</code></strong> ::     <strong>Required?</strong> False; <strong>Default</strong>: <code>NULL</code></p>
+<p>The record <code>id</code> value of the Owner record which owns the Instance.</p>
+<p>Note that <code>NULL</code> is a valid value subject to the conditions in the function description.</p>
+</li>
+</ul>
+<p><strong>General Usage</strong></p>
+<p>This function returns the best matching rule for the provided parameters.  This means that when <code>p_host_addr</code> is provided but neither of <code>p_instance_id</code> or <code>p_instance_owner_id</code> are provided, the host can only be evaluated against the Disallowed Hosts and the Global Network Rules which isn&rsquo;t sufficient for a complete validation of a host&rsquo;s access to an Instance; such incomplete checks can be useful to avoid more expensive authentication processes later if the host is just going to be denied access due to global network rules.</p>
+<p>Providing only <code>p_instance_owner_id</code> will include the Global and Owner defined rules, but not the Instance specific rules.  If <code>p_instance_id</code> is provided that is sufficient that is sufficient for testing all the applicable rules since the Instance Owner ID can be derived using just <code>p_instance_id</code> parameter.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/generate_comments_apiview_commo_eb86f3ab.html">generate_comments_apiview_common_columns(p_view_config ms_syst_priv.comments_config_apiview)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>void</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Provides boilerplate API View Column comment configurations and generates the comments for columns which appear in many places across the applications and where standardized descriptions are likely to apply.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><strong><code>p_view_config</code></strong> ::     <strong>Required?</strong> True; <strong>Default</strong>: ( No Default )
+<p>A required value of type <code>ms_syst_priv.comments_config_apiview</code>.  This value provides the basic comments configuration data used to determine to which API View to apply common column comments, find which columns may be present, etc.  Only the fields of the value below are used by this function:</p>
+<ul>
+<li><code>view_schema</code>  - (required)</li>
+<li><code>view_name</code>    - (required)</li>
+<li><code>table_schema</code> - (required)</li>
+<li><code>table_name</code>   - (required)</li>
+<li><code>user_records</code> - (optional)</li>
+<li><code>user_insert</code>  - (optional)</li>
+<li><code>user_select</code>  - (optional)</li>
+<li><code>user_update</code>  - (optional)</li>
+<li><code>syst_records</code> - (optional)</li>
+<li><code>syst_select</code>  - (optional)</li>
+<li><code>syst_update</code>  - (optional)</li>
+</ul>
+<p>Any fields passed as <code>NULL</code> will assume their default values.  See the database type documentation for more information, including to find any defined field level default values.  Failing to provide a <code>table_schema</code> and <code>table_name</code> will not raise an exception, but may produce unsatisfactory results.  In cases where the API View is not strongly associated with a Data Table, common columns should be documentend manually.</p>
+</li>
+</ul>
+<p><strong>General Usage</strong></p>
+<p>This function expects that a there is a closely associated Data Table defined. The Data Table columns provide the descriptive texts for the related API View columns.  If the API View is not closely associated with an underlying Data Table, common columns should be configured manually as regular API View Columns and passed directly to either <code>ms_syst_priv.generate_comments_apiview</code> or <code>ms_syst_priv.generate_comments_apiview_column</code> as appropriate.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/decode_base36_p_value_text__ae00b05b.html">decode_base36(p_value text)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>true</td>
+                                        <td>bigint</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Decodes integers represented in Base36 notation back to decimal form.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><strong><code>p_value</code></strong> ::     <strong>Required?</strong> True; <strong>Default</strong>: ( No Default )
+<p>The Base36 value to decode to decimal.</p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/generate_comments_copy_function_ddfd2fe5.html">generate_comments_copy_function(p_source_schema text, p_source_name text, p_target_schema text, p_target_name text, p_supplemental text DEFAULT NULL::text)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>void</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Copies the comments of a source function to be the comments of a different target function.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><strong><code>p_source_schema</code></strong> ::     <strong>Required?</strong> True; <strong>Default</strong>: ( No Default )</p>
+<p>The name of the schema which hosts the function whose comments are to be copied.</p>
+</li>
+<li>
+<p><strong><code>p_source_name</code></strong> ::     <strong>Required?</strong> True; <strong>Default</strong>: ( No Default )</p>
+<p>The function name from which comments will be copied.</p>
+</li>
+<li>
+<p><strong><code>p_target_schema</code></strong> ::     <strong>Required?</strong> True; <strong>Default</strong>: ( No Default )</p>
+<p>The name of the schema which hosts the function which will receive the copied comments.</p>
+</li>
+<li>
+<p><strong><code>p_target_name</code></strong> ::     <strong>Required?</strong> True; <strong>Default</strong>: ( No Default )</p>
+<p>The name of the function to which the copied comments will be applied.</p>
+</li>
+<li>
+<p><strong><code>p_supplemental</code></strong> ::     <strong>Required?</strong> False; <strong>Default</strong>: ( No Default )</p>
+<p>An optional text which can be added to the copied comments in a special &ldquo;Supplemental&rdquo; section.  This allows the target function to have additional notes if appropriate.</p>
+</li>
+</ul>
+<p><strong>General Usage</strong></p>
+<p>The use case for this function is many Public API functions are just wrappers exposing functions defined in the private logic.  In these cases the private function logic will generally apply to the Public API wrapper and the private function can serve as a single source of the documentation.</p>
+<p>Note that this function current doesn&rsquo;t work with overloaded functions.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/is_parent_record_referenced_p_t_4929a266.html">is_parent_record_referenced(p_table_schema text, p_table_name text, p_parent_record_id uuid, p_excluded_relations regclass[] DEFAULT &#39;{}&#39;::regclass[])</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>boolean</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Tests if a specific parent record is referenced in a foreign key relationship.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><strong><code>p_table_schema</code></strong> ::     <strong>Required?</strong> True; <strong>Default</strong>: ( No Default )</p>
+<p>The name of the schema which hosts the parent table.</p>
+</li>
+<li>
+<p><strong><code>p_table_name</code></strong> ::     <strong>Required?</strong> True; <strong>Default</strong>: ( No Default )</p>
+<p>The name of the parent table.</p>
+</li>
+<li>
+<p><strong><code>p_parent_record_id</code></strong> ::     <strong>Required?</strong> True; <strong>Default</strong>: ( No Default )</p>
+<p>The ID value of the parent record which will be searched for in the child tables.</p>
+</li>
+<li>
+<p><strong><code>p_excluded_relations</code></strong> ::     <strong>Required?</strong> False; <strong>Default</strong>: No excluded relations</p>
+<p>An optional array of child table <code>regclass</code>es which should not be searched.</p>
+</li>
+</ul>
+<p><strong>General Usage</strong></p>
+<p>The parent table is identified by the <code>p_table_schema</code> and <code>p_table_name</code> parameters and the specific record is identified using the <code>p_parent_record_id</code> parameter.  The <code>p_parent_record_id</code> is expected to be the <code>id</code> column value of the parent relation.</p>
+<p>On execution, the function will then look up all relations (children) with foreign key references to the parent table and its <code>id</code> column and test if the <code>p_parent_record_id</code> value exists in the child relation.  Once a child relation with a reference is found, then the function returns <code>TRUE</code> and the search stops. If no child relations have a reference to the given parent record, then the function returns false.</p>
+<p>There are several assumptions to be aware of when making use of this function. The function assumes that any foreign key reference to the parent relation is a simple, single column relationship to the parent relation&rsquo;s <code>id</code> column;  an assumption is made that constraint names are unique across the application, but there is no guarantee from PostgreSQL that this is true; and that by using this function the developer is aware that when there are either many child relations and/or the child relations contain many records, this function may not perform well, especially in cases where there are no references to the given parent record.  Finally, if any of the parameter values are <code>NULL</code>, the function will return <code>NULL</code>.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/generate_comments_table_common__7a2b079a.html">generate_comments_table_common_columns(p_table_schema text, p_table_name text)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>void</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Provides boilerplate column comment configurations for columns which are common to many columns and applies these comment configurations to any table columns which are found to be in the set of common columns.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><strong><code>p_table_schema</code></strong> ::     <strong>Required?</strong> True; <strong>Default</strong>: ( No Default )</p>
+<p>The name of the schema which hosts the table.</p>
+</li>
+<li>
+<p><strong><code>p_table_name</code></strong> ::     <strong>Required?</strong> True; <strong>Default</strong>: ( No Default )</p>
+<p>The name of the table for which common column comments should be added.</p>
+</li>
+</ul>
+<p><strong>General Usage</strong></p>
+<p>Note that if there are customizations or overrides desired when documenting these common columns for a given table, such overrides should appear in the columns list passed to <code>ms_syst_priv.generate_comments_table</code>, directly by calling <code>ms_syst_priv.generate_comments_table_column</code>, or by simply commenting on the desired column directly.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_b_iu_set_diagnostic_columns_a71cb36.html">trig_b_iu_set_diagnostic_columns()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Automatically maintains the common table diagnostic columns whenever data is inserted or updated.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>BEFORE</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code>, <code>UPDATE</code></p>
+</li>
+</ul>
+<p><strong>General Usage</strong></p>
+<p>For <code>UPDATE</code> transactions, the trigger will determine if there are &lsquo;real data changes&rsquo;, meaning any fields other than the common diagnostic columns being changed by the transaction.  If not, only the <code>diag_update_count</code> column will be updated.</p>
+<p>To use this trigger, the targeted table must have the following columns / types defined:</p>
+<ul>
+<li>
+<p><code>diag_timestamp_created</code> / <code>timestamptz</code></p>
+</li>
+<li>
+<p><code>diag_role_created</code> / <code>text</code></p>
+</li>
+<li>
+<p><code>diag_timestamp_modified</code> / <code>timestamptz</code></p>
+</li>
+<li>
+<p><code>diag_wallclock_modified</code> / <code>timestamptz</code></p>
+</li>
+<li>
+<p><code>diag_role_modified</code> / <code>text</code></p>
+</li>
+<li>
+<p><code>diag_row_version</code> / <code>bigint</code></p>
+</li>
+<li>
+<p><code>diag_update_count</code> / <code>bigint</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/generate_comments_table_p_comme_c7536130.html">generate_comments_table(p_comments_config ms_syst_priv.comments_config_table)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>void</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Generates table comments, and optionally associated column comments, in a standardized format.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><strong><code>p_comments_config</code></strong> ::     <strong>Required?</strong> True; <strong>Default</strong>: ( No Default )
+<p>A value of type <code>ms_syst_priv.comments_config_table</code> which describes the required and optional attributes for generating the column&rsquo;s comments.  See the comments for that database type for detailed information.</p>
+</li>
+</ul>
+<p><strong>General Usage</strong></p>
+<p>The comments themselves are defined using an object of type <code>ms_syst_priv.comment_configs_table</code> which in turn is used as the parameter of this function.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/encode_base36_p_value_bigint__1eeee5f1.html">encode_base36(p_value bigint)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>true</td>
+                                        <td>text</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Encodes integers into a Base36 representation.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><strong><code>p_value</code></strong> ::     <strong>Required?</strong> True; <strong>Default</strong>: ( No Default )
+<p>A big integer value to encode as a Base36.</p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_a_iu_enum_item_check___e19cc5a9.html">trig_a_iu_enum_item_check()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>A constraint trigger function to provide foreign key like validation of columns which reference syst_enum_items.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>AFTER</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code>, <code>UPDATE</code></p>
+</li>
+</ul>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><strong><code>tg_argv[0]</code></strong> ::     <strong>Required?</strong> True; <strong>Default</strong>: ( No Default )</p>
+<p>The name of the enumeration to validate against.</p>
+<p>This value will be the <code>ms_syst_data.syst_enums.internal_name</code> value which identified the enumeration.</p>
+</li>
+<li>
+<p><strong><code>tg_argv[1]</code></strong> ::     <strong>Required?</strong> True; <strong>Default</strong>: ( No Default )</p>
+<p>The name of the foreign key column in the host table which references <code>ms_syst_data.syst_enum_items</code> records.</p>
+</li>
+</ul>
+<p><strong>General Usage</strong></p>
+<p>This relationship requires the additional check that only values from the desired enumeration are used in assigning to records.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/generate_comments_apiview_p_com_8aa1a350.html">generate_comments_apiview(p_comments_config ms_syst_priv.comments_config_apiview)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>void</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Generates API View comments as well as comments for any requested columns.</p>
+<p>API Views are typically closely associated with specific Data Tables.  While this function does not require Data Table to API View parity of columns, types, etc. it does assume that a substantial amount of Data Table to API View parity exists.  Given this, the descriptive texts of the API View and its columns are extracted from the Data Table comments and applied to the API View.  Additional information that is specific for the API View is then added using the configurations passed in the <code>p_comments_config</code> parameter.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><strong><code>p_comments_config</code></strong> ::     <strong>Required?</strong> True; <strong>Default</strong>: ( No Default )
+<p>A <code>ms_syst_priv.comments_config_apiview</code> value which provides the configuration and texts from which to generate the API View documentation.  See the documentation of that database type for more information.</p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/encode_base32_p_value_bigint__dc476ded.html">encode_base32(p_value bigint)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>true</td>
+                                        <td>text</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Encodes a big integer value into Base32 representation.  The representation here is that designed by Douglas Crockford (<a href="https://www.crockford.com/base32.html">https://www.crockford.com/base32.html</a>).</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><strong><code>p_value</code></strong> ::     <strong>Required?</strong> True; <strong>Default</strong>: ( No Default )
+<p>The value to encode as a Crockford Base32 value.</p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/decode_base32_p_value_text__46930757.html">decode_base32(p_value text)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>true</td>
+                                        <td>bigint</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Decodes integers represented in Base32.  The representation here is that designed by Douglas Crockford (<a href="https://www.crockford.com/base32.html">https://www.crockford.com/base32.html</a>).</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><strong><code>p_value</code></strong> ::     <strong>Required?</strong> True; <strong>Default</strong>: ( No Default )
+<p>The Base32 encoded value to decode back to a decimal representation.</p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/get_random_string_p_length_inte_1830b228.html">get_random_string(p_length integer, p_tokens text DEFAULT &#39;0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ&#39;::text)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>text</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Returns a random text string, by default consisting of alpha-numeric symbols, of the requested length.</p>
+<p>An arbitrary set of characters from which to draw the random string may be provided my the caller.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><strong><code>p_length</code></strong> ::     <strong>Required?</strong> True; <strong>Default</strong>: ( No Default )</p>
+<p>The number of random characters to return.</p>
+</li>
+<li>
+<p><strong><code>p_tokens</code></strong> ::     <strong>Required?</strong> False; <strong>Default</strong>: <code>0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ</code></p>
+<p>An option alternate set of characters to use in the generation.</p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/generate_comments_function_p_co_37cda9f0.html">generate_comments_function(p_comments_config ms_syst_priv.comments_config_function)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>void</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Generates comments for functions, procedures, and trigger functions.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><strong><code>p_comments_config</code></strong> ::     <strong>Required?</strong> True; <strong>Default</strong>: ( No Default )
+<p>A configuration object of type <code>ms_syst_priv.comments_config_function</code> which is used in automatically generating the appropriately formatted function comments.</p>
+</li>
+</ul>
+<p><strong>General Usage</strong></p>
+<p>If the default value of a documented function is longer than ~40 characters, it may be better to set the <code>default_value</code> to refer to the &ldquo;General Usage&rdquo; section and then explain the default value there. This due to line-length issues in the resulting formatted comments.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/nonstandard_encode_p_base_integ_2197f7f3.html">nonstandard_encode(p_base integer, p_tokens text, p_value bigint)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>true</td>
+                                        <td>text</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Performs an encode operation, similar to the standard encode function, but for non-standard encoding schemes such as Base32 or Base36.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><strong><code>p_base</code></strong> ::     <strong>Required?</strong> True; <strong>Default</strong>: ( No Default )</p>
+<p>The number base that the encoding system is expecting.  For example, Base36 the <code>p_base</code> value is <code>36</code>.</p>
+</li>
+<li>
+<p><strong><code>p_tokens</code></strong> ::     <strong>Required?</strong> True; <strong>Default</strong>: ( No Default )</p>
+<p>The tokens to use in representing the numbering scheme.  The count of characters passed in this parameter should match the <code>p_base</code> parameter.</p>
+</li>
+<li>
+<p><strong><code>p_value</code></strong> ::     <strong>Required?</strong> True; <strong>Default</strong>: ( No Default )</p>
+<p>The decimal value to encode in the requested base.</p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/get_exception_details_p_proc_sc_2f410e79.html">get_exception_details(p_proc_schema text, p_proc_name text, p_exception_name text, p_errcode text, p_param_data jsonb, p_context_data jsonb)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>text</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Returns exception details based on the passed parameters represented as a pretty-printed JSON object.  The returned value is intended to standardize the details related to <code>RAISE</code>d exceptions and be suitable for use in setting the <code>RAISE DETAILS</code> variable.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><strong><code>p_proc_schema</code></strong> ::     <strong>Required?</strong> True; <strong>Default</strong>: ( No Default )</p>
+<p>The schema name hosting the function or store procedure which raised the exception.</p>
+</li>
+<li>
+<p><strong><code>p_proc_name</code></strong> ::     <strong>Required?</strong> True; <strong>Default</strong>: ( No Default )</p>
+<p>The name of the process which raised the exception.</p>
+</li>
+<li>
+<p><strong><code>p_exception_name</code></strong> ::     <strong>Required?</strong> True; <strong>Default</strong>: ( No Default )</p>
+<p>A standard name for the exception raised.</p>
+</li>
+<li>
+<p><strong><code>p_errcode</code></strong> ::     <strong>Required?</strong> True; <strong>Default</strong>: ( No Default )</p>
+<p>Error code complying with the PostgreSQL standard error codes (<a href="https://www.postgresql.org/docs/current/errcodes-appendix.html">https://www.postgresql.org/docs/current/errcodes-appendix.html</a>).  Typically this will be a compatible error code made outside of already designated error codes.</p>
+</li>
+<li>
+<p><strong><code>p_param_data</code></strong> ::     <strong>Required?</strong> False; <strong>Default</strong>: ( No Default )</p>
+<p>A <code>jsonb</code> object where the keys are relevant parameters.</p>
+</li>
+<li>
+<p><strong><code>p_context_data</code></strong> ::     <strong>Required?</strong> False; <strong>Default</strong>: ( No Default )</p>
+<p>A <code>jsonb</code> object encapsulating relevant data which might help in interpreting the exception, if such data exists.</p>
+</li>
+</ul></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+                <script>
+                    var config = {
+                        pagination: false
+                    }
+                </script>
+            </div>
+            <!-- /.content-wrapper -->
+            <footer class="main-footer">
+                <div>
+                    <div class="pull-right hidden-xs">
+                        <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
+                        <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
+                    </div>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.2.4</a></strong>
+                </div>
+                <!-- /.container -->
+            </footer>
+        </div>
+        <!-- ./wrapper -->
+
+        <!-- jQuery 2.2.3 -->
+        <script src="bower/admin-lte/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script src="bower/admin-lte/plugins/jQueryUI/jquery-ui.min.js"></script>
+        <!-- Bootstrap 3.3.5 -->
+        <script src="bower/admin-lte/bootstrap/js/bootstrap.min.js"></script>
+        <!-- DataTables -->
+        <script src="bower/datatables.net/jquery.dataTables.min.js"></script>
+        <script src="bower/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+        <script src="bower/datatables.net-buttons/dataTables.buttons.min.js"></script>
+        <script src="bower/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+        <script src="bower/datatables.net-buttons/buttons.html5.min.js"></script>
+        <script src="bower/datatables.net-buttons/buttons.print.min.js"></script>
+        <script src="bower/datatables.net-buttons/buttons.colVis.min.js"></script>
+        <!-- SheetJS -->
+        <script src="bower/js-xlsx/xlsx.full.min.js"></script>
+        <!-- pdfmake -->
+        <script src="bower/pdfmake/pdfmake.min.js"></script>
+        <script src="bower/pdfmake/vfs_fonts.js"></script>
+        <!-- SlimScroll -->
+        <script src="bower/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+        <!-- FastClick -->
+        <script src="bower/admin-lte/plugins/fastclick/fastclick.js"></script>
+        <!-- Salvattore -->
+        <script src="bower/salvattore/salvattore.min.js"></script>
+        <!-- AnchorJS -->
+        <script src="bower/anchor-js/anchor.min.js"></script>
+        <!-- CodeMirror -->
+        <script src="bower/codemirror/codemirror.js"></script>
+        <script src="bower/codemirror/sql.js"></script>
+        <!-- AdminLTE App -->
+        <script src="bower/admin-lte/dist/js/app.min.js"></script>
+        <script src="routines.js"></script>
+        <script src="schemaSpy.js"></script>
+    </body>
+</html>

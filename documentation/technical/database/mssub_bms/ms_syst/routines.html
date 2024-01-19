@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>msbms_dev Database</title>
+        <title>mssub_bms.ms_syst</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../index.html" class="navbar-brand"><b>msbms_dev</b> Database</a>
+                            <a href="../index.html" class="navbar-brand"><b>mssub_bms</b></a><span class="navbar-brand" style="padding-left: 0">.ms_syst</span>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -83,7 +83,13 @@
                             <h3 class="box-title">Routines</h3>
                         </div>
                         <div class="box-body">
-                            <table id="routine_table" class="table table-bordered table-striped dataTable" role="grid">
+                            <table
+                                    id="routine_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="50"
+                                    data-length-change="false">
                                 <thead align='left'>
                                     <tr>
                                         <th>Name</th>
@@ -97,163 +103,220 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><a href="routines/trig_i_u_syst_enum_items.html">trig_i_u_syst_enum_items</a></td>
+                                        <td><a href="routines/trig_i_i_syst_settings___8772bd8d.html">trig_i_i_syst_settings()</a></td>
                                         <td>FUNCTION</td>
-                                        <td>PLPGSQL</td>
+                                        <td>plpgsql</td>
                                         <td>false</td>
                                         <td>trigger</td>
                                         <td>DEFINER</td>
-                                        <td><p>An INSTEAD OF trigger function which applies business rules when using the<br />
-syst_enum_items API View for UPDATE operations.</p></td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code></p>
+</li>
+</ul></td>
                                     </tr>
                                     <tr>
-                                        <td><a href="routines/trig_i_i_syst_feature_setting_assigns.html">trig_i_i_syst_feature_setting_assigns</a></td>
+                                        <td><a href="routines/trig_i_u_syst_enums___c4df26fe.html">trig_i_u_syst_enums()</a></td>
                                         <td>FUNCTION</td>
-                                        <td>PLPGSQL</td>
+                                        <td>plpgsql</td>
                                         <td>false</td>
                                         <td>trigger</td>
                                         <td>DEFINER</td>
-                                        <td><p>An INSTEAD OF trigger function which applies business rules when using the<br />
-syst_settings API View for INSERT operations.</p></td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>UPDATE</code></p>
+</li>
+</ul></td>
                                     </tr>
                                     <tr>
-                                        <td><a href="routines/trig_i_i_syst_enums.html">trig_i_i_syst_enums</a></td>
+                                        <td><a href="routines/trig_i_d_syst_enum_items___266291a7.html">trig_i_d_syst_enum_items()</a></td>
                                         <td>FUNCTION</td>
-                                        <td>PLPGSQL</td>
+                                        <td>plpgsql</td>
                                         <td>false</td>
                                         <td>trigger</td>
                                         <td>DEFINER</td>
-                                        <td><p>An INSTEAD OF trigger function which applies business rules when using the<br />
-syst_enums API View for INSERT operations.</p></td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>DELETE</code></p>
+</li>
+</ul></td>
                                     </tr>
                                     <tr>
-                                        <td><a href="routines/trig_i_u_syst_enum_functional_types.html">trig_i_u_syst_enum_functional_types</a></td>
+                                        <td><a href="routines/trig_i_i_syst_enum_functional_t_7a31da73.html">trig_i_i_syst_enum_functional_types()</a></td>
                                         <td>FUNCTION</td>
-                                        <td>PLPGSQL</td>
+                                        <td>plpgsql</td>
                                         <td>false</td>
                                         <td>trigger</td>
                                         <td>DEFINER</td>
-                                        <td><p>An INSTEAD OF trigger function which applies business rules when using the<br />
-syst_enum_functional_types API View for UPDATE operations.</p>
-<p>Note that the parent ms_syst_data.syst_enums.syst_defined determines whether<br />
-or not child ms_syst_data.syst_enum_functional_types records are considered<br />
-system defined.</p></td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code></p>
+</li>
+</ul></td>
                                     </tr>
                                     <tr>
-                                        <td><a href="routines/trig_i_d_syst_feature_setting_assigns.html">trig_i_d_syst_feature_setting_assigns</a></td>
+                                        <td><a href="routines/trig_i_d_syst_settings___f4216788.html">trig_i_d_syst_settings()</a></td>
                                         <td>FUNCTION</td>
-                                        <td>PLPGSQL</td>
+                                        <td>plpgsql</td>
                                         <td>false</td>
                                         <td>trigger</td>
                                         <td>DEFINER</td>
-                                        <td><p>An INSTEAD OF trigger function which applies business rules when using the<br />
-syst_settings API View for DELETE operations.</p></td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>DELETE</code></p>
+</li>
+</ul></td>
                                     </tr>
                                     <tr>
-                                        <td><a href="routines/trig_i_i_syst_settings.html">trig_i_i_syst_settings</a></td>
+                                        <td><a href="routines/trig_i_i_syst_enum_items___2ab67a6c.html">trig_i_i_syst_enum_items()</a></td>
                                         <td>FUNCTION</td>
-                                        <td>PLPGSQL</td>
+                                        <td>plpgsql</td>
                                         <td>false</td>
                                         <td>trigger</td>
                                         <td>DEFINER</td>
-                                        <td><p>An INSTEAD OF trigger function which applies business rules when using the<br />
-syst_settings API View for INSERT operations.</p></td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code></p>
+</li>
+</ul></td>
                                     </tr>
                                     <tr>
-                                        <td><a href="routines/trig_i_d_syst_enum_items.html">trig_i_d_syst_enum_items</a></td>
+                                        <td><a href="routines/trig_i_d_syst_enum_functional_t_76d28058.html">trig_i_d_syst_enum_functional_types()</a></td>
                                         <td>FUNCTION</td>
-                                        <td>PLPGSQL</td>
+                                        <td>plpgsql</td>
                                         <td>false</td>
                                         <td>trigger</td>
                                         <td>DEFINER</td>
-                                        <td><p>An INSTEAD OF trigger function which applies business rules when using the<br />
-syst_enum_items API View for DELETE operations.</p></td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>DELETE</code></p>
+</li>
+</ul></td>
                                     </tr>
                                     <tr>
-                                        <td><a href="routines/trig_i_i_syst_enum_items.html">trig_i_i_syst_enum_items</a></td>
+                                        <td><a href="routines/trig_i_u_syst_settings___4f692599.html">trig_i_u_syst_settings()</a></td>
                                         <td>FUNCTION</td>
-                                        <td>PLPGSQL</td>
+                                        <td>plpgsql</td>
                                         <td>false</td>
                                         <td>trigger</td>
                                         <td>DEFINER</td>
-                                        <td><p>An INSTEAD OF trigger function which applies business rules when using the<br />
-syst_enum_items API View for INSERT operations.</p></td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>UPDATE</code></p>
+</li>
+</ul></td>
                                     </tr>
                                     <tr>
-                                        <td><a href="routines/trig_i_u_syst_feature_setting_assigns.html">trig_i_u_syst_feature_setting_assigns</a></td>
+                                        <td><a href="routines/trig_i_u_syst_enum_items___ceb30f78.html">trig_i_u_syst_enum_items()</a></td>
                                         <td>FUNCTION</td>
-                                        <td>PLPGSQL</td>
+                                        <td>plpgsql</td>
                                         <td>false</td>
                                         <td>trigger</td>
                                         <td>DEFINER</td>
-                                        <td><p>An INSTEAD OF trigger function which applies business rules when using the<br />
-syst_settings API View for UPDATE operations.</p>
-<p>Note that for syst_feature_setting_assigns records that updating is not a<br />
-supported operation.  Any change in the feature or the setting is a sufficiently<br />
-large change to justify just using a full delete/insert.</p></td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>UPDATE</code></p>
+</li>
+</ul></td>
                                     </tr>
                                     <tr>
-                                        <td><a href="routines/trig_i_i_syst_enum_functional_types.html">trig_i_i_syst_enum_functional_types</a></td>
+                                        <td><a href="routines/trig_i_i_syst_enums___2e79b38a.html">trig_i_i_syst_enums()</a></td>
                                         <td>FUNCTION</td>
-                                        <td>PLPGSQL</td>
+                                        <td>plpgsql</td>
                                         <td>false</td>
                                         <td>trigger</td>
                                         <td>DEFINER</td>
-                                        <td><p>An INSTEAD OF trigger function which applies business rules when using the<br />
-syst_enum_functional_types API View for INSERT operations.</p>
-<p>Note that the parent ms_syst_data.syst_enums.syst_defined determines whether<br />
-or not child ms_syst_data.syst_enum_functional_types records are considered<br />
-system defined.</p></td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code></p>
+</li>
+</ul></td>
                                     </tr>
                                     <tr>
-                                        <td><a href="routines/trig_i_u_syst_settings.html">trig_i_u_syst_settings</a></td>
+                                        <td><a href="routines/trig_i_d_syst_enums___c524c36f.html">trig_i_d_syst_enums()</a></td>
                                         <td>FUNCTION</td>
-                                        <td>PLPGSQL</td>
+                                        <td>plpgsql</td>
                                         <td>false</td>
                                         <td>trigger</td>
                                         <td>DEFINER</td>
-                                        <td><p>An INSTEAD OF trigger function which applies business rules when using the<br />
-syst_settings API View for UPDATE operations.</p></td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>DELETE</code></p>
+</li>
+</ul></td>
                                     </tr>
                                     <tr>
-                                        <td><a href="routines/trig_i_d_syst_enums.html">trig_i_d_syst_enums</a></td>
+                                        <td><a href="routines/trig_i_u_syst_enum_functional_t_8249e5e7.html">trig_i_u_syst_enum_functional_types()</a></td>
                                         <td>FUNCTION</td>
-                                        <td>PLPGSQL</td>
+                                        <td>plpgsql</td>
                                         <td>false</td>
                                         <td>trigger</td>
                                         <td>DEFINER</td>
-                                        <td><p>An INSTEAD OF trigger function which applies business rules when using the<br />
-syst_enums API View for DELETE operations.</p></td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="routines/trig_i_d_syst_enum_functional_types.html">trig_i_d_syst_enum_functional_types</a></td>
-                                        <td>FUNCTION</td>
-                                        <td>PLPGSQL</td>
-                                        <td>false</td>
-                                        <td>trigger</td>
-                                        <td>DEFINER</td>
-                                        <td><p>An INSTEAD OF trigger function which applies business rules when using the<br />
-syst_enum_functional_types API View for DELETE operations.</p></td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="routines/trig_i_d_syst_settings.html">trig_i_d_syst_settings</a></td>
-                                        <td>FUNCTION</td>
-                                        <td>PLPGSQL</td>
-                                        <td>false</td>
-                                        <td>trigger</td>
-                                        <td>DEFINER</td>
-                                        <td><p>An INSTEAD OF trigger function which applies business rules when using the<br />
-syst_settings API View for DELETE operations.</p></td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="routines/trig_i_u_syst_enums.html">trig_i_u_syst_enums</a></td>
-                                        <td>FUNCTION</td>
-                                        <td>PLPGSQL</td>
-                                        <td>false</td>
-                                        <td>trigger</td>
-                                        <td>DEFINER</td>
-                                        <td><p>An INSTEAD OF trigger function which applies business rules when using the<br />
-syst_enums API View for UPDATE operations.</p></td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>UPDATE</code></p>
+</li>
+</ul></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -262,7 +325,7 @@ syst_enums API View for UPDATE operations.</p></td>
                 </section>
                 <script>
                     var config = {
-                        pagination: true
+                        pagination: false
                     }
                 </script>
             </div>
@@ -273,7 +336,7 @@ syst_enums API View for UPDATE operations.</p></td>
                         <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
                         <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
                     </div>
-                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.1.0</a></strong>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.2.4</a></strong>
                 </div>
                 <!-- /.container -->
             </footer>

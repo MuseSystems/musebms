@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>syst_interaction_logs - msbms_dev Database</title>
+        <title>syst_interaction_logs - mssub_bms.ms_syst_data</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../../index.html" class="navbar-brand"><b>msbms_dev</b> Database</a>
+                            <a href="../../index.html" class="navbar-brand"><b>mssub_bms</b></a><span class="navbar-brand" style="padding-left: 0">.ms_syst_data</span>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -73,7 +73,7 @@
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
-                    <h1>syst_interaction_logs</h1><p><span id="recordNumber">0</span> rows</p><br />
+                    <h1>syst_interaction_logs</h1><br />
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <i class="fa fa-file-text-o"></i>
@@ -84,8 +84,7 @@
                             </div>
                         </div><!-- /.box-header -->
                         <div class="box-body clearfix">
-                            <p>Records interactions to drive both system functionality and to provide usage<br />
-telemetry.</p>
+                            <p>Records interactions to drive both system functionality and to provide usage telemetry.</p>
                         </div><!-- /.box-body -->
                     </div>
                 </section>
@@ -101,7 +100,13 @@ telemetry.</p>
                             </div>
                         </div>
                         <div class="box-body">
-                            <table id="standard_table" class="table table-bordered table-striped dataTable" role="grid">
+                            <table
+                                    id="standard_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="10"
+                                    data-length-change="false">
                                 <thead align='left'>
                                 <tr>
                                     <th>Column</th>
@@ -122,7 +127,7 @@ telemetry.</p>
                                     <td>2147483647</td>
                                     <td title=''></td>
                                     <td title=''></td>
-                                    <td>uuid_generate_v1()</td>
+                                    <td>uuid_generate_v7()</td>
                                     <td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
@@ -131,8 +136,9 @@ telemetry.</p>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The record&rsquo;s primary key.  The definitive identifier of the record in the<br />
-system.</p></td>
+                                    <td><p>The record&rsquo;s primary key.  The definitive identifier of the record in the system.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td class='indexedColumn' title='Indexed'><i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i><span id="interaction_timestamp">interaction_timestamp</span></td>
@@ -149,8 +155,7 @@ system.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The nominal time at which the event being recorded is considered to have<br />
-happened.  This is the database transaction start time specifically.</p></td>
+                                    <td><p>The nominal time at which the event being recorded is considered to have happened.  This is the database transaction start time specifically.</p></td>
                                 </tr>
                                 <tr>
                                     <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="interaction_type_id">interaction_type_id</span></td>
@@ -167,7 +172,8 @@ happened.  This is the database transaction start time specifically.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
                                                 <td title="syst_interaction_logs.interaction_type_id references syst_enum_items.id via syst_interaction_logs_interaction_types_fk"><a href='syst_enum_items.html'>syst_enum_items</a><span class='relatedKey'>.id</span></td>
-                                                <td class="constraint detail">syst_interaction_logs_interaction_types_fk<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">syst_interaction_logs_interaction_types_fk</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -188,12 +194,12 @@ happened.  This is the database transaction start time specifically.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
                                                 <td title="syst_interaction_logs.interface_type_id references syst_enum_items.id via syst_interaction_logs_interface_types_fk"><a href='syst_enum_items.html'>syst_enum_items</a><span class='relatedKey'>.id</span></td>
-                                                <td class="constraint detail">syst_interaction_logs_interface_types_fk<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">syst_interaction_logs_interface_types_fk</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
                                     </td>
-                                    <td><p>The origin entry point into the application and from which the activity was<br />
-initiated.</p></td>
+                                    <td><p>The origin entry point into the application and from which the activity was initiated.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="data">data</span></td>
@@ -210,8 +216,7 @@ initiated.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>Optional document style data which may more completely elaborate on the activity<br />
-being recorded.</p></td>
+                                    <td><p>Optional document style data which may more completely elaborate on the activity being recorded.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_timestamp_created">diag_timestamp_created</span></td>
@@ -228,8 +233,9 @@ being recorded.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The database server date/time when the transaction which created the record<br />
-started.</p></td>
+                                    <td><p>The database server date/time when the transaction which created the record started.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_role_created">diag_role_created</span></td>
@@ -246,7 +252,9 @@ started.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The database role which created the record.</p></td>
+                                    <td><p>The database role which created the record.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_timestamp_modified">diag_timestamp_modified</span></td>
@@ -263,9 +271,9 @@ started.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The database server date/time when the transaction which modified the record<br />
-started.  This field will be the same as diag_timestamp_created for inserted<br />
-records.</p></td>
+                                    <td><p>The database server date/time when the transaction which modified the record started.  This field will be the same as diag_timestamp_created for inserted records.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_wallclock_modified">diag_wallclock_modified</span></td>
@@ -282,9 +290,9 @@ records.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The database server date/time at the moment the record was actually modified.<br />
-For long running transactions this time may be significantly later than the<br />
-value of diag_timestamp_modified.</p></td>
+                                    <td><p>The database server date/time at the moment the record was actually modified. For long running transactions this time may be significantly later than the value of diag_timestamp_modified.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_role_modified">diag_role_modified</span></td>
@@ -301,7 +309,9 @@ value of diag_timestamp_modified.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The database role which modified the record.</p></td>
+                                    <td><p>The database role which modified the record.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_row_version">diag_row_version</span></td>
@@ -318,11 +328,11 @@ value of diag_timestamp_modified.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The current version of the row.  The value here indicates how many actual<br />
-data changes have been made to the row.  If an update of the row leaves all data<br />
-fields the same, disregarding the updates to the diag_* columns, the row version<br />
-is not updated, nor are any updates made to the other diag_* columns other than<br />
-diag_update_count.</p></td>
+                                    <td><p>The current version of the row.  The value here indicates how many actual data changes have been made to the row.  If an update of the row leaves all data fields the same, disregarding the updates to the diag_* columns, the row version is not updated, nor are any updates made to the other diag_* columns other than diag_update_count.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p>
+<p><strong>Direct Usage</strong></p>
+<p>This column is frequently used by by application logic to resolve the &ldquo;dirty write&rdquo; issues which can arise from concurrent data changes.  As such any administrative override of automatic system maintenance of this value should consider the ramifications on application function.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_update_count">diag_update_count</span></td>
@@ -339,10 +349,9 @@ diag_update_count.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>Records the number of times the record has been updated regardless as to if<br />
-the update actually changed any data.  In this way needless or redundant record<br />
-updates can be found.  This row starts at 0 and therefore may be the same as the<br />
-diag_row_version - 1.</p></td>
+                                    <td><p>Records the number of times the record has been updated regardless as to if the update actually changed any data.  In this way needless or redundant record updates can be found.  This row starts at 0 and therefore may be the same as the diag_row_version - 1.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -358,7 +367,13 @@ diag_row_version - 1.</p></td>
                             </div>
                         </div>
                         <div class="box-body">
-                            <table id="indexes_table" class="table table-bordered table-striped dataTable" role="grid">
+                            <table
+                                    id="indexes_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="10"
+                                    data-length-change="false">
                                 <thead>
                                 <tr>
                                     <th>Constraint Name</th>
@@ -402,27 +417,12 @@ diag_row_version - 1.</p></td>
                                 </ul>
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
-                                        <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="syst_interaction_logs.html" target="_top" title="syst_interaction_logs" alt="" coords="329,5,764,427">
-<area shape="rect" id="node2" href="syst_enum_items.html" target="_top" title="syst_enum_items" alt="" coords="5,81,285,316">
-</map>
-                                        <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/syst_interaction_logs.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
+                                        
+                                        <a name='diagram'><object type="image/svg+xml" id="oneDegreeImg" data="../diagrams/tables/syst_interaction_logs.1degree.svg" class="diagram" border="0" align="left"></object></a>
                                     </div>
                                     <div class="chart tab-pane " id="twodegreesDegreeImg-chart" style="position: relative; overflow-x:auto;">
-                                        <map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
-<area shape="rect" id="node1" href="../ms_appl_data/tables/mstr_contacts.html" target="_top" title="ms_appl_data.mstr_contacts" alt="" coords="979,5,1301,93">
-<area shape="rect" id="node2" href="syst_enum_items.html" target="_top" title="syst_enum_items" alt="" coords="599,249,879,484">
-<area shape="rect" id="node8" href="syst_enum_functional_types.html" target="_top" title="syst_enum_functional_types" alt="" coords="236,391,555,479">
-<area shape="rect" id="node9" href="syst_enums.html" target="_top" title="syst_enums" alt="" coords="5,355,192,443">
-<area shape="rect" id="node3" href="../ms_appl_data/tables/mstr_entities.html" target="_top" title="ms_appl_data.mstr_entities" alt="" coords="983,147,1297,235">
-<area shape="rect" id="node4" href="../ms_appl_data/tables/mstr_entity_person_roles.html" target="_top" title="ms_appl_data.mstr_entity_person_roles" alt="" coords="935,357,1345,445">
-<area shape="rect" id="node5" href="../ms_appl_data/tables/mstr_person_contact_roles.html" target="_top" title="ms_appl_data.mstr_person_contact_roles" alt="" coords="928,463,1352,551">
-<area shape="rect" id="node6" href="../ms_appl_data/tables/mstr_persons.html" target="_top" title="ms_appl_data.mstr_persons" alt="" coords="982,252,1298,340">
-<area shape="rect" id="node7" href="../ms_appl_data/tables/mstr_places.html" target="_top" title="ms_appl_data.mstr_places" alt="" coords="988,568,1292,656">
-<area shape="rect" id="node10" href="syst_interaction_logs.html" target="_top" title="syst_interaction_logs" alt="" coords="923,673,1357,1095">
-<area shape="rect" id="node11" href="syst_person_logins.html" target="_top" title="syst_person_logins" alt="" coords="1401,147,1645,235">
-</map>
-                                        <a name='diagram'><img id="twodegreesDegreeImg" src="../diagrams/tables/syst_interaction_logs.2degrees.png" usemap="#twoDegreesRelationshipsDiagram" class="diagram" border="0" align="left"></a>
+                                        
+                                        <a name='diagram'><object type="image/svg+xml" id="twodegreesDegreeImg" data="../diagrams/tables/syst_interaction_logs.2degrees.svg" class="diagram" border="0" align="left"></object></a>
                                     </div>
                                 </div>
                             </div>
@@ -431,7 +431,7 @@ diag_row_version - 1.</p></td>
                 </section>
                 <script>
                     var config = {
-                        pagination: true
+                        pagination: false
                     }
                 </script>
             </div>
@@ -442,7 +442,7 @@ diag_row_version - 1.</p></td>
                         <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
                         <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
                     </div>
-                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.1.0</a></strong>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.2.4</a></strong>
                 </div>
                 <!-- /.container -->
             </footer>

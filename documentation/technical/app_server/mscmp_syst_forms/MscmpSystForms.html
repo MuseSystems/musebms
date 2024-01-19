@@ -124,7 +124,7 @@ Pages
 
 
   <section id="moduledoc">
-<h1>MscmpSystForms - User Interface Forms &amp; Components</h1><p>The <a href="MscmpSystForms.html#content"><code class="inline">MscmpSystForms</code></a> module provides a standard methodology for authoring
+<p>The <a href="MscmpSystForms.html#content"><code class="inline">MscmpSystForms</code></a> module provides a standard methodology for authoring
 application user interface forms in support of business systems development.</p><blockquote><h4 class="info"><code class="inline">use MscmpSystForms</code></h4><p>When you <code class="inline">use MscmpSystForms</code>, the MscmpSystForms module will set <code class="inline">@behaviour MscmpSystForms</code> and the following functions will be created for the using
 module:</p><ul><li><a href="#update_button_state/3"><code class="inline">update_button_state/3</code></a></li><li><a href="#start_processing_override/2"><code class="inline">start_processing_override/2</code></a></li><li><a href="#finish_processing_override/2"><code class="inline">finish_processing_override/2</code></a></li><li><a href="#update_display_data/3"><code class="inline">update_display_data/3</code></a></li><li><code class="inline">get_component_info/1</code></li></ul><p>Documentation for these functions is available in the module and they are
 simply delegates to the same functions (give or take some arity) in
@@ -1246,26 +1246,26 @@ configurations are related to the rendered layout in any way.</p><h2 id="c:get_f
   </a>
   <span class="text">Examples</span>
 </h2>
-<p>Consider the following example configuration:</p><pre><code class="makeup elixir" translate="no"><span class="kd">def</span><span class="w"> </span><span class="nf">get_form_config</span><span class="w"> </span><span class="k" data-group-id="5219770066-1">do</span><span class="w">
-  </span><span class="p" data-group-id="5219770066-2">[</span><span class="w">
-    </span><span class="p" data-group-id="5219770066-3">%</span><span class="nc" data-group-id="5219770066-3">FormConfig</span><span class="p" data-group-id="5219770066-3">{</span><span class="w">
+<p>Consider the following example configuration:</p><pre><code class="makeup elixir" translate="no"><span class="kd">def</span><span class="w"> </span><span class="nf">get_form_config</span><span class="w"> </span><span class="k" data-group-id="1560253069-1">do</span><span class="w">
+  </span><span class="p" data-group-id="1560253069-2">[</span><span class="w">
+    </span><span class="p" data-group-id="1560253069-3">%</span><span class="nc" data-group-id="1560253069-3">FormConfig</span><span class="p" data-group-id="1560253069-3">{</span><span class="w">
       </span><span class="ss">permission</span><span class="p">:</span><span class="w"> </span><span class="ss">:form_access_permission</span><span class="p">,</span><span class="w">
       </span><span class="ss">label</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Virtual FormConfig&quot;</span><span class="p">,</span><span class="w">
-      </span><span class="ss">children</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="5219770066-4">[</span><span class="w">
-        </span><span class="p" data-group-id="5219770066-5">%</span><span class="nc" data-group-id="5219770066-5">FormConfig</span><span class="p" data-group-id="5219770066-5">{</span><span class="w">
+      </span><span class="ss">children</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1560253069-4">[</span><span class="w">
+        </span><span class="p" data-group-id="1560253069-5">%</span><span class="nc" data-group-id="1560253069-5">FormConfig</span><span class="p" data-group-id="1560253069-5">{</span><span class="w">
           </span><span class="ss">form_id</span><span class="p">:</span><span class="w"> </span><span class="ss">:concrete_config_input</span><span class="p">,</span><span class="w">
           </span><span class="ss">binding_id</span><span class="p">:</span><span class="w"> </span><span class="ss">:data_field_input</span><span class="p">,</span><span class="w">
           </span><span class="ss">label</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Example Input Field&quot;</span><span class="p">,</span><span class="w">
-        </span><span class="p" data-group-id="5219770066-5">}</span><span class="p">,</span><span class="w">
-        </span><span class="p" data-group-id="5219770066-6">%</span><span class="nc" data-group-id="5219770066-6">FormConfig</span><span class="p" data-group-id="5219770066-6">{</span><span class="w">
+        </span><span class="p" data-group-id="1560253069-5">}</span><span class="p">,</span><span class="w">
+        </span><span class="p" data-group-id="1560253069-6">%</span><span class="nc" data-group-id="1560253069-6">FormConfig</span><span class="p" data-group-id="1560253069-6">{</span><span class="w">
           </span><span class="ss">form_id</span><span class="p">:</span><span class="w"> </span><span class="ss">:concrete_config_submit_button</span><span class="p">,</span><span class="w">
           </span><span class="ss">label</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Submit&quot;</span><span class="p">,</span><span class="w">
           </span><span class="ss">button_state</span><span class="p">:</span><span class="w"> </span><span class="ss">:message</span><span class="w">
-        </span><span class="p" data-group-id="5219770066-6">}</span><span class="w">
-      </span><span class="p" data-group-id="5219770066-4">]</span><span class="w">
-    </span><span class="p" data-group-id="5219770066-3">}</span><span class="w">
-  </span><span class="p" data-group-id="5219770066-2">]</span><span class="w">
-</span><span class="k" data-group-id="5219770066-1">end</span></code></pre><p>At the top level we have a virtual or abstract <code class="inline">FormConfig</code> value; we know
+        </span><span class="p" data-group-id="1560253069-6">}</span><span class="w">
+      </span><span class="p" data-group-id="1560253069-4">]</span><span class="w">
+    </span><span class="p" data-group-id="1560253069-3">}</span><span class="w">
+  </span><span class="p" data-group-id="1560253069-2">]</span><span class="w">
+</span><span class="k" data-group-id="1560253069-1">end</span></code></pre><p>At the top level we have a virtual or abstract <code class="inline">FormConfig</code> value; we know
 it's virtual because it defines no <code class="inline">form_id</code> value.  This top level value
 exists so that its children can inherit its permission value and its defined
 display modes (see <a href="#c:get_form_modes/0"><code class="inline">MscmpSystForms.get_form_modes/0</code></a>).</p><p>This doesn't mean that the returned configuration represents all elements in
@@ -1274,27 +1274,27 @@ correspond to any rendered form element at all (that would require a <code class
 value being defined).  The overall structure and the virtual element exist to
 purely support the inheritance of configuration and state related values.</p><p>While with the structure in the example above, we can take advantage of
 inherited values, we can selectively override those values as needed.
-Consider this revision of the first example:</p><pre><code class="makeup elixir" translate="no"><span class="kd">def</span><span class="w"> </span><span class="nf">get_form_config</span><span class="w"> </span><span class="k" data-group-id="5057188839-1">do</span><span class="w">
-  </span><span class="p" data-group-id="5057188839-2">[</span><span class="w">
-    </span><span class="p" data-group-id="5057188839-3">%</span><span class="nc" data-group-id="5057188839-3">FormConfig</span><span class="p" data-group-id="5057188839-3">{</span><span class="w">
+Consider this revision of the first example:</p><pre><code class="makeup elixir" translate="no"><span class="kd">def</span><span class="w"> </span><span class="nf">get_form_config</span><span class="w"> </span><span class="k" data-group-id="1156905929-1">do</span><span class="w">
+  </span><span class="p" data-group-id="1156905929-2">[</span><span class="w">
+    </span><span class="p" data-group-id="1156905929-3">%</span><span class="nc" data-group-id="1156905929-3">FormConfig</span><span class="p" data-group-id="1156905929-3">{</span><span class="w">
       </span><span class="ss">permission</span><span class="p">:</span><span class="w"> </span><span class="ss">:form_access_permission</span><span class="p">,</span><span class="w">
       </span><span class="ss">label</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Virtual FormConfig&quot;</span><span class="p">,</span><span class="w">
-      </span><span class="ss">children</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="5057188839-4">[</span><span class="w">
-        </span><span class="p" data-group-id="5057188839-5">%</span><span class="nc" data-group-id="5057188839-5">FormConfig</span><span class="p" data-group-id="5057188839-5">{</span><span class="w">
+      </span><span class="ss">children</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1156905929-4">[</span><span class="w">
+        </span><span class="p" data-group-id="1156905929-5">%</span><span class="nc" data-group-id="1156905929-5">FormConfig</span><span class="p" data-group-id="1156905929-5">{</span><span class="w">
           </span><span class="ss">form_id</span><span class="p">:</span><span class="w"> </span><span class="ss">:concrete_config_input</span><span class="p">,</span><span class="w">
           </span><span class="ss">binding_id</span><span class="p">:</span><span class="w"> </span><span class="ss">:data_field_input</span><span class="p">,</span><span class="w">
           </span><span class="ss">label</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Example Input Field&quot;</span><span class="p">,</span><span class="w">
-        </span><span class="p" data-group-id="5057188839-5">}</span><span class="p">,</span><span class="w">
-        </span><span class="p" data-group-id="5057188839-6">%</span><span class="nc" data-group-id="5057188839-6">FormConfig</span><span class="p" data-group-id="5057188839-6">{</span><span class="w">
+        </span><span class="p" data-group-id="1156905929-5">}</span><span class="p">,</span><span class="w">
+        </span><span class="p" data-group-id="1156905929-6">%</span><span class="nc" data-group-id="1156905929-6">FormConfig</span><span class="p" data-group-id="1156905929-6">{</span><span class="w">
           </span><span class="ss">form_id</span><span class="p">:</span><span class="w"> </span><span class="ss">:concrete_config_submit_button</span><span class="p">,</span><span class="w">
           </span><span class="ss">permission</span><span class="p">:</span><span class="w"> </span><span class="ss">:form_submit_permission</span><span class="p">,</span><span class="w">
           </span><span class="ss">label</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Submit&quot;</span><span class="p">,</span><span class="w">
           </span><span class="ss">button_state</span><span class="p">:</span><span class="w"> </span><span class="ss">:message</span><span class="w">
-        </span><span class="p" data-group-id="5057188839-6">}</span><span class="w">
-      </span><span class="p" data-group-id="5057188839-4">]</span><span class="w">
-    </span><span class="p" data-group-id="5057188839-3">}</span><span class="w">
-  </span><span class="p" data-group-id="5057188839-2">]</span><span class="w">
-</span><span class="k" data-group-id="5057188839-1">end</span></code></pre><p>In the revised example, we don't inherit the the <code class="inline">:form_access_permission</code>
+        </span><span class="p" data-group-id="1156905929-6">}</span><span class="w">
+      </span><span class="p" data-group-id="1156905929-4">]</span><span class="w">
+    </span><span class="p" data-group-id="1156905929-3">}</span><span class="w">
+  </span><span class="p" data-group-id="1156905929-2">]</span><span class="w">
+</span><span class="k" data-group-id="1156905929-1">end</span></code></pre><p>In the revised example, we don't inherit the the <code class="inline">:form_access_permission</code>
 value of the parent in <code class="inline">:concrete_config_submit_button</code> any longer, but now
 check the <code class="inline">:form_submit_permission</code> permission instead.  The
 <code class="inline">:concrete_config_submit_button</code> will continue to inherit other values from
@@ -1326,23 +1326,23 @@ component should take when a given form state is specified.</p><p>The map return
 Form State <code class="inline">feature</code> is at the top level,  the Form State <code class="inline">mode</code> taking the
 next level, and the Form State <code class="inline">State</code> being nested under <code class="inline">mode</code>.  In this
 way each defined <code class="inline">feature</code> can have one or more <code class="inline">mode</code> entries and each <code class="inline">mode</code>
-entry can have one or more <code class="inline">state</code> entries.</p><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="2648725122-1">%{</span><span class="w">
-  </span><span class="o">&lt;</span><span class="n">feature</span><span class="ss">&gt;</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2648725122-2">%{</span><span class="w">
-    </span><span class="ss">default</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2648725122-3">%{</span><span class="w">
+entry can have one or more <code class="inline">state</code> entries.</p><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="4327710368-1">%{</span><span class="w">
+  </span><span class="o">&lt;</span><span class="n">feature</span><span class="ss">&gt;</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4327710368-2">%{</span><span class="w">
+    </span><span class="ss">default</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4327710368-3">%{</span><span class="w">
       </span><span class="o">&lt;</span><span class="n">component_form_id</span><span class="ss">&gt;</span><span class="p">:</span><span class="w">
-        </span><span class="p" data-group-id="2648725122-4">%</span><span class="nc" data-group-id="2648725122-4">MscmpSystForms.Types.ComponentDisplayModes</span><span class="p" data-group-id="2648725122-4">{</span><span class="o">&lt;</span><span class="n">default</span><span class="w"> </span><span class="n">component</span><span class="w"> </span><span class="n">modes</span><span class="o">&gt;</span><span class="p" data-group-id="2648725122-4">}</span><span class="w">
-    </span><span class="p" data-group-id="2648725122-3">}</span><span class="p">,</span><span class="w">
-    </span><span class="o">&lt;</span><span class="n">mode</span><span class="ss">&gt;</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2648725122-5">%{</span><span class="w">
-      </span><span class="o">&lt;</span><span class="n">state</span><span class="ss">&gt;</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2648725122-6">%{</span><span class="w">
+        </span><span class="p" data-group-id="4327710368-4">%</span><span class="nc" data-group-id="4327710368-4">MscmpSystForms.Types.ComponentDisplayModes</span><span class="p" data-group-id="4327710368-4">{</span><span class="o">&lt;</span><span class="n">default</span><span class="w"> </span><span class="n">component</span><span class="w"> </span><span class="n">modes</span><span class="o">&gt;</span><span class="p" data-group-id="4327710368-4">}</span><span class="w">
+    </span><span class="p" data-group-id="4327710368-3">}</span><span class="p">,</span><span class="w">
+    </span><span class="o">&lt;</span><span class="n">mode</span><span class="ss">&gt;</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4327710368-5">%{</span><span class="w">
+      </span><span class="o">&lt;</span><span class="n">state</span><span class="ss">&gt;</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4327710368-6">%{</span><span class="w">
         </span><span class="o">&lt;</span><span class="n">component_form_id</span><span class="ss">&gt;</span><span class="p">:</span><span class="w">
-          </span><span class="p" data-group-id="2648725122-7">%</span><span class="nc" data-group-id="2648725122-7">MscmpSystForms.Types.ComponentDisplayModes</span><span class="p" data-group-id="2648725122-7">{</span><span class="o">&lt;</span><span class="n">component</span><span class="w"> </span><span class="n">modes</span><span class="o">&gt;</span><span class="p" data-group-id="2648725122-7">}</span><span class="w">
-      </span><span class="p" data-group-id="2648725122-6">}</span><span class="w">
-    </span><span class="p" data-group-id="2648725122-5">}</span><span class="p">,</span><span class="w">
-    </span><span class="ss">processing_overrides</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2648725122-8">%{</span><span class="w">
-      </span><span class="o">&lt;</span><span class="n">component_form_id</span><span class="ss">&gt;</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2648725122-9">[</span><span class="o">&lt;</span><span class="n">processing</span><span class="w"> </span><span class="n">override</span><span class="w"> </span><span class="n">name</span><span class="o">&gt;</span><span class="p" data-group-id="2648725122-9">]</span><span class="w">
-    </span><span class="p" data-group-id="2648725122-8">}</span><span class="w">
-  </span><span class="p" data-group-id="2648725122-2">}</span><span class="w">
-</span><span class="p" data-group-id="2648725122-1">}</span></code></pre><h2 id="c:get_form_modes/0-mode-structure-rules-considerations" class="section-heading">
+          </span><span class="p" data-group-id="4327710368-7">%</span><span class="nc" data-group-id="4327710368-7">MscmpSystForms.Types.ComponentDisplayModes</span><span class="p" data-group-id="4327710368-7">{</span><span class="o">&lt;</span><span class="n">component</span><span class="w"> </span><span class="n">modes</span><span class="o">&gt;</span><span class="p" data-group-id="4327710368-7">}</span><span class="w">
+      </span><span class="p" data-group-id="4327710368-6">}</span><span class="w">
+    </span><span class="p" data-group-id="4327710368-5">}</span><span class="p">,</span><span class="w">
+    </span><span class="ss">processing_overrides</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4327710368-8">%{</span><span class="w">
+      </span><span class="o">&lt;</span><span class="n">component_form_id</span><span class="ss">&gt;</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4327710368-9">[</span><span class="o">&lt;</span><span class="n">processing</span><span class="w"> </span><span class="n">override</span><span class="w"> </span><span class="n">name</span><span class="o">&gt;</span><span class="p" data-group-id="4327710368-9">]</span><span class="w">
+    </span><span class="p" data-group-id="4327710368-8">}</span><span class="w">
+  </span><span class="p" data-group-id="4327710368-2">}</span><span class="w">
+</span><span class="p" data-group-id="4327710368-1">}</span></code></pre><h2 id="c:get_form_modes/0-mode-structure-rules-considerations" class="section-heading">
   <a href="#c:get_form_modes/0-mode-structure-rules-considerations" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
   </a>
@@ -1394,36 +1394,36 @@ Feature/Mode/State combination.</p><h2 id="c:get_form_modes/0-examples" class="s
 <p>Different form elements may take on different display properties as the state
 of the form evolves over time with changes in data or in response to user
 interactions.  This function returns a nested map structure which, based on
-the examples from <a href="#c:get_form_config/0"><code class="inline">get_form_config/0</code></a>, might look like:</p><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="6482483710-1">%{</span><span class="w">
-  </span><span class="ss">default</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="6482483710-2">%{</span><span class="w">
-    </span><span class="ss">default</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="6482483710-3">%{</span><span class="w">
+the examples from <a href="#c:get_form_config/0"><code class="inline">get_form_config/0</code></a>, might look like:</p><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="4537778730-1">%{</span><span class="w">
+  </span><span class="ss">default</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4537778730-2">%{</span><span class="w">
+    </span><span class="ss">default</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4537778730-3">%{</span><span class="w">
       </span><span class="ss">concrete_config_input</span><span class="p">:</span><span class="w">
-        </span><span class="p" data-group-id="6482483710-4">%</span><span class="nc" data-group-id="6482483710-4">MscmpSystForms.Types.ComponentDisplayModes</span><span class="p" data-group-id="6482483710-4">{</span><span class="ss">component_mode</span><span class="p">:</span><span class="w"> </span><span class="ss">:visible</span><span class="p" data-group-id="6482483710-4">}</span><span class="p">,</span><span class="w">
+        </span><span class="p" data-group-id="4537778730-4">%</span><span class="nc" data-group-id="4537778730-4">MscmpSystForms.Types.ComponentDisplayModes</span><span class="p" data-group-id="4537778730-4">{</span><span class="ss">component_mode</span><span class="p">:</span><span class="w"> </span><span class="ss">:visible</span><span class="p" data-group-id="4537778730-4">}</span><span class="p">,</span><span class="w">
       </span><span class="ss">concrete_config_submit_button</span><span class="p">:</span><span class="w">
-        </span><span class="p" data-group-id="6482483710-5">%</span><span class="nc" data-group-id="6482483710-5">MscmpSystForms.Types.ComponentDisplayModes</span><span class="p" data-group-id="6482483710-5">{</span><span class="ss">component_mode</span><span class="p">:</span><span class="w"> </span><span class="ss">:visible</span><span class="p" data-group-id="6482483710-5">}</span><span class="w">
-    </span><span class="p" data-group-id="6482483710-3">}</span><span class="p">,</span><span class="w">
-    </span><span class="ss">entry</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="6482483710-6">%{</span><span class="w">
-      </span><span class="ss">basic_form_state</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="6482483710-7">%{</span><span class="w">
+        </span><span class="p" data-group-id="4537778730-5">%</span><span class="nc" data-group-id="4537778730-5">MscmpSystForms.Types.ComponentDisplayModes</span><span class="p" data-group-id="4537778730-5">{</span><span class="ss">component_mode</span><span class="p">:</span><span class="w"> </span><span class="ss">:visible</span><span class="p" data-group-id="4537778730-5">}</span><span class="w">
+    </span><span class="p" data-group-id="4537778730-3">}</span><span class="p">,</span><span class="w">
+    </span><span class="ss">entry</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4537778730-6">%{</span><span class="w">
+      </span><span class="ss">basic_form_state</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4537778730-7">%{</span><span class="w">
         </span><span class="ss">concrete_config_input</span><span class="p">:</span><span class="w">
-          </span><span class="p" data-group-id="6482483710-8">%</span><span class="nc" data-group-id="6482483710-8">MscmpSystForms.Types.ComponentDisplayModes</span><span class="p" data-group-id="6482483710-8">{</span><span class="ss">component_mode</span><span class="p">:</span><span class="w"> </span><span class="ss">:entry</span><span class="p" data-group-id="6482483710-8">}</span><span class="p">,</span><span class="w">
+          </span><span class="p" data-group-id="4537778730-8">%</span><span class="nc" data-group-id="4537778730-8">MscmpSystForms.Types.ComponentDisplayModes</span><span class="p" data-group-id="4537778730-8">{</span><span class="ss">component_mode</span><span class="p">:</span><span class="w"> </span><span class="ss">:entry</span><span class="p" data-group-id="4537778730-8">}</span><span class="p">,</span><span class="w">
         </span><span class="ss">concrete_config_submit_button</span><span class="p">:</span><span class="w">
-          </span><span class="p" data-group-id="6482483710-9">%</span><span class="nc" data-group-id="6482483710-9">MscmpSystForms.Types.ComponentDisplayModes</span><span class="p" data-group-id="6482483710-9">{</span><span class="ss">component_mode</span><span class="p">:</span><span class="w"> </span><span class="ss">:entry</span><span class="p" data-group-id="6482483710-9">}</span><span class="w">
-      </span><span class="p" data-group-id="6482483710-7">}</span><span class="w">
-    </span><span class="p" data-group-id="6482483710-6">}</span><span class="p">,</span><span class="w">
-    </span><span class="ss">view</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="6482483710-10">%{</span><span class="w">
-      </span><span class="ss">basic_form_state</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="6482483710-11">%{</span><span class="w">
+          </span><span class="p" data-group-id="4537778730-9">%</span><span class="nc" data-group-id="4537778730-9">MscmpSystForms.Types.ComponentDisplayModes</span><span class="p" data-group-id="4537778730-9">{</span><span class="ss">component_mode</span><span class="p">:</span><span class="w"> </span><span class="ss">:entry</span><span class="p" data-group-id="4537778730-9">}</span><span class="w">
+      </span><span class="p" data-group-id="4537778730-7">}</span><span class="w">
+    </span><span class="p" data-group-id="4537778730-6">}</span><span class="p">,</span><span class="w">
+    </span><span class="ss">view</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4537778730-10">%{</span><span class="w">
+      </span><span class="ss">basic_form_state</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4537778730-11">%{</span><span class="w">
         </span><span class="ss">concrete_config_input</span><span class="p">:</span><span class="w">
-          </span><span class="p" data-group-id="6482483710-12">%</span><span class="nc" data-group-id="6482483710-12">MscmpSystForms.Types.ComponentDisplayModes</span><span class="p" data-group-id="6482483710-12">{</span><span class="ss">component_mode</span><span class="p">:</span><span class="w"> </span><span class="ss">:visible</span><span class="p" data-group-id="6482483710-12">}</span><span class="p">,</span><span class="w">
+          </span><span class="p" data-group-id="4537778730-12">%</span><span class="nc" data-group-id="4537778730-12">MscmpSystForms.Types.ComponentDisplayModes</span><span class="p" data-group-id="4537778730-12">{</span><span class="ss">component_mode</span><span class="p">:</span><span class="w"> </span><span class="ss">:visible</span><span class="p" data-group-id="4537778730-12">}</span><span class="p">,</span><span class="w">
         </span><span class="ss">concrete_config_submit_button</span><span class="p">:</span><span class="w">
-          </span><span class="p" data-group-id="6482483710-13">%</span><span class="nc" data-group-id="6482483710-13">MscmpSystForms.Types.ComponentDisplayModes</span><span class="p" data-group-id="6482483710-13">{</span><span class="ss">component_mode</span><span class="p">:</span><span class="w"> </span><span class="ss">:visible</span><span class="p" data-group-id="6482483710-13">}</span><span class="w">
-      </span><span class="p" data-group-id="6482483710-11">}</span><span class="w">
-    </span><span class="p" data-group-id="6482483710-10">}</span><span class="p">,</span><span class="w">
-    </span><span class="ss">processing_overrides</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="6482483710-14">%{</span><span class="w">
-      </span><span class="ss">concrete_config_input</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="6482483710-15">[</span><span class="ss">:process_underway</span><span class="p" data-group-id="6482483710-15">]</span><span class="w">
-      </span><span class="ss">concrete_config_submit_button</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="6482483710-16">[</span><span class="ss">:process_underway</span><span class="p" data-group-id="6482483710-16">]</span><span class="w">
-    </span><span class="p" data-group-id="6482483710-14">}</span><span class="w">
-  </span><span class="p" data-group-id="6482483710-2">}</span><span class="w">
-</span><span class="p" data-group-id="6482483710-1">}</span></code></pre>
+          </span><span class="p" data-group-id="4537778730-13">%</span><span class="nc" data-group-id="4537778730-13">MscmpSystForms.Types.ComponentDisplayModes</span><span class="p" data-group-id="4537778730-13">{</span><span class="ss">component_mode</span><span class="p">:</span><span class="w"> </span><span class="ss">:visible</span><span class="p" data-group-id="4537778730-13">}</span><span class="w">
+      </span><span class="p" data-group-id="4537778730-11">}</span><span class="w">
+    </span><span class="p" data-group-id="4537778730-10">}</span><span class="p">,</span><span class="w">
+    </span><span class="ss">processing_overrides</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4537778730-14">%{</span><span class="w">
+      </span><span class="ss">concrete_config_input</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4537778730-15">[</span><span class="ss">:process_underway</span><span class="p" data-group-id="4537778730-15">]</span><span class="w">
+      </span><span class="ss">concrete_config_submit_button</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4537778730-16">[</span><span class="ss">:process_underway</span><span class="p" data-group-id="4537778730-16">]</span><span class="w">
+    </span><span class="p" data-group-id="4537778730-14">}</span><span class="w">
+  </span><span class="p" data-group-id="4537778730-2">}</span><span class="w">
+</span><span class="p" data-group-id="4537778730-1">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="c:postconnect_init/1">

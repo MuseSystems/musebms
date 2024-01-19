@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>mscmp_syst_nav.ms_syst_priv</title>
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
+        <!-- Bootstrap 3.3.5 -->
+        <link rel="stylesheet" href="../bower/admin-lte/bootstrap/css/bootstrap.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="../bower/font-awesome/css/font-awesome.min.css">
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="../bower/ionicons/css/ionicons.min.css">
+        <!-- DataTables -->
+        <link rel="stylesheet" href="../bower/datatables.net-bs/css/dataTables.bootstrap.min.css">
+        <link rel="stylesheet" href="../bower/datatables.net-buttons-bs/css/buttons.bootstrap.min.css">
+        <!-- Code Mirror -->
+        <link rel="stylesheet" href="../bower/codemirror/codemirror.css">
+        <!-- Fonts -->
+        <link href='../fonts/indieflower/indie-flower.css' rel='stylesheet' type='text/css'>
+        <link href='../fonts/source-sans-pro/source-sans-pro.css' rel='stylesheet' type='text/css'>
+
+        <!-- Theme style -->
+        <link rel="stylesheet" href="../bower/admin-lte/dist/css/AdminLTE.min.css">
+        <!-- Salvattore -->
+        <link rel="stylesheet" href="../bower/salvattore/salvattore.css">
+        <!-- AdminLTE Skins. Choose a skin from the css/skins
+           folder instead of downloading all of them to reduce the load. -->
+        <link rel="stylesheet" href="../bower/admin-lte/dist/css/skins/_all-skins.min.css">
+        <!-- SchemaSpy -->
+        <link rel="stylesheet" href="../schemaSpy.css">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="../bower/html5shiv/html5shiv.min.js"></script>
+        <script src="../bower/respond/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+    <body class="hold-transition skin-blue layout-top-nav">
+        <div class="wrapper">
+            <header class="main-header">
+                <nav class="navbar navbar-static-top">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <a href="../../index.html" class="navbar-brand"><b>mscmp_syst_nav</b></a><span class="navbar-brand" style="padding-left: 0">.ms_syst_priv</span>
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
+                        </div>
+
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+                            <ul class="nav navbar-nav">
+                                <li><a href="../index.html">Tables <span class="sr-only">(current)</span></a></li>
+                                <li><a href="../columns.html" title="All of the columns in the schema">Columns</a></li>
+                                <li><a href="../constraints.html" title="Useful for diagnosing error messages that just give constraint name or number">Constraints</a></li>
+                                <li><a href="../relationships.html" title="Diagram of table relationships">Relationships</a></li>
+                                <li><a href="../orphans.html" title="View of tables with neither parents nor children">Orphan&nbsp;Tables</a></li>
+                                <li><a href="../anomalies.html" title="Things that might not be quite right">Anomalies</a></li>
+                                <li><a href="../routines.html" title="Procedures and functions">Routines</a></li>
+                            </ul>
+                        </div>
+                        <!-- /.navbar-collapse -->
+                        <!-- Navbar Right Menu -->
+                    </div>
+                    <!-- /.container-fluid -->
+                </nav>
+            </header>
+            <!-- Main content -->
+            <!-- Full Width Column -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <h1>generate_comments_function(p_comments_config ms_syst_priv.comments_config_function)</h1><br />
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <i class="fa fa-file-text-o"></i>
+                            <h3 id="Description" class="box-title">Description</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body clearfix">
+                            <p><p>Generates comments for functions, procedures, and trigger functions.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><strong><code>p_comments_config</code></strong> ::     <strong>Required?</strong> True; <strong>Default</strong>: ( No Default )
+<p>A configuration object of type <code>ms_syst_priv.comments_config_function</code> which is used in automatically generating the appropriately formatted function comments.</p>
+</li>
+</ul>
+<p><strong>General Usage</strong></p>
+<p>If the default value of a documented function is longer than ~40 characters, it may be better to set the <code>default_value</code> to refer to the &ldquo;General Usage&rdquo; section and then explain the default value there. This due to line-length issues in the resulting formatted comments.</p></p>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                </section>
+                <!-- Main content -->
+                <section class="content">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                            <h3 id="Columns" class="box-title">Parameters</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <table id="standard_table" class="table table-bordered table-striped dataTable" role="grid">
+                                <thead align='left'>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Type</th>
+                                    <th>Mode</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>p_comments_config</td>
+                                    <td>ms_syst_priv.comments_config_function</td>
+                                    <td>IN</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <i class="fa fa-file-code-o"></i>
+                            <h3 id="RoutineDefinition" class="box-title">Definition</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <textarea id="sql-script-codemirror" name="sql-script-codemirror" rows="" style="display: none;">-- File:        generate_comments_function.eex.sql&#10;-- Location:    musebms/database/all/ms_syst_priv/functions/generate_comments_function.eex.sql&#10;-- Project:     Muse Systems Business Management System&#10;--&#10;-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems&#10;-- This file may include content copyrighted and licensed from third parties.&#10;--&#10;-- See the LICENSE file in the project root for license terms and conditions.&#10;-- See the NOTICE file in the project root for copyright ownership information.&#10;--&#10;-- muse.information@musesystems.com :: https://muse.systems&#10;&#10;DECLARE&#10;&#10;    var_working_config       ms_syst_priv.comments_config_function;&#10;    var_resolved_trigger     text :&#61; &#39;&#39;;&#10;    var_resolved_description text;&#10;    var_resolved_params      text :&#61; &#39;&#39;;&#10;    var_resolved_general_use text;&#10;&#10;    var_curr_param ms_syst_priv.comments_config_function_param;&#10;&#10;    var_comment text;&#10;&#10;BEGIN&#10;&#10;    CASE&#10;        WHEN nullif( p_comments_config.function_schema, &#39;&#39;) IS NULL THEN&#10;            RAISE EXCEPTION&#10;                &#39;Function comment configurations must specify which schema &#39;&#10;                &#39;hosts the function.&#39;;&#10;&#10;        WHEN nullif( p_comments_config.function_name, &#39;&#39;) IS NULL THEN&#10;            RAISE EXCEPTION&#10;                &#39;Function comment configurations must specify the name of the &#39;&#10;                &#39;function being commented upon.&#39;;&#10;&#10;        ELSE&#10;            NULL;&#10;    END CASE;&#10;&#10;    var_working_config.function_schema :&#61; p_comments_config.function_schema;&#10;    var_working_config.function_name   :&#61; p_comments_config.function_name;&#10;    var_working_config.description     :&#61;&#10;        coalesce( p_comments_config.description, &#39;( Routine Not Yet Documented )&#39; );&#10;&#10;    var_working_config.general_usage    :&#61; p_comments_config.general_usage;&#10;    var_working_config.trigger_function :&#61;&#10;        coalesce( p_comments_config.trigger_function, false );&#10;&#10;    var_working_config.trigger_timing :&#61;&#10;        coalesce( p_comments_config.trigger_timing, &#39;{}&#39;::text[] );&#10;&#10;    var_working_config.trigger_ops :&#61;&#10;        coalesce( p_comments_config.trigger_ops, &#39;{}&#39;::text[] );&#10;&#10;    var_working_config.params         :&#61;&#10;        coalesce(&#10;            p_comments_config.params,&#10;            &#39;{}&#39;::ms_syst_priv.comments_config_function_param[]&#10;        );&#10;&#10;    var_resolved_description :&#61; var_working_config.description;&#10;&#10;    &lt;&lt; trigger_block &gt;&gt;&#10;    DECLARE&#10;        var_timings text[ ] :&#61; &#39;{}&#39;::text[ ];&#10;        var_ops     text[ ] :&#61; &#39;{}&#39;::text[ ];&#10;&#10;    BEGIN&#10;        IF var_working_config.trigger_function THEN&#10;&#10;            -- Timings&#10;&#10;            IF &#39;b&#39; &#61; ANY( var_working_config.trigger_timing ) THEN&#10;                var_timings :&#61; var_timings || &#39;&#96;BEFORE&#96;&#39;::text;&#10;            END IF;&#10;&#10;            IF &#39;a&#39; &#61; ANY( var_working_config.trigger_timing ) THEN&#10;                var_timings :&#61; var_timings || &#39;&#96;AFTER&#96;&#39;::text;&#10;            END IF;&#10;&#10;            IF &#39;i&#39; &#61; ANY( var_working_config.trigger_timing ) THEN&#10;                var_timings :&#61; var_timings || &#39;&#96;INSTEAD OF&#96;&#39;::text;&#10;            END IF;&#10;&#10;            IF array_length( var_timings, 1) &#61; 0 THEN&#10;                var_timings :&#61; var_timings || &#39;(Not Yet Documented)&#39;::text;&#10;            END IF;&#10;&#10;            -- Operations&#10;&#10;            IF &#39;i&#39; &#61; ANY( var_working_config.trigger_ops ) THEN&#10;                var_ops :&#61; var_ops || &#39;&#96;INSERT&#96;&#39;::text;&#10;            END IF;&#10;&#10;            IF &#39;u&#39; &#61; ANY( var_working_config.trigger_ops ) THEN&#10;                var_ops :&#61; var_ops || &#39;&#96;UPDATE&#96;&#39;::text;&#10;            END IF;&#10;&#10;            IF &#39;d&#39; &#61; ANY( var_working_config.trigger_ops ) THEN&#10;                var_ops :&#61; var_ops || &#39;&#96;DELETE&#96;&#39;::text;&#10;            END IF;&#10;&#10;            IF array_length( var_ops, 1) &#61; 0 THEN&#10;                var_ops :&#61; var_ops || &#39;(Not Yet Documented)&#39;::text;&#10;            END IF;&#10;&#10;            var_resolved_trigger :&#61;&#10;                E&#39;**Trigger Function Details**:\n\n&#39; ||&#10;                E&#39;  * **Supported Timing**: &#39; ||&#10;                array_to_string(var_timings, &#39;, &#39;) || E&#39;\n\n&#39; ||&#10;                E&#39;  * **Supported Operations**: &#39; ||&#10;                array_to_string(var_ops, &#39;, &#39;);&#10;&#10;        END IF;&#10;    END trigger_block;&#10;&#10;    var_resolved_general_use :&#61;&#10;        E&#39;**General Usage**\n\n&#39; ||&#10;        nullif( var_working_config.general_usage, &#39;&#39; );&#10;&#10;    &lt;&lt; parameter_loop &gt;&gt;&#10;    FOR var_curr_param IN&#10;        SELECT&#10;              p.param_name&#10;            , coalesce( p.description, &#39;( Parameter Not Yet Documented)&#39; )&#10;            , coalesce( p.required, TRUE )&#10;            , coalesce( p.default_value, &#39;( No Default )&#39; )&#10;        FROM unnest( var_working_config.params ) p&#10;    LOOP&#10;        IF nullif( var_curr_param.param_name, &#39;&#39; ) IS NULL THEN&#10;            RAISE EXCEPTION&#10;                &#39;Parameter comment configurations must specify a valid &#39;&#10;                &#39;parameter name.&#39;;&#10;        END IF;&#10;&#10;        -- TODO: The select thing below could almost certainly be cleaner. Put&#10;        --       this on the clean-up list.  The only thing this does for sure&#10;        --       is give us a declarative solution.&#10;&#10;        var_resolved_params :&#61;&#10;            var_resolved_params ||&#10;                &#39;  * **&#96;&#39; || var_curr_param.param_name || E&#39;&#96;** :: &#39; ||&#10;                &#39;    **Required?** &#39; ||&#10;                CASE WHEN var_curr_param.required THEN &#39;True&#39; ELSE &#39;False&#39; END ||&#10;                &#39;; **Default**: &#39; || var_curr_param.default_value || E&#39;\n\n&#39; ||&#10;                ( SELECT&#10;                      string_agg( &#39;    &#39; || q.doc_line, E&#39;\n&#39; )&#10;                  FROM&#10;                      ( SELECT&#10;                            regexp_split_to_table(&#10;                                var_curr_param.description,&#10;                                &#39;[\n\r\f\u000B\u0085\u2028\u2029]&#39; ) AS doc_line ) q ) ||&#10;                E&#39;\n\n&#39;;&#10;&#10;    END LOOP parameter_loop;&#10;&#10;    IF nullif( var_resolved_params, &#39;&#39; ) IS NOT NULL THEN&#10;        var_resolved_params :&#61; E&#39;**Parameters**\n\n&#39; || var_resolved_params;&#10;    END IF;&#10;&#10;    var_comment :&#61;&#10;        regexp_replace(&#10;            coalesce( var_resolved_description || E&#39;\n\n&#39;, &#39;&#39; )  ||&#10;            coalesce( var_resolved_trigger || E&#39;\n\n&#39;, &#39;&#39; ) ||&#10;            coalesce( var_resolved_params || E&#39;\n\n&#39;, &#39;&#39; )  ||&#10;            coalesce( var_resolved_general_use || E&#39;\n\n&#39;, &#39;&#39; ),&#10;            &#39;[\n\r\f\u000B\u0085\u2028\u2029]{3,}&#39;,&#10;            E&#39;\n\n&#39; );&#10;&#10;    EXECUTE format( &#39;COMMENT ON FUNCTION %1$I.%2$I IS %3$L;&#39;,&#10;                    var_working_config.function_schema,&#10;                    var_working_config.function_name,&#10;                    var_comment);&#10;&#10;END;</textarea>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <!-- /.content-wrapper -->
+            <footer class="main-footer">
+                <div>
+                    <div class="pull-right hidden-xs">
+                        <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
+                        <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
+                    </div>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.2.4</a></strong>
+                </div>
+                <!-- /.container -->
+            </footer>
+        </div>
+        <!-- ./wrapper -->
+
+        <!-- jQuery 2.2.3 -->
+        <script src="../bower/admin-lte/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script src="../bower/admin-lte/plugins/jQueryUI/jquery-ui.min.js"></script>
+        <!-- Bootstrap 3.3.5 -->
+        <script src="../bower/admin-lte/bootstrap/js/bootstrap.min.js"></script>
+        <!-- DataTables -->
+        <script src="../bower/datatables.net/jquery.dataTables.min.js"></script>
+        <script src="../bower/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+        <script src="../bower/datatables.net-buttons/dataTables.buttons.min.js"></script>
+        <script src="../bower/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+        <script src="../bower/datatables.net-buttons/buttons.html5.min.js"></script>
+        <script src="../bower/datatables.net-buttons/buttons.print.min.js"></script>
+        <script src="../bower/datatables.net-buttons/buttons.colVis.min.js"></script>
+        <!-- SheetJS -->
+        <script src="../bower/js-xlsx/xlsx.full.min.js"></script>
+        <!-- pdfmake -->
+        <script src="../bower/pdfmake/pdfmake.min.js"></script>
+        <script src="../bower/pdfmake/vfs_fonts.js"></script>
+        <!-- SlimScroll -->
+        <script src="../bower/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+        <!-- FastClick -->
+        <script src="../bower/admin-lte/plugins/fastclick/fastclick.js"></script>
+        <!-- Salvattore -->
+        <script src="../bower/salvattore/salvattore.min.js"></script>
+        <!-- AnchorJS -->
+        <script src="../bower/anchor-js/anchor.min.js"></script>
+        <!-- CodeMirror -->
+        <script src="../bower/codemirror/codemirror.js"></script>
+        <script src="../bower/codemirror/sql.js"></script>
+        <!-- AdminLTE App -->
+        <script src="../bower/admin-lte/dist/js/app.min.js"></script>
+        <script src="routine.js"></script>
+        <script src="../schemaSpy.js"></script>
+    </body>
+</html>

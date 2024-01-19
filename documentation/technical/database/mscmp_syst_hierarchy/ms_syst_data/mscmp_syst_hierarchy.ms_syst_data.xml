@@ -1,0 +1,1048 @@
+<?xml version="1.0" encoding="UTF-8"?><database name="mscmp_syst_hierarchy" schema="ms_syst_data" type="PostgreSQL - 16.1 (Ubuntu 16.1-1.pgdg22.04+1)">
+   <tables>
+      <table name="syst_enum_functional_types" remarks="For those Enumerations requiring Functional Type designation, this table defines&#10;the available types and persists related metadata.  Note that not all&#10;Enumerations require Functional Types." schema="ms_syst_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">
+            <child column="functional_type_id" foreignKey="syst_enum_items_enum_functional_type_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_enum_items"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="false" remarks="A candidate key useful for programmatic references to individual records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="display_name" nullable="false" remarks="A friendly name and candidate key for the record, suitable for use in user&#10;interactions&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="external_name" nullable="false" remarks="A non-unique/non-key value used to display to users and external parties where&#10;uniqueness is less of a concern than specific end user presentation." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="enum_id" nullable="false" remarks="A reference to the owning Enumeration of the functional type." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="syst_enum_functional_types_enum_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_enums"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="syst_description" nullable="false" remarks="A system defined description indicating the purpose and use cases of a given&#10;record.  Text defined in this column is system maintained and should not be&#10;changed under normal circumstances.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="user_description" nullable="true" remarks="An optional user defined description of the record and its use cases.  If this&#10;value is not `NULL`, the value will override any `syst_description` defined text&#10;in application user interfaces and other presentations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="7" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="diag_role_created" nullable="false" remarks="The database role which created the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="9" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="10" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="diag_role_modified" nullable="false" remarks="The database role which modified the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="12" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Direct Usage**&#10;&#10;This column is frequently used by by application logic to resolve the &quot;dirty&#10;write&quot; issues which can arise from concurrent data changes.  As such any&#10;administrative override of automatic system maintenance of this value should&#10;consider the ramifications on application function." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="13" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="syst_enum_functional_types_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="syst_enum_functional_types_display_name_udx" unique="true">
+            <column ascending="true" name="display_name"/>
+         </index>
+         <index name="syst_enum_functional_types_internal_name_udx" unique="true">
+            <column ascending="true" name="internal_name"/>
+         </index>
+      </table>
+      <table name="syst_enum_items" remarks="The list of values provided by an Enumeration as well as related behavioral and&#10;informational metadata." schema="ms_syst_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">
+            <child column="hierarchy_state_id" foreignKey="syst_hierarchies_hierarchy_state_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_hierarchies"/>
+            <child column="hierarchy_type_id" foreignKey="syst_hierarchies_hierarchy_type_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_hierarchies"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="false" remarks="A candidate key useful for programmatic references to individual records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="display_name" nullable="false" remarks="A friendly name and candidate key for the record, suitable for use in user&#10;interactions&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="external_name" nullable="false" remarks="A non-unique/non-key value used to display to users and external parties where&#10;uniqueness is less of a concern than specific end user presentation." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="enum_id" nullable="false" remarks="The enumeration record with which the value is associated." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="syst_enum_items_enum_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_enums"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="functional_type_id" nullable="true" remarks="If the enumeration requires a functional type, this column references the&#10;functional type associated with the enumeration value record.&#10;&#10;**General Usage**&#10;&#10;Note that not all enumerations require functional types.  If&#10;syst_enum_functional_types records exist for an enumeration, then this column&#10;will be required for any values of that enumeration; if there are no functional&#10;types defined for an enumeration, the this column must remain NULL." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="syst_enum_items_enum_functional_type_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_enum_functional_types"/>
+         </column>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="6" name="enum_default" nullable="false" remarks="If true, indicates that this value is the default selection from all values&#10;defined for the enumerations.&#10;&#10;**General Usage**&#10;&#10;Note that if a record is inserted or updated in this table with enum_default set&#10;true, and another record already exists for the enumeration with its&#10;enum_default set true, the newly inserted/updated record will take precedence&#10;and the value record previously set to be default will have its enum_default&#10;setting set to false.&#10;&#10;If false then the value record has no special significance relative to&#10;defaulting." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="7" name="functional_type_default" nullable="false" remarks="If true, the value record is the default selection for any of a specific&#10;fucntional type.  This is helpful in situations where a progression of state is&#10;automatically processed by the system and the state is represented by an&#10;enumeration.&#10;&#10;**General Usage**&#10;&#10;Note that if a record is inserted or updated in this table with its&#10;functional_type_default set true, and another record already exists for the&#10;enumeration/functional type combination with its functional_type_default set&#10;true, the newly inserted/updated record will take precedence and the value&#10;record previously set to be default will have its functional_type_default&#10;setting set to false.&#10;&#10;In cases where there are no functional types, this value should simply remain&#10;false." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="8" name="syst_defined" nullable="false" remarks="Values of `TRUE` in this column indicate that the record is considered a&#10;&quot;System Defined&quot; record, a record which is created and primarily maintained by&#10;the system using automated processes.  A value of `FALSE` indicates that the&#10;record is considered a &quot;User Defined&quot; record which is maintained by user actions&#10;in the application.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="true" digits="0" id="9" name="user_maintainable" nullable="false" remarks="If a record is system defined (see the `syst_defined` column), there may be&#10;some user data maintenance operations permitted in some cases.  If the value of&#10;this column for a record is `TRUE` and the record is also &quot;System Defined&quot;, then&#10;permitted user maintenance operations are available for the record.  If the&#10;record is system defined and the value of this column is `FALSE`, no user&#10;maintenance is allowed.  If the record is not system defined, the value in this&#10;column will have no meaning or effect; user defined records may set this value&#10;`TRUE` as a simple information point indicating that the record is user&#10;maintainable.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="syst_description" nullable="false" remarks="A system defined description indicating the purpose and use cases of a given&#10;record.  Text defined in this column is system maintained and should not be&#10;changed under normal circumstances.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="user_description" nullable="true" remarks="An optional user defined description of the record and its use cases.  If this&#10;value is not `NULL`, the value will override any `syst_description` defined text&#10;in application user interfaces and other presentations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="sort_order" nullable="false" remarks="Indicates the sort ordering of the particular value record with the lowest value&#10;sorting first.&#10;&#10;**General Usage**&#10;&#10;When a value record for an enumeration is inserted or updated and this&#10;column is being set to a value which equals another enumeration value record for&#10;the same enumeration, the system assumes that the new record is being set to&#10;precede the existing record and it will be set to sort after the newly&#10;inserted/updated enumeration value." size="5" type="int2" typeCode="5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="13" name="syst_options" nullable="true" remarks="Extended options and metadata which describe the behavior and meaning of the&#10;specific value within the enumeration.&#10;&#10;**General Usage**&#10;&#10;The owning syst_enums record's default_syst_options column will indicate&#10;what syst_options are required or available and establishes default values for&#10;them." size="2147483647" type="jsonb" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="14" name="user_options" nullable="true" remarks="Extended user defined options, similar to syst_options, but for the purpose of&#10;driving custom functionality." size="2147483647" type="jsonb" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="15" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="16" name="diag_role_created" nullable="false" remarks="The database role which created the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="17" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="18" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="19" name="diag_role_modified" nullable="false" remarks="The database role which modified the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="20" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Direct Usage**&#10;&#10;This column is frequently used by by application logic to resolve the &quot;dirty&#10;write&quot; issues which can arise from concurrent data changes.  As such any&#10;administrative override of automatic system maintenance of this value should&#10;consider the ramifications on application function." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="21" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="syst_enum_items_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="syst_enum_items_display_name_udx" unique="true">
+            <column ascending="true" name="display_name"/>
+         </index>
+         <index name="syst_enum_items_internal_name_udx" unique="true">
+            <column ascending="true" name="internal_name"/>
+         </index>
+      </table>
+      <table name="syst_enums" remarks="Enumerates the enumerations known to the system along with additional metadata&#10;useful in applying them appropriately." schema="ms_syst_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">
+            <child column="enum_id" foreignKey="syst_enum_functional_types_enum_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_enum_functional_types"/>
+            <child column="enum_id" foreignKey="syst_enum_items_enum_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_enum_items"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="false" remarks="A candidate key useful for programmatic references to individual records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="display_name" nullable="false" remarks="A friendly name and candidate key for the record, suitable for use in user&#10;interactions&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="syst_description" nullable="false" remarks="A system defined description indicating the purpose and use cases of a given&#10;record.  Text defined in this column is system maintained and should not be&#10;changed under normal circumstances.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="user_description" nullable="true" remarks="An optional user defined description of the record and its use cases.  If this&#10;value is not `NULL`, the value will override any `syst_description` defined text&#10;in application user interfaces and other presentations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="5" name="syst_defined" nullable="false" remarks="Values of `TRUE` in this column indicate that the record is considered a&#10;&quot;System Defined&quot; record, a record which is created and primarily maintained by&#10;the system using automated processes.  A value of `FALSE` indicates that the&#10;record is considered a &quot;User Defined&quot; record which is maintained by user actions&#10;in the application.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="true" digits="0" id="6" name="user_maintainable" nullable="false" remarks="If a record is system defined (see the `syst_defined` column), there may be&#10;some user data maintenance operations permitted in some cases.  If the value of&#10;this column for a record is `TRUE` and the record is also &quot;System Defined&quot;, then&#10;permitted user maintenance operations are available for the record.  If the&#10;record is system defined and the value of this column is `FALSE`, no user&#10;maintenance is allowed.  If the record is not system defined, the value in this&#10;column will have no meaning or effect; user defined records may set this value&#10;`TRUE` as a simple information point indicating that the record is user&#10;maintainable.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="default_syst_options" nullable="true" remarks="Establishes the expected extended system options along with default values if&#10;applicable.&#10;&#10;**General Usage**&#10;&#10;Note that this setting is used to both validate and set defaults in the&#10;`syst_enum_items.syst_options` column." size="2147483647" type="jsonb" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="default_user_options" nullable="true" remarks="Allows a user to set the definition of syst_enum_items.user_options values and&#10;provide defaults for those values if appropriate." size="2147483647" type="jsonb" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="9" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="diag_role_created" nullable="false" remarks="The database role which created the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="11" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="12" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="13" name="diag_role_modified" nullable="false" remarks="The database role which modified the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="14" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Direct Usage**&#10;&#10;This column is frequently used by by application logic to resolve the &quot;dirty&#10;write&quot; issues which can arise from concurrent data changes.  As such any&#10;administrative override of automatic system maintenance of this value should&#10;consider the ramifications on application function." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="15" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="syst_enums_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="syst_enums_display_name_udx" unique="true">
+            <column ascending="true" name="display_name"/>
+         </index>
+         <index name="syst_enums_internal_name_udx" unique="true">
+            <column ascending="true" name="internal_name"/>
+         </index>
+      </table>
+      <table name="syst_hierarchies" remarks="Establishes a hierarchical template for parent/child relationships to&#10;follow. The `hierarchies` relation creates a type of hierarchy which is linked&#10;to a specific feature or functional area of the application via a record's&#10;`hierarchy_type_id` reference. Hierarchies is also the parent relation of&#10;Hierarchy Items relation (`ms_syst_data.syst_hierarchy_items`)&#10;records where each Hierarchy Items record represents a level of the&#10;hierarchy.&#10;&#10;**General Usage**&#10;&#10;Note that once the Hierarchy is active and in use by Hierarchy implementing&#10;Components, most changes to the Hierarchy records will not be allowed to ensure&#10;the consistency of currently used data." schema="ms_syst_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111">
+            <child column="hierarchy_id" foreignKey="syst_hierarchy_items_hierarchy_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_hierarchy_items"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="false" remarks="A candidate key useful for programmatic references to individual records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="display_name" nullable="false" remarks="A friendly name and candidate key for the record, suitable for use in user&#10;interactions&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="hierarchy_type_id" nullable="false" remarks="A reference indicating in which specific functional area or with which feature&#10;of the application the Hierarchy is associated with." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="syst_hierarchies_hierarchy_type_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_enum_items"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="hierarchy_state_id" nullable="false" remarks="A reference indicating at which point in the Hierarchy life-cycle the record&#10;sits.&#10;&#10;**General Usage**&#10;&#10;The record may only be set in an `active` state if the record and any associated&#10;Hierarchy Item records are in a consistent, valid state.  Similarly, the record&#10;may only be set to an `inactive` state if the Hierarchy record is not in use,&#10;which is defined as the record being referenced by an Hierarchy implementing&#10;Component's records." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="syst_hierarchies_hierarchy_state_fk" implied="false" onDeleteCascade="false" schema="ms_syst_data" table="syst_enum_items"/>
+         </column>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="5" name="syst_defined" nullable="false" remarks="Values of `TRUE` in this column indicate that the record is considered a&#10;&quot;System Defined&quot; record, a record which is created and primarily maintained by&#10;the system using automated processes.  A value of `FALSE` indicates that the&#10;record is considered a &quot;User Defined&quot; record which is maintained by user actions&#10;in the application.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="true" digits="0" id="6" name="user_maintainable" nullable="false" remarks="If a record is system defined (see the `syst_defined` column), there may be&#10;some user data maintenance operations permitted in some cases.  If the value of&#10;this column for a record is `TRUE` and the record is also &quot;System Defined&quot;, then&#10;permitted user maintenance operations are available for the record.  If the&#10;record is system defined and the value of this column is `FALSE`, no user&#10;maintenance is allowed.  If the record is not system defined, the value in this&#10;column will have no meaning or effect; user defined records may set this value&#10;`TRUE` as a simple information point indicating that the record is user&#10;maintainable.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="true" digits="0" id="7" name="structured" nullable="false" remarks="A flag indicating whether or not the Hierarchy actually defines a structure, or&#10;if the any implementations allow fully ad hoc structuring within the&#10;implementing Component.&#10;&#10;**General Usage**&#10;&#10;This configuration exists for cases where a Component implements Hierarchy&#10;functionality, but can also operate while bypassing any hierarchy checks at all;&#10;this way we can still require a Hierarchy record reference in the implementation&#10;while allowing the Hierarchy definition itself be the configuration point for&#10;determining whether or not hierarchical structure is required." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="syst_description" nullable="false" remarks="A system defined description indicating the purpose and use cases of a given&#10;record.  Text defined in this column is system maintained and should not be&#10;changed under normal circumstances.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="user_description" nullable="true" remarks="An optional user defined description of the record and its use cases.  If this&#10;value is not `NULL`, the value will override any `syst_description` defined text&#10;in application user interfaces and other presentations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="10" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="diag_role_created" nullable="true" remarks="The database role which created the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="12" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="13" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="14" name="diag_role_modified" nullable="true" remarks="The database role which modified the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="15" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Direct Usage**&#10;&#10;This column is frequently used by by application logic to resolve the &quot;dirty&#10;write&quot; issues which can arise from concurrent data changes.  As such any&#10;administrative override of automatic system maintenance of this value should&#10;consider the ramifications on application function." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="16" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="syst_hierarchies_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="syst_hierarchies_display_name_udx" unique="true">
+            <column ascending="true" name="display_name"/>
+         </index>
+         <index name="syst_hierarchies_internal_name_udx" unique="true">
+            <column ascending="true" name="internal_name"/>
+         </index>
+      </table>
+      <table name="syst_hierarchy_items" remarks="Hierarchy Item records represent a level in the hierarchy of their parent&#10;Hierarchy.&#10;&#10;**General Usage**&#10;&#10;Each Hierarchy Item record is individually sequenced in its group via the&#10;`hierarchy_depth` column.&#10;&#10;Note that once the Hierarchy is active and in use by Hierarchy implementing&#10;Components, most changes to the Hierarchy Item records will not be allowed to&#10;ensure the consistency of currently used data." schema="ms_syst_data" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v7()" digits="0" id="0" name="id" nullable="false" remarks="The record's primary key.  The definitive identifier of the record in the&#10;system.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="internal_name" nullable="false" remarks="A candidate key useful for programmatic references to individual records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="display_name" nullable="false" remarks="A friendly name and candidate key for the record, suitable for use in user&#10;interactions&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="external_name" nullable="false" remarks="A non-unique/non-key value used to display to users and external parties where&#10;uniqueness is less of a concern than specific end user presentation." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="hierarchy_id" nullable="false" remarks="Identifies the Hierarchy to which the record belongs." size="2147483647" type="uuid" typeCode="1111">
+            <parent column="id" foreignKey="syst_hierarchy_items_hierarchy_fk" implied="false" onDeleteCascade="true" schema="ms_syst_data" table="syst_hierarchies"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="hierarchy_depth" nullable="false" remarks="Indicates the at what level in the hierarchy this Group Type Item sits&#10;relative to the other items in the Group Type.  Records with relatively&#10;higher values are deeper or lower in the hierarchy.&#10;&#10;**General Usage**&#10;&#10;When a value for this column is not provided at insert time, the record is&#10;assigned the next hierarchy depth value relative to the existing records.  When&#10;a record is inserted with a set hierarchy_depth value and that value pre-exists&#10;for the same Group Type as the new record, the insert is treated as a &quot;insert&#10;above&quot; operation, with the existing conflicting record being updated to have the&#10;next hierarchy value; existing Group Type Item records are continued to be&#10;updated until the last record is assigned a non-conflicting hierarchy_depth&#10;value." size="5" type="int2" typeCode="5"/>
+         <column autoUpdated="false" defaultValue="true" digits="0" id="6" name="required" nullable="false" remarks="Indicates if the Hierarchy Item level must be represented by a record in the&#10;implementing data, or if the Hierarchy Item level represents an optional level.&#10;If true, the Hierarchy Item level must be represented by a record in the data of&#10;the implementing Component for that data to be considered valid.  If false,&#10;the Hierarchy Item level is considered optional and the data of the implementing&#10;Component may omit the Hierarchy Item level in its data without the data being&#10;considered invalid.&#10;&#10;**General Usage**&#10;&#10;The highest/root Hierarchy Item level must always be required.  If lower levels&#10;of the Hierarchy are required, all parents to the lowest required Hierarchy Item&#10;level must also be marked as required true." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="7" name="allow_leaf_nodes" nullable="false" remarks="Indicates to implementing Components that this Hierarchy Item level can be&#10;associated with &quot;Leaf Nodes&quot;. Leaf Nodes are not defined in the&#10;mscmp_syst_hierarchy Component, but are rather defined by Hierarchy implementing&#10;Components.  Leaf Nodes are the records which the Branch Nodes/Hierarchy&#10;definition are organizing.  An example of a Leaf Node would be an application&#10;menu implementing Component defining references/links to specific application&#10;functionality which are then displayed associated to branches of a tree&#10;structure (menu/sub-menu/ etc.)  The links are Leaf Nodes and the branches of&#10;the menu are Branch Nodes: representations of the Hierarchy Items.&#10;&#10;**General Usage**&#10;&#10;If this value is true, it means this Hierarchy Item record may be associated&#10;directly with Leaf Nodes.  If false, Leaf Nodes must be associated with other&#10;levels of the Hierarchy.&#10;&#10;The bottom/lowest level required Hierarchy Item must always be marked as&#10;`allow_leaf_nodes` true.  Higher than the lowest required Hierarchy Item level&#10;may arbitrarily allow or disallow Leaf Node associations as the implementing&#10;Component sees fit." size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="8" name="diag_timestamp_created" nullable="false" remarks="The database server date/time when the transaction which created the record&#10;started.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="diag_role_created" nullable="true" remarks="The database role which created the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="10" name="diag_timestamp_modified" nullable="false" remarks="The database server date/time when the transaction which modified the record&#10;started.  This field will be the same as diag_timestamp_created for inserted&#10;records.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="clock_timestamp()" digits="6" id="11" name="diag_wallclock_modified" nullable="false" remarks="The database server date/time at the moment the record was actually modified.&#10;For long running transactions this time may be significantly later than the&#10;value of diag_timestamp_modified.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="35" type="timestamptz" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="diag_role_modified" nullable="true" remarks="The database role which modified the record.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="13" name="diag_row_version" nullable="false" remarks="The current version of the row.  The value here indicates how many actual&#10;data changes have been made to the row.  If an update of the row leaves all data&#10;fields the same, disregarding the updates to the diag_* columns, the row version&#10;is not updated, nor are any updates made to the other diag_* columns other than&#10;diag_update_count.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations.&#10;&#10;**Direct Usage**&#10;&#10;This column is frequently used by by application logic to resolve the &quot;dirty&#10;write&quot; issues which can arise from concurrent data changes.  As such any&#10;administrative override of automatic system maintenance of this value should&#10;consider the ramifications on application function." size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="14" name="diag_update_count" nullable="false" remarks="Records the number of times the record has been updated regardless as to if&#10;the update actually changed any data.  In this way needless or redundant record&#10;updates can be found.  This row starts at 0 and therefore may be the same as the&#10;diag_row_version - 1.&#10;&#10;**General Usage**&#10;&#10;This column is system maintained and should be considered read only in normal&#10;operations." size="19" type="int8" typeCode="-5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="syst_hierarchy_items_pk" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="syst_hierarchy_items_depth_udx" unique="true">
+            <column ascending="true" name="hierarchy_id"/>
+            <column ascending="true" name="hierarchy_depth"/>
+         </index>
+         <index name="syst_hierarchy_items_display_name_udx" unique="true">
+            <column ascending="true" name="display_name"/>
+         </index>
+         <index name="syst_hierarchy_items_internal_name_udx" unique="true">
+            <column ascending="true" name="internal_name"/>
+         </index>
+      </table>
+   </tables>
+   <routines>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_a_iu_syst_enum_items_maintain_sort_order()" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Automatically maintains the sort order of syst_enum_item records in cases where
+sort ordering collides with existing syst_enum_items records for the same
+enum_id.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `AFTER`
+
+  * **Supported Operations**: `INSERT`, `UPDATE`
+
+**General Usage**
+
+On insert or update when the new sort_order value matches that of an existing
+record for the enumeration, the system will sort the match record after the
+new/updated record. This will cascade for all syst_enum_items records matching
+the enum_id until the last one is updated.]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_a_iu_syst_enum_items_maintain_sort_order.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_enums/ms_syst_data/syst_enum_items/trig_a_iu_syst_enum_items_maintain_sort_order.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com  :: https://muse.systems
+
+BEGIN
+
+    UPDATE ms_syst_data.syst_enum_items
+    SET sort_order = sort_order + 1
+    WHERE enum_id = new.enum_id AND sort_order = new.sort_order AND id != new.id;
+
+    RETURN NULL;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_b_d_syst_hierarchies_validate_prereqs()" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Validates that a Hierarchy is no longer referenced by the data of Hierarchy
+implementing Components prior to allowing that Hierarchy being deleted.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `BEFORE`
+
+  * **Supported Operations**: `DELETE`
+
+**General Usage**
+
+Note that references from associated Hierarchy Item records do not count as
+"references" and that deleting their parent Hierarchy record will cascade to the
+Hierarchy Item records.]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_b_d_syst_hierarchies_validate_prereqs.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_hierarchy/ms_syst_data/syst_hierarchies/trig_b_d_syst_hierarchies_validate_prereqs.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    IF ms_syst_priv.is_hierarchy_record_referenced( old.id ) THEN
+
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'Hierarchy records may not be deleted when they ' ||
+                          'are referenced in the data of hierarchy ' ||
+                          'implementing Components.',
+                DETAIL  = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_appl_data'
+                            ,p_proc_name      => 'trig_b_d_syst_hierarchies_validate_prereqs'
+                            ,p_exception_name => 'invalid_state'
+                            ,p_errcode        => 'PM003'
+                            ,p_param_data     => to_jsonb( old )
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM003',
+                SCHEMA  = tg_table_schema,
+                TABLE   = tg_table_name;
+
+    END IF;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_b_d_syst_hierarchy_items_hierarchy_inactive_check()" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Verifies that the parent Hierarchy is in an "inactive" prior to allowing
+deletion of the Hierarchy Item record.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `BEFORE`
+
+  * **Supported Operations**: `DELETE`]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_b_d_syst_hierarchy_items_hierarchy_inactive_check.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_hierarchy/ms_syst_data/syst_hierarchy_items/trig_b_d_syst_hierarchy_items_hierarchy_inactive_check.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    IF
+        ( SELECT eft.internal_name = 'hierarchy_states_active'
+          FROM ms_syst_data.syst_hierarchies ch
+              JOIN ms_syst_data.syst_enum_items ei
+                ON ei.id = ch.hierarchy_state_id
+              JOIN ms_syst_data.syst_enum_functional_types eft
+                  ON eft.id = ei.functional_type_id
+          WHERE ch.id = old.hierarchy_id )
+    THEN
+
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'Deleting Hierarchy Item records may only be done ' ||
+                          'when the parent Hierarchy is in an "inactive" ' ||
+                          'state.',
+                DETAIL  = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_appl_data'
+                            ,p_proc_name      => 'trig_b_d_syst_hierarchy_items_hierarchy_inactive_check'
+                            ,p_exception_name => 'invalid_state'
+                            ,p_errcode        => 'PM003'
+                            ,p_param_data     => to_jsonb( old )
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM003',
+                SCHEMA  = tg_table_schema,
+                TABLE   = tg_table_name;
+
+    END IF;
+
+    RETURN old;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_b_i_syst_enum_functional_type_validate_new_allowed()" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Checks to see if this is the first functional type being added for the
+enumeration and, if so, that no syst_enum_items records already exist.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `BEFORE`
+
+  * **Supported Operations**: `INSERT`
+
+**General Usage**
+
+Adding a first functional type for an enumeration which already has defined
+enumeration items implies that the enumeration items must be assigned a
+functional type in the same operation to keep data consistency.  In practice,
+this would be difficult since there would almost certainly have to be multiple
+functional types available in order to avoid making bogus assignments; it would
+be much more difficult to manage such a process as compared to simply
+disallowing the scenario.]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_b_i_syst_enum_functional_type_validate_new_allowed.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_enums/ms_syst_data/syst_enum_functional_types/trig_b_i_syst_enum_functional_type_validate_new_allowed.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com  :: https://muse.systems
+
+BEGIN
+
+    IF
+        NOT EXISTS(SELECT TRUE
+                    FROM ms_syst_data.syst_enum_functional_types
+                    WHERE enum_id = new.enum_id) AND
+        EXISTS(
+                SELECT TRUE
+                FROM ms_syst_data.syst_enum_items
+                WHERE enum_id = new.enum_id
+            )
+    THEN
+
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'You cannot add a functional type requirement after enumeration item ' ||
+                          'records have already been defined.',
+                DETAIL  = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst_data'
+                            ,p_proc_name      => 'trig_b_i_syst_enum_functional_type_validate_new_allowed'
+                            ,p_exception_name => 'invalid_functional_type'
+                            ,p_errcode        => 'PM003'
+                            ,p_param_data     => to_jsonb(new)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM003',
+                SCHEMA  = tg_table_schema,
+                TABLE   = tg_table_name;
+
+    END IF;
+
+    RETURN new;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_b_i_syst_enum_items_maintain_sort_order()" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[For INSERTed records with a null sort_order value, this trigger will assign a
+default value assuming the new record should be inserted at the end of the sort.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `BEFORE`
+
+  * **Supported Operations**: `INSERT`
+
+**General Usage**
+
+If the inserted record was already assigned a sort_order value, the inserted
+value is respected.]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_b_i_syst_enum_items_maintain_sort_order.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_enums/ms_syst_data/syst_enum_items/trig_b_i_syst_enum_items_maintain_sort_order.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com  :: https://muse.systems
+
+BEGIN
+
+    new.sort_order :=
+        coalesce(
+            new.sort_order,
+            ( SELECT max( sort_order ) + 1
+              FROM ms_syst_data.syst_enum_items
+              WHERE enum_id = new.enum_id ),
+            1 );
+
+    RETURN new;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_b_i_syst_hierarchies_validate_inactive()" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Prevents Hierarchy records from being inserted in an already "active" state.
+
+**General Usage**
+
+Hierarchy records should be inserted "inactive" and then later made "active"
+once the record and its associate Hierarchy Item records are complete and valid.]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_b_i_syst_hierarchies_validate_inactive.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_hierarchy/ms_syst_data/syst_hierarchies/trig_b_i_syst_hierarchies_validate_inactive.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    IF
+        ( SELECT eft.internal_name = 'hierarchy_states_active'
+          FROM ms_syst_data.syst_enum_items ei
+              JOIN ms_syst_data.syst_enum_functional_types eft
+                  ON eft.id = ei.functional_type_id
+          WHERE ei.id = new.hierarchy_state_id )
+    THEN
+
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'New Hierarchy records may not be inserted using ' ||
+                          'an "active" state.',
+                DETAIL  = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_appl_data'
+                            ,p_proc_name      => 'trig_b_i_syst_hierarchies_validate_inactive'
+                            ,p_exception_name => 'invalid_state'
+                            ,p_errcode        => 'PM003'
+                            ,p_param_data     => to_jsonb( new )
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM003',
+                SCHEMA  = tg_table_schema,
+                TABLE   = tg_table_name;
+
+    END IF;
+
+    RETURN new;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_b_i_syst_hierarchy_items_hierarchy_prereqs()" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Validates that the Hierarchy conditions of being in an "inactive" state and
+that the Hierarchy is a "structured" Hierarchy are true.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `BEFORE`
+
+  * **Supported Operations**: `INSERT`]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_b_i_syst_hierarchy_items_hierarchy_prereqs.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_hierarchy/ms_syst_data/syst_hierarchy_items/trig_b_i_syst_hierarchy_items_hierarchy_prereqs.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+DECLARE
+
+    var_context_data record;
+
+BEGIN
+
+    SELECT INTO var_context_data
+        eft.internal_name = 'hierarchy_states_active' AS is_active
+      , ch.structured
+    FROM
+        ms_syst_data.syst_hierarchies ch
+            JOIN ms_syst_data.syst_enum_items ei
+                 ON ei.id = ch.hierarchy_state_id
+            JOIN ms_syst_data.syst_enum_functional_types eft
+                 ON eft.id = ei.functional_type_id
+    WHERE ch.id = new.hierarchy_id;
+
+    CASE
+        WHEN var_context_data.is_active THEN
+
+            RAISE EXCEPTION
+                USING
+                    MESSAGE = 'Inserting Hierarchy Item records may only be ' ||
+                              'done when the parent Hierarchy is in an ' ||
+                              '"inactive" state.',
+                    DETAIL  = ms_syst_priv.get_exception_details(
+                                 p_proc_schema    => 'ms_appl_data'
+                                ,p_proc_name      =>
+                                    'trig_b_i_syst_hierarchy_items_hierarchy_prereqs'
+                                ,p_exception_name => 'invalid_state'
+                                ,p_errcode        => 'PM003'
+                                ,p_param_data     => to_jsonb( new )
+                                ,p_context_data   =>
+                                    jsonb_build_object(
+                                         'tg_op',         tg_op
+                                        ,'tg_when',       tg_when
+                                        ,'tg_schema',     tg_table_schema
+                                        ,'tg_table_name', tg_table_name)),
+                    ERRCODE = 'PM003',
+                    SCHEMA  = tg_table_schema,
+                    TABLE   = tg_table_name;
+
+
+        WHEN NOT var_context_data.structured THEN
+
+            RAISE EXCEPTION
+                USING
+                    MESSAGE = 'Hierarchy Item records may not be inserted ' ||
+                              'for unstructured Hierarchies.',
+                    DETAIL  = ms_syst_priv.get_exception_details(
+                                 p_proc_schema    => 'ms_appl_data'
+                                ,p_proc_name      =>
+                                    'trig_b_i_syst_hierarchy_items_hierarchy_prereqs'
+                                ,p_exception_name => 'invalid_state'
+                                ,p_errcode        => 'PM003'
+                                ,p_param_data     => to_jsonb( new )
+                                ,p_context_data   =>
+                                    jsonb_build_object(
+                                         'tg_op',         tg_op
+                                        ,'tg_when',       tg_when
+                                        ,'tg_schema',     tg_table_schema
+                                        ,'tg_table_name', tg_table_name)),
+                    ERRCODE = 'PM003',
+                    SCHEMA  = tg_table_schema,
+                    TABLE   = tg_table_name;
+
+        ELSE
+
+            RETURN new;
+
+    END CASE;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_b_iu_syst_enum_items_validate_functional_types()" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Ensures that if the parent syst_enums record has syst_enum_functional_types
+records defined, a syst_enum_items record will reference one of those
+functional types.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `BEFORE`
+
+  * **Supported Operations**: `INSERT`, `UPDATE`
+
+**General Usage**
+
+Note that this trigger function is intended to be use by
+constraint triggers.]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_b_iu_syst_enum_items_validate_functional_types.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_enums/ms_syst_data/syst_enum_items/trig_b_iu_syst_enum_items_validate_functional_types.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com  :: https://muse.systems
+
+BEGIN
+
+    IF
+        EXISTS( SELECT TRUE
+                FROM ms_syst_data.syst_enum_functional_types seft
+                WHERE   seft.enum_id = new.enum_id) AND
+        NOT EXISTS( SELECT TRUE
+                    FROM ms_syst_data.syst_enum_functional_types seft
+                    WHERE   seft.id = new.functional_type_id
+                        AND seft.enum_id = new.enum_id)
+    THEN
+
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'The enumeration requires a valid functional type to be specified.',
+                DETAIL  = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_syst_data'
+                            ,p_proc_name      => 'trig_b_iu_syst_enum_items_validate_functional_types'
+                            ,p_exception_name => 'invalid_functional_type'
+                            ,p_errcode        => 'PM003'
+                            ,p_param_data     => to_jsonb(new)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM003',
+                SCHEMA  = tg_table_schema,
+                TABLE   = tg_table_name;
+
+    END IF;
+
+    RETURN new;
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_b_iu_syst_hierarchy_items_depth_maint()" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Manages the `hierarchy_depth` column value.  Depending on the passed data, this
+trigger will perform different actions.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `BEFORE`
+
+  * **Supported Operations**: `INSERT`, `UPDATE`
+
+**General Usage**
+
+When a new Hierarchy Item record is inserted without specifying a
+`hierarchy_depth` value, this trigger will assign it the next highest
+`hierarchy_depth` value based on the existing Hierarchy Item records assigned
+to the Hierarchy, or 1 if there are no existing Hierarchy Item records
+assigned to the Hierarchy.
+
+When a new Hierarchy Item record is inserted specifying an explicit
+`hierarchy_depth` value, we assume that insertion is done with knowing intent
+and we will not change the inserted value in this trigger.  `hierarchy_depth`
+values must be unique for any members of a single Hierarchy.  In the case where
+the inserted record's explicit `hierarchy_depth` value does not collide with a
+pre-existing value, we simply take that value as-is.  When there is a collision,
+we take an "insert before" approach: the pre-existing record with which the new
+record collides has its `hierarchy_depth` value increased by 1; if this updated
+value in turn collides with another pre-existing record in the Hierarchy, we
+update this next record by incrementing its value by 1.  This continues until
+all collisions in the Hierarchy are resolved to be unique.
+
+Updated records follow the same patterns as inserted records, except that we do
+not expect that the update will attempt to NULL the `hierarchy_depth` value.  If
+an update would leave a gap, we do not try to renumber the `hierarchy_depth`
+values meaning that the `hierarchy_depth` sequence within any Hierarchy may
+indeed include gaps: we only attempt to keep overall ordering consistent and we
+do not attempt to achieve a gapless numbering scheme.]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_b_iu_syst_hierarchy_items_depth_maint.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_hierarchy/ms_syst_data/syst_hierarchy_items/trig_b_iu_syst_hierarchy_items_depth_maint.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    CASE
+        WHEN tg_op = 'INSERT' AND new.hierarchy_depth IS NULL THEN
+
+            new.hierarchy_depth :=
+                coalesce( ( SELECT max( hierarchy_depth ) + 1
+                            FROM ms_syst_data.syst_hierarchy_items
+                            WHERE hierarchy_id = new.hierarchy_id ), 1 );
+
+        WHEN
+            exists( SELECT TRUE
+                    FROM ms_syst_data.syst_hierarchy_items
+                    WHERE hierarchy_id   = new.hierarchy_id
+                      AND hierarchy_depth = new.hierarchy_depth )
+        THEN
+
+            UPDATE ms_syst_data.syst_hierarchy_items
+            SET hierarchy_depth = hierarchy_depth + 1
+            WHERE hierarchy_id   = new.hierarchy_id
+              AND hierarchy_depth = new.hierarchy_depth;
+
+        ELSE
+            NULL;
+    END CASE;
+
+    RETURN new;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_b_u_syst_hierarchies_validate_state_change()" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Checks that a Hierarchy record's state may be changed while ensuring that
+such a change doesn't allow for data inconsistencies with either of the
+Hierarchy or the data of Hierarchy implementing Components.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `BEFORE`
+
+  * **Supported Operations**: `UPDATE`
+
+**General Usage**
+
+Setting the Hierarchy to an "active" state requires that the Hierarchy and its
+associated Hierarchy Items are complete and fully self-consistent.  For the
+"inactive" check, the Hierarchy may not be in use which is defined as being
+referenced in the data of Hierarchy implementing Components.]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_b_u_syst_hierarchies_validate_state_change.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_hierarchy/ms_syst_data/syst_hierarchies/trig_b_u_syst_hierarchies_validate_state_change.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+DECLARE
+
+    var_context_data record;
+
+BEGIN
+
+    IF old.hierarchy_state_id = new.hierarchy_state_id THEN
+        RETURN new;
+    END IF;
+
+    SELECT INTO var_context_data
+        eft.internal_name AS new_state_name
+    FROM
+        ms_syst_data.syst_enum_items ei
+            JOIN ms_syst_data.syst_enum_functional_types eft
+                 ON eft.id = ei.functional_type_id
+    WHERE ei.id = new.hierarchy_state_id;
+
+    CASE var_context_data.new_state_name
+        WHEN 'hierarchy_states_active' THEN
+
+            IF NOT ms_syst_priv.is_hierarchy_config_valid( new ) THEN
+
+                RAISE EXCEPTION
+                    USING
+                        MESSAGE = 'Hierarchy records may not be set to an ' ||
+                                  '"active" state unless the Hierarchy record and ' ||
+                                  'all associated Hierarchy Item records are ' ||
+                                  'consistent and valid.',
+                        DETAIL  = ms_syst_priv.get_exception_details(
+                                     p_proc_schema    => 'ms_appl_data'
+                                    ,p_proc_name      =>
+                                        'trig_b_u_syst_hierarchies_validate_state_change'
+                                    ,p_exception_name => 'invalid_state'
+                                    ,p_errcode        => 'PM003'
+                                    ,p_param_data     =>
+                                        jsonb_build_object('new', new, 'old', old)
+                                    ,p_context_data   =>
+                                        jsonb_build_object(
+                                             'tg_op',         tg_op
+                                            ,'tg_when',       tg_when
+                                            ,'tg_schema',     tg_table_schema
+                                            ,'tg_table_name', tg_table_name)),
+                        ERRCODE = 'PM003',
+                        SCHEMA  = tg_table_schema,
+                        TABLE   = tg_table_name;
+
+            ELSE
+
+                RETURN new;
+
+            END IF;
+
+        WHEN 'hierarchy_states_inactive' THEN
+
+            IF ms_appl.is_hierarchy_record_referenced( new.id ) THEN
+
+                RAISE EXCEPTION
+                    USING
+                        MESSAGE = 'Hierarchy records may not be set to an ' ||
+                                  '"inactive" state when the data of hierarchy ' ||
+                                  'implementing Components still reference the ' ||
+                                  'Hierarchy record.',
+                        DETAIL  = ms_syst_priv.get_exception_details(
+                                     p_proc_schema    => 'ms_appl_data'
+                                    ,p_proc_name      =>
+                                        'trig_b_u_syst_hierarchies_validate_state_change'
+                                    ,p_exception_name => 'invalid_state'
+                                    ,p_errcode        => 'PM003'
+                                    ,p_param_data     =>
+                                        jsonb_build_object('new', new, 'old', old)
+                                    ,p_context_data   =>
+                                        jsonb_build_object(
+                                             'tg_op',         tg_op
+                                            ,'tg_when',       tg_when
+                                            ,'tg_schema',     tg_table_schema
+                                            ,'tg_table_name', tg_table_name)),
+                        ERRCODE = 'PM003',
+                        SCHEMA  = tg_table_schema,
+                        TABLE   = tg_table_name;
+
+            ELSE
+
+                RETURN new;
+
+            END IF;
+
+    END CASE;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_b_u_syst_hierarchies_validate_structured()" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[A trigger function which ensures that changing a hierarchy between being
+"structured" and "unstructured" is only possible when the Hierarchy record is
+in an "inactive" state.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `BEFORE`
+
+  * **Supported Operations**: `UPDATE`]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_b_u_syst_hierarchies_validate_structured.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_hierarchy/ms_syst_data/syst_hierarchies/trig_b_u_syst_hierarchies_validate_structured.eex.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    CASE
+        WHEN
+            new.structured != old.structured
+                AND ( SELECT eft.internal_name = 'hierarchy_states_active'
+                      FROM ms_syst_data.syst_enum_items ei
+                          JOIN ms_syst_data.syst_enum_functional_types eft
+                              ON eft.id = ei.functional_type_id
+                      WHERE ei.id = new.hierarchy_state_id )
+        THEN
+
+            RAISE EXCEPTION
+                USING
+                    MESSAGE = 'The "structured" value of the Hierarchy may ' ||
+                              'only be changed when the Hierarchy is in an ' ||
+                              '"inactive" state.',
+                    DETAIL  = ms_syst_priv.get_exception_details(
+                                 p_proc_schema    => 'ms_appl_data'
+                                ,p_proc_name      =>
+                                    'trig_b_u_syst_hierarchies_validate_structured'
+                                ,p_exception_name => 'invalid_state'
+                                ,p_errcode        => 'PM003'
+                                ,p_param_data     =>
+                                    jsonb_build_object('new', new, 'old', old)
+                                ,p_context_data   =>
+                                    jsonb_build_object(
+                                         'tg_op',         tg_op
+                                        ,'tg_when',       tg_when
+                                        ,'tg_schema',     tg_table_schema
+                                        ,'tg_table_name', tg_table_name)),
+                    ERRCODE = 'PM003',
+                    SCHEMA  = tg_table_schema,
+                    TABLE   = tg_table_name;
+
+        WHEN
+            old.structured
+                AND NOT new.structured
+                AND exists( SELECT TRUE
+                            FROM ms_syst_data.syst_hierarchy_items chi
+                            WHERE chi.hierarchy_id = new.id )
+        THEN
+
+            RAISE EXCEPTION
+                USING
+                    MESSAGE = 'Unstructured Hierarchies should not have ' ||
+                              'structuring Hierarchy Item records.',
+                    DETAIL  = ms_syst_priv.get_exception_details(
+                                 p_proc_schema    => 'ms_appl_data'
+                                ,p_proc_name      =>
+                                    'trig_b_u_syst_hierarchies_validate_structured'
+                                ,p_exception_name => 'invalid_state'
+                                ,p_errcode        => 'PM003'
+                                ,p_param_data     =>
+                                    jsonb_build_object('new', new, 'old', old)
+                                ,p_context_data   =>
+                                    jsonb_build_object(
+                                         'tg_op',         tg_op
+                                        ,'tg_when',       tg_when
+                                        ,'tg_schema',     tg_table_schema
+                                        ,'tg_table_name', tg_table_name)),
+                    ERRCODE = 'PM003',
+                    SCHEMA  = tg_table_schema,
+                    TABLE   = tg_table_name;
+
+    ELSE
+
+        RETURN new;
+
+    END CASE;
+
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trig_b_u_syst_hierarchy_items_hierarchy_inactive_check()" returnType="trigger" securityType="DEFINER" type="FUNCTION">
+         <comment><![CDATA[Ensures that, if a functionally significant column is changed during an update
+operation, that the parent Hierarchy record is set to an "inactive" state.
+
+**Trigger Function Details**:
+
+  * **Supported Timing**: `BEFORE`
+
+  * **Supported Operations**: `UPDATE`]]></comment>
+         <definition language="plpgsql"><![CDATA[-- File:        trig_b_u_syst_hierarchy_items_hierarchy_inactive_check.sql
+-- Location:    musebms/database/components/system/mscmp_syst_hierarchy/ms_syst_data/syst_hierarchy_items/trig_b_u_syst_hierarchy_items_hierarchy_inactive_check.sql
+-- Project:     Muse Systems Business Management System
+--
+-- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
+-- This file may include content copyrighted and licensed from third parties.
+--
+-- See the LICENSE file in the project root for license terms and conditions.
+-- See the NOTICE file in the project root for copyright ownership information.
+--
+-- muse.information@musesystems.com :: https://muse.systems
+
+BEGIN
+
+    IF
+        (new.hierarchy_depth != old.hierarchy_depth
+                OR new.required != old.required
+                OR new.allow_leaf_nodes != old.allow_leaf_nodes)
+                AND ( SELECT eft.internal_name = 'hierarchy_states_active'
+                      FROM
+                          ms_syst_data.syst_hierarchies ch
+                              JOIN ms_syst_data.syst_enum_items ei
+                                   ON ei.id = ch.hierarchy_state_id
+                              JOIN ms_syst_data.syst_enum_functional_types eft
+                                   ON eft.id = ei.functional_type_id
+                      WHERE ch.id = new.hierarchy_id )
+    THEN
+
+        RAISE EXCEPTION
+            USING
+                MESSAGE = 'Deleting Hierarchy Item records may only be done ' ||
+                          'when the parent Hierarchy is in an "inactive" ' ||
+                          'state.',
+                DETAIL  = ms_syst_priv.get_exception_details(
+                             p_proc_schema    => 'ms_appl_data'
+                            ,p_proc_name      => 'trig_b_d_syst_hierarchy_items_hierarchy_inactive_check'
+                            ,p_exception_name => 'invalid_state'
+                            ,p_errcode        => 'PM003'
+                            ,p_param_data     => jsonb_build_object('new', new, 'old', old)
+                            ,p_context_data   =>
+                                jsonb_build_object(
+                                     'tg_op',         tg_op
+                                    ,'tg_when',       tg_when
+                                    ,'tg_schema',     tg_table_schema
+                                    ,'tg_table_name', tg_table_name)),
+                ERRCODE = 'PM003',
+                SCHEMA  = tg_table_schema,
+                TABLE   = tg_table_name;
+
+    END IF;
+
+    RETURN new;
+
+END;]]></definition>
+         <parameters>
+            <parameter mode="IN"/>
+         </parameters>
+      </routine>
+   </routines>
+</database>

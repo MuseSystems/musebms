@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>mstr_countries - msbms_dev Database</title>
+        <title>mstr_countries - mssub_bms.ms_appl_data</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../../index.html" class="navbar-brand"><b>msbms_dev</b> Database</a>
+                            <a href="../../index.html" class="navbar-brand"><b>mssub_bms</b></a><span class="navbar-brand" style="padding-left: 0">.ms_appl_data</span>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -73,7 +73,7 @@
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
-                    <h1>mstr_countries</h1><p><span id="recordNumber">0</span> rows</p><br />
+                    <h1>mstr_countries</h1><br />
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <i class="fa fa-file-text-o"></i>
@@ -84,11 +84,9 @@
                             </div>
                         </div><!-- /.box-header -->
                         <div class="box-body clearfix">
-                            <p>A listing of countries including currency symbology, official names, and other<br />
-information concering the country from standards bodies and international<br />
-organizations.</p>
-<p>The table structure as it now stands is based on the data available at:<br />
-<a href="https://datahub.io/core/country-codes">https://datahub.io/core/country-codes</a></p>
+                            <p>A listing of countries including currency symbology, official names, and other information concerning the country from standards bodies and international organizations.</p>
+<p><strong>General Usage</strong></p>
+<p>The table structure as it now stands is based on the data available at: <a href="https://datahub.io/core/country-codes">https://datahub.io/core/country-codes</a></p>
                         </div><!-- /.box-body -->
                     </div>
                 </section>
@@ -104,7 +102,13 @@ organizations.</p>
                             </div>
                         </div>
                         <div class="box-body">
-                            <table id="standard_table" class="table table-bordered table-striped dataTable" role="grid">
+                            <table
+                                    id="standard_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="10"
+                                    data-length-change="false">
                                 <thead align='left'>
                                 <tr>
                                     <th>Column</th>
@@ -125,20 +129,23 @@ organizations.</p>
                                     <td>2147483647</td>
                                     <td title=''></td>
                                     <td title=''></td>
-                                    <td>uuid_generate_v1()</td>
+                                    <td>uuid_generate_v7()</td>
                                     <td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
                                                 <td title="mstr_country_address_format_assocs.country_id references mstr_countries.id via mstr_country_address_format_assocs_countries_fk"><a href='mstr_country_address_format_assocs.html'>mstr_country_address_format_assocs</a><span class='relatedKey'>.country_id</span></td>
-                                                <td class="constraint detail">mstr_country_address_format_assocs_countries_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
+                                                <td class="constraint detail">mstr_country_address_format_assocs_countries_fk</td>
+                                                <td class="constraint detail"><span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
                                             </tr>
                                             <tr>
                                                 <td title="mstr_country_name_format_assocs.country_id references mstr_countries.id via mstr_country_name_format_assocs_countries_fk"><a href='mstr_country_name_format_assocs.html'>mstr_country_name_format_assocs</a><span class='relatedKey'>.country_id</span></td>
-                                                <td class="constraint detail">mstr_country_name_format_assocs_countries_fk<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">mstr_country_name_format_assocs_countries_fk</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                             <tr>
                                                 <td title="mstr_country_phone_format_assocs.country_id references mstr_countries.id via mstr_country_phone_format_assocs_countries_fk"><a href='mstr_country_phone_format_assocs.html'>mstr_country_phone_format_assocs</a><span class='relatedKey'>.country_id</span></td>
-                                                <td class="constraint detail">mstr_country_phone_format_assocs_countries_fk<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">mstr_country_phone_format_assocs_countries_fk</td>
+                                                <td class="constraint detail"><span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -146,8 +153,9 @@ organizations.</p>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The record&rsquo;s primary key.  The definitive identifier of the record in the<br />
-system.</p></td>
+                                    <td><p>The record&rsquo;s primary key.  The definitive identifier of the record in the system.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td class='indexedColumn' title='Indexed'><i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i><span id="internal_name">internal_name</span></td>
@@ -164,7 +172,9 @@ system.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>A candidate key useful for programmatic references to individual records.</p></td>
+                                    <td><p>A candidate key useful for programmatic references to individual records.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td class='indexedColumn' title='Indexed'><i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i><span id="display_name">display_name</span></td>
@@ -181,8 +191,9 @@ system.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>A friendly name and candidate key for the record, suitable for use in user<br />
-interfaces.</p></td>
+                                    <td><p>A friendly name and candidate key for the record, suitable for use in user interactions</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="external_name">external_name</span></td>
@@ -199,9 +210,7 @@ interfaces.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>A friendly name for externally facing uses such as in postal addressing which<br />
-maynot follow accepted international conventions for naming.  Note that this is<br />
-not a key value and has no UNIQUE enforcement.</p></td>
+                                    <td><p>A non-unique/non-key value used to display to users and external parties where uniqueness is less of a concern than specific end user presentation.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="official_name_ar">official_name_ar</span></td>
@@ -218,7 +227,7 @@ not a key value and has no UNIQUE enforcement.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>Country or Area official Arabic short name from UN Statistics Division</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="official_name_cn">official_name_cn</span></td>
@@ -235,7 +244,7 @@ not a key value and has no UNIQUE enforcement.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>Country or Area official Chinese short name from UN Statistics Division</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="official_name_en">official_name_en</span></td>
@@ -252,7 +261,7 @@ not a key value and has no UNIQUE enforcement.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>Country or Area official English short name from UN Statistics Division</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="official_name_es">official_name_es</span></td>
@@ -269,7 +278,7 @@ not a key value and has no UNIQUE enforcement.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>Country or Area official Spanish short name from UN Statistics Division</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="official_name_fr">official_name_fr</span></td>
@@ -286,7 +295,7 @@ not a key value and has no UNIQUE enforcement.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>Country or Area official French short name from UN Statistics Division</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="official_name_ru">official_name_ru</span></td>
@@ -303,7 +312,7 @@ not a key value and has no UNIQUE enforcement.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>Country or Area official Russian short name from UN Statistics Division</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="iso3166_1_alpha_2">iso3166_1_alpha_2</span></td>
@@ -320,7 +329,7 @@ not a key value and has no UNIQUE enforcement.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>Alpha-2 codes from ISO 3166-1</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="iso3166_1_alpha_3">iso3166_1_alpha_3</span></td>
@@ -337,7 +346,7 @@ not a key value and has no UNIQUE enforcement.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>Alpha-3 codes from ISO 3166-1 (synonymous with World Bank Codes)</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="iso3166_1_numeric">iso3166_1_numeric</span></td>
@@ -354,7 +363,7 @@ not a key value and has no UNIQUE enforcement.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>Numeric codes from ISO 3166-1</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="iso4217_currency_alphabetic_code">iso4217_currency_alphabetic_code</span></td>
@@ -371,7 +380,7 @@ not a key value and has no UNIQUE enforcement.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>ISO 4217 currency alphabetic code</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="iso4217_currency_country_name">iso4217_currency_country_name</span></td>
@@ -388,7 +397,7 @@ not a key value and has no UNIQUE enforcement.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>(ISO4217-currency_country_name) :: ISO 4217 country name</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="iso4217_currency_minor_unit">iso4217_currency_minor_unit</span></td>
@@ -405,7 +414,7 @@ not a key value and has no UNIQUE enforcement.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>(ISO4217-currency_minor_unit) :: ISO 4217 currency number of minor units</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="iso4217_currency_name">iso4217_currency_name</span></td>
@@ -422,7 +431,7 @@ not a key value and has no UNIQUE enforcement.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>(ISO4217-currency_name) :: ISO 4217 currency name</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="iso4217_currency_numeric_code">iso4217_currency_numeric_code</span></td>
@@ -439,7 +448,7 @@ not a key value and has no UNIQUE enforcement.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>(ISO4217-currency_numeric_code) :: ISO 4217 currency numeric code</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="cldr_display_name">cldr_display_name</span></td>
@@ -456,7 +465,7 @@ not a key value and has no UNIQUE enforcement.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>(CLDR display name) :: Country&rsquo;s customary English short name (CLDR)</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="capital">capital</span></td>
@@ -473,7 +482,7 @@ not a key value and has no UNIQUE enforcement.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>Capital city from Geonames</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="continent">continent</span></td>
@@ -490,7 +499,7 @@ not a key value and has no UNIQUE enforcement.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>(Continent) :: Continent from Geonames</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="ds">ds</span></td>
@@ -507,7 +516,7 @@ not a key value and has no UNIQUE enforcement.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>(DS) :: Distinguishing signs of vehicles in international traffic</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="dial">dial</span></td>
@@ -524,7 +533,7 @@ not a key value and has no UNIQUE enforcement.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>Country code from ITU-T recommendation E.164, sometimes followed by area code</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="edgar">edgar</span></td>
@@ -541,7 +550,7 @@ not a key value and has no UNIQUE enforcement.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>(EDGAR) :: EDGAR country code from SEC</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="fips">fips</span></td>
@@ -558,7 +567,7 @@ not a key value and has no UNIQUE enforcement.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>(FIPS) :: Codes from the U.S. standard FIPS PUB 10-4</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="gaul">gaul</span></td>
@@ -575,7 +584,7 @@ not a key value and has no UNIQUE enforcement.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>(GAUL) :: Global Administrative Unit Layers from the Food and Agriculture Organization</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="geoname_id">geoname_id</span></td>
@@ -592,7 +601,7 @@ not a key value and has no UNIQUE enforcement.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>(Geoname ID) :: Geoname ID</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="global_code">global_code</span></td>
@@ -609,7 +618,7 @@ not a key value and has no UNIQUE enforcement.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>(Global Code) :: Country classification from United Nations Statistics Division</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="global_name">global_name</span></td>
@@ -626,7 +635,7 @@ not a key value and has no UNIQUE enforcement.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>(Global Name) :: Country classification from United Nations Statistics Division</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="ioc">ioc</span></td>
@@ -643,7 +652,7 @@ not a key value and has no UNIQUE enforcement.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>(IOC) :: Codes assigned by the International Olympics Committee</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="itu">itu</span></td>
@@ -660,7 +669,7 @@ not a key value and has no UNIQUE enforcement.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>(ITU) :: Codes assigned by the International Telecommunications Union</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="intermediate_region_code">intermediate_region_code</span></td>
@@ -677,7 +686,7 @@ not a key value and has no UNIQUE enforcement.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>(Intermediate Region Code) :: Country classification from United Nations Statistics Division</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="intermediate_region_name">intermediate_region_name</span></td>
@@ -694,7 +703,7 @@ not a key value and has no UNIQUE enforcement.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>(Intermediate Region Name) :: Country classification from United Nations Statistics Division</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="languages">languages</span></td>
@@ -711,7 +720,7 @@ not a key value and has no UNIQUE enforcement.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>(Languages) :: Languages from Geonames</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="marc">marc</span></td>
@@ -728,7 +737,7 @@ not a key value and has no UNIQUE enforcement.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>(MARC) :: MAchine-Readable Cataloging codes from the Library of Congress</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="region_code">region_code</span></td>
@@ -745,7 +754,7 @@ not a key value and has no UNIQUE enforcement.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>(Region Code) :: Country classification from United Nations Statistics Division</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="region_name">region_name</span></td>
@@ -762,7 +771,7 @@ not a key value and has no UNIQUE enforcement.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>(Region Name) :: Country classification from United Nations Statistics Division</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="sub_region_code">sub_region_code</span></td>
@@ -779,7 +788,7 @@ not a key value and has no UNIQUE enforcement.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>(Sub-region Code) :: Country classification from United Nations Statistics Division</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="sub_region_name">sub_region_name</span></td>
@@ -796,7 +805,7 @@ not a key value and has no UNIQUE enforcement.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>(Sub-region Name) :: Country classification from United Nations Statistics Division</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="tld">tld</span></td>
@@ -813,7 +822,7 @@ not a key value and has no UNIQUE enforcement.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>(TLD) :: Top level domain from Geonames</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="wmo">wmo</span></td>
@@ -830,7 +839,7 @@ not a key value and has no UNIQUE enforcement.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>(WMO) :: Country abbreviations by the World Meteorological Organization</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="is_independent">is_independent</span></td>
@@ -847,7 +856,7 @@ not a key value and has no UNIQUE enforcement.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>(is_independent) :: Country status, based on the CIA World Factbook</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_timestamp_created">diag_timestamp_created</span></td>
@@ -864,8 +873,9 @@ not a key value and has no UNIQUE enforcement.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The database server date/time when the transaction which created the record<br />
-started.</p></td>
+                                    <td><p>The database server date/time when the transaction which created the record started.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_role_created">diag_role_created</span></td>
@@ -882,7 +892,9 @@ started.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The database role which created the record.</p></td>
+                                    <td><p>The database role which created the record.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_timestamp_modified">diag_timestamp_modified</span></td>
@@ -899,9 +911,9 @@ started.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The database server date/time when the transaction which modified the record<br />
-started.  This field will be the same as diag_timestamp_created for inserted<br />
-records.</p></td>
+                                    <td><p>The database server date/time when the transaction which modified the record started.  This field will be the same as diag_timestamp_created for inserted records.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_wallclock_modified">diag_wallclock_modified</span></td>
@@ -918,9 +930,9 @@ records.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The database server date/time at the moment the record was actually modified.<br />
-For long running transactions this time may be significantly later than the<br />
-value of diag_timestamp_modified.</p></td>
+                                    <td><p>The database server date/time at the moment the record was actually modified. For long running transactions this time may be significantly later than the value of diag_timestamp_modified.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_role_modified">diag_role_modified</span></td>
@@ -937,7 +949,9 @@ value of diag_timestamp_modified.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The database role which modified the record.</p></td>
+                                    <td><p>The database role which modified the record.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_row_version">diag_row_version</span></td>
@@ -954,11 +968,11 @@ value of diag_timestamp_modified.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The current version of the row.  The value here indicates how many actual<br />
-data changes have been made to the row.  If an update of the row leaves all data<br />
-fields the same, disregarding the updates to the diag_* columns, the row version<br />
-is not updated, nor are any updates made to the other diag_* columns other than<br />
-diag_update_count.</p></td>
+                                    <td><p>The current version of the row.  The value here indicates how many actual data changes have been made to the row.  If an update of the row leaves all data fields the same, disregarding the updates to the diag_* columns, the row version is not updated, nor are any updates made to the other diag_* columns other than diag_update_count.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p>
+<p><strong>Direct Usage</strong></p>
+<p>This column is frequently used by by application logic to resolve the &ldquo;dirty write&rdquo; issues which can arise from concurrent data changes.  As such any administrative override of automatic system maintenance of this value should consider the ramifications on application function.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_update_count">diag_update_count</span></td>
@@ -975,10 +989,9 @@ diag_update_count.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>Records the number of times the record has been updated regardless as to if<br />
-the update actually changed any data.  In this way needless or redundant record<br />
-updates can be found.  This row starts at 0 and therefore may be the same as the<br />
-diag_row_version - 1.</p></td>
+                                    <td><p>Records the number of times the record has been updated regardless as to if the update actually changed any data.  In this way needless or redundant record updates can be found.  This row starts at 0 and therefore may be the same as the diag_row_version - 1.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -994,7 +1007,13 @@ diag_row_version - 1.</p></td>
                             </div>
                         </div>
                         <div class="box-body">
-                            <table id="indexes_table" class="table table-bordered table-striped dataTable" role="grid">
+                            <table
+                                    id="indexes_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="10"
+                                    data-length-change="false">
                                 <thead>
                                 <tr>
                                     <th>Constraint Name</th>
@@ -1044,23 +1063,12 @@ diag_row_version - 1.</p></td>
                                 </ul>
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
-                                        <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="mstr_country_address_format_assocs.html" target="_top" title="mstr_country_address_format_assocs" alt="" coords="560,5,955,181">
-<area shape="rect" id="node2" href="mstr_countries.html" target="_top" title="mstr_countries" alt="" coords="5,225,516,1732">
-<area shape="rect" id="node3" href="mstr_country_name_format_assocs.html" target="_top" title="mstr_country_name_format_assocs" alt="" coords="570,199,945,375">
-<area shape="rect" id="node4" href="mstr_country_phone_format_assocs.html" target="_top" title="mstr_country_phone_format_assocs" alt="" coords="567,392,947,568">
-</map>
-                                        <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/mstr_countries.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
+                                        
+                                        <a name='diagram'><object type="image/svg+xml" id="oneDegreeImg" data="../diagrams/tables/mstr_countries.1degree.svg" class="diagram" border="0" align="left"></object></a>
                                     </div>
                                     <div class="chart tab-pane " id="twodegreesDegreeImg-chart" style="position: relative; overflow-x:auto;">
-                                        <map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
-<area shape="rect" id="node1" href="mstr_country_address_format_assocs.html" target="_top" title="mstr_country_address_format_assocs" alt="" coords="560,117,955,293">
-<area shape="rect" id="node2" href="../ms_syst_data/tables/syst_complex_format_values.html" target="_top" title="ms_syst_data.syst_complex_format_values" alt="" coords="41,1529,480,1617">
-<area shape="rect" id="node3" href="mstr_countries.html" target="_top" title="mstr_countries" alt="" coords="5,5,516,1512">
-<area shape="rect" id="node4" href="mstr_country_name_format_assocs.html" target="_top" title="mstr_country_name_format_assocs" alt="" coords="570,448,945,624">
-<area shape="rect" id="node5" href="mstr_country_phone_format_assocs.html" target="_top" title="mstr_country_phone_format_assocs" alt="" coords="567,917,947,1093">
-</map>
-                                        <a name='diagram'><img id="twodegreesDegreeImg" src="../diagrams/tables/mstr_countries.2degrees.png" usemap="#twoDegreesRelationshipsDiagram" class="diagram" border="0" align="left"></a>
+                                        
+                                        <a name='diagram'><object type="image/svg+xml" id="twodegreesDegreeImg" data="../diagrams/tables/mstr_countries.2degrees.svg" class="diagram" border="0" align="left"></object></a>
                                     </div>
                                 </div>
                             </div>
@@ -1069,7 +1077,7 @@ diag_row_version - 1.</p></td>
                 </section>
                 <script>
                     var config = {
-                        pagination: true
+                        pagination: false
                     }
                 </script>
             </div>
@@ -1080,7 +1088,7 @@ diag_row_version - 1.</p></td>
                         <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
                         <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
                     </div>
-                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.1.0</a></strong>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.2.4</a></strong>
                 </div>
                 <!-- /.container -->
             </footer>

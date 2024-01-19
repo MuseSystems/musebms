@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>mssub_mcp Database</title>
+        <title>mssub_mcp.ms_syst</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../index.html" class="navbar-brand"><b>mssub_mcp</b> Database</a>
+                            <a href="../index.html" class="navbar-brand"><b>mssub_mcp</b></a><span class="navbar-brand" style="padding-left: 0">.ms_syst</span>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -83,7 +83,13 @@
                             <h3 class="box-title">Routines</h3>
                         </div>
                         <div class="box-body">
-                            <table id="routine_table" class="table table-bordered table-striped dataTable" role="grid">
+                            <table
+                                    id="routine_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="50"
+                                    data-length-change="false">
                                 <thead align='left'>
                                     <tr>
                                         <th>Name</th>
@@ -96,6 +102,1744 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <tr>
+                                        <td><a href="routines/trig_i_i_syst_instance_type_app_91801748.html">trig_i_i_syst_instance_type_applications()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_d_syst_access_account_in_fc703460.html">trig_i_d_syst_access_account_instance_assocs()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>DELETE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_d_syst_hierarchies___132ef030.html">trig_i_d_syst_hierarchies()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>DELETE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_u_syst_disallowed_passwo_3471f289.html">trig_i_u_syst_disallowed_passwords()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>UPDATE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_d_syst_instances___19fd9d5b.html">trig_i_d_syst_instances()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>DELETE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_u_syst_hierarchy_items___a2879e2.html">trig_i_u_syst_hierarchy_items()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>UPDATE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_u_syst_settings___4f692599.html">trig_i_u_syst_settings()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>UPDATE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_d_syst_instance_type_app_8f445883.html">trig_i_d_syst_instance_type_applications()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>DELETE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_u_syst_hierarchies___74ee2c7f.html">trig_i_u_syst_hierarchies()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>UPDATE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_u_syst_enum_functional_t_8249e5e7.html">trig_i_u_syst_enum_functional_types()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>UPDATE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/get_greatest_rights_scope_p_sco_62dd6e16.html">get_greatest_rights_scope(p_scopes text[] DEFAULT NULL::text[])</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>true</td>
+                                        <td>text</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Given an array of Permission Right Scopes, returns the most expansive scope found in the array.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><strong><code>p_scopes</code></strong> ::     <strong>Required?</strong> True; <strong>Default</strong>: ( No Default )
+<p>The array of permission scopes to test.</p>
+</li>
+</ul>
+<p><strong>General Usage</strong></p>
+<p>If the array is NULL the returned value is &lsquo;deny&rsquo;.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_i_syst_settings___8772bd8d.html">trig_i_i_syst_settings()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_i_syst_credentials___1021e334.html">trig_i_i_syst_credentials()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_u_syst_credentials___ebb7efa8.html">trig_i_u_syst_credentials()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>DELETE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_u_syst_perm_functional_t_d1ed0b98.html">trig_i_u_syst_perm_functional_types()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>UPDATE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_d_syst_sessions___576b4582.html">trig_i_d_syst_sessions()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>DELETE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_u_syst_owners___b5878b96.html">trig_i_u_syst_owners()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>UPDATE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_d_syst_instance_network__da7ed3a1.html">trig_i_d_syst_instance_network_rules()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>DELETE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_d_syst_enums___c524c36f.html">trig_i_d_syst_enums()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>DELETE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_d_syst_perm_functional_t_c675a609.html">trig_i_d_syst_perm_functional_types()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>DELETE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_i_syst_global_password_r_812aad27.html">trig_i_i_syst_global_password_rules()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_i_syst_perms___64d85b3b.html">trig_i_i_syst_perms()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_i_syst_instance_network__430abce6.html">trig_i_i_syst_instance_network_rules()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/get_applied_network_rule_p_host_ee623192.html">get_applied_network_rule(p_host_addr inet, p_instance_id uuid DEFAULT NULL::uuid, p_instance_owner_id uuid DEFAULT NULL::uuid)</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>sql</td>
+                                        <td>false</td>
+                                        <td>TABLE(precedence text, network_rule_id uuid, functional_type text, ip_host_or_network inet, ip_host_range_lower inet, ip_host_range_upper inet)</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Applies all of the applicable network rules for a host and returns the governing record for the identified host.</p>
+<p>The returned rule is chosen by identifying which rules apply to the host based on the provided Instance related parameters and then limiting the return to the rule with the highest precedence.  Currently the precedence is defined as:</p>
+<ol>
+<li>
+<p>Disallowed Hosts: Globally disallowed or &ldquo;banned&rdquo; hosts are always checked first and no later rule can override the denial.  Only removing the host from the syst_disallowed_hosts table can reverse this denial.</p>
+</li>
+<li>
+<p>Global Rules: These are rules applied to all Instances without exception.</p>
+</li>
+<li>
+<p>Instance Rules: Rules defined by Instance Owners and are the most granular rule level available (p_instance_id).</p>
+</li>
+<li>
+<p>Instance Owner Rules: Applied to all Instances owned by the identified Owner (p_instance_owner_id).</p>
+</li>
+<li>
+<p>Global Implied Default Rule: When no explicitly defined network has been found for a host this rule will apply implicitly.  The current rule grants access from any host.</p>
+</li>
+</ol>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><strong><code>p_host_addr</code></strong> ::     <strong>Required?</strong> True; <strong>Default</strong>: ( No Default )</p>
+<p>The host IP address for which to retrieve a network rule to apply.</p>
+</li>
+<li>
+<p><strong><code>p_instance_id</code></strong> ::     <strong>Required?</strong> False; <strong>Default</strong>: <code>NULL</code></p>
+<p>The record <code>id</code> of the Instance that the host is attempting to access.</p>
+<p>Note that <code>NULL</code> is a valid value subject to the conditions in the function description.</p>
+</li>
+<li>
+<p><strong><code>p_instance_owner_id</code></strong> ::     <strong>Required?</strong> False; <strong>Default</strong>: <code>NULL</code></p>
+<p>The record <code>id</code> value of the Owner record which owns the Instance.</p>
+<p>Note that <code>NULL</code> is a valid value subject to the conditions in the function description.</p>
+</li>
+</ul>
+<p><strong>General Usage</strong></p>
+<p>This function returns the best matching rule for the provided parameters.  This means that when <code>p_host_addr</code> is provided but neither of <code>p_instance_id</code> or <code>p_instance_owner_id</code> are provided, the host can only be evaluated against the Disallowed Hosts and the Global Network Rules which isn&rsquo;t sufficient for a complete validation of a host&rsquo;s access to an Instance; such incomplete checks can be useful to avoid more expensive authentication processes later if the host is just going to be denied access due to global network rules.</p>
+<p>Providing only <code>p_instance_owner_id</code> will include the Global and Owner defined rules, but not the Instance specific rules.  If <code>p_instance_id</code> is provided that is sufficient that is sufficient for testing all the applicable rules since the Instance Owner ID can be derived using just <code>p_instance_id</code> parameter.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_u_syst_instance_type_app_63a91454.html">trig_i_u_syst_instance_type_applications()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>UPDATE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_i_syst_owner_network_rul_fb58c4d2.html">trig_i_i_syst_owner_network_rules()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_u_syst_instances___27ada16a.html">trig_i_u_syst_instances()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>UPDATE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_d_syst_perms___fb836b20.html">trig_i_d_syst_perms()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>DELETE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_i_syst_disallowed_hosts__df5ccc50.html">trig_i_i_syst_disallowed_hosts()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_d_syst_access_account_pe_191cdfc2.html">trig_i_d_syst_access_account_perm_role_assigns()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>DELETE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_i_syst_instance_type_con_d6d2a889.html">trig_i_i_syst_instance_type_contexts()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_u_syst_perm_role_grants__660920e7.html">trig_i_u_syst_perm_role_grants()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>UPDATE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_u_syst_owner_password_ru_ecd20855.html">trig_i_u_syst_owner_password_rules()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>UPDATE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_i_syst_hierarchy_items___3a15c76e.html">trig_i_i_syst_hierarchy_items()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_d_syst_disallowed_hosts__4a6b4b4b.html">trig_i_d_syst_disallowed_hosts()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>DELETE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_i_syst_perm_roles___3a60d518.html">trig_i_i_syst_perm_roles()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_u_syst_instance_type_con_d1bc0b95.html">trig_i_u_syst_instance_type_contexts()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>UPDATE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_d_syst_owners___bdf57d45.html">trig_i_d_syst_owners()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>DELETE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_u_syst_access_account_in_55809fb1.html">trig_i_u_syst_access_account_instance_assocs()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>UPDATE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_d_syst_enum_items___266291a7.html">trig_i_d_syst_enum_items()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>DELETE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_i_syst_applications___5f53aa0d.html">trig_i_i_syst_applications()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_i_syst_access_account_in_e97508a5.html">trig_i_i_syst_access_account_instance_assocs()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_i_syst_global_network_ru_ff9b9634.html">trig_i_i_syst_global_network_rules()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_u_syst_owner_network_rul_45251d46.html">trig_i_u_syst_owner_network_rules()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>UPDATE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_d_syst_settings___f4216788.html">trig_i_d_syst_settings()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>DELETE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_u_syst_perm_roles___de5d6a24.html">trig_i_u_syst_perm_roles()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>UPDATE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_u_syst_access_account_pe_6fbfbad3.html">trig_i_u_syst_access_account_perm_role_assigns()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>UPDATE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_d_syst_global_network_ru_310c1faf.html">trig_i_d_syst_global_network_rules()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>DELETE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_d_syst_instance_contexts_fd6893eb.html">trig_i_d_syst_instance_contexts()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>DELETE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_u_syst_global_password_r_8942b89b.html">trig_i_u_syst_global_password_rules()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>UPDATE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_d_syst_disallowed_passwo_7623c5f8.html">trig_i_d_syst_disallowed_passwords()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>DELETE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_d_syst_perm_role_grants__9ed403d6.html">trig_i_d_syst_perm_role_grants()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>DELETE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_i_syst_enums___2e79b38a.html">trig_i_i_syst_enums()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_u_syst_enum_items___ceb30f78.html">trig_i_u_syst_enum_items()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>UPDATE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_i_syst_owners___7f3e908a.html">trig_i_i_syst_owners()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_u_syst_sessions___b2b30393.html">trig_i_u_syst_sessions()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>UPDATE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_u_syst_password_history__931a6026.html">trig_i_u_syst_password_history()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>UPDATE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_d_syst_identities___4994f201.html">trig_i_d_syst_identities()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>DELETE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_i_syst_perm_functional_t_c9d50024.html">trig_i_i_syst_perm_functional_types()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_i_syst_hierarchies___9958200b.html">trig_i_i_syst_hierarchies()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_u_syst_enums___c4df26fe.html">trig_i_u_syst_enums()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>UPDATE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_d_syst_owner_network_rul_47439ff7.html">trig_i_d_syst_owner_network_rules()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>DELETE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_i_syst_enum_items___2ab67a6c.html">trig_i_i_syst_enum_items()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_d_syst_global_password_r_7dcb530c.html">trig_i_d_syst_global_password_rules()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>DELETE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_i_syst_access_account_pe_d83db6c7.html">trig_i_i_syst_access_account_perm_role_assigns()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_i_syst_access_accounts___7c9e0fd9.html">trig_i_i_syst_access_accounts()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_i_syst_perm_role_grants__33c584db.html">trig_i_i_syst_perm_role_grants()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_d_syst_applications___2056de88.html">trig_i_d_syst_applications()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>DELETE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_d_syst_owner_password_ru_2e83dbc4.html">trig_i_d_syst_owner_password_rules()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>DELETE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_i_syst_instances___f0d707f6.html">trig_i_i_syst_instances()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_d_syst_perm_roles___360cec53.html">trig_i_d_syst_perm_roles()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>DELETE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_u_syst_instance_network__3df41ff2.html">trig_i_u_syst_instance_network_rules()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>UPDATE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_d_syst_hierarchy_items___4e0dfd13.html">trig_i_d_syst_hierarchy_items()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>DELETE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_u_syst_application_conte_c94684a9.html">trig_i_u_syst_application_contexts()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>UPDATE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_i_syst_sessions___eabc9b87.html">trig_i_i_syst_sessions()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_d_syst_password_history__cbe54315.html">trig_i_d_syst_password_history()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>DELETE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_u_syst_applications___f67f2c19.html">trig_i_u_syst_applications()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>UPDATE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_d_syst_credentials___89f8b359.html">trig_i_d_syst_credentials()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>DELETE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_i_syst_enum_functional_t_7a31da73.html">trig_i_i_syst_enum_functional_types()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_i_syst_identities___4de8dac6.html">trig_i_i_syst_identities()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_u_syst_perms___fb3dceaf.html">trig_i_u_syst_perms()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>UPDATE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_i_syst_application_conte_d987ce9d.html">trig_i_i_syst_application_contexts()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_i_syst_instance_contexts__6a73386.html">trig_i_i_syst_instance_contexts()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_i_syst_owner_password_ru_fd135249.html">trig_i_i_syst_owner_password_rules()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_d_syst_enum_functional_t_76d28058.html">trig_i_d_syst_enum_functional_types()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>DELETE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_u_syst_instance_contexts_1cd718fa.html">trig_i_u_syst_instance_contexts()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>UPDATE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_u_syst_access_accounts___4cb0c24d.html">trig_i_u_syst_access_accounts()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>UPDATE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_d_syst_application_contex_af85818.html">trig_i_d_syst_application_contexts()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>DELETE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_u_syst_identities___f1e56fd2.html">trig_i_u_syst_identities()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>UPDATE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_u_syst_global_network_ru_ef5a4c40.html">trig_i_u_syst_global_network_rules()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_d_syst_instance_type_con_6e46bf44.html">trig_i_d_syst_instance_type_contexts()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>DELETE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_d_syst_access_accounts___9096457e.html">trig_i_d_syst_access_accounts()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>DELETE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_u_syst_disallowed_hosts__11a0685c.html">trig_i_u_syst_disallowed_hosts()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>UPDATE</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_i_syst_password_history__60d6c41a.html">trig_i_i_syst_password_history()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code></p>
+</li>
+</ul></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trig_i_i_syst_disallowed_passwo_44b33c7d.html">trig_i_i_syst_disallowed_passwords()</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>plpgsql</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>DEFINER</td>
+                                        <td><p>Processes incoming API View requests according to globally applicable business rules and data validation requirements.</p>
+<p><strong>Trigger Function Details</strong>:</p>
+<ul>
+<li>
+<p><strong>Supported Timing</strong>: <code>INSTEAD OF</code></p>
+</li>
+<li>
+<p><strong>Supported Operations</strong>: <code>INSERT</code></p>
+</li>
+</ul></td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -103,7 +1847,7 @@
                 </section>
                 <script>
                     var config = {
-                        pagination: true
+                        pagination: false
                     }
                 </script>
             </div>
@@ -114,7 +1858,7 @@
                         <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
                         <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
                     </div>
-                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.1.0</a></strong>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.2.4</a></strong>
                 </div>
                 <!-- /.container -->
             </footer>

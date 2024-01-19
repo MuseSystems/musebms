@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>syst_instance_contexts - mssub_mcp Database</title>
+        <title>syst_instance_contexts - mssub_mcp.ms_syst</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../../index.html" class="navbar-brand"><b>mssub_mcp</b> Database</a>
+                            <a href="../../index.html" class="navbar-brand"><b>mssub_mcp</b></a><span class="navbar-brand" style="padding-left: 0">.ms_syst</span>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -73,7 +73,7 @@
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
-                    <h1>syst_instance_contexts</h1><p><span id="recordNumber">0</span> rows</p><br />
+                    <h1>syst_instance_contexts</h1><br />
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <i class="fa fa-file-text-o"></i>
@@ -84,15 +84,12 @@
                             </div>
                         </div><!-- /.box-header -->
                         <div class="box-body clearfix">
-                            <p>Instance specific settings which determine how each Instance connects to the<br />
-defined Application Contexts.</p>
-<p>This API View allows the application to read and maintain the data according to<br />
-well defined application business rules.  Using this API view for updates to<br />
-data is the preferred method of data maintenance in the course of normal usage.</p>
-<p>Only user maintainable values may be maintained via this API.  System created or<br />
-maintained data is not maintainable via this view.  Attempts at invalid data<br />
-maintenance via this API may result in the invalid changes being ignored or may<br />
-raise an exception.</p>
+                            <p>Instance specific settings which determine how each Instance connects to the defined Application Contexts.</p>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code></li>
+</ul>
                         </div><!-- /.box-body -->
                     </div>
                 </section>
@@ -108,7 +105,13 @@ raise an exception.</p>
                             </div>
                         </div>
                         <div class="box-body">
-                            <table id="standard_table" class="table table-bordered table-striped dataTable" role="grid">
+                            <table
+                                    id="standard_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="10"
+                                    data-length-change="false">
                                 <thead align='left'>
                                 <tr>
                                     <th>Column</th>
@@ -138,9 +141,19 @@ raise an exception.</p>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The record&rsquo;s primary key.  The definitive identifier of the record in the<br />
-system.</p>
-<p>This column is read only and not maintainable via this API view.</p></td>
+                                    <td><p>The record&rsquo;s primary key.  The definitive identifier of the record in the system.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               false</li>
+<li>Unique Values Required?: true</li>
+<li>Default Value:           Automatically Generated</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul></td>
                                 </tr>
                                 <tr>
                                     <td><span id="internal_name">internal_name</span></td>
@@ -158,8 +171,19 @@ system.</p>
                                         </table>
                                     </td>
                                     <td><p>A candidate key useful for programmatic references to individual records.</p>
-<p>This column&rsquo;s value must be set on INSERT, but may not be updated later using<br />
-this API view.</p></td>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               true</li>
+<li>Unique Values Required?: true</li>
+<li>Default Value:           ( No Default Value )</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code></li>
+</ul></td>
                                 </tr>
                                 <tr>
                                     <td><span id="instance_id">instance_id</span></td>
@@ -177,8 +201,16 @@ this API view.</p></td>
                                         </table>
                                     </td>
                                     <td><p>Identifies the parent Instance for which Instance Contexts are being defined.</p>
-<p>This column&rsquo;s value must be set on INSERT, but may not be updated later using<br />
-this API view.</p></td>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               true</li>
+<li>Unique Values Required?: false</li>
+<li>Default Value:           ( No Default Value )</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul></td>
                                 </tr>
                                 <tr>
                                     <td><span id="application_context_id">application_context_id</span></td>
@@ -196,8 +228,16 @@ this API view.</p></td>
                                         </table>
                                     </td>
                                     <td><p>Identifies the Application Context which is being defined for the Instance.</p>
-<p>This column&rsquo;s value must be set on INSERT, but may not be updated later using<br />
-this API view.</p></td>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               true</li>
+<li>Unique Values Required?: false</li>
+<li>Default Value:           ( No Default Value )</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul></td>
                                 </tr>
                                 <tr>
                                     <td><span id="start_context">start_context</span></td>
@@ -214,10 +254,20 @@ this API view.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>If true, indicates that the Instance Context should be started, so long as the<br />
-Application Context record is also set to allow context starting.  If false, the<br />
-Instance Context not be started, even if the related Application Context is set<br />
-to allow context starts.</p></td>
+                                    <td><p>Indicates whether the Instance Context should be started on Instance start.</p>
+<p><strong>General Usage</strong></p>
+<p>If true, indicates that the Instance Context should be started, so long as the Application Context record is also set to allow context starting.  If false, the Instance Context not be started, even if the related Application Context is set to allow context starts.</p>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               true</li>
+<li>Unique Values Required?: false</li>
+<li>Default Value:           ( No Default Value )</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code></li>
+</ul></td>
                                 </tr>
                                 <tr>
                                     <td><span id="db_pool_size">db_pool_size</span></td>
@@ -234,8 +284,18 @@ to allow context starts.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>If the Application Context is a login datastore context, this value establishes<br />
-how many database connections to open on behalf of this Instance Context.</p></td>
+                                    <td><p>If the Application Context is a login datastore context, this value establishes how many database connections to open on behalf of this Instance Context.</p>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               true</li>
+<li>Unique Values Required?: false</li>
+<li>Default Value:           ( No Default Value )</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code></li>
+</ul></td>
                                 </tr>
                                 <tr>
                                     <td><span id="context_code">context_code</span></td>
@@ -252,8 +312,18 @@ how many database connections to open on behalf of this Instance Context.</p></t
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>An Instance Context specific series of bytes which are used in algorithmic<br />
-credential generation.</p></td>
+                                    <td><p>An Instance Context specific series of bytes which are used in algorithmic credential generation.</p>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               true</li>
+<li>Unique Values Required?: false</li>
+<li>Default Value:           ( No Default Value )</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+<li><code>UPDATE</code></li>
+</ul></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_timestamp_created">diag_timestamp_created</span></td>
@@ -270,9 +340,19 @@ credential generation.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The database server date/time when the transaction which created the record<br />
-started.</p>
-<p>This column is read only and not maintainable via this API view.</p></td>
+                                    <td><p>The database server date/time when the transaction which created the record started.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               false</li>
+<li>Unique Values Required?: false</li>
+<li>Default Value:           Automatically Generated</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_role_created">diag_role_created</span></td>
@@ -290,7 +370,18 @@ started.</p>
                                         </table>
                                     </td>
                                     <td><p>The database role which created the record.</p>
-<p>This column is read only and not maintainable via this API view.</p></td>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               false</li>
+<li>Unique Values Required?: false</li>
+<li>Default Value:           Automatically Generated</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_timestamp_modified">diag_timestamp_modified</span></td>
@@ -307,10 +398,19 @@ started.</p>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The database server date/time when the transaction which modified the record<br />
-started.  This field will be the same as diag_timestamp_created for inserted<br />
-records.</p>
-<p>This column is read only and not maintainable via this API view.</p></td>
+                                    <td><p>The database server date/time when the transaction which modified the record started.  This field will be the same as diag_timestamp_created for inserted records.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               false</li>
+<li>Unique Values Required?: false</li>
+<li>Default Value:           Automatically Generated</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_wallclock_modified">diag_wallclock_modified</span></td>
@@ -327,10 +427,19 @@ records.</p>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The database server date/time at the moment the record was actually modified.<br />
-For long running transactions this time may be significantly later than the<br />
-value of diag_timestamp_modified.</p>
-<p>This column is read only and not maintainable via this API view.</p></td>
+                                    <td><p>The database server date/time at the moment the record was actually modified. For long running transactions this time may be significantly later than the value of diag_timestamp_modified.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               false</li>
+<li>Unique Values Required?: false</li>
+<li>Default Value:           Automatically Generated</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_role_modified">diag_role_modified</span></td>
@@ -348,7 +457,18 @@ value of diag_timestamp_modified.</p>
                                         </table>
                                     </td>
                                     <td><p>The database role which modified the record.</p>
-<p>This column is read only and not maintainable via this API view.</p></td>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               false</li>
+<li>Unique Values Required?: false</li>
+<li>Default Value:           Automatically Generated</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_row_version">diag_row_version</span></td>
@@ -365,12 +485,19 @@ value of diag_timestamp_modified.</p>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The current version of the row.  The value here indicates how many actual<br />
-data changes have been made to the row.  If an update of the row leaves all data<br />
-fields the same, disregarding the updates to the diag_* columns, the row version<br />
-is not updated, nor are any updates made to the other diag_* columns other than<br />
-diag_update_count.</p>
-<p>This column is read only and not maintainable via this API view.</p></td>
+                                    <td><p>The current version of the row.  The value here indicates how many actual data changes have been made to the row.  If an update of the row leaves all data fields the same, disregarding the updates to the diag_* columns, the row version is not updated, nor are any updates made to the other diag_* columns other than diag_update_count.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               false</li>
+<li>Unique Values Required?: false</li>
+<li>Default Value:           Automatically Generated</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_update_count">diag_update_count</span></td>
@@ -387,15 +514,47 @@ diag_update_count.</p>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>Records the number of times the record has been updated regardless as to if<br />
-the update actually changed any data.  In this way needless or redundant record<br />
-updates can be found.  This row starts at 0 and therefore may be the same as the<br />
-diag_row_version - 1.</p>
-<p>This column is read only and not maintainable via this API view.</p></td>
+                                    <td><p>Records the number of times the record has been updated regardless as to if the update actually changed any data.  In this way needless or redundant record updates can be found.  This row starts at 0 and therefore may be the same as the diag_row_version - 1.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p>
+<p><strong>Data Requirements</strong></p>
+<ul>
+<li>Required?:               false</li>
+<li>Unique Values Required?: false</li>
+<li>Default Value:           Automatically Generated</li>
+</ul>
+<p><strong>User Defined Record Supported Operations</strong></p>
+<ul>
+<li><code>SELECT</code></li>
+</ul></td>
                                 </tr>
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <i class="fa fa-code-fork"></i>
+                            <h3 id="Relationships" class="box-title">Relationships</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <div class="nav-tabs-custom"><!-- Tabs within a box -->
+                                <h5>Close relationships within degrees of separation</h5>
+                                <ul class="nav nav-tabs pull-left ui-sortable-handle">
+                                    <li class="active"><a href="#oneDegreeImg-chart" data-toggle="tab" aria-expanded="true">One</a></li>
+                                </ul>
+                                <div class="tab-content no-padding">
+                                    <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
+                                        
+                                        <a name='diagram'><object type="image/svg+xml" id="oneDegreeImg" data="../diagrams/tables/syst_instance_contexts.1degree.svg" class="diagram" border="0" align="left"></object></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- /.box-body -->
                     </div>
                     <div class="box box-primary">
                         <div class="box-header with-border">
@@ -407,7 +566,7 @@ diag_row_version - 1.</p>
                             </div>
                         </div>
                         <div class="box-body">
-                            <textarea id="sql-script-codemirror" name="sql-script-codemirror" rows="" style="display: none;">SELECT syst_instance_contexts.id,&#10;    syst_instance_contexts.internal_name,&#10;    syst_instance_contexts.instance_id,&#10;    syst_instance_contexts.application_context_id,&#10;    syst_instance_contexts.start_context,&#10;    syst_instance_contexts.db_pool_size,&#10;    syst_instance_contexts.context_code,&#10;    syst_instance_contexts.diag_timestamp_created,&#10;    syst_instance_contexts.diag_role_created,&#10;    syst_instance_contexts.diag_timestamp_modified,&#10;    syst_instance_contexts.diag_wallclock_modified,&#10;    syst_instance_contexts.diag_role_modified,&#10;    syst_instance_contexts.diag_row_version,&#10;    syst_instance_contexts.diag_update_count&#10;   FROM ms_syst_data.syst_instance_contexts;</textarea>
+                            <textarea id="sql-script-codemirror" name="sql-script-codemirror" rows="" style="display: none;">SELECT id,&#10;    internal_name,&#10;    instance_id,&#10;    application_context_id,&#10;    start_context,&#10;    db_pool_size,&#10;    context_code,&#10;    diag_timestamp_created,&#10;    diag_role_created,&#10;    diag_timestamp_modified,&#10;    diag_wallclock_modified,&#10;    diag_role_modified,&#10;    diag_row_version,&#10;    diag_update_count&#10;   FROM ms_syst_data.syst_instance_contexts;</textarea>
                             <div style="padding-top: 5px;"><hr></div>
                             <div class="box box-solid">
                                 <div class="box-header with-border">
@@ -417,7 +576,6 @@ diag_row_version - 1.</p>
                                 <!-- /.box-header -->
                                 <div class="box-body">
                                     <ul class="list-unstyled">
-                                        <li><a href="syst_instance_contexts.html">syst_instance_contexts</a></li>
                                     </ul>
                                 </div><!-- /.box-body -->
                             </div>
@@ -426,7 +584,7 @@ diag_row_version - 1.</p>
                 </section>
                 <script>
                     var config = {
-                        pagination: true
+                        pagination: false
                     }
                 </script>
             </div>
@@ -437,7 +595,7 @@ diag_row_version - 1.</p>
                         <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
                         <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
                     </div>
-                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.1.0</a></strong>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.2.4</a></strong>
                 </div>
                 <!-- /.container -->
             </footer>

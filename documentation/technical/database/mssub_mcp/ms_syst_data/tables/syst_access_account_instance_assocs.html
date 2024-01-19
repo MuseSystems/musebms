@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>syst_access_account_instance_assocs - mssub_mcp Database</title>
+        <title>syst_access_account_instance_assocs - mssub_mcp.ms_syst_data</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../../index.html" class="navbar-brand"><b>mssub_mcp</b> Database</a>
+                            <a href="../../index.html" class="navbar-brand"><b>mssub_mcp</b></a><span class="navbar-brand" style="padding-left: 0">.ms_syst_data</span>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -73,7 +73,7 @@
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
-                    <h1>syst_access_account_instance_assocs</h1><p><span id="recordNumber">-1</span> rows</p><br />
+                    <h1>syst_access_account_instance_assocs</h1><br />
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <i class="fa fa-file-text-o"></i>
@@ -84,10 +84,7 @@
                             </div>
                         </div><!-- /.box-header -->
                         <div class="box-body clearfix">
-                            <p>Associates access accounts with the instances for which they are allowed to<br />
-authenticate to.  Note that being able to authenticate to an instance is not the<br />
-same as having authorized rights within the instance; authorization is handled<br />
-by the instance directly.</p>
+                            <p>Associates access accounts with the instances for which they are allowed to authenticate to.  Note that being able to authenticate to an instance is not the same as having authorized rights within the instance; authorization is handled by the instance directly.</p>
                         </div><!-- /.box-body -->
                     </div>
                 </section>
@@ -103,7 +100,13 @@ by the instance directly.</p>
                             </div>
                         </div>
                         <div class="box-body">
-                            <table id="standard_table" class="table table-bordered table-striped dataTable" role="grid">
+                            <table
+                                    id="standard_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="10"
+                                    data-length-change="false">
                                 <thead align='left'>
                                 <tr>
                                     <th>Column</th>
@@ -124,7 +127,7 @@ by the instance directly.</p>
                                     <td>2147483647</td>
                                     <td title=''></td>
                                     <td title=''></td>
-                                    <td>uuid_generate_v1()</td>
+                                    <td>uuid_generate_v7()</td>
                                     <td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
@@ -133,8 +136,9 @@ by the instance directly.</p>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The record&rsquo;s primary key.  The definitive identifier of the record in the<br />
-system.</p></td>
+                                    <td><p>The record&rsquo;s primary key.  The definitive identifier of the record in the system.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="access_account_id">access_account_id</span></td>
@@ -151,12 +155,12 @@ system.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
                                                 <td title="syst_access_account_instance_assocs.access_account_id references syst_access_accounts.id via syst_access_account_instance_assocs_access_accounts_fk"><a href='syst_access_accounts.html'>syst_access_accounts</a><span class='relatedKey'>.id</span></td>
-                                                <td class="constraint detail">syst_access_account_instance_assocs_access_accounts_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
+                                                <td class="constraint detail">syst_access_account_instance_assocs_access_accounts_fk</td>
+                                                <td class="constraint detail"><span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
                                             </tr>
                                         </table>
                                     </td>
-                                    <td><p>The access account which is being granted authentication rights to the given<br />
-instance.</p></td>
+                                    <td><p>The access account which is being granted authentication rights to the given instance.</p></td>
                                 </tr>
                                 <tr>
                                     <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="instance_id">instance_id</span></td>
@@ -173,7 +177,8 @@ instance.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
                                                 <td title="syst_access_account_instance_assocs.instance_id references syst_instances.id via syst_access_account_instance_assocs_instances_fk"><a href='syst_instances.html'>syst_instances</a><span class='relatedKey'>.id</span></td>
-                                                <td class="constraint detail">syst_access_account_instance_assocs_instances_fk<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
+                                                <td class="constraint detail">syst_access_account_instance_assocs_instances_fk</td>
+                                                <td class="constraint detail"><span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -194,11 +199,9 @@ instance.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The timestamp at which access to the instance was granted and active.  If<br />
-the access did not require the access invitation process, this value will<br />
-typically reflect the creation timestamp of the record.  If the invitation was<br />
-required, it will reflect the time when the access account holder actually<br />
-accepted the invitation to access the instance.</p></td>
+                                    <td><p>The timestamp at which access to the instance was granted and active.</p>
+<p><strong>General Usage</strong></p>
+<p>If the access did not require the access invitation process, this value will typically reflect the creation timestamp of the record.  If the invitation was required, it will reflect the time when the access account holder actually accepted the invitation to access the instance.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="invitation_issued">invitation_issued</span></td>
@@ -215,13 +218,9 @@ accepted the invitation to access the instance.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>When inviting unowned, independent access accounts such as might be used by an<br />
-external bookkeeper, the grant of access by the instance owner is<br />
-not immediately effective but must also be approved by the access account holder<br />
-being granted access.  The timestamp in this column indicates when the<br />
-invitation to connect to the instance was issued.</p>
-<p>If the value in this column is null, the assumption is that no invitation was<br />
-required to grant the access to the access account.</p></td>
+                                    <td><p>When inviting unowned, independent access accounts such as might be used by an external bookkeeper, the grant of access by the instance owner is not immediately effective but must also be approved by the access account holder being granted access.</p>
+<p><strong>General Usage</strong></p>
+<p>The timestamp in this column indicates when the invitation to connect to the instance was issued. If the value in this column is null, the assumption is that no invitation was required to grant the access to the access account.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="invitation_expires">invitation_expires</span></td>
@@ -255,8 +254,7 @@ required to grant the access to the access account.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The timestamp at which the access account holder explicitly declined the<br />
-invitation to access the given instance.</p></td>
+                                    <td><p>The timestamp at which the access account holder explicitly declined the invitation to access the given instance.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_timestamp_created">diag_timestamp_created</span></td>
@@ -273,8 +271,9 @@ invitation to access the given instance.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The database server date/time when the transaction which created the record<br />
-started.</p></td>
+                                    <td><p>The database server date/time when the transaction which created the record started.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_role_created">diag_role_created</span></td>
@@ -291,7 +290,9 @@ started.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The database role which created the record.</p></td>
+                                    <td><p>The database role which created the record.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_timestamp_modified">diag_timestamp_modified</span></td>
@@ -308,9 +309,9 @@ started.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The database server date/time when the transaction which modified the record<br />
-started.  This field will be the same as diag_timestamp_created for inserted<br />
-records.</p></td>
+                                    <td><p>The database server date/time when the transaction which modified the record started.  This field will be the same as diag_timestamp_created for inserted records.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_wallclock_modified">diag_wallclock_modified</span></td>
@@ -327,9 +328,9 @@ records.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The database server date/time at the moment the record was actually modified.<br />
-For long running transactions this time may be significantly later than the<br />
-value of diag_timestamp_modified.</p></td>
+                                    <td><p>The database server date/time at the moment the record was actually modified. For long running transactions this time may be significantly later than the value of diag_timestamp_modified.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_role_modified">diag_role_modified</span></td>
@@ -346,7 +347,9 @@ value of diag_timestamp_modified.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The database role which modified the record.</p></td>
+                                    <td><p>The database role which modified the record.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_row_version">diag_row_version</span></td>
@@ -363,11 +366,11 @@ value of diag_timestamp_modified.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>The current version of the row.  The value here indicates how many actual<br />
-data changes have been made to the row.  If an update of the row leaves all data<br />
-fields the same, disregarding the updates to the diag_* columns, the row version<br />
-is not updated, nor are any updates made to the other diag_* columns other than<br />
-diag_update_count.</p></td>
+                                    <td><p>The current version of the row.  The value here indicates how many actual data changes have been made to the row.  If an update of the row leaves all data fields the same, disregarding the updates to the diag_* columns, the row version is not updated, nor are any updates made to the other diag_* columns other than diag_update_count.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p>
+<p><strong>Direct Usage</strong></p>
+<p>This column is frequently used by by application logic to resolve the &ldquo;dirty write&rdquo; issues which can arise from concurrent data changes.  As such any administrative override of automatic system maintenance of this value should consider the ramifications on application function.</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="diag_update_count">diag_update_count</span></td>
@@ -384,10 +387,9 @@ diag_update_count.</p></td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>Records the number of times the record has been updated regardless as to if<br />
-the update actually changed any data.  In this way needless or redundant record<br />
-updates can be found.  This row starts at 0 and therefore may be the same as the<br />
-diag_row_version - 1.</p></td>
+                                    <td><p>Records the number of times the record has been updated regardless as to if the update actually changed any data.  In this way needless or redundant record updates can be found.  This row starts at 0 and therefore may be the same as the diag_row_version - 1.</p>
+<p><strong>General Usage</strong></p>
+<p>This column is system maintained and should be considered read only in normal operations.</p></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -403,7 +405,13 @@ diag_row_version - 1.</p></td>
                             </div>
                         </div>
                         <div class="box-body">
-                            <table id="indexes_table" class="table table-bordered table-striped dataTable" role="grid">
+                            <table
+                                    id="indexes_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="10"
+                                    data-length-change="false">
                                 <thead>
                                 <tr>
                                     <th>Constraint Name</th>
@@ -447,29 +455,12 @@ diag_row_version - 1.</p></td>
                                 </ul>
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
-                                        <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="syst_access_account_instance_assocs.html" target="_top" title="syst_access_account_instance_assocs" alt="" coords="304,71,776,551">
-<area shape="rect" id="node2" href="syst_access_accounts.html" target="_top" title="syst_access_accounts" alt="" coords="5,5,260,211">
-<area shape="rect" id="node3" href="syst_instances.html" target="_top" title="syst_instances" alt="" coords="5,228,260,551">
-</map>
-                                        <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/syst_access_account_instance_assocs.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
+                                        
+                                        <a name='diagram'><object type="image/svg+xml" id="oneDegreeImg" data="../diagrams/tables/syst_access_account_instance_assocs.1degree.svg" class="diagram" border="0" align="left"></object></a>
                                     </div>
                                     <div class="chart tab-pane " id="twodegreesDegreeImg-chart" style="position: relative; overflow-x:auto;">
-                                        <map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
-<area shape="rect" id="node1" href="syst_access_account_instance_assocs.html" target="_top" title="syst_access_account_instance_assocs" alt="" coords="797,357,1269,837">
-<area shape="rect" id="node2" href="syst_access_accounts.html" target="_top" title="syst_access_accounts" alt="" coords="499,248,753,453">
-<area shape="rect" id="node3" href="syst_instances.html" target="_top" title="syst_instances" alt="" coords="499,471,753,793">
-<area shape="rect" id="node5" href="syst_enum_items.html" target="_top" title="syst_enum_items" alt="" coords="5,589,208,677">
-<area shape="rect" id="node6" href="syst_owners.html" target="_top" title="syst_owners" alt="" coords="269,625,438,713">
-<area shape="rect" id="node11" href="syst_applications.html" target="_top" title="syst_applications" alt="" coords="252,484,455,572">
-<area shape="rect" id="node4" href="syst_access_account_perm_role_assigns.html" target="_top" title="syst_access_account_perm_role_assigns" alt="" coords="848,111,1219,199">
-<area shape="rect" id="node7" href="syst_credentials.html" target="_top" title="syst_credentials" alt="" coords="1313,284,1508,372">
-<area shape="rect" id="node8" href="syst_identities.html" target="_top" title="syst_identities" alt="" coords="943,5,1124,93">
-<area shape="rect" id="node9" href="syst_instance_contexts.html" target="_top" title="syst_instance_contexts" alt="" coords="911,960,1156,1048">
-<area shape="rect" id="node10" href="syst_instance_network_rules.html" target="_top" title="syst_instance_network_rules" alt="" coords="891,855,1175,943">
-<area shape="rect" id="node12" href="syst_password_history.html" target="_top" title="syst_password_history" alt="" coords="912,216,1155,304">
-</map>
-                                        <a name='diagram'><img id="twodegreesDegreeImg" src="../diagrams/tables/syst_access_account_instance_assocs.2degrees.png" usemap="#twoDegreesRelationshipsDiagram" class="diagram" border="0" align="left"></a>
+                                        
+                                        <a name='diagram'><object type="image/svg+xml" id="twodegreesDegreeImg" data="../diagrams/tables/syst_access_account_instance_assocs.2degrees.svg" class="diagram" border="0" align="left"></object></a>
                                     </div>
                                 </div>
                             </div>
@@ -478,7 +469,7 @@ diag_row_version - 1.</p></td>
                 </section>
                 <script>
                     var config = {
-                        pagination: true
+                        pagination: false
                     }
                 </script>
             </div>
@@ -489,7 +480,7 @@ diag_row_version - 1.</p></td>
                         <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
                         <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
                     </div>
-                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.1.0</a></strong>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.2.4</a></strong>
                 </div>
                 <!-- /.container -->
             </footer>

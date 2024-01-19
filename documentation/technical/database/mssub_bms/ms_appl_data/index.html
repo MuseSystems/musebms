@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>msbms_dev Database</title>
+        <title>mssub_bms.ms_appl_data</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="../index.html" class="navbar-brand"><b>msbms_dev</b> Database</a>
+                            <a href="../index.html" class="navbar-brand"><b>mssub_bms</b></a><span class="navbar-brand" style="padding-left: 0">.ms_appl_data</span>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -77,12 +77,12 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="callout callout-info">
-                                <h4>SchemaSpy Analysis of msbms_dev</h4>
-                                <p>Generated on Thu Nov 17 14:48 PST 2022</p>
+                                <h4>SchemaSpy Analysis of mssub_bms.ms_appl_data</h4>
+                                <p>Generated on Fri Jan 19 05:41 PST 2024</p>
                             </div>
                         </div>
                     </div>
-                    <a href="msbms_dev.ms_appl_data.xml" title="XML Representation">XML Representation</a><br />
+                    <a href="mssub_bms.ms_appl_data.xml" title="XML Representation">XML Representation</a><br />
                     <a href="insertionOrder.txt" title="Useful for loading data into a database">Insertion Order</a>
                     <a href="deletionOrder.txt" title="Useful for purging data from a database">Deletion Order</a>
                 </section>
@@ -94,7 +94,7 @@
                                 <span class="info-box-icon bg-aqua"><i class="fa fa-table"></i></span>
                                 <div class="info-box-content">
                                     <span class="info-box-text">TABLES</span>
-                                    <span class="info-box-number">17</span>
+                                    <span class="info-box-number">16</span>
                                 </div>
                                 <!-- /.info-box-content -->
                             </div>
@@ -118,7 +118,7 @@
                                 <span class="info-box-icon bg-green"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></span>
                                 <div class="info-box-content">
                                     <span class="info-box-text">COLUMNS</span>
-                                    <span class="info-box-number">238</span>
+                                    <span class="info-box-number">229</span>
                                 </div>
                                 <!-- /.info-box-content -->
                             </div>
@@ -130,7 +130,7 @@
                                 <span class="info-box-icon bg-yellow"><i class="ion ion-key"></i></span>
                                 <div class="info-box-content">
                                     <span class="info-box-text">Constraints</span>
-                                    <span class="info-box-number">39</span>
+                                    <span class="info-box-number">37</span>
                                 </div>
                                 <!-- /.info-box-content -->
                             </div>
@@ -168,7 +168,21 @@
                             <span class="label label-primary pull-right"><i class="fa fa-cog fa-2x"></i></span>
                         </div><!-- /.box-header -->
                         <div class="box-body">
-                            <p>Database Type: PostgreSQL - 15.1 (Ubuntu 15.1-1.pgdg22.04+1)</p>
+                            <p>Database Type: PostgreSQL - 16.1 (Ubuntu 16.1-1.pgdg22.04+1)</p>
+                        </div><!-- /.box-body -->
+                    </div>
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Catalog mssub_bms</h3>
+                            <span class="label label-primary pull-right"><i class="fa fa-cog fa-2x"></i></span>
+                        </div><!-- /.box-header -->
+                        <div class="box-body">
+                            <p> <p><strong>Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems</strong></p>
+<p>This database software and documentation is licensed to you under the terms of the <a href="https://docs.muse.systems/license/">Muse Systems Business Management System License Agreement v1.1</a> or other written, superseding license that you have obtained from Muse Systems.</p>
+<p>Only Muse Systems may license this software to you.  Your continued use of this software indicates your agreement to abide by the applicable license terms.</p>
+<p>This database may include content copyrighted by and licensed from third parties.</p>
+<p>Please see the license or contact us for more information.</p>
+<p><a href="mailto:muse.information@musesystems.com">muse.information@musesystems.com</a> :: <a href="https://muse.systems">https://muse.systems</a></p> </p>
                         </div><!-- /.box-body -->
                     </div>
                     <div class="box box-primary">
@@ -177,8 +191,9 @@
                             <span class="label label-primary pull-right"><i class="fa fa-cog fa-2x"></i></span>
                         </div><!-- /.box-header -->
                         <div class="box-body">
-                            <p> <p>Schema container for the application&rsquo;s business related data tables and<br />
-application defined types.</p> </p>
+                            <p> <p>Internal application business data for use by Muse Systems developers.</p>
+<p><strong>All member objects of this schema are considered &ldquo;private&rdquo;.</strong></p>
+<p>Direct usage of this schema or its member objects is not supported.  Please consider using features from <code>ms_appl</code> Public API schema or other Public APIs as appropriate.</p> </p>
                         </div><!-- /.box-body -->
                     </div>
                     <div class="box box-primary">
@@ -187,14 +202,19 @@ application defined types.</p> </p>
                             <span class="label label-primary pull-right"><i class="fa fa-database fa-2x"></i></span>
                         </div><!-- /.box-header -->
                         <div class="box-body">
-                            <table id="database_objects" class="table table-bordered table-striped dataTable" role="grid">
+                            <table
+                                    id="database_objects"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="false"
+                                    data-page-length="50"
+                                    data-length-change="false">
                                 <thead>
                                     <tr>
                                         <th valign="bottom">Table / View</th>
                                         <th align="right" valign="bottom">Children</th>
                                         <th align="right" valign="bottom">Parents</th>
                                         <th align="right" valign="bottom">Columns</th>
-                                        <th align="right" valign="bottom">Rows</th>
                                         <th align="right" valign="bottom">Type</th>
                                         <th class="toggle">Comments</th>
                                     </tr>
@@ -205,195 +225,143 @@ application defined types.</p> </p>
                                         <td class="detail" align="right">1</td>
                                         <td class="detail" align="right">3</td>
                                         <td class="detail" align="right">16</td>
-                                        <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Represents a single method of contact for a person, entity, place, or other<br />
-contextually relevant association.</p>
-<p>Note that there is a weakness in this part of the schema design in that contact<br />
-information doesn&rsquo;t make sense outside of assignment to a person, facility, or<br />
-entity, but such assignment is indirect through role assignments.  This means it<br />
-is conceivable that records in this table could become orphaned.  At this stage,<br />
-however, it doesn&rsquo;t seem worth it to denormalize the data to record the direct<br />
-association.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Represents a single method of contact for a person, entity, place, or other contextually relevant association.</p>
+<p><strong>General Usage</strong></p>
+<p>Note that there is a weakness in this part of the schema design in that contact information doesn&rsquo;t make sense outside of assignment to a person, facility, or entity, but such assignment is indirect through role assignments.  This means it is conceivable that records in this table could become orphaned.  At this stage, however, it doesn&rsquo;t seem worth it to denormalize the data to record the direct association.</p></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
-                                        <td class="detail"><a href="tables/mstr_entity_fulfillment_places.html">mstr_entity_fulfillment_places</a></td>
+                                        <td class="detail"><a href="tables/mstr_entity_bank_entities.html">mstr_entity_bank_entities</a></td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">2</td>
                                         <td class="detail" align="right">10</td>
-                                        <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Establishes a relationship between an entity and a place allowing the entity to<br />
-receive order fulfillment at the identified place; this is &ldquo;ship-to&rdquo;<br />
-relationship.  Note these places are used as the shipping places in external<br />
-fulfillment transactions.  For internal fulfillment transactions, the entity/<br />
-inventory/place relationship determines whether or not the place may receive<br />
-units.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Establishes an financial service provider relationship between an Owning entity and an Entity which provides financial and banking services.</p>
+<p><strong>General Usage</strong></p>
+<p>Banks can process certain financial related transactions and be associated with specific asset and liability accounts is relation to the owning Entity.</p></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/mstr_persons.html">mstr_persons</a></td>
+                                        <td class="detail" align="right">2</td>
                                         <td class="detail" align="right">3</td>
-                                        <td class="detail" align="right">3</td>
-                                        <td class="detail" align="right">15</td>
-                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">16</td>
                                         <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Represents real people in the world.  Ideally, there is one record in this table<br />
-for each person the various entities interact with.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>A Person is someone who acts as an agent on behalf of an Entity. This may be a real individual person in the world or indicate a function, such as “Customer Support”, where the actual person contacted may vary and identifying a specific individual is unimportant.</p></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
-                                        <td class="detail"><a href="tables/mstr_entity_banking_entities.html">mstr_entity_banking_entities</a></td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">2</td>
-                                        <td class="detail" align="right">10</td>
-                                        <td class="detail" align="right">0</td>
+                                        <td class="detail"><a href="tables/mstr_places.html">mstr_places</a></td>
+                                        <td class="detail" align="right">3</td>
+                                        <td class="detail" align="right">3</td>
+                                        <td class="detail" align="right">14</td>
                                         <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Establishes an financial service provider relationship between an owning entity<br />
-and a banking related entity.  This record, or its children, will define the<br />
-banking behavior when the transaction entity is the owning entity.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Places are the retail stores, warehouses, factories, and offices in which businesses conduct their operations.  This is not synonymous with &ldquo;address&rdquo; as a place may have multiple, different addresses for different purposes.</p></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/mstr_country_phone_format_assocs.html">mstr_country_phone_format_assocs</a></td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">2</td>
                                         <td class="detail" align="right">11</td>
-                                        <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Establishes relationships between phone format records and country records and<br />
-allows recognizing an phone format as the default format for the country.</p></td>
-                                    </tr>
-                                    <tr class="tbl even" valign="top">
-                                        <td class="detail"><a href="tables/mstr_places.html">mstr_places</a></td>
-                                        <td class="detail" align="right">4</td>
-                                        <td class="detail" align="right">3</td>
-                                        <td class="detail" align="right">14</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>places are system representations of real world buildings, such as office<br />
-buildings, warehouses, factories, or sales centers.  Note that a place may be<br />
-associated with multiple addresses which can be assigned roles for different<br />
-purposes.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Establishes relationships between phone format records and country records and allows recognizing an phone format as the default format for the country.</p></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/mstr_entity_purchasing_entities.html">mstr_entity_purchasing_entities</a></td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">2</td>
                                         <td class="detail" align="right">10</td>
-                                        <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Establishes a vendor relationship between an owning entity and its vendor<br />
-entity.  This record, or its children, will define purchasing and payables<br />
-behavior when the transaction entity is the owning entity.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Establishes a vendor relationship between an Owning Entity and its vendor Entity.</p>
+<p><strong>General Usage</strong></p>
+<p>This record, or its children, will define purchasing behavior when the transaction entity is the owning entity.</p></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/mstr_person_contact_roles.html">mstr_person_contact_roles</a></td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">4</td>
                                         <td class="detail" align="right">12</td>
-                                        <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Associates individual persons with their contact data and includes an indication</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Establishes the Roles that Contact records serve in relation to the given Person.</p></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/mstr_countries.html">mstr_countries</a></td>
                                         <td class="detail" align="right">3</td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">49</td>
-                                        <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>A listing of countries including currency symbology, official names, and other<br />
-information concering the country from standards bodies and international<br />
-organizations.</p>
-<p>The table structure as it now stands is based on the data available at:<br />
-<a href="https://datahub.io/core/country-codes">https://datahub.io/core/country-codes</a></p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>A listing of countries including currency symbology, official names, and other information concerning the country from standards bodies and international organizations.</p>
+<p><strong>General Usage</strong></p>
+<p>The table structure as it now stands is based on the data available at: <a href="https://datahub.io/core/country-codes">https://datahub.io/core/country-codes</a></p></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/mstr_entities.html">mstr_entities</a></td>
-                                        <td class="detail" align="right">17</td>
+                                        <td class="detail" align="right">15</td>
                                         <td class="detail" align="right">3</td>
                                         <td class="detail" align="right">14</td>
-                                        <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Master list of legal entities with whom the business interacts.  All legal<br />
-entities are represented by this table, including the business using this<br />
-application itself.  The information stored in this record represents general<br />
-information about the entity that is broadly applicable in all contexts which<br />
-might use the entity.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Master list of legal entities with whom the business interacts.</p>
+<p>All legal entities are represented by this table, including the business using this application itself.</p>
+<p><strong>General Usage</strong></p>
+<p>The information stored in this record represents general information about the entity that is broadly applicable in all contexts which might use the entity.</p></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/mstr_entity_selling_entities.html">mstr_entity_selling_entities</a></td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">2</td>
                                         <td class="detail" align="right">10</td>
-                                        <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Establishes a customer relationship between an owning entity and its customer<br />
-entity.  This record, or its children, will define sales and receivables<br />
-behavior when the transaction entity is the owning entity.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Establishes a customer relationship between an Owning Entity and a customer Entity.</p>
+<p><strong>General Usage</strong></p>
+<p>This record, or its children, will define sales behavior when the transaction Entity is the Owning Entity.</p></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/mstr_country_address_format_assocs.html">mstr_country_address_format_assocs</a></td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">2</td>
                                         <td class="detail" align="right">11</td>
-                                        <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Establishes relationships between address format records and country records and<br />
-allows recognizing an address format as the default format for the country.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Establishes relationships between address format records and country records and allows recognizing an address format as the default format for the country.</p></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
-                                        <td class="detail"><a href="tables/mstr_entity_workplace_places.html">mstr_entity_workplace_places</a></td>
+                                        <td class="detail"><a href="tables/mstr_entity_facility_places.html">mstr_entity_facility_places</a></td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">2</td>
                                         <td class="detail" align="right">10</td>
-                                        <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Identifies a specific place as being a valid option for person addressing, such<br />
-as mailing, etc.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Identifies a Place as being both a place of work for staff and a place where non-inventory, physical assets belonging to the associated Entity may be held.</p></td>
+                                    </tr>
+                                    <tr class="tbl even" valign="top">
+                                        <td class="detail"><a href="tables/mstr_entity_staff_entities.html">mstr_entity_staff_entities</a></td>
+                                        <td class="detail" align="right">0</td>
+                                        <td class="detail" align="right">2</td>
+                                        <td class="detail" align="right">10</td>
+                                        <td class="detail" align="right">Table</td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Establishes an employee or contractor relationship between an Owning Entity and its employee Entity.</p></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/mstr_country_name_format_assocs.html">mstr_country_name_format_assocs</a></td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">2</td>
                                         <td class="detail" align="right">11</td>
-                                        <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Establishes relationships between name format records and country records and<br />
-allows recognizing a name format as the default format for the country.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Establishes relationships between name format records and country records and allows recognizing a name format as the default format for the country.</p></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/mstr_entity_person_roles.html">mstr_entity_person_roles</a></td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">3</td>
                                         <td class="detail" align="right">11</td>
-                                        <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Establishes the relationship between individual persons and and entity.  Note<br />
-that for now a simple table with the entity, person, and the role assigned is<br />
-sufficient for expressing the relationship, though in future it may be<br />
-appropriate to have specific relationship tables like entity/entity relationships<br />
-should the relationships not be containable in a single attribute describing the<br />
-role.</p></td>
-                                    </tr>
-                                    <tr class="tbl even" valign="top">
-                                        <td class="detail"><a href="tables/mstr_entity_staffing_entities.html">mstr_entity_staffing_entities</a></td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">2</td>
-                                        <td class="detail" align="right">10</td>
-                                        <td class="detail" align="right">0</td>
-                                        <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Establishes an employee or contractor relationship between an owning entity and<br />
-its employee entity.  This record, or its children, will define the employee<br />
-behavior when the transaction entity is the owning entity.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Establishes the relationship between individual persons and and entity.</p>
+<p><strong>General Usage</strong></p>
+<p>Note that for now a simple table with the Entity, Person, and the Role assigned is sufficient for expressing the relationship, though in future it may be appropriate to have specific relationship tables like Entity/Entity relationships should the relationships not be containable in a single attribute describing the Role.</p></td>
                                     </tr>
                                     <tr class="tbl even" valign="top">
                                         <td class="detail"><a href="tables/mstr_entity_inventory_places.html">mstr_entity_inventory_places</a></td>
                                         <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">2</td>
                                         <td class="detail" align="right">14</td>
-                                        <td class="detail" align="right">0</td>
                                         <td class="detail" align="right">Table</td>
-                                        <td class="comment detail" style="display: table-cell;"><p>Establishes one or more inventory relationships between a managed entity and a<br />
-place.</p></td>
+                                        <td class="comment detail" style="display: table-cell;"><p>Establishes one or more Inventory Relationships between an Owning Entity and a Place.</p></td>
                                     </tr>
                             </table>
                         </div>
@@ -402,7 +370,7 @@ place.</p></td>
                 <!-- /.content -->
                 <script>
                     var config = {
-                        pagination: true
+                        pagination: false
                     }
                 </script>
             </div>
@@ -413,7 +381,7 @@ place.</p></td>
                         <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
                         <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
                     </div>
-                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.1.0</a></strong>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.2.4</a></strong>
                 </div>
                 <!-- /.container -->
             </footer>
