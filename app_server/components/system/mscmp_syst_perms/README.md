@@ -1,5 +1,7 @@
 # MscmpSystPerms - Permissions System Foundation
 
+<!-- MDOC !-->
+
 Provides a generalized foundation for user permission system
 implementations.
 

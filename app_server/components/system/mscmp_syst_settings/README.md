@@ -1,5 +1,7 @@
 # MscmpSystSettings - User Configuration Management
 
+<!-- MDOC !-->
+
 A user options configuration management service.
 
 The Settings Service provides caching and management functions for user

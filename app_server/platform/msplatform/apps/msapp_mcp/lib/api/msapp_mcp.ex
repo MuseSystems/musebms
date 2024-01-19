@@ -11,9 +11,12 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule MsappMcp do
-  @moduledoc """
-  MsappMcp API
-  """
+  @external_resource "README.md"
+  @moduledoc Path.join([__DIR__, "..", "..", "README.md"])
+             |> File.read!()
+             |> String.split("<!-- MDOC !-->")
+             |> Enum.fetch!(1)
+
   alias MsappMcp.Impl
   alias MsappMcp.Types
   alias MscmpSystNetwork.Types, as: NetTypes

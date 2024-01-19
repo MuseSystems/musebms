@@ -1,5 +1,7 @@
 # MssubMcp - Global Systems Management
 
+<!-- MDOC !-->
+
 API for the Master Control Program Subsystem.
 
 The Master Control Program Subsystem provides global services such as tenant and

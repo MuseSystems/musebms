@@ -1,5 +1,7 @@
 # MscmpSystForms - User Interface Forms & Components
 
+<!-- MDOC !-->
+
 The `MscmpSystForms` module provides a standard methodology for authoring
 application user interface forms in support of business systems development.
 

@@ -1,5 +1,7 @@
 # MscmpSystLimiter - Token Bucket Rate Limiting
 
+<!-- MDOC !-->
+
 API for establishing rate limits for usage of finite system resources.
 
 Online, multi-user systems can be unintentionally overwhelmed by aggressive

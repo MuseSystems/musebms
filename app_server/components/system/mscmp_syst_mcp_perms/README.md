@@ -1,5 +1,7 @@
 # MscmpSystMcpPerms - MCP Permission Implementation
 
+<!-- MDOC !-->
+
 Implements `MscmpSystPerms` related functionality for the `MssubMcp` subsystem.
 
 The only public API provided by this module are the selector structs which are
