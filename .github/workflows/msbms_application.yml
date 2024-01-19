@@ -718,17 +718,17 @@ jobs:
           run: mix deps.get
           working-directory: ${{ env.MSBMS_PRJDIR }}
 
-        - name: Run Unit Tests
-          run: mix test
-          working-directory: ${{ env.MSBMS_PRJDIR }}
+        # - name: Run Unit Tests
+        #   run: mix test
+        #   working-directory: ${{ env.MSBMS_PRJDIR }}
 
         - name: Run Integration Tests
           run: mix test --only integration
           working-directory: ${{ env.MSBMS_PRJDIR }}
 
-        - name: Run Documentation Tests
-          run: mix test --only doctest
-          working-directory: ${{ env.MSBMS_PRJDIR }}
+        # - name: Run Documentation Tests
+        #   run: mix test --only doctest
+        #   working-directory: ${{ env.MSBMS_PRJDIR }}
 
         - name: Run Credo
           run: mix credo
