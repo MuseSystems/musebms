@@ -18,9 +18,9 @@ defmodule MscmpSystDb do
              |> Enum.fetch!(1)
 
   alias MscmpSystDb.Impl.Dba
-  alias MscmpSystDb.Runtime.DevSupport
   alias MscmpSystDb.Impl.Privileged
   alias MscmpSystDb.Runtime.Datastore
+  alias MscmpSystDb.Runtime.DevSupport
   alias MscmpSystDb.Types
   alias MscmpSystDb.Types.{ContextState, DatastoreContext, DatastoreOptions}
 
