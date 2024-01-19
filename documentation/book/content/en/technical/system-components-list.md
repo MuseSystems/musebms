@@ -7,6 +7,11 @@ draft = false
 
 weight = 30
 +++
+
+{{< alert title="Example Documentation" color="primary" >}}
+If you are reading this documentation to see and/or evaluate examples of this project's documentation, we recommend looking at the [__`MscmpSystAuthn`__](#mscmpsystauthn) Component documentation.  This documentation is reasonably complete and representative of the documentation standards this project hopes to achieve.
+{{< /alert >}}
+
 ## Overview
 
 The listing below shows the currently existing Elixir components which make up the application server (`app_server`), their dependencies, and their relationship with each other.
@@ -18,9 +23,6 @@ Note that only dependencies which are active at runtime in production are listed
 
 Each listed Component includes links to its application API documentation.  If the Component depends on the database, a link to the Component specific database documentation and ERD is also included.  Note that the inclusion of the database documentation at the Component level is not meant to imply that each Component requires its own database, but rather to ensure that only the relevant database documentation is presented in the Component context.
 
-{{< alert title="Example Documentation" color="primary" >}}
-If you are reading this documentation to see and/or evaluate examples of this project's documentation, we recommend looking at the [__`MscmpSystAuthn`__](#mscmpsystauthn) Component documentation.  This documentation is reasonably complete and representative of the documentation standards this project hopes to achieve.
-{{< /alert >}}
 
 ## Platform
 
