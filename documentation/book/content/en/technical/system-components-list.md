@@ -7,13 +7,22 @@ draft = false
 
 weight = 30
 +++
+## Overview
+
+The listing below shows the currently existing Elixir components which make up the application server (`app_server`), their dependencies, and their relationship with each other.
+
 {{< alert title="Dependency Listings" color="warning" >}}
 Note that only dependencies which are active at runtime in production are listed below. Excluded are those dependencies that are only present to support development or testing.
 {{< /alert >}}
 
-## Application Server Documentation
 
-The listing below shows the currently existing Elixir components which make up the application server (`app_server`), their dependencies, and their relationship with each other.
+Each listed Component includes links to its application API documentation.  If the Component depends on the database, a link to the Component specific database documentation and ERD is also included.  Note that the inclusion of the database documentation at the Component level is not meant to imply that each Component requires its own database, but rather to ensure that only the relevant database documentation is presented in the Component context.
+
+{{< alert title="Example Documentation" color="primary" >}}
+If you are reading this documentation to see and/or evaluate examples of this project's documentation, we recommend looking at the [__`MscmpSystAuthn`__](#mscmpsystauthn) Component documentation.  This documentation is reasonably complete and representative of the documentation standards this project hopes to achieve.
+{{< /alert >}}
+
+## Platform
 
 ### `Msplatform`
 
@@ -68,7 +77,7 @@ The listing below shows the currently existing Elixir components which make up t
 
   * ### `MssubBms`
 
-      <sup>(<a href="/documentation/technical/app_server/mssub_bms" target="_blank">API Docs</a>)</sup>
+      <sup>(<a href="/documentation/technical/app_server/mssub_bms" target="_blank">API Docs</a>) / (<a href="/documentation/technical/database/mssub_bms" target="_blank">Database Docs & ERD</a>)</sup>
 
       A business logic subsystem implementing the Muse Systems Business Management Systems.  An Msplatform application delivering a complete small to mid-sized business management solution.
 
@@ -85,7 +94,7 @@ The listing below shows the currently existing Elixir components which make up t
 
   * ### `MssubMcp`
 
-      <sup>(<a href="/documentation/technical/app_server/mssub_mcp" target="_blank">API Docs</a>)</sup>
+      <sup>(<a href="/documentation/technical/app_server/mssub_mcp" target="_blank">API Docs</a>) / (<a href="/documentation/technical/database/mssub_mcp" target="_blank">Database Docs & ERD</a>)</sup>
 
       The "Master Control Program" subsystem which provides global user authentication and environment/tenant administration for all applications running on the MuseBMS platform.
 
@@ -112,7 +121,7 @@ These Components are listed in "Lower Level Component" to "Higher Level Componen
 
   * ### `MscmpSystAuthn`
 
-    <sup>(<a href="/documentation/technical/app_server/mscmp_syst_authn" target="_blank">API Docs</a>)</sup>
+    <sup>(<a href="/documentation/technical/app_server/mscmp_syst_authn" target="_blank">API Docs</a>) / (<a href="/documentation/technical/database/mscmp_syst_authn" target="_blank">Database Docs & ERD</a>)</sup>
 
     API for the management of user authentication.
 
@@ -160,7 +169,7 @@ These Components are listed in "Lower Level Component" to "Higher Level Componen
 
   * ### `MscmpSystEnums`
 
-    <sup>(<a href="/documentation/technical/app_server/mscmp_syst_enums" target="_blank">API Docs</a>)</sup>
+    <sup>(<a href="/documentation/technical/app_server/mscmp_syst_enums" target="_blank">API Docs</a>) / (<a href="/documentation/technical/database/mscmp_syst_enums" target="_blank">Database Docs & ERD</a>)</sup>
 
     A framework for user configurable 'list of values' type functionality.
 
@@ -209,7 +218,7 @@ These Components are listed in "Lower Level Component" to "Higher Level Componen
 
   * ### `MscmpSystInstance`
 
-    <sup>(<a href="/documentation/technical/app_server/mscmp_syst_instance" target="_blank">API Docs</a>)</sup>
+    <sup>(<a href="/documentation/technical/app_server/mscmp_syst_instance" target="_blank">API Docs</a>) / (<a href="/documentation/technical/database/mscmp_syst_instance" target="_blank">Database Docs & ERD</a>)</sup>
 
     "Instances" are instances of running application environments.  Instances are established to host the application for different purposes, such as for running the application for production, training, and testing purposes; or as a means to implement multi-tenancy where each tenant application environment is an Instance.
 
@@ -244,7 +253,7 @@ These Components are listed in "Lower Level Component" to "Higher Level Componen
 
   * ### `MscmpSystMcpPerms`
 
-    <sup>(<a href="/documentation/technical/app_server/mscmp_syst_mcp_perms" target="_blank">API Docs</a>)</sup>
+    <sup>(<a href="/documentation/technical/app_server/mscmp_syst_mcp_perms" target="_blank">API Docs</a>) / (<a href="/documentation/technical/database/mscmp_syst_mcp_perms" target="_blank">Database Docs & ERD</a>)</sup>
 
     Implements [`MscmpSystPerms`](#mscmpsystperms) related functionality for the [`MssubMcp`](#mssub_mcp) subsystem.
 
@@ -291,7 +300,7 @@ These Components are listed in "Lower Level Component" to "Higher Level Componen
 
   * ### `MscmpSystPerms`
 
-    <sup>(<a href="/documentation/technical/app_server/mscmp_syst_perms" target="_blank">API Docs</a>)</sup>
+    <sup>(<a href="/documentation/technical/app_server/mscmp_syst_perms" target="_blank">API Docs</a>) / (<a href="/documentation/technical/database/mscmp_syst_perms" target="_blank">Database Docs & ERD</a>)</sup>
 
     Provides a generalized foundation for user permission system implementations.
 
@@ -309,7 +318,7 @@ These Components are listed in "Lower Level Component" to "Higher Level Componen
 
   * ### `MscmpSystSession`
 
-    <sup>(<a href="/documentation/technical/app_server/mscmp_syst_session" target="_blank">API Docs</a>)</sup>
+    <sup>(<a href="/documentation/technical/app_server/mscmp_syst_session" target="_blank">API Docs</a>) / (<a href="/documentation/technical/database/mscmp_syst_session" target="_blank">Database Docs & ERD</a>)</sup>
 
     Session Management API & Runtime
 
@@ -325,7 +334,7 @@ These Components are listed in "Lower Level Component" to "Higher Level Componen
 
   * ### `MscmpSystSettings`
 
-    <sup>(<a href="/documentation/technical/app_server/mscmp_syst_settings" target="_blank">API Docs</a>)</sup>
+    <sup>(<a href="/documentation/technical/app_server/mscmp_syst_settings" target="_blank">API Docs</a>) / (<a href="/documentation/technical/database/mscmp_syst_settings" target="_blank">Database Docs & ERD</a>)</sup>
 
     The Settings Service provides caching and management functions for user configurable options which govern how the application operates.  Multiple Settings Service instances may be in operation depending on the needs of the application; for example, in the case of multi-tenancy, each tenant will have its own instance of the Setting Service running since each tenant's needs of the application may unique.
 
@@ -352,15 +361,3 @@ These Components are listed in "Lower Level Component" to "Higher Level Componen
     * __Third Party Dependencies__
 
       (none)
-
-## Database Documentation
-
-Database schema are current only documented at the Subsystem level.
-
-  * ### `MssubBms` {#mssub_bms_db}
-
-    <sup>(<a href="/documentation/technical/database/mssub_bms" target="_blank">Database Docs / ERD</a>)</sup>
-
-  * ### `MssubMcp` {#mssub_mcp_db}
-
-    <sup>(<a href="/documentation/technical/database/mssub_mcp" target="_blank">Database Docs / ERD</a>)</sup>
