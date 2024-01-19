@@ -26,14 +26,3 @@ load_files = [
     {type = "plan", file = "all/subplans.common_init.toml"},
     {type = "plan", file = "components/system/mscmp_syst_session/subplans.mscmp_syst_session.toml"}
 ]
-
-[[build_plan]]
-release              = 1
-version              = 1
-update               = 0
-sponsor              = 821
-sponsor_modification = 0
-load_files = [
-    "components/system/mscmp_syst_session/testing_support/test_privileges.eex.sql",
-    "components/system/mscmp_syst_session/testing_support/test_data_doc_test.eex.sql"
-]
