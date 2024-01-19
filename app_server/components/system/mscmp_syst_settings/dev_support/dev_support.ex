@@ -23,7 +23,7 @@ defmodule DevSupport do
 
     _ = MscmpSystDb.put_datastore_context(MscmpSystDb.get_devsupport_context_name())
 
-    MscmpSystSettings.start_devsupport_services()
+    _ = MscmpSystSettings.start_devsupport_services()
 
     _ = MscmpSystSettings.put_settings_service(MscmpSystSettings.get_devsupport_service_name())
   end
