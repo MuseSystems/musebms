@@ -29,7 +29,11 @@ $INIT_DATASTORE$
         AUTHORIZATION <%= ms_owner %>;
 
         COMMENT ON SCHEMA <%= migrations_schema %> IS
-        $DOC$Datastore migrations management schema.$DOC$;
+$DOC$Datastore migrations management schema.
+
+**All member objects of this schema are considered "private".**
+
+Direct usage of this schema or its member objects is not supported.$DOC$;
 
         REVOKE USAGE ON SCHEMA <%= migrations_schema %> FROM PUBLIC;
 
@@ -111,9 +115,42 @@ $INIT_DATASTORE$
                                                 ,p_errcode        text
                                                 ,p_param_data     jsonb
                                                 ,p_context_data   jsonb) IS
-$DOC$Returns exception details based on the passed parameters represented as a pretty-printed JSON
-object.  The returned value is intended to standardize the details related to RAISEd exceptions and
-be suitable for use in setting the RAISE DETAILS variable. $DOC$;
+$DOC$Returns exception details based on the passed parameters represented as a
+pretty-printed JSON object.  The returned value is intended to standardize the
+details related to `RAISE`d exceptions and be suitable for use in setting the
+`RAISE DETAILS` variable.
+
+**Parameters**
+
+  * **`p_proc_schema`** ::     **Required?** True; **Default**: ( No Default )
+
+    The schema name hosting the function or store procedure which raised the
+    exception.
+
+  * **`p_proc_name`** ::     **Required?** True; **Default**: ( No Default )
+
+    The name of the process which raised the exception.
+
+  * **`p_exception_name`** ::     **Required?** True; **Default**: ( No Default )
+
+    A standard name for the exception raised.
+
+  * **`p_errcode`** ::     **Required?** True; **Default**: ( No Default )
+
+    Error code complying with the PostgreSQL standard error codes
+    (https://www.postgresql.org/docs/current/errcodes-appendix.html).  Typically
+    this will be a compatible error code made outside of already designated
+    error codes.
+
+  * **`p_param_data`** ::     **Required?** False; **Default**: ( No Default )
+
+    A `jsonb` object where the keys are relevant parameters.
+
+  * **`p_context_data`** ::     **Required?** False; **Default**: ( No Default )
+
+    A `jsonb` object encapsulating relevant data which might help in
+    interpreting the exception, if such data exists.
+$DOC$;
 
         CREATE OR REPLACE FUNCTION <%= migrations_schema %>.trig_b_iu_set_diagnostic_columns()
         RETURNS trigger AS
@@ -258,10 +295,32 @@ be suitable for use in setting the RAISE DETAILS variable. $DOC$;
 
         COMMENT ON FUNCTION <%= migrations_schema %>.trig_b_iu_set_diagnostic_columns() IS
 $DOC$Automatically maintains the common table diagnostic columns whenever data is
-inserted or updated.  For UPDATE transactions, the trigger will determine if
-there are 'real data changes', meaning any fields other than the common
-diagnostic columns being changed by the transaction.  If not, only the
-diag_update_count column will be updated.$DOC$;
+inserted or updated.
+
+**General Usage**
+
+For `UPDATE` transactions, the trigger will determine if there are 'real data
+changes', meaning any fields other than the common diagnostic columns being
+changed by the transaction.  If not, only the `diag_update_count` column will be
+updated.
+
+To use this trigger, the targeted table must have the following columns / types
+defined:
+
+  * `diag_timestamp_created` / `timestamptz`
+
+  * `diag_role_created` / `text`
+
+  * `diag_timestamp_modified` / `timestamptz`
+
+  * `diag_wallclock_modified` / `timestamptz`
+
+  * `diag_role_modified` / `text`
+
+  * `diag_row_version` / `bigint`
+
+  * `diag_update_count` / `bigint`
+$DOC$;
 
         CREATE TABLE <%= migrations_schema %>.<%= migrations_table %>
         (
@@ -332,16 +391,19 @@ diag_update_count column will be updated.$DOC$;
 
         COMMENT ON
             TABLE <%= migrations_schema %>.<%= migrations_table %> IS
-$DOC$Records which database updates have been applied to the system.  Available
-database migrations are stored in a file system directory where individual files
-are named starting with the version number taking a fixed number of numeric
-digits.  In the simple case, the migration process will get a sorted listing of
-available migrations from the migrations file system directory and compare the
-version of the file with the minimum version number not already checked against
-the maximum version applied to the database according to this table.  If the
-file version is greater, the migration is applied to the database, otherwise the
-file is skipped and the version checking process repeats until there are no more
-migration files to evaluate.
+$DOC$Records which database updates have been applied to the system.
+
+**General Usage**
+
+Available database migrations are stored in a file system directory where
+individual files are named starting with the version number taking a fixed
+number of numeric digits.  In the simple case, the migration process will get a
+sorted listing of available migrations from the migrations file system directory
+and compare the version of the file with the minimum version number not already
+checked against the maximum version applied to the database according to this
+table.  If the file version is greater, the migration is applied to the
+database, otherwise the file is skipped and the version checking process repeats
+until there are no more migration files to evaluate.
 
 Finally, during the migration process, the <%= migrations_schema %>.<%= migrations_table %>
 record is created once the corresponding migration file has been successfully
