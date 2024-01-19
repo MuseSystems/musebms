@@ -1,5 +1,7 @@
 # MscmpSystDb - Database Migrations, Connectivity, and Querying
 
+<!-- MDOC !-->
+
 A database management Component for developing and managing database-per-tenant
 oriented systems.  To achieve this we wrap and extend the popular `Ecto` and
 `EctoSql` libraries with a specialized templated (`EEx`) migrations system and add

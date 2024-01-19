@@ -1,5 +1,7 @@
 # MscmpSystAuthn - Global User Authentication
 
+<!-- MDOC !-->
+
 API for the management of user authentication.
 
 This Component provides a global method of authentication for users wishing to
