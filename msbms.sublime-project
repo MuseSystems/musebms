@@ -47,6 +47,9 @@
             "path": "app_server/components/system/mscmp_syst_mcp_perms",
         },
         {
+            "path": "app_server/components/system/mscmp_syst_state",
+        },
+        {
             "path": "app_server/components/system/mscmp_syst_session",
         },
         {
