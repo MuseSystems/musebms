@@ -1,5 +1,5 @@
 # Source File: mix.exs
-# Location:    musebms/app_server/components/system/mscmp_syst_state/mix.exs
+# Location:    musebms/app_server/components/system/mscmp_syst_interaction/mix.exs
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -9,10 +9,10 @@
 # See the NOTICE file in the project root for copyright ownership information.
 #
 # muse.information@musesystems.com :: https://muse.systems
-defmodule MscmpSystState.MixProject do
+defmodule MscmpSystInteraction.MixProject do
   use Mix.Project
 
-  @name :mscmp_syst_state
+  @name :mscmp_syst_interaction
   @version "0.1.0"
 
   @deps [
@@ -48,9 +48,9 @@ defmodule MscmpSystState.MixProject do
       dialyzer: @dialyzer_opts,
       elixirc_paths: elixirc_paths(Mix.env()),
       docs: [
-        name: "MscmpSystState",
-        main: "MscmpSystState",
-        output: "../../../../documentation/technical/app_server/mscmp_syst_state",
+        name: "MscmpSystInteraction",
+        main: "MscmpSystInteraction",
+        output: "../../../../documentation/technical/app_server/mscmp_syst_interaction",
         deps: [
           mscmp_syst_utils: "../../../../documentation/technical/app_server/mscmp_syst_utils",
           mscmp_syst_error: "../../../../documentation/technical/app_server/mscmp_syst_error"
@@ -58,8 +58,8 @@ defmodule MscmpSystState.MixProject do
         groups_for_functions: [],
         nest_modules_by_prefix: [],
         groups_for_modules: [
-          API: [MscmpSystState],
-          "Supporting Types": [MscmpSystState.Types]
+          API: [MscmpSystInteraction],
+          "Supporting Types": [MscmpSystInteraction.Types]
         ]
       ]
     ]

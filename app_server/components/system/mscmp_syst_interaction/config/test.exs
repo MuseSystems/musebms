@@ -1,5 +1,5 @@
-# Source File: state_test_case.ex
-# Location:    musebms/app_server/components/system/mscmp_syst_state/test/support/state_test_case.ex
+# Source File: test.exs
+# Location:    musebms/app_server/components/system/mscmp_syst_interaction/config/test.exs
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,8 +10,6 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule StateTestCase do
-  @moduledoc false
+import Config
 
-  use ExUnit.CaseTemplate
-end
+config :logger, level: :info

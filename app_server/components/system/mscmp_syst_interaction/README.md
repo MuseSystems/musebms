@@ -1,4 +1,4 @@
-# MscmpSystState - Data Maintenance State Management
+# MscmpSystInteraction - Data Maintenance State Management
 
 <!-- MDOC !-->
 

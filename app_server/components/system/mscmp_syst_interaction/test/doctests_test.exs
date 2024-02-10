@@ -1,5 +1,5 @@
-# Source File: config.exs
-# Location:    musebms/app_server/components/system/mscmp_syst_state/config/config.exs
+# Source File: doctests_test.exs
+# Location:    musebms/app_server/components/system/mscmp_syst_interaction/test/doctests_test.exs
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,6 +10,11 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-import Config
+defmodule DoctestsTest do
+  use InteractionTestCase, async: true
 
-import_config "#{Mix.env()}.exs"
+  @moduletag :doctest
+  @moduletag :capture_log
+
+  doctest MscmpSystInteraction
+end

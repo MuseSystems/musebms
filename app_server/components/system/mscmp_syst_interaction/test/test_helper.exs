@@ -1,5 +1,5 @@
-# Source File: doctests_test.exs
-# Location:    musebms/app_server/components/system/mscmp_syst_state/test/doctests_test.exs
+# Source File: test_helper.exs
+# Location:    musebms/app_server/components/system/mscmp_syst_interaction/test/test_helper.exs
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,11 +10,4 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-defmodule DoctestsTest do
-  use StateTestCase, async: true
-
-  @moduletag :doctest
-  @moduletag :capture_log
-
-  doctest MscmpSystState
-end
+ExUnit.start()

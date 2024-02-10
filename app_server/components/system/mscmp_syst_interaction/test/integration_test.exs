@@ -11,7 +11,7 @@
 # muse.information@musesystems.com :: https://muse.systems
 
 defmodule IntegrationTest do
-  use StateTestCase, async: false
+  use InteractionTestCase, async: false
 
   import Ecto.Query
 

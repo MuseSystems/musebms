@@ -1,5 +1,5 @@
-# Source File: test.exs
-# Location:    musebms/app_server/components/system/mscmp_syst_state/config/test.exs
+# Source File: interaction_test_case.ex
+# Location:    musebms/app_server/components/system/mscmp_syst_interaction/test/support/interaction_test_case.ex
 # Project:     Muse Systems Business Management System
 #
 # Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,6 +10,8 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
-import Config
+defmodule InteractionTestCase do
+  @moduledoc false
 
-config :logger, level: :info
+  use ExUnit.CaseTemplate
+end

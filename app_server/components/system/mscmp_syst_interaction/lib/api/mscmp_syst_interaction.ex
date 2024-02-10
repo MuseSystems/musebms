@@ -1,6 +1,6 @@
-defmodule MscmpSystState do
+defmodule MscmpSystInteraction do
   @moduledoc """
-  Documentation for `MscmpSystState`.
+  Documentation for `MscmpSystInteraction`.
   """
 
   @doc """
@@ -8,7 +8,7 @@ defmodule MscmpSystState do
 
   ## Examples
 
-      iex> MscmpSystState.hello()
+      iex> MscmpSystInteraction.hello()
       :world
 
   """
