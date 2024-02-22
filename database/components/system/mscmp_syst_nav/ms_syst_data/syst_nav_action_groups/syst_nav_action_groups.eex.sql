@@ -1,5 +1,5 @@
--- File:        syst_action_groups.eex.sql
--- Location:    musebms/database/components/system/mscmp_syst_nav/ms_syst_data/syst_action_groups/syst_action_groups.eex.sql
+-- File:        syst_nav_action_groups.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_nav/ms_syst_data/syst_nav_action_groups/syst_nav_action_groups.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,26 +10,26 @@
 --
 -- muse.information@musesystems.com :: https://muse.systems
 
-CREATE TABLE ms_syst_data.syst_action_groups
+CREATE TABLE ms_syst_data.syst_nav_action_groups
 (
      id
         uuid
         NOT NULL DEFAULT uuid_generate_v7( )
-        CONSTRAINT syst_action_groups_pk PRIMARY KEY
+        CONSTRAINT syst_nav_action_groups_pk PRIMARY KEY
     ,internal_name
         text
         NOT NULL
-        CONSTRAINT syst_action_groups_internal_name_udx UNIQUE
+        CONSTRAINT syst_nav_action_groups_internal_name_udx UNIQUE
     ,display_name
         text
         NOT NULL
-        CONSTRAINT syst_action_groups_display_name_udx UNIQUE
+        CONSTRAINT syst_nav_action_groups_display_name_udx UNIQUE
     ,external_name
         text
         NOT NULL
     ,command
         text
-        CONSTRAINT syst_action_groups_command_udx UNIQUE NULLS DISTINCT
+        CONSTRAINT syst_nav_action_groups_command_udx UNIQUE NULLS DISTINCT
     ,command_config
         regconfig
     ,command_aliases
@@ -42,7 +42,7 @@ CREATE TABLE ms_syst_data.syst_action_groups
                 p_command => command,
                 p_command_aliases => command_aliases ) )
             STORED
-    ,CONSTRAINT syst_action_groups_command_validity_chk
+    ,CONSTRAINT syst_nav_action_groups_command_validity_chk
         CHECK
             ( ( command IS NULL
                     AND command_config IS NULL
@@ -84,17 +84,17 @@ CREATE TABLE ms_syst_data.syst_action_groups
         NOT NULL DEFAULT 0
 );
 
-ALTER TABLE ms_syst_data.syst_action_groups OWNER TO <%= ms_owner %>;
+ALTER TABLE ms_syst_data.syst_nav_action_groups OWNER TO <%= ms_owner %>;
 
-REVOKE ALL ON TABLE ms_syst_data.syst_action_groups FROM public;
-GRANT ALL ON TABLE ms_syst_data.syst_action_groups TO <%= ms_owner %>;
+REVOKE ALL ON TABLE ms_syst_data.syst_nav_action_groups FROM public;
+GRANT ALL ON TABLE ms_syst_data.syst_nav_action_groups TO <%= ms_owner %>;
 
 CREATE TRIGGER z99_trig_b_iu_set_diagnostic_columns
-    BEFORE INSERT OR UPDATE ON ms_syst_data.syst_action_groups
+    BEFORE INSERT OR UPDATE ON ms_syst_data.syst_nav_action_groups
     FOR EACH ROW EXECUTE PROCEDURE ms_syst_priv.trig_b_iu_set_diagnostic_columns();
 
-CREATE INDEX syst_action_groups_command_search_idx
-    ON ms_syst_data.syst_action_groups USING GIN ( command_search );
+CREATE INDEX syst_nav_action_groups_command_search_idx
+    ON ms_syst_data.syst_nav_action_groups USING GIN ( command_search );
 
 DO
 $DOCUMENTATION$
@@ -108,7 +108,7 @@ DECLARE
 
 BEGIN
     var_comments_config.table_schema := 'ms_syst_data';
-    var_comments_config.table_name   := 'syst_action_groups';
+    var_comments_config.table_name   := 'syst_nav_action_groups';
 
 
     var_comments_config.description :=
@@ -117,7 +117,7 @@ command.
 
 There are two fundamental roles fulfilled by the Action Group.  The first of
 these is a simple organizing role related to child Action records
-(`ms_syst_data.syst_actions`); there is little functional purpose to this first
+(`ms_syst_data.syst_nav_actions`); there is little functional purpose to this first
 role aside from user interface categorization.
 
 The second fundamental role establishes the Primary Command component of a user
@@ -198,6 +198,6 @@ END;
 $DOCUMENTATION$;
 
 COMMENT ON
-    CONSTRAINT syst_action_groups_command_validity_chk
-    ON ms_syst_data.syst_action_groups IS
+    CONSTRAINT syst_nav_action_groups_command_validity_chk
+    ON ms_syst_data.syst_nav_action_groups IS
 $DOC$Enforces the rule that all `command*` columns share a null/not null state.$DOC$;

@@ -49,7 +49,7 @@ CREATE TABLE ms_syst_data.syst_menu_items
     ,action_id
         uuid
         CONSTRAINT syst_menu_items_action_fk
-            REFERENCES ms_syst_data.syst_actions ( id )
+            REFERENCES ms_syst_data.syst_nav_actions ( id )
     ,syst_description
         text
         NOT NULL
@@ -111,6 +111,11 @@ BEGIN
 $DOC$Individual menu entries which can serve as actionable menu items, grouping
 items, references to other menus to include recursively, or any appropriate
 combination thereof.$DOC$;
+
+    var_comments_config.general_usage :=
+$DOC$Menu Item records are children of parent Menu records and as such inherit the
+System Defined and User Maintainable traits of their parent records.  This may
+result in certain limitation being placed on maintenance activities.$DOC$;
 
     --
     -- Column Configs

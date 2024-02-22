@@ -36,17 +36,17 @@ ALTER VIEW ms_syst.syst_menu_items OWNER TO <%= ms_owner %>;
 
 REVOKE ALL ON TABLE ms_syst.syst_menu_items FROM PUBLIC;
 
--- CREATE TRIGGER a50_trig_i_i_syst_menu_items
---     INSTEAD OF INSERT ON ms_syst.syst_menu_items
---     FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_i_syst_menu_items();
---
--- CREATE TRIGGER a50_trig_i_u_syst_menu_items
---     INSTEAD OF UPDATE ON ms_syst.syst_menu_items
---     FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_u_syst_menu_items();
---
--- CREATE TRIGGER a50_trig_i_d_syst_menu_items
---     INSTEAD OF DELETE ON ms_syst.syst_menu_items
---     FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_d_syst_menu_items();
+CREATE TRIGGER a50_trig_i_i_syst_menu_items
+    INSTEAD OF INSERT ON ms_syst.syst_menu_items
+    FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_i_syst_menu_items();
+
+CREATE TRIGGER a50_trig_i_u_syst_menu_items
+    INSTEAD OF UPDATE ON ms_syst.syst_menu_items
+    FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_u_syst_menu_items();
+
+CREATE TRIGGER a50_trig_i_d_syst_menu_items
+    INSTEAD OF DELETE ON ms_syst.syst_menu_items
+    FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_d_syst_menu_items();
 
 DO
 $DOCUMENTATION$

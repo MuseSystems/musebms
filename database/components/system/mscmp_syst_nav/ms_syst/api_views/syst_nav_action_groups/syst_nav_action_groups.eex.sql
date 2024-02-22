@@ -1,5 +1,5 @@
--- File:        syst_action_groups.eex.sql
--- Location:    musebms/database/components/system/mscmp_syst_nav/ms_syst/api_views/syst_action_groups/syst_action_groups.eex.sql
+-- File:        syst_nav_action_groups.eex.sql
+-- Location:    musebms/database/components/system/mscmp_syst_nav/ms_syst/api_views/syst_nav_action_groups/syst_nav_action_groups.eex.sql
 -- Project:     Muse Systems Business Management System
 --
 -- Copyright © Lima Buttgereit Holdings LLC d/b/a Muse Systems
@@ -10,7 +10,7 @@
 --
 -- muse.information@musesystems.com :: https://muse.systems
 
-CREATE VIEW ms_syst.syst_action_groups AS
+CREATE VIEW ms_syst.syst_nav_action_groups AS
 SELECT
     id
   , internal_name
@@ -31,23 +31,23 @@ SELECT
   , diag_role_modified
   , diag_row_version
   , diag_update_count
-FROM ms_syst_data.syst_action_groups;
+FROM ms_syst_data.syst_nav_action_groups;
 
-ALTER VIEW ms_syst.syst_action_groups OWNER TO <%= ms_owner %>;
+ALTER VIEW ms_syst.syst_nav_action_groups OWNER TO <%= ms_owner %>;
 
-REVOKE ALL ON TABLE ms_syst.syst_action_groups FROM PUBLIC;
+REVOKE ALL ON TABLE ms_syst.syst_nav_action_groups FROM PUBLIC;
 
--- CREATE TRIGGER a50_trig_i_i_syst_action_groups
---     INSTEAD OF INSERT ON ms_syst.syst_action_groups
---     FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_i_syst_action_groups();
---
--- CREATE TRIGGER a50_trig_i_u_syst_action_groups
---     INSTEAD OF UPDATE ON ms_syst.syst_action_groups
---     FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_u_syst_action_groups();
---
--- CREATE TRIGGER a50_trig_i_d_syst_action_groups
---     INSTEAD OF DELETE ON ms_syst.syst_action_groups
---     FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_d_syst_action_groups();
+CREATE TRIGGER a50_trig_i_i_syst_nav_action_groups
+    INSTEAD OF INSERT ON ms_syst.syst_nav_action_groups
+    FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_i_syst_nav_action_groups();
+
+CREATE TRIGGER a50_trig_i_u_syst_nav_action_groups
+    INSTEAD OF UPDATE ON ms_syst.syst_nav_action_groups
+    FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_u_syst_nav_action_groups();
+
+CREATE TRIGGER a50_trig_i_d_syst_nav_action_groups
+    INSTEAD OF DELETE ON ms_syst.syst_nav_action_groups
+    FOR EACH ROW EXECUTE PROCEDURE ms_syst.trig_i_d_syst_nav_action_groups();
 
 DO
 $DOCUMENTATION$
@@ -62,9 +62,9 @@ DECLARE
 BEGIN
 
     var_view_config.table_schema := 'ms_syst_data';
-    var_view_config.table_name   := 'syst_action_groups';
+    var_view_config.table_name   := 'syst_nav_action_groups';
     var_view_config.view_schema  := 'ms_syst';
-    var_view_config.view_name    := 'syst_action_groups';
+    var_view_config.view_name    := 'syst_nav_action_groups';
     var_view_config.syst_records := TRUE;
     var_view_config.syst_update  := TRUE;
 

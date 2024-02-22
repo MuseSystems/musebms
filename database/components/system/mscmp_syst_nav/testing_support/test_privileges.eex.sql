@@ -10,19 +10,19 @@
 --
 -- muse.information@musesystems.com :: https://muse.systems
 
--- syst_action_groups
+-- syst_nav_action_groups
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE ms_syst.syst_action_groups TO <%= ms_appusr %>;
--- GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_action_groups() TO <%= ms_appusr %>;
--- GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_action_groups() TO <%= ms_appusr %>;
--- GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_action_groups() TO <%= ms_appusr %>;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE ms_syst.syst_nav_action_groups TO <%= ms_appusr %>;
+-- GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_nav_action_groups() TO <%= ms_appusr %>;
+-- GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_nav_action_groups() TO <%= ms_appusr %>;
+-- GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_nav_action_groups() TO <%= ms_appusr %>;
 
--- syst_actions
+-- syst_nav_actions
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE ms_syst.syst_actions TO <%= ms_appusr %>;
--- GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_actions() TO <%= ms_appusr %>;
--- GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_actions() TO <%= ms_appusr %>;
--- GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_actions() TO <%= ms_appusr %>;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE ms_syst.syst_nav_actions TO <%= ms_appusr %>;
+-- GRANT EXECUTE ON FUNCTION ms_syst.trig_i_i_syst_nav_actions() TO <%= ms_appusr %>;
+-- GRANT EXECUTE ON FUNCTION ms_syst.trig_i_u_syst_nav_actions() TO <%= ms_appusr %>;
+-- GRANT EXECUTE ON FUNCTION ms_syst.trig_i_d_syst_nav_actions() TO <%= ms_appusr %>;
 
 
 -- syst_menus
