@@ -14,4 +14,11 @@ defmodule InteractionTestCase do
   @moduledoc false
 
   use ExUnit.CaseTemplate
+
+  setup do
+    [
+      datastore_context:
+        MscmpSystDb.put_datastore_context(MscmpSystDb.get_testsupport_context_name())
+    ]
+  end
 end

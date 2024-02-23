@@ -10,4 +10,26 @@
 #
 # muse.information@musesystems.com :: https://muse.systems
 
+test_kind =
+  cond do
+    ExUnit.configuration() |> Keyword.get(:include) |> Enum.member?(:integration) ->
+      ExUnit.configure(seed: 0)
+      :integration_testing
+
+    ExUnit.configuration() |> Keyword.get(:include) |> Enum.member?(:doctest) ->
+      :doc_testing
+
+    true ->
+      ExUnit.configure(exclude: [:integration, :doctest])
+      :unit_testing
+  end
+
+TestSupport.setup_testing_database(test_kind)
+
+MscmpSystDb.put_datastore_context(MscmpSystDb.get_testsupport_context_name())
+
 ExUnit.start()
+
+ExUnit.after_suite(fn _suite_result ->
+  TestSupport.cleanup_testing_database(test_kind)
+end)

@@ -13,8 +13,6 @@
 defmodule IntegrationTest do
   use InteractionTestCase, async: false
 
-  import Ecto.Query
-
   @moduletag :integration
   @moduletag :capture_log
 
